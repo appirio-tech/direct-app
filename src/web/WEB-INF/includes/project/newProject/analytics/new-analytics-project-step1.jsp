@@ -1,11 +1,14 @@
 <%--
-  - Author: minhu
-  - Version: 1.0
+  - Author: minhu, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 1st step of analytics project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -51,7 +54,7 @@
                     <div class="eBudget">
                         <div class="title">
                             <a rel="&lt;p&gt; An estimation of Budget that you would wish you spend for the project.&lt;/p&gt;" class="toolTip" href="javascript:;"></a>
-                            <label>Estimated Budget<span class="red">*</span></label>
+                            <label class="question23"></label>
                         </div>
                         <div class="sliderCtl">
                             <div class="ruler">
@@ -69,7 +72,7 @@
                             </div>    
                             <div class="slider"></div>
                             <div class="val">
-                                <input type="text" class="text" value="" autocomplete="off"/>
+                                <input id="estimatedBudget" type="text" class="text" value="" autocomplete="off"/>
                                 <span>K US Dollar</span>
                                 <p class="errorTxt">This field cannot have empty or zero value.</p>
                             </div>
@@ -80,10 +83,10 @@
                     <div class="eTimeline">
                         <div class="title">
                             <a rel="&lt;p&gt; The duration within which you would like to complete this project.&lt;/p&gt;" class="toolTip" href="javascript:;"></a>
-                            <label>Estimated Timeline<span class="red">*</span></label>
+                            <label class="question24"></label>
                         </div> 
                         <div class="sliderCtl">
-                            <input type="radio" name="eTimeline" class="radio" checked="checked" value="slider" />
+                            <input id="slider" type="radio" name="eTimeline" class="radio" checked="checked" value="slider" />
                             <div class="ruler">
                                 <span class="first"><span>>0</span></span>
                                 <span>50</span>
@@ -96,18 +99,18 @@
                                 <span class="last">400</span>
                             </div> <div class="slider"></div>
                             <div class="val">
-                                <input type="text" class="text" value="" autocomplete="off"/>
-                                <span>Days</span>
+                                <input id="estimatedTimeline" type="text" class="text" value="" autocomplete="off"/>
+                                <span class="questionOption114"></span>
                                 <p class="errorTxt">This field cannot have empty or zero value.</p>
                             </div>
                             <div class="clear"></div>
                         </div>
                         <div class="dp">
-                            <input type="radio" name="eTimeline" class="radio" value="dp" />
-                            <label>Specific Dates</label>
-                            <input type="text" class="text from" readonly="readonly" autocomplete="off"/>
-                            <span>to</span>
-                            <input type="text" class="text to"  readonly="readonly" autocomplete="off"/>
+                            <input id="specificDate" type="radio" name="eTimeline" class="radio" value="dp" />
+                            <label class="questionOption115"></label>
+                            <input id="startDate" type="text" class="text from" readonly="readonly" autocomplete="off"/>
+                            <span class="questionOption116"></span>
+                            <input id="endDate" type="text" class="text to"  readonly="readonly" autocomplete="off"/>
                             <p class="errorTxt">This field cannot have empty or zero value.</p>
                             <div class="disableMask"></div>
                         </div>

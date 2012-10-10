@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the common require copilot step jsp.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 <div class="stepForth stepContainer">
 
@@ -52,12 +55,10 @@
 
             <dl class="radioList">
                 <dt><a href="javascript:;" class="toolTip"
-                       rel="A Copilot is a TopCoder Member who help you manage the TopCoder process for your project."></a><span>Do you require a Copilot for your Project ? </span>
+                       rel="A Copilot is a TopCoder Member who help you manage the TopCoder process for your project."></a><span class="question"></span>
                 </dt>
-                <dd><input type="radio" name="radio1" class="radio radioYes" value="yes"  autocomplete="off"/><label>Yes,
-                    I need a Copilot</label></dd>
-                <dd><input type="radio" name="radio1" class="radio radioNo" value="no"  autocomplete="off"/><label>No
-                    Thanks, I don't need a copilot</label></dd>
+                <dd><input type="radio" name="radio1" class="radio radioYes questionOption" value="yes"  autocomplete="off"/><label class="optionText"></label></dd>
+                <dd><input type="radio" name="radio1" class="radio radioNo questionOption" value="no"  autocomplete="off"/><label class="optionText"></label></dd>
             </dl>
 
             <div class="chooseCopilot">

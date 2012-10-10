@@ -12,12 +12,16 @@
  *
  * @version 1.2 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
  *              added functions for manage forums page and popups.
- *
- * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY
- * @version 1.2
+ * @version 1.3 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
+ *              added function for populate project answers.
+ *              added initialize project question for custom project.
+ * 
+ * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY, Ghost_141
+ * @version 1.3
  */
  
 function initCustomProjectFlow() {
+	initProjectQuestions(PROJECT_TYPE_CUSTOM);
     initCustomStep1();
     initCustomStep2();
     initCustomStep4();
@@ -282,4 +286,38 @@ function validateForum(box){
         return false;
     }
     return true;
+}
+
+function populateProjectAnswersForCustom() {
+	// the result array.
+	result = [];
+	// prepare the project questions.
+	customProjectQuestions = prepareProjectQuestions(PROJECT_TYPE_CUSTOM);
+	getCopilotInfo(customProjectQuestions[0], result);
+	populateProjectAnswerFromProjectQuestion(customProjectQuestions[1], result);
+	getProjectForum(customProjectQuestions[2], result);
+	return result;
+}
+
+function getProjectForum(question, result) {
+	array = new Array("Forum Name: ", ", Description: ");
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	answer.multipleAnswers = [];
+	$(question.multipleAnswersHtmlXpath).each(function(i) {
+		if(i > 1) {
+			var detailedSpe = "";
+			$(this).children().each(function(index) {
+				if(index < 2) {
+					detailedSpe = detailedSpe + array[index] + $(this).text();
+				}
+			});
+			answer.multipleAnswers.push(detailedSpe);
+		}
+	});
+	
+	result.push(answer);
+	return answer;
 }

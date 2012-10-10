@@ -1,11 +1,14 @@
 <%--
-  - Author: minhu
-  - Version: 1.0
+  - Author: minhu, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 3rd step of analytics project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -31,8 +34,8 @@
                 <div class="step4">
                     <p class="intro">All fields marked with <span class="red">*</span> are mandatory</p>
                     <div class="row">
-                        <label>Please provide a high level overview of the problem that needs to be solved. <span class="red">*</span></label>
-                        <textarea cols="10" rows="10" autocomplete="off"></textarea>
+                        <label class="question26"></label>
+                        <textarea id="problemOverview" cols="10" rows="10" autocomplete="off"></textarea>
                          <span class="errorIcon"></span>
                          <p class="errorTxt">This field cannot be left empty.</p>
                     </div>
@@ -46,15 +49,15 @@
                                 <td class="left">
                                     <div class="title">
                                         <a rel="&lt;p&gt; If choose Yes, please list the metrics that are essential to evaluate the quality of a solution.&lt;/p&gt;" class="toolTip" href="javascript:;"></a>
-                                        <label>Do you know the metrics that are essential to evaluate the quality of a <br/>solution to the described problem</label>
+                                        <label class="question27"></label>
                                     </div>
                                     <div class="radios">
-                                        <input type="radio" name="metrics" id="metricsYes" value="yes" autocomplete="off"/><label for="metricsYes">Yes</label>
-                                        <input type="radio" name="metrics" id="metricsNo" value="no"  checked="checked" autocomplete="off"/><label for="metricsNo">No</label>
+                                        <input type="radio" name="metrics" id="metricsYes" value="yes" autocomplete="off"/><label for="metricsYes" class="questionOption119"></label>
+                                        <input type="radio" name="metrics" id="metricsNo" value="no"  checked="checked" autocomplete="off"/><label for="metricsNo" class="questionOption120"></label>
                                     </div>
                                     <div class="yesWrapper hide">
-                                        <label>Please list the metrics</label>
-                                        <textarea cols="10" rows="10" autocomplete="off"></textarea>
+                                        <label class="questionOption119"></label>
+                                        <textarea id="analyticMetrics" cols="10" rows="10" autocomplete="off"></textarea>
                                     </div>
                                 </td>
                                 <td class="right">
@@ -72,14 +75,14 @@
                                     <div class="leftMask">
                                         <div class="title">
                                             <a rel="&lt;p&gt; If choose Yes, please list the 'fields of knowledge'.&lt;/p&gt;" class="toolTip" href="javascript:;"></a>
-                                            <label>Do you know the 'fields of knowledge' that one needs to have a deep <br/>knowledge of in order to be successful in solving the problem.</label>
+                                            <label class="question28"></label>
                                         </div>
                                         <div class="radios">
-                                            <input type="radio" name="knowledge" id="knowledgeYes" value="yes" autocomplete="off"/><label for="knowledgeYes">Yes</label>
-                                            <input type="radio" name="knowledge" id="knowledgeNo" value="no"  checked="checked" autocomplete="off"/><label for="knowledgeNo">No</label>
+                                            <input type="radio" name="knowledge" id="knowledgeYes" value="yes" autocomplete="off"/><label for="knowledgeYes" class="questionOption121"></label>
+                                            <input type="radio" name="knowledge" id="knowledgeNo" value="no"  checked="checked" autocomplete="off"/><label for="knowledgeNo" class="questionOption122"></label>
                                         </div>
                                         <div class="addKnowledge hide">
-                                            <label>Field of Knowledge:</label>
+                                            <label class="questionOption121"></label>
                                             <div class="field">
                                                 <input type="text" class="text tipIt" maxlength="30" autocomplete="off"/>
                                                 <a class="smallRedBtn" href="javascript:;">ADD</a>

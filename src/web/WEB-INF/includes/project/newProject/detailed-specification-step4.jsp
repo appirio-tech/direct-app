@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 4th step of mobile project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -13,7 +16,7 @@
 
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>4</span>Detailed specifications</h3>
+        <h3 class="question13"></h3>
         <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
     </div>
     <!-- End .stepTitle -->
@@ -34,12 +37,12 @@
                 <div class="filter">
                     <div class="row first">
                         <a href="javascript:;" class="toolTip" rel="Demo text"></a>
-                        <span class="label">Type:</span>
-                        <label class="first"><input checked="checked" type="radio" name="type"/>Content outline</label>
-                        <label><input type="radio" name="type"/>Design document</label>
-                        <label><input type="radio" name="type"/>Data document</label>
-                        <label><input type="radio" name="type"/>Free-form comments</label>
-                        <label><input type="radio" name="type" value="other"/></label>
+                        <span class="label question13"></span>
+                        <label class="first questionOption48"><input id="contentOutline" checked="checked" type="radio" name="type"/></label>
+                        <label class="questionOption49"><input id="designDoc" type="radio" name="type"/></label>
+                        <label class="questionOption50"><input id="dataDoc" type="radio" name="type"/></label>
+                        <label class="questionOption51"><input id="freeForm" type="radio" name="type"/></label>
+                        <label class="questionOption52"><input id="otherType" type="radio" name="type" value="other"/></label>
                         <div class="inputCnt">
                             <input name="other" disabled="disabled" type="text" class="waterMark text disable"
                                    title="other"value="other" />
@@ -53,10 +56,10 @@
                     </div>
                     <div class="row">
                         <a href="javascript:;" class="toolTip" rel="Demo text"></a>
-                        <span class="label">Source:</span>
-                        <label class="first"><input value="upload" checked="checked" type="radio" name="source"/>Upload</label>
-                        <label><input value="url" type="radio" name="source"/>Remote file (URL)</label>
-                        <label><input value="source" type="radio" name="source"/>Direct entry </label>
+                        <span class="label question13"></span>
+                        <label class="first questionOption53"><input id="upload" value="upload" checked="checked" type="radio" name="source"/></label>
+                        <label class="questionOption54"><input id="url" value="url" type="radio" name="source"/></label>
+                        <label class="questionOption55"><input id="directEntry" value="source" type="radio" name="source"/></label>
 
                         <div class="clear"></div>
                     </div>

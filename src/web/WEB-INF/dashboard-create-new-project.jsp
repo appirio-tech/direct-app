@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER, KennyAlive, TCSASSEMBLER, duxiaoyang
-  - Version: 1.4
+  - Author: TCSASSEMBLER, KennyAlive, duxiaoyang, Ghost_141
+  - Version: 1.5
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the create new project process.
@@ -17,6 +17,9 @@
   -
   - Version 1.4 (Release Assembly - TC Direct Project Forum Configuration Assembly)
   -             change notes: Added a new step for custom project type.
+  -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added global js variable projectQuestions.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -42,6 +45,8 @@
     <script type="text/javascript">
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
+		// project questions for populate project answer.
+		var projectQuestions = ${result.projectQuestions};
     </script>
     <script type="text/javascript" src="/scripts/project-create-flow-custom.js?v=215356"></script>
     <script type="text/javascript" src="/scripts/project-create-flow-mobile.js?v=215566"></script>
@@ -145,7 +150,6 @@
                                 <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step-confirmation.jsp"/>
                                
                             </div>
-
                         </div>
                     </div>
 

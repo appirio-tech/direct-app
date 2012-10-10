@@ -755,6 +755,12 @@
           <property name="copilotURLPrefix" value="http://community.topcoder.com/tc?module=ProjectDetail&amp;pj="/>
     </bean>
 
+    <bean id="viewCreateNewProjectAction"
+          class="com.topcoder.direct.services.view.action.ViewCreateNewProjectAction"
+          scope="prototype">
+        <property name="projectServiceFacade" ref="projectServiceFacade"/>
+    </bean>
+
         <!-- For Copilot Profile and Copilot Project DAO-->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName">

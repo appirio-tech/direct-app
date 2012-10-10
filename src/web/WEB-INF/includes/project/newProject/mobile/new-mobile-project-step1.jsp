@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 1st step of mobile project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -37,7 +40,7 @@
                 <div class="row projectName">
 
                     <a href="javascript:;" class="toolTip" id="toolTip1"></a>
-                    <span class="label">What type of app do you want to build: cross-platform, native, or web?</span>
+                    <span class="label question1"></span>
                 </div>
                 <!-- End .row -->
                 <div class="clear"></div>
@@ -45,41 +48,35 @@
                 <div class="content">
                     <div class="left platform">
                         <div class="row cross">
-                            <label><input checked="checked" type="radio" name="platform" value="cross"/>Cross-platform app</label>
-                            <div class="note">
-                                A single development effort results in a set of native apps that look and feel the same while running on different operating systems. A cross-platform app can use many of the hardware features on each device.
+                            <label class="questionOption1"><input id="crossPlatformApp" checked="checked" type="radio" name="platform" value="cross"/></label>
+                            <div class="note questionOption1">
                             </div>
                         </div>
                         <div class="row native">
-                            <label><input type="radio" name="platform" value="native"/>Native app</label>
-                            <div class="note">
-                                The app is developed for a family of mobile devices that use a specific operating system, allowing it to take full advantage of hardware capabilities. A separate development effort is required for each operating system.
+                            <label class="questionOption2"><input id="nativeApp" type="radio" name="platform" value="native"/></label>
+                            <div class="note questionOption2">
                             </div>
                         </div>
                         <div class="row web">
-                            <label><input type="radio" name="platform" value="web"/>Web app</label>
-                            <div class="note">
-                                The application is hosted "in the cloud" and users access it through their device's web browser. All Internet-connected mobile devices can use the same web app. However, a web app cannot integrate tightly with the operating system and has minimal access to hardware features.
+                            <label class="questionOption3"><input id="webApp" type="radio" name="platform" value="web"/></label>
+                            <div class="note questionOption3">
                             </div>
                         </div>
                         <div class="row not">
-                            <label><input type="radio" name="platform" value="not"/>I'm not sure</label>
-                            <div class="note">
-                                You're not clear on the differences between the various approaches, or you can't decide which one would suit you best. We'll discuss your goals and compare the possible solutions.
+                            <label class="questionOption4"><input id="typeNotSure" type="radio" name="platform" value="not"/></label>
+                            <div class="note questionOption4">
                             </div>
                         </div>
                     </div>
                     <div class="left desc">
-                        <div class="crossOption options">
-                            Do you require the use of a specific cross-platform
-                            framework?
+                        <div class="crossOption options question2">
                             <div class="opt">
-                                <label><input checked="checked" type="radio" name="cross"/>No specific requirement</label>
-                                <label><input type="radio" name="cross"/>PhoneGap</label>
-                                <label><input type="radio" name="cross"/>MoSync</label>
-                                <label class="last"><input type="radio" name="cross" value="other"/>Other:</label>
+                                <label class="questionOption5"><input id="noSpecific" checked="checked" type="radio" name="cross"/></label>
+                                <label class="questionOption6"><input id="phoneGap" type="radio" name="cross"/></label>
+                                <label class="questionOption7"><input id="moSync" type="radio" name="cross"/></label>
+                                <label class="last questionOption8"><input id="otherCrossPlatform" type="radio" name="cross" value="other"/></label>
                                 <div class="inputCnt">
-                                    <input name="crossOther" type="text" value="other" class="text waterMark" title="other"/>
+                                    <input id="otherCrossPlatformVal" name="crossOther" type="text" value="other" class="text waterMark" title="other"/>
                                     <span class="errorIcon"></span>
                                     <p class="message padding">
                                         <span class="errorText" style="display: inline;">This field cannot be left empty.</span>
@@ -89,19 +86,18 @@
                             </div>
 
                         </div>
-                        <div class="nativeOption options">
-                            What operating system(s) do you want to target?
+                        <div class="nativeOption options question3">
                             <p class="message padding">
                                 <span class="errorText" style="display: inline;">This field cannot be left empty.</span>
                             </p>
                             <div class="opt">
-                                <label><input checked="checked" type="checkbox" name="native"/>Apple iOS (iPhone, iPod, iPad)</label>
-                                <label><input type="checkbox" name="native"/>Android</label>
-                                <label><input type="checkbox" name="native"/>BlackBerry</label>
-                                <label><input type="checkbox" name="native"/>Windows Phone</label>
-                                <label class="last"><input id="otherNative" type="checkbox" name="native" value="other"/>Other:</label>
+                                <label class="questionOption9"><input id="ios" checked="checked" type="checkbox" name="native"/></label>
+                                <label class="questionOption10"><input id="android" type="checkbox" name="native"/></label>
+                                <label class="questionOption11"><input id="blackberry" type="checkbox" name="native"/></label>
+                                <label class="questionOption12"><input id="windowsPhone" type="checkbox" name="native"/></label>
+                                <label class="last questionOption13"><input id="otherNative" type="checkbox" name="native" value="other"/></label>
                                 <div class="inputCnt">
-                                    <input name="nativeOther" value="other" type="text" class="text waterMark" title="other"/>
+                                    <input id="otherNativeVal" name="nativeOther" value="other" type="text" class="text waterMark" title="other"/>
                                     <span class="errorIcon"></span>
                                     <p class="message padding">
                                         <span class="errorText" style="display: inline;">This field cannot be left empty.</span>

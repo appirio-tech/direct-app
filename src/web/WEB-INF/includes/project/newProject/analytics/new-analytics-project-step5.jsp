@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 5th step of analytics project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -33,7 +36,7 @@
                     <div class="otherDetails">
                         <div class="title">
                             <a rel="&lt;p&gt; Please list all other details that are not covered by any questions in the previous steps.&lt;/p&gt;" class="toolTip" href="javascript:;"></a>
-                            <label>If there are any other details that you think are relevant but are not covered by any questions in the previous steps, please list them here.<span class="red">*</span></label>
+                            <label class="question36"></label>
                         </div>
                         <textarea cols="10" rows="10" autocomplete="off"></textarea>
                         <span class="errorIcon"></span>
@@ -43,11 +46,11 @@
                         <div class="radios">
                             <a rel="&lt;p&gt; Please choose the document source type and provide the document or its URL/Direct Entry.&lt;/p&gt;"  class="toolTip" href="javascript:;"></a>
                             <input type="radio" name="document" id="isUpload" checked="checked" value="isUpload" />
-                            <label for="isUpload">Upload</label>
+                            <label for="isUpload" class="questionOption145"></label>
                             <input type="radio" name="document" id="isUrl"  value="isUrl"/>
-                            <label for="isUrl">Remote file (URL)</label>
+                            <label for="isUrl" class="questionOption146"></label>
                             <input type="radio" name="document" id="isDirect" value="isDirect" />
-                            <label for="isDirect">Direct entry</label>
+                            <label for="isDirect" class="questionOption147"></label>
                         </div>
                         
                         <div class="isUpload inputRow">

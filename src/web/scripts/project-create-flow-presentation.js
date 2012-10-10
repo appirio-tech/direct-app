@@ -4,12 +4,17 @@
  * JavaScript code related to presentation project creation flow.
  *
  * @version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
- *
- * @author: KennyAlive
- * @version 1.0
+ * 
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
+ * 				added populate project answer for presentation project.
+ *              added initialize project question for presentation project.
+ * 
+ * @author: KennyAlive, Ghost_141
+ * @version 1.1
  */
 
 function initPresentationProjectFlow() {
+	initProjectQuestions(PROJECT_TYPE_PRESENTATION);
     initPresentationStep1();
     initPresentationStep2();
     initPresentationStep3();
@@ -443,4 +448,94 @@ function updatePresentationProjectSummaryPage() {
             $(this).find('td').eq(3).remove();
         }
     });
+}
+
+function populateProjectAnswersForPresentation() {
+	// the result array.
+	result = [];
+	// prepare the project questions.
+	presentationProjectQuestions = prepareProjectQuestions(PROJECT_TYPE_PRESENTATION);
+	// define question index.
+	var i = 0;
+	populateFirstPresentationQuestion(presentationProjectQuestions[i++], result);
+	
+	for(var j = 0; j< 4; j++) {
+		populateProjectAnswerFromProjectQuestion(presentationProjectQuestions[i++], result);
+	}
+	// get strategy answer
+	for(var j = 0; j < 3; j++) {
+		populateStrategyAnswers(presentationProjectQuestions[i++], result);
+	}
+	// get detailed specifications
+	getDetailedSpecifications(presentationProjectQuestions[i++], result);
+	return result;
+}
+
+function populateStrategyAnswers(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	
+	$.each(question.questionOptions, function(index, content) {
+		answerOption = {};
+		answerOption.projectQuestionOption = {};
+		answerOption.projectQuestionOption.id = content.id;
+		// find the checked option(radio or checkbox)
+		answerNode = $("#" + content.answerHtmlId);
+		if(answerNode.is(':checked')) {
+			answerOption.answerHtmlValue = answerNode.val();
+			answer.optionAnswers.push(answerOption);
+		}
+	});
+	answer.multipleAnswers = getMultipleAnswers(question.multipleAnswersHtmlXpath);
+	result.push(answer);
+	return answer;
+}
+
+function populateFirstPresentationQuestion(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+
+	// question has multiple options
+	node = $('#' + question.questionOptions[0].answerHtmlId);
+	if(node.is(':checked')) {
+		for(var i = 0; i < 5; i++) {
+			var option = question.questionOptions[i];
+			answerOption = {};
+			answerOption.projectQuestionOption = {};
+			answerOption.projectQuestionOption.id = option.id;
+			// find the checked option(radio or checkbox)
+			answerNode = $("#" + option.answerHtmlId);
+			if(answerNode.is(':checked')) {
+				if(option.hasAssociatedTextbox) {
+					answerOption.answerHtmlValue = $("#" + option.associatedTextboxHtmlId).val();
+				}else {
+					answerOption.answerHtmlValue = answerNode.val();
+				}
+				answer.optionAnswers.push(answerOption);
+			}
+		}
+	} else {
+		for(var i = 5; i < 10; i++) {
+			var option = question.questionOptions[i];
+			answerOption = {};
+			answerOption.projectQuestionOption = {};
+			answerOption.projectQuestionOption.id = option.id;
+			// find the checked option(radio or checkbox)
+			answerNode = $("#" + option.answerHtmlId);
+			if(answerNode.is(':checked')) {
+				if(option.hasAssociatedTextbox) {
+					answerOption.answerHtmlValue = $("#" + option.associatedTextboxHtmlId).val();
+				}else {
+					answerOption.answerHtmlValue = answerNode.val();
+				}
+				answer.optionAnswers.push(answerOption);
+			}
+		}
+	}
+	result.push(answer);
+	return answer;
 }

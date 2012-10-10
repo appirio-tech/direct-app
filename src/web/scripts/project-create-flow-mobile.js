@@ -5,11 +5,16 @@
  *
  * @version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
  *
- * @author: KennyAlive
- * @version 1.0
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
+ * 				added populate project answer for mobile project.
+ *              added initialize project question for mobile project.
+ * 
+ * @author: KennyAlive, Ghost_141
+ * @version 1.1
  */
 
 function initMobileProjectFlow() {
+	initProjectQuestions(PROJECT_TYPE_MOBILE);
     initMobileStep1();
     initMobileStep2();
     initMobileStep3();
@@ -689,4 +694,81 @@ function updateMobileProjectSummaryPage() {
             $(this).find('td').eq(3).remove();
         }
     });
+}
+
+function populateProjectAnswersForMobile() {
+	// the result array.
+	result = [];
+	// prepare the project questions.
+	mobileProjectQuestions = prepareProjectQuestions(PROJECT_TYPE_MOBILE);
+	// define question index.
+	var i = 0;
+	// Development target
+	answer = populateProjectAnswerFromProjectQuestion(mobileProjectQuestions[i++], result);
+	if(answer.optionAnswers[0].answerHtmlValue == "cross") {
+		// the app type is cross form.
+		// get cross form framework
+		populateProjectAnswerFromProjectQuestion(mobileProjectQuestions[i++], result);
+		// escape the target os question
+		i++;
+	} else if(answer.optionAnswers[0].answerHtmlValue == "native") {
+		// the app type is native.
+		// get target os question
+		i++;
+		// get target os answer
+		populateProjectAnswerFromProjectQuestion(mobileProjectQuestions[i++], result);
+	} else {
+		// the app type is web or not sure
+		// escape above two questions
+		i = i + 2;
+	}
+	// Application design
+	answer = populateProjectAnswerFromProjectQuestion(mobileProjectQuestions[i++], result);
+	if(answer.optionAnswers[0].answerHtmlValue == "no") {
+		// Original design
+		// escape next question
+		i++;
+	} else {
+		// Adaptation design
+		populateProjectAnswerFromProjectQuestion(mobileProjectQuestions[i++], result);
+	}
+	// Application design and Hardware support
+	for(j=0; j<7; j++) {
+		populateProjectAnswer_MobileType(mobileProjectQuestions[i++], result);
+	}
+	// get detailed specification
+	getDetailedSpecifications(mobileProjectQuestions[i++], result);
+	return result;
+}
+
+function populateProjectAnswer_MobileType(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	for(optionIndex in question.questionOptions) {
+		var option = question.questionOptions[optionIndex];
+		answerOption = {};
+		answerOption.projectQuestionOption = {};
+		answerOption.projectQuestionOption.id = option.id;
+		// get the checkbox or radio
+		answerNode = $("#" + option.answerHtmlId);
+		if(answerNode.is(':checked')) {
+			if(optionIndex == 0) {
+				// user is unsure about this question. the rest options' answer will not be collected.
+				answerOption.answerHtmlValue = answerNode.val();
+				answer.optionAnswers.push(answerOption);
+				break;
+			}
+			if(option.hasAssociatedTextbox) {
+				answerOption.answerHtmlValue = $("#" + option.associatedTextboxHtmlId).val();
+			}else {
+				answerOption.answerHtmlValue = answerNode.val();
+			}
+			answer.optionAnswers.push(answerOption);
+		}
+	}
+	answer.multipleAnswers = getMultipleAnswers(question.multipleAnswersHtmlXpath);
+	result.push(answer);
+	return answer;
 }

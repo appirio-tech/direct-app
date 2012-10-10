@@ -15,15 +15,20 @@
  *
  * @version 1.3 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
  *              added forums configuration for new custom project creation flow.
- *
- * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY
- * @version 1.3
+ * 
+ * @version 1.4 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
+ * 				added populate project answer for mobile, presentation, analytic project type.
+ *              added initProjectQuestions for initialize project question text by data from backend.
+ * 				updated custom, mobile, presentation, analytics project type.
+ * 
+ * @author: KennyAlive, TCSASSEMBLY, Ghost_141
+ * @version 1.4
  */
  
- var PROJECT_TYPE_CUSTOM = 0;
- var PROJECT_TYPE_MOBILE = 1;
- var PROJECT_TYPE_PRESENTATION = 2;
- var PROJECT_TYPE_ANALYTICS = 3;
+ var PROJECT_TYPE_CUSTOM = 9;
+ var PROJECT_TYPE_MOBILE = 10;
+ var PROJECT_TYPE_PRESENTATION = 11;
+ var PROJECT_TYPE_ANALYTICS = 12;
 
 // Defines which project type's wizard is active at the moment. 
 var activeProjectType = PROJECT_TYPE_CUSTOM;
@@ -286,14 +291,14 @@ function createDraftContestRequest(projectName, projectType) {
     projectHeader.projectSpec.privateDescription = "";
     projectHeader.setProjectName(contestName);
 
-    if (projectType == PROJECT_TYPE_MOBILE) {
+	if (projectType == PROJECT_TYPE_MOBILE) {
         projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_MobileProject();
     } else if (projectType == PROJECT_TYPE_PRESENTATION) {
         projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_PresentationProject();
     } else if (projectType == PROJECT_TYPE_ANALYTICS) {
         projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_AnalyticsProject();
     }
-
+	
     var amount = 150.0;
     projectHeader.setFirstPlaceCost(amount);
     // set all prize to 0 except first place cost
@@ -317,6 +322,124 @@ function createDraftContestRequest(projectName, projectType) {
         request['presentationProject'] = true;
     }
     return request;
+}
+
+function changeIdAndClass() {
+	questions = [39, 25];
+	$('.question').each(function(index) {
+		$(this).removeClass('question').addClass('question' + questions[index]);
+	});
+	options = ['needCopilotCustom', 'noCopilotCustom', 'needCopilot', 'noCopilot'];
+	$('.questionOption').each(function(index) {
+		$(this).removeClass('questionOption').attr('id', options[index]);
+	});
+	options = [148, 149, 117, 118];
+	$('.optionText').each(function(index) {
+		$(this).removeClass('optionText').addClass('questionOption' + options[index]);
+	});
+}
+
+function getMultipleAnswers(Xpath) {
+	if(Xpath != null) {
+		nodes = $(".stepFirst2 .geryContent .formats label.last" + Xpath);
+		multipleAnswers = [];
+		$.each(nodes, function(index) {
+			if($(this).is(':checked')) {
+				multipleAnswers.push($(this).parent().next().find('input').val());
+			}
+		});
+		return multipleAnswers;
+	}
+}
+
+function getDetailedSpecifications(question, result) {
+	array = new Array("Type: ", ", Source: ", ", Data: ");
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	answer.multipleAnswers = [];
+	$(question.multipleAnswersHtmlXpath).each(function(i) {
+		if(i > 1) {
+			var detailedSpe = "";
+			$(this).children().each(function(index) {
+				if(index < 3) {
+					detailedSpe = detailedSpe + array[index] + $(this).text();
+				}
+			});
+			answer.multipleAnswers.push(detailedSpe);
+		}
+	});
+	
+	result.push(answer);
+	return answer;
+}
+
+function initProjectQuestions(projectType) {
+	questions = prepareProjectQuestions(projectType);
+	if((questions == null) || (questions.length == 0)){
+		showErrors("There is some thing wrong with project questions. Please contact PM. Thanks.");
+	}
+	$.each(questions, function(index, question) {
+		var texts = question.questionText.split('||');
+		$('.question' + question.id).each(function(index) {
+			$(this).html(texts[index] + $(this).html());
+		});
+		if(question.questionOptions != null) {
+			$.each(question.questionOptions, function(index, content) {
+				var optionsTexts = content.questionOptionText.split('||');
+				$('.questionOption' + content.id).each(function(index) {
+					$(this).html($(this).html() + optionsTexts[index]);
+				});
+			});
+		}
+	});
+}
+
+function prepareProjectQuestions(projectType) {
+	questions = [];
+	$.each(projectQuestions, function(index, content) {
+		if(content.directProjectTypeId == projectType) {questions.push(content)}
+	});
+	return questions;
+}
+
+// populate project answers
+function populateProjectAnswerFromProjectQuestion(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	if(question.answerHtmlId != "") {
+		// question has direct answer
+		answer.textualAnswer = $("#" + question.answerHtmlId).val();
+	} else if(question.questionOptions != null) {
+		// question has multiple options
+		$.each(question.questionOptions, function(index, content) {
+			answerOption = {};
+			answerOption.projectQuestionOption = {};
+			answerOption.projectQuestionOption.id = content.id;
+			// find the checked option(radio or checkbox)
+			answerNode = $("#" + content.answerHtmlId);
+			if(answerNode.is(':checked')) {
+				if(content.hasAssociatedTextbox) {
+					answerOption.answerHtmlValue = $("#" + content.associatedTextboxHtmlId).val();
+				}else {
+					answerOption.answerHtmlValue = answerNode.val();
+				}
+				answer.optionAnswers.push(answerOption);
+			}
+		});
+	}
+	if(question.multipleAnswersHtmlXpath != "") {
+		elements = $(question.multipleAnswersHtmlXpath);
+		answer.multipleAnswers = [];
+		elements.each(function(index) {
+			answer.multipleAnswers.push($(this).text());
+		});
+	}
+	result.push(answer);
+	return answer;
 }
 
 // final step
@@ -403,7 +526,18 @@ var createNewProject = function() {
     request['projectName'] = projectName;
     request['projectDescription'] = projectDescription;
     request['permissions'] = permissions;
-
+	
+	request.projectData = {};
+	if (projectType == PROJECT_TYPE_MOBILE) {
+		request.projectData.projectAnswers = populateProjectAnswersForMobile();
+    } else if (projectType == PROJECT_TYPE_PRESENTATION) {
+		request.projectData.projectAnswers = populateProjectAnswersForPresentation();
+    } else if (projectType == PROJECT_TYPE_ANALYTICS) {
+		request.projectData.projectAnswers = populateProjectAnswersForAnalytics();
+	} else if (projectType == PROJECT_TYPE_CUSTOM) {
+		request.projectData.projectAnswers = populateProjectAnswersForCustom();
+	}
+	
     modalPreloader();
 
     $.ajax({
@@ -1024,13 +1158,13 @@ $(document).ready(function() {
             }
         }
     });
-
+	// change element id and class
+	changeIdAndClass();
     // initialize project creation wizards
     initCustomProjectFlow();
     initMobileProjectFlow();
     initPresentationProjectFlow();
     initAnalyticsProjectFlow();
-        
 
     //detail modal
     $('.stepFirst .geryContent .detailButton').click(function() {

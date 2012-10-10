@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 2nd step of mobile project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,18 +37,18 @@
             <div class="original">
                 <div class="content">
                     <div class="left first">
-                        <div class="title">Original or adaptation</div>
-                        <div class="note">Is the design of your mobile app based on an existing application?</div>
-                        <label><input type="radio" value="no" name="org"/>no, we are making a completely new design</label>
-                        <label><input type="radio" value="yes" name="org"/>yes, we are adaptig an existing application</label>
+                        <div class="title question4"></div>
+                        <div class="note question4"></div>
+                        <label class="questionOption14"><input id="newDesign" type="radio" value="no" name="org"/></label>
+                        <label class="questionOption15"><input id="adaptExisting" type="radio" value="yes" name="org"/></label>
                     </div>
                     <div class="left disable">
-                        <div class="text">What type of application are you adapting?</div>
-                        <label><input checked="checked" disabled="disabled" type="radio" name="app"/>desktop application</label>
-                        <label><input disabled="disabled" type="radio" name="app"/>web application</label>
-                        <label class="other"><input disabled="disabled" type="radio" name="app" value="other"/>&nbsp;</label>
+                        <div class="text question5"></div>
+                        <label class="questionOption16"><input id="desktopApplication" checked="checked" disabled="disabled" type="radio" name="app"/></label>
+                        <label class="questionOption17"><input id="webApplication" disabled="disabled" type="radio" name="app"/></label>
+                        <label class="other questionOption18"><input id="otherApplication" disabled="disabled" type="radio" name="app" value="other"/></label>
                         <div class="inputCnt">
-                            <input type="text" title="other" class="wateMark text" name="appOther" value="other"/>
+                            <input id="otherApplicationVal" type="text" title="other" class="wateMark text" name="appOther" value="other"/>
                             <span class="errorIcon"></span>
                             <p class="message padding">
                                 <span class="errorText" style="display: inline;">This field cannot be left empty.</span>
@@ -63,23 +66,23 @@
             <div class="products">
                 <div class="left">
                     <a class="toolTip" href="javascript:;"></a>
-                    <span class="label">Form factor</span>
+                    <span class="label question6"></span>
                     <span class="errorIcon hide"></span>
                     <div class="clear"></div>
                     <p class="message">
                         <span class="errorText" style="display: none;">Please choose at least 1 option.</span>
                     </p>
-                    <label class="select2"><input type="checkbox" name="factorSelect"/>Unsure about this area - need help</label>
+                    <label class="select2 questionOption19"><input id="formFactorNotSure" type="checkbox" name="factorSelect"/></label>
                     <div class="icon formFactor"></div>
-                    <label><input checked="checked" type="checkbox" name="factor"/>smartphone</label><br/>
-                    <span>4" screen approximately</span><br/>
-                    <label><input type="checkbox" name="factor"/>compact tablet</label><br/>
-                    <span>7" screen approximately</span><br/>
-                    <label><input type="checkbox" name="factor"/>full-sized tablet</label><br/>
-                    <span>10" screen and greater</span><br/>
-                    <label class="other"><input type="checkbox" name="factor" value="other"/>&nbsp;</label>
+                    <label class="questionOption20"><input id="smartPhone" checked="checked" type="checkbox" name="factor"/></label><br/>
+                    <span class="questionOption20"></span><br/>
+                    <label class="questionOption21"><input id="compactTablet" type="checkbox" name="factor"/></label><br/>
+                    <span class="questionOption21"></span><br/>
+                    <label class="questionOption22"><input id="fullSizedTablet" type="checkbox" name="factor"/></label><br/>
+                    <span class="questionOption22"></span><br/>
+                    <label class="other questionOption23"><input id="otherFormFactor" type="checkbox" name="factor" value="other"/></label>
                     <div class="inputCnt">
-                        <input name="factorOther" type="text" title="other" class="wateMark text" value="other"/>
+                        <input id="otherFormFactorVal" name="factorOther" type="text" title="other" class="wateMark text" value="other"/>
                         <span class="errorIcon"></span>
                         <p class="message padding">
                             <span class="errorText">This field cannot be left empty.</span>
@@ -88,26 +91,26 @@
                 </div>
                 <div class="left">
                     <a class="toolTip" href="javascript:;"></a>
-                    <span class="label">Screen orientation</span>
+                    <span class="label question7"></span>
                     <div class="clear"></div>
-                    <label class="select2"><input type="checkbox" name="orientation"/>Unsure about this area - need help</label>
+                    <label class="select2 questionOption24"><input id="screenOrientationNotSure" type="checkbox" name="orientation"/></label>
                     <div class="icon screenOrientation"></div>
-                    <label><input checked="checked" type="radio" name="ori"/>portrait</label><br/>
-                    <label><input type="radio" name="ori"/>landscape</label><br/>
-                    <label><input type="radio" name="ori"/>both</label><br/>
+                    <label class="questionOption25"><input id="portrait" checked="checked" type="radio" name="ori"/></label><br/>
+                    <label class="questionOption26"><input id="landscape" type="radio" name="ori"/></label><br/>
+                    <label class="questionOption27"><input id="bothOrientation" type="radio" name="ori"/></label><br/>
                 </div>
                 <div class="left last">
                     <a class="toolTip" href="javascript:;"></a>
-                    <span class="label">Screen resolution</span>
+                    <span class="label question8"></span>
                     <div class="clear"></div>
-                    <label class="select2"><input type="checkbox" name="resolution"/>Unsure about this area - need help</label>
+                    <label class="select2 questionOption28"><input id="screenResolutionNotSure" type="checkbox" name="resolution"/></label>
                     <div class="icon screenResolution"></div>
-                    <label><input checked="checked" type="radio" name="res"/>low resolution</label><br/>
-                    <span>individual pixels are easily distinguished, as on iPhone 3, iPad 2</span><br/>
-                    <label><input type="radio" name="res"/>high resolution</label><br/>
-                    <span>"retina display" as on iPhone 4, Galaxy Nexus, iPad 3</span><br/>
-                    <label><input type="radio" name="res"/>both low and high resolution</label><br/>
-                    <span>extra design effort required</span><br/>
+                    <label class="questionOption29"><input id="lowResolution" checked="checked" type="radio" name="res"/></label><br/>
+                    <span class="questionOption29"></span><br/>
+                    <label class="questionOption30"><input id="highResolution" type="radio" name="res"/></label><br/>
+                    <span class="questionOption30"></span><br/>
+                    <label class="questionOption31"><input id="bothResolution" type="radio" name="res"/></label><br/>
+                    <span class="questionOption31"></span><br/>
                 </div>
                 <div class="clear"></div>
             </div>

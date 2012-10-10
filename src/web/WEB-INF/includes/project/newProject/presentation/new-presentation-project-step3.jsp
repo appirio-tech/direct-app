@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 3rd step of presentation project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -36,24 +39,24 @@
                 <!-- row -->
                 <div class="row formats">
                     <a href="javascript:;" class="toolTip" rel='To what kind of audience will you be presenting? Select all applicable options.'></a>
-                    <span class="label audience">Audience</span>
+                    <span class="label audience question19"></span>
                     <span class="errorIcon hide"></span>
                     <div class="clear"></div>
                     <p class="message">
                         <span class="errorText">Please choose at least 1 option.</span>
                     </p>
-                    <label><input checked="checked" type="checkbox" name="audience"/><span>customers</span></label>
-                    <label><input type="checkbox" name="audience"/><span>colleagues</span></label>
-                    <label><input type="checkbox" name="audience"/><span>business partners</span></label>
-                    <label><input type="checkbox" name="audience"/><span>top executives</span></label>
-                    <label><input type="checkbox" name="audience"/><span>upper management</span></label>
-                    <label><input type="checkbox" name="audience"/><span>lower management</span></label>
-                    <label><input type="checkbox" name="audience"/><span>technical staff</span></label>
-                    <label><input type="checkbox" name="audience"/><span>sales staff</span></label>
-                    <label><input type="checkbox" name="audience"/><span>laborers</span></label>
-                    <label><input type="checkbox" name="audience"/><span>academic audience</span></label>
-                    <label><input type="checkbox" name="audience"/><span>industry insiders</span></label>
-                    <label><input type="checkbox" name="audience"/><span>general public</span></label>
+                    <label class="questionOption77"><input id="customer" checked="checked" type="checkbox" name="audience"/></label>
+                    <label class="questionOption78"><input id="colleague" type="checkbox" name="audience"/></label>
+                    <label class="questionOption79"><input id="businessPartner" type="checkbox" name="audience"/></label>
+                    <label class="questionOption80"><input id="topExcutive" type="checkbox" name="audience"/></label>
+                    <label class="questionOption81"><input id="upperManagement" type="checkbox" name="audience"/></label>
+                    <label class="questionOption82"><input id="lowerManagement" type="checkbox" name="audience"/></label>
+                    <label class="questionOption83"><input id="technicalStaff" type="checkbox" name="audience"/></label>
+                    <label class="questionOption84"><input id="saleStaff" type="checkbox" name="audience"/></label>
+                    <label class="questionOption85"><input id="laborer" type="checkbox" name="audience"/></label>
+                    <label class="questionOption86"><input id="academic" type="checkbox" name="audience"/></label>
+                    <label class="questionOption87"><input id="industryInsider" type="checkbox" name="audience"/></label>
+                    <label class="questionOption88"><input id="generalPublic" type="checkbox" name="audience"/></label>
                     <div class="clear"></div>
                     <label class="last"><input value="other" type="checkbox" name="audience" class="other"/><span>&nbsp;</span></label>
                     <span class="input"><input disabled="disabled" name="audienceOther" class="waterMark audience" title="other" type="text" value="other"/></span>
@@ -69,26 +72,26 @@
                 <!-- row -->
                 <div class="row formats">
                     <a href="javascript:;" class="toolTip" rel='What do you hope to achieve with the presentation? Select all applicable options.'></a>
-                    <span class="label purpose">Purpose</span>
+                    <span class="label purpose question20"></span>
                     <span class="errorIcon hide"></span>
                     <div class="clear"></div>
                     <p class="message">
                         <span class="errorText">Please choose at least 1 option.</span>
                     </p>
-                    <label><input checked="checked" type="checkbox" name="purpose"/><span>introduce a product</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>present a plan</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>offer a deal</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>recruit a customer</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>honor an occasion</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>inspire an action</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>improve morale</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>describe an idea</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>analyze a situation</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>argue for a position</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>explain a problem</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>offer a solution</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>describe research</span></label>
-                    <label><input type="checkbox" name="purpose"/><span>summarize finances</span></label>
+                    <label class="questionOption89"><input id="introduceProduct" checked="checked" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption90"><input id="presentPlan" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption91"><input id="offerDeal" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption92"><input id="recruitCustomer" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption93"><input id="honorOccasion" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption94"><input id="inspireAction" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption95"><input id="improveMorale" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption96"><input id="describeIdea" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption97"><input id="analyzeSituation" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption98"><input id="arguePosition" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption99"><input id="explainProblem" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption100"><input id="offerSolution" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption101"><input id="describeResearch" type="checkbox" name="purpose"/></label>
+                    <label class="questionOption102"><input id="summarizeFinace" type="checkbox" name="purpose"/></label>
                     <div class="clear"></div>
                     <label class="last"><input value="other" type="checkbox" name="purpose" class="other"/><span>&nbsp;</span></label>
                     <span class="input"><input disabled="disabled" name="purposeOther" class="waterMark purpose" title="other" type="text" value="other"/></span>
@@ -104,23 +107,23 @@
                 <!-- row -->
                 <div class="row formats">
                     <a href="javascript:;" class="toolTip" rel='What style of presentation do you wish to use? Select all applicable options.'></a>
-                    <span class="label style">Style</span>
+                    <span class="label style question21"></span>
                     <span class="errorIcon hide"></span>
                     <div class="clear"></div>
                     <p class="message">
                         <span class="errorText">Please choose at least 1 option.</span>
                     </p>
-                    <label><input checked="checked" type="checkbox" name="style"/><span>casual</span></label>
-                    <label><input type="checkbox" name="style"/><span>formal</span></label>
-                    <label><input type="checkbox" name="style"/><span>concise</span></label>
-                    <label><input type="checkbox" name="style"/><span>detailed</span></label>
-                    <label><input type="checkbox" name="style"/><span>statistical</span></label>
-                    <label><input type="checkbox" name="style"/><span>textual</span></label>
-                    <label><input type="checkbox" name="style"/><span>graphical</span></label>
-                    <label><input type="checkbox" name="style"/><span>humorous</span></label>
-                    <label><input type="checkbox" name="style"/><span>dispassionate</span></label>
-                    <label><input type="checkbox" name="style"/><span>factual</span></label>
-                    <label><input type="checkbox" name="style"/><span>emotional</span></label>
+                    <label class="questionOption103"><input id="casual" checked="checked" type="checkbox" name="style"/></label>
+                    <label class="questionOption104"><input id="formal" type="checkbox" name="style"/></label>
+                    <label class="questionOption105"><input id="concise" type="checkbox" name="style"/></label>
+                    <label class="questionOption106"><input id="detail" type="checkbox" name="style"/></label>
+                    <label class="questionOption107"><input id="statistical" type="checkbox" name="style"/></label>
+                    <label class="questionOption108"><input id="textual" type="checkbox" name="style"/></label>
+                    <label class="questionOption109"><input id="graphical" type="checkbox" name="style"/></label>
+                    <label class="questionOption110"><input id="humorous" type="checkbox" name="style"/></label>
+                    <label class="questionOption111"><input id="dispassionate" type="checkbox" name="style"/></label>
+                    <label class="questionOption112"><input id="factual" type="checkbox" name="style"/></label>
+                    <label class="questionOption113"><input id="emotional" type="checkbox" name="style"/></label>
                     <div class="clear"></div>
                     <label class="last"><input value="other" type="checkbox" name="style" class="other"/><span>&nbsp;</span></label>
                     <span class="input"><input disabled="disabled" name="styleOther" class="waterMark style" title="other" type="text" value="other"/></span>

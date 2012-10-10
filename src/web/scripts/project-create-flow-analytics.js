@@ -2,12 +2,19 @@
  * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  *
  * JavaScript code related to analytics project creation flow.
- *
- * @author: minhu
+ * 
  * @version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+ * 
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
+ * 				added populate project answer for analytics project.
+ *              added initialize project question for analytics project.
+ * 
+ * @author: minhu, Ghost_141
+ * @version 1.1
  */
 
-function initAnalyticsProjectFlow() {    
+function initAnalyticsProjectFlow() {   
+	initProjectQuestions(PROJECT_TYPE_ANALYTICS);
     initAnalyticsStep1();
     initAnalyticsStep3();
     initAnalyticsStep4();
@@ -163,12 +170,22 @@ function initAnalyticsStep3() {
            $(".step4 .row").addClass("error");
             return false;
         }
+		if($('#metricsYes').is(':checked') && $.trim($('#analyticMetrics').val()) == "") {
+			$(".yesWrapper").addClass("error");
+            return false;
+		}
         goAnalyticsProjectStep(4);
         return false;
     })
     $(".step4 .row textarea").keyup(function(){
         $(this).parent().removeClass("error");
     })
+	$('#analyticMetrics').keyup(function() {
+		$(this).parent().removeClass("error");
+	})
+	$('#metricsNo').click(function(){
+		$(".yesWrapper").removeClass("error");
+	})
 
     $(".step4 input[name='metrics']").change(function(){
         if($(this).val() == "yes"){
@@ -273,6 +290,25 @@ function initAnalyticsStep4() {
     $(".step5 .val .text, .step5 .textR .text").focus(function(){
         $(this).parent().removeClass("error");
     })
+	
+	$('#overviewOnCurrentSolution').focus(function(){
+		$(this).parent().removeClass("error");
+	})
+	
+	$('#checkbox56').click(function(){
+		if($(this).is(':checked')){
+			$("input[name=checkbox5]").attr("disabled","disabled");
+			$(this).removeAttr("disabled");
+		}else{
+            $("input[name=checkbox5]").removeAttr("disabled");
+        }
+	})
+	
+	$("input[name=checkbox5]").each(function(){
+		$(this).click(function() {
+			$(".q5 .rightMask").removeClass("error");
+		})
+	})
     
     $(".step5 .row .left .radios input").change(function(){
         var row = $(this).parents(".row")
@@ -296,6 +332,22 @@ function initAnalyticsStep4() {
             }
         })      
         
+		if($('#radio71').is(':checked') && $.trim($('#overviewOnCurrentSolution').val()) == "") {
+			$('#overviewOnCurrentSolution').parent().addClass("error");
+			valid=false;
+		}
+		
+		r = false;
+		$("input[name=checkbox5]").each(function() {
+			if((this).checked){
+				r = true;
+			}
+		});
+		if(r == false) {
+			$(".q5 .rightMask").addClass("error");
+			valid = r;
+		}
+		
         if (valid)goAnalyticsProjectStep(5);
         return false;
     })
@@ -653,4 +705,104 @@ function createCopilotContestDescription_AnalyticsProject() {
     }
     content += '<br/>';
     return content;
+}
+
+function populateProjectAnswersForAnalytics() {
+	// the result array.
+	result = [];
+	// prepare the project questions.
+	analyticProjectQuestions = prepareProjectQuestions(PROJECT_TYPE_ANALYTICS);
+	$.each(analyticProjectQuestions, function(index, content) {
+		if(index == 2) {getCopilotInfo(content, result)}
+		else if (index == 10) {getLanguages(content, result)}
+		else if (index == 14) {getOtherDocuments(content, result)}
+		else {populateProjectAnswerFromProjectQuestion(content, result)}
+	});
+	return result;
+}
+
+function getOtherDocuments(question, result) {
+	array = new Array("Source: ", ", Data: ");
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	elements = $(question.multipleAnswersHtmlXpath);
+	answer.multipleAnswers = [];
+	
+	$.each(elements, function(i) {
+		if((i < elements.length - 1) && (i > 0)) {
+			var detailedSpe = "";
+			$(this).children().each(function(index) {
+				if(index < 2) {
+					detailedSpe = detailedSpe + array[index] + $(this).text();
+				}
+			});
+			answer.multipleAnswers.push(detailedSpe);
+		}
+	});
+	
+	result.push(answer);
+	return answer;
+}
+
+function getCopilotInfo(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+	answerOption = {};
+	answerNode = $('#' + question.questionOptions[0].answerHtmlId);
+	if(answerNode.is(':checked')) {
+		// need copilot
+		answerOption.answerHtmlValue = answerNode.val();
+		answer.multipleAnswers = [];
+		$(question.multipleAnswersHtmlXpath).each(function(index) {
+			answer.multipleAnswers.push($(this).text());
+		});
+		answerOption.projectQuestionOption ={};
+		answerOption.projectQuestionOption.id = question.questionOptions[0].id;
+		answer.optionAnswers.push(answerOption);
+	} else {
+		// don't need copilot
+		answerOption.answerHtmlValue = $('#' + question.questionOptions[1].answerHtmlId).val();
+
+		answerOption.projectQuestionOption ={};
+		answerOption.projectQuestionOption.id = question.questionOptions[1].id;
+
+		answer.optionAnswers.push(answerOption);
+	}
+	result.push(answer);
+	return answer;
+}
+
+function getLanguages(question, result) {
+	answer = {};
+	answer.optionAnswers = new Array();
+	answer.projectQuestion = {};
+	answer.projectQuestion.id = question.id;
+
+	// question has multiple options
+	$.each(question.questionOptions, function(index, content) {
+		answerOption = {};
+		answerOption.projectQuestionOption = {};
+		answerOption.projectQuestionOption.id = content.id;
+		// find the checked option(radio or checkbox)
+		answerNode = $("#" + content.answerHtmlId);
+		if(answerNode.is(':checked')) {
+			if(content.hasAssociatedTextbox) {
+				answerOption.answerHtmlValue = $("#" + content.associatedTextboxHtmlId).val();
+			}else {
+				answerOption.answerHtmlValue = answerNode.val();
+			}
+			if(index == question.questionOptions.length - 1) {
+				answer.optionAnswers.splice(0, answer.optionAnswers.length, answerOption);
+			}
+			else 
+				answer.optionAnswers.push(answerOption);
+		}
+	});
+
+	result.push(answer);
+	return answer;
 }

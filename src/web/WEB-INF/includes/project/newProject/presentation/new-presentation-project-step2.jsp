@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 2nd step of presentation project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
+  -             change notes: Added id and class field for question elements.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -35,10 +38,10 @@
                 <!-- row -->
                 <div class="row">
                     <a href="javascript:;" class="toolTip" rel='What is the title of your presentation? '></a>
-                    <span class="label">Title</span>
+                    <span class="label question15"></span>
                     <div class="clear"></div>
                     <div class="input">
-                        <input class="title limit" type="text"/>
+                        <input id="presentationTitle" class="title limit" type="text"/>
                     </div>
                     <div class="clear"></div>
                     <p class="message">
@@ -49,10 +52,10 @@
                 <!-- row -->
                 <div class="row">
                     <a href="javascript:;" class="toolTip" rel='Please describe in a sentence or brief paragraph the subject of your presentation.'></a>
-                    <span class="label">Summary</span>
+                    <span class="label question16"></span>
                     <div class="clear"></div>
                     <div class="input">
-                        <textarea rows="" cols=""></textarea>
+                        <textarea id="presentationSummary" rows="" cols=""></textarea>
                     </div>
                     <div class="clear"></div>
                     <p class="message">
@@ -64,16 +67,16 @@
                 <!-- row -->
                 <div class="row formats">
                     <a href="javascript:;" class="toolTip" rel='What is the primary physical format of the presentation?'></a>
-                    <span class="label">Format</span>
+                    <span class="label question17"></span>
                     <div class="clear"></div>
-                    <label><input checked="checked" type="radio" name="format"/><span>PowerPoint slides</span></label>
-                    <label><input type="radio" name="format"/><span>Word document</span></label>
-                    <label><input type="radio" name="format"/><span>PDF document</span></label>
-                    <label><input type="radio" name="format"/><span>HTML (web) pages</span></label>
-                    <label><input type="radio" name="format"/><span>Flash application</span></label>
+                    <label class="questionOption66"><input id="pptSlide" checked="checked" type="radio" name="format"/></label>
+                    <label class="questionOption67"><input id="wordDocument" type="radio" name="format"/></label>
+                    <label class="questionOption68"><input id="pdfDocument" type="radio" name="format"/></label>
+                    <label class="questionOption69"><input id="htmlPage" type="radio" name="format"/></label>
+                    <label class="questionOption70"><input id="flashApplication" type="radio" name="format"/></label>
                     <div class="clear"></div>
-                    <label class="last"><input value="other" type="radio" name="format"/><span>&nbsp;</span></label>
-                    <span class="input"><input disabled="disabled" name="formatOther" class="waterMark format" title="other" type="text" value="other"/></span>
+                    <label class="last questionOption71"><input id="otherPresentationFormat" value="other" type="radio" name="format"/></label>
+                    <span class="input"><input id="otherPresentationFormatVal" disabled="disabled" name="formatOther" class="waterMark format" title="other" type="text" value="other"/></span>
                     <div class="clear"></div>
                     <p class="message padding">
                         <span class="errorText">Please specify the format.</span>
@@ -84,15 +87,15 @@
                 <!-- row -->
                 <div class="row formats">
                     <a href="javascript:;" class="toolTip" rel='How will the audience see the visual portion (as opposed to the spoken portion) of your presentation?'></a>
-                    <span class="label">Visuals</span>
+                    <span class="label question18"></span>
                     <div class="clear"></div>
-                    <label><input checked="checked" type="radio" name="visuals"/><span>on one large screen</span></label>
-                    <label><input type="radio" name="visuals"/><span>on their own computers</span></label>
-                    <label><input type="radio" name="visuals"/><span>on printed copies</span></label>
-                    <label><input type="radio" name="visuals"/><span>this is an oral presentation without visual aids</span></label>
+                    <label class="questionOption72"><input id="onLargeScreen" checked="checked" type="radio" name="visuals"/></label>
+                    <label class="questionOption73"><input id="onOwnComputer" type="radio" name="visuals"/></label>
+                    <label class="questionOption74"><input id="onPrintedCopy" type="radio" name="visuals"/></label>
+                    <label class="questionOption75"><input id="oralPresentation" type="radio" name="visuals"/></label>
                     <div class="clear"></div>
-                    <label class="last"><input value="other" type="radio" name="visuals"/><span>&nbsp;</span></label>
-                    <span class="input"><input disabled="disabled" name="visualsOther" class="waterMark visuals" title="other" type="text" value="other"/></span>
+                    <label class="last questionOption76"><input id="otherPresentationVisualAid" value="other" type="radio" name="visuals"/></label>
+                    <span class="input"><input id="otherPresentationVisualAidVal" disabled="disabled" name="visualsOther" class="waterMark visuals" title="other" type="text" value="other"/></span>
                     <div class="clear"></div>
                     <p class="message padding">
                         <span class="errorText">Please specify the visuals.</span>
