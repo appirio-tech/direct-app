@@ -1,20 +1,30 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.configs.ConfigUtils;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.List;
 
 /**
  * <p>A DTO represents the issue tracking of direct project</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * Version 1.1 (TC Direct Issue Tracking Tab Update Assembly 3) change notes:
+ *   <ol>
+ *     <li>Added {@link #directProjectBugs} fields. Also the getters/setters were added.</li>
+ *     <li>Updated {@link #getUnresolvedBugRacesNumber, @link #getBugRacesNumber} methods.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author xjtufreeman, TCSDEVELOPER
+ * @version 1.1
  */
 public class ProjectIssueTrackingDTO extends CommonDTO implements Serializable {
 
@@ -34,6 +44,11 @@ public class ProjectIssueTrackingDTO extends CommonDTO implements Serializable {
     private Map<ContestBriefDTO, ContestIssuesTrackingDTO> projectIssues;
 
     /**
+     * bugs of the direct project.
+     */
+    private List<TcJiraIssue> directProjectBugs;
+
+    /**
      * Gets the issues of the direct project.
      *
      * @return the issues of the direct project.
@@ -49,6 +64,24 @@ public class ProjectIssueTrackingDTO extends CommonDTO implements Serializable {
      */
     public void setProjectIssues(Map<ContestBriefDTO, ContestIssuesTrackingDTO> projectIssues) {
         this.projectIssues = projectIssues;
+    }
+
+    /**
+     * Gets the bugs of the direct project.
+     *
+     * @return the bugs of the direct project.
+     */
+    public List<TcJiraIssue> getProjectBugs() {
+        return directProjectBugs;
+    }
+
+    /**
+     * Sets the bugs of the direct project.
+     *
+     * @param directProjectBugs the bugs of the direct project.
+     */
+    public void setProjectBugs(List<TcJiraIssue> directProjectBugs) {
+        this.directProjectBugs = directProjectBugs;
     }
 
     /**
@@ -78,6 +111,12 @@ public class ProjectIssueTrackingDTO extends CommonDTO implements Serializable {
             count += contestIssues.getUnresolvedBugRacesNumber();
         }
 
+        List<Long> resolvedStatusIds = ConfigUtils.getIssueTrackingConfig().getResolvedStatusIds();
+        for(TcJiraIssue jiraBug : directProjectBugs) {
+            if(!resolvedStatusIds.contains(Long.parseLong(jiraBug.getStatusId()))) {
+                count++;
+            }
+        }
         return count;
     }
 
@@ -107,6 +146,7 @@ public class ProjectIssueTrackingDTO extends CommonDTO implements Serializable {
         for (ContestIssuesTrackingDTO contestIssues : projectIssues.values()) {
             count += contestIssues.getBugRacesNumber();
         }
+        count += directProjectBugs.size();
 
         return count;
     }

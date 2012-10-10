@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -14,18 +14,28 @@ import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectIssueTrackingDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * <p>
+ * Version 1..0 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking Assembly) change notes:
  * A <code>Struts</code> action to be used for handling requests for viewing the
  * <code>Project Issue Tracking</code> page for requested project.
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking Assembly)
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
+ *   <ol>
+ *     <li>Update {@link #execute()} to process the direct project bugs</li>
+ *   </ol>
+ * </p>
+ *
+ * @author xjtufreeman, TCSDEVELOPER
+ * @version 1.1
  */
 public class ProjectIssuesTrackingAction extends AbstractAction implements FormAction<ProjectIdForm>,
         ViewAction<ProjectIssueTrackingDTO> {
@@ -81,7 +91,6 @@ public class ProjectIssuesTrackingAction extends AbstractAction implements FormA
             try {
                 // Gets the contests of the cockpit project first
                 List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
-
                 Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
 
                 getViewData().setProjectIssues(issues);
@@ -106,6 +115,10 @@ public class ProjectIssuesTrackingAction extends AbstractAction implements FormA
                     }
 
                 }
+                // set project bugs
+                String directProjectName = getSessionData().getCurrentProjectContext().getName();
+                List<TcJiraIssue> bugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectName);
+                getViewData().setProjectBugs(bugs);
 
                 getSessionData().setCurrentSelectDirectProjectID(
                         getFormData().getProjectId());

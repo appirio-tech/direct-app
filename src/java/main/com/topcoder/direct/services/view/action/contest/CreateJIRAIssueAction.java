@@ -15,6 +15,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 
 /**
@@ -29,9 +30,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Added method {@link #getIssueKey()} to get the corresponding issue key.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
+ *   <ol>
+ *     <li>Update {@link #executeAction()} to process the direct project bugs</li>
+ *   </ol>
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.1
+ * @author xjtufreeman, TCSASSEMBLER
+ * @version 1.2
  */
 public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
@@ -106,14 +114,26 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
     public void executeAction() throws Exception {
         long projectId = getProjectId();
         IssueTrackingConfig config = ConfigUtils.getIssueTrackingConfig();
-        
+
+
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
         // get the contest instance
-        
-        SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        DirectUtils.setSoftwareCompetitionDirectProjectName(competition, getProjects());
-        
+
+
+        String tcDirectProjectName;
+        // the contestId or projectId field
+        String projectOrContestId = config.getProjectIDField();
+        if(issue.isProjectBug()) {
+            projectOrContestId = config.getDirectProjectIDField();
+            ProjectServiceFacade projectServiceFacade = getProjectServiceFacade();
+            tcDirectProjectName = projectServiceFacade.getProject(currentUser, projectId).getName();
+        } else {
+            SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+            DirectUtils.setSoftwareCompetitionDirectProjectName(competition, getProjects());
+            tcDirectProjectName = competition.getProjectHeader().getTcDirectProjectName();
+        }
+
         // create a new JIRA issue
         RemoteIssue remoteIssue = new RemoteIssue();
         // set the JIRA project
@@ -128,6 +148,7 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
         remoteIssue.setDescription(issue.getDescription());
         // set reporter
         remoteIssue.setReporter(getSessionData().getCurrentUserHandle());
+
         // set the custom fields
         remoteIssue.setCustomFieldValues(new RemoteCustomFieldValue[] {
                 // First Place Payment
@@ -136,11 +157,10 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
                 createRemoteCustomFieldValue(config.getPaymentStatusFieldId(), "Payment Required"),
                 // TCO Points
                 createRemoteCustomFieldValue(config.getTcoPointsFieldId(), String.valueOf(issue.getTcoPoints())),
-                // Project ID
-                createRemoteCustomFieldValue(config.getProjectIDField(), String.valueOf(projectId)),
+                // Contest Id or Project Id
+                createRemoteCustomFieldValue(projectOrContestId, String.valueOf(projectId)),
                 // Application or Component Name
-                createRemoteCustomFieldValue(config.getApplicationNameFieldId(),
-                        competition.getProjectHeader().getTcDirectProjectName()),
+                createRemoteCustomFieldValue(config.getApplicationNameFieldId(), tcDirectProjectName),
                 // Bug Type
                 createRemoteCustomFieldValue(config.getBugTypeFieldId(), issue.getType())
         });

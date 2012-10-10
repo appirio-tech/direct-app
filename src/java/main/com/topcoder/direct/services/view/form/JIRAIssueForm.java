@@ -8,8 +8,15 @@ import java.io.Serializable;
 /**
  * <p>A form bean providing the data submitted by user for creating/updating a JIRA issue.</p>
  *
- * @author TCSASSEMBER
- * @version 1.0
+ * Version 1.1 (TC Direct Issue Tracking Tab Update Assembly 3) change notes:
+ *   <ol>
+ *     <li>Added {@link #projectBug} fields.
+ *     Also the getters/setters were added.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author xjtufreeman, TCSASSEMBER
+ * @version 1.1
  */
 public class JIRAIssueForm implements Serializable {
     /**
@@ -61,6 +68,13 @@ public class JIRAIssueForm implements Serializable {
      * <p>Represents the bug type.<p>
      */
     private String type;
+
+    /**
+     * <p>Represents whether the bug is a project type bug.<p>
+     *
+     * @since 1.1
+     */
+    private boolean projectBug;
     
     /**
      * <p>Empty constructor.</p>
@@ -229,5 +243,26 @@ public class JIRAIssueForm implements Serializable {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    /**
+     * <p>Gets the flag indicates whether bug is a project bug.</p>
+     *
+     * @return the true if the bug is a project bug, false otherwise.
+     * @since 1.1
+     */
+    public boolean isProjectBug() {
+        return projectBug;
+    }
+
+    /**
+     * <p>Sets the flag indicates whether the bug is a project bug.</p>
+     *
+     * @param projectBug true if the bug is a project bug, false otherwise
+     * @since 1.1
+     */
+    public void setProjectBug(boolean projectBug) {
+        this.projectBug = projectBug;
     }
 }

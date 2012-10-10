@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSDEVELOPER, TCSASSEMBLER
-  - Version: 1.0.4
+  - Author: xjtufreeman, TCSDEVELOPER, TCSASSEMBLER
+  - Version: 1.0.5
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the issues and bug races of the contest.
@@ -14,6 +14,10 @@
   -
   - Version 1.0.4 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) change Notes: 
   - - Add support to upload attachment to JIRA issue under Bug Race tab.
+
+  - Version 1.0.4 (TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
+  - - Added the missing </form> element
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -498,6 +502,7 @@
                                                         <a href="#" class="button6 btnCancel"><span class="left"><span class="right">Cancel</span></span></a>
                                                     </div>
                                                     <div class="clear"></div>
+                                                    </form>
                                                 </div>
                                                 <!-- End .addContent -->
                                                 

@@ -40,6 +40,9 @@
 
 	<prizeFieldId>customfield_10012</prizeFieldId>
 
+    <!-- the custom field id fo custom filed 'direct project ID Field' -->
+	<directProjectIDField>customfield_10190</directProjectIDField>
+
 	<!-- the custom field id fo custom filed 'project ID Field' -->
 	<projectIDField>customfield_10093</projectIDField>
 
@@ -64,6 +67,8 @@
 	<!-- the JQL query used for software contest -->
 	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
 
+    <!-- the JQL query used for direct project -->
+	<directProjectJQLQuery>"Application or Component Name" ~ "\"@directProjectName@\"" and ProjectID is empty</directProjectJQLQuery>
 
 	<!-- the max result number -->
 	<maxResultNumber>10000</maxResultNumber>

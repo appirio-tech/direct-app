@@ -17,6 +17,7 @@ import com.atlassian.jira.rpc.soap.client.JiraSoapService;
 import com.atlassian.jira.rpc.soap.client.RemoteAttachment;
 import com.atlassian.jira.rpc.soap.client.RemoteAuthenticationException;
 import com.atlassian.jira.rpc.soap.client.RemoteFieldValue;
+import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
 import com.atlassian.jira.rpc.soap.client.RemoteIssue;
 import com.atlassian.jira.rpc.soap.client.RemoteResolution;
 import com.atlassian.jira.rpc.soap.client.RemoteStatus;
@@ -62,9 +63,18 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  *     <li>Added method {@link #getIssueAttachments(String)} to get the attachments of issue.</li>
  *   </ol>
  * </p>
+ *
+ * Version 1.5 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
+ *   <ol>
+ *     <li>Added method {@link #getIssuesForDirectProject(String)} to get project bugs for the given project.</li>
+ *     <li>Added method {@link #getIssuesForDirectProject(java.util.Set<String> )} to get project bugs for set
+ *         of project.
+ *     </li>
+ *   </ol>
+ * </p>
  *  
- * @author Veve, TCSASSEMBLER
- * @version 1.4
+ * @author Veve, xjtufreeman, TCSASSEMBLER
+ * @version 1.5
  */
 public class JiraRpcServiceWrapper {
 
@@ -265,6 +275,78 @@ public class JiraRpcServiceWrapper {
         return result;
     }
 
+
+    /**
+     * Gets TcJiraIssues of the given direct project name.
+     *
+     * @param directProjectName a direct project name.
+     * @return a list of TcJiraIssues.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.5
+     */
+    public static List<TcJiraIssue> getIssuesForDirectProject(String directProjectName) throws Exception {
+
+        // when the input is null or empty, return an empty result
+        if (directProjectName == null || directProjectName.length() == 0 ) {
+            return  new ArrayList<TcJiraIssue>();
+        }
+
+        // build the JQL query first
+        String directProjectQuery = ConfigUtils.getIssueTrackingConfig().getDirectProjectJQLQuery();
+
+        String jqlQuery = directProjectQuery.replaceAll("@directProjectName@", directProjectName) + " order by Created DESC";
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
+
+        return result;
+    }
+
+    /**
+     * Gets TcJiraIssues of the given direct project name set.
+     *
+     * @param directProjectNameSet a direct project name set.
+     * @return a list of TcJiraIssues.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.5
+     */
+    public static List<TcJiraIssue> getIssuesForDirectProject(Set<String> directProjectNameSet) throws Exception {
+
+        // when the input is null or empty, return an empty result
+        if (directProjectNameSet == null || directProjectNameSet.size() == 0 ) {
+            return  new ArrayList<TcJiraIssue>();
+        }
+
+        StringBuffer jqlQuery = new StringBuffer();
+        jqlQuery.append("(");
+        boolean first = true;
+        // build the JQL query first
+        for(String directProjectName : directProjectNameSet) {
+            if(!first) {
+                jqlQuery.append(" OR ");
+            } else {
+                first = false;
+            }
+            jqlQuery.append("\"Application or Component Name\" ~ \"\\\"");
+            jqlQuery.append(directProjectName);
+            jqlQuery.append("\\\"\"");
+        }
+        jqlQuery.append(") AND ProjectID is empty ORDER BY Created DESC"); 
+
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery.toString());
+        for(TcJiraIssue issue : result) {
+            RemoteCustomFieldValue[] customValues = issue.getRemoteIssue().getCustomFieldValues();
+            for (RemoteCustomFieldValue rcf : customValues) {
+                if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                        ConfigUtils.getIssueTrackingConfig().getDirectProjectIDField().trim().toLowerCase())) {
+                    issue.setDirectProjectId(Long.parseLong(rcf.getValues()[0].trim()));
+                } else if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                        ConfigUtils.getIssueTrackingConfig().getApplicationNameFieldId().trim().toLowerCase())) {
+                    issue.setDirectProjectName(rcf.getValues()[0].trim());
+                }
+            }
+        }
+        return result;
+    }
+
     /**
      * Gets the bug race for the direct project.
      *
@@ -412,7 +494,6 @@ public class JiraRpcServiceWrapper {
      * @since 1.1
      */
     private static List<TcJiraIssue> getIssuesFromJQLQuery(String jqlQuery) throws Exception {
-
         // List to store the final result
         final List<TcJiraIssue> result = new ArrayList<TcJiraIssue>();
 
@@ -438,7 +519,6 @@ public class JiraRpcServiceWrapper {
 
                 tcJiraIssue.setResolutionName(RESOLUTION_NAMES.get(tcJiraIssue.getResolutionId()));
                 tcJiraIssue.setStatusName(ISSUE_STATUS_NAMES.get(tcJiraIssue.getStatusId()));
-
                 // check issue type
                 if (includeIssueTypeIds.contains(Long.parseLong(issue.getType()))) {
                     result.add(tcJiraIssue);

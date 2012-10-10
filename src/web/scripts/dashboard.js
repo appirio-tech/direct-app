@@ -72,17 +72,19 @@
  *  - Update the codes to auto adjust width and height of billing cost report.
  *
  *  Version 2.3 - Module Assembly - JIRA issues loading update and report creation
-
  *  - Add support for jira issues report.
  *
  *  Version 2.4 - Release Assembly - TC Direct Cockpit Release Seven version 1.0
  *  - Add support for copilot posting review - no select any copilot feature
+ *
+ *  Version 2.5 - Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3
+ *  - Add support for create/update/display direct project bugs
  * 
- *  Version 2.5 - Module Assembly - TC Cockpit Operations Dashboard For PMs
+ *  Version 2.6 - Module Assembly - TC Cockpit Operations Dashboard For PMs
  *  - Add support for operations dashboard.
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, bugbuka
- * @version 2.5
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka
+ * @version 2.6
  */
 
 var mouse_is_inside;
@@ -532,7 +534,7 @@ $(document).ready(function(){
             mask.find(".contestsDropDown .dropList").hide();
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
-        if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
+          if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
             // call method defined by filter panel
             filterbyCustomer($(this).data("id"),$(this).find('a').html());
             var customer = "";
@@ -1053,6 +1055,11 @@ $(document).ready(function(){
         $('.issueSelectionContent .inputContainer').hide();
         $('label').removeClass('required');
         $("#bugRace .viewAll").show();
+        if( $("#bugForm #projectBug").val() == 'true' ) {
+            hideBugRacesEmptyContest();
+            bugSortFunction();
+        }
+
         return false;
     });
 
@@ -1067,33 +1074,38 @@ $(document).ready(function(){
     
 	// when click "Edit" button in contest tracking page under Bug Race tab
     $('#bugRace .issueSelectionContent .button11').live("click", function() {
-        $('.issueSelectionContent .inputContainer').show();
-        $('.issueSelectionContent .content').hide();
-        $('.issueSelectionContent .inputContainer .row:lt(1)').hide();
-        $('.issueSelectionContent .inputContainer .btnUpdate').show();
-        $('.issueSelectionContent .inputContainer .btnCreate').hide();
-        if ($.browser.msie && ($.browser.version == "7.0")) {
-            $("label:contains('Summary')").css('padding-top','20px');                       
+        if($(this).hasClass("contestEdit")){
+            var tr = $(this).parents("tr");
+            location.href = $(tr).find(".contestNameLink a").attr("href").trim() + "&bugIdx=" + $(this).attr("index");
+        } else {
+            $('.issueSelectionContent .inputContainer').show();
+            $('.issueSelectionContent .content').hide();
+            $('.issueSelectionContent .inputContainer .row:lt(1)').hide();
+            $('.issueSelectionContent .inputContainer .btnUpdate').show();
+            $('.issueSelectionContent .inputContainer .btnCreate').hide();
+            if ($.browser.msie && ($.browser.version == "7.0")) {
+                $("label:contains('Summary')").css('padding-top','20px');
+            }
+            var rowItem = $(this).parents(".rowItem");
+            $("#issueName").val(rowItem.find(".contestName").val());
+            $("#issueId").val(rowItem.find("input.issueId").val());
+            $("#environment").val(rowItem.find(".environment").val());
+            $("#description").val(rowItem.find(".description").val());
+            $("#bugRace .issueSelectionContent .firstPayment").val(rowItem.find(".prize").val());
+            $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
+            $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
+            $("#bugType").val(rowItem.find("input.issueType").val());
+            $("#bugRace .viewAll").hide();
+
+            var names = [];
+            rowItem.find(".attachmentName").each(function() {
+                names.push($(this).val());
+            });
+            $("#attachmentNames").val(names.join("\\"));
+            restoreBugrFileInputs();
+            updateAttachmentsSection(rowItem);
+            return false;
         }
-        var rowItem = $(this).parents(".rowItem");
-        $("#issueName").val(rowItem.find(".contestName").val());
-        $("#issueId").val(rowItem.find("input.issueId").val());
-        $("#environment").val(rowItem.find(".environment").val());
-        $("#description").val(rowItem.find(".description").val());
-        $("#bugRace .issueSelectionContent .firstPayment").val(rowItem.find(".prize").val());
-        $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
-        $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
-		$("#bugType").val(rowItem.find("input.issueType").val());
-        $("#bugRace .viewAll").hide();
-        
-        var names = [];
-        rowItem.find(".attachmentName").each(function() {
-            names.push($(this).val());
-        });
-        $("#attachmentNames").val(names.join("\\"));
-        restoreBugrFileInputs();
-		updateAttachmentsSection(rowItem);
-        return false;
     });
     
     // fill the row using the bug race data
@@ -1155,7 +1167,7 @@ $(document).ready(function(){
             showErrors("Please input the required fields");
             return false;
         }
-        if ($("#rdoNo").is(":checked")) {
+        if ($("#rdoNo").is(":checked") || $("#bugForm #projectBug").val() == 'true') {
             var attIds = [];
             for (var i = 0; i < bugrAttachments.length; i++) attIds.push(bugrAttachments[i]['documentId']);
             $("#attachmentIds").val(attIds.join(","));
@@ -1183,7 +1195,14 @@ $(document).ready(function(){
                         function(result) {
                             var row = $("#rowItemTemplate>div").clone().addClass("rowItem");
                             fillBugRaceRow(row, result);
-                            row.appendTo("#bugRace .issueSelectionContent .content");
+                            if($("#bugForm #projectBug").val() == 'true') {
+                                row.prependTo("#bugRace .issueSelectionContent .directProjectBugs");
+                                $("#bugRace .issueSelectionContent tr").show();
+                                $("#bugRace .issueSelectionContent tr:last").addClass("lastTr");
+                                $("#bugRace .issueSelectionContent .directProjectBugs .rowItem:last").addClass("lastRowItem");
+                            } else {
+                                row.appendTo("#bugRace .issueSelectionContent .content");
+                            }
                             $('.issueSelectionContent .content').show();
                             $('.issueSelectionContent .inputContainer').hide();
                             var total1 = parseInt($($("#bugRace .total dl dd")[0]).text());
@@ -1210,7 +1229,7 @@ $(document).ready(function(){
                             if (result.attachmentError) {
                                 // error when add attachment
                             } else {
-                                if ($("#rdoNo").is(":checked")) {
+                                if ($("#rdoNo").is(":checked") || $("#bugForm #projectBug").val() == 'true') {
                                     for (var i = 0; i < bugrAttachments.length; i++)
                                         row.append('<input class="attachmentName" type="hidden" value="' + bugrAttachments[i]['fileName'] + '">');
                                 } else {
@@ -1231,7 +1250,7 @@ $(document).ready(function(){
     $('#bugRace .btnUpdate').live('click', function() {
         if (validateBugForm(this)) {
             // final fix
-            if (!$("#rdoNo").is(":checked")) {
+            if ($("#bugForm #projectBug").val() != 'true' && !$("#rdoNo").is(":checked")) {
                 var names = $("#attachmentNames").val().split("\\");
                 var fileName = "Final_Fix_" + $("#lastClosedFinalFixPhaseId").val();
                 for (var i = 0; i < names.length; i++) {
@@ -1273,10 +1292,10 @@ $(document).ready(function(){
                             if (result.attachmentError) {
                                 // error when add attachment
                             } else {
-                                if ($("#rdoNo").is(":checked")) {
+                                if ($("#rdoNo").is(":checked") || $("#bugForm #projectBug").val() == 'true') {
                                     for (var i = 0; i < bugrAttachments.length; i++)
                                         rowItem.append('<input class="attachmentName" type="hidden" value="' + bugrAttachments[i]['fileName'] + '">');
-                                } else {
+                                } else  {
                                     rowItem.append('<input class="attachmentName" type="hidden" value="Final_Fix_' + ($("#lastClosedFinalFixPhaseId").val()) + '">');
                                 }
                             }
@@ -1310,7 +1329,7 @@ $(document).ready(function(){
         if ($('#bugRace .issueSelectionContent div.rowItem:visible').length % 2 != 0) {
             $('#bugRace .container2Opt .corner').addClass('evencorner');
         }
-
+        $("#bugRace tbody tr").removeClass("lastTr");
         $("#bugRace tbody>tr:visible:last").addClass("lastTr");
     }
 
@@ -1338,6 +1357,7 @@ $(document).ready(function(){
             $('#bugRace .rowItem').each(function() {
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
                 $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+                $(this).find('.longDetails ul').show();
             });
             hideBugRacesEmptyContest();
             bugSortFunction();
@@ -1402,10 +1422,20 @@ $(document).ready(function(){
         $('#bugRace .rowItem').each(function() {
             $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
             $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+            $(this).find('.longDetails ul').show();
         });
         hideBugRacesEmptyContest();
         bugSortFunction();
+        
+        var bugIdx = 0;
+        if (isNumber(getUrlPara('bugIdx'))) {
+            bugIdx = parseInt(getUrlPara('bugIdx'));
+            $("#bugRace .content .rowItem .shortDetails .button11").eq(bugIdx).trigger('click');
+        }
     }
+
+
+
     
     if ($.browser.mozilla) {
         // firefox

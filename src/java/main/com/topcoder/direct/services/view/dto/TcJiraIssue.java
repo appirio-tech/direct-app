@@ -52,9 +52,16 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
  *     <li>Added filed {@link #attachments}. Also the getter were added.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.5 (TC Direct Issue Tracking Tab Update Assembly 3) change notes:
+ *   <ol>
+ *     <li>Added method {@link #getRemoteIssue}. </li>
+ *   </ol>
+ * </p>
  * 
- * @author Veve, GreatKevin, TCSASSEMBER
- * @version 1.4
+ * @author Veve, GreatKevin, xjtufreeman, TCSASSEMBER
+ * @version 1.5
  */
 public class TcJiraIssue implements Serializable {
 
@@ -731,5 +738,15 @@ public class TcJiraIssue implements Serializable {
 
     public void setClientId(long clientId) {
         this.clientId = clientId;
+    }
+
+    /**
+     * Gets the remote issue.
+     *
+     * @return the remote issue.
+     * @since 1.5
+     */
+    public RemoteIssue getRemoteIssue() {
+        return issue;
     }
 }

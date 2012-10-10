@@ -25,9 +25,16 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
  *     <li>Added method {@link #getIssueKey()} to get the corresponding issue key.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
+ *   <ol>
+ *     <li>Update {@link #executeAction()} to process the direct project bugs</li>
+ *   </ol>
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.1
+ * @author xjtufreeman, TCSASSEMBLER
+ * @version 1.2
  */
 public class UpdateJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
@@ -87,9 +94,9 @@ public class UpdateJIRAIssueAction extends JIRAAttachmentBaseAction {
             throw new DirectException("Can't retrieve the JIRA issue", e);
         }
         
-        // the project id of the JIRA issue must equal to the specified project id, otherwise
-        // the URL must be faked by the user
-        if (projectId != jiraIssue.getProjectID()) {
+        // the project id of the JIRA issue must equal to the specified project id and it's not a direct project bug,
+        // otherwise the URL must be faked by the user
+        if (!issue.isProjectBug() && projectId != jiraIssue.getProjectID()) {
             throw new DirectException("Have no permission to edit the JIRA issue");
         }
         

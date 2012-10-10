@@ -26,9 +26,17 @@ import java.util.List;
  *     Also the getters/setters were added.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 (TC Direct Issue Tracking Tab Update Assembly 3) change notes:
+ *   <ol>
+ *     <li>Added {@link #directProjectIDField}, {@link #directProjectJQLQuery} fields.
+ *     Also the getters/setters were added.</li>
+ *   </ol>
+ * </p>
  * 
- * @author Veve, TCSASSEMBER
- * @version 1.2
+ * @author Veve, xjtufreeman, TCSASSEMBER
+ * @version 1.3
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "IssueTrackingConfiguration")
@@ -97,6 +105,14 @@ public class IssueTrackingConfig {
     private String projectIDField;
 
     /**
+     * The custom field id for direct project id.
+     *
+     * @since 1.3
+     */
+    @XmlElement
+    private String directProjectIDField;
+
+    /**
      * The custom field id for Payment Status.
      * 
      * @since 1.2
@@ -155,6 +171,14 @@ public class IssueTrackingConfig {
      */
     @XmlElement
     private String softwareContestJQLQuery;
+
+    /**
+     * JQL query for direct project.
+     *
+     * @since 1.3
+     */
+    @XmlElement
+    private String directProjectJQLQuery;
 
 
     /**
@@ -371,6 +395,29 @@ public class IssueTrackingConfig {
 
 
     /**
+     * Gets the JQL query for direct project.
+     *
+     * @return the JQL query for direct project.
+     *
+     * @since 1.3
+     */
+    public String getDirectProjectJQLQuery() {
+        return directProjectJQLQuery;
+    }
+
+    /**
+     * Sets the JQL query for direct project.
+     *
+     * @param directProjectJQLQuery the JQL query for direct project.
+     *
+     * @since 1.3
+     */
+    public void setDirectProjectJQLQuery(String directProjectJQLQuery) {
+        this.directProjectJQLQuery = directProjectJQLQuery;
+    }
+
+
+    /**
      * Gets the max result number returned by the Jira RPC Service.
      *
      * @return the max result number returned by the Jira RPC Service.
@@ -426,6 +473,26 @@ public class IssueTrackingConfig {
      */
     public void setProjectIDField(String projectIDField) {
         this.projectIDField = projectIDField;
+    }
+
+    /**
+     * Gets the custom directProjectIDField.
+     *
+     * @return the custom direct Project ID Field.
+     * @since 1.3
+     */
+    public String getDirectProjectIDField() {
+        return directProjectIDField;
+    }
+
+    /**
+     * Sets the custom directProjectIDField.
+     *
+     * @param directProjectIDField the custom direct Project ID Field
+     * @since 1.3
+     */
+    public void setDirectProjectIDField(String directProjectIDField) {
+        this.directProjectIDField = directProjectIDField;
     }
 
     /**

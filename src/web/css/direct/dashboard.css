@@ -80,6 +80,9 @@
  *
  * - (TC Cockpit - Member Participation Metrics Report Upgrade)
  * - Update the CSS for the participation metrics report.
+ *
+ * - (Module Assembly - TC Direct Issue Tracking Tab Update Assembly 3)
+ * - Update the CSS for direct project bugs
  */
 
 
@@ -6169,6 +6172,11 @@ margin-left:220px;
     margin-right: 26px;
     margin-top: 6px;
 }
+
+.lanchProjectBugRaceBtn {
+    margin-top: 9px !important;
+}
+
 
 #ccaRequiredLabel {
     cursor: pointer;

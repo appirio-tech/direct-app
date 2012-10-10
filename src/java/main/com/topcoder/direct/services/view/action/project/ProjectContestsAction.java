@@ -49,8 +49,13 @@ import java.util.Set;
  *     - Add checking for showing contest download panel
  * </p>
  *
- * @author isv, GreatKevin, TCSASSEMBLER
- * @version 1.3
+ * <p>
+ *     Version 1.4 - Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3
+ *     - Added logic to display the direct project bugs.
+ * </p>
+ *
+ * @author isv, GreatKevin, xjtufreeman, TCSASSEMBLER
+ * @version 1.4
  */
 public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectContestsDTO> {
@@ -134,6 +139,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                     request.setContentHandle(queryName);
                     request.setProperty("uid", String.valueOf(currentUser.getUserId()));
 
+                    Map<String, IdNamePair> directProjectMapping = new HashMap<String, IdNamePair>();
                     Map<Long, IdNamePair> contestProjectMapping = new HashMap<Long, IdNamePair>();
                     final ResultSetContainer resultContainer = dataAccessor.getData(request).get(queryName);
                     final int recordNum = resultContainer.size();
@@ -145,7 +151,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                         IdNamePair project = new IdNamePair();
                         project.setId(projectId);
                         project.setName(projectName);
-
+                        directProjectMapping.put(projectName, project);
                         contestProjectMapping.put(contestId, project);
                     }
 
@@ -167,6 +173,9 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                         }
                     }
 
+                    // add the direct project bugs
+                    List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectMapping.keySet());
+                    filteredIssue.addAll(projectBugs);
 
                     getViewData().setProjectBugRaces(filteredIssue);
 
