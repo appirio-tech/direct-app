@@ -11,8 +11,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.services.project.entities.ProjectQuestion;
-import com.topcoder.direct.services.project.entities.ProjectQuestionOption;
+import com.topcoder.service.project.entities.ProjectQuestion;
+import com.topcoder.service.project.entities.ProjectQuestionOption;
 import com.topcoder.json.object.JSONArray;
 import com.topcoder.json.object.JSONObject;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
