@@ -13,6 +13,8 @@ import java.util.Map;
 import javax.xml.datatype.DatatypeFactory;
 
 import com.topcoder.direct.services.copilot.model.CopilotProject;
+import com.topcoder.service.project.entities.ProjectAnswer;
+import com.topcoder.service.project.entities.ProjectAnswerOption;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction;
 import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
@@ -29,56 +31,74 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 
 /**
- * This action creates a new direct project and assigns permissions for the new project.
- *
+ * This action creates a new direct project and assigns permissions for the new
+ * project.
+ * 
  * <p>
  * Version 1.1 Change notes:
  * <ul>
- * <li>Change the base class from <code>BaseDirectStrutsAction</code> to <code>SaveDraftContestAction</code>.</li>
- * <li>Added {@link #createCopilotDraftPosting(ProjectData)} to create a draft copilot contest for the new created Presentation Project.</li>
- * <li>Updated {@link #executeAction()} method to create a draft copilot contest if the new created project is Presentation Project.</li>
+ * <li>Change the base class from <code>BaseDirectStrutsAction</code> to
+ * <code>SaveDraftContestAction</code>.</li>
+ * <li>Added {@link #createCopilotDraftPosting(ProjectData)} to create a draft
+ * copilot contest for the new created Presentation Project.</li>
+ * <li>Updated {@link #executeAction()} method to create a draft copilot contest
+ * if the new created project is Presentation Project.</li>
  * </ul>
  * </p>
- *
+ * 
  * <p>
- *     Version 1.1 updates:
- *     - Add new logic to add copilots for the new project.
- *     - Add new logic to create draft copilot posting for the new project.
+ * Version 1.1 updates: - Add new logic to add copilots for the new project. -
+ * Add new logic to create draft copilot posting for the new project.
  * </p>
- *
+ * 
  * <p>
- *     Version 1.2 updates:
- *     -  change call of contest service facade #updateProjectPermissions to permission service facade #updateProjectPermissions
- * </p>
- * <p>
- * Version 1.3 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part Two) change notes:
- *   <ol>
- *       <li>Updated {@link #executeAction()} method to call newly added method for creating TC Direct project via
- *       Project Service Facade.</li>
- *   </ol>
+ * Version 1.2 updates: - change call of contest service facade
+ * #updateProjectPermissions to permission service facade
+ * #updateProjectPermissions
  * </p>
  * <p>
- * Version 1.3.1 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow) change notes:
- *   <ol>
- *       <li>Updated {@link #createCopilotDraftPosting()} method by setting correct project name and project
- *       detailed requirements fields.</li>
- *   </ol>
+ * Version 1.3 (Release Assembly - TC Cockpit Create Project Refactoring
+ * Assembly Part Two) change notes:
+ * <ol>
+ * <li>Updated {@link #executeAction()} method to call newly added method for
+ * creating TC Direct project via Project Service Facade.</li>
+ * </ol>
  * </p>
- * Version 1.3.2 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
- *   <ol>
- *       <li>Added <code>forums</code> field.</li>
- *       <li>Modified {@link #executeAction()} to setup customized forums for the new project.</li>
- *   </ol>
+ * <p>
+ * Version 1.3.1 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT
+ * Projects Flow) change notes:
+ * <ol>
+ * <li>Updated {@link #createCopilotDraftPosting()} method by setting correct
+ * project name and project detailed requirements fields.</li>
+ * </ol>
  * </p>
- *
- * @author Veve, isv, KennyAlive, TCSASSEMBLY
- * @version 1.3.2
+ * Version 1.3.2 (Release Assembly - TC Direct Project Forum Configuration
+ * Assembly) change notes:
+ * <ol>
+ * <li>Added <code>forums</code> field.</li>
+ * <li>Modified {@link #executeAction()} to setup customized forums for the new
+ * project.</li>
+ * </ol>
+ * </p>
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Start New Project Data
+ * Persistence) change notes:
+ * <ol>
+ * <li>Added <code>projectData</code> field.</li>
+ * <li>Modified {@link #executeAction()} to setup project answers for the new
+ * project.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author Veve, isv, KennyAlive, Ghost_141
+ * @version 1.4
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * The lag between of the start date of the draft copilot contest.
-	 * @since 1.1
+     * 
+     * @since 1.1
      */
     private static final long COPILOT_CONTEST_START_DATE_LAG = 48 * 60 * 60 * 1000;
 
@@ -93,7 +113,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     private int pptJIRAIssueTypeId;
 
     /**
-     * The JIRA issue reporter  when creating issue for PPT project.
+     * The JIRA issue reporter when creating issue for PPT project.
      */
     private String pptJIRAIssueReporter;
 
@@ -124,27 +144,35 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * A flag indicates whether the project is presentation project.
-	 * @since 1.1
+     * 
+     * @since 1.1
      */
     private boolean presentationProject = false;
 
     /**
      * The copilot profile ids to represents the copilots of the new project.
-     *
+     * 
      * @since 1.1
      */
     private long[] copilotIds;
 
     /**
      * Boolean to represent whether need to create a draft copilot posting.
-     *
+     * 
      * @since 1.1
      */
     private boolean createCopilotPosting;
 
     /**
+     * <p>
+     * Represent the project data.
+     * </p>
+     */
+    private ProjectData projectData;
+
+    /**
      * Gets whether to create draft copilot posting.
-     *
+     * 
      * @return whether to create draft copilot posting.
      * @since 1.1
      */
@@ -154,8 +182,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets whether to create draft copilot posting.
-     *
-     * @param createCopilotPosting whether to create draft copilot posting.
+     * 
+     * @param createCopilotPosting
+     *            whether to create draft copilot posting.
      * @since 1.1
      */
     public void setCreateCopilotPosting(boolean createCopilotPosting) {
@@ -164,7 +193,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Gets the copilot profile ids.
-     *
+     * 
      * @return the copilot profile ids.
      * @since 1.1
      */
@@ -174,8 +203,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the copilot profile ids.
-     *
-     * @param copilotIds the copilot profile ids.
+     * 
+     * @param copilotIds
+     *            the copilot profile ids.
      * @since 1.1
      */
     public void setCopilotIds(long[] copilotIds) {
@@ -184,7 +214,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Gets the project name
-     *
+     * 
      * @return the project name.
      */
     public String getProjectName() {
@@ -193,8 +223,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the project name.
-     *
-     * @param projectName the project name.
+     * 
+     * @param projectName
+     *            the project name.
      */
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -202,7 +233,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Gets the project description.
-     *
+     * 
      * @return the project description.
      */
     public String getProjectDescription() {
@@ -211,8 +242,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the project description
-     *
-     * @param projectDescription the project description.
+     * 
+     * @param projectDescription
+     *            the project description.
      */
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
@@ -220,7 +252,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Gets the project permissions.
-     *
+     * 
      * @return the project permissions.
      */
     public List<ProjectPermission> getPermissions() {
@@ -229,8 +261,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the project permissions.
-     *
-     * @param permissions the project permissions.
+     * 
+     * @param permissions
+     *            the project permissions.
      */
     public void setPermissions(List<ProjectPermission> permissions) {
         this.permissions = permissions;
@@ -240,6 +273,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * <p>
      * Gets the project forum configuration.
      * </p>
+     * 
      * @return the project forum configuration.
      */
     public List<ProjectForumTemplateDTO> getForums() {
@@ -250,7 +284,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * <p>
      * Sets the project forum configuration.
      * </p>
-     * @param forums the project forum configuration to set.
+     * 
+     * @param forums
+     *            the project forum configuration to set.
      */
     public void setForums(List<ProjectForumTemplateDTO> forums) {
         this.forums = forums;
@@ -258,9 +294,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Gets the flag indicates whether the project is presentation project.
-     *
+     * 
      * @return true if the project is presentation project, false otherwise.
-	 * @since 1.1
+     * @since 1.1
      */
     public boolean isPresentationProject() {
         return presentationProject;
@@ -268,9 +304,10 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the flag indicates whether the project is presentation project.
-     *
-     * @param presentationProject true if the project is presentation project, false otherwise.
-	 * @since 1.1
+     * 
+     * @param presentationProject
+     *            true if the project is presentation project, false otherwise.
+     * @since 1.1
      */
     public void setPresentationProject(boolean presentationProject) {
         this.presentationProject = presentationProject;
@@ -278,8 +315,9 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the JIRA project to create issue for PPT project.
-     *
-     * @param pptJIRAProject the JIRA project to create issue for PPT project.
+     * 
+     * @param pptJIRAProject
+     *            the JIRA project to create issue for PPT project.
      */
     public void setPptJIRAProject(String pptJIRAProject) {
         this.pptJIRAProject = pptJIRAProject;
@@ -287,17 +325,19 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the id of JIRA issue type when creating issue for PPT project.
-     *
-     * @param pptJIRAIssueTypeId the id of JIRA issue type when creating issue for PPT project.
+     * 
+     * @param pptJIRAIssueTypeId
+     *            the id of JIRA issue type when creating issue for PPT project.
      */
     public void setPptJIRAIssueTypeId(int pptJIRAIssueTypeId) {
         this.pptJIRAIssueTypeId = pptJIRAIssueTypeId;
     }
 
     /**
-     * Sets the JIRA issue reporter  when creating issue for PPT project.
-     *
-     * @param pptJIRAIssueReporter the JIRA issue reporter  when creating issue for PPT project.
+     * Sets the JIRA issue reporter when creating issue for PPT project.
+     * 
+     * @param pptJIRAIssueReporter
+     *            the JIRA issue reporter when creating issue for PPT project.
      */
     public void setPptJIRAIssueReporter(String pptJIRAIssueReporter) {
         this.pptJIRAIssueReporter = pptJIRAIssueReporter;
@@ -305,17 +345,43 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Sets the URL prefix of copilot contest page.
-     *
-     * @param copilotURLPrefix the URL prefix of copilot contest page.
+     * 
+     * @param copilotURLPrefix
+     *            the URL prefix of copilot contest page.
      */
     public void setCopilotURLPrefix(String copilotURLPrefix) {
         this.copilotURLPrefix = copilotURLPrefix;
     }
 
     /**
-     * The main logic to create the new project and assign permissions to the new project.
-     *
-     * @throws Exception if there is any error.
+     * <p>
+     * Get the projectData.
+     * </p>
+     * 
+     * @return projectData the projectData.
+     */
+    public ProjectData getProjectData() {
+        return projectData;
+    }
+
+    /**
+     * <p>
+     * Set the projectData.
+     * </p>
+     * 
+     * @param projectData
+     *            the projectData to set.
+     */
+    public void setProjectData(ProjectData projectData) {
+        this.projectData = projectData;
+    }
+
+    /**
+     * The main logic to create the new project and assign permissions to the
+     * new project.
+     * 
+     * @throws Exception
+     *             if there is any error.
      */
     @Override
     protected void executeAction() throws Exception {
@@ -334,6 +400,23 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         ProjectData projectData = new ProjectData();
         projectData.setName(getProjectName());
         projectData.setDescription(getProjectDescription());
+        // prepare the project answer.
+        for (ProjectAnswer answer : getProjectData().getProjectAnswers()) {
+            if (answer.getOptionAnswers() != null) {
+                for (ProjectAnswerOption answerOption : answer.getOptionAnswers()) {
+                    answerOption.setProjectAnswer(answer);
+                }
+            }
+            // replace XWorkList by ArrayList.
+            if (answer.getMultipleAnswers() != null) {
+                List<String> s = new ArrayList<String>();
+                for (String mAnswer : answer.getMultipleAnswers()) {
+                    s.add(mAnswer);
+                }
+                answer.setMultipleAnswers(s);
+            }
+        }
+        projectData.setProjectAnswers(getProjectData().getProjectAnswers());
 
         if (forums != null) {
             Map<String, String> forumsMap = new HashMap<String, String>();
@@ -341,7 +424,8 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
                 forumsMap.put(forum.getForumName(), forum.getForumDescription());
             }
             // delegate to ProjectServiceFacade to create the project.
-            projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions(), forumsMap);
+            projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions(),
+                    forumsMap);
         } else {
             // delegate to ProjectServiceFacade to create the project.
             projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions());
@@ -368,11 +452,8 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
                     copilotProjects.add(copilotProject);
                 }
 
-
                 // update copilots projects
-                getContestServiceFacade()
-                        .updateCopilotProjects(currentUser, copilotProjects,
-                                removeFlags);
+                getContestServiceFacade().updateCopilotProjects(currentUser, copilotProjects, removeFlags);
 
             }
 
@@ -382,7 +463,8 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
                 // create JIRA issue
                 Map<String, Object> conetstResult = (Map<String, Object>) getResult();
                 String description = "Copilot Opportunities: " + copilotURLPrefix + conetstResult.get("projectId");
-                JiraRpcServiceWrapper.createIssue(pptJIRAProject, pptJIRAIssueTypeId, projectName, description, pptJIRAIssueReporter);
+                JiraRpcServiceWrapper.createIssue(pptJIRAProject, pptJIRAIssueTypeId, projectName, description,
+                        pptJIRAIssueReporter);
             }
         } else {
             createCopilotDraftPosting(projectData);
@@ -391,12 +473,14 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         setResult(result);
     }
 
-	/**
-	 * Create a draft copilot contest for the new created Presentation Project.
-	 *
-	 * @param projectData the new created Presentation Project.
-	 * @throws Exception if any error occurs.
-	 */
+    /**
+     * Create a draft copilot contest for the new created Presentation Project.
+     * 
+     * @param projectData
+     *            the new created Presentation Project.
+     * @throws Exception
+     *             if any error occurs.
+     */
     private void createPPTCopilotDraftPosting(ProjectData projectData) throws Exception {
         setTcDirectProjectId(projectData.getProjectId());
         Date startDate = new Date();
@@ -411,10 +495,12 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
     /**
      * Creates draft copilot posting for the newly created project.
-     *
-     * @param directProject the direct project.
+     * 
+     * @param directProject
+     *            the direct project.
      * @return the created competition
-     * @throws Exception if error happens when creating the contest.
+     * @throws Exception
+     *             if error happens when creating the contest.
      * @since 1.1
      */
     private SoftwareCompetition createCopilotDraftPosting(ProjectData directProject) throws Exception {
@@ -463,7 +549,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         firstPlace.setPlace(1);
         firstPlace.setPrizeAmount(150);
 
-		Prize secondPlace = new Prize();
+        Prize secondPlace = new Prize();
         secondPlace.setNumberOfSubmissions(1);
         secondPlace.setPlace(2);
         secondPlace.setPrizeAmount(75);
@@ -474,7 +560,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
         firstPlace.setPrizeType(prizeType);
         prizes.add(firstPlace);
-		secondPlace.setPrizeType(prizeType);
+        secondPlace.setPrizeType(prizeType);
         prizes.add(secondPlace);
 
         projectHeader.setPrizes(prizes);
