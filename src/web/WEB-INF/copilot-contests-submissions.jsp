@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.2
+  - Author: GreatKevin, tangzx
+  - Version: 1.3
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
@@ -8,6 +8,9 @@
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Add new button "I don't want to choose copilot"
+  -
+  - Version 1.3 BUGR-7279
+  - fix button align issue
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -31,8 +34,12 @@
     <script type="text/javascript">
         $(document).ready(function(){
            if($(".noCopilotButton").length > 0) {
-               $("#noCopilotButtonArea").append($(".noCopilotButton").get(0));
-               $("#noCopilotButtonArea").find(".noCopilotButton").removeClass("hide");
+           
+               if (!$($(".noCopilotButton").get(0)).hasClass("chooseSecondPlaceButton")) {
+                   $("#noCopilotButtonArea").append($(".noCopilotButton").get(0));
+                   $("#noCopilotButtonArea").find(".noCopilotButton").removeClass("hide");
+               }
+               
            }
         });
     </script>
@@ -155,13 +162,13 @@
                                                                                 The Chosen Copilot
                                                                             </c:when>
                                                                             <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                   class="noCopilotButton"><span
-                                                                                    class="profileLeft">Choose as 2nd place</span></a>
+                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');" class="noCopilotButton chooseSecondPlaceButton">
+                                                                                    <span class="profileLeft">Choose as 2nd place</span>
+                                                                                </a>
 
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 3, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                                                                                                   class="chooseCopilotButton notChooseButton"><span
-                                                                                                                                                                    class="profileLeft">I don't want to select 2nd</span></a>
+                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 3, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');" class="chooseCopilotButton notChooseButton">
+                                                                                    <span class="profileLeft">I don't want to select 2nd</span>
+                                                                                </a>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq secondPlaceWinner.id}">
                                                                                 The Runner-Up Copilot

@@ -2809,7 +2809,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 .chooseCopilotButton{
 	margin:0 auto;
 	display:block;
-	width:141px;
+	width:180px;
 	height:21px;
 	padding-left:3px;
 	background:url(../../images/button-sm-red-left.png) left top no-repeat;
@@ -2822,7 +2822,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	.chooseCopilotButton span.profileLeft{
 		display:block;
 		height:21px;
-		width:141px;
+		width:180px;
 		background:url(../../images/button-sm-red-right.png) right top no-repeat;
 		overflow:hidden;
 	}

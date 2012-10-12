@@ -83,6 +83,9 @@
  *  Version 2.6 - Module Assembly - TC Cockpit Operations Dashboard For PMs
  *  - Add support for operations dashboard.
  * 
+ *  Version 2.7 - BUGR-7279
+ *  - Fix button not work issue.
+ * 
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka
  * @version 2.6
  */
@@ -809,17 +812,6 @@ $(document).ready(function(){
         $('#SelectCopilotForm').submit();
         return false;
     });
-
-    $('.selectRunnerUpCopilot').live ('click', function() {
-        var data = $(this).data('rel');
-        $('#scpPlacement').val($(this).data('place'));
-        $('#scpSubmissionId').val($(this).data('sid'));
-        $('#scpProfileId').val($(this).data('pid'));
-        $('#scpTcdProjectId').val($(this).data('prid'));
-        $('#SelectCopilotForm').submit();
-        return false;
-    });
-
 
     /*
      * ************************************************
@@ -2437,6 +2429,18 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $("#removeProjectDialog .header .title").text("Do not select any copilot");
         $("#removeProjectDialog .body").html("Are you sure you don't want to any copilot?");
     }
+    
+    // move click bind logic here
+    // from BUGR-7279
+    $('.selectRunnerUpCopilot').unbind('click').bind('click', function() {
+        var data = $(this).data('rel');
+        $('#scpPlacement').val($(this).data('place'));
+        $('#scpSubmissionId').val($(this).data('sid'));
+        $('#scpProfileId').val($(this).data('pid'));
+        $('#scpTcdProjectId').val($(this).data('prid'));
+        $('#SelectCopilotForm').submit();
+        return false;
+    });
     
     $('#removeProjectDialog').dialog("open");
     return false;
