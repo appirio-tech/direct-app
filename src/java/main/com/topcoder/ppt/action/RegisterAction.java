@@ -90,6 +90,11 @@ public class RegisterAction extends BaseAjaxAction {
      * Represents the name of the /mobile registration source.
      */
     private static final String MOBILE_REGISTER_SOURCE_NAME = "mobile";
+	
+	/**
+     * Represents the default registration source.
+     */
+    private static final String HOME_REGISTER_SOURCE_NAME = "home";
 
     /**
      * A <code>RegisterForm</code> providing the register data submitted by user.
@@ -196,7 +201,9 @@ public class RegisterAction extends BaseAjaxAction {
             user.setRegSource(PPT_REGISTER_SOURCE_NAME);
         } else if (formData.getModuleFrom().equals("mobile")) {
             user.setRegSource(MOBILE_REGISTER_SOURCE_NAME);
-        }
+        } else {
+			user.setRegSource(HOME_REGISTER_SOURCE_NAME);
+		}
         long userId = userService.registerUser(user);
 
         //generate and save activation code
