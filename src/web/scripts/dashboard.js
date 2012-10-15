@@ -803,16 +803,6 @@ $(document).ready(function(){
     $(".memberProfile[rel='_blank']").attr("target","_blank");
     $(".copilotProfile[rel='_blank']").attr("target","_blank");
 
-    $('.selectWinnerCopilot').live('click', function() {
-        var data = $(this).data('rel');
-        $('#scpPlacement').val('1');
-        $('#scpSubmissionId').val($(this).data('sid'));
-        $('#scpProfileId').val($(this).data('pid'));
-        $('#scpTcdProjectId').val($(this).data('prid'));
-        $('#SelectCopilotForm').submit();
-        return false;
-    });
-
     /*
      * ************************************************
      * scripts for bug tracking - contest integration
@@ -2413,6 +2403,10 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('.selectRunnerUpCopilot').data('prid', prid);
     }
     if (place == 1) {
+        $('.selectWinnerCopilot').data('place', 1);
+        $("#removeProjectDialog .header .title").text("Choose Copilot Confirmation");
+        $("#removeProjectDialog .body").html("Choose <strong id='firstPlaceCopilot'></strong> as copilot of project <strong id='projectNameLabel'></strong> ?");
+        
         $('#firstPlaceCopilot').html(handle);
         $('#projectNameLabel').html(projectName);
     } else if (place == 2) {
@@ -2441,7 +2435,17 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('#SelectCopilotForm').submit();
         return false;
     });
-    
+        
+    $('.selectWinnerCopilot').unbind('click').bind('click', function() {
+        var data = $(this).data('rel');
+        $('#scpPlacement').val('1');
+        $('#scpSubmissionId').val($(this).data('sid'));
+        $('#scpProfileId').val($(this).data('pid'));
+        $('#scpTcdProjectId').val($(this).data('prid'));
+        $('#SelectCopilotForm').submit();
+        return false;
+    });
+
     $('#removeProjectDialog').dialog("open");
     return false;
 }
