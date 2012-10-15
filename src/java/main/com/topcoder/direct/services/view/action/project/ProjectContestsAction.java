@@ -11,6 +11,7 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -126,9 +127,17 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
         if (SUCCESS.equals(result)) {
             List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
             TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            List<ProjectBriefDTO> userProjects = getViewData().getUserProjects().getProjects();
+            Set<String> directProjectNames = new HashSet<String>();
+            for(ProjectBriefDTO p : userProjects) {
+                directProjectNames.add(p.getName());
+            }
+            // add the direct project bugs
+            List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames);
             if (contests.isEmpty()) {
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
-
+                getViewData().setProjectBugRaces(projectBugs);
             } else {
                 if (this instanceof ActiveContestsAction)
                 {
@@ -139,7 +148,6 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                     request.setContentHandle(queryName);
                     request.setProperty("uid", String.valueOf(currentUser.getUserId()));
 
-                    Map<String, IdNamePair> directProjectMapping = new HashMap<String, IdNamePair>();
                     Map<Long, IdNamePair> contestProjectMapping = new HashMap<Long, IdNamePair>();
                     final ResultSetContainer resultContainer = dataAccessor.getData(request).get(queryName);
                     final int recordNum = resultContainer.size();
@@ -151,7 +159,6 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                         IdNamePair project = new IdNamePair();
                         project.setId(projectId);
                         project.setName(projectName);
-                        directProjectMapping.put(projectName, project);
                         contestProjectMapping.put(contestId, project);
                     }
 
@@ -169,14 +176,9 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                                 issue.setClientId(DirectUtils.getClientIdForProject(currentUser, project.getId()));
                             }
                             filteredIssue.add(issue);
-
                         }
                     }
-
-                    // add the direct project bugs
-                    List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectMapping.keySet());
                     filteredIssue.addAll(projectBugs);
-
                     getViewData().setProjectBugRaces(filteredIssue);
 
                 }
@@ -191,7 +193,6 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                     }
 
                     final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds, null);
-
                     getViewData().setProjectBugRaces(bugRaceForDirectProject);
                 }
 
