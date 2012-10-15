@@ -134,7 +134,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                 directProjectNames.add(p.getName());
             }
             // add the direct project bugs
-            List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames);
+            List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames); System.out.println("-------projectBugs-------"+projectBugs.size());
             if (contests.isEmpty()) {
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
                 getViewData().setProjectBugRaces(projectBugs);
@@ -162,7 +162,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                         contestProjectMapping.put(contestId, project);
                     }
 
-                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), "status = Open OR status = \"In Progress\"");
+                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), "status = Open OR status = \"In Progress\"");System.out.println("-------bugRaceForDirectProject-------"+bugRaceForDirectProject.size());
 
                     List<TcJiraIssue> filteredIssue = new ArrayList<TcJiraIssue>();
 
@@ -178,7 +178,26 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                             filteredIssue.add(issue);
                         }
                     }
-                    filteredIssue.addAll(projectBugs);
+					
+					for(TcJiraIssue issue : projectBugs) {
+
+                        if(contestProjectMapping.containsKey(issue.getProjectID())) {
+                            IdNamePair project = contestProjectMapping.get(issue.getProjectID());
+                            issue.setDirectProjectId(project.getId());
+                            issue.setDirectProjectName(project.getName());
+                            if(DirectUtils.getClientIdForProject(currentUser, project.getId()) != null) {
+                                issue.setClientId(DirectUtils.getClientIdForProject(currentUser, project.getId()));
+                            }
+                            filteredIssue.add(issue);
+                        }
+                    }
+                    //filteredIssue.addAll(projectBugs);System.out.println("-------filteredIssue-------"+filteredIssue.size());
+					
+					for(TcJiraIssue issue : filteredIssue) {
+					
+						System.out.println("-------ssue.getIssueKey()-------"+issue.getIssueKey());
+						System.out.println("-------ssue.getDirectProjectName()-------"+issue.getDirectProjectName());
+					}
                     getViewData().setProjectBugRaces(filteredIssue);
 
                 }
