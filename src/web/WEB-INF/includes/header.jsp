@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka
-  - Version: 1.6.7
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, TCSASSEMBLER
+  - Version: 1.6.4
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -24,7 +24,6 @@
   - Version 1.6.4 (Module Assembly - TC Cockpit Project Milestones Management Front End) : add the milestone tab for project
   - Version 1.6.5 (Module Assembly - TC Cockpit Project Contests Batch Edit ): add the dropdown menu for the contests tab in the project section
   - Version 1.6.6 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part): add the new enterprise dashboard
-  - Version 1.6.7 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes note: add the new Operations DashBoard.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -60,12 +59,7 @@
                     <a href="javascript:;" class="logo overviewLogo">Dashboard</a>
                 </c:when>
                 <c:when test="${requestScope.CURRENT_TAB eq 'enterprise'}">
-                    <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
-                        <a class="logo" href="javascript:;" style="left: 25px; top: 60px"> <img src="/images/all_projects_ico.png" alt="Operations DashBoard" class="projectTitle"/><span id="projectTitleSpan">Operations DashBoard</span></a>
-                    </s:if>
-                    <s:else>
-                        <a class="logo" href="javascript:;"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
-                    </s:else>
+                    <a class="logo" href="javascript:;"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
                 </c:when>
                 <c:otherwise>
                     <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
@@ -110,14 +104,12 @@
         <ui:isDashboardPage>
             <ul>
                 <li class="on">
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
-                
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+
                     <div class="subNav">
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <c:if test="${tcdirect:isTCStaff()}">
-                            <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
-                        </c:if>
+                        <a href="javascript:;">Operation Dashboard</a>
                     </div>
                 </li>
                 <li>
@@ -162,14 +154,11 @@
         <ui:isProjectPage>
             <ul>
                 <li>
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
-                
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                     <div class="subNav">
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <c:if test="${tcdirect:isTCStaff()}">
-                            <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
-                        </c:if>
+                        <a href="javascript:;">Operation Dashboard</a>
                     </div>
                 </li>
 
@@ -214,14 +203,11 @@
         <ui:isCopilotPage>
             <ul>
                 <li>
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
-
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                     <div class="subNav">
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <c:if test="${tcdirect:isTCStaff()}">
-                            <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
-                        </c:if>
+                        <a href="javascript:;">Operation Dashboard</a>
                     </div>
                 </li>
 
@@ -269,14 +255,11 @@
         <ui:isInternalPage>
             <ul>
                 <li>
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
-
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                     <div class="subNav">
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <c:if test="${tcdirect:isTCStaff()}">
-                            <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
-                        </c:if>
+                        <a href="javascript:;">Operation Dashboard</a>
                     </div>
                 </li>
 
@@ -320,14 +303,11 @@
         <c:if test="${requestScope.PAGE_TYPE eq 'launch'}">
             <ul>
                 <li class="on">
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
-
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                     <div class="subNav">
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <c:if test="${tcdirect:isTCStaff()}">
-                            <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
-                        </c:if>
+                        <a href="javascript:;">Operation Dashboard</a>
                     </div>
                 </li>
 
