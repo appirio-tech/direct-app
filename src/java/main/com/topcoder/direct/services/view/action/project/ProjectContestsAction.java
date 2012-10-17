@@ -191,13 +191,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                             filteredIssue.add(issue);
                         }
                     }
-                    //filteredIssue.addAll(projectBugs);System.out.println("-------filteredIssue-------"+filteredIssue.size());
-					
-					for(TcJiraIssue issue : filteredIssue) {
-					
-						System.out.println("-------ssue.getIssueKey()-------"+issue.getIssueKey());
-						System.out.println("-------ssue.getDirectProjectName()-------"+issue.getDirectProjectName());
-					}
+                  
                     getViewData().setProjectBugRaces(filteredIssue);
 
                 }
