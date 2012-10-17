@@ -423,6 +423,9 @@ public class RegisterAction extends BaseAjaxAction {
         } else if(formData.getModuleFrom().equals("mobile")){
             url += MOBILE_ACTICATE_ACTION_NAME + "?" + 
                     WebConstants.ACTIVATION_CODE + "=" + activationCode;
+        } else if(formData.getModuleFrom().equals("home")){
+            url += PPT_ACTIVATE_ACTION_NAME + "?" + 
+                    WebConstants.ACTIVATION_CODE + "=" + activationCode;
         }
         String msg = readFileAsString(activationEmailBodyTemplateFile);
         msg = msg.replace("%ACTIVATION_CODE%", activationCode).replace("%ACTIVATION_URL%", url);
