@@ -192,7 +192,7 @@ public class JSPHelper {
      */
     public static String getSubmissionPreviewImageURL(long submissionId, String previewType, int artifactNum,
                                                       HttpServletRequest request) {
-        String protocol = request.isSecure() ? "https" : "http";
+        String protocol = "https"; //request.isSecure() ? "https" : "http";
         if (artifactNum <= 0) {
             return protocol + "://studio.topcoder.com/?module=DownloadSubmission&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType;

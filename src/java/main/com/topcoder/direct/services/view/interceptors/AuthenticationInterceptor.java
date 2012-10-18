@@ -276,11 +276,8 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
                 if ("GET".equalsIgnoreCase(request.getMethod())) {
                     StringBuffer redirectBackUrl = new StringBuffer();
 
-                    redirectBackUrl.append(request.getScheme());
-                    redirectBackUrl.append("://");
+                    redirectBackUrl.append("https://");
                     redirectBackUrl.append(request.getServerName());
-                    redirectBackUrl.append(':');
-                    redirectBackUrl.append(request.getServerPort());
                     redirectBackUrl.append(request.getRequestURI());
                     if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
                         redirectBackUrl.append('?');
@@ -304,7 +301,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         String queryString = (query == null) ? ("") : ("?" + query);
 
         StringBuffer buf = new StringBuffer(200);
-        buf.append(request.getScheme()+"://");        
+        buf.append("https://");        
         buf.append(request.getServerName());
         buf.append(servletPath);
         buf.append(queryString);

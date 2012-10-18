@@ -94,7 +94,7 @@ public class AuthenticationInterceptor implements Interceptor {
         String queryString = (query == null) ? ("") : ("?" + query);
 
         StringBuffer buf = new StringBuffer(200);
-        buf.append(request.getScheme()+"://");        
+        buf.append("https://");        
         buf.append(request.getServerName());
         buf.append(servletPath);
         buf.append(queryString);

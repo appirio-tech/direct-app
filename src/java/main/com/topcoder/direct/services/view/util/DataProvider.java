@@ -3516,7 +3516,7 @@ public class DataProvider {
         if (!isStudio) {
             latestForumPost.setUrl("https://apps.topcoder.com/forums/?module=Thread&threadID=" + latestThreadId);
         } else {
-            latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
+            latestForumPost.setUrl("https://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
         }
 
         if (latestTime != null)
@@ -5482,9 +5482,9 @@ public class DataProvider {
      * @since 3.2
      */
     public static Map<Long, CopilotPoolMember> getCopilotStatistics() throws Exception {
-        final String commandName = "copilot_pool_members";
-        final String queryName = "copilot_pool_statistics_projects_contests";
-        DataAccess dataAccess = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        final String commandName = "copilot_pool_statistics";
+        final String queryName = "copilot_pool_statistics";
+        DataAccess dataAccess = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(commandName);
 
