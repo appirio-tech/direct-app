@@ -17,7 +17,7 @@
 
 
 
-    <package name="default" extends="struts-default" namespace="/">
+    <package name="default" extends="ssl-default" namespace="/">
         <result-types>
             <result-type name="json" class="com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult">
             </result-type>
@@ -35,44 +35,61 @@
             <interceptor name="loggingInterceptor"
                          class="loggingInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
+			<interceptor-stack name="secureStack">
+			
+			<interceptor-stack name="secureStack">
+				<interceptor-ref name="secure">
+					<param name="useAnnotations">false</param>
+				 </interceptor-ref>
+				 <interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
+
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedProjectPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedProjectStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedContestPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedContestStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedInternalStatsStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="internalStatsGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedDefaultStack">
                 <interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
             </interceptor-stack>
             <!-- base stack -->
