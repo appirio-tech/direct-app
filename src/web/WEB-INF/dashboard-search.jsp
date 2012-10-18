@@ -24,7 +24,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <s:if test="viewData.isAllProjectsPage == false">
-        <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+        <s:if test="viewData.resultType != null && viewData.resultType.name() == 'PM_PROJECTS'">
             <ui:dashboardPageType tab="enterprise"/>
         </s:if>
         <s:else>
@@ -55,7 +55,7 @@
 
                     <div class="area1Content">
                     <div class="areaHeader">
-                    <s:if test="viewData.isAllProjectsPage == false && viewData.resultType.name() != 'PM_PROJECTS'">
+                    <s:if test="viewData.isAllProjectsPage == false && (viewData.resultType == null || viewData.resultType.name() != 'PM_PROJECTS')">
                         <h2 class="title">
                         <s:if test="viewData.isAllProjectsPage == false">Search</s:if>
                         <s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
@@ -63,7 +63,7 @@
                     </s:if>
                     </div><!-- End .areaHeader -->
 
-                    <s:if test="viewData.isAllProjectsPage == false && viewData.resultType.name() != 'PM_PROJECTS'">
+                    <s:if test="viewData.isAllProjectsPage == false && (viewData.resultType == null || viewData.resultType.name() != 'PM_PROJECTS')">
                     <div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
