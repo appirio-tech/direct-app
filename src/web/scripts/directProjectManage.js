@@ -103,3 +103,7 @@ function updateDirectProjectStatus(directProjectId, statusId) {
         }
     });
 }
+
+$(document).ready(function(){
+    $("#projectStatusFilter").val("Active").trigger('change');
+})
