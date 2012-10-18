@@ -35,13 +35,6 @@
             <interceptor name="loggingInterceptor"
                          class="loggingInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
-			
-			<interceptor-stack name="secureStack">
-				<interceptor-ref name="secure">
-					<param name="useAnnotations">false</param>
-				 </interceptor-ref>
-				 <interceptor-ref name="defaultStack"/>
-			</interceptor-stack>
 
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
