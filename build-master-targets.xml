@@ -315,7 +315,7 @@
 
   <target name="branch-all" description="Branches all subprojects.">
 
-    <condition property="version" value="TRUNK">
+    <condition property="version" value="branches/cockpit_trunk">
       <not>
         <isset property="version" />
       </not>
