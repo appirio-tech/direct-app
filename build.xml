@@ -261,6 +261,7 @@
         <copy file="${struts2-core-2.1.8.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${struts2-spring-plugin-2.1.8.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${struts2-json-plugin-2.1.8.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+		<copy file="${struts2-ssl-plugin-1.2.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-1.2.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-core-2.1.6.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss-cache-jdk50.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
