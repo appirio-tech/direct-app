@@ -105,7 +105,13 @@
                         </c:if>
                     </td>
                     
-                    <td>${projectSummary.messageNumber == 0 ? '' : projectSummary.messageNumber}</td>
+                    <td>
+					 <c:if test="${projectSummary.projectForumCategoryId > 0}">
+						<a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}" target="_blank">
+						${projectSummary.messageNumber}
+						</a>
+                     </c:if>
+					</td>
                     <td>
                     	<c:if test="${projectSummary.daysSinceLastPost > 0}">
   							${projectSummary.daysSinceLastPost} days
