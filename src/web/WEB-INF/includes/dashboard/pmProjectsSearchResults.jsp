@@ -105,14 +105,16 @@
                         </c:if>
                     </td>
                     
-                    <td>${projectSummary.messageNumber}</td>
+                    <td>${projectSummary.messageNumber == 0 ? '' : projectSummary.messageNumber}</td>
                     <td>
                     	<c:if test="${projectSummary.daysSinceLastPost > 0}">
   							${projectSummary.daysSinceLastPost} days
                         </c:if>
                     </td>
                     <td>
-                    	<link:user userId="${projectSummary.lastPostHandleId}" handle="${projectSummary.lastPostHandle}"/>
+						<c:if test="${projectSummary.lastPostHandleId != null}">
+							<link:user userId="${projectSummary.lastPostHandleId}" handle="${projectSummary.lastPostHandle}"/>
+						 </c:if>
                     </td>
                     <td class="last">${projectSummary.hasStalledContests ? "Yes" : "No"}</td>
 
