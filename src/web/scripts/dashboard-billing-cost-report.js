@@ -439,7 +439,7 @@ $(document).ready(function() {
             var invoiceId = result.invoiceId;
             updateExistsRows(invoiceId, invoiceNumber, invoiceDate);
             
-            var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+            var chs = $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes()));
             var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
             
             var fd = formatDate(invoiceDate);
@@ -529,15 +529,15 @@ $(document).ready(function() {
     });
     
     // the click handler for the checkbox in the process column
-    $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").click(function() {
-        var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+    $("input[name='invoiceRecordProcessed']", $($.billingCostReportDataTable.fnGetNodes())).click(function() {
+        var chs = $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes()));
         if (chs.length == 0) {
             $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
         } else {
             $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
         }
         
-        if (chs.length == $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").length) {
+        if (chs.length == $("input[name='invoiceRecordProcessed']:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes())).length) {
             $("#checkAllInvoice").attr("checked", "checked");
         } else {
             $("#checkAllInvoice").removeAttr("checked");
@@ -551,7 +551,7 @@ $(document).ready(function() {
         invoiceTypeNames = [];
         invoiceAmounts = [];
         processeds = [];
-        $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").each(function() {
+        $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes())).each(function() {
             if (!$(this).is(":disabled") && $(this).is(":checked")) {
                 contestIds.push($(this).attr("contestid"));
                 paymentIds.push($(this).attr("paymentid"));
@@ -576,12 +576,16 @@ $(document).ready(function() {
     
     $("#checkAllInvoice").click(function() {
         if ($(this).is(":checked")) {
-            $("#billingCostDetails tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").attr("checked", "checked");
+            $($.billingCostReportDataTable.fnGetNodes()).each(function() {
+                $("input[name='invoiceRecordProcessed']", $(this)).attr("checked", "checked");
+            });
         } else {
-            $("#billingCostDetails tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").removeAttr("checked");
+            $($.billingCostReportDataTable.fnGetNodes()).each(function() {
+                $("input[name='invoiceRecordProcessed']", $(this)).removeAttr("checked");
+            });
         }
         
-        var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+        var chs = $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes()));
         if (chs.length == 0) {
             $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
         } else {

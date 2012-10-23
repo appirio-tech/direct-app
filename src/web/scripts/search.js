@@ -839,18 +839,12 @@ $(document).ready(function() {
     }
     $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {
-            var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+            var chs = $.billingCostReportDataTable ? $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes())) : $("#billingCostReportSection .paginatedDataTable input[name='invoiceRecordProcessed']:checked:not(:disabled)");
             if (chs.length == 0) {
                 $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
             } else {
                 $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
-            }
-            
-            if (chs.length == $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").length) {
-                $("#checkAllInvoice").attr("checked", "checked");
-            } else {
-                $("#checkAllInvoice").removeAttr("checked");
-            }            
+            }         
         },
         "iDisplayLength": 50,
         "bFilter": true,
