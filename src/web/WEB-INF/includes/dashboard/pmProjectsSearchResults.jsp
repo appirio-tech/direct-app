@@ -30,6 +30,7 @@
                 <col width="7%"/>
                 <col width="" />
                 <col width="" />
+                <col width="" />
             </colgroup>
 
 
@@ -51,6 +52,7 @@
                 <th>Days since last post</th>
                 <th>Handle of last post</th>
                 <th>Stalled Contests</th>
+                <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
             </tr>
@@ -128,13 +130,29 @@
                     <td class="hide metadataTD">
                         <s:if test="projectsMetadataMap != null">
                             <s:iterator value="projectsMetadataMap">
-                                <span class="metadataGroup">
-                                     <span class="metadataKeyId"><s:property value="key.id"/></span>
-                                     <span class="metadataKeyName"><s:property value="key.name"/></span>
-                                     <s:iterator value="value">
-                                         <span class="metadataValue"><s:property value="metadataValue"/></span>
-                                     </s:iterator>
-                                </span>
+                                <s:if test="key.grouping">
+                                    <span class="metadataGroup">
+                                         <span class="metadataKeyId"><s:property value="key.id"/></span>
+                                         <span class="metadataKeyName"><s:property value="key.name"/></span>
+                                         <s:iterator value="value">
+                                             <span class="metadataValue"><s:property value="metadataValue"/></span>
+                                         </s:iterator>
+                                    </span>
+                                </s:if>
+                            </s:iterator>
+                        </s:if>
+                    </td>
+                    <td class="hide projectManagerMeta">
+                        <s:if test="projectsMetadataMap != null">
+                            <s:iterator value="projectsMetadataMap">
+                                <s:if test="key.id == 2">
+                                    <s:iterator value="value">
+                                        <span class="metadataProjectManager">
+                                             <span class="metadataValue"><s:property value="metadataValue"/></span>
+                                             <tc-webtag:handle coderId="${metadataValue}"/>
+                                        </span>                                    
+                                    </s:iterator>
+                                </s:if>
                             </s:iterator>
                         </s:if>
                     </td>

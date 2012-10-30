@@ -339,6 +339,11 @@ $(document).ready(function() {
 
     });
     
+    $("#pmProjectsResult table.projectStats tr").each(function() {
+        if ($(this).find('td.projectManagerMeta .metadataProjectManager').size() == 0) {
+            $(this).find('td.projectManagerMeta').html('<span>none</span>');
+        }
+    });
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": false,
@@ -370,6 +375,7 @@ $(document).ready(function() {
             { "sType": "html" },
             { "sType": "html" },
             { "sType": "html" },
+            null,
             null,
             null
         ]

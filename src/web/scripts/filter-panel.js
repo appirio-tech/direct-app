@@ -594,6 +594,30 @@ var setupFilterPanel = function () {
         tableHandle.fnFilter("")
     });
 
+    // pop data for project managers
+    if (handleName == "pmProjectsResult") {
+        var values = {};
+    
+        $("#pmProjectsResult table.projectStats tr").each(function(){
+            var metadataTD = $(this).find("td.projectManagerMeta");
+            metadataTD.find(".metadataProjectManager").each(function() {
+                values[$(this).find(".metadataValue").text()] = $(this).find("a").text();
+            });
+        });
+        
+        $.each(values, function(item) {
+            $("#projectManagerFilter").append($("<option></option>").attr('value', item).text(values[item]));
+        });
+    
+        $("#projectManagerFilter").change(function() {
+            if ($(this).val() == '-1') {
+                tableHandle.fnFilter('<span>none</span>', 18);
+            } else {
+                tableHandle.fnFilter($(this).val(), 18);
+            }
+        }).val('').trigger('change');
+        
+    }        
 }
 
 $(function() {

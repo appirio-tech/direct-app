@@ -69,6 +69,8 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      */
     private static final Map<DashboardSearchCriteriaType, String> SEARCH_CRITERIA_TYPES;
 
+    private static final Long PROJECT_MANAGER_KEY = 2L;
+
     /**
      * <p>
      * This static initializer initializes the <code>SEARCH_CRITERIA_TYPES</code> map.
@@ -177,8 +179,11 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                 final List<DirectProjectMetadata> projectMetadataByProjects = this.getMetadataService().getProjectMetadataByProjects(allProjectIds);
 
                 for (DirectProjectMetadata metadata : projectMetadataByProjects) {
+
                     // only add metadata used for grouping (grouping = true)
-                    if (metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping()) {
+                    // or if it's project manager
+                    if ((metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping())
+                            || (metadata.getProjectMetadataKey().getId() == PROJECT_MANAGER_KEY)) {
                         long projectId = metadata.getTcDirectProjectId();
                         Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> data
                                 = helperMap.get(projectId).getProjectsMetadataMap();

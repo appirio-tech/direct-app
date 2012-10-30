@@ -122,6 +122,15 @@
                                                         <option value='All'>All Project Status</option>
                                                     </select>
                                                 </div>
+                                                <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+                                                    <div class='row'>
+                                                        <span class='title'>Project Managers</span>
+                                                        <select id='projectManagerFilter'>
+                                                            <option value=''>All Managers</option>
+                                                            <option value='-1'>No Manager</option>
+                                                        </select>
+                                                    </div>
+                                                </s:if>
                                             </div>
                                             <div class='column2'>
                                                 <div class='row'>
