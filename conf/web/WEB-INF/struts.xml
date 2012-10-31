@@ -16,14 +16,15 @@
     <constant name="struts.multipart.maxSize" value="20971520" />
 
 
-
-    <package name="default" extends="ssl-default" namespace="/">
+    <package name="default" extends="struts-default" namespace="/">
         <result-types>
             <result-type name="json" class="com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult">
             </result-type>
         </result-types>
         <interceptors>
             <interceptor name="preProcessor" class="actionPreProcessor"/>
+            <interceptor name="sslInterceptor"
+                         class="com.topcoder.direct.services.view.interceptors.SSLInterceptor"/>
             <interceptor name="projectAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
             <interceptor name="contestAccessGuard"
@@ -36,45 +37,50 @@
                          class="loggingInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
 
-            <interceptor-stack name="preProcessorStack">
+            <interceptor-stack name="secureStack">
+                <interceptor-ref name="sslInterceptor"/>
                 <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+
+            <interceptor-stack name="preProcessorStack">
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedPreProcessorStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedProjectPreProcessorStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedProjectStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedContestPreProcessorStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
             <interceptor-stack name="securedContestStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedInternalStatsStack">
-                <interceptor-ref name="defaultStack"/>
-				
+                <interceptor-ref name="secureStack"/>
+
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="internalStatsGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedDefaultStack">
-                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="secureStack"/>
                 <interceptor-ref name="authnInterceptor"/>
             </interceptor-stack>
             <!-- base stack -->
@@ -120,8 +126,7 @@
             </interceptor-stack>
         </interceptors>
 
-        <default-interceptor-ref name="baseStack"/>
-
+        <default-interceptor-ref name="secureStack"/>
 
         <global-results>
             <result name="error">/error.jsp</result>
@@ -165,7 +170,7 @@
         </action>
 
         <action name="TopCoderRoadmap">
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <result name="success">/WEB-INF/public-roadmap.jsp</result>
         </action>
 
@@ -602,7 +607,7 @@
 
         <action name="getProjectPermissions" class="getProjectPermissionsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -610,7 +615,7 @@
 
         <action name="getUser" class="searchUserAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -618,7 +623,7 @@
 
         <action name="updateProjectPermissions" class="updateProjectPermissionsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -626,7 +631,7 @@
 
         <action name="syncUser" class="syncUserAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -635,7 +640,7 @@
         <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction">
             <!--<interceptor-ref name="securedPreProcessorStack"/>-->
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <!--<interceptor-ref name="preProcessor"/>-->
             <result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>
@@ -649,7 +654,7 @@
 
         <action name="updateDirectProjectNotifications" method="updateDirectProjectNotifications" class="updateNotificationsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -677,14 +682,14 @@
 
         <action name="dashboardReports" class="dashboardReportsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-pipeline.jsp</result>
         </action>
 
         <action name="dashboardGetCostReport" class="dashboardCostReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
             <result name="download" type="stream">
@@ -697,21 +702,21 @@
 
         <action name="dashboardCostReport" class="dashboardShowCostReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
         </action>
 
         <action name="dashboardParticipationReport" class="dashboardShowParticipationReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
         </action>
 
         <action name="dashboardGetProjectMetricsReport" class="dashboardProjectMetricsReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-project-metrics-report.jsp</result>
             <result name="download" type="stream">
@@ -724,7 +729,7 @@
         
         <action name="dashboardProjectMetricsReport" class="dashboardShowProjectMetricsReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-project-metrics-report.jsp</result>
         </action>
@@ -732,14 +737,14 @@
 
         <action name="dashboardJiraIssuesReport" class="dashboardShowJiraIssuesReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
         </action>
 
         <action name="dashboardGetJiraIssuesReport" class="dashboardJiraIssuesReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
             <result name="download" type="stream">
@@ -752,7 +757,7 @@
 
         <action name="dashboardGetParticipationReport" class="dashboardParticipationReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
             <result name="download" type="stream">
@@ -765,7 +770,7 @@
 
         <action name="dashboardGetBillingCostReport" class="dashboardBillingCostReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
             <result name="download" type="stream">
@@ -778,7 +783,7 @@
 
         <action name="getGroupByOptionsForCustomer" method="getGroupByOptionsForCustomer" class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -786,7 +791,7 @@
 
         <action name="getGroupValuesForGroupBy" method="getGroupValuesForGroupBy" class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -794,7 +799,7 @@
 
         <action name="getInvoiceNumbersForBillingAccount" method="getInvoiceNumbersForBillingAccount" class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -802,7 +807,7 @@
 
         <action name="getProjectsForInvoiceNumberAndBillingAccount" method="getProjectsForInvoiceNumberAndBillingAccount" class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -810,7 +815,7 @@
 
         <action name="updateInvoiceRecords" class="updateInvoiceRecordsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -818,7 +823,7 @@
 
         <action name="updateInvoice" class="updateInvoiceAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -826,14 +831,14 @@
 
          <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
         </action>
 
         <action name="dashboardPipelineReport" class="dashboardPipelineAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-pipeline.jsp</result>
             <result name="download" type="stream">
@@ -846,7 +851,7 @@
 
         <action name="dashboardPipelineDraftsRatio" class="dashboardPipelineDraftsRatioAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -854,7 +859,7 @@
 
         <action name="getProjectCopilotsWidgetData" method="getProjectCopilotsWidgetData" class="com.topcoder.direct.services.view.action.project.ProjectCopilotsWidgetAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -862,7 +867,7 @@
 
         <action name="createProjectForum" class="createProjectForumAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -870,7 +875,7 @@
 
         <action name="projectContestsCalendarView" method="getContestsCalendar" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -878,7 +883,7 @@
 
         <action name="updateProjectForumWatchAJAX" class="updateProjectForumWatchAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -886,7 +891,7 @@
 
         <action name="getProjectForumsStatusAJAX" class="getProjectForumsStatusAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -894,7 +899,7 @@
 
 		<action name="addProjectForumAJAX" class="addProjectForumAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -902,7 +907,7 @@
 
         <action name="deleteProjectForumsAJAX" class="deleteProjectForumsAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -922,7 +927,7 @@
 
         <action name="customerProjectsAjaxAction" class="com.topcoder.direct.services.view.action.project.CustomerProjectsAjaxAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -930,7 +935,7 @@
 
         <action name="createNewCockpitProjectAjax" class="createNewProjectAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -1218,7 +1223,7 @@
 
         <action name="updateSubmissionFeedback" class="updateStudioSubmissionFeedbackAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
       <result name="error" type="json" />
@@ -1226,7 +1231,7 @@
 
         <action name="hasSubmissionFeedback" class="hasStudioSubmissionFeedbackAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result type="json" />
         </action>
@@ -1306,7 +1311,7 @@
 
         <action name="updateGeneralSubmissionsFeedback" class="updateStudioGeneralFeedbackAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -1314,7 +1319,7 @@
 
         <action name="hasGeneralSubmissionsFeedback" class="hasStudioGeneralFeedbackAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result type="json" />
         </action>
@@ -1453,7 +1458,7 @@
         <action name="projectMilestone"
                 class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result>/WEB-INF/milestone/project-milestone-demo.jsp</result>
         </action>
@@ -1461,7 +1466,7 @@
         <action name="projectMilestoneBatchCreatePage"
                         class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
                     <interceptor-ref name="baseStack"/>
-                    <interceptor-ref name="defaultStack"/>
+                    <interceptor-ref name="secureStack"/>
                     <interceptor-ref name="authnInterceptor"/>
                     <result>/WEB-INF/milestone/project-milestone-batch-create.jsp</result>
         </action>
@@ -1521,7 +1526,7 @@
 
         <action name="projectMetadata" class="projectMetadataAction">
             <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="secureStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result>/WEB-INF/metadata/project-metadata-demo.jsp</result>
         </action>
