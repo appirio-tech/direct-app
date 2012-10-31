@@ -7,6 +7,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
@@ -23,7 +25,10 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
+import com.topcoder.management.project.CopilotContestExtraInfo;
+import com.topcoder.management.project.CopilotContestExtraInfoType;
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectType;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.review.data.Review;
@@ -381,9 +386,15 @@ import java.util.*;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.9.2 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+ * <p>
+ *     <li>Added method {@link #setCopilotDashboardSpecificData(com.topcoder.project.service.ProjectServices, long, com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO)}</li>
+ * </p>
+ * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
- * @version 1.9.1
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
+ * @version 1.9.2
  */
 public final class DirectUtils {
     /**
@@ -1734,6 +1745,82 @@ public final class DirectUtils {
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
 
         dto.setDashboard(adjustPhases(dto.getDashboard()));
+    }
+
+    /**
+     * Sets the copilot dashboard data.
+     *
+     * @param contestService the contest service.
+     * @param contestId the contest id.
+     * @param dashboardDTO the dashboard DTO
+     * @since 1.9.1
+     */
+    public static void setCopilotDashboardSpecificData(ProjectServices contestService,
+                            ProjectServiceFacade projectServiceFacade,
+                            DirectProjectMetadataService metadataService, long contestId,
+                            long directProjectId, ContestDashboardDTO dashboardDTO) throws Exception {
+
+        final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        // set project
+        com.topcoder.management.project.Project project = contestService.getProject(contestId);
+        Set<Long> copilotProjectTypes = new HashSet<Long>();
+
+        if (project.getProjectCopilotTypes() != null && project.getProjectCopilotTypes().size() > 0) {
+            for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
+                copilotProjectTypes.add(type.getId());
+            }
+        }
+
+        dashboardDTO.setCopilotProjectTypes(copilotProjectTypes);
+
+        String budget = null;
+        String otherManagingExperienceString = null;
+        if (project.getCopilotContestExtraInfos() != null && project.getCopilotContestExtraInfos().size() > 0) {
+            for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
+                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
+                    budget = extraInfo.getValue();
+                }
+                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
+                    otherManagingExperienceString = extraInfo.getValue();
+                }
+            }
+        }
+
+        dashboardDTO.setBudget(budget);
+        dashboardDTO.setOtherManagingExperienceString(otherManagingExperienceString);
+
+        // set project type
+        final ProjectData tp = projectServiceFacade.getProject(currentUser, directProjectId);
+
+        String projectType = null;
+
+        if (tp.getProjectType() != null) {
+            projectType = tp.getProjectType().getName();
+
+            if(tp.getProjectCategory() != null) {
+                projectType = projectType + " - " + tp.getProjectCategory().getName();
+            }
+        }
+
+        dashboardDTO.setDirectProjectType(projectType);
+
+        // set project duration
+        List<DirectProjectMetadata> metadata = metadataService.getProjectMetadataByProject(directProjectId);
+
+        for (DirectProjectMetadata data : metadata) {
+            long keyId = data.getProjectMetadataKey().getId();
+            String value = data.getMetadataValue();
+            if (value == null || value.trim().length() == 0) {
+                // value does not exist, continue
+                continue;
+            }
+
+            if (keyId == 6L) {
+                // duration
+                dashboardDTO.setDirectProjectDuration(value);
+            }
+        }
     }
 
     /**

@@ -562,11 +562,13 @@ function updateProjectGeneralInfo(notSendToServer) {
     var exp = '';
     
     experiences = [];
+    experiencesText = [];
     
     var tmpExp = [];
     $.each($('.experienceDiv input[type=checkbox]:checked'), function(index, item) {
         tmpExp.push($(item).next().html());
         experiences.push($(item).val());
+        experiencesText.push($(item).parent().find("label").text());
         copilotTypes.push(new com.topcoder.direct.ProjectCopilotType($(this).val(), $(this).attr('id'), $(this).attr('id')));
     });
     
@@ -580,7 +582,25 @@ function updateProjectGeneralInfo(notSendToServer) {
         extraInfos.push(infoType);
         
         tmpExp.push(other);
-    }    
+    }
+
+    if(experiences.length > 0) {
+        $(".requiredXperience span").html(experiencesText[0] + '&nbsp;<a class="more" href="javascript:;">More</a>');
+
+        $(".moreFlyout ul li").remove(); // clear first
+
+        $.each(experiencesText, function(index, item) {
+            $("<li></li>").text('- ' + item).appendTo($(".moreFlyout ul"));
+        });
+    }
+
+    if(other.length > 0) {
+        $("<li></li>").text('- ' + other).appendTo($(".moreFlyout ul"));
+    }
+
+    if(experiences.length == 0 && other.length == 0) {
+        $(".requiredXperience span").html("Not Required");
+    }
     
     if (tmpExp.length > 0) {
         for (var i = 0; i < tmpExp.length; i++) {
@@ -605,8 +625,13 @@ function updateProjectGeneralInfo(notSendToServer) {
         extraInfos.push(infoType);
         
         bud = "$ " + bud;
+
+        $(".projectBudget span").text(bud);
+
     } else {
         bud = "Don't have a budget yet.";
+
+        $(".projectBudget span").text("Not Indicated");
     }
             
     $('#contestNameTextLabel').html(contestName);

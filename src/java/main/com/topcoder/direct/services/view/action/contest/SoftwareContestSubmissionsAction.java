@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -472,6 +473,13 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         // add final fixes of the contest if exist
         setFinalFixes(DataProvider.getContestFinalFixes(getProjectId()));
+
+
+        if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
+            DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
+                    getMetadataService(), getProjectId(),  softwareCompetition.getProjectHeader().getTcDirectProjectId(),
+                    getViewData().getDashboard());
+        }
     }
 
     /**
@@ -549,5 +557,17 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     public int getMilestoneWinnersNumber() {
         return milestoneWinnersNumber;
+    }
+
+    /**
+     * <p>
+     * Gets the mapping to be used for looking up the project copilot types by IDs.
+     * </p>
+     *
+     * @return a <code>Map</code> mapping the project copilot type ids to category names.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
+        return DataProvider.getAllProjectCopilotTypes();
     }
 }

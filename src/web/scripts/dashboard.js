@@ -1665,9 +1665,11 @@ $(document).ready(function(){
 	/* new added for contest dashboard */
     // BUGR-4901 - Resize timeline relative the amount of phases.
 	var progressContainerWidth = $('.progressContainer').width();
+
 	// 771 = max size of the progressContainer to no break in min-width
 	// phaseNamePadding = space free / amount phases / 2 (2 sides)
-	var phaseNamePadding = Math.floor((771 - progressContainerWidth) / $('.progressContainer li').size() / 2);
+    var minWidth = parseInt($('.timelineContainer').css('min-width')) - 1;
+	var phaseNamePadding = Math.floor((minWidth - progressContainerWidth) / $('.progressContainer li').size() / 2);
 	
 	// set paddings
 	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', phaseNamePadding + 'px');
@@ -1747,7 +1749,7 @@ $(document).ready(function(){
 		if($(window).width() > 1024){
 			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "48px");
 			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "46px");
-			
+            $(".dashboardModule .content .timelineContainer.copilot").css("padding-bottom", "39px");
 			/*
 			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
 				$(".appositeContainer .issueModule").css({"width":"17.2%"}); 
@@ -1763,6 +1765,7 @@ $(document).ready(function(){
 		else{
 			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "39px");
 			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "42px");
+            $(".dashboardModule .content .timelineContainer.copilot").css("padding-bottom", "39px");
 			/*
 			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){  
 				$(".appositeContainer .issueModule").css("width","17.4%");

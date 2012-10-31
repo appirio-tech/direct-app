@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.0
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.1
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+  - - Added copilot posting dashboard
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -19,6 +22,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
 </head>
 
 <body id="page">
@@ -56,7 +60,7 @@
 
                                     <div class="myCopilotsContestsList">
 
-                                        <jsp:include page="includes/copilot/contestStats.jsp"/>
+                                        <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
                                         <div class="container2 tabs3Container tabs3Special" id="CopilotPostingRegistrants">
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -8,6 +8,7 @@ import com.topcoder.direct.services.view.dto.UserDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -43,8 +44,16 @@ import java.util.List;
  *     <li>Add regProgressPercent : int field and corresponding get/set methods.</li>
  *   </ol>
  * </p>
- * @author isv, TCSDEVELOPER, morehappiness
- * @version 1.3
+ *
+ * <p>
+ * Version 1.4 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+ * <ol>
+ *     <li>Add data {@link #copilotProjectTypes} {@link #budget} {@link #otherManagingExperienceString}
+ *     for store copilot dashboard data</li>
+ * </ol>
+ * </p>
+ * @author isv, morehappiness, GreatKevin
+ * @version 1.4
  */
 public class ContestDashboardDTO extends ContestHealthDTO implements Serializable {
 
@@ -130,6 +139,28 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * @since 1.3
      */
     private int regProgressPercent;
+    
+    /**
+     * copilot project types required for copilot posting dashboard.
+     * @since 1.4
+     */
+    private Set<Long> copilotProjectTypes;
+
+    /**
+     * copilot project budget required for copilot posting dashboard.
+     * @since 1.4
+     */
+    private String budget;
+
+    /**
+     * other project manage experience string for copilot posting dashboard.
+     * @since 1.4
+     */
+    private String otherManagingExperienceString;
+
+    private String directProjectType;
+
+    private String directProjectDuration;
     
     /**
      * <p>
@@ -443,5 +474,81 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
             return false;
         }
         return true;
+    }
+
+    /**
+     * Gets the copilot project types.
+     *
+     * @return the copilot project types.
+     * @since 1.4
+     */
+    public Set<Long> getCopilotProjectTypes() {
+        return copilotProjectTypes;
+    }
+
+    /**
+     * Sets the copilot project types.
+     *
+     * @param copilotProjectTypes the copilot project types.
+     * @since 1.4
+     */
+    public void setCopilotProjectTypes(Set<Long> copilotProjectTypes) {
+        this.copilotProjectTypes = copilotProjectTypes;
+    }
+
+    /**
+     * Gets the budget.
+     *
+     * @return the budget.
+     * @since 1.4
+     */
+    public String getBudget() {
+        return budget;
+    }
+
+    /**
+     * Sets the budget.
+     *
+     * @param budget the project budget.
+     * @since 1.4
+     */
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    /**
+     * Gets the other required management experience.
+     *
+     * @return the other required management experience.
+     * @since 1.4
+     */
+    public String getOtherManagingExperienceString() {
+        return otherManagingExperienceString;
+    }
+
+    /**
+     * Sets the other required management experience.
+     *
+     * @param otherManagingExperienceString the other required management experience.
+     * @since 1.4
+     */
+    public void setOtherManagingExperienceString(String otherManagingExperienceString) {
+        this.otherManagingExperienceString = otherManagingExperienceString;
+    }
+
+    public String getDirectProjectType() {
+        return directProjectType;
+    }
+
+    public void setDirectProjectType(String directProjectType) {
+        this.directProjectType = directProjectType;
+    }
+
+    public String getDirectProjectDuration() {
+        return directProjectDuration;
+    }
+
+    public void setDirectProjectDuration(String directProjectDuration) {
+        this.directProjectDuration = directProjectDuration;
     }
 }

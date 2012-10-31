@@ -3,20 +3,6 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts2.ServletActionContext;
-
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -30,11 +16,7 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.deliverable.Submission;
-import com.topcoder.management.project.CopilotContestExtraInfo;
-import com.topcoder.management.project.CopilotContestExtraInfoType;
 import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.Project;
-import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -42,6 +24,16 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.apache.struts2.ServletActionContext;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -139,8 +131,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu
- * @version 1.7
+ * <p>
+ * Version 1.8 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard) change notes:
+ * <ol>
+ *     <li>Refactor the copilot posting specific data into the contest dashboard data</li>
+ * </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, GreatKevin
+ * @version 1.8
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -212,12 +211,6 @@ public class GetContestAction extends ContestAction {
      */
     private boolean admin;
 
-    private Set<Long> copilotProjectTypes;
-
-    private String budget;
-
-    private String otherManagingExperienceString;
-
     /**
      * The submission end date.
      * @since 1.5
@@ -248,7 +241,6 @@ public class GetContestAction extends ContestAction {
      *
      * @throws IllegalStateException if the contest service facade is not set.
      * @throws Exception if any other error occurs
-     * @see ContestServiceFacade#getContest(com.topcoder.security.TCSubject, long)
      * @see ContestServiceFacade#getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
      */
     protected void executeAction() throws Exception {
@@ -311,8 +303,6 @@ public class GetContestAction extends ContestAction {
 		// Set current project context based on selected contest
 		getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
 		getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
-		
-
 
         getViewData().setDashboard(
             DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
@@ -351,35 +341,15 @@ public class GetContestAction extends ContestAction {
 
         // calculate the contest issues tracking health
         getViewData().getDashboard().setUnresolvedIssuesNumber(
-            getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
+        getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
 
         getViewData().getDashboard().setAllPhases(sortContestPhases(getViewData().getDashboard().getAllPhases()));
 
         if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
-            // set project
-            Project project = getProjectServices().getProject(projectId);
-            copilotProjectTypes = new HashSet<Long>();
-
-            if (project.getProjectCopilotTypes() != null && project.getProjectCopilotTypes().size() > 0) {
-                for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
-                    copilotProjectTypes.add(type.getId());
-                }
-            }
-
-            budget = null;
-            otherManagingExperienceString = null;
-            if (project.getCopilotContestExtraInfos() != null && project.getCopilotContestExtraInfos().size() > 0) {
-                for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
-                    if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
-                        budget = extraInfo.getValue();
-                    }
-                    if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
-                        otherManagingExperienceString = extraInfo.getValue();
-                    }
-                }
-            }
-
+            DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
+                    getMetadataService(), projectId,  softwareCompetition.getProjectHeader().getTcDirectProjectId(),
+                    getViewData().getDashboard());
         }
     }
 
@@ -636,27 +606,6 @@ public class GetContestAction extends ContestAction {
      */
     public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
         return DataProvider.getAllProjectCopilotTypes();
-    }
-
-    /**
-     * @return the copilotProjectTypes
-     */
-    public Set<Long> getCopilotProjectTypes() {
-        return copilotProjectTypes;
-    }
-
-    /**
-     * @return the budget
-     */
-    public String getBudget() {
-        return budget;
-    }
-
-    /**
-     * @return the otherManagingExperienceString
-     */
-    public String getOtherManagingExperienceString() {
-        return otherManagingExperienceString;
     }
 
     /**

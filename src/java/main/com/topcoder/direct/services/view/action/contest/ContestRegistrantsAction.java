@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -21,6 +21,7 @@ import com.topcoder.service.user.Registrant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Contest Registrants</code>
@@ -47,8 +48,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.3
+ * <p>
+ * Version 1.4 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+ * <ol>
+ *     <li>Add data for getting copilot dashboard data to the {@link #executeAction()}</li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.4
  */
 public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
@@ -165,6 +173,12 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         
         DirectUtils.setDashboardData(currentUser, contestId, viewData,
                 getContestServiceFacade(), !DirectUtils.isStudio(competition));
+
+        if (competition.getProjectHeader().getProjectCategory().getId() == 29) {
+            DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
+                    getMetadataService(), contestId,  competition.getProjectHeader().getTcDirectProjectId(),
+                    getViewData().getDashboard());;
+        }
     }
 
     /**
@@ -175,5 +189,17 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
      */
     public SessionData getSessionData() {
         return this.sessionData;
+    }
+
+    /**
+     * <p>
+     * Gets the mapping to be used for looking up the project copilot types by IDs.
+     * </p>
+     *
+     * @return a <code>Map</code> mapping the project copilot type ids to category names.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
+        return DataProvider.getAllProjectCopilotTypes();
     }
 }

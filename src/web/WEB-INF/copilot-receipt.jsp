@@ -1,7 +1,11 @@
 <%--
-  - Author: veve
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: veve, GreatKevin
+  - Version: 1.1
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  -
+  - Version 1.1 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+  - - Added copilot posting dashboard
   -
   - Description: This page renders the copilot posting receipt page.
 --%>
@@ -18,6 +22,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
     <script type="text/javascript">
         $(document).ready(function(){
             $(".prizesTable:eq(0) tbody tr td:gt(1):lt(2)").hide();
@@ -61,7 +66,7 @@
 
                                     <div class="myCopilotsContestsList">
 
-                                        <jsp:include page="includes/copilot/contestStats.jsp"/>
+                                        <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
                                         <div class="container2 tabs3Container tabs3Special" id="CopilotPostingRegistrants">
 

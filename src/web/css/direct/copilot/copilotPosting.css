@@ -1,0 +1,1633 @@
+/* added on 25Sep2012 */
+input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    height: 13px;
+    width: 13px;
+}
+#content.liquid{
+    min-width: 1339px;
+}
+/* button */
+.btn, .btn .bRt, .btn .bMid{
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    background: url('/images/copilotPosting/bg-btn.png') no-repeat;
+    text-align: center;
+    color: #363636;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover, .btn:hover .bRt, .btn:hover .bMid{
+    background-image: url('/images/copilotPosting/bg-btn-hover.png');
+}
+.btn{
+    padding-left: 23px;
+    background-position: left top;
+}
+.btn .bRt{
+    background-position: right bottom;
+    padding-right: 4px;
+}
+.btn .bMid{
+    background-position: left center;
+    background-repeat: repeat-x;
+    padding: 0 8px;
+}
+/* action button */
+.action-btn, .action-btn .bRt, .action-btn .bMid{
+    background-image: url('/images/copilotPosting/bg-btnAction.png');
+}
+.action-btn:hover, .action-btn:hover .bRt, .action-btn:hover .bMid{
+    background-image: url('/images/copilotPosting/bg-btnAction-hover.png');
+}
+/* red button */
+.btn-red{
+    padding-left: 4px;
+}
+.btn-red, .btn-red .bRt, .btn-red .bMid{
+    background-image: url('/images/copilotPosting/btn-red.png');
+    color: #fffffe;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    text-shadow: 0 -1px 0 #982016;
+}
+
+.btn-red:hover, .btn-red:hover .bRt, .btn-red:hover .bMid{
+    background-image: url('/images/copilotPosting/btn-red-hover.png');
+}
+.btn-pickup .ico{
+    background: url('/images/copilotPosting/ico-tick.png') left center no-repeat;;
+    padding-left: 14px;
+}
+/* white button */
+.btn-white{
+    padding-left: 4px;
+}
+.btn-white, .btn-white .bRt, .btn-white .bMid{
+    background-image: url('/images/copilotPosting/btn-white.png');
+    color: #333;
+    font-weight: bold;
+    font-size: 11px;
+}
+.btn-white:hover, .btn-white:hover .bRt, .btn-white:hover .bMid{
+    background-image: url('/images/copilotPosting/btn-white-hover.png');
+}
+/* compare button */
+.btn-compare, .btn-compare .bRt, .btn-compare .bMid{
+    background-image: url('/images/copilotPosting/btn-compare.png');
+    font-size: 11px;
+    font-weight: bold;
+    color: #fffffe;
+    line-height: 24px;
+}
+.btn-compare:hover, .btn-compare:hover .bRt, .btn-compare:hover .bMid{
+    background-image: url('/images/copilotPosting/btn-compare-hover.png');
+}
+/* switch */
+.switch{
+    overflow: hidden;
+    display: inline-block;
+    height: 24px;
+}
+.switch a{
+    background: url('/images/copilotPosting/btn-switch.png') no-repeat;
+    float: left;
+    width: 30px;
+    height: 24px;
+    display: inline-block;
+}
+.switch.btn-nexPrev a{
+    background: url('/images/copilotPosting/btn-nexPrev.png') no-repeat;
+    width: 28px;
+}
+.switch .listView{
+    background-position: left top;
+}
+.switch .listView:hover,
+.switch .listView.active{
+    background-position: left bottom;
+}
+.switch .gridview{
+    width: 29px;
+    background-position: right top;
+}
+.switch .gridview:hover,
+.switch .gridview.active{
+    background-position: right bottom;
+}
+.switch.btn-nexPrev .prev{
+    background-position: left top;
+}
+.switch.btn-nexPrev .prev:hover{
+    background-position: left bottom;
+}
+.switch.btn-nexPrev .next{
+    background-position: right top;
+    padding: 0;
+}
+.switch.btn-nexPrev .next:hover{
+    background-position: right bottom;
+}
+.switch.btn-nexPrev .prev.disabled{
+    background: url('/images/copilotPosting/btn-next-prev-disabled.png') left top no-repeat;
+}
+.switch.btn-nexPrev .next.disabled{
+    background: url('/images/copilotPosting/btn-next-prev-disabled.png') right top no-repeat;
+}
+.fRight{
+    float: right;
+}
+.fLeft{
+    float: left;
+}
+
+/*badges*/
+
+.achiv .b1{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b2{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -32px 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b3{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -64px 0;
+    width: 26px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b4{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -90px 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b5{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -122px 0;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b6{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -150px 0;
+    width:50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+
+.achiv .b1a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b2a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -32px 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b3a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -64px 0;
+    width: 26px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b4a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -90px 0;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b5a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -122px 0;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b6a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -150px 0;
+    width:50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+
+
+.achiv .b7{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 -51px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b8{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -38px -51px;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b9{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -70px -51px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b10{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -108px -51px;
+    width: 42px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b11{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -150px -51px;
+    width:50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+
+.achiv .b7a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 -51px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b8a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -38px -51px;
+    width: 32px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b9a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -70px -51px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b10a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -108px -51px;
+    width: 42px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b11a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -150px -51px;
+    width:50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b12{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 -103px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b13{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -38px -103px;
+    width: 50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b14{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -88px -103px;
+    width: 30px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b15{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -118px -103px;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b16{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -146px -103px;
+    width:54px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b12a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 -103px;
+    width: 38px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b13a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -38px -103px;
+    width: 50px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b14a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -88px -103px;
+    width: 30px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b15a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -118px -103px;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+
+.achiv .b16a{
+    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -146px -103px;
+    width:54px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .sep{
+    width:90px;
+    height: 48px;
+    float: left;
+
+}
+.achiv .b17{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -90px -154px;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b18{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -118px -154px;
+    width: 28px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.achiv .b19{
+    background: url(/images/copilotPosting/skillBadges.png) no-repeat -146px -154px;
+    width:54px;
+    height: 48px;
+    float: left;
+    cursor: pointer;
+}
+.quoteBadgesItem{
+    margin:0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: bottom;
+}
+/* #area1 section*/
+#area1 h2.copilotPositng{
+    background: url('/images/copilotPosting/ico-copilotPosting.png') left top no-repeat;
+    overflow: hidden;
+}
+#area1 h2 .currentStatus{
+    font-size: 12px;
+    font-weight: normal;
+}
+#area1 h2 .currentStatus .statDraft{
+    background: url('/images/copilotPosting/ico-draft.png') left top no-repeat;
+    display: inline-block;
+    padding-left: 20px;
+    width: 36px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 8px;
+}
+#area1 h2 .currentStatus .statActive{
+    background: url('/images/copilotPosting/ico-active.png') left top no-repeat;
+    display: inline-block;
+    padding-left: 22px;
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 8px;
+}
+#area1 h2 .currentStatus .statCompleted{
+    background: url('/images/copilotPosting/ico-completed.png') left top no-repeat;
+    display: inline-block;
+    padding-left: 22px;
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 8px;
+}
+/* dashboardModule */
+.timelineModule{
+    margin-right: 256px;
+    height: 140px;
+}
+.timelineModule .content{
+    height: 113px;
+}
+.dashboardModule.moduleAction{
+    float: right;
+    width: 249px;
+    margin-top: -140px;
+    height: 140px;
+}
+.dashboardModule .actionContent{
+    height: 113px;
+}
+.dashboardModule .actionContent .btn{
+    margin-top: 40px;
+}
+#area1 .dashboardTable{
+    background: none;
+    margin-bottom: 12px;
+}
+.area1Content{
+    position: relative;
+}
+.copilotPostingDashboard .dashboardModule .content .timelineContainer{
+    min-width: 578px;
+}
+.copilotPostingDashboard .appositeContainer .registrationModule{
+    width: 32.8%;
+    margin-right: .7%;
+}
+.copilotPostingDashboard .appositeContainer .forumModule{
+    width: 33.1%;
+    margin-right: .7%;
+}
+.copilotPostingDashboard .appositeContainer .copilotStats{
+    width: 32.7%;
+    margin-right: 0;
+}
+.copilotPostingDashboard .appositeContainer .content{
+    padding-top: 9px;
+    height: 75px;
+    padding-left: 14px;
+}
+.dashboardModule .listContent .healthy .progressStatus .progress{
+    width: 80px;
+}
+.appositeContainer .copilotStats .listContent p{
+    width: auto;
+}
+.dashboardModule .list-alternate p.row {
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+    width: auto;
+    margin-bottom: 4px;
+    width: 265px;
+}
+.dashboardModule .list-alternate .fLeft{
+    margin-left: 14px;
+}
+.dashboardModule p.row{
+    width: 265px;
+    overflow: hidden;
+}
+.dashboardModule p.row .fLeft{
+    margin-left: 0;
+    min-width: 145px;
+}
+.dashboardModule p.row .fLeft.last{
+    min-width: 105px;
+    margin-left: 14px;
+    margin-top: 0;
+}
+.dashboardModule p.row .fLeft.last.date{
+    margin-left: 8px;
+}
+.copilotPostingDashboard .dashboardModule .list-alternate .statusP{
+    margin-bottom: 4px;
+    float: left;
+}
+.dashboardModule .progressWrapper{
+    display: inline-block;
+    width: 265px;
+}
+.color-gold{
+    color: #FF9900 !important;
+}
+
+/* flyout */
+.flyout{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 9999;
+}
+.flyout .flyoutBody{
+    padding-top: 10px;
+}
+.moreFlyout{
+    width: 233px;
+    height: 65px;
+    padding: 10px 15px;
+    border: solid #bdbdbd;
+    border-width: 0 1px;
+    background: url('/images/copilotPosting/bg-flyout.png') left top repeat-x;
+}
+.xperienceFlyout{
+    width: 200px;
+    min-height: 194px;
+    padding: 18px 15px 14px;
+    border: solid #bdbdbd;
+    border-width: 0 1px 1px;
+    font-size: 14px;
+    line-height: 16px;
+    background: #e7e7e7 url('/images/copilotPosting/bg-flyout-long.png') left top repeat-x;
+
+}
+.trackFlyout{
+    height: 34px;
+    line-height: 34px;
+    padding: 0 15px;
+    border: solid #bdbdbd;
+    border-width: 0 1px;
+    font-size: 12px;
+    font-weight: bold;
+    background: url(/images/tabs3_bg.png) repeat-x top left;
+
+}
+.skillsFlyout{
+    height: 70px;
+    padding: 0 15px;
+    border: solid #bdbdbd;
+    border-width: 0 1px 1px;
+    background: url('/images/copilotPosting/bg-flyout.png') left top repeat-x;
+}
+.skillsFlyout img{
+    height: 49px;
+    padding-top: 10px;
+}
+.flyout .arrow{
+    position: absolute;
+    background: url('/images/copilotPosting/ico-arrow.png') left top no-repeat;
+    height: 7px;
+    width: 11px;
+    right: 20px;
+    top: -6px;
+}
+.flyout h2{
+    font-size: 11px;
+    padding-bottom: 6px;
+}
+.flyout.moreFlyout li{
+    font-size: 11px;
+    padding-bottom: 2px;
+    list-style: none;
+    line-height: 14px;
+}
+
+.xperienceFlyout .row{
+    padding-bottom: 10px;
+}
+.xperienceFlyout .xpStat {
+    color: #666667;
+    font-size: 11px;
+    font-weight: bold;
+}
+.xperienceFlyout .xpStat .active {
+    color: #3994ED;
+    text-decoration: none;
+}
+.xperienceFlyout .xpStat .completed {
+    color: #027200;
+    text-decoration: none;
+}
+/* contest links */
+.contest-links{
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.contest-links ul.links li{
+    border-right: 1px solid #d6d6d6;
+    padding-right: 10px;
+    margin-right: 9px;
+    margin-left: 4px;
+}
+.contest-links .links li a{
+    padding-left: 22px;
+    line-height: 19px;
+    height: 19px;
+    display: inline-block;
+    text-decoration: none;
+}
+.contest-links .links li a:hover{
+    color: #666665;
+}
+.contest-links .links li .viewContest{
+    background: url('/images/link-icon-view-contest.gif') left top no-repeat;
+}
+.contest-links .links li .registration{
+    background: url('/images/link-icon-registration-page.gif') left top no-repeat;
+}
+.contest-links .links li .OR{
+    background: url('/images/link-icon-online-review.gif') left top no-repeat;
+}
+.contest-links .links li .forum{
+    background: url('/images/link-icon-forum.gif') left center no-repeat;
+}
+/* tabs */
+#tabs3.newLayout ul li{
+    width: 25%;
+}
+#tabs3 UL LI.lastItem{
+    width: auto;
+}
+.det_font .lbl{
+    font-weight: bold;
+    min-width: 168px;
+    display: inline-block;
+}
+.det_font .value{
+    font-weight: bold;
+    color: #3B3B3B;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.det_font.normalValue .value{
+    font-weight: normal;
+}
+.no_details .caption_det_prize .captionInner,
+.no_details .caption_det_round .captionInner{
+    padding: 30px 0 0 0;
+    height: 28px;
+}
+.detailsContent_det_prize{
+    padding: 0px 10px 30px 40px;
+}
+.container2Content_det{
+    padding: 10px 1px 0 1px;
+    position: relative;
+}
+#area1{
+    padding-bottom: 250px;
+}
+/* tabs3Container 
+-------------------------------*/
+/* table */
+/* list view */
+.listview-table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.listview-table th{
+    background: url(/images/tabs3_bg.png) repeat-x top left;
+    height: 34px;
+    vertical-align: middle;
+    font-size: 11px;
+    font-weight: bold;
+    border-left: 1px solid #bdbdbd;
+}
+.listview-table td{
+    height: 143px;
+    border-left: 1px solid #bdbdbd;
+    padding-top: 15px;
+    font-size: 11px;
+    border-bottom: 1px solid #bdbdbd;
+}
+.listview-table .even td{
+    background: #f3f3f3;
+}
+.listview-table th:first-child,
+.listview-table td:first-child{
+    border-left: none;
+}
+.listview-table td a:hover{
+    text-decoration: none;
+}
+/* copilot cells */
+.listview-table .tdCopilot .colLt{
+    padding: 0 15px;
+    width: 63px;
+    float: left;
+    height: 143px;
+    position: relative;
+}
+.listview-table .tdCopilot .colRt{
+    float: left;
+    height: 143px;
+}
+.listview-table .tdCopilot .top{
+    height: 69px;
+    padding-bottom: 10px;
+}
+.listview-table .tdCopilot p{
+    padding-bottom: 4px;
+}
+.listview-table .tdCopilot .compare{
+    overflow: hidden;
+    font-size: 12px;
+}
+.listview-table .tdCopilot .compare label{
+    float: left;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    color: #000;
+    vertical-align: bottom;
+    margin-left: 4px;
+}
+.listview-table .tdCopilot .compare input[type="checkbox"]{
+    float: left;
+}
+.listview-table .tdCopilot .memberPic{
+    width: 63px;
+    height: 69px;
+    display: block;
+    padding-bottom: 10px;
+}
+.listview-table .tdCopilot .track{
+    overflow: hidden;
+}
+.listview-table .tdCopilot .track a{
+    display: inline-block;
+    height: 31px;
+    width: 31px;
+    text-decoration: none;
+    float: left;
+}
+.listview-table .tdCopilot .track a:first-child{
+    margin-right: 1px;
+}
+.listview-table .tdCopilot .track .dev{
+    background: url('/images/copilotPosting/ico-tc.png') left top no-repeat;
+}
+.listview-table .tdCopilot .track .studio{
+    background: url('/images/copilotPosting/ico-studio.png') left top no-repeat;
+}
+.listview-table .handle{
+    font-size: 12px;
+}
+.listview-table .colFulFill{
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    vertical-align: top;
+
+}
+.txtRed{
+    color: #fe0000;
+}
+.txtYellow{
+    color: #eea900;
+}
+.txtBlue{
+    color: #0049ff;
+}
+.txtGreen{
+    color: #008f15;
+}
+.txtGray{
+    color: #666667;
+}
+.listview-table .colWorkload{
+    text-align: center;
+    font-size: 16px;
+    vertical-align: top;
+    color: #333333;
+}
+.listview-table .colWorkload p{
+    padding-bottom: 6px;
+}
+.colExperience{
+    font-size: 14px;
+    vertical-align: top;
+}
+.colExperience .row{
+    padding-left: 12px;
+    padding-bottom: 10px;
+}
+.colExperience .row .xp{
+    font-size: 14px;
+}
+.colExperience .xpStat{
+    color: #666667;
+    font-size: 11px;
+    font-weight: bold;
+}
+.colExperience .xpStat .active{
+    color: #3994ed;
+    text-decoration: none;
+}
+.colExperience .xpStat .completed{
+    color: #027200;
+    text-decoration: none;
+}
+.colExperience .link{
+    font-size: 11px;
+    padding-left: 12px;
+}
+.gridview-table .colExperience .link{
+    padding-left: 0px;
+}
+.colSkills{
+    font-size: 12px;
+    vertical-align: top;
+}
+.colSkills ul{
+    padding-left: 18px;
+}
+.colSkills li{
+    list-style: none;
+    min-height: 17px;
+    line-height: 17px;
+    margin-bottom: 8px;
+    background-image: url('/images/copilotPosting/skills-sprite.png');
+    background-repeat: no-repeat;
+    padding-left: 28px;
+    cursor: pointer;
+}
+.colSkills li.uiNgd{
+    background-position: 0 -0;
+}
+.colSkills li.imple{
+    background-position: 0 -25px;
+}
+.colSkills li.ba{
+    background-position: 0 -50px;
+}
+.colSkills li.ana{
+    background-position: 0 -75px;
+}
+.colSkills li.tqa{
+    background-position: 0 -100px;
+}
+table .colPickup {
+    vertical-align: top;
+    padding-top: 0;
+    height: 158px;
+}
+.compareItems .colPickup{
+    text-align: center;
+}
+.compareItems .colPickup .btn-red{
+    margin-bottom: 8px;
+}
+table .colPickup .btn .bMid,
+.compareItems .colPickup .btn .bMid{
+    width: 136px;
+    padding: 0;
+}
+table .colPickup .btn{
+    margin: 8px 0 0;
+}
+table .colPickup .row{
+    text-align: center;
+    padding-top: 10px;
+}
+.compare-table .colPickup .row{
+    padding-top: 0;
+}
+.compare-table .colPickup .btn-red{
+    margin-top: 0;
+}
+table .colPickup .row.highlighted,
+.compareItems .colPickup .row.highlighted{
+    background: #fcffe5;
+    border-bottom: 1px solid #d3d3d3;
+    height: 60px;
+    font-size: 11px;
+}
+.compareItems .colPickup .row.highlighted{
+    text-align: center;
+}
+table.compare-table .colPickup .row.highlighted,
+.compareItems .colPickup .row.highlighted{
+    background: #fff;
+    border-bottom: none;
+}
+table .submitedFile,
+.compareItems .submitedFile {
+    font-size: 12px;
+    background: url('/images/copilotPosting/ico-zip.png') left top no-repeat;
+    line-height: 22px;
+    height: 22px;
+    padding-bottom: 8px;
+    display: inline-block;
+    padding-left: 28px;
+}
+
+.caption{
+    overflow: hidden;
+    padding: 5px 10px 1px;
+    border-right: 1px solid #bdbdbd;
+}
+.caption.bottom{
+    border: solid #bdbdbd;
+    border-width: 0 0 1px 0;
+    padding: 10px 10px 10px;
+}
+.caption .fRight .btn{
+    float: left;
+    margin-right: 10px;
+}
+.caption .fRight .switch{
+    float: left;
+}
+.caption .link{
+    font-size: 11px;
+    padding-left: 18px;
+    height: 17px;
+    line-height: 17px;
+    display: inline-block;
+}
+.caption .link:hover{
+    text-decoration: none;
+}
+.caption .seprator{
+    margin: 0 10px;
+    border-right: 1px solid #bdbdbd;
+    font-weight: normal;
+}
+.caption .download{
+    background: url('/images/copilotPosting/ico-dwld.png') left center no-repeat;
+}
+.caption .choose{
+    background: url('/images/copilotPosting/ico-noMem.png') left center no-repeat;
+}
+
+/* grid view */
+.gridview-table{
+    border-top:1px solid #BDBDBD;
+    border-collapse: collapse;
+    width: 100%;
+}
+.gridview-table tr td{
+    border: solid #BDBDBD;
+    border-width: 0 0 1px 1px;
+    height: 318px;
+    vertical-align: top;
+}
+.gridview-table tr td:first-child {
+    border-width: 0 0 1px 0;
+}
+
+.gridview-table .col1{
+    min-width: 160px;
+    width: 31%;
+    height: 298px;
+    text-align: center;
+    padding-top: 20px;
+    float: left;
+    background: #f3f3f3;
+    border-right: 1px solid #dadada;
+    position: relative;
+}
+.gridview-table .memberPic{
+    padding-bottom: 8px;
+}
+.gridview-table .handle{
+    font-size: 14px;
+    font-weight: bold;
+}
+.gridview-table .handle:hover{
+    text-decoration: none;
+}
+.gridview-table .copilotStat{
+    font-size: 11px;
+}
+.gridview-table .copilotStat:hover{
+    text-decoration: none;
+}
+.gridview-table .track{
+    overflow: hidden;
+    padding-top: 12px;
+    position: relative;
+}
+.gridview-table .track a{
+    display: inline-block;
+    height: 31px;
+    width: 31px;
+    text-decoration: none;
+}
+.gridview-table .track a:first-child{
+    margin-right: 1px;
+}
+.track .dev{
+    background: url('/images/copilotPosting/ico-tc.png') left top no-repeat;
+}
+.track .studio{
+    background: url('/images/copilotPosting/ico-studio.png') left top no-repeat;
+}
+.gridview-table .compare{
+    font-size: 12px;
+    vertical-align: top;
+    padding-top: 18px;
+}
+.gridview-table .compare label{
+    color: #000;
+    line-height: 16px;
+    display: inline-block;
+    padding-left: 2px;
+    vertical-align: top;
+}
+.gridview-table .compare .chkCompare{
+    vertical-align: top;
+    height: 16px;
+    display: inline-block;
+}
+.gridview-table .col2{
+    padding-top: 20px;
+    float: left;
+    text-align: left;
+    min-width: 138px;
+    width: 27%;
+    padding-left: 3.3%;
+    font-size: 11px;
+    height: 298px;
+}
+.gridview-table .location{
+    height: 14px;
+    line-height: 14px;
+    padding-left: 21px;
+    padding-bottom: 10px;
+    background: url('/images/copilotPosting/ico-globe.png') left top no-repeat;
+}
+.gridview-table .fullfillMent span{
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 22px;
+}
+.gridview-table .fullfillMent .percent{
+    font-size: 24px;
+    line-height: 44px;
+    height: 44px;
+    text-align: center;
+    font-weight: bold;
+    color: #fffffe;
+    position: relative;
+    width: 138px;
+}
+.gridview-table .fullfillMent .percent.bgRed{
+    background: #ff0000;
+}
+.gridview-table .fullfillMent .percent.bgYellow{
+    background: #eea800;
+}
+.gridview-table .fullfillMent .percent.bgBlue{
+    background: #0048ff;
+}
+.gridview-table .fullfillMent .percent.bgGreen{
+    background: #008f14;
+}
+.gridview-table .fullfillMent .percent.bgGray{
+    background: #666666;
+}
+.gridview-table .corner{
+    background-image: url(/images/copilotPosting/bg-corners.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 3px;
+    width: 3px;
+}
+.gridview-table .tl{
+    top: 0;
+    left: 0;
+    background-position: top left;
+}
+.gridview-table .tr{
+    top: 0;
+    right: 0;
+    background-position: top right;
+}
+.gridview-table .bl{
+    bottom: 0;
+    left: 0;
+    background-position: bottom left;
+}
+.gridview-table .br{
+    bottom: 0;
+    right: 0;
+    background-position: bottom right;
+}
+.gridview-table .skills .title{
+    font-weight: bold;
+    font-size: 12px;
+    padding: 13px 0;
+}
+table.gridview-table .colSkills ul {
+    padding-left: 0;
+}
+table.gridview-table .colSkills ul li{
+    word-spacing: -1px;
+}
+
+.gridview-table .col3{
+    padding-top: 20px;
+    height: 298px;
+    float: left;
+    min-width: 175px;
+    width: 34.2%;
+    padding-left: 3.3%;
+    text-align: left;
+}
+.gridview-table .time{
+    height: 14px;
+    line-height: 14px;
+    padding-left: 21px;
+    padding-bottom: 10px;
+    font-size: 11px;
+    background: url('/images/copilotPosting/ico-time.png') left top no-repeat;
+}
+.gridview-table .workload{
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 10px;
+}
+.gridview-table .workload .value{
+    background: #777777;
+    position: relative;
+    height: 40px;
+    padding: 2px 0;
+    color: #fffffe;
+    text-align: center;
+    overflow: hidden;
+    width: 152px;
+}
+.gridview-table .workload .title{
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 22px;
+}
+.gridview-table .workload .value strong{
+    font-size: 24px;
+    line-height: 28px;
+}
+.gridview-table .workload .value .v1{
+    float: left;
+    border-right: 1px solid #5f5f5f;
+    width: 75px;
+}
+.gridview-table .workload .value .v2{
+    float: left;
+    border-left: 1px solid #858585;
+    width: 75px;
+}
+.gridview-table .xperience .title{
+    font-weight: bold;
+    font-size: 12px;
+    padding: 13px 0;
+}
+.gridview-table .colExperience .row {
+    padding-left: 0;
+}
+.gridview-table .colExperience .row .xp{
+    word-spacing: -1px;
+}
+.gridview-table .highlightedCell{
+    background: #FCFFE5;
+    border: 1px solid #D3D3D3;
+    text-align: center;
+    height: 47px;
+    padding-top: 10px;
+    width: 133px;
+    position: relative;
+}
+.gridview-table .corAlt .corner{
+    background-image: url('/images/copilotPosting/bg-corners-gray.png');
+    height: 6px;
+    width: 6px;
+}
+.gridview-table .corAlt .tl{
+    left: -1px;
+    top: -1px;
+}
+.gridview-table .corAlt .tr{
+    right: -1px;
+    top: -1px;
+}
+.gridview-table .corAlt .bl{
+    left: -1px;
+    bottom: -1px;
+}
+.gridview-table .corAlt .br{
+    right: -1px;
+    bottom: -1px;
+}
+.gridview-table  .pickupCell{
+    width: 150px;
+    height: 57px;
+    position: relative;
+}
+.gridview-table .inner{
+    height: 296px;
+}
+.gridview-table  .pickupCell .btn-red{
+    margin-bottom: 10px;
+}
+.gridview-table  .pickupCell .bMid{
+    width: 142px;
+    padding: 0;
+}
+.gridview-table .pickupCell.cpPicked,
+.gridview-table .pickupCell.rupPicked{
+    background: #f3f3f3;
+    border: 1px solid #D3D3D3;
+    text-align: center;
+}
+.gridview-table .pickupCell .corner{
+    display: none;
+}
+.gridview-table .pickupCell.cpPicked .corner,
+.gridview-table .pickupCell.rupPicked .corner{
+    display: inline-block;
+}
+.pickupCell .pickedCP{
+    display: none;
+}
+.pickupCell .pikedAsCP{
+    color: #da0000;
+    background: url('/images/copilotPosting/ico-tick-cp.png') left top no-repeat;
+    padding-left: 21px;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 11px;
+    text-align: left;
+    margin: 22px 0 0 0;
+}
+.pickupCell .pickedRunnerUp{
+    display: none;
+}
+.pickupCell .pikedAsRUP{
+    color: #333;
+    background: url('/images/copilotPosting/ico-tick-rup.png') left top no-repeat;
+    padding-left: 21px;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 11px;
+    text-align: left;
+    margin: 22px 0 0 0;
+}
+.listview-table .pickupCell .pikedAsRUP,
+.listview-table .pickupCell .pikedAsCP{
+    margin-top: 38px;
+}
+.compare-table .pickupCell .pikedAsRUP,
+.compare-table .pickupCell .pikedAsCP{
+    margin-top: 0;
+}
+.pickupCell.cpPicked .pickedCP{
+    display: block;
+    text-align: center;
+}
+.pickupCell.cpPicked .unPickedCP{
+    display: none;
+}
+.pickupCell.rupPicked .pickedRunnerUp{
+    display: block;
+    word-spacing: -1px;
+    text-align: center;
+}
+.pickupCell.rupPicked .unPickedCP{
+    display: none;
+}
+.rowSelCP .ribbon,
+.rowSelRUP .ribbon{
+    position: absolute;
+    left: 0;
+    top: -16px;
+    z-index: 999;
+    height: 67px;
+    width: 67px;
+    background: url(/images/copilotPosting/ribbon-cp.png) left top no-repeat;
+}
+.gridview-table .rowSelCP .ribbon,
+.gridview-table .rowSelRUP .ribbon{
+    top: -1px;
+}
+.rowSelRUP .ribbon{
+    background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
+}
+.submission-table tr td{
+    height: 388px;
+}
+.submission-table .col1, .submission-table .col2, .submission-table .col3{
+    height: 368px;
+}
+
+/* compare list */
+.compareList{
+    overflow: hidden;
+    border: solid #BDBDBD;
+    border-width: 1px 0;
+    position: relative;
+}
+.compareList li{
+    list-style: none;
+}
+.compareList .cLeft{
+    float: left;
+    background: #F3F3F3;
+}
+.compareList .cLeft ul{
+    width: 153px;
+    overflow: hidden;
+}
+.compareList .cLeft li{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    width: 153px;
+    border-top: 1px solid #BDBDBD;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.compareList .cLeft li p{
+    bottom: -50%;
+    position: relative;
+    line-height: 0px;
+    padding-left: 8px;
+}
+.compareList .cLeft li.doubleLine p{
+    line-height: 16px;
+    margin-top: -16px;
+}
+.compareList .cRight{
+    background: #fff;
+    position: absolute;
+    left: 153px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.compareList .cRight .cell{
+    border-left: 1px solid #DADADA;
+    border-right: 1px solid #DADADA;
+    border-top: 1px solid #BDBDBD;
+    margin-right: -1px;
+}
+.compareList .cRight ul{
+    overflow: hidden;
+}
+.compareList .cRight ul .colCopilot{
+    float: left;
+    width: 25%;
+    display: inline;
+}
+.compareList .cRight ul .colCopilot.hide{
+    display: none;
+}
+
+.compareList .cRight .rCopilot{
+    height: 320px;
+    border-top: none;
+    text-align: center;
+    position: relative;
+}
+.compareList .cLeft li.rCopilot{
+    height: 320px;
+    border-top: none;
+}
+.compareList .rFullFill{
+    height: 52px;
+}
+.compareList .rWorkLoad{
+    height: 66px;
+    text-align: center;
+}
+.compareList .rMatchedXp{
+    height: 138px;
+}
+.compareList .rExperience{
+    height: 220px;
+}
+.compareList .rSkills{
+    height: 144px;
+}
+.compareList .rSbumission{
+    height: 70px;
+}
+.compareList .rPickUp{
+    height: 85px;
+}
+.compareList .colFulFill{
+    padding-top:
+}
+
+.compareList .rFullFill span{
+    line-height: 53px;
+}
+.compareList .cellWorkload p:first-child{
+    padding-top:13px;
+}
+.compareList .colExperience .row:first-child{
+    padding-top: 10px;
+}
+.compareList .colSkills ul:first-child{
+    padding-top: 10px;
+}
+.compareList .colPickup .row:first-child{
+    padding-top: 5px;
+}
+.compareList .rPickUp div{
+    padding-top: 10px !important;
+}
+
+.compareList .dragSection{
+    overflow: hidden;
+    height: 23px;
+    border-bottom: 1px solid #A8ABAD;
+    padding: 5px 8px 0 8px;
+    margin-bottom: 14px;
+}
+
+
+/* compare table */
+.compare-table{
+    border-collapse: collapse;
+    border-top: 1px solid #a8abad;
+    width: 100%;
+}
+.compare-table thead th{
+    height: 26px;
+    border-bottom: 1px solid #a8abad;
+    border-left: 1px solid #dadada;
+    width: auto;
+}
+.compare-table thead th:first-child{
+    background: #F3F3F3;
+    border: none;
+    width: 154px;
+}
+.compare-table td{
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #a8abad;
+    vertical-align: middle;
+}
+.compareItems .rFullFill{
+    height: 52px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+.compare-table .rWorkLoad td{
+    height: 66px;
+    text-align: center;
+}
+.compare-table .rMatchedXp td{
+    height: 138px;
+}
+.compare-table .rExperience td{
+    height: 220px;
+}
+.compare-table .rSkills td{
+    height: 144px;
+}
+.compare-table .rSbumission td{
+    height: 70px;
+}
+.compare-table .rPickUp td{
+    height: 85px;
+}
+.compare-table .rCopilot{
+    text-align: center;
+    height: 292px;
+}
+.compareItems .rCopilot .colCopilot{
+    position: relative;
+}
+.compareItems .rCopilot .memberPic{
+    padding-bottom: 6px;
+}
+.compareItems .rCopilot .handle{
+    font-size: 14px;
+}
+.compareItems .rCopilot .track{
+    padding-top: 10px;
+}
+.compareItems .rCopilot .track a{
+    display: inline-block;
+    height: 31px;
+    width: 31px;
+    text-decoration: none;
+    margin-left: 6px;
+}
+.compareItems .rCopilot .timestamp{
+    padding-top: 13px;
+    font-size: 12px;
+}
+.compareItems .rCopilot .copilotStat{
+    margin-top: 12px;
+    font-size: 12px;
+    padding-left: 21px;
+    line-height: 17px;
+    height: 17px;
+    display: inline-block;
+    background:  url('/images/copilotPosting/ico-view-cp.png') left top no-repeat;
+}
+.compareItems .rCopilot .copilotStat:hover{
+    text-decoration: none;
+}
+.pickupCell .submitedFile:hover{
+    text-decoration: none;
+}
+
+.compare-table td:first-child{
+    background: #f3f3f3;
+    border-left: none;
+    padding-left: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+}
+.compare-table th{
+    padding: 0 6px;
+    line-height: 27px;
+}
+.compareItems .dragSection .reorder{
+    background: url('/images/copilotPosting/btn-drag.png') left top no-repeat;
+    cursor: move;
+    color: #999999;
+    font-size: 11px;
+    font-weight: normal;
+    display: inline-block;
+    height: 17px;
+    line-height: 20px;
+    padding-left: 22px;
+}
+.compareItems .dragSection .reorder:hover{
+    background: url('/images/copilotPosting/btn-drag.png') left bottom no-repeat;
+}
+.compareItems .dragSection .close{
+    display: inline-block;
+    height: 17px;
+    line-height: 17px;
+    width: 17px;
+    background: url('/images/copilotPosting/btn-close.png') left top no-repeat;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    z-index: 1001;
+}
+.compareItems .dragSection .close:hover{
+    background: url('/images/copilotPosting/btn-close.png') left bottom no-repeat;
+}
+.caption .comparisonResult{
+    font-size: 16px;
+}
+
+/* .dragging */
+.dragtable-drag-handle{
+    cursor: move;
+}
+.ui-sortable .ui-sortable-helper {
+    background: #F3F3F3;
+}
+
+#timeLineTip.tooltipContainer {
+    width: 185px;
+}
+.rCopilot .ribbonCP{
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 67px;
+    width: 67px;
+    z-index: 9999;
+    background: url(/images/copilotPosting/ribbon-cp.png) left top no-repeat;
+}
+.rCopilot .ribbonRUP{
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 67px;
+    width: 67px;
+    z-index: 9999;
+    background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
+}

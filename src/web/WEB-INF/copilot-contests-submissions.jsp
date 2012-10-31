@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin, tangzx
-  - Version: 1.3
+  - Author: GreatKevin, tangzx, GreatKevin
+  - Version: 1.4
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
@@ -11,6 +11,9 @@
   -
   - Version 1.3 BUGR-7279
   - fix button align issue
+  -
+  - Version 1.4 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+  - - Added copilot posting dashboard
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -29,6 +32,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/permissions.js?v=210124"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <script type="text/javascript">
@@ -83,7 +87,7 @@
                                     <c:set value="${viewData.contestStats.contest.id}" var="projectId"/>
                                     <div class="myCopilotsContestsList">
 
-                                        <jsp:include page="includes/copilot/contestStats.jsp"/>
+                                        <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
                                         <div class="container2 tabs3Container tabs3Special"
                                              id="CopilotPostingSubmissions">

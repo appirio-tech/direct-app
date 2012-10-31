@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version: 1.5
+  - Author: isv, GreatKevin
+  - Version: 1.6
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
@@ -18,6 +18,9 @@
   -
   - Version 1.5 (BUGR-6609) Change notes:
   - - Added the submission end date and contest end date in Schedule section.
+  -
+  - Version 1.6 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
+  - - Added copilot posting dashboard
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -41,6 +44,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
 	<link rel="stylesheet" href="/css/direct/copilotDetails.css?v=209437" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
     <script type="text/javascript" src="/scripts/copilots.js?v=213622"></script>
@@ -74,11 +78,11 @@
             ${doc.uploadedFileDesc} -->
             </c:forEach>
             
-            <c:forEach items="${copilotProjectTypes}" var="type" varStatus="loop" >
+            <c:forEach items="${viewData.dashboard.copilotProjectTypes}" var="type" varStatus="loop" >
                 experiences.push('${type}');
             </c:forEach>
-            extraExperience = '${otherManagingExperienceString}';
-            budget = '${budget}';
+            extraExperience = '${viewData.dashboard.otherManagingExperienceString}';
+            budget = '${viewData.dashboard.budget}';
             $('#start2TimeInput').getSetSSValue(getTimePart('${assetDTO.productionDate}'));
             $("#start2DateInput").datePicker().val(getDatePart('${assetDTO.productionDate}')).trigger('change');
         });
@@ -111,15 +115,44 @@
 <div class="orderReview">
 
 <div class="myCopilotsContests">
-   <span class="introductionHeadIcon"><img src="/images/copilot_contests_icon.png" alt="copilot contests"/></span>
+   <span class="introductionHeadIcon"><img src="/images/ico-copilotPosting.png" alt="copilot contests"/></span>
 
-    <h2 class="sectionHead"><c:out value="${viewData.contestStats.contest.title}"/></h2>
+    <h2 class="sectionHead"><c:out value="${viewData.contestStats.contest.title}"/>
+        <span class="fRight currentStatus">Copilot Posting Status
+
+            <c:set var="projectStatus" value="${viewData.contestStats.currentStatus}"/>
+            <c:choose>
+                <c:when test="${projectStatus eq 'Active'}">
+                    <c:choose>
+                        <c:when test="${viewData.dashboard.stalled}">
+                        </c:when>
+                        <c:otherwise>
+                            <span class="statActive">Active</span>
+                        </c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:when test="${projectStatus eq 'Draft'}">
+                    <span class="statDraft">Draft</span>
+                </c:when>
+                <c:when test="${projectStatus eq 'Deleted'}">
+
+                </c:when>
+                <c:when test="${projectStatus == 'Completed'}">
+                    <span class="statCompleted">Completed</span>
+                </c:when>
+                <c:otherwise>
+
+                </c:otherwise>
+            </c:choose>
+        </span>
+    </h2>
+
 </div>
 <!-- end .getCopilots -->
 
 <div class="myCopilotsContestsList">
 
-<jsp:include page="includes/copilot/contestStats.jsp"/>
+<jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
 <div class="container2 tabs3Container tabs3Special">
 
@@ -177,13 +210,13 @@
                     
                     <strong id="copilotTypesTextLabel">
                         <c:forEach var="copilotType" items="${allProjectCopilotTypes}" >
-                            <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">
+                            <c:if test="${fn:contains(viewData.dashboard.copilotProjectTypes, copilotType.key)}">
                                 ${copilotType.value}&nbsp;
                             </c:if>                               
                         </c:forEach>
                         
-                        <c:if test="${not empty otherManagingExperienceString}">
-                            ${otherManagingExperienceString}
+                        <c:if test="${not empty viewData.dashboard.otherManagingExperienceString}">
+                            ${viewData.dashboard.otherManagingExperienceString}
                         </c:if>
                     </strong>
                 </li>
@@ -191,10 +224,10 @@
                     <label>Budget :</label>
                     
                     <strong id="budgetTextLabel">
-                        <c:if test="${not empty budget}">
-                            $ ${budget}
+                        <c:if test="${not empty viewData.dashboard.budget}">
+                            $ ${viewData.dashboard.budget}
                         </c:if>
-                        <c:if test="${empty budget}">
+                        <c:if test="${empty viewData.dashboard.budget}">
                             Don't have a budget yet.
                         </c:if>
                     </strong>
@@ -259,7 +292,7 @@
                     <ul class="type1">
                         <c:forEach var="copilotType" items="${allProjectCopilotTypes}" end="${fn:length(allProjectCopilotTypes) / 2 - 0.5}">
                         <li>
-                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
+                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(viewData.dashboard.copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
                             <label for="${copilotType.value}">${copilotType.value}</label>
                         </li>
                         </c:forEach>      
@@ -267,7 +300,7 @@
                     <ul class="type3">
                         <c:forEach var="copilotType" items="${allProjectCopilotTypes}" begin="${fn:length(allProjectCopilotTypes) / 2 + 0.5}">
                         <li>
-                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
+                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(viewData.dashboard.copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
                             <label for="${copilotType.value}">${copilotType.value}</label>
                         </li>
                         </c:forEach>
@@ -276,7 +309,7 @@
                     <div class="clear"></div>
                     
                     <label class="otherExperience">Other:</label>
-                    <input type="text" class="text" id="otherExperience" value='${otherManagingExperienceString}'/>                    
+                    <input type="text" class="text" id="otherExperience" value='${viewData.dashboard.otherManagingExperienceString}'/>
                 </div>
             </div>            
             
@@ -286,12 +319,12 @@
                 
                 <ul>
                     <li>
-                        <input type="radio" class="radio" name="budget" id="haveBudget" <c:if test="${not empty budget}">checked='checked'</c:if> /> 
+                        <input type="radio" class="radio" name="budget" id="haveBudget" <c:if test="${not empty viewData.dashboard.budget}">checked='checked'</c:if> />
                         <label for="haveBudget">a. I have a budget</label>
-                         $&nbsp;<input id="projectBudgetInput" type="text" class="text" value="${budget}" />
+                         $&nbsp;<input id="projectBudgetInput" type="text" class="text" value="${viewData.dashboard.budget}" />
                     </li>
                     <li>
-                        <input type="radio" class="radio" name="budget" id="notHaveBudget" <c:if test="${empty budget}">checked='checked'</c:if>/> 
+                        <input type="radio" class="radio" name="budget" id="notHaveBudget" <c:if test="${empty viewData.dashboard.budget}">checked='checked'</c:if>/>
                         <label for="notHaveBudget">b. I don't have a budget yet.</label> 
                     </li>
                 </ul>                
@@ -602,7 +635,7 @@
 <!-- end #launchContestOut -->
 <if:isDraft typedContestBrief="${contestDTO}">
     <div id="resubmit">
-          <a href="javascript:activateContest();" class="button4">Activate</a>
+          <a href="javascript:activateContest();" class="activateButton"></a>
     </div>
 </if:isDraft>
 
