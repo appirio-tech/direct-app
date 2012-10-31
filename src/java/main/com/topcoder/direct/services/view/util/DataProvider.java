@@ -3952,7 +3952,7 @@ public class DataProvider {
         ResultSetContainer resultContainer = null;
 
         request.setContentHandle("non_admin_client_billing_accounts_v2");
-        request.setProperty("tcdirectids", concatenate(directProjectIds, ", "));
+        request.setProperty("uid", String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
         resultContainer = dataAccess.getData(request).get(
                 "non_admin_client_billing_accounts_v2");
 
@@ -4155,7 +4155,7 @@ public class DataProvider {
             }
             if (projects.size() > 0) {
                 request.setContentHandle("non_admin_client_billing_accounts_v2");
-                request.setProperty("tcdirectids", concatenate(projectIds, ", "));
+                request.setProperty("uid", String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
                 resultContainer = dataAccess.getData(request).get(
                         "non_admin_client_billing_accounts_v2");
             }
