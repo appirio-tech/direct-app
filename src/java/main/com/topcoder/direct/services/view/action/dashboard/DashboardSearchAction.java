@@ -69,6 +69,11 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      */
     private static final Map<DashboardSearchCriteriaType, String> SEARCH_CRITERIA_TYPES;
 
+    /**
+     * <p>
+     * The key value of project manager field in project meta data.
+     * </p>
+     */
     private static final Long PROJECT_MANAGER_KEY = 2L;
 
     /**
