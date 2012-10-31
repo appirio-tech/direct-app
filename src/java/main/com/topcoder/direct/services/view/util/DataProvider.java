@@ -605,8 +605,17 @@ import java.util.Map.Entry;
  * </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka
- * @version 5.2
+ * <p>
+ * Version 5.3 (Release Assembly - TopCoder Direct Billing Project Links)
+ * <ul>
+ *     <li>Update {@link #getProjectsCustomers(long[])} to use new queries</li>
+ *     <li>Update {@link #getDirectProjectsForClient(String)} to use new queries</li>
+ *     <li>Add method {@link #getDashboardClientBillingProjectMappingsV2(com.topcoder.security.TCSubject)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues
+ * @version 5.3
  * @since 1.0
  */
 public class DataProvider {
@@ -3936,16 +3945,16 @@ public class DataProvider {
             return result;
         }
 
-        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
 
         Request request = new Request();
 
         ResultSetContainer resultContainer = null;
 
-        request.setContentHandle("non_admin_client_billing_accounts");
-        request.setProperty("tdpis", concatenate(directProjectIds, ", "));
+        request.setContentHandle("non_admin_client_billing_accounts_v2");
+        request.setProperty("tcdirectids", concatenate(directProjectIds, ", "));
         resultContainer = dataAccess.getData(request).get(
-                "non_admin_client_billing_accounts");
+                "non_admin_client_billing_accounts_v2");
 
         if (resultContainer != null) {
 
@@ -3971,8 +3980,8 @@ public class DataProvider {
      * @since 3.9
      */
     public static Map<Long, String> getDirectProjectsForClient(String clientName) throws Exception {
-        String handlerName = "client_direct_project_ids";
-        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        String handlerName = "client_direct_project_ids_v2";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
 
         Request request = new Request();
 
@@ -4104,6 +4113,108 @@ public class DataProvider {
 
         return result;
     }
+
+    /**
+     * Gets the clients and billing accounts for the admin user. This method is a new method to replace the
+     * method getDashboardClientBillingProjectMappings. It gets the project and billing account relationship
+     * directly from the direct_project_account table. The old method is kept in case it's needed by other
+     * places.
+     *
+     * @param tcSubject the tcSubject
+     * @return the list of billing projects.
+     * @throws Exception if any error occurs.
+     * @since 5.3
+     */
+    public static Map<String, Object> getDashboardClientBillingProjectMappingsV2(TCSubject tcSubject)
+            throws Exception {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        Map<Long, Map<Long, String>> clientBillingMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, Map<Long, String>> clientProjectMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, Map<Long, String>> billingProjectMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, String> clientsMap = new HashMap<Long, String>();
+        Map<Long, Long> projectClientMap = new HashMap<Long, Long>();
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+
+        ResultSetContainer resultContainer = null;
+
+        if (DirectUtils.isTcOperations(tcSubject) || DirectUtils.isTcStaff(tcSubject)) {
+            request.setContentHandle("admin_client_billing_accounts_v2");
+            resultContainer = dataAccess.getData(request).get(
+                    "admin_client_billing_accounts_v2");
+        } else {
+            List<ProjectBriefDTO> projects = getUserProjectsList(tcSubject.getUserId());
+            long[] projectIds = new long[projects.size()];
+            int index = 0;
+            for(ProjectBriefDTO data : projects) {
+                projectIds[index] = data.getId();
+                index++;
+            }
+            if (projects.size() > 0) {
+                request.setContentHandle("non_admin_client_billing_accounts_v2");
+                request.setProperty("tcdirectids", concatenate(projectIds, ", "));
+                resultContainer = dataAccess.getData(request).get(
+                        "non_admin_client_billing_accounts_v2");
+            }
+        }
+
+
+        if (resultContainer != null) {
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+                long billingId = row.getLongItem("billing_account_id");
+                String billingName = row.getStringItem("billing_account_name");
+                long clientId = row.getLongItem("client_id");
+                String clientName = row.getStringItem("client_name");
+                long directProjectId = row.getLongItem("direct_project_id");
+                String directProjectName = row.getStringItem("direct_project_name");
+                // put into clients map
+                clientsMap.put(clientId, clientName);
+
+                // put into clientBillingMap
+                Map<Long, String> billingsForClient = clientBillingMap.get(clientId);
+                if (billingsForClient == null) {
+                    billingsForClient = new HashMap<Long, String>();
+                    clientBillingMap.put(clientId, billingsForClient);
+                }
+
+                billingsForClient.put(billingId, billingName);
+
+                // put into clientProjectMap
+                Map<Long, String> projectForClient = clientProjectMap.get(clientId);
+                if (projectForClient == null) {
+                    projectForClient = new HashMap<Long, String>();
+                    clientProjectMap.put(clientId, projectForClient);
+                }
+
+                projectForClient.put(directProjectId, directProjectName);
+
+                // put into billingProjectMap
+                Map<Long, String> projectForBilling = billingProjectMap.get(billingId);
+                if (projectForBilling == null) {
+                    projectForBilling = new HashMap<Long, String>();
+                    billingProjectMap.put(billingId, projectForBilling);
+                }
+
+                projectForBilling.put(directProjectId, directProjectName);
+
+                projectClientMap.put(directProjectId, clientId);
+            }
+
+        }
+
+        result.put("client.billing", clientBillingMap);
+        result.put("client.project", clientProjectMap);
+        result.put("billing.project", billingProjectMap);
+        result.put("clients", clientsMap);
+        result.put("project.client", projectClientMap);
+
+        return result;
+    }
+
 
     /**
      * Gets the cost report details with the given paramters. The method returns a list of CostDetailsDTO. Each

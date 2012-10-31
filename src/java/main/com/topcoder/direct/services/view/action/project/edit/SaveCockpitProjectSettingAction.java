@@ -428,6 +428,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
 
             setResult(result);
 
+            // remove mappings
+            getSessionData().getSession().removeAttribute("clientBillingProjectMappings");
+
         } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);
@@ -461,6 +464,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
             result.put("operation", "remove");
 
             setResult(result);
+
+            // remove mappings
+            getSessionData().getSession().removeAttribute("clientBillingProjectMappings");
 
         } catch (Throwable e) {
             if (getModel() != null) {

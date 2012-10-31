@@ -373,9 +373,17 @@ import java.util.*;
  * </p>
  * </p>
  *
+ * <p>
+ * Version 1.9.1 (Release Assembly - TopCoder Direct Billing Project Links)
+ * <ul>
+ *     <li>Update getDashboardClientBillingProjectMappings to use the new method to retrieve the client, billing, project mappings.
+ *     The new method gets the mappings from direct_project_account table</li>
+ * </ul>
+ * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.9.0
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
+ * @version 1.9.1
  */
 public final class DirectUtils {
     /**
@@ -1400,6 +1408,11 @@ public final class DirectUtils {
     /**
      * Gets the mappings of client, billing and projects.
      *
+     * <p>
+     *     Update in version 1.9.1:
+     *     - use getDashboardClientBillingProjectMappingsV2 to get mappings
+     * </p>
+     *
      * @param tcSubject the tcSubject
      * @return the mapping of client, billing and projects
      * @throws Exception if any error occurs.
@@ -1411,7 +1424,7 @@ public final class DirectUtils {
         Object value = request.getSession().getAttribute("clientBillingProjectMappings");
 
         if (value == null) {
-            result = DataProvider.getDashboardClientBillingProjectMappings(tcSubject);
+            result = DataProvider.getDashboardClientBillingProjectMappingsV2(tcSubject);
             request.getSession().setAttribute("clientBillingProjectMappings", result);
         } else {
             result = (Map<String, Object>) value;
