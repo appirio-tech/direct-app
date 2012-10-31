@@ -278,6 +278,11 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
                     redirectBackUrl.append("https://");
                     redirectBackUrl.append(request.getServerName());
+
+                    if(request.getServerPort() != 443) {
+                        redirectBackUrl.append(":" + request.getServerPort());
+                    }
+
                     redirectBackUrl.append(request.getRequestURI());
                     if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
                         redirectBackUrl.append('?');
