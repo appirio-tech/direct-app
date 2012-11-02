@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
          var rightSidebarData = <s:property value="viewData.userProjects.jsonResult" escape="false"/>;
-         var currentProjectName = '<s:property value="sessionData.currentProjectContext.name"/>';
+         var currentProjectName = '<s:property value="sessionData.currentProjectContext.name" escapeJavaScript="true"/>';
          var isInProjectScope = ('project' == $.trim("<s:property value='#request.PAGE_TYPE'/>"));
          var currentProjectContests;
     </script>
@@ -138,7 +138,7 @@
                                             <span class="<s:property value="status.shortName"/>"></span>
                                         </td>
                                         <td class="leftAlign">
-                                            ${contest.title}
+                                            <c:out value="${contest.title}" />
                                         </td>
                                         <td>
                                             <img src="/images/<s:property value="contestType.letter"/>_small.png"
