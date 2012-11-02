@@ -662,7 +662,7 @@
                     <!-- content -->
                     <div class="modalBody">
                         <div class="description">
-                            <p>${viewData.projectGeneralInfo.project.description}</p>
+                            <p><c:out value="${viewData.projectGeneralInfo.project.description}"/></p>
                         </div>
                         <div class="buttonArea">
                             <a href="javascript:;" title="OK" class="button6 closeModal"><span class="left"><span class="right">OK</span></span></a>
