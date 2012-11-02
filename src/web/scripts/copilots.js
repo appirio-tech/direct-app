@@ -485,7 +485,7 @@ function addNewProject() {
 
 function addFileItem(doc) {
     var template = unescape($('#uploadedDocumentTemplate').html());
-    var html = $.validator.format(template, doc['documentId'], doc['fileName'], doc['description']);
+    var html = $.validator.format(template, doc['documentId'], doc['fileName'], doc['description'].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
     $('.fileUpload dl').append(html);
 }
 
@@ -876,7 +876,7 @@ function handleDraftSaving(jsonResult) {
                              var pos = doc.url.lastIndexOf('/');
                              d['fileName'] = doc.url.substring(pos + 1);
                              d['documentId'] = doc.id;
-                             d['description'] = doc.documentName;
+                             d['description'] = doc.documentName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
                              exsitingDocuments.push(d);
                          });
                          restorePrevData();
