@@ -250,10 +250,10 @@ function initCustomStep6() {
             var tmpTR = $("<tr>");
             var tmpTD = $("<td>");
             tmpTD.append('<input class="selectUserCheck" type="checkbox">');
-            tmpTD.append('<span class="group">' + $("#createForumModal .projectName input").val() + '</span>');
+            tmpTD.append('<span class="group">' + $("#createForumModal .projectName input").val().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</span>');
             tmpTR.append(tmpTD);
             tmpTD = $("<td>");
-            tmpTD.append('<span class="group">' + $("#createForumModal .descProject textarea").val() + '</span>');
+            tmpTD.append('<span class="group">' + $("#createForumModal .descProject textarea").val().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</span>');
             tmpTR.append(tmpTD);
             tmpTD = $('<td class="checkbox">');
             tmpTD.append('<a class="deleteIcon" href="javascript:;">')

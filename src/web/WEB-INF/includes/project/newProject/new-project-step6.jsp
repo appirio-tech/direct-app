@@ -74,10 +74,10 @@
                         <c:forEach items="${viewData}" var="template">
                         <tr>
                             <td>
-                                <span class="group predefined">${template.forumName}</span>
+                                <span class="group predefined"><c:out value="${template.forumName}" /></span>
                             </td>
                             <td>
-                                <span class="group">${template.forumDescription}</span>
+                                <span class="group"><c:out value="${template.forumDescription}" /></span>
                             </td>
                             <td class="checkbox">
                             </td>
