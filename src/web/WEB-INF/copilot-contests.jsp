@@ -176,7 +176,7 @@
                                                             <c:out value="${contest.contest.title}"/></a>
                                                     </td>
                                                     <td class="alignLeft">
-                                                        <a href="../projectOverview?formData.projectId=${contest.contest.project.id}">${contest.contest.project.name}</a>
+                                                        <a href="../projectOverview?formData.projectId=${contest.contest.project.id}"><c:out value="${contest.contest.project.name}" /></a>
                                                     </td>
                                                     <td>
                                                         <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${contest.startTime}"/> ET (GMT-400)
