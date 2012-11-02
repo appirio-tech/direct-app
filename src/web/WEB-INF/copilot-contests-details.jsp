@@ -65,7 +65,7 @@
                 <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
                 d['fileName'] = '${docName}';
                 d['documentId'] = ${doc.id};
-                d['description'] = '${doc.documentName}';
+                d['description'] = '${fn:escapeXml(doc.documentName)}';
                 exsitingDocuments.push(d);
                 addFileItem(d);
             </c:forEach>
@@ -266,7 +266,7 @@
             <!-- Contest Name -->
             <div class="row <s:if test="#contestStatus == 'Completed'">hide</s:if>">
                 <label for="contestNameInput2">Create a name for your Copilot Posting :</label>
-                <input type="text" class="text" id="contestNameInput2" value="${assetDTO.name}"/>
+                <input type="text" class="text" id="contestNameInput2" value="${fn:escapeXml(assetDTO.name)}"/>
             </div>
 
             <!-- Billing Account -->
@@ -580,7 +580,7 @@
                     <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
                     <td class="fileName"><span>${loop.index + 1}.</span>
                         <a href="${ctx}/launch/downloadDocument?documentId=${doc.id}"><c:out value="${docName}"/></a></td>
-                    <td class="fileDesc"><c:out value="${doc.documentName}"/></td>
+                    <td class="fileDesc"><c:out value="${doc.documentName}" /></td>
                 </tr>
             </c:forEach>
             </table>
