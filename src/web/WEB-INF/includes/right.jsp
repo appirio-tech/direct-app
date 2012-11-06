@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
          var rightSidebarData = <s:property value="viewData.userProjects.jsonResult" escape="false"/>;
-         var currentProjectName = '<s:property value="sessionData.currentProjectContext.name" escapeJavaScript="true"/>';
+         var currentProjectName = '<s:property value="sessionData.currentProjectContext.name"/>';
          var isInProjectScope = ('project' == $.trim("<s:property value='#request.PAGE_TYPE'/>"));
          var currentProjectContests;
     </script>
