@@ -21,7 +21,7 @@ $(function(){
 		}
 	}); 
 	if($.cookie("noMaintenanceCookies") != "yes") {
-	switchMaintenance = true;
+	switchMaintenance = false;
 	} else {
         switchMaintenance = false;
     }
@@ -58,6 +58,6 @@ showMaintenanceNotification = function() {
 
 	if($.cookie("noMaintenanceCookies") != "yes") {
 	// display the ie6 notification
-		setTimeout(showMaintenanceNotification, 1000);
+	//	setTimeout(showMaintenanceNotification, 1000);
 	}
 
