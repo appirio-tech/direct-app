@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="isUrl inputRow hide">
-                            <input type="text" class="text" name="http://" value="http://" autocomplete="off"/> 
+                            <input type="text" class="text" name="https://" value="https://" autocomplete="off"/> 
                         </div>
                         <div class="isDirect inputRow hide">
                             <textarea cols="10" rows="10" class="text" autocomplete="off"></textarea>

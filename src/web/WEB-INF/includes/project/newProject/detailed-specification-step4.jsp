@@ -71,7 +71,7 @@
                     <div class="top">
                     
                         <div class="row url">
-                            <input type="text" class="text url" name="http://" value="http://"/>
+                            <input type="text" class="text url" name="https://" value="https://"/>
                             <p class="message padding">
                                 <span class="errorText">This field cannot be left empty.</span>
                             </p>

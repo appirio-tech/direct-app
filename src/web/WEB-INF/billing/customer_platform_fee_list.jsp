@@ -36,7 +36,7 @@
                         <span class="tipTop"></span>
                         <span class="tipBg">
                             <span class="pic"><img src="/images/ie_icon.png" alt="Internet Explorer 8" /></span>
-                            <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-8" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                            <a href="https://windows.microsoft.com/en-US/internet-explorer/downloads/ie-8" class="downloadSubmission"><span>DOWNLOAD</span></a>
                         </span>
                         <span class="tipBottom"></span>
                     </span>
@@ -46,7 +46,7 @@
                         <span class="tipTop"></span>
                         <span class="tipBg">
                             <span class="pic"><img src="/images/ff_icon.png" alt="Firefox 5.0" /></span>
-                            <a href="http://www.mozilla.com/en-US/firefox/fx/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                            <a href="https://www.mozilla.com/en-US/firefox/fx/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                         </span>
                         <span class="tipBottom"></span>
                     </span>
@@ -56,7 +56,7 @@
                             <span class="tipTop"></span>
                             <span class="tipBg">
                                 <span class="pic"><img src="/images/safari_icon.png" alt="Safari 5.0" /></span>
-                                <a href="http://www.apple.com/safari/download/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                                <a href="https://www.apple.com/safari/download/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                             </span>
                             <span class="tipBottom"></span>
                         </span>
@@ -66,7 +66,7 @@
                             <span class="tipTop"></span>
                             <span class="tipBg">
                                 <span class="pic"><img src="/images/chrome_icon.png" alt="Google Chrome" /></span>
-                                <a href="http://www.google.com/chrome/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                                <a href="https://www.google.com/chrome/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                             </span>
                             <span class="tipBottom"></span>
                         </span>

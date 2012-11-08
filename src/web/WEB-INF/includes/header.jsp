@@ -30,7 +30,7 @@
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-	<!-- topcoder maintenance module -->
+	<!-- topcoder maintenance module 
 	<div id="topcoder-maintenance-notification">
 		<div class="content">
 			<div class="alert">
@@ -49,7 +49,7 @@
 			</div>
 
 		</div>
-	</div>
+	</div>-->
 <!-- topcoder maintenance module ends -->
 
 <div id="header">
@@ -153,7 +153,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
-                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                            <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -205,7 +205,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
-                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                            <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -260,7 +260,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
-                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                            <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -311,7 +311,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
-                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                            <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -362,7 +362,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
-                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                            <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
