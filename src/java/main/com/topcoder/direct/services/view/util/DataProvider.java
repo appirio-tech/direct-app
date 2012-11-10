@@ -614,8 +614,15 @@ import java.util.Map.Entry;
  * </ul>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues
- * @version 5.3
+ *
+ * <p>
+ * Version 5.4 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
+ * <ol>
+ *     <li>Update method {@link #getEnterpriseDashboardVolumeView(long, long, long, long[], java.util.Date, java.util.Date, boolean)}</li>
+ * </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin
+ * @version 5.4
  * @since 1.0
  */
 public class DataProvider {
@@ -3136,11 +3143,17 @@ public class DataProvider {
      * @param projectCategoryIds the ids of project categories.
      * @param startDate the start date of the view
      * @param endDate the end date of the view
+     * @param month whether group by month, otherwise group by week
      * @return the volume view data.
      * @throws Exception if there is error.
      * @since 3.0
      */
-    public static List<EnterpriseDashboardVolumeViewDTO> getEnterpriseDashboardVolumeView(long projectId, long billingProjectId, long clientId, long[] projectCategoryIds, Date startDate, Date endDate) throws Exception {
+    public static List<EnterpriseDashboardVolumeViewDTO> getEnterpriseDashboardVolumeView(long projectId,
+                                                                                          long billingProjectId,
+                                                                                          long clientId,
+                                                                                          long[] projectCategoryIds,
+                                                                                          Date startDate, Date endDate, boolean month)
+            throws Exception {
         List<EnterpriseDashboardVolumeViewDTO> result = new ArrayList<EnterpriseDashboardVolumeViewDTO>();
 
         // argument checking
@@ -3150,30 +3163,30 @@ public class DataProvider {
         }
 
         String queryName = "direct_dashboard_enterprise_volume_view";
+
+        if(!month) {
+            queryName += "_week";
+        }
+
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
         String projectCategoryIdsList = concatenate(projectCategoryIds, ", ");
 
-        if(projectId != 0) {
+        if (projectId != 0) {
             request.setProperty("tcdirectid", String.valueOf(projectId));
             request.setProperty("billingaccountid", "0");
             request.setProperty("clientid", "0");
-        } else if(billingProjectId != 0) {
+        } else if (billingProjectId != 0) {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", String.valueOf(billingProjectId));
             request.setProperty("clientid", "0");
-        } else if(clientId != 0) {
+        } else if (clientId != 0) {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
             request.setProperty("clientid", String.valueOf(clientId));
         } else {
-            // check if user is admin first
-            if(!DirectUtils.isTcOperations(DirectStrutsActionsHelper.getTCSubjectFromSession())) {
-                throw new IllegalArgumentException("The client id does not exist");
-            }
-
             // this will get all the projects' data
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");

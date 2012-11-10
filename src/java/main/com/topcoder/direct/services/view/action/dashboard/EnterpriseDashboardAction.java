@@ -152,6 +152,13 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     private String dashboardViewType;
 
     /**
+     * The time group by type used by the new enterprise dashboard - analysis tab.
+     *
+     * @since 2.2
+     */
+    private String groupByType;
+
+    /**
      * <p>Constructs new <code>EnterpriseDashboardAction</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardAction() {
@@ -212,6 +219,28 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     }
 
     /**
+     * Gets the group by type.
+     *
+     * @return the group by type.
+     *
+     * @since 2.2
+     */
+    public String getGroupByType() {
+        return groupByType;
+    }
+
+    /**
+     * Sets the group by type.
+     *
+     * @param groupByType the group by type.
+     *
+     * @since 2.2
+     */
+    public void setGroupByType(String groupByType) {
+        this.groupByType = groupByType;
+    }
+
+    /**
      * <p>Gets the current session associated with the incoming request from client.</p>
      *
      * @return a <code>SessionData</code> providing access to current session.
@@ -257,10 +286,16 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         boolean isTableViewCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseTableViewCall");
         boolean isDrillTableCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseDrillTableCall");
         boolean isVolumeViewCall = false;
+        boolean isNewEnterpriseDashboard = false;
 
         // check if it's volume view call
         if (getDashboardViewType() != null && getDashboardViewType().equals("volumeView")) {
             isVolumeViewCall = true;
+        }
+
+        // whether it's the call of the new enterprise dashboard - analysis
+        if (getDashboardViewType() != null && getDashboardViewType().equals("newEnterpriseDashboard")) {
+            isNewEnterpriseDashboard = true;
         }
 
         admin = DirectUtils.isTcOperations(currentUser) || DirectUtils.isTcOperations(currentUser);
@@ -385,7 +420,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         if (isVolumeViewCall) {
 
             List<EnterpriseDashboardVolumeViewDTO> volumeViewData = DataProvider.getEnterpriseDashboardVolumeView(projectIds[0],
-                    billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate);
+                    billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate, true);
 
             setResult(generateVolumeViewData(volumeViewData, categoryIds,
                     formData.getContestStatus(), startDate, endDate, projectCategories));
@@ -742,9 +777,75 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
             result.put("contestTypeAvgCost", contestTypeAvgCost);
 
+            // get volume view data for the new enterprise dashboard - analysis
+            if(isNewEnterpriseDashboard) {
+                EnterpriseDashboardStatPeriodType groupType = EnterpriseDashboardStatPeriodType.forName(getGroupByType());
+
+                boolean monthGroupBy = !EnterpriseDashboardStatPeriodType.WEEK.equals(groupType);
+
+                // get market volume data
+                List<EnterpriseDashboardVolumeViewDTO> marketVolumeData = DataProvider.getEnterpriseDashboardVolumeView(0, 0, 0, categoryIds, startDate, endDate, monthGroupBy);
+
+                // get customer volume data
+                List<EnterpriseDashboardVolumeViewDTO> customerVolumeData = DataProvider.getEnterpriseDashboardVolumeView(projectIds[0],
+                                                                  billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate, monthGroupBy);
+
+                List<EnterpriseDashboardAggregatedStatDTO> volumes = new ArrayList<EnterpriseDashboardAggregatedStatDTO>();
+
+
+                for(EnterpriseDashboardVolumeViewDTO marketItem : marketVolumeData) {
+                    String timeLabel = getTimeLabel(marketItem.getStatisticDate(), groupType);
+                    final EnterpriseDashboardAggregatedStatDTO volumeStat = getStat(timeLabel, volumes);
+                    volumeStat.setOverallContestsCount(volumeStat.getOverallContestsCount() + marketItem.getCompletedContestsNumber());
+                }
+
+                for(EnterpriseDashboardVolumeViewDTO customerItem : customerVolumeData) {
+                    String timeLabel = getTimeLabel(customerItem.getStatisticDate(), groupType);
+                    final EnterpriseDashboardAggregatedStatDTO volumeStat = getStat(timeLabel, volumes);
+                    volumeStat.setClientContestsCount(volumeStat.getClientContestsCount() + customerItem.getCompletedContestsNumber());
+                }
+
+                Collections.sort(volumes, new LabelComparator(groupType));
+
+                List<Map<String, String>> volumesResult = new ArrayList<Map<String, String>>();
+
+                for(EnterpriseDashboardAggregatedStatDTO resultItem : volumes) {
+                    Map<String, String> m = new HashMap<String, String>();
+                    m.put("date", resultItem.getTimePeriodLabel());
+                    m.put("tc", String.valueOf(resultItem.getOverallContestsCount()));
+                    m.put("customer", String.valueOf(resultItem.getClientContestsCount()));
+                    volumesResult.add(m);
+                }
+
+                result.put("volume", volumesResult);
+            }
+
             setResult(result);
      
         }
+    }
+
+    /**
+     * Gets the time label of a date based on the time group by type.
+     *
+     * @param time the date
+     * @param groupByType the group by time
+     * @return the time string representation.
+     * @since 2.2
+     */
+    private String getTimeLabel(Date time, EnterpriseDashboardStatPeriodType groupByType) {
+        switch (groupByType) {
+            case WEEK :
+                return getWeekLabel(time);
+            case MONTH:
+                return getMonthLabel(time);
+            case QUARTER:
+                return getQuarterLabel(time);
+            case YEAR:
+                return getYearLabel(time);
+        }
+
+        return null;
     }
 
     /**

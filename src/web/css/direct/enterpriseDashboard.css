@@ -11,8 +11,11 @@
 * Version 1.2 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
 * - Changed the margin of datepicker in active contests
 *
-* Author: GreatKevin, hanshuai
-* Version 1.2
+* Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
+* - Updated the analysis page
+*
+* Author: GreatKevin, hanshuai, GreatKevin
+* Version 1.3
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -22,6 +25,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     outline: 0 none;
     padding: 0;
     vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
 }
 
 .dashboardPage #content {
@@ -372,6 +379,13 @@ input{
 				/* text shadow */
 				text-shadow:#ffffff 1px 1px 0;
 				}
+
+                    #mainSection .analyticsContainer  .filterPanel .filterPanelHeader h3{
+                        padding:0 8px 0 14px;
+                        font-size: 18px;
+                    }
+
+
 				
 			#mainSection .filterPanel .filterPanelHeader dt{
 				width:auto;
@@ -385,6 +399,9 @@ input{
 				padding:0 4px 0 15px;
 				background:url(/images/bg_line_filter_header.png) no-repeat left center;
 				}
+                     #mainSection .analyticsContainer .filterPanel .filterPanelHeader dt{
+                         padding:0 4px 0 8px;
+                     }
 				
 			#mainSection .filterPanel .filterPanelHeader dd{
 				width:auto;
@@ -397,7 +414,10 @@ input{
 				/* text shadow */
 				text-shadow:#ffffff 1px 1px 0;
 				}
-			
+                    #mainSection .analyticsContainer .filterPanel .filterPanelHeader dd {
+                        padding:0 8px 0 0;
+                    }
+
 			/* filterPanelButton */
 			#mainSection .filterPanel .filterPanelHeader .filterPanelButton{
 				width:auto;
@@ -4681,6 +4701,7 @@ input{
 						width:auto;
 						float:left;
 						display:inline;
+                                                margin: 3px;
 						}
 					
 					#mainSection .analyticsSection .filterForAnalytics .column .row .selectWrapper li span{
@@ -4689,6 +4710,10 @@ input{
 						line-height:19px;
 						cursor:pointer;
 						}
+
+                        #mainSection .analyticsSection .displayButton input {
+                            margin: 3px;
+                        }
 						
 		/* View */
 		#mainSection .analyticsSection .analyticsView{
@@ -4755,7 +4780,7 @@ input{
 							}
 							
 						#mainSection .analyticsSection .analyticsView .viewTitle ul li a.tableView{
-							background-image:url(/images/btn-table.png);
+							background-image:url(/images/btn-table-new.png);
 							}
 							
 						#mainSection .analyticsSection .analyticsView .viewTitle ul li.active a{
@@ -5181,6 +5206,7 @@ input{
 		border-top:0;
 		padding:10px 20px;
 		border-top:#bdbdbd solid 1px;
+                border-bottom:#bdbdbd solid 1px;
 		background:url(/images/bg_page.png) repeat-x left top;
 		}
 		
@@ -5225,6 +5251,10 @@ input{
 				display:inline;
 				background-image:none;
 				}
+
+            #mainSection .analyticsSection .lineViewContainer .buttonArea li.quarter{
+                width:66px;
+            }
 				
 			#mainSection .analyticsSection .lineViewContainer .buttonArea .displayButton li{
 				width:auto;
@@ -7415,4 +7445,13 @@ TABLE#activeContestData TD SPAN.milestone{
 TABLE#activeContestData TD SPAN.failedReview{
     color: #dc0000;
     background: url(../../images/milestone_ico.png) no-repeat left 0px;
+}
+
+.filterForAnalytics .filterContainer {
+    border: none;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 11px;
 }

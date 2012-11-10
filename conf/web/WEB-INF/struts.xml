@@ -1584,6 +1584,10 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/active-contests.jsp</result>
         </action>
+        <action name="analysis" class="enterpriseDashboardAnalysisAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/enterpriseDashboard/analysis.jsp</result>
+        </action>
         <action name="getTotalSpend" method="getTotalSpend" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />

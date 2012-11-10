@@ -14,8 +14,11 @@
  * Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
  * - Add JS for the active contests
  *
+ * Version 1.4 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
+ * - Add JS for the analysis tab
+ *
  * @author GreatKevin, hanshuai
- * @version 1.3
+ * @version 1.4
  */
 var chart;
 var financialTable;
@@ -30,6 +33,9 @@ var prevMonthTotal;
 var projectToSync;
 var projectFilterToSync;
 var projectFilterValueToSync;
+
+// for the analysis
+var analysisData;
 
 var sStdMenu =
     '<em>|</em><span>Show: </span><select size="1" name="dataTableLength" id="dataTableLength">' +
@@ -1511,6 +1517,57 @@ function renderFinancialTab() {
     loadCurrentPrevMonthSpend();
 }
 
+function getRequestForAnalysis() {
+    var request = {};
+    request.customerIds = [$("#customer").val()];
+    request.billingAccountIds = [$("#billingAccount").val()];
+    request.projectIds = [$("#project").val()];
+    var projectCategoryIds = [];
+    $(".selectWrapper ul li:gt(0)").each(function(){
+        if($(this).hasClass("selected")) {
+            projectCategoryIds.push($(this).find('input').attr('value'));
+        }
+    })
+    request.projectCategoryIds = projectCategoryIds;
+
+    var groupType = $("#timeDimension").val();
+    // get the start date and end date
+    if (groupType == 'Week') {
+        request.startDate = $("#endDateBegin").val();
+        request.endDate = $("#endDateEnd").val();
+    } else if (groupType == 'Month') {
+        var startTime = Date.parse($("select[name=startYear]").val() + '-' + ($("select[name=startMonth]").val()/1 + 1));
+        var endTime = Date.parse($("select[name=endYear]").val() + '-' + ($("select[name=endMonth]").val()/1 + 1));
+        endTime = new Date(endTime.getFullYear(), endTime.getMonth() + 1, 0);
+        request.startDate = $.datepicker.formatDate('mm/dd/yy', startTime);
+        request.endDate =  $.datepicker.formatDate('mm/dd/yy', endTime);
+    } else if (groupType == 'Quarter') {
+        var startMonth = $("select[name=startQuarter]").val() * 3 - 2;
+        var endMonth = $("select[name=endQuarter]").val() * 3;
+        var startTime = Date.parse($("select[name=startYear]").val() + '-' + startMonth);
+        var endTime = Date.parse($("select[name=endYear]").val() + '-' + endMonth);
+        endTime = new Date(endTime.getFullYear(), endTime.getMonth() + 1, 0);
+        request.startDate = $.datepicker.formatDate('mm/dd/yy', startTime);
+        request.endDate =  $.datepicker.formatDate('mm/dd/yy', endTime);
+    } else if (groupType == 'Year') {
+        var startTime = Date.parse($("select[name=startYear]").val() + '-' + 1);
+        var endTime = Date.parse($("select[name=endYear]").val() + '-' + 12);
+        endTime = new Date(endTime.getFullYear(), endTime.getMonth() + 1, 0);
+        request.startDate = $.datepicker.formatDate('mm/dd/yy', startTime);
+        request.endDate =  $.datepicker.formatDate('mm/dd/yy', endTime);
+    }
+
+    if(Date.parse(request.startDate) > Date.parse(request.endDate)) {
+        $(".button .errorMessage").text("start time should not larger than the end date");
+        return;
+    } else {
+        $(".button .errorMessage").text('');
+    }
+
+    var data = {formData:request, groupByType:groupType, dashboardViewType: "newEnterpriseDashboard"};
+    return data;
+}
+
 
 $(document).ready(function () {
 
@@ -1885,9 +1942,9 @@ $(document).ready(function () {
 
         $('#mainSection .analyticsSection .lineViewContainer #lineView').css({'width':$('#mainSection').width() - 2, 'height':'360px'});
         $('#activeContest .filter .date-pick').css('width', ($('#activeContest .thirdCokumn').width() - 136) / 2);
-        $('.analyticsContainer .datePickerWrapper').css('width', ($('#mainSection').width() - $('.secondColumn').width() - $('.thirdColumn').width() - 144) / 2);
-        $('.analyticsContainer .date-pick').css('width', ($('#mainSection').width() - $('.secondColumn').width() - $('.thirdColumn').width() - 220) / 2);
-        $('.analyticsContainer .groupBy').css('width', ($('.analyticsContainer .firstColumn').width() - 190) / 2);
+        //$('.analyticsContainer .datePickerWrapper').css('width', ($('#mainSection').width() - $('.secondColumn').width() - $('.thirdColumn').width() - 144) / 2);
+        //$('.analyticsContainer .date-pick').css('width', ($('#mainSection').width() - $('.secondColumn').width() - $('.thirdColumn').width() - 220) / 2);
+        //$('.analyticsContainer .groupBy').css('width', ($('.analyticsContainer .firstColumn').width() - 190) / 2);
         $('.volumeView .tableData .ajaxTableLoader,.volumeView .tableData .noData').css({'margin-left':$('#mainSection').width() / 2 + 15, 'margin-top':'90px'});
         $('#calendarView .filter .filterContainer .filterValuesColumn').css('width', $('#mainSection').width() - $('#calendarView .filter .filterContainer .customerColumn').width() - $('#calendarView .filter .filterContainer .projectFiltersColumn').width() - $('#calendarView .filter .filterContainer .button').width() - 10);
 
@@ -1989,7 +2046,6 @@ $(document).ready(function () {
                 }
             });
         }
-
     }
 
 
@@ -2081,4 +2137,924 @@ $(document).ready(function () {
             "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>'
         });
     }
+
+    // analysis
+    if($(".analyticsIcon").parents("li").hasClass("active")) {
+
+        // setup codes
+        $('.analyticsContainer .groupBy').css('width',($('.analyticsContainer .firstColumn').width()-190)/2);
+        $('.analyticsContainer .datePickerWrapper').css('width',($('#mainSection').width()-$('.secondColumn').width()-$('.thirdColumn').width()-144)/2);
+        $('.analyticsContainer .date-pick').css('width',($('#mainSection').width()-$('.secondColumn').width()-$('.thirdColumn').width()-220)/2);
+
+        // setup filter panel - collapse / expand
+        $('.filterForAnalytics .folder').live('click',function(){
+            if($(this).hasClass('unfolder')){
+                $(this).removeClass('unfolder');
+                $(this).parents('.filterTitle').css('border-bottom','#bdbdbd solid 1px');
+                $('.filterForAnalytics .filterContainer').show();
+            }else{
+                $(this).addClass('unfolder');
+                $(this).parents('.filterTitle').css('border-bottom','none');
+                $('.filterForAnalytics .filterContainer').hide();
+            }
+        });
+
+        // setup chart view - collapse / expand
+        $('.analyticsView .folder').live('click',function(){
+            if($(this).hasClass('unfolder')){
+                $(this).removeClass('unfolder');
+                $('.analyticsView .viewContainer').show();
+            }else{
+                $(this).addClass('unfolder');
+                $('.analyticsView .viewContainer').hide();
+            }
+        });
+
+
+        ////////////// filter panel //////////////////////
+
+        // customer selector - change event, reloads the billing accounts and projects
+        $("#customer").change(function () {
+            loadOptionsByClientId($(this).val());
+        });
+
+        // billing account selector - change event, reloads the projects
+        $("#billingAccount").change(function() {
+
+            var billingId = $(this).val();
+
+            if (billingId == 0) {
+                // select all again, load all the billings and projects for customer
+                var customerId = $("#customer").val();
+
+                loadOptionsByClientId(customerId);
+
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url:  "dashboardGetOptionsForBillingAJAX",
+                data: {'formData.billingAccountIds':billingId},
+                cache: false,
+                dataType: 'json',
+                success: function(jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function(result) {
+                            var projects = result.projects;
+                            var $project = $("#project");
+
+                            $project.html("");
+                            $.each(projects, function(key, value) {
+                                $project.append($('<option></option>').val(key).html(value));
+                            });
+
+                            // append the default "select all"
+                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.val(0);
+                            sortDropDown("#project");
+                        },
+                        function(errorMessage) {
+                            // TODO
+                            $('#validationErrors').html(errorMessage);
+                        });
+                }
+            });
+        });
+
+        // contest type selector - select highlighting
+        $('.filterForAnalytics .selectWrapper li input').live('click',function(){
+            if($(this).attr('checked')){
+                $(this).parents('li').addClass('selected');
+            }else{
+                $(this).parents('li').removeClass('selected');
+            }
+        });
+
+        $('.filterForAnalytics .selectWrapper li input').each(function(){
+            if($(this).attr('checked')){
+                $(this).parents('li').addClass('selected');
+            }else{
+                $(this).parents('li').removeClass('selected');
+            }
+        });
+
+        // contest type selector - label click event
+        $('.filterForAnalytics .selectWrapper li span').live('click',function(){
+            $(this).parents('li').find('input').trigger('click');
+            if($(this).parents('li').find('input').attr('checked')){
+                $(this).parents('li').addClass('selected');
+            }else{
+                $(this).parents('li').removeClass('selected');
+            }
+        });
+
+        // contest type selector - Select all click event
+        $('.filterForAnalytics .selectWrapper #checkAll').live('change',function(){
+            if($(this).attr('checked')){
+                $(this).parents('.selectWrapper').find('input').attr('checked',true);
+                $(this).parents('.selectWrapper').find('li').addClass('selected');
+            }else{
+                $(this).parents('.selectWrapper').find('input').attr('checked',false);
+                $(this).parents('.selectWrapper').find('li').removeClass('selected');
+            }
+        });
+
+        // set the start date of the week to monday for date picker
+        Date.firstDayOfWeek = 0;
+        var monthsLookup = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        function getMonday(d) {
+            var day = d.getDay();
+            var diff = d.getDate() - day + (day == 0 ? -7 : 0);
+            var r = new Date(d.setDate(diff));
+            return r;
+        }
+
+        function getQuarter(d) {
+            var m = d.getMonth();
+            return Math.floor( m/3 ) + 1;
+        }
+
+        function getYearOptions(endYear) {
+            var yearOptions = '';
+            for(var i = endYear; i >= 2005; i--) {
+                yearOptions += '<option value="' + i + '">' + i + '</option>';
+            }
+            return yearOptions;
+        }
+
+        function getWeekRangeFromNow(weekNumber) {
+            var currentDate = new Date();
+            var endDateStr = $.datepicker.formatDate('mm/dd/yy', getMonday(currentDate));
+            var startDate = new Date(currentDate.setDate(currentDate.getDate() - 7 * (weekNumber - 1)));
+            var startDateStr = $.datepicker.formatDate('mm/dd/yy', getMonday(startDate));
+            var result = {};
+            result.startWeek = startDateStr;
+            result.endWeek = endDateStr;
+            return result;
+        }
+
+        function getMonthRangeFromNow(monthNumber) {
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth();
+            var result = {};
+            result.endYear = currentYear;
+            result.endMonth = currentMonth;
+            result.startYear = currentYear - (currentMonth - monthNumber + 1) < 0 ? 1 : 0;
+            result.startMonth = ((currentMonth - monthNumber + 1) + 12) % 12;
+            return result;
+        }
+
+        function getQuarterRangeFromNow(quarterNumber) {
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            var currentQuarter = getQuarter(currentDate);
+            var result = {};
+            result.endYear = currentYear;
+            result.endQuarter = currentQuarter;
+            result.startYear = currentYear - (currentQuarter - 4) < 0 ? 1 : 0;
+            result.startQuarter = ((currentQuarter - 4) + 12) % 12;
+            return result;
+        }
+
+        function getYearRangeFromNow(yearNumber) {
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            var result = {};
+            result.endYear = currentYear;
+            result.startYear = currentYear - yearNumber + 1;
+            return result;
+        }
+
+        function updateWeekTime(weekNumber) {
+            // eight weeks range by default
+            var result = getWeekRangeFromNow(weekNumber);
+
+            var newDate =
+                '<label class="inline">Start:</label>' +
+                    '<div class="datePickerWrapper"><input id="endDateBegin" type="text" class="date-pick" value="'+ result.startWeek + '" /></div>' +
+                    '<label class="inline endLabel">End:</label>' +
+                    '<div class="datePickerWrapper EndDatePickerWrapper"><input id="endDateEnd" type="text" class="date-pick" value="' + result.endWeek + '" /></div>';
+
+            $(".dateRow>div").html(newDate);
+            $(".dateRow>div>div>select").css({"width":"100px"});
+            $(".dateRow>div>div").css({"float":"left", "padding-left":"0px"});
+            $(".dateRow").css({"width":"800px"});
+            if ($('.date-pick').length > 0) {
+                $(".date-pick").datePicker({selectWeek:true, closeOnSelect:false, startDate:'01/01/2005'});
+            }
+        }
+
+        function updateMonthTime(monthNumber) {
+            var result = getMonthRangeFromNow(monthNumber);
+
+            var yearOptions = getYearOptions(result.endYear);
+
+            var newDate =
+                '<div>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select class="groupBy" name="startYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">Month:</label>' +
+                    '<select class="groupBy" name="startMonth">' +
+                    '<option value = "0">January</option>' +
+                    '<option value = "1">February</option>' +
+                    '<option value = "2">March</option>' +
+                    '<option value = "3" >April</option>' +
+                    '<option value = "4" selected="selected">May</option>' +
+                    '<option value = "5">June</option>' +
+                    '<option value = "6">July</option>' +
+                    '<option value = "7">August</option>' +
+                    '<option value = "8">September</option>' +
+                    '<option value = "9">October</option>' +
+                    '<option value = "10">November</option>' +
+                    '<option value = "11">December</option>' +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">--</label>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select  class="groupBy" name="endYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">Month:</label>' +
+                    '<select  class="groupBy" name="endMonth">' +
+                    '<option value = "0">January</option>' +
+                    '<option value = "1">February</option>' +
+                    '<option value = "2">March</option>' +
+                    '<option value = "3">April</option>' +
+                    '<option value = "4">May</option>' +
+                    '<option value = "5" >June</option>' +
+                    '<option value = "6">July</option>' +
+                    '<option value = "7">August</option>' +
+                    '<option value = "8">September</option>' +
+                    '<option value = "9">October</option>' +
+                    '<option value = "10">November</option>' +
+                    '<option value = "11">December</option>' +
+                    '</select>'
+                    + '</div>';
+            $(".dateRow>div").html(newDate);
+            $(".dateRow>div>div>select").css({"width":"100px"});
+            $(".dateRow>div>div").css({"float":"left", "padding-left":"0px"});
+            $(".dateRow").css({"width":"800px"});
+            $('select[name=endYear]').val(result.endYear);
+            $('select[name=endMonth]').val(result.endMonth);
+            $('select[name=startYear]').val(result.startYear);
+            $('select[name=startMonth]').val(result.startMonth);
+        }
+
+        function updateQuarterTime(quarterNumber) {
+            var result = getQuarterRangeFromNow(quarterNumber);
+
+            var yearOptions = getYearOptions(result.endYear);
+
+            var newDate =
+                '<div>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select class="groupBy" name="startYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">Quarter:</label>' +
+                    '<select class="groupBy" name="startQuarter">' +
+                    '<option value = "1">Q1</option>' +
+                    '<option value = "2">Q2</option>' +
+                    '<option value = "3">Q3</option>' +
+                    '<option value = "4">Q4</option>' +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">--</label>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select class="groupBy" name="endYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">Quarter:</label>' +
+                    '<select  class="groupBy" name="endQuarter">' +
+                    '<option value = "1">Q1</option>' +
+                    '<option value = "2">Q2</option>' +
+                    '<option value = "3">Q3</option>' +
+                    '<option value = "4">Q4</option>' +
+                    '</select>' +
+                    '</div>';
+            $(".dateRow>div").html(newDate);
+            $(".dateRow>div>div>select").css({"width":"100px"});
+            $(".dateRow>div>div").css({"float":"left", "padding-left":"0px"});
+            $(".dateRow").css({"width":"800px"});
+            $('select[name=endYear]').val(result.endYear);
+            $('select[name=endQuarter]').val(result.endQuarter);
+            $('select[name=startYear]').val(result.startYear);
+            $('select[name=startQuarter]').val(result.startQuarter);
+        }
+
+        function updateYearTime(yearNumber) {
+            var result = getYearRangeFromNow(yearNumber);
+            var yearOptions = getYearOptions(result.endYear);
+
+            var newDate =
+                '<div>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select class="groupBy" name="startYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="inline">--</label>' +
+                    '<label class="inline">Year:</label>' +
+                    '<select  class="groupBy" name="endYear">' +
+                    yearOptions +
+                    '</select>' +
+                    '</div>';
+            $(".dateRow>div").html(newDate);
+            $(".dateRow>div>div>select").css({"width":"100px"});
+            $(".dateRow>div>div").css({"float":"left", "padding-left":"0px"});
+            $(".dateRow").css({"width":"800px"});
+            $("select[name=startYear]").val(result.startYear);
+            $("select[name=endYear]").val(result.endYear);
+        }
+
+        // group by selector - change event
+        $("#timeDimension").change(function () {
+
+            // Week
+            if ($(this).find("option:selected").text() == "Week") {
+                var zoom =
+                    '<li class="oneWeek firstSelectot zoom"><a href="javascript:;"><span>1 Week</span></a></li>' +
+                        '<li class="twoWeek zoom"><a href="javascript:;"><span>2 Weeks</span></a></li>' +
+                        '<li class="fourWeek zoom"><a href="javascript:;"><span>4 Weeks</span></a></li>' +
+                        '<li class="eightWeek lastSelector zoom"><a href="javascript:;"><span>8 Weeks</span></a></li>';
+                $(".zoomButton ul").html(zoom);
+
+                updateWeekTime(8);
+            }
+
+
+            if ($(this).find("option:selected").text() == "Month") {
+                var zoom =
+                    '<li class="oneMonth firstSelectot zoom"><a href="javascript:;"><span>1 Month</span></a></li>' +
+                        '<li class="twoMonth zoom"><a href="javascript:;"><span>2 Months</span></a></li>' +
+                        '<li class="threeMonth zoom"><a href="javascript:;"><span>3 Months</span></a></li>' +
+                        '<li class="sixMonth lastSelector zoom"><a href="javascript:;"><span>6 Months</span></a></li>';
+                $(".zoomButton ul").html(zoom);
+
+                updateMonthTime(6);
+            }
+
+            if ($(this).find("option:selected").text() == "Quarter") {
+                var zoom =
+                    '<li class="oneQuarter firstSelectot quarter zoom"><a href="javascript:;"><span>1 Quarter</span></a></li>' +
+                        '<li class="twoQuarter quarter zoom"><a href="javascript:;"><span>2 Quarters</span></a></li>' +
+                        '<li class="threeQuarter quarter zoom"><a href="javascript:;"><span>3 Quarters</span></a></li>' +
+                        '<li class="fourQuarter lastSelector quarter zoom"><a href="javascript:;"><span>4 Quarters</span></a></li>';
+                $(".zoomButton ul").html(zoom);
+
+                updateQuarterTime(4);
+            }
+
+            // year
+            if ($(this).find("option:selected").text() == "Year") {
+                var zoom =
+                    '<li class="oneYear firstSelectot zoom"><a href="javascript:;"><span>1 Year</span></a></li>' +
+                        '<li class="twoYear zoom"><a href="javascript:;"><span>2 Years</span></a></li>' +
+                        '<li class="threeYear zoom"><a href="javascript:;"><span>3 Years</span></a></li>';
+                $(".zoomButton ul").html(zoom);
+
+                updateYearTime(2);
+            }
+        });
+
+        $("#timeDimension").val('Month').trigger('change');
+
+        // summary tab - tab switch
+        $('.analyticsView .customer a').live('click',function(){
+            var showContainer = '.'+$(this).attr('rel');
+            $('.analyticsView .customer a').removeClass('current');
+            $(this).addClass('current');
+            $('.analyticsView .customerTabContainer').hide();
+            $('.analyticsView').find(showContainer).show();
+        });
+
+        // placeholder - chart view & table view
+
+        // summary tab - on hover tips
+        $('.tipToggle').hover(function () {
+            switch ($(this).parents('.customerTabContainer').attr('id')) {
+                case 'blue':
+                    $('#tipForTab').addClass('blueTab');
+                    break;
+                case 'green':
+                    $('#tipForTab').addClass('greenTab');
+                    break;
+                case 'orange':
+                    $('#tipForTab').addClass('orangeTab');
+                    break;
+                default:
+                    $('#tipForTab').addClass('blueTab');
+                    break;
+            }
+            $('#tipForTab').show();
+            $('#tipForTab .tooltipBox .tooltipHeader h2').text($(this).text().replace(':', ''));
+            $('#tipForTab .tooltipBox .tooltipContent p').text($(this).attr('title'));
+            $(this).attr('title', '');
+            $('#tipForTab .tooltipBox').css({'left':$(this).offset().left - $('#tipForTab .tooltipBox').width() / 2 + $(this).width() / 2, 'top':$(this).offset().top - $('#tipForTab .tooltipBox').height() - 6});
+        }, function () {
+            $('#tipForTab').hide();
+            $(this).attr('title', $('#tipForTab .tooltipBox .tooltipContent p').text());
+            $('#tipForTab').removeClass('blueTab');
+            $('#tipForTab').removeClass('greenTab');
+            $('#tipForTab').removeClass('orangeTab');
+        });
+
+
+        function renderSummary(result) {
+            $(".viewDate").show();
+            $("#customerAverageFulfillment, #customerAverageFulfillmentComparison").html(result.customerAverageFulfillment.toString() + '%');
+            $("#customerAverageCost, #customerAverageCostComparison").html('$' + result.customerAverageCost.toString());
+            $("#customerAverageDuration, #customerAverageDurationComparison").html(result.customerAverageDuration.toString() + ' days');
+            $("#customerAverageVol, #customerAverageVolComparison").html(result.customerAverageVol.toString());
+            $("#customerTotalVol, #customerTotalVolComparison").html(result.customerTotalVol.toString());
+            $("#customerTotalCost, #customerTotalCostComparison").html('$' + result.customerTotalCost.toString());
+            $("#customerMinMaxCost, #customerMinMaxCostComparison").html('$' + result.customerMinCost.toString() + " - $" + result.customerMaxCost.toString());
+            $("#customerMinMaxDuration, #customerMinMaxDurationComparison").html(result.customerMinDuration.toString() + " - " + result.customerMaxDuration.toString() + ' days');
+            $("#marketAverageFulfillment, #marketAverageFulfillmentComparison").html(result.marketAverageFulfillment.toString() + '%');
+            $("#marketAverageCost, #marketAverageCostComparison").html('$' + result.marketAverageCost.toString());
+            $("#marketAverageDuration, #marketAverageDurationComparison").html(result.marketAverageDuration.toString() + ' days');
+            $("#marketAverageVol, #marketAverageVolComparison").html(result.marketAverageVol.toString());
+            $("#marketTotalVol, #marketTotalVolComparison").html(result.marketTotalVol.toString());
+            $("#marketTotalCost, #marketTotalCostComparison").html('$' + result.marketTotalCost.toString());
+            $("#marketMinMaxCost, #marketMinMaxCostComparison").html('$' + result.marketMinCost.toString() + " - $" + result.marketMaxCost.toString());
+            $("#marketMinMaxDuration, #marketMinMaxDurationComparison").html(result.marketMinDuration.toString() + " - " + result.marketMaxDuration.toString() + ' days');
+            if(result.hasMarketSummary && result.hasCustomerSummary) {
+                $("#marketCap").html(result.marketCap + "%");
+                $("#customerMarketCap").html(result.marketCap + "%");
+            }
+        }
+
+        $('.lineViewContainer .displayButton a').live('click', function () {
+
+            var index = $('.lineViewContainer .displayButton a').index(this);
+
+            if(index == 0 || index == 2) {
+                // contest duration & fulfillment not clickable for now
+                return;
+            }
+
+            if ($(this).find('input').is(':checked') == true) {
+                $(this).find('input').attr('checked', false);
+                $(this).removeClass('current');
+            } else {
+                $(this).find('input').attr('checked', true);
+                $(this).addClass('current');
+            }
+            renderAnalysisByDisplayTypes();
+        });
+
+        function loadAnalysis() {
+            var request = getRequestForAnalysis();
+            if(!request) return false;
+
+            var data = request.formData;
+            $.ajax({
+                type:'POST',
+                url:'dashboardEnterpriseAJAX',
+                data:request,
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function(result) {
+                            // update the chart viewer header
+                            $(".filterPanelHeader h3").text($("#customer option:selected").text());
+                            $("#projectHeader").text($("#project option:selected").text());
+                            $("#billingHeader").text($("#billingAccount option:selected").text());
+                            $("#groupHeader").text($("#timeDimension option:selected").text());
+                            $("#timeHeader").text(data.startDate + ' to ' + data.endDate);
+                            analysisData = result;
+
+                            if(result.hasCustomerSummary == false) {
+                                $(".viewDate").hide();
+                                $('#lineView').empty().append('<div class="ajaxTableLoader"><span style="font-size:12px;color:grey;">Not Enough Data For Filters Selected</span></div>');
+                                return;
+                            }
+
+                            // render the summary tabs
+                            renderSummary(result);
+                            renderAnalysisByDisplayTypes();
+                        },
+                        function(errorMessage) {
+                            showServerError(errorMessage);
+                        })
+                }
+            });
+            return true;
+        }
+
+        $("#filterApply").click(function () {
+            modalPreloader();
+            if(!loadAnalysis()) {
+                modalAllClose();
+            }
+        });
+
+        if($("#silderBar .active a.filterSynEnabled").length > 0 && getUrlPara('customer')) {
+            $("#customer").val(getUrlPara('customer')).trigger('change');
+        }
+
+        $('.lineViewContainer .zoomButton a').live('click', function () {
+            $('.lineViewContainer .zoomButton a').removeClass('current');
+            $(this).addClass('current');
+            var timeNumber = $.trim($(this).find("span").text())[0] / 1;
+            var timeDimension = $("#timeDimension").val();
+            if(timeDimension == 'Week') {
+                updateWeekTime(timeNumber);
+            } else if(timeDimension == 'Month') {
+                updateMonthTime(timeNumber);
+            } else if(timeDimension == 'Quarter') {
+                updateQuarterTime(timeNumber);
+            } else if(timeDimension == 'Year') {
+                updateYearTime(timeNumber);
+            }
+            $('#lineView').empty().append('<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>');
+            loadAnalysis();
+        });
+
+        loadAnalysis();
+    }
 });
+
+function loadOptionsByClientId(clientId) {
+    $.ajax({
+        type: 'POST',
+        url:  "dashboardGetOptionsForClientAJAX",
+        data: {'formData.customerIds':clientId},
+        cache: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    var billings = result.billings;
+                    var projects = result.projects;
+                    var $billing = $("#billingAccount");
+                    var $project = $("#project");
+
+                    $billing.html("");
+                    $.each(billings, function(key, value) {
+                        $billing.append($('<option></option>').val(key).html(value));
+                    });
+
+                    // append the default "select all"
+                    $billing.append($('<option></option>').val(0).html("All Billing Accounts"));
+                    $billing.val(0);
+
+                    $project.html("");
+                    $.each(projects, function(key, value) {
+                        $project.append($('<option></option>').val(key).html(value));
+                    });
+
+                    // append the default "select all"
+                    $project.append($('<option></option>').val(0).html("All Projects"));
+                    $project.val(0);
+                    if(projectToSync) {
+                        $project.val(projectToSync);
+                        projectToSync = null;
+                    }
+                    sortDropDown("#project");
+                    sortDropDown("#billingAccount");
+                },
+                function(errorMessage) {
+                    // TODO
+                    $('#validationErrors').html(errorMessage);
+                });
+        }
+    });
+}
+
+function displayChartView(contestData, volumeData, contestView, costView, fulfillView, volumeView, marketView) {
+    var ajaxTableLoader, strData = '';
+    var arrayData = new Array();
+    var xAxisCate = new Array();
+    var customerCost = new Array();
+    var marketCost = new Array();
+    var customerVolume = new Array();
+    var marketVolume = new Array();
+    var contestDurationLabel = '';
+    var costLabel = '';
+    var fulfillmentLabel = '';
+    var marketFulfillmentSufValue = '';
+    var costPrevValue = '';
+    var prevValue = '';
+    var sufValue = '';
+    var jsonVolumeFile = '';
+    var jsonAnalyticsFile = '';
+    var contestDurationSufValue = '';
+    contestDurationLabel = 'Avg Contest Duration';
+    costLabel = 'Avg Cost';
+    fulfillmentLabel = 'Avg Fulfillment';
+    contestDurationSufValue = ' days';
+    costPrevValue = '$ ';
+    marketFulfillmentSufValue = ' %';
+    var iRotation = 0;
+    if ($('#lineView').length > 0) {
+
+        var costData;
+        var groupType = $("#timeDimension").val();
+
+        if(groupType == 'Week') {
+            costData = contestData.cost.week;
+        } else if(groupType == 'Month') {
+            costData = contestData.cost.month;
+        } else if(groupType == 'Quarter') {
+            costData = contestData.cost.quarter;
+        } else if(groupType == 'Year') {
+            costData = contestData.cost.year;
+        }
+
+        var volumeData = contestData.volume;
+
+        $.each(costData, function (idx, item) {
+            xAxisCate.push(item.date);
+            customerCost.push(item.customer / 1);
+            marketCost.push(item.tc / 1);
+        });
+
+        $.each(volumeData, function (idx, item) {
+            customerVolume.push(item.customer / 1);
+            marketVolume.push(item.tc / 1);
+        });
+
+        var option = {
+            chart:{
+                renderTo:'lineView',
+                type:'column',
+                marginTop:30,
+                marginLeft:100,
+                marginRight:100,
+                marginBottom:55
+            },
+            credits:{
+                text:''
+            },
+            navigation:{
+                buttonOptions:{
+                    enabled:false
+                }
+            },
+            title:{
+                text:null
+            },
+            xAxis:{
+                categories:xAxisCate,
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    },
+                    rotation:iRotation
+                },
+                tickLength:0
+            },
+            yAxis:[],
+            legend:{
+                align:'right',
+                verticalAlign:'top',
+                y:-20,
+                backgroundColor:'#ffffff',
+                borderWidth:0,
+                borderRadius:0,
+                itemMarginTop:5,
+                itemMarginBottom:5,
+                itemStyle:{
+                    fontFamily:'Arial',
+                    fontSize:'11px',
+                    color:'#898989'
+                },
+                reversed:true
+            },
+            tooltip:{
+                useHTML:true,
+                backgroundColor:null,
+                borderRadius:0,
+                borderWidth:0,
+                shadow:false,
+                style:{
+                    margin:'0px',
+                    padding:'0px',
+                    fontFamily:'Arial',
+                    fontSize:'11px',
+                    color:'#333333'
+                },
+                formatter:function () {
+                    var s = '';
+                    if (this.series.name == 'Avg Fulfillment') {
+                        s = ' %';
+                        return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                            this.point.category
+                            + '</strong><div>' +
+                            this.series.name
+                            + ': ' +
+                            this.point.y
+                            + s
+                            + '</div></div></div>';
+                    } else if (this.series.name == 'Avg Contest Duration') {
+                        s = ' days';
+                        return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                            this.point.category
+                            + '</strong><div>' +
+                            this.series.name
+                            + ': ' +
+                            this.point.y
+                            + s
+                            + '</div></div></div>';
+                    } else if (this.series.name.indexOf('Cost') != -1) {
+                        s = '$ ';
+                        return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                            this.point.category
+                            + '</strong><div>' +
+                            this.series.name
+                            + ': ' +
+                            s +
+                            this.point.y
+                            + '</div></div></div>';
+                    } else {
+                        return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                            this.point.category
+                            + '</strong><div>' +
+                            this.series.name
+                            + ': ' +
+                            this.point.y
+                            + '</div></div></div>';
+                    }
+                }
+            },
+            series:[]
+        };
+        var axisNumber = 0;
+
+        if (costView) {
+            option.series.push({
+                name:'Average Customer Cost',
+                color:'#8fd31a',
+                yAxis:axisNumber,
+                type:'line',
+                data:customerCost,
+                shadow:false
+            });
+            option.yAxis.push({ //For Cost
+                min:0,
+                title:{
+                    text:'Cost',
+                    style:{
+                        fontFamily:'Arial',
+                        fontWeight:'normal',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                }
+            });
+
+            if (marketView) {
+                option.series.push({
+                    name:'Average Market Cost',
+                    color:'#8fd31a',
+                    yAxis:axisNumber,
+                    type:'line',
+                    dashStyle:'ShortDash',
+                    showInLegend:false,
+                    data:marketCost,
+                    shadow:false
+                });
+
+//                option.yAxis.push({ //For Cost
+//                    min:0,
+//                    gridLineWidth:0,
+//                    title:{
+//                        text:'',
+//                        align:'high'
+//                    }
+//                });
+//                axisNumber++;
+            }
+
+
+            axisNumber++;
+        }
+
+        if (volumeView) {
+            option.series.push({
+                name:'Customer Volume',
+                data:customerVolume,
+                color:'#3465cc',
+                yAxis:axisNumber,
+                type:'line',
+                borderColor:'#002e88'
+            });
+            option.yAxis.push({ //For Volume
+                min:0,
+                title:{
+                    text:'Volume',
+                    style:{
+                        fontFamily:'Arial',
+                        fontWeight:'normal',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                stackLabels:{
+                    enabled:true,
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                opposite:true
+            });
+//            axisNumber++;
+            if (marketView) {
+                option.series.push({
+                    name:'Market Volume',
+                    data:marketVolume,
+                    color:'#3465cc',
+                    yAxis:axisNumber,
+                    showInLegend:false,
+                    type:'line',
+                    dashStyle:'ShortDash',
+                    borderColor:'#002e88'
+                });
+//                option.yAxis.push({
+//                    min:0,
+//                    gridLineWidth:0,
+//                    title:{
+//                        text:'',
+//                        align:'high'
+//                    }
+//                });
+            }
+        }
+
+        chart = new Highcharts.Chart(option);
+    }
+}
+
+function renderAnalysisByDisplayTypes() {
+    var contestDurationView = false;
+    var costView = false;
+    var fulfillmentView = false;
+    var volumeView = false;
+    var marketView = false;
+    var all = false;
+
+    $('#lineView').empty().append('<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>');
+    $.each($('.lineViewContainer .displayButton a.current'), function (i, element) {
+        switch ($.trim($(this).text())) {
+            case 'Contest Duration':
+                contestDurationView = true;
+                break;
+            case 'Cost':
+                costView = true;
+                break;
+            case 'Fulfillment':
+                fulfillmentView = true;
+                break;
+            case 'Volume View':
+                volumeView = true;
+                break;
+            case 'Market':
+                marketView = true;
+                break;
+            default:
+                all = true;
+                break;
+        }
+    });
+    if (all) {
+        displayChartView(analysisData, null, false, true, false, true, false);
+    } else {
+        displayChartView(analysisData, null, contestDurationView, costView, fulfillmentView, volumeView, marketView)
+    }
+}
