@@ -429,7 +429,8 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
             setResult(result);
 
             // remove mappings
-            getSessionData().getSession().removeAttribute("clientBillingProjectMappings");
+            DirectUtils.getApplicationContext().remove(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE);
+            DirectUtils.getApplicationContext().remove(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
 
         } catch (Throwable e) {
             if (getModel() != null) {
@@ -466,7 +467,8 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
             setResult(result);
 
             // remove mappings
-            getSessionData().getSession().removeAttribute("clientBillingProjectMappings");
+            DirectUtils.getApplicationContext().remove(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE);
+            DirectUtils.getApplicationContext().remove(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
 
         } catch (Throwable e) {
             if (getModel() != null) {

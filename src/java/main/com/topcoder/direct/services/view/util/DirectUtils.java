@@ -434,6 +434,10 @@ public final class DirectUtils {
     public final static List<String> CANCELLED_STATUS = Arrays.asList("Cancelled - Client Request",
         "Cancelled - Requirement Infeasible");
 
+    public final static String PROJECT_BILLING_MAPPING_RESULT_CACHE = "projectBillingMappingResultCache";
+
+    public final static String PROJECT_BILLING_MAPPING_RECORD_CACHE = "projectBillingMappingRecordCache";
+
      /**
      * Represents the &quot;Specification Submission&quot; phase type.
      */
@@ -618,6 +622,10 @@ public final class DirectUtils {
      */
     public static HttpServletRequest getServletRequest() {
         return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+    }
+
+    public static Map<String, Object> getApplicationContext() {
+        return ActionContext.getContext().getApplication();
     }
 
     /**
@@ -1430,18 +1438,7 @@ public final class DirectUtils {
      * @since 1.6.4
      */
     private static Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
-        Map<String, Object> result;
-        HttpServletRequest request = DirectUtils.getServletRequest();
-        Object value = request.getSession().getAttribute("clientBillingProjectMappings");
-
-        if (value == null) {
-            result = DataProvider.getDashboardClientBillingProjectMappingsV2(tcSubject);
-            request.getSession().setAttribute("clientBillingProjectMappings", result);
-        } else {
-            result = (Map<String, Object>) value;
-        }
-
-        return result;
+        return DataProvider.getDashboardClientBillingProjectMappingsV2(tcSubject);
     }
 
     /**
