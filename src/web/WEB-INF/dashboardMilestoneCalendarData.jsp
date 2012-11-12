@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 <div>
 
     <div id="allResponsiblePerson" class="hide">
@@ -25,7 +25,8 @@
                 "title": "${fn:replace(name, '"', '\\"')}",
                 "start": "<s:if test="completed"><fmt:formatDate pattern="yyyy-MM-dd" value="${completionDate}"/></s:if><s:else><fmt:formatDate pattern="yyyy-MM-dd" value="${dueDate}"/></s:else>",
                 "status": "<s:property value="status.toString().toLowerCase()"/>",
-                "description": "${fn:replace(description, '"', '\\"')}",
+                <c:set var="replaceNewLine" value='${fn:replace(description, newLineChar, ";")}'/>
+                "description": "${fn:replace(replaceNewLine, '"', '\\"')}",
                 "projectId" : "<s:property value='projectId'/>",
                 "projectName": "<s:property value="viewData.projects[projectId]"/>"
                 <s:if test="owners != null && owners.size > 0">
