@@ -1373,7 +1373,7 @@ public class DataProvider {
     public static List<ProjectSummaryData> getPMProjectData(TCSubject tcSubject) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_projects_contests");
+        request.setContentHandle("direct_my_pm_projects_contests");
 
         if (DirectUtils.isCockpitAdmin(tcSubject)) {
             request.setProperty("uid", String.valueOf(0));
@@ -4538,10 +4538,13 @@ public class DataProvider {
         Request request = new Request();
 
         String queryName;
+		String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
         if (!hasInvoice) {
+			commandName = "dashboard_billing_cost_invoice_report";
             queryName = "dashboard_billing_cost_invoice_report";
         } else {
+			commandName = "dashboard_billing_cost_invoice_report_invoice_number";
             queryName = "dashboard_billing_cost_invoice_report_invoice_number";
         }
 
@@ -4561,7 +4564,7 @@ public class DataProvider {
             request.setProperty("invoicenumber", invoiceNumber);
         }
 
-        request.setContentHandle(queryName);
+        request.setContentHandle(commandName);
 
         if (contestId > 0 || hasInvoice) {
             request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
