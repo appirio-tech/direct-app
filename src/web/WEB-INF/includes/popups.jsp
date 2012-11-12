@@ -1968,6 +1968,32 @@
         </div>
 
     </s:if>
+    
+    <s:if test='%{#request.CURRENT_TAB == "editProject"}'>
+        <div class="setDatePopup" id="setDatePopup">
+            <h4>Set completion date</h4>
+            <dl>
+                <dt>When?</dt>
+                <dd><input type="text" class="text" readonly="readonly" /></dd>
+            </dl>
+            <dl>
+                <dt>Choose completion Date</dt>
+                <dd>
+                    <input type="radio" id="curDate" name="pickdate" checked="checked"/>
+                    <label for="curDate"><b>Current Date</b></label>
+                    <input type="radio" id="pickupDate" name="pickdate" />
+                    <label for="pickupDate">Pick up a Date</label>
+                    <p>The completion date marks when your project is completed.</p>
+                </dd>
+            </dl>
+            <div class="buttonLine">
+                <input type="button" class="done" value="Done" />
+                <span>or</span>
+                <a class="cancel" href="javascript:;">Cancel</a>
+            </div>
+        </div>
+
+    </s:if>
 
     <span class="hide">
        <img src="/images/preloader-corner.png"/>

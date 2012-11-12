@@ -8,6 +8,7 @@ import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperati
 import com.topcoder.direct.services.view.dto.project.edit.ProjectNotificationSetting;
 import com.topcoder.service.permission.ProjectPermission;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -138,6 +139,11 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      * @since 1.2
      */
     private List<Long> contestsNotification;
+
+    /**
+     * The completion  date of the milestone.
+     */
+    private Date completionDate;
 
     /**
      * The user id.
@@ -545,5 +551,23 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setProjectBillingAccountId(long projectBillingAccountId) {
         this.projectBillingAccountId = projectBillingAccountId;
+    }
+    
+    /**
+     * Gets the compeltion date of the milestone.
+     * 
+     * @return the completion date of the milestone.
+     */
+    public Date getCompletionDate() {
+        return completionDate;
+    }
+
+    /**
+     *Sets the completion date of the milestone.
+     *
+     *@param completionDate the completion date of the milestone.
+     */
+    public void setCompletionDate(Date completionDate) {
+        this.completionDate = completionDate;
     }
 }

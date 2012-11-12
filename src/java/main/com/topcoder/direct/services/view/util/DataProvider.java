@@ -1239,6 +1239,11 @@ public class DataProvider {
             data.setProjectName(resultContainer.getStringItem(i, "project_name"));
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
+            System.out.println("xxx:" + resultContainer.getItem(i, "completion_date").getResultData() == null);
+            if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
+                System.out.println("XXXXXX:" + resultContainer.getTimestampItem(i, "completion_date"));
+                data.setProjectCompletionDate(resultContainer.getTimestampItem(i, "completion_date"));
+            }
             if (resultContainer.getItem(i, "project_forum_id").getResultData() != null) {
                 data.setProjectForumCategoryId(Long.parseLong(resultContainer.getStringItem(i, "project_forum_id")));
             }

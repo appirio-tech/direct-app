@@ -72,7 +72,10 @@
                         (GMT-400)
                     </td>
                     <td>
-
+                        <s:if test="data.projectCompletionDate != null">
+                            <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${projectSummary.projectCompletionDate}"/> ET
+                            (GMT-400)
+                        </s:if>
                     </td>
                     <td>${projectSummary.draft.totalNumber}</td>
                     <td>${projectSummary.scheduled.totalNumber}</td>

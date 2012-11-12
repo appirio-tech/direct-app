@@ -311,7 +311,7 @@
                 <label class="deletedStatus">Cancelled</label>
             </li>
             <li>
-                <input autocomplete="off" name="projectStatus" type="radio" value="4"
+                <input autocomplete="off" name="projectStatus" type="radio" value="4" class="completedStatus"
                        <s:if test='viewData.project.projectStatusId == 4L'>checked="checked"</s:if> />
                 <label class="completedStatus">Completed</label>
             </li>
@@ -508,6 +508,7 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/project/edit/editProjectPageModals.jsp"/>
+<jsp:include page="includes/popups.jsp"/>
 
 </body>
 <!-- End #page -->

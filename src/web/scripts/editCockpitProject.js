@@ -159,6 +159,61 @@ $(document).ready(function (e) {
             }
 
         });
+        
+        // set project completetion date
+        $("#editProjectStatus input").live("click", function () {
+            if ($("#setDatePopup").is(":visible")) {
+                $("#setDatePopup").hide();
+                $("#setDatePopup").data("trigger").attr("disabled", "");
+                $("#setDatePopup").data("trigger").attr("checked", "");
+            }
+            if (!$(this).hasClass("completedStatus")) {
+                $("#editProjectStatus label.completedStatus").text("Completed");
+                return true;
+            }
+            
+            $("#setDatePopup input.text").val($.datepicker.formatDate('mm/dd/yy', new Date()));
+            $("#setDatePopup input.text").dpSetSelected($("#setDatePopup input.text").val());
+            $("#setDatePopup input#curDate").attr("checked", "checked");
+
+            var _this = $(this);
+            _this.attr("checked", "checked");
+            $("#editProjectStatus input").attr("disabled", "disabled");
+            $("#editProjectStatus label").attr("disabled", "disabled");
+            $("#editProjectStatus label").addClass("disabled");
+            
+            $("#setDatePopup").show().css({
+                "left":$(this).offset().left + 20 + "px",
+                "top":$(this).offset().top - 22 + "px"
+            }).data("trigger", _this);
+        })
+        
+        $("#setDatePopup a.cancel").click(function () {
+            $("#setDatePopup").hide();
+            $("#editProjectStatus input").attr("disabled", "");
+            $("#editProjectStatus label").attr("disabled", "");
+            $("#editProjectStatus label").removeClass("disabled");
+            return false;
+        })
+
+        $("#setDatePopup .done").click(function () {
+            $("#setDatePopup").hide();
+            var completionDate = $("#setDatePopup input.text").val();
+            $("#editProjectStatus label.completedStatus").text("Completed on " + completionDate);
+            $("#editProjectStatus input").attr("disabled", "");
+            $("#editProjectStatus label").attr("disabled", "");
+            $("#editProjectStatus label").removeClass("disabled");
+        })
+
+        $("#setDatePopup input.text").datePicker({
+            createButton:false,
+            startDate:'01/01/1900',
+            verticalOffset:22
+        })
+
+        $("#setDatePopup #pickupDate").click(function () {
+            $("#setDatePopup input.text").dpDisplay();
+        })
 
         $('.permissionsNotifications tbody tr:odd').addClass('odd');
         $('#settingModal tbody tr:even').addClass('odd');
@@ -1053,7 +1108,11 @@ $(document).ready(function (e) {
             formData.projectDescription = $('textarea[name="projectDesc"]').val();
             // set project status id
             formData.projectStatusId = $("input[name='projectStatus']:checked").val();
-
+            // set project completion date
+            if ($("#editProjectStatus label.completedStatus").text() != "Completed") {
+                formData.completionDate = $("#editProjectStatus label.completedStatus").text().substring(13);
+            }
+        
             formData.projectTypeId = $("#projectType").val();
 
             formData.projectCategoryId = $("#projectCategory").val();
@@ -1476,6 +1535,9 @@ $(document).ready(function (e) {
             label.css('cursor', 'pointer');
             label.data('radio', $(this));
             label.click(function () {
+                if (label.hasClass("disabled")) {
+                    return;
+                }
                 var radio = $(this).data('radio');
                 radio.trigger('click');
             });

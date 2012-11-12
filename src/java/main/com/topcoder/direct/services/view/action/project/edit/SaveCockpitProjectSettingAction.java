@@ -88,6 +88,12 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
     private static final long TOPCODER_MANAGER_METADATA_KEY = 2L;
 
     /**
+     * constant for completed project status id.
+     *
+     */
+    private static final long PROJECT_STATUS_COMPLETED = 4;
+    
+    /**
      * The form of saving project settings.
      */
     private SaveProjectSettingsForm formData = new SaveProjectSettingsForm();
@@ -147,6 +153,11 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
         project.setName(formData.getProjectName());
         project.setDescription(formData.getProjectDescription());
         project.setProjectStatusId(formData.getProjectStatusId());
+        
+        // set completion date
+        if(formData.getCompletionDate() != null && formData.getProjectStatusId() == PROJECT_STATUS_COMPLETED) {
+            project.setCompletionDate(getFormData().getCompletionDate());
+        }
 
         // set project type & category
         if(getFormData().getProjectTypeId() == -1L) {
