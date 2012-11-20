@@ -52,8 +52,16 @@ import java.util.Set;
  *     for store copilot dashboard data</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.5 (Cockpit Copilot Posting Registrants Analysis)
+ * <ul>
+ *     <li>Add copilot posting dashboard properties: {@link #directProjectTypeId}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, morehappiness, GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public class ContestDashboardDTO extends ContestHealthDTO implements Serializable {
 
@@ -158,9 +166,26 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      */
     private String otherManagingExperienceString;
 
+    /**
+     * The direct project type name.
+     *
+     * @since 1.4
+     */
     private String directProjectType;
 
+    /**
+     * The direct project duration.
+     *
+     * @since 1.4
+     */
     private String directProjectDuration;
+
+    /**
+     * The direct project type id.
+     *
+     * @since 1.5
+     */
+    private long directProjectTypeId;
     
     /**
      * <p>
@@ -536,19 +561,63 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
         this.otherManagingExperienceString = otherManagingExperienceString;
     }
 
+    /**
+     * Gets the direct project type.
+     *
+     * @return the direct project type.
+     * @since 1.4
+     */
     public String getDirectProjectType() {
         return directProjectType;
     }
 
+    /**
+     * Sets the direct project type.
+     *
+     * @param directProjectType the direct project type.
+     * @since 1.4
+     */
     public void setDirectProjectType(String directProjectType) {
         this.directProjectType = directProjectType;
     }
 
+    /**
+     * Gets the direct project duration.
+     *
+     * @return the direct project duration.
+     * @since 1.4
+     */
     public String getDirectProjectDuration() {
         return directProjectDuration;
     }
 
+    /**
+     * Sets the direct project duration.
+     *
+     * @param directProjectDuration the direct project duration.
+     * @since 1.4
+     */
     public void setDirectProjectDuration(String directProjectDuration) {
         this.directProjectDuration = directProjectDuration;
+    }
+
+    /**
+     * Gets the direct project type id.
+     *
+     * @return the direct project type id.
+     * @since 1.5
+     */
+    public long getDirectProjectTypeId() {
+        return directProjectTypeId;
+    }
+
+    /**
+     * Sets the direct project type id.
+     *
+     * @param directProjectTypeId the direct project type id.
+     * @since 1.5
+     */
+    public void setDirectProjectTypeId(long directProjectTypeId) {
+        this.directProjectTypeId = directProjectTypeId;
     }
 }

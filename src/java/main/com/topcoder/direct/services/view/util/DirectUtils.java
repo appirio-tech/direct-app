@@ -1791,9 +1791,11 @@ public final class DirectUtils {
         final ProjectData tp = projectServiceFacade.getProject(currentUser, directProjectId);
 
         String projectType = null;
+        long projectTypeId = 0;
 
         if (tp.getProjectType() != null) {
             projectType = tp.getProjectType().getName();
+            projectTypeId = tp.getProjectType().getProjectTypeId();
 
             if(tp.getProjectCategory() != null) {
                 projectType = projectType + " - " + tp.getProjectCategory().getName();
@@ -1801,6 +1803,7 @@ public final class DirectUtils {
         }
 
         dashboardDTO.setDirectProjectType(projectType);
+        dashboardDTO.setDirectProjectTypeId(projectTypeId);
 
         // set project duration
         List<DirectProjectMetadata> metadata = metadataService.getProjectMetadataByProject(directProjectId);

@@ -810,7 +810,7 @@ input[type="checkbox"] {
 .txtGreen{
     color: #008f15;
 }
-.txtGray{
+.txtGrey{
     color: #666667;
 }
 .listview-table .colWorkload{
@@ -1104,7 +1104,7 @@ table .submitedFile,
 .gridview-table .fullfillMent .percent.bgGreen{
     background: #008f14;
 }
-.gridview-table .fullfillMent .percent.bgGray{
+.gridview-table .fullfillMent .percent.bgGrey{
     background: #666666;
 }
 .gridview-table .corner{

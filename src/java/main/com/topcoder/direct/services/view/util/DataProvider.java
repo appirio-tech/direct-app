@@ -16,6 +16,7 @@ import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
@@ -628,9 +629,18 @@ import java.util.Map.Entry;
  *    <li>Add method {@link #getClientUserStats()}</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 5.6 (Module Assembly - Cockpit Copilot Posting Registrants Analysis)
+ * <ul>
+ *     <li>
+ *         Add method {@link #setCopilotFullStatistics(java.util.List, long)}
+ *     </li>
+ * </ul>
+ * </p>
  * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol
- * @version 5.5
+ * @version 5.6
  * @since 1.0
  */
 public class DataProvider {
@@ -5711,6 +5721,143 @@ public class DataProvider {
         }
 
         return members;
+    }
+
+    /**
+     * Sets the analysis stats for the copilots.
+     *
+     * @param copilots the copilots.
+     * @param projectTypeToAnalysis the project type of the copilot posting to analysis
+     * @throws Exception if there is any error.
+     * @since 5.6
+     */
+    public static void setCopilotFullStatistics(List<CopilotStatDTO> copilots, long projectTypeToAnalysis) throws Exception {
+        Map<Long, CopilotStatDTO> copilotsMap = new HashMap<Long, CopilotStatDTO>();
+        long[] userIds = new long[copilots.size()];
+        int index = 0;
+        for(CopilotStatDTO c : copilots) {
+            copilotsMap.put(c.getUserId(), c);
+            userIds[index++] = c.getUserId();
+        }
+
+        String requestInput = concatenate(userIds, ",");
+
+        String commandName = "copilots_info";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(commandName);
+        request.setProperty("uids", requestInput);
+
+        Map<String, ResultSetContainer> data = dataAccess.getData(request);
+        ResultSetContainer container = data.get("copilots_info");
+
+        for (ResultSetRow row : container) {
+            long userId = row.getLongItem("user_id");
+            CopilotStatDTO copilotDTO = copilotsMap.get(userId);
+            copilotDTO.setImagePath(row.getItem("image_path").getResultData() == null ? null : row.getStringItem("image_path"));
+            copilotDTO.setStudioCopilot(row.getBooleanItem("is_studio_copilot"));
+            copilotDTO.setSoftwareCopilot(row.getBooleanItem("is_software_copilot"));
+            copilotDTO.setCountry(row.getStringItem("country_name"));
+            copilotDTO.setTimeZone(row.getStringItem("timezone"));
+        }
+
+        container = data.get("copilots_experience");
+
+        Map<Long, Map<Long, CopilotStatDTO.Experience>> copilotsExperiencesMap = new HashMap<Long, Map<Long, CopilotStatDTO.Experience>>();
+
+        for (ResultSetRow row : container) {
+            long typeId = 0;
+            long categoryId = 0;
+            String typeName = null;
+            String categoryName = null;
+            if(row.getItem("direct_project_type_id").getResultData() != null) {
+                typeId = row.getLongItem("direct_project_type_id");
+                typeName = row.getStringItem("direct_project_type_name");
+            }
+            if(row.getItem("direct_project_category_id").getResultData() != null) {
+                categoryId = row.getLongItem("direct_project_category_id");
+                categoryName = row.getStringItem("direct_project_category_name");
+            }
+
+
+            long userId = row.getLongItem("user_id");
+            Map<Long, CopilotStatDTO.Experience> copilotExperiencesMap;
+            if(copilotsExperiencesMap.containsKey(userId)) {
+                copilotExperiencesMap = copilotsExperiencesMap.get(userId);
+            } else {
+                copilotExperiencesMap = new HashMap<Long, CopilotStatDTO.Experience>();
+                copilotsExperiencesMap.put(userId, copilotExperiencesMap);
+            }
+
+            long typeCategoryIndex = typeId * 1000 + categoryId;
+            CopilotStatDTO.Experience exp;
+            if(copilotExperiencesMap.containsKey(typeCategoryIndex)) {
+                exp = copilotExperiencesMap.get(typeCategoryIndex);
+            } else {
+                exp = new CopilotStatDTO.Experience();
+                exp.setProjectType(typeName == null ? "Other" : typeName);
+                exp.setProjectCategory(categoryName);
+                exp.setProjectTypeId(typeId);
+                exp.setProjectCategoryId(categoryId);
+                copilotExperiencesMap.put(typeCategoryIndex, exp);
+            }
+
+            long projectStatusId = row.getLongItem("project_status_id");
+
+            if(projectStatusId == 1L) {
+                exp.setActiveProjectNumber(exp.getActiveProjectNumber() + 1);
+            } else if(projectStatusId == 2L || projectStatusId == 4L) {
+                exp.setCompletedProjectNumber(exp.getCompletedProjectNumber() + 1);
+            }
+        }
+
+        for(CopilotStatDTO item : copilots) {
+            Map<Long, CopilotStatDTO.Experience> experiences = copilotsExperiencesMap.get(item.getUserId());
+            List<CopilotStatDTO.Experience> other = new ArrayList<CopilotStatDTO.Experience>();
+            List<CopilotStatDTO.Experience> matched = new ArrayList<CopilotStatDTO.Experience>();
+            if (experiences != null) {
+                for(Long indexId : experiences.keySet()) {
+                    if((indexId / 1000) == projectTypeToAnalysis && projectTypeToAnalysis > 0) {
+                        // matched
+                        matched.add(experiences.get(indexId));
+                    } else {
+                        other.add(experiences.get(indexId));
+                    }
+                }
+            }
+
+            item.setMatchedExperience(matched);
+            item.setOtherExperience(other);
+        }
+
+        commandName = "copilots_statistics";
+
+        dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        request = new Request();
+        request.setContentHandle(commandName);
+        request.setProperty("uids", requestInput);
+
+        data = dataAccess.getData(request);
+
+        container = data.get("copilots_statistics");
+
+        for (ResultSetRow row : container) {
+            long userId = row.getLongItem("user_id");
+            CopilotStatDTO copilotDTO = copilotsMap.get(userId);
+            copilotDTO.setCurrentContests(row.getIntItem("current_contests_number"));
+            copilotDTO.setCurrentProjects(row.getIntItem("current_projects_number"));
+            copilotDTO.setFulfillment(row.getItem("fulfillment").getResultData() == null ? -1 : row.getDoubleItem("fulfillment"));
+        }
+
+        container = data.get("copilots_skills");
+
+        for (ResultSetRow row : container) {
+            long userId = row.getLongItem("user_id");
+            CopilotStatDTO copilotDTO = copilotsMap.get(userId);
+            long copilotSkillId = row.getLongItem("copilot_skill_id");
+            copilotDTO.addCopilotSkill(copilotSkillId);
+        }
+
     }
 
     /**

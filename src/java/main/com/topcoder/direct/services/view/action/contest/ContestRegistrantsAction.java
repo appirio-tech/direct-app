@@ -9,6 +9,7 @@ import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRegistrantsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ContestRegistrantsForm;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -20,6 +21,7 @@ import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.user.Registrant;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,8 +57,16 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.5 (Cockpit Copilot Posting Registrants Analysis)
+ * <ul>
+ *     <li>Add copilot analysis data for the copilot registrants page for copilot posting</li>
+ * </ul>
+ * </p>
+ *
+ *
  * @author isv, GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
@@ -77,6 +87,22 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
      * <code>Contest Registrants</code> view. </p>
      */
     private ContestRegistrantsDTO viewData;
+
+    /**
+     * Statistics of the all the copilots registered for the copilot posting.
+     *
+     * @since 1.5
+     */
+    private List<CopilotStatDTO> copilots;
+
+    /**
+     * The view type for the copilot posting registrants page. There are two view types:
+     * 1) Grid view - default
+     * 2) List view
+     *
+     * @since 1.5
+     */
+    private String viewType;
 
     /**
      * <p>Constructs new <code>ContestRegistrantsAction</code> instance. This implementation does nothing.</p>
@@ -125,6 +151,11 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
     /**
      * <p>Handles the incoming request. If action is executed successfully then changes the current project context to
      * project for contest requested for this action.</p>
+     *
+     * <p>
+     * Update in version 1.5 (Cockpit Copilot Posting Registrants Analysis)
+     * - Add logic to get and set copilot registrants stats when the contest is of type copilot posting
+     * </p>
      *
      * @throws Exception if an unexpected error occurs while processing the request.
      */
@@ -175,9 +206,30 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
                 getContestServiceFacade(), !DirectUtils.isStudio(competition));
 
         if (competition.getProjectHeader().getProjectCategory().getId() == 29) {
+            // special handling for the copilot posting
+
+            // set data for copilot posting dashboard
             DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
-                    getMetadataService(), contestId,  competition.getProjectHeader().getTcDirectProjectId(),
-                    getViewData().getDashboard());;
+                    getMetadataService(), contestId, competition.getProjectHeader().getTcDirectProjectId(),
+                    getViewData().getDashboard());
+
+            // set stats data for the copilots registered for the copilot posting
+            List<CopilotStatDTO> copilots = new ArrayList<CopilotStatDTO>();
+
+            for (Registrant reg : viewData.getContestRegistrants()) {
+                CopilotStatDTO c = new CopilotStatDTO();
+                c.setUserId(reg.getUserId());
+                c.setHandle(reg.getHandle());
+                copilots.add(c);
+            }
+
+            DataProvider.setCopilotFullStatistics(copilots, getViewData().getDashboard().getDirectProjectTypeId());
+            setCopilots(copilots);
+
+            if (getViewType() == null) {
+                // default to grid view
+                setViewType("grid");
+            }
         }
     }
 
@@ -201,5 +253,45 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
      */
     public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
         return DataProvider.getAllProjectCopilotTypes();
+    }
+
+    /**
+     * Gets the copilots data.
+     *
+     * @return the copilots data.
+     * @since 1.5
+     */
+    public List<CopilotStatDTO> getCopilots() {
+        return copilots;
+    }
+
+    /**
+     * Sets the copilot data.
+     *
+     * @param copilots the copilots data.
+     * @since 1.5
+     */
+    public void setCopilots(List<CopilotStatDTO> copilots) {
+        this.copilots = copilots;
+    }
+
+    /**
+     * Gets the view type.
+     *
+     * @return the view type.
+     * @since 1.5
+     */
+    public String getViewType() {
+        return viewType;
+    }
+
+    /**
+     * Sets the view type.
+     *
+     * @param viewType the view type.
+     * @since 1.5
+     */
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
     }
 }
