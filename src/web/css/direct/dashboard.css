@@ -83,6 +83,9 @@
  *
  * - (Module Assembly - TC Direct Issue Tracking Tab Update Assembly 3)
  * - Update the CSS for direct project bugs
+ *
+ * - (Module Assembly - TC Client Users Stats Report Generation version 1.0)
+ * - Add styles for Client Users Statistics page.
  */
 
 
@@ -8185,6 +8188,196 @@ div.rightColumn .activity TABLE {
 }
 
 
+/* Client User Report */
+#clientUserStatsReports{
+    margin-bottom:20px;
+}
+#clientUserStatsReports select{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000001;
+}
+#clientUserStatsReports .filterContainer{
+    position:relative;
+    padding-top:8px;
+    min-height:60px;
+}
+#clientUserStatsReports .filterLeftTwoParts{
+    display:block;
+    padding-right:380px;
+    min-height:50px;
+    overflow:hidden;
+    min-width:360px;
+}
+#clientUserStatsReports .filterContainer .filterColumnPart{
+    float:left;
+    width:49.9%;
+    display:inline;
+    overflow:hidden;
+}
+#clientUserStatsReports .filterContainer .filterColumnThird{
+    position:absolute;
+    right:19px;
+    top:8px;
+    width:380px;
+    min-height:10px;
+    z-index:99;
+}
+#clientUserStatsReports .filterContainer .mainContentForFilter{
+    padding-top:63px;
+    min-height:50px;
+    overflow:hidden;
+}
+#clientUserStatsReports .filterContainer .mainContentForFilter .leftFilterContent{
+    width:200px;
+}
+#clientUserStatsReports .filterContainer .mainContentForFilter .rightFilterContent{
+    margin-top:0px;
+}
+#clientUserStatsReports .filterContainer .filterProject2 label,
+#clientUserStatsReports .filterContainer .filterCustomerName label,
+#clientUserStatsReports .filterContainer .filterBillingAccount label{
+    line-height:22px;
+    font-weight:bold;
+    padding-bottom:8px;
+    display:block;
+}
+#clientUserStatsReports .filterContainer .filterProject2 select{
+    width:380px;
+}
+#clientUserStatsReports .filterContainer .filterCustomerName select,
+#clientUserStatsReports .filterContainer .filterBillingAccount select{
+    width:170px;
+}
+
+#clientUserStatsReports .filterContainer #datefilter .filterRow{
+    clear:left;
+    float:none;
+    width:174px;
+    min-width:174px;
+    display:block;
+    min-height:20px;
+    overflow:hidden;
+}
+#clientUserStatsReports .filterContainer .filterRow{
+    padding-bottom:10px;
+}
+#clientUserStatsReports .filterContainer #datefilter .firstFilterRow{
+    padding-bottom:19px;
+}
+#clientUserStatsReports .filterContainer #datefilter .text{
+    width:128px;
+}
+#clientUserStatsReports .filterContainer #datefilter label{
+    font-size:12px;
+    font-weight:bold;
+    color:#333333;
+    padding-bottom:12px;
+    display:block;
+    line-height:normal;
+    width:auto;
+}
+#clientUserStatsReports .filterContainer #datefilter .firstFilterRow label{
+    padding-top:16px;
+}
+#clientUserStatsReports .filterColumnPart .multiSelectArea{
+    width:170px;
+    float:none;
+    display:block;
+}
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectAreaInner{
+    width:170px;
+    float:none;
+    display:block;
+}
+#clientUserStatsReports .multiSelectArea .multiSelectAreaInner label.multiSelectAreaTitle{
+    padding-top:16px;
+}
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectBox{
+    width:168px;
+}
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectBox .multiOptionRow{
+    width:146px;
+}
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectBox  label{
+    width:114px;
+}
+#clientUserStatsReports .filterColumnThird .multiSelectArea{
+    width:380px;
+    float:none;
+    display:block;
+}
+#clientUserStatsReports .filterColumnThird .multiSelectArea .multiSelectAreaInner{
+    width:380px;
+    float:none;
+    display:block;
+}
+#clientUserStatsReports .filterColumnThird .multiSelectArea .multiSelectBox{
+    width:378px;
+}
+#clientUserStatsReports .filterColumnThird .multiSelectArea .multiSelectBox .multiOptionRow{
+    width:356px;
+}
+#clientUserStatsReports .filterColumnThird .multiSelectArea .multiSelectBox  label{
+    width:324px;
+}
+
+#clientUserStatsReports a.button6 span.right{
+    padding:4px 27px 0px;
+}
+
+
+#clientUserStatsReportsSection table.pipelineStats{
+    margin-bottom:0px;
+}
+#clientUserStatsReportsSection th.tableTitle a.expand{
+    background: url(../../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#clientUserStatsReportsSection th.tableTitle a.collapse{
+    background: url(../../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#clientUserStatsReportsSection TABLE.pipelineStats TH.tableTitle span{
+    margin-left:6px;
+}
+#clientUserStatsReportsSection th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+#clientUserStatsReportsSection .resultTableContainer {
+    border: none;
+}
+
+#clientUserStatsReportsSection .pipelineStats thead tr.scData th,
+#clientUserStatsReportsSection .pipelineStats thead tr.subTheadRow th{
+    background:#eaeaea url(../../images/bg-sub-table-header.png) left top repeat-x;
+    border-right:1px solid #bdbdbd;
+    border-left:1px solid #bdbdbd;
+    font-size:12px;
+    padding-left:2px;
+    padding-right:2px;
+}
+
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectAreaTitle,
+#clientUserStatsReports .filterColumnPart .multiSelectArea .multiSelectBox {
+    margin-left: 0;
+}
 
 
 

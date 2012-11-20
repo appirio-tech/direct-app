@@ -621,8 +621,16 @@ import java.util.Map.Entry;
  *     <li>Update method {@link #getEnterpriseDashboardVolumeView(long, long, long, long[], java.util.Date, java.util.Date, boolean)}</li>
  * </ol>
  * </p>
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin
- * @version 5.4
+ *
+ * <p>
+ * Version 5.5 (Module Assembly - TC Client Users Stats Report Generation v1.0) changes:
+ * <ol>
+ *    <li>Add method {@link #getClientUserStats()}</li>
+ * </ol>
+ * </p>
+ * 
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol
+ * @version 5.5
  * @since 1.0
  */
 public class DataProvider {
@@ -6648,6 +6656,36 @@ public class DataProvider {
             showContestsDownload = true;
         }   
         return showContestsDownload;
+    }
+	
+	/**
+     * <p>
+     * This method retrieves client user stats.
+     * </p>
+     * @return Collection of {@link ClientUserStatsDTO}.
+     * @throws Exception  If there is any error.
+     * @since 5.5
+     */
+    public static List<ClientUserStatsDTO> getClientUserStats() throws Exception {
+        List<ClientUserStatsDTO> result = new ArrayList<ClientUserStatsDTO>();
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("client_user_stats");
+        final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("client_user_stats");
+        if(null == resultSetContainer) {
+            return result;
+        } else {
+            ClientUserStatsDTO dto = null;
+            for(ResultSetRow row : resultSetContainer) {
+                dto = new ClientUserStatsDTO();
+                dto.setClientId(row.getLongItem("client_id"));
+                dto.setClientName(row.getStringItem("client_name"));
+                dto.setYearMonth(row.getStringItem("year_month"));
+                dto.setUserCount(row.getIntItem("user_count"));
+                result.add(dto);
+            }
+            return result;
+        }
     }
 
 }

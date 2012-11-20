@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol
   - Version: 1.6.7
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
@@ -25,6 +25,7 @@
   - Version 1.6.5 (Module Assembly - TC Cockpit Project Contests Batch Edit ): add the dropdown menu for the contests tab in the project section
   - Version 1.6.6 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part): add the new enterprise dashboard
   - Version 1.6.7 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes note: add the new Operations DashBoard.
+  - Version 1.6.8 (Module Assembly - TC Client Users Stats Report Generation ) changes note: add the new User Stats DashBoard.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -117,6 +118,7 @@
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
+                            <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
                     </div>
                 </li>
@@ -169,6 +171,7 @@
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
+                            <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
                     </div>
                 </li>
@@ -221,6 +224,7 @@
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
+                            <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
                     </div>
                 </li>
@@ -276,6 +280,7 @@
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
+                            <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
                     </div>
                 </li>
@@ -327,6 +332,7 @@
                         <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
+                            <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
                     </div>
                 </li>

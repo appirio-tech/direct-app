@@ -736,7 +736,20 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
         </action>
-
+        
+        <action name="clientUserStatsReport" class="com.topcoder.direct.services.view.action.report.ClientUserStatsReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-client-user-stats-report.jsp</result>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=${excelFileName}</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>            
+            </result>
+        </action>
+        
         <action name="dashboardGetJiraIssuesReport" class="dashboardJiraIssuesReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
