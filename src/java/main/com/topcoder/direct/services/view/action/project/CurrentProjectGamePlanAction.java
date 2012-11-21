@@ -100,6 +100,11 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      */
     private static final String CONTEST_DETAIL_LINK = "contest/detail.action?projectId=";
 
+    /**
+     * The link prefix for the copilot posting details page.
+     */
+    private static final String COPILOT_POSTING_LINK = "copilot/copilotContestDetails.action?projectId=";
+
 
     /**
      * The link prefix for the project overview page.
@@ -608,15 +613,19 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
         boolean isBugRace = contestType.equalsIgnoreCase("bug race");
 
+        boolean isCopilotPosting = contestType.equalsIgnoreCase("copilot posting");
+
         String link = "";
 
-       if(isBugRace) {
-           link = JIRA_LINK + key;
-       } else if(isMilestone) {
-           link = MILESTONE_LINK + directProjectId;
-       } else {
-           link = CONTEST_DETAIL_LINK + id;
-       }
+        if (isBugRace) {
+            link = JIRA_LINK + key;
+        } else if (isMilestone) {
+            link = MILESTONE_LINK + directProjectId;
+        } else if (isCopilotPosting) {
+            link = COPILOT_POSTING_LINK + id;
+        } else {
+            link = CONTEST_DETAIL_LINK + id;
+        }
 
         contestData.append("<task>");
         contestData.append("<pID>" + id + "</pID>");

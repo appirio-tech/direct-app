@@ -25,6 +25,7 @@ To use this component please contact sales@dhtmlx.com to obtain license
  *  @topic: 0
  */
 var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
+var ganttCopilotPostingUrl = "./copilot/copilotContestDetails.action?projectId="
 var ganttContestUrl = ganttSoftwareContestUrl;
 var ganttProjectUrl = "./currentProjectOverview.action";
 var ganttBugRaceUrlPrefix = "https://apps.topcoder.com/bugs/browse/";
@@ -5183,6 +5184,8 @@ GanttTask.prototype.checkWidthTaskNameItem = function()
     }
     
     var urlTemplate = this.TaskInfo.Name.indexOf("Bug Race -") == 0 ? ganttBugRaceUrlPrefix : ganttSoftwareContestUrl;
+
+    urlTemplate = this.TaskInfo.Name.indexOf("Copilot Posting -") == 0 ? ganttCopilotPostingUrl : urlTemplate;
     
     this.cTaskNameItem[0].innerHTML = "<a href=\"" + urlTemplate + this.TaskInfo.Id + '" target="_blank">' + "<font color='" + color + "'>" + tName + "</font></a>";
 
