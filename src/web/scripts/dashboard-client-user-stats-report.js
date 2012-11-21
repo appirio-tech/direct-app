@@ -73,13 +73,19 @@ function updateYearMonth() {
    var sData = dT.fnGetData();
    var currentClient = $("#clientIdSelect").val();
    var existing = "";
+   var yearMonthArray = new Array();
    for(var i=0; i<sData.length; i++) {
       var items = (sData[i] + "").split(',');
       if(currentClient == items[0] || 'All' == currentClient) {
          if(-1 == existing.indexOf(items[1])) {
-            $select.append('<option class="yearMonthItem">' + items[1] + '</option>');
+         	yearMonthArray.push(items[1]);
             existing = existing + ', ' + items[1];
          }
       }
+   }
+   yearMonthArray.sort();
+   yearMonthArray.reverse();
+   for(var i=0; i<yearMonthArray.length; i++) {
+	   $select.append('<option class="yearMonthItem">' + yearMonthArray[i] + '</option>');
    }
 }
