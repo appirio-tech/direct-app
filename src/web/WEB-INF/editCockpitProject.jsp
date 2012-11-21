@@ -313,7 +313,10 @@
             <li>
                 <input autocomplete="off" name="projectStatus" type="radio" value="4" class="completedStatus"
                        <s:if test='viewData.project.projectStatusId == 4L'>checked="checked"</s:if> />
-                <label class="completedStatus">Completed</label>
+                <label class="completedStatus">
+                    <s:if test='viewData.project.projectStatusId == 4L && viewData.project.completionDate != null'>Completed on ${viewData.project.completionDate}</s:if>
+                    <s:else>Completed</s:else>
+                </label>
             </li>
         </ul>
     </div>

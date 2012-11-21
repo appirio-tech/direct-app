@@ -33,7 +33,7 @@
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">
-            <div id="content">
+            <div id="content" class="liquid">
 
                 <jsp:include page="includes/header.jsp"/>
 
@@ -242,7 +242,7 @@
             </s:if>
 
             <td>
-                <div class="col1">
+                <div class="col1 col">
                     <s:if test="imagePath == null || imagePath.length == 0">
                         <img class="memberPic" alt="copilot picture" src="/images/copilotPosting/copilotHeader.png"/>
                     </s:if>
@@ -269,8 +269,9 @@
                         </s:if>
                     </p>
                 </div>
+               <div class="colGrp">
                 <!-- /.col1 -->
-                <div class="col2">
+                <div class="col2 col">
                     <p class="location">${country}</p>
 
                     <div class="fullfillMent bg${fulfillmentColor}">
@@ -306,7 +307,7 @@
                     </div>
                 </div>
                 <!-- /.col2 -->
-                <div class="col3">
+                <div class="col3 col">
                     <p class="time">${timeZone}</p>
 
                     <div class="workload">
@@ -331,7 +332,6 @@
                                 </p>
                             </div>
                         </s:iterator>
-
                         <p class="link">
                             <a href="javascript:;" class="viewXperience">View other experience</a>
                         </p>
@@ -351,6 +351,8 @@
 
                     </div>
                 </div>
+                   <div class="clear"></div>
+               </div>
                 <!-- /.col3 -->
             </td>
 

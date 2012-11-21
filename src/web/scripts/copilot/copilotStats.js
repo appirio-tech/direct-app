@@ -6,6 +6,11 @@
  */
 
 $(document).ready(function() {
+
+    $(".gridview-table td").each(function(){
+        $(this).find("div.colGrp").height($(this).height());
+    });
+
     $('.requiredXperience .more').mouseover(function() {
         var $parent = $(this).parents('.dashboardModule:eq(0)').position();
         var r = $(this).parents('.dashboardModule:eq(0)').width() - $(this).position().left;
@@ -31,23 +36,19 @@ $(document).ready(function() {
         window.setTimeout($('.moreFlyout').addClass('hide'), 500);
     });
 
-    /* viewXperience flyout function */
     $('.viewXperience').mouseover(function() {
         var l = $(this).parent().parent().position().left - 1;
         if ($.browser.webkit) {
             // webkit fix
             l += 1;
         }
-        var t = $(this).parents('td:eq(0)').position().top + 158; // height of
-        // cell
+        var t = $(this).position().top + 20;
+
         var arrowLt = 70;
         if ($(this).parent().parent().hasClass('xperience')) {
-            t = $(this).position().top + 30;
             l -= 52;
             arrowLt = 103;
         }
-
-        $('.xperienceFlyout').html($(this).parent().parent().find(".otherExperienceDiv").html());
 
         $('.xperienceFlyout .arrow').css({
             'left' : arrowLt + 'px'
@@ -57,8 +58,9 @@ $(document).ready(function() {
             'left' : l + 'px'
         });
     });
+
     $('.viewXperience').mouseleave(function() {
-        window.setTimeout($('.xperienceFlyout').addClass('hide'), 500);
+        window.setTimeout("$('.xperienceFlyout').addClass('hide')", 500);
     });
 
     /* tack flyout function */

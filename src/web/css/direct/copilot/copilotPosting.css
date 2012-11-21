@@ -849,6 +849,7 @@ input[type="checkbox"] {
 .colExperience .link{
     font-size: 11px;
     padding-left: 12px;
+    padding-bottom: 10px;
 }
 .gridview-table .colExperience .link{
     padding-left: 0px;
@@ -988,23 +989,22 @@ table .submitedFile,
 .gridview-table tr td{
     border: solid #BDBDBD;
     border-width: 0 0 1px 1px;
-    height: 318px;
+    min-height: 318px;
     vertical-align: top;
+    background: #f3f3f3;
 }
 .gridview-table tr td:first-child {
     border-width: 0 0 1px 0;
 }
 
 .gridview-table .col1{
-    min-width: 160px;
     width: 31%;
-    height: 298px;
     text-align: center;
     padding-top: 20px;
     float: left;
     background: #f3f3f3;
-    border-right: 1px solid #dadada;
     position: relative;
+    min-height: 298px;
 }
 .gridview-table .memberPic{
     padding-bottom: 8px;
@@ -1059,15 +1059,22 @@ table .submitedFile,
     height: 16px;
     display: inline-block;
 }
+.gridview-table .colGrp{
+    background: white;
+    float: left;
+    width: 68.65%;
+    min-height: 298px;
+    border-left: 1px solid #DADADA;
+}
 .gridview-table .col2{
     padding-top: 20px;
     float: left;
     text-align: left;
     min-width: 138px;
-    width: 27%;
+    width: 40%;
     padding-left: 3.3%;
     font-size: 11px;
-    height: 298px;
+    min-height: 298px;
 }
 .gridview-table .location{
     height: 14px;
@@ -1148,12 +1155,12 @@ table.gridview-table .colSkills ul li{
 
 .gridview-table .col3{
     padding-top: 20px;
-    height: 298px;
     float: left;
     min-width: 175px;
-    width: 34.2%;
+    width: 53%;
     padding-left: 3.3%;
     text-align: left;
+    min-height: 298px;
 }
 .gridview-table .time{
     height: 14px;
@@ -1630,4 +1637,8 @@ table.gridview-table .colSkills ul li{
     width: 67px;
     z-index: 9999;
     background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
+}
+
+.gridview-table tr td:first-child {
+    border-width: 0 1px 1px 0;
 }
