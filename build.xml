@@ -383,6 +383,7 @@
                 <exclude name="scripts/tiny_mce/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
+				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/scorecard/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
             </fileset>
