@@ -152,10 +152,10 @@
                 <c:when test="${viewData.contestStats.currentStatus eq 'Active'}">
                     <c:forEach items="${viewData.dashboard.allPhases}" var="phase" varStatus="loop">
                                 <c:choose>
-                                    <c:when test='${phase.phaseType.shortName eq "Review" && phase.phaseStatus.htmlClass eq "current"}}'>
-                                        <a class="btn" href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
-                                    <s:param name="projectId" value="%{#attr['contest'].id}"/>
-                                </s:url>"><span class="bRt"> <span class="bMid">CHOOSE YOUR COPILOT</span></span></a>
+                                    <c:when test='${phase.phaseType.shortName eq "Review" && phase.phaseStatus.htmlClass eq "current"}'>
+                                        <a class="btn" href='<s:url namespace="/copilot" action="listCopilotContestSubmissions">
+                                    <s:param name="projectId" value="%{#attr['projectId']}"/>
+                                </s:url>'><span class="bRt"> <span class="bMid">CHOOSE YOUR COPILOT</span></span></a>
                                     </c:when>
                                 </c:choose>
                     </c:forEach>
