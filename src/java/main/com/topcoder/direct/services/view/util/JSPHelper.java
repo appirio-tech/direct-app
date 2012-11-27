@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -7,8 +7,17 @@ import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType;
+import com.topcoder.security.groups.services.DirectProjectService;
+import com.topcoder.security.groups.services.SecurityGroupException;
+import com.topcoder.security.groups.services.UserService;
+import com.topcoder.security.groups.services.dto.ProjectDTO;
+import com.topcoder.security.groups.services.dto.UserDTO;
 import com.topcoder.service.pipeline.CommonPipelineData;
+import com.topcoder.service.user.UserServiceException;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.DecimalFormat;
@@ -17,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>This class provides the set of static functions for use by JSP views.</p>
@@ -68,8 +79,17 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv, pvmagacho
- * @version 1.1.5
+ * <p>
+ * Version 1.1.7 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isSecurityGroupsUIAvailable()} method.</li>
+ *     <li>Added {@link #resolveDirectProject(long)} method.</li>
+ *     <li>Added {@link #resolveUser(long)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, pvmagacho, TCSDEVELOPER
+ * @version 1.1.7
  */
 public class JSPHelper {
 
@@ -438,4 +458,87 @@ public class JSPHelper {
     public static boolean isTCAccounting() {
         return DirectUtils.isTCAccounting(DirectUtils.getTCSubjectFromSession());
     }
+
+    /**
+     * <p>Checks whether the current user is allowed to access Security Groups UI or not.</p>
+     *
+     * @return <code>true</code> if current user can access Security Groups UI; <code>false</code> otherwise.
+     * @throws UserServiceException if an unexpected error occurs.
+     * @since 1.1.7
+     */
+    public static boolean isSecurityGroupsUIAvailable() throws UserServiceException {
+        return DirectUtils.isSecurityGroupsUIAvailable();
+    }
+
+    /**
+     * <p>Looks up for TC Direct project mapped to specified project ID.</p>
+     * 
+     * @param directProjectId a <code>long</code> providing the ID of TC Direct project.
+     * @return a <code>ProjectDTO</code> providing data for specified project. 
+     * @throws SecurityGroupException if an unexpected error occurs.
+     * @since 1.1.7
+     */
+    @SuppressWarnings("unchecked")
+    public static ProjectDTO resolveDirectProject(long directProjectId)
+        throws SecurityGroupException {
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        Map<Long, ProjectDTO> projectsCache = (Map<Long, ProjectDTO>) request.getAttribute("directProjectsMap");
+        if (projectsCache == null) {
+            projectsCache = new HashMap<Long, ProjectDTO>();
+            request.setAttribute("directProjectsMap", projectsCache);
+        }
+        ProjectDTO project;
+        if (!projectsCache.containsKey(directProjectId)) {
+            DirectProjectService directProjectService
+                = (DirectProjectService) getSpringContextBean("groupProjectService");
+            project = directProjectService.get(directProjectId);
+            projectsCache.put(directProjectId, project);
+        } else {
+            project = projectsCache.get(directProjectId);
+        }
+        
+        return project;
+    }
+
+    /**
+     * <p>Looks up for user account mapped to specified user ID.</p>
+     *
+     * @param userId a <code>long</code> providing the ID of user account.
+     * @return a <code>UserDTO</code> providing data for specified user.
+     * @throws SecurityGroupException if an unexpected error occurs.
+     * @since 1.1.7
+     */
+    @SuppressWarnings("unchecked")
+    public static UserDTO resolveUser(long userId) throws SecurityGroupException {
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        Map<Long, UserDTO> usersCache = (Map<Long, UserDTO>) request.getAttribute("usersMap");
+        if (usersCache == null) {
+            usersCache = new HashMap<Long, UserDTO>();
+            request.setAttribute("usersMap", usersCache);
+        }
+        UserDTO user;
+        if (!usersCache.containsKey(userId)) {
+            UserService userService = (UserService) getSpringContextBean("groupUserService");
+            user = userService.get(userId);
+            usersCache.put(userId, user);
+        } else {
+            user = usersCache.get(userId);
+        }
+
+        return user;
+    }
+
+    /**
+     * <p>Gets the bean bound to Spring context under specified name.</p>
+     * 
+     * @param beanName a <code>String</code> providing the name of bean.
+     * @return an <code>Object</code> bound in Spring context under specified name.
+     * @since 1.1.7
+     */
+    private static Object getSpringContextBean(String beanName) {
+        HttpServletRequest servletRequest = DirectUtils.getServletRequest();
+        ServletContext ctx = servletRequest.getSession().getServletContext();
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+        return applicationContext.getBean(beanName);
+    }	
 }

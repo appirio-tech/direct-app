@@ -19,6 +19,10 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.DirectProject;
+import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.services.GroupService;
+import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.facade.contest.notification.ContestNotification;
 import com.topcoder.service.facade.contest.notification.ProjectNotification;
 import com.topcoder.service.permission.Permission;
@@ -26,7 +30,16 @@ import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -58,8 +71,17 @@ import java.util.*;
  *    - update method {@link #executeAction()} to set associated project billing accounts.
  * </p>
  *
- * @version 2.1
- * @author GreatKevin
+ * <p>
+ * Version 2.2 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
+ *   <ol>
+ *     <li>Added {@link #groupService} property.</li>
+ *     <li>Updated {@link #executeAction()} method to set view data with lists of assigned and available security 
+ *     groups.</li>
+ *   </ol>
+ * </p>
+ *
+ * @version 2.2
+ * @author GreatKevin, TCSDEVELOPER
  */
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<EditCockpitProjectDTO> {
@@ -128,6 +150,13 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
      * @since 2.0
      */
     private long userId;
+
+    /**
+     * <p>A <code>GroupService</code> providing the interface to security groups service.</p>
+     * 
+     * @since 2.1
+     */
+    private GroupService groupService;
 
     /**
      * Gets the view data.
@@ -331,7 +360,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         this.viewData.setProjectForumNotifications(projectNotifications);
 
         // set current user permission
-        this.viewData.setCanAccessPermissionNotification(this.viewData.getHasFullPermission());
+        this.viewData.setCanAccessPermissionNotification(DirectUtils.isCockpitAdmin(currentUser)
+                || DirectUtils.isTcOperations(currentUser)
+                || DirectUtils.isTcStaff(currentUser));
 
         List<DirectProjectMetadata> allProjectMetadata = getMetadataService().getProjectMetadataByProject(formData.getProjectId());
 
@@ -345,6 +376,38 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
 
         getSessionData().setCurrentSelectDirectProjectID(currentProject.getId());
 
+        // Get the list of security groups accessible to current user and split them into two lists - one
+        // with groups already assigned to project and the rest
+        GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
+        groupSearchCriteria.setUserId(currentUser.getUserId());
+
+        Long clientIdForProject = viewData.getClientId();
+        List<Group> groups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+        List<Group> assignedGroups = new ArrayList<Group>();
+        List<Group> unassignedGroups = new ArrayList<Group>();
+        for (Group group : groups) {
+            List<DirectProject> directProjects = group.getDirectProjects();
+            boolean assigned = false;
+            if (directProjects != null) {
+                for (DirectProject directProject : directProjects) {
+                    if (directProject.getDirectProjectId() == currentProject.getId()) {
+                        assigned = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (assigned) {
+                assignedGroups.add(group);
+            } else {
+                if (group.getClient().getId() == clientIdForProject) {
+                    unassignedGroups.add(group);
+                }
+            }
+        }
+
+        viewData.setSecurityGroups(assignedGroups);
+        viewData.setAvailableSecurityGroups(unassignedGroups);
     }
 
     /**
@@ -530,5 +593,25 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * <p>Gets the interface to security groups service.</p>
+     *
+     * @return a <code>GroupService</code> providing the interface to security groups service.
+     * @since 2.2
+     */
+    public GroupService getGroupService() {
+        return this.groupService;
+    }
+
+    /**
+     * <p>Sets the interface to security groups service.</p>
+     *
+     * @param groupService a <code>GroupService</code> providing the interface to security groups service.
+     * @since 2.2
+     */
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 }

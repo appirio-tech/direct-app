@@ -11,6 +11,7 @@ import com.topcoder.direct.services.project.milestone.MilestoneService;
 import com.topcoder.direct.services.project.milestone.ResponsiblePersonService;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.services.AuthorizationService;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
@@ -92,6 +93,12 @@ import java.util.List;
  * <ul>
  * <li>Add <code>permissionServiceFacade</code> reference.</li>
  * </ul>
+ * </p>
+ * <p>
+ * Version 1.5 (Topcoder Security Groups Backend - Direct Permissions Propagation Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #authorizationService} property.</li>
+ *   </ol>
  * </p>
  *  <p>
  * Version 1.5 - Module Assembly - TC Cockpit Project Milestones Service Integration and Testing Change Note
@@ -228,6 +235,13 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * @since 1.3
      */
     private DirectProjectMetadataKeyService metadataKeyService;
+
+    /**
+     * <p>A <code>AuthorizationService</code> providing the interface to authorization service.</p>
+     * 
+     * @since 1.5
+     */
+    private AuthorizationService authorizationService;
 
     /**
      * The direct project metadata service.
@@ -646,6 +660,27 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
         this.metadataService = metadataService;
     }
 
+    /**
+     * <p>Gets the interface to authorization service.</p>
+     *
+     * @return a <code>AuthorizationService</code> providing the interface to authorization service.
+     * @since 1.5
+     */
+    public AuthorizationService getAuthorizationService() {
+        return this.authorizationService;
+    }
+
+    /**
+     * <p>Sets the interface to authorization service.</p>
+     *
+     * @param authorizationService a <code>AuthorizationService</code> providing the interface to authorization
+     *                             service.
+     * @since 1.5
+     */
+    public void setAuthorizationService(AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
+    
     /**
      * Gets the milestone responsible person service.
      *

@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol
-  - Version: 1.6.7
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
+  - Version: 2.2
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -26,6 +26,16 @@
   - Version 1.6.6 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part): add the new enterprise dashboard
   - Version 1.6.7 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes note: add the new Operations DashBoard.
   - Version 1.6.8 (Module Assembly - TC Client Users Stats Report Generation ) changes note: add the new User Stats DashBoard.
+  - Version 1.7 (Release Assembly - TopCoder Security Groups Frontend - View Group Details) : add tabs for security groups
+  - Version 1.8 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) :
+  -   updated tabs for Pending Approvals and Received Invitations 
+  - Version 1.9 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups) :
+  -   updated link for view user groups tabs 
+  - Version 2.0 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous) :
+  -   updated link for create customer administrator, send invitation, audit information tabs
+  - Version 2.1 (Release Assembly - TopCoder Security Groups - Release 2) change notes: made the UI related to security
+  -   groups displayed if user is granted a permission to access security groups UI
+  - Version 2.2 (https://apps.topcoder.com/bugs/browse/TCCC-4704) change notes: add the 'Report' permission for group security
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -84,6 +94,9 @@
                 <span>TopCoder Copilots</span>
             </a>
         </c:when>
+        <c:when test="${requestScope.PAGE_TYPE eq 'group'}">
+            <a href="#" class="logo">Groups</a>
+        </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
     <c:otherwise>
@@ -107,6 +120,9 @@
     </c:otherwise>
     </c:choose>
 
+    <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
+      <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
+    </s:url>
     <div id="tabs0"><!-- the left tabs -->
         <ui:isDashboardPage>
             <ul>
@@ -136,6 +152,11 @@
                     </div>
                 </li>
 
+                <if:isSecurityGroupsUIAccessible>
+                    <li>
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+                </if:isSecurityGroupsUIAccessible>
                 <c:if test="${tcdirect:isScorecardAdmin()}">
                     <li>
                         <a href="/direct/scorecard/"><span>Scorecards</span></a>
@@ -188,6 +209,12 @@
                         <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
                     </div>
                 </li>
+                
+                <if:isSecurityGroupsUIAccessible>
+                    <li>
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+                </if:isSecurityGroupsUIAccessible>
 
                 <c:if test="${tcdirect:isScorecardAdmin()}">
                     <li>
@@ -242,7 +269,11 @@
                         <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
                     </div>
                 </li>
-
+                <if:isSecurityGroupsUIAccessible>
+                    <li>
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+                </if:isSecurityGroupsUIAccessible>
                 <c:if test="${tcdirect:isScorecardAdmin()}">
                     <li>
                         <a href="/direct/scorecard/"><span>Scorecards</span></a>
@@ -297,7 +328,11 @@
                         <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
                     </div>
                 </li>
-
+                <if:isSecurityGroupsUIAccessible>
+                    <li>
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+                </if:isSecurityGroupsUIAccessible>
                 <c:if test="${tcdirect:isScorecardAdmin()}">
                     <li>
                         <a href="/direct/scorecard/"><span>Scorecards</span></a>
@@ -349,7 +384,11 @@
                         <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
                     </div>
                 </li>
-
+                <if:isSecurityGroupsUIAccessible>
+                    <li>
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+                </if:isSecurityGroupsUIAccessible>
                 <c:if test="${tcdirect:isScorecardAdmin()}">
                     <li>
                         <a href="/direct/scorecard/"><span>Scorecards</span></a>
@@ -374,6 +413,39 @@
                 </c:if>
             </ul>
         </c:if>
+        <ui:isGroupPage>
+            <ul>
+                <li>
+                    <a href="<s:url action="dashboard" namespace="/"/>"><span>Dashboard</span></a>
+                </li>
+
+                <li>
+                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                </li>
+
+                <li>
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+
+                <if:isSecurityGroupsUIAccessible>
+                    <li class="on">
+                        <a href="${viewUserGroupsUrl}"><span>Groups</span></a>
+                    </li>
+               </if:isSecurityGroupsUIAccessible>
+
+                <c:if test="${tcdirect:isScorecardAdmin()}" >
+                <li>
+                     <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                </li>
+                
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+                <li>
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
+            </ul>
+        </ui:isGroupPage>
     </div>
     <!-- End #tabs0 -->
 
@@ -491,6 +563,36 @@
         </div>
      </ui:isCopilotPage>
     
+    <if:isSecurityGroupsUIAccessible>
+        <ui:isGroupPage>
+            <div id="tabs1">
+               <ul>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'detail'}">class="on"</c:if>>
+                        <a href="${viewUserGroupsUrl}"><span class="dashboardSpan">Groups</span></a></li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'sendInvitation'}">class="on"</c:if>>
+                        <a href='<s:url action="enterSendInvitationAction" namespace="/group"/>'><span
+                                class="dashboardSpan">Send Invitation</span></a></li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'approvals'}">class="on"</c:if>>
+                        <s:url var="viewPendingApprovalUrl" action="viewPendingApprovalUserAction" namespace="/group">
+                        </s:url>
+                        <a href="${viewPendingApprovalUrl}"><span class="dashboardSpan">Approvals</span></a></li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'createAdministrator'}">class="on"</c:if>>
+                        <a href='<s:url action="enterCreateCustomerAdminAction" namespace="/group"/>'><span
+                                class="dashboardSpan">Create Admin</span></a></li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'audit'}">class="on"</c:if>>
+                        <s:url var="auditInfoUrl" action="viewAuditingInfoAction" namespace="/group">
+                            <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
+                        </s:url>
+                        <a href="${auditInfoUrl}"><span class="dashboardSpan">Audit Information</span></a></li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'receivedInvitations'}">class="on"</c:if>>
+                        <s:url var="viewInvitationUrl" action="viewInvitationStatusAction" namespace="/group">
+                            <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
+                        </s:url>
+                        <a href="${viewInvitationUrl}"><span class="dashboardSpan">Received Invitations</span></a></li>
+                </ul>
+            </div>
+        </ui:isGroupPage>
+    </if:isSecurityGroupsUIAccessible>
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
           

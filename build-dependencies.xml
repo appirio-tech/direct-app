@@ -470,19 +470,24 @@
   <property name="topcoder_cockpit_project_metadata_services.path" value="topcoder_cockpit_project_metadata_services/${topcoder_cockpit_project_metadata_services.version}" />
   <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_services.path}/${topcoder_cockpit_project_metadata_services.jar.name}" />
 
-    <property name="topcoder_cockpit_project_milestone_services.version" value="1.0.0"/>
-    <property name="topcoder_cockpit_project_milestone_services.jar.name"
+  <property name="topcoder_cockpit_project_milestone_services.version" value="1.0.0"/>
+  <property name="topcoder_cockpit_project_milestone_services.jar.name"
               value="topcoder_cockpit_project_milestone_services.jar"/>
-    <property name="topcoder_cockpit_project_milestone_services.path"
+  <property name="topcoder_cockpit_project_milestone_services.path"
               value="topcoder_cockpit_project_milestone_services/${topcoder_cockpit_project_milestone_services.version}"/>
-    <property name="topcoder_cockpit_project_milestone_services.jar"
+  <property name="topcoder_cockpit_project_milestone_services.jar"
               value="${tcs_libdir}/${topcoder_cockpit_project_milestone_services.path}/${topcoder_cockpit_project_milestone_services.jar.name}"/>
-  
+
   <property name="topcoder_commons_utility.version" value="1.0.0" />
   <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar" />
   <property name="topcoder_commons_utility.path" value="topcoder_commons_utility/${topcoder_commons_utility.version}" />
   <property name="topcoder_commons_utility.jar" value="${tcs_libdir}/${topcoder_commons_utility.path}/${topcoder_commons_utility.jar.name}" />
   
+  <property name="topcoder_security_groups.version" value="1.0.0"/>
+  <property name="topcoder_security_groups.jar.name" value="topcoder_security_groups.jar"/>
+  <property name="topcoder_security_groups.path" value="topcoder_security_groups/${topcoder_security_groups.version}"/>
+  <property name="topcoder_security_groups.jar" value="${tcs_libdir}/${topcoder_security_groups.path}/${topcoder_security_groups.jar.name}"/>
+	
   <property name="typesafe_enum.version" value="1.1.0" />
   <property name="typesafe_enum.jar.name" value="typesafe_enum.jar" />
   <property name="typesafe_enum.path" value="typesafe_enum/${typesafe_enum.version}" />
@@ -577,6 +582,9 @@
   
   <property name="ehcache.jar" value="${ext_libdir}/hibernate/ehcache-1.5.0.jar" />
   <property name="hibernate-jpa.jar" value="${ext_libdir}/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar" />
+  <property name="hibernate.jar" value="${ext_libdir}/hibernate/hibernate3.jar" />
+  <property name="aspectjrt.jar" value="${ext_libdir}/aspectj/aspectjrt.jar" />
+  <property name="aspectjweaver.jar" value="${ext_libdir}/aspectj/aspectjweaver.jar" />
 
 
   <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar" />
@@ -780,6 +788,7 @@
     <pathelement location="${random_string_generator.jar}" />
     <pathelement location="${random_string_image.jar}" />
     <pathelement location="${spell_check.jar}" />
+    <pathelement location="${topcoder_security_groups.jar}" />
     <pathelement location="${topcoder_commons_utility.jar}" />
   </path>
 

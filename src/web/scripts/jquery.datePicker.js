@@ -424,7 +424,7 @@
 		{
 			return _w.call(this, 'display', e);
 		},
-
+        
         dpClearSelected : function() {
             return _w.call(this, 'clearSelected');
         },
@@ -783,9 +783,15 @@
 						'id'		:	'dp-popup',
 						'class'	:	'dp-popup'
 					};
+					var tLeft;
+					if(eleOffset.left + c.horizontalOffset + 242 > $('body').width()){
+						tLeft = eleOffset.left - c.horizontalOffset - 218;
+					}else{
+						tLeft = eleOffset.left + c.horizontalOffset + 30;
+					}
 					cssRules = {
 						'top'	:	eleOffset.top + c.verticalOffset,
-						'left'	:	eleOffset.left + c.horizontalOffset + 30
+						'left'	:	tLeft
 					};
 					
 					var _checkMouse = function(e)

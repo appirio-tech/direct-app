@@ -1,0 +1,14 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.datasource">java:TCS_CATALOG</property>
+        <property name="use_sql_comments">false</property>
+        <property name="show_sql">false</property>
+        <property name="dialect">org.hibernate.dialect.InformixDialect</property>
+        <property name="hibernate.query.substitutions">true 1, false 0</property>
+        <mapping resource="securityGroupsMapping.xml"/>
+    </session-factory>
+</hibernate-configuration>

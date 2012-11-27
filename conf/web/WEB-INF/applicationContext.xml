@@ -261,6 +261,7 @@
         <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
         <property name="metadataService" ref="directProjectMetadataServices"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
+        <property name="authorizationService" ref="groupAuthorizationService"/>
         <property name="milestoneResponsiblePersonService" ref="milestoneResponsiblePersonService"/>
         <property name="milestoneService" ref="milestoneService"/>
     </bean>
@@ -448,6 +449,7 @@
 
     <bean id="editCockpitProjectAction" class="com.topcoder.direct.services.view.action.project.edit.EditCockpitProjectAction"
             parent="baseDirectStrutsAction" scope="prototype">
+        <property name="groupService" ref="groupService"/>
     </bean>
 
     <bean id="saveCockpitProjectSettingAction" class="com.topcoder.direct.services.view.action.project.edit.SaveCockpitProjectSettingAction"

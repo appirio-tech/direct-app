@@ -7,6 +7,7 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.dto.CommonDTO;
+import com.topcoder.security.groups.model.Group;
 import com.topcoder.service.permission.Permission;
 import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
@@ -35,8 +36,16 @@ import java.util.*;
  *     - Add property {@link #billingAccounts} and its getter and setter
  * </p>
  *
- * @version 1.3
- * @author GreatKevin
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
+ *   <ol>
+ *     <li>Added {@link #securityGroups} property.</li>
+ *     <li>Added {@link #availableSecurityGroups} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @version 1.4
+ * @author GreatKevin, TCSDEVELOPER
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
@@ -159,9 +168,25 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
     /**
      * The billing accounts the project has.
+     *
      * @since 1.3
      */
     private List<com.topcoder.clients.model.Project> billingAccounts;
+
+    /**
+     * <p>A <code>List<Group></code> providing the list of security groups associated with the project.</p>
+     * 
+     * @since 1.4
+     */
+    private List<Group> securityGroups;
+
+    /**
+     * <p>A <code>List<Group></code> providing the list of security groups available for association with the
+     * project.</p>
+     * 
+     * @since 1.4
+     */
+    private List<Group> availableSecurityGroups;
 
     /**
      * Gets the project data.
@@ -579,5 +604,48 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setBillingAccounts(List<Project> billingAccounts) {
         this.billingAccounts = billingAccounts;
+    }
+
+    /**
+     * <p>Gets the list of security groups available for association with the project.</p>
+     *
+     * @return a <code>List<Group></code> providing the list of security groups available for association with the
+     *         project.
+     * @since 1.4
+     */
+    public List<Group> getAvailableSecurityGroups() {
+        return this.availableSecurityGroups;
+    }
+
+    /**
+     * <p>Sets the list of security groups available for association with the project.</p>
+     *
+     * @param availableSecurityGroups a <code>List<Group></code> providing the list of security groups available for
+     *                                association with the project.
+     * @since 1.4
+     */
+    public void setAvailableSecurityGroups(List<Group> availableSecurityGroups) {
+        this.availableSecurityGroups = availableSecurityGroups;
+    }
+
+    /**
+     * <p>Gets the list of security groups associated with the project.</p>
+     *
+     * @return a <code>List<Group></code> providing the list of security groups associated with the project.
+     * @since 1.4
+     */
+    public List<Group> getSecurityGroups() {
+        return this.securityGroups;
+    }
+
+    /**
+     * <p>Sets the list of security groups associated with the project.</p>
+     *
+     * @param securityGroups a <code>List<Group></code> providing the list of security groups associated with the
+     *                       project.
+     * @since 1.4
+     */
+    public void setSecurityGroups(List<Group> securityGroups) {
+        this.securityGroups = securityGroups;
     }
 }

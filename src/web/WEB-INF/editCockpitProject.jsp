@@ -1,11 +1,9 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.3.0
+  - Author: GreatKevin, TCSDEVELOPER
+  - Version: 1.2.1
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
-  -
-  - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
   -
   - (Version 1.1 Release Assembly - TC Cockpit Edit Project and Project General Info Update) changes:
   - - Add edit and save of project ratings.
@@ -14,8 +12,10 @@
   - - Add edit of project type & category
   - - Add manage of project permissions, notifications and contest notifications for the user.
   -
-  - (Version 1.3 Release Assembly - TopCoder Cockpit Billing Account Project Association)
-  - - Add associate/remove project billing account feature
+  - Version 1.2.1 updates (Release Assembly - TopCoder Security Groups - Release 2)
+  - - Add group permissions area
+  -
+  - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -26,6 +26,86 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/editProject.css?v=213353" media="all" type="text/css"/>
+    <script type="text/javascript">
+        var groupIds = []; 
+        var group;
+        var data;
+        var availableGroups = {};
+        <c:forEach items="${viewData.availableSecurityGroups}" var="group">
+        groupIds.push(${group.id});
+        group = {};
+        group.id = ${group.id};
+        group.name = '${group.name}';
+        group.defaultPermission = '${group.defaultPermission}';
+        
+        group.billingAccounts = [];
+        <c:forEach items="${group.billingAccounts}" var="d">
+            data = {};
+            data.name = '${d.name}';
+            group.billingAccounts.push(data);    
+        </c:forEach>
+        
+        group.directProjects = [];
+        <c:forEach items="${group.directProjects}" var="d">
+            data = {};
+            data.name = '${tcdirect:resolveDirectProject(d.directProjectId).name}';
+            group.directProjects.push(data);    
+        </c:forEach>
+        
+        group.restrictions = [];
+        <c:forEach items="${group.restrictions}" var="d">
+            data = {};
+            data.name = '${d}';
+            group.restrictions.push(data);    
+        </c:forEach>
+
+        group.members = [];
+        <c:forEach items="${group.groupMembers}" var="d">
+            data = {};
+            data.handle = '${tcdirect:resolveUser(d.userId).handle}';
+            group.members.push(data);
+        </c:forEach>
+
+        availableGroups['${group.id}'] = group;
+        </c:forEach>
+        <c:forEach items="${viewData.securityGroups}" var="group">
+        groupIds.push(${group.id});
+        group = {};
+        group.id = ${group.id};
+        group.name = '${group.name}';
+        group.defaultPermission = '${group.defaultPermission}';
+
+        group.billingAccounts = [];
+        <c:forEach items="${group.billingAccounts}" var="d">
+        data = {};
+        data.name = '${d.name}';
+        group.billingAccounts.push(data);
+        </c:forEach>
+
+        group.directProjects = [];
+        <c:forEach items="${group.directProjects}" var="d">
+        data = {};
+        data.name = '${tcdirect:resolveDirectProject(d.directProjectId).name}';
+        group.directProjects.push(data);
+        </c:forEach>
+
+        group.restrictions = [];
+        <c:forEach items="${group.restrictions}" var="d">
+        data = {};
+        data.name = '${d}';
+        group.restrictions.push(data);
+        </c:forEach>
+
+        group.members = [];
+        <c:forEach items="${group.groupMembers}" var="d">
+        data = {};
+        data.handle = '${tcdirect:resolveUser(d.userId).handle}';
+        group.members.push(data);
+        </c:forEach>
+
+        availableGroups['${group.id}'] = group;
+        </c:forEach>
+    </script>
     <script type="text/javascript" src="/scripts/editCockpitProject.js?v=213353"></script>
     <ui:projectPageType tab="editProject"/>
 </head>
@@ -104,9 +184,7 @@
     <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Information :</h3>
 
     <s:if test="viewData.hasFullPermission">
-        <s:if test="!viewData.canAccessPermissionNotification">
-            <input type="hidden" id="hasFullPermissionOnly" value="true">
-        </s:if>
+
     <div class="projectMetaAreaField oddRowItem">
         <h4 class="projectMetaLabel cmIcon">Client Manager Handles :</h4>
 
@@ -185,28 +263,6 @@
 
         <div class="inputContainer">
             <input id="jiraAddress" name="${viewData.jiraURL.id}" type="text" value="<s:property value='viewData.jiraURL.metadataValue'/>" class="textInput" autocomplete="off"/>
-        </div>
-    </div>
-
-    <div class="projectMetaAreaField oddRowItem">
-        <h4 class="projectMetaLabel ptypeIcon">Project Billing Account:</h4>
-        <div class="comboContainer" id="billingSelection">
-            <select name="projectBillingAccount" autocomplete="off">
-                <option value="0">Select Billing Account to add</option>
-                <s:iterator value='availableBillingAccounts'>
-                    <option value="<s:property value='id'/>"><s:property value='name'/></option>
-                </s:iterator>
-            </select>
-            <span class="errorMessage"></span>
-        </div>
-        <a name="addBillingAccount" class="buttonRed1 addBillingButton" href="javascript:;"><span>ASSOCIATE BILLING</span></a>
-        <div class="comboContainer" id="billingDisplay">
-            <s:iterator value='viewData.billingAccounts'>
-                <div class="billingAccountEntry">
-                    <span><s:property value='name'/></span><a class="removeBilling" href="javascript:;">Remove</a>
-                    <input type="hidden" value="<s:property value='id'/>"/>
-                </div>
-            </s:iterator>
         </div>
     </div>
 
@@ -419,7 +475,7 @@
 
 
 <!-- Permissions & Notifications -->
-<s:if test="viewData.canAccessPermissionNotification || viewData.hasFullPermission">
+<s:if test="viewData.canAccessPermissionNotification">
 
 <div class="permissionsNotifications">
     <a name="permissionsNotifications"/>
@@ -487,6 +543,85 @@
     <a id="savePermissionNotification" class="buttonRed1" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
 </div>
 </s:if>
+
+<if:isSecurityGroupsUIAccessible>
+    <div class="groupPermissions">
+        <a name="permissionsNotifications"/>
+
+        <h3>Group Permissions</h3>
+        <table border="0" cellpadding="0" cellspacing="0" class="tableHeader">
+            <colgroup>
+                <col width="15%"/>
+                <col width="10%"/>
+                <col/>
+                <col/>
+                <col width="12%"/>
+                <col/>
+                <col width="120"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="userColumn"><span>Group Name</span></th>
+                <th>Access Rights</th>
+                <th>Accounts</th>
+                <th>Projects</th>
+                <th>Resource Resttrictions</th>
+                <th>Group Members</th>
+                <th><a name="addGroupModal" class="buttonRed1 triggerModal" href="javascript:;" id="addGroup"><span>ADD GROUP</span></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <s:iterator value="viewData.securityGroups" var="group">
+                <tr class="existingSecurityGroup">
+                    <td class="permissionGroup">
+                        <a href="javascript:;" class="useName"><s:property value='name'/></a>
+                        <input type="hidden" value="<s:property value='id'/>"/>
+                    </td>
+                    <td class="alignCenter">
+                        <s:property value="defaultPermission"/>
+                    </td>
+                    <td class="alignCenter">
+                        <s:iterator value="billingAccounts" var="billingAccount" status="loop">
+                            <s:if test="#loop.index > 0"><br/></s:if>
+                            <s:property value="#billingAccount.name"/>
+                        </s:iterator>
+                    </td>
+                    <td class="alignCenter">
+                        <s:iterator value="directProjects" var="directProject" status="loop">
+                            <s:if test="#loop.index > 0"><br/></s:if>
+                            <c:out value="${tcdirect:resolveDirectProject(directProject.directProjectId).name}"/>
+                        </s:iterator>
+                    </td>
+                    <td class="alignCenter">
+                        <s:iterator value="restrictions" var="restriction" status="loop">
+                            <s:if test="#loop.index > 0"><br/></s:if>
+                            <s:if test="#restriction.toString() == 'PROJECT'">Projects</s:if>
+                            <s:if test="#restriction.toString() == 'BILLING_ACCOUNT'">Billing Accounts</s:if>
+                        </s:iterator>
+                    </td>
+                    <td class="alignCenter">
+                        <s:iterator value="groupMembers" var="member" status="loop">
+                            <s:if test="#loop.index > 0"><br/></s:if>
+                            <c:out value="${tcdirect:resolveUser(member.userId).handle}"/>
+                        </s:iterator>
+                    </td>
+                    <td class="alignCenter"><a name="preloaderModal" rel="<s:property value='id'/>" 
+                                               class="triggerModal remove" href="javascript:;">Remove</a></td>
+                </tr>
+            </s:iterator>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- End. permissionsNotifications -->
+
+    <div class="groupButtonContainer">
+        <a class="buttonRed1 cancelProjectButton cancelGroupsButton" href="javascript:;"><span>CANCEL</span></a>
+        <a id="saveSecurityGroups" class="buttonRed1" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
+    </div>
+
+</if:isSecurityGroupsUIAccessible>
 
 </div>
 

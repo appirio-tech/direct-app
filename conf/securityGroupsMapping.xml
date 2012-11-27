@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.topcoder.security.groups.model">
+
+    <!-- mapped from time_oltp -->
+    <class name="Client" table="client">
+        <id name="id" column="client_id" type="long">
+            <generator class="increment"/>
+        </id>
+
+        <property name="companyId" column="company_id" type="long"/>
+        <property name="name" column="name" type="string" length="64"/>
+        <property name="deleted" column="is_deleted" type="boolean"/>
+    </class>
+
+    <!-- mapped from time_oltp -->
+    <class name="BillingAccount" table="tt_project">
+        <id name="id" column="project_id" type="long">
+            <generator class="increment"/>
+        </id>
+
+        <property name="companyId" column="company_id" type="long"/>
+        <property name="name" column="name" type="string" length="64"/>
+        <property name="description" column="description" type="string" length="255"/>
+        <many-to-one name="client" column="client_id" class="Client"/>
+        <property name="deleted" column="is_deleted" type="boolean"/>
+    </class>
+
+    <class name="CustomerAdministrator" table="customer_administrator">
+        <id name="id" column="customer_administrator_id" type="long">
+            <generator class="increment"/>
+        </id>
+
+        <property name="userId" column="user_id" type="long"/>
+        <many-to-one name="client" column="client_id" class="Client"/>
+    </class>
+
+    <class name="GroupAuditRecord" table="group_audit_record">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+
+        <property name="handle" column="user_handle" type="string" length="45"/>
+        <property name="ipAddress" column="ip_address" type="string" length="45"/>
+        <property name="previousValue" column="previous_data_value" type="string" length="500"/>
+        <property name="newValue" column="new_data_value" type="string" length="500"/>
+        <property name="date" column="create_date" type="timestamp"/>
+    </class>
+
+    <class name="DirectProject" table="group_associated_direct_projects">
+        <id name="id" column="group_direct_project_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="directProjectId" column="tc_direct_project_id" type="long"/>
+        <many-to-one name="group" column="group_id" class="Group" lazy="false"/>
+    </class>
+
+    <class name="Group" table="customer_group">
+        <id name="id" column="group_id" type="long">
+            <generator class="increment"/>
+        </id>
+
+        <property name="name" column="name" type="string" length="45"/>
+        <property name="defaultPermission" column="default_permission"
+                  type="com.topcoder.security.groups.model.GroupPermissionTypeUserType"/>
+        <many-to-one name="client" column="client_id" class="Client" lazy="false" fetch="select"/>
+        <property name="archived" column="archived" type="boolean"/>
+        <property name="archivedOn" column="archived_on" type="timestamp"/>
+
+        <many-to-one name="effectiveGroup" column="effective_group_id" class="Group" lazy="false" fetch="select" not-found="ignore"/>
+
+        <bag name="groupMembers" inverse="true" lazy="false" fetch="select" cascade="all-delete-orphan">
+            <key column="group_id"/>
+            <one-to-many class="GroupMember"/>
+        </bag>
+
+        <bag name="billingAccounts" table="group_associated_billing_accounts" lazy="false" fetch="select">
+            <key column="group_id"/>
+            <many-to-many column="billing_account_id" class="BillingAccount"/>
+        </bag>
+        <bag name="directProjects" inverse="true" lazy="false" fetch="select" cascade="all">
+            <key column="group_id"/>
+            <one-to-many class="DirectProject"/>
+        </bag>
+
+        <bag name="restrictions" table="group_restriction_resources" lazy="false" fetch="select" cascade="all">
+            <key column="group_id"/>
+            <!--
+            <many-to-many column="resource_type" type="ResourceTypeUserType" />
+            -->
+            <element column="resource_type" type="com.topcoder.security.groups.model.ResourceTypeUserType"/>
+        </bag>
+    </class>
+
+    <class name="GroupMember" table="group_member">
+        <id name="id" column="group_member_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="userId" column="user_id" type="long"/>
+        <many-to-one name="group" column="group_id" class="Group" lazy="false"/>
+        <property name="useGroupDefault" column="use_group_default" type="boolean"/>
+        <property name="specificPermission" column="specific_permission"
+                  type="com.topcoder.security.groups.model.GroupPermissionTypeUserType"/>
+        <property name="active" column="active" type="boolean"/>
+        <property name="activatedOn" column="activated_on" type="timestamp"/>
+        <property name="unassignedOn" column="unassigned_on" type="timestamp"/>
+
+    </class>
+
+    <class name="GroupInvitation" table="group_invitation">
+        <id name="id" column="group_invitation_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <many-to-one name="groupMember" column="group_member_id" class="GroupMember" lazy="false"/>
+        <property name="status" column="status" type="com.topcoder.security.groups.model.InvitationStatusUserType"/>
+        <property name="sentOn" column="sent_on" type="timestamp"/>
+        <property name="acceptedOrRejectedOn" column="accepted_or_rejected_on" type="timestamp"/>
+        <property name="approvalProcessedOn" column="approval_processed_on" type="timestamp"/>
+        <property name="rejectReason" column="reject_reason" type="string"/>
+    </class>
+</hibernate-mapping>

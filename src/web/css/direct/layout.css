@@ -1,0 +1,539 @@
+/* 
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+
+  This file will contain css used in both the index and the other pages.
+
+  - Version 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) :
+  -   updated to support new group pages of Pending Approvals and Received Invitations
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+a:hover, a:active, a:focus, a:active{
+    outline: none;
+} 
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* the display of screen */
+.clear{
+	clear:both;
+}
+
+.hide{
+	display:none;
+}
+img{
+	border: none;
+}
+.clearFixed{
+	display:block;
+	width:0;
+	height:0;
+	overflow:hidden;
+	clear:both;
+}
+em.visible{
+	visibility:hidden;
+}
+.fLeft{
+	float:left;
+}
+.fRight{
+	float:right;
+}
+
+
+body#page{
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f6f6f6;
+	color: #333;
+	font-size:11px;
+}
+
+.TCLogo {
+	float: right;
+	margin-right: 23px;
+	margin-top: 45px;
+}
+
+/*------------
+	WRAPPER
+---------------*/
+
+#content{
+	min-width: 1040px;
+}
+
+
+/*-------------
+	HEADER
+---------------*/
+
+#header{
+	height: 120px;
+	background: url(/images/header_dash_bg.png) repeat-x;
+	position: relative;
+}
+
+#header .logo{
+	height:28px;
+	margin-left:4px;
+	padding-top:6px;
+	padding-left:42px;
+	position: absolute;
+	top: 44px;
+	left: 21px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333;
+	font-size: 16px;
+	font-weight:bold;
+	line-height:22px;
+	text-decoration: none;
+	background:url(/images/group_logo.png) no-repeat left center;
+}
+
+#header .projectLogo{
+	padding-left: 40px;
+	padding-top: 7px;
+	padding-bottom: 3px;
+	background: url(/images/project_logo.png) no-repeat left;
+}
+
+#header .helloUser{ /* this area will contain the logout, help links*/
+	position: absolute;
+	right: 30px;
+	top: 8px;
+	font-size: 12px;
+}
+
+	#header .helloUser UL{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#header .helloUser LI{
+		float: left;
+		color: #444;
+	}
+	
+		#header .helloUser LI strong{
+			color: #FFF;
+		}
+	
+	#header .helloUser LI.helloUserLink A{
+		color: #FFF;
+		padding: 0 5px;
+		text-decoration: none;
+	}
+	
+	#header .helloUser A:hover{
+		color: #908986;
+	}
+	
+	#header .helloUser A.user{
+		color: #ec1c23 !important;
+		font-weight: bold;
+		padding-left: 0;
+	}
+		
+	#header .helloUser A.help{
+		background: url(/images/help_ico6.png) no-repeat right 0;
+		padding-right: 20px;
+		padding-top: 2px;
+		font-weight: bold;
+	}
+	
+	#header .helloUser A.help:hover{
+		background: url(/images/help_ico6.png) no-repeat right -17px;
+	}
+
+/*-----------------
+	Looking for Community Portal lINK
+------------------*/
+.dashBoardLookCP{
+	position:absolute;
+	top:60px;
+	right:24px;
+}
+.lookCP{
+	background:url(/images/redArrow.gif) no-repeat 0 center;
+	padding-left:13px;
+	font-size:11px;
+	color:#333;
+	margin-top:10px;
+	float:right;
+	line-height:14px;
+	}
+	.lookCP a,
+	.lookCP a:visited{
+		font-weight:bold;
+		text-decoration:underline;
+		color:#333;
+		}
+	.lookCP a:hover{
+		color:#FF0000;
+		}
+
+
+/*-----------------
+	TABS 
+------------------*/
+
+/* tabs0 ( the header tabs )*/
+#tabs0{
+	background: #362f2b;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 33px;
+	width: 100%;
+}
+
+#tabs0 UL{
+	list-style: none;
+	padding: 0;
+	margin: 6px 0 6px 25px;
+	height: 21px;
+}
+
+#tabs0 UL LI{
+	float: left;
+	margin-right: 15px;
+}
+
+	#tabs0 UL LI A{
+		color: #FFF;
+		font-size: 12px;
+		font-weight: bold;
+		text-decoration: none;
+		height: 21px;
+		line-height: 21px;
+		float: left;
+	}
+	
+	#tabs0 UL LI A SPAN{
+		height: 21px;
+		float: left;
+		display: inline-block;
+		padding: 0 17px 0 13px;
+		margin-left: 4px;
+		text-align: center;
+		cursor: pointer;
+	}
+	
+	
+	#tabs0 UL LI.on A{
+		color: #262626;
+		background: url(/images/top_nav_button_left.png) left top no-repeat;
+	}
+	
+	#tabs0 UL LI.on A:hover {
+	}
+
+	#tabs0 UL LI.on A SPAN{
+		background: url(/images/top_nav_button.png) right top no-repeat;
+	}
+
+	#tabs0 UL LI A:hover{
+		color: #262626;
+		background: url(/images/top_nav_button_left.png) 0 -21px no-repeat;
+	}
+	
+	#tabs0 UL LI A:hover SPAN{
+		background: url(/images/top_nav_button.png) right -21px no-repeat;
+	}
+/* tabs1 ( the main tabs )*/
+#tabs1{
+	position: absolute;
+	top: 92px;
+	left: 21px;
+}
+
+#tabs1 UL{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#tabs1 UL LI{
+	float: left;
+	margin: 0 3px;
+}
+
+	#tabs1 UL LI A{
+		color: #FFF;
+		font-size: 12px;
+		font-weight: bold;
+		text-decoration: none;
+		background: #000 url(/images/tabs_left2.png) no-repeat left top; /* left corner */
+		float: left;
+	}
+	
+	#tabs1 UL LI A SPAN{
+		background: url(../../images/tabs_right.png) no-repeat right top; /* right corner */
+		float: left;
+		height: 20px;
+		/*width: 100px;*/
+		padding:0 4px;
+		padding-top: 8px;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	 #tabs1.copilotsTabs1 UL LI A SPAN{
+        width:auto;
+        padding-left:15px;
+        padding-right:15px;
+    }
+	
+	#tabs1 UL LI A:hover{
+		background-position: left bottom;
+	}
+	
+	#tabs1 UL LI A:hover SPAN{
+		background-position: right bottom;
+	}
+	
+	#tabs1 UL LI.on A{
+		color: #ec1c23;
+		background: url(/images/tabs_left_on2.png) no-repeat left; /* left corner */
+	}
+	
+	#tabs1 UL LI.on A SPAN{
+		background: url(/images/tabs_right_on.png) no-repeat right; /* left corner */
+	}
+	
+	#tabs1 ul li a span.dashboardSpan { width: auto; }
+
+/* tabs2 ( the right side tabs ) */
+
+#tabs2{
+	position: absolute;
+	top: 92px;
+	right: 21px;
+}
+
+#tabs2 UL{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#tabs2 UL LI{
+	float: left;
+	margin: 0 3px;
+}
+
+#tabs2 UL LI.last{
+	margin-right:100px;
+}
+
+	#tabs2 UL LI A{
+		color: #FFF;
+		font-size: 12px;
+		font-weight: bold;
+		text-decoration: none;
+		background: #000 url(/images/tabs2_left.png) no-repeat left top; /* left corner */
+		float: left;
+	}
+	
+	#tabs2 UL LI A SPAN{
+		background: url(/images/tabs2_right.png) no-repeat right top; /* right corner */
+		float: left;
+		height: 20px;
+		width: 100px;
+		padding-top: 8px;
+		text-align: center;
+		cursor: pointer;
+	}
+	
+	#tabs2 UL LI A:hover{
+		background-position: left bottom;
+	}
+	
+	#tabs2 UL LI A:hover SPAN{
+		background-position: right bottom;
+	}
+	
+	#tabs2 UL LI.on A{
+		background-position: left bottom;
+	}
+	
+	#tabs2 UL LI.on SPAN{
+		background-position: right bottom;
+	}
+
+
+/*----------------
+	MAIN CONTENT
+-----------------*/
+
+#mainContent{
+	width: 100%;
+	overflow: hidden;
+	color: #333;
+	background: #FFFFFE url(/images/area2_bg2.png) repeat-y right;
+}	
+#wholeContent{
+	width: 100%;
+	overflow: hidden;
+	color: #333;
+	background: #FFFFFE;
+}
+#wholeArea{
+	padding-left: 25px;
+	padding-right:25px;
+	padding-bottom:100px;
+	min-height:700px;
+}
+#area1{
+	padding-left: 25px;
+	padding-bottom: 100px;
+	padding-right: 290px;
+}
+
+#area2{
+	float: right;
+	width: 272px;
+	min-height:600px;
+	overflow:hidden;
+}
+
+
+
+/*-----------------
+	FOOTER
+------------------*/
+#footer{
+	padding: 20px 21px 17px 10px;
+	margin: 0 auto;
+	font-size: 11px;
+	color: #333;
+	position: relative;
+	border-top: 1px solid #bdbdbd;
+}
+
+#footer .socialNetwork{
+	float:right;
+	position:relative;
+	top:-2px;
+	}
+.homeFooter .socialNetwork{
+	padding-right:6px;
+	}
+.dashboard .socialNetwork{
+	padding-right:15px;
+	}
+	#footer .socialNetwork span{
+		position:relative;
+		top:-3px;
+		}
+	#footer .socialNetwork a,
+	#footer .socialNetwork a:visited{
+		background-image:url(/images/followIcon.gif);
+		background-repeat:no-repeat;
+		width:16px;
+		height:16px;
+		display:inline-block;
+		overflow:hidden;
+		margin-left:6px;
+		}
+	#footer .socialNetwork a.twitterIcon,
+	#footer .socialNetwork a.twitterIcon:visited{
+		background-position:0 0;
+		}
+	#footer .socialNetwork a.linkedInIcon,
+	#footer .socialNetwork a.linkedInIcon:visited{
+		background-position:-16px 0;
+		}
+	#footer .socialNetwork a.facebookIcon,
+	#footer .socialNetwork a.facebookIcon:visited{
+		background-position:-32px 0;
+		}
+	#footer .copyright{
+		font-size:11px;
+		color:#333;
+		}
+		#footer .copyright span{
+			display:inline-block;
+			padding-right:0px;
+			}
+		#footer .copyright a,
+		#footer .copyright a:visited{
+			background:url(/images/footerSeparator.gif) no-repeat left center;
+			color:#333;
+			text-decoration:none;
+			display:inline-block;
+			padding:0 1px 0 4px;
+			}
+		#footer .copyright a:hover{
+			text-decoration:underline;
+			}
+
+/*-----------------
+	MISC FOR USERS
+------------------*/
+.coderTextGreen{
+	font-weight: bold;
+	background-color: transparent;
+	color: #00A900;
+}
+.coderTextGreen:link,
+.coderTextGreen:visited{
+	text-decoration: none;
+}
+.coderTextGreen:hover,
+.coderTextGreen:active{
+	text-decoration: underline;
+}

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-2.5.xsd
+  http://www.springframework.org/schema/tx
+  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="securityGroupsSessionFactory"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="configLocation">
+            <value>classpath:securityGroupsHibernate.cfg.xml</value>
+        </property>
+    </bean>
+
+    <bean id="securityTransactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="securityGroupsSessionFactory" />
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="securityTransactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="search*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="serviceOperation"
+            expression="execution(* com.topcoder.security.groups.services.hibernate.*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+    </aop:config>
+
+    <bean id="logger" class="com.topcoder.util.log.LogManager"
+        factory-method="getLog" />
+
+    <bean id="baseGroupService"
+        class="com.topcoder.security.groups.services.hibernate.BaseGroupService"
+        abstract="true">
+        <property name="logger" ref="logger" />
+        <property name="sessionFactory" ref="securityGroupsSessionFactory" />
+    </bean>
+
+    <bean id="groupAuthorizationService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateAuthorizationService"
+        parent="baseGroupService" init-method="afterPropertiesSet">
+    </bean>
+
+    <bean id="groupAuditService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateGroupAuditService"
+        parent="baseGroupService">
+    </bean>
+
+    <bean id="groupProjectService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateDirectProjectService"
+        parent="baseGroupService">
+    </bean>
+
+    <bean id="groupUserService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateUserService"
+        parent="baseGroupService">
+    </bean>
+
+    <bean id="groupService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateGroupService"
+        parent="baseGroupService" init-method="afterPropertiesSet">
+        <property name="authorizationService" ref="groupAuthorizationService" />
+        <property name="userService" ref="groupUserService" />
+    </bean>
+    
+    <bean id="groupClientService"
+          class="com.topcoder.security.groups.services.hibernate.HibernateClientService" parent="baseGroupService">
+    </bean>
+    
+    <bean id="groupCustomerAdministratorService"
+          class="com.topcoder.security.groups.services.hibernate.HibernateCustomerAdministratorService" parent="baseGroupService">
+        <property name="clientService" ref="groupClientService" />
+        <property name="userService" ref="groupUserService" />
+    </bean>
+    
+    <bean id="groupInvitationService"
+          class="com.topcoder.security.groups.services.hibernate.HibernateGroupInvitationService" parent="baseGroupService">
+        <property name="authorizationService" ref="groupAuthorizationService" />
+        <property name="userService" ref="groupUserService" />
+        <property name="emailSubject">
+            <value>Group Invitation</value>
+        </property>
+        <property name="emailBodyTemplateSourceId">
+            <value>file</value>
+        </property>
+        <property name="emailBodyTemplateName">
+            <value>@emailTemplateFileDir@/group_invitation.txt</value>
+        </property>
+        <property name="emailSender">
+            <value>@SecurityGroup.InvitationEmailSender@</value>
+        </property>
+    </bean>
+    
+    <bean id="groupBillingAccountService"
+          class="com.topcoder.security.groups.services.hibernate.HibernateBillingAccountService" parent="baseGroupService">
+    </bean>
+
+    <bean id="groupMemberService"
+          class="com.topcoder.security.groups.services.hibernate.HibernateGroupMemberService" parent="baseGroupService">
+        <property name="authorizationService" ref="groupAuthorizationService" />
+        <property name="userService" ref="groupUserService" />
+    </bean>
+    
+    <!-- actions -->
+
+    <bean id="baseGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.BaseAction"
+        abstract="true">
+        <property name="logger" ref="logger" />
+        <property name="auditService" ref="groupAuditService" />
+        <property name="authorizationService" ref="groupAuthorizationService" />
+    </bean>
+    
+    <bean id="viewGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.ViewGroupAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupService" ref="groupService" />
+        <property name="projectService" ref="groupProjectService" />
+        <property name="groupUserService" ref="groupUserService" />
+    </bean>
+    
+    <bean id="baseCreateUpdateGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.CreateUpdateGroupAction"
+        parent="baseGroupAction"                         
+        abstract="true">
+        <property name="groupService" ref="groupService" />
+        <property name="clientService" ref="groupClientService" />
+        <property name="customerAdministratorService" ref="groupCustomerAdministratorService" />
+        <property name="directProjectService" ref="groupProjectService" />
+        <property name="groupInvitationService" ref="groupInvitationService" />
+        <property name="billingAccountService" ref="groupBillingAccountService" />
+        <property name="groupMemberService" ref="groupMemberService" />
+        <property name="groupUserService" ref="groupUserService" />
+        <property name="acceptRejectUrlBase"
+            value="@SecurityGroup.AcceptRejectUrlBase@"/>
+        <property name="registrationUrl"
+            value="@SecurityGroup.RegistrationUrl@"/>
+    </bean>
+    
+    <bean id="createGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.CreateGroupAction"
+        scope="prototype" parent="baseCreateUpdateGroupAction" init-method="checkInit">    
+    </bean>
+    
+    <bean id="updateGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.UpdateGroupAction"
+        scope="prototype" parent="baseCreateUpdateGroupAction" init-method="checkInit">    
+    </bean>
+    
+    <bean id="groupSearchUserAction"
+        class="com.topcoder.direct.services.view.action.groups.SearchUserAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupUserService" ref="groupUserService" />
+    </bean>
+    
+    <bean id="viewInvitationStatusAction"
+        class="com.topcoder.direct.services.view.action.groups.ViewInvitationStatusAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupInvitationService" ref="groupInvitationService" />
+    </bean>
+    
+    <bean id="viewPendingApprovalUserAction"
+        class="com.topcoder.direct.services.view.action.groups.ViewPendingApprovalUserAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupUserService" ref="groupUserService" />
+        <property name="clientService" ref="groupClientService" />
+        <property name="customerAdministratorService" ref="groupCustomerAdministratorService" />
+        <property name="groupInvitationService" ref="groupInvitationService" />
+    </bean>
+    
+    <bean id="acceptRejectGroupInvitationAction"
+        class="com.topcoder.direct.services.view.action.groups.AcceptRejectGroupInvitationAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupInvitationService" ref="groupInvitationService" />
+    </bean>
+    
+    <bean id="approveRejectPendingUserAction"
+        class="com.topcoder.direct.services.view.action.groups.ApproveRejectPendingUserAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupInvitationService" ref="groupInvitationService" />
+        <property name="groupMemberService" ref="groupMemberService" />
+    </bean>
+    
+    <bean id="deleteGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.DeleteGroupAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupService" ref="groupService" />
+    </bean>
+    
+    <bean id="searchGroupAction"
+        class="com.topcoder.direct.services.view.action.groups.SearchGroupAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupService" ref="groupService" />
+        <property name="groupUserService" ref="groupUserService" />
+        <property name="directProjectService" ref="groupProjectService" />
+    </bean>
+    
+    <bean id="clientsPrepopulatingBaseAction"
+        class="com.topcoder.direct.services.view.action.groups.ClientsPrepopulatingBaseAction"
+        abstract="true" parent="baseGroupAction">
+        <property name="customerAdministratorService" ref="groupCustomerAdministratorService" />
+        <property name="clientService" ref="groupClientService" />
+    </bean>    
+    <bean id="accessAuditingInfoAction"
+        class="com.topcoder.direct.services.view.action.groups.AccessAuditingInfoAction"
+        scope="prototype" parent="clientsPrepopulatingBaseAction" init-method="checkInit">
+        <property name="groupService" ref="groupService" />
+        <property name="groupMemberService" ref="groupMemberService" />
+        <property name="groupUserService" ref="groupUserService" />
+        <property name="directProjectService" ref="groupProjectService" />
+    </bean>
+    <bean id="createCustomerAdminAction"
+        class="com.topcoder.direct.services.view.action.groups.CreateCustomerAdminAction"
+        scope="prototype" parent="clientsPrepopulatingBaseAction" init-method="checkInit">
+        <property name="groupUserService" ref="groupUserService" />
+    </bean>
+    
+    <bean id="sendInvitationAction"
+        class="com.topcoder.direct.services.view.action.groups.SendInvitationAction"
+        scope="prototype" parent="baseGroupAction" init-method="checkInit">
+        <property name="groupUserService" ref="groupUserService" />
+        <property name="groupInvitationService" ref="groupInvitationService" />
+        <property name="groupService" ref="groupService" />
+        <property name="acceptRejectUrlBase"
+            value="@SecurityGroup.AcceptRejectUrlBase@"/>
+        <property name="registrationUrl"
+            value="@SecurityGroup.RegistrationUrl@"/>
+    </bean>
+
+    <bean id="securityGroupsAccessInterceptor" scope="prototype"
+          class="com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor">
+        <property name="allowedUsers" value="@securityGroupsManagers@"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="saveSecurityGroupPermissionsAction"
+          class="com.topcoder.direct.services.view.action.project.edit.SaveSecurityGroupPermissionsAction"
+          scope="prototype" parent="baseGroupAction">
+        <property name="groupService" ref="groupService"/>
+    </bean>
+</beans>

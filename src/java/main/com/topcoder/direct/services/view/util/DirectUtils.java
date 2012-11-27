@@ -20,6 +20,23 @@ import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
+import com.topcoder.security.groups.model.GroupPermissionType;
+import com.topcoder.security.groups.model.ResourceType;
+import com.topcoder.security.groups.services.AuthorizationService;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.review.data.Review;
+import com.topcoder.project.service.ProjectServices;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.service.project.CompetitionPrize;
+import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.user.UserServiceException;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
@@ -62,6 +79,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
@@ -393,8 +411,28 @@ import java.util.*;
  * </p>
  * </p>
  *
+ * <p>
+ * Version 1.9.3 (Topcoder Security Groups Backend - Direct Permissions Propagation Assembly 1.0) 
+ * Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasPermissionBySecurityGroups(TCSubject, long, AuthorizationService, GroupPermissionType...)}
+ *     method.</li>
+ *     <li>Updated {@link #hasWritePermission(BaseDirectStrutsAction, TCSubject, long, boolean)}, 
+ *     {@link #hasProjectReadPermission(BaseDirectStrutsAction, TCSubject, long)}, 
+ *     {@link #hasProjectWritePermission(BaseDirectStrutsAction, TCSubject, long)} methods to check user permissions
+ *     against security groups in case all other checks have returned <code>false</code>.</li>
+ *     <li>Fixed bug in {@link #hasProjectReadPermission(BaseDirectStrutsAction, TCSubject, long)}, 
+ *     {@link #hasProjectWritePermission(BaseDirectStrutsAction, TCSubject, long)} methods </li>
+ *   </ol>
+ * </p>
+ * <p>
+ * Version 1.9.4 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isSecurityGroupsUIAvailable()} method.</li>
+ *   </ol>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.9.2
+ * @version 1.9.4
  */
 public final class DirectUtils {
     /**
@@ -1295,22 +1333,28 @@ public final class DirectUtils {
     /**
      * Check whether user has permission to a specify contest.
      *
-     * @param action
-     *            the action
-     * @param tcSubject
-     *            the user to check
-     * @param contestId
-     *            the contest id
-     * @param isStudio
-     *            whether is studio contest
+     * @param action the action
+     * @param tcSubject the user to check
+     * @param contestId the contest id
+     * @param isStudio whether is studio contest
      * @return has permission or not
+     * @throws PermissionServiceException if an unexpected error occurs.
+     * @throws ContestServiceException if an unexpected error occurs.
      * @since 1.6.2
      */
-    public static boolean hasWritePermission(BaseDirectStrutsAction action,
-            TCSubject tcSubject, long contestId, boolean isStudio) {
+    public static boolean hasWritePermission(BaseDirectStrutsAction action, TCSubject tcSubject, long contestId,
+                                             boolean isStudio)
+        throws PermissionServiceException, ContestServiceException {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
-            return action.getProjectServices().checkContestPermission(
-                        contestId, false, tcSubject.getUserId());
+            boolean hasContestPermission = action.getProjectServices().checkContestPermission(contestId, false,
+                                                                                              tcSubject.getUserId());
+            if (hasContestPermission) {
+                return true;
+            } else {
+                long tcDirectProjectId = action.getProjectServices().getTcDirectProject(contestId);
+                return hasPermissionBySecurityGroups(tcSubject, tcDirectProjectId, action.getAuthorizationService(),
+                                                     GroupPermissionType.WRITE, GroupPermissionType.FULL);
+            }
         } else {
             return true;
         }
@@ -1841,12 +1885,16 @@ public final class DirectUtils {
 
             for (Permission p : permissions) {
 
-                if (p.getPermissionType().getPermissionTypeId() == 2L || p.getPermissionType().getPermissionTypeId() == 3L) {
-                    return true;
-                }
+                if (p.getUserId() == tcSubject.getUserId()) {
+                    if (p.getPermissionType().getPermissionTypeId() == 2L 
+                        || p.getPermissionType().getPermissionTypeId() == 3L) {
+                        return true;
+                    }
+                 }
             }
 
-            return false;
+            return hasPermissionBySecurityGroups(tcSubject, directProjectId, action.getAuthorizationService(),
+                                                 GroupPermissionType.WRITE, GroupPermissionType.FULL);
 
         } else {
             return true;
@@ -1860,7 +1908,7 @@ public final class DirectUtils {
      * @param tcSubject the TCSubject instance which represents an user
      * @param directProjectId the id of the direct project
      * @return true if has write permission, false otherwise
-     * @throws PermissionServiceException
+     * @throws PermissionServiceException if an unexpected error occurs.
      * @since 1.7.6
      */
     public static boolean hasProjectReadPermission(BaseDirectStrutsAction action,
@@ -1868,14 +1916,18 @@ public final class DirectUtils {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
             List<Permission> permissions = action.getPermissionServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
             for (Permission p : permissions) {
-                if (p.getPermissionType().getPermissionTypeId() == 1L
-                    || p.getPermissionType().getPermissionTypeId() == 2L
-                    || p.getPermissionType().getPermissionTypeId() == 3L) {
-                    return true;
+                if (p.getUserId() == tcSubject.getUserId()) {
+                    if (p.getPermissionType().getPermissionTypeId() == 1L
+                        || p.getPermissionType().getPermissionTypeId() == 2L
+                        || p.getPermissionType().getPermissionTypeId() == 3L) {
+                        return true;
+                    }
                 }
             }
 
-            return false;
+            return hasPermissionBySecurityGroups(tcSubject, directProjectId, action.getAuthorizationService(),
+                                                 GroupPermissionType.READ, GroupPermissionType.FULL);
+
         } else {
             return true;
         }
@@ -2218,4 +2270,68 @@ public final class DirectUtils {
 
         return projectBriefDTO;
     }
+
+    /**
+     * <p>Checks if specified user is granted one of the specified permissions for accessing the specified TC Direct
+     * project based on the security groups policies.</p>
+     *
+     * @param tcSubject              a <code>TCSubject</code> representing the desired user.
+     * @param tcDirectProjectId      a <code>long</code> providing the ID of a TC Direct project to check permission
+     *                               for.
+     * @param authorizationService   an <code>AuthorizationService</code> providing interface to authorization service.
+     * @param allowedPermissionTypes a list of permission types which should allow the user to access the project.
+     * @return <code>true</code> if user is granted permission for accessing the project; <code>false</code> otherwise.
+     * @throws PermissionServiceException if an unexpected error occurs.
+     * @since 1.9.3
+     */
+    public static boolean hasPermissionBySecurityGroups(TCSubject tcSubject, long tcDirectProjectId,
+                                                        AuthorizationService authorizationService,
+                                                        GroupPermissionType... allowedPermissionTypes)
+        throws PermissionServiceException {
+        try {
+            // Check if user is administrator for client account
+            Long clientId = getClientIdForProject(tcSubject, tcDirectProjectId);
+            long userId = tcSubject.getUserId();
+            boolean isCustomerAdministrator = false;
+            if (clientId != null) {
+                isCustomerAdministrator = authorizationService.isCustomerAdministrator(userId, clientId);
+            }
+            if (isCustomerAdministrator) {
+                return true;
+            } else {
+                // If not then check if user is granted desired permission to access the project based on 
+                // security groups which user is member of
+                GroupPermissionType groupPermissionType =
+                    authorizationService.checkAuthorization(userId, tcDirectProjectId, ResourceType.PROJECT);
+                if (groupPermissionType == null) {
+                    return false;
+                } else {
+                    for (GroupPermissionType allowedPermissionType : allowedPermissionTypes) {
+                        if (allowedPermissionType == groupPermissionType) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        } catch (Exception e) {
+            throw new PermissionServiceException("Failed to authorize user against security groups", e);
+        }
+    }
+
+    /**
+     * <p>Checks whether the current user is allowed to access Security Groups UI or not.</p>
+     *
+     * @return <code>true</code> if current user can access Security Groups UI; <code>false</code> otherwise.
+     * @throws UserServiceException if an unexpected error occurs.
+     * @since 1.9.4
+     */
+    public static boolean isSecurityGroupsUIAvailable() throws UserServiceException {
+        HttpServletRequest servletRequest = getServletRequest();
+        ServletContext ctx = servletRequest.getSession().getServletContext();
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+        SecurityGroupsAccessInterceptor securityGroupsAccessInterceptor
+            = (SecurityGroupsAccessInterceptor) applicationContext.getBean("securityGroupsAccessInterceptor");
+        return securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable();
+    }	
 }

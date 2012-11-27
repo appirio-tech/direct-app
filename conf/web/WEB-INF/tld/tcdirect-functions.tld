@@ -136,4 +136,22 @@
         <function-signature>boolean isTCAccounting()</function-signature>
     </function>
 
+    <function>
+        <name>isSecurityGroupsUIAvailable</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isSecurityGroupsUIAvailable()</function-signature>
+    </function>
+
+    <function>
+        <name>resolveUser</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>com.topcoder.security.groups.services.dto.UserDTO resolveUser(long)</function-signature>
+    </function>
+
+    <function>
+        <name>resolveDirectProject</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>com.topcoder.security.groups.services.dto.ProjectDTO resolveDirectProject(long)</function-signature>
+    </function>
+    
 </taglib>

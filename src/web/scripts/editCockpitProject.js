@@ -13,9 +13,12 @@
  *
  *  Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
  *  - Add js to add/remove project billing accounts.
+ *  
+ *  Version 2.2 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added code for Group
+ *  Permissions area
  *
- * @author GreatKevin
- * @version 2.1
+ * @author GreatKevin, TCSDEVELOPER
+ * @version 2.2
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -216,6 +219,7 @@ $(document).ready(function (e) {
         })
 
         $('.permissionsNotifications tbody tr:odd').addClass('odd');
+        $('.groupPermissions tbody tr:odd').addClass('odd');
         $('#settingModal tbody tr:even').addClass('odd');
         $('.projectTypeArea .comboContainer select').css('width',($('.projectTypeArea .comboContainer').width() - 150)/2);
 
@@ -229,14 +233,17 @@ $(document).ready(function (e) {
             $('#settingModal .settingTable .tableBody').css('overflow-y','auto');
         }
 
-        if($("#hasFullPermissionOnly").val() == 'true') {
+
+        if ($("#hasFullPermissionOnly").val() == 'true') {
             $('.permissionsNotifications input').attr('disabled', 'disabled');
         }
 
         sortDropDown("select[name='projectBillingAccount']");
 
+
         //scroll
         $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
+        $('#addGroupModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
 
 
         ///////////////// START: Add user permission modal
@@ -290,6 +297,86 @@ $(document).ready(function (e) {
 
 
        ///////////////// END: Add user permission modal
+        $("#addGroup").click(function () {
+            modalLoad('#' + $(this).attr('name'));
+            var modal = $("#addGroupModal");
+            modal.find(".searchBox input").val('');
+            initAddGroupList(false);
+        });
+
+        $("#addGroupModal .saveButton").click(function () {
+            for (var i = 0; i < $('#addGroupModal .addUserRight li').length; i++) {
+                var groupId = $('#addGroupModal .addUserRight li').eq(i).attr('name');
+                
+                var group = availableGroups['' + groupId];
+                
+                var billings = group.billingAccounts;
+                var billingsText = '';
+                if (billings && billings.length > 0) {
+                    for (var j = 0; j < billings.length; j++ ) {
+                        if (j > 0) {
+                            billingsText += '<br/>';
+                        }
+                        billingsText += billings[j].name;
+                    }
+                }
+                
+                var directProjects = group.directProjects;
+                var directProjectsText = '';
+                if (directProjects && directProjects.length > 0) {
+                    for (var j = 0; j < directProjects.length; j++) {
+                        if (j > 0) {
+                            directProjectsText += '<br/>';
+                        }
+                        directProjectsText += directProjects[j].name;
+                    }
+                }
+
+                var restrictions = group.restrictions;
+                var restrictionsText = '';
+                if (restrictions && restrictions.length > 0) {
+                    for (var j = 0; j < restrictions.length; j++) {
+                        if (j > 0) {
+                            restrictionsText += '<br/>';
+                        }
+                        if (restrictions[j].name == 'PROJECT') {
+                            restrictionsText += 'Projects';
+                        } else {
+                            restrictionsText += 'Billing Accounts';
+                        }
+                    }
+                }
+
+                var members = group.members;
+                var membersText = '';
+                if (members && members.length > 0) {
+                    for (var j = 0; j < members.length; j++) {
+                        if (j > 0) {
+                            membersText += '<br/>';
+                        }
+                        membersText += members[j].handle;
+                    }
+                }
+
+                $('.groupPermissions table tbody').append(
+                            '<tr class="addedSecurityGroup">' +
+                                '<td class="permissionGroup">' +
+                                    '<a href="javascript:;" class="useName">' + group.name + '</a>' +
+                                    '<input type="hidden" value="' + group.id + '"/>' +
+                                '</td>' + 
+                                '<td class="alignCenter">' + group.defaultPermission + '</td>' +
+                                '<td class="alignCenter">' + billingsText +  '</td>' +
+                                '<td class="alignCenter">' + directProjectsText + '</td>' +
+                                '<td class="alignCenter">' + restrictionsText + '</td>' +
+                                '<td class="alignCenter">' + membersText + '</td>' +
+                                '<td class="alignCenter"><a name="preloaderModal" rel="' + group.id + '" class="triggerModal remove" href="javascript:;">Remove</a></td>' +
+                            '</tr>');
+            }
+
+            $('.groupPermissions tbody tr').removeClass('odd');
+            $('.groupPermissions tbody tr:odd').addClass('odd');
+            modalAllClose();
+        });
 
 
         // Save project permissions & notifications
@@ -388,6 +475,65 @@ $(document).ready(function (e) {
             });
 
         });
+
+        // remove user permission from project
+        $(".groupPermissions a.remove").live('click', function () {
+            var row = $(this).parents("tr");
+            if (row.hasClass('addedSecurityGroup')) {
+                row.remove();
+            } else {
+                row.addClass('removedSecurityGroup').addClass('hide');
+            }
+            var groupId = $(this).attr('rel');
+            var group = availableGroups['' + groupId];
+            $('#addGroupModal .addUserForm .addUserLeft .addUserList ul').append(
+                    '<li name="' + groupId + '">' + group.name + '</li>');
+        });
+        
+        $('.cancelGroupsButton').click(function() {
+            $('.addedSecurityGroup').remove();
+            $('.removedSecurityGroup').removeClass('removedSecurityGroup').removeClass('hide');
+        });
+
+        // Save project permissions & notifications
+        $("#saveSecurityGroups").click(function () {
+            var request = {};
+            request.directProjectId = $("input[name='editProjectId']").val();
+            request.groupIds = [];
+
+            $(".groupPermissions tbody tr").each(function () {
+                var isRemoved = $(this).hasClass('removedSecurityGroup');
+                if (!isRemoved) {
+                    var groupId = $(this).find(".permissionGroup input").val();
+                    request.groupIds.push(groupId);
+                }
+            });
+
+            modalPreloader();
+
+            $.ajax({
+                       type:'post',
+                       url:'group/saveProjectGroupPermissions',
+                       data: request,
+                       cache:false,
+                       dataType:'json',
+                       success:function (jsonResult) {
+                           handleJsonResult(
+                                   jsonResult,
+                                   function (result) {
+                                       showSuccessfulMessage("Group Permissions are successfully updated.");
+                                       $('.addedSecurityGroup').removeClass('addedSecurityGroup').addClass('existingSecurityGroup');
+                                       $('.removedSecurityGroup').remove();
+                                   },
+                                   function (errorMessage) {
+                                       modalAllClose();
+                                       showServerError(errorMessage);
+                                   });
+                       }
+                   });
+
+        });
+
 
         //////////////////// Start contest notification setting modal ///////////////
 
@@ -976,9 +1122,17 @@ $(document).ready(function (e) {
 
         // scroll
         $('.userManagementModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
+        $('#addGroupModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
 
         // list selected
         $('.userManagementModal .addUserForm .addUserList li').live('click', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            } else {
+                $(this).addClass('selected');
+            }
+        });
+        $('#addGroupModal .addUserForm .addUserList li').live('click', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
             } else {
@@ -1068,6 +1222,70 @@ $(document).ready(function (e) {
         });
 
         setupEditProjectToolTip();
+
+
+        // select all
+        $('#addGroupModal .addUserForm .selectAll').click(function () {
+            var modal = $(this).parents('#addGroupModal:first');
+            modal.find('.addUserForm .addUserLeft ul li').filter(":visible").addClass('selected');
+        });
+
+        // remove all
+        $('#addGroupModal .addUserForm .removeAll').click(function () {
+            var modal = $(this).parents('#addGroupModal:first');
+            modal.find('.addUserForm .addUserLeft ul').append(modal.find('.addUserForm .addUserRight ul').html());
+            modal.find('.addUserForm .addUserRight ul').empty();
+            var p = {};
+            modal.find('.addUserForm .addUserLeft ul li').each(function () {
+                var name = $(this).attr('name');
+                if (p[name] == true) {
+                    $(this).remove();
+                } else {
+                    p[name] = true;
+                }
+            });
+        });
+
+        // add item
+        $('#addGroupModal .addUserForm .addItem').live('click', function () {
+            var modal = $(this).parents('#addGroupModal:first');
+            modal.find('.addUserForm .addUserLeft ul li.selected').each(function () {
+                modal.find('.addUserForm .addUserRight ul').append('<li name="' + $(this).attr('name') + '">' +
+                                                                   $(this).html() + '</li>');
+                $(this).remove();
+            });
+            var p = {};
+            modal.find('.addUserForm .addUserRight ul li').each(function () {
+                var name = $(this).attr('name');
+                if (p[name] == true) {
+                    $(this).remove();
+                } else {
+                    p[name] = true;
+                }
+            });
+            adjustLeftRightPanel(modal);
+        });
+
+        // remove item
+        $('#addGroupModal .addUserForm .removeItem').live('click', function () {
+            var modal = $(this).parents('#addGroupModal:first');
+            modal.find('.addUserForm .addUserRight ul li.selected').each(function () {
+                modal.find('.addUserForm .addUserLeft ul').append('<li name="' + $(this).attr('name') + '" id="' +
+                                                                  $(this).attr('id') + '">' + $(this).html() + '</li>');
+                $(this).remove();
+            });
+            var p = {};
+            modal.find('.addUserForm .addUserLeft ul li').each(function () {
+                var name = $(this).attr('name');
+                if (p[name] == true) {
+                    $(this).remove();
+                } else {
+                    p[name] = true;
+                }
+            });
+            adjustLeftRightPanel(modal);
+        });
+
 
 //        $('.userManagementModal a.downloadProfile').each(function () {
 //            $(this).tctip({
@@ -1510,6 +1728,25 @@ $(document).ready(function (e) {
                 }
             });
 
+        });
+        
+        $("#addGroupModal .downloadProfile").click(function () {
+            var modal = $(this).parents('#addGroupModal:first');
+
+            // get search text first
+            var searchText = $.trim(modal.find(".searchBox input").val()).toLowerCase();
+            if ($.trim(searchText) == '') {
+                $('#addGroupModal .addUserForm .addUserLeft .addUserList ul li').show();
+            } else {
+                $('#addGroupModal .addUserForm .addUserLeft .addUserList ul li').each(function() {
+                    var groupName = $(this).text().toLowerCase();
+                    if (groupName.indexOf(searchText) < 0) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    } 
+                });
+            }
         });
 
         function closeIt() {
@@ -1969,3 +2206,31 @@ function formatNumber(number) {
     };
 
 }) (jQuery);
+
+function initAddGroupList(preserveRight) {
+    if (!preserveRight) {
+        var modal = $("#addGroupModal");
+        modal.find('.addUserRight .addUserList ul li').remove();
+    }
+    $('#addGroupModal .addUserForm .addUserLeft .addUserList ul').empty();
+
+    var existingGroupIds = [];
+    $('.existingSecurityGroup').each(function() {
+        if (!$(this).hasClass('removedSecurityGroup')) {
+            existingGroupIds.push(parseInt($(this).find('.remove').attr('rel')));
+        }
+    });
+    $('.addedSecurityGroup').each(function () {
+        existingGroupIds.push(parseInt($(this).find('.remove').attr('rel')));
+    });
+
+    for (var i = 0; i < groupIds.length; i++) {
+        var groupId = groupIds[i];
+        var index = existingGroupIds.indexOf(groupId);
+        if (typeof(index) == 'undefined') {
+            var group = availableGroups['' + groupId];
+            $('#addGroupModal .addUserForm .addUserLeft .addUserList ul').append(
+                    '<li name="' + groupId + '">' + group.name + '</li>');
+        }
+    }
+}

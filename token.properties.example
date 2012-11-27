@@ -338,3 +338,7 @@
 # CloudVMService.xml                  #
 #######################################
 @notusBaseUrl@=https://www-180.ibm.com/cloud/innovation/api/rest/20090403
+
+# A comma-separated list of handles of users which are allowed to access Security Groups UI. Empty value means
+# that all users are allowed to access Security Groups UI
+@securityGroupsManagers@=heffan,super

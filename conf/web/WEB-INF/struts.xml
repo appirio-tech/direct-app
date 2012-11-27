@@ -36,6 +36,7 @@
                          class="loggingInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
 
+	    <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
@@ -85,6 +86,12 @@
                 </interceptor-ref>
             </interceptor-stack>
 
+            <interceptor-stack name="groupDefaultStack">
+                <interceptor-ref name="baseStack"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="securityGroupsAccessInterceptor"/>
+            </interceptor-stack>
       <interceptor-stack name="projectFeeStack">
         <interceptor-ref name="loggingInterceptor"/>
                 <interceptor-ref name="exception">
@@ -1622,5 +1629,113 @@
             <result name="error" type="json" />
         </action>    
       </package>
+    <package name="securityGroup" namespace="/group" extends="base">
+        <default-interceptor-ref name="groupDefaultStack"/>
+        <action name="viewGroupAction" class="viewGroupAction">
+            <result name="success">/WEB-INF/groups/view-user-group-details.jsp</result>
+        </action>
+        
+        <action name="searchUser" class="groupSearchUserAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="saveProjectGroupPermissions" class="saveSecurityGroupPermissionsAction">
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="createGroup" class="createGroupAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="updateGroup" class="updateGroupAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="getProjectsAndAccounts" class="createGroupAction" method="getProjectsAndAccounts">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="enterCreateGroup" class="createGroupAction" method="enterGroupDetails">
+            <result name="success">/WEB-INF/groups/create-group.jsp</result>
+        </action>
+        
+        <action name="enterUpdateGroup" class="updateGroupAction" method="enterGroupDetails">
+            <result name="success">/WEB-INF/groups/create-group.jsp</result>
+        </action>
+        <action name="viewInvitationStatusAction" class="viewInvitationStatusAction">
+            <result name="success">/WEB-INF/groups/view-invitations.jsp</result>
+        </action>
+        <action name="viewPendingApprovalUserAction" class="viewPendingApprovalUserAction">
+            <result name="success">/WEB-INF/groups/view-pending-approvals.jsp</result>
+        </action>
+        <action name="searchReceivedInvitations" class="viewInvitationStatusAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="searchPendingApproval" class="viewPendingApprovalUserAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="acceptRejectGroupInvitationAction" class="acceptRejectGroupInvitationAction">
+            <result type="chain">
+                <param name="actionName">viewInvitationStatusAction</param>
+                <param name="namespace">/group</param>
+            </result>
+        </action>
+        <action name="approveRejectPendingUserAction" class="approveRejectPendingUserAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="deleteGroupAction" class="deleteGroupAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="viewUserGroupsAction" class="searchGroupAction">
+            <result name="success">/WEB-INF/groups/view-user-groups.jsp</result>
+        </action>
+        
+        <action name="searchGroupAction" class="searchGroupAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="checkUpdateRemovePermission" method ="checkUpdateRemovePermission" class="searchGroupAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="viewAuditingInfoAction" class="accessAuditingInfoAction">
+            <result name="success">/WEB-INF/groups/auditing-info.jsp</result>
+        </action>        
+        <action name="searchAuditingInfoAction" class="accessAuditingInfoAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>        
+        <action name="enterCreateCustomerAdminAction" method="enterCreateCustomerAdmin" class="createCustomerAdminAction">
+            <result name="success">/WEB-INF/groups/create-administrator.jsp</result>
+        </action>        
+        <action name="createCustomerAdminAction" class="createCustomerAdminAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>      
+        <action name="enterSendInvitationAction" method="enterSendInvitation" class="sendInvitationAction">
+            <result name="success">/WEB-INF/groups/send-invitation.jsp</result>
+        </action>        
+        <action name="sendInvitationAction" class="sendInvitationAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="validateUserHandle" method="validateUserHandle" class="sendInvitationAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+    </package>
 
 </struts>

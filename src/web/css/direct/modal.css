@@ -1,3 +1,13 @@
+/*
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.0 Added this file
+  -
+  - Version 1.1 (Release Assembly - TopCoder Security Groups Release 3) changes:
+  -   Updated to fixed the bugs in this assembly.
+*/
 *{padding: 0; margin: 0;}
 #TB_window {
 	font: 12px Arial, Helvetica, sans-serif;
@@ -342,6 +352,7 @@ position: absolute;
 
 #new-modal-window .outLay .modalBody .modalContent li {
     margin-bottom: 2px;
+    word-wrap: break-word;
 }
 
 #new-modal-window .outLay .modalBody .modalContent li.single {

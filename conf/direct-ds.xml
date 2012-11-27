@@ -184,6 +184,35 @@
             <type-mapping>InformixDB</type-mapping>
         </metadata>
     </xa-datasource>  
+    
+    <xa-datasource>
+        <jndi-name>CORP_DS</jndi-name>
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
+        <no-tx-separate-pools>true</no-tx-separate-pools>
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">corporate_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+         <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+         <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource> 
 
 
     <xa-datasource>

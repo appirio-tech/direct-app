@@ -4075,9 +4075,10 @@ public class DataProvider {
 
         if (DirectUtils.isTcOperations(tcSubject) || DirectUtils.isTcStaff(tcSubject)) {
             //System.out.println("query the cockpit admin...");
-            request.setContentHandle("admin_client_billing_accounts");
+            dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+            request.setContentHandle("admin_client_billing_accounts_v2");
             resultContainer = dataAccess.getData(request).get(
-                    "admin_client_billing_accounts");
+                    "admin_client_billing_accounts_v2");
         } else {
             //System.out.println("query non admin...");
             List<ProjectBriefDTO> projects = getUserProjectsList(tcSubject.getUserId());

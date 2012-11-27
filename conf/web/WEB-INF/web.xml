@@ -7,6 +7,11 @@
     <!--
         This is standard deployment descriptor for Funktional Consultation Website application front-end module.
     -->
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/securityGroupsApplicationContext.xml,WEB-INF/applicationContext.xml;</param-value>
+    </context-param>
 
     <filter>
         <filter-name>direct</filter-name>

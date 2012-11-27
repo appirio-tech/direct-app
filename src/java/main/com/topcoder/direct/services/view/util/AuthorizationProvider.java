@@ -3,11 +3,19 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.GroupPermissionType;
+import com.topcoder.security.groups.services.AuthorizationService;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>An utility class providing the methods for making authorization decisions.</p>
@@ -27,16 +35,32 @@ import com.topcoder.shared.util.DBMS;
  * </p>
  *
  * <p>
+ * Version 1.2 (Topcoder Security Groups Backend - Direct Permissions Propagation Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #isUserGrantedAccessToContest(TCSubject, long)} and 
+ *     {@link #isUserGrantedAccessToProject(TCSubject, long)} to check user permissions against security groups also.
+ *     </li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
  * Version 1.2 (Module Assembly - TC Cockpit Project Milestones Management Front End) change log:
  *   <ol>
  *       <li>Add method {@link #isUserGrantedToModifyMilestone(com.topcoder.security.TCSubject, long)}</li>
  *   </ol>
  * </p>
- * 
+ *
  * @author isv, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class AuthorizationProvider {
+
+    /**
+     * Private constant specifying administrator role.
+     *
+     * @since 1.2
+     */
+    private static final String ADMIN_ROLE = "Cockpit Administrator";
 
     /**
      * <p>Constructs new <code>AuthorizationProvider</code> instance. This implementation does nothing.</p>
@@ -53,7 +77,7 @@ public class AuthorizationProvider {
      * @throws Exception if any error occurs
      */
     public static boolean isUserGrantedAccessToProject(TCSubject tcSubject, long projectId) throws Exception {
-        if (DirectUtils.isTcStaff(tcSubject)) {
+        if (DirectUtils.isTcStaff(tcSubject) || DirectUtils.isRole(tcSubject, ADMIN_ROLE)) {
             return true;
         }
         
@@ -63,7 +87,19 @@ public class AuthorizationProvider {
         request.setProperty("tcdirectid", String.valueOf(projectId));
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_project_permissions");
-        return resultContainer.size() > 0;
+        if (resultContainer.isEmpty()) {
+            HttpServletRequest servletRequest = DirectUtils.getServletRequest();
+            ServletContext ctx = servletRequest.getSession().getServletContext();
+            WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+            AuthorizationService authorizationService 
+                = (AuthorizationService) applicationContext.getBean("groupAuthorizationService");
+
+            return DirectUtils.hasPermissionBySecurityGroups(tcSubject, projectId, authorizationService, 
+                                                             GroupPermissionType.READ, GroupPermissionType.WRITE, 
+                                                             GroupPermissionType.FULL);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -75,7 +111,7 @@ public class AuthorizationProvider {
      * @throws Exception if any error occurs
      */
     public static boolean isUserGrantedAccessToContest(TCSubject tcSubject, long contestId) throws Exception {
-        if (DirectUtils.isTcStaff(tcSubject)) {
+        if (DirectUtils.isTcStaff(tcSubject) || DirectUtils.isRole(tcSubject, ADMIN_ROLE)) {
             return true;
         }
         
@@ -85,9 +121,23 @@ public class AuthorizationProvider {
         request.setProperty("pj", String.valueOf(contestId));
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_permissions");
-        return resultContainer.size() > 0;
+        if (resultContainer.isEmpty()) {
+            HttpServletRequest servletRequest = DirectUtils.getServletRequest();
+            ServletContext ctx = servletRequest.getSession().getServletContext();
+            WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+            AuthorizationService authorizationService
+                = (AuthorizationService) applicationContext.getBean("groupAuthorizationService");
+            ProjectServices projectServices
+                = (ProjectServices) applicationContext.getBean("projectServices");
+            long projectId = projectServices.getTcDirectProject(contestId);
+            return DirectUtils.hasPermissionBySecurityGroups(tcSubject, projectId, authorizationService,
+                                                             GroupPermissionType.READ, GroupPermissionType.WRITE,
+                                                             GroupPermissionType.FULL);
+        } else {
+            return true;
+        }
     }
-
+    
     /**
      * <p>Checks if specified user is granted access permission to modify the specified milestone.</p>
      *

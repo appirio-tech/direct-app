@@ -1,0 +1,1505 @@
+/* 
+  - Author: TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+
+  This file will contain css used in group pages.
+
+  - Version 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) :
+  -   updated to support new group pages of Pending Approvals and Received Invitations
+  -
+  - Version 1.2 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups) :
+  -   updated to support view user groups page
+  -
+  - Version 1.3 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous) :
+  -   updated to support updated create-group.jsp and new groups pages of Create Admin, Send Invitation
+  -   and Audit Information.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Security Groups Release 3) changes:
+  -   Updated to fixed the bugs in this assembly.
+*/
+/* tab width */
+/*#tabs1 ul li.firstTabs a span.dashboardSpan{	width:100px; }
+#tabs1 ul li.secondTabs a span.dashboardSpan{	width:150px; }
+#tabs1 ul li.thirdTabs a span.dashboardSpan{	width:132px; }
+#tabs1 ul li.forthTabs a span.dashboardSpan{	width:195px; }
+#tabs1 ul li.fifthTabs a span.dashboardSpan{	width:132px; }
+#tabs1 ul li.sixthTabs a span.dashboardSpan{	width:150px; }*/
+
+/* #wholeAreaHeader */
+#wholeAreaHeader{
+	height:42px;
+	padding-top:17px;
+}
+	#wholeAreaHeader .groupTitle{
+		font-size:18px;
+		font-family:Tahoma, Geneva, sans-serif;
+		padding-left:43px;
+		height:32px;
+		line-height:32px;
+		background:url(/images/icon_groups_title.png) left top no-repeat;
+		font-weight:normal;
+		max-width:70%;
+	}
+	#wholeAreaHeader .sendEmailTitle{
+		background:url(/images/icon_send_mail_title.png) left top no-repeat;
+	}
+
+/* .pipelineFilter */
+.topFilterBox{
+	margin-top:3px;
+	min-height:10px;
+	font-size:12px;
+	color:#333333;
+}
+	/* .filterTitle */
+	.filterTitle{
+		height:36px;
+		padding-left:4px;
+		background:url(/images/bg-newbox-header.png) left top no-repeat;
+		overflow:hidden;
+	}
+		.filterTitle .filterTitleRight{
+			height:36px;
+			padding-right:4px;
+			background:url(/images/bg-newbox-header.png) right -72px no-repeat;
+		}
+			.filterTitle .filterTitleCenter{
+				height:36px;
+				background:url(/images/bg-newbox-header.png) left -36px repeat-x;
+			}
+				.filterTitle .filterTitleCenter h3.title{
+					font-size:14px;
+					padding-left:15px;
+					line-height:36px;
+				}
+		.filterTitleCollapsed{
+			background-position:left -108px;
+		}
+			.filterTitleCollapsed .filterTitleRight{
+				background-position:right -144px;
+			}
+		.filterTitle .expanded{
+			float:left;
+			height:21px;
+			width:21px;
+			margin-left:4px;
+			margin-top:8px;
+			background:url(/images/icon-new-expand.png) left top no-repeat;
+			display:inline;
+			overflow:hidden;
+		}
+		.filterTitle .collapsed{
+			background-position:left -21px;
+		}
+		.filterTitle h4{
+			float:left;
+			min-height:10px;
+			line-height:36px;
+			margin-left:9px;
+			display:inline;
+			font-weight:normal;
+			font-size:12px;
+		}
+	
+	/* .filterContainer */
+	.filterContainer{
+		border:1px solid #bdbdbd;
+		border-top-width:0;
+		padding:16px 18px 13px;
+		min-height:10px;
+		overflow:hidden;
+	}
+	.filterContainer .filterContainerCommand2{
+		padding-top:10px;
+		}
+		.filterContainer dl.filterUserGroup dd{
+			min-height:10px;
+			padding-bottom:19px;
+		}
+			.filterContainer dl.filterUserGroup dd .leftSide{
+				float:left;
+				width:46%;
+				display:inline;
+				margin-right:1%;
+			}
+			.filterContainer dl.filterUserGroup dd .rightSide{
+				float:right;
+				width:46%;
+				display:inline;
+				margin-left:1%;
+			}
+				.filterContainer dl.filterUserGroup dd .leftSide select{
+					float:left;
+					margin-top:2px;
+					font-family:Arial, Helvetica, sans-serif;
+					font-size:11px;
+					color:#000000;
+				}
+				.filterContainer dl.filterUserGroup dd .label{
+					float:left;
+					width:178px;
+					display:inline;
+					line-height:22px;
+					font-weight:bold;
+				}
+				.filterContainer dl.filterUserGroup dd .text,
+				.filterContainer dl.filterUserGroup dd .secondColumn{
+					float:left;
+					width:auto;
+					display:inline;
+				}
+				.filterContainer dl.filterUserGroup dd .searchText{
+					width:56%;
+					}
+				.filterContainer dl.filterUserGroup dd .searchDetails{
+					width:21px;
+					float:right;
+					display:inline;
+					margin-right:0;
+					}
+				.filterContainer dl.filterUserGroup dd .specialColumn{
+					text-align:center;
+					line-height:22px;
+				}
+				.filterContainer dl.filterUserGroup dd input[type=checkbox]{
+					float:left;
+				}
+                .filterContainer dl.filterUserGroup dd input[type=radio]{
+					float:left;
+				}
+				.filterContainer dl.filterUserGroup dd .secondColumn label{
+					float:left;
+					min-width:50px;
+					margin-right:7px;
+					margin-left:8px;
+					display:inline;
+				}
+				.filterContainer dl.filterUserGroup dd a.dp-choose-date{
+					width:23px;
+					float:left;
+					display:inline;
+					}
+				.filterContainer dl.filterUserGroup dd .secondColumn input[type=text]{
+					width:65%;
+				}
+                .filterContainer .filterContainerCommand2 a.button6{
+                    margin: 0px;
+                    }
+				.secondColumn a.dp-choose-date {
+				    margin-right: 0px;
+				}
+				
+				.noInvitation {
+                    font-size: 16px;
+                    margin-top: 24px;
+                }
+				
+				@-moz-document url-prefix() {
+				    .selectCustomer, .newAdminSelect {padding: 1px;}
+				    .selectCustomer option, .newAdminSelect option {padding-left: 4px;}
+				}
+	.groupDetailsTableContainer table{
+		width:100%;
+		border:1px solid #cfd0d1;
+		border-top:0;
+	}
+		.groupDetailsTableContainer table tbody td{
+			border:1px solid #cfd0d1;
+			vertical-align:middle;
+			text-align:left;
+			line-height:14px;
+			font-size:12px;
+			padding:7px 16px;
+		}
+		.groupDetailsTableContainer table tbody td.firstColumn{
+			background-color:#f5f5f5;
+			vertical-align:top;
+			line-height:20px;
+			font-weight:bold;
+		}
+		.groupDetailsTableContainer table tbody tr.firstRow td{
+			border-top:0;
+		}
+			.groupDetailsTableContainer table tbody td .attributesWrapper input,
+			.groupDetailsTableContainer table tbody td .restrictionsWrapper input{
+				float:left;
+				display:inline;
+				}
+			.groupDetailsTableContainer table tbody td .attributesWrapper label,
+			.groupDetailsTableContainer table tbody td .restrictionsWrapper label{
+				float:left;
+				display:inline;
+				margin-left:6px;
+				width:56px;
+				}
+			.groupDetailsTableContainer table tbody td .restrictionsWrapper label{
+				width:134px;
+				}
+			.groupDetailsTableContainer table tbody td #groupName{
+				width:98%;
+				}
+	
+	.groupMembersTable{
+		margin-top:24px;
+		}
+		.groupMembersTable table{
+			width:100%;
+			border:1px solid #cfd0d1;
+			border-top:0;
+			}
+			.groupMembersTable table thead th{
+				border-top:0;
+				height:33px;
+				vertical-align:middle;
+				border-bottom:0;
+				color:#fff;
+				background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
+				}
+				.groupMembersTable table tbody td{
+					padding:6px 10px 5px 9px;
+					border:1px solid #ced0d1;
+					vertical-align:middle;
+					}
+				.groupMembersTable table tbody td.firstColumn .text{
+					float:left;
+					width:85%;
+					}
+				.groupMembersTable table tbody td.firstColumn .searchDetails{
+					float:right;
+					margin:0;
+					}
+				.groupMembersTable table tbody td.secondColumn{
+					padding-left:14px;
+					padding-right:14px;
+					text-align:center;
+					}
+					.groupMembersTable table tbody td.secondColumn input[type=radio]{
+						float:left;
+						}
+					.groupMembersTable table tbody td label{
+						padding-left:8px;
+						padding-right:0;
+						float:left;
+						width:auto;
+						display:inline;
+						}	
+					.groupMembersTable table tbody td.secondColumn .leftPart{
+						width:auto;
+						float:left;
+						display:inline;
+						margin-right:35px;
+						}
+					.groupMembersTable table tbody td.secondColumn .rightPart{
+						width:auto;
+						float:left;
+						display:inline;
+						}
+				.groupMembersTable table tbody td.thirdColumn{
+					padding-left:6%;
+					padding-right:0;
+					}
+					.groupMembersTable table tbody td.thirdColumn .unit{
+						float:left;
+						width:24%;
+						display:inline;
+						}
+						.groupMembersTable table tbody td.thirdColumn .unit input[type=radio]{
+							float:left;
+							}
+				.groupMembersTable table tbody td.forthColumn{
+					text-align:center;
+					}
+				.groupMembersTable table tbody tr.even td{
+					background-color:#f5f5f5;
+					}
+				.groupMembersTableControl{
+					height:25px;
+					line-height:25px;
+					padding:5px 19px 5px 9px;
+					border:1px solid #ced0d1;
+					background-color:#f5f5f5;
+					border-top:0;
+					overflow:hidden;
+					}
+					.groupMembersTableControl .groupMembersTableControlNotice{
+						float:left;
+						background:url(/images/alert-icon2.png) left 4px no-repeat;
+						padding-left:28px;
+						color:#555555;
+						}
+					.groupMembersTableControl .newButton2{
+						float:right;
+						}
+				.commandOperationBox{
+					text-align:right;
+					padding-top:23px;
+					min-height:10px;
+					}
+					.commandOperationBox .newButtonGray{
+						margin-left:10px;
+						}
+						.commandOperationBox .newButton1 .btnC{
+							padding:0 7px;
+							}
+						.commandOperationBox .newButtonGray .btnC{
+							padding:0 21px;
+							}
+				
+		.sendGroupInvitationTable table{
+			width:100%;
+			}	
+			.sendGroupInvitationTable table td{
+				border:1px solid #bdbdbd;
+				}
+			.sendGroupInvitationTable table td.firstColumn{
+				background-color:#f5f5f5;
+				padding:8px 19px;
+				vertical-align:top;
+				}
+				.sendGroupInvitationTable table td.firstColumn .unitLabel{
+					font-weight:bold;
+					font-size:12px;
+					}
+				.sendGroupInvitationTable table td.firstColumn .noteLabel{
+					font-size:11px;
+					background:url(/images/icon-note.png) left 2px no-repeat;
+					padding-left:22px;
+					margin-top:56px;
+					line-height:14px;
+					}
+			.sendGroupInvitationTable table td.lastColumn{
+				padding:12px 16px !important;
+				vertical-align:top;
+				}
+				.sendGroupInvitationTable table td.lastColumn dd{
+					min-height:22px;
+					padding-bottom:12px;
+					}
+					.sendGroupInvitationTable table td.lastColumn dd input[type=text]{
+						float:left;
+						width:91%;
+						}
+					.sendGroupInvitationTable table td.lastColumn dd .searchDetails{
+						float:right;
+						margin:0;
+						}
+					.sendGroupInvitationTable table td.lastColumn dd.lastDd{
+						padding-bottom:0;
+						text-align:right;
+						}
+				
+				
+		
+/* main content area */	
+	.mainContent{
+		margin-top:24px;
+		min-height:10px;
+		font-size:11px;
+	}
+		.tableControlBox{
+			padding:7px 17px;
+			height:21px;
+			overflow:hidden;
+			border:1px solid #bdbdbd;
+		}
+		.tableControlBoxTop{
+			border-bottom:0;
+		}
+		.tableControlBoxBottom{
+			border-top:0;
+		}
+			.tableControlBox .leftSide{
+				float:left;
+				width:auto;
+				display:inline;
+			}
+			.tableControlBox .rightSide{
+				float:right;
+				width:auto;
+				display:inline;
+			}
+				.tableControlBox .rightSide .button7{
+					margin-left:9px;
+					float:left;
+				}
+
+		/* normal table style */
+		.tableGroupWrapper .normalTableList{
+			width:100%;
+			border:1px solid #cfd0d1;
+			border-top:0;
+		}
+			.tableGroupWrapper .normalTableList thead th{
+				border-top:0;
+				height:33px;
+				vertical-align:middle;
+				border-bottom:0;
+				color:#fff;
+				background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
+			}
+			.tableGroupWrapper .normalTableList tbody td{
+				border:1px solid #cfd0d1;
+				vertical-align:middle;
+				text-align:center;
+				line-height:13px;
+				padding:8px;
+			}
+			.tableGroupWrapper .normalTableList tbody tr.firstRow td{
+				border-top:0;
+			}
+			.tableGroupWrapper .normalTableList tbody tr.even td{
+				background-color:#f5f5f5;
+			}
+				.tableGroupWrapper .normalTableList tbody td a{
+					color:#333;
+					text-decoration:underline;
+				}
+				.tableGroupWrapper .normalTableList tbody td a:hover{
+					text-decoration:none;
+				}
+		
+		.tableControlPage{
+			position:relative;
+			height:24px;
+			overflow:hidden;
+			padding:4px 21px;
+			line-height:24px;
+			background-color:#bdbdbd;
+		}
+			.tableControlPage .leftSide{
+				float:left;
+				display:inline;
+			}
+			.tableControlPage .rightSide{
+				float:right;
+				display:inline;
+			}
+				.tableControlPage .rightSide .label,
+				.tableControlPage .rightSide select,
+				.tableControlPage .rightSide ul{
+					float:left;
+					display:inline;
+				}
+				.tableControlPage .rightSide .label{
+					padding:0 5px 0 7px;
+				}
+				.tableControlPage .rightSide ul{
+					margin-left:20px;
+				}
+					.tableControlPage .rightSide ul li{
+						float:left;
+						display:inline;
+						margin-left:8px;
+					}
+						.tableControlPage .rightSide ul li a{
+							color:#333333;
+							text-decoration:underline;
+						}
+						.tableControlPage .rightSide ul li a:hover{
+							text-decoration:none;
+						}
+						.tableControlPage .rightSide ul li a.prevPage{
+							text-decoration:none;
+							padding-left:10px;
+							background:url(/images/icon-pagecontrol-prev.png) left center no-repeat;
+						}
+						.tableControlPage .rightSide ul li a.prevPage:hover{
+							text-decoration:underline;
+						}
+						.tableControlPage .rightSide ul li a.nextPage{
+							text-decoration:none;
+							padding-right:10px;
+							background:url(/images/icon-pagecontrol-next.png) right center no-repeat;
+						}
+						.tableControlPage .rightSide ul li a.nextPage:hover{
+							text-decoration:underline;
+						}
+						.tableControlPage .rightSide ul li a.prevPage.disable{
+							background-image:url(/images/icon-pagecontrol-prev-disable.png);
+                            text-decoration:none !important;
+                            cursor: default;
+						}
+						.tableControlPage .rightSide ul li a.nextPage.disable{
+							background-image:url(/images/icon-pagecontrol-next-disable.png);
+                            text-decoration:none !important;
+                            cursor: default;
+						}
+				
+				
+			.tableControlPage .corner{
+				width:1px;
+				height:1px;
+				overflow:hidden;
+				background-color:#fff;
+				display:block;
+				position:absolute;
+			}
+			.tableControlPage .bl{
+				left:0;
+				bottom:0;
+			}
+			.tableControlPage .br{
+				right:0;
+				bottom:0;
+			}
+			
+
+
+
+/* button */
+A.button6{
+	float: right;
+	background:transparent url(/images/button5_bg.png) repeat-x top;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+	color: #FFF;
+	text-decoration: none;
+}
+
+	A.button6 SPAN{
+		display: block;
+		cursor: pointer;
+	}
+
+	A.button6 SPAN.left{
+		background: url(/images/button5_left.png) no-repeat left top;
+		padding: 0;
+	}
+	
+	A.button6 SPAN.right{
+		background: url(/images/button5_right.png) no-repeat right top;
+		padding: 0px 22px;
+		height: 24px;
+		line-height:24px;
+	}
+A.button6:hover{
+	background-position: left bottom;
+	text-decoration: none !important;
+}
+	A.button6:hover SPAN.left{
+		background-position: left bottom;
+	}
+	
+	A.button6:hover SPAN.right{
+		background-position: right bottom;
+	}
+	
+A.grayButton6{
+	background:transparent url(/images/button-new-2.png) repeat-x left -24px;
+	}
+	
+	A.grayButton6 SPAN.left{
+		background: url(/images/button-new-2.png) no-repeat left top;
+		}
+		
+	A.grayButton6 SPAN.right{
+		padding:0 30px;
+		background: url(/images/button-new-2.png) no-repeat right -48px;
+		}
+		
+A.grayButton6:hover{
+	background:transparent url(/images/button-new-2.png) repeat-x left -96px;
+	}
+	
+	A.grayButton6:hover SPAN.left{
+		background: url(/images/button-new-2.png) no-repeat left -72px;
+		}
+		
+	A.grayButton6:hover SPAN.right{
+		padding:0 30px;
+		background: url(/images/button-new-2.png) no-repeat right -120px;
+		}
+
+A.button7{
+	margin:0 auto;
+	display:inline-block;
+	height:21px;
+	padding-left:3px;
+	background:transparent url(/images/button7-left.png) left top no-repeat;
+	overflow:hidden;
+	line-height:20px;
+	text-decoration:none;
+	color:#ffffff;
+	font-weight:bold;
+	font-size:11px;
+}
+	A.button7 span.left{
+		display:inline-block;
+		height:21px;
+		width:108px;
+		padding-right:3px;
+		text-align:center;
+		background:url(/images/button7-right.png) right top no-repeat;
+		overflow:hidden;
+		cursor:pointer;
+	}
+A.button7:hover{
+	background-position:left -21px;
+}
+	A.button7:hover span.left{
+		background-position:right -21px;
+	}
+
+A.grayButton7{
+	background:url(/images/button7-gray-left.png) left top no-repeat;
+	}
+	A.grayButton7 span.left{
+		background:url(/images/button7-gray-right.png) right top no-repeat;
+		}
+A.grayButton7:hover{
+	background-position:left -21px;
+}
+	A.grayButton7:hover span.left{
+		background-position:right -21px;
+	}
+
+.newButton1{
+	background: transparent url(/images/button-new-1.png) no-repeat left top;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFE;
+	font-family:Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	text-transform:uppercase;
+	display:inline-block;
+	overflow: hidden;
+	height:24px;
+	line-height:24px;
+	padding-left:4px;
+}	
+
+	.newButton1 .btnR{
+		display:inline-block;
+		padding-right:4px;
+		background: transparent url(/images/button-new-1.png) no-repeat right -48px;
+		cursor: pointer;
+	}
+	.newButton1 .btnC{
+		display:inline-block;
+		background: transparent url(/images/button-new-1.png) left -24px repeat-x;
+		cursor: pointer;
+		height: 24px;
+		padding:0 18px;
+		text-align:center;
+	}
+	
+	.newButton1:hover{
+		background-position:left -72px;
+	}
+		.newButton1:hover .btnR{
+			background-position:right -120px;
+		}
+		.newButton1:hover .btnC{
+			background-position:left -96px;
+		}
+
+.newButtonGray,
+.newButtonGray .btnR,
+.newButtonGray .btnC{
+	background-image:url(/images/button-new-2.png);
+}
+
+.newButton2{
+	background: transparent url(/images/button-new-4.png) no-repeat left top;
+	font-size: 12px;
+	color: #313131;
+	font-family:Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	display:inline-block;
+	overflow: hidden;
+	height:25px;
+	line-height:25px;
+	padding-left:3px;
+}	
+
+	.newButton2 .btnR{
+		display:inline-block;
+		padding-right:3px;
+		background: transparent url(/images/button-new-4.png) no-repeat right -50px;
+		cursor: pointer;
+	}
+	.newButton2 .btnC{
+		display:inline-block;
+		background: transparent url(/images/button-new-4.png) left -25px repeat-x;
+		cursor: pointer;
+		height: 25px;
+		padding:0 5px;
+		text-align:center;
+	}
+	
+	.newButton2:hover{
+		background-position:left -75px;
+	}
+		.newButton2:hover .btnR{
+			background-position:right -125px;
+		}
+		.newButton2:hover .btnC{
+			background-position:left -100px;
+		}
+	.removeButton .btnC .btnIcon{
+		display:inline-block;
+		background: transparent url(/images/icon-remove.png) left 6px no-repeat;
+		cursor: pointer;
+		height: 25px;
+		padding-left:23px;
+		padding-right:5px;
+	}
+	.addMoreMembersButton .btnC .btnIcon{
+		display:inline-block;
+		background: transparent url(/images/icon-add-more-members.png) left 8px no-repeat;
+		cursor: pointer;
+		height: 25px;
+		padding-left:23px;
+	}
+
+
+
+
+/* form elements */
+input[type=text]{
+	color:#6c6c6c;
+	font-size:12px;
+	height:20px;
+	line-height:20px;
+	border:1px solid #BDBDBD;
+	padding:0 6px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+input[type=checkbox]{
+	margin:0;
+	padding:0;
+	width:13px;
+	height:13px;
+	overflow:hidden;
+}
+input[type=radio]{
+	margin:0;
+	padding:0;
+	width:13px;
+	height:13px;
+	overflow:hidden;
+}
+select{
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+}
+
+.multiSelectBox{
+	height:84px;
+	border:1px solid #bdbdbd;
+	overflow:scroll;
+	background-color:#fffffc;
+}
+	.multiSelectBox .multiOptionRow{
+		padding-left:5px;
+		min-height:13px;
+		padding-top:4px;
+		padding-bottom:4px;
+		overflow:hidden;
+	}
+	.multiSelectBox .multiOptionRowChecked{
+		background-color:#dee7f7;
+	}
+		.multiSelectBox input[type=checkbox]{
+			float:left;
+			display:inline;
+		}
+		.multiSelectBox label{
+			float:left;
+			padding-left:5px;
+			display:inline;
+			line-height:13px;
+			white-space:nowrap;
+			overflow:hidden;
+			font-weight:bold;
+			cursor:pointer;
+		}
+
+
+
+/* modal */
+#modalBackground{
+	width:100%;
+	height:100%;
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:10000;
+	display:none;
+	background:#000002;
+}
+#new-modal{
+	top:0;
+	left:0;
+	position:fixed;
+	z-index:10001;
+}
+
+#new-modal .outLay{
+	position:relative;
+	display:none;
+}
+.outLay{
+	width:370px;
+}
+
+#new-modal .outLay .modalHeader .closeModal,
+#new-modal .outLay .modalHeader .closeOtherModal{
+	position:absolute;
+	right:0;
+	top:0;
+	display:block;
+	width:30px;
+	height:30px;
+	text-indent:-9999px;
+	background:url(/images/modal-close.png) left top no-repeat;
+	z-index:2;
+}
+#new-modal .outLay .modalHeader .closeModal:hover,
+#new-modal .outLay .modalHeader .closeOtherModal:hover{
+	background-position:left -30px;
+}
+
+#new-modal .outLay .modalHeader{
+	height:40px;
+	background:url(/images/modal-header.png) left top no-repeat;
+	padding-left:8px;
+	overflow:hidden;
+}
+	#new-modal .outLay .modalHeader .modalHeaderRight{
+		height:40px;
+		background:url(/images/modal-header.png) right -80px no-repeat;
+		padding-right:8px;
+	}
+	#new-modal .outLay .modalHeader .modalHeaderCenter{
+		height:40px;
+		font-size:14px;
+		line-height:40px;
+		font-family:Arial, Helvetica, sans-serif;
+		font-weight:bold;
+		color:#000000;
+		padding-left:22px;
+		background:url(/images/modal-header.png) left -40px repeat-x;
+	}
+
+#new-modal .outLay .modalHeaderSmall{
+	height:8px;
+	background:url(/images/preloader-corner.png) left top no-repeat;
+	padding-left:8px;
+	overflow:hidden;
+}
+	#new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight{
+		height:8px;
+		background:url(/images/preloader-corner.png) right -16px no-repeat;
+		padding-right:8px;
+	}
+	#new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter{
+		height:8px;
+		background:url(/images/preloader-corner.png) left -8px repeat-x;
+	}
+
+#new-modal .outLay .modalFooter{
+	height:8px;
+	background:url(/images/preloader-corner.png) left -24px no-repeat;
+	padding-left:8px;
+	overflow:hidden;
+}
+	#new-modal .outLay .modalFooter .modalFooterRight{
+		height:8px;
+		background:url(/images/preloader-corner.png) right -40px no-repeat;
+		padding-right:8px;
+	}
+	#new-modal .outLay .modalFooter .modalFooterCenter{
+		height:8px;
+		background:url(/images/preloader-corner.png) left -32px repeat-x;
+	}
+
+.outLay .modalBody{
+	border:4px solid #000000;
+	border-top-width:0;
+	border-bottom-width:0;
+	background:#e6e6e6 url(/images/modal-body-normal.png) left top repeat-x;
+	font-size:12px;
+	color:#333333;
+	line-height:18px;
+	min-height:10px;
+}
+	.outLay .iconNotice{
+		position:absolute;
+		left:22px;
+		top:73px;
+	}
+		
+	.outLay .modalBody .noticeContent{
+		padding-left:96px;
+		height:109px;
+		width:240px;
+	}
+	
+	.outLay .modalBody .modalCommandBox{
+		border-top:1px solid #ccc;
+		padding-top:16px;
+		height:36px;
+		text-align:center;
+	}
+/* #preloaderModal */
+#preloaderModal{
+	width:100px;
+	height:80px;
+}
+#preloaderModal .modalBody, #sendInvitationModal .modalBody{
+    height:auto;
+    min-height:10px;
+    padding-top:4px;
+    text-align:center;
+    background:url(/images/preloader-body.png) left -2px repeat-x;
+}
+#sendInvitationModal .modalBody{
+    background:url(/images/preloader-body.png) left -16px repeat-x !important;
+}
+
+#preloaderModal .modalBody .preloaderTips,
+#sendInvitationModal .modalBody .preloaderTips{
+    padding-top:5px;
+    font-size:12px;
+    color:#333333;
+}
+
+#sendInvitationModal .modalBody .preloaderTips{
+    text-align: center;
+    padding: 5px;
+}
+/* end #preloaderModal */
+
+#deleteGroupModal .modalBody .modalCommandBox{
+	text-align:right;
+	padding-right:24px;
+}
+	#deleteGroupModal .modalBody .modalCommandBox .newButton1{
+		margin-left:3px;
+	}
+		#deleteGroupModal .modalBody .modalCommandBox .newButton1 .btnC{
+			padding:0;
+			width:42px;
+			text-align:center;
+		}
+		#deleteGroupModal .modalBody .noticeContent{
+			text-align:center;
+			padding-top:27px;
+			height:82px;
+			padding-left:80px;
+			width:266px;
+		}
+		
+#deleteGroupConfirmModal,	
+#sendInvitationConfirmModal{
+	width:360px;
+}
+		#deleteGroupConfirmModal .modalBody .modalCommandBox .newButton1 .btnC,
+		#sendInvitationConfirmModal .modalBody .modalCommandBox .newButton1 .btnC{
+			padding:0;
+			width:52px;
+			text-align:center;
+		}
+		#deleteGroupConfirmModal .modalBody .noticeContent,
+		#sendInvitationConfirmModal .modalBody .noticeContent{
+			padding-top:40px;
+			height:69px;
+			padding-left:80px;
+			width:266px;
+		}
+		#deleteGroupConfirmModal .modalBody .noticeContentSendInviteConfirmation,
+		#sendInvitationConfirmModal .modalBody .noticeContentSendInviteConfirmation{
+			padding-top:35px;
+			height:84px;
+		}
+
+#wholeAreaHeader .fetchUrlTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_fecth_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	}
+	
+	/* fecthButton */
+	.fecthButton{
+		padding-top:16px;
+		min-height:10px;
+		}
+							
+	/* fetchUrlButton */
+	#fetchUrlButton{
+		width:auto;
+		float:right;
+		display:inline;
+		}
+	
+		#fetchUrlButton span.btnC{
+			padding:0 12px;
+			}
+		
+	/* fetchUrlDiv */
+	.fetchUrlDiv{
+		display:none;
+		min-height:14px;
+		margin-top:32px;
+		padding:11px 16px;
+		border:#fbcc00 solid 1px;
+		background:#fffdcd;
+		}
+		
+		.fetchUrlDiv dt{
+			width:115px;
+			float:left;
+			display:inline;
+			padding-left:25px;
+			font-size:12px;
+			font-weight:bold;
+			line-height:14px;
+			background:url(/images/check-icon.png) no-repeat left center;
+			}
+			
+		.fetchUrlDiv dd{
+			width:auto;
+			float:left;
+			display:inline;
+			font-size:14px;
+			line-height:14px;
+			font-weight:bold;
+			color:#ec1c23;
+			}
+
+/* audit */			
+#wholeAreaHeader .auditTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_audit_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	}
+		
+	.filterContainer dl.filterUserGroup dd.last{
+		padding-bottom:0;
+		}
+		/*.filterContainer dl.filterUserGroup dd.last .rightSide{
+			padding-right:5px;
+			}
+		.filterContainerCommand2{
+			padding-right:5px;
+			}
+		.filterContainerCommand{
+			padding-right:3px;
+			}*/
+
+/* group details */		
+#wholeAreaHeader .groupDetailsTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_groups_details_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	float:left;
+	display:inline;
+	}
+	
+#wholeAreaHeader .hasRightButton{
+	max-width:70%;
+	float:left;
+	display:inline;
+	}
+	
+.groupMembersTableContainer .normalTableList{
+	width:100%;
+	border:1px solid #cfd0d1;
+	border-top:0;
+	}
+	
+	.groupMembersTableContainer .normalTableList thead th{
+		border-top:0;
+		height:33px;
+		vertical-align:middle;
+		border-bottom:0;
+		color:#fff;
+		background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
+		}
+		
+	.groupMembersTableContainer .normalTableList tbody td{
+		border:1px solid #cfd0d1;
+		vertical-align:middle;
+		text-align:center;
+		line-height:13px;
+		padding:8px;
+		}
+		
+	.groupMembersTableContainer .normalTableList tbody tr.firstRow td{
+		border-top:0;
+		}
+		
+	.groupMembersTableContainer .normalTableList tbody tr.even td{
+		background-color:#f5f5f5;
+		}
+	
+#wholeAreaHeader .button7{
+	width:auto;
+	float:right;
+	display:inline;
+	margin-top:10px;
+	}
+	
+	.groupDetailsButton,.approvalButton{
+		width:auto;
+		min-height:25px;
+		padding-top:20px;
+		}
+		
+		.groupDetailsButton .newButton1,.approvalButton .newButton1{
+			width:auto;
+			float:right;
+			display:inline;
+			}
+		
+		.groupDetailsButton .newButton1 .btnC{
+			padding:0 10px;
+			}
+			
+		.approvalButton .newButton1 .btnC{
+			padding:0 28px;
+			}
+			
+		.approvalButton .approveButton .btnC{
+			padding:0 20px;
+			}
+		
+		.groupDetailsButton .updateGroupButton,.approvalButton .approveButton{
+			margin-right:12px;
+			}
+			
+/* new adminstration */
+#wholeAreaHeader .newAdminTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_new_admin_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	}
+	
+#wholeAreaHeader .updateGroupTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_update_groups_title.png) no-repeat left top;
+	font-weight:normal;
+	max-width:70%;
+	}
+	
+#wholeAreaHeader .pendingApprovalTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_pending_title.png) no-repeat left top;
+	font-weight:normal;
+	max-width:70%;
+	}
+	
+#wholeAreaHeader .createGroupTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_new_admin_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	float:left;
+	display:inline;
+	}
+#wholeAreaHeader .createGroupsTitle{
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	padding-left:43px;
+	height:32px;
+	line-height:32px;
+	background:url(/images/icon_new_groups_title.png) left top no-repeat;
+	font-weight:normal;
+	max-width:70%;
+	float:left;
+	display:inline;
+	}	
+	.newAdminSelect{
+		width:100%
+		}
+		
+	.newAdminText{
+		width:auto;
+		float:left;
+		}
+		
+	.searchIcon{
+		width:21px;
+		height:21px;
+		float:right;
+		display:inline;
+		text-indent:-9999px;
+		background:url(/images/search-icon.png) no-repeat left top;
+		}
+		
+	.searchIcon:hover{
+		background:url(/images/search-icon.png) no-repeat left -21px;
+		}
+		
+	.searchDetails{
+		width:21px;
+		height:21px;
+		float:left;
+		display:inline;
+		margin-right:12px;
+		text-indent:-9999px;
+		background:url(/images/search-icon.png) no-repeat left top;
+		}
+		
+	.searchDetails:hover{
+		background:url(/images/search-icon.png) no-repeat left -21px;
+		}
+
+		
+	.detailsGroupTable .searchRow{
+		width:72px;
+		margin:0 auto;
+		}
+		
+		.detailsGroupTable .searchRow span{
+			line-height:21px;
+			}
+		
+	.alertIcon{
+		margin-top:10px;
+		margin-bottom:2px;
+		padding:2px 0px;
+		padding-left:30px;
+		font-size:11px;
+		line-height:14px;
+		background:url(/images/alert-icon2.png) no-repeat left center;
+		}
+		
+	.createAdminButton{
+		min-height:25px;
+		padding-top:15px;
+		}
+		
+		.createAdminButton .newButton1{
+			width:auto;
+			float:right;
+			display:inline;
+			}
+			
+/* rejectTextArea */
+#rejectModal .newButton1{
+	margin:0 5px;
+	}
+
+.rejectTextArea{
+	padding:30px 25px;
+	padding-top:20px;
+	}
+	
+	.rejectTextArea p{
+		font-size:12px;
+		font-weight:bold;
+		line-height:37px;
+		}
+		
+	.rejectTextArea .textarea{
+		width:292px;
+		padding:5px 10px;
+		height:111px;
+		font-size:12px;
+		color:#333333;
+		line-height:18px;
+		font-family:Arial, Helvetica, sans-serif;
+		}
+		
+/* rejecResulttModal */
+#rejecResulttModal .noticeContent,#approveModal .noticeContent,
+#rejectModal .noticeContent,#acceptModal .noticeContent{
+	height:73px;
+	padding-top:36px;
+	padding-left:108px;
+	}
+	
+#createGroupConfirmModal{
+	width:360px;
+	}
+	
+#createGroupConfirmModal .noticeContent{
+	width:256px;
+	height:77px;
+	padding-top:32px;
+	padding-left:78px;
+	}
+	
+#createAdminModal .noticeContent{
+	width:auto;
+	height:73px;
+	padding-left:63px;
+	padding-top:36px;
+	text-align:center;
+	}
+	
+#updateGroupConfirmModal .noticeContent{
+	width:280px;
+	height:73px;
+	padding-left:63px;
+	padding-top:36px;
+	text-align:center;
+	}
+	
+/* searchInputDiv */
+#searchModal,#searchListModal{
+	width:398px;
+	}
+
+.searchInputDiv{
+	height:22px;
+	padding-top:35px;
+	padding-bottom:50px;
+	}
+	
+	.searchInputDiv label{
+		width:90px;
+		float:left;
+		display:inline;
+		font-size:12px;
+		font-weight:bold;
+		line-height:22px;
+		padding-left:26px;
+		}
+		
+	.searchInputDiv .text{
+		width:240px;
+		color:#333333;
+		}
+		
+	#searchModal .searchButton,#searchListModal .searchButton{
+		margin-right:6px;
+		}
+		
+/* #searchListModal */
+#searchListModal .searchListDiv{
+	padding:20px;
+	}
+	
+	#searchListModal .searchListDiv p{
+		height:33px;
+		font-size:11px;
+		font-weight:bold;
+		line-height:33px;
+		text-indent:12px;
+		color:#ffffff;
+		background:transparent url(/images/bg-normal-table-th.png) repeat-x left top;
+		}
+		
+	#searchListModal .searchListDiv table{
+		width:100%;
+		border:#a9acae solid 1px;
+		border-collapse:collapse;
+		vertical-align:middle;
+		}
+		
+		#searchListModal .searchListDiv table td{
+			height:26px;
+			text-indent:18px;
+			border:#a9acae solid 1px;
+			font-size:11px;
+			background:#fffffe;
+			vertical-align:middle;
+			}
+			
+		#searchListModal .searchListDiv table td.firstColumn{
+			text-align:center;
+			text-indent:0;
+			}
+			
+		#searchListModal .searchListDiv table .even td{
+			background:#f5f5f5;
+			}
+			
+			#searchListModal .searchListDiv table td input{
+				margin-top:2px;
+				}
+
+#searchListModal .newButton1 .btnC{
+	padding:0 5px;
+	}
+	
+#searchListModal .newButtonGray .btnC{
+	padding:0 18px;
+	}
+	
+#header .helloUser li.helloUserLink a.helloUserLinkTarget{
+	display:inline-block;
+	line-height:14px;
+	padding-right:20px;
+	background:url(/images/help_ico6.png) no-repeat right -2px;
+	}
+	
+#header .helloUser li.helloUserLink a.helloUserLinkTarget:hover{
+	background:url(/images/help_ico6.png) no-repeat right -19px;
+	}
+	
+a.createNewGroup span.left{
+	padding:0 16px 0 13px;
+	}
+	.filterContainer .filterContainerCommand2.noPaddingTop{
+		padding-top:0;
+		}
+		
+		
+		.tableGroupWrapper .emptyTableList{
+			border:1px solid #cfd0d1;
+			padding: 5px;
+		}
+
+#filterAuditInfo{
+    margin:0;
+}
+a#createGroup, a#updateGroup {
+    margin-left: 35px;    
+}
+
+.handleInputError {
+    margin-top: 5px;
+    margin-left: 115px;
+    color: red;
+    display: none;
+}
+.handleSelectError {
+    margin-top: 2px;
+    float: left;
+    color: red;
+    display: none;
+}
+.confirmGroupName {
+    word-wrap: break-word;
+}		
+

@@ -3,6 +3,9 @@
  *
  * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
  * 1) Added new styles for help center widget.
+ 
+ * Version 1.1 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added styles for Group 
+ * Permissions area
  */
 .add_comment_cancel_text{
 	margin-right: 22px;
@@ -93,7 +96,7 @@
 }
 
 #settingModal input,
-.permissionsNotifications input{
+.permissionsNotifications input, .groupPermissions input {
     position:static;
     top:0;
 }
