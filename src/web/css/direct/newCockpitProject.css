@@ -2555,7 +2555,6 @@ table {
             }
 		.stepSixth .successDiv .communicate{
 			 float:right;
-             background:url(/images/forum-icon.png) no-repeat left top;
             font-size:11px;
             padding-left:26px;
             margin-top:6px;
@@ -2563,11 +2562,19 @@ table {
             .stepSixth .successDiv .communicate span{
                 display:block;
              }
-            .stepSixth .successDiv .communicate a{
+            
+			a.colorFix{
+                color:#ffffff !important;
+             }
+			 
+			.stepSixth .successDiv .communicate a{
                 color:#ff0000;
                 text-decoration:none;
                 font-weight:bold;
              }
+			 
+			 
+			 
             .stepSixth .successDiv .communicate a:hover{
                 text-decoration:underline;
              }

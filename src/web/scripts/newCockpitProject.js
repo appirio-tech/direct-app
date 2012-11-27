@@ -152,14 +152,20 @@ var generateConfirmationPage = function(projectId, projectName) {
         $(".stepSixth .step1 p").html(text);
 
         // update project overview link
-        var projectOverviewLink = $(".stepSixth .bottomLine .button6");
+        var projectOverviewLink = $(".stepSixth .button6");
         var hrefValue = projectOverviewLink.attr('href');
         hrefValue = hrefValue.replace("projectIdValue", projectId);
         projectOverviewLink.attr('href', hrefValue);
+		
+		// update project overview link
+        var projectOverviewLink1 = $(".stepSixth .defaultNote .overviewLink");
+        var hrefValue1 = projectOverviewLink1.attr('href');
+        hrefValue1 = hrefValue1.replace("projectIdValue", projectId);
+        projectOverviewLink1.attr('href', hrefValue1);
 
         // Display default note
         $(".stepSixth .defaultNote").show();
-        if (step1 == "gameplan" && step4 == "chooseCopilot") {
+        /*if (step1 == "gameplan" && step4 == "chooseCopilot") {
             $(".stepSixth .completedSteps .step2.gameplanStep").show();
             $(".stepSixth .completedSteps .step3.selectStep").show();
         }
@@ -245,7 +251,7 @@ var generateConfirmationPage = function(projectId, projectName) {
 
         // target audience
         $('.stepSixth dl.pptTargetAudience dd p').html(audiences);
-        }
+        } */
     }
 
 };

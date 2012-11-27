@@ -14,8 +14,7 @@
 
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>7</span>Launch</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <h3><span>7</span>Success!</h3>
     </div>
     <!-- End .stepTitle -->
 
@@ -38,11 +37,11 @@
                 <!-- success -->
                 <div class="successDiv">
                     <div class="communicate">
-                        <span>Want to communicate?</span>
-                        <a href="#">Project Forums</a>
+                            <a class="button6 colorFix" title="Go To Project" href='<s:url action="projectOverview"><s:param name="formData.projectId" value="%{'projectIdValue'}" /></s:url>'><span class="left"><span
+                                class="right">Go To Project</span></span></a>
                     </div>
                     <p class='defaultNote'>You have successfully created your project. <br/>
-                        You must complete project setup from Project Overview Page before you can start your project.
+                        Please go to your <span><a class="overviewLink" href='<s:url action="projectOverview"><s:param name="formData.projectId" value="%{'projectIdValue'}" /></s:url>'>Project Overview</a></span> to finish setting up your project.
                     </p>
                     <p class='pptNote hide'>Your presentation project has been launched. That was easy, wasn't it? <br/>
                         Your specifications are summarized below.
@@ -106,34 +105,6 @@
 
                     </table>
 
-                    <!-- list -->
-                    <dl class="topStep completedSteps">
-                        <dt>Steps already completed:</dt>
-                        <dd class="step1"><span class="icon">1</span>
-
-                            <p>Create Project</p></dd>
-                        <dd class="step2 createStep hide"><span class="icon">2</span>
-
-                            <p>Create draft copilot posting</p></dd>
-                        <dd class="step2 gameplanStep hide"><span class="icon">2</span>
-
-                            <p>Create gameplan from project template with draft contests</p></dd>
-                        <dd class="step2 selectStep hide"><span class="icon">2</span>
-
-                            <p class="twoLine">Select copilot<br/><span class="smallText">Username1, iamcopilot</span>
-                            </p></dd>
-                        <dd class="step2 pptStep hide"><span class="icon">2</span>
-
-                            <p>Provide Presentation Details Information</p></dd>
-                        <dd class="step3 selectStep hide"><span class="icon">3</span>
-
-                            <p class="twoLine">Select copilot<br/><span class="smallText">Username1, iamcopilot</span>
-                            </p></dd>
-                        <dd class="step3 createStep hide"><span class="icon">3</span>
-
-                            <p>Create draft copilot posting</p></dd>
-                    </dl>
-
                     <dl class="notYetSteps hide">
                         <dt>Steps yet to be completed:</dt>
                         <dd class="step2 hide"><span class="icon">2</span>
@@ -182,15 +153,6 @@
                     </dl>
                     <!-- End .list -->
 
-<div class="bottomLine">
-                        <a class="button6" title="PROJECT OVERVIEW" href='<s:url action="projectOverview"><s:param name="formData.projectId" value="%{'projectIdValue'}" /></s:url>'><span class="left"><span
-                                class="right">PROJECT OVERVIEW</span></span></a>
-
-                        <p>
-                            Go to your project. Once you're in your project you can do things like monitor status,
-                            manage your copilot, run contests...
-                        </p>
-                    </div>
                 </div>
 
 
