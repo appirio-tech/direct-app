@@ -7,6 +7,8 @@
   -
   - The contents of help widget are defined and loaded in the loadHelps.js.
 --%>
+<%--
+
 <div id="helpCenterWidget">
     <h6>Help Center</h6>
     <ul class="tabList">
@@ -80,3 +82,4 @@
         <li><a href="javascript:;" onclick="window.open('{0}')">{1}</a></li>
     </div>
 </div>
+--%>
