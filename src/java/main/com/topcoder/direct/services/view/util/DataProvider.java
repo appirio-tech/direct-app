@@ -4504,9 +4504,9 @@ public class DataProvider {
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
-                                                                                           long clientId, long billingAccountId, long[] projectStatusIds,
+                                                                                           long clientId, long billingAccountId, 
                                                                                            long contestId, String invoiceNumber, Date startDate, Date endDate,
-                                                                                           Map<String, Long> statusMapping, Map<String, Long> paymentTypesMapping) throws Exception {
+																						   Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
@@ -4530,10 +4530,6 @@ public class DataProvider {
                 }
     
                 if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
-                    return data;
-                }
-                
-                if (projectStatusIds == null || (projectStatusIds.length == 0)) {
                     return data;
                 }
             }
@@ -4603,14 +4599,6 @@ public class DataProvider {
 
         final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
 
-        // prepare status filter
-        Set<Long> statusFilter = new HashSet<Long>();
-        if (projectStatusIds != null) {
-            for (long statusId : projectStatusIds) {
-                statusFilter.add(statusId);
-            }
-        }
-
         // prepare payment type filter
         Set<Long> paymentTypeFilter = new HashSet<Long>();
         for (long paymentTypeId : paymentTypeIds) {
@@ -4624,9 +4612,6 @@ public class DataProvider {
             // set status first
             String status = row.getStringItem("contest_status");
             costDTO.setStatus(status == null ? null : status.trim());
-
-            // filter by status
-            if (status != null && !statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) continue;
 
             // get payment type
             String paymentType = row.getStringItem("line_item_category");
