@@ -638,9 +638,21 @@ import java.util.Map.Entry;
  *     </li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 5.7 (Release Assembly - TC Direct Cockpit Release Eight)
+ * <ul>
+ *     <li>
+ *        Update method {@link #getPMProjectData(com.topcoder.security.TCSubject)}  to add late status.
+ *     </li>
+ *     <li>
+ *         Update method {@link #getActiveContests(long)} to add multiple active phases and late status.
+ *     </li>
+ * </ul>
+ * </p>
  * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol
- * @version 5.6
+ * @version 5.7
  * @since 1.0
  */
 public class DataProvider {
@@ -1429,7 +1441,8 @@ public class DataProvider {
             data.setDaysSinceLastPost(row.getStringItem("days_since_last_post"));
             data.setLastPostHandle(row.getStringItem("last_post_handle"));
             data.setLastPostHandleId(row.getStringItem("last_post_handle_id"));
-            data.setHasStalledContests(row.getBooleanItem("has_stalled_contests"));
+            data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
+            data.setHasLateContests(row.getBooleanItem("has_late_contests"));
             projectData.add(data);
         }
 
@@ -2150,10 +2163,28 @@ public class DataProvider {
             if(resultContainer.getItem(i, "active_phase").getResultData() != null) {
                 activePhaseName = resultContainer.getStringItem(i, "active_phase");
             }
+
+            String actionPhaseName2 = null;
+            if(resultContainer.getItem(i, "active_phase_2").getResultData() != null) {
+                actionPhaseName2 = resultContainer.getStringItem(i, "active_phase_2");
+            }
+
+            String actionPhaseName3 = null;
+            if(resultContainer.getItem(i, "active_phase_3").getResultData() != null) {
+                actionPhaseName3 = resultContainer.getStringItem(i, "active_phase_3");
+            }
+
             String nextScheduledPhaseName = null;
             if(resultContainer.getItem(i, "next_scheduled_phase").getResultData() != null) {
                 nextScheduledPhaseName = resultContainer.getStringItem(i, "next_scheduled_phase");
             }
+
+            boolean isLate = false;
+            if(resultContainer.getItem(i, "is_late").getResultData() != null) {
+                isLate = true;
+            }
+
+            Set<String> statusNamesSet = new HashSet<String>();
 
             String statusName;
 
@@ -2169,9 +2200,13 @@ public class DataProvider {
                 } else {
                     statusName = "Stalled";
                 }
+            } else if(isLate) {
+                statusName = "Late";
             } else {
                 statusName = activePhaseName;
             }
+
+            statusNamesSet.add(statusName);
 
             String typeName = resultContainer.getStringItem(i, "contest_type");
             long contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
@@ -2217,6 +2252,16 @@ public class DataProvider {
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
                                                              forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
+
+            if(actionPhaseName2 != null && !statusNamesSet.contains(actionPhaseName2) && isLate == false) {
+                contest.setStatus2(ContestStatus.forName(actionPhaseName2));
+                statusNamesSet.add(actionPhaseName2);
+            }
+
+            if(actionPhaseName3 != null && !statusNamesSet.contains(actionPhaseName3) && isLate == false) {
+                contest.setStatus3(ContestStatus.forName(actionPhaseName3));
+            }
+
             contests.add(contest);
         }
 

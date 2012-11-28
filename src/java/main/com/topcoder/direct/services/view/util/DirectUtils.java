@@ -425,14 +425,23 @@ import java.util.*;
  *     {@link #hasProjectWritePermission(BaseDirectStrutsAction, TCSubject, long)} methods </li>
  *   </ol>
  * </p>
+ *
  * <p>
  * Version 1.9.4 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
  *   <ol>
  *     <li>Added {@link #isSecurityGroupsUIAvailable()} method.</li>
  *   </ol>
  * </p>
+ *
+ *
+ * <p>
+ * Version 1.9.5 (Release Assembly - TC Direct Cockpit Release Eight)
+ * <ul>
+ *     <li>Add method {@link #isMilestoneSubmissionPhaseClosed(com.topcoder.service.project.SoftwareCompetition)}</li>
+ * </ul>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.9.4
+ * @version 1.9.5
  */
 public final class DirectUtils {
     /**
@@ -1292,6 +1301,23 @@ public final class DirectUtils {
                 if (phase.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                     return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
                 }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the milestone submission phase is closed for a multiple round software contest.
+     *
+     * @param competition the software contest to check
+     * @return whether the milestone submission phase is closed for a multiple round software contest.
+     *
+     * @since 1.9.5
+     */
+    public static boolean isMilestoneSubmissionPhaseClosed(SoftwareCompetition competition) {
+        for (Phase phase : competition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+                return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
             }
         }
         return false;

@@ -20,8 +20,15 @@ package com.topcoder.direct.services.view.dto.contest;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Cockpit Release Eight)
+ * <ul>
+ *     <li>Add the new contest status {@link #Late}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public enum ContestStatus {
 
@@ -263,7 +270,14 @@ public enum ContestStatus {
      *
      * @since 1.2
      */
-    STALLED("Stalled", "stalled", "View");
+    STALLED("Stalled", "stalled", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to all the late contests</p>
+     *
+     * @since 1.3
+     */
+    Late("Late", "stalled", "View");
 
     /**
      * <p>A <code>String</code> providing the state name. Such a name serves as a textual presentation of the status.

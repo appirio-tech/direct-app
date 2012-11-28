@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -13,8 +13,16 @@ import java.util.Date;
 /**
  * <p>A DTO class providing the details for single contest displayed by <code>Project Contests</code> view.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Cockpit Release Eight)
+ * <ul>
+ *     <li>Add new property {@link #status2}</li>
+ *     <li>Add new property {@link #status3}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.1
  */
 public class ProjectContestDTO implements Serializable {
 
@@ -42,6 +50,20 @@ public class ProjectContestDTO implements Serializable {
      * <p>A <code>ContestStatus</code> providing current contest status.</p>
      */
     private ContestStatus status;
+
+    /**
+     * <p>The second <code>ContestStatus</code> providing current contest status.</p>
+     *
+     * @since 1.1
+     */
+    private ContestStatus status2;
+
+    /**
+     * <p>The third <code>ContestStatus</code> providing current contest status.</p>
+     *
+     * @since 1.1
+     */
+    private ContestStatus status3;
 
     /**
      * <p>A <code>Date</code> providing the start time for contest.</p>
@@ -233,12 +255,63 @@ public class ProjectContestDTO implements Serializable {
     public void setContestType(ContestType contestType) {
         this.contestType = contestType;
     }
-	
+
+    /**
+     * Gets whether the contest is studio.
+     *
+     * @return whether the contest is studio.
+     */
 	public Boolean getIsStudio() {
 		return isStudio;
 	}
-	
+
+    /**
+     * Sets whether the contest is studio.
+     *
+     * @param isStudio whether the contest is studio.
+     */
 	public void setIsStudio(Boolean isStudio) {
 		this.isStudio = isStudio;
 	}
+
+    /**
+     * Gets the second contest phase status.
+     *
+     * @return the second contest phase status.
+     *
+     * @since 1.1
+     */
+    public ContestStatus getStatus2() {
+        return status2;
+    }
+
+    /**
+     * Sets the second contest phase status.
+     *
+     * @param status2 the second contest phase status.
+     * @since 1.1
+     */
+    public void setStatus2(ContestStatus status2) {
+        this.status2 = status2;
+    }
+
+    /**
+     * Sets the third contest phase status.
+     *
+     * @return the third contest phase status.
+     * @since 1.1
+     */
+    public ContestStatus getStatus3() {
+        return status3;
+    }
+
+    /**
+     * Gets the third contest phase status.
+     *
+     * @return the third contest phase status.
+     * @since 1.1
+     */
+    public void setStatus3(ContestStatus status3) {
+        this.status3 = status3;
+    }
 }

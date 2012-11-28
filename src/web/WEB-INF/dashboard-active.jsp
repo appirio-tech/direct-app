@@ -1,7 +1,7 @@
 <%--
-  - Author: tangzx, TCSASSEMBLER
-  - Version: 1.3
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: tangzx, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the View/Edit buttons. 
@@ -13,6 +13,9 @@
   -
   - Version 1.3 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
   - 1) Add the filter panel for the dashboard active contests.
+  -
+  - Version 1.4 (Release Assembly - TC Direct Cockpit Release Eight)
+  - 1) Add mulestiple active phases to the status column
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -304,9 +307,25 @@
                                                     <s:property value="forumPostsNumber"/>
                                                     <s:if test="forumId != -1"></a></s:if>
                                                     </td>
-                                                    <td><span
+                                                    <td>
+
+                                                        <span
                                                             class="<s:property value="status.shortName"/>"><s:property
-                                                            value="status.name"/></span></td>
+                                                            value="status.name"/></span>
+
+                                                        <s:if test="status2 != null">
+                                                            <span
+                                                                    class="<s:property value="status2.shortName"/>"><s:property
+                                                                    value="status2.name"/></span>
+                                                        </s:if>
+
+                                                        <s:if test="status3 != null">
+                                                            <span
+                                                                    class="<s:property value="status3.shortName"/>"><s:property
+                                                                    value="status3.name"/></span>
+                                                        </s:if>
+
+                                                    </td>
                                                     <td class="last">
                                                         <s:if test="contestType.name == 'Copilot Posting'">
                                                             <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>

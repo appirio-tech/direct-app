@@ -57,8 +57,11 @@
  * Version 2.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
  * - Always use the value of project info 49 as the copilot cost of the contest
  *
+ * Version 2.3 (Release Assembly - TC Direct Cockpit Release Eight)
+ * - Fix the review cost zero bug when the contest type is assembly and prize type is custom.
+ *
  * @author isv, GreatKevin
- * @version 2.2
+ * @version 2.3
  */
 
  /**
@@ -1599,12 +1602,11 @@ function calculateSecondPlacePrize(firstPlaceCost) {
 function calculateReviewCost(firstPlacePrize, categoryId) {
       var STANDARD_SUBMISSION_COUNT = 3;
       var STANDARD_PASSED_SCREENING_COUNT = 3;
-
       if (categoryId == getProjectCategoryIdByName('DEVELOPMENT')
               || categoryId == getProjectCategoryIdByName('DESIGN')) {
           // calculate as per component reviewer calculator.
           return getComponentReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else if (categoryId == getProjectCategoryIdByName('ASSEMBLY')) {
+      } else if (categoryId == getProjectCategoryIdByName('SOFTWARE ASSEMBLY')) {
           // calculate as per assembly reviewer calculator.
           return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT) * 1.5 * 1.2;
       } else if (categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')) {

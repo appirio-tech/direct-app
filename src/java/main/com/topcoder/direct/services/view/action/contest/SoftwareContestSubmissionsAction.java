@@ -88,8 +88,15 @@ import org.apache.log4j.Logger;
  *  </ul>
  * </p>
  *
+ * <p>
+ * Version 1.5 (Release Assembly - TC Direct Cockpit Release Eight)
+ * <ul>
+ *     <li>Update the action execution logic to allow open final tab when there is no milestone submissions.</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -318,9 +325,9 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         if (hasMilestoneRound) {
             if (roundType == ContestRoundType.FINAL) {
-                boolean isMilestoneRoundConfirmed 
-                    = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
-                if (!isMilestoneRoundConfirmed) {
+                boolean isMilestoneSubmissionClosed =
+                    DirectUtils.isMilestoneSubmissionPhaseClosed(softwareCompetition);
+                if (!isMilestoneSubmissionClosed) {
                     // if the milestone is not confirmed, redirect to milestone submission page
                     this.redirectToMilestone = true;
                     return;

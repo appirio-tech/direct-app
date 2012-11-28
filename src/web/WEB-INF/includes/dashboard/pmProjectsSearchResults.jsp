@@ -1,8 +1,11 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.0
+  - Author: bugbuka, GreatKevin
+  - Version: 1.1
   - Since: Module Assembly - TC Cockpit Operations Dashboard 
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Eight)
+  - Change the last column to stalled/late and add late status.
   -
   - Description: This page renders the search result for operations dashboard.
 --%>
@@ -51,7 +54,7 @@
                 <th># of Project Forum Posts</th>
                 <th>Days since last post</th>
                 <th>Handle of last post</th>
-                <th>Stalled Contests</th>
+                <th>Stalled/Late</th>
                 <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
@@ -124,7 +127,7 @@
 							<link:user userId="${projectSummary.lastPostHandleId}" handle="${projectSummary.lastPostHandle}"/>
 						 </c:if>
                     </td>
-                    <td class="last">${projectSummary.hasStalledContests ? "Yes" : "No"}</td>
+                    <td class="last">${projectSummary.hasStalledContests ? "Stalled" : ""} ${projectSummary.hasStalledContests && projectSummary.hasLateContests ? "/" : ""} ${projectSummary.hasLateContests ? "Late" : ""}</td>
 
                     <td class="hide"><span>${projectSummary.customerId == -1 ? 'none' : projectSummary.customerId}</span></td>
                     <td class="hide metadataTD">
