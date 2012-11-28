@@ -858,9 +858,9 @@ $(document).ready(function() {
     aoColumns.push({ "sType": "money" });
     aoColumns.push({ "sSortDataType": "html" });
     aoColumns.push({ "sSortDataType": "simple-date" });
+	aoColumns.push({ "sSortDataType": "money" });
     
     if (ths >= 18) {
-        aoColumns.push({ "sSortDataType": "money" });
         aoColumns.push({ "sSortDataType": "html" });
         aoColumns.push({ "bSortable": false });
     }

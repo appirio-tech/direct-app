@@ -388,7 +388,7 @@
     <tr>
         <th class="tableTitle" colspan="
         <c:if test="${viewData.canProcessInvoices}">20</c:if>
-        <c:if test="${!viewData.canProcessInvoices}">16</c:if>
+        <c:if test="${!viewData.canProcessInvoices}">17</c:if>
         
         ">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
@@ -422,9 +422,9 @@
         
         <th class="tableColumn">&nbsp;Invoice Number&nbsp;</th>
         <th class="tableColumn">&nbsp;Invoice Date&nbsp;</th>
+		<th class="tableColumn">&nbsp;Invoice Amount&nbsp;</th>
         
         <c:if test="${viewData.canProcessInvoices}">
-        <th class="tableColumn">&nbsp;Invoice Amount&nbsp;</th>
         <th class="tableColumn">&nbsp;Payment ID&nbsp;</th>
         <th class="tableColumn" style="width:100px">
             <input type="checkbox" id="checkAllInvoice">
@@ -528,17 +528,19 @@
                     <s:date name="invoiceDate" format="yyyy-MM-dd" />
                 </c:if>
             </td>
-            <c:if test="${viewData.canProcessInvoices}">
+            
             
             <td class="invoiceAmount">
                 <s:set var="invoiceA" value="invoiceAmount" scope="page"/>
-                <c:if test="${not empty invoiceNumber}">
+                <c:if test="${viewData.canProcessInvoices and not empty invoiceDate}">
                     <a href="#" class="updInvoiceAmount"><fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/></a>
                 </c:if>
-                <c:if test="${empty invoiceNumber}">
-                <fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/>
+                <c:if test="${!viewData.canProcessInvoices and not empty invoiceDate}">
+					<fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/>
                 </c:if>
             </td>
+			
+			<c:if test="${viewData.canProcessInvoices}">
             <td>
                 <s:if test="paymentId!=0 && paymentType=='Contest Fee'">for <s:property value="paymentId"/></s:if>
                 <s:else><s:property value="paymentId"/></s:else>
