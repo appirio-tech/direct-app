@@ -519,10 +519,10 @@ public class JiraRpcServiceWrapper {
 
                 tcJiraIssue.setResolutionName(RESOLUTION_NAMES.get(tcJiraIssue.getResolutionId()));
                 tcJiraIssue.setStatusName(ISSUE_STATUS_NAMES.get(tcJiraIssue.getStatusId()));
-                // check issue type
-                if (includeIssueTypeIds.contains(Long.parseLong(issue.getType()))) {
+                // check issue type UPDATE: include all types.
+                //if (includeIssueTypeIds.contains(Long.parseLong(issue.getType()))) {
                     result.add(tcJiraIssue);
-                }
+                //}
             }
 
         } catch (RemoteAuthenticationException authEx) {
