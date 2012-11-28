@@ -191,32 +191,7 @@
 		<!-- .rightFilterContent -->
 		<div class="rightFilterContent">
               <div class="col">
-                    <div class="multiSelectArea statusMultiSelect">
-                        <div class="multiSelectAreaInner">
-                            <label class="multiSelectAreaTitle">Status:</label>
-
-                            <div class="multiSelectBox">
-                                <div class="multiOptionRow multiOptionRowChecked">
-                                    <input type="checkbox" checked="checked" id="StatusSelectAll"
-                                           name="StatusSelectAll" class="optionAll"/>
-                                    <label for="StatusSelectAll" title="Select All">Select All</label>
-                                </div>
-
-                                <s:iterator value='viewData.contestStatus' status='s'>
-                                    <s:set name='needCheck' value='false'/>
-                                    <s:iterator value='formData.statusIds' var="statusId">
-                                        <s:if test="#statusId == key.longValue()"><s:set name='needCheck' value='true'/></s:if>
-                                    </s:iterator>
-                                    <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
-                                        <input type="checkbox" <s:if test='#needCheck'>checked="checked"</s:if> id="StatusSelectCheckBox${s.index}" class="optionItem" name="formData.statusIds" value="${key}"/>
-                                        <label for="StatusSelectCheckBox${s.index}" title="${value}">${value}</label>
-                                    </div>
-                                </s:iterator>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end .multiSelectArea -->
+           
 
                   <div id="groupFilter">
                       <div class="filterRow firstFilterRow">
