@@ -134,7 +134,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                 directProjectNames.add(p.getName());
             }
             // add the direct project bugs
-            List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames); System.out.println("-------projectBugs-------"+projectBugs.size());
+            List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames); 
             if (contests.isEmpty()) {
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
                 getViewData().setProjectBugRaces(projectBugs);
@@ -162,7 +162,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                         contestProjectMapping.put(contestId, project);
                     }
 
-                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), "status = Open OR status = \"In Progress\"");System.out.println("-------bugRaceForDirectProject-------"+bugRaceForDirectProject.size());
+                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), "status = Open OR status = \"In Progress\"");
 
                     List<TcJiraIssue> filteredIssue = new ArrayList<TcJiraIssue>();
 
