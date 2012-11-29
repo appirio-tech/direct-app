@@ -177,11 +177,11 @@
                     <div class="article testimonialsArticle">
                         <h3>Testimonials</h3>
                         <div class="figure">
-                            <img src="/images/analytics/image-client-pic.jpg" alt="IMAGE CLIENT" />
+                            <img src="/wp-content/uploads/2012/08/ntl_person.png" alt="IMAGE CLIENT" />
                             <div class="detail">
-                                <em class="leftQ">"</em>Lorem ipsum dolor sit amet, con- sectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex est laborum!<em class="rightQ">"</em>
+                                <em class="leftQ">"</em>The NASA Tournament Lab is enabling NASA to accelerate technical capabilities while at the same time advancing our knowledge of using open innovation for impactful results on our missions.<em class="rightQ">"</em>
                             </div>
-                            <p>Alan Smith</p>
+                            <p>Jason Crusan</p>
                         </div>
                     </div>
                     <!-- End .testimonialsArticle -->
