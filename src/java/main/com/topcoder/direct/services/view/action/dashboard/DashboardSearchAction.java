@@ -14,10 +14,13 @@ import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchResultsDTO
 import com.topcoder.direct.services.view.form.DashboardSearchForm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -55,9 +58,21 @@ import java.util.Map;
  *     </li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ *  Version 2.3 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) change notes:
+ *   <ol>
+ *     <li>
+ *         Add fields {@link #customers} and {@link #projectManagers} and their getters.
+ *     </li>
+ *     <li>
+ *         Updated method {@link #executeAction} to get the customer names and project managers.
+ *     </li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, bugbuka
- * @version 2.2
+ * @author isv, BeBetter, bugbuka, TCSASSEMBLER
+ * @version 2.3 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
  */
 public class DashboardSearchAction extends BaseDirectStrutsAction implements ViewAction<DashboardSearchResultsDTO>,
         FormAction<DashboardSearchForm> {
@@ -101,7 +116,16 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      * </p>
      */
     private DashboardSearchForm formData = new DashboardSearchForm();
-
+    /**
+     * The customer names.
+     * @since 2.3
+     */
+    private List<String> customers = new ArrayList<String>();
+    /**
+     * The project manager names.
+     * @since 2.3
+     */
+    private List<String> projectManagers = new ArrayList<String>();
     /**
      * <p>
      * Constructs new <code>DashboardSearchAction</code> instance. This implementation does nothing.
@@ -136,6 +160,24 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
     }
 
     /**
+     * Gets the customers.
+     * @return the customers
+     * @since 2.3
+     */
+    public List<String> getCustomers() {
+        return customers;
+    }
+
+    /**
+     * Gets the projectManagers.
+     * @return the projectManagers
+     * @since 2.3
+     */
+    public List<String> getProjectManagers() {
+        return projectManagers;
+    }
+
+    /**
      * <p>
      * Gets the form data.
      * </p>
@@ -149,6 +191,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
     /**
      * Gets the project metadata of which group flag is true for search projects, all projects page, and 
      * operationsDashboardEnterprise page.
+     * Changes in version 2.3: get customers and projectManagers.
      *
      * @throws Exception if error.
      * @since 2.1
@@ -171,10 +214,22 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
 
                 List<Long> allProjectIds = new ArrayList<Long>();
 
+                customers.clear();
+                projectManagers.clear();
                 for (DashboardProjectSearchResultDTO item : projects) {
                     allProjectIds.add(item.getData().getProjectId());
                     helperMap.put(item.getData().getProjectId(), item);
+                    if(!customers.contains(item.getData().getCustomerName())) {
+                        customers.add(item.getData().getCustomerName());
+                    }
+                    if(0 != item.getData().getProjectManagerName().trim().length()) {
+                        if(!projectManagers.contains(item.getData().getProjectManagerName())) {
+                            projectManagers.add(item.getData().getProjectManagerName());
+                        }
+                    }
                 }
+                Collections.sort(customers);
+                Collections.sort(projectManagers);
 
                 if (this.getMetadataKeyService() == null) {
                     throw new IllegalStateException("The direct project metadata service is not initialized.");
@@ -185,10 +240,8 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
 
                 for (DirectProjectMetadata metadata : projectMetadataByProjects) {
 
-                    // only add metadata used for grouping (grouping = true)
-                    // or if it's project manager
-                    if ((metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping())
-                            || (metadata.getProjectMetadataKey().getId() == PROJECT_MANAGER_KEY)) {
+                    // only add metadata used for grouping (grouping is null or grouping = true)
+                    if (metadata.getProjectMetadataKey().getGrouping() == null || metadata.getProjectMetadataKey().getGrouping()) {
                         long projectId = metadata.getTcDirectProjectId();
                         Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> data
                                 = helperMap.get(projectId).getProjectsMetadataMap();

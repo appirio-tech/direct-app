@@ -1,13 +1,16 @@
 <%--
-  - Author: bugbuka, GreatKevin
-  - Version: 1.1
+  - Author: bugbuka, GreatKevin, morehappiness
+  - Version: 1.2
   - Since: Module Assembly - TC Cockpit Operations Dashboard 
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Eight)
   - Change the last column to stalled/late and add late status.
   -
-  - Description: This page renders the search result for operations dashboard.
+  - Description: This page renders the search result for operations dashboard.  
+  - 
+  - Version: 1.2 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+  - Change in version 1.2: change the result table structure as requested by bugs TCCC-4724 and TCCC-4729  
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,25 +20,22 @@
         <table class="projectStats contests resultTable paginatedDataTable" cellpadding="0" cellspacing="0">
 
             <colgroup>
-
-                <col width="9%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="7%"/>
-                <col width="9%"/>
-                <col width="7%"/>
-                <col width="9%"/>
-                <col width="7%"/>
-                <col width="" />
-                <col width="" />
-                <col width="" />
+                <col width="15%">
+                <col width="12%">
+                <col width="7%">
+                <col width="16%">
+                <col width="16%">
+                <col width="8%">
+                <col width="15%">
+                <col width="11%">
+                <col width="9%">
+                <col width="12%">
+                <col width="8%">
+                <col width="">
+                <col width="">
+                <col width="">
+                <col width="">
             </colgroup>
-
 
             <thead>
             <tr>
@@ -44,17 +44,13 @@
                 <th class="hide">Completion Date</th>
                 <th>Customer Name</th>
                 <th>Project Fulfillment</th>
-                <th>Total Budget</th>
-                <th>Actual Cost</th>
-                <th>Projected Cost</th>
+                <th>Budget</th>
                 <th class="hide">Project Status</th>
-                <th>Planned Duration</th>
-                <th>Actual Duration</th>
-                <th>Projected Duration</th>
+                <th>Duration</th>
                 <th># of Project Forum Posts</th>
-                <th>Days since last post</th>
-                <th>Handle of last post</th>
+                <th>Last Posters</th>
                 <th>Stalled/Late</th>
+                <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
@@ -65,7 +61,7 @@
             <s:iterator value="viewData.projects" status="status">
                 <s:set var="project" value="project" scope="page"/>
                 <s:set var="projectSummary" value="data" scope="page"/>
-                <tr id="projectRow${projectSummary.projectId}">
+                <tr class="dataRow" id="projectRow${projectSummary.projectId}">
                     <td class="first">
                         <link:projectOverview project="${project}"/>
                     </td>
@@ -81,35 +77,47 @@
                     <td>
                     	<fmt:formatNumber value="${projectSummary.projectFulfillment}" pattern="##0.##"/>%
                     </td>
-                    <td>
-                    	<fmt:formatNumber value="${projectSummary.totalBudget}" pattern="$#,##0.00"/>
-                    </td>
-                    <td>
-                    	<fmt:formatNumber value="${projectSummary.actualCost}" pattern="$#,##0.00"/>
-                    </td>
-                    <td>
-                    	<fmt:formatNumber value="${projectSummary.projectedCost}" pattern="$#,##0.00"/>
+                    <td class="budgetRow">
+                        <c:choose>
+                            <c:when test="${projectSummary.totalBudget > 0}">
+                                <span class="costPercentage " style="font-weight:normal;">
+                                    <fmt:formatNumber value="${(projectSummary.actualCost + projectSummary.projectedCost) / projectSummary.totalBudget}" pattern="##0.##"/>%
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="costPercentage " style="font-weight:normal;">
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
+                    	
+                        <div class="allThreeCosts hide" style="width:180px; font-weight:normal;">
+                            <div style="font-weight:normal;">Total Budget: <fmt:formatNumber value="${projectSummary.totalBudget}" pattern="$#,##0.00"/></div>
+                            <div style="font-weight:normal;">Actual Cost: <fmt:formatNumber value="${projectSummary.actualCost}" pattern="$#,##0.00"/></div>
+                            <div style="font-weight:normal;">Projected Cost: <fmt:formatNumber value="${projectSummary.projectedCost}" pattern="$#,##0.00"/></div>
+                        </div>
                     </td>
                     <td class="hide"><span class='<s:property value="projectStatusType.projectStatusName.toLowerCase()"/>'
                               id="projectStatus${projectSummary.projectId}"
                               name="<s:property value="projectStatusType.projectStatusId"/>">${projectStatusType.projectStatusName}</span>
                     </td>
-                    <td>
-                    	<c:if test="${projectSummary.plannedDuration > 0}">
-  							${projectSummary.plannedDuration} days
-                        </c:if>
+                    <td class="durationRow">
+                        <c:choose>
+                        	<c:when test="${projectSummary.plannedDuration > 0}">
+                                <span class="durationPercentage " style="font-weight:normal;">
+                                    <fmt:formatNumber value="${(projectSummary.actualDuration + projectSummary.projectedDuration) / projectSummary.plannedDuration}" pattern="##0.##"/>%
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="durationPercentage " style="font-weight:normal;">
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="allThreeDurations hide" style="width:180px; font-weight:normal;">
+                            <div style="font-weight:normal;">Planned Duration: ${projectSummary.plannedDuration}</div>
+                            <div style="font-weight:normal;">Actual Duration: ${projectSummary.actualDuration}</div>
+                            <div style="font-weight:normal;">Projected Duration: ${projectSummary.projectedDuration}</div>
+                        </div>
                     </td>
-                    <td>
-                    	<c:if test="${projectSummary.actualDuration > 0}">
-  							${projectSummary.actualDuration} days
-                        </c:if>
-                    </td>
-                    <td>
-                    	<c:if test="${projectSummary.projectedDuration > 0}">
-  							${projectSummary.projectedDuration} days
-                        </c:if>
-                    </td>
-                    
                     <td>
 					 <c:if test="${projectSummary.projectForumCategoryId > 0}">
 						<a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}" target="_blank">
@@ -118,47 +126,38 @@
                      </c:if>
 					</td>
                     <td>
-                    	<c:if test="${projectSummary.daysSinceLastPost > 0}">
-  							${projectSummary.daysSinceLastPost} days
-                        </c:if>
-                    </td>
-                    <td>
-						<c:if test="${projectSummary.lastPostHandleId != null}">
-							<link:user userId="${projectSummary.lastPostHandleId}" handle="${projectSummary.lastPostHandle}"/>
-						 </c:if>
+                        <c:forEach var="poster" items="${projectSummary.latestThreePosters}">
+                            <div style="width: 180px;">
+                                <link:user userId="${poster.handleId}" handle="${poster.handle}"/>
+                                <c:choose>
+                                    <c:when test="${poster.daysSincePost > 1}">
+                                        ${poster.daysSincePost} days ago
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${poster.daysSincePost} day ago
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </c:forEach>
                     </td>
                     <td class="last">${projectSummary.hasStalledContests ? "Stalled" : ""} ${projectSummary.hasStalledContests && projectSummary.hasLateContests ? "/" : ""} ${projectSummary.hasLateContests ? "Late" : ""}</td>
 
-                    <td class="hide"><span>${projectSummary.customerId == -1 ? 'none' : projectSummary.customerId}</span></td>
+                    <td class="hide">${(fn:length(projectSummary.customerName) eq 0) ? 'none' : projectSummary.customerName}</td>
                     <td class="hide metadataTD">
                         <s:if test="projectsMetadataMap != null">
                             <s:iterator value="projectsMetadataMap">
-                                <s:if test="key.grouping">
-                                    <span class="metadataGroup">
-                                         <span class="metadataKeyId"><s:property value="key.id"/></span>
-                                         <span class="metadataKeyName"><s:property value="key.name"/></span>
-                                         <s:iterator value="value">
-                                             <span class="metadataValue"><s:property value="metadataValue"/></span>
-                                         </s:iterator>
-                                    </span>
-                                </s:if>
+                                <span class="metadataGroup">
+                                     <span class="metadataKeyId"><s:property value="key.id"/></span>
+                                     <span class="metadataKeyName"><s:property value="key.name"/></span>
+                                     <s:iterator value="value">
+                                         <span class="metadataValue"><s:property value="metadataValue"/></span>
+                                     </s:iterator>
+                                </span>
                             </s:iterator>
                         </s:if>
                     </td>
-                    <td class="hide projectManagerMeta">
-                        <s:if test="projectsMetadataMap != null">
-                            <s:iterator value="projectsMetadataMap">
-                                <s:if test="key.id == 2">
-                                    <s:iterator value="value">
-                                        <span class="metadataProjectManager">
-                                             <span class="metadataValue"><s:property value="metadataValue"/></span>
-                                             <tc-webtag:handle coderId="${metadataValue}"/>
-                                        </span>                                    
-                                    </s:iterator>
-                                </s:if>
-                            </s:iterator>
-                        </s:if>
-                    </td>
+                    <td class="hide metadataValTD"></td>
+                    <td class="hide"><span>${projectSummary.projectManagerName}</span></td>
                 </tr>
             </s:iterator>
 

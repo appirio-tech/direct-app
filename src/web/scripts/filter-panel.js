@@ -17,8 +17,11 @@
  * Version 1.4 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
  * - add filter for operations dashboard, filter projects in "Active" status by default.
  *
+ * Version 1.5 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) changes:
+ * - update filter of customer, project manager, and project filter value for operations dashboard.
+ *
  * @author TCSASSEMBLER
- * @version 1.4
+ * @version 1.5
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -83,7 +86,15 @@ function filterbyCustomer(id, filterStr) {
         tableHandle.fnFilter(searchPattern, 10);
     }
     else if (handleName == "pmProjectsResult") {
-        tableHandle.fnFilter(searchPattern, 16);
+        if (filterStr.indexOf('No Customer') < 0) {
+            searchPattern = filterStr;
+        } else {
+            searchPattern = 'none';
+        }
+        if (filterStr.indexOf('All') != -1) {
+            searchPattern = '';
+        }
+        tableHandle.fnFilter(searchPattern, 11);
     }
     else if (handleName == "activeContests") {
         tableHandle.fnFilter(searchPattern, 10);
@@ -201,23 +212,14 @@ var setupFilterPanel = function () {
         contestStatusFilter = tableHandle.fnGetColumnData(7);
 
     if (handleName == 'activeContests' || handleName == 'ProjectsContests') {
-        var len = contestStatusFilter.length;
-        var added = {};
-        for(var i = 0; i < len; ++i) {
-            var items = contestStatusFilter[i].split("</span>");
-            for(var j = 0; j < items.length; ++j) {
-                var value = $.trim(items[j]);
-                if(value.length > 0) {
-                    var index1 = value.indexOf('>');
-                    value = value.substring(index1+1);
-                    if(!added[value]) {
-                        $('#contestStatusFilter').append("<option value='" + value + "'>" + value + "</option>");
-                        added[value] = 1;
-                    }
-                }
-            }
-        }
+        len = contestStatusFilter.length;
+        for (var i = 0; i < len; i++) {
+            var index1 = contestStatusFilter[i].indexOf('>');
+            var index2 = contestStatusFilter[i].indexOf('<', 1);
+            var value = contestStatusFilter[i].substring(index1 + 1, index2);
 
+            $('#contestStatusFilter').append("<option value='" + value + "'>" + value + "</option>");
+        }
     }
     //copilot posting
     if (handleName == "MyCopilotPostings") {
@@ -314,9 +316,12 @@ var setupFilterPanel = function () {
         // handle the change of project filters and project filter values select, only apply for
         // all projects page and project search page
         if ($("#allProjectsFilter").size() > 0) {
+            $("#groupBy").val('no');
+            $("#groupValue").val('all');
+            filterbyCustomer(customerId, str);
             if (str != 'All Customers' && str != 'No Customer') {
-                $("#groupBy").attr('disabled', false).val('no');
-                $("#groupValue").attr('disabled', false).val('all');
+                $("#groupBy").attr('disabled', false);
+                $("#groupValue").attr('disabled', false);
 
                 // reset the cache maps
                 currentProjectFilters = {};
@@ -327,7 +332,7 @@ var setupFilterPanel = function () {
                 $("#groupValue option:gt(0)").remove();
 
                 // load project filters options
-                $("#projectsResult table.projectStats tr, #pmProjectsResult table.projectStats tr,").each(function(){
+                $("#projectsResult table.projectStats tr, #pmProjectsResult table.projectStats tr").each(function(){
                     var metadataTD = $(this).find("td.metadataTD");
                     metadataTD.find(".metadataGroup").each(function(){
                         var keyId = $(this).find(".metadataKeyId").text();
@@ -360,9 +365,10 @@ var setupFilterPanel = function () {
                 }
 
             } else {
-                $("#groupBy").val('no').attr('disabled', true);
-                $("#groupValue").val('all').attr('disabled', true);
+                $("#groupBy").attr('disabled', true);
+                $("#groupValue").attr('disabled', true);
             }
+            $("#groupBy").trigger("change");
         }
 
         // handle the customer change for enterprise calendar
@@ -507,15 +513,13 @@ var setupFilterPanel = function () {
                 });
             }
             tableHandle.fnFilter('');
-        });
+        }).val('no').trigger('change');
 
         // setup the change event for "Project Filter Values" select
-        $("#groupValue").change(function(){
+        $("#groupValue").change(function () {
             tableHandle.fnFilter('');
-        });
+        }).val('all').trigger('change');
 
-        $("#groupBy").val('no');
-        $("#groupValue").val('all');
         $("#projectStatusFilter").val('All');
     }
 
@@ -619,10 +623,21 @@ var setupFilterPanel = function () {
         });
     
         $("#projectManagerFilter").change(function() {
-            if ($(this).val() == '-1') {
-                tableHandle.fnFilter('<span>none</span>', 18);
+            var searchPattern = $(this).val();
+            if (searchPattern== '-1') {
+                searchPattern = '<span>none</span>';
+            }
+            if (searchPattern.indexOf('All') != -1) {
+                searchPattern = '';
+            }
+
+            if (handleName == "pmProjectsResult") {
+                if ($(this).val()== '-1') {
+                    searchPattern = '<span></span>';
+                }
+                tableHandle.fnFilter(searchPattern, 14);
             } else {
-                tableHandle.fnFilter($(this).val(), 18);
+                tableHandle.fnFilter(searchPattern, 18);
             }
         }).val('').trigger('change');
         
@@ -712,10 +727,11 @@ $(function() {
                 if (filterValue == 'all') {
                     return true;
                 } else {
-                    if (aData[11] == null || $.trim(aData[11]).length == 0) {
+                    var dd = (handleName == "pmProjectsResult") ? aData[12] : aData[11];
+                    if (dd == null || $.trim(dd).length == 0) {
                         return filterValue == 'none';
                     }
-                    var data = $("<div></div>").html(aData[11]);
+                    var data = $("<div></div>").html(dd);
                     var findKey = false;
                     data.find(".metadataGroup").each(function(){
                        if($(this).find(".metadataKeyId").text() == keyId) {
@@ -729,11 +745,10 @@ $(function() {
                        }
                     });
 
+                    if(findKey == false && filterValue == 'none') {
+                        return true;
+                    }
                 }
-            }
-
-            if(findKey == false && filterValue == 'none') {
-                return true;
             }
 
             return result;
@@ -820,4 +835,4 @@ $(function() {
         $("#projectStatusFilter").trigger('change'); 
     }
 
-})
+});

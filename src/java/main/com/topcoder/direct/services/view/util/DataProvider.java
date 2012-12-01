@@ -48,6 +48,7 @@ import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ForumPoster;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.dataAccess.DataAccess;
@@ -423,7 +424,7 @@ import java.util.Map.Entry;
  *     to set projected duration and projected cost of the project.</li>
  * </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 3.6 (Release Assembly - TC Direct Cockpit Release Two) change log:
  * <ol>
@@ -451,10 +452,10 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>
- * Version 3.8.1 (Release Assembly - TC Cockpit - Member Participation Metrics Report Performance Enhancement Assembly) 
+ * Version 3.8.1 (Release Assembly - TC Cockpit - Member Participation Metrics Report Performance Enhancement Assembly)
  * Change notes:
  *   <ol>
- *     <li>Updated {@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], Date, Date, 
+ *     <li>Updated {@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], Date, Date,
  *     ParticipationBasicReportDTO, List, List, List, List)} method to load report data from TCS_DW database instead of
  *     TCS_CATALOG database.</li>
  *   </ol>
@@ -484,7 +485,7 @@ import java.util.Map.Entry;
  *     to support software milestone management.</li>
  * </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 4.0 (Module Assembly - TC Cockpit Project Contests Batch Edit)
  * <ol>
@@ -579,29 +580,29 @@ import java.util.Map.Entry;
  *     <li>Updated method {@link #getContestReceipt(long, boolean)} to store showReceipt flag</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 5.1 (TC Cockpit - Member Participation Metrics Report Upgrade)
  * <ol>
- *     <li>Updated method{@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], 
+ *     <li>Updated method{@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[],
  *     java.util.Date, java.util.Date, ParticipationBasicReportDTO, List, List, List, List)} to fetch the
  *     member participation contest report </li>
- *     <li>Added method {@link #getDashboardParticipationExcelData(TCSubject, long, long[], long, 
- *     long, String[], java.util.Date, java.util.Date,String)} to get the contest participation metrics excel data with 
+ *     <li>Added method {@link #getDashboardParticipationExcelData(TCSubject, long, long[], long,
+ *     long, String[], java.util.Date, java.util.Date,String)} to get the contest participation metrics excel data with
  *     the given parameters. </li>
  * </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 5.2 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
  * <ol>
- *     <li>Refactor method {@link #searchUserProjects(TCSubject, String)}, decompose a new method method 
+ *     <li>Refactor method {@link #searchUserProjects(TCSubject, String)}, decompose a new method method
  *     {@link #getFilteredProjects(String, List<ProjectSummaryData>)} that can be reused.</li>
- *     <li>Added method {@link #getFilteredProjects(String, List)} to Search the project by 
+ *     <li>Added method {@link #getFilteredProjects(String, List)} to Search the project by
  *     searchFor criteria, and set the customer id to the project dto.</li>
- *     <li>Added method {@link #searchPMUserProjects(TCSubject, String)} to get the details on Platform Managers' 
+ *     <li>Added method {@link #searchPMUserProjects(TCSubject, String)} to get the details on Platform Managers'
  *     projects associated with specified user and matching the specified criteria for operations dashboard page</li>
- *     <li>Added method {@link #getPMProjectData(TCSubject)} to get the list of Platform Managers' project summary data 
+ *     <li>Added method {@link #getPMProjectData(TCSubject)} to get the list of Platform Managers' project summary data
  *     associated with specified user.</li>
  * </ol>
  * </p>
@@ -622,8 +623,7 @@ import java.util.Map.Entry;
  *     <li>Update method {@link #getEnterpriseDashboardVolumeView(long, long, long, long[], java.util.Date, java.util.Date, boolean)}</li>
  * </ol>
  * </p>
- *
- * <p>
+* <p>
  * Version 5.5 (Module Assembly - TC Client Users Stats Report Generation v1.0) changes:
  * <ol>
  *    <li>Add method {@link #getClientUserStats()}</li>
@@ -650,9 +650,15 @@ import java.util.Map.Entry;
  *     </li>
  * </ul>
  * </p>
- * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol
- * @version 5.7
+ *
+ * <p>
+ * Version 5.8  (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+ * <ol>
+ *     <li>Add method {@link #getLatestThreePosters(String)}</li>
+ * </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness
+ * @version 5.8
  * @since 1.0
  */
 public class DataProvider {
@@ -1292,7 +1298,7 @@ public class DataProvider {
 
             // cancelled
             data.getCancelled().setTotalNumber(resultContainer.getIntItem(i, "num_cancelled"));
-            
+
             projectData.add(data);
         }
 
@@ -1319,7 +1325,7 @@ public class DataProvider {
 
     /**
      * Search the project by searchFor criteria, and set the customer id to the project dto.
-     * 
+     *
      * @param searchFor the search criteria
      * @param projects the project list to be searched
      * @return the search result
@@ -1372,10 +1378,10 @@ public class DataProvider {
             }
         });
     }
-    
+
     /**
      * <p>
-     * Gets the details on Platform Managers' projects associated with specified user and matching the specified 
+     * Gets the details on Platform Managers' projects associated with specified user and matching the specified
      * criteria.
      * </p>
      *
@@ -1391,9 +1397,10 @@ public class DataProvider {
         List<ProjectSummaryData> projects = getPMProjectData(tcSubject);
         return getFilteredProjects(searchFor, projects);
     }
-    
+
     /**
      * <p>Gets the list of Platform Managers' project summary data associated with specified user.</p>
+     * Change in version 5.8: retrieve last three posters from database.
      *
      * @param tcSubject a <code>TCSubject</code> referencing the user.
      * @return a <code>List</code> listing the details for project summary data.
@@ -1403,7 +1410,7 @@ public class DataProvider {
     public static List<ProjectSummaryData> getPMProjectData(TCSubject tcSubject) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_pm_projects_contests");
+        request.setContentHandle("direct_my_pm_projects_contests_v2");
 
         if (DirectUtils.isCockpitAdmin(tcSubject)) {
             request.setProperty("uid", String.valueOf(0));
@@ -1413,7 +1420,7 @@ public class DataProvider {
 
         List<ProjectSummaryData> projectData = new ArrayList<ProjectSummaryData>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests_v2");
 
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
             ProjectSummaryData data = new ProjectSummaryData();
@@ -1425,22 +1432,23 @@ public class DataProvider {
             data.setProjectCompletionDate(getDate(row,"end_date"));
             if (row.getItem("project_forum_id").getResultData() != null) {
                 data.setProjectForumCategoryId(Long.parseLong(row.getStringItem("project_forum_id")));
+                data.setLatestThreePosters(getLatestThreePosters(row.getStringItem("last_posters")));
             }
 
             data.setProjectFulfillment(row.getDoubleItem("project_fulfillment"));
-            
+
             data.setTotalBudget(row.getStringItem("total_budget"));
             data.setActualCost(row.getDoubleItem("actual_cost"));
             data.setProjectedCost(row.getDoubleItem("cost_projected"));
-            
+
             data.setPlannedDuration(row.getStringItem("planned_duration"));
             data.setActualDuration(row.getStringItem("actual_duration"));
             data.setProjectedDuration(row.getStringItem("projected_duration"));
 
             data.setMessageNumber(row.getIntItem("message_number"));
-            data.setDaysSinceLastPost(row.getStringItem("days_since_last_post"));
-            data.setLastPostHandle(row.getStringItem("last_post_handle"));
-            data.setLastPostHandleId(row.getStringItem("last_post_handle_id"));
+            data.setHasStalledContests(row.getBooleanItem("has_stalled_contests"));
+            data.setProjectManagerName(row.getStringItem("name_of_project_manager"));
+
             data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
             data.setHasLateContests(row.getBooleanItem("has_late_contests"));
             projectData.add(data);
@@ -1448,7 +1456,28 @@ public class DataProvider {
 
         return projectData;
     }
-    
+    /**
+     * Gets latest three posters.
+     *
+     * @param lastPosters the last posters
+     * @return the latest three posters
+     * @throws Exception if an unexpected error occurs.
+     * @since 5.8
+     */
+    private static List<ForumPoster> getLatestThreePosters(String lastPosters) throws Exception {
+        List<ForumPoster> posters = new ArrayList<ForumPoster>();
+        String[] postersStr = lastPosters.split(";");
+        for(String p : postersStr) {
+            String[] parts = p.split(","); // userid,handle,days
+            ForumPoster data = new ForumPoster();
+            data.setHandleId(parts[0]);
+            data.setHandle(parts[1]);
+            data.setDaysSincePost(parts[2]);
+            posters.add(data);
+        }
+        return posters;
+    }
+
     /**
      * <p>Gets the details on contests associated with specified user and matching the specified criteria.</p>
      *
@@ -1744,14 +1773,14 @@ public class DataProvider {
      * @param startDate          the start date.
      * @param endDate            the end date.
      * @param statses            the project metrics data.
-     * 
+     *
      * @throws Exception if any error occurs.
      * @since 3.9.1
      */
     public static void getDashboardProjectMetricsReport(TCSubject currentUser, long projectId,
             long clientId, long billingAccountId, long[] projectStatusIds,
             Date startDate, Date endDate, List<ProjectMetricsReportEntryDTO> statses) throws Exception {
-            
+
             if (projectStatusIds == null || (projectStatusIds.length == 0)) {
                 return;
             }
@@ -1774,11 +1803,11 @@ public class DataProvider {
             request.setProperty("directProjectStatusIds", projectStatusesList);
             request.setContentHandle("dashboard_project_metrics_report");
             final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
-            
-            // Project metrics 
+
+            // Project metrics
             final ResultSetContainer resultContainer = queryData.get("dashboard_project_metrics_report");
             for (ResultSetContainer.ResultSetRow row : resultContainer) {
-            
+
                 ProjectMetricsReportEntryDTO stats = new ProjectMetricsReportEntryDTO();
                 stats.setProjectId(row.getLongItem("tc_direct_project_id"));
                 stats.setProjectName(row.getStringItem("tc_direct_project_name"));
@@ -1790,7 +1819,7 @@ public class DataProvider {
                 stats.setStartDate(getDate(row,"create_date"));
                 stats.setCompletionDate(getDate(row,"completion_date"));
                 stats.setTotalContests(row.getIntItem("total_number"));
-                
+
                 // draft
                 stats.setNumDraft(row.getIntItem("num_draft"));
                 stats.setCostDraft(row.getDoubleItem("cost_draft"));
@@ -1810,14 +1839,14 @@ public class DataProvider {
                 // cancelled
                 stats.setNumCanceled(row.getIntItem("num_cancelled"));
                 stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
-                
+
                 stats.setProjectedCost(row.getDoubleItem("cost_draft") + row.getDoubleItem("cost_scheduled") +
                 		row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
                 		row.getDoubleItem("cost_cancelled"));
-                
+
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
-            }        
+            }
     }
 
     /**
@@ -1894,7 +1923,7 @@ public class DataProvider {
                 jiraStatusName.add(JiraIssueStatus.STUCK.getStatusName());
             } else if(statusId == JiraIssueStatus.TESTING.getStatusId()) {
                 jiraStatusName.add(JiraIssueStatus.TESTING.getStatusName());
-            }	
+            }
         }
 
         // concatenate the filters
@@ -2398,7 +2427,7 @@ public class DataProvider {
             SoftwareSubmissionReviewDTO milestoneReview = new SoftwareSubmissionReviewDTO();
             milestoneReview.setSubmissionId(reviewRow.getLongItem("submission_id"));
             milestoneReview.setReviewId(reviewRow.getLongItem("review_id"));
-            milestoneReview.setCommitted(reviewRow.getBooleanItem("is_committed"));            
+            milestoneReview.setCommitted(reviewRow.getBooleanItem("is_committed"));
             milestoneReview.setFinalScore(reviewRow.getItem("final_score").getResultData() == null ? 0 :
                 reviewRow.getFloatItem("final_score"));
             milestoneReview.setInitialScore(reviewRow.getItem("initial_score").getResultData() == null ? 0 :
@@ -2424,9 +2453,9 @@ public class DataProvider {
         int milestonePrizeNumber = 0;
 
         List<SoftwareSubmissionDTO> submissions = new ArrayList<SoftwareSubmissionDTO>();
-        
+
         List<SoftwareContestWinnerDTO> milestoneWinners = new ArrayList<SoftwareContestWinnerDTO>();
-        
+
         for (ResultSetContainer.ResultSetRow submissionRow : submissionsContainer) {
             UserDTO submitter = new UserDTO();
             submitter.setId(Long.parseLong(submissionRow.getStringItem("submitter_id")));
@@ -2457,7 +2486,7 @@ public class DataProvider {
 
             Integer placement = submission.getPlacement();
 
-            
+
             if (placement != null && placement <= milestonePrizeNumber && submission.getPassedReview()) {
                 SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
                 winner.setFinalScore(submission.getFinalScore());
@@ -2466,7 +2495,7 @@ public class DataProvider {
                 winner.setPlacement(placement);
                 winner.setProjectId(dto.getProjectId());
                 winner.setSubmissionId(submissionId);
-                
+
                 milestoneWinners.add(winner);
             }
         }
@@ -4181,7 +4210,7 @@ public class DataProvider {
                 }
 
                 projectForBilling.put(directProjectId, directProjectName);
-                
+
                 projectClientMap.put(directProjectId, clientId);
             }
 
@@ -4540,7 +4569,7 @@ public class DataProvider {
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
-                                                                                           long clientId, long billingAccountId, 
+                                                                                           long clientId, long billingAccountId,
                                                                                            long contestId, String invoiceNumber, Date startDate, Date endDate,
 																						   Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
@@ -4550,7 +4579,7 @@ public class DataProvider {
             if (paymentTypeIds == null || paymentTypeIds.length == 0) {
                 return data;
             }
-            
+
             // check if need to show Platform Fee records
             boolean showPlatformFee = false;
             for (long paymentTypeId : paymentTypeIds) {
@@ -4564,7 +4593,7 @@ public class DataProvider {
                 if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
                     return data;
                 }
-    
+
                 if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
                     return data;
                 }
@@ -5977,7 +6006,7 @@ public class DataProvider {
         } else {
             projectGeneralInfo.setProjectedCost(projectGeneralInfo.getActualCost());
         }
-        
+
     }
 
     /**
@@ -6294,7 +6323,7 @@ public class DataProvider {
      */
     public static void getDashboardParticipationReport(TCSubject currentUser, long projectId, long[] projectCategoryIds,
                                                        long clientId, long billingAccountId, String[] projectStatus,
-                                                       Date startDate, Date endDate, 
+                                                       Date startDate, Date endDate,
                                                        ParticipationBasicReportDTO basicMetrics,
                                                        List<ParticipationAggregationReportDTO> billingAggregation,
                                                        List<ParticipationAggregationReportDTO> projectAggregation,
@@ -6329,40 +6358,40 @@ public class DataProvider {
         request.setProperty("statuses", projectStatusesList);
         request.setContentHandle("dashboard_participation_metrics_report");
         final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
-        
-        // Basic metrics 
+
+        // Basic metrics
         final ResultSetContainer basicMetricsResult = queryData.get("dashboard_participation_basic_metrics");
         ResultSetRow basicMetricsResultRow = basicMetricsResult.get(0);
         basicMetrics.setTotalCopilots(basicMetricsResultRow.getIntItem("total_copilots_count"));
         basicMetrics.setTotalContests(basicMetricsResultRow.getIntItem("total_contests_count"));
         basicMetrics.setTotalProjects(basicMetricsResultRow.getIntItem("total_projects_count"));
-        
-        // Aggregation by billing account 
+
+        // Aggregation by billing account
         getParticipationReportAggregatedData(billingAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_billing");
 
-        // Aggregation by projects 
+        // Aggregation by projects
         getParticipationReportAggregatedData(projectAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_project");
 
-        // Aggregation by contest types 
-        getParticipationReportAggregatedData(contestTypeAggregation, queryData, 
+        // Aggregation by contest types
+        getParticipationReportAggregatedData(contestTypeAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_type");
 
-        // Aggregation by statuses 
+        // Aggregation by statuses
         getParticipationReportAggregatedData(statusAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_status");
-        
-        // Aggregation by contest 
+
+        // Aggregation by contest
         getParticipationReportAggregatedData(contestAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_contest");
     }
 
-    
-    
+
+
     /**
-     * Gets the contest participation metrics excel data with the given parameters. 
-     * 
+     * Gets the contest participation metrics excel data with the given parameters.
+     *
      * @param currentUser        the current user.
      * @param projectId          the direct project id.
      * @param projectCategoryIds project category ids.
@@ -6377,22 +6406,22 @@ public class DataProvider {
      * @since 5.1
      */
     public static List<ParticipationAggregationReportDTO> getDashboardParticipationExcelData(
-        TCSubject currentUser, long projectId, long[] projectCategoryIds, long clientId, long billingAccountId, 
+        TCSubject currentUser, long projectId, long[] projectCategoryIds, long clientId, long billingAccountId,
         String[] projectStatus, Date startDate, Date endDate,String viewType) throws Exception {
-        
+
         if (viewType == null || viewType.length() == 0) {
             throw new IllegalArgumentException("The parameter [viewType] is NULL or empty");
         }
-        
+
         if (projectCategoryIds == null || projectCategoryIds.length == 0) {
             throw new IllegalArgumentException("The parameter [projectCategoryIds] is NULL or empty");
         }
         if (projectStatus == null || (projectStatus.length == 0)) {
             throw new IllegalArgumentException("The parameter [projectStatus] is NULL or empty");
         }
-        
+
         String queryName = "dashboard_participation_stats_aggregation_" + viewType.toString().toLowerCase();
-        
+
         // concatenate the filters
         String projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
         String projectStatusesList = concatenate(projectStatus, ", ");
@@ -6412,22 +6441,22 @@ public class DataProvider {
         request.setProperty("statuses", projectStatusesList);
         request.setContentHandle("dashboard_participation_metrics_report");
         final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
-        
+
         List<ParticipationAggregationReportDTO> returnValue = new ArrayList<ParticipationAggregationReportDTO>();
-        
+
         getParticipationReportAggregatedData(returnValue, queryData, queryName);
-        
+
         return returnValue;
     }
-    
-    
-    
+
+
+
     /**
-     * <p>Reads the data for <code>Participation Metrics</code> report from the specified queries and puts it to 
+     * <p>Reads the data for <code>Participation Metrics</code> report from the specified queries and puts it to
      * specified list.</p>
-     * 
-     * @param aggregator a <code>List</code> collecting the aggregated data. 
-     * @param queryData a <code>Map</code> providing the query data. 
+     *
+     * @param aggregator a <code>List</code> collecting the aggregated data.
+     * @param queryData a <code>Map</code> providing the query data.
      * @param queryNameBase a <code>String</code> providing the base name of the queries to get data from.
      * @since 3.8.1
      */
@@ -6437,7 +6466,7 @@ public class DataProvider {
         ResultSetContainer result = queryData.get(queryNameBase);
         for (ResultSetRow row : result) {
             ParticipationAggregationReportDTO dto = new ParticipationAggregationReportDTO();
-            
+
             dto.setGroupName(row.getStringItem("group_name"));
             dto.setTotalRegistrants(row.getIntItem("total_registrants_count"));
             dto.setUniqueRegistrants(row.getIntItem("unique_registrants_count"));
@@ -6506,26 +6535,26 @@ public class DataProvider {
     }
 
     /**
-     * <p>Generates  the <code>Excel</code> worksheet with results for contests for specified <code>TC Direct</code> 
+     * <p>Generates  the <code>Excel</code> worksheet with results for contests for specified <code>TC Direct</code>
      * project.</p>
      *
-     * @param tcDirectProjectId a <code>long</code> providing the ID of <code>TC Direct</code> project to generate 
+     * @param tcDirectProjectId a <code>long</code> providing the ID of <code>TC Direct</code> project to generate
      *                          winner sheet for.
-     * @return an <code>InputStream</code> with content of generated worksheet. 
+     * @return an <code>InputStream</code> with content of generated worksheet.
      * @throws Exception if an unexpected error occurs.
      * @since 3.11
      */
     public static InputStream generateWinnerSheet(long tcDirectProjectId) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy HH:mm z");
         DateFormat dateFormat2 = new SimpleDateFormat("MM.dd.yyyy");
-        
+
         // Get project contest results from DB
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("project_contest_results");
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
         ResultSetContainer projectContestResults = dataAccessor.getData(request).get("project_contest_results");
-        
+
         // Convert results to Excel worksheet
         String sheetName = WorkbookUtil.createSafeSheetName("Contest Results for " + tcDirectProjectId);
         Workbook wb = new HSSFWorkbook();
@@ -6546,7 +6575,7 @@ public class DataProvider {
         createExcelHeaderCell(4, "2", row);
 
         // Data
-        int rowIndex = 1; 
+        int rowIndex = 1;
         for (ResultSetContainer.ResultSetRow data : projectContestResults) {
             row = sheet1.createRow(rowIndex++);
             row.createCell(0).setCellValue(data.getLongItem("contest_id"));
@@ -6560,7 +6589,7 @@ public class DataProvider {
             }
         }
 
-        // Get the input stream with workbook content 
+        // Get the input stream with workbook content
         ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
         wb.write(saveTo);
         return new ByteArrayInputStream(saveTo.toByteArray());
@@ -6636,22 +6665,22 @@ public class DataProvider {
      * @param loginUrl a <code>String</code> providing the URL for Login controller for Online Review application.
      * @param username a <code>String</code> providing username to be used to login to Online Review application.
      * @param password a <code>String</code> providing password to be used to login to Online Review application.
-     * @param compositeReviewBaseURL a <code>String</code> providing the URL for ViewCompositeReview controller for 
+     * @param compositeReviewBaseURL a <code>String</code> providing the URL for ViewCompositeReview controller for
      *                               Online Review application.
      * @param baseURL a <code>String</code> providing the base URL for Online Review application.
-     * @param submissionId a <code>long</code> providing the ID of submission to generate combined review scorecard for. 
+     * @param submissionId a <code>long</code> providing the ID of submission to generate combined review scorecard for.
      * @since 3.11
      */
-    public static InputStream generateCombinedReviewScorecard(String loginUrl, String username, String password, 
-                                                       String compositeReviewBaseURL, String baseURL, 
+    public static InputStream generateCombinedReviewScorecard(String loginUrl, String username, String password,
+                                                       String compositeReviewBaseURL, String baseURL,
                                                        long submissionId) throws Exception {
         HttpPost loginRequest = new HttpPost(loginUrl + "?method=login&userName=" + username + "&password=" + password);
-        
+
         HttpClient http = new DefaultHttpClient();
         CookieStore cookieStore = new BasicCookieStore();
         HttpContext localContext = new BasicHttpContext();
         localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-        
+
         HttpResponse loginResponse = http.execute(loginRequest, localContext);
         if (loginResponse.getStatusLine().getStatusCode() == 302) {
             HttpEntity loginResponseEntity = loginResponse.getEntity();
@@ -6668,9 +6697,9 @@ public class DataProvider {
                     documentBuilderFactory.setValidating(false);
                     documentBuilderFactory.setFeature("http://xml.org/sax/features/namespaces", false);
                     documentBuilderFactory.setFeature("http://xml.org/sax/features/validation", false);
-                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", 
+                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
                                                       false);
-                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", 
+                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
                                                       false);
 
                     DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
@@ -6691,8 +6720,8 @@ public class DataProvider {
                                               + ". Content is empty");
                 }
             } else {
-                throw new DirectException("Failed to retrieve composite review for submission: " + submissionId 
-                                          + ". HTTP status code: " 
+                throw new DirectException("Failed to retrieve composite review for submission: " + submissionId
+                                          + ". HTTP status code: "
                                           + compositeReviewResponse.getStatusLine().getStatusCode());
             }
         } else {
@@ -6729,7 +6758,7 @@ public class DataProvider {
      * <p>
      * Gets the contest ids to export for the given project.
      * </p>
-     * 
+     *
      * @param projectId the direct project id.
      * @param userId user id.
      * @param startDate start date to export.
@@ -6763,7 +6792,7 @@ public class DataProvider {
      * <p>
      * Gets the submission ids to export.
      * </p>
-     * 
+     *
      * @param contestId the contest id
      * @param isStudio whether the contest is studio
      * @return a map, the key is the submission id, the value is the file location to export
@@ -6786,7 +6815,7 @@ public class DataProvider {
         } else {
             resultSetContainer = dataAccess.getData(request).get("software_submission_to_export");
         }
-        
+
         List<Submission> result = new ArrayList<Submission>();
         for (ResultSetRow row : resultSetContainer) {
             Submission s = new Submission();
@@ -6798,9 +6827,9 @@ public class DataProvider {
             s.setUpload(u);
             result.add(s);
         }
-        
+
         return result;
-    }   
+    }
 
     /**
      * <p>
@@ -6817,16 +6846,16 @@ public class DataProvider {
         Request request = new Request();
         request.setContentHandle("show_contests_download");
         request.setProperty("tcdirectid", String.valueOf(projectId));
-        
+
         final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("show_contests_download");
         boolean showContestsDownload = false;
-        
+
         if (resultSetContainer.size() > 0) {
             showContestsDownload = true;
-        }   
+        }
         return showContestsDownload;
     }
-	
+
 	/**
      * <p>
      * This method retrieves client user stats.

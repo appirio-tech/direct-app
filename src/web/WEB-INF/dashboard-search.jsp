@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, bugbuka
-  - Version: 1.5
+  - Author: winsty, GreatKevin, bugbuka, TCSASSEMBLER
+  - Version: 1.6 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
@@ -14,6 +14,8 @@
   - Version 1.5 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
   -     Add the filter panel and projects search result for the Operations Dashboard page 
   - Add project filters and project filter values to filter panel
+  - Version 1.6 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) changes:
+  -     Add customers and project names to the filter panel for the Operations Dashboard page 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -111,9 +113,14 @@
                                         <div class='inner'>
                                             <div class='column1'>
                                                 <div class='row'>
-                                                    <span class='title'>Customer</span>
+                                                    <span class='title'>Customer </span>
                                                     <select id='customerFilter'>
                                                         <option value='All Customers'>All Customers</option>
+														<s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+                                                            <c:forEach var="customer" items="${customers}">
+                                                                <option value='${customer}'>${customer}</option>
+                                                            </c:forEach>
+                                                        </s:if>
                                                     </select>
                                                 </div>
                                                 <div class='row <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">hide</s:if>'>
@@ -127,6 +134,9 @@
                                                         <span class='title'>Project Managers</span>
                                                         <select id='projectManagerFilter'>
                                                             <option value=''>All Managers</option>
+                                                            <c:forEach var="managerName" items="${projectManagers}">
+                                                                <option value='${managerName}'>${managerName}</option>
+                                                            </c:forEach>
                                                             <option value='-1'>No Manager</option>
                                                         </select>
                                                     </div>
@@ -135,7 +145,7 @@
                                             <div class='column2'>
                                                 <div class='row'>
                                                     <span class='title'>Project Filters</span>
-                                                    <select id='groupBy' disabled="disabled">
+                                                    <select id='groupBy' disabled="disabled" <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">style="width: 180px;"</s:if>>
                                                         <option value='no'>No Filter Applied</option>
                                                     </select>
                                                 </div>

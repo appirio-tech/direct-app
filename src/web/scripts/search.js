@@ -66,12 +66,15 @@
  * 
  * Version 1.8.8 - (Module Assembly - TC Cockpit Operations Dashboard For PMs)
  * - Add support for operations dashboard.
- * 
+ *
  * Version 1.8.9 (Module Assembly - TC Client Users Stats Report Generation)
  * - Add support of Client User Stats report.
+ *
+ * Version 1.9.0 -  (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+ * - update operations dashboard result table sort function.
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol
- * @version 1.8.9
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness
+ * @version 1.9.0
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -104,6 +107,36 @@ $(document).ready(function() {
         return str;
     }
 
+    function getPercentage(text) {
+        var span = $(trim(text)).eq(0);
+        var n = 0;
+        if(span.length) {
+            n = parseFloat(trim(span.text()));
+        } else {
+            n = parseFloat(trim(text));
+        }
+        if(isNaN(n)) {
+            return 0;
+        }
+        return n;
+    }
+    jQuery.fn.dataTableExt.oSort['direct-percentage-asc'] = function(a, b) {
+        var num1 = getPercentage(a);
+        var num2 = getPercentage(b);
+        var x = num1 * 100;
+        var y = num2 * 100;
+        var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        return z;
+    };
+
+    jQuery.fn.dataTableExt.oSort['direct-percentage-desc'] = function(a, b) {
+        var num1 = getPercentage(a);
+        var num2 = getPercentage(b);
+        var x = num1 * 100;
+        var y = num2 * 100;
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
     jQuery.fn.dataTableExt.oSort['direct-projectNumber-asc'] = function(a, b) {
         var num1 = a.split('/');
         var num2 = b.split('/');
@@ -341,12 +374,7 @@ $(document).ready(function() {
         ]
 
     });
-    
-    $("#pmProjectsResult table.projectStats tr").each(function() {
-        if ($(this).find('td.projectManagerMeta .metadataProjectManager').size() == 0) {
-            $(this).find('td.projectManagerMeta').html('<span>none</span>');
-        }
-    });
+
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": false,
@@ -366,18 +394,14 @@ $(document).ready(function() {
             { "sType": "date-direct" },
             { "sType": "date-direct" },
             { "sType": "html" },
+            { "sType": "direct-percentage" },
+            { "sType": "direct-percentage" },
             { "sType": "html" },
-            { "sType": "money" },
-            { "sType": "money" },
-            { "sType": "money" },
-            { "sType": "html" },            
-            { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "direct-percentage" },
+            { "sType": "link-number" },
             { "sType": "html" },
             { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "html" },
+            null,
             null,
             null,
             null
@@ -1046,6 +1070,21 @@ $(document).ready(function() {
         $(this).parent().remove();
     });
 
+
+    $(".budgetRow").mouseover(function() {
+        $(".costPercentage", this).hide();
+        $(".allThreeCosts", this).show();
+    }).mouseout(function() {
+        $(".costPercentage", this).show();
+        $(".allThreeCosts", this).hide();
+    });
+    $(".durationRow ").mouseover(function() {
+        $(".durationPercentage", this).hide();
+        $(".allThreeDurations", this).show();
+    }).mouseout(function() {
+        $(".durationPercentage", this).show();
+        $(".allThreeDurations", this).hide();
+    });
 });
    
 /**
