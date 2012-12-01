@@ -4226,67 +4226,60 @@ public class DataProvider {
 
         final Map<String, Object> applicationContext = DirectUtils.getApplicationContext();
 
-        if(applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE) != null
-                && applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE) != null) {
-            globalResult = (Map<String, Object>) applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
-            globalRecordCache = (Map<Long, ClientBillingDirectProjectMappingDTO>) applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE);
-        } else {
-            // get from the database
-            request.setContentHandle("admin_client_billing_accounts_v2");
-            resultContainer = dataAccess.getData(request).get(
-                    "admin_client_billing_accounts_v2");
+        // get from the database
+        request.setContentHandle("admin_client_billing_accounts_v2");
+        resultContainer = dataAccess.getData(request).get(
+                "admin_client_billing_accounts_v2");
 
-            if (resultContainer != null) {
-                for (ResultSetContainer.ResultSetRow row : resultContainer) {
+        if (resultContainer != null) {
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
 
-                    long billingId = row.getLongItem("billing_account_id");
-                    String billingName = row.getStringItem("billing_account_name");
-                    long clientId = row.getLongItem("client_id");
-                    String clientName = row.getStringItem("client_name");
-                    long directProjectId = row.getLongItem("direct_project_id");
-                    String directProjectName = row.getStringItem("direct_project_name");
-                    // put into clients map
-                    globalClientsMap.put(clientId, clientName);
+                long billingId = row.getLongItem("billing_account_id");
+                String billingName = row.getStringItem("billing_account_name");
+                long clientId = row.getLongItem("client_id");
+                String clientName = row.getStringItem("client_name");
+                long directProjectId = row.getLongItem("direct_project_id");
+                String directProjectName = row.getStringItem("direct_project_name");
+                // put into clients map
+                globalClientsMap.put(clientId, clientName);
 
-                    // put into clientBillingMap
-                    Map<Long, String> billingsForClient = globalClientBillingMap.get(clientId);
-                    if (billingsForClient == null) {
-                        billingsForClient = new HashMap<Long, String>();
-                        globalClientBillingMap.put(clientId, billingsForClient);
-                    }
-
-                    billingsForClient.put(billingId, billingName);
-
-                    // put into clientProjectMap
-                    Map<Long, String> projectForClient = globalClientProjectMap.get(clientId);
-                    if (projectForClient == null) {
-                        projectForClient = new HashMap<Long, String>();
-                        globalClientProjectMap.put(clientId, projectForClient);
-                    }
-
-                    projectForClient.put(directProjectId, directProjectName);
-
-                    // put into billingProjectMap
-                    Map<Long, String> projectForBilling = globalBillingProjectMap.get(billingId);
-                    if (projectForBilling == null) {
-                        projectForBilling = new HashMap<Long, String>();
-                        globalBillingProjectMap.put(billingId, projectForBilling);
-                    }
-
-                    projectForBilling.put(directProjectId, directProjectName);
-
-                    globalProjectClientMap.put(directProjectId, clientId);
-
-                    ClientBillingDirectProjectMappingDTO mappingDTO = new ClientBillingDirectProjectMappingDTO();
-                    mappingDTO.setBillingId(billingId);
-                    mappingDTO.setBillingName(billingName);
-                    mappingDTO.setClientId(clientId);
-                    mappingDTO.setClientName(clientName);
-                    mappingDTO.setProjectId(directProjectId);
-                    mappingDTO.setProjectName(directProjectName);
-                    globalRecordCache.put(directProjectId, mappingDTO);
+                // put into clientBillingMap
+                Map<Long, String> billingsForClient = globalClientBillingMap.get(clientId);
+                if (billingsForClient == null) {
+                    billingsForClient = new HashMap<Long, String>();
+                    globalClientBillingMap.put(clientId, billingsForClient);
                 }
 
+                billingsForClient.put(billingId, billingName);
+
+                // put into clientProjectMap
+                Map<Long, String> projectForClient = globalClientProjectMap.get(clientId);
+                if (projectForClient == null) {
+                    projectForClient = new HashMap<Long, String>();
+                    globalClientProjectMap.put(clientId, projectForClient);
+                }
+
+                projectForClient.put(directProjectId, directProjectName);
+
+                // put into billingProjectMap
+                Map<Long, String> projectForBilling = globalBillingProjectMap.get(billingId);
+                if (projectForBilling == null) {
+                    projectForBilling = new HashMap<Long, String>();
+                    globalBillingProjectMap.put(billingId, projectForBilling);
+                }
+
+                projectForBilling.put(directProjectId, directProjectName);
+
+                globalProjectClientMap.put(directProjectId, clientId);
+
+                ClientBillingDirectProjectMappingDTO mappingDTO = new ClientBillingDirectProjectMappingDTO();
+                mappingDTO.setBillingId(billingId);
+                mappingDTO.setBillingName(billingName);
+                mappingDTO.setClientId(clientId);
+                mappingDTO.setClientName(clientName);
+                mappingDTO.setProjectId(directProjectId);
+                mappingDTO.setProjectName(directProjectName);
+                globalRecordCache.put(directProjectId, mappingDTO);
             }
 
             globalResult.put("client.billing", globalClientBillingMap);
@@ -4294,8 +4287,6 @@ public class DataProvider {
             globalResult.put("billing.project", globalBillingProjectMap);
             globalResult.put("clients", globalClientsMap);
             globalResult.put("project.client", globalProjectClientMap);
-            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE, globalResult);
-            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE, globalRecordCache);
         }
 
 
