@@ -184,7 +184,9 @@
     <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Information :</h3>
 
     <s:if test="viewData.hasFullPermission">
-
+        <s:if test="!viewData.canAccessPermissionNotification">
+            <input type="hidden" id="hasFullPermissionOnly" value="true">
+        </s:if>
     <div class="projectMetaAreaField oddRowItem">
         <h4 class="projectMetaLabel cmIcon">Client Manager Handles :</h4>
 
@@ -263,6 +265,28 @@
 
         <div class="inputContainer">
             <input id="jiraAddress" name="${viewData.jiraURL.id}" type="text" value="<s:property value='viewData.jiraURL.metadataValue'/>" class="textInput" autocomplete="off"/>
+        </div>
+    </div>
+
+    <div class="projectMetaAreaField oddRowItem">
+        <h4 class="projectMetaLabel ptypeIcon">Project Billing Account:</h4>
+        <div class="comboContainer" id="billingSelection">
+            <select name="projectBillingAccount" autocomplete="off">
+                <option value="0">Select Billing Account to add</option>
+                <s:iterator value='availableBillingAccounts'>
+                    <option value="<s:property value='id'/>"><s:property value='name'/></option>
+                </s:iterator>
+            </select>
+            <span class="errorMessage"></span>
+        </div>
+        <a name="addBillingAccount" class="buttonRed1 addBillingButton" href="javascript:;"><span>ASSOCIATE BILLING</span></a>
+        <div class="comboContainer" id="billingDisplay">
+            <s:iterator value='viewData.billingAccounts'>
+                <div class="billingAccountEntry">
+                    <span><s:property value='name'/></span><a class="removeBilling" href="javascript:;">Remove</a>
+                    <input type="hidden" value="<s:property value='id'/>"/>
+                </div>
+            </s:iterator>
         </div>
     </div>
 
@@ -475,7 +499,7 @@
 
 
 <!-- Permissions & Notifications -->
-<s:if test="viewData.canAccessPermissionNotification">
+<s:if test="viewData.canAccessPermissionNotification || viewData.hasFullPermission">
 
 <div class="permissionsNotifications">
     <a name="permissionsNotifications"/>
