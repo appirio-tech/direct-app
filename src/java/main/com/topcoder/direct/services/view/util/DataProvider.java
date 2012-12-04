@@ -1446,7 +1446,7 @@ public class DataProvider {
             data.setProjectedDuration(row.getStringItem("projected_duration"));
 
             data.setMessageNumber(row.getIntItem("message_number"));
-            data.setHasStalledContests(row.getBooleanItem("has_stalled_contests"));
+            
             data.setProjectManagerName(row.getStringItem("name_of_project_manager"));
 
             data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
