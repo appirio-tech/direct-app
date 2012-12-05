@@ -222,7 +222,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                     if(!customers.contains(item.getData().getCustomerName())) {
                         customers.add(item.getData().getCustomerName());
                     }
-                    if(0 != item.getData().getProjectManagerName().trim().length()) {
+                    if(item.getData().getProjectManagerName() != null && 0 != item.getData().getProjectManagerName().trim().length()) {
                         if(!projectManagers.contains(item.getData().getProjectManagerName())) {
                             projectManagers.add(item.getData().getProjectManagerName());
                         }
