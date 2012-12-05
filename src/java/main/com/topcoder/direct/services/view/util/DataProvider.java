@@ -1466,6 +1466,11 @@ public class DataProvider {
      */
     private static List<ForumPoster> getLatestThreePosters(String lastPosters) throws Exception {
         List<ForumPoster> posters = new ArrayList<ForumPoster>();
+		
+		if (lastPosters == null || lastPosters.equals("")) {
+			return posters;
+		}
+		
         String[] postersStr = lastPosters.split(";");
         for(String p : postersStr) {
             String[] parts = p.split(","); // userid,handle,days
