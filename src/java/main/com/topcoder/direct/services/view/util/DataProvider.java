@@ -2225,7 +2225,7 @@ public class DataProvider {
             if(activePhaseName == null) {
                 // there is no active phase
                 if(nextScheduledPhaseName == null) {
-                    statusName = "Finished";
+                    statusName = "Active";
                 } else if(nextScheduledPhaseName.equalsIgnoreCase("Specification Submission")) {
                     // next scheduled is specification submission, we use status "Specification Review"
                     statusName =  "Specification Review";

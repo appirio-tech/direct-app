@@ -37,6 +37,8 @@ public enum ContestStatus {
      */
     DRAFT("Draft", "draft", "Edit"),
 
+    Finished("Finished", "running", "View"),
+
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Running</code> contest status.</p>
      */

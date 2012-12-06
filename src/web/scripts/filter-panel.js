@@ -213,13 +213,23 @@ var setupFilterPanel = function () {
 
     if (handleName == 'activeContests' || handleName == 'ProjectsContests') {
         len = contestStatusFilter.length;
+        var statusMap = {};
         for (var i = 0; i < len; i++) {
-            var index1 = contestStatusFilter[i].indexOf('>');
-            var index2 = contestStatusFilter[i].indexOf('<', 1);
-            var value = contestStatusFilter[i].substring(index1 + 1, index2);
+            var statusArray = contestStatusFilter[i].split("</span>");
+            for(var k = 0; k < statusArray.length; ++k) {
+                if($.trim(statusArray[k]).length == 0) continue;
+                statusArray[k] = statusArray[k].replace(/<font.*?\/font>/g, "");
+                var index1 = statusArray[k].indexOf('>');
+                var value = statusArray[k].substring(index1 + 1);
+                statusMap[value] = true;
+            }
 
-            $('#contestStatusFilter').append("<option value='" + value + "'>" + value + "</option>");
+
         }
+
+        $.each(statusMap, function (key, value) {
+            $('#contestStatusFilter').append("<option value='" + key + "'>" + key + "</option>");
+        });
     }
     //copilot posting
     if (handleName == "MyCopilotPostings") {

@@ -376,11 +376,11 @@
                                                     <td>
                                                         <a href="<s:property value='issueLink'/>">0</a>
                                                     </td>
-                                                    <td><span
+                                                    <td class="contestStatus"><span
                                                             class="<s:property value="contestLikeStatusClass"/>"><s:property
                                                             value="contestLikeStatus"/></span></td>
                                                     <td class="last">
-                                                        <a href="<s:property value='issueLink'/>" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                        <a href="<s:property value='issueLink'/>" class="short" style="text-align: center"><img alt="" src="/images/edit-icon.png">View/Edit</a>
                                                     </td>
                                                     <td class="hide"><span><s:if test="clientId <= 0">none</s:if><s:else><s:property value='clientId'/></s:else></span></td>
                                                 </tr>
