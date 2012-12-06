@@ -6701,6 +6701,15 @@ A.button11{
     width: auto;
 }
 
+.resultTableContainer table.resultTable td.contestStatus {
+    text-align: left;
+}
+
+.resultTableContainer table.resultTable td.contestStatus span {
+    margin-left: 5px;
+    display: block;
+}
+
 .resultTableContainer table.resultTable th.alignLeft {
     padding-left: 6px;
     text-align: left;

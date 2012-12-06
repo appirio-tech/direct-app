@@ -208,11 +208,11 @@
                                             <col width="12%" />
                                             <col width="10%" />
                                             <col width="10%" />
-                                            <col width="8%" />
-                                            <col width="8%" />
-                                            <col width="8%" />
-                                            <col width="10%" />
-                                            <col width="11%" />
+                                            <col width="7%" />
+                                            <col width="7%" />
+                                            <col width="7%" />
+                                            <col width="19%" />
+                                            <col width="9%" />
                                             <col width=""/>
                                         </colgroup>  
                                         
@@ -307,32 +307,33 @@
                                                     <s:property value="forumPostsNumber"/>
                                                     <s:if test="forumId != -1"></a></s:if>
                                                     </td>
-                                                    <td>
+                                                    <td class="contestStatus">
 
                                                         <span
                                                             class="<s:property value="status.shortName"/>"><s:property
-                                                            value="status.name"/></span>
+                                                            value="status.name"/><s:if test="statusLate"><font style="color: red">&nbsp;(Late)</font></s:if></span>
 
                                                         <s:if test="status2 != null">
                                                             <span
                                                                     class="<s:property value="status2.shortName"/>"><s:property
-                                                                    value="status2.name"/></span>
+                                                                    value="status2.name"/><s:if test="status2Late"><font style="color: red">&nbsp;(Late)</font></s:if></span>
                                                         </s:if>
 
                                                         <s:if test="status3 != null">
                                                             <span
                                                                     class="<s:property value="status3.shortName"/>"><s:property
-                                                                    value="status3.name"/></span>
+                                                                    value="status3.name"/><s:if test="status3Late"><font style="color: red">&nbsp;(Late)</font></s:if></span>
                                                         </s:if>
 
                                                     </td>
                                                     <td class="last">
                                                         <s:if test="contestType.name == 'Copilot Posting'">
-                                                            <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                            <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="short" style="text-align: center"><img alt="" src="/images/edit-icon.png">View/Edit</a>
                                                         </s:if>
                                                         <s:if test="contestType.name != 'Copilot Posting'">
-                                                            <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                            <a href="contest/detail?projectId=${contest.id}" class="short" style="text-align: center"><img alt="" src="/images/edit-icon.png">View/Edit</a>
                                                         </s:if>
+
                                                     </td>
                                                     <td class="hide"><span><s:property value="contest.customerId"/></span></td>
                                                 </tr>

@@ -2213,9 +2213,9 @@ public class DataProvider {
                 nextScheduledPhaseName = resultContainer.getStringItem(i, "next_scheduled_phase");
             }
 
-            boolean isLate = false;
-            if(resultContainer.getItem(i, "is_late").getResultData() != null) {
-                isLate = true;
+            String latePhase = null;
+            if(resultContainer.getItem(i, "late_phase").getResultData() != null) {
+                latePhase = resultContainer.getStringItem(i, "late_phase");
             }
 
             Set<String> statusNamesSet = new HashSet<String>();
@@ -2234,8 +2234,6 @@ public class DataProvider {
                 } else {
                     statusName = "Stalled";
                 }
-            } else if(isLate) {
-                statusName = "Late";
             } else {
                 statusName = activePhaseName;
             }
@@ -2282,18 +2280,30 @@ public class DataProvider {
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
             contestBrief.setCustomerId(customerId);
             ContestType type =  ContestType.forIdAndFlag(contestTypeId, isStudio);
+
             ContestStatus status = ContestStatus.forName(statusName);
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
                                                              forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
 
-            if(actionPhaseName2 != null && !statusNamesSet.contains(actionPhaseName2) && isLate == false) {
+            // check late for the status#1
+            if(latePhase != null && statusName.equalsIgnoreCase(latePhase)) {
+                contest.setStatusLate(true);
+            }
+
+            if(actionPhaseName2 != null && !statusNamesSet.contains(actionPhaseName2)) {
                 contest.setStatus2(ContestStatus.forName(actionPhaseName2));
+                if(latePhase != null && actionPhaseName2.equalsIgnoreCase(latePhase)) {
+                    contest.setStatus2Late(true);
+                }
                 statusNamesSet.add(actionPhaseName2);
             }
 
-            if(actionPhaseName3 != null && !statusNamesSet.contains(actionPhaseName3) && isLate == false) {
+            if(actionPhaseName3 != null && !statusNamesSet.contains(actionPhaseName3)) {
                 contest.setStatus3(ContestStatus.forName(actionPhaseName3));
+                if(latePhase != null && actionPhaseName3.equalsIgnoreCase(latePhase)) {
+                    contest.setStatus3Late(true);
+                }
             }
 
             contests.add(contest);

@@ -21,8 +21,15 @@ import java.util.Date;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (BUGR-7592 Cockpit Release Eight Miscellaneous Fixes)
+ * <ul>
+ *     <li>Add properties {@link #isStatusLate}, {@link #isStatus2Late} and {@link #isStatus3Late}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class ProjectContestDTO implements Serializable {
 
@@ -64,6 +71,33 @@ public class ProjectContestDTO implements Serializable {
      * @since 1.1
      */
     private ContestStatus status3;
+
+    /**
+     * <p>
+     * Whether the status is late.
+     * </p>
+     *
+     * @since 1.2
+     */
+    private boolean isStatusLate;
+
+    /**
+     * <p>
+     * Whether the status2 is late.
+     * </p>
+     *
+     * @since 1.2
+     */
+    private boolean isStatus2Late;
+
+    /**
+     * <p>
+     * Whether the status3 is late.
+     * </p>
+     *
+     * @since 1.2
+     */
+    private boolean isStatus3Late;
 
     /**
      * <p>A <code>Date</code> providing the start time for contest.</p>
@@ -313,5 +347,66 @@ public class ProjectContestDTO implements Serializable {
      */
     public void setStatus3(ContestStatus status3) {
         this.status3 = status3;
+    }
+
+    /**
+     * Gets whether the status is late.
+     *
+     * @return whether the status is late.
+     * @since 1.2
+     */
+    public boolean isStatusLate() {
+        return isStatusLate;
+    }
+
+    /**
+     * Sets whether the status is late.
+     *
+     * @param statusLate whether the status is late.
+     * @since 1.2
+     */
+    public void setStatusLate(boolean statusLate) {
+        isStatusLate = statusLate;
+    }
+
+
+    /**
+     * Gets whether the status2 is late.
+     *
+     * @return whether the status2 is late.
+     * @since 1.2
+     */
+    public boolean isStatus2Late() {
+        return isStatus2Late;
+    }
+
+    /**
+     * Sets whether the status2 is late.
+     *
+     * @param status2Late whether the status2 is late.
+     * @since 1.2
+     */
+    public void setStatus2Late(boolean status2Late) {
+        isStatus2Late = status2Late;
+    }
+
+    /**
+     * Gets whether the status3 is late.
+     *
+     * @return whether the status3 is late.
+     * @since 1.2
+     */
+    public boolean isStatus3Late() {
+        return isStatus3Late;
+    }
+
+    /**
+     * Sets whether the status3 is late.
+     *
+     * @param status3Late whether the status3 is late.
+     * @since 1.2
+     */
+    public void setStatus3Late(boolean status3Late) {
+        isStatus3Late = status3Late;
     }
 }
