@@ -45,7 +45,7 @@
 							
 							<!-- main section -->
 							<div id="mainSection">
-								<h2>Active Contest</h2>
+								<h2>Active Contests</h2>
 								
 								<!-- active contest -->
 								<div id="activeContest">
