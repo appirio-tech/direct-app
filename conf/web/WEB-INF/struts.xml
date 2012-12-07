@@ -133,10 +133,7 @@
         <global-results>
             <result name="error">/error.jsp</result>
             <result name="permissionDenied">/error.jsp</result>
-            <result name="anonymous" type="redirectAction">
-                <param name="actionName">home</param>
-                <param name="namespace">/</param>
-            </result>
+            <result name="anonymous">/home-redirect.jsp</result>
         </global-results>
 
         <global-exception-mappings>
