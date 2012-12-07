@@ -481,6 +481,10 @@ public final class DirectUtils {
     public final static List<String> CANCELLED_STATUS = Arrays.asList("Cancelled - Client Request",
         "Cancelled - Requirement Infeasible");
 
+    public final static String PROJECT_BILLING_MAPPING_RESULT_CACHE = "projectBillingMappingResultCache";
+
+    public final static String PROJECT_BILLING_MAPPING_RECORD_CACHE = "projectBillingMappingRecordCache";
+
      /**
      * Represents the &quot;Specification Submission&quot; phase type.
      */
