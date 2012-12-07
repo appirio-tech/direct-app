@@ -17,9 +17,46 @@
  * Version 1.4 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
  * - Add JS for the analysis tab
  *
- * @author GreatKevin, hanshuai
- * @version 1.4
+ * Version 1.5 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 2)
+ * - Add JS for analysis chart view to display contest duration and fulfillment data
+ * - Add JS for loading volume view summary table
+ * - Add JS for implementing table view in analysis page.
+ *
+ * @author GreatKevin, hanshuai, GreatKevin
+ * @version 1.5
  */
+var shortNameMap = {
+    "1" : ["Design" , "Design"],
+    "2" :   ["Development", "Dev"],
+    "6" :   ["Specification", "Spec"],
+    "7" :   ["Architecture", "Archi"],
+    "13" :  ["Test Suites", "Suites"],
+    "14" :  ["Assembly  Competition", "Assembly"],
+    "16" :  ["Banners/Icons","Banners/Icons"],
+    "17" :  ["Web Design", "Web Design"],
+    "18" :  ["Wireframes", "Wireframes"],
+    "19" :  ["UI Prototypes", "Prototype"],
+    "20" :  ["Logo Design" , "Logo"],
+    "21" :  ["Print/Presentation", "Print"],
+    "22" :  ["Idea Generation", "Idea"],
+    "23" :  ["Conceptualization", "Concept"],
+    "24" :  ["RIA Build" , "RIA Build"],
+    "25" :  ["RIA Component" , "RIA component"],
+    "26" :  ["Test Scenarios", "Scenarios"],
+    "29" :  ["Copilot Posting" , "Copilot"],
+    "30" :  ["Widget or Mobile Screen Design", "Widget"],
+    "31" :  ["Front-End Flash" , "Flash"],
+    "32" :  ["Application Front-End Design" , "App Design"],
+    "34" :  ["Other" , "Other"],
+    "35" :  ["Content Creation", "Content"],
+    "36" :  ["Reporting" , "Reporting"],
+    "37" :  ["Marathon Match" , "Marathon Match"],
+    "9" :  ["Bug Hunt" , "Bug Hunt"]
+};
+var volumeTableLoaded;
+var tableViewTable;
+var tableViewTableTemplate;
+
 var chart;
 var financialTable;
 var loadCurrentMonth;
@@ -36,6 +73,9 @@ var projectFilterValueToSync;
 
 // for the analysis
 var analysisData;
+
+// the current selected customer name
+var customerName;
 
 var sStdMenu =
     '<em>|</em><span>Show: </span><select size="1" name="dataTableLength" id="dataTableLength">' +
@@ -1520,6 +1560,7 @@ function renderFinancialTab() {
 function getRequestForAnalysis() {
     var request = {};
     request.customerIds = [$("#customer").val()];
+    customerName = $("#customer option:selected").text();
     request.billingAccountIds = [$("#billingAccount").val()];
     request.projectIds = [$("#project").val()];
     var projectCategoryIds = [];
@@ -1557,11 +1598,23 @@ function getRequestForAnalysis() {
         request.endDate =  $.datepicker.formatDate('mm/dd/yy', endTime);
     }
 
+    var errorMessage = '';
+
     if(Date.parse(request.startDate) > Date.parse(request.endDate)) {
-        $(".button .errorMessage").text("start time should not larger than the end date");
+        errorMessage = "- Start time should not larger than the end time";
+    }
+
+    if(projectCategoryIds.length <= 0) {
+        if(errorMessage.length > 0) {
+            errorMessage += " <br/> ";
+        }
+        errorMessage += "- Please select at least one contest type";
+    }
+
+    $(".button .errorMessage").html(errorMessage);
+
+    if(errorMessage.length > 0) {
         return;
-    } else {
-        $(".button .errorMessage").text('');
     }
 
     var data = {formData:request, groupByType:groupType, dashboardViewType: "newEnterpriseDashboard"};
@@ -1964,18 +2017,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.filterForAnalytics .folder').live('click', function () {
-        if ($(this).hasClass('unfolder')) {
-            $(this).removeClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
-            $('.filterForAnalytics .filterContainer').show();
-        } else {
-            $(this).addClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', 'none');
-            $('.filterForAnalytics .filterContainer').hide();
-        }
-    });
-
     //tip for header
     $('.icon').hover(function () {
         var headerTip = '';
@@ -2156,6 +2197,23 @@ $(document).ready(function () {
                 $(this).addClass('unfolder');
                 $(this).parents('.filterTitle').css('border-bottom','none');
                 $('.filterForAnalytics .filterContainer').hide();
+            }
+        });
+
+        // setup chart view / table view toggles
+        $('.analyticsView .viewTitle li a').live('click',function(){
+            var showContainer = '.'+$(this).attr('rel');
+            $('.analyticsView .viewTitle li').removeClass('active');
+            $(this).parents('li').addClass('active');
+            $('.analyticsView .analyticsViewTabContainer').hide();
+            $('.analyticsView').find(showContainer).show();
+            if($(this).text() == 'Table'){
+                $('.analyticsView .viewTitle .folder').text('Table View');
+                $("div.volumeView").hide();
+                loadTableView();
+            }else{
+                $('.analyticsView .viewTitle .folder').text('Chart View');
+                loadAnalysis();
             }
         });
 
@@ -2544,8 +2602,6 @@ $(document).ready(function () {
             $('.analyticsView').find(showContainer).show();
         });
 
-        // placeholder - chart view & table view
-
         // summary tab - on hover tips
         $('.tipToggle').hover(function () {
             switch ($(this).parents('.customerTabContainer').attr('id')) {
@@ -2598,16 +2654,12 @@ $(document).ready(function () {
                 $("#marketCap").html(result.marketCap + "%");
                 $("#customerMarketCap").html(result.marketCap + "%");
             }
+            $("td.customerReplacement").text(customerName);
+            $("span.customerReplacement").text(customerName + ' Summary');
+            $("h3.customerReplacement").text(customerName + ' Volume Summary');
         }
 
         $('.lineViewContainer .displayButton a').live('click', function () {
-
-            var index = $('.lineViewContainer .displayButton a').index(this);
-
-            if(index == 0 || index == 2) {
-                // contest duration & fulfillment not clickable for now
-                return;
-            }
 
             if ($(this).find('input').is(':checked') == true) {
                 $(this).find('input').attr('checked', false);
@@ -2624,6 +2676,7 @@ $(document).ready(function () {
             if(!request) return false;
 
             var data = request.formData;
+            volumeTableLoaded = false;
             $.ajax({
                 type:'POST',
                 url:'dashboardEnterpriseAJAX',
@@ -2659,10 +2712,159 @@ $(document).ready(function () {
             return true;
         }
 
+        function loadTableView() {
+            var request = getRequestForAnalysis();
+
+            if(!request) return false;
+
+            $(".tableViewContainer tbody").empty().append('<tr><td colspan="11">' +
+                    '<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading"/></div></td></tr>'
+            );
+
+            var data = request.formData;
+            $.ajax({
+                type:'POST',
+                url:'dashboardEnterpriseAJAX',
+                data:request,
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function(result) {
+                            // update the chart viewer header
+                            $(".filterPanelHeader h3").text($("#customer option:selected").text());
+                            $("#projectHeader").text($("#project option:selected").text());
+                            $("#billingHeader").text($("#billingAccount option:selected").text());
+                            $("#groupHeader").text($("#timeDimension option:selected").text());
+                            $("#timeHeader").text(data.startDate + ' to ' + data.endDate);
+                            analysisData = result;
+
+                            if(result.hasCustomerSummary == false) {
+                                $(".viewDate").hide();
+                                $('#lineView').empty().append('<div class="ajaxTableLoader"><span style="font-size:12px;color:grey;">Not Enough Data For Filters Selected</span></div>');
+                                return;
+                            }
+                            // render the summary tabs
+                            renderSummary(result);
+                        },
+                        function(errorMessage) {
+                            showServerError(errorMessage);
+                        })
+                }
+            });
+
+            delete request.dashboardViewType;
+            delete request.groupByType;
+
+            $.ajax({
+                type:'POST',
+                url:'../dashboardEnterpriseTableViewCall',
+                data:request,
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function (result) {
+                            var strData;
+                            if (result.contestStatus.length) {
+                                $.each(result.contestStatus, function (idx, item) {
+                                    var projectLink = "/direct/projectOverview.action?formData.projectId=" + item.directProjectId;
+                                    var contestLink = "/direct/contest/detail.action?projectId=" + item.projectId;
+
+                                    if(item.contestType == 'Copilot Posting') {
+                                        contestLink = "/direct/copilot/copilotContestDetails.action?projectId=" + item.projectId;
+                                    }
+
+                                    var date = $.datepicker.formatDate('yy-mm-dd', new Date(item.date));
+
+                                    strData += '<tr>';
+                                    strData += '<td>' + date + '</td>';
+                                    strData += '<td>' + item.customerName + '</td>';
+                                    strData += '<td class="alignLeft"><a target="_blank" href="' + projectLink +  '">' + item.projectName + '</a></td>';
+                                    strData += '<td class="alignLeft"><a target="_blank" href="' + contestLink +  '">' + item.contestName + '</a></td>';
+                                    strData += '<td class="alignLeft">' + item.contestType + '</td>';
+                                    strData += '<td>' + item.contestFullfilment + '%</td>';
+                                    strData += '<td><span class="marketNumber">' + item.marketAvgFullfilment + '%</span></td>';
+                                    strData += '<td>$' + item.contestCost + '</td>';
+                                    strData += '<td><span class="marketNumber">$' + item.marketAvgCost + '</span></td>';
+                                    strData += '<td>' + item.contestDuration + '</td>';
+                                    strData += '<td><span class="marketNumber">' + item.marketAvgDuration + '</span></td>';
+                                    strData += '</tr>';
+                                });
+
+                                if(result.contestStatus.length){
+
+                                    if (typeof tableViewTable == 'undefined') {
+                                        tableViewTableTemplate = $(".tableViewContainer").html();
+                                    } else {
+                                        $(".tableViewContainer").html(tableViewTableTemplate);
+                                    }
+
+                                    $(".tableViewContainer tbody").empty().append(strData);
+                                    $('.tableViewContainer .pagePanel .totalNumber').text(result.contestStatus.length);
+
+                                    tableViewTable = $('.tableViewContainer table').dataTable({
+                                        "iDisplayLength":10,
+                                        "bFilter":false,
+                                        "bSort":true,
+                                        "oLanguage":{
+                                            "sLengthMenu":sStdMenu,
+                                            "oPaginate":{
+                                                "sFirst":"",
+                                                "sPrevious":"Prev",
+                                                "sNext":"Next",
+                                                "sLast":""
+                                            }
+                                        },
+                                        "sPaginationType":"full_numbers",
+                                        "sDom":'t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>',
+                                        "aaSorting": [
+                                            [0,'asc']
+                                        ],
+                                        "aoColumns": [
+                                            { "sType": "simple-date" },
+                                            { "sType": "html" },
+                                            { "sType": "html-trimmed" },
+                                            { "sType": "html-trimmed" },
+                                            { "sType": "html" },
+                                            { "sType": "number-trimmed" },
+                                            { "sType": "number-trimmed" },
+                                            { "sType": "money"},
+                                            { "sType": "money"},
+                                            { "sType": "number-trimmed" },
+                                            { "sType": "number-trimmed" }
+                                        ]
+                                    });
+
+
+                                }
+                            } else{
+                                $(".tableViewContainer tbody").empty().append('<tr><td colspan="11"><div style="font-size:12px;color:grey;">No data available</div></td></tr>');
+                            }
+                        },
+                        function (errorMessage) {
+                            showServerError(errorMessage);
+                        })
+                }
+            });
+
+            return true;
+        }
+
         $("#filterApply").click(function () {
             modalPreloader();
-            if(!loadAnalysis()) {
-                modalAllClose();
+
+            var isInTableView = $(".analyticsView  .viewTitle li:eq(1)").hasClass("active");
+
+            if(!isInTableView) {
+                if(!loadAnalysis()) {
+                    modalAllClose();
+                }
+
+            } else {
+                if(!loadTableView()) {
+                    modalAllClose();
+                }
             }
         });
 
@@ -2739,54 +2941,71 @@ function loadOptionsByClientId(clientId) {
     });
 }
 
-function displayChartView(contestData, volumeData, contestView, costView, fulfillView, volumeView, marketView) {
-    var ajaxTableLoader, strData = '';
-    var arrayData = new Array();
+function displayChartView(contestData, contestDurationView, costView, fulfillView, volumeView, marketView) {
+
+    if(volumeView) {
+        renderVolumeSummaryTable(contestData.volumeSummaryData);
+    } else {
+        $("div.volumeView").hide();
+    }
+
     var xAxisCate = new Array();
     var customerCost = new Array();
     var marketCost = new Array();
+    var customerContestDuration = new Array();
+    var marketContestDuration = new Array();
+    var customerFulfillment = new Array();
+    var marketFulfillment = new Array();
     var customerVolume = new Array();
     var marketVolume = new Array();
-    var contestDurationLabel = '';
-    var costLabel = '';
-    var fulfillmentLabel = '';
-    var marketFulfillmentSufValue = '';
-    var costPrevValue = '';
-    var prevValue = '';
-    var sufValue = '';
-    var jsonVolumeFile = '';
-    var jsonAnalyticsFile = '';
-    var contestDurationSufValue = '';
-    contestDurationLabel = 'Avg Contest Duration';
-    costLabel = 'Avg Cost';
-    fulfillmentLabel = 'Avg Fulfillment';
-    contestDurationSufValue = ' days';
-    costPrevValue = '$ ';
-    marketFulfillmentSufValue = ' %';
     var iRotation = 0;
     if ($('#lineView').length > 0) {
 
         var costData;
+        var contestDurationData;
+        var fulfillmentData;
         var groupType = $("#timeDimension").val();
 
         if(groupType == 'Week') {
             costData = contestData.cost.week;
+            contestDurationData = contestData.contest.week;
+            fulfillmentData = contestData.fulfill.week;
         } else if(groupType == 'Month') {
             costData = contestData.cost.month;
+            contestDurationData = contestData.contest.month;
+            fulfillmentData = contestData.fulfill.month;
         } else if(groupType == 'Quarter') {
             costData = contestData.cost.quarter;
+            contestDurationData = contestData.contest.quarter;
+            fulfillmentData = contestData.fulfill.quarter;
         } else if(groupType == 'Year') {
             costData = contestData.cost.year;
+            contestDurationData = contestData.contest.year;
+            fulfillmentData = contestData.fulfill.year;
         }
 
         var volumeData = contestData.volume;
 
+        // setup cost data and X axis
         $.each(costData, function (idx, item) {
             xAxisCate.push(item.date);
             customerCost.push(item.customer / 1);
             marketCost.push(item.tc / 1);
         });
 
+        // setup contest duration data
+        $.each(contestDurationData, function (idx, item) {
+            customerContestDuration.push(item.customer / 1);
+            marketContestDuration.push(item.tc / 1);
+        });
+
+        // setup fulfillment data
+        $.each(fulfillmentData, function (idx, item) {
+            customerFulfillment.push(item.customer / 1);
+            marketFulfillment.push(item.tc / 1);
+        });
+
+        // setup volume data
         $.each(volumeData, function (idx, item) {
             customerVolume.push(item.customer / 1);
             marketVolume.push(item.tc / 1);
@@ -2856,7 +3075,7 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
                 },
                 formatter:function () {
                     var s = '';
-                    if (this.series.name == 'Avg Fulfillment') {
+                    if (this.series.name.indexOf('Fulfillment') != -1) {
                         s = ' %';
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
                             this.point.category
@@ -2866,7 +3085,7 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
                             this.point.y
                             + s
                             + '</div></div></div>';
-                    } else if (this.series.name == 'Avg Contest Duration') {
+                    } else if (this.series.name.indexOf('Duration') != -1) {
                         s = ' days';
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
                             this.point.category
@@ -2900,10 +3119,14 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
             series:[]
         };
         var axisNumber = 0;
+        var costViewLegend = 'Average ' + customerName + ' Cost';
+        var durationViewLegend = 'Average ' + customerName + ' Contest Duration';
+        var fulfillViewLegend = 'Average ' + customerName + ' Fulfillment';
+        var volumeViewLegend = customerName + ' Volume';
 
         if (costView) {
             option.series.push({
-                name:'Average Customer Cost',
+                name:costViewLegend,
                 color:'#8fd31a',
                 yAxis:axisNumber,
                 type:'line',
@@ -2941,16 +3164,6 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
                     data:marketCost,
                     shadow:false
                 });
-
-//                option.yAxis.push({ //For Cost
-//                    min:0,
-//                    gridLineWidth:0,
-//                    title:{
-//                        text:'',
-//                        align:'high'
-//                    }
-//                });
-//                axisNumber++;
             }
 
 
@@ -2959,7 +3172,7 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
 
         if (volumeView) {
             option.series.push({
-                name:'Customer Volume',
+                name:volumeViewLegend,
                 data:customerVolume,
                 color:'#3465cc',
                 yAxis:axisNumber,
@@ -2994,7 +3207,6 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
                 },
                 opposite:true
             });
-//            axisNumber++;
             if (marketView) {
                 option.series.push({
                     name:'Market Volume',
@@ -3006,15 +3218,97 @@ function displayChartView(contestData, volumeData, contestView, costView, fulfil
                     dashStyle:'ShortDash',
                     borderColor:'#002e88'
                 });
-//                option.yAxis.push({
-//                    min:0,
-//                    gridLineWidth:0,
-//                    title:{
-//                        text:'',
-//                        align:'high'
-//                    }
-//                });
             }
+            axisNumber++;
+        }
+
+        if(contestDurationView) {
+            option.series.push({
+                name: durationViewLegend,
+                color: '#07b5fa',
+                yAxis: axisNumber,
+                type: 'line',
+                data: customerContestDuration,
+                shadow: false
+            });
+
+            option.yAxis.push( { //For Contest Duration
+                min: 0,
+                title: {
+                    text: 'Contest Duration',
+                    style: {
+                        fontFamily: 'Arial',
+                        fontWeight: 'normal',
+                        fontSize: '11px',
+                        color: '#898989'
+                    }
+                },
+                labels: {
+                    style: {
+                        fontFamily: 'Arial',
+                        fontSize: '11px',
+                        color: '#898989'
+                    }
+                }
+            });
+
+            if(marketView) {
+                option.series.push({
+                    name: "Average Market Contest Duration",
+                    color: '#07b5fa',
+                    yAxis: axisNumber,
+                    type: 'line',
+                    dashStyle: 'ShortDash',
+                    showInLegend : false,
+                    data: marketContestDuration,
+                    shadow: false
+                });
+            }
+            axisNumber++;
+        }
+
+        if (fulfillView) {
+            option.series.push({
+                name:fulfillViewLegend,
+                color:'#dc3812',
+                yAxis:axisNumber,
+                type:'line',
+                data:customerFulfillment,
+                shadow:false
+            });
+            option.yAxis.push({ //For Fulfillment
+                min:0,
+                title:{
+                    text:'Fulfillment',
+                    style:{
+                        fontFamily:'Arial',
+                        fontWeight:'normal',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    }
+                },
+                opposite:true
+            });
+            if (marketView) {
+                option.series.push({
+                    name:"Average Market Fulfillment",
+                    color:'#dc3812',
+                    yAxis:axisNumber,
+                    type:'line',
+                    dashStyle:'ShortDash',
+                    showInLegend:false,
+                    data:marketFulfillment,
+                    shadow:false
+                });
+            }
+            axisNumber++;
         }
 
         chart = new Highcharts.Chart(option);
@@ -3053,8 +3347,82 @@ function renderAnalysisByDisplayTypes() {
         }
     });
     if (all) {
-        displayChartView(analysisData, null, false, true, false, true, false);
+        displayChartView(analysisData, false, true, false, true, false);
     } else {
-        displayChartView(analysisData, null, contestDurationView, costView, fulfillmentView, volumeView, marketView)
+        displayChartView(analysisData, contestDurationView, costView, fulfillmentView, volumeView, marketView)
     }
 }
+
+function renderVolumeSummaryTable(volumeSummaryData) {
+
+    if(volumeTableLoaded) {
+        $("div.volumeView").show();
+        return;
+    }
+
+    var volumeSummaryTable = $("#volumeSummaryTable");
+
+    // clean the data first
+    volumeSummaryTable.find("colgroup col").remove();
+    volumeSummaryTable.find("thead tr th").remove();
+    volumeSummaryTable.find("tbody tr td").remove();
+
+    var first = true;
+    var totalAvgFailed = 0;
+    var totalAvgCompleted = 0;
+    var totalFailed = 0;
+    var totalCompleted = 0;
+
+    $.each(volumeSummaryData, function(key, value){
+        volumeSummaryTable.find("colgroup").append($("<col>").attr("width", "100"));
+        var header = $("<th/>").text(shortNameMap[key][1]);
+        if(first) {
+            header.addClass("firstColumn");
+        }
+        volumeSummaryTable.find("thead tr").append(header);
+        var row0 =$("<td/>").text(value['AvgCompleted'].toFixed(1));
+        totalAvgCompleted += value['AvgCompleted'];
+        if(first) {
+            row0.addClass("firstColumn");
+        }
+        volumeSummaryTable.find("tbody tr:eq(0)").append(row0);
+
+        var row1 =$("<td/>").text(value['AvgFailed'].toFixed(1));
+        totalAvgFailed += value['AvgFailed'];
+        if(first) {
+            row1.addClass("firstColumn");
+        }
+        volumeSummaryTable.find("tbody tr:eq(1)").append(row1);
+
+        var row2 =$("<td/>").text(value['totalCompleted'].toFixed(1));
+        totalCompleted += value['totalCompleted'];
+        if(first) {
+            row2.addClass("firstColumn");
+        }
+        volumeSummaryTable.find("tbody tr:eq(2)").append(row2);
+
+        var row3 =$("<td/>").text(value['totalFailed'].toFixed(1));
+        totalFailed += value['totalFailed'];
+        if(first) {
+            row3.addClass("firstColumn");
+        }
+        volumeSummaryTable.find("tbody tr:eq(3)").append(row3);
+        first = false;
+    });
+
+    volumeSummaryTable.find("colgroup").append($("<col>").attr("width", "100"));
+    var header = $("<th/>").text("Total");
+    volumeSummaryTable.find("thead tr").append(header);
+    var row0 =$("<td/>").text(totalAvgCompleted.toFixed(1));
+    volumeSummaryTable.find("tbody tr:eq(0)").append(row0);
+    var row1 =$("<td/>").text(totalAvgFailed.toFixed(1));
+    volumeSummaryTable.find("tbody tr:eq(1)").append(row1);
+    var row2 =$("<td/>").text(totalCompleted.toFixed(1));
+    volumeSummaryTable.find("tbody tr:eq(2)").append(row2);
+    var row3 =$("<td/>").text(totalFailed.toFixed(1));
+    volumeSummaryTable.find("tbody tr:eq(3)").append(row3);
+
+    $("div.volumeView").show();
+    volumeTableLoaded = true;
+}
+

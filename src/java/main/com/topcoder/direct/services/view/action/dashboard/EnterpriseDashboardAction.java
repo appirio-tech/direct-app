@@ -96,9 +96,18 @@ import javax.servlet.http.HttpServletRequest;
  *     {@link EnterpriseDashboardHealthAction} class.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.2 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 2) Change Notes:
+ * <ol>
+ *     <li>
+ *         Add volume summary data to the new enterprise dashboard analysis view.
+ *     </li>
+ * </ol>
+ * </p>
  * 
- * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv
- * @version 2.1
+ * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, GreatKevin
+ * @version 2.2
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -271,6 +280,11 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     /**
      * <p>Processes the incoming request.</p>
      *
+     * <p>
+     * Updates in version 2.2 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 2)
+     * - Add volume summary data to the ajax return data of newEnterpriseDashboard call
+     * </p>
+     *
      * @throws Exception if an unexpected error occurs.
      */
     @Override
@@ -415,17 +429,27 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             return;
         }
 
+        Map<String, Object> volumeData = null;
 
         // handle the volume view call
-        if (isVolumeViewCall) {
+        if (isVolumeViewCall || isNewEnterpriseDashboard) {
 
             List<EnterpriseDashboardVolumeViewDTO> volumeViewData = DataProvider.getEnterpriseDashboardVolumeView(projectIds[0],
-                    billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate, true);
+                                     billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate, true);
+            long[] statusIds = formData.getContestStatus();
 
-            setResult(generateVolumeViewData(volumeViewData, categoryIds,
-                    formData.getContestStatus(), startDate, endDate, projectCategories));
+            if(isNewEnterpriseDashboard) {
+                // use all status for analysis page
+                statusIds = new long[]{0L, 1L};
+            }
 
-            return;
+            volumeData = generateVolumeViewData(volumeViewData, categoryIds,
+                                                statusIds, startDate, endDate, projectCategories);
+
+            if (isVolumeViewCall) {
+                setResult(volumeData);
+                return;
+            }
         }
 
         Map<String, String> contestTypeAvgCost = new HashMap<String, String>();
@@ -818,6 +842,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 }
 
                 result.put("volume", volumesResult);
+                result.put("volumeSummaryData", volumeData == null ? null : volumeData.get("volumeSummaryData"));
             }
 
             setResult(result);

@@ -248,6 +248,18 @@ $(document).ready(function() {
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['number-trimmed-asc'] = function (a, b) {
+        var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['number-trimmed-desc'] = function (a, b) {
+        var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
     jQuery.fn.dataTableExt.oSort['money-asc'] = function (a, b) {
         var x = parseFloat(trim(a.replace(/[^\d]/g, "")));
         var y = parseFloat(trim(b.replace(/[^\d]/g, "")));

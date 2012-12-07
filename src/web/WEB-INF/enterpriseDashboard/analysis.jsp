@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
+  -
+  - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 2)
+  - - Add table view and volume view summary table.
   -
   - Description: The analysis contests page of the new enterprise dashboard
 --%>
@@ -25,6 +28,7 @@
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
 </head>
 
@@ -185,7 +189,7 @@
 
         <ul class="tabs customer">
             <li><a href="javascript:;" rel="customerSummary"
-                   class="customer current"><span><span>Customer Summary</span></span></a></li>
+                   class="customer current"><span><span class="customerReplacement">Summary</span></span></a></li>
             <li><a href="javascript:;" rel="marketSummary" class="market"><span><span>Market Summary</span></span></a>
             </li>
             <li><a href="javascript:;" rel="compare" class="compare"><span><span>Compare</span></span></a></li>
@@ -401,7 +405,7 @@
                             </thead>
                             <tbody>
                             <tr class="customerData">
-                                <td class="dataTitle">Customer</td>
+                                <td class="dataTitle customerReplacement">Customer</td>
                                 <td id="customerAverageFulfillmentComparison">90.26%</td>
                                 <td id="customerAverageCostComparison">$3,169.50</td>
                                 <td id="customerAverageDurationComparison">10 days</td>
@@ -466,8 +470,8 @@
         <tr>
             <th>Contest</th>
             <th>Market Avg</th>
-            <th>Contest (Breakdown)</th>
-            <th>Market Avg (Breakdown)</th>
+            <th>Contest</th>
+            <th>Market Avg</th>
             <th>Contest</th>
             <th>Market Avg</th>
         </tr>
@@ -542,27 +546,23 @@
     <div class="volumeViewContainer">
 
         <div class="sectionTop">
-
-            <h3>Customer Volume Summary</h3>
+            <h3 class="customerReplacement">Customer Volume Summary</h3>
         </div>
 
         <!-- data -->
         <div class="tableData">
-            <div class="infor">
-                <div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading"/></div>
-            </div>
             <div class="summanyTable">
                 <table border="0" cellpadding="0" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Status Summany</th>
+                        <th>Status Summary</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The percentage of (customer total member cost / market total member cost)">Avg.
+                                 title="The average completed contest volume in 30 days in the chosen date range">Avg.
                                 Completed
                             </div>
                         </td>
@@ -570,7 +570,7 @@
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The percentage of (customer total member cost / market total member cost)">Avg.
+                                 title="The average failed contest volume in 30 days in the chosen date range">Avg.
                                 Failed
                             </div>
                         </td>
@@ -578,7 +578,7 @@
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The percentage of (customer total member cost / market total member cost)">Total
+                                 title="The total completed contest volume in the chosen date range.">Total
                                 Completed
                             </div>
                         </td>
@@ -586,7 +586,7 @@
                     <tr>
                         <td class="lastRow">
                             <div class="fieldName tipToggle"
-                                 title="The percentage of (customer total member cost / market total member cost)">Total
+                                 title="The total failed contest volume in the chosen date range.">Total
                                 Failed
                             </div>
                         </td>
@@ -597,8 +597,8 @@
 
             <!-- jsonData -->
             <div class="jsonData">
-                <div class="jsonDataInner">
-                    <table border="0" cellpadding="0" cellspacing="0" class="tableHeader">
+                <div class="jsonDataInner volumeSummaryTableDiv">
+                    <table border="0" cellpadding="0" cellspacing="0" class="tableHeader" id="volumeSummaryTable">
                         <colgroup>
                             <col width="100"/>
                             <col width="100"/>
@@ -660,11 +660,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="27" class="firstColumn">
-                                <div class="placeHolder"></div>
-                            </td>
-                        </tr>
+                            <tr>
+
+                            </tr>
+                            <tr class="odd">
+
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            <tr class="odd">
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>
