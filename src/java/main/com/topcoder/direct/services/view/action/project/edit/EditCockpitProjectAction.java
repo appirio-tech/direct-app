@@ -400,7 +400,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             if (assigned) {
                 assignedGroups.add(group);
             } else {
-                if (group.getClient().getId() == clientIdForProject) {
+                if (clientIdForProject != null && group.getClient().getId() == clientIdForProject) {
                     unassignedGroups.add(group);
                 }
             }
