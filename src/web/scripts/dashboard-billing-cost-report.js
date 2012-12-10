@@ -330,16 +330,24 @@ $(document).ready(function() {
     var invoiceTypeNames = [];
     var invoiceAmounts = [];
     var processeds = [];
+    var referenceIds = [];
     var toUpdate = false;
     var updateSingle = false;
     var updateInvoiceId;
     var updateInvoiceRecordId;
     var updateRowChkbox;
+    
     $("#invoiceNumber").keyup(function() {
         if ($.trim($(this).val()).length > 0) {
             $(".errorInfo", $(this).parent()).hide();
         }
     });
+    $("#creditAmount").keyup(function() {
+        if ($.trim($(this).val()).length > 0) {
+            $(".errorInfo", $(this).parent()).hide();
+        }
+        $(".errorInfo2", $(this).parent()).hide(); 
+    });    
 
 
     
@@ -382,6 +390,17 @@ $(document).ready(function() {
         });
     };
     
+    function formatCreditAmount(amount) {
+        var creditAmount = $.trim(amount);
+        if (creditAmount.length == 0 || creditAmount.charAt(0) != '-') {
+            return 0;
+        }
+        if (!checkNumber(creditAmount.substr(1)) || isNaN(creditAmount.substr(1)) || creditAmount.length == 1) {
+            return 0;
+        }
+        return -parseFloat(creditAmount.substr(1));
+    }
+    
     // The click handler of the SAVE button in the invoice popup
     $("#processInvoiceRecordModal .updateInvoice").click(function() {
         var invoiceNumber = $.trim($("#invoiceNumber").val());
@@ -390,6 +409,20 @@ $(document).ready(function() {
             $(".errorInfo", $("#invoiceNumber").parent()).show();
             return;
         }
+        var creditAmount = formatCreditAmount($.trim($("#creditAmount").val()));
+        var isCredit = $("#creditAmount").is(":visible");
+        // check if credit amount is valid
+        if (isCredit) {
+            if ($.trim($("#creditAmount").val()).length == 0) {
+                $(".errorInfo1", $("#creditAmount").parent()).show();
+                return;
+            } else if (creditAmount >= 0) {
+                $(".errorInfo2", $("#creditAmount").parent()).show();
+                return;
+            }
+            invoiceAmounts.push($.trim($("#creditAmount").val()));
+        }
+        
         if (toUpdate) {
             // update the existing invoice
             updateInvoice(updateInvoiceId, invoiceNumber, invoiceDate, updateSingle, updateInvoiceRecordId, true, function(result) {
@@ -435,42 +468,50 @@ $(document).ready(function() {
         if (contestIds.length == 0) return;
         
         // the function to update the table rows when the invoice has been created successfully
-        var updateFunc = function(result) {
-            var invoiceId = result.invoiceId;
-            updateExistsRows(invoiceId, invoiceNumber, invoiceDate);
-            
-            var chs = $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes()));
-            var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
-            
-            var fd = formatDate(invoiceDate);
-            chs.each(function() {
-                $("td.invoiceAmount", $(this).parent().parent()).html("$" + parseFloat($(this).attr("invoiceamount")).formatMoney(2));
-                if (ths != 19) {
-                    $("td.invoiceDate", $(this).parent().parent()).html(fd);
-                    $("td.invoiceNumber", $(this).parent().parent()).html(invoiceNumber);
-                } else {
-                    $("td.invoiceDate", $(this).parent().parent()).html('<a href="#" class="updInvoiceDate">' + fd + '</a>');
-                    $("td.invoiceNumber", $(this).parent().parent()).html('<a href="#" class="updInvoiceDate">' + invoiceNumber + '</a>');
-                }
-                $(this).attr("invoiceid", invoiceId);
-                $(this).attr("invoicenumber", invoiceNumber);
-                $(this).attr("invoicedate", invoiceDate);
+        var updateFunc;
+        if (!isCredit) {
+            updateFunc = function(result) {
+                var invoiceId = result.invoiceId;
+                updateExistsRows(invoiceId, invoiceNumber, invoiceDate);
                 
-                var data = $.billingCostReportDataTable.fnGetData($(this).parent().parent()[0]);
-                data[14] = $("td.invoiceNumber", $(this).parent().parent()).html();
-                data[15] = $("td.invoiceNumber", $(this).parent().parent()).html();
-            });
-            chs.attr("disabled", "disabled");
-            $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
-        };
-        
-        updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, true, function(result) {
+                var chs = $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes()));
+                var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
+                
+                var fd = formatDate(invoiceDate);
+                chs.each(function(index) {
+                    $("td.invoiceAmount", $(this).parent().parent()).html("$" + parseFloat($(this).attr("invoiceamount")).formatMoney(2));
+                    if (ths != 21) {
+                        $("td.invoiceDate", $(this).parent().parent()).html(fd);
+                        $("td.invoiceNumber", $(this).parent().parent()).html(invoiceNumber);
+                    } else {
+                        $("td.invoiceDate", $(this).parent().parent()).html('<a href="#" class="updInvoiceDate">' + fd + '</a>');
+                        $("td.invoiceNumber", $(this).parent().parent()).html('<a href="#" class="updInvoiceDate">' + invoiceNumber + '</a>');
+                        $("td.creditAmount", $(this).parent().parent()).html('<a href="#" class="addCredit">Credit</a>');
+                    }
+                    var invoiceRecordId = result.invoiceRecordIds[index];
+                    $(this).attr("invoicerecordid", invoiceRecordId);
+                    $(this).attr("invoiceid", invoiceId);
+                    $(this).attr("invoicenumber", invoiceNumber);
+                    $(this).attr("invoicedate", invoiceDate);
+                    
+                    var data = $.billingCostReportDataTable.fnGetData($(this).parent().parent()[0]);
+                    data[14] = $("td.invoiceNumber", $(this).parent().parent()).html();
+                    data[15] = $("td.invoiceNumber", $(this).parent().parent()).html();
+                });
+                chs.attr("disabled", "disabled");
+                $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
+            };
+        } else {
+            updateFunc = function(result) {
+            };
+        }
+        updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, true, function(result) {
             if (result.invoiceNumberExists) {
             	// the invoice number already exists, display a warning popup first
                 modalLoad("#invoiceNumberDuplicatedModal");
                 setTimeout(function(){modalLoad("#invoiceNumberDuplicatedModal");}, 100);
                 $("#invoiceNumberDuplicatedModal .updateInvoice").unbind("click").click(function() {
-                    updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, false, function(result) {
+                    updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, false, function(result) {
                         updateFunc(result);
                     }, function() {
                     
@@ -494,6 +535,7 @@ $(document).ready(function() {
         $("#invoiceNumber").val(chkbox.attr("invoicenumber"));
         $("#invoiceDate").val(chkbox.attr("invoicedate")).trigger('change');
         $(".errorInfo", $("#invoiceNumber").parent()).hide();
+        $(".creditRow").hide();
         // the invoice id we need to update
         updateInvoiceId = chkbox.attr("invoiceid");
         updateRowChkbox = chkbox;
@@ -510,6 +552,7 @@ $(document).ready(function() {
         $("#invoiceNumber").val(chkbox.attr("invoicenumber"));
         $("#invoiceDate").val(chkbox.attr("invoicedate")).trigger('change');
         $(".errorInfo", $("#invoiceNumber").parent()).hide();
+        $(".creditRow").hide();
         // the invoice id we need to update
         updateInvoiceId = chkbox.attr("invoiceid");
         updateInvoiceRecordId = chkbox.attr("invoicerecordid");
@@ -571,6 +614,7 @@ $(document).ready(function() {
         $("#invoiceNumber").val("");
         $("#invoiceDate").val($("#currentDate").val()).trigger('change');
         $(".errorInfo", $("#invoiceNumber").parent()).hide();
+        $(".creditRow").hide();
         modalLoad("#processInvoiceRecordModal");
     });
     
@@ -593,6 +637,32 @@ $(document).ready(function() {
         }
     });
     
+    // adding credit feature on invoice history page
+    $(".addCredit").live("click", function() {
+        contestIds = [];
+        paymentIds = [];
+        referenceIds = [];
+        invoiceTypeNames = [];
+        invoiceAmounts = [];
+        processeds = [];
+        var record = $("input[name='invoiceRecordProcessed']", $(this).parent().parent());
+        contestIds.push(record.attr("contestid"));
+        paymentIds.push(0);
+        referenceIds.push(record.attr("invoicerecordid"));
+        invoiceTypeNames.push("Credit");
+        processeds.push(true);
+ 
+        toUpdate = false;
+        $("#processInvoiceRecordModal .title").html("Add Credit");
+        $("#invoiceNumber").val("");
+        $("#creditAmount").val("");
+        $(".errorInfo", $("#invoiceNumber").parent()).hide();
+        $(".errorInfo", $("#creditAmount").parent()).hide();
+        $(".creditRow").show();
+        $("#invoiceDate").val($("#currentDate").val()).trigger('change');
+        modalLoad("#processInvoiceRecordModal");
+        return false;
+    });
 });
 
 /**
@@ -600,6 +670,7 @@ $(document).ready(function() {
  * 
  * @param contestIds the contest IDs of the invoice records.
  * @param paymentIds the payment IDs of the invoice records.
+ * @param referenceIds the reference IDs of the invoice records.
  * @param invoiceTypeNames the invoice type names of the invoice records.
  * @param invoiceAmounts the invoice amount of the invoice records.
  * @param processeds the processed flags of the invoice records.
@@ -609,9 +680,9 @@ $(document).ready(function() {
  * @param succCallback the callback function which will be called when AJAX completed.
  * @param errorCallback the callback function which will be called when AJAX failed.
  */
-function updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, checkInvoiceNumber, succCallback, errorCallback) {
+function updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, checkInvoiceNumber, succCallback, errorCallback) {
     if (contestIds.length == 0) return;
-    var data = {contestIds: contestIds, paymentIds: paymentIds, invoiceTypeNames: invoiceTypeNames, invoiceAmounts: invoiceAmounts, processeds: processeds,
+    var data = {contestIds: contestIds, paymentIds: paymentIds, referenceIds: referenceIds, invoiceTypeNames: invoiceTypeNames, invoiceAmounts: invoiceAmounts, processeds: processeds,
                 invoiceNumber: invoiceNumber, invoiceDate: invoiceDate, checkInvoiceNumber: checkInvoiceNumber};
     modalAllClose();
     $.ajax({

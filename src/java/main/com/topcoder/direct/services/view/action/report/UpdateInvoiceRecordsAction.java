@@ -23,6 +23,7 @@ import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
@@ -87,6 +88,11 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
      * <p>A <code>List</code> providing the contest IDs of the invoice records which needs to be updated.</p>
      */
     private List<Long> contestIds;
+    
+    /**
+     * <p>A <code>List</code> providing the reference IDs of the credit invoice records which needs to be updated.</p>
+     */
+    private List<Long> referenceIds;
     
     /**
      * <p>A <code>List</code> providing the invoice type names of the invoice records which needs to be updated.</p>
@@ -184,7 +190,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
             }
             List<Long> invoiceRecordIds = new ArrayList<Long>();
             for (int i = 0; i < contestIds.size(); i++) {
-                InvoiceRecord record;
+                InvoiceRecord record = null;
                 String invoiceTypeName = invoiceTypeNames.get(i).trim();
                 InvoiceType invoiceType = DirectUtils.getInvoiceType(invoiceTypeName, invoiceTypes);
                 if (invoiceType == null) {
@@ -194,10 +200,12 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     // payment_id > 0, get invoice record by payment_id and invoice_type_id
                     record = invoiceRecordDAO.getByPaymentAndInvoiceType(paymentIds.get(i), invoiceType.getId());
                 } else {
-                    // payment_id = 0, get invoice record by contest_id and invoice_type_id
-                    record = invoiceRecordDAO.getByContestAndInvoiceType(contestIds.get(i), invoiceType.getId());
-                    if (record != null && record.getPaymentId() != null) {
-                        throw new DirectException("Payment Id should be zero.");
+                    if (!PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
+                        // payment_id = 0, get invoice record by contest_id and invoice_type_id
+                        record = invoiceRecordDAO.getByContestAndInvoiceType(contestIds.get(i), invoiceType.getId());
+                        if (record != null && record.getPaymentId() != null) {
+                            throw new DirectException("Payment Id should be zero.");
+                        }
                     }
                 }
                 
@@ -216,6 +224,9 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record = new InvoiceRecord();
                     record.setBillingAccountId(recordData.getBillingAccountId());
                     record.setContestId(recordData.getContestId());
+                    if (PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
+                        record.setReferenceId(referenceIds.get(i));
+                    }
                     if (paymentIds.get(i) > 0) {
                         record.setPaymentId(paymentIds.get(i));
                         //record.setInvoiceType(DirectUtils.getInvoiceType(recordData.getInvoiceType().trim(), invoiceTypes));
@@ -302,6 +313,15 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
         this.contestIds = contestIds;
     }
 
+    /**
+     * <p>Sets the reference IDs of the credit invoice records which needs to be updated.</p>
+     * 
+     * @param referenceIds A <code>List</code> providing the reference IDs of the credit invoice records which needs to be updated.
+     */
+    public void setReferenceIds(List<Long> referenceIds) {
+        this.referenceIds = referenceIds;
+    }
+    
     /**
      * <p>Sets the invoice type names of the invoice records which needs to be updated.</p>
      * 

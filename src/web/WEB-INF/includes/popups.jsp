@@ -254,6 +254,13 @@
                         <div class="clearFix"></div>
                         <div class="errorInfo hide">Please input invoice number</div>
                     </div>
+                    <div class="modalRow creditRow hide">
+                        <label>Credit Amount:</label>
+                        <input type="text" class="text" id="creditAmount"/>
+                        <div class="clearFix"></div>
+                        <div class="errorInfo errorInfo1 hide">Please input credit amount</div>
+                        <div class="errorInfo errorInfo2 hide">Credit amount must be negative</div>
+                    </div>
                     <div class="modalRow">
                         <label class="fLeft">Invoice Date:</label>
                         <input type="text" class="text fLeft date-pick" id="invoiceDate" readonly value="" />

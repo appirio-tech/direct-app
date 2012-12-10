@@ -387,7 +387,7 @@
     <thead>
     <tr>
         <th class="tableTitle" colspan="
-        <c:if test="${viewData.canProcessInvoices}">20</c:if>
+        <c:if test="${viewData.canProcessInvoices}">21</c:if>
         <c:if test="${!viewData.canProcessInvoices}">17</c:if>
         
         ">
@@ -431,6 +431,7 @@
             <label for="checkAllInvoice">All</label>
             <input type="button" value="Invoice" class="processBtn">
         </th>
+        <th class="tableColumn" style="width:50px">&nbsp;Credit&nbsp;</th>
         </c:if>
     </tr>
     </thead>
@@ -548,6 +549,11 @@
             <td>
                 <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
             </td>
+            <td class="creditAmount">
+                <c:if test="${not empty invoiceNumber}">
+                    <a href="#" class="addCredit">Credit</a>
+                </c:if>
+            </td>            
             </c:if>
 
         </tr>

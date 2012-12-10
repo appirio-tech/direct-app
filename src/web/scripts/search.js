@@ -899,6 +899,7 @@ $(document).ready(function() {
     if (ths >= 18) {
         aoColumns.push({ "sSortDataType": "html" });
         aoColumns.push({ "bSortable": false });
+        aoColumns.push({ "bSortable": false });
     }
     $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {

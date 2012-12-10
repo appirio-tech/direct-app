@@ -75,8 +75,13 @@ public enum PaymentType {
      *
      * @since 1.1
      */
-    PLATFORM_FEE(11, "Platform Fee");
+    PLATFORM_FEE(11, "Platform Fee"),
 
+    /**
+     * Credit payment type.
+     */
+    CREDIT(12, "Credit");
+     
     /**
      * The id of the payment type.
      */
