@@ -17,8 +17,11 @@
  *  Version 2.2 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added code for Group
  *  Permissions area
  *
+ *  Version 2.3 (Release Assembly - TopCoder Direct Project Audit v1.0)
+ *  - Fix the bug when saving direct project.
+ *
  * @author GreatKevin, TCSDEVELOPER
- * @version 2.2
+ * @version 2.3
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -1327,8 +1330,8 @@ $(document).ready(function (e) {
             // set project status id
             formData.projectStatusId = $("input[name='projectStatus']:checked").val();
             // set project completion date
-            if ($("#editProjectStatus label.completedStatus").text() != "Completed") {
-                formData.completionDate = $("#editProjectStatus label.completedStatus").text().substring(13);
+            if ($("#editProjectStatus label.completedStatus").text().trim() != "Completed") {
+                formData.completionDate = $("#editProjectStatus label.completedStatus").text().trim().substring(13);
             }
         
             formData.projectTypeId = $("#projectType").val();

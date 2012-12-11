@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, TCSDEVELOPER
-  - Version: 1.2.1
+  - Version: 1.2.2
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
@@ -16,6 +16,9 @@
   - - Add group permissions area
   -
   - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
+  -
+  - Version 1.2.2 (Release Assembly - TopCoder Direct Project Audit v1.0) changes
+  - - Fix the bug when rendering the completion date.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -394,7 +397,7 @@
                 <input autocomplete="off" name="projectStatus" type="radio" value="4" class="completedStatus"
                        <s:if test='viewData.project.projectStatusId == 4L'>checked="checked"</s:if> />
                 <label class="completedStatus">
-                    <s:if test='viewData.project.projectStatusId == 4L && viewData.project.completionDate != null'>Completed on ${viewData.project.completionDate}</s:if>
+                    <s:if test='viewData.project.projectStatusId == 4L && viewData.project.completionDate != null'>Completed on <fmt:formatDate pattern="MM/dd/yyyy" value="${viewData.project.completionDate}" /></s:if>
                     <s:else>Completed</s:else>
                 </label>
             </li>
