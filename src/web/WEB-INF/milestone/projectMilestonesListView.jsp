@@ -112,25 +112,12 @@
                                                         </s:if>
                                                     </div>
                                                     <div class="projectD">
-
-                                                        <s:if test="%{description.length() > 100}">
-                                                           <span class="short">
-                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
-                                                             <a href="javascript:;">more</a>
-                                                           </span>
-                                                           <span class="long hide">
+                                                         <span class="long">
                                                                <span>
                                                                    <s:property value="description"/>
                                                                </span>
-                                                               <a href="javascript:;">Hide</a>
-                                                           </span>
+                                                         </span>
 
-                                                        </s:if>
-                                                        <s:else>
-                                                           <span class="short">
-                                                               <s:property value="description"/>
-                                                           </span>
-                                                        </s:else>
                                                     </div>
                                                 </div>
                                                 <div class="actions">
@@ -172,25 +159,11 @@
                                                         </s:if>
                                                     </div>
                                                     <div class="projectD">
-
-                                                        <s:if test="description.length() > 100">
-                                                           <span class="short">
-                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
-                                                             <a href="javascript:;">more</a>
-                                                           </span>
-                                                           <span class="long hide">
+                                                         <span class="long">
                                                                <span>
                                                                    <s:property value="description"/>
                                                                </span>
-                                                               <a href="javascript:;">Hide</a>
-                                                           </span>
-
-                                                        </s:if>
-                                                        <s:else>
-                                                           <span class="short">
-                                                               <s:property value="description"/>
-                                                           </span>
-                                                        </s:else>
+                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="actions">
@@ -234,25 +207,11 @@
                                                         </s:if>
                                                     </div>
                                                     <div class="projectD">
-
-                                                        <s:if test="description.length() > 100">
-                                                           <span class="short">
-                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
-                                                             <a href="javascript:;">more</a>
-                                                           </span>
-                                                           <span class="long hide">
+                                                         <span class="long">
                                                                <span>
                                                                    <s:property value="description"/>
                                                                </span>
-                                                               <a href="javascript:;">Hide</a>
-                                                           </span>
-
-                                                        </s:if>
-                                                        <s:else>
-                                                           <span class="short">
-                                                               <s:property value="description"/>
-                                                           </span>
-                                                        </s:else>
+                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="actions">

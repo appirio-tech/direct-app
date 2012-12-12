@@ -493,7 +493,7 @@
                          </li>
 
                         <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                            <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
+                            <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
                         </li>
 
                         <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>

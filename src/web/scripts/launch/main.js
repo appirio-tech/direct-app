@@ -753,10 +753,10 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
           modalClose();
-          showSuccessfulMessage("Software Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.");
+          showSuccessfulMessageWithOperation("Software Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
           modalClose();
-          showSuccessfulMessage("Software Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.");
+            showSuccessfulMessageWithOperation("Software Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
 
         //update endDate
@@ -775,9 +775,9 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
         	mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showSuccessfulMessage("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.");
+          showSuccessfulMessageWithOperation("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
-          showSuccessfulMessage("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.");
+            showSuccessfulMessageWithOperation("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
 
         //update admin fee, to be fixed

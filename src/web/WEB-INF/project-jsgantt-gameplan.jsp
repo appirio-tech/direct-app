@@ -95,6 +95,10 @@
                                 </a> &gt;
                                 <strong>Game Plan</strong>
                             </div>
+                            <div class="batchButtons batchButtons2 gamePlanBatchButtons">
+                                <!--<a class="batchCreate" href="javascript:;">Batch Create</a>-->
+                                <a class="batchEdit" href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Batch Edit</a>
+                            </div>
                             <div class="areaHeader" style="width:400px">
                                 <div style="float:left"><h2 class="title">Game Plan Gantt Chart</h2> </div>
                                 <input type="hidden" id="projectIDHolder" value="${formData.projectId}"/>

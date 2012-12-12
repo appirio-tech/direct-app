@@ -711,7 +711,7 @@ function addNewProject() {
                                 $('#projects').getSetSSValue(projectData.projectId);
 
                                 modalCloseAddNewProject();
-                                showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
+                                showSuccessfulMessageWithOperation('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.', "VIEW PROJECT", function(){window.open ('/direct/projectOverview?formData.projectId=' + projectData.projectId,'_self',false);} );
 
                                 // we need to clear the copilots options and set to unassigned for new created project
                                 $("#contestCopilot").html("");

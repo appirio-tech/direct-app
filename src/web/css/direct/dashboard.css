@@ -736,11 +736,20 @@ BODY#page{
 /*----- area1 ------*/
 
 #area1 .area1Content .batchButtons{
-    position: absolute;
+     position: absolute;
+     top: 7px;
+     right: 0;
+     float: right;
+     font-size: 11px;
+ }
+
+#area1 .area1Content .batchButtons2{
     top: 7px;
     right: 0;
     float: right;
     font-size: 11px;
+    position: relative !important;
+    padding-right: 25px !important;
 }
 
 #area1 .area1Content .gamePlanBatchButtons {
