@@ -7414,6 +7414,7 @@ div.notif-div{
 TABLE#activeContestData TD SPAN{ /* contest status */
     font-weight: bold;
     padding-left: 14px;
+    display: block;
 }
 
 TABLE#activeContestData TD SPAN.completed {
