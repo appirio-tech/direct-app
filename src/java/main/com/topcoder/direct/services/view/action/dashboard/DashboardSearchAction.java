@@ -48,17 +48,17 @@ import java.util.Set;
  *  </li>
  *  </ol>
  * </p>
- * 
+ *
  * <p>
  *  Version 2.2 (Module Assembly - TC Cockpit Operations Dashboard For PMs) change notes:
  *   <ol>
  *     <li>
- *         Updated method {@link #executeAction} to get the project metadata of which group flag is true for 
+ *         Updated method {@link #executeAction} to get the project metadata of which group flag is true for
  *         operationsDashboardEnterprise page.
  *     </li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  *  Version 2.3 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) change notes:
  *   <ol>
@@ -189,7 +189,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
     }
 
     /**
-     * Gets the project metadata of which group flag is true for search projects, all projects page, and 
+     * Gets the project metadata of which group flag is true for search projects, all projects page, and
      * operationsDashboardEnterprise page.
      * Changes in version 2.3: get customers and projectManagers.
      *
@@ -223,8 +223,12 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                         customers.add(item.getData().getCustomerName());
                     }
                     if(item.getData().getProjectManagerName() != null && 0 != item.getData().getProjectManagerName().trim().length()) {
-                        if(!projectManagers.contains(item.getData().getProjectManagerName())) {
-                            projectManagers.add(item.getData().getProjectManagerName());
+                        String pmNames = item.getData().getProjectManagerName();
+                        String[] pmNamesArray = pmNames.split(",");
+                        for(String name : pmNamesArray) {
+                            if(!projectManagers.contains(name.trim())) {
+                                projectManagers.add(name.trim());
+                            }
                         }
                     }
                 }

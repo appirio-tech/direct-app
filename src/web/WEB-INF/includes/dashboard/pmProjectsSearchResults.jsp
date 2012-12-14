@@ -78,45 +78,32 @@
                     	<fmt:formatNumber value="${projectSummary.projectFulfillment}" pattern="##0.##"/>%
                     </td>
                     <td class="budgetRow">
-                        <c:choose>
-                            <c:when test="${projectSummary.totalBudget > 0}">
                                 <span class="costPercentage " style="font-weight:normal;">
+                                <c:if test="${projectSummary.totalBudget > 0}">
                                     <fmt:formatNumber value="${(projectSummary.actualCost + projectSummary.projectedCost) / projectSummary.totalBudget}" pattern="##0.##"/>%
+                                </c:if>
                                 </span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="costPercentage " style="font-weight:normal;">
-                                </span>
-                            </c:otherwise>
-                        </c:choose>
-                    	
-                        <div class="allThreeCosts hide" style="width:180px; font-weight:normal;">
-                            <div style="font-weight:normal;">Total Budget: <fmt:formatNumber value="${projectSummary.totalBudget}" pattern="$#,##0.00"/></div>
-                            <div style="font-weight:normal;">Actual Cost: <fmt:formatNumber value="${projectSummary.actualCost}" pattern="$#,##0.00"/></div>
-                            <div style="font-weight:normal;">Projected Cost: <fmt:formatNumber value="${projectSummary.projectedCost}" pattern="$#,##0.00"/></div>
-                        </div>
+				<div class="allThreeCosts hide" style="width:180px; font-weight:normal;">
+					<div style="font-weight:normal;">Total Budget: <fmt:formatNumber value="${projectSummary.totalBudget}" pattern="$#,##0.00"/></div>
+					<div style="font-weight:normal;">Actual Cost: <fmt:formatNumber value="${projectSummary.actualCost}" pattern="$#,##0.00"/></div>
+					<div style="font-weight:normal;">Projected Cost: <fmt:formatNumber value="${projectSummary.projectedCost}" pattern="$#,##0.00"/></div>
+				</div>                            
                     </td>
                     <td class="hide"><span class='<s:property value="projectStatusType.projectStatusName.toLowerCase()"/>'
                               id="projectStatus${projectSummary.projectId}"
                               name="<s:property value="projectStatusType.projectStatusId"/>">${projectStatusType.projectStatusName}</span>
                     </td>
-                    <td class="durationRow">
-                        <c:choose>
-                        	<c:when test="${projectSummary.plannedDuration > 0}">
+                    <td class="durationRow">                        	
                                 <span class="durationPercentage " style="font-weight:normal;">
+                                <c:if test="${projectSummary.plannedDuration > 0}">
                                     <fmt:formatNumber value="${(projectSummary.actualDuration + projectSummary.projectedDuration) / projectSummary.plannedDuration}" pattern="##0.##"/>%
+                                </c:if>
                                 </span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="durationPercentage " style="font-weight:normal;">
-                                </span>
-                            </c:otherwise>
-                        </c:choose>
-                        <div class="allThreeDurations hide" style="width:180px; font-weight:normal;">
-                            <div style="font-weight:normal;">Planned Duration: ${projectSummary.plannedDuration}</div>
-                            <div style="font-weight:normal;">Actual Duration: ${projectSummary.actualDuration}</div>
-                            <div style="font-weight:normal;">Projected Duration: ${projectSummary.projectedDuration}</div>
-                        </div>
+				<div class="allThreeDurations hide" style="width:180px; font-weight:normal;">
+					<div style="font-weight:normal;">Planned Duration: ${projectSummary.plannedDuration}</div>
+					<div style="font-weight:normal;">Actual Duration: ${projectSummary.actualDuration}</div>
+					<div style="font-weight:normal;">Projected Duration: ${projectSummary.projectedDuration}</div>
+				</div>                            
                     </td>
                     <td>
 					 <c:if test="${projectSummary.projectForumCategoryId > 0}">
