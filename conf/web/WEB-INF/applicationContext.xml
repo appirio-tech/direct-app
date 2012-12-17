@@ -346,6 +346,11 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="enterpriseDashboardEntryFuturePeekAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.BaseDashboardAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="allowFuturePeek" value="true"/>
+    </bean>
+
     <bean id="enterpriseDashboardFinancialAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.DashboardFinancialAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

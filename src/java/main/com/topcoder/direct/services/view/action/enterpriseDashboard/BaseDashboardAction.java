@@ -57,6 +57,13 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
     private Map<Long, String> clientMetadataKeys;
 
     /**
+     * Indicates whether the enterprise dashboard page allow checking future timeline.
+     *
+     * @since BUGR-7664
+     */
+    private boolean allowFuturePeek;
+
+    /**
      * Gets the clients map.
      *
      * @return the clients map.
@@ -150,6 +157,11 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
         int startYear =  DEFAULT_START_YEAR;
         int endYear = Calendar.getInstance().get(Calendar.YEAR);
 
+        if(allowFuturePeek) {
+            // allow to view next year if allowFuturePeek is true
+            endYear++;
+        }
+
         List<String> monthOptions = new ArrayList<String>();
 
         for(int year = startYear; year <= endYear; year++) {
@@ -204,5 +216,14 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
             }
 
         }
+    }
+
+    /**
+     * Sets whether the enterprise dashboard page allows future peek.
+     *
+      * @param allowFuturePeek whether the enterprise dashboard page allows future peek.
+     */
+    public void setAllowFuturePeek(boolean allowFuturePeek) {
+        this.allowFuturePeek = allowFuturePeek;
     }
 }

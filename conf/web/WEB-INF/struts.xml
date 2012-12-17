@@ -1581,7 +1581,7 @@
     </package>
 
     <package name="enterpriseDashboard" namespace="/enterpriseDashboard" extends="base">
-        <action name="overview" class="enterpriseDashboardEntryAction">
+        <action name="overview" class="enterpriseDashboardEntryFuturePeekAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/overview.jsp</result>
         </action>
@@ -1589,11 +1589,11 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/financial.jsp</result>
         </action>
-        <action name="pipeline" class="enterpriseDashboardEntryAction">
+        <action name="pipeline" class="enterpriseDashboardEntryFuturePeekAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
         </action>
-	    <action name="roadmap" class="enterpriseDashboardEntryAction">
+	    <action name="roadmap" class="enterpriseDashboardEntryFuturePeekAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/roadmap.jsp</result>
         </action>
