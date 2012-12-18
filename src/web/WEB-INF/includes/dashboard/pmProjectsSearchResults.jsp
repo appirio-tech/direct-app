@@ -81,8 +81,8 @@
                         <c:choose>
                             <c:when test="${projectSummary.totalBudget > 0}">
                                 <span class="costPercentage " style="font-weight:normal;">
-                                    <fmt:formatNumber value="${projectSummary.actualCost / projectSummary.totalBudget}" pattern="##0.##"/>% Actual
-				    <br /><fmt:formatNumber value="${projectSummary.projectedCost / projectSummary.totalBudget}" pattern="##0.##"/>% Projected
+                                    <fmt:formatNumber value="${projectSummary.actualCost / projectSummary.totalBudget}" pattern="##0.##" type="percent"/> Actual
+				    <br /><fmt:formatNumber value="${projectSummary.projectedCost / projectSummary.totalBudget}" pattern="##0.##" type="percent"/> Projected
                                 </span>
                             </c:when>
                             <c:otherwise>
@@ -113,8 +113,8 @@
                         <c:choose>
                         	<c:when test="${projectSummary.plannedDuration > 0}">
                                 <span class="durationPercentage " style="font-weight:normal;">
-                                    <fmt:formatNumber value="${projectSummary.actualDuration / projectSummary.plannedDuration}" pattern="##0.##"/>% Actual
-                                    <br /><fmt:formatNumber value="${projectSummary.projectedDuration / projectSummary.plannedDuration}" pattern="##0.##"/>% Projected
+                                    <fmt:formatNumber value="${projectSummary.actualDuration / projectSummary.plannedDuration}" pattern="##0.##" type="percent"/> Actual
+                                    <br /><fmt:formatNumber value="${projectSummary.projectedDuration / projectSummary.plannedDuration}" pattern="##0.##" type="percent"/> Projected
                                 </span>
                             </c:when>
                             <c:otherwise>
