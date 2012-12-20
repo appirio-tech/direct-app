@@ -299,6 +299,7 @@
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="userService" ref="userService"/>
+		<property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="export" value="true"/>
     </bean>
     
