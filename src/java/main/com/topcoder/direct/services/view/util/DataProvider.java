@@ -4764,13 +4764,6 @@ public class DataProvider {
                 costDTO.setReferenceId(row.getStringItem("reference_id"));
             }
 
-            if (row.getItem("is_studio").getResultData() != null) {
-                if (row.getIntItem("is_studio") == 1)
-                {
-                    costDTO.setStudio(true);
-                }
-            }
-
             if (row.getItem("invoice_amount").getResultData() != null) {
                 costDTO.setInvoiceAmount(row.getDoubleItem("invoice_amount"));
             }
