@@ -460,19 +460,9 @@
                 <s:property value="projectFilterValue"/>
             </td>
             <td>
-
-                <s:if test="studio">
-                    <a class="longWordsBreak"
-                       href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="contest.id"/></s:url>">
-                        <s:property value="contest.name"/></a>
-                </s:if>
-                <s:else>
                     <a class="longWordsBreak"
                        href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contest.id"/></s:url>">
                          <s:property value="contest.name"/></a>
-                </s:else>
-
-
             </td>
             <td>
                 <s:if test="paymentType!='Platform Fee'"><s:property value="contest.id"/></s:if>
