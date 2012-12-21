@@ -148,11 +148,11 @@
                             <div style="width: 180px;">
                                 <link:user userId="${poster.handleId}" handle="${poster.handle}"/>
                                 <c:choose>
-                                    <c:when test="${poster.daysSincePost > 1}">
-                                        ${poster.daysSincePost} days ago
+                                    <c:when test="${poster.daysSincePost > 1.0}">
+                                        ${fn:substringBefore(poster.daysSincePost, ".")} days ago
                                     </c:when>
                                     <c:otherwise>
-                                        ${poster.daysSincePost} day ago
+                                        ${fn:substringBefore(poster.daysSincePost, ".")} day ago
                                     </c:otherwise>
                                 </c:choose>
                             </div>

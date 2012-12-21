@@ -145,7 +145,7 @@
                                             <div class='column2'>
                                                 <div class='row'>
                                                     <span class='title'>Project Filters</span>
-                                                    <select id='groupBy' disabled="disabled" <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">style="width: 180px;"</s:if>>
+                                                    <select id='groupBy' disabled="disabled" <s:if test="viewData.resultType.name() == 'PM_PROJECTS'"></s:if>>
                                                         <option value='no'>No Filter Applied</option>
                                                     </select>
                                                 </div>

@@ -120,6 +120,39 @@ $(document).ready(function() {
         }
         return n;
     }
+	function getMinimalLastPosterDay(text, async) {
+		var trimmed = trim(text);
+		if(trimmed == '') {
+			 if(async) {
+				return 2147483647;
+			} else {
+				return -1;
+			}
+		}
+		var dIdx = trimmed.indexOf('days ago');
+		if(dIdx < 0) {
+			dIdx = trimmed.indexOf('day ago');
+		}
+		var minimalDay = trimmed.substring(trimmed.indexOf('</a>') + '</a>'.length, dIdx);
+		return parseInt(minimalDay);
+	}
+	jQuery.fn.dataTableExt.oSort['last-posters-asc'] = function(a, b) {
+        var num1 = getMinimalLastPosterDay(a, true);
+        var num2 = getMinimalLastPosterDay(b, true);
+        var x = num1;
+        var y = num2;
+        var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        return z;
+    };
+
+    jQuery.fn.dataTableExt.oSort['last-posters-desc'] = function(a, b) {
+        var num1 = getMinimalLastPosterDay(a, false);
+        var num2 = getMinimalLastPosterDay(b, false);
+        var x = num1;
+        var y = num2;
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
     jQuery.fn.dataTableExt.oSort['direct-percentage-asc'] = function(a, b) {
         var num1 = getPercentage(a);
         var num2 = getPercentage(b);
@@ -411,7 +444,7 @@ $(document).ready(function() {
             { "sType": "html" },
             { "sType": "direct-percentage" },
             { "sType": "link-number" },
-            { "sType": "html" },
+            { "sType": "last-posters" },
             { "sType": "html" },
             null,
             null,
@@ -1084,17 +1117,19 @@ $(document).ready(function() {
     });
 
 
-    $(".budgetRow").mouseover(function() {
+    $(".budgetRow").live('mouseover', function() {
         $(".costPercentage", this).hide();
         $(".allThreeCosts", this).show();
-    }).mouseout(function() {
+    });
+	$(".budgetRow").live('mouseout', function() {
         $(".costPercentage", this).show();
         $(".allThreeCosts", this).hide();
     });
-    $(".durationRow ").mouseover(function() {
+    $(".durationRow ").live('mouseover', function() {
         $(".durationPercentage", this).hide();
         $(".allThreeDurations", this).show();
-    }).mouseout(function() {
+    });
+	$(".durationRow ").live('mouseout', function() {
         $(".durationPercentage", this).show();
         $(".allThreeDurations", this).hide();
     });
