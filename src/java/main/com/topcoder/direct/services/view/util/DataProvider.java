@@ -657,8 +657,16 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getLatestThreePosters(String)}</li>
  * </ol>
  * </p>
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness
- * @version 5.8
+ * 
+ * <p>
+ * Version 5.9  (Module Assembly - TC Cockpit Invoice History Page Update)
+ * <ol>
+ *   <li>Update method {@link #getInvoiceRecordRelatedData(List, List, List)} to add cockpit project id.</li>
+ *   <li>Add method {@link #getRelatedSecondInstallment(List, List)} to get second installment data.</li>
+ * </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad
+ * @version 5.9
  * @since 1.0
  */
 public class DataProvider {
@@ -4594,32 +4602,13 @@ public class DataProvider {
                                                                                            long[] paymentTypeIds,
                                                                                            long clientId, long billingAccountId,
                                                                                            long contestId, String invoiceNumber, Date startDate, Date endDate,
-																						   Map<String, Long> paymentTypesMapping) throws Exception {
+                                                                                           Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
         if (contestId <= 0) {
             if (paymentTypeIds == null || paymentTypeIds.length == 0) {
                 return data;
-            }
-
-            // check if need to show Platform Fee records
-            boolean showPlatformFee = false;
-            for (long paymentTypeId : paymentTypeIds) {
-                if (PaymentType.PLATFORM_FEE.getId() == paymentTypeId) {
-                    showPlatformFee = true;
-                    break;
-                }
-            }
-
-            if (!showPlatformFee) {
-                if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
-                    return data;
-                }
-
-                if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
-                    return data;
-                }
             }
         }
 
@@ -5691,13 +5680,20 @@ public class DataProvider {
         for (int i = 0; i < contestResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(contestResultSetContainer.getLongItem(i, "billing_account_id"));
-            record.setContestId(contestResultSetContainer.getLongItem(i, "contest_id"));
-            contestInvoiceMap.put(record.getContestId(), record);
+            if (contestResultSetContainer.getItem(i, "contest_id").getResultData() != null) {
+                record.setContestId(contestResultSetContainer.getLongItem(i, "contest_id"));
+                contestInvoiceMap.put(record.getContestId(), record);
+            }
         }
         for (int i = 0; i < paymentResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(paymentResultSetContainer.getLongItem(i, "billing_account_id"));
-            record.setContestId(paymentResultSetContainer.getLongItem(i, "contest_id"));
+            if (paymentResultSetContainer.getItem(i, "contest_id").getResultData() != null) {
+                record.setContestId(paymentResultSetContainer.getLongItem(i, "contest_id"));
+            }
+            if (paymentResultSetContainer.getItem(i, "cockpit_project_id").getResultData() != null) {
+                record.setCockpitProjectId(paymentResultSetContainer.getLongItem(i, "cockpit_project_id"));
+            }
             record.setInvoiceType(paymentResultSetContainer.getStringItem(i, "invoice_type"));
             long paymentId = paymentResultSetContainer.getLongItem(i, "payment_id");
             paymentInvoiceMap.put(paymentId, record);
@@ -6902,5 +6898,46 @@ public class DataProvider {
         }
     }
 
+    /**
+     * Gets the billing cost report entries for second installments with the given parameters. The method returns a map,
+     * the key is the payment id for the first installment, the value is the billing cost entry for the second installment.
+     *
+     * @param paymentIds the payment ids.
+     * @param invoiceTypeNames the invoice type names.
+     * @return the generated cost report.
+     * @throws Exception if any error occurs.
+     * @since 5.9
+     */
+    public static Map<Long, BillingCostReportEntryDTO> getRelatedSecondInstallment(List<Long> paymentIds,
+            List<String> invoiceTypeNames) throws Exception {
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_direct_payment_second_installment");
+        List<Long> paymentIdsList = new ArrayList<Long>();
+        paymentIdsList.add(0L);
+        // prepare for the query parameters
+        for (int i = 0; i < paymentIds.size(); i++) {
+            if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
+                if (paymentIds.get(i) > 0) {
+                    paymentIdsList.add(paymentIds.get(i));
+                }
+            }
+        }
+        request.setProperty("payids", concatenate(paymentIdsList, ","));
+        
+        Map<Long, BillingCostReportEntryDTO> result = new HashMap<Long, BillingCostReportEntryDTO>();
+        
+        // query result by contestIds and paymentIds
+        final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("tc_direct_payment_second_installment");
+        for (int i = 0; i < resultSetContainer.size(); i++) {
+            long paymentId = resultSetContainer.getLongItem(i, "payment_id");
+            long paymentIdSecond = resultSetContainer.getLongItem(i, "payment_id_second");
+            BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
+            costDTO.setPaymentId(paymentIdSecond);
+            costDTO.setInvoiceAmount(0);
+            result.put(paymentId, costDTO);
+        }
+        return result;
+    }
 }
 

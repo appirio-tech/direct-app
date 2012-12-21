@@ -22,6 +22,7 @@ import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -54,8 +55,14 @@ import com.topcoder.security.TCSubject;
  * </ol>
  * </p>
  * 
- * @author flexme, minhu, TCSASSEMBLER
- * @version 1.3
+ * <p>
+ * Version 1.4: (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+ * <ol>
+ *   <li>Updated method {@link #executeAction()} to support records related to a second installment.
+ * </ol>
+ * </p>
+ * @author flexme, minhu, TCSASSEMBLER, notpad
+ * @version 1.4
  */
 public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
 
@@ -159,6 +166,8 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
         // For platform fee records, its contest_id = customer_platform_fee_id and its billing_account_id = 0.
         List<InvoiceRecordBriefDTO> recordDatas = DataProvider.getInvoiceRecordRelatedData(
             contestIds, paymentIds, invoiceTypeNames);
+        Map<Long, BillingCostReportEntryDTO> secondInstallments = DataProvider.getRelatedSecondInstallment(
+            paymentIds, invoiceTypeNames);
         
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
         String userId = String.valueOf(tcSubject.getUserId());
@@ -191,10 +200,15 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
             List<Long> invoiceRecordIds = new ArrayList<Long>();
             for (int i = 0; i < contestIds.size(); i++) {
                 InvoiceRecord record = null;
+                InvoiceRecord record2 = null;
                 String invoiceTypeName = invoiceTypeNames.get(i).trim();
                 InvoiceType invoiceType = DirectUtils.getInvoiceType(invoiceTypeName, invoiceTypes);
                 if (invoiceType == null) {
                     throw new DirectException("Can't find the invoice type:" + invoiceTypeName);
+                }
+                // payment ids are only used to get related data when credit, after that, set it to zero
+                if (PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
+                    paymentIds.set(i, 0L);
                 }
                 if (paymentIds.get(i) > 0) {
                     // payment_id > 0, get invoice record by payment_id and invoice_type_id
@@ -224,6 +238,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record = new InvoiceRecord();
                     record.setBillingAccountId(recordData.getBillingAccountId());
                     record.setContestId(recordData.getContestId());
+                    record.setCockpitProjectId(recordData.getCockpitProjectId());
                     if (PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
                         record.setReferenceId(referenceIds.get(i));
                     }
@@ -249,7 +264,29 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                         invoiceDAO.create(invoice);
                     }
                     record.setInvoice(invoice);
+                    
+                    // check if there is a second installment for this payment
+                    if (paymentIds.get(i) > 0 && secondInstallments.containsKey(paymentIds.get(i))) {
+                        record2 = new InvoiceRecord();
+                        BillingCostReportEntryDTO costDTO = secondInstallments.get(paymentIds.get(i));
+                        long paymentId2 = costDTO.getPaymentId();
+                        double invoiceAmount2 = costDTO.getInvoiceAmount();
+                        record2.setBillingAccountId(recordData.getBillingAccountId());
+                        record2.setContestId(recordData.getContestId());
+                        record2.setCockpitProjectId(recordData.getCockpitProjectId());
+                        record2.setPaymentId(paymentId2);
+                        record2.setInvoiceType(invoiceType);
+                        record2.setProcessed(processeds.get(i));
+                        record2.setInvoiceAmount(invoiceAmount2);
+                        record2.setCreateUser(userId);
+                        record2.setModifyUser(userId);
+                        record2.setInvoice(invoice);
+                    } 
+                    
                     invoiceRecordDAO.create(record);
+                    if (record2 != null) {
+                        invoiceRecordDAO.create(record2);
+                    }
                 }
                 invoiceRecordIds.add(record.getId());
             }

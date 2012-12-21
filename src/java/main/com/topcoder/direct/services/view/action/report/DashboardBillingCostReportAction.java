@@ -84,8 +84,16 @@ import java.util.Set;
  * </ol>
  * </p>
  * 
- * @author Blues, GreatKevin
- * @version 1.5
+ * <p>
+ * Version 1.6 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+ * <ol>
+ *   <li>Added {@link #filterByInvoiceStatus(List)}} method to filter by invoice status.</li>
+ *   <li>Updated method {@link #executeAction()} to apply filters with invoice status and 
+ *   update the calculation of contest and bugrace count. </li>
+ * </ol>
+ * </p>
+ * @author Blues, GreatKevin, notpad
+ * @version 1.6
  */
 public class DashboardBillingCostReportAction extends DashboardReportBaseAction<DashboardBillingCostReportForm, BillingCostReportDTO> {
 
@@ -212,7 +220,24 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         Date endDate = DirectUtils.getDate(form.getEndDate());
 
         boolean isFirstCall = getViewData().isShowJustForm();
-
+        
+        // If the invoice status to select are not specified then select all records
+        Boolean selectInvoiced = form.getSelectInvoiced();
+        Boolean selectNotInvoiced = form.getSelectNotInvoiced();
+        boolean invoiceStatusIsSet = (selectInvoiced != null) || (selectNotInvoiced != null);
+        if (isFirstCall && !invoiceStatusIsSet) {
+            selectInvoiced = true;
+            selectNotInvoiced = true;
+        }
+        if (selectInvoiced == null) {
+            selectInvoiced = false;
+        }
+        if (selectNotInvoiced == null) {
+            selectNotInvoiced = false;
+        }
+        form.setSelectInvoiced(selectInvoiced);
+        form.setSelectNotInvoiced(selectNotInvoiced);
+        
         // If payment type IDs are not specified then use all the payment types by default
         boolean  paymentTypeIdsAreSet = (paymentTypeIds != null) && (paymentTypeIds.length > 0);
         if (isFirstCall && !paymentTypeIdsAreSet) {
@@ -302,6 +327,11 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
                 viewData = filterByGroups(viewData);
             }
             
+            // do not apply invoice status filter if user is searching with the invoice number (implying 'invoiced')
+            if((form.getInvoiceNumber() == null || form.getInvoiceNumber().trim().length() <= 0)) {
+                viewData = filterByInvoiceStatus(viewData);
+            }
+            
             // filter out the platform fee items
             final boolean ignorePlatformFee = 
                 (contestId > 0 || projectId > 0 || billingAccountId > 0 || customerId <= 0);
@@ -341,9 +371,13 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 		
 		        for(BillingCostReportEntryDTO entry : getViewData().getEntries()) {
 		            if(entry.getContest() != null) {
-		                uniqueContestSet.add(entry.getContest().getId());
+		                // ignore the items linked to project
+		                if (entry.getPaymentId() <= 0 || entry.getContest().getName() != null) {
+		                    uniqueContestSet.add(entry.getContest().getId());
+		                }
 		            }
-		            if(entry.getPaymentType().trim().equalsIgnoreCase("bugs")) {
+		            if (entry.getPaymentType().trim().equalsIgnoreCase("bugs") ||
+		                (entry.getPaymentId() > 0 && entry.getContest().getName() == null && entry.getReferenceId() != null)) {
 		                uniqueBugRaces.add(entry.getReferenceId());
 		            }
 		        }
@@ -358,6 +392,38 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         this.getViewData().setCanProcessInvoices(DirectUtils.canPerformInvoiceRecords(getCurrentUser()));
     }
 
+    /**
+     * Filters the invoices by the invoice filter status. There are 3 types of invoice filter status:
+     * - All
+     * - Invoiced
+     * - NotInvoiced
+     *
+     * @param listToFilter the list of invoice records to filter
+     * @return the filtered list of invoice records
+     * @since 1.6
+     */
+    private List<BillingCostReportEntryDTO> filterByInvoiceStatus(List<BillingCostReportEntryDTO> listToFilter) {
+        Boolean selectInvoiced = getFormData().getSelectInvoiced();
+        Boolean selectNotInvoiced = getFormData().getSelectNotInvoiced();
+        if (selectInvoiced && selectNotInvoiced) {
+            // do not filter for "All"
+            return listToFilter;
+        }
+
+        List<BillingCostReportEntryDTO> result = new ArrayList<BillingCostReportEntryDTO>();
+        for(BillingCostReportEntryDTO entry : listToFilter) {
+            if(selectInvoiced && entry.isProcessed()) {
+                // filter is "invoiced", add isProcessed() into
+                result.add(entry);
+            } else if(selectNotInvoiced && !entry.isProcessed()) {
+                // filter is "not invoiced", add !isProcessed() into
+                result.add(entry);
+            }
+        }
+
+        return result;
+    }
+    
     /**
      * Filter the list of BillingCostReportEntryDTO by the group by and group values.
      *

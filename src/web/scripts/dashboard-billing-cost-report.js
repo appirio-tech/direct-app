@@ -1,6 +1,6 @@
 /**
- * AUTHOR: Blues, GreatKevin
- * VERSION: 1.4 (Release Assembly - TC Direct Cockpit Release Six)
+ * AUTHOR: Blues, GreatKevin, notpad
+ * VERSION: 1.5 (Module Assembly - TC Cockpit Invoice History Page Update)
  *
  * Version 1.0 (TC Cockpit Permission and Report Update One) change log:
  * - Change parameter name from projectIds to projectId.
@@ -18,6 +18,9 @@
  * - Update billing account dropdown handler to populate invoice numbers dropdown
  *
  * Submits the billing cost report form and trigger cost report excel download.
+ *
+ * Version 1.5 (Module Assembly - TC Cockpit Invoice History Page Update)
+ * - Update the payment id to support credit for payments linked to project.
  */
 function getBillingCostReportAsExcel() {
     $('#formDataExcel').val("true");
@@ -647,7 +650,7 @@ $(document).ready(function() {
         processeds = [];
         var record = $("input[name='invoiceRecordProcessed']", $(this).parent().parent());
         contestIds.push(record.attr("contestid"));
-        paymentIds.push(0);
+        paymentIds.push(record.attr("paymentid"));
         referenceIds.push(record.attr("invoicerecordid"));
         invoiceTypeNames.push("Credit");
         processeds.push(true);

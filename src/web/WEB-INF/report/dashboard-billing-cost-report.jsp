@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.9
+  - Author: Blues, GreatKevin, notpad
+  - Version: 2.0
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -29,6 +29,9 @@
   - Version 1.9 (Release Assembly - TC Direct Cockpit Release Six)
   - - Add aggregation stats table to show total contests number, total bug races number and total amount.
   - - Add invoice number dropdown
+  
+  - Version 2.0 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+  - - Add invoice status filter.
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -188,10 +191,36 @@
 		</div>
 		<!-- end .leftFilterContent -->
 
-		<!-- .rightFilterContent -->
-		<div class="rightFilterContent">
-              <div class="col">
-           
+        <!-- .rightFilterContent -->
+        <div class="rightFilterContent">
+            <div class="col">
+                <div id="invoiceStatusFilter">
+                    <div class="multiSelectArea">
+                        <div class="multiSelectAreaInner">
+                            <label class="multiSelectAreaTitle">Invoice Filter:</label>
+                            <div class="multiSelectBox">
+                                <div class="multiOptionRow multiOptionRowChecked">
+                                    <input type="checkbox" checked="checked" id="invoiceStatusSelectAll" class="optionAll"/>
+                                    <label for="invoiceStatusSelectAll" title="Select All">Select All</label>
+                                </div>
+                                <div class="multiOptionRow <s:if test="formData.selectInvoiced == true">multiOptionRowChecked</s:if>">
+                                    <input type="checkbox" 
+                                        <s:property value="formData.selectInvoiced"/>
+                                        <s:if test="formData.selectInvoiced == true">checked="checked"</s:if> 
+                                        id="invoiceStatusInvoiced" name="formData.selectInvoiced" value="true" class="optionItem"/>
+                                    <label for="invoiceStatusInvoiced" title="Invoiced">Invoiced</label>
+                                </div>
+                                <div class="multiOptionRow <s:if test="formData.selectNotInvoiced == true">multiOptionRowChecked</s:if>">
+                                    <input type="checkbox" 
+                                        <s:if test="formData.selectNotInvoiced == true">checked="checked"</s:if>
+                                        id="invoiceStatusNotInvoiced" name="formData.selectNotInvoiced" value="true" class="optionItem"/>
+                                    <label for="invoiceStatusNotInvoiced" title="Not Invoiced">Not Invoiced</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+                <!-- end InvoiceStatusFilter -->                
 
                   <div id="groupFilter">
                       <div class="filterRow firstFilterRow">
@@ -465,7 +494,7 @@
                          <s:property value="contest.name"/></a>
             </td>
             <td>
-                <s:if test="paymentType!='Platform Fee'"><s:property value="contest.id"/></s:if>
+                <s:if test="paymentType!='Platform Fee' && contest.id != 0"><s:property value="contest.id"/></s:if>
             </td>
             <td>
                 <s:if test="referenceId != null && referenceId != ''">
@@ -491,7 +520,7 @@
             
             <c:if test="${viewData.canProcessInvoices}">
                 <s:if test="paymentType!='Platform Fee'">
-                   <td class="invoiceAmount">${actualTotalMemberCost}</td>  
+                   <td>${actualTotalMemberCost}</td>  
                 </s:if><s:else><td/></s:else>
             </c:if>
             

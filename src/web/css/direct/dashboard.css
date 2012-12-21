@@ -86,6 +86,9 @@
  *
  * - (Module Assembly - TC Client Users Stats Report Generation version 1.0)
  * - Add styles for Client Users Statistics page.
+ *
+ * - (Module Assembly - TC Cockpit Invoice History Page Update)
+ * - Add styles for invoice status filter.
  */
 
 
@@ -9279,6 +9282,15 @@ TABLE.pipelineStats TH.tableTitle span {
 #billingCostReportsPage .filterContainer #invoiceFilter .filterRow,
 #billingCostReportsPage .filterContainer #invoiceFilter input {
     width: 65px;
+}
+
+#billingCostReportsPage #invoiceStatusFilter {
+    width: 100%;
+    float: left;
+}
+#billingCostReportsPage #invoiceStatusFilter .multiSelectArea {
+    width: 100%;
+    min-width: 150px;
 }
 
 #billingCostReportsPage #groupFilter {

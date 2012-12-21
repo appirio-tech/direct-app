@@ -86,8 +86,11 @@
  *  Version 2.7 - BUGR-7279
  *  - Fix button not work issue.
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka
- * @version 2.6
+ *  Version 2.8 - Module Assembly - TC Cockpit Invoice History Page Update
+ *  - Add support for invoice status filter.
+ *
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad
+ * @version 2.8
  */
 
 var mouse_is_inside;
@@ -2321,11 +2324,14 @@ function adjustReportFilterHeight() {
     $('.filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 110) + 'px'});
     $('.filterContainer .statusMultiSelect .multiSelectBox').css({'height':(height / 2 - 55) + 'px'});
     $('#billingCostReportsPage .filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height / 2 - 76) + 'px'});
+	$('#billingCostReportsPage .filterContainer #invoiceStatusFilter .multiSelectArea .multiSelectBox').css({'height':(height / 2 - 120) + 'px'});
     $('#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox').css({'height':(height + 85) + 'px'});
     $('#billingCostReportsPage .filterContainer1400 #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 90) + 'px'});
-    $('.filterContainer1400 .statusMultiSelect .multiSelectBox').css({'height':(height - 90) + 'px'});
+    $('#billingCostReportsPage .filterContainer1400 #invoiceStatusFilter .multiSelectArea .multiSelectBox').css({'height':(height - 203) + 'px'});
+	$('.filterContainer1400 .statusMultiSelect .multiSelectBox').css({'height':(height - 90) + 'px'});
     $('#pipelineReportsPage .multiSelectArea .multiSelectBox').css({'height':(height - 37) + 'px'});
     $('#pipelineReportsPage #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 93) + 'px'});
+	
 }
 
 

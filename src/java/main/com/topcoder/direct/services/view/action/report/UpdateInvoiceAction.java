@@ -5,6 +5,8 @@ package com.topcoder.direct.services.view.action.report;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -18,14 +20,23 @@ import com.topcoder.clients.invoices.model.InvoiceRecord;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for updating the invoice.</p>
  * 
- * @author TCSASSEMBER
- * @version 1.0 (TC Accounting Tracking Invoiced Payments Part 2)
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+ * <ol>
+ *   <li>Update method {@link #executeAction()} to support records related to a second installment. </li>
+ * </ol>
+ * </p>
+ * 
+ * @author TCSASSEMBER, notpad
+ * @version 1.1
  */
 public class UpdateInvoiceAction extends BaseDirectStrutsAction {
 
@@ -121,6 +132,18 @@ public class UpdateInvoiceAction extends BaseDirectStrutsAction {
                 // update invoice for the single invoice record
                 Invoice invoice = invoiceDAO.getByInvoiceNumber(invoiceNumber);
                 InvoiceRecord invoiceRecord = invoiceRecordDAO.retrieve(invoiceRecordId);
+                InvoiceRecord invoiceRecord2 = null;
+                long paymentId = invoiceRecord.getPaymentId();
+                List<Long> paymentIds = new ArrayList<Long>();
+                paymentIds.add(paymentId);
+                List<String> invoiceTypeNames = new ArrayList<String>();
+                invoiceTypeNames.add(invoiceRecord.getInvoiceType().getName());
+                Map<Long, BillingCostReportEntryDTO> secondInstallments = DataProvider.getRelatedSecondInstallment(paymentIds, invoiceTypeNames);
+                if (secondInstallments.containsKey(paymentId)) {
+                    BillingCostReportEntryDTO costDTO = secondInstallments.get(paymentId);
+                    long paymentId2 = costDTO.getPaymentId();
+                    invoiceRecord2 = invoiceRecordDAO.getByPayment(paymentId2);
+                }
                 if (checkInvoiceNumber && invoice != null && invoice.getId() != invoiceRecord.getInvoice().getId()) {
                     // the invoice number already exists
                     Map<String, Boolean> result = new HashMap<String, Boolean>();
@@ -145,6 +168,10 @@ public class UpdateInvoiceAction extends BaseDirectStrutsAction {
                 }
                 invoiceRecord.setInvoice(invoice);
                 invoiceRecordDAO.update(invoiceRecord);
+                if (invoiceRecord2 != null) {
+                    invoiceRecord2.setInvoice(invoice);
+                    invoiceRecordDAO.update(invoiceRecord2);
+                }
                 
                 int count = invoiceRecordDAO.countByInvoice(oldInvoiceId);
                 if (count == 0) {

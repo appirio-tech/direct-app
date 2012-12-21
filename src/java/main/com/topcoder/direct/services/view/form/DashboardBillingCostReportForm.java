@@ -13,8 +13,14 @@ package com.topcoder.direct.services.view.form;
  *  </ol>
  * </p>
  *
- * @author Blues, GreatKevin
- * @version 1.1
+ * <p>
+ * Version 1.2 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+ * <ol>
+ *   <li>Add property {@link #selectInvoiced} and {@link #selectNotInvoiced} and their getters and setters.</li>
+ * </ol>
+ * </p>
+ * @author Blues, GreatKevin, notpad
+ * @version 1.2
  */
 public class DashboardBillingCostReportForm extends DashboardCostReportForm {
     /**
@@ -22,6 +28,19 @@ public class DashboardBillingCostReportForm extends DashboardCostReportForm {
      */
     private long[] paymentTypeIds;
 
+    /**
+     * <p>Represents to select the invoiced records.</p>
+     * 
+     * @since 1.2
+     */
+    private Boolean selectInvoiced;
+    
+    /**
+     * <p>Represents to select the not invoiced records.</p>
+     * @since 1.2
+     */
+    private Boolean selectNotInvoiced;
+    
     /**
      * The invoice number selected in the dropdown.
      *
@@ -51,7 +70,47 @@ public class DashboardBillingCostReportForm extends DashboardCostReportForm {
     public void setPaymentTypeIds(long[] paymentTypeIds) {
         this.paymentTypeIds = paymentTypeIds;
     }
-
+    
+    /**
+     * Gets whether to select the invoiced records.
+     *
+     * @return whether to select the invoiced records.
+     * @since 1.2
+     */
+    public Boolean getSelectInvoiced() {
+        return selectInvoiced;
+    }
+    
+    /**
+     * Sets whether to select the invoiced records.
+     *
+     * @param selectInvoiced whether to select the invoiced records
+     * @since 1.2
+     */
+    public void setSelectInvoiced(Boolean selectInvoiced) {
+        this.selectInvoiced = selectInvoiced;
+    }
+    
+    /**
+     * Sets whether to select the not invoiced records.
+     *
+     * @param selectNotInvoiced whether to select the not invoiced records
+     * @since 1.2
+     */
+    public void setSelectNotInvoiced(Boolean selectNotInvoiced) {
+        this.selectNotInvoiced = selectNotInvoiced;
+    }
+    
+    /**
+     * Gets whether to select the not invoiced records.
+     *
+     * @return whether to select the not invoiced records.
+     * @since 1.2
+     */
+    public Boolean getSelectNotInvoiced() {
+        return selectNotInvoiced;
+    }
+    
     /**
      * Gets the invoice number for filtering billing cost report.
      * 

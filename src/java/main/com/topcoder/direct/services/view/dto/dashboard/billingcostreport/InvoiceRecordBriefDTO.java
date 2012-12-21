@@ -6,14 +6,28 @@ package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
 /**
  * <p>The DTO to store info the one invoice record brief data.</p>
  * 
- * @author flexme
- * @version 1.0 (TC Accounting Tracking Invoiced Payments)
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
+ * <ol>
+ *   <li>Update {@link #contestId} field and its getter and setter to allow for null value.</li>
+ *   <li>Added {@link #cockpitProjectId} field and its getter and setter.</li> 
+ * </ol>
+ * </p> 
+ * @author flexme, notpad
+ * @version 1.1
  */
 public class InvoiceRecordBriefDTO {
     /**
      * <p>The id of the contest.</p>
      */
-    private long contestId;
+    private Long contestId;
+    
+    /**
+     * <p>The id of the cockpict project.</p>
+     * 
+     * @since 1.1
+     */
+    private Long cockpitProjectId;
     
     /**
      * <p>The id of the billing account.</p>
@@ -37,8 +51,28 @@ public class InvoiceRecordBriefDTO {
      * 
      * @return the id of the contest.
      */
-    public long getContestId() {
+    public Long getContestId() {
         return contestId;
+    }
+
+    /**
+     * <p>Sets the id of the cockpict project.</p>
+     * 
+     * @param cockpitProjectId the id of the cockpict project.
+     * @since 1.1
+     */
+    public void setCockpitProjectId(Long cockpitProjectId) {
+        this.cockpitProjectId = cockpitProjectId;
+    }
+    
+    /**
+     * <p>Gets the id of the cockpict project.</p>
+     * 
+     * @return the id of the cockpict project.
+     * @since 1.1
+     */
+    public Long getCockpitProjectId() {
+        return cockpitProjectId;
     }
 
     /**
@@ -46,7 +80,7 @@ public class InvoiceRecordBriefDTO {
      * 
      * @param contestId the id of the contest.
      */
-    public void setContestId(long contestId) {
+    public void setContestId(Long contestId) {
         this.contestId = contestId;
     }
 
