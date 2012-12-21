@@ -4638,11 +4638,11 @@ public class DataProvider {
 		String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
         if (!hasInvoice) {
-			commandName = "dashboard_billing_cost_invoice_report_v2";
-            queryName = "dashboard_billing_cost_invoice_report_v2";
+			commandName = "dashboard_billing_cost_invoice_report_v3";
+            queryName = "dashboard_billing_cost_invoice_report_v3";
         } else {
-			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v2";
-            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v2";
+			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v3";
+            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v3";
         }
 
         if(contestId > 0) {
@@ -5674,7 +5674,7 @@ public class DataProvider {
         // query result by contestIds
         final ResultSetContainer contestResultSetContainer = results.get("tc_direct_contest_invoice");
         // query result by paymentIds
-        final ResultSetContainer paymentResultSetContainer = results.get("tc_direct_payment_invoice");
+        final ResultSetContainer paymentResultSetContainer = results.get("tc_direct_payment_invoice_v2");
         Map<Long, InvoiceRecordBriefDTO> contestInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
         Map<Long, InvoiceRecordBriefDTO> paymentInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
         for (int i = 0; i < contestResultSetContainer.size(); i++) {
