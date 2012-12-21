@@ -10,7 +10,7 @@
 <div class="box videoBox">
     <!-- video wrapper -->
     <div class="videoContent">
-        <object id="videoContainer" type="application/x-shockwave-flash" data="https://www.youtube.com/v/ubU0_mVtxJc">
+        <object id="videoContainer" type="application/x-shockwave-flash" data="https://www.youtube.com/v/xUxfwF4WK54">
             <param name="movie" id="movieLink" value="https://www.youtube.com/v/xUxfwF4WK54"/>
             <param name="FlashVars" value="playerMode=embedded"/>
         </object>
