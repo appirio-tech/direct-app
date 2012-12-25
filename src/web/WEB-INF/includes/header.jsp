@@ -1,6 +1,6 @@
 <%--
   - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
-  - Version: 2.2
+  - Version: 2.3
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -36,6 +36,7 @@
   - Version 2.1 (Release Assembly - TopCoder Security Groups - Release 2) change notes: made the UI related to security
   -   groups displayed if user is granted a permission to access security groups UI
   - Version 2.2 (https://apps.topcoder.com/bugs/browse/TCCC-4704) change notes: add the 'Report' permission for group security
+  - Version 2.3 (Release Assembly - TopCoder Security Groups - Release 4) change notes: Add link to the top icon in group related pages.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -56,13 +57,17 @@
 			<div class="noAsk">
             <a class="close" href="javascript:;">Close</a>
             <div class="clear"></div>
-            <div class="noAakInner"><input type="checkbox" id="noAskMaintenanceAgain"><label for="noAskMaintenanceAgain">Don�t show again</label></div>
+            <div class="noAakInner"><input type="checkbox" id="noAskMaintenanceAgain"><label for="noAskMaintenanceAgain">Don't show again</label></div>
 			</div>
 
 		</div>
 	</div>-->
 <!-- topcoder maintenance module ends -->
 
+<s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
+    <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
+</s:url>
+    
 <div id="header">
     <c:choose>
         <c:when test="${requestScope.PAGE_TYPE eq 'dashboard'}">
@@ -95,7 +100,7 @@
             </a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'group'}">
-            <a href="#" class="logo">Groups</a>
+            <a href="${viewUserGroupsUrl}" class="logo">Groups</a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
@@ -120,9 +125,6 @@
     </c:otherwise>
     </c:choose>
 
-    <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
-      <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
-    </s:url>
     <div id="tabs0"><!-- the left tabs -->
         <ui:isDashboardPage>
             <ul>

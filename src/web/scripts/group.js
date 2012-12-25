@@ -22,6 +22,9 @@
  *
  * Version 1.5 (https://apps.topcoder.com/bugs/browse/TCCC-4704) changes:
  *   Added the 'Report' permission to group security
+ *
+ * Version 1.6 (Release Assembly - TopCoder Security Groups Release 4) changes:
+ *   Updated to fixed the bugs in this assembly.
  */
 $(document).ready(function(){
 
@@ -109,7 +112,7 @@ $(document).ready(function(){
     $("#searchUser").click(function() {
         var handle = $("#handle").val();
         if (handle.trim().length == 0) {
-            $(".handleInputError").text("Please enter the handle name");
+            $(".handleInputError").text("Please enter the handle");
             $(".handleInputError").show();
             return;
         }
@@ -182,6 +185,24 @@ $(document).ready(function(){
     if($('.date-pick').length > 0){
         Date.firstDayOfWeek = 0;
     	$(".date-pick").datePicker({startDate:'01/01/2001'});
+        var expNum = function(d) {
+            d = "" + d;
+            if (d.length < 2) d = "0" + d;
+            return d;
+        }
+        $(".date-pick").blur(function() {
+            var d = $(this).val().trim();
+            if (d.length > 0) {
+                var dd = parseDate(d);
+                if (dd.toString() == "Invalid Date" ||
+                (expNum(dd.getMonth() + 1) + "/" + expNum(dd.getDate()) + "/" + dd.getFullYear() != d)) {
+                    showErrors("The date is invalid");
+                    $(this).val("");
+                    $(this).change();
+                    return false;
+                }
+            }
+        });
     }
 
 	
@@ -262,10 +283,11 @@ $(document).ready(function(){
 	});
 	
 	var items = 5;
+    var addedStatus = $("#groupMemberTable thead tr th").length == 5;
 	$('#addGroupMemberButton').live('click',function(){
 		for(i=0;i<5;i++){
 			items++;
-			$('#groupMemberTable').append('<tr><td class="firstColumn"><input type="text" class="text" /><a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a></td><td class="secondColumn"><div class="leftPart"><input type="radio" name="radioGroupMembers'+items+'" checked="checked" value="Group Default" id="gruopRadio'+items+'" /><label for="gruopRadio'+items+'">Group Default</label></div><div class="rightPart"><input type="radio" name="radioGroupMembers'+items+'" value="User Specific" id="userRadio'+items+'" /><label for="userRadio'+items+'">User Specific</label></div></td><td class="thirdColumn"><div class="unit"><input type="radio" disabled="disabled" id="reportRadio'+items+'" value="REPORT" name="accesslevel'+items+'"/><label for="reportRadio'+items+'">Report</label></div><div class="unit"><input type="radio" disabled="disabled" checked="checked" id="readRadio'+items+'" value="READ"  name="accesslevel'+items+'"/><label for="readRadio'+items+'">Read</label></div><div class="unit"><input type="radio" disabled="disabled" id="writeRadio'+items+'" value="WRITE" name="accesslevel'+items+'"/><label for="writeRadio'+items+'">Write</label></div><div class="unit"><input type="radio"  disabled="disabled" id="fullRadio'+items+'" value="FULL" name="accesslevel'+items+'"/><label for="fullRadio'+items+'">Full</label></div></td><td class="forthColumn"><a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a></td></tr>');
+			$('#groupMemberTable').append('<tr><td class="firstColumn"><input type="text" class="text" /><a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a></td><td class="secondColumn"><div class="leftPart"><input type="radio" name="radioGroupMembers'+items+'" checked="checked" value="Group Default" id="gruopRadio'+items+'" /><label for="gruopRadio'+items+'">Group Default</label></div><div class="rightPart"><input type="radio" name="radioGroupMembers'+items+'" value="User Specific" id="userRadio'+items+'" /><label for="userRadio'+items+'">User Specific</label></div></td><td class="thirdColumn"><div class="unit"><input type="radio" disabled="disabled" id="reportRadio'+items+'" value="REPORT" name="accesslevel'+items+'"/><label for="reportRadio'+items+'">Report</label></div><div class="unit"><input type="radio" disabled="disabled" checked="checked" id="readRadio'+items+'" value="READ"  name="accesslevel'+items+'"/><label for="readRadio'+items+'">Read</label></div><div class="unit"><input type="radio" disabled="disabled" id="writeRadio'+items+'" value="WRITE" name="accesslevel'+items+'"/><label for="writeRadio'+items+'">Write</label></div><div class="unit"><input type="radio"  disabled="disabled" id="fullRadio'+items+'" value="FULL" name="accesslevel'+items+'"/><label for="fullRadio'+items+'">Full</label></div></td>' + (addedStatus ? '<td class="forthColumn"></td>' : '') + '<td class="forthColumn"><a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a></td></tr>');
 		}
 		$('#groupMemberTable tbody tr').removeClass('even');
 		$('.tableGroupWrapper .normalTableList tbody tr:odd,.groupMembersTableContainer .normalTableList tbody tr:odd,#searchListModal .searchListDiv tbody tr:odd,.groupMembersTable tbody tr:odd').addClass('even');
@@ -532,11 +554,11 @@ $(document).ready(function(){
             projects = getCheckboxesValue("projects", "directProjectId");
         }
         if (!billingCheck && billings.length == 0) {
-            showErrors("At least one Billing Accounts must be selected");
+            showErrors("At least one Billing Account must be selected");
             return false;
         }
         if (!projectsCheck && projects.length == 0) {
-            showErrors("At least one Projects must be selected");
+            showErrors("At least one Project must be selected");
             return false;
         }
         var members = getGroupMembers();
@@ -557,6 +579,35 @@ $(document).ready(function(){
         return group;
     }
     
+    var oriGroup;
+    if ($("#updateGroup").length > 0) {
+        oriGroup = validateGroup();
+    }
+    
+    function compareGroup(group1, group2) {
+        if (group1.name != group2.name) return false;
+        if (group1.client.id != group2.client.id) return false;
+        if (group1.billingAccounts.length != group2.billingAccounts.length) return false;
+        for (var i = 0; i < group1.billingAccounts.length; i++) {
+            if (group1.billingAccounts[i].id != group2.billingAccounts[i].id) return false;
+        }
+        if (group1.directProjects.length != group2.directProjects.length) return false;
+        for (var i = 0; i < group1.directProjects.length; i++) {
+            if (group1.directProjects[i].directProjectId != group2.directProjects[i].directProjectId) return false;
+        }
+        if (group1.defaultPermission != group2.defaultPermission) return false;
+        if (group1.groupMembers.length != group2.groupMembers.length) return false;
+        for (var i = 0; i < group1.groupMembers.length; i++) {
+            if (group1.groupMembers[i].handle != group2.groupMembers[i].handle) return false;
+            if (group1.groupMembers[i].specificPermission != group2.groupMembers[i].specificPermission) return false;
+        }
+        if (group1.restrictions.length != group2.restrictions.length) return false;
+        for (var i = 0; i < group1.restrictions.length; i++) {
+            if (group1.restrictions[i] != group2.restrictions[i]) return false;
+        }
+        return true;
+    }
+    
     // create group
     $("#createGroup").click(function() {
         var group = validateGroup();
@@ -573,13 +624,26 @@ $(document).ready(function(){
           dataType: 'json',
           //async : false,
           beforeSend: (skipInvitationEmail || group.groupMembers.length == 0) ? modalPreloader : modalSendInvitation,
+          timeout:3600000,
           success: function (jsonResult) {
               handleJsonResult(jsonResult,
               function(result) {
                 $(".gotoGroupDetail").attr("rel", result.groupId);
                 $(".confirmGroupName").text(group.name);
                 $("#confirmCustomName").text($($("#selectCreateCustomerName")[0].options[$("#selectCreateCustomerName")[0].selectedIndex]).text());
-                $("#emailMessage").text(skipInvitationEmail ? "The group members have been granted the access." : "Invitation emails have been sent to the members added to the group.");
+                if (skipInvitationEmail) {
+                    if (group.groupMembers.length == 0) {
+                        $("#emailMessage").text("");
+                    } else {
+                        $("#emailMessage").text("The group " + (group.groupMembers.length > 1 ? "members have" : "member has") + " been granted access.");
+                    }
+                } else {
+                    if (group.groupMembers.length == 1) {
+                        $("#emailMessage").text("Invitation emails have been sent to the member added to the group.");
+                    } else if (group.groupMembers.length > 1) {
+                        $("#emailMessage").text("Invitation emails have been sent to the members added to the group.");
+                    } else $("#emailMessage").text("");
+                }
                 modalLoad("#createGroupConfirmModal");
               },
               function(errorMessage) {
@@ -596,6 +660,11 @@ $(document).ready(function(){
         if (group === false) {
             return;
         }
+        if (compareGroup(oriGroup, group)) {
+            $("#noChangeGroupName").text(group.name);
+            modalLoad("#noChangeConfirmModal");
+            return;
+        }
         var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
         var hasNew = hasNewMembers(oldGroupMemberHandles, getGroupMemberHandles());
         $.ajax({
@@ -604,6 +673,7 @@ $(document).ready(function(){
           data: {group: group, groupId: parseInt($("#groupId").val()), skipInvitationEmail: skipInvitationEmail},
           cache: false,
           dataType: 'json',
+          timeout:3600000,
           //async : false,
           beforeSend: (skipInvitationEmail || group.groupMembers.length == 0 || !hasNew) ? modalPreloader : modalSendInvitation,
           success: function (jsonResult) {
@@ -650,11 +720,6 @@ $(document).ready(function(){
     
     // go to the group detail page
     $(".gotoGroupDetail").click(function() {
-        if ($("#groupId").length > 0 && $("#groupId").val() == $(this).attr("rel")) {
-            // in update group page, the group was not archived after updated, so no need to
-            // redirect to group detail page
-            return;
-        }
         window.location.href = ctx + "/group/viewGroupAction.action?groupId=" + $(this).attr("rel");
     });
     
@@ -666,12 +731,12 @@ $(document).ready(function(){
     
     // filter items
     $('#filterViewInvitations, #filterAuditInfo, #filterUserGroups').click(function() {
-         filterItems(1);
+         filterItems(false, 1);
     });
     
     // page size update
     $('#pageSizeSelect').change(function() {
-         filterItems(1);
+         filterItems(true, 1);
     });
     
     // pagination
@@ -690,7 +755,7 @@ $(document).ready(function(){
          } else {
              dest = parseInt(op);
          }
-         filterItems(dest);            
+         filterItems(true, dest);            
     });
     
     // check group name and permissions
@@ -800,7 +865,7 @@ $(document).ready(function(){
                 showErrors("Invitee Email can't exceed 45 characters");
                 return false;
             }
-            var emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/gi;
+            var emailPattern = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             if (!emailPattern.test(inviteeEmail)) {
                 showErrors("Invitee Email is not valid");
                 return false;
@@ -904,8 +969,30 @@ $(document).ready(function(){
         return true; 
     }
     
+    (function() {
+        var isAuditPage = $('#auditPage').val();
+        var isGroupPage = $('#groupPage').val();
+        var isGroupDetailsPage = $('#groupDetailsPage').val();
+        var isApprovalPage = $('#approvalPage').val();
+        var isInvitation = $('#filterViewInvitations').length > 0;
+        criteria = {};
+        if (isAuditPage) {
+            validateAuditFilter();
+        } else if (isGroupPage) {
+            validateGroupFilter();
+        } else if (isGroupDetailsPage)
+        {} else if (isApprovalPage) {
+            validateApprovalFilter();
+        } else if (isInvitation) {
+            validateInvitationFilter();
+        }
+        $("#pageSizeSelect").data("criteria", criteria);
+    })();
+    
+    updateMultiRowsCell();
+    
     // retrieve the group invitations
-    function filterItems(page, fromApproval, criteriaOverwrite) {
+    function filterItems(useOldCriteria, page, fromApproval, criteriaOverwrite) {
         if (criteriaOverwrite) criteria = criteriaOverwrite;
         else criteria = {};
         var isAuditPage = $('#auditPage').val();
@@ -914,16 +1001,16 @@ $(document).ready(function(){
         var isApprovalPage = $('#approvalPage').val();
         var url;
         if (isAuditPage) {
-            if (!validateAuditFilter())return;
+            if (!useOldCriteria && !validateAuditFilter())return;
             url = ctx + "/group/searchAuditingInfoAction";
         } else if (isGroupPage) {
-            if (!criteriaOverwrite && !validateGroupFilter())return;
+            if (!useOldCriteria && !criteriaOverwrite && !validateGroupFilter())return;
             url = ctx + "/group/searchGroupAction";
         } else if(isGroupDetailsPage) {
             location.href = '/direct/group/viewUserGroupsAction.action?criteria.permissions=REPORT&criteria.permissions=READ&criteria.permissions=WRITE&criteria.permissions=FULL';
             return;
-        } else if (!isApprovalPage && !validateInvitationFilter()
-            || isApprovalPage && !validateApprovalFilter()) {
+        } else if (!isApprovalPage && !useOldCriteria && !validateInvitationFilter()
+            || isApprovalPage && !useOldCriteria && !validateApprovalFilter()) {
             if (fromApproval) {
                 // for invalid filter settings, we uses empty criteria
                 criteria = {};
@@ -938,6 +1025,12 @@ $(document).ready(function(){
         var pageSize=$('#pageSizeSelect').val();
         if (pageSize == 0)page = 0;
         
+        if (useOldCriteria) {
+            criteria = $("#pageSizeSelect").data("criteria");
+            if (!criteria) criteria = {};
+        } else {
+            $("#pageSizeSelect").data("criteria", criteria);
+        }
         var data = {page: page, pageSize: pageSize, criteria: criteria};
         if (isApprovalPage) {
             data.clientId = $('#clientIdSelect').val();  
@@ -970,7 +1063,7 @@ $(document).ready(function(){
                       // pagination 
                       $('.tableControlPage .leftSide').html("Showing <strong>"+(page == 0 ? 1 : (page-1)*pageSize+1)+
                           "</strong> to <strong>" + (page == 0 ? total : (page-1)*pageSize+items.length) + 
-                          "</strong> of <strong>"+ total +"</strong> entries");                      
+                          "</strong> of <strong>"+ total +"</strong> " + (total > 1 ? "entries" : "entry"));                      
                       $('.tableControlPage .rightSide ul').html(
                           '<li><a href="javascript:;" class="prevPage ' +
                               (page<=1 ? 'disable' : '') + '">Prev</a></li>' + 
@@ -990,8 +1083,8 @@ $(document).ready(function(){
                                         '<td>'+obj.groupName+'</td>'+
                                         '<td>'+obj.member+'</td>'+
                                         '<td>'+obj.customerName+'</td>'+
-                                        '<td>'+obj.accounts.join('<br/>')+'</td>'+
-                                        '<td>'+obj.projects.join('<br/>')+'</td>'+
+                                        '<td>'+tooltipOnMultiRows(obj.accounts)+'</td>'+
+                                        '<td>'+tooltipOnMultiRows(obj.projects)+'</td>'+
                                         '<td>'+obj.fromTo.join('<br/>')+'</td>'+
                                         '<td>'+obj.accessRights+'</td>'+
                                     '</tr>';
@@ -1003,8 +1096,8 @@ $(document).ready(function(){
                                         '<td><a '+' rel="'+obj.groupId+'" href="'+(ctx + '/group/viewGroupAction?groupId='+obj.groupId+'">')+obj.groupName+'</a></td>'+
                                         '<td>'+obj.accessRights+'</td>'+
                                         '<td>'+obj.customerName+'</td>'+
-                                        '<td>'+obj.accounts.join('<br/>')+'</td>'+
-                                        '<td>'+obj.projects.join('<br/>')+'</td>'+
+                                        '<td>'+tooltipOnMultiRows(obj.accounts)+'</td>'+
+                                        '<td>'+tooltipOnMultiRows(obj.projects)+'</td>'+
                                         '<td>'+obj.resources.join('<br/>')+'</td>'+
                                         '<td>'+obj.members.join('<br/>')+'</td>'+
                                         '<td class="hide">'+obj.groupId+'</td>'+
@@ -1032,6 +1125,7 @@ $(document).ready(function(){
 					  });
                       $('.mainContent table tbody').html(content);                      
                       $('.mainContent table tbody tr:odd').addClass('even');
+                      tooltipOnMultiRowsEvents();
                   }
                   
                   // show message modal
@@ -1067,7 +1161,7 @@ $(document).ready(function(){
               handleJsonResult2(jsonResult,
               function(result) {
                   // refetch the pending approvals
-                 filterItems(1, 1);
+                 filterItems(true, 1, 1);
               },
               function(errorMessage) {
                   modalClose();
@@ -1085,7 +1179,7 @@ $(document).ready(function(){
             invitationIds.push(id);
         });
         if (invitationIds.length==0){
-            showErrors("At least one row should be checked.");
+            showErrors("At least one row should be checked");
             return false;
         }
         approveRejectData = {approved:approved, invitationIds:invitationIds};
@@ -1118,7 +1212,7 @@ $(document).ready(function(){
     $('#rejectModal a.triggerNoPreloaderModal').click(function() {
         var reason = $('div.rejectTextArea textarea').val().trim();
         if (reason.length > rejectedTextMaxLen) {
-            showErrors("The length of reject reason should not be more than " + rejectedTextMaxLen + " characters.");
+            showErrors("The length of reject reason should not be more than " + rejectedTextMaxLen + " characters");
             return false;
         }
         approveRejectData.rejectReason = reason;
@@ -1172,15 +1266,15 @@ $(document).ready(function(){
             groupName=$("#groupNameInput").val();
         } else {
             if (!getGroupNameAndId()) {
-                showErrors("One radio button of the user group should be checked.");
+                showErrors("One radio button of the user group should be checked");
                 return;
             }
         }
         if ($(this).hasClass("deleteGroupButton")) {
-            $("#deleteGroupModal div.noticeContent").html("Are you sure you want to delete group "+
-                groupName+" ?");
-            $("#deleteGroupConfirmModal div.noticeContent").html(groupName+
-                " has been deleted.");
+            $("#deleteGroupModal div.noticeContent").html("Are you sure you want to delete group <span class='confirmGroupName'>"+
+                groupName+"</span> ?");
+            $("#deleteGroupConfirmModal div.noticeContent").html("<span class='confirmGroupName'>" + groupName+
+                "</span> has been deleted.");
             modalLoad("#deleteGroupModal"); 
         } else {
             if ($(this).attr("href").indexOf("groupId=")>0) {
@@ -1217,7 +1311,7 @@ $(document).ready(function(){
     
     // close the confirm modal and redirect to view user groups page
     $("#deleteGroupConfirmModal .closeModal").click(function() {          
-          filterItems(1, false, {permissions: ['REPORT', 'READ', 'WRITE', 'FULL']});
+          filterItems(true, 1, false);
           return false;
     });
     
@@ -1287,7 +1381,7 @@ $(document).ready(function(){
                             }
                         },
                         function(errorMessage) {
-                            showServerError(errorMessage);
+                            showErrors(errorMessage);
                         });
             },
             error: function(xmlhttprequest, textstatus, message) {
@@ -1331,7 +1425,7 @@ $(document).ready(function(){
                 error: function(xmlhttprequest, textstatus, message) {
                     modalClose();
                     if (textstatus == "timeout") {
-                        showErrors("There might be too many emails and the server is still sending invitation emails.");
+                        showErrors("There might be too many emails and the server is still sending invitation emails");
                     } else {
                         showServerError("An unexpected error occurred: " + textstatus + ", " + message);
                     }
@@ -1344,16 +1438,16 @@ $(document).ready(function(){
     $("div.createAdminButton a").click(function() {
         var handle = $('#newAdminHandle').val().trim();
         if (handle.length == 0) {
-            showErrors("Member handle can't be empty.");
+            showErrors("Member handle can't be empty");
             return false;
         }
         if (!checkStrLen(handle)) {
-            showErrors("Member handle can't exceed 45 characters.");
+            showErrors("Member handle can't exceed 45 characters");
             return false;
         }
         var clientId = $('#clientIdSelect').val();
         if (clientId<=0) {
-            showErrors("You must select a customer.");
+            showErrors("You must select a customer");
             return false;
         }
         

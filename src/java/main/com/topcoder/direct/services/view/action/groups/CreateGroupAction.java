@@ -67,8 +67,15 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Security Groups - Release 4) change notes:
+ * <ol>
+ *   <li>Fix the <code>NullPointException</code> bug of {@link #executeAction()}.</li>
+ * </ol>
+ * </p>
+ * 
  * @author woodjhon, hanshuai, flexme, minhu, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  */
 @SuppressWarnings("serial")
 public class CreateGroupAction extends CreateUpdateGroupAction {
@@ -117,7 +124,7 @@ public class CreateGroupAction extends CreateUpdateGroupAction {
             getAuditService().add(record);
             
             HelperUtility.fillRelation(getGroup());
-            if (isSkipInvitationEmail()) {
+            if (isSkipInvitationEmail() && getGroup().getGroupMembers() != null) {
                 Date now = new Date();
                 for (GroupMember member : getGroup().getGroupMembers()) {
                     member.setActive(true);

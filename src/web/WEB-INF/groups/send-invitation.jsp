@@ -98,7 +98,7 @@
 											</dl>
 											<dl>
 												<dd class="lastDd">
-													<a href="javascript:;" class="newButton2 addMoreMembersButton" id="addMemberButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Add More User</span></span></span></a>
+													<a href="javascript:;" class="newButton2 addMoreMembersButton" id="addMemberButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Add More Users</span></span></span></a>
 												</dd>
 											</dl>
 										</td>

@@ -73,8 +73,15 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Security Groups - Release 4) change notes:
+ * <ol>
+ *   <li>Fix the typos.</li>
+ * </ol>
+ * </p>
+ * 
  * @author gevak, TCSDEVELOPER, minhu
- * @version 1.1
+ * @version 1.2
  */
 @SuppressWarnings("serial")
 public class CreateCustomerAdminAction extends ClientsPrepopulatingBaseAction {
@@ -192,7 +199,7 @@ public class CreateCustomerAdminAction extends ClientsPrepopulatingBaseAction {
                 getCustomerAdministratorService().getAdministratorsForCustomer(client.getId())) {
                 if (admin.getUserId() == userId) {
                     throw new SecurityGroupsActionException("The member " + handle
-                        + " was already an customer administrator for " + client.getName() + ".");
+                        + " was already a customer administrator for " + client.getName() + ".");
                 }
             }
             

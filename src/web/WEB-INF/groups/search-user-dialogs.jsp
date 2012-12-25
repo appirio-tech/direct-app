@@ -26,9 +26,9 @@
     
     <div class="modalBody">
         <div class="searchInputDiv">
-            <label>Handle Name:</label>
+            <label>Handle:</label>
             <input type="text" class="text" value="Name" id="handle" />
-            <div class="handleInputError">Please input the handle name</div>
+            <div class="handleInputError">Please input the handle</div>
         </div>
         
         <div class="modalCommandBox">

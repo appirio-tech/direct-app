@@ -185,6 +185,6 @@ public abstract class BaseAction extends BaseDirectStrutsAction {
      * @since 1.1
      */
     protected String formatDate(Date date) {
-        return date == null ? "N/A" : INVITATION_DATE_FORMAT.format(date).toLowerCase();
+        return date == null ? "N/A" : INVITATION_DATE_FORMAT.format(date);
     }
 }

@@ -1,9 +1,13 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
+  - Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the auditing information page.
+  -
+  - Version 1.1 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Add support for rendering at most a configurable rows of an array contents.
+  - - Change data picker input box editable.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -22,6 +26,7 @@
     <link rel="stylesheet" href="/css/direct/layout-groups.css?v=210792" media="all" type="text/css" />
 
     <!-- External javascript -->
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=222286"></script>
     <script type="text/javascript" src="/scripts/group.js"></script>
 </head>
 
@@ -94,10 +99,10 @@
 											<span class="label">Had Access between dates:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
-													<input type="text" name="formData.startDate" readonly="readonly" id="startDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />
 												</div>
 												<div class="fRight">
-													<input type="text" name="formData.endDate" readonly="readonly" id="endDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.endDate"  id="endDateReceived" class="text date-pick dp-applied" />
 												</div>
 												and
 												<div class="clearFixed"></div>
@@ -155,7 +160,7 @@
 											<th>Billing Accounts</th>
 											<th>Projects</th>
 											<th>Access From / To</th>
-											<th>Access Type</th>
+											<th>Access Rights</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -164,8 +169,8 @@
 											<td><s:property value="groupName"/></td>
 											<td><s:property value="member"/></td>
 											<td><s:property value="customerName"/></td>
-											<td><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
-											<td><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td class="multirowsCell"><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td class="multirowsCell"><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:iterator value="fromTo" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:property value="accessRights"/></td>
 										</tr>
@@ -188,6 +193,7 @@
 
 <div id="modalBackground"></div>
 <div id="new-modal"></div>
+<%@ include file="tooltip.jsp" %>
 
 </body>
 <!-- End #page -->

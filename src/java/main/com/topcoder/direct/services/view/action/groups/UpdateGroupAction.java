@@ -18,8 +18,10 @@ import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
 import com.topcoder.security.groups.model.GroupAuditRecord;
+import com.topcoder.security.groups.model.GroupInvitation;
 import com.topcoder.security.groups.model.GroupMember;
 import com.topcoder.security.groups.model.ResourceType;
+import com.topcoder.security.groups.services.GroupInvitationService;
 import com.topcoder.security.groups.services.SecurityGroupException;
 
 /**
@@ -89,6 +91,11 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
      * </p>
      */
     private static final String CLASS_NAME = UpdateGroupAction.class.getName();
+
+    /**
+     * Represents the mapping from the group member to the group member invitation.
+     */
+    private Map<Long, GroupInvitation> groupInvitations;
 
     /**
      * <p>
@@ -222,6 +229,7 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
             HelperUtility.fillHandle(getGroupUserService(), group);
             setGroup(group);
             setSelectedClientId(group.getClient().getId());
+            this.groupInvitations = HelperUtility.getGroupMemberInvitations(getGroupInvitationService(), group);
             input();
             LoggingWrapperUtility.logExit(getLogger(), signature, new Object[] {SUCCESS });
             return SUCCESS;
@@ -344,5 +352,14 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
         for (DirectProject dp : newProjects) {
             oldGroup.getDirectProjects().add(dp);
         }
+    }
+    
+    /**
+     * Sets the group invitations.
+     * 
+     * @return the groupInvitations
+     */
+    public Map<Long, GroupInvitation> getGroupInvitations() {
+        return groupInvitations;
     }
 }

@@ -13,6 +13,8 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Security Groups Release 3) changes:
   - - updated to fixed the bugs in this assembly.
+  - Version 1.4 (Release Assembly - TopCoder Security Groups Release 4) changes:
+  - - Add "Status" column.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -52,7 +54,7 @@
                             <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
                               <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
                             </s:url>
-							<a class="button7" href="${viewUserGroupsUrl}"><span class="left">Back to Groups</span></a>
+							<a class="button7" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
 						</div>
 						<!-- End #wholeAreaHeader -->
 						
@@ -114,7 +116,7 @@
                                                 </s:if>
                                                 </s:iterator>
 											</td>
-											<td class="firstColumn">Resource Restriction:</td>
+											<td class="firstColumn">Resource Restrictions:</td>
 											<td>
 											    <s:iterator value="group.restrictions" id="restriction" status="status">
                                                 <s:if test="#status.First">
@@ -154,7 +156,8 @@
 									<thead>
 										<tr>
 											<th>Handle</th>
-											<th>Access Type</th>
+											<th>Access Rights</th>
+                                            <th>Status</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -176,6 +179,9 @@
                                                     <s:if test="#groupMember.specificPermission.toString() == 'WRITE'">Write</s:if>
                                                 </s:if>
 											</td>
+                                            <td>
+                                                ${groupInvitations[groupMember.userId].status}
+                                            </td>
 										</tr>
                                         </s:if>
 										</s:iterator>

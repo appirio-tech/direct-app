@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the received invitations page.
@@ -8,6 +8,9 @@
   - Changes:
   - Version 1.1 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups) changes:
   -   updated to use the refactored pagination.jsp.
+  -
+  - Version 1.2.2 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Change date picker input box editable.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -70,7 +73,7 @@
 								<div class="filterTitleRight">
 									<div class="filterTitleCenter">
 										<a href="javascript:;" class="expanded"></a>
-										<h4>Filter</h4>
+										<h4>Search</h4>
 									</div><!-- End .filterTitleCenter -->
 								</div><!-- End .filterTitleRight -->
 							</div>
@@ -105,10 +108,10 @@
 											<span class="label">Invitation Received Between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
-													<input type="text" name="formData.startDate" readonly="readonly" id="startDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />
 												</div>
 												<div class="fRight">
-													<input type="text" name="formData.endDate" readonly="readonly" id="endDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.endDate"  id="endDateReceived" class="text date-pick dp-applied" />
 												</div>
 												and
 												<div class="clearFixed"></div>
@@ -119,10 +122,10 @@
 											<span class="label">Invitation Accepted Between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
-													<input type="text" name="formData.startDate" readonly="readonly" id="startDateAccepted" class="text date-pick dp-applied" />
+													<input type="text" name="formData.startDate" id="startDateAccepted" class="text date-pick dp-applied" />
 												</div>
 												<div class="fRight">
-													<input type="text" name="formData.endDate" readonly="readonly" id="endDateAccepted" class="text date-pick dp-applied" />
+													<input type="text" name="formData.endDate"  id="endDateAccepted" class="text date-pick dp-applied" />
 												</div>
 												and
 												<div class="clearFixed"></div>
@@ -132,7 +135,7 @@
 									</dd>
 								</dl>
 								<div class="filterContainerCommand2">
-									<a class="button6" id="filterViewInvitations" href="javascript:;"><span class="left"><span class="right">FILTER</span></span></a>
+									<a class="button6" id="filterViewInvitations" href="javascript:;"><span class="left"><span class="right">SEARCH</span></span></a>
 									<div class="clearFixed"></div>
 								</div>
 							</div>
@@ -167,12 +170,12 @@
 											<td><s:if test="not groupMember.useGroupDefault"><s:property value="groupMember.specificPermission"/></s:if>
 											    <s:else><s:property value="groupMember.group.defaultPermission"/></s:else></td>
 											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${sentOn}" />
-											    ${fn:toLowerCase(dt)}</td>
+											    ${dt}</td>
 											<td><s:if test="status+''=='REJECTED'">Rejected</s:if><s:else>
-											        <s:if test="acceptedOrRejectedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${acceptedOrRejectedOn}" />${fn:toLowerCase(dt)}</s:if>
+											        <s:if test="acceptedOrRejectedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${acceptedOrRejectedOn}" />${dt}</s:if>
 											        <s:else>N/A</s:else></s:else></td>
 											<td><s:if test="status+''=='APPROVAL_REJECTED'">Rejected</s:if><s:else>
-											        <s:if test="approvalProcessedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${approvalProcessedOn}" />${fn:toLowerCase(dt)}</s:if>
+											        <s:if test="approvalProcessedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${approvalProcessedOn}" />${dt}</s:if>
 											        <s:else>N/A</s:else></s:else></td>
 										</tr>
 										</s:iterator>

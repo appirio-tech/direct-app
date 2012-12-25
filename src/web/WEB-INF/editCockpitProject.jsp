@@ -15,6 +15,9 @@
   - Version 1.2.1 updates (Release Assembly - TopCoder Security Groups - Release 2)
   - - Add group permissions area
   -
+  - Version 1.2.2 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Add support for rendering at most a configurable rows of an array contents.
+  -
   - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
   -
   - Version 1.2.2 (Release Assembly - TopCoder Direct Project Audit v1.0) changes
@@ -28,6 +31,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=222286"></script>
     <link rel="stylesheet" href="/css/direct/editProject.css?v=213353" media="all" type="text/css"/>
     <script type="text/javascript">
         var groupIds = []; 
@@ -607,13 +611,13 @@
                     <td class="alignCenter">
                         <s:property value="defaultPermission"/>
                     </td>
-                    <td class="alignCenter">
+                    <td class="alignCenter multirowsCell">
                         <s:iterator value="billingAccounts" var="billingAccount" status="loop">
                             <s:if test="#loop.index > 0"><br/></s:if>
                             <s:property value="#billingAccount.name"/>
                         </s:iterator>
                     </td>
-                    <td class="alignCenter">
+                    <td class="alignCenter multirowsCell">
                         <s:iterator value="directProjects" var="directProject" status="loop">
                             <s:if test="#loop.index > 0"><br/></s:if>
                             <c:out value="${tcdirect:resolveDirectProject(directProject.directProjectId).name}"/>
@@ -673,6 +677,7 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/project/edit/editProjectPageModals.jsp"/>
+<jsp:include page="groups/tooltip.jsp"/>
 <jsp:include page="includes/popups.jsp"/>
 
 </body>

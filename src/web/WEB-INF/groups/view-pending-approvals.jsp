@@ -10,6 +10,9 @@
   -   updated to use the refactored pagination.jsp.
   - Version 1.2 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous) changes:
   -   updated to use the common search-user-dialogs.jsp.
+  -
+  - Version 1.2.2 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Change date picker input box editable.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -90,10 +93,10 @@
 											<span class="label">Request Date Between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
-													<input type="text" name="formData.startDate" readonly="readonly" id="startDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />
 												</div>
 												<div class="fRight">
-													<input type="text" name="formData.endDate" readonly="readonly" id="endDateReceived" class="text date-pick dp-applied" />
+													<input type="text" name="formData.endDate"  id="endDateReceived" class="text date-pick dp-applied" />
 												</div>
 												and
 												<div class="clearFixed"></div>
@@ -143,7 +146,7 @@
 											<td><s:property value="users[#st.index].handle"/></td>
 											<td><s:property value="users[#st.index].emailAddress"/></td>
 											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${sentOn}" />
-											    ${fn:toLowerCase(dt)}</td>
+											    ${dt}</td>
 											<td><s:property value="groupMember.group.client.name"/></td>
 											<td class="hide"><s:property value="id"/></td>
 										</tr>

@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the create/update security group page.
@@ -14,6 +14,10 @@
   - Changes:
   - Version 1.2 (Release Assembly - TopCoder Security Groups Release 3) changes:
   -   updated to fixed the bugs in this assembly.
+  -
+  - Version 1.3 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Add "Status" column.
+  - - Change the link of "Cancel" button.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -55,7 +59,7 @@
                             </c:if>
                             <c:if test="${empty group}">
                                 <h2 class="createGroupsTitle">Create New Group</h2>
-                                <a class="button7" href="${viewUserGroupsUrl}"><span class="left">Back to Groups</span></a>
+                                <a class="button7" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
                             </c:if>
 						</div>
 						<!-- End #wholeAreaHeader -->
@@ -83,7 +87,7 @@
 											<td><input type="text" class="text" id="groupName" id="inputCreateGroupName" value="<s:property value="#attr.group.name"/>"/></td>
 										</tr>
 										<tr>
-											<td class="firstColumn">Group Authorization Attributes:</td>
+											<td class="firstColumn">Group Access Rights:</td>
 											<td>
 												<div class="attributesWrapper">
                                                     <input type="radio" id="reportRadio" name="defaultPerm" value="REPORT" <c:if test="${group.defaultPermission eq 'REPORT'}">checked="checked"</c:if>  autocomplete="off"/>
@@ -211,13 +215,20 @@
 										<col width="28%" />
 										<col width="28%" />
 										<col width="28%" />
-										<col width="16%" />
+                                        <c:set var="renderStatus" value="${not empty group and fn:length(group.groupMembers) gt 0}"/>
+                                        <c:if test="${renderStatus}">
+                                        <col width="6%" />
+                                        </c:if>
+										<col width="10%" />
 									</colgroup>
 									<thead>
 										<tr>
 											<th>Member Handle</th>
-											<th>Group User Authorization Attributes</th>
-											<th>Access Level</th>
+											<th>Group Member Authorization Attributes</th>
+											<th>Access Rights</th>
+                                            <c:if test="${renderStatus}">
+                                            <th>Status</th>
+                                            </c:if>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -257,6 +268,8 @@
                                                         <input type="radio" <c:if test="${member.useGroupDefault}">disabled="disabled"</c:if> id="fullRadio${currentId}" value="FULL" name="accesslevel${currentId}" autocomplete="off" <c:if test="${(not member.useGroupDefault) and member.specificPermission eq 'FULL'}">checked="checked"</c:if>/>
                                                         <label for="fullRadio${currentId}">Full</label>
                                                     </div>
+                                                </td>
+                                                <td class="forthColumn"> ${groupInvitations[member.userId].status}
                                                 </td>
                                                 <td class="forthColumn">
                                                     <a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a>
@@ -300,6 +313,9 @@
                                                         <label for="fullRadio${currentId}">Full</label>
                                                     </div>
                                                 </td>
+                                                <c:if test="${renderStatus}">
+                                                <td class="forthColumn"></td>
+                                                </c:if>
                                                 <td class="forthColumn">
                                                     <a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a>
                                                 </td>
@@ -326,7 +342,19 @@
                             <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">Update group details</span></span></a>
                             <input type="hidden" id="groupId" value="${group.id}"/>
                             </c:if>
-							<a href="javascript:window.history.go(-1)" class="newButton1 newButtonGray"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+                            
+                            <c:if test="${not empty group}">
+                            <s:url var="backUrl" action="viewGroupAction" namespace="/group">
+                                <s:param name="groupId" value="groupId"/>
+                            </s:url>
+                            </c:if>
+                            
+                            <c:if test="${empty group}">
+                            <s:url var="backUrl" action="viewUserGroupsAction" namespace="/group">
+                                <s:param name="criteria.permissions" value="new java.lang.String[]{'REPORT','READ','WRITE','FULL'}"/>
+                            </s:url>
+                            </c:if>
+							<a href="${backUrl}" class="newButton1 newButtonGray"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
 						</div>
 						
 					</div>
@@ -352,7 +380,7 @@
 			<div class="modalHeaderRight">
 				<div class="modalHeaderCenter">
 					Group Created
-					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+					<a href="javascript:;" class="closeModal gotoGroupDetail" title="Close">Close</a>
 				</div>
 			</div>
 		</div>
@@ -360,7 +388,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent"><span class="confirmGroupName"></span> has been succesfully created for <span id="confirmCustomName"></span>. <span id="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
+			<div class="noticeContent"><span class="confirmGroupName"></span> has been successfully created for <span id="confirmCustomName"></span>. <span id="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -383,7 +411,7 @@
 			<div class="modalHeaderRight">
 				<div class="modalHeaderCenter">
 					Group Details Updated
-					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+					<a href="javascript:;" class="closeModal gotoGroupDetail" title="Close">Close</a>
 				</div>
 			</div>
 		</div>
@@ -391,7 +419,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent"><span class="confirmGroupName"></span> details have been succesfully updated.</div>
+			<div class="noticeContent"><span class="confirmGroupName"></span> details have been successfully updated.</div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -408,6 +436,36 @@
 	</div>
 	<!-- end #updateGroupConfirmModal -->
     
+    <!-- #noChangeConfirmModal -->
+	<div id="noChangeConfirmModal" class="outLay">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					Group Details No Change
+					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		
+		<div class="modalBody">
+			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
+			<div class="noticeContent"><span id="noChangeGroupName"></span> details haven't been changed.</div>
+			
+			<div class="modalCommandBox">
+    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+			</div>
+		</div>
+		<!-- end .modalBody -->
+		
+		<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #noChangeConfirmModal -->
 </div>
 <!-- end modal -->
 

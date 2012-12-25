@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.action.groups;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,9 @@ import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.commons.utils.ValidationUtility;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.model.GroupInvitation;
 import com.topcoder.security.groups.services.DirectProjectService;
+import com.topcoder.security.groups.services.GroupInvitationService;
 import com.topcoder.security.groups.services.GroupService;
 import com.topcoder.security.groups.services.SecurityGroupException;
 import com.topcoder.security.groups.services.UserService;
@@ -96,6 +99,11 @@ public class ViewGroupAction extends BaseAction {
     private Group group;
 
     /**
+     * Represents the mapping from the group member to the group member invitation.
+     */
+    private Map<Long, GroupInvitation> groupInvitations;
+    
+    /**
      * Purpose: groupService is used to represents the group service. It's required. Usage: It's injected. Legal Values:
      * Not null after set
      */
@@ -113,6 +121,11 @@ public class ViewGroupAction extends BaseAction {
      */
     private UserService groupUserService;
 
+    /**
+     * Represents the group invitation service.
+     */
+    private GroupInvitationService groupInvitationService;
+    
     /**
      * <p>
      * Create the instance.
@@ -174,6 +187,7 @@ public class ViewGroupAction extends BaseAction {
 
             fillProjectName(group);
             HelperUtility.fillHandle(groupUserService, group);
+            this.groupInvitations = HelperUtility.getGroupMemberInvitations(groupInvitationService, group);
 
             LoggingWrapperUtility.logExit(getLogger(), signature, new Object[] { SUCCESS });
 
@@ -301,4 +315,20 @@ public class ViewGroupAction extends BaseAction {
         this.groupUserService = groupUserService;
     }
 
+    /**
+     * Sets the group invitations.
+     * 
+     * @return the groupInvitations
+     */
+    public Map<Long, GroupInvitation> getGroupInvitations() {
+        return groupInvitations;
+    }
+
+    /**
+     * Sets the group invitation service.
+     * @param groupInvitationService the group invitation service.
+     */
+    public void setGroupInvitationService(GroupInvitationService groupInvitationService) {
+        this.groupInvitationService = groupInvitationService;
+    }
 }

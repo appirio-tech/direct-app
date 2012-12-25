@@ -1,9 +1,12 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups)
+  - Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the user groups page.
+  -
+  - Version 1.1 updates (Release Assembly - TopCoder Security Groups - Release 4)
+  - - Add support for rendering at most a configurable rows of an array contents.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -22,6 +25,7 @@
     <link rel="stylesheet" href="/css/direct/layout-groups.css?v=210792" media="all" type="text/css" />
 
     <!-- External javascript -->
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=222286"></script>
     <script type="text/javascript" src="/scripts/group.js"></script>
 </head>
 
@@ -170,8 +174,8 @@
                                                 </s:url><a href="${viewUserGroupDetailsUrl}" rel="<s:property value='groupId'/>"><s:property value="groupName"/></a></td>
 											<td><s:property value="accessRights"/></td>
 											<td><s:property value="customerName"/></td>
-											<td><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
-											<td><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td class="multirowsCell"><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td class="multirowsCell"><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:iterator value="resources" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:iterator value="members" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 										</tr>
@@ -196,7 +200,8 @@
 </div>
 
 <%@ include file="delete-group-dialogs.jsp" %>
-
+<%@ include file="tooltip.jsp" %>
+    
 </body>
 <!-- End #page -->
 </html>

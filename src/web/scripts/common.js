@@ -23,6 +23,10 @@
  * Version 1.7 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
  * - Add method to sort the dropdown by its option text
  *
+ * Version 1.8 (Release Assembly - TopCoder Security Groups - Release 4)
+ * - Add methods to support rendering at most configurable rows for an array content. The hidden 
+ * - rows can be displayed through tooltip.
+ *
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -837,4 +841,60 @@ function sortDropDown(dropDownId) {
         // set the selected value back
         $dd.val(selectedVal);
     }
+}
+
+window.multiRowsDivID = 1;
+/**
+ * Build the HTML content to restrict the max rows of an array content.
+ * @param rows the array containing the content.
+ * @param maxrows the max rows.
+ * @return the HTML content.
+ */
+function tooltipOnMultiRows(rows, maxrows) {
+    if (!maxrows) maxrows = 4;
+    if (rows.length <= maxrows) return rows.join('<br/>');
+    var divId = 'multirows_tip_id_' + window.multiRowsDivID;
+    var html = '<div class="multirowsTip" rel="' + window.multiRowsDivID + '">';
+    var c = [];
+    for (var i = 0; i < maxrows; i++) c.push(rows[i]);
+    c.push('<strong>...</strong>');
+    html += c.join('<br/>') + '</div>';
+    html += '<div id="multirows_content_' + window.multiRowsDivID + '" style="display:none;">' + rows.join('<br/>') + '</div>';
+    window.multiRowsDivID++;
+    return html;
+}
+/**
+ * Set up the mouseover event for the multi rows tooltip.
+ */
+function tooltipOnMultiRowsEvents() {
+    var tips = $(".multirowsTip");
+    if (tips.length == 0) return;
+    tips.each(function() {
+        $(this).tooltip({
+            tip: '#namesRowsToolTip',
+            delay:0,
+            onBeforeShow: function(){
+                this.getTip().find(".tooltipContent").html($("#multirows_content_" + $(this.getTrigger()).attr('rel')).html());
+            }
+        });
+    });
+}
+/**
+ * Build the multi rows HTML content and set up the tooltip mouseover event.
+ */
+function updateMultiRowsCell() {
+    $(".multirowsCell").each(function() {
+        var content = $(this).html().trim();
+        var lines = content.split("<br>");
+        if (lines.length < 2) lines = content.split("<br/>");
+        if (lines.length < 2) lines = content.split("<BR/>");
+        if (lines.length < 2) lines = content.split("<BR>");
+        var rows = [];
+        for (var i = 0; i < lines.length; i++) {
+            var row = lines[i].trim();
+            if (row.length > 0) rows.push(row);
+        }
+        $(this).html(tooltipOnMultiRows(rows));
+    });
+    tooltipOnMultiRowsEvents();
 }

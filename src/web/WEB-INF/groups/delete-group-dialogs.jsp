@@ -1,10 +1,13 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups)
+  - Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file of delete group dialogs, it's statically included in the view user groups page
   - and view group details page.
+  -
+  - Version 1.1 (Release Assembly - TopCoder Security Groups Release 4) changes:
+  - - Change the icon in delete group confirmation dialog.
 --%>
 <div id="modalBackground"></div>
 <div id="new-modal">
@@ -53,7 +56,7 @@
 		<!-- end .modalHeader -->
 		
 		<div class="modalBody">
-			<div class="iconNotice"><img src="/images/icon-question.png" alt="question" /></div>
+			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
 			<div class="noticeContent">&lt;Group Name&gt; has been deleted.</div>
 			
 			<div class="modalCommandBox">

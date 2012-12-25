@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.action.groups;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,8 +62,15 @@ import com.topcoder.service.project.ProjectData;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Security Groups - Release 4) change notes:
+ * <ol>
+ *   <li>Updated {@link #input()} to sort the clients.</li>
+ * </ol>
+ * </p>
+ * 
  * @author woodjhon, hanshuai, flexme, minhu, TCSASSEMBLER
- * @version 1.2
+ * @version 1.4
  */
 @SuppressWarnings("serial")
 public abstract class CreateUpdateGroupAction extends BaseAction {
@@ -263,6 +272,11 @@ public abstract class CreateUpdateGroupAction extends BaseAction {
             } else {
                 clients = customerAdministratorService.getCustomersForAdministrator(userId);
             }
+            Collections.sort(clients, new Comparator<Client>() {
+                public int compare(Client client1, Client client2) {
+                    return client1.getName().compareTo(client2.getName());
+                }
+            });
             
             if (!HelperUtility.checkPermission(ServletActionContext.getRequest(), getCurrentUserId(), getAuthorizationService(), getGroup(), clients.size() > 0, false)) {
                 throw new SecurityGroupsActionException("Can't view this group");

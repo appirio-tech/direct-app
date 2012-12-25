@@ -16,6 +16,8 @@
  *  
  *  Version 2.2 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added code for Group
  *  Permissions area
+ *  - Version 2.3 (Release Assembly - TopCoder Security Groups Release 4) changes:
+ *  -   Updated to fixed the bugs in this assembly.
  *
  *  Version 2.3 (Release Assembly - TopCoder Direct Project Audit v1.0)
  *  - Fix the bug when saving direct project.
@@ -92,7 +94,8 @@ var setupEditProjectToolTip = function() {
 
 
 $(document).ready(function (e) {
-
+    updateMultiRowsCell();
+    
     if ($('.editPage').length > 0) {
 
         $(".ratingEdit span").live("mouseenter", function () {
@@ -314,26 +317,12 @@ $(document).ready(function (e) {
                 var group = availableGroups['' + groupId];
                 
                 var billings = group.billingAccounts;
-                var billingsText = '';
-                if (billings && billings.length > 0) {
-                    for (var j = 0; j < billings.length; j++ ) {
-                        if (j > 0) {
-                            billingsText += '<br/>';
-                        }
-                        billingsText += billings[j].name;
-                    }
-                }
+                if (!billings) billings = [];
+                billings = $.map(billings, function(b) {return b.name});
                 
                 var directProjects = group.directProjects;
-                var directProjectsText = '';
-                if (directProjects && directProjects.length > 0) {
-                    for (var j = 0; j < directProjects.length; j++) {
-                        if (j > 0) {
-                            directProjectsText += '<br/>';
-                        }
-                        directProjectsText += directProjects[j].name;
-                    }
-                }
+                if (!directProjects) directProjects = [];
+                directProjects = $.map(directProjects, function(b) {return b.name});
 
                 var restrictions = group.restrictions;
                 var restrictionsText = '';
@@ -368,8 +357,8 @@ $(document).ready(function (e) {
                                     '<input type="hidden" value="' + group.id + '"/>' +
                                 '</td>' + 
                                 '<td class="alignCenter">' + group.defaultPermission + '</td>' +
-                                '<td class="alignCenter">' + billingsText +  '</td>' +
-                                '<td class="alignCenter">' + directProjectsText + '</td>' +
+                                '<td class="alignCenter">' + tooltipOnMultiRows(billings) +  '</td>' +
+                                '<td class="alignCenter">' + tooltipOnMultiRows(directProjects) + '</td>' +
                                 '<td class="alignCenter">' + restrictionsText + '</td>' +
                                 '<td class="alignCenter">' + membersText + '</td>' +
                                 '<td class="alignCenter"><a name="preloaderModal" rel="' + group.id + '" class="triggerModal remove" href="javascript:;">Remove</a></td>' +
@@ -378,6 +367,7 @@ $(document).ready(function (e) {
 
             $('.groupPermissions tbody tr').removeClass('odd');
             $('.groupPermissions tbody tr:odd').addClass('odd');
+            tooltipOnMultiRowsEvents();
             modalAllClose();
         });
 

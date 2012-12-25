@@ -1,6 +1,6 @@
 /* 
   - Author: TCSASSEMBLER
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
 
   This file will contain css used in group pages.
@@ -16,6 +16,8 @@
   -   and Audit Information.
   -
   - Version 1.4 (Release Assembly - TopCoder Security Groups Release 3) changes:
+  -   Updated to fixed the bugs in this assembly.
+  - Version 1.5 (Release Assembly - TopCoder Security Groups Release 4) changes:
   -   Updated to fixed the bugs in this assembly.
 */
 /* tab width */
@@ -976,8 +978,7 @@ select{
 /* end #preloaderModal */
 
 #deleteGroupModal .modalBody .modalCommandBox{
-	text-align:right;
-	padding-right:24px;
+	text-align:center;
 }
 	#deleteGroupModal .modalBody .modalCommandBox .newButton1{
 		margin-left:3px;
@@ -1373,7 +1374,13 @@ select{
 	padding-top:36px;
 	text-align:center;
 	}
-	
+#noChangeConfirmModal .noticeContent{
+	width:280px;
+	height:73px;
+	padding-left:63px;
+	padding-top:36px;
+	text-align:center;
+	}	
 /* searchInputDiv */
 #searchModal,#searchListModal{
 	width:398px;
@@ -1502,4 +1509,3 @@ a#createGroup, a#updateGroup {
 .confirmGroupName {
     word-wrap: break-word;
 }		
-

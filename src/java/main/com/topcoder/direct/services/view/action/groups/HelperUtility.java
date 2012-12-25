@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.groups;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +73,15 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Security Groups - Release 4) change notes:
+ * <ol>
+ *   <li>Fix the typos.</li>
+ * </ol>
+ * </p>
+ * 
  * @author woodjhon, hanshuai, flexme, TCSDEVELOPER, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  */
 final class HelperUtility {
     /**
@@ -500,7 +508,7 @@ final class HelperUtility {
         try {
             List<UserDTO> users = userService.search(handle);
             if (users.size() == 0) {
-                throw new SecurityGroupsActionValidationException("Handle " + handle + " doesn't exists");
+                throw new SecurityGroupsActionValidationException("Handle " + handle + " doesn't exist");
             }
             for (UserDTO user : users) {
                 // compare the handle text and return the user id
@@ -508,10 +516,31 @@ final class HelperUtility {
                     return user;
                 }
             }
-            throw new SecurityGroupsActionValidationException("Handle " + handle + " doesn't exists");
+            throw new SecurityGroupsActionValidationException("Handle " + handle + " doesn't exist");
         } catch (SecurityGroupException e) {
             throw new SecurityGroupsActionValidationException("Error occurs when validating members", e);
         }
+    }
+    
+    /**
+     * Gets the mapping from the group member to the group member invitation.
+     * 
+     * @param groupInvitationService the group invitation service.
+     * @param group the group.
+     * @return the mapping from the group member to the group member invitation.
+     * @throws SecurityGroupException if any error occurs.
+     */
+    static Map<Long, GroupInvitation> getGroupMemberInvitations(GroupInvitationService groupInvitationService, Group group) throws SecurityGroupException {
+        Map<Long, GroupInvitation> invitations = new HashMap<Long, GroupInvitation>();
+        if (group.getGroupMembers() != null) {
+            for (GroupMember member : group.getGroupMembers()) {
+                GroupInvitation invitation = groupInvitationService.getInvitation(group.getId(), member.getUserId());
+                if (invitation != null) {
+                    invitations.put(member.getUserId(), invitation);
+                }
+            }
+        }
+        return invitations;
     }
 
     /**

@@ -11,7 +11,7 @@
   -   updated to be used as a common pagination file for security groups jsps.
 --%>
 <div class="tableControlPage">
-    <div class="leftSide">Showing <strong>${page==0?1:((page-1) * pageSize+1)}</strong> to <strong>${page==0?(pagedResult.total):((page-1) * pageSize+fn:length(pagedResult.values))}</strong> of <strong>${pagedResult.total}</strong> entries</div>
+    <div class="leftSide">Showing <strong>${page==0?1:((page-1) * pageSize+1)}</strong> to <strong>${page==0?(pagedResult.total):((page-1) * pageSize+fn:length(pagedResult.values))}</strong> of <strong>${pagedResult.total}</strong> <c:if test="${pagedResult.total gt 1}">entries</c:if><c:if test="${pagedResult.total lt 2}">entry</c:if></div>
     <div class="rightSide">
         <strong class="label">Show:</strong>
         <select id="pageSizeSelect">
@@ -20,7 +20,7 @@
             <option <s:if test="(page>0) and (pageSize==50)">selected="selected"</s:if> value="50">50</option>
             <option <s:if test="page==0">selected="selected"</s:if> value="0">All</option>
         </select>
-        <span class="label">per Page</span>
+        <span class="label">per page</span>
         
         <input type="hidden" id="totalInput" value="${pagedResult.total}"/>
         <ul>

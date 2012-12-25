@@ -106,7 +106,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent">Customer Adminstrator user was successfully <br />created.</div>
+			<div class="noticeContent">Customer Administrator user was successfully <br />created.</div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
