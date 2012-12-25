@@ -128,6 +128,7 @@
         <property name="groupService" ref="groupService" />
         <property name="projectService" ref="groupProjectService" />
         <property name="groupUserService" ref="groupUserService" />
+        <property name="groupInvitationService" ref="groupInvitationService" />
     </bean>
     
     <bean id="baseCreateUpdateGroupAction"
