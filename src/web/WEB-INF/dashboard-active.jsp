@@ -1,6 +1,6 @@
 <%--
   - Author: tangzx, GreatKevin
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
@@ -16,6 +16,10 @@
   -
   - Version 1.4 (Release Assembly - TC Direct Cockpit Release Eight)
   - 1) Add mulestiple active phases to the status column
+  -
+  - Version 1.5 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
+  -   page can access the session on the first hit.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -288,14 +292,29 @@
                                                         </s:if>
                                                         <s:if test="contestType.name != 'Copilot Posting'">
                                                             <s:if test="isStudio == true">
-                                                            <link:studioSubmissionsGrid contestId="${contest.id}">
-                                                                    <s:property value="submissionsNumber"/>
-                                                            </link:studioSubmissionsGrid>
+
+                                                                <s:if test="multipleRound">
+                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:studioSubmissionsGrid>:
+                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                        <s:property value="submissionsNumber"/>
+                                                                    </link:studioSubmissionsGrid>
+                                                                </s:else>
+
+
                                                             </s:if>
                                                             <s:if test="isStudio == false">
-                                                            <link:softwareSubmissionsList contestId="${contest.id}">
-                                                                    <s:property value="submissionsNumber"/>
-                                                            </link:softwareSubmissionsList>
+                                                                <s:if test="multipleRound">
+                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:softwareSubmissionsList>:
+                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                        <s:property value="submissionsNumber"/>
+                                                                    </link:softwareSubmissionsList>
+                                                                </s:else>
                                                             </s:if>
                                                         </s:if>
                                                     </td>

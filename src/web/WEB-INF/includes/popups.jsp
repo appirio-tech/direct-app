@@ -1924,7 +1924,7 @@
                     <p>Create a new milestone for your project.</p>
                 </div>
                 <div class="multi">
-                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
+                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
                          <span class="buttonMask"><span class="text">Multiple Milestones</span></span>
                      </a>
                     <p>Create multiple milestones for your project and save them all at one time.</p>
@@ -1942,7 +1942,7 @@
                     <p>Create a new milestone for your project.</p>
                 </div>
                 <div class="multi">
-                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
+                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
                          <span class="buttonMask"><span class="text">Multiple Milestones</span></span>
                      </a>
                     <p>Create multiple milestones for your project and save them all at one time.</p>

@@ -72,9 +72,12 @@
  *
  * Version 1.9.0 -  (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
  * - update operations dashboard result table sort function.
+ *
+ * Version 2.0 - (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * - Add new sort routine 'submission-number' to sort the submission number in the active contests table
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness
- * @version 1.9.0
+ * @version 2.0
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -293,6 +296,48 @@ $(document).ready(function() {
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['submission-number-asc'] = function (a, b) {
+        var ah = trim(a.replace(/(<([^>]+)>)/ig, ""));
+        var ahs = ah.split(":");
+        var x;
+        if(ahs.length > 1) {
+            x = ahs[1].replace(/[^\d]+/ig, "");
+        } else {
+            x = trim(ah);
+        }
+        var bh = trim(b.replace(/(<([^>]+)>)/ig, ""));
+        var bhs = bh.split(":");
+        var y;
+        if(bhs.length > 1) {
+            y = bhs[1].replace(/[^\d]+/ig, "");
+        } else {
+            y = trim(bh);
+        }
+
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['submission-number-desc'] = function (a, b) {
+        var ah = trim(a.replace(/(<([^>]+)>)/ig, ""));
+        var ahs = ah.split(":");
+        var x;
+        if(ahs.length > 1) {
+            x = ahs[1].replace(/[^\d]+/ig, "");
+        } else {
+            x = trim(ah);
+        }
+        var bh = trim(b.replace(/(<([^>]+)>)/ig, ""));
+        var bhs = bh.split(":");
+        var y;
+        if(bhs.length > 1) {
+            y = bhs[1].replace(/[^\d]+/ig, "");
+        } else {
+            y = trim(bh);
+        }
+
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
     jQuery.fn.dataTableExt.oSort['money-asc'] = function (a, b) {
         var x = parseFloat(trim(a.replace(/[^\d]/g, "")));
         var y = parseFloat(trim(b.replace(/[^\d]/g, "")));
@@ -476,7 +521,7 @@ $(document).ready(function() {
             { "sType": "date-direct" },
             { "sType": "date-direct" },
             { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "submission-number" },
             { "sType": "html" },
             { "sType": "html" },
             null,

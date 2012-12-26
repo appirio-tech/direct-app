@@ -49,8 +49,17 @@ import java.util.*;
  * - Add project milestones data to game plan jsgantt version
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *     <li>
+ *         Include dependency type id for the jsgantt game plan result
+ *     </li>
+ * </ol>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -267,9 +276,9 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             // Get project game plan data from Game Plan Service
             TCDirectProjectGamePlanData data = getGamePlanService().retrieveGamePlanData(user, projectId);
 
-            /*     System.out.println("******************************************");
+            /* System.out.println("******************************************");
 
-           for (SoftwareProjectData spt : softwareProjects) {
+           for (SoftwareProjectData spt : data.getSoftwareProjects()) {
                System.out.println("name:" + spt.getProjectName());
                System.out.println("current status:" + spt.getProjectStatus());
                System.out.println("current phase:" + spt.getCurrentPhase());
@@ -277,11 +286,12 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                System.out.println("start date:" + spt.getStartDate());
                System.out.println("end date:" + spt.getEndDate());
                System.out.println("dependency ID:" + Arrays.toString(spt.getDependencyProjectIds()));
+               System.out.println("dependency type ID:" + Arrays.toString(spt.getDependencyProjectTypeIds()));
                System.out.println("=============================================");
 
            }
 
-           System.out.println("******************************************"); */
+           System.out.println("******************************************");  */
 
             if (data == null) {
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
@@ -427,9 +437,16 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
                 }
 
+                long dependencyTypeId = -1;
+
+                if(predecessorId > 0) {
+                    dependencyTypeId = swc.getDependencyProjectTypeIds().length > 0 ? swc.getDependencyProjectTypeIds()[0] : -1;
+                }
+
+
                 if (isJSGantt) {
                     jsGanttDataBuffer.add(new JsGanttDataBuffer(swc.getStartDate(), swc.getEndDate(), generateContestGamePlanDataJsGantt(id, directProjectId, name, type, startTime,
-                            endTime, percentage, predecessorId, contestStatus, null, false)));
+                            endTime, percentage, predecessorId, dependencyTypeId, contestStatus, null, false)));
                 } else {
                     result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
                 }
@@ -466,7 +483,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     if (isJSGantt) {
 
                         jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime,
-                                endTime, percentage, -1, contestLikeStatus, id, false) ));
+                                endTime, percentage, -1, -1, contestLikeStatus, id, false) ));
                     } else {
                         result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
                     }
@@ -481,7 +498,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     Date milestoneDate = milestone.isCompleted() ? milestone.getCompletionDate() : milestone.getDueDate();
                     String MilestoneDateStr = JSGANTT_GAME_PLAN_DATE_FORMAT.format(milestoneDate);
                     jsGanttDataBuffer.add(new JsGanttDataBuffer(milestoneDate, milestoneDate, generateContestGamePlanDataJsGantt(String.valueOf(milestone.getId()), directProjectId, milestone.getName(), "Milestone", MilestoneDateStr,
-                            MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, milestone.getStatus().name(), null, true) ));
+                            MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, -1, milestone.getStatus().name(), null, true) ));
                 }
             }
         }
@@ -608,7 +625,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
     private static String generateContestGamePlanDataJsGantt(String id, long directProjectId, String name,
                                                              String contestType, String startTime,
                                                              String endTime, long percentage,
-                                                             long predecessorId, String status, String key, boolean isMilestone) {
+                                                             long predecessorId, long dependencyTypeId,
+                                                             String status, String key, boolean isMilestone) {
         StringBuilder contestData = new StringBuilder();
 
         boolean isBugRace = contestType.equalsIgnoreCase("bug race");
@@ -641,6 +659,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         contestData.append("<pParent>" + directProjectId + "</pParent>");
         contestData.append("<pOpen>1</pOpen>");
         contestData.append("<pDepend>" + (predecessorId > 0 ? predecessorId : "") + "</pDepend>");
+        contestData.append("<pDependType>" + (dependencyTypeId > 0 ? dependencyTypeId : "") + "</pDependType>");
         contestData.append("<pCaption></pCaption>");
         contestData.append("</task>");
 

@@ -4,6 +4,10 @@
   - Version: 1.0
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
+  -   page can access the session on the first hit.
+  -
   - Description: This page renders the project milestones batch creation view.
   -
 --%>
@@ -49,7 +53,7 @@
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a>
                                 &gt;
                                 <a href="<s:url action="allProjects" namespace="/"/>">Projects</a> &gt;
-                                <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>'><s:property
+                                <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'><s:property
                                         value="sessionData.currentProjectContext.name"/></a> &gt;
                                 <strong>Milestones</strong>
                             </div>
@@ -69,7 +73,7 @@
                                             <span>List View</span>
                                         </a>
                                         <a class="calendarViewBtn"
-                                           href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/><s:param name="formData.viewType">calendar</s:param></s:url>">
+                                           href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/><s:param name="formData.viewType">calendar</s:param></s:url>">
                                             <span>Calendar</span>
                                         </a>
                                     </div>

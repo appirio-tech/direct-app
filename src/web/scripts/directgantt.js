@@ -265,6 +265,8 @@ $(document).ready(function () {
                     $(this).addClass("completedDummy");
                 });
             }
+
+            g.DrawDependencies();
         });
 
         extendStyle();

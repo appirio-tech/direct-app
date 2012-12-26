@@ -138,8 +138,17 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.9 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *     <li>
+ *         Add check null for current select project id in session data.
+ *     </li>
+ * </ol>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -299,10 +308,6 @@ public class GetContestAction extends ContestAction {
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
         getViewData().setContestStats(contestStats);
-				
-		// Set current project context based on selected contest
-		getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
-		getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
 
         getViewData().setDashboard(
             DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
@@ -351,6 +356,10 @@ public class GetContestAction extends ContestAction {
                     getMetadataService(), projectId,  softwareCompetition.getProjectHeader().getTcDirectProjectId(),
                     getViewData().getDashboard());
         }
+
+        // Set current project context based on selected contest
+        getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+        getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
     }
 
     /**
@@ -506,7 +515,9 @@ public class GetContestAction extends ContestAction {
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession(false);
 
-            if (sessionData == null) {
+            if (sessionData == null
+                    || sessionData.getCurrentProjectContext() == null
+                    || sessionData.getCurrentSelectDirectProjectID() == null) {
                 sessionData = new SessionData(session);
             }
 

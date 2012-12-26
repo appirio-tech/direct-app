@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv, TCSASSEMBLER
-  - Version: 1.4
+  - Author: BeBetter, isv, GreatKevin
+  - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -15,6 +15,9 @@
   - - added hasContestWritePermission field.
   - Version 1.4 - TC Direct "Contest Links and Button" Update 24Hr Assembly Change Note
   - - removed the 'View Contest', 'Repost Contest', 'New Version' links.
+  - Version 1.5 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
+  -   page can access the session on the first hit.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -62,7 +65,7 @@
                     <div class="area1Content">
                     <div class="currentPage">
                         <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
-                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
+                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
                         <strong style="word-wrap:break-word;"><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
 

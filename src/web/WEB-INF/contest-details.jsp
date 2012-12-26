@@ -26,7 +26,7 @@
                     <div class="area1Content">
                     <div class="currentPage">
                         <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"/></a> &gt;
+                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>"/></a> &gt;
                         <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">

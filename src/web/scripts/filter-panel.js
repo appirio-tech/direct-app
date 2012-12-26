@@ -20,8 +20,11 @@
  * Version 1.5 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) changes:
  * - update filter of customer, project manager, and project filter value for operations dashboard.
  *
- * @author TCSASSEMBLER
- * @version 1.5
+ * Version 1.6 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * - Update the contest status filter to correctly filter unique contest status.
+ *
+ * @author GreatKevin
+ * @version 1.6
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -551,14 +554,8 @@ var setupFilterPanel = function () {
         tableHandle.fnFilter(searchFor, 0);
     });
     $('#contestStatusFilter').change(function() {
-        var str = $(this).val();
-        if (str.indexOf('All') != -1)str = '';
-
-        if (handleName == 'activeContests')
-            tableHandle.fnFilter(str, 8);
-        else if (handleName == 'ProjectsContests') {
-            tableHandle.fnFilter(str, 7, true);
-        }
+        tableHandle.fnDraw();
+        tableHandle.fnFilter("");
     });
     $('#projectNameFilter').change(function() {
         var str = $(this).find("option:selected").text();
@@ -705,14 +702,16 @@ $(function() {
         handleName = "activeContests";
     }
 
-    var startDateCol, endDateCol;
+    var startDateCol, endDateCol, statusCol;
     if (handleName == 'activeContests') {
         startDateCol = 3;
         endDateCol = 4;
+        statusCol = 8;
     }
     else if (handleName == 'MyCopilotPostings' || handleName == 'ProjectsContests') {
         startDateCol = 2;
         endDateCol = 3;
+        statusCol = 7;
     }
     else if (handleName == 'projectsResult' || handleName == 'pmProjectsResult') {
         startDateCol = 1;
@@ -827,6 +826,32 @@ $(function() {
                     return true;
             }
             return false;
+        });
+    $.fn.dataTableExt.afnFiltering.push(
+        function (oSettings, aData, iDataIndex) {
+            var value = $("#contestStatusFilter").val();
+            if (!value || !statusCol) {
+                return true;
+            }
+            if(value == 'All') {
+                return true;
+            }
+
+            var statusMap = {};
+            var statusArray = aData[statusCol].split("</span>");
+            for (var k = 0; k < statusArray.length; ++k) {
+                if ($.trim(statusArray[k]).length == 0) continue;
+                statusArray[k] = statusArray[k].replace(/<font.*?\/font>/g, "");
+                var index1 = statusArray[k].indexOf('>');
+                var availableStatus = statusArray[k].substring(index1 + 1);
+                statusMap[availableStatus.toLowerCase()] = true;
+            }
+
+            if(statusMap[value.toLowerCase()]) {
+                return true;
+            } else {
+                return false;
+            }
         });
 
     setupFilterPanel();

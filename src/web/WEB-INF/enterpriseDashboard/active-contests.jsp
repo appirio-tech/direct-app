@@ -1,6 +1,10 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Add milestone / final submission number to the submission column of active contests table.
+  -
   -
   - Description: The active contests page of the new enterprise dashboard
 --%>
@@ -214,20 +218,35 @@
                                                                     </td>
                                                                     <td>
                                                                         <s:if test="contestType.name == 'Copilot Posting'">
-                                                                            <a href="../copilot/listCopilotContestSubmissions.action?projectId=${contest.id}">
+                                                                            <a href="copilot/listCopilotContestSubmissions.action?projectId=${contest.id}">
                                                                                 <s:property value="submissionsNumber"/>
                                                                             </a>
                                                                         </s:if>
                                                                         <s:if test="contestType.name != 'Copilot Posting'">
                                                                             <s:if test="isStudio == true">
-                                                                            <link:studioSubmissionsGrid contestId="${contest.id}">
-                                                                                    <s:property value="submissionsNumber"/>
-                                                                            </link:studioSubmissionsGrid>
+
+                                                                                <s:if test="multipleRound">
+                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:studioSubmissionsGrid>:
+                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
+                                                                                </s:if>
+                                                                                <s:else>
+                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                                        <s:property value="submissionsNumber"/>
+                                                                                    </link:studioSubmissionsGrid>
+                                                                                </s:else>
+
+
                                                                             </s:if>
                                                                             <s:if test="isStudio == false">
-                                                                            <link:softwareSubmissionsList contestId="${contest.id}">
-                                                                                    <s:property value="submissionsNumber"/>
-                                                                            </link:softwareSubmissionsList>
+                                                                                <s:if test="multipleRound">
+                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:softwareSubmissionsList>:
+                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
+                                                                                </s:if>
+                                                                                <s:else>
+                                                                                    <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                                        <s:property value="submissionsNumber"/>
+                                                                                    </link:softwareSubmissionsList>
+                                                                                </s:else>
                                                                             </s:if>
                                                                         </s:if>
                                                                     </td>

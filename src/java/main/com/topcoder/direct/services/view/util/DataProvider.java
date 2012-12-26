@@ -665,8 +665,17 @@ import java.util.Map.Entry;
  *   <li>Add method {@link #getRelatedSecondInstallment(List, List)} to get second installment data.</li>
  * </ol>
  * </p>
+ * <p>
+ *
+ * Version 6.0 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *     <li>
+ *         Update method {@link #getActiveContests(long)} to include the milestone / final submission number and isMultipleRound.
+ *     </li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad
- * @version 5.9
+ * @version 6.0
  * @since 1.0
  */
 public class DataProvider {
@@ -2255,6 +2264,9 @@ public class DataProvider {
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
+            int milestoneSubmissionCount = resultContainer.getIntItem(i, "number_of_milestone_submission");
+            int finalSubmissionCount = resultContainer.getIntItem(i, "number_of_final_submission");
+            boolean isMultipleRound = resultContainer.getBooleanItem(i, "is_multiple_round");
             Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
             int forumId = -1;
             long customerId = -1L;
@@ -2293,6 +2305,10 @@ public class DataProvider {
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
                                                              forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
+
+            contest.setMultipleRound(isMultipleRound);
+            contest.setMilestoneSubmissionNumber(milestoneSubmissionCount);
+            contest.setFinalSubmissionNumber(finalSubmissionCount);
 
             // check late for the status#1
             if(latePhase != null && statusName.equalsIgnoreCase(latePhase)) {

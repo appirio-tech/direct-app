@@ -22,8 +22,11 @@
  * - Add JS for loading volume view summary table
  * - Add JS for implementing table view in analysis page.
  *
+ * Version 1.6 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * - use the correct sorting routine for the submission number in the active contests tab - active contests table
+ *
  * @author GreatKevin, hanshuai, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -2168,7 +2171,7 @@ $(document).ready(function () {
                 { "sType": "date-direct" },
                 { "sType": "date-direct" },
                 { "sType": "link-number" },
-                { "sType": "link-number" },
+                { "sType": "submission-number" },
                 { "sType": "link-number" },
                 { "sType": "html" },
                 null,

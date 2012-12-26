@@ -59,7 +59,7 @@ var vBenchTime = new Date().getTime();
  * note : you should use setCaption("Caption") in order to display the caption
  * @return void
  */
-JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption)
+JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption, pDependType)
 {
 
     /**
@@ -168,6 +168,14 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
     var vDepend = pDepend;
 
     /**
+     * @property vDependType
+     * @type String
+     * @default pDependType
+     * @private
+     */
+    var vDependType = pDependType;
+
+    /**
      * @property vCaption
      * @type String
      * @default pCaption
@@ -261,6 +269,13 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
      * @method getDepend
      * @return {String}
      */    this.getDepend   = function(){ if(vDepend) return vDepend; else return null };
+
+    /**
+     * Returns task dependencies type as list of values (i.e. 123,122)
+     * @method getDependType
+     * @return {String}
+     */    this.getDependType   = function(){ if(vDependType) return vDependType; else return null };
+
 
     /**
      * Returns task caption (if it exists)
@@ -758,7 +773,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
      * Draw a straight line (colored one-pixel wide DIV), need to parameterize doc item
      * @method sLine
      * @return {Void}
-     */  this.sLine = function(x1,y1,x2,y2) {
+     */  this.sLine = function(x1,y1,x2,y2,dependType) {
 
         vLeft = Math.min(x1,x2);
         vTop  = Math.min(y1,y2);
@@ -766,6 +781,19 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
         vHgt  = Math.abs(y2-y1) + 1;
 
         vDoc = document.getElementById('rightside');
+
+        var dependTypeId = parseInt(dependType);
+        var color = 'black'; // default color for type "Depends On"
+        if(dependTypeId == 4) {
+            // blue for 'For Design'
+            color = 'blue';
+        } else if(dependTypeId == 5) {
+            // red for 'Repost For'
+            color = 'red';
+        } else if(dependTypeId == 6) {
+            // green for 'bug hunt for'
+            color = 'green';
+        }
 
         // retrieve DIV
         var oDiv = document.createElement('div');
@@ -779,7 +807,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 
         // set attributes
         oDiv.style.zIndex = 0;
-        oDiv.style.backgroundColor = "red";
+        oDiv.style.backgroundColor = color;
 
         oDiv.style.left = vLeft + "px";
         oDiv.style.top = vTop + "px";
@@ -796,7 +824,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
      * Draw a diaganol line (calc line x,y pairs and draw multiple one-by-one sLines)
      * @method dLine
      * @return {Void}
-     */  this.dLine = function(x1,y1,x2,y2) {
+     */  this.dLine = function(x1,y1,x2,y2,dependType) {
 
         var dx = x2 - x1;
         var dy = y2 - y1;
@@ -810,7 +838,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
         {
             vx = Math.round(x);
             vy = Math.round(y);
-            this.sLine(vx,vy,vx,vy);
+            this.sLine(vx,vy,vx,vy,dependType);
             x += dx;
             y += dy;
         };
@@ -821,29 +849,29 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
      * Draw dependency line between two points (task 1 end -> task 2 start)
      * @method drawDependency
      * @return {Void}
-     */ this.drawDependency =function(x1,y1,x2,y2)
+     */ this.drawDependency =function(x1,y1,x2,y2,dependType)
     {
         if(x1 + 10 < x2)
         {
-            this.sLine(x1,y1,x1+4,y1);
-            this.sLine(x1+4,y1,x1+4,y2);
-            this.sLine(x1+4,y2,x2,y2);
-            this.dLine(x2,y2,x2-3,y2-3);
-            this.dLine(x2,y2,x2-3,y2+3);
-            this.dLine(x2-1,y2,x2-3,y2-2);
-            this.dLine(x2-1,y2,x2-3,y2+2);
+            this.sLine(x1,y1,x1+4,y1,dependType);
+            this.sLine(x1+4,y1,x1+4,y2,dependType);
+            this.sLine(x1+4,y2,x2,y2,dependType);
+            this.dLine(x2,y2,x2-3,y2-3,dependType);
+            this.dLine(x2,y2,x2-3,y2+3,dependType);
+            this.dLine(x2-1,y2,x2-3,y2-2,dependType);
+            this.dLine(x2-1,y2,x2-3,y2+2,dependType);
         }
         else
         {
-            this.sLine(x1,y1,x1+4,y1);
-            this.sLine(x1+4,y1,x1+4,y2-10);
-            this.sLine(x1+4,y2-10,x2-8,y2-10);
-            this.sLine(x2-8,y2-10,x2-8,y2);
-            this.sLine(x2-8,y2,x2,y2);
-            this.dLine(x2,y2,x2-3,y2-3);
-            this.dLine(x2,y2,x2-3,y2+3);
-            this.dLine(x2-1,y2,x2-3,y2-2);
-            this.dLine(x2-1,y2,x2-3,y2+2);
+            this.sLine(x1,y1,x1+4,y1,dependType);
+            this.sLine(x1+4,y1,x1+4,y2-10,dependType);
+            this.sLine(x1+4,y2-10,x2-8,y2-10,dependType);
+            this.sLine(x2-8,y2-10,x2-8,y2,dependType);
+            this.sLine(x2-8,y2,x2,y2,dependType);
+            this.dLine(x2,y2,x2-3,y2-3,dependType);
+            this.dLine(x2,y2,x2-3,y2+3,dependType);
+            this.dLine(x2-1,y2,x2-3,y2-2,dependType);
+            this.dLine(x2-1,y2,x2-3,y2+2,dependType);
         }
     };
 
@@ -873,7 +901,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                     var vTask = this.getArrayLocationByID(vDepList[k]);
 
                     if(vList[vTask].getVisible()==1)
-                        this.drawDependency(vList[vTask].getEndX(),vList[vTask].getEndY(),vList[i].getStartX()-1,vList[i].getStartY())
+                        this.drawDependency(vList[vTask].getEndX(),vList[vTask].getEndY(),vList[i].getStartX()-1,vList[i].getStartY(),vList[i].getDependType())
                 }
             }
         }
@@ -2484,11 +2512,21 @@ JSGantt.AddXMLTask = function(pGanttVar){
             //pDepend *= 1;
             if (pDepend.length==0){pDepend=''} // need this to draw the dependency lines
 
+            try { pDependType = Task[i].getElementsByTagName("pDependType")[0].childNodes[0].nodeValue;
+            } catch (error) { pDependType =0;}
+            //pDepend *= 1;
+            if (pDependType.length==0){pDependType=''}
+
+            if(pDependType == '5') {
+                pName += '(REPOST)';
+            }
+
+
             try { pCaption = Task[i].getElementsByTagName("pCaption")[0].childNodes[0].nodeValue;
             } catch (error) { pCaption ="";}
 
             // Finally add the task
-            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption));
+            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption,pDependType));
         }
     }
 
@@ -2612,16 +2650,22 @@ JSGantt.ChromeXMLParse = function (pGanttVar){
             pOpen *= 1;
 
             var te = Task.split(/<pDepend>/i);
-            var te = Task.split(/<pDepend>/i);
             if(te.length> 2){var pDepend=te[1];} else {var pDepend = "";}
             //pDepend *= 1;
             if (pDepend.length==0){pDepend=''} // need this to draw the dependency lines
 
+            var te = Task.split(/<pDependType>/i);
+            if(te.length> 2){var pDependType=te[1];} else {var pDependType = "";}
+
             var te = Task.split(/<pCaption>/i);
             if(te.length> 2){var pCaption=te[1];} else {var pCaption = "";}
 
+            if(pDependType == '5') {
+                pName += '(REPOST)';
+            }
+
             // Finally add the task
-            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption 	));
+            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption, pDependType));
         };
     };
 };

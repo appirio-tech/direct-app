@@ -1,7 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: GreatKevin
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
+  -   page can access the session on the first hit.
   -
   - Description: JSP page for the jsgantt project game plan
 --%>
@@ -91,7 +95,7 @@
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/>
+                                <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/>
                                 </a> &gt;
                                 <strong>Game Plan</strong>
                             </div>

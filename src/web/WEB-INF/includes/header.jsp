@@ -112,12 +112,12 @@
     </a>
     </s:if>
     <s:else>
-    <a href="<s:url action='projectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"
+    <a href="<s:url action='projectOverview' namespace='/'><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>" class="logo"
        style="float:left; position:relative;">
         <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
         <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
         <c:if test="${requestScope.CURRENT_TAB != 'editProject'}">
-            <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>'
+            <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'
                class="editIcon"></a>
         </c:if>
     </a>
@@ -484,18 +484,18 @@
                 <div id="tabs1">
                      <ul>
                         <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                            <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
+                            <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>">
                                 <span>Overview</span>
                             </a>
                         </li>
                         <li <c:if test="${requestScope.CURRENT_TAB eq 'milestone'}">class="on"</c:if>>
-                             <a id="tabProjectMilestone" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
+                             <a id="tabProjectMilestone" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/> <s:param name="formData.viewType" >list</s:param></s:url>">
                                  <span>Project Milestones</span>
                              </a>
                          </li>
 
                         <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                            <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
+                            <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Game Plan</span></a>
                         </li>
 
                         <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
@@ -505,10 +505,10 @@
                             <div class="dropDwnLst">
                                 <div class="section">
                                     <h3>View Contests</h3>
-                                    <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">List View</a>
-                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Calendar View</a>
-                                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Game Plan View</a>
-									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">New Game Plan View (Beta)</a>
+                                    <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>">List View</a>
+                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Calendar View</a>
+                                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>
+									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">New Game Plan View (Beta)</a>
                                 </div>
                                 <div class="section">
                                     <h3>Create Contest</h3>
@@ -518,13 +518,13 @@
                                 </div>
                                 <div class="section">
                                     <h3>Edit Contest</h3>
-                                    <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Bulk Edit Draft Contests</a>
+                                    <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Bulk Edit Draft Contests</a>
                                 </div>
                             </div>
                         </li>
 
                          <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
-                            <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Issue Tracking</span></a>
+                            <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Issue Tracking</span></a>
                         </li>
                     </ul>
                 </div>

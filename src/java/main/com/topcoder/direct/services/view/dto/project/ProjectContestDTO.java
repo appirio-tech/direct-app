@@ -28,8 +28,15 @@ import java.util.Date;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *     <li>Add properties {@link #milestoneSubmissionNumber}, {@link #finalSubmissionNumber} and {@link #isMultipleRound}</li>
+ * </ol>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class ProjectContestDTO implements Serializable {
 
@@ -47,6 +54,27 @@ public class ProjectContestDTO implements Serializable {
      * <p>An <code>int</code> providing the number of submissions for contest.</p>
      */
     private int submissionsNumber;
+
+    /**
+     * The milestone submission number.
+     *
+     * @since  1.3
+     */
+    private int milestoneSubmissionNumber;
+
+    /**
+     * The final submission number.
+     *
+     * @since 1.3
+     */
+    private int finalSubmissionNumber;
+
+    /**
+     * Whether the contest is multiple round.
+     *
+     * @since 1.3
+     */
+    private boolean isMultipleRound;
 
     /**
      * <p>An <code>int</code> providing the number of forum posts for contest.</p>
@@ -408,5 +436,65 @@ public class ProjectContestDTO implements Serializable {
      */
     public void setStatus3Late(boolean status3Late) {
         isStatus3Late = status3Late;
+    }
+
+    /**
+     * Gets the milestone submission number.
+     *
+     * @return the milestone submission number.
+     * @since 1.3
+     */
+    public int getMilestoneSubmissionNumber() {
+        return milestoneSubmissionNumber;
+    }
+
+    /**
+     * Sets the milestone submission number.
+     *
+     * @param milestoneSubmissionNumber the milestone submission number.
+     * @since 1.3
+     */
+    public void setMilestoneSubmissionNumber(int milestoneSubmissionNumber) {
+        this.milestoneSubmissionNumber = milestoneSubmissionNumber;
+    }
+
+    /**
+     * Gets the final submission number.
+     *
+     * @return the final submission number.
+     * @since 1.3
+     */
+    public int getFinalSubmissionNumber() {
+        return finalSubmissionNumber;
+    }
+
+    /**
+     * Sets the final submission number.
+     *
+     * @param finalSubmissionNumber the final submission number.
+     * @since 1.3
+     */
+    public void setFinalSubmissionNumber(int finalSubmissionNumber) {
+        this.finalSubmissionNumber = finalSubmissionNumber;
+    }
+
+    /**
+     * Gets is multiple round.
+     *
+     * @return is multiple round.
+     * @since 1.3
+     */
+    public boolean isMultipleRound() {
+        return isMultipleRound;
+    }
+
+    /**
+     * Sets whether the contest is multiple round.
+     *
+     * @param multipleRound whether the contest is multiple round.
+     * @since 1.3
+     */
+    public void setMultipleRound(boolean multipleRound) {
+        isMultipleRound = multipleRound;
     }
 }
