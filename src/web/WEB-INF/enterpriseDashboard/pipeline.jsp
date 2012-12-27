@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Version: 1.0 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+  - - Add the projects pipeline chart into the pipeline page
   -
   - Description: The pipeline page the new enterprise dashboard
 --%>
@@ -51,10 +54,50 @@
 
                                 <div class="sectionContainer pipelineSection">
 
-                                    <div class="sectionInner">
+                                    <div class="sectionInner projectsPipeline">
 
                                         <div class="pipelineTitle">
-                                            <h3>Pipeline</h3>
+                                            <h3>Project Pipeline</h3>
+                                            <a href="javascript:;" class="icon"
+                                               rel="This chart depicts the projects in Pipeline">!</a>
+                                        </div>
+                                        <!-- title -->
+
+                                        <div class="dataSection">
+
+                                            <!-- numberSection -->
+                                            <div class="numberSection">
+                                                <div class="numberSectionInner">
+                                                    <ul>
+                                                        <li class="ajaxTableLoader"><img src="/images/rss_loading.gif"
+                                                                                         alt="loading"/></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- End .numberSection -->
+
+                                            <!-- Pipeline -->
+                                            <div class="pipelineChart">
+
+                                                <div id="projectPipelineChartWrapper">
+                                                    <div id="projectPipelineChart">
+                                                        <div class="ajaxTableLoader"><img src="/images/rss_loading.gif"
+                                                                                          alt="loading"/></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End .pipelineChart -->
+
+                                        </div>
+
+                                        <div class="corner tl"></div>
+                                        <div class="corner tr"></div>
+                                    </div>
+
+                                    <div class="sectionInner contestsPipeline">
+
+                                        <div class="pipelineTitle">
+                                            <h3>Contest Pipeline</h3>
                                             <a href="javascript:;" class="icon"
                                                rel="This chart depicts the contests of projects in Pipeline">!</a>
                                         </div>

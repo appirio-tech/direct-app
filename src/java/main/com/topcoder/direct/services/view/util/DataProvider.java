@@ -38,6 +38,7 @@ import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineSchedule
 import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.project.*;
@@ -674,8 +675,21 @@ import java.util.Map.Entry;
  *     </li>
  * </ol>
  * </p>
+ *
+ * Version 6.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *   <li>
+ *    Updted {@link #setProjectGeneralInfo(com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO)} to
+ *    use completion date to calculate project actual duration if the project is completed
+ *   </li>
+ *   <li>
+ *    Add method {@link #getEnterpriseDashboardProjectsPipeline(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}
+ *    to gets the projects pipeline data.
+ *   </li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad
- * @version 6.0
+ * @version 6.1
  * @since 1.0
  */
 public class DataProvider {
@@ -5974,15 +5988,20 @@ public class DataProvider {
             startDate = startDateContainer.getTimestampItem(0, "start_date");
 
             if (startDate != null) {
-                // current date
-                Date currentTime = new Date();
+                // project end date
+                Date endTime = new Date();
 
-                long duration = currentTime.getTime() - startDate.getTime();
+                // use the project completion date as project end date if the project is completed
+                if(projectGeneralInfo.getProject().getProjectStatusId() == 4L) {
+                    endTime = projectGeneralInfo.getProject().getCompletionDate();
+                }
+
+                long duration = endTime.getTime() - startDate.getTime();
 
                 long days = 0;
 
                 if (duration > 0) {
-                    days = DirectUtils.daysBetween(startDate, currentTime);
+                    days = DirectUtils.daysBetween(startDate, endTime);
                 }
 
 
@@ -6284,6 +6303,80 @@ public class DataProvider {
         }
 
         List<EnterpriseDashboardMonthPipelineDTO> result = new ArrayList<EnterpriseDashboardMonthPipelineDTO>(resultMap.values());
+
+        return result;
+    }
+
+    /**
+     * Gets the projects pipeline data for new enterprise dashboard, each
+     * <code>EnterpriseDashboardMonthProjectPipelineDTO</code> represents
+     * the pipeline stats dat for one month in the filtered range.
+     *
+     * @param filterForm the <code>EnterpriseDashboardFilterForm</code> instance which contains all the filter data
+     * @return a list of <code>EnterpriseDashboardMonthProjectPipelineDTO</code>
+     * @throws Exception if any error
+     * @since 6.1
+     */
+    public static List<EnterpriseDashboardMonthProjectPipelineDTO>
+            getEnterpriseDashboardProjectsPipeline(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if(projectIds == null || projectIds.length == 0) {
+            return new ArrayList<EnterpriseDashboardMonthProjectPipelineDTO>();
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_projects_pipeline";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        Date startDate = sourceDataFormatter.parse(filterForm.getStartMonth());
+        Date endDate = sourceDataFormatter.parse(filterForm.getEndMonth());
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        long startMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        calendar.setTime(endDate);
+
+        long endMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        Map<Long, EnterpriseDashboardMonthProjectPipelineDTO> resultMap =
+                new LinkedHashMap<Long, EnterpriseDashboardMonthProjectPipelineDTO>();
+        for(long m = startMonthCount; m <= endMonthCount; m++) {
+            EnterpriseDashboardMonthProjectPipelineDTO item = new EnterpriseDashboardMonthProjectPipelineDTO();
+            int year = (int) m / 12;
+            int month = (int) m % 12;
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            item.setDate(calendar.getTime());
+            resultMap.put(m, item);
+        }
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long projectStatusId = resultContainer.getLongItem(i, "project_status_id");
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+
+            EnterpriseDashboardMonthProjectPipelineDTO item =
+                    resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+
+            if (projectStatusId == 4L) {
+                item.setTotalCompletedProjects(item.getTotalCompletedProjects() + 1);
+            } else {
+                item.setTotalStartedProjects(item.getTotalStartedProjects() + 1);
+            }
+
+        }
+
+        List<EnterpriseDashboardMonthProjectPipelineDTO> result =
+                new ArrayList<EnterpriseDashboardMonthProjectPipelineDTO>(resultMap.values());
 
         return result;
     }

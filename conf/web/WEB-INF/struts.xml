@@ -1620,6 +1620,11 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        <action name="getProjectsPipeline" method="getProjectsPipeline" class="enterpriseDashboardPipelineAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
         <action name="getProjectsMilestones" method="getProjectsMilestones" class="enterpriseDashboardRoadmapAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />

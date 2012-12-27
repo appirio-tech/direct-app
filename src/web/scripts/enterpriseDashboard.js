@@ -22,11 +22,14 @@
  * - Add JS for loading volume view summary table
  * - Add JS for implementing table view in analysis page.
  *
- * Version 1.6 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * Version 1.6 (Release Assembly - TopCoder Direct Cockpit Release Assembly Nine)
  * - use the correct sorting routine for the submission number in the active contests tab - active contests table
  *
+ * Version 1.7 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * - Add JS for pipeline page - projects pipeline
+ *
  * @author GreatKevin, hanshuai, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -1047,7 +1050,7 @@ function renderPipelinePage(resultJson) {
         });
     }
 
-    $('.pipelineSection ul').empty().append('<li class="finished">Total Finished Contests<strong>' + finishedDataTotal + '</strong></li><li class="active">Total Active Contests<strong>' + activeDataTotal + '</strong></li><li class="scheduled">Total Scheduled Contests<strong>' + scheduledDataTotal + '</strong></li><li class="draft">Total Draft Contests<strong>' + draftDataTotal + '</strong></li><li class="last failed">Total Failed Contests<strong>' + failedDataTotal + '</strong></li>');
+    $('.pipelineSection .contestsPipeline ul').empty().append('<li class="finished">Total Finished Contests<strong>' + finishedDataTotal + '</strong></li><li class="active">Total Active Contests<strong>' + activeDataTotal + '</strong></li><li class="scheduled">Total Scheduled Contests<strong>' + scheduledDataTotal + '</strong></li><li class="draft">Total Draft Contests<strong>' + draftDataTotal + '</strong></li><li class="last failed">Total Failed Contests<strong>' + failedDataTotal + '</strong></li>');
     if (resultJson.length) {
         chart = new Highcharts.Chart({
             chart:{
@@ -1192,6 +1195,153 @@ function renderPipelinePage(resultJson) {
         });
     } else {
         $('.pipelineSection #pipelineChart').empty().append('<div class="noData">No data available</div>');
+    }
+}
+
+function renderProjectsPipeline(resultJson) {
+    var xAxisCate = new Array();
+    var completedData = new Array();
+    var startedData = new Array();
+    var completedDataTotal = 0, startedDataTotal = 0;
+    $.each(resultJson, function (idx, item) {
+        startedDataTotal += parseInt(item.startedProjectsNumber);
+        completedDataTotal += parseInt(item.completedProjectsNumber);
+    });
+
+    if (resultJson.length) {
+        $.each(resultJson, function (idx, item) {
+            xAxisCate.push(item.date);
+            completedData.push(parseInt(item.completedProjectsNumber) == 0 ? null : parseInt(item.completedProjectsNumber));
+            startedData.push(parseInt(item.startedProjectsNumber) == 0 ? null : parseInt(item.startedProjectsNumber));
+        });
+    }
+
+    $('.pipelineSection .projectsPipeline ul').empty().append('<li class="finished">Total Completed Projects<strong>' + completedDataTotal + '</strong></li><li class="active">Total Started Projects<strong>' + startedDataTotal + '</strong></li>');
+    if (resultJson.length) {
+        chart = new Highcharts.Chart({
+            chart:{
+                renderTo:'projectPipelineChart',
+                type:'column',
+                marginBottom:60
+            },
+            credits:{
+                text:''
+            },
+            navigation:{
+                buttonOptions:{
+                    enabled:false
+                }
+            },
+            title:{
+                text:null
+            },
+            xAxis:{
+                categories:xAxisCate,
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    },
+                    formatter:function () {
+                        return this.value.substring(5, 8).toUpperCase() + '\'' + parseInt(this.value).toString().substring(2, 4);
+                    }
+                },
+                tickLength:0
+            },
+            yAxis:{
+                min:0,
+                title:{
+                    text:null
+                },
+                stackLabels:{
+                    enabled:true
+                },
+                labels:{
+                    enabled:false
+                },
+                gridLineWidth:0
+            },
+            legend:{
+                align:'center',
+                verticalAlign:'bottom',
+                y:16,
+                backgroundColor:'#ebebeb',
+                borderColor:'#CCC',
+                borderWidth:1,
+                borderRadius:0,
+                symbolPadding:6,
+                itemWidth:150,
+                itemStyle:{
+                    fontFamily:'Arial',
+                    fontWeight:'bold',
+                    fontSize:'11px',
+                    color:'#898989'
+                },
+                reversed:true
+            },
+            tooltip:{
+                useHTML:true,
+                backgroundColor:null,
+                borderRadius:0,
+                borderWidth:0,
+                shadow:false,
+                style:{
+                    margin:'0px',
+                    padding:'0px',
+                    fontFamily:'Arial',
+                    fontSize:'11px',
+                    color:'#333333'
+                },
+                formatter:function () {
+                    return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                        parseInt(this.point.category) + ' ' + this.point.category.substring(5)
+                        + '</strong><div>' +
+                        this.series.name
+                        + ': ' +
+                        this.point.y
+                        + '</div></div></div>';
+                }
+            },
+            plotOptions:{
+                column:{
+                    stacking:'normal',
+                    dataLabels:{
+                        enabled:true,
+                        color:'#ffffff',
+                        style:{
+                            fontFamily:'Arial',
+                            fontSize:'11px',
+                            fontWeight:'bold'
+                        },
+                        formatter:function () {
+                            return this.y == 0 ? null : this.y;
+                        }
+                    },
+                    shadow:false,
+                    borderColor:Highcharts.getOptions().borderColor
+                },
+                series:{
+                    pointWidth:48
+                }
+            },
+            series:[
+                {
+                    name:'Started Projects',
+                    data:startedData,
+                    color:'#2fcafa',
+                    borderColor:'#0096c7'
+                },
+                {
+                    name:'Completed Projects',
+                    data:completedData,
+                    color:'#2f9c0d',
+                    borderColor:'#187000'
+                }
+            ]
+        });
+    } else {
+        $('.pipelineSection #projectPipelineChart').empty().append('<div class="noData">No data available</div>');
     }
 }
 
@@ -1403,7 +1553,7 @@ function loadTotalSpend(resultHandler) {
 function loadPipeline(resultHandler) {
     if($("#pipelineChartWrapper").length > 0) {
         $("#pipelineChart").empty().html('<div class="ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></div>');
-        $(".numberSectionInner ul").empty().html('<li class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></li>');
+        $(".contestsPipeline .numberSectionInner ul").empty().html('<li class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></li>');
     }
     if($("#overviewPipeline").length > 0) {
         $("#overviewPipeline").empty().html('<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>');
@@ -1423,6 +1573,30 @@ function loadPipeline(resultHandler) {
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
+                });
+        }
+    });
+}
+
+function loadProjectPipeline(resultHandler) {
+    $("#projectPipelineChart").empty().html('<div class="ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></div>');
+    $(".projectsPipeline .numberSectionInner ul").empty().html('<li class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></li>');
+
+    $.ajax({
+        type: 'POST',
+        url:  "getProjectsPipeline",
+        data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
+        cache: false,
+        timeout:100000,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult2(jsonResult,
+                function(result) {
+                    resultHandler(result);
+                },
+                function(errorMessage) {
+                    $(".projectsPipeline .numberSectionInner ul").empty();
+                    $('.pipelineSection #projectPipelineChart').empty().append('<div class="noData">Error when loading projects pipeline</div>')
                 });
         }
     });
@@ -2121,9 +2295,11 @@ $(document).ready(function () {
     // pipeline
     if ($(".pipelineIcon").parents("li").hasClass("active")) {
         loadPipeline(renderPipelinePage);
+        loadProjectPipeline(renderProjectsPipeline);
 
         $("#filterButton").click(function(){
             loadPipeline(renderPipelinePage);
+            loadProjectPipeline(renderProjectsPipeline);
         });
     }
 

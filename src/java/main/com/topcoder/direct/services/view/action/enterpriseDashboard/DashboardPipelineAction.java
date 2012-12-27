@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.enterpriseDashboard;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 
@@ -21,8 +22,17 @@ import java.util.Map;
  * The action handles the ajax requests for pipeline part of the enterprise dashboard.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
+ * <ol>
+ *     <li>
+ *      Add method {@link #getProjectsPipeline()} to handle the ajax request to get projects pipeline data.
+ *     </li>
+ * </ol>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  * @since Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
@@ -93,6 +103,39 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
 
             e.printStackTrace(System.err);
 
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax request to get the data for the projects pipeline chart.
+     *
+     * @return the result code.
+     * @since 1.1
+     */
+    public String getProjectsPipeline() {
+        try {
+            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+            // get the date from data provider via query
+            final List<EnterpriseDashboardMonthProjectPipelineDTO> enterpriseDashboardPipelines =
+                    DataProvider.getEnterpriseDashboardProjectsPipeline(getFormData());
+
+            for(EnterpriseDashboardMonthProjectPipelineDTO item : enterpriseDashboardPipelines) {
+                Map<String, String> m = new HashMap<String, String>();
+                m.put("date", AXIS_DATE_FORMAT.format(item.getDate()));
+                m.put("startedProjectsNumber", String.valueOf(item.getTotalStartedProjects()));
+                m.put("completedProjectsNumber", String.valueOf(item.getTotalCompletedProjects()));
+                result.add(m);
+            }
+
+            setResult(result);
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
             if (getModel() != null) {
                 setResult(e);
             }
