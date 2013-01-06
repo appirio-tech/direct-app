@@ -375,6 +375,16 @@
            </result>
         </action>
 
+        <action name="projectGamePlanExport" method="getGamePlanDataExcelExport" class="projectGamePlanDataAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="export" type="stream">
+                <param name="contentDisposition">attachment;filename=${exportGamePlanFilename}</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">gamePlanExport</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
         <action name="jsGanttProjectGamePlan" method="getJsGanttGamePlanData" class="projectGamePlanDataAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result type="stream">

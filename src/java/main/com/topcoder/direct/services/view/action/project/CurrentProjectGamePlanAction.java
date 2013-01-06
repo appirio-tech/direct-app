@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -13,6 +13,13 @@ import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.excel.Row;
+import com.topcoder.excel.Sheet;
+import com.topcoder.excel.Workbook;
+import com.topcoder.excel.impl.ExcelSheet;
+import com.topcoder.excel.impl.ExcelWorkbook;
+import com.topcoder.excel.output.Biff8WorkbookSaver;
+import com.topcoder.excel.output.WorkbookSaver;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.gameplan.GamePlanService;
 import com.topcoder.service.util.gameplan.SoftwareProjectData;
@@ -20,6 +27,7 @@ import com.topcoder.service.util.gameplan.StudioProjectData;
 import com.topcoder.service.util.gameplan.TCDirectProjectGamePlanData;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,8 +66,15 @@ import java.util.*;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.5 (BUGR-7728 Cockpit Game Plan Export Feature - Excel and Microsoft Project Support)
+ * <ul>
+ *    <li>Add export game plan.</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -159,6 +174,31 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
     private InputStream inputStream;
 
     /**
+     * The buffer for exported data.
+     *
+     * @since 1.5
+     */
+    private List<ExportDataBuffer> exportedData;
+
+    /**
+     * The direct project name.
+     *
+     * @since 1.5
+     */
+    private String directProjectName;
+
+    /**
+     * Gets the direct project name.
+     *
+     * @return the direct project name.
+     *
+     * @since 1.5
+     */
+    public String getDirectProjectName() {
+        return directProjectName;
+    }
+
+    /**
      * Getter for the game plan service.
      *
      * @return the game plan service.
@@ -250,6 +290,32 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         return SUCCESS;
     }
 
+    /**
+     * Gets the game plan data export.
+     *
+     * @return the game plan data export.
+     * @throws Exception if any error.
+     *
+     * @since 1.5
+     */
+    public String getGamePlanDataExcelExport() throws Exception {
+        generateGamePlanResponseStream(true);
+        return "export";
+    }
+
+    /**
+     * Gets the game plan exported file name.
+     *
+     * @return the game plan exported file name.
+     *
+     * @since 1.5
+     */
+    public String getExportGamePlanFilename() {
+        String fileName = directProjectName;
+        fileName = fileName.replaceAll(" ", "_");
+
+        return fileName + "_game_plan.xls";
+    }
 
     /**
      * Generates the game plan response stream
@@ -293,11 +359,14 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
            System.out.println("******************************************");  */
 
+            exportedData = new ArrayList<ExportDataBuffer>();
+
             if (data == null) {
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
             } else {
                 // generate the response data
-                responseData = generateProjectGamePlanData(data, isJsGantt, getMilestoneService());
+                responseData = generateProjectGamePlanData(data, isJsGantt, getMilestoneService(), exportedData);
+                directProjectName = data.getTcDirectProjectName();
             }
 
 
@@ -334,7 +403,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * @param milestoneService the project milestone service
      * @return the generated data response.
      */
-    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan, boolean isJSGantt, MilestoneService milestoneService) throws Exception {
+    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan, boolean isJSGantt, MilestoneService milestoneService, List<ExportDataBuffer> exportedData) throws Exception {
         // create a string builder to store the XML result
         StringBuilder result = new StringBuilder();
 
@@ -397,6 +466,13 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 String name = swc.getProjectName();
                 String type = swc.getProjectType();
 
+                ExportDataBuffer exportContest = new ExportDataBuffer();
+
+                exportContest.setName(name);
+                exportContest.setResourceName(type);
+                exportContest.setMilestone(false);
+                exportContest.setUniqueID(id);
+
                 if(!isJSGantt) {
                     name = type + " - " + name;
                 }
@@ -404,6 +480,9 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getStartDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getEndDate());
                 String contestStatus = swc.getProjectStatus();
+
+                exportContest.setStartDate(swc.getStartDate());
+                exportContest.setEndDate(swc.getEndDate());
 
                 // calculate the duration in hours
                 long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
@@ -417,6 +496,10 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 } else if (contestStatus.contains("Cancelled")) {
                     contestStatus = "Cancelled";
                     percentage = 100;
+                }
+
+                if(percentage == 100 && !contestStatus.contains("Cancelled")) {
+                    exportContest.setStatus("Completed");
                 }
 
                 // software contest will only have single dependency contest
@@ -437,6 +520,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
                 }
 
+                exportContest.setPredecessorId(predecessorId > 0 ? predecessorId : 0L);
+
                 long dependencyTypeId = -1;
 
                 if(predecessorId > 0) {
@@ -450,6 +535,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 } else {
                     result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
                 }
+
+                exportedData.add(exportContest);
             }
 
 
@@ -462,12 +549,21 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     String name = bugRace.getIssueKey() + " " + bugRace.getTitle();
                     String type = "Bug Race";
 
+                    ExportDataBuffer exportBugRace = new ExportDataBuffer();
+                    exportBugRace.setName(name);
+                    exportBugRace.setResourceName(type);
+                    exportBugRace.setMilestone(false);
+                    exportBugRace.setUniqueID(id);
+
                     if(!isJSGantt) {
                         name = type + " - " + name;
                     }
 
                     String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate());
                     String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate());
+
+                    exportBugRace.setStartDate(bugRace.getCreationDate());
+                    exportBugRace.setEndDate(bugRace.getEndDate());
 
                     long duration = calculateDuration(bugRace.getCreationDate(), bugRace.getEndDate());
                     String contestLikeStatus = bugRace.getContestLikeStatus();
@@ -480,6 +576,10 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                         contestLikeStatus = "cancelled";
                     }
 
+                    if(percentage == 100) {
+                        exportBugRace.setStatus("Completed");
+                    }
+
                     if (isJSGantt) {
 
                         jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime,
@@ -487,6 +587,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     } else {
                         result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
                     }
+
+                    exportedData.add(exportBugRace);
                 }
             }
 
@@ -499,6 +601,18 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     String MilestoneDateStr = JSGANTT_GAME_PLAN_DATE_FORMAT.format(milestoneDate);
                     jsGanttDataBuffer.add(new JsGanttDataBuffer(milestoneDate, milestoneDate, generateContestGamePlanDataJsGantt(String.valueOf(milestone.getId()), directProjectId, milestone.getName(), "Milestone", MilestoneDateStr,
                             MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, -1, milestone.getStatus().name(), null, true) ));
+
+                    ExportDataBuffer exportMilestone = new ExportDataBuffer();
+                    exportMilestone.setMilestone(true);
+                    exportMilestone.setName(milestone.getName());
+                    if(milestone.isCompleted()) {
+                        exportMilestone.setStatus("Completed");
+                    }
+                    exportMilestone.setUniqueID(String.valueOf(milestone.getId()));
+                    exportMilestone.setStartDate(milestoneDate);
+                    exportMilestone.setEndDate(milestoneDate);
+                    exportMilestone.setResourceName("Milestone");
+                    exportedData.add(exportMilestone);
                 }
             }
         }
@@ -517,6 +631,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             }
             result.append("</project>");
         }
+
+        Collections.sort(exportedData);
 
         return result.toString();
     }
@@ -831,4 +947,202 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             return result;
         }
     }
+
+    /**
+     * Gets the input stream for the game plan export.
+     *
+     * @return the input stream for the game plan export.
+     * @since 1.5
+     */
+    public InputStream getGamePlanExport() {
+        try {
+
+            Workbook workbook = new ExcelWorkbook();
+            Sheet sheet = new ExcelSheet("Game Plan", (ExcelWorkbook) workbook);
+
+
+            // the date format used for displaying 'completion date'
+            DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+
+            // set up the sheet header first
+            Row row = sheet.getRow(1);
+            int index = 1;
+
+            row.getCell(index++).setStringValue("ID");
+            row.getCell(index++).setStringValue("Name");
+            row.getCell(index++).setStringValue("Start");
+            row.getCell(index++).setStringValue("Finish");
+            row.getCell(index++).setStringValue("Predecessors");
+            row.getCell(index++).setStringValue("Resource Names");
+            row.getCell(index++).setStringValue("Status");
+            row.getCell(index).setStringValue("Milestone");
+
+            // insert sheet data from 2nd row
+            int rowIndex = 2;
+            Map<String, Integer> uniqueIDtoIndexIdMapping = new HashMap<String, Integer>();
+
+            int count = 1;
+            for(ExportDataBuffer data : exportedData) {
+                uniqueIDtoIndexIdMapping.put(data.getUniqueID(), count++);
+            }
+
+            count = 1;
+            for(ExportDataBuffer data: exportedData) {
+                // project name
+                row = sheet.getRow(rowIndex++);
+
+                row.getCell(1).setStringValue(String.valueOf(count++));
+                row.getCell(2).setStringValue(data.getName());
+                row.getCell(3).setStringValue(dateFormatter.format(data.getStartDate()));
+                row.getCell(4).setStringValue(dateFormatter.format(data.getEndDate()));
+                if(data.getPredecessorId() > 0) {
+                    row.getCell(5).setStringValue(uniqueIDtoIndexIdMapping.get(String.valueOf(data.getPredecessorId())).toString());
+                }
+                row.getCell(6).setStringValue(data.getResourceName());
+                if(data.getStatus() != null) {
+                    row.getCell(7).setStringValue(data.getStatus());
+                }
+                row.getCell(8).setStringValue(data.isMilestone() ? "Yes" : "No");
+            }
+
+            workbook.addSheet(sheet);
+
+            // Create a new WorkBookSaver
+            WorkbookSaver saver = new Biff8WorkbookSaver();
+            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+            saver.save(workbook, saveTo);
+            return new ByteArrayInputStream(saveTo.toByteArray());
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            throw new IllegalStateException(e);
+        }
+    }
+
+
+    private static class ExportDataBuffer implements Comparable<ExportDataBuffer> {
+
+        /**
+         * The name.
+         */
+        private String name;
+
+        /**
+         * The start date.
+         */
+        private Date startDate;
+
+        /**
+         * The end date.
+         */
+        private Date endDate;
+
+        /**
+         * The duration in days
+         */
+        private int duration;
+
+        private long predecessorId;
+
+        private String resourceName;
+
+        private String status;
+
+        private boolean isMilestone;
+
+        private String uniqueID;
+
+        /**
+         * Gets the start date.
+         *
+         * @return the start date.
+         */
+        public Date getStartDate() {
+            return startDate;
+        }
+
+        public Date getEndDate() {
+            return endDate;
+        }
+
+        public void setStartDate(Date startDate) {
+            this.startDate = startDate;
+        }
+
+        public void setEndDate(Date endDate) {
+            this.endDate = endDate;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public void setDuration(int duration) {
+            this.duration = duration;
+        }
+
+        public long getPredecessorId() {
+            return predecessorId;
+        }
+
+        public void setPredecessorId(long predecessorId) {
+            this.predecessorId = predecessorId;
+        }
+
+        public String getResourceName() {
+            return resourceName;
+        }
+
+        public void setResourceName(String resourceName) {
+            this.resourceName = resourceName;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public boolean isMilestone() {
+            return isMilestone;
+        }
+
+        public void setMilestone(boolean milestone) {
+            isMilestone = milestone;
+        }
+
+        public String getUniqueID() {
+            return uniqueID;
+        }
+
+        public void setUniqueID(String uniqueID) {
+            this.uniqueID = uniqueID;
+        }
+
+        /**
+         * Compares to another ExportDataBuffer.
+         *
+         * @param toCompare another ExportDataBuffer to compare
+         * @return the compare result
+         */
+        public int compareTo(ExportDataBuffer toCompare) {
+            int result = startDate.compareTo(toCompare.getStartDate());
+            if (result == 0) {
+                return endDate.compareTo(toCompare.getEndDate());
+            }
+
+            return result;
+        }
+    }
+
 }

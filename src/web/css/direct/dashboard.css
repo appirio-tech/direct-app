@@ -776,6 +776,11 @@ BODY#page{
     background: url("../../images/batch-edit.png") no-repeat;
 }
 
+#area1 .area1Content a.exportGamePlan {
+    color:red;
+    padding-left: 0px;
+}
+
 #area1 .currentPage{ /* page links on the top of the page */
 	color: #333;
 	font-size: 11px;

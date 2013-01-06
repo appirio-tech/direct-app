@@ -7,6 +7,9 @@
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
   -
+  - Version 1.2 (BUGR-7728Cockpit Game Plan Export Feature - Excel and Microsoft Project Support)
+  - - Add game plan export link
+  -
   - Description: JSP page for the jsgantt project game plan
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -102,6 +105,7 @@
                             <div class="batchButtons batchButtons2 gamePlanBatchButtons">
                                 <!--<a class="batchCreate" href="javascript:;">Batch Create</a>-->
                                 <a class="batchEdit" href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Batch Edit</a>
+                                <a class="exportGamePlan" href="<s:url action="projectGamePlanExport" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Export Game Plan</a>
                             </div>
                             <div class="areaHeader" style="width:400px">
                                 <div style="float:left"><h2 class="title">Game Plan Gantt Chart</h2> </div>
