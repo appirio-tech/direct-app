@@ -105,7 +105,7 @@
 									</dd>
 									<dd>
 										<div class="leftSide">
-											<span class="label">Invitation Received Between:</span>
+											<span class="label">Invitation Received between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
 													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />
@@ -119,7 +119,7 @@
 										</div>
 										
 										<div class="rightSide">
-											<span class="label">Invitation Accepted Between:</span>
+											<span class="label">Invitation Accepted between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
 													<input type="text" name="formData.startDate" id="startDateAccepted" class="text date-pick dp-applied" />

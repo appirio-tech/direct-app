@@ -1,6 +1,6 @@
 <%--
   - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
-  - Version: 2.3
+  - Version: 2.4
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -37,6 +37,9 @@
   -   groups displayed if user is granted a permission to access security groups UI
   - Version 2.2 (https://apps.topcoder.com/bugs/browse/TCCC-4704) change notes: add the 'Report' permission for group security
   - Version 2.3 (Release Assembly - TopCoder Security Groups - Release 4) change notes: Add link to the top icon in group related pages.
+  - Version 2.4 (Release Assembly - TopCoder Security Groups - Release 5) change notes:
+  - - Added hasWritePermission variable if current page is in project context.
+  - - For the pages under project context, hide some edit project links if user doesn't have permission.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -112,11 +115,12 @@
     </a>
     </s:if>
     <s:else>
-    <a href="<s:url action='projectOverview' namespace='/'><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>" class="logo"
+    <c:set var="hasWritePermission" value="${tcdirect:hasWriteProjectPermission(session.currentSelectDirectProjectID)}" scope="request"/>
+    <a href="<s:url action='projectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"
        style="float:left; position:relative;">
         <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
         <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
-        <c:if test="${requestScope.CURRENT_TAB != 'editProject'}">
+        <c:if test="${requestScope.CURRENT_TAB != 'editProject' and hasWritePermission}">
             <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'
                class="editIcon"></a>
         </c:if>
@@ -516,10 +520,12 @@
                                   <!--  <a href="javascript:;">Quick Create Draft Contest</a>
                                     <a href="javascript:;">Bulk Creation</a>-->
                                 </div>
+                                <c:if test="${hasWritePermission}">
                                 <div class="section">
                                     <h3>Edit Contest</h3>
                                     <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Bulk Edit Draft Contests</a>
                                 </div>
+                                </c:if>
                             </div>
                         </li>
 

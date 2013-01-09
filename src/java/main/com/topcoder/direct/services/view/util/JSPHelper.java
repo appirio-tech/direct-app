@@ -88,8 +88,15 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author isv, pvmagacho, TCSDEVELOPER
- * @version 1.1.7
+ * <p>
+ * Version 1.1.8 (Release Assembly - TopCoder Security Groups - Release 2) Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasWriteProjectPermission(long)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, pvmagacho, TCSDEVELOPER, flexme
+ * @version 1.1.8
  */
 public class JSPHelper {
 
@@ -526,6 +533,18 @@ public class JSPHelper {
         }
 
         return user;
+    }
+
+    /**
+     * Checks whether current user has write permission on the given project.
+     *
+     * @param projectId the id of the given project.
+     * @return true if current user has write permission on the given project, false otherwise.
+     * @throws Exception if any error occurs.
+     * @since 1.1.8
+     */
+    public static boolean hasWriteProjectPermission(long projectId) throws Exception {
+        return AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
     }
 
     /**

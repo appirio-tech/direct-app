@@ -175,9 +175,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Add the code to save the launcher when activating and paying the contest</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version  1.6.7 ( Release Assembly - TopCoder Security Groups Release 5 version 1.0) updates
+ * <ol>
+ *     <li>Update {@link #prepare()} to return the error message if error occurs.</li>
+ * </ol>
+ * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin
- * @version 1.6.6
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme
+ * @version 1.6.7
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -1273,23 +1280,28 @@ public class SaveDraftContestAction extends ContestAction {
         // call super
         super.prepare();
 
-        ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
-        
-        // if both projectId
-        if (projectId > 0) {
-            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
-                    DirectStrutsActionsHelper.getTCSubjectFromSession(), projectId);
-            assetDTO = softwareCompetition.getAssetDTO();
-            projectHeader = softwareCompetition.getProjectHeader();
+        try {
+            ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
+            
+            // if both projectId
+            if (projectId > 0) {
+                softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
+                        DirectStrutsActionsHelper.getTCSubjectFromSession(), projectId);
+                assetDTO = softwareCompetition.getAssetDTO();
+                projectHeader = softwareCompetition.getProjectHeader();
+            }
+    
+            if (null == softwareCompetition) {
+                assetDTO = new AssetDTO();
+                projectHeader = new com.topcoder.management.project.Project();
+            }
+            projectHeader.setPrizes(null);
+    		projectHeader.setProjectCopilotTypes(null);
+            projectHeader.setCopilotContestExtraInfos(null);
+        } catch (Exception e) {
+            setResult(e);
+            throw e;
         }
-
-        if (null == softwareCompetition) {
-            assetDTO = new AssetDTO();
-            projectHeader = new com.topcoder.management.project.Project();
-        }
-        projectHeader.setPrizes(null);
-		projectHeader.setProjectCopilotTypes(null);
-        projectHeader.setCopilotContestExtraInfos(null);
     }
 
     /**

@@ -552,6 +552,13 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>
+ * Version 4.6.1 (Release Assembly - TopCoder Security Groups Release 5 v1.0) changes:
+ * <ol>
+ *     <li>Updated {@link #getProjectData(TCSubject)} to populate <code>hasWritePermission</code> field.</li>
+ * </ol>
+ * </p>
+ *
+ * <p>
  * Version 4.7 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
  * <ol>
  *     <li>Updated {@link #getEnterpriseDashboardFilteredProjectIds(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
@@ -1306,6 +1313,7 @@ public class DataProvider {
             data.setProjectName(resultContainer.getStringItem(i, "project_name"));
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
+            data.setHasWritePermission(resultContainer.getBooleanItem(i, "has_write_permission"));
             System.out.println("xxx:" + resultContainer.getItem(i, "completion_date").getResultData() == null);
             if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
                 System.out.println("XXXXXX:" + resultContainer.getTimestampItem(i, "completion_date"));

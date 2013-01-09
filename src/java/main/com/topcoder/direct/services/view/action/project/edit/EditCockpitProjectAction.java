@@ -4,12 +4,24 @@
 package com.topcoder.direct.services.view.action.project.edit;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -29,17 +41,6 @@ import com.topcoder.service.permission.Permission;
 import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * <p>
@@ -80,9 +81,18 @@ import java.util.Set;
  *   </ol>
  * </p>
  *
- * @version 2.2
+ * <p>
+ * Version 2.3 (Release Assembly - TopCoder Security Groups Release 5 v1.0) Change notes:
+ *   <ol>
+ *     <li>Added annotation <code>WriteProject</code> to this class so that the interceptor will check
+ *     the write permission before execution this action.</li>
+ *   </ol>
+ * </p>
+ *
+ * @version 2.3
  * @author GreatKevin, TCSDEVELOPER
  */
+@WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<EditCockpitProjectDTO> {
 

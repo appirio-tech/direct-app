@@ -27,6 +27,8 @@
   - - Add the project permission general info.
   - Version 1.4 - Release Assembly - TopCoder Cockpit Project Overview Performance Improvement
   - - Change project stats and activities and part of project information to be loaded via ajax
+  - Version 1.5 - Release Assembly - TopCoder Security Groups - Release 5
+- - Hide some links/sections if user doesn't have write permission on the project.
   - Version 1.5 - Release Assembly - TC Direct Project Forum Configuration Assembly 2 
   - - Add Configure Project Forum button inside the project forum section.
 --%>
@@ -82,11 +84,13 @@
                             <div class="projectInforDiv">
                                 <div class="projectInforTitle"><a href="javascript:void(0)" class="expand">Project
                                     Information</a></div>
+                                <c:if test="${hasWritePermission}">
                                 <div class="editProject">
                                     <a href="<s:url action='editProject'>
                                     <s:param name='formData.projectId'>${formData.projectId}</s:param></s:url>">
                                         Edit</a>
                                 </div>
+                                </c:if>
                                 <div class="exportProject">
                                     <a href="<s:url action='projectInfoExport'>
                                     <s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">
@@ -108,11 +112,13 @@
                                                         <p><c:out value="${viewData.projectGeneralInfo.project.description}"></c:out></p>
                                                     </s:if>
                                                     <s:else>
+                                                        <c:if test="${hasWritePermission}">
                                                         <p>
                                                             <a class="projectEditLink"
                                                                href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
                                                                 Project Description</a>
                                                         </p>
+                                                        </c:if>
                                                     </s:else>
 
                                                 </div>
@@ -135,7 +141,9 @@
                                             <div class="projectType">
                                                 <h3>Project Type :</h3>
                                                 <s:if test="viewData.projectGeneralInfo.project.projectType == null && viewData.projectGeneralInfo.project.projectCategory == null">
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set Project Type</a>
+                                                    </c:if>
                                                 </s:if>
                                                 <s:else>
                                                     <p><span><s:property value="viewData.projectGeneralInfo.project.projectType.name"/></span>
@@ -151,9 +159,9 @@
                                             <div class="projectTechnology">
                                                 <h3>Users with permission :</h3>
                                                 <p>${viewData.projectGeneralInfo.permissionInfo.totalPermissionNumber} Users (Report ${viewData.projectGeneralInfo.permissionInfo.reportPermissionNumber}/ Read ${viewData.projectGeneralInfo.permissionInfo.readPermissionNumber}/ Write ${viewData.projectGeneralInfo.permissionInfo.writePermissionNumber}/ Full ${viewData.projectGeneralInfo.permissionInfo.fullPermissionNumber})</p>
-                                               
+                                                <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>#permissionsNotifications">Edit Project Permission</a>
-                                           
+                                                </c:if>
                                             </div>
                                             <!-- End Project Permissions -->
 
@@ -161,12 +169,14 @@
                                             <div class="smallProjectLinks">
                                                 <h3>Project Links :</h3>
                                                     <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                        <c:if test="${hasWritePermission}">
                                                         <a class="projectEditLink"
                                                            href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                             Project SVN</a> <br>
                                                         <a class="projectEditLink"
                                                            href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                             Project Bug Track (JIRA)</a>
+                                                        </c:if>
                                                     </s:if>
                                                     <s:else>
                                                 <div class="linkBox">
@@ -232,7 +242,9 @@
                                                             <span class='hide plannedCostValue'>${viewData.projectGeneralInfo.projectedCost}</span>
                                                         </dl>
                                                     </div>
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set Project Budget</a>
+                                                    </c:if>
                                                 </s:else>
 
                                             </div>
@@ -244,12 +256,14 @@
 
 
                                                 <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                         Project SVN</a> <br>
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                         Project Bug Track (JIRA)</a>
+                                                    </c:if>
                                                 </s:if>
                                                 <s:else>
                                                     <div class="linkBox">
@@ -313,9 +327,11 @@
                                                             </dd>
                                                         </dl>
                                                     </div>
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                         Planned Duration</a>
+                                                    </c:if>
                                                 </s:else>
                                             </div>
 
@@ -331,9 +347,11 @@
                                             <dt>Project Ratings :</dt>
                                             <s:if test="viewData.projectGeneralInfo.businessImpactRating == null && viewData.projectGeneralInfo.riskLevelRating == null && viewData.projectGeneralInfo.costRating == null
                                             && viewData.projectGeneralInfo.difficultyRating == null && viewData.projectGeneralInfo.roiRating == null ">
+                                                <c:if test="${hasWritePermission}">
                                                 <dd><a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Rate
                                                     The Project</a></dd>
+                                                </c:if>
                                             </s:if>
                                             <s:else>
                                                 <dd>
@@ -365,8 +383,10 @@
                                                 <h3>Client Managers : </h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.clientManagers == null || viewData.projectGeneralInfo.clientManagers.size == 0">
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add Client Manager</a>
+                                                    </c:if>
                                                 </s:if>
                                                 <s:else>
                                                     <ul>
@@ -386,9 +406,11 @@
                                                 <h3>TopCoder Project Managers :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.topcoderManagers == null || viewData.projectGeneralInfo.topcoderManagers.size == 0">
+                                                    <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
                                                         TopCoder Project Manager</a>
+                                                    </c:if>
                                                 </s:if>
                                                 <s:else>
                                                     <ul>
@@ -420,11 +442,13 @@
                                                 </s:iterator>
                                             </s:if>
                                             <s:else>
+                                                <c:if test="${hasWritePermission}">
                                                 <dd>
                                                     <a class="projectEditLink"
                                                         href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">
                                                         Set additional project information</a>
                                                 </dd>
+                                                </c:if>
                                             </s:else>
 
                                         </dl>
@@ -517,6 +541,7 @@
 
                   <div class="goForCopilot">
                     <h3>There is currently no copilot hired for this project.</h3>
+                    <c:if test="${hasWritePermission}">
                     <div class="goForCopilotBox">
                       <div class="leftBox">
                         <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1"><span>GET A COPILOT</span></a>
@@ -527,6 +552,7 @@
                         <p>If you already have a copilot that you would like to assign. </p>
                       </div>
                     </div>
+                    </c:if>
                   </div>
                   <!-- End .goForCopilot -->
 
@@ -630,12 +656,14 @@
                       </ul>
                     </div>
                   </div>
+                  <c:if test="${hasWritePermission}">
                   <div class="copilotsListButtonBox">
                         <a href="javascript:;" class="buttonRed1 triggerModal" name="newCopilotFeedbackModal"><span>LEAVE FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal hide" name="viewCopilotFeedbackModal"><span>VIEW FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal hide" name="editCopilotFeedbackModal"><span>EDIT FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
                   </div>
+                  </c:if>
                 </div>
                             </s:else>
 
@@ -697,9 +725,11 @@
                                     <div class="projectForumLeader">
                                         <h3>Create a project forum to start communication</h3>
                                         <p>If you have a question / problem about your project, you can create a project forum to start the discussion with TopCoder PM and your copilots</p>
+                                        <c:if test="${hasWritePermission}">
                                         <div class="projectForumLeaderButton">
                                             <a href="javascript:;" class="buttonRed1 createForumButton"><span>CREATE PROJECT FORUM</span></a>
                                         </div>
+                                        </c:if>
                                     </div>
                                 </s:elseif>
                                 <s:else>

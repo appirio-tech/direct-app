@@ -96,7 +96,7 @@
 										</div>
 										
 										<div class="rightSide">
-											<span class="label">Had Access between dates:</span>
+											<span class="label">Had Access between Dates:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
 													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />

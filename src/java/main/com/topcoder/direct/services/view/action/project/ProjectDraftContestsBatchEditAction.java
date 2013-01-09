@@ -47,10 +47,20 @@ import java.util.Set;
  * This class provides actions to handle the requests in batch draft contests edit page.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Security Groups Release 5 v1.0) Change notes:
+ *   <ol>
+ *     <li>Added annotation <code>WriteProject</code> to this class so that the interceptor will check
+ *     the write permission before execution this action.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Contests Batch Edit)
+ * @version 1.1 (Module Assembly - TC Cockpit Project Contests Batch Edit)
  */
-public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm> {
+@WriteProject
+public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction
+    implements FormAction<ProjectIdForm> {
 
     /**
      * The date format for the start date and end date in contests batch edit page.

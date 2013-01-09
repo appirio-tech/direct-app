@@ -44,14 +44,22 @@ import javax.servlet.http.HttpServletRequest;
  * </p>
  *
  * <p>
- * Version 1.2 (Module Assembly - TC Cockpit Project Milestones Management Front End) change log:
+ * Version 1.3 (Module Assembly - TC Cockpit Project Milestones Management Front End) change log:
  *   <ol>
  *       <li>Add method {@link #isUserGrantedToModifyMilestone(com.topcoder.security.TCSubject, long)}</li>
  *   </ol>
  * </p>
  *
- * @author isv, GreatKevin
- * @version 1.3
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Security Groups Release 5 v1.0) change log:
+ *   <ol>
+ *       <li>Add method {@link #isUserGrantedWriteAccessToProject(TCSubject, long)} to check whether the user
+ *       has write permission on a project.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, GreatKevin, TCSASSEMBLER
+ * @version 1.4
  */
 public class AuthorizationProvider {
 
@@ -102,6 +110,40 @@ public class AuthorizationProvider {
         }
     }
 
+    /**
+     * <p>Checks if specified user is granted writer access permission to specified project.</p>
+     *
+     * @param tcSubject a <code>TCSubject</code> providing the user subject.
+     * @param projectId a <code>long</code> providing the project ID.
+     * @return <code>true</code> if user is granted access to project; <code>false</code> otherwise.
+     * @throws Exception if any error occurs
+     * @since 1.4
+     */
+    public static boolean isUserGrantedWriteAccessToProject(TCSubject tcSubject, long projectId) throws Exception {
+        if (DirectUtils.isTcStaff(tcSubject) || DirectUtils.isRole(tcSubject, ADMIN_ROLE)) {
+            return true;
+        }
+        
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("has_cockpit_project_permissions");
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_project_permissions");
+        if (resultContainer.isEmpty()) {
+            HttpServletRequest servletRequest = DirectUtils.getServletRequest();
+            ServletContext ctx = servletRequest.getSession().getServletContext();
+            WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+            AuthorizationService authorizationService 
+                = (AuthorizationService) applicationContext.getBean("groupAuthorizationService");
+
+            return DirectUtils.hasPermissionBySecurityGroups(tcSubject, projectId, authorizationService, 
+                                                             GroupPermissionType.WRITE, GroupPermissionType.FULL);
+        } else {
+            return true;
+        }
+    }
+    
     /**
      * <p>Checks if specified user is granted access permission to specified contest.</p>
      *

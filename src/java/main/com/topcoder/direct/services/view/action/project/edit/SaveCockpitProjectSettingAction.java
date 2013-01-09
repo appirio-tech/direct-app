@@ -4,10 +4,19 @@
 package com.topcoder.direct.services.view.action.project.edit;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectNotificationSetting;
 import com.topcoder.direct.services.view.form.SaveProjectSettingsForm;
@@ -24,8 +33,6 @@ import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
 import com.topcoder.shared.security.AuthorizationException;
-
-import java.util.*;
 
 /**
  * <p>
@@ -57,10 +64,18 @@ import java.util.*;
  *     - Add method {@link #removeProjectBillingAccount()}
  * </p>
  *
- * @author GreatKevin
- * @version 2.1
+ * <p>
+ *     Version 2.2 (Release Assembly - TopCoder Security Groups Release 5 v1.0)
+ *     - Added annotation <code>WriteProject</code> to this class and some action methods so that the interceptor will
+ *       check the write permission before executing the actions.
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 2.2
  */
-public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction implements FormAction<SaveProjectSettingsForm> {
+@WriteProject
+public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
+    implements FormAction<SaveProjectSettingsForm> {
 
 
     /**
@@ -326,6 +341,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
      *
      * @return result code.
      */
+    @WriteProject
     public String saveClientProjectManagers() {
         try {
             Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
@@ -359,6 +375,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
      *
      * @return result code.
      */
+    @WriteProject
     public String saveTopCoderManagers() {
         try {
             Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
@@ -514,6 +531,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
      * @return the struts2 result code.
      * @since 2.0
      */
+    @WriteProject
     public String saveProjectPermissionsAndNotifications() {
         try {
             Map<String, String> result = new HashMap<String, String>();
@@ -600,6 +618,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
      * @return the struts2 result code.
      * @since 2.0
      */
+    @WriteProject
     public String saveContestsNotificationsForUser() {
         try {
             Map<String, String> result = new HashMap<String, String>();

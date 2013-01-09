@@ -17,8 +17,16 @@ import java.util.Map;
  * This action class handles all the operation ajax requests for project milestone management.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Security Groups Release 5 v1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #addProjectMilestone()} and {@link #addProjectMilestones()} to check the write permission
+ *     instead of the read permission.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * @version 1.1 (Module Assembly - TC Cockpit Project Milestones Management Front End)
  */
 public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
 
@@ -76,7 +84,7 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
             }
 
             // check whether the user has access to the project
-            if (!AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId)) {
+            if (!AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId)) {
                 throw new IllegalArgumentException("You don't have permission to create milestone for the project");
             }
 
@@ -251,7 +259,7 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
             }
 
             // check whether the user has access to the project
-            if (!AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId)) {
+            if (!AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId)) {
                 throw new IllegalArgumentException("You don't have permission to create milestones for the project");
             }
 

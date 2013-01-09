@@ -51,14 +51,14 @@
 									</colgroup>
 									<tbody>
 										<tr>
-											<td class="firstColumn">Enter the Customer Name for whom you are creating the Customer Admin:</td>
+											<td class="firstColumn">Select the Customer Name for whom you are creating the Customer Administrator:</td>
 											<td>											
 											<s:select id="clientIdSelect" name="clientId" headerKey="0" headerValue="--"
 											        list="clients" listKey="id" listValue="name"
 											        cssClass="newAdminSelect"/></td>
 										</tr>
 										<tr>
-											<td class="firstColumn">Enter the member handle of the new customer administrator:</td>
+											<td class="firstColumn">Enter the member handle of the new Customer Administrator:</td>
 											<td>
 												<input type="text" class="text newAdminText" id="newAdminHandle" />
 												<a href="javascript:;" class="searchIcon searchUser triggerModal" rel="#searchModal">Search</a>

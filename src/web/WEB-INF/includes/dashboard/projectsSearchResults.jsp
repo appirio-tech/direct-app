@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, TCSASSEMBLER
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the search result of project search.
@@ -17,6 +17,9 @@
   - Version 1.4 (Release Assembly - TC Cockpit All Projects Management Page Update) changes:
   - - Add project metadata data
   - - Change the operation buttons to new ones, add edit and project forum button
+  -
+  - Version 1.5 (Release Assembly - TopCoder Security Groups Release 5) changes:
+  - - Hide some links if user doesn't have the write permission on the project.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -87,7 +90,7 @@
                               name="<s:property value="projectStatusType.projectStatusId"/>">${projectStatusType.projectStatusName}</span>
                     </td>
                     <td class="last">
-
+                        <c:if test="${projectSummary.hasWritePermission}">
                         <a class="short operation activateOperation <s:if test='projectStatusType.projectStatusId != 2L && projectStatusType.projectStatusId != 5L'>hide</s:if>"
                            href="javascript:;" onclick="updateDirectProjectStatus(${projectSummary.projectId}, 1)">
                             <img src="/images/activate-icon.png" alt=""/>Activate
@@ -101,12 +104,15 @@
                            href="javascript:;"  onclick="updateDirectProjectStatus(${projectSummary.projectId}, 3)">
                             <img src="/images/remove-milestone-icon.png" alt=""/>Cancel
                         </a>
+                        </c:if>
 
                         <s:if test='projectStatusType.projectStatusId == 1L || projectStatusType.projectStatusId == 2L'>
                             <br class="secondRowSeparator"/>
                         </s:if>
 
+                        <c:if test="${projectSummary.hasWritePermission}">
                         <a class="short" target="_blank" href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="data.projectId"/></s:url>'><img src="/images/edit-icon.png" alt=""/>Edit</a>
+                        </c:if>
                         <a class="long" target="_blank" <s:if test="data.projectForumCategoryId == null || data.projectForumCategoryId <=0"> style='visibility: hidden;' </s:if>
                            href="https://apps.topcoder.com/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}">
                             <img src="/images/forum-link-icon.png" alt=""/>Project Forum

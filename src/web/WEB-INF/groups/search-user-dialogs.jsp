@@ -75,7 +75,13 @@
         </div>
         
         <div class="modalCommandBox">
-            <a href="javascript:;" class="newButton1 searchButton" id="addUser"><span class="btnR"><span class="btnC"><s:if test="#request.CURRENT_TAB=='createAdministrator'">SELECT USER</s:if><s:else>ADD USER TO GROUP</s:else></span></span></a>
+            <a href="javascript:;" class="newButton1 searchButton" id="addUser"><span class="btnR"><span class="btnC">
+            <c:choose>
+                <c:when test="${request.CURRENT_TAB=='createAdministrator'}">SELECT USER</c:when>
+                <c:when test="${request.CURRENT_TAB=='approvals'}">ADD TO SEARCH</c:when>
+                <c:otherwise>ADD USER TO GROUP</c:otherwise>
+            </c:choose>
+            </span></span></a>
             <a href="javascript:;" class="newButton1 searchButton triggerNoPreloaderModal" rel="#searchModal"><span class="btnR"><span class="btnC">SEARCH AGAIN</span></span></a>
             <a href="javascript:;" class="newButton1 newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
         </div>

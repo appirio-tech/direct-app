@@ -150,8 +150,9 @@
 							<div class="groupMembersTableContainer">
 								<table cellpadding="0" cellspacing="0" class="normalTableList detailsGroupTable">
 									<colgroup>
-										<col width="50%" />
-										<col width="50%" />
+										<col width="35%" />
+										<col width="35%" />
+                                        <col width="30%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -180,7 +181,7 @@
                                                 </s:if>
 											</td>
                                             <td>
-                                                ${groupInvitations[groupMember.userId].status}
+                                                ${fn:replace(groupInvitations[groupMember.userId].status,'_',' ')}
                                             </td>
 										</tr>
                                         </s:if>

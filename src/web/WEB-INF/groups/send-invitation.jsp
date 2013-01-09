@@ -68,7 +68,7 @@
                                                             <div>No group available</div>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <input type="checkbox" id="multiSelect01CheckBox01" autocomplete="off"/>
+                                                            <input type="checkbox" id="multiSelect01CheckBox00" autocomplete="off"/>
 													        <label for="multiSelect01CheckBox00">Select All</label>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -108,7 +108,7 @@
 						</div>
 						
 						<div class="commandOperationBox">
-							<a href="javascript:;" id="sendInvitation" class="newButton1 triggerModal" rel="#sendInvitationConfirmModal"><span class="btnR"><span class="btnC">SEND INVITE</span></span></a>
+							<a href="javascript:;" id="sendInvitation" class="newButton1 triggerModal" rel="#sendInvitationConfirmModal"><span class="btnR"><span class="btnC">SEND INVITATION</span></span></a>
 						</div>
 						
 					</div>
@@ -130,7 +130,7 @@
 		<div class="modalHeader">
 			<div class="modalHeaderRight">
 				<div class="modalHeaderCenter">
-					Send Invite Confirmation
+					Send Invitation Confirmation
 					<a href="javascript:;" class="closeModal" title="Close">Close</a>
 				</div>
 			</div>
@@ -155,6 +155,37 @@
 		<!-- end .modalFooter -->
 	</div>
 	<!-- end #sendInvitationConfirmModal -->
+    
+    <!-- #sendInvitationConfirmModal -->
+	<div id="sendInvitationWarnModal" class="outLay">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					Send Invitation
+					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		
+		<div class="modalBody">
+			<div class="iconNotice"><img src="/images/modal-notice.png" alt="warn" /></div>
+			<div class="noticeContent noticeContentSendInviteWarn"></div>
+			
+			<div class="modalCommandBox">
+    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+			</div>
+		</div>
+		<!-- end .modalBody -->
+		
+		<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #sendInvitationWarnModal -->
 </div>
 <!-- end modal -->
 </body>

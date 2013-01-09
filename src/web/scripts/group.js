@@ -139,6 +139,7 @@ $(document).ready(function(){
                 result.length == 0 ? $("#addUser").hide() : $("#addUser").show();
                 $(".handleSelectError").hide();
                 var label = result.length > 1 ? " User Handles Found:" : " User Handle Found:";
+                if (result.length == 0) label = " User Handle Found"
                 $("#searchListModal .searchListDiv p").html(result.length + label);
                 $("#searchListModal .searchListDiv table tbody").html(html);
                 modalLoad("#searchListModal");
@@ -501,7 +502,7 @@ $(document).ready(function(){
                 members.push(mem);
                 if (mh[handle] && ok) {
                     ok = false;
-                    showErrors("User " + handle + " occurs multi times");
+                    showErrors("User " + handle + " occurs multiple times");
                 }
                 mh[handle] = true;
             }
@@ -607,6 +608,13 @@ $(document).ready(function(){
         }
         return true;
     }
+    function newAddedMember(oriGroup, group) {
+        var members = [];
+        for (var i = 0; i < oriGroup.groupMembers.length; i++) members[oriGroup.groupMembers[i].handle] = true;
+        var tot = 0;
+        for (var i = 0; i < group.groupMembers.length; i++) if (!members[group.groupMembers[i].handle]) tot++;
+        return tot;
+    }
     
     // create group
     $("#createGroup").click(function() {
@@ -631,18 +639,18 @@ $(document).ready(function(){
                 $(".gotoGroupDetail").attr("rel", result.groupId);
                 $(".confirmGroupName").text(group.name);
                 $("#confirmCustomName").text($($("#selectCreateCustomerName")[0].options[$("#selectCreateCustomerName")[0].selectedIndex]).text());
-                if (skipInvitationEmail) {
+                if (!skipInvitationEmail) {
                     if (group.groupMembers.length == 0) {
-                        $("#emailMessage").text("");
+                        $(".emailMessage").text("");
                     } else {
-                        $("#emailMessage").text("The group " + (group.groupMembers.length > 1 ? "members have" : "member has") + " been granted access.");
+                        $(".emailMessage").text("The group " + (group.groupMembers.length > 1 ? "members have" : "member has") + " been granted access.");
                     }
                 } else {
                     if (group.groupMembers.length == 1) {
-                        $("#emailMessage").text("Invitation emails have been sent to the member added to the group.");
+                        $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
                     } else if (group.groupMembers.length > 1) {
-                        $("#emailMessage").text("Invitation emails have been sent to the members added to the group.");
-                    } else $("#emailMessage").text("");
+                        $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
+                    } else $(".emailMessage").text("");
                 }
                 modalLoad("#createGroupConfirmModal");
               },
@@ -681,6 +689,22 @@ $(document).ready(function(){
               function(result) {
                 $(".gotoGroupDetail").attr("rel", result.groupId);
                 $(".confirmGroupName").text(group.name);
+                
+                var totAdd = newAddedMember(oriGroup, group);
+                if (skipInvitationEmail) {
+                    if (totAdd == 0) {
+                        $(".emailMessage").text("");
+                    } else {
+                        $(".emailMessage").text("The new group " + (totAdd > 1 ? "members have" : "member has") + " been granted access.");
+                    }
+                } else {
+                    if (totAdd == 1) {
+                        $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
+                    } else if (totAdd > 1) {
+                        $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
+                    } else $(".emailMessage").text("");
+                }
+                
                 modalLoad("#updateGroupConfirmModal");
               },
               function(errorMessage) {
@@ -1089,6 +1113,7 @@ $(document).ready(function(){
                                         '<td>'+obj.accessRights+'</td>'+
                                     '</tr>';
                             } else if (isGroupPage) {
+                                for (var i = 0; i < obj.resources.length; i++) obj.resources[i] = obj.resources[i] + 's';
                                 content += 
 					              '<tr ' + (idx==0?'class="firstRow"':'')+'>'+
                                         '<td><input type="radio" name="userGroupSelectRadio" class="userGroupSelectRadio"'
@@ -1335,7 +1360,7 @@ $(document).ready(function(){
                 }
                 if (mh[handle]) {
                     ok = false;
-                    showErrors("User " + handle + " occurs multi times");
+                    showErrors("User " + handle + " occurs occurs multiple times");
                     return false;
                 }
                 handles.push(handle);
@@ -1411,11 +1436,12 @@ $(document).ready(function(){
                                     sendInvitationEmail();
                                 } else {
                                     if (!hasSend) {
-                                        $(".noticeContentSendInviteConfirmation").text("No invitation email has been sent out, the members are already in the checked groups.");
+                                        $(".noticeContentSendInviteWarn").text("No invitation email has been sent out, the members are already in the checked groups.");
+                                        modalLoad("#sendInvitationWarnModal");
                                     } else {
                                         $(".noticeContentSendInviteConfirmation").text("Invitation emails have been sent to the new members added to the checked groups.");
+                                        modalLoad("#sendInvitationConfirmModal");
                                     }
-                                    modalLoad("#sendInvitationConfirmModal");
                                 }
                             },
                             function(errorMessage) {

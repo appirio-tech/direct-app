@@ -40,7 +40,9 @@
   <div class="caption_det_type">													
 	  <div class="captionInner">
            <h2>Contest Type</h2>
-		   <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>                                                          
+           <c:if test="${viewData.hasContestWritePermission}">
+		   <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+           </c:if>
       </div>
 													
    </div><!-- End .caption -->
@@ -165,7 +167,9 @@
 		 <div class="caption_det_round">		 	
 		 		<div class="captionInner">
 		 			<h2>Schedule </h2>
+                    <c:if test="${viewData.hasContestWritePermission}">
 					<a href="javascript:;" class="button11 edit_type edit_round"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+                    </c:if>
 		 		</div>		 	
 		 </div><!-- End .caption -->												
 		<div class="detailsContent_det_round">
@@ -318,7 +322,9 @@
       <div class="caption_det_prize">				
 					<div class="captionInner">
 						<h2>Prizes </h2>
+                        <c:if test="${viewData.hasContestWritePermission}">
 						<a href="javascript:;" class="button11 edit_type edit_prize"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+                        </c:if>
 					</div>				
 			</div><!-- End .caption -->												
 	     <div class="detailsContent_det_prize">
@@ -427,8 +433,9 @@
 				<div class="caption_det_spec">					
 						<div class="captionInner">
 							<h2>Specification </h2>
-							<a href="javascript:;" class="button11 edit_type edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>                                      
-
+                            <c:if test="${viewData.hasContestWritePermission}">
+							<a href="javascript:;" class="button11 edit_type edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+                            </c:if>
 
 						</div>					
 				</div><!-- End .caption -->
@@ -660,7 +667,9 @@
 				<div class="caption_det_files">													
 						<div class="captionInner">
 							<h2>Files </h2>
+                            <c:if test="${viewData.hasContestWritePermission}">
 							<a href="javascript:;" class="button11 edit_type edit_files"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+                            </c:if>
 						</div>													
 				</div><!-- End .caption -->												
 				<div class="detailsContent_det_files">

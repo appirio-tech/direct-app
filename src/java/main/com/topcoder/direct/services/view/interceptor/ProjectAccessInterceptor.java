@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.TopCoderDirectAction;
+import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -28,9 +29,17 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  *   <li>Updated {@link #intercept(ActionInvocation)} to set the error page message when user has no permission.</li>
  * </ol>
  * </p>
- * 
- * @author isv
- * @version 1.1
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Security Groups Release 5 v1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #intercept(ActionInvocation)} to check the write permission instead of read permission on the
+ *     project if the corresponding struts action class/method is annotated with <code>WriteProject</code>.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.2
  */
 public class ProjectAccessInterceptor implements Interceptor {
 
@@ -67,7 +76,23 @@ public class ProjectAccessInterceptor implements Interceptor {
         Object formData = formAction.getFormData();
         ProjectIdForm projectIdForm = (ProjectIdForm) formData;
         long projectId = projectIdForm.getProjectId();
-        boolean granted = AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+        boolean readonly = true;
+        boolean granted;
+        String method = actionInvocation.getProxy().getMethod();
+        if (method != null && !method.equals("execute")) {
+            if (actionInvocation.getAction().getClass().getMethod(method).isAnnotationPresent(WriteProject.class)) {
+                readonly = false;
+            }
+        } else {
+            if (actionInvocation.getAction().getClass().isAnnotationPresent(WriteProject.class)) {
+                readonly = false;
+            }
+        }
+        if (!readonly) {
+            granted =  AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+        } else {
+            granted = AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+        }
         if (!granted) {
             request.setAttribute("errorPageMessage", "Sorry, you don't have permission to access this project.");
             return "permissionDenied";

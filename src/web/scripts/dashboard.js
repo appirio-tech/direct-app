@@ -2607,6 +2607,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	modalClose = function() {
         $('#modalBackground').hide();
 		$('#new-modal #preloaderModal').hide();
+        $('#new-modal .outLay').hide();
     }
 
     modalAllClose = function() {

@@ -193,7 +193,8 @@
 				}
 				
 				.noInvitation {
-                    font-size: 16px;
+                    font-size: 12px;
+                    line-height: 36px;
                     margin-top: 24px;
                 }
 				
@@ -298,14 +299,22 @@
 						display:inline;
 						}
 				.groupMembersTable table tbody td.thirdColumn{
-					padding-left:6%;
-					padding-right:0;
+					padding-left:14px;
+					padding-right:14px;
+                    text-align:center;
 					}
 					.groupMembersTable table tbody td.thirdColumn .unit{
 						float:left;
-						width:24%;
+						width:65px;
+                        margin-left:10px;
+                        margin-right:10px;
 						display:inline;
 						}
+                        .groupMembersTable table tbody td.thirdColumn .optionWrapper{
+                            margin-left:auto;
+                            margin-right:auto;
+                            width:350px;
+                        }
 						.groupMembersTable table tbody td.thirdColumn .unit input[type=radio]{
 							float:left;
 							}
@@ -415,6 +424,7 @@
 				float:left;
 				width:auto;
 				display:inline;
+                width:160px;
 			}
 			.tableControlBox .rightSide{
 				float:right;
@@ -938,7 +948,7 @@ select{
 		
 	.outLay .modalBody .noticeContent{
 		padding-left:96px;
-		height:109px;
+		min-height:109px;
 		width:240px;
 	}
 	
@@ -991,32 +1001,36 @@ select{
 		#deleteGroupModal .modalBody .noticeContent{
 			text-align:center;
 			padding-top:27px;
-			height:82px;
+			min-height:82px;
 			padding-left:80px;
 			width:266px;
 		}
 		
 #deleteGroupConfirmModal,	
-#sendInvitationConfirmModal{
+#sendInvitationConfirmModal,
+#sendInvitationWarnModal{
 	width:360px;
 }
 		#deleteGroupConfirmModal .modalBody .modalCommandBox .newButton1 .btnC,
-		#sendInvitationConfirmModal .modalBody .modalCommandBox .newButton1 .btnC{
+		#sendInvitationConfirmModal .modalBody .modalCommandBox .newButton1 .btnC,
+        #sendInvitationWarnModal .modalBody .modalCommandBox .newButton1 .btnC{
 			padding:0;
 			width:52px;
 			text-align:center;
 		}
 		#deleteGroupConfirmModal .modalBody .noticeContent,
-		#sendInvitationConfirmModal .modalBody .noticeContent{
+		#sendInvitationConfirmModal .modalBody .noticeContent,
+        #sendInvitationWarnModal .modalBody .noticeContent{
 			padding-top:40px;
-			height:69px;
+			min-height:69px;
 			padding-left:80px;
 			width:266px;
 		}
 		#deleteGroupConfirmModal .modalBody .noticeContentSendInviteConfirmation,
-		#sendInvitationConfirmModal .modalBody .noticeContentSendInviteConfirmation{
+		#sendInvitationConfirmModal .modalBody .noticeContentSendInviteConfirmation,
+        #sendInvitationWarnModal .modalBody .noticeContentSendInviteConfirmation,{
 			padding-top:35px;
-			height:84px;
+			min-height:84px;
 		}
 
 #wholeAreaHeader .fetchUrlTitle{
@@ -1110,7 +1124,7 @@ select{
 	padding-left:43px;
 	height:32px;
 	line-height:32px;
-	background:url(/images/icon_groups_details_title.png) left top no-repeat;
+	background:url(/images/icon_groups_title.png) left top no-repeat;
 	font-weight:normal;
 	max-width:70%;
 	float:left;
@@ -1207,7 +1221,7 @@ select{
 	padding-left:43px;
 	height:32px;
 	line-height:32px;
-	background:url(/images/icon_update_groups_title.png) no-repeat left top;
+	background:url(/images/icon_new_groups_title.png) no-repeat left top;
 	font-weight:normal;
 	max-width:70%;
 	}
@@ -1343,7 +1357,7 @@ select{
 /* rejecResulttModal */
 #rejecResulttModal .noticeContent,#approveModal .noticeContent,
 #rejectModal .noticeContent,#acceptModal .noticeContent{
-	height:73px;
+	min-height:73px;
 	padding-top:36px;
 	padding-left:108px;
 	}
@@ -1354,14 +1368,14 @@ select{
 	
 #createGroupConfirmModal .noticeContent{
 	width:256px;
-	height:77px;
+	min-height:77px;
 	padding-top:32px;
 	padding-left:78px;
 	}
 	
 #createAdminModal .noticeContent{
 	width:auto;
-	height:73px;
+	min-height:73px;
 	padding-left:63px;
 	padding-top:36px;
 	text-align:center;
@@ -1369,14 +1383,14 @@ select{
 	
 #updateGroupConfirmModal .noticeContent{
 	width:280px;
-	height:73px;
+	min-height:73px;
 	padding-left:63px;
 	padding-top:36px;
 	text-align:center;
 	}
 #noChangeConfirmModal .noticeContent{
 	width:280px;
-	height:73px;
+	min-height:73px;
 	padding-left:63px;
 	padding-top:36px;
 	text-align:center;
@@ -1485,6 +1499,8 @@ a.createNewGroup span.left{
 		.tableGroupWrapper .emptyTableList{
 			border:1px solid #cfd0d1;
 			padding: 5px;
+            font-size: 12px;
+            line-height: 36px;
 		}
 
 #filterAuditInfo{
@@ -1506,6 +1522,9 @@ a#createGroup, a#updateGroup {
     color: red;
     display: none;
 }
-.confirmGroupName {
+.confirmGroupName, .noticeContent {
     word-wrap: break-word;
-}		
+}
+#pageSizeSelect {
+    width: 40px;
+}

@@ -212,14 +212,14 @@
 							<div class="groupMembersTableContainer">
 								<table cellpadding="0" cellspacing="0" id="groupMemberTable">
 									<colgroup>
-										<col width="28%" />
-										<col width="28%" />
-										<col width="28%" />
+										<col width="25%" />
+										<col width="25%" />
+										<col width="25%" />
                                         <c:set var="renderStatus" value="${not empty group and fn:length(group.groupMembers) gt 0}"/>
                                         <c:if test="${renderStatus}">
-                                        <col width="6%" />
+                                        <col width="12%" />
                                         </c:if>
-										<col width="10%" />
+										<col width="13%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -252,6 +252,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="thirdColumn">
+                                                    <div class="optionWrapper">
                                                     <div class="unit">
                                                         <input type="radio" <c:if test="${member.useGroupDefault}">disabled="disabled"</c:if> id="reportRadio${currentId}" value="REPORT" name="accesslevel${currentId}" autocomplete="off" <c:if test="${(not member.useGroupDefault) and member.specificPermission eq 'REPORT'}">checked="checked"</c:if> />
                                                         <label for="reportRadio${currentId}">Report</label>
@@ -268,8 +269,10 @@
                                                         <input type="radio" <c:if test="${member.useGroupDefault}">disabled="disabled"</c:if> id="fullRadio${currentId}" value="FULL" name="accesslevel${currentId}" autocomplete="off" <c:if test="${(not member.useGroupDefault) and member.specificPermission eq 'FULL'}">checked="checked"</c:if>/>
                                                         <label for="fullRadio${currentId}">Full</label>
                                                     </div>
+                                                    <div style="clear:both;"></div>
+                                                    </div>
                                                 </td>
-                                                <td class="forthColumn"> ${groupInvitations[member.userId].status}
+                                                <td class="forthColumn"> ${fn:replace(groupInvitations[member.userId].status,'_',' ')}
                                                 </td>
                                                 <td class="forthColumn">
                                                     <a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a>
@@ -296,6 +299,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="thirdColumn">
+                                                    <div class="optionWrapper">
                                                     <div class="unit">
                                                         <input type="radio" disabled="disabled" id="reportRadio${currentId}"  value="REPORT" name="accesslevel${currentId}" autocomplete="off"/>
                                                         <label for="reportRadio${currentId}">Report</label>
@@ -311,6 +315,8 @@
                                                     <div class="unit">
                                                         <input type="radio" disabled="disabled" id="fullRadio${currentId}" value="FULL" name="accesslevel${currentId}" autocomplete="off"/>
                                                         <label for="fullRadio${currentId}">Full</label>
+                                                    </div>
+                                                    <div style="clear:both;"></div>
                                                     </div>
                                                 </td>
                                                 <c:if test="${renderStatus}">
@@ -388,7 +394,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent"><span class="confirmGroupName"></span> has been successfully created for <span id="confirmCustomName"></span>. <span id="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
+			<div class="noticeContent">"<span class="confirmGroupName"></span>" Group has been successfully created for <span id="confirmCustomName"></span>. <span class="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -419,7 +425,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent"><span class="confirmGroupName"></span> details have been successfully updated.</div>
+			<div class="noticeContent">"<span class="confirmGroupName"></span>" Group details have been successfully updated. <span class="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -450,7 +456,7 @@
 		
 		<div class="modalBody">
 			<div class="iconNotice"><img src="/images/icon-check.png" alt="question" /></div>
-			<div class="noticeContent"><span id="noChangeGroupName"></span> details haven't been changed.</div>
+			<div class="noticeContent">"<span id="noChangeGroupName"></span>" Group details haven't been changed.</div>
 			
 			<div class="modalCommandBox">
     			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
