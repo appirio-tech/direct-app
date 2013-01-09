@@ -281,7 +281,7 @@
                 <param name="namespace">/</param>
             </result>
         </action>
-        <action name="updateDirectProjectStatus" class="com.topcoder.direct.services.view.action.project.UpdateProjectStatusAction">
+        <action name="updateDirectProjectStatus" class="updateProjectStatusAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>

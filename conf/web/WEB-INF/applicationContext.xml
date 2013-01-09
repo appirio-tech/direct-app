@@ -307,6 +307,10 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="updateProjectStatusAction" class="com.topcoder.direct.services.view.action.project.UpdateProjectStatusAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+    
     <bean id="projectMilestoneOperationAction" class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneOperationAction"
               scope="prototype" parent="baseDirectStrutsAction">
         </bean>

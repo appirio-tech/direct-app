@@ -154,4 +154,9 @@
         <function-signature>com.topcoder.security.groups.services.dto.ProjectDTO resolveDirectProject(long)</function-signature>
     </function>
     
+    <function>
+        <name>hasWriteProjectPermission</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean hasWriteProjectPermission(long)</function-signature>
+    </function>
 </taglib>
