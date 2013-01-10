@@ -985,6 +985,7 @@ BODY#page{
 	float: right;
 	width: 272px;
     overflow:hidden;
+    min-height:500px;
 }
 
 #area2 .contestsDropDown .longWordsBreak {
@@ -1056,6 +1057,7 @@ BODY#page{
 	display: none;
 	color: #333333;
 	z-index: 999;
+    padding: 1px 6px 1px 4px !important;
 }
 
 .contestsDropDown UL{
@@ -1079,8 +1081,7 @@ BODY#page{
 }
 
 .contestsDropDown UL LI A{
-	text-decoration: none;
-	font-size: 12px;
+	text-decoration: none; 
 }
 
 /*-----------------*/
@@ -9658,11 +9659,23 @@ a.downloadAllbtn:hover span {
                          .newSidebar .contestList .filter .dropdownWidget .dropList a{
                               display:block;
                              padding:3px 5px;
-                             text-decoration:none;
-                             line-height:16px;
+                             text-decoration:none; 
                          }
                          .newSidebar .contestList .dropdownWidget .dropList .even a{
                              background:#F3F3F3;
+                             width:100%;
+							 margin-left:-4px !important;
+							 padding-left:5px !important;
+							 height:100%;
+                         }
+                         .newSidebar .contestList .dropdownWidget .dropList .even{
+                             background:#F3F3F3 !important;
+						}
+                        .newSidebar .contestList .dropdownWidget .dropList .even:hover{
+                            background:#ffffcc !important;
+						}
+                         .newSidebar .contestList .dropdownWidget .dropList .even:hover{
+                            background:#ffffcc !important;
                          }
                           .newSidebar .contestList .dropdownWidget .dropList a:hover,
                           .newSidebar .contestList .dropdownWidget .dropList .even a:hover{
