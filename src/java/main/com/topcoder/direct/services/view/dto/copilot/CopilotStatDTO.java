@@ -13,8 +13,18 @@ import java.util.Set;
  * The statistics of the copilot.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Cockpit Copilot Posting Registrants Analysis)
+ * <p>
+ * Version 1.1 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+ * <ul>
+ *     <li>
+ *         Adds the properties {@link #copilotProfileId}, {@link #negativeFeedbackNumber}
+ *         and {@link #positiveFeedbackNumber}, and corresponding getter and setter.
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class CopilotStatDTO implements Serializable {
     /**
@@ -93,6 +103,13 @@ public class CopilotStatDTO implements Serializable {
     private long userId;
 
     /**
+     * The copilot profile id.
+     *
+     * @since 1.1
+     */
+    private long copilotProfileId;
+
+    /**
      * The handle of the copilot.
      */
     private String handle;
@@ -133,6 +150,20 @@ public class CopilotStatDTO implements Serializable {
     private int currentProjects;
 
     /**
+     * The positive feedback number.
+     *
+     * @since 1.1
+     */
+    private int positiveFeedbackNumber;
+
+    /**
+     * The negative feedback number.
+     *
+     * @since 1.1
+     */
+    private int negativeFeedbackNumber;
+
+    /**
      * The matched experiences of the copilot.
      */
     private List<Experience> matchedExperience;
@@ -169,6 +200,27 @@ public class CopilotStatDTO implements Serializable {
      */
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+
+    /**
+     * Gets the copilot profile id.
+     *
+     * @return the copilot profile id.
+     * @since 1.1
+     */
+    public long getCopilotProfileId() {
+        return copilotProfileId;
+    }
+
+    /**
+     * Sets the copilot profile id.
+     *
+     * @param copilotProfileId the copilot profile id.
+     * @since 1.1
+     */
+    public void setCopilotProfileId(long copilotProfileId) {
+        this.copilotProfileId = copilotProfileId;
     }
 
     /**
@@ -334,6 +386,46 @@ public class CopilotStatDTO implements Serializable {
     }
 
     /**
+     * Gets positive feedback number.
+     *
+     * @return positive feedback number.
+     * @since 1.1
+     */
+    public int getPositiveFeedbackNumber() {
+        return positiveFeedbackNumber;
+    }
+
+    /**
+     * Sets the positive feedback number.
+     *
+     * @param positiveFeedbackNumber the positive feedback number.
+     * @since 1.1
+     */
+    public void setPositiveFeedbackNumber(int positiveFeedbackNumber) {
+        this.positiveFeedbackNumber = positiveFeedbackNumber;
+    }
+
+    /**
+     * Gets negative feedback number.
+     *
+     * @return the negative feedback number.
+     * @since 1.1
+     */
+    public int getNegativeFeedbackNumber() {
+        return negativeFeedbackNumber;
+    }
+
+    /**
+     * Sets negative feedback number.
+     *
+     * @param negativeFeedbackNumber the negative feedback number.
+     * @since 1.1
+     */
+    public void setNegativeFeedbackNumber(int negativeFeedbackNumber) {
+        this.negativeFeedbackNumber = negativeFeedbackNumber;
+    }
+
+    /**
      * Gets the matched experiences.
      *
      * @return the matched experiences.
@@ -421,6 +513,16 @@ public class CopilotStatDTO implements Serializable {
     public boolean isHasTestingSkill() {
         return copilotSkills.contains(COPILOT_SKILL_BUG_HUNT)
                 && copilotSkills.contains(COPILOT_SKILL_TEST_SCENARIOS);
+    }
+
+    /**
+     * Gets the copilot skills set.
+     *
+     * @return the copilot skills set.
+     * @since 1.1
+     */
+    public Set<Long> getCopilotSkills() {
+        return copilotSkills;
     }
 
     /**

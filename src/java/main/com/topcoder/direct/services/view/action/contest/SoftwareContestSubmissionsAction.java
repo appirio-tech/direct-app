@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
@@ -22,6 +21,9 @@ import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsD
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotSubmissionStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -95,8 +97,21 @@ import org.apache.log4j.Logger;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.6 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+ * <ul>
+ *     <li>
+ *         Adds properties {@link #copilotUserIds}, {@link #viewType}, {@link #inReviewPhase},
+ *         and {@link #copilotSubmissions}. Their getter/setter are added.
+ *     </li>
+ *     <li>
+ *         Update {@link #executeAction()} to add copilot posting submissions page data.
+ *     </li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -163,6 +178,14 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */ 
     private boolean inMilestoneReviewPhase;
 
+
+    /**
+     * <p>Flag used to determine whether current open phase is review phase</p>
+     *
+     * @since 1.6
+     */
+    private boolean inReviewPhase;
+
     /**
      * <p>Flag used to determine whether the milestone review is committed.</p>
      * 
@@ -197,7 +220,35 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     private SoftwareContestSubmissionsDTO viewData;
 
+    /**
+     * The view type for the copilot posting submissions page. There are three view types:
+     * 1) Grid view - default
+     * 2) List view
+     * 3) Comparison
+     *
+     * @since 1.6
+     */
+    private String viewType;
+
     private List<ContestFinalFixDTO> finalFixes;
+
+    /**
+     * The list of copilot posting submissions. It's only used when the contest is of type copilot posting.
+     *
+     * @since 1.6
+     */
+    private List<CopilotSubmissionStatDTO> copilotSubmissions;
+
+    /**
+     * The list of copilot user ids to compare. It's only used when the contest is of type copilot posting.
+     * And the view type is 'comparison'.
+     *
+     * @since 1.6
+     */
+    private List<Long> copilotUserIds;
+
+
+    private List<CopilotSkillDTO> copilotSkills;
 
     public List<ContestFinalFixDTO> getFinalFixes() {
         return finalFixes;
@@ -261,6 +312,10 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     public SoftwareContestSubmissionsDTO getViewData() {
         return this.viewData;
+    }
+
+    public List<CopilotSkillDTO> getCopilotSkills() {
+        return copilotSkills;
     }
 
     /**
@@ -340,6 +395,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         if (roundType == ContestRoundType.FINAL) {
             // Set submissions, winners, reviewers data
             DataProvider.setSoftwareSubmissionsData(getViewData());
+
+            inReviewPhase = DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.REVIEW_PHASE);
         } else {
             inMilestoneSubmissionPhase = DirectUtils.isPhaseOpen(
                 softwareCompetition, PhaseType.MILESTONE_SUBMISSION_PHASE);
@@ -483,10 +540,102 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
 
         if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
+            // special handling for copilot posting
+
+            // 1) set data for copilot posting dashboard
             DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
                     getMetadataService(), getProjectId(),  softwareCompetition.getProjectHeader().getTcDirectProjectId(),
                     getViewData().getDashboard());
+
+            // 2) set stats for the copilot posting submissions
+            List<CopilotStatDTO> copilotSubmissions = new ArrayList<CopilotStatDTO>();
+            for(SoftwareSubmissionDTO sub : getViewData().getSubmissions()) {
+
+                if (viewType != null && viewType.equalsIgnoreCase("comparison")
+                        && !copilotUserIds.contains(sub.getSubmitter().getId())) {
+                    continue;
+                }
+
+                CopilotSubmissionStatDTO copilotSub = new CopilotSubmissionStatDTO();
+                copilotSub.setUserId(sub.getSubmitter().getId());
+                copilotSub.setHandle(sub.getSubmitter().getHandle());
+                copilotSub.setSubmissionId(sub.getSubmissionId());
+                copilotSub.setSubmitTime(sub.getSubmissionDate());
+                copilotSubmissions.add(copilotSub);
+            }
+
+            DataProvider.setCopilotFullStatistics(copilotSubmissions, getViewData().getDashboard().getDirectProjectTypeId());
+
+            setCopilotSubmissions((List<CopilotSubmissionStatDTO>)(List<?>) copilotSubmissions);
+
+            // set copilot skills
+            copilotSkills = DataProvider.getCopilotSkillRules();
+
+            if(getViewType() == null) {
+                // default to list view
+                setViewType("list");
+            }
         }
+    }
+
+    /**
+     * Gets the copilot submissions.
+     *
+     * @return the copilot submissions
+     * @since 1.6
+     */
+    public List<CopilotSubmissionStatDTO> getCopilotSubmissions() {
+        return copilotSubmissions;
+    }
+
+    /**
+     * Sets the copilot submissions.
+     *
+     * @param copilotSubmissions the copilot submissions
+     * @since 1.6
+     */
+    public void setCopilotSubmissions(List<CopilotSubmissionStatDTO> copilotSubmissions) {
+        this.copilotSubmissions = copilotSubmissions;
+    }
+
+    /**
+     * Gets the view type.
+     *
+     * @return the view type.
+     * @since 1.6
+     */
+    public String getViewType() {
+        return viewType;
+    }
+
+    /**
+     * Sets the view type.
+     *
+     * @param viewType the view type.
+     * @since 1.6
+     */
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+
+    /**
+     * Gets the copilot user ids.
+     *
+     * @return the copilot user ids.
+     * @since 1.6
+     */
+    public List<Long> getCopilotUserIds() {
+        return copilotUserIds;
+    }
+
+    /**
+     * Sets the copilot user ids.
+     *
+     * @param copilotUserIds the copilot user ids.
+     * @since 1.6
+     */
+    public void setCopilotUserIds(List<Long> copilotUserIds) {
+        this.copilotUserIds = copilotUserIds;
     }
 
     /**
@@ -514,6 +663,16 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     public boolean isInMilestoneSubmissionPhase() {
         return inMilestoneSubmissionPhase;
+    }
+
+    /**
+     * Gets inReviewPhase flag.
+     *
+     * @return the inReviewPhase flag
+     * @since 1.6
+     */
+    public boolean isInReviewPhase() {
+        return inReviewPhase;
     }
 
     /**

@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, GreatKevin
-  - Version 1.5
+  - Author: isv, GreatKevin, Blues
+  - Version 1.6
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
@@ -19,6 +19,9 @@
   -
   - Version 1.5 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Updated to show approval phase status correctly
+  -
+  - Version 1.6 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
+  - - Updated to add "Download All" link for software final submissions.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -246,8 +249,8 @@
                                                 </c:if>
 
                                                 <s:set var="viewData" value="viewData" scope="page"/>
-                                                    <h2>All Final Round Submissions</h2>
-
+                                                    <h2 class="finalRound">All Final Round Submissions</h2>
+                                                    <a class="downloadAll finalRound" href="<s:url action='downloadAllSoftwareFinalSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
 <%--
                                                 <table class="${viewData.showApproval ? 'softwareStatsApproval' : 'softwareStats'}" 
 --%>
@@ -467,7 +470,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th>
                                                                     <th>
                                                                         Submission Date/Time
@@ -534,7 +537,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th> 
                                                                     <th>
                                                                         Feedback
@@ -622,7 +625,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th>
                                                                     <th>
                                                                         Select Placement

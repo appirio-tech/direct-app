@@ -89,8 +89,11 @@
  *  Version 2.8 - Module Assembly - TC Cockpit Invoice History Page Update
  *  - Add support for invoice status filter.
  *
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad
- * @version 2.8
+ *  Version 2.9 - Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp
+ *  - Comment out the old copilot pickup handler
+ *
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin
+ * @version 2.9
  */
 
 var mouse_is_inside;
@@ -2441,7 +2444,8 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('#scpSubmissionId').val($(this).data('sid'));
         $('#scpProfileId').val($(this).data('pid'));
         $('#scpTcdProjectId').val($(this).data('prid'));
-        $('#SelectCopilotForm').submit();
+        //console.log($('#SelectCopilotForm').serialize());
+        // $('#SelectCopilotForm').submit();
         return false;
     });
         
@@ -2451,7 +2455,8 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('#scpSubmissionId').val($(this).data('sid'));
         $('#scpProfileId').val($(this).data('pid'));
         $('#scpTcdProjectId').val($(this).data('prid'));
-        $('#SelectCopilotForm').submit();
+        //console.log($('#SelectCopilotForm').serialize());
+        // $('#SelectCopilotForm').submit();
         return false;
     });
 

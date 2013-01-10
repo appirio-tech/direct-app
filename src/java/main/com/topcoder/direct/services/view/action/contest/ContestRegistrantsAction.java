@@ -9,6 +9,7 @@ import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRegistrantsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ContestRegistrantsForm;
@@ -104,6 +105,8 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
      */
     private String viewType;
 
+    private List<CopilotSkillDTO> copilotSkills;
+
     /**
      * <p>Constructs new <code>ContestRegistrantsAction</code> instance. This implementation does nothing.</p>
      */
@@ -128,6 +131,10 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
      */
     public ContestRegistrantsDTO getViewData() {
         return this.viewData;
+    }
+
+    public List<CopilotSkillDTO> getCopilotSkills() {
+        return copilotSkills;
     }
 
     /**
@@ -225,6 +232,9 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
             DataProvider.setCopilotFullStatistics(copilots, getViewData().getDashboard().getDirectProjectTypeId());
             setCopilots(copilots);
+
+            // set copilotSkills
+            copilotSkills = DataProvider.getCopilotSkillRules();
 
             if (getViewType() == null) {
                 // default to grid view

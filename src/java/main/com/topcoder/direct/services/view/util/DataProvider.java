@@ -16,6 +16,7 @@ import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
@@ -695,8 +696,22 @@ import java.util.Map.Entry;
  *   </li>
  * </ol>
  * </p>
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad
- * @version 6.1
+ *
+ * <p>
+ * Version 6.2 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+ * <ul>
+ *     <li>
+ *         Update the method {@link #setCopilotFullStatistics(java.util.List, long)} to set the copilot profile id,
+ *         positive and negative feedback number.
+ *     </li>
+ *     <li>
+ *         Add the method {@link #getCopilotSkillRules()} to get all the copilot skill rules.
+ *     </li>
+ * </ul>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, 
+  *@GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
+ * @version 6.2
  * @since 1.0
  */
 public class DataProvider {
@@ -5825,6 +5840,35 @@ public class DataProvider {
     }
 
     /**
+     * Gets all the copilot skill rules from the tcs_dw:user_achievement_rule
+     *
+     * @return a list of <code>CopilotSkillDTO</code>
+     * @since 6.2
+     */
+    public static List<CopilotSkillDTO> getCopilotSkillRules() throws Exception {
+
+        List<CopilotSkillDTO> skillRules = new ArrayList<CopilotSkillDTO>();
+
+        String commandName = "copilot_skills";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(commandName);
+
+        Map<String, ResultSetContainer> data = dataAccess.getData(request);
+        ResultSetContainer container = data.get(commandName);
+
+        for (ResultSetRow row : container) {
+            CopilotSkillDTO skillDTO = new CopilotSkillDTO();
+            skillDTO.setRuleId(row.getLongItem("rule_id"));
+            skillDTO.setName(row.getStringItem("name"));
+            skillDTO.setDescription(row.getStringItem("description"));
+            skillRules.add(skillDTO);
+        }
+
+        return skillRules;
+    }
+
+    /**
      * Sets the analysis stats for the copilots.
      *
      * @param copilots the copilots.
@@ -5860,6 +5904,9 @@ public class DataProvider {
             copilotDTO.setSoftwareCopilot(row.getBooleanItem("is_software_copilot"));
             copilotDTO.setCountry(row.getStringItem("country_name"));
             copilotDTO.setTimeZone(row.getStringItem("timezone"));
+            copilotDTO.setCopilotProfileId(row.getLongItem("copilot_profile_id"));
+            copilotDTO.setPositiveFeedbackNumber(row.getIntItem("positive_feedback"));
+            copilotDTO.setNegativeFeedbackNumber(row.getIntItem("negative_feedback"));
         }
 
         container = data.get("copilots_experience");

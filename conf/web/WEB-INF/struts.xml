@@ -1311,6 +1311,16 @@
             </result>
         </action>
 
+        <action name="downloadAllSoftwareFinalSubmissions" class="downloadAllSoftwareFinalSubmissions">
+            <interceptor-ref name="securedContestStack"/>
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
         <action name="saveSoftwareMilestoneReviewAction" class="saveSoftwareMilestoneReviewAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
@@ -1400,6 +1410,16 @@
             <result>/WEB-INF/launch-copilot-contest.jsp</result>
         </action>
 
+        <action name="downloadAllCopilotPostingSubmissions" class="downloadAllCopilotPostingSubmissions">
+            <interceptor-ref name="securedContestStack"/>
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
     <action name="postACopilot" class="launchContestAction">
             <result>/WEB-INF/post-a-copilot.jsp</result>
         </action>
@@ -1445,6 +1465,11 @@
                 <param name="namespace">/copilot</param>
             </result>
         </action>
+
+        <action name="compareCopilots" class="copilotPostingContestSubmissionsAction">
+            <result>/WEB-INF/copilot-contests-comparison.jsp</result>
+        </action>
+
         <action name="setCopilotContestRegistrantProfiles" class="allCopilotsListAction">
             <result>/WEB-INF/copilot-contests-registrants.jsp</result>
         </action>
@@ -1458,6 +1483,12 @@
                 <param name="projectId">${projectId}</param>
             </result>
         </action>
+
+        <action name="selectCopilotAjax" method="selectCopilotAjax" class="selectCopilotAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="documentUpload" class="documentUploadAction">
             <result name="success" type="json" />
             <result name="error" type="json" />

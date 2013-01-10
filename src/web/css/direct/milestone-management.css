@@ -1,6 +1,11 @@
 /**
- * Author: TCSASSEMBLER
+ * Author: GreatKevin
+ *
  * Version: 1.0 (Release Assembly - TopCoder Cockpit Software Milestone Management)
+ *
+ * Version: 1.1 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
+ * - Add CSS styles for Download all link of final round software submissions
+ *
  * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  *
  * The CSS File contains CSS styles used for software milestone management.
@@ -301,7 +306,7 @@
             font-weight: bold;
             border:1px solid #bdbdbd;
         }
-            #tcSoftwareMM .mmDataTable table th a.download{
+            a.downloadAll{
                 line-height:18px;
                 border-left:1px solid #bdbdbd;
                 text-decoration:underline;
@@ -313,6 +318,17 @@
                 margin-left:4px;
                 display:inline-block;
             }
+
+        h2.finalRound {
+            float: left;
+        }
+
+        div.containerNoPadding a.finalRound {
+            border: none;
+            margin-top: 24px;
+            margin-left: 0px;
+        }
+
         #tcSoftwareMM .mmDataTable table td{
             color:#2d2d2d;
             border:1px solid #bdbdbd;

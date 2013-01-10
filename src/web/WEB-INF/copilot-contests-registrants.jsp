@@ -1,13 +1,17 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.2
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
   - - Added copilot posting dashboard
   -
   - Version 1.2 (Module Assembly - Cockpit Copilot Posting Registrants Analysis)
   - - Update the copilot posting registrants to a new look
+  -
+  - Version 1.3 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+  - - Update copilot skills data
+  - - Add copilot feedback number stats
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -152,6 +156,11 @@
                                 <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
                                    class="copilotStat" target="_blank"> View Copilot Statistics</a>
                             </p>
+
+                            <ul class="feedbacks">
+                                <li class="positiveFeedback <s:if test='positiveFeedbackNumber <= 0'>zeroPositiveFeedback</s:if>">${positiveFeedbackNumber}</li>
+                                <li class="negativeFeedback <s:if test='negativeFeedbackNumber <= 0'>zeroNegativeFeedback</s:if>">${negativeFeedbackNumber}</li>
+                            </ul>
                         </div>
 
 
@@ -198,27 +207,10 @@
                 </td>
 
                 <td class="colSkills">
-                    <ul>
-                        <s:if test="hasUISkill">
-                            <li class="uiNgd">UI &amp; Graphic Design</li>
-                        </s:if>
+                    <s:iterator value="copilotSkills">
+                        <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
+                    </s:iterator>
 
-                        <s:if test="hasImplementationSkill">
-                            <li class="imple">Implementation</li>
-                        </s:if>
-
-                        <s:if test="hasBusinessAnalysisSkill">
-                            <li class="ba">Business Analysis</li>
-                        </s:if>
-
-                        <s:if test="hasAnalyticsSkill">
-                            <li class="ana">Analytics</li>
-                        </s:if>
-
-                        <s:if test="hasTestingSkill">
-                            <li class="tqa">Testing &amp; Quality Assurance</li>
-                        </s:if>
-                    </ul>
                 </td>
             </tr>
         </s:iterator>
@@ -268,6 +260,13 @@
                             <a href="javascript:;" class="dev">&nbsp;</a>
                         </s:if>
                     </p>
+
+                    <div class="feedbackWrapper">
+                        <ul class="feedbacks">
+                            <li class="positiveFeedback <s:if test='positiveFeedbackNumber <= 0'>zeroPositiveFeedback</s:if>">${positiveFeedbackNumber}</li>
+                            <li class="negativeFeedback <s:if test='negativeFeedbackNumber <= 0'>zeroNegativeFeedback</s:if>">${negativeFeedbackNumber}</li>
+                        </ul>
+                    </div>
                 </div>
                <div class="colGrp">
                 <!-- /.col1 -->
@@ -280,30 +279,6 @@
                             class="tl corner"></span> <span
                             class="tr corner"></span> <span class="bl corner"></span> <span class="br corner"></span>
 																		</span>
-                    </div>
-                    <div class="skills colSkills">
-                        <p class="title">Copilot Skills</p>
-                        <ul>
-                            <s:if test="hasUISkill">
-                                <li class="uiNgd">UI &amp; Graphic Design</li>
-                            </s:if>
-
-                            <s:if test="hasImplementationSkill">
-                                <li class="imple">Implementation</li>
-                            </s:if>
-
-                            <s:if test="hasBusinessAnalysisSkill">
-                                <li class="ba">Business Analysis</li>
-                            </s:if>
-
-                            <s:if test="hasAnalyticsSkill">
-                                <li class="ana">Analytics</li>
-                            </s:if>
-
-                            <s:if test="hasTestingSkill">
-                                <li class="tqa">Testing &amp; Quality Assurance</li>
-                            </s:if>
-                        </ul>
                     </div>
                 </div>
                 <!-- /.col2 -->
@@ -320,6 +295,8 @@
                                 class="bl corner"></span> <span class="br corner"></span>
                         </p>
                     </div>
+                </div> <!-- /.col3 -->
+                <div class="col4">
                     <div class="xperience colExperience">
                         <p class="title">Matched Experience</p>
 
@@ -350,9 +327,22 @@
                         </div>
 
                     </div>
-                </div>
+                    <div class="skills">
+                        <p class="title">Copilot Skills</p>
+                        <div class="colSkills">
+                            <s:iterator value="copilotSkills">
+                                <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
+                            </s:iterator>
+                        </div>
+                    </div>
+
+                    </div>
+
+
                    <div class="clear"></div>
-               </div>
+                </div>
+
+
                 <!-- /.col3 -->
             </td>
 
@@ -447,6 +437,9 @@
 </div>
 <!-- End #container -->
 </div>
+    <s:iterator value="copilotSkills">
+        <input type="hidden" id="skill-rule-${ruleId}" name="${name}" value="${description}"/>
+    </s:iterator>
 </div>
 <!-- End #wrapper -->
 <!-- this area will contain the popups of this page -->

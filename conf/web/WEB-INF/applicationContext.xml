@@ -921,9 +921,24 @@
     </bean>
 
     <bean id="downloadAllSoftwareMilestoneSubmissions"
-          class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareMilestoneSubmissionsAction"
+          class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+        <property name="roundType" value="MILESTONE" />
+    </bean>
+
+    <bean id="downloadAllSoftwareFinalSubmissions"
+          class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="fileUpload" ref="fileUpload"/>
+        <property name="roundType" value="FINAL" />
+    </bean>
+
+    <bean id="downloadAllCopilotPostingSubmissions"
+          class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="fileUpload" ref="fileUpload"/>
+        <property name="roundType" value="FINAL" />
     </bean>
 
     <bean id="saveSoftwareMilestoneReviewAction"

@@ -1,15 +1,28 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.copilot;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for selecting copilot for contest.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Manage Copilot Postings assembly)
+ * <p>
+ * Version 1.1 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+ * <ul>
+ *     <li>
+ *         Adds the ajax method {@link #selectCopilotAjax()} to handle ajax request of selecting copilot / runner
+ *         for copilot posting. It can also choose no copilot posting winner or no copilot posting runner-up.
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class SelectCopilotAction extends BaseDirectStrutsAction {
 
@@ -56,6 +69,35 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
     protected void executeAction() throws Exception {
         getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProfileId(), 
                                                 getSubmissionId(), getPlacement(), getProjectId());
+    }
+
+    /**
+     * <p>
+     * Handles the select copilot / runner-up operation in ajax.
+     * </p>
+     *
+     * @return the result code.
+     * @since 1.1
+     */
+    public String selectCopilotAjax() {
+        try {
+
+            Map<String, String> result = new HashMap<String, String>();
+
+            getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProfileId(),
+                    getSubmissionId(), getPlacement(), getProjectId());
+
+            result.put("resultCode", "success");
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
     }
     
     /**

@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, tangzx, GreatKevin
-  - Version: 1.4
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, tangzx, GreatKevin, Blues
+  - Version: 2.0
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - Add new button to allow user not choose the 2nd place winner of copilot posting contest when review.
@@ -14,6 +14,9 @@
   -
   - Version 1.4 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
   - - Added copilot posting dashboard
+  -
+  - Version 2.0 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
+  - - Change to the new copilot posting submissions page.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -34,16 +37,17 @@
     <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/permissions.js?v=210124"></script>
+    <script type="text/javascript" src="/scripts/copilot/copilotStats.js"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <script type="text/javascript">
         $(document).ready(function(){
            if($(".noCopilotButton").length > 0) {
-           
+
                if (!$($(".noCopilotButton").get(0)).hasClass("chooseSecondPlaceButton")) {
                    $("#noCopilotButtonArea").append($(".noCopilotButton").get(0));
                    $("#noCopilotButtonArea").find(".noCopilotButton").removeClass("hide");
                }
-               
+
            }
         });
     </script>
@@ -53,7 +57,7 @@
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">
-            <div id="content">
+            <div id="content" class="liquid">
 
                 <jsp:include page="includes/header.jsp"/>
 
@@ -85,6 +89,11 @@
                                     <c:set value="${viewData.contestStats.contest.project.id}" var="tcDirectProjectId"/>
                                     <c:set value="${viewData.contestStats.contest.project.name}" var="tcDirectProjectName"/>
                                     <c:set value="${viewData.contestStats.contest.id}" var="projectId"/>
+                                    <c:set var="firstPlaceWinner" value="${viewData.copilotPostingWinner}"/>
+                                    <c:set var="secondPlaceWinner" value="${viewData.copilotPostingRunnerUp}"/>
+                                    <input type="hidden" id="currentCopilotPostingId" value="${viewData.contestStats.contest.id}" />
+                                    <input type="hidden" name="contestId" value="${viewData.contestStats.contest.id}"/>
+                                    <input type="hidden" name="directProjectId" value="${viewData.contestStats.contest.project.id}"/>
                                     <div class="myCopilotsContestsList">
 
                                         <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
@@ -94,104 +103,539 @@
 
                                             <jsp:include page="includes/copilot/tabs.jsp"/>
 
-                                            <div class="container2Left">
-                                                <div class="container2Right"><div class="container2Bottom">
-                                            <div class="container2BottomLeft"><div class="container2BottomRight">
-                                                <div class="tableContainer">
-                                                    <table class="projectStats newContestsStatus paginatedDataTable copilotPostingSubmissions"
-                                                           cellpadding="0" cellspacing="0">
-                                                        <thead>
-                                                            <colgroup>
-                                                                <col width="12%"/>
-                                                                <col width="20%"/>
-                                                                <col width="12%"/>
-                                                                <col width="20%"/>
-                                                                <col />
-                                                            </colgroup>
-                                                            <tr>
-                                                                <th>Copilot</th>
-                                                                <th>Profiles</th>
-                                                                <th>Submission Time</th>
-                                                                <th>Download Submission</th>
-                                                                <th>&nbsp;</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <c:set var="firstPlaceWinner" value="${viewData.copilotPostingWinner}"/>
-                                                        <c:set var="secondPlaceWinner" value="${viewData.copilotPostingRunnerUp}"/>
-                                                        <c:forEach items="${viewData.submissions}" var="submission"
-                                                                   varStatus="loop">
-                                                            <c:set var="submitter" value="${submission.submitter}"/>
-                                                            <tr>
-                                                                <td class="photo">
-                                                                    <img src="/images/photo_people.png" alt="photo"/>
-                                                                    <span><link:user userId="${submitter.id}" handle="${submitter.handle}"/> </span>
-                                                                </td>
-                                                                <td>
-                                                                    <a rel="_blank"
-                                                                       href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=${submitter.id}"
-                                                                       class="memberProfile"><span class="profileLeft">Member Profile</span></a>
-                                                                    <a rel="_blank"
-                                                                       href="https://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${submitter.id}"
-                                                                       class="copilotProfile"><span class="profileLeft">Copilot Profile</span></a>
-                                                                    <!--this link should be replaced by Copilot Profile page-->
-                                                                </td>
-                                                                <td>
-                                                                    <fmt:formatDate value="${submission.submissionDate}"
-                                                                                    pattern="MM/dd/yyyy HH:mm"/>
+                                            <div class="container2Left ">
+                                            <div class="caption">
+                                                <div class="fLeft">
+                                                    <a href="<s:url action='downloadAllCopilotPostingSubmissions' namespace='/copilot'/>?projectId=${param.projectId}" class="download link">Download all Submissions</a>
+                                                    <c:if test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                        <span class="seprator">&nbsp;</span>
+                                                        <a href="javascript:;" class="choose link noCopilotChoosen">I don't want to choose any copilot</a>
+                                                    </c:if>
+                                                    <c:if test="${firstPlaceWinner ne null && secondPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                        <span class="seprator">&nbsp;</span>
+                                                        <a href="javascript:;" class="choose link noRunnerUpChosen">I don't want to choose runner-up copilot</a>
+                                                    </c:if>
 
-                                                                </td>
-                                                                <td>
+                                                </div>
+                                                <div class="fRight">
+                                                    <a class="btn btn-compare"
+                                                       href="javascript:;"><span class="bRt"> <span
+                                                            class="bMid">COMPARE COPILOTS</span></span></a>
+												<span class="switch">
+                                                     <s:if test="viewType eq 'list'">
+                                                         <a href="javascript:;" class="active listView"></a>
+                                                         <a href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
+                                                                <s:param name="projectId" value="projectId"/>
+                                                                <s:param name="viewType">grid</s:param>
+                                                        </s:url>" class="gridview"></a>
+                                                     </s:if>
+                                                     <s:else>
+                                                         <a href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
+                                                                <s:param name="projectId" value="projectId"/>
+                                                                <s:param name="viewType">list</s:param>
+                                                        </s:url>" class="listView"></a>
+                                                         <a href="javascript:;" class="active gridview"></a>
+                                                     </s:else>
+												</span>
+                                                </div>
+                                            </div>
+                                            <!-- /.caption -->
+                                            <div class="container2Right">
+
+                                            <div class="container2Content_det">
+
+                                            <s:if test='viewType == "list"'>
+                                                <table class="listview-table">
+                                                    <colgroup>
+                                                        <col width="22.7%"/>
+                                                        <col width=""/>
+                                                        <col width="11%"/>
+                                                        <col width="22.3%"/>
+                                                        <col width="21.3%"/>
+                                                        <col width="16.6%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Copilot</th>
+                                                        <th>Fulfillment</th>
+                                                        <th>Current Workload</th>
+                                                        <th>Matched Experience</th>
+                                                        <th>Copilot Skills</th>
+                                                        <th>Choose your copilot</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <s:iterator value="copilotSubmissions">
+                                                        <tr class="<c:choose><c:when test="${userId eq firstPlaceWinner.id}">rowSelCP</c:when><c:when test="${userId eq secondPlaceWinner.id}">rowSelRUP</c:when></c:choose>">
+                                                            <input type="hidden" name="submissionId" value="${submissionId}"/>
+                                                            <input type="hidden" name="profileId" value="${copilotProfileId}"/>
+                                                            <td class="tdCopilot">
+                                                                <div class="colLt">
+
+                                                                    <s:if test="imagePath == null || imagePath.length == 0">
+                                                                        <img class="memberPic" alt="copilot picture"
+                                                                             src="/images/copilotPosting/copilotHeader.png"/>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        <img class="memberPic" alt="copilot picture" src="${imagePath}"/>
+                                                                    </s:else>
+                                                                    <p class="track">
+                                                                        <s:if test="studioCopilot">
+                                                                            <a href="javascript:;" class="studio">
+                                                                                &nbsp;</a>
+                                                                        </s:if>
+                                                                        <s:if test="softwareCopilot">
+                                                                            <a href="javascript:;" class="dev">&nbsp;</a>
+                                                                        </s:if>
+
+                                                                    </p>
+                                                                    <p class="compare">
+                                                                        <input type="checkbox" id="chkList${userId}" class="chkCompare"> <label for="chkList${userId}">Compare</label>
+                                                                    </p>
+                                                                    <c:choose>
+                                                                        <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                            <span class="ribbon"></span>
+                                                                        </c:when>
+                                                                        <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                            <span class="ribbon"></span>
+                                                                        </c:when>
+                                                                    </c:choose>
+                                                                </div>
+                                                                <div class="colRt">
+                                                                    <div class="top">
+                                                                        <p class="userHandleHolder">
+                                                                            <link:user userId="${userId}"/>
+                                                                        </p>
+
+                                                                        <p>${country}</p>
+
+                                                                        <p>${timeZone}</p>
+
+                                                                        <p>
+                                                                            <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
+                                                                               class="copilotStat" target="_blank"> View Copilot Statistics</a>
+                                                                        </p>
+
+                                                                        <ul class="feedbacks">
+                                                                            <li class="positiveFeedback <s:if test='positiveFeedbackNumber <= 0'>zeroPositiveFeedback</s:if>">${positiveFeedbackNumber}</li>
+                                                                            <li class="negativeFeedback <s:if test='negativeFeedbackNumber <= 0'>zeroNegativeFeedback</s:if>">${negativeFeedbackNumber}</li>
+                                                                        </ul>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="colFulFill"><span class="txt${fulfillmentColor}">${roundedFulfillment}%</span></td>
+                                                            <td class="colWorkload">
+                                                                <p>
+                                                                    <strong>${currentContests} </strong>Contests
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>${currentProjects} </strong>Projects
+                                                                </p>
+                                                            </td>
+
+                                                            <td class="colExperience">
+                                                                <s:iterator value="matchedExperience">
+                                                                    <div class="row">
+                                                                        <p class="xp">${projectType} <s:if test="projectCategory != null">- ${projectCategory}</s:if></p>
+
+                                                                        <p class="xpStat">
+                                                                            Active : <span class="active">${activeProjectNumber}</span>, Completed : <span class="completed">${completedProjectNumber}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </s:iterator>
+                                                                <p class="link">
+                                                                    <a href="javascript:;" class="viewXperience">View other experience</a>
+                                                                </p>
+
+                                                                <div class="hide otherExperienceDiv">
+                                                                    <span class="arrow">&nbsp;</span>
+                                                                    <s:iterator value="otherExperience">
+                                                                        <div class="row">
+                                                                            <p class="xp">${projectType}<s:if test="projectCategory != null">- ${projectCategory}</s:if></p>
+
+                                                                            <p class="xpStat">
+                                                                                Active : <span class="active">${activeProjectNumber}</span>, Completed : <span class="completed">${completedProjectNumber}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </s:iterator>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="colSkills">
+                                                                <s:iterator value="copilotSkills">
+                                                                    <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
+                                                                </s:iterator>
+
+                                                            </td>
+                                                            <td class="colPickup pickupCell <c:if test="${userId eq firstPlaceWinner.id}">cpPicked</c:if> <c:if test="${userId eq secondPlaceWinner.id}">rupPicked</c:if>">
+                                                                <p class="row highlighted">
                                                                     <link:onlineReviewDownloadSubmission
                                                                             projectId="${projectId}"
-                                                                            submissionId="${submission.submissionId}"
-                                                                            styleClass="downloadProfile">
-                                                                        <span class="profileLeft">Download</span>
+                                                                            submissionId="${submissionId}"
+                                                                            styleClass="submitedFile">
+                                                                        #${submissionId}
                                                                     </link:onlineReviewDownloadSubmission>
-                                                                </td>
+                                                                    <br>
+                                                                    <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
+                                                                </p>
 
-                                                                <td>
-                                                                        <c:choose>
-                                                                            <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                                                <a href="#" 
-                                                                                   onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                   class="chooseCopilotButton"><span
-                                                                                    class="profileLeft">Choose This Copilot</span></a>
-                                                                                <a href="#"
-                                                                                   onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 100, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                   class="noCopilotButton hide"><span
-                                                                                        class="profileLeft">I don't want to choose a copilot</span></a>
-                                                                            </c:when>
-                                                                            <c:when test="${submitter.id eq firstPlaceWinner.id}">
-                                                                                The Chosen Copilot
-                                                                            </c:when>
-                                                                            <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');" class="noCopilotButton chooseSecondPlaceButton">
-                                                                                    <span class="profileLeft">Choose as 2nd place</span>
-                                                                                </a>
+                                                                <s:if test="inReviewPhase">
+                                                                    <c:choose>
+                                                                        <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                                            <div class="unPickedCP row">
+                                                                                <a class="btn btn-red btn-pickup"
+                                                                                   href="javascript:;">
+                                                                            <span class="bRt"> <span class="bMid"> <span
+                                                                                    class="ico">CHOOSE</span></span></span></a><br>
+                                                                                <a class="btn btn-white btn-pickup-rup" style="display:none"
+                                                                                   href="javascript:;">
+                                                                                    <span class="bRt"> <span class="bMid"> CHOOSE AS RUNNER-UP</span></span></a>
+                                                                            </div>
+                                                                            <div class="pickedCP">
+                                                                                <span class="pikedAsCP">CHOSEN AS COPILOT</span>
+                                                                            </div>
+                                                                            <div class="pickedRunnerUp">
+                                                                                <span class="pikedAsRUP">CHOSEN AS RUNNER-UP</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                            <div class="pickedCP">
+                                                                                <span class="pikedAsCP">CHOSEN AS COPILOT</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                                            <div class="unPickedCP row">
+                                                                                <a href="javascript:;"
+                                                                                   class="btn btn-white btn-pickup-rup"><span
+                                                                                        class="bRt"> <span class="bMid"> CHOOSE AS RUNNER-UP</span></span></a>
+                                                                            </div>
+                                                                            <div class="pickedCP">
+                                                                                <span class="pikedAsCP">CHOSEN AS COPILOT</span>
+                                                                            </div>
+                                                                            <div class="pickedRunnerUp">
+                                                                                <span class="pikedAsRUP">CHOSEN AS RUNNER-UP</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                            <div class="pickedRunnerUp">
+                                                                                <span class="pikedAsRUP">CHOSEN AS RUNNER-UP</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            &nbsp;
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <c:choose>
+                                                                        <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                            <div class="pickedCP">
+                                                                                <span class="pikedAsCP">CHOSEN AS COPILOT</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                            <div class="pickedRunnerUp">
+                                                                                <span class="pikedAsRUP">CHOSEN AS RUNNER-UP</span>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            &nbsp;
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </s:else>
+                                                            </td>
+                                                        </tr>
+                                                    </s:iterator>
 
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 3, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');" class="chooseCopilotButton notChooseButton">
-                                                                                    <span class="profileLeft">I don't want to select 2nd</span>
-                                                                                </a>
-                                                                            </c:when>
-                                                                            <c:when test="${submitter.id eq secondPlaceWinner.id}">
-                                                                                The Runner-Up Copilot
-                                                                            </c:when>
-                                                                            <c:otherwise>
-                                                                                &nbsp;
-                                                                            </c:otherwise>
-                                                                        </c:choose>
-                                                                </td>
+
+                                                    </tbody>
+                                                </table>
+                                            </s:if>
+                                            <s:else>
+                                                <!-- /.listview-table -->
+                                                <table class="gridview-table submission-table">
+                                                    <colgroup>
+                                                        <col width="50%"/>
+                                                        <col width="50%"/>
+                                                    </colgroup>
+                                                    <tbody>
+
+                                                    <s:iterator value="copilotSubmissions" status="rowStatus">
+                                                        <s:if test="#rowStatus.odd == true">
+                                                            <tr>
+                                                        </s:if>
+
+                                                        <td class="<c:choose><c:when test="${userId eq firstPlaceWinner.id}">rowSelCP</c:when><c:when test="${userId eq secondPlaceWinner.id}">rowSelRUP</c:when></c:choose>">
+                                                            <input type="hidden" name="submissionId" value="${submissionId}"/>
+                                                            <input type="hidden" name="profileId" value="${copilotProfileId}"/>
+                                                            <div class="col1 col">
+                                                                <s:if test="imagePath == null || imagePath.length == 0">
+                                                                    <img class="memberPic" alt="copilot picture" src="/images/copilotPosting/copilotHeader.png"/>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    <img class="memberPic" alt="copilot picture" src="${imagePath}"/>
+                                                                </s:else>
+                                                                <p class="userHandleHolder">
+                                                                    <link:user userId="${userId}"/>
+                                                                </p>
+
+                                                                <p>
+                                                                    <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
+                                                                       class="copilotStat" target="_blank">
+                                                                        View Copilot Statistics</a>
+                                                                </p>
+
+                                                                <p class="track">
+                                                                    <s:if test="studioCopilot">
+                                                                        <a href="javascript:;" class="studio">
+                                                                            &nbsp;</a>
+                                                                    </s:if>
+                                                                    <s:if test="softwareCopilot">
+                                                                        <a href="javascript:;" class="dev">&nbsp;</a>
+                                                                    </s:if>
+                                                                </p>
+
+                                                                <div class="feedbackWrapper">
+                                                                    <ul class="feedbacks">
+                                                                        <li class="positiveFeedback <s:if test='positiveFeedbackNumber <= 0'>zeroPositiveFeedback</s:if>">${positiveFeedbackNumber}</li>
+                                                                        <li class="negativeFeedback <s:if test='negativeFeedbackNumber <= 0'>zeroNegativeFeedback</s:if>">${negativeFeedbackNumber}</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <p class="compare">
+                                                                    <input type="checkbox" id="chkGrid${userId}" class="chkCompare"> <label for="chkGrid${userId}">Compare</label>
+                                                                </p>
+                                                                <c:choose>
+                                                                    <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                        <span class="ribbon"></span>
+                                                                    </c:when>
+                                                                    <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                        <span class="ribbon"></span>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                            </div>
+                                                            <div class="colGrp">
+                                                                <!-- /.col1 -->
+                                                                <div class="col2 col">
+                                                                    <p class="location">${country}</p>
+
+                                                                    <div class="fullfillMent bg${fulfillmentColor}">
+                                                                        <span>Fulfillment</span> <span
+                                                                            class="percent bg${fulfillmentColor}">${roundedFulfillment}% <span
+                                                                            class="tl corner"></span> <span
+                                                                            class="tr corner"></span> <span class="bl corner"></span> <span class="br corner"></span>
+																		</span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.col2 -->
+                                                                <div class="col3 col">
+                                                                    <p class="time">${timeZone}</p>
+
+                                                                    <div class="workload">
+                                                                        <p class="title">Current Workload</p>
+
+                                                                        <p class="value">
+                                                                            <span class="v1"><strong>${currentContests}</strong><br/>Contests</span> <span
+                                                                                class="v2"><strong>${currentProjects}</strong><br/>Projects</span> <span
+                                                                                class="tl corner"></span> <span class="tr corner"></span> <span
+                                                                                class="bl corner"></span> <span class="br corner"></span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div> <!-- /.col3 -->
+                                                                <div class="col4">
+                                                                    <div class="xperience colExperience">
+                                                                        <p class="title">Matched Experience</p>
+
+                                                                        <s:iterator value="matchedExperience">
+                                                                            <div class="row">
+                                                                                <p class="xp">${projectType} <s:if test="projectCategory != null">- ${projectCategory}</s:if></p>
+
+                                                                                <p class="xpStat">
+                                                                                    Active : <span class="active">${activeProjectNumber}</span>, Completed : <span class="completed">${completedProjectNumber}</span>
+                                                                                </p>
+                                                                            </div>
+                                                                        </s:iterator>
+                                                                        <p class="link">
+                                                                            <a href="javascript:;" class="viewXperience">View other experience</a>
+                                                                        </p>
+
+                                                                        <div class="hide otherExperienceDiv">
+                                                                            <span class="arrow">&nbsp;</span>
+                                                                            <s:iterator value="otherExperience">
+                                                                                <div class="row">
+                                                                                    <p class="xp">${projectType}<s:if test="projectCategory != null">- ${projectCategory}</s:if></p>
+
+                                                                                    <p class="xpStat">
+                                                                                        Active : <span class="active">${activeProjectNumber}</span>, Completed : <span class="completed">${completedProjectNumber}</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </s:iterator>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="skills">
+                                                                        <p class="title">Copilot Skills</p>
+                                                                        <div class="colSkills">
+                                                                            <s:iterator value="copilotSkills">
+                                                                                <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
+                                                                            </s:iterator>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="highlightedCell corAlt">
+                                                                        <link:onlineReviewDownloadSubmission
+                                                                                projectId="${projectId}"
+                                                                                submissionId="${submissionId}"
+                                                                                >
+                                                                            #${submissionId}
+                                                                        </link:onlineReviewDownloadSubmission>
+                                                                        <br> <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
+                                                                        <span class="tl corner"></span> <span class="tr corner"></span>
+                                                                        <span class="bl corner"></span> <span class="br corner"></span>
+                                                                    </div>
+                                                                    <div class="pickupCell corAlt <c:if test="${userId eq firstPlaceWinner.id}">cpPicked</c:if> <c:if test="${userId eq secondPlaceWinner.id}">rupPicked</c:if>">
+                                                                        <s:if test="inReviewPhase">
+                                                                            <c:choose>
+                                                                                <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                                                    <div class="unPickedCP">
+                                                                                        <a class="btn btn-red btn-pickup"
+                                                                                           href="javascript:;"><span
+                                                                                                class="bRt"> <span class="bMid">
+                                                                                <span class="ico">CHOOSE</span></span></span></a>
+                                                                                        <a class="btn btn-white btn-pickup-rup" style="display:none"
+                                                                                           href="javascript:;">
+                                                                                    <span class="bRt"> <span
+                                                                                            class="bMid">CHOOSE AS RUNNER-UP</span></span></a>
+                                                                                    </div>
+                                                                                    <div class="pickedCP">
+                                                                                        <span class="pikedAsCP">PICKED AS COPILOT</span>
+                                                                                    </div>
+                                                                                    <div class="pickedRunnerUp">
+                                                                                        <span class="pikedAsRUP">PICKED AS RUNNER-UP</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                                    <div class="pickedCP">
+                                                                                        <span class="pikedAsCP">PICKED AS COPILOT</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
+                                                                                    <div class="unPickedCP row">
+                                                                                        <a href="javascript:;" class="btn btn-white btn-pickup-rup"><span
+                                                                                                class="bRt"> <span class="bMid"> CHOOSE AS RUNNER-UP</span></span></a>
+                                                                                    </div>
+                                                                                    <div class="pickedCP">
+                                                                                        <span class="pikedAsCP">PICKED AS COPILOT</span>
+                                                                                    </div>
+                                                                                    <div class="pickedRunnerUp">
+                                                                                        <span class="pikedAsRUP">PICKED AS RUNNER-UP</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                                    <div class="pickedRunnerUp">
+                                                                                        <span class="pikedAsRUP">PICKED AS RUNNER-UP</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    &nbsp;
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </s:if>
+                                                                        <s:else>
+                                                                            <c:choose>
+                                                                                <c:when test="${userId eq firstPlaceWinner.id}">
+                                                                                    <div class="pickedCP">
+                                                                                        <span class="pikedAsCP">PICKED AS COPILOT</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:when test="${userId eq secondPlaceWinner.id}">
+                                                                                    <div class="pickedRunnerUp">
+                                                                                        <span class="pikedAsRUP">PICKED AS RUNNER-UP</span>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    &nbsp;
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </s:else>
+                                                                        <span class="tl corner"></span> <span class="tr corner"></span> <span class="bl corner"></span> <span class="br corner"></span>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="clear"></div>
+                                                            </div>
+
+
+                                                            <!-- /.col3 -->
+                                                        </td>
+
+
+                                                        <s:if test="#rowStatus.even == true">
                                                             </tr>
-                                                        </c:forEach>
+                                                        </s:if>
 
-                                                        </tbody>
-                                                    </table><!-- End .projectsStats -->
+                                                    </s:iterator>
+
+                                                    </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </s:else>
+
+                                            <!-- /.gridview-table -->
+                                            <div class="flyout xperienceFlyout hide">
+                                                <span class="arrow">&nbsp;</span>
+
+                                                <div class="row">
+                                                    <p class="xp">Mobile - Androids</p>
+
+                                                    <p class="xpStat">
+                                                        Active : <span class="active">5</span>, Completed : <span class="completed">10</span>
+                                                    </p>
                                                 </div>
-                                                <div id="noCopilotButtonArea" style="float: right; margin-right: 15px"></div>
-                                                <div class="panel"></div>
-                                            </div></div>
-                                            </div></div></div>
+                                                <div class="row">
+                                                    <p class="xp">Web appilcation - Ajax</p>
+
+                                                    <p class="xpStat">
+                                                        Active : <span class="active">5</span>, Completed : <span class="completed">10</span>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="xp">Studio - Wireframe</p>
+
+                                                    <p class="xpStat">
+                                                        Active : <span class="active">5</span>, Completed : <span class="completed">10</span>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="xp">Studio - Logo Design</p>
+
+                                                    <p class="xpStat">
+                                                        Active : <span class="active">5</span>, Completed : <span class="completed">10</span>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="xp">Studio - Logo Design</p>
+
+                                                    <p class="xpStat">
+                                                        Active : <span class="active">5</span>, Completed : <span class="completed">10</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!-- /.xperienceFlyout -->
+                                            <div class="flyout trackFlyout hide">
+                                                <span class="arrow">&nbsp;</span>
+                                                <p class="data">Certified TopCoder Studio Copilot</p>
+                                            </div>
+
+                                            </div>
+                                            <!-- End .container2Content_det -->
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- end .getCopilotsStep -->
@@ -221,6 +665,9 @@
         <!-- End #container -->
     </div>
 </div>
+<s:iterator value="copilotSkills">
+    <input type="hidden" id="skill-rule-${ruleId}" name="${name}" value="${description}"/>
+</s:iterator>
 <!-- End #wrapper -->
 <!-- this area will contain the popups of this page -->
 <div class="popups">

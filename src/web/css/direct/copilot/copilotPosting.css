@@ -1,4 +1,3 @@
-/* added on 25Sep2012 */
 input[type="checkbox"] {
     margin: 0;
     padding: 0;
@@ -129,6 +128,7 @@ input[type="checkbox"] {
 .switch.btn-nexPrev .next{
     background-position: right top;
     padding: 0;
+    font-size: 0;
 }
 .switch.btn-nexPrev .next:hover{
     background-position: right bottom;
@@ -148,268 +148,145 @@ input[type="checkbox"] {
 
 /*badges*/
 
-.achiv .b1{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 0;
-    width: 32px;
+.achiv {
+    margin: 0 auto;
     height: 48px;
-    float: left;
-    cursor: pointer;
+    padding-bottom: 2px;
 }
-.achiv .b2{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -32px 0;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b3{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -64px 0;
-    width: 26px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b4{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -90px 0;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b5{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -122px 0;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b6{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -150px 0;
-    width:50px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.col4 .colSkills{
+    padding-bottom: 12px;
 }
 
-.achiv .b1a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 0;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.col4 .achiv{
+    margin: 0;
 }
-.achiv .b2a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -32px 0;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.col4 .noBadgeHint{
+    text-align: left;
+    line-height: 12px;
 }
-.achiv .b3a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -64px 0;
-    width: 26px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.badge-ui {
+    width: 200px;
 }
-.achiv .b4a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -90px 0;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b5a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -122px 0;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b6a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -150px 0;
-    width:50px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.badge-imple {
+    width: 200px;
 }
 
-
-.achiv .b7{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 -51px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.badge-ig  {
+    width: 112px;
+    padding: 0 0 0 88px;
 }
-.achiv .b8{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -38px -51px;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.badge-qa {
+    width: 110px;
+    padding: 0 0 0 90px;
 }
-.achiv .b9{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -70px -51px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
+.badge-bd  {
+    width: 86px;
+    padding: 0 0 0 114px;
 }
-.achiv .b10{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -108px -51px;
-    width: 42px;
-    height: 48px;
+.achiv div {
     float: left;
-    cursor: pointer;
-}
-.achiv .b11{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -150px -51px;
-    width:50px;
     height: 48px;
-    float: left;
-    cursor: pointer;
-}
-
-.achiv .b7a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 -51px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b8a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -38px -51px;
-    width: 32px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b9a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -70px -51px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b10a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -108px -51px;
-    width: 42px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b11a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -150px -51px;
-    width:50px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b12{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat 0 -103px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b13{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -38px -103px;
-    width: 50px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b14{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -88px -103px;
-    width: 30px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b15{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -118px -103px;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b16{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -146px -103px;
-    width:54px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b12a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat 0 -103px;
-    width: 38px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b13a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -38px -103px;
-    width: 50px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b14a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -88px -103px;
-    width: 30px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b15a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -118px -103px;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-
-.achiv .b16a{
-    background: url(/images/copilotPosting/skillBadgesH.png) no-repeat -146px -103px;
-    width:54px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .sep{
-    width:90px;
-    height: 48px;
-    float: left;
-
-}
-.achiv .b17{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -90px -154px;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b18{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -118px -154px;
-    width: 28px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.achiv .b19{
-    background: url(/images/copilotPosting/skillBadges.png) no-repeat -146px -154px;
-    width:54px;
-    height: 48px;
-    float: left;
-    cursor: pointer;
-}
-.quoteBadgesItem{
     margin:0;
     padding: 0;
-    display: inline-block;
-    vertical-align: bottom;
+    display: block;
+    background: url(/images/skillBadges.png) no-repeat 0 0;
+    position: relative;
 }
+.quoteBadgesItem{
+    cursor: pointer;
+}
+.achiv div.skill-rule-55   { width: 32px; background-position: 0 0;}
+.achiv div.skill-rule-55y  { width: 32px; background-position: -216px 0;}
+.achiv div.skill-rule-56   { width: 32px; background-position:  -32px 0;}
+.achiv div.skill-rule-56y  { width: 32px; background-position: -248px 0;}
+.achiv div.skill-rule-57   { width: 26px; background-position:  -64px 0;}
+.achiv div.skill-rule-57y  { width: 26px; background-position: -280px 0;}
+.achiv div.skill-rule-58   { width: 32px; background-position:  -90px 0;}
+.achiv div.skill-rule-58y  { width: 32px; background-position: -306px 0;}
+.achiv div.skill-rule-59   { width: 28px; background-position: -122px 0;}
+.achiv div.skill-rule-59y  { width: 28px; background-position: -338px 0;}
+.achiv div.badge-ui-all { width: 50px; background-position: -150px 0;}
+.achiv div.badge-ui-ally{ width: 50px; background-position: -366px 0;}
+
+.achiv div.skill-rule-60   { width: 38px; background-position: 0 -51px;}
+.achiv div.skill-rule-60y  { width: 38px; background-position: -216px -51px;}
+.achiv div.skill-rule-61   { width: 32px; background-position:  -38px -51px;}
+.achiv div.skill-rule-61y  { width: 32px; background-position: -254px -51px;}
+.achiv div.skill-rule-62   { width: 38px; background-position:  -70px -51px;}
+.achiv div.skill-rule-62y  { width: 38px; background-position: -286px -51px;}
+.achiv div.skill-rule-63   { width: 42px; background-position: -108px -51px;}
+.achiv div.skill-rule-63y  { width: 42px; background-position: -324px -51px;}
+.achiv div.badge-imple-all { width: 50px; background-position: -150px -51px;}
+.achiv div.badge-imple-ally{ width: 50px; background-position: -366px -51px;}
+
+.achiv div.skill-rule-64   { width: 30px; background-position:  -88px -103px;}
+.achiv div.skill-rule-64y  { width: 30px; background-position: -304px -103px;}
+.achiv div.skill-rule-65   { width: 32px; background-position: -118px -103px;}
+.achiv div.skill-rule-65y  { width: 32px; background-position: -334px -103px;}
+.achiv div.badge-ig-all { width: 50px; background-position: -150px -103px;}
+.achiv div.badge-ig-ally{ width: 50px; background-position: -366px -103px;}
+
+.achiv div.skill-rule-66   { width: 28px; background-position:  -90px -154px;}
+.achiv div.skill-rule-66y  { width: 28px; background-position: -306px -154px;}
+.achiv div.skill-rule-67   { width: 32px; background-position: -118px -154px;}
+.achiv div.skill-rule-67y  { width: 32px; background-position: -334px -154px;}
+.achiv div.badge-qa-all { width: 50px; background-position: -150px -154px;}
+.achiv div.badge-qa-ally{ width: 50px; background-position: -366px -154px;}
+
+.achiv div.skill-rule-68   { width: 36px; background-position: 0 -103px;}
+.achiv div.skill-rule-68y  { width: 36px; background-position: -216px -103px;}
+.achiv div.badge-bd-all { width: 50px; background-position:  -36px -103px;}
+.achiv div.badge-bd-ally{ width: 50px; background-position: -252px -103px;}
+
+.quoteBadgesItem span.badgeTips{
+    display: none;
+}
+.quoteBadgesItem span.toolTipsHover{
+    display: block;
+    position: absolute;
+    bottom: 49px;
+    width: 158px;
+    cursor: default;
+}
+.quoteBadgesItem span.badgeName {
+    display: block;
+    background: transparent url("/images/toolTipsBg.png") 0 0 repeat;
+    border-color: #000000 #000000 #474747;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+    padding: 5px 7px 4px;
+}
+.quoteBadgesItem span.badgeDesc {
+    display: block;
+    background: transparent url("/images/toolTipsBg.png") 0 0 repeat;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #474747;
+    color: #989898;
+    font-size: 11px;
+    line-height: 14px;
+    min-height: 10px;
+    padding: 12px 7px 10px;
+}
+
+.quoteBadgesItem span.tipsArrow {
+    background: transparent url("/images/toolTipsArrows.png") 0 0 no-repeat;
+    display: block;
+    height: 19px;
+    overflow: hidden;
+    width: 158px;
+}
+p.noBadgeHint{
+    text-align: center;
+    font-size: 12px;
+    color: #999999;
+    line-height: 26px;
+}
+
 /* #area1 section*/
 #area1 h2.copilotPositng{
     background: url('/images/copilotPosting/ico-copilotPosting.png') left top no-repeat;
@@ -717,6 +594,7 @@ input[type="checkbox"] {
     padding-top: 15px;
     font-size: 11px;
     border-bottom: 1px solid #bdbdbd;
+    vertical-align: top;
 }
 .listview-table .even td{
     background: #f3f3f3;
@@ -730,8 +608,8 @@ input[type="checkbox"] {
 }
 /* copilot cells */
 .listview-table .tdCopilot .colLt{
-    padding: 0 15px;
-    width: 63px;
+    padding: 0 0 0 15px;
+    width: 78px;
     float: left;
     height: 143px;
     position: relative;
@@ -750,6 +628,7 @@ input[type="checkbox"] {
 .listview-table .tdCopilot .compare{
     overflow: hidden;
     font-size: 12px;
+    padding-top: 7px;
 }
 .listview-table .tdCopilot .compare label{
     float: left;
@@ -759,6 +638,7 @@ input[type="checkbox"] {
     color: #000;
     vertical-align: bottom;
     margin-left: 4px;
+    letter-spacing: -0.5px;
 }
 .listview-table .tdCopilot .compare input[type="checkbox"]{
     float: left;
@@ -854,10 +734,11 @@ input[type="checkbox"] {
 .gridview-table .colExperience .link{
     padding-left: 0px;
 }
-.colSkills{
-    font-size: 12px;
-    vertical-align: top;
-}
+.listview-table td.colSkills{
+		font-size: 12px;
+		vertical-align: top;
+		padding: 8px 0 7px 0;
+	}
 .colSkills ul{
     padding-left: 18px;
 }
@@ -987,25 +868,26 @@ table .submitedFile,
     width: 100%;
 }
 .gridview-table tr td{
-    border: solid #BDBDBD;
-    border-width: 0 0 1px 1px;
-    min-height: 318px;
-    vertical-align: top;
-    background: #f3f3f3;
-}
+		border: solid #BDBDBD;
+		border-width: 0 0 1px 1px;
+		height: 318px;
+		vertical-align: top;
+	}
 .gridview-table tr td:first-child {
     border-width: 0 0 1px 0;
 }
 
 .gridview-table .col1{
-    width: 31%;
-    text-align: center;
-    padding-top: 20px;
-    float: left;
-    background: #f3f3f3;
-    position: relative;
-    min-height: 298px;
-}
+		min-width: 160px;
+		width: 31%;
+		height: 298px;
+		text-align: center;
+		padding-top: 20px;
+		float: left;
+		background: #f3f3f3;
+		border-right: 1px solid #dadada; 
+		position: relative;
+	}
 .gridview-table .memberPic{
     padding-bottom: 8px;
 }
@@ -1045,7 +927,7 @@ table .submitedFile,
 .gridview-table .compare{
     font-size: 12px;
     vertical-align: top;
-    padding-top: 18px;
+    padding-top: 12px;
 }
 .gridview-table .compare label{
     color: #000;
@@ -1059,23 +941,17 @@ table .submitedFile,
     height: 16px;
     display: inline-block;
 }
-.gridview-table .colGrp{
-    background: white;
-    float: left;
-    width: 68.65%;
-    min-height: 298px;
-    border-left: 1px solid #DADADA;
-}
+
 .gridview-table .col2{
-    padding-top: 20px;
-    float: left;
-    text-align: left;
-    min-width: 138px;
-    width: 40%;
-    padding-left: 3.3%;
-    font-size: 11px;
-    min-height: 298px;
-}
+		padding-top: 20px;
+		float: left;
+		text-align: left;
+		min-width: 138px;
+		width: 27%;
+		padding-left: 3.3%;
+		font-size: 11px;
+		height: 90px;
+	}
 .gridview-table .location{
     height: 14px;
     line-height: 14px;
@@ -1144,7 +1020,7 @@ table .submitedFile,
 .gridview-table .skills .title{
     font-weight: bold;
     font-size: 12px;
-    padding: 13px 0;
+    padding: 15px 0 6px 0;
 }
 table.gridview-table .colSkills ul {
     padding-left: 0;
@@ -1154,14 +1030,38 @@ table.gridview-table .colSkills ul li{
 }
 
 .gridview-table .col3{
-    padding-top: 20px;
-    float: left;
-    min-width: 175px;
-    width: 53%;
-    padding-left: 3.3%;
-    text-align: left;
-    min-height: 298px;
-}
+		padding-top: 20px;
+		height: 90px;
+		float: left;
+		min-width: 175px;
+		width: 34.2%;
+		padding-left: 3.3%;
+		text-align: left;
+	}
+/*Start Col4 Styles*/
+	.gridview-table .col4{
+		float: left;
+		font-size: 11px;
+		min-width: 313px;
+		padding-left: 3.3%;
+		text-align: left;
+		width: 64.5%;
+	}
+	.submission-table .col4{
+		padding-bottom: 75px;
+		position: relative;
+	}
+	.submission-table .col4	.highlightedCell{
+		position: absolute;
+		bottom: 15px;
+		left: 5.1%;
+	}
+	.submission-table .col4	.pickupCell  {
+		position: absolute;
+		bottom: 15px;
+		left: 50%;
+	}
+	/*End Col4 Styles*/
 .gridview-table .time{
     height: 14px;
     line-height: 14px;
@@ -1341,12 +1241,12 @@ table.gridview-table .colSkills ul li{
     background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
 }
 .submission-table tr td{
-    height: 388px;
+	height: 388px;	
 }
-.submission-table .col1, .submission-table .col2, .submission-table .col3{
-    height: 368px;
-}
-
+	.submission-table .col2, .submission-table .col3{
+		height: 90px;
+	}
+	
 /* compare list */
 .compareList{
     overflow: hidden;
@@ -1412,13 +1312,13 @@ table.gridview-table .colSkills ul li{
 }
 
 .compareList .cRight .rCopilot{
-    height: 320px;
+    height: 341px;
     border-top: none;
     text-align: center;
     position: relative;
 }
 .compareList .cLeft li.rCopilot{
-    height: 320px;
+    height: 341px;
     border-top: none;
 }
 .compareList .rFullFill{
@@ -1427,6 +1327,7 @@ table.gridview-table .colSkills ul li{
 .compareList .rWorkLoad{
     height: 66px;
     text-align: center;
+    font-size:16px;
 }
 .compareList .rMatchedXp{
     height: 138px;
@@ -1435,8 +1336,12 @@ table.gridview-table .colSkills ul li{
     height: 220px;
 }
 .compareList .rSkills{
-    height: 144px;
-}
+				min-height: 144px;
+				padding: 10px 0 11px 0;
+			}
+			.compareList .rSkills .achiv{
+				margin: 0 0 0 12px;
+			}
 .compareList .rSbumission{
     height: 70px;
 }
@@ -1530,14 +1435,16 @@ table.gridview-table .colSkills ul li{
     position: relative;
 }
 .compareItems .rCopilot .memberPic{
-    padding-bottom: 6px;
-}
+			padding-bottom: 4px;
+			display: block;
+			margin: 0 auto;
+		}
 .compareItems .rCopilot .handle{
     font-size: 14px;
 }
 .compareItems .rCopilot .track{
-    padding-top: 10px;
-}
+			padding-top: 8px;
+		}
 .compareItems .rCopilot .track a{
     display: inline-block;
     height: 31px;
@@ -1609,7 +1516,7 @@ table.gridview-table .colSkills ul li{
     font-size: 16px;
 }
 
-/* .dragging */
+/* .dragging */                                             f
 .dragtable-drag-handle{
     cursor: move;
 }
@@ -1642,3 +1549,62 @@ table.gridview-table .colSkills ul li{
 .gridview-table tr td:first-child {
     border-width: 0 1px 1px 0;
 }
+
+/*Start Copilot Feedback Stats*/
+ul.feedbacks{
+	display: block;
+	height: 20px;
+	width: 106px;
+	overflow: hidden;
+	padding: 12px 0 0 0;
+}
+	ul.feedbacks li{
+		display: block;
+		width: 25px;
+		height: 20px;
+		overflow: hidden;
+		float: left;
+		padding: 0 0 0 25px;
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 20px;
+		text-align: left;
+	}
+	ul.feedbacks li.positiveFeedback{
+		background: url(/images/positive-feedback.png) 0 0 no-repeat;
+		padding-right: 6px;
+	}
+	ul.feedbacks li.negativeFeedback{
+		background: url(/images/negative-feedback.png) 0 0 no-repeat;
+	}
+	ul.feedbacks li.zeroPositiveFeedback, ul.feedbacks li.zeroNegativeFeedback {
+		background-position: 0 -20px;
+	}
+.gridview-table .feedbackWrapper{
+	margin: 10px 16px 0 18px;
+	padding: 10px 0 0 12px;
+	border-top: 1px solid #dadada;
+}
+	.gridview-table .feedbackWrapper ul.feedbacks{
+		margin: 0 auto;
+		padding: 0;
+	}
+.submission-table .feedbackWrapper{
+	padding: 10px 0 10px 12px;
+	border-top: 1px solid #dadada;
+	border-bottom: 1px solid #dadada;
+}
+.submission-table ul.feedbacks{
+	padding: 0;
+	margin: 0 auto;
+}
+.cellCopilot ul.feedbacks{
+	margin: 0 auto;
+	padding: 10px 0 0 20px;
+}
+
+.btn-pickup, .btn-pickup-rup {
+    margin-top: 12px;
+}
+
+/*End Copilot Feedback Stats*/
