@@ -27,9 +27,12 @@
  *
  * Version 1.5.3 (Release Assembly - TC Direct Cockpit Release Four) changes:
  * - Change project name to a link to project overview page.
+ * 
+ * Version 1.5.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
- *  @author GreatKevin, isv, GreatKevin
- * @version 1.5.3
+ *  @author GreatKevin, isv, GreatKevin, TCASSEMBLER
+ * @version 1.5.4
  */
 
 var currentDocument = {};
@@ -85,9 +88,8 @@ $(document).ready(function() {
 
     $('#projects2, #billingProjects2').sSelect(SelectOptions);
     
-    setupTinyMCE("publicCopilotPostingDescription2", 12000);
-    setupTinyMCE("privateCopilotPostingDescription2", 4096);
-
+    CKEDITOR.replace( 'publicCopilotPostingDescription2' );
+    CKEDITOR.replace( 'privateCopilotPostingDescription2' );
 
     /* init pop */
     var prevPopup = null;
@@ -242,7 +244,7 @@ $(document).ready(function() {
 
     $('#cancelPublicDesc').click(function() {
         hideEdit($(this));
-        tinyMCE.get('publicCopilotPostingDescription2').setContent($('#publicDescriptionText').html());
+        CKEDITOR.instances.publicCopilotPostingDescription2.getData().setData($('#publicDescriptionText').html());
         return false;
     });
 
@@ -254,7 +256,7 @@ $(document).ready(function() {
 
     $('#cancelPrivateDesc').click(function() {
         hideEdit($(this));
-        tinyMCE.get('privateCopilotPostingDescription2').setContent($('#privateDescriptionText').html());
+        CKEDITOR.instances.privateCopilotPostingDescription2.getData().setData($('#privateDescriptionText').html());
         return false;
     });
 
@@ -662,7 +664,7 @@ function updateProjectDate() {
 }
 
 function updatePublicDesc() {
-    var publicDescription = tinyMCE.get('publicCopilotPostingDescription2').getContent();
+    var publicDescription = CKEDITOR.instances.publicCopilotPostingDescription2.getData();
     if (publicDescription.length > 12000) {
         showErrors('Public Description can haave at most 12000 characters.');
         return;
@@ -673,8 +675,8 @@ function updatePublicDesc() {
 }
 
 function updatePrivateDesc() {
-    var privateDescription = tinyMCE.get('privateCopilotPostingDescription2').getContent();
-    if (privateDescription.length > 4096) {
+    var privateDescription = CKEDITOR.instances.privateCopilotPostingDescription2.getData();
+	if (privateDescription.length > 4096) {
         showErrors('Private Description can haave at most 4096 characters.');
         return;
     }
@@ -781,9 +783,10 @@ function saveAsDraftRequest() {
     request["projectHeader.properties['First Place Cost']"] = parseFloat($('input[name=firstPlacePrize]').val());
     request["projectHeader.properties['Second Place Cost']"] = (request["projectHeader.properties['First Place Cost']"] / 2).toFixed(1);
     request["projectHeader.properties['Payments']"] = parseFloat($('input[name=firstPlacePrize]').val());
-    request['projectHeader.projectSpec.detailedRequirements'] = tinyMCE.get('publicCopilotPostingDescription2').getContent();
-    request['projectHeader.projectSpec.privateDescription'] = tinyMCE.get('privateCopilotPostingDescription2').getContent();
+    request['projectHeader.projectSpec.detailedRequirements'] = CKEDITOR.instances.publicCopilotPostingDescription2.getData();
+    request['projectHeader.projectSpec.privateDescription'] = CKEDITOR.instances.privateCopilotPostingDescription2.getData();
 
+    
     request['docUploadIds'] = getDocumentIds();
     request['docCompIds'] = getExistingDocumentIds();
 

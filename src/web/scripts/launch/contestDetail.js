@@ -12,9 +12,12 @@
  * Version 1.0.2 (TC Direct "Contest Links and Button" Update 24Hr Assembly) Change notes:
  * - Add support to show the 'Preview Contest' link if the contest is in draft status.
  * </p>
+ * 
+ * Version 1.0.3 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.0.2
+ * @version 1.0.3
  */
 $(document).ready(function(){
     /* init date-pack */
@@ -111,28 +114,11 @@ $(document).ready(function(){
             showTypeSectionEdit();
             populateTypeSection();
             showTypeSectionDisplay();
-
-              // restrict chars for the text editor
-              function makeMaxCharsTinyMCE(obj, maxChars) {
-                  tinyMCE.init({
-                      mode:"exact",
-                      elements:obj,
-                      plugins:"paste",
-                      theme:"advanced",
-                      theme_advanced_buttons1:"bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
-                      theme_advanced_buttons2:"",
-                      theme_advanced_buttons3:"",
-                      init_instance_callback:function () {
-                          $('table.mceLayout').css('width', '100%');
-                      },
-                      handle_event_callback:maxCharsAndAllowedTagsEventHandler(obj, maxChars)
-                  });
-              }
-
-              makeMaxCharsTinyMCE("contestDescription", 10000);
-              makeMaxCharsTinyMCE("contestIntroduction", 10000);
-              makeMaxCharsTinyMCE("round1Info", 2000);
-              makeMaxCharsTinyMCE("round2Info", 2000);
+            
+            CKEDITOR.replace( 'contestDescription' );
+            CKEDITOR.replace( 'contestIntroduction' );
+            CKEDITOR.replace( 'round1Info' );
+            CKEDITOR.replace( 'round2Info' );
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -571,9 +557,9 @@ function validateFieldsRoundSection() {
    var startDate = getDateByIdPrefix('start');
    var endDate = getDateByIdPrefix('end');
    var milestoneDate = getDateByIdPrefix('milestone');
-   
-   var round1Info = tinyMCE.get('round1Info').getContent(); 
-   var round2Info = tinyMCE.get('round2Info').getContent(); 
+
+   var round1Info = CKEDITOR.instances.round1Info.getData();
+   var round2Info = CKEDITOR.instances.round2Info.getData();
    //milestone prize and submission numbers
    var milestonePrizeInput = $('#milestonePrize').val();
    
@@ -792,8 +778,8 @@ function saveSpecSection() {
 }
 
 function validateFieldsSpecSection() {
-   var contestDescription = tinyMCE.get('contestDescription').getContent();
-   var contestIntroduction = tinyMCE.get('contestIntroduction').getContent(); 
+   var contestDescription = CKEDITOR.instances.contestDescription.getData();
+   var contestIntroduction = CKEDITOR.instances.contestIntroduction.getData();
 	
    //validation
    var errors = [];

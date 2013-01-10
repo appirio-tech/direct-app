@@ -1146,6 +1146,10 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        
+        <action name="imageUpload" class="imageUploadAction">
+            <result>/WEB-INF/image-upload.jsp</result>
+        </action>
 
         <action name="removeDocument" class="removeDocumentAction">
             <result name="success" type="json" />

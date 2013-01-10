@@ -26,8 +26,11 @@
  * Version 1.6.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
  * - check whether the public description is filled under step 1 of creating copilot posting
  * 
+ * Version 1.6.2 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
+ * 
  * @author duxiaoyang, GreatKevin, TCSASSEMBLER
- * @version 1.6.1
+ * @version 1.6.2
  */
 
 var roundMinutes = function(date) {
@@ -39,9 +42,8 @@ var roundMinutes = function(date) {
 }
 
 $(document).ready(function(){
-
-    setupTinyMCE('allDescription', 12000);
-    setupTinyMCE('privateDescription', 4096);
+    CKEDITOR.replace( 'allDescription' );
+    CKEDITOR.replace( 'privateDescription' );
 
     initPanel();
 
@@ -433,9 +435,9 @@ function validateStepInputs() {
         case 1:
             var contestName = $('input#contestName').val();
             var tcProjectId = parseInt($('select#projects').val());
-            var allDescription = tinyMCE.get('allDescription').getContent();
-            var privateDescription = tinyMCE.get('privateDescription').getContent();
-
+            
+            var allDescription = CKEDITOR.instances.allDescription.getData();
+            var privateDescription = CKEDITOR.instances.privateDescription.getData();
             
             if(tcProjectId < 0) {
                 errors.push('Project name could not be empty.');

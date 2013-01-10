@@ -22,6 +22,9 @@
  *
  * Version 1.7 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
  * - Add method to sort the dropdown by its option text
+ * 
+ * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
  * Version 1.8 (Release Assembly - TopCoder Security Groups - Release 4)
  * - Add methods to support rendering at most configurable rows for an array content. The hidden 
@@ -433,10 +436,6 @@ function showSuccessfulMessage(message) {
     displayOperationSuccess("#demoModal", "Message", message);
 }
 
-function showSuccessfulMessageWithOperation(message, text, handler) {
-    displayOperationSuccess("#demoModal", "Message", message, text, handler);
-}
-
 /**
  * Shows the warning message after operation finishes
  *
@@ -553,74 +552,6 @@ function caculateImageRatio(image,oldWidth, oldHeight) {
     }
 }
 
-/**
- * Return the event handler used by tinyMCE to restrict the max characters.
- * 
- * @param obj the tinyMCE name
- * @param maxChars the max characters
- */
-function maxCharsEventHandler(obj, maxChars) {
-    var ori;
-    var timeId = -1;
-    return function(e) {
-        var content = tinyMCE.get(obj).getContent();
-        if (content.length <= maxChars) {
-            ori = content;
-        }
-        if (timeId != -1) {
-            timeId = clearTimeout(timeId);
-        }
-        timeId = setTimeout(function() {
-            timeId = -1;
-            if (tinyMCE.get(obj).getContent().length > maxChars) {
-            	showErrors("You can only input max " + maxChars + " characters.");
-                tinyMCE.get(obj).setContent(ori);
-            }
-        }, 100);
-        return true;
-    };
-}
-/**
- * Set the event handler used by tinyMCE to restrict the max characters when there is a call to setContent() method.
- */
-function setMaxCharsEventHandlerOnSetup(ed, maxChars) {
-	ed.onBeforeSetContent.add(function(ed, o) {
-		if (o.content.length > maxChars) {
-			showErrors("You can only input max " + maxChars + " characters.");
-			o.content = ed.getContent();
-		}
-	});
-}
-
-var enableMCEPlaceholderText = true;
-/**
- * Set the event handler used by tinyMCE to support placeholder text.
- * @param ed the object
- * @param placeholder the placeholder text
- * @since 1.6
- */
-function setPlacehoderOnSetup(ed, placeholder) {
-    ed.onGetContent.add(function(ed, o) {
-        if (enableMCEPlaceholderText && $(o.content).text() == placeholder) {
-            o.content = "";
-        }
-    });
-    ed.onClick.add(function(ed, e) {
-        if (ed.getContent() == "") {
-            ed.setContent("");
-        }
-    });
-    ed.onInit.add(function(ed, evt) {
-        var dom = ed.dom;
-        var doc = ed.getWin();
-        tinymce.dom.Event.add(doc, 'blur', function(e) {
-            if (enableMCEPlaceholderText && ed.getContent() == "") {
-                ed.setContent(placeholder);
-            }
-        });
-    });
-}
-
 var allowedTags = [
 /<a\s*(href\s*=\s*[^=|^>|^<]*)?>/mg,
 /<(span|ul)\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,
@@ -628,171 +559,35 @@ var allowedTags = [
 /<\/\s*(a|span|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
 ];
 var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
-var tinyMCEValidElements = "a[href|target=_blank],-span[style],-ul[style],annot,abbr,acronym,-blockquote,br,em/i,-li,-ol[style],#p,-pre,s,strike,-sub,-sup,-strong/b,-table,#td,-tr,tt,u";
-
+ 
  /**
- * Return the event handler used by tinyMCE to restrict the max characters and the allowed tags.
- * 
- * @param obj the tinyMCE name
- * @param maxChars the max characters
+ * init CKEditor template
+ * used to test CKEditor templates
  */
-function maxCharsAndAllowedTagsEventHandler(obj, maxChars) {
-    var ori='';
-    var timeId = -1;
-    return function(e) {
-        var content = tinyMCE.get(obj).getContent();
-		var invalid = false;
-        if (content.length <= maxChars) {
-			var c = content;
-			c = c.replace(/<|>/mg, "").replace(/&lt;/mg, "<").replace(/&gt;/mg, ">").replace(/&amp;lt;/mg, "<").replace(/&amp;gt;/mg, ">");
-			for(var i = 0; i < allowedTags.length; i++) {
-				c = c.replace(allowedTags[i], '');
-			}
-			if(c.search(tagsRegExp) < 0) { // no invalid tags 
-				ori = content;
-			} else {
-				invalid = true;
-			}
-        }
-        if (timeId != -1) {
-            timeId = clearTimeout(timeId);
-        }
-        timeId = setTimeout(function() {
-            timeId = -1;
-			if(invalid) {
-				showErrors("You have inputted non-allowed tags or invalid attributes.");
-                tinyMCE.get(obj).setContent(ori);
-			}
-            if (tinyMCE.get(obj).getContent().length > maxChars) {
-            	showErrors("You can only input max " + maxChars + " characters.");
-                tinyMCE.get(obj).setContent(ori);
-            }
-        }, 100);
-        return true;
-    };
-}
-
+ var initTemplate = function() {    
+    CKEDITOR.addTemplate('assembly_template_requirements', assembly_template_requirements_content);
+    CKEDITOR.addTemplate('assembly_template_guidelines', assembly_template_guidelines_content);
+ }
+ 
 /**
- * Standard options for cockpit tinyMCE editor
- * @since 1.4
- */
-var cockpitTinyMCEOptions =
-{
-    mode: "exact",
-    // General options
-    skin : "cirkuit",
-    theme : "advanced",
-    plugins : "inlinepopups,advlist,paste,fullscreen,template,preview",
-
-    // Theme options
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,bullist,numlist,outdent, indent,|,|,forecolor,backcolor,link,unlink,|,|,pasteword,code,preview,fullscreen,template,|,indent,outdent,forecolor,backcolor",
-    theme_advanced_buttons2 :"",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_statusbar_location : "bottom",
-    theme_advanced_resizing : true,
-    theme_advanced_resize_horizontal : false,
-    theme_advanced_path : false,
-    theme_advanced_resizing_use_cookie : false,
-    valid_elements : tinyMCEValidElements
-};
-
-/**
- * The template lists location for tinyMCE editor
- * @since 1.4
- */
-var templateListsLocation = "/scripts/tinyMCE/lists/";
-
-/**
- * Sets up the tinyMCE editor without loading template list
+ * Sets up the CKEditor with template
  *
  * @param obj the obj id
- * @param maxChars the max chars allowed
- * @since 1.4
+ * @param templateName the name of the template
  */
-var setupTinyMCE = function(obj, maxChars) {
-    var options = jQuery.extend({}, cockpitTinyMCEOptions);
-    options.elements = obj;
-    options.setup = function(ed) {
-        setMaxCharsEventHandlerOnSetup(ed, maxChars);
-    };
-    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
-    tinyMCE.init(options);
-}
-
-/**
- * Sets up the tinyMCE editor without loading template list
- *
- * @param obj the obj id
- * @param maxChars the max chars allowed
- * @param height the height of the editor
- * @since 1.4
- */
-var setupTinyMCEWithHeight = function(obj, maxChars, height) {
-    var options = jQuery.extend({}, cockpitTinyMCEOptions);
-    options.elements = obj;
-    options.setup = function(ed) {
-        setMaxCharsEventHandlerOnSetup(ed, maxChars);
-    };
-    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
-    options.height=height;
-    tinyMCE.init(options);
-}
-
-var setupTinyMCEWithTemplateAndHeight = function(obj, maxChars, templateListName, height) {
-    var options = jQuery.extend({},cockpitTinyMCEOptions);
-    options.elements = obj;
-    options.setup = function(ed) {
-        setMaxCharsEventHandlerOnSetup(ed, maxChars);
-    };
-    options.height=height;
-    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
-    options.template_external_list_url = templateListsLocation + templateListName + ".js";
-    tinyMCE.init(options);
-}
-
-/**
- * Sets up the tinyMCE editor with template list loaded
- *
- * @param obj the obj id
- * @param maxChars the max chars allowed
- * @param templateListName the name of the template list to load
- * @since 1.4
- */
-var setupTinyMCEWithTemplate = function(obj, maxChars, templateListName) {
-    var options = jQuery.extend({},cockpitTinyMCEOptions);
-    options.elements = obj;
-    options.setup = function(ed) {
-        setMaxCharsEventHandlerOnSetup(ed, maxChars);
-    };
-    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
-    options.template_external_list_url = templateListsLocation + templateListName + ".js";
-    tinyMCE.init(options);
-}
-
-/**
- * Sets up the tinyMCE editor with template list loaded and the placeholder text
- *
- * @param obj the obj id
- * @param maxChars the max chars allowed
- * @param placeholder the place holder text
- * @param templateListName the name of the template list to load
- * @since 1.6
- */
-var setupTinyMCEWithTemplateAndPlaceHoder = function(obj, maxChars, placeholder, templateListName) {
-    var options = jQuery.extend({},cockpitTinyMCEOptions);
-    options.elements = obj;
-    options.setup = function(ed) {
-        setMaxCharsEventHandlerOnSetup(ed, maxChars);
-        setPlacehoderOnSetup(ed, placeholder);
-    };
-    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
-    if (templateListName) {
-        options.template_external_list_url = templateListsLocation + templateListName + ".js";
+var setupCKEditorWithTemplate = function(obj, templateName) {
+	if (CKEDITOR.getTemplate(templateName) == undefined) {
+        initTemplate();
     }
-    tinyMCE.init(options);
-};
-
+    CKEDITOR.replace(obj, {
+        on:{ instanceReady : function( ev ) {
+               insert = CKEDITOR.getTemplate(templateName);
+               this.setData(insert.output());
+            }
+        },
+	 });
+}
+ 
 function sortDropDown(dropDownId) {
     // alert('sort ' + dropDownId);
     // get the select

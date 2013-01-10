@@ -15,8 +15,11 @@
  *
  * Version 1.3 (Release Assembly - TopCoder Studio CCA Integration) change notes:
  * - Add support CCA for studio contest.
+ * 
+ * Version 1.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
- * @version 1.3
+ * @version 1.4
  * @author TCSDEVELOPER
  */
 $(document).ready(function() {	 
@@ -281,17 +284,17 @@ function validateFieldsContestSelectionStudio() {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
        enableMCEPlaceholderText = true;
        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
-            var obj = tinyMCE.get(this);
-            if (obj.getContent() == "") {
-                obj.setContent("Only members that register for this contest will see this description.");
+            var obj = CKEDITOR.instances[this];
+            if (obj.getData() == "") {
+                obj.setData("Only members that register for this contest will see this description.");
             }
        });
    } else {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
-            var obj = tinyMCE.get(this);
-            if (obj.getContent() == "") {
-                obj.setContent("");
+            var obj = CKEDITOR.instances[this];
+            if (obj.getData() == "") {
+                obj.setData("");
             }
        });
        enableMCEPlaceholderText = false;

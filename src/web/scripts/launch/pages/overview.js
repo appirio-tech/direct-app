@@ -20,8 +20,11 @@
  * - Add support to save the DR points for the studio contests.
  * - Add support to save the stock arts allowed flag for the studio contests.
  *
+ * Version 1.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
+ *
  * @author TCSASSEMBER
- * @version 1.3
+ * @version 1.4
  */
 $(document).ready(function() {
    //technologies
@@ -82,8 +85,9 @@ function validateFieldsOverview() {
 }
 
 function validateFieldsOverviewSoftware() {
-   var detailedRequirements = tinyMCE.get('swDetailedRequirements').getContent();
-   var softwareGuidelines = tinyMCE.get('swGuidelines').getContent();	
+   var detailedRequirements = CKEDITOR.instances.swDetailedRequirements.getData();
+   var softwareGuidelines = CKEDITOR.instances.swGuidelines.getData();
+
    var rootCategoryId = $('#catalogSelect').val();
    //milestone prize and submission numbers
    var milestonePrizeInput = $('#swMilestonePrize').val();
@@ -169,10 +173,10 @@ function validateFieldsOverviewSoftware() {
 }
 
 function validateFieldsOverviewStudio() {
-   var contestDescription = tinyMCE.get('contestDescription').getContent();
-   var contestIntroduction = tinyMCE.get('contestIntroduction').getContent();
-   var round1Info = tinyMCE.get('round1Info').getContent();
-   var round2Info = tinyMCE.get('round2Info').getContent();
+   var contestDescription = CKEDITOR.instances.contestDescription.getData();
+   var contestIntroduction = CKEDITOR.instances.contestIntroduction.getData();
+   var round1Info = CKEDITOR.instances.round1Info.getData();
+   var round2Info = CKEDITOR.instances.round2Info.getData();
 
     //milestone prize and submission numbers
     var milestonePrizeInput = $('#milestonePrize').val();

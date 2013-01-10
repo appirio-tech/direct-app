@@ -11,6 +11,9 @@
   - - Add game plan export link
   -
   - Description: JSP page for the jsgantt project game plan
+  -
+  - Version 1.1 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+  - remove include of TinyMCE, replaced with CKEditor.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -69,7 +72,8 @@
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
     <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
-    <script type="text/javascript" src="/scripts/tinyMCE/tiny_mce/tiny_mce.js?v=210496"></script>
+	<script type="text/javascript" src="/scripts/ckeditor/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="/scripts/ckeditor/templates/assembly_templates.js"></script>
     <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
     <script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js?v=215325"></script>
 	<script type="text/javascript" src="/scripts/jquery.cookie.js?v=215325"></script>

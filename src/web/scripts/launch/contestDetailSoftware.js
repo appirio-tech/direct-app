@@ -59,8 +59,11 @@
  * Version 1.9 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
  * - Always use the value stored in project info (49) as the copilot cost of the contest
  *
+ * Version 2.0 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
+ * 
  * @author isv, minhu, pvmagacho, GreatKevin
- * @version 1.9
+ * @version 2.0
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -199,20 +202,43 @@ $(document).ready(function(){
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
-
-              setupTinyMCEWithTemplateAndPlaceHoder('contestDescription', 10000, "Only members that register for this contest will see this description.", "studio_templates_list");
-              setupTinyMCE("swPrivateDescription", 2048);
-              setupTinyMCE('contestIntroduction', 2000);
-              setupTinyMCEWithTemplateAndPlaceHoder('round1Info', 2000, "Only members that register for this contest will see this description.");
-              setupTinyMCEWithTemplateAndPlaceHoder('round2Info', 2000, "Only members that register for this contest will see this description.");
-              setupTinyMCE('swDetailedRequirements', 12000);
-              setupTinyMCE('swGuidelines', 2048);
+            
+            try {
+            	CKEDITOR.replace( 'contestDescription' );
+            } catch (err) {
+            	// pass
+            }
+            try {
+            	CKEDITOR.replace( 'contestIntroduction' );
+            } catch (err) {
+            	// pass
+            }
+            try {
+            	CKEDITOR.replace( 'round1Info' );
+            } catch (err) {
+            	// pass
+            }
+            try {
+            	CKEDITOR.replace( 'round2Info' );
+            } catch (err) {
+            	// pass
+            }
+            try {
+            	CKEDITOR.replace( 'swDetailedRequirements' );
+            } catch (err) {
+            	// pass
+            }
+            try {
+            	CKEDITOR.replace( 'swGuidelines' );
+            } catch (err) {
+            	// pass
+            }
             
             //execute some actions specific for component design/dev
             //onContestTypeChange();
             $("#contestLoading").hide();
             var waitForMCE=function() {
-                if (!tinyMCE.get('contestDescription')) {
+                if (!CKEDITOR.instances.contestDescription) {
                     setTimeout(waitForMCE, 500);
                     return;
                 }
@@ -775,23 +801,23 @@ function populateTypeSection() {
 }
 
 /**
- * Update the tinyMCE editors to support or not support the placeholder function.
+ * Update the editors to support or not support the placeholder function.
  * @since 1.7
  */
 function updateMCEPlaceHolderCtl() {
     if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
         enableMCEPlaceholderText = true;
         $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
-            var obj = tinyMCE.get(this);
-            if (obj.getContent() == "") {
-                obj.setContent("Only members that register for this contest will see this description.");
+            var obj = CKEDITOR.instances[this];
+            if (obj.getData() == "") {
+                obj.setData("Only members that register for this contest will see this description.");
             }
        });
      } else {
         $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
-            var obj = tinyMCE.get(this);
-            if (obj.getContent() == "") {
-                obj.setContent("");
+            var obj = CKEDITOR.instances[this];
+            if (obj.getData() == "") {
+                obj.setData("");
             }
        });
        enableMCEPlaceholderText = false;
@@ -1080,17 +1106,17 @@ function getMilestonePrize(prizes) {
 }
 
 /**
- * Gets the content of a TinyMCE.
+ * Gets the content of a CKEditor.
  * 
- * @param id the id of TinyMCE
- * @returns the content of the TinyMCE
+ * @param id the id of CKEditor
+ * @returns the content of the CKEditor
  */
-function getTinyMCEContent(id) {
-	var obj = tinyMCE.get(id);
+function getCKEditorContent(id) {
+	var obj = CKEDITOR.instances[id];
 	if (!obj) {
 		return "";
 	}
-	return obj.getContent();
+	return obj.getData();
 }
 
 function validateFieldsRoundSection() {
@@ -1098,8 +1124,8 @@ function validateFieldsRoundSection() {
 	var startDate = getDateByIdPrefix('start');
 	var milestoneDateHours = $('#milestoneDateDay').val() * 24 + parseInt($('#milestoneDateHour').val());
 
-	var round1Info = getTinyMCEContent('round1Info'); 
-	var round2Info = getTinyMCEContent('round2Info');
+	var round1Info = getCKEditorContent('round1Info'); 
+	var round2Info = getCKEditorContent('round2Info');
 	//milestone prize
 	var milestonePrizeInput;
    
@@ -1825,11 +1851,11 @@ function saveSpecSection() {
 }
 
 function validateFieldsSpecSection() {
-   var detailedRequirements = getTinyMCEContent('swDetailedRequirements');
-   var softwareGuidelines = getTinyMCEContent('swGuidelines'); 
-   var privateDescription = getTinyMCEContent('swPrivateDescription'); 
-   var contestDescription = getTinyMCEContent('contestDescription');
-   var contestIntroduction = getTinyMCEContent('contestIntroduction'); 
+   var detailedRequirements = getCKEditorContent('swDetailedRequirements');
+   var softwareGuidelines = getCKEditorContent('swGuidelines');
+   var privateDescription = getCKEditorContent('swPrivateDescription');
+   var contestDescription = getCKEditorContent('contestDescription');
+   var contestIntroduction = getCKEditorContent('contestIntroduction');
    
    var rootCategoryId = $('#catalogSelect').val();
 	

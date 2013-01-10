@@ -33,9 +33,12 @@
  *
  * Version 1.7 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
  * - Add js to populate billing accounts based on project selection.
+ * 
+ * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
- * @author GreatKevin
- * @version 1.7
+ * @author GreatKevin, TCASSEMBLER
+ * @version 1.8
  */
 $(document).ready(function() {
 
@@ -454,13 +457,13 @@ $(document).ready(function() {
     if ($('.date-pick').length > 0) {
         $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
     }
-
-	setupTinyMCEWithTemplateAndPlaceHoder('contestDescription', 10000, "Only members that register for this contest will see this description.", "studio_templates_list");
-    setupTinyMCEWithTemplate('contestIntroduction', 2000);
-	setupTinyMCEWithTemplateAndPlaceHoder('round1Info', 2000, 'Only members that register for this contest will see this description.');
-	setupTinyMCEWithTemplateAndPlaceHoder('round2Info', 2000, 'Only members that register for this contest will see this description.');
-	setupTinyMCEWithTemplateAndHeight('swDetailedRequirements', 12000, "software_templates_list", "240");
-	setupTinyMCEWithHeight('swGuidelines', 2048, "240");
+    
+    CKEDITOR.replace( 'contestDescription' );
+    CKEDITOR.replace( 'contestIntroduction' );
+    CKEDITOR.replace( 'round1Info' );
+    CKEDITOR.replace( 'round2Info' );
+    setupCKEditorWithTemplate('swDetailedRequirements', 'assembly_template_requirements');
+    setupCKEditorWithTemplate('swGuidelines', 'assembly_template_guidelines');
 
     handleProjectDropDownChange();
 
@@ -711,7 +714,7 @@ function addNewProject() {
                                 $('#projects').getSetSSValue(projectData.projectId);
 
                                 modalCloseAddNewProject();
-                                showSuccessfulMessageWithOperation('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.', "VIEW PROJECT", function(){window.open ('/direct/projectOverview?formData.projectId=' + projectData.projectId,'_self',false);} );
+                                showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
 
                                 // we need to clear the copilots options and set to unassigned for new created project
                                 $("#contestCopilot").html("");
