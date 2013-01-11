@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, winsty, Blues
-  - Version: 1.1
+  - Author: isv, winsty, Blues, Ghost_141
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Landing page for TC Direct application.
@@ -14,6 +14,8 @@
   - 2) Added a help center widget to the home page right sibebar.
   - 3) Updated the footer of the home page.
   - 4) Added a link to topcoder community in the home page.
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -330,7 +332,7 @@
                                         <p>
                                             <s:checkbox id="remember_me" cssClass="rememberMe"
                                                         name="formData.remember"/>
-                                            <s:label for="remember_me" cssClass="rememberMe">Remember me</s:label>
+                                            <s:label for="remember_me" cssClass="rememberMe">Remember Me</s:label>
                                             <a href="https://www.topcoder.com/tc?module=RecoverPassword"
                                                class="forgotPass" target="_blank">Forgot Password?</a>
                                             <s:submit cssStyle="display:none;"/>

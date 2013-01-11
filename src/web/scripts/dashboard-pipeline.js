@@ -13,10 +13,13 @@
  * - Updates the filter panel of pipeline report to the new one.
  *
  * Version 1.4 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement ) updates
-  * - Add ajax indicator for dropdown change and add group by and group values filter
+ * - Add ajax indicator for dropdown change and add group by and group values filter
  *
- * @author isv, Blues, GreatKevin, TCSASSEMBLER
- * @version 1.4
+ * Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) updates
+ * - Update a method to fix a text inconsistency bug.
+ * 
+ * @author isv, Blues, GreatKevin, Ghost_141, TCSASSEMBLER
+ * @version 1.5
  * @since Direct Pipeline Stats Update Assembly
  */
 var ctx = "/direct";
@@ -217,7 +220,7 @@ $(document).ready(function(){
         var endDate = new Date($("#endDate").val());
 
         if (startDate >= endDate) {
-            $('#validationErrors').append("Start date should be smaller than end date<br/>");
+            $('#validationErrors').append("Start date should be smaller than End date<br/>");
         }
 
         // check group values & group id

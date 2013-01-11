@@ -3,6 +3,9 @@
  *
  * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
  * 1) Updated styles of video area.
+ * 
+ * Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ * Update the CSS styles to fix multiple issues.
  */
 
 BODY{
@@ -368,12 +371,13 @@ BODY{
 	
 	.login .rememberMe{ /* remember me check box and label container*/
 		float: left;
-		margin: 3px 0 0 0;
+		margin: 0 0 0 0;
 	}
 	
 	.login INPUT.rememberMe{
 		width: 13px;
 		height: 13px;
+        margin-right: 4px;
 	}
 	
 	.login LABEL.rememberMe{
@@ -383,7 +387,7 @@ BODY{
 	.login A.forgotPass{ /*forgot password link */
 		color: #a9a3a0;
 		float: right;
-		padding-top: 3px;
+		padding-top: 0px;
 		text-decoration: none;
 	}
 	
@@ -564,6 +568,7 @@ A.allVideos:hover {
     font-size: 11px;
     color: #333;
     position: relative;
+    border-top: none;
 }
 
 #footer A{

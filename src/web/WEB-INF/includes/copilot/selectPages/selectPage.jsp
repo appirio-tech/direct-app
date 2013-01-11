@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: The select copilot step.
   - Since: Release Assembly - TC Direct Select From Copilot Pool Assembly
   - Version 1.0 (Release Assembly - TC Direct Select From Copilot Pool Assembly).
@@ -172,7 +175,7 @@
                 </p>
                 
                 <div class="buttonArea">
-                    <a href="javascript:;" class="button2" id="hireCopilotBtn"> <span class="left"><span class="right">Hire the Copilot</span></span></a>
+                    <a href="javascript:;" class="button2" id="hireCopilotBtn"> <span class="left"><span class="right">HIRE THE COPILOT</span></span></a>
                     
                 </div>
                 <!--End .buttonArea-->

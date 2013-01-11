@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, flexme, GreatKevin
-  - Version: 1.7
+  - Author: Blues, flexme, GreatKevin, Ghost_141
+  - Version: 1.8
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -26,6 +26,9 @@
   -
   - Version 1.7 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Added new column launch date in the cost analysis report
+  - 
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -546,8 +549,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">

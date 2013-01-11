@@ -1,10 +1,12 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: TCSASSEMBLER, Ghost_141
   - Version: 1.0 (Module Assembly - JIRA issues loading update and report creation)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for jira issues report including form and report data.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - Update layout to fix a layout issue.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -84,11 +86,6 @@
                             <label for="endDate">End:</label>
                             <s:textfield name="formData.endDate" readonly="true"
                                          id="endDateJiraIssuesReport" cssClass="text date-pick fLeft dp-applied"/>
-                            <s:if test="hasActionErrors()">
-                                <div id="validationErrors">
-                                    <s:actionerror/>
-                                </div>
-                            </s:if>
                             <div class="clearFix"></div>
                         </div><!-- end .filterRow -->
 
@@ -137,7 +134,11 @@
                 <div class="clearFix"></div>
             </div>
             <!-- end .applyButtonBox -->
-
+            <s:if test="hasActionErrors()">
+                <div id="validationErrors">
+                    <s:actionerror/>
+                </div>
+            </s:if>
         </div>
     </s:form>
     <!-- End .filterContainer -->
@@ -174,7 +175,7 @@
                     <th class="tableColumn">TCO<br />Points</th>
                     <th class="tableColumn">Resolution<br />Date</th>
                     <th class="tableColumn">Registrants</th>
-                    <th class="tableColumn">winner</th>
+                    <th class="tableColumn">Winner</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -248,8 +249,8 @@
             <div class="container2Left">
                 <div class="container2Right">
                     <div class="container2Bottom">
-                        <div class="container2BottomLeft">
-                            <div class="container2BottomRight">
+                        <div>
+                            <div>
 
                                 <div class="panel tableControlPanel">
                                     <div class="exportControl">

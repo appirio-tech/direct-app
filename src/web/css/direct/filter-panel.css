@@ -61,6 +61,8 @@
     height: 20px;
     border: none;
     background: none;
+    padding: 0px 5px 5px 5px;
+    font-size: 11px;
 }
 
 .filterPanel .filterHead .inner .searchContainer a img {
@@ -222,11 +224,13 @@
 }
 
 .filterPanel .filterContent .inner .column3 input {
-    width: 70px;
+    width: 60px;
     height: 18px;
     float: left;
     color: #6c6c6c;
-    font-size: 12px;
+    font-size: 11px;
+    font-family: Arial;
+    padding: 0px 5px;
 }
 
 .filterPanel .filterContent .inner .column3 .row .dateLabel {

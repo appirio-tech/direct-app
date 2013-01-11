@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMLBER
-  - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+  - Author: TCSASSEMLBER, Ghost_141
+  - Version: 1.1 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: The filter panel of the new enterprise dashboard
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,7 +18,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    FILTER
+                    Filter
                     <a title="Close" class="closeModal" href="javascript:;">Close</a>
                 </div>
             </div>

@@ -22,14 +22,17 @@
  *
  * Version 1.7 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
  * - Add method to sort the dropdown by its option text
- * 
- * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
- * - remove TinyMCE related code, replaced with CKEditor.
  *
  * Version 1.8 (Release Assembly - TopCoder Security Groups - Release 4)
  * - Add methods to support rendering at most configurable rows for an array content. The hidden 
  * - rows can be displayed through tooltip.
+ * 
+ * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+ * - remove TinyMCE related code, replaced with CKEditor.
  *
+ * Version 1.9 - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ * - Update method to fix a bug in Chrome.
+ * 
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -243,11 +246,18 @@ $.fn.tctip = function(s) {
     var hover = $('<div class="tctips"><div class="triangle"></div><h2 class="tipsTitle">' + s.title + '</h2><p class="tipsContent">' + s.content + '</p></div>');
     $(this).append(hover);
     var top = $(this).outerHeight() + 11;
-
-    hover.css({
-        top: top + 'px',
-        left: '-28px'
-    });
+    
+    if(navigator.userAgent.indexOf("Chrome") != -1) {
+        hover.css({
+            top: top + 'px',
+            left: '0px'
+        });
+    } else {
+        hover.css({
+            top: top + 'px',
+            left: '-28px'
+        });
+    }
 
     var leftNew, topNew;
 
@@ -559,8 +569,8 @@ var allowedTags = [
 /<\/\s*(a|span|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
 ];
 var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
- 
- /**
+
+/**
  * init CKEditor template
  * used to test CKEditor templates
  */
@@ -587,7 +597,7 @@ var setupCKEditorWithTemplate = function(obj, templateName) {
         },
 	 });
 }
- 
+
 function sortDropDown(dropDownId) {
     // alert('sort ' + dropDownId);
     // get the select

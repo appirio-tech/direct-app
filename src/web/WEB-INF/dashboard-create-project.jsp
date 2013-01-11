@@ -1,12 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.2
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.3
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of creating project in dashboard.
   -
   - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "an error has occurred when try to save new project without any input".
   - Version 1.2 (TC Direct UI Improvement Assembly 2) changes: Solve "Choosing Create A New Project but Calendar is highlighted".
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes: Fix multiple bugs.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -83,9 +84,9 @@
                                     <link:cancelDashboardOperation/>
                                     <a id="addExistContest"
                                        class="button6 middleButton">
-                                        <span class="left"><span class="right">Add A Contest to This Project</span></span></a>
+                                        <span class="left"><span class="right">ADD A CONTEST TO THIS PROJECT</span></span></a>
                                     <a
-                                       class="button6 rightButton" id="createProjectViewSave"><span class="left"><span class="right">Save</span></span></a>
+                                       class="button6 rightButton" id="createProjectViewSave"><span class="left"><span class="right">SAVE</span></span></a>
                                 </div>
                                 <!-- End .buttons -->
                                 </s:form>

@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the confirmation step of analytics project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Update button text to uppercase.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -73,7 +76,7 @@
     
             <!-- bottom bar -->
             <div class="BottomBar">
-                <a href="#" class="overviewBtn" id="confirmOverviewLink">Project Overview</a>
+                <a href="#" class="overviewBtn" id="confirmOverviewLink">PROJECT OVERVIEW</a>
             </div>
             <!-- End .BottomBar -->
             

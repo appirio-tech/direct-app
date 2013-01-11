@@ -1,10 +1,13 @@
 <%--
-  - Author: GreatKevin, TCSDEVELOPER
-  - Version: 1.2
+  - Author: GreatKevin, TCSDEVELOPER, Ghost_141
+  - Version: 1.3
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment contains all the modal windows of the edit project page.
   -
+  - Version 1.3 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Fix multiple bugs.
+  - 
   - Version 1.2 updates (Release Assembly - TopCoder Security Groups - Release 2)
   - - Add group permission modal
   -
@@ -23,7 +26,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>MANAGE CLIENT MANAGERS</span>
+                    <span>Manage Client Managers</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -97,7 +100,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>MANAGE TOPCODER MANAGERS</span>
+                    <span>Manage Topcoder Managers</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -194,7 +197,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                LEAVING THIS PAGE?
+                Leaving This Page?
                 <a title="Close" class="closeModal" href="javascript:;">Close</a>
             </div>
         </div>
@@ -228,7 +231,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                DELETE CUSTOM PROJECT METADATA?
+                Delete Custom Project Metadata?
                 <a title="Close" class="closeModal" href="javascript:;">Close</a>
             </div>
         </div>
@@ -262,7 +265,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                ADD CUSTOM PROJECT METADATA
+                Add Custom Project Metadata
                 <a title="Close" class="closeModal" href="javascript:;">Close</a>
             </div>
         </div>
@@ -319,7 +322,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>ADD USERS TO PERMISSION LIST</span>
+                    <span>Add Users To Permission List</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -393,7 +396,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>ADD GROUPS TO PERMISSIONS LIST</span>
+                    <span>Add Groups To Permissions List</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -471,7 +474,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span><span class="userTitle">USERNAME</span> - CONTESTS NOTIFICATION SETTING</span>
+                    <span><span class="userTitle">Username</span> - Contest Notifications Setting</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>

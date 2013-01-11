@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (ReRelease Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: The confirmation step of selecting copilot.
   - Since: Release Assembly - TC Direct Select From Copilot Pool Assembly
   - Version 1.0 (Release Assembly - TC Direct Select From Copilot Pool Assembly).
@@ -15,7 +18,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3 class="infoIcon">Confirmation</h3>
-        <a href="<s:url action='dashboardActive' namespace='/'/>"class="button4 backDashboardBtn">Back to Dashboard</a>
+        <a href="<s:url action='dashboardActive' namespace='/'/>"class="button4 backDashboardBtn">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
     

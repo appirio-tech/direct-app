@@ -6,6 +6,9 @@
  
  * Version 1.1 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added styles for Group 
  * Permissions area
+ * 
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ * Fix bugs.
  */
 .add_comment_cancel_text{
 	margin-right: 22px;
@@ -103,4 +106,56 @@
 
 .specailCol{
     width:166px !important;
+}
+#activeContests_length{
+	width:133px;
+	float:right;
+	display:table-cell;
+	vertical-align:middle;
+}
+.perpage{
+	position:absolute;
+	margin-top:8px;
+}
+.showPerPage{
+	margin-top:7%;
+}
+.bottom1{
+	display:table;
+}
+.newSidebar .contestList .dropdownWidget .dropList .even{
+}
+.newSidebar .contestList .dropdownWidget .dropList .even a{
+	width:190px;
+}
+.newSidebar .contestList .filter .dropdownWidget .dropList {
+	overflow-x:hidden;
+}
+#dataTableLength{
+	margin-top:3%;
+
+}
+#tabs1{
+	z-index:-1;
+}
+#tabs0 UL > li .subNav {
+
+}
+.filterPanel .filterHead .inner .searchContainer input {
+	line-height:20px;
+	
+}
+.filterPanel .filterHead .inner .searchContainer .filterSearch {
+	padding-top:1px;
+	height:19px;
+}
+#tabs0 UL > li .subNav a {
+	width:110px;
+}
+
+#tabs0 UL > li:first-child .subNav a {
+	width:155px;
+}
+body{
+	overflow:hidden;
 }

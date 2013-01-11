@@ -4,11 +4,11 @@
     <div class="copilotLeft"><div class="copilotRight">
         <div class="copilotInner">
             <div class="fLeft">
-                <a href="help.jsp?height=400&amp;width=800&amp;inlineId=helpPopup" class="title thickbox">CoPilots</a>
-                <strong>Available </strong>CoPilots
+                <a href="help.jsp?height=400&amp;width=800&amp;inlineId=helpPopup" class="title thickbox">Copilots</a>
+                <strong>Available </strong>Copilots
                 <strong class="number"><s:property value="availableCopilots"/></strong> |&nbsp;&nbsp;
                 <a href="https://www.topcoder.com/wiki/display/tc/Active+Copilot+Opportunities" style="color:black;text-decoration: none;" target="_blank">
-                    <strong>Projects Available </strong>for CoPilots
+                    <strong>Projects Available </strong>for Copilots
                 </a> 
                 <strong class="number"><s:property value="availableCopilotProjects"/></strong>
             </div>

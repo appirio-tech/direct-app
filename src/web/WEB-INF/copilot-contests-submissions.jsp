@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin, tangzx, GreatKevin, Blues
-  - Version: 2.0
+  - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141
+  - Version: 2.1
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
@@ -17,6 +17,9 @@
   -
   - Version 2.0 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
   - - Change to the new copilot posting submissions page.
+  - 
+  - Version 2.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Update the button text to uppercase.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -693,7 +696,7 @@
                 <div class="separator"></div>
                 <div class="buttons">
                     <a class="button6 chooseConfirmationButton selectWinnerCopilot" href="javascript:">
-                        <span class="left"><span class="right">Yes</span></span></a>
+                        <span class="left"><span class="right">YES</span></span></a>
                 </div>
             </div>
         </c:if>
@@ -713,7 +716,7 @@
             <div class="separator"></div>
             <div class="buttons">
                 <a class="button6 okeyButton chooseConfirmationButton selectRunnerUpCopilot" href="javascript:">
-                    <span class="left"><span class="right">Yes</span></span></a>
+                    <span class="left"><span class="right">YES</span></span></a>
             </div>
         </div>
         </c:if>

@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: TCSASSEMBLER, Ghost_141
   -
   - Version 1.1 (HTML Cockpit Spec Review Assembly assembly)
   -
@@ -9,6 +9,9 @@
   - Version 1.2.1 (Release Assembly - TC Direct Cockpit Release Four) change notes:
   - - Uses the new flag hasActiveSpecSubmssion to check if need to display resubmit spec button
   -  
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - 
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the specification reivew view.
@@ -100,9 +103,9 @@
 
                                 <div class="container2Left">
                                     <div class="container2Right">
-                                        <div class="container2Bottom">
-                                            <div class="container2BottomLeft">
-                                                <div class="container2BottomRight">
+                                        <div class="container2Bottom" style="background: url(../../images/container2_bottom.png) repeat-x bottom;">
+                                            <div>
+                                                <div>
                                                     <div class="container2Content_det">
                                                         <span class="status">
                                                             <c:if test="${viewData.specificationReviewStatus eq 'PENDING_REVIEW'}">

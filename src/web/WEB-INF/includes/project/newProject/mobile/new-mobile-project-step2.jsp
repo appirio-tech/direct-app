@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 2nd step of mobile project creation.
@@ -9,6 +9,9 @@
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added id and class field for question elements.
+  - 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             change notes: Update button text to uppercase.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +20,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>2</span>Application design</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 
@@ -65,7 +68,7 @@
 
             <div class="products">
                 <div class="left">
-                    <a class="toolTip" href="javascript:;"></a>
+                    <a class="toolTip" href="javascript:;" rel="Form factor"></a>
                     <span class="label question6"></span>
                     <span class="errorIcon hide"></span>
                     <div class="clear"></div>
@@ -90,7 +93,7 @@
                     </div>
                 </div>
                 <div class="left">
-                    <a class="toolTip" href="javascript:;"></a>
+                    <a class="toolTip" href="javascript:;" rel="Screen orientation"></a>
                     <span class="label question7"></span>
                     <div class="clear"></div>
                     <label class="select2 questionOption24"><input id="screenOrientationNotSure" type="checkbox" name="orientation"/></label>
@@ -100,7 +103,7 @@
                     <label class="questionOption27"><input id="bothOrientation" type="radio" name="ori"/></label><br/>
                 </div>
                 <div class="left last">
-                    <a class="toolTip" href="javascript:;"></a>
+                    <a class="toolTip" href="javascript:;" rel="Screen resolution"></a>
                     <span class="label question8"></span>
                     <div class="clear"></div>
                     <label class="select2 questionOption28"><input id="screenResolutionNotSure" type="checkbox" name="resolution"/></label>

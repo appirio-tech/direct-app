@@ -1,11 +1,12 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
-  - Version 1.3 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
+  - Author: isv, flexme, Ghost_141, TCSDEVELOPER
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
+  - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added "I can not choose a winner" button.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Add link for checkout button.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Create dynamic prize slots depends on the prize number.
   -
-  - Version: 1.4
+  - Version: 1.5
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -102,12 +103,12 @@
             <s:if test="formData.roundType.toString() == 'MILESTONE'">
                 <s:if test="viewData.phaseOpen">
                 <link:studioCheckout contestId="${projectId}" milestoneRound="${true}" styleClass="buttonBankSelection milestoneConfirmation">
-                    <span class="left"><span class="right">Confirm Milestone</span></span>
+                    <span class="left"><span class="right">CONFIRM MILESTONE</span></span>
                 </link:studioCheckout>
                 </s:if>
                 <s:else>
                 <a href="javascript:;" class="buttonBankSelection"><span class="left"><span
-                         class="right">Confirm Milestone</span></span></a>
+                         class="right">CONFIRM MILESTONE</span></span></a>
                 </s:else>
             </s:if>
             <s:else>
@@ -124,7 +125,7 @@
                 <span class="left"><span class="right">I cannot choose a winner</span></span></a>
             </s:if>
             <a href="javascript:;" id="clearSlots" class="buttonBankSelection"><span class="left"><span
-                    class="right">Clear Slots</span></span></a>
+                    class="right">CLEAR SLOTS</span></span></a>
         </s:if>
         </div>
 

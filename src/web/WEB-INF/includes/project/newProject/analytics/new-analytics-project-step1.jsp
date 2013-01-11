@@ -1,6 +1,6 @@
 <%--
   - Author: minhu, Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 1st step of analytics project creation.
@@ -9,6 +9,8 @@
   - 
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added id and class field for question elements.
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Fix a text inconsistency bug.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +19,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>1</span>Estimation of budget and timeline</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 
@@ -73,7 +75,7 @@
                             <div class="slider"></div>
                             <div class="val">
                                 <input id="estimatedBudget" type="text" class="text" value="" autocomplete="off"/>
-                                <span>K US Dollar</span>
+                                <span>K US Dollars</span>
                                 <p class="errorTxt">This field cannot have empty or zero value.</p>
                             </div>
                             <div class="clear"></div>

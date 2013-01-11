@@ -1,10 +1,12 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, Ghost_141
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Add milestone / final submission number to the submission column of active contests table.
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Add readonly in data pick element.
   -
   - Description: The active contests page of the new enterprise dashboard
 --%>
@@ -97,9 +99,9 @@
 												<div class="column thirdCokumn">
 													<div>
 														<label>Start Date:</label>
-														<input id='startDateBegin' type='text' class="date-pick"/>
+														<input id='startDateBegin' type='text' readonly="readonly" class="date-pick"/>
 														<span class='title toLabel'>To</span>
-														<input id='startDateEnd' type='text' class="date-pick"/>
+														<input id='startDateEnd' type='text' readonly="readonly" class="date-pick"/>
 													</div>
 												</div>
 											</div>
@@ -123,9 +125,9 @@
 												<div class="column thirdCokumn">
 													<div>
 														<label>End Date:</label>
-														<input id='endDateBegin' type='text' class="date-pick"/>
+														<input id='endDateBegin' type='text' readonly="readonly" class="date-pick"/>
 														<span class='title toLabel'>To</span>
-														<input id='endDateEnd' type='text' class="date-pick"/>
+														<input id='endDateEnd' type='text' readonly="readonly" class="date-pick"/>
 													</div>
 												</div>
 											</div>

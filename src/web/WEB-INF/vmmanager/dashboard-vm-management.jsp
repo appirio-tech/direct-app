@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, kanakarajank
-  - Version: 1.2
+  - Author: winsty, kanakarajank, Ghost_141
+  - Version: 1.3
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of VM management in dashboard.
@@ -8,6 +8,8 @@
   - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "all clear buttons in "VM Management" cannot work"
   - Version 1.2 Module Assembly - Cloud VM Service Notus Cloud Integration version 1.0
   -             Added span for showing Successful creation of VM/ Successful Deletion of VM
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  -             Update button text to uppercase.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -120,7 +122,7 @@
 
                             </div>
 							<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>
-								<a id="launchVM"  class="button6"><span class="left"><span class="right">Submit</span></span></a>		
+								<a id="launchVM"  class="button6"><span class="left"><span class="right">SUBMIT</span></span></a>		
 							</td></tr></table>
 							<!-- End .form -->
 							<hr color="black" class="plain" />
@@ -177,9 +179,9 @@
                                                 <div class='column3'>
                                                     <div class='row'>
                                                         <span class='title dateLabel'>Creation Date</span>
-                                                        <input id='startDateBegin' type='text' class='date-pick'/>
+                                                        <input id='startDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                         <span class='title toLabel'>To</span>
-                                                        <input id='startDateEnd' type='text' class='date-pick'/>
+                                                        <input id='startDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                     </div>
                                                     <div class='row'>
                                                         <span class='title' style="width:90px">VM Usage</span>

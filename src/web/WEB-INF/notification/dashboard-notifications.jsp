@@ -1,6 +1,6 @@
 <%--
-  - Author: greatKevin, winsty, isv, TCSASSEMBLER
-  - Version: 1.7
+  - Author: greatKevin, winsty, isv, Ghost_141, TCSASSEMBLER
+  - Version: 1.8
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
@@ -16,6 +16,9 @@
   - - Add new column 'report permission' to the permission table
   - Version 1.7 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) changes notes: Added platform fee
    -management and creation functions to the page.
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - 1) Update button text to uppercase.
+  - 2) Rewrite part of the page to update layout.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -220,8 +223,13 @@
                                                         </div>
                                                     </c:forEach>
 
-
-                                                    <div class="panel2"><a class="button9" href="javascript:savePreference();" id="savePreferenceButton">Save Preference</a></div>
+                                                    <div class="panel2">
+                                                        <a href="javascript:savePreference();" id="savePreferenceButton" class="button6">
+                                                            <span class="left">
+                                                                <span class="right">SAVE PREFERENCES</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -357,7 +365,7 @@
                                                                 <td><a class="subgroup shorten" href="contest/detail?projectId=${contestNotifications.contestId}">${contestNotifications.name} (${contestNotifications.type})</a></td>
                                                                 <td class="checkbox">
                                                                     <input id='${contestCheckTimeId}' name="timeline" value="${contestNotifications.contestId}"
-                                                                           class="selectUser select_timeline" type="checkbox"
+                                                                           class="selectUser select_timeline" type="checkbox" style="vertical-align: text-top;" 
                                                                            onclick="notifications.selectContest(this, 'timeline', ${projectNotifications.projectId});"
                                                                            ${contestNotifications.projectNotification ? 'checked="checked"' : ''}
                                                                            autocomplete="off"
@@ -366,7 +374,7 @@
                                                                 </td>
                                                                 <td class="checkbox">
                                                                     <input id='${contestCheckForumId}' name="forum" value="${contestNotifications.contestId}"
-                                                                           class="selectUser select_forum group_${contestNotifications.forumId}" type="checkbox"
+                                                                           class="selectUser select_forum group_${contestNotifications.forumId}" type="checkbox" style="vertical-align: text-top;" 
                                                                            onclick="notifications.selectContest(this, 'forum', ${projectNotifications.projectId}, ${contestNotifications.forumId});"
                                                                            ${contestNotifications.forumNotification ? 'checked="checked"' : ''}
                                                                            autocomplete="off"
@@ -382,8 +390,8 @@
                                             <div class="container2Left">
                                                 <div class="container2Right">
                                                     <div class="container2Bottom">
-                                                        <div class="container2BottomLeft">
-                                                            <div class="container2BottomRight">
+                                                        <div>
+                                                            <div>
 
 
 
@@ -409,7 +417,11 @@
 
 
                                                                 <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
-                                                                    <a class="button9" href="javascript:notifications.update();">Save Notifications</a>
+                                                                    <a href="javascript:notifications.update();" class="button8" style="margin-left: 10px;">
+                                                                        <span class="left">
+                                                                            <span class="right">SAVE NOTIFICATIONS</span>
+                                                                        </span>
+                                                                    </a>
                                                                 </div>
 
                                                             </div>
@@ -554,7 +566,7 @@
                             <form id="permissionForm" action="updatePermission" method="post">
                                 <input type="hidden" id="permissionHiddenInput" name="permissionsJSON" value="test"/>
                                 <a id="permission_submit" class="button6" onclick="pbutton_submit()" href="javascript:;">
-                                    <span class="left"><span class="right">Submit</span></span>
+                                    <span class="left"><span class="right">SUBMIT</span></span>
                                 </a>
                             </form>
                         </div>
@@ -634,8 +646,8 @@
                             <!-- End .areaHeader -->
                             <div>
                                 <div style="width:300px;">
-                                    <label>Handle:</label> <input type="text" size="15" id="handle"/>
-                                    <a class="button6 applyButton" href="javascript:syncUser();"><span class="left"><span class="right">Sync</span></span></a>
+                                    <label>Handle:</label> <input type="text" size="15" id="handle" style="padding:0 5px; font-size: 11px"/>
+                                    <a class="button6 applyButton" href="javascript:syncUser();"><span class="left"><span class="right">SYNC</span></span></a>
                                 </div>
                             </div>
                         </div>
@@ -695,11 +707,12 @@
             <div class="separator">
             </div>
             <div class="buttons">
-                <a class="button6" href="javascript:void(0)" id="mu_save"><span class="left"><span class="right">
-                        Save</span></span></a> <a class="button6 closeDialog" href="javascript:void(0)"><span
-                    class="left"><span class="right">Cancel</span></span></a></div>
+                <a class="button6" href="javascript:void(0)" id="mu_save" style="margin-left: 22px;"><span class="left"><span class="right">
+                        SAVE</span></span></a> <a class="button6 closeDialog" href="javascript:void(0)"><span
+                    class="left"><span class="right">CANCEL</span></span></a></div>
         </div>
     </div>
+    
     <div id="addUserDialog">
         <div class="header">
             <div class="title">
@@ -736,10 +749,10 @@
             <div class="separator">
             </div>
             <div class="buttons">
-                <a id="au_save" class="button6 assignProjects " href="javascript:void(0)"><span class="left"><span
-                        class="right">Save</span></span></a> <a class="button6 closeDialog"
+                <a id="au_save" class="button6 assignProjects " href="javascript:void(0)" style="margin-left: 55px;"><span class="left"><span
+                        class="right">SAVE</span></span></a> <a class="button6 closeDialog"
                                                                              href="javascript:void(0)"><span
-                    class="left"><span class="right">Cancel</span></span></a></div>
+                    class="left"><span class="right">CANCEL</span></span></a></div>
         </div>
     </div>
     <div id="addProjectDialogPm">
@@ -778,12 +791,12 @@
             <div class="separator">
             </div>
             <div class="buttons">
-                <a id="ap_save" class="button6" href="javascript:void(0)"><span class="left"><span class="right">
-                        Save</span></span></a> <a id="ap_add" class="button6 addMoreUsers"
+                <a id="ap_save" class="button6" href="javascript:void(0)" style="margin-left: -58px;"><span class="left"><span class="right">
+                        SAVE</span></span></a> <a id="ap_add" class="button6 addMoreUsers"
                                                   href="javascript:void(0)"><span
-                    class="left"><span class="right">Add More Users</span></span></a> <a class="button6 closeDialog"
+                    class="left"><span class="right">ADD MORE USERS</span></span></a> <a class="button6 closeDialog"
                                                                                          href="javascript:void(0)"><span
-                    class="left"><span class="right">Cancel</span></span></a></div>
+                    class="left"><span class="right">CANCEL</span></span></a></div>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 
 <%--
-  - Author: KennyAlive, TCSASSEMBLER
-  - Version: 1.2
+  - Author: KennyAlive, TCSASSEMBLER, Ghost_141
+  - Version: 1.3
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 2.
@@ -11,6 +11,8 @@
   -             change notes: new mobile and presentation project type flow. Removed old presentation flow.
   - Version 1.2 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
   -             change notes: new analytics project type flow.
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Fix multiple bugs.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -19,7 +21,7 @@
 <!-- step title -->
 <div class="stepTitle">
     <h3><span>2</span>Choose a type and size for your project.</h3>
-     <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+     <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
 </div>
 <!-- End .stepTitle -->
 
@@ -139,8 +141,8 @@
                     </table>
 
                     <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
+                        <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
+                        <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
 
                 </div>
@@ -200,8 +202,8 @@
                     </table>
 
                     <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
+                        <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
+                        <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
 
                 </div>
@@ -261,8 +263,8 @@
                     </table>
 
                     <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
+                        <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
+                        <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
 
                 </div>
@@ -322,8 +324,8 @@
                     </table>
 
                     <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
+                        <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
+                        <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
 
                 </div>

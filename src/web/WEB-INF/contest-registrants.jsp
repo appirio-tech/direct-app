@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSASSEMBLER
-  - Version: 1.0.3
+  - Author: isv, Ghost_141, TCSASSEMBLER
+  - Version: 1.1
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Contest Registrants list.
@@ -9,7 +9,10 @@
   - Version 1.0.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   -
   - Version 1.0.3 (TC Direct Contest Dashboard Update Assembly) change Notes: 
-  - 1.Add dashboard header.      
+  - 1.Add dashboard header.
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.  
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -124,8 +127,8 @@
                                                     <div class="container2Left">
                                                         <div class="container2Right">
                                                             <div class="container2Bottom">
-                                                                <div class="container2BottomLeft">
-                                                                    <div class="container2BottomRight">
+                                                                <div>
+                                                                    <div>
 
                                                                         <div class="panel tableControlPanel"></div>
 

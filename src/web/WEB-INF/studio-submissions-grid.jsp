@@ -1,14 +1,15 @@
 <%--
-  - Author: isv, flexme, TCSASSEMBLER
+  - Author: isv, flexme, Ghost_141, TCSASSEMBLER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
   - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
   - Version 1.3 (TC Direct Release Assembly 7) change Notes: added hasContestWritePermission field.
   - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
-  -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
+  - 
   - Version 1.4 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Add dashboard header.  
   -  
-  - Version: 1.4
+  - Version: 1.5
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -106,7 +107,7 @@
                             <jsp:include page="includes/contest/submissionViewer/paginationDropdown.jsp"/>
 --%>
 
-                            <a href="javascript:;" class="button1 backToTop"><span>Back To Top</span></a>
+                            <a href="javascript:;" class="button1 backToTop"><span>BACK TO TOP</span></a>
                         </div>
                     </div>
 

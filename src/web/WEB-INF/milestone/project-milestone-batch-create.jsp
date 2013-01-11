@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Set read only in data pick element.
+  - 
   - Description: This page provides the demonstration of batch creation of project milestones.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -73,7 +76,7 @@
 
                                     <div style="padding-top:20px">
                                         <span>Milestone Due Date:</span> </br></br>
-                                        <input name="dueDate" type='text' class='date-pick'/>
+                                        <input name="dueDate" type='text' readonly="readonly" class='date-pick'/>
                                     </div>
 
                                     <div style="padding-top:20px">
@@ -112,7 +115,7 @@
 
                                     <div style="padding-top:20px">
                                         <span>Milestone Due Date:</span> </br></br>
-                                        <input name='dueDate' type='text' class='date-pick'/>
+                                        <input name='dueDate' type='text' readonly="readonly" class='date-pick'/>
                                     </div>
 
                                     <div style="padding-top:20px">
@@ -149,7 +152,7 @@
 
                                     <div style="padding-top:20px">
                                         <span>Milestone Due Date:</span> </br></br>
-                                        <input name='dueDate' type='text' class='date-pick'/>
+                                        <input name='dueDate' type='text' readonly="readonly" class='date-pick'/>
                                     </div>
 
                                     <div style="padding-top:20px">

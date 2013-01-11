@@ -180,12 +180,13 @@
     overflow: hidden;
 }
 .ui-dialog .body .searchBox input.searchTxt{
-	width: 110px;
+	width: 100px;
 	height:20px;
 	float:left;
 	display: block;
 	margin-right:10px;
 	font-size: 11px;
+    padding: 0 5px;
 }
 .ui-dialog .body .searchBox a.button1{
 	display: block;

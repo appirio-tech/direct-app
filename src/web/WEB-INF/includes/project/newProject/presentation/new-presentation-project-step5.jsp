@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 5th step of presentation project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             change notes: Update button text to uppercase.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -13,7 +16,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>5</span>Review</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 

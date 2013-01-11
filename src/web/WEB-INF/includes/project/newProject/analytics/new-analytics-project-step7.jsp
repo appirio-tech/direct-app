@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 7th step of analytics project creation.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Update button text to uppercase.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -14,7 +17,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>7</span>Review</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->   
     
@@ -236,7 +239,7 @@
     <!-- End #stepContainer -->
     
     <div class="launchBox">
-    <a href="javascript:;" class="launchBtn">Confirm and Launch</a>
+    <a href="javascript:;" class="launchBtn">CONFIRM AND LAUNCH</a>
     <div class="proceedMsg">
         <p>Now we are going to create and setup your new project, do you want to proceed?</p>
         <a href="javascript:" class="smallRedBtn no">NO</a>

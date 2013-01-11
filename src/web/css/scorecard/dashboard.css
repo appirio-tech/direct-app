@@ -7,6 +7,8 @@
  *  - Created document header.
  *  - Modified scorecard right side bar to match direct application right side bar.
  *
+ *  Version 2.1 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ *  - Update the CSS styles to fix multiple issues.
  */
 
 /*------------
@@ -270,6 +272,7 @@ BODY#page{
 		font-size: 11px;
 		color: #000;
 		background-color: inherit;
+        padding: 0 5px;
 	}
 	#addScorecard2 input.status,
 	#addScorecard2 input.check,
@@ -1527,7 +1530,7 @@ DIV.notif-div{
 }
 
 	.container2Left{
-		background: url(../../../images/content_border.png) repeat-y left;
+        background: url(../../../images/content_border.png) repeat-y left;
 	}
 	
 	.container2Right{
@@ -1535,7 +1538,7 @@ DIV.notif-div{
 	}
 	
 	.container2Bottom{
-		background: url(../../../images/container2_bottom.png) repeat-x bottom;
+		background: #A8A8A8;
 	}
 	
 	.container2BottomClear{
@@ -1543,11 +1546,11 @@ DIV.notif-div{
 	}
 	
 	.container2BottomLeft{
-		background: url(../../../images/container2_bottom_left.png) no-repeat bottom left;
+		background: #A8A8A8;
 	}
 	
 	.container2BottomRight{
-		background: url(../../../images/container2_bottom_left.png) no-repeat bottom right;
+		background: #A8A8A8;
 	}
 	
 	.container2Content{
@@ -4396,7 +4399,7 @@ input.longText{
 	height: 20px;
 	color: #333;
 	font-size: 11px;
-	padding: 0 3px;
+	padding: 0 5px;
 	margin: 3px 0;
 }
 input.mediumText{
@@ -4404,7 +4407,7 @@ input.mediumText{
 	height: 20px;
 	color: #333;
 	font-size: 11px;
-	padding: 0 3px;
+	padding: 0 5px;
 	margin: 3px 0;
 }
 input.shortText{
@@ -4412,7 +4415,7 @@ input.shortText{
 	height: 20px;
 	color: #333;
 	font-size: 11px;
-	padding: 0 3px;
+	padding: 0 5px;
 	margin: 3px 0;
 }
 	input.red{background-color:#f00;}
@@ -4439,7 +4442,7 @@ textarea.question{
 	/*width: 400px;*/
 	width: 96%;
 	height: 30px;
-	padding: 0 3px;
+	padding: 0 5px;
 	color: #333;
 	font-size: 11px;
 	font-family: Arial;
@@ -4449,7 +4452,7 @@ textarea.guideline{
 	/*width: 400px;*/
 	width: 96%;
 	height: 130px;
-	padding: 0 3px;
+	padding: 0 5px;
 	color: #333;
 	font-size: 11px;
 	font-family: Arial;

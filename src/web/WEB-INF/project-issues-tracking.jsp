@@ -1,6 +1,6 @@
 <%--
-  - Author: xjtufreeman, TCSASSEMBLER
-  - Version 1.1
+  - Author: xjtufreeman, Ghost_141, TCSASSEMBLER
+  - Version 1.2
   -
   - Version: 1.0
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
@@ -8,6 +8,9 @@
   - Version: 1.1 (TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
   - Added logic to display the project bugs.
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: This page renders the project issue tracking view.
   -
 --%>
@@ -74,7 +77,7 @@
 
                                             <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
                                                 <span class="left">
-                                                    <span class="right">Launch Project Bug Race</span>
+                                                    <span class="right">LAUNCH PROJECT BUG RACE</span>
                                                 </span>
                                             </a>
 
@@ -285,7 +288,7 @@
 
                                             <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
                                                 <span class="left">
-                                                    <span class="right">Launch Project Bug Race</span>
+                                                    <span class="right">LAUNCH PROJECT BUG RACE</span>
                                                 </span>
                                             </a>
 
@@ -856,9 +859,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="buttonBox">
-                                                            <a href="javascript:;" class="button6 btnUpdate"><span class="left"><span class="right">Update</span></span></a>
-                                                            <a href="javascript:;" class="button6 btnCreate"><span class="left"><span class="right">Activate</span></span></a>
-                                                            <a href="javascript:;" class="button6 btnCancel"><span class="left"><span class="right">Cancel</span></span></a>
+                                                            <a href="javascript:;" class="button6 btnUpdate"><span class="left"><span class="right">UPDATE</span></span></a>
+                                                            <a href="javascript:;" class="button6 btnCreate"><span class="left"><span class="right">ACTIVATE</span></span></a>
+                                                            <a href="javascript:;" class="button6 btnCancel"><span class="left"><span class="right">CANCEL</span></span></a>
                                                         </div>
                                                         <div class="clear"></div>
                                                     </form>

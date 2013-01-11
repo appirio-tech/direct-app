@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Blues
-  - Version: 1.5
+  - Author: isv, Blues, Ghost_141
+  - Version: 1.6
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
@@ -20,6 +20,9 @@
   -
   - Version 1.5 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
   - - Added Group by and group values into the filter panel.
+  - 
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -695,8 +698,8 @@
                                          <div class="container2Left">
                                                         <div class="container2Right">
                                                             <div class="container2Bottom">
-                                                                <div class="container2BottomLeft">
-                                                                    <div class="container2BottomRight">
+                                                                <div>
+                                                                    <div>
 
                                                                         <div class="panel tableControlPanel">
                                                                             <div class="exportControl">

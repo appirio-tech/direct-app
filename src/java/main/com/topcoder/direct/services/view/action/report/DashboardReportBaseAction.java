@@ -40,9 +40,15 @@ import java.util.Set;
  *      billing cost report</li>
  *  </ol>
  * </p>
+ * <p>
+ *  Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+ *  <ol>
+ *      <li>Update action error message to "Start date should be smaller than End date"</li>
+ *  </ol>
+ * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.1
+ * @author TCSASSEMBLER, Ghost_141
+ * @version 1.2
  * @param <FORMT> a type of the form used by the report page. It must extends from <code>DashboardReportForm</code>.
  * @param <VIEWT> a type of the view used by the report page. It must extends from <code>ReportBaseDTO</code>.
  */
@@ -283,7 +289,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
 
         // Validate the dates range
         if (startDate.compareTo(endDate) > 0) {
-            addActionError("Start date must not be after end date");
+            addActionError("Start date should be smaller than End date");
             return;
         }
 

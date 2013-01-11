@@ -34,28 +34,36 @@ $(function() {
   var hanldeUserResult = function hanldeUserResult(jsonResult) {
     var dialogId;
     var dialogAlias;
+    
+    var modalId;
 
     if (!jsonResult['result']) {
       $.permission.showErrors("fail to get users");
     }
     jsonResult = jsonResult['result']['return'];
-    if ($("#manageUserDialog").dialog("isOpen")) {
+    //if ($("#manageUserDialog").dialog("isOpen")) {
+    if ($('#userManageModal').css('display') == 'block') {
       dialogId = "#manageUserDialog";
+      modalId = "#userManageModal";
       dialogAlias = "mu";
     } else {
       dialogId = "#addUserDialog";
+      modalId = "#addMoreUsersModal";
       dialogAlias = "au";
     }
-    var listDiv = $(dialogId + " .left .list");
+    //var listDiv = $(dialogId + " .left .list");
+    var listDiv = $(modalId + " .left .list");
         var alreadyUsed = '';
-        $(dialogId + " .right .list .listItem").each(function() {
+        //$(dialogId + " .right .list .listItem").each(function() {
+        $(modalId + " .right .list .listItem").each(function() {
       alreadyUsed += ',' + $(this).attr("name") + ',';
     });
 
     for ( var i = 0; i < jsonResult.length; i++) {
             var handle = ',' + jsonResult[i].handle + ',';
             if (alreadyUsed.indexOf(handle) < 0) {
-                var htmlToAdd = getListItemString(jsonResult[i], dialogId,
+                //var htmlToAdd = getListItemString(jsonResult[i], dialogId,
+                var htmlToAdd = getListItemString(jsonResult[i], modalId,
                         dialogAlias);
                 listDiv.append(htmlToAdd);
             }
@@ -72,6 +80,15 @@ $(function() {
     $(".ui-dialog-content .list .listItem").click(function() {
       $(this).toggleClass("active");
     });
+    $("#assignProjectModal .list .listItem").click(function() {
+        $(this).toggleClass("active");
+    });
+    $("#addMoreUsersModal .list .listItem").click(function() {
+        $(this).toggleClass("active");
+    });
+    $("#userManageModal .list .listItem").click(function() {
+        $(this).toggleClass("active");
+    });
   };
 
   /**
@@ -86,7 +103,8 @@ $(function() {
    */
   var getListItemString = function getListItemString(jsonObj, dialogId,
       dialogAlias) {
-    var searchText = $(dialogId + " .searchTxt").val();
+    //var searchText = $(dialogId + " .searchTxt").val();
+    var searchText = $(dialogId + " .searchText").val();
     var userName = jsonObj.handle;
     searchText = userName.replace(searchText, "<span class='b'>"
         + searchText + "</span>");
@@ -219,24 +237,36 @@ $(function() {
   /**
    * Handle save button click event.
    */
-  $("#mu_save").click(function() {
-    $("#manageUserDialog").dialog("close");
+  //$("#mu_save").click(function() {
+  $("#userManageModal .userManageSave").click(function() {
+    //$("#manageUserDialog").dialog("close");
+    modalClose();
     $.permission.processAddUsersToProject();
   });
 
   /**
    * Handle save button click event.
    */
-  $("#au_save").click(function() {
-    $("#addUserDialog").dialog("close");
+  //$("#au_save").click(function() {
+  $("#addMoreUsersModal .addMoreUserSave").click(function() {
+    //$("#addUserDialog").dialog("close");
+    $("#addMoreUsersModal").hide();
     $.permission.processAddUsers();
+    if($('#addMoreUsersModal').hasClass('focusModal')){
+		modalPreloader('#assignProjectModal');
+	}else{
+		modalClose();
+	}
+    
   });
 
   /**
    * Handle save button click event.
    */
-  $("#ap_save").click(function() {
-    $("#addProjectDialogPm").dialog("close");
+  //$("#ap_save").click(function() {
+  $("#assignProjectModal .assignProjectSave").click(function() {
+    //$("#addProjectDialogPm").dialog("close");
+    modalClose();
     $.permission.processAssignProjects();
     pbutton_submit();
   });
@@ -244,11 +274,12 @@ $(function() {
   /**
    * Set click event handle.
    */
-  $.each( [ "manageUserDialog", "addUserDialog" ], function(index, item) {
+  //$.each( [ "manageUserDialog", "addUserDialog" ], function(index, item) {
+  $.each( [ "userManageModal", "addMoreUsersModal" ], function(index, item) {
     $("#" + item + " .button1").click(function() {
       $("#" + item + " .left .list").empty();
 
-      var userName = $("#" + item + " .searchTxt").val();
+      var userName = $("#" + item + " .searchText").val();
       processor.addSendingData("searchText=" + userName);
     });
   });
@@ -280,14 +311,17 @@ $(function() {
   /**
    * Add users for projects assign.
    */
-  $("#ap_add").click(function() {
+  //$("#ap_add").click(function() {
+  $("#assignProjectModal .addMoreUserModal").click(function() {
     $.permission.addMoreUsersDirect = false;
 
     // clear and open the dialog
-    $.permission.clearAndOpenDialog("addUserDialog");
+    //$.permission.clearAndOpenDialog("addUserDialog");
+    $.permission.showModalWindow("addMoreUsersModal");
 
         $.each($.permission.currentUserMap, function(uId, handle) {
-            var listDiv = $("#addUserDialog .right .list");
+            //var listDiv = $("#addUserDialog .right .list");
+            var listDiv = $("#addMoreUsersModal .right .list");
             var htmlToAdd = "<div name='" + handle + "' id='au_r_" + uId + "' class='listItem'>"
                 + handle + "</div>";
             listDiv.append(htmlToAdd);

@@ -1,12 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.1
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.2
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Release Assembly - Project Contest Fee Management Update 1) changes:
   - Initialized the page functions. This page renders the form for creating contest fees for billing accounts.
   - Version 1.1 (Module Assembly - Contest Fee Based on % of Member Cost Admin Part)
   - Added contest fee base on percentage support.
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -132,7 +134,7 @@
  
                                     <div id="contest_fee_type">
                                         <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Contest Fee', 'false':'Member Cost Percentage Based Contest Fee'}"/>
-                                        <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20"/>
+                                        <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20" cssClass="contestFeePercentage"/>
                                     </div>
                                     <table id="contestFeeEditDetail"
                                            class="projectStats contests paginatedDataTable resultTable"
@@ -160,7 +162,7 @@
                                                     <td><s:property value="contestTypeDescription"/></td>
                                                     <td>
                                                         <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
-                                                                     size="40"/>
+                                                                     size="40" cssClass="contestFeeValue"/>
                                                     </td>
                                                 </tr>
                                             </s:if>
@@ -176,7 +178,7 @@
                                                     <td><s:property value="contestTypeDescription"/></td>
                                                     <td>
                                                         <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
-                                                                     size="40"/>
+                                                                     size="40" cssClass="contestFeeValue"/>
                                                     </td>
                                                 </tr>
                                             </s:if>

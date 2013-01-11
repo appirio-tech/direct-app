@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSASSEMBER
-  - Version: 1.5
+  - Author: isv, TCSASSEMBER, Ghost_141
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
@@ -14,6 +14,8 @@
   - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
   - Version 1.5 (Release Assembly - TopCoder Studio CCA Integration) change notes:
   -   Disabled the submission visibility functionality.
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  -   Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -51,7 +53,7 @@
 	<div class="designs hide" id="round2InfoDiv">    
         <h3><span class="icon">Round 2 Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
         <div class="textarea">
-            <textarea id="round2Info" rows="10" cols="80"></textarea>
+            <textarea id="round2Info" rows="10" cols="80" style="padding: 0 5px; font-size: 11px;"></textarea>
         </div>
   </div>
   <!-- end round 2 information -->

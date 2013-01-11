@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 4.
@@ -12,13 +12,15 @@
   - 
   - Version 1.2 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added class field for question elements.
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div id="newProjectStep4" class="hide customProject newProjectStep">
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>4</span>Would you like a copilot for this project?</h3>
-         <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+         <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
     <%@ include file="/WEB-INF/includes/project/newProject/require-copilot-step.jsp" %>

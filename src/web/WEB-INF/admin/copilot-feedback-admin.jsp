@@ -1,8 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0 (Module Assembly - TopCoder Copilot Feedback Integration)
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.0 Module Assembly - TopCoder Copilot Feedback Integration
+  - 
+  - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Remove container2BottomLeft and container2BottomRight in pagination part.
+  - 
   - The admin page for the copilot feedback management
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -114,8 +119,8 @@
     <div class="container2Left">
         <div class="container2Right">
             <div class="container2Bottom">
-                <div class="container2BottomLeft">
-                    <div class="container2BottomRight">
+                <div>
+                    <div>
                         <div class="panel tableControlPanel"></div>
                     </div>
                 </div>

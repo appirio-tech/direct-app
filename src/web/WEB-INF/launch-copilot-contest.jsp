@@ -1,6 +1,6 @@
 <%--
-  - Author: tangzx, duxiaoyang
-  - Version: 1.3
+  - Author: tangzx, duxiaoyang, Ghost_141
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: provide two ways to select a copilot.
@@ -14,6 +14,9 @@
   -
   - Version 1.3 (Release Assembly - TC Direct Select From Copilot Pool Assembly) changes:
   - Use the really copilot profile data.
+  - 
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.topcoder.shared.util.ApplicationServer" %>
@@ -155,7 +158,7 @@
 
 
                                                                     <div class="buttonArea">
-                                                                        <a href="${profileLink}" class="btnRed"> <span class="right"> <span class="middle">View Profile</span> </span> </a>
+                                                                        <a href="${profileLink}" class="btnRed"> <span class="right"> <span class="middle">VIEW PROFILE</span> </span> </a>
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.colRight -->
@@ -201,7 +204,7 @@
                                                
                                                 <div class="buttonArea">
                                                     <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
-                                                        <span class="left"><span class="right">Engage the Copilots</span></span>
+                                                        <span class="left"><span class="right">ENGAGE THE COPILOTS</span></span>
                                                     </a>
                                                                              
                                                 </div>

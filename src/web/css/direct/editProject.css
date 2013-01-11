@@ -11,9 +11,12 @@
  * 
  * Version 1.3 (Release Assembly - TopCoder Security Groups - Release 2) change notes: added styles for Group 
  * Permissions area
- 
- * Author: GreatKevin, TCSDEVELOPER
- * Version 1.3
+ * 
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ * - Update the CSS styles to fix multiple issues.
+ * 
+ * Author: GreatKevin, TCSDEVELOPER, Ghost_141
+ * Version 1.4
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -115,19 +118,19 @@
 }
 
 .editProjectForm input.textInput {
-    padding: 4px 7px;
+    padding: 4px 5px;
     font-family: Arial, Helvetica, sans-serif;
     color: #333333;
-    font-size: 12px;
+    font-size: 11px;
     border: 1px solid #a8abad;
     line-height: 15px;
 }
 
 .editProjectForm textarea {
-    padding: 3px 7px;
+    padding: 3px 5px;
     font-family: Arial, Helvetica, sans-serif;
     color: #333333;
-    font-size: 12px;
+    font-size: 11px;
     border: 1px solid #a8abad;
     line-height: 16px;
     height: 91px;
@@ -582,6 +585,7 @@ a.buttonGray:hover span {
     line-height: 18px;
     width: 156px;
     padding: 0 5px;
+    font-size: 11px;
 }
 
 .setDatePopup p {
@@ -1047,8 +1051,8 @@ a.buttonGray:hover span {
 .budgetField input.text, .durationField input.text {
     font-family: Arial, Helvetica, sans-serif;
     color: #333;
-    font-size: 12px;
-    padding: 4px 6px 4px 5px;
+    font-size: 11px;
+    padding: 4px 5px 4px 5px;
     border: 1px solid #adb0b2;
 }
 

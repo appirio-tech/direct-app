@@ -1,13 +1,16 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: TCSASSEMBLER, Ghost_141
   -
-  - Version: 1.0
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Update button text to uppercase.
+  - 
   - Description: This page renders the project milestones list view.
   -
 --%>
@@ -124,7 +127,7 @@
 
                             <div class="bottomLine">
                                                                 <span class="errorMsg hide">
-                                                                    The highlight fields can not be empty.
+                                                                    The highlighted fields can not be empty.
                                                                 </span>
                                 <a class="button6" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/><s:param name="formData.viewType">list</s:param></s:url>"><span class="left"><span class="right">CANCEL</span></span></a>
                                 <a class="button6 saveButton" href="javascript:;"><span class="left"><span class="right">SAVE</span></span></a>

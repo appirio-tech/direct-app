@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - Fix multiple bugs.
+  - 
   - Description: Launch copilot selection contest page.
   - Since: TC Cockpit Post a Copilot Assembly 1
   - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
@@ -111,7 +114,7 @@
                                 <div class="stepNav">
                   <a id="saveDraftButton" href="javascript:;" class="button6 draft draftBtn"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
                                     <a id="submitButton" href="javascript:;" class="button6 smallRed submitButton"><span class="left"><span class="right">SUBMIT</span></span></a>
-                  <a href="/direct/dashboardActive.action" class="button4 backDashboardBtn">Back to Dashboard</a>
+                  <a href="/direct/dashboardActive.action" class="button4 backDashboardBtn">BACK TO DASHBOARD</a>
                   <div class="clear"></div>
                 </div>
                 <!--End .stepNav-->
@@ -201,7 +204,7 @@
             <div class="inner">
                 <!-- title -->
                 <div class="modal-title">
-                    <h2>ERRORS</h2>
+                    <h2>Errors</h2>
                     <a href="javascript:;" class="closeModal">Close</a>
                 </div>
                 <!-- End .modal-title -->
@@ -252,7 +255,7 @@
             <div class="modalHeader">
                 <div class="modalHeaderRight">
                     <div class="modalHeaderCenter">
-                        CREATE NEW PROJECT
+                        Create New Project
                         <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalCloseAddNewProject();">Close</a>
                     </div>
                 </div>

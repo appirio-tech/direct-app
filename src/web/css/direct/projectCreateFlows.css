@@ -5,7 +5,9 @@
  * Changes in version 1.1 (Release Assembly - TC Direct Project Forum Configuration Assembly):
  *   Added styles for new manage forums page and popups.
  *
- * @version 1.1
+ * Changes in version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0):
+ *   Update the CSS styles to fix multiple issues.
+ * @version 1.2
  * @since 1.0
  */
  
@@ -132,10 +134,10 @@
 			.stepFirst2 .geryContent .row textarea{
 				width:auto;
 				height:127px;
-				padding:2px 7px;
+				padding:2px 5px;
 				border:#a8abad solid 1px;
 				font-family:Tahoma, Arial, Helvetica, sans-serif;
-				font-size:12px;
+				font-size:11px;
 				color:#6c6c6c;
                 float:left;
                 overflow:auto;
@@ -629,14 +631,15 @@ input{
             }
             .stepFirst2 .geryContent .left .input input{
                 height: 21px;
-                padding: 1px;
+                padding: 1px 5px;
                 border: 1px solid transparent;
                 width: 95%;
                 background: transparent;
+                font-size: 11px;
             }
             .stepFirst2 .geryContent .left .input textarea{
                 height: 93px;
-                padding: 1px;
+                padding: 1px 5px;
                 border: 1px solid transparent;
                 width: 95%;
                 float: none;
@@ -968,10 +971,10 @@ input{
             color: #6C6C6C;
             display: inline;
             font-family: Tahoma,Arial,Helvetica,sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             height: 17px;
             line-height: 17px;
-            padding: 2px 7px;
+            padding: 2px 5px;
             width: 170px;
         }
         
@@ -1353,10 +1356,10 @@ input{
                 color: #6C6C6C;
                 display: inline;
                 font-family: Tahoma,Arial,Helvetica,sans-serif;
-                font-size: 12px;
+                font-size: 11px;
                 height: 17px;
                 line-height: 17px;
-                padding: 2px 7px;
+                padding: 2px 5px;
                 width: 160px;
             }
             .stepFirst2 .content .desc .options .opt .inputCnt input.error2{
@@ -1474,10 +1477,10 @@ input{
                     color: #6C6C6C;
                     display: inline;
                     font-family: Tahoma,Arial,Helvetica,sans-serif;
-                    font-size: 12px;
+                    font-size: 11px;
                     height: 17px;
                     line-height: 17px;
-                    padding: 2px 7px;
+                    padding: 2px 5px;
                     width: 200px;
                 }
                 .mobile .stepSecond2 .original .content .left.disable .inputCnt input.text{
@@ -1588,10 +1591,10 @@ input{
                 color: #6C6C6C;
                 display: inline;
                 font-family: Tahoma,Arial,Helvetica,sans-serif;
-                font-size: 12px;
+                font-size: 11px;
                 height: 17px;
                 line-height: 17px;
-                padding: 2px 7px;
+                padding: 2px 5px;
                 width: 170px;
             }
 

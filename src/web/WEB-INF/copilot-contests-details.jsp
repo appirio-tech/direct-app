@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, GreatKevin
-  - Version: 1.6
+  - Author: isv, GreatKevin, Ghost_141
+  - Version: 1.7
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
@@ -21,6 +21,9 @@
   -
   - Version 1.6 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
   - - Added copilot posting dashboard
+  - 
+  - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Fix text inconsistency bug.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -718,8 +721,8 @@
                 <textarea id="projectDescription" name="projectDescription" rows="5" cols="30"></textarea>
             </div>
             <div class="popupButtons">
-                <a href="javascript:" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-                <a href="javascript:" onclick="addNewProject();" class="button1"><span>Yes</span></a>
+                <a href="javascript:" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
+                <a href="javascript:" onclick="addNewProject();" class="button1"><span>YES</span></a>
             </div>
         </div>
         <!-- End #addProjectForm -->

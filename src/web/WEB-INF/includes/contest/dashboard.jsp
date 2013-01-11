@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Veve, GreatKevin
-  - Version: 1.4
+  - Author: isv, Veve, GreatKevin, Ghost_141
+  - Version: 1.5
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -16,6 +16,9 @@
   - Version 1.4 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
   - - Add start time and end time of the phase and hide in the timeline of contest dashboard
   -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Fix multiple bugs.
+  - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -185,7 +188,7 @@
                                     <div class="tooltipCaption">
                                         <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
                                             <div class="tooltipCaptionInner">
-                                                <h2>What Should I do</h2>
+                                                <h2>What should I do</h2>
                                             </div><!-- End .tooltipCaptionInner -->
                                         </div></div>
                                     </div><!-- End .tooltipCaption -->
@@ -284,7 +287,7 @@
                 <span class="br"></span>
                 <div class="listContent">
                     <p class="registered">
-                        ${fn:length(viewData.dashboard.reviewers)}/${viewData.dashboard.requiredReviewersNumber} Reviewers are registered
+                        ${fn:length(viewData.dashboard.reviewers)}/${viewData.dashboard.requiredReviewersNumber} <label>Reviewers are registered</label>
                     </p>
                     
                     <c:forEach items="${viewData.dashboard.reviewers}" var="reviewer" varStatus="loop">
@@ -310,13 +313,19 @@
 						<s:set var="dependenciesStatus" value="viewData.dashboard.dependenciesStatus.toString()"/>
                         <c:choose>
                             <c:when test="${dependenciesStatus eq 'DEPENDENCIES_NON_SATISFIED'}">
+                            <label>
                                 Some dependencies are not satisfied.&nbsp;&nbsp;
+                            </label>
                             </c:when>
                             <c:when test="${dependenciesStatus eq 'DEPENDENCIES_SATISFIED'}">
+                            <label>
                                 All dependencies are satisfied.&nbsp;&nbsp;
+                            </label>
                             </c:when>
                             <c:when test="${dependenciesStatus eq 'NO_DEPENDENCIES'}">
+                            <label>
                                 There are no dependencies.&nbsp;&nbsp;
+                            </label>
                             </c:when>
                         </c:choose>                                                    
                     </p>
@@ -347,7 +356,7 @@
                 <span class="br"></span>
                 <div class="listContent">
                     <p>
-                        <strong><label>Open Issue</label>: <s:property value='viewData.contestStats.issues.unresolvedIssuesNumber'/></strong>
+                        <strong><label>Open Issues</label>: <s:property value='viewData.contestStats.issues.unresolvedIssuesNumber'/></strong>
                     </p>
                     <s:if test="viewData.contestStats.issues.unresolvedIssuesNumber > 0">
                         <p>

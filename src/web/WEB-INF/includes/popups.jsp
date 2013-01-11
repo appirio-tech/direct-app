@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang
-  - Version: 2.4
+  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang, Ghost_141
+  - Version: 2.5
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -52,6 +52,8 @@
   -
   - Version 2.4 - Release Assembly - TC Direct Project Forum Configuration Assembly 2
   - - Added popup for forum configuration on project overview page
+  - Version 2.5 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -85,8 +87,8 @@
               Are you sure to repost the failed contest?
           </p>
         <div class="popupButtons">
-          <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-          <a href="javascript:;" onclick="repostContest();" class="button1"><span>Yes</span></a>
+          <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
+          <a href="javascript:;" onclick="repostContest();" class="button1"><span>YES</span></a>
         </div>
       </div><!-- End #repostForm -->
 
@@ -96,8 +98,8 @@
             Click edit button if you want to edit it.
         </p>
         <div class="popupButtons">
-          <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a>
-            <a href="javascript:;" onclick="editRepost();" class="button1"><span>Edit</span></a>
+          <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>CLOSE</span></a>
+            <a href="javascript:;" onclick="editRepost();" class="button1"><span>EDIT</span></a>
         </div>
       </div><!-- End #repostResult -->
     </div><!-- End #repostDialog -->
@@ -109,8 +111,8 @@
                Are you sure to release a new version?
           </p>
         <div class="popupButtons">
-          <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-          <a href="javascript:;" onclick="newVersionConfirm();" class="button1"><span>Yes</span></a>
+          <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
+          <a href="javascript:;" onclick="newVersionConfirm();" class="button1"><span>YES</span></a>
         </div>
       </div><!-- End #newVersionStep1 -->
 
@@ -119,8 +121,8 @@
                Do you want to create corresponding development contest?
           </p>
         <div class="popupButtons">
-          <a href="javascript:;" onclick="newVersionDevYes();" class="button1"><span>Yes</span></a>
-          <a href="javascript:;" onclick="newVersionDevNo();" class="button1"><span>No</span></a>
+          <a href="javascript:;" onclick="newVersionDevYes();" class="button1"><span>YES</span></a>
+          <a href="javascript:;" onclick="newVersionDevNo();" class="button1"><span>NO</span></a>
         </div>
       </div><!-- End #newVersionDev -->
 
@@ -129,9 +131,9 @@
                Do you want to create a major version or minor version?
           </p>
         <div class="popupButtons">
-            <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-          <a href="javascript:;" onclick="newVersionChooseMajor();" class="button1"><span>Major Version</span></a>
-          <a href="javascript:;" onclick="newVersionChooseMinor();" class="button1"><span>Minor Version</span></a>
+            <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
+          <a href="javascript:;" onclick="newVersionChooseMajor();" class="button1"><span>MAJOR VERSION</span></a>
+          <a href="javascript:;" onclick="newVersionChooseMinor();" class="button1"><span>MINOR VERSION</span></a>
         </div>
       </div><!-- End #newVersionMinor -->
 
@@ -141,8 +143,8 @@
             Click edit button if you want to edit it.
         </p>
         <div class="popupButtons">
-          <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a>
-            <a href="javascript:;" onclick="editNewVersionProject();" class="button1"><span>Edit</span></a>
+          <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>CLOSE</span></a>
+            <a href="javascript:;" onclick="editNewVersionProject();" class="button1"><span>EDIT</span></a>
         </div>
       </div><!-- End #repostResult -->
     </div><!-- End #repostDialog -->
@@ -193,7 +195,7 @@
             <div class="modalHeader">
                 <div class="modalHeaderRight">
                     <div class="modalHeaderCenter">
-                        CREATE NEW PROJECT
+                        Create New Project
                         <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalCloseAddNewProject();">Close</a>
                     </div>
                 </div>
@@ -217,7 +219,7 @@
 
                 <div class="modalCommandBox">
                     <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC"
-                                                                                       onclick="addNewProject();">YES</span></span></a>
+                                                                                       onclick="addNewProject();">CREATE</span></span></a>
                     <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
                        onclick="modalCloseAddNewProject();"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>
@@ -270,7 +272,7 @@
 
                 <div class="modalCommandBox">
                     <a href="javascript:;" class="newButton1 updateInvoice"><span class="btnR"><span class="btnC"
-                                                                                       onclick="">Save</span></span></a>
+                                                                                       onclick="">SAVE</span></span></a>
                     <a href="javascript:;" class="newButton1 newButtonCancel closeModal"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>
                 </div>
@@ -323,7 +325,7 @@
             <div class="modalHeader">
                 <div class="modalHeaderRight">
                     <div class="modalHeaderCenter">
-                        CHOOSE YOUR COPILOT
+                        Choose Your Copilot
                         <a href="javascript:;" class="closeModal" title="Close">Close</a>
                     </div>
                 </div>
@@ -403,7 +405,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>SUBMISSION FEEDBACK</span>
+                    <span>Submission Feedback</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -436,7 +438,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>EDIT GENERAL FEEDBACK</span>
+                    <span>Edit General Feedback</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -469,7 +471,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>SUCCESSFULLY SAVED</span>
+                    <span>Successfully Saved</span>
                     <a href="javascript:" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -500,7 +502,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>SUCCESSFULLY LOCKED IN</span>
+                    <span>Successfully Locked In</span>
                 </div>
             </div>
         </div>
@@ -530,7 +532,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>LOCK IN MILESTONES</span>
+                    <span>Lock In Milestones</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -563,7 +565,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>LOCK IN MILESTONES</span>
+                    <span>Lock In Milestones</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -594,7 +596,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>LOCK IN MILESTONES</span>
+                    <span>Lock In Milestones</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -626,7 +628,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                <span>LOCK IN MILESTONES</span>
+                <span>Lock In Milestones</span>
                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
             </div>
         </div>
@@ -659,7 +661,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                PROJECT DESCRIPTION
+                                Project Description
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>
@@ -692,7 +694,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                COPILOT FEEDBACK
+                                Copilot Feedback
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>
@@ -733,7 +735,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                EDIT COPILOT FEEDBACK
+                                Edit Copilot Feedback
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>
@@ -775,7 +777,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                VIEW COPILOT FEEDBACK
+                                View Copilot Feedback
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>
@@ -816,7 +818,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>ERRORS</h2>
+                                <h2>Errors</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -850,7 +852,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>ERRORS</h2>
+                                <h2>Errors</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -880,7 +882,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>ERRORS</h2>
+                                <h2>Errors</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -963,7 +965,7 @@
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="CLOSE"
                                        class="closebutton button6 closeButton"><span
-                                            class="left"><span class="right">Close</span></span></a>
+                                            class="left"><span class="right">CLOSE</span></span></a>
                                 </div>
                             </div>
                             <!-- End .content -->
@@ -998,7 +1000,7 @@
                             <div class="clear"></div>
                             <div class="buttonArea">
                                 <a href="javascript:;" title="CLOSE" class="closebutton button6 closeButton"><span
-                                        class="left"><span class="right">Close</span></span></a>
+                                        class="left"><span class="right">CLOSE</span></span></a>
                             </div>
                         </div>
                         <!-- End .content -->
@@ -1022,7 +1024,7 @@
                     <div class="barMidM">
                         <!-- title -->
                         <div class="modal-title">
-                            <h2>CUSTOM GAME PLAN</h2>
+                            <h2>Custom Game Plan</h2>
                             <a href="javascript:;" class="closeModal">Close</a>
                         </div>
                         <!-- End .modal-title -->
@@ -1065,7 +1067,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>ADD USER TO LIST</h2>
+                                <h2>Add User To List</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -1135,7 +1137,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>DELETE USERS</h2>
+                                <h2>Delete Users</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -1166,7 +1168,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>DELETE USERS</h2>
+                                <h2>Delete Users</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -1195,7 +1197,7 @@
                         <div class="inner">
                             <!-- title -->
                             <div class="modal-title">
-                                <h2>ALERT</h2>
+                                <h2>Alert</h2>
                                 <a href="javascript:;" class="closeModal">Close</a>
                             </div>
                             <!-- End .modal-title -->
@@ -1260,7 +1262,7 @@
             <div class="barMidM">
                 <!-- title -->
                 <div class="modal-title">
-                    <h2>COPILOT SELECTION CONFIRMATION</h2>
+                    <h2>Copilot Selection Confirmation</h2>
                     <a href="javascript:;" class="closeModal">Close</a>
                 </div>
                 <!-- End .modal-title -->
@@ -1311,7 +1313,7 @@
             <div class="barMidM">
                 <!-- title -->
                 <div class="modal-title">
-                    <h2>CREATE A COPILOT POSTING</h2>
+                    <h2>Create A Copilot Posting</h2>
                     <a href="javascript:;" class="closeModal">Close</a>
                 </div>
                 <!-- End .modal-title -->
@@ -1396,7 +1398,7 @@
                                 <div class="modalHeader">
                                     <div class="modalHeaderRight">
                                         <div class="modalHeaderCenter">
-                                            EDIT PROJECT MILESTONE
+                                            Edit Project Milestone
                                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                                         </div>
                                     </div>
@@ -1463,7 +1465,7 @@
                                 <div class="modalHeader">
                                     <div class="modalHeaderRight">
                                         <div class="modalHeaderCenter">
-                                            ADD A PROJECT MILESTONE
+                                            Add A Project Milestone
                                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                                         </div>
                                     </div>
@@ -1530,7 +1532,7 @@
                                 <div class="modalHeader">
                                     <div class="modalHeaderRight">
                                         <div class="modalHeaderCenter">
-                                            REMOVE PROJECT MILESTONE
+                                            Remove Project Milestone
                                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                                         </div>
                                     </div>
@@ -1571,7 +1573,7 @@
                 <div class="barMidR"><div class="barMidM">
                     <!-- title -->
                     <div class="modal-title">
-                        <h2>INSERT CUSTOM FORUM CONFIRMATION</h2>
+                        <h2>Insert Custom Forum Confirmation</h2>
                         <a href="javascript:;" class="closeModal">Close</a>
                     </div>
                     <!-- End .modal-title -->
@@ -1602,7 +1604,7 @@
             <div class="inner">
                 <!-- title -->
                 <div class="modal-title">
-                    <h2>INSERT CUSTOM FORUM</h2>
+                    <h2>Insert Custom Forum</h2>
                     <a href="javascript:;" class="closeModal">Close</a>
                 </div>
                 <!-- End .modal-title -->
@@ -1653,7 +1655,7 @@
             <div class="modalHeader">
                 <div class="modalHeaderRight">
                     <div class="modalHeaderCenter">
-                        CONFIGURE PROJECT FORUM
+                        Configure Project Forum
                         <a href="javascript:;" class="closeModal" title="Close">Close</a>
                     </div>
                 </div>
@@ -1699,6 +1701,179 @@
             <!-- end .modalFooter -->
         </div>
     </div>
+    
+    <!-- #addMoreUsersModal -->
+	<div id="addMoreUsersModal" class="outLay">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					Add to Users List...
+					<a href="javascript:;" class="closeOtherModal" title="Close">Close</a>
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		
+		<div class="modalBody">
+			<div class="modalBodyContent">
+				<div class="left">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Available User</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Select All</a>
+	    			</div>
+	    			<div class="searchBox">
+	    				<div class="searchTxt"><input type="text" class="searchText"/></div>
+						<a class="button1" href="javascript:void(0)"><span>Search</span></a>
+					</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+	    		<div class="middle">
+	    			<a class="addItem" href="javascript:void(0)"><img src="/images/add_tech.png" alt=""/></a>
+	    			<a class="removeItem" href="javascript:void(0)"><img src="/images/remove_tech.png" alt=""/></a>
+	    		</div>
+	    		<div class="right">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Chosen User</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Remove All</a>
+	    			</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+				<div class="clearFix"></div>
+			</div>
+			
+			<div class="modalCommandBox">
+    			<a href="javascript:;" class="newButton1 addMoreUserSave"><span class="btnR"><span class="btnC">SAVE</span></span></a>
+    			<a href="javascript:;" class="newButton1 returnUserModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+			</div>
+		</div>
+		<!-- end .modalBody -->
+		
+		<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #addMoreUsersModal -->
+
+		<!-- #assignProjectModal -->
+	<div id="assignProjectModal" class="outLay">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					Assign Project(s)...
+					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		
+		<div class="modalBody">
+			<div class="modalBodyContent">
+				<div class="left">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Available Projects</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Select All</a>
+	    			</div>
+	    			<div class="searchBox">
+	    				<div class="searchTxt"><input type="text" class="searchText"/></div>
+						<a class="button1" href="javascript:void(0)"><span>Search</span></a>
+					</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+	    		<div class="middle">
+	    			<a class="addItem" href="javascript:void(0)"><img src="/images/add_tech.png" alt=""/></a>
+	    			<a class="removeItem" href="javascript:void(0)"><img src="/images/remove_tech.png" alt=""/></a>
+	    		</div>
+	    		<div class="right">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Chosen Projects</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Remove All</a>
+	    			</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+				<div class="clearFix"></div>
+			</div>
+			
+			<div class="modalCommandBox">
+    			<a href="javascript:;" class="newButton1 assignProjectSave"><span class="btnR"><span class="btnC">SAVE</span></span></a>
+    			<a href="javascript:;" class="newButton1 addMoreUserModal"><span class="btnR"><span class="btnC">ADD MORE USERS</span></span></a>
+    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+			</div>
+		</div>
+		<!-- end .modalBody -->
+		
+		<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #assignProjectModal -->
+    
+    <!-- #userManageModal -->
+	<div id="userManageModal" class="outLay">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					User Management
+					<a href="javascript:;" class="closeModal" title="Close">Close</a>
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		
+		<div class="modalBody">
+			<div class="modalBodyContent">
+				<div class="left">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Available Users</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Select All</a>
+	    			</div>
+	    			<div class="searchBox">
+	    				<div class="searchTxt"><input type="text" class="searchText"/></div>
+						<a class="button1" href="javascript:void(0)"><span>Search</span></a>
+					</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+	    		<div class="middle">
+	    			<a class="addItem" href="javascript:void(0)"><img src="/images/add_tech.png" alt=""/></a>
+	    			<a class="removeItem" href="javascript:void(0)"><img src="/images/remove_tech.png" alt=""/></a>
+	    		</div>
+	    		<div class="right">
+	    			<div class="subtitle">
+	    				<a href="javascript:void(0)" class="leftTxt">Chosen Users</a>
+	    				<a href="javascript:void(0)" class="rightTxt">Remove All</a>
+	    			</div>
+	    			<div class="list">
+	    			</div>
+	    		</div>
+				<div class="clearFix"></div>
+			</div>
+			
+			<div class="modalCommandBox">
+    			<a href="javascript:;" class="newButton1 userManageSave"><span class="btnR"><span class="btnC">SAVE</span></span></a>
+    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+			</div>
+		</div>
+		<!-- end .modalBody -->
+		
+		<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #userManageModal -->
+    
     </div>
 
     <div id="modalBackgroundNew"></div>
@@ -1709,7 +1884,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            INSERT PROJECT FORUM
+                            Insert Project Forum
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -1778,7 +1953,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            DELETE CONFIRMATION
+                            Delete Confirmation
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -1813,7 +1988,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            DELETE CONFIRMATION
+                            Delete Confirmation
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -1849,7 +2024,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            ERROR
+                            Error
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -1883,7 +2058,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            ERRORS
+                            Errors
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -1968,7 +2143,7 @@
                 </dd>
             </dl>
             <div class="buttonLine">
-                <input type="button" class="done" value="Done" />
+                <input type="button" class="done" value="DONE" />
                 <span>or</span>
                 <a class="cancel" href="javascript:;">Cancel</a>
             </div>
@@ -1994,7 +2169,7 @@
                 </dd>
             </dl>
             <div class="buttonLine">
-                <input type="button" class="done" value="Done" />
+                <input type="button" class="done" value="DONE" />
                 <span>or</span>
                 <a class="cancel" href="javascript:;">Cancel</a>
             </div>
@@ -2027,8 +2202,8 @@
                 <textarea id="projectDescription" name="projectDescription" rows="6" cols="45"></textarea>
             </div>
             <div class="popupButtons">
-                <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-                <a href="javascript:;" onclick="addNewProject();" class="button1"><span>Yes</span></a>
+                <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
+                <a href="javascript:;" onclick="addNewProject();" class="button1"><span>YES</span></a>
             </div>
         </div>
         <!-- End #addProjectForm -->

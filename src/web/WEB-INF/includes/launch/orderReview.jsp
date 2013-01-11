@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.1
+  - Author: TCSASSEMBER, Ghost_141
+  - Version: 1.2
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: order review page for studio contest page.
@@ -8,6 +8,9 @@
   - Version 1.1 - TC Direct Replatforming Release 2 Change Note
   - - Add specification review cost.
   - - Add "Go to my Spec Review" section to support starting specification review for studio contest. 
+  - 
+  - Version 1.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
+  - - Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -104,7 +107,7 @@
 </div>
 
 <div class="buttonBox, hide" id="orderReview_buttonBox2">
-	<a href="javascript:editContest();" class="button6 contiune"><span class="left"><span class="right">Edit</span></span></a>
+	<a href="javascript:editContest();" class="button6 contiune"><span class="left"><span class="right">EDIT</span></span></a>
 </div>
 
 <div class="bottom-review" style="display:none" id="orderReview_bottom_review">

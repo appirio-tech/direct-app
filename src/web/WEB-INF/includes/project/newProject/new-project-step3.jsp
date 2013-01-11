@@ -1,11 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 3.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1 v1.0)
+  - 
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div id="newProjectStep3" class="hide newProjectStep">
@@ -13,7 +16,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>3</span>Project Game Plan</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 

@@ -12,7 +12,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-size: 100%;
 	vertical-align: baseline;
 	background: transparent;
-    line-height:13px;
+    line-height:16px;
 }
 
 /* tables still need 'cellspacing="0"' in the markup */
@@ -164,8 +164,8 @@ a.smallRed span.right {
 
 .dashBoardLookCP{
 	position:absolute;
-	top:46px;
-	right:23px;
+	top:60px;
+	right:11px;
 	}
 .lookCP{
 	background:url(../../images/redArrow.gif) no-repeat 0 center;
@@ -179,7 +179,7 @@ a.smallRed span.right {
 	.lookCP a,
 	.lookCP a:visited{
 		font-weight:bold;
-		text-decoration:none;
+		text-decoration:underline;
 		color:#333;
 		}
 	.lookCP a:hover{
@@ -378,11 +378,11 @@ a.smallRed span.right {
 						height: 19px;
 						float: left;
 						display: inline;
-						padding: 2px 7px;
+						padding: 0px 5px;
 						background: white;
 						border: #A8ABAD solid 1px;
 						font-family: Tahoma, Arial, Helvetica, sans-serif;
-						font-size: 12px;
+						font-size: 11px;
 						color: #6C6C6C;
 						}
 			

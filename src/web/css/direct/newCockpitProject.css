@@ -7,6 +7,9 @@
  *
  * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow) change notes: 
  *              added support for new analytics project type creation flow.
+ * 
+ * @version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ *              Update the CSS styles to fix multiple issues.
  */
 @charset "utf-8";
 /* CSS Document */
@@ -25,7 +28,7 @@
 	
 body#page{
 	margin:0;
-	padding:0;
+	padding:0 0 50px;
 	font-family:Arial, Helvetica, sans-serif;
 	background-color:#f6f6f6;
 	color:#333;
@@ -151,8 +154,8 @@ table {
 #tabs0 ul{
 	list-style:none;
 	padding:0;
-	margin:6px 0 6px 25px;
-	height:21px;
+	margin:0px 0 6px 25px;
+	height:33px;
 	}
 
 #tabs0 ul li{
@@ -1038,11 +1041,11 @@ table {
 				height:19px;
 				float:left;
 				display:inline;
-				padding:2px 7px !important;
+				padding:2px 5px !important;
 				background:#ffffff;
 				border:#a8abad solid 1px;
 				font-family:Tahoma, Arial, Helvetica, sans-serif;
-				font-size:12px;
+				font-size:11px;
 				color:#6c6c6c;
 				}
 			
@@ -1050,10 +1053,10 @@ table {
 			.stepSecond .geryContent .row textarea{
 				width:auto;
 				height:127px;
-				padding:2px 7px !important;
+				padding:2px 5px !important;
 				border:#a8abad solid 1px;
 				font-family:Tahoma, Arial, Helvetica, sans-serif;
-				font-size:12px;
+				font-size:11px;
 				color:#6c6c6c;
                 float:left;
                 overflow:auto;
@@ -2836,7 +2839,7 @@ table {
 			font-size:14px;
 			color:#000001;
 			line-height:32px;
-            text-transform:uppercase;
+            text-transform:none;
             }
         #new-modal .newModal .modal-title h2{
             line-height:26px;   
@@ -3125,7 +3128,7 @@ table {
 						margin-top:15px;
 						margin-left:10px;
 						margin-right:10px;
-						padding:1px;
+						padding:1px 5px;
 						background:#f8f8f8;
 						font-size:11px;
 						border:#a2a1a5 solid 1px;
@@ -4359,19 +4362,19 @@ a.grayBtn:hover{
         color: #6C6C6C;
         display: inline-block; 
         font-family: Tahoma,Arial,Helvetica,sans-serif;
-        font-size: 12px;
+        font-size: 11px;
         height: 19px;
-        padding: 2px 7px;
+        padding: 2px 5px;
         width: 353px;
     }
     .analyticsSteps textarea{
         border: 1px solid #A8ABAD;
         color: #6C6C6C; 
         font-family: Tahoma,Arial,Helvetica,sans-serif;
-        font-size: 12px;
+        font-size: 11px;
         height: 127px;
         overflow: auto;
-        padding: 2px 7px;
+        padding: 2px 5px;
         width:300px;
     }
     .analyticsSteps .intro{

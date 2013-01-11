@@ -40,7 +40,7 @@
                         <jsp:include page="includes/contest/tabs.jsp"/>
 
                         <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
-                            <div class="container2BottomLeft"><div class="container2BottomRight">
+                            <div><div>
                                 <div class="container2Content">
 
                                         <div class="details">

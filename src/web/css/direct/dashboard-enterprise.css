@@ -8,6 +8,9 @@
  *
  * - Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly change notes:
  * - Add css styles for the volume view
+ * 
+ * - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 change notes:
+ * - Update CSS styles to fix multiple issues.
  */
 .chartCollapse a.expand{
   display:inline-block;
@@ -216,7 +219,7 @@ a.fiterButton{
 
 .filterProject select{ 
 	width:350px;
-	font-size:12px;
+	font-size:11px;
 	border:1px solid #a9acae;
 }
 
@@ -801,7 +804,7 @@ td.fontGreen{
 
 .summaryPanel .tabsContent .marketSummary .tooltipBox {
     width: 208px;
-    margin-left: -104px;
+    margin-left: -80px;
 }
 
 .summaryPanel .tabsContent .compare .tooltipBox {
@@ -816,6 +819,7 @@ td.fontGreen{
 
 .tooltipBox.firstColumn {
     left: 80%;
+    margin-left: -80px;
 }
 
 .tooltipBox SPAN.arrow {

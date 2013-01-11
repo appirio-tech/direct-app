@@ -1,12 +1,15 @@
 <%--
   - Author: TCSASSEMBLY, Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 6.
   - 
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added id and class field for question elements.
+  - 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Fix a text inconsistency bug.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div id="newProjectStep6" class="hide newProjectStep">
@@ -14,7 +17,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3 class="question41"></h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 
@@ -38,7 +41,7 @@
                         <a href="javascript:void(0)">Hide</a>
                     </dt>
                     <dd>Your project will have a private forum associated to it.  Use this screen to configure the topics you will have in your forum.  By default, one has been created for you.</dd>
-                    <dd>The topic named “Project Discussion” cannot be removed.</dd>
+                    <dd>The topic named project Discussion” cannot be removed.</dd>
                 </dl>
             </div><!-- End .noteMask -->                                        
 

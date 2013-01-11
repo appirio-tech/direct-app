@@ -28,6 +28,9 @@
  *
  * Version 2.0 - Release Assembly - TC Cockpit Project Report Permission
  * - Update the javascript codes to support the newly added project permission type: 'report'
+ * 
+ * Version 2.1 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ * - Update to use newly added modal.
  *
  * @author TCSASSEMBLER
  * @version 2.0
@@ -131,7 +134,7 @@ function pbutton_submit() {
     var result = JSON.stringify(ret);
     var request = {permissionsJSON:result};
 
-    modalPreloader();
+    modalPreloader2();
 
     $.ajax({
         type:'POST',
@@ -1297,6 +1300,19 @@ $.permission = {
       $("#" + dialogId + " .searchTxt").val("");
       $("#" + dialogId).dialog("open");
     },
+    
+    /**
+     * Show Specified modal window.
+     * @param modalId
+     *            the id of modal.
+     */
+    showModalWindow:function (modalId) {
+        $("#" + modalId + " .list").each(function() {
+            $(this).empty();
+        });
+        $("#" + modalId + " .searchText").val("");
+        modalPreloader('#' + modalId);
+    },
 
     /**
      * Handle add user click event.
@@ -1306,13 +1322,15 @@ $.permission = {
      */
     handleAddUserClick:function (projectId) {
       // clear and open the dialog
-      this.clearAndOpenDialog("manageUserDialog");
+      //this.clearAndOpenDialog("manageUserDialog");
+      this.showModalWindow("userManageModal");
 
       // set current project id
       this.currentProjectId = projectId;
 
         $.each($.permission.projects[projectId].userPermissions, function (index, item) {
-          var listDiv = $("#manageUserDialog .right .list");
+          //var listDiv = $("#manageUserDialog .right .list");
+          var listDiv = $("#userManageModal .right .list");
           var htmlToAdd = "<div name='" + item.handle + "' id='mu_r_" + index + "' class='listItem'>"
               + item.handle + "</div>";
           listDiv.append(htmlToAdd);
@@ -1322,6 +1340,9 @@ $.permission = {
         $(".ui-dialog-content .list .listItem").click(function () {
           $(this).toggleClass("active");
         });
+      $("#userManageModal .list .listItem").click(function () {
+          $(this).toggleClass("active");
+      });
     },
 
     /**
@@ -1332,23 +1353,30 @@ $.permission = {
      */
     handleAssignProjectClick:function (userId) {
       // clear and open the dialog
-      this.clearAndOpenDialog("addProjectDialogPm");
+      //this.clearAndOpenDialog("addProjectDialogPm");
+      this.showModalWindow("assignProjectModal");
 
       // initiate the currentUserList
       this.currentUserMap = {};
       this.currentUserMap[userId] = this.users[userId].handle;
 
         $.each($.permission.users[userId].projectPermissions, function (index, item) {
-          var listDiv = $("#addProjectDialogPm .right .list");
+          //var listDiv = $("#addProjectDialogPm .right .list");
+          var listDiv = $("#assignProjectModal .right .list");
           var htmlToAdd = "<div name='" + item.projectName + "' id='ap_r_" + index + "' class='listItem'>"
               + item.projectName + "</div>";
           listDiv.append(htmlToAdd);
       });
 
+      /*
       $(".ui-dialog-content .list .listItem").unbind("click");
         $(".ui-dialog-content .list .listItem").click(function () {
           $(this).toggleClass("active");
         });
+      */
+      $("#assignProjectModal .list .listItem").click(function() {
+          $(this).toggleClass("active");
+      });
     },
 
     /**
@@ -1358,14 +1386,16 @@ $.permission = {
       this.addMoreUsersDirect = true;
 
       // clear and open the dialog
-      this.clearAndOpenDialog("addUserDialog");
+      //this.clearAndOpenDialog("addUserDialog");
+      this.showModalWindow("addMoreUsersModal");
     },
 
     /**
      * Handle add user process.
      */
     processAddUsers:function () {
-        $("#addUserDialog .right .list .listItem").each(function () {
+        //$("#addUserDialog .right .list .listItem").each(function () {
+        $("#addMoreUsersModal .right .list .listItem").each(function () {
         var userId = $.permission.retrieveId(this, "au_r_");
         var handle = $(this).attr("name");
 
@@ -1381,7 +1411,8 @@ $.permission = {
      * Handle add user to project process.
      */
     processAddUsersToProject:function () {
-      $("#manageUserDialog .right .list .listItem")
+      //$("#manageUserDialog .right .list .listItem")
+      $("#userManageModal .right .list .listItem")
           .each(
             function () {
                 var project = $.permission.projects[$.permission.currentProjectId];
@@ -1422,7 +1453,8 @@ $.permission = {
      * Handle assign projects process.
      */
     processAssignProjects:function () {
-        $("#addProjectDialogPm .right .list .listItem").each(function () {
+        //$("#addProjectDialogPm .right .list .listItem").each(function () {
+        $("#assignProjectModal .right .list .listItem").each(function() {
         var pId = $.permission.retrieveId(this, "ap_r_");
 
             $.each($.permission.currentUserMap, function (uId, handle) {

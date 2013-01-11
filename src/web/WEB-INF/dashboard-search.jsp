@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, bugbuka, TCSASSEMBLER
-  - Version: 1.6 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+  - Author: winsty, GreatKevin, bugbuka, Ghost_141, TCSASSEMBLER
+  - Version: 1.7 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
@@ -16,6 +16,9 @@
   - Add project filters and project filter values to filter panel
   - Version 1.6 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1) changes:
   -     Add customers and project names to the filter panel for the Operations Dashboard page 
+  - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - - Fix text inconsistency bug.
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -69,7 +72,7 @@
                     <div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
-                            <s:textfield cssClass="fLeft" name="formData.searchFor" id="searchFor"/>
+                            <s:textfield cssClass="fLeft searchText" name="formData.searchFor" id="searchFor"/>
                             <label class="fLeft" for="searchIn"> In</label>
                             <s:select id="searchIn" list="requestData.dashboardSearchTypes" name="formData.searchIn"/>
                             <div id="datefilter" style="float:left;">
@@ -160,15 +163,15 @@
                                             <div class='column3'>
                                                 <div class='row'>
                                                     <span class='title dateLabel'>Creation Date</span>
-                                                    <input id='startDateBegin' type='text' class='date-pick'/>
+                                                    <input id='startDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='startDateEnd' type='text' class='date-pick'/>
+                                                    <input id='startDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                 </div>
                                                 <div class='row'>
                                                     <span class='title dateLabel'>Complete Date</span>
-                                                    <input id='endDateBegin' type='text' class='date-pick'/>
+                                                    <input id='endDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='endDateEnd' type='text' class='date-pick'/>
+                                                    <input id='endDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                 </div>
                                             </div>
                                             <!--end .column3-->
@@ -213,8 +216,8 @@
                                                  <div class="container2Left">
                                                         <div class="container2Right">
                                                             <div class="container2Bottom">
-                                                                <div class="container2BottomLeft">
-                                                                    <div class="container2BottomRight">
+                                                                <div>
+                                                                    <div>
 
                                                                         <div class="panel tableControlPanel"></div>
 

@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version: 1.4
+  - Author: isv, Ghost_141
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -20,6 +20,9 @@
   -
   - Version 1.5 (Release Assembly - TC Direct Cockpit Release Five) changes:
   - - Add DR points check flag in software contest details page.
+  - 
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - - Fix multiple bugs.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -186,7 +189,7 @@
 			  <span class="mid_info">
 				Digital Points:&nbsp;&nbsp;$
 			  </span>
-			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/>
+			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7" style="padding: 0 5px; font-size: 11px;"/>
               <br/>
               <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>

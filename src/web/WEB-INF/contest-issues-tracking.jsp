@@ -1,5 +1,5 @@
 <%--
-  - Author: xjtufreeman, TCSDEVELOPER, TCSASSEMBLER
+  - Author: xjtufreeman, Ghost_141, TCSDEVELOPER, TCSASSEMBLER
   - Version: 1.0.5
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
@@ -14,9 +14,12 @@
   -
   - Version 1.0.4 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) change Notes: 
   - - Add support to upload attachment to JIRA issue under Bug Race tab.
-
+  - 
   - Version 1.0.4 (TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
   - - Added the missing </form> element
+  - 
+  - Version 1.0.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - - Fix a text inconsistency bug.
 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -84,7 +87,7 @@
                                 
                                 <a class="button6 btnAddNew" href="#">
                                     <span class="left">
-                                        <span class="right">Launch Bug Race</span>
+                                        <span class="right">LAUNCH BUG RACE</span>
                                     </span>
                                 </a>
 
@@ -406,7 +409,7 @@
                                                     <label>1st place:</label>
                                                     <div class="row">
                                                         <input type="text" class="text firstPayment" id="firstPayment" name="issue.firstPlacePayment"/>
-                                                        <p>Payment amounts in US $ for the issue.</p>
+                                                        <p>Payment amount in US $ for the issue.</p>
                                                     </div>
                                                     <label><em>*TCO Points:</em></label>
                                                     <div class="row">
@@ -497,9 +500,9 @@
 
                                                     </div>
                                                     <div class="buttonBox">
-                                                        <a href="#" class="button6 btnUpdate"><span class="left"><span class="right">Update</span></span></a>
-                                                        <a href="#" class="button6 btnCreate"><span class="left"><span class="right">Activate</span></span></a>
-                                                        <a href="#" class="button6 btnCancel"><span class="left"><span class="right">Cancel</span></span></a>
+                                                        <a href="#" class="button6 btnUpdate"><span class="left"><span class="right">UPDATE</span></span></a>
+                                                        <a href="#" class="button6 btnCreate"><span class="left"><span class="right">ACTIVATE</span></span></a>
+                                                        <a href="#" class="button6 btnCancel"><span class="left"><span class="right">CANCEL</span></span></a>
                                                     </div>
                                                     <div class="clear"></div>
                                                     </form>
@@ -547,7 +550,7 @@
                                                         
                                                         <a class="button6 btnAddNew" href="#">
                                                             <span class="left">
-                                                                <span class="right">Launch Bug Race</span>
+                                                                <span class="right">LAUNCH BUG RACE</span>
                                                             </span>
                                                         </a>
 

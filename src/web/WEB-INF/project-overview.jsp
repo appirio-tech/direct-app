@@ -31,6 +31,8 @@
 - - Hide some links/sections if user doesn't have write permission on the project.
   - Version 1.5 - Release Assembly - TC Direct Project Forum Configuration Assembly 2 
   - - Add Configure Project Forum button inside the project forum section.
+  - Version 1.6 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Fix bug COCKPITUI-208.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -571,7 +573,7 @@
                             <s:else>
                                <div class="projectCopilotsList">
                   <div class="copilotsListHeader">
-                    <h3><strong class="red"><s:property value="copilotStats.size"/></strong> copilot working on this project.</h3>
+                    <h3><strong class="red"><s:property value="copilotStats.size"/></strong> <s:if test="copilotStats.size == 1">copilot</s:if><s:else>copilots</s:else> working on this project.</h3>
                   </div>
                   <div class="copilotsListBody">
                     <div id="projectCopilotsCarouselWrapper" class="noCopilotType">

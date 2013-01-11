@@ -1,6 +1,6 @@
 <%--
-  - Author: tangzx, GreatKevin
-  - Version: 1.2
+  - Author: tangzx, GreatKevin, Ghost_141
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
@@ -11,6 +11,9 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) Change notes:
   - Add the filter panel to my copilot posting pages.
+  - 
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) Change notes:
+  - Add readonly in date element.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -102,15 +105,15 @@
                                                         <div class='column3'>
                                                             <div class='row'>
                                                                 <span class='title dateLabel'>Start Date</span>
-                                                                <input id='startDateBegin' type='text' class='date-pick'/>
+                                                                <input id='startDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                                 <span class='title toLabel'>To</span>
-                                                                <input id='startDateEnd' type='text' class='date-pick'/>
+                                                                <input id='startDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                             </div>
                                                             <div class='row'>
                                                                 <span class='title dateLabel'>End Date</span>
-                                                                <input id='endDateBegin' type='text' class='date-pick'/>
+                                                                <input id='endDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                                 <span class='title toLabel'>To</span>
-                                                                <input id='endDateEnd' type='text' class='date-pick'/>
+                                                                <input id='endDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                             </div>
                                                         </div>
                                                         <!--end .column3-->

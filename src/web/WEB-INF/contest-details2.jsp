@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv, GreatKevin
-  - Version: 1.5
+  - Author: BeBetter, isv, GreatKevin, Ghost_141
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -18,6 +18,8 @@
   - Version 1.5 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -84,8 +86,8 @@
 
                         <jsp:include page="includes/contest/tabs.jsp"/>
 
-                        <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
-                            <div class="container2BottomLeft"><div class="container2BottomRight">
+                        <div class="container2Left"><div class="container2Right"><div class="container2Bottom" style="background: url(../../images/container2_bottom.png) repeat-x bottom;">
+                            <div><div>
 
                             <div class="container2Content_det">
 

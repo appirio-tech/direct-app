@@ -26,7 +26,7 @@
                     <s:if test="permissions.length == 0">
                         <a class="button1 thickbox"
                            href="TB_inline?height=260&amp;width=500&amp;inlineId=setPermissionPopup">
-                            <span>Set Permission</span></a>
+                            <span>SET PERMISSION</span></a>
                     </s:if>
                     <s:else>
                         <s:iterator value="permissions"><s:property value="description"/><br/></s:iterator>

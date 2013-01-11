@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER, duxiaoyang
-  - Version: 1.1
+  - Author: TCSASSEMBLER, duxiaoyang, Ghost_141
+  - Version: 1.2
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: The step 6 of post a copilot.
   - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
   -   Finished step 2 and 3.
@@ -175,13 +178,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label>1ST place:</label></td>
+                        <td><label>1st place:</label></td>
                         <td>
                             <span id="amountSummaryFirst"></span>
                         </td>
                     </tr>
 					<tr>
-                        <td><label>2ND place:</label></td>
+                        <td><label>2nd place:</label></td>
                         <td>
                             <span id="amountSummarySecond"></span>
                         </td>

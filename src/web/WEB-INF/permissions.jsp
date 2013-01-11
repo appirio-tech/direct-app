@@ -63,7 +63,7 @@
 
                     <div class="container2">
                         <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
-                            <div class="container2BottomLeft"><div class="container2BottomRight">
+                            <div><div>
                                 <div class="container2Content">
                                     <div class="search">
                                         <a href="#" class="button1"><span>Search</span></a><input type="text" /><label>Search User:</label>

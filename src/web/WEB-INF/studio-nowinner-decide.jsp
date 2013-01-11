@@ -1,9 +1,11 @@
 <%--
-  - Author: TCSDEVELOPER
+  - Author: Ghost_141, TCSDEVELOPER
   -
   - Version 1.1 (TC Direct Replatforming Release 5) change notes: Change contestId parameter to projectId.
   -
-  - Version: 1.1
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
+  - 
+  - Version: 1.2
   - Since: Submission Viewer Release 4 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -81,12 +83,12 @@
                                                                  <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                                                  <s:param name="formData.roundType" value="formData.roundType"/>
                                                              </s:url>" class="button7 btnNoThankYou">
-                                                        <span class="left"><span class="right">No, Thank You</span></span></a>
+                                                        <span class="left"><span class="right">NO, THANK YOU</span></span></a>
 
                                                     <link:studioSubmissionsGrid contestId="${viewData.contestId}"
                                                                                 milestoneRound="${formData.isMilestoneRound}"
                                                                                 styleClass="button6 btnRunAgian">
-                                                        <span class="left"><span class="right">Run this Contest Again</span></span>
+                                                        <span class="left"><span class="right">RUN THIS CONTEST AGAIN</span></span>
                                                     </link:studioSubmissionsGrid>
                                                 </div>
 

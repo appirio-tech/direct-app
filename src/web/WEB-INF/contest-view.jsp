@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv, tangzx, Blues, TCSASSEMBLER
-  - Version: 1.6
+  - Author: BeBetter, isv, tangzx, Blues, Ghost_141, TCSASSEMBLER
+  - Version: 1.9
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
@@ -28,6 +28,9 @@
   -
   - Version 1.8 (Release Assembly - TopCoder Cockpit Project Contest Results Export Part 1 version 1.0) changes:
   - Add a new panel for exporting project contest results.
+  - 
+  - Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
+  - Fix a text inconsistency bug.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -128,15 +131,15 @@
                                             <div class='column3'>
                                                 <div class='row'>
                                                     <span class='title dateLabel'>Start Date</span>
-                                                    <input id='startDateBegin' type='text' class='date-pick'/>
+                                                    <input id='startDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='startDateEnd' type='text' class='date-pick'/>
+                                                    <input id='startDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                 </div>
                                                 <div class='row'>
                                                     <span class='title dateLabel'>End Date</span>
-                                                    <input id='endDateBegin' type='text' class='date-pick'/>
+                                                    <input id='endDateBegin' type='text' readonly="readonly" class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='endDateEnd' type='text' class='date-pick'/>
+                                                    <input id='endDateEnd' type='text' readonly="readonly" class='date-pick'/>
                                                 </div>
                                             </div>
                                             <!--end .column3-->
@@ -205,7 +208,7 @@
                                                 <td>
                                                     <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
                                                         <img src="/images/<s:property value="contestType.letter"/>_small.png"
-                                                             alt="<s:property value="contestType.letter"/>"/>
+                                                             alt="<s:property value="contestType.letter"/>" class="contestTypeIcon"/>
 
                                                     </div>
                                                     <div style="display:table-cell;text-align:left">
@@ -320,8 +323,8 @@
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
-                                            <div class="container2BottomLeft">
-                                                <div class="container2BottomRight">
+                                            <div>
+                                                <div>
 
                                                         <div class="panel copilotPostingsPanel"></div>
 

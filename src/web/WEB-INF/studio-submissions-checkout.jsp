@@ -1,11 +1,12 @@
 <%--
-  - Author: flexme, TCSDEVELOPER
+  - Author: flexme, Ghost_141, TCSDEVELOPER
   -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   - Version 1.3 (TC Direct Replatforming Release 5) change notes: The final round check out process is changed, the unused code were removed.
   - Version 1.2 (TC Direct Replatforming Release 3  ) change notes: Update studioCheckoutSubmissionItem tag to work with the new Submission type.
   - Version 1.1 (Direct Submission Viewer Release 4 ) change notes: Added logic for handling "Confirmed" submissions.
-  -
-  - Version: 1.3
+  - 
+  - Version: 1.4
   - Since: Submission Viewer Release 3 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -158,7 +159,7 @@
                                                                         <div class="generalFeedbackAction">
                                                                         <a href="javascript:" class="button6" rel="${contestId}"
                                                                            id="saveGeneralFeedback">
-                                                                            <span class="left"><span class="right">Save Feedback</span></span></a>
+                                                                            <span class="left"><span class="right">SAVE FEEDBACK</span></span></a>
                                                                             <span id="ginfo" class="fright"></span>
                                                                         </div>
                                                                         </s:if>

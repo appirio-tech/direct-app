@@ -1,12 +1,13 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
+  - Author: isv, flexme, Ghost_141, TCSDEVELOPER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Only display the update feedback form when
   - feedback text is null or empty.
   - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: The form for updating feedback is displayed only
   - if the submission is not "Confirmed"
   - Version 1.3 (TC Direct Replatforming Release 3  ) change notes: update some tags parameters according to the DTO and the new tags.
-  -
-  - Version: 1.3
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
+  - 
+  - Version: 1.4
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -18,7 +19,7 @@
     <h4>Feedback:</h4>
     <textarea cols="10" rows="5" id="feedback">${viewData.feedbackText}</textarea>
     <a href="javascript:;" class="button6" id="updateFeedback"><span class="left"><span
-            class="right">Save Feedback</span></span></a>
+            class="right">SAVE FEEDBACK</span></span></a>
     <div class="clear"></div>
 </div>
 </if:isConfirmedStudioSubmission>

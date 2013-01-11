@@ -1,8 +1,11 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
+  - Fix multiple bugs.
+  - 
   - Description: The grid view of copilots.
   - Since: Release Assembly - TC Direct Select From Copilot Pool Assembly
   - Version 1.0 (Release Assembly - TC Direct Select From Copilot Pool Assembly).
@@ -24,7 +27,7 @@
                             <!-- img -->
                             <div class="copioltPic">
                                 <img src="${profile.photo.photoPath}" alt="" style="height:106px;width:96px"/>
-                                <a href="javascript:;" class="blackButton selectCopilot" id="gridSelectButton_${profile.member.copilotProfile.userId}">Choose</a>
+                                <a href="javascript:;" class="blackButton selectCopilot" id="gridSelectButton_${profile.member.copilotProfile.userId}">CHOOSE</a>
                             </div>
                             <!-- End .projectPic -->
                             
@@ -61,7 +64,7 @@
                                         <td class="lastTd "><strong class="redColorText">${profile.member.copilotProfile.suspensionCount}</strong></td>
                                     </tr>                                    
                                     <tr>
-                                        <td class="firstTd">Fullfillment: </td>
+                                        <td class="firstTd">Fulfillment: </td>
                                         <td class="lastTd"><strong class="field_${profile.member.copilotProfile.userId}_fullfillment">loading</strong></td>
                                     </tr>
                                     <tr>
@@ -71,7 +74,7 @@
                                     </tr>
                                 </table>
                                 
-                                <p>Current Working On</p>
+                                <p>Currently working on</p>
                                 <ul>
                                     <li>
                                         <span>Number of Project: </span>

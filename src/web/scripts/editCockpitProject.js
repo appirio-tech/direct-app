@@ -22,8 +22,12 @@
  *  Version 2.3 (Release Assembly - TopCoder Direct Project Audit v1.0)
  *  - Fix the bug when saving direct project.
  *
- * @author GreatKevin, TCSDEVELOPER
- * @version 2.3
+ *  Version 2.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ *  - Fix a text inconsistency bug.
+ *  - Fix bug COCKPITUI-240.
+ * 
+ * @author GreatKevin, Ghost_141, TCSDEVELOPER
+ * @version 2.4
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -634,7 +638,7 @@ $(document).ready(function (e) {
                     handleJsonResult(
                         jsonResult,
                         function (result) {
-                            showSuccessfulMessage("The contests notifications setting have been saved.");
+                            showSuccessfulMessage("The contest notifications setting have been saved.");
                         },
                         function (errorMessage) {
                             modalAllClose();
@@ -972,7 +976,8 @@ $(document).ready(function (e) {
                     $('#budgetOutput').trigger('change');
                 }
             },
-            step:1000
+            step:1000, 
+            errorMessage:"Please input a positive integer for project budget."
         });
 
 
@@ -998,6 +1003,7 @@ $(document).ready(function (e) {
                 $('#durationOutput').val(value);
                 $('.datePickerView .radio').trigger('click').trigger('change');
             }
+            errorMessage:"Please input a positive integer for project duration."
         });
 
         $('.sliderView input.radio').change(function () {
@@ -1996,7 +2002,8 @@ function formatNumber(number) {
             close:false,
             onExceed:null,
             onIn:null,
-            step:0
+            step:0, 
+            errorMessage:""
         }, s || {});
         this.css('relative');
         this.data('options', s);
@@ -2145,7 +2152,7 @@ function formatNumber(number) {
                     var v = value.replace(/[,]/g, '').replace(/[ ]/g, '');
                     var reg = /^[0-9]+$/;
                     if (!($.trim(v).length == 0) && !reg.test(v)) {
-                        showErrors('Please input a positive integer for project budget.');
+                        showErrors(s.errorMessage);
                         $(this).val(opt.orgValue);
                         return;
                     }

@@ -1,12 +1,15 @@
 <%--
-  - Author: veve, GreatKevin
-  - Version: 1.1
+  - Author: veve, GreatKevin, Ghost_141
+  - Version: 1.2
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   -
   - Version 1.1 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
   - - Added copilot posting dashboard
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Remove the container2BottomLeft and container2BottomRight in pagination part.
+  - 
   - Description: This page renders the copilot posting receipt page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -73,7 +76,7 @@
                                             <jsp:include page="includes/copilot/tabs.jsp"/>
 
                                             <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
-                            <div class="container2BottomLeft"><div class="container2BottomRight">
+                            <div><div>
 
                             <div class="container2Content">
                                 <jsp:include page="includes/contest/receiptTab.jsp"/>

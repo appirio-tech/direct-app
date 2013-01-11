@@ -1,6 +1,6 @@
 <%--
-  - Author: tangzx, GreatKevin
-  - Version: 1.5
+  - Author: tangzx, GreatKevin, Ghost_141
+  - Version: 1.6
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
@@ -20,6 +20,9 @@
   - Version 1.5 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
+  - 
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -119,7 +122,7 @@
                                 <strong>All Active Contests</strong>
                             </div>
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Contests</h2>
+                                <h2 class="title contestTitle">Active Contests</h2>
                             </div>
                             <!-- End .areaHeader -->
                             <form id="filterPanelForm" autocompleted="off">
@@ -178,15 +181,15 @@
                                             <div class='column3'>
                                             	<div class='row'>
                                                 	<span class='title dateLabel'>Start Date</span>
-                                                    <input id='startDateBegin' type='text' class="date-pick"/>
+                                                    <input id='startDateBegin' type='text' readonly="readonly" class="date-pick"/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='startDateEnd' type='text' class="date-pick"/>
+                                                    <input id='startDateEnd' type='text' readonly="readonly" class="date-pick"/>
                                                 </div>
                                                 <div class='row'>
                                                 	<span class='title dateLabel'>End Date</span>
-                                                    <input id='endDateBegin' type='text' class="date-pick"/>
+                                                    <input id='endDateBegin' type='text' readonly="readonly" class="date-pick"/>
                                                     <span class='title toLabel'>To</span>
-                                                    <input id='endDateEnd' type='text' class="date-pick"/>
+                                                    <input id='endDateEnd' type='text' readonly="readonly" class="date-pick"/>
                                                 </div>
                                             </div>
                                             <!--end .column3-->
@@ -414,8 +417,8 @@
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
-                                            <div class="container2BottomLeft">
-                                                <div class="container2BottomRight">
+                                            <div>
+                                                <div>
                                                     <div class="panel tableControlPanel"></div>
                                                 </div>
                                             </div>

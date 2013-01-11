@@ -91,9 +91,12 @@
  *
  *  Version 2.9 - Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp
  *  - Comment out the old copilot pickup handler
- *
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin
- * @version 2.9
+ *  
+ *  Version 3.0 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ *  - Update a method to fix a text inconsistency bug.
+ * 
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141
+ * @version 3.0
  */
 
 var mouse_is_inside;
@@ -2310,7 +2313,7 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                     $(".roadmapViewArea .loading").hide();
                 }
             } else {
-                showErrors("Fail to load the milestone data");
+                showErrors("Failed to load the milestone data");
             }
         }
     });
@@ -2576,7 +2579,7 @@ function loadGroupValuesForGroup(selector, groupId, successCallback) {
 }
 
 /* new code for Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1 - add ajax preloader functions */
-var intPreloaderTimmer = 20000;	//timer
+var intPreloaderTimmer = 2000;	//timer
 var strTip = "Loading...";		//string for preloader
 var objPreloaderTimmer;			//timer for modal
 var floatOverlayOpacity = 0.6;	//opacity for modal Background
@@ -2604,23 +2607,25 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		$("#modalBackground").css("opacity", floatOverlayOpacity);
 
 		if ($("body").height() > $("#modalBackground").height()){
-            $("#modalBackground").css("height", $("body").height() + "px");
-		}
+            $("#modalBackground").css("height", $("body").height() + 50 + "px");
+		} else {
+            $("#modalBackground").css("height", $("#modalBackground").height() + 50 + "px");
+        }
 	}
 
 	/* close modal */
 	modalClose = function() {
         $('#modalBackground').hide();
 		$('#new-modal #preloaderModal').hide();
-        $('#new-modal .outLay').hide();
+        $('.outLay').hide();
     }
 
     modalAllClose = function() {
         $('#modalBackground').hide();
 		$('#new-modal .outLay').hide();
+        $('.outLay').hide();
     }
-
-
+    
     /**
      * Close the add new project modal window.
      */
@@ -2628,7 +2633,6 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
         $('#modalBackground').hide();
 		$('#new-modal #addNewProjectModal').hide();
     }
-
 
 	/* load modal (string itemID )*/
 	modalLoad = function(itemID) {
@@ -2683,8 +2687,49 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		}
 
         modalLoad('#preloaderModal');
-	
+        
+        if(objPreloaderTimmer) clearTimeout(objPreloaderTimmer);
+	    objPreloaderTimmer = setTimeout(function(){
+			$('#new-modal #preloaderModal').hide();
+			modalLoad(itemID);
+			if(strMarginTop) $('#new-modal').css({'margin-top':strMarginTop});
+            if(callback){
+              callback.call(this);
+            } 
+        },intPreloaderTimmer);
+        
 	}
+    modalPreloader2 = function(itemID,strMarginTop,callback) {
+        //        if($.browser.msie) {
+//            $('#new-modal #preloaderModal').remove();
+//        }
+
+
+		if($('#new-modal #preloaderModal').length == 0){
+			var preloaderHtml = '';
+			preloaderHtml += '<div id="preloaderModal" class="outLay">';
+			preloaderHtml += 	'<div class="modalHeaderSmall">';
+			preloaderHtml += 	'<div class="modalHeaderSmallRight">';
+			preloaderHtml += 	'<div class="modalHeaderSmallCenter">';
+			preloaderHtml += 	'</div></div></div>';
+
+			preloaderHtml += 	'<div class="modalBody">';
+			preloaderHtml += 	'<img id="loadingImg" src="/images/preloader-loading.gif" alt="Loading" />';
+			preloaderHtml += 	'<div class="preloaderTips">';
+			preloaderHtml += 	strTip;
+			preloaderHtml += 	'</div></div>';
+
+			preloaderHtml += 	'<div class="modalFooter">';
+			preloaderHtml += 	'<div class="modalFooterRight">';
+			preloaderHtml += 	'<div class="modalFooterCenter">';
+			preloaderHtml += 	'<div class="</div></div></div>">';
+			preloaderHtml += '</div>';
+
+			$('#new-modal').append(preloaderHtml);
+		}
+
+        modalLoad('#preloaderModal');
+    }
 
 	$('#new-modal .outLay .closeModal').live('click', function(){
 		modalAllClose();
@@ -2693,6 +2738,22 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 
     $('#new-modal .outLay .closeProjectModal').live('click', function(){
 		modalCloseAddNewProject();
+		return false;
+	});
+	
+	//copilot Manage
+	$('.addMoreUserModal').live('click',function(){
+		modalPreloader('#addMoreUsersModal');
+		$('#addMoreUsersModal').addClass('focusModal');
+		return false;
+	});
+	$('.returnUserModal,.closeOtherModal').live('click',function(){
+		if($('#addMoreUsersModal').hasClass('focusModal')){
+			modalPreloader('#assignProjectModal');
+            $('#addMoreUsersModal').removeClass('focusModal');
+		}else{
+			modalClose();
+		}
 		return false;
 	});
 

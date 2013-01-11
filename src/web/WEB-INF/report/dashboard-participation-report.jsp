@@ -1,6 +1,6 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade)
+  - Author: bugbuka, Ghost_141
+  - Version: 1.3 (Release Assembly - TopCoder Cockpit Direct UI - Text and Layout Part 1 Bugs Termination)
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
@@ -12,6 +12,10 @@
   - - Split the "Aggregation Participation Metrics Report" table into multiple tables to support sorting and pagination.
   - - Show indicator when “Customer Name” or “Billing Account” has been changed.
   -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) 
+  - - Update layout to fix a layout issue.
+  - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - 
   - Description: This page renders the view for participation metrics report including form and report data.
   -
 --%>
@@ -96,11 +100,6 @@
                         <label for="endDate">End:</label>
                         <s:textfield name="formData.endDate" readonly="true"
                                          id="endDateParticipationReport" cssClass="text date-pick fLeft dp-applied"/>
-                        <s:if test="hasActionErrors()">
-                            <div id="validationErrors">
-                                <s:actionerror/>
-                            </div>
-                        </s:if>
                         <div class="clearFix"></div>
                     </div><!-- end .filterRow -->
 
@@ -166,7 +165,11 @@
             <div class="clearFix"></div>
         </div>
         <!-- end .applyButtonBox -->
-
+        <s:if test="hasActionErrors()">
+            <div id="validationErrors">
+                <s:actionerror/>
+            </div>
+        </s:if>
     </div>
     </s:form>
     <!-- End .filterContainer -->
@@ -291,8 +294,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">
@@ -374,8 +377,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">
@@ -455,8 +458,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">
@@ -537,8 +540,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">
@@ -621,8 +624,8 @@
         <div class="container2Left">
             <div class="container2Right">
                 <div class="container2Bottom">
-                    <div class="container2BottomLeft">
-                        <div class="container2BottomRight">
+                    <div>
+                        <div>
 
                             <div class="panel tableControlPanel">
                                 <div class="exportControl">

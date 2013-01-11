@@ -1,8 +1,13 @@
 <%--
-  - Author: leo_lol
-  - Version: 1.0 (Module Assembly - TC Client Users Stats Report Generation v1.0)
+  - Author: leo_lol, Ghost_141
+  - Version: 1.0 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version: 1.0 Module Assembly - TC Client Users Stats Report Generation v1.0
+  - 
+  - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Remove container2BottomLeft and container2BottomRight in pagination part.
+  - 
   - Description: This page renders the view for client user stats report including form and report data.
   -
 --%>
@@ -138,8 +143,8 @@
             <div class="container2Left">
                 <div class="container2Right">
                     <div class="container2Bottom">
-                        <div class="container2BottomLeft">
-                            <div class="container2BottomRight">
+                        <div>
+                            <div>
                                 <div class="panel tableControlPanel">
                                     <div class="exportControl">
                                         <a href="javascript:getClientUserStatsReportAsExcel();" class="exportExcel">Export to

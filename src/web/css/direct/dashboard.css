@@ -89,6 +89,9 @@
  *
  * - (Module Assembly - TC Cockpit Invoice History Page Update)
  * - Add styles for invoice status filter.
+ * 
+ * - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ * - Update the CSS to fix multiple issues.
  */
 
 
@@ -1054,10 +1057,10 @@ BODY#page{
 	width: 250px;
 	position: absolute;
 	top: 48px;
+    padding: 1px 6px 1px 4px !important;
 	display: none;
 	color: #333333;
 	z-index: 999;
-    padding: 1px 6px 1px 4px !important;
 }
 
 .contestsDropDown UL{
@@ -1068,7 +1071,7 @@ BODY#page{
 
 .contestsDropDown UL LI{
 	margin: 0 !important;
-	padding: 3px 6px!important;
+	padding: 2px 6px 1px 4px !important;
 	cursor: pointer;
 }
 
@@ -1081,7 +1084,7 @@ BODY#page{
 }
 
 .contestsDropDown UL LI A{
-	text-decoration: none; 
+	text-decoration: none;
 }
 
 /*-----------------*/
@@ -1732,7 +1735,7 @@ DIV.notif-div{
 }
 
 	.container2Left{
-		background: url(../../images/content_border.png) repeat-y left;
+       background: url(../../images/content_border.png) repeat-y left;
 	}
 	
 	.container2Right{
@@ -1740,7 +1743,7 @@ DIV.notif-div{
 	}
 	
 	.container2Bottom{
-		background: url(../../images/container2_bottom.png) repeat-x bottom;
+        background: #A8A8A8;
 	}
 	
 	.container2BottomClear{
@@ -1756,11 +1759,11 @@ DIV.notif-div{
 	}
 	
 	.container2BottomLeft{
-		background: url(../../images/container2_bottom_left.png) no-repeat bottom left;
+		background: #A8A8A8;
 	}
 	
 	.container2BottomRight{
-		background: url(../../images/container2_bottom_left.png) no-repeat bottom right;
+		background: #A8A8A8;
 	}
 	
 	.container2Content{
@@ -1836,9 +1839,6 @@ DIV.notif-div{
 .panel2  A{
 		float: left;
 		text-decoration: none;
-		height: 19px;
-		padding-top: 2px;
-        padding-left:5px;
 	}
 	
 	.panel2  A:hover{
@@ -2012,6 +2012,8 @@ DIV.notif-div{
 		float: right;
 		margin-right: 3px;
 		margin-top: 3px;
+        padding: 0 5px;
+        font-size: 11px;
 	}
 	
 	.search A.button1{
@@ -2115,6 +2117,8 @@ TABLE.notif{
 TABLE.project{
 	border: none;
 	margin-bottom: 8px;
+    border-left: 1px solid #bdbdbd;
+    border-right: 1px solid #bdbdbd;
 }
 
 	TABLE.project TH{
@@ -2159,14 +2163,16 @@ TABLE.project{
 	}
 	
 	TABLE.project TBODY TD{
-		border: 1px solid #bdbdbd;
 		font-size: 10px;
 		padding: 7px 10px;
+        border-left: 1px solid #bdbdbd;
+        border-bottom: 1px solid #bdbdbd;
 	}
 	
 	TABLE.project TBODY TD.first{
 		padding: 0;
 		width: 3px;
+        border-left: none;
 	}
 	
 	TABLE.project TBODY TD.second{
@@ -2475,6 +2481,7 @@ TABLE.notifications TD{
 	font-weight: normal;
 	text-align: center;
 	color: #333;
+    padding-left: 0px;
 }
 	
 TABLE.notifications A.button{
@@ -2599,7 +2606,7 @@ TABLE.notifications TH.permCol2{
 }
 	
 	.pagination .showPages{
-		top: 0;
+		top: 5px;
 		left: 0;
 	}
 	
@@ -4625,7 +4632,9 @@ width: 290px;
 	max-width: 500px;
 	min-width: 200px;
 	min-height: 50px;
-	max-height:500px
+	max-height:500px;
+    padding: 0px 5px;
+    font-size: 11px;
 }
 
 .subm {
@@ -4653,6 +4662,8 @@ vertical-align: top;
 .line input {
 	display: inline;
 	width: 287px;
+    padding: 0px 5px;
+    font-size: 11px;
 }
 
 .line select#vm_usage_id {
@@ -6098,7 +6109,8 @@ Contest links
 .issueSelectionContent .inputContainer .row .text{
     width:158px;
     height:15px;
-    padding:3px 0;
+    padding:3px 5px;
+    font-size: 11px;
     margin-bottom:2px;
     border:#acacac solid 1px;
     line-height:15px;
@@ -6118,7 +6130,8 @@ Contest links
     max-width:85%;
     width:85%;
     font-family:Arial, Helvetica, sans-serif;
-    padding:2px 0;
+    padding:2px 5px;
+    font-size: 11px;
     border:#acacac solid 1px;
 }
 		
@@ -6372,7 +6385,7 @@ table#copilotProjectTable td a.addCopilotUsers {
 }
 .myCopilotsContestsList .bottom1, .myProjectContests .bottom1 {
     position:static;
-    margin-top:-6px;
+    margin-top:-1px;
 }
 .myCopilotsContestsList .bottom2, .myProjectContests .bottom2 {
     position:static;
@@ -6644,7 +6657,7 @@ A.button11{
 
 .resultTableContainer .bottom1 {
     position: static;
-    margin-top: -1px;
+    margin-top: 1px;
 }
 
 .resultTableContainer .bottom2 {
@@ -7083,6 +7096,7 @@ table.resultTable td.last a.long {
 	.appositeContainer .issueModule .content{
 		height:85px;
 		padding-top:9px;
+        padding-left:17px;
 	}
 	.appositeContainer.studio .issueModule .content{ height:64px; }
 		.dashboardModule .listContent p{
@@ -7106,7 +7120,7 @@ table.resultTable td.last a.long {
 		.appositeContainer .registrationModule .column.first .statusP{ width:162px; }
 		.appositeContainer .forumModule .listContent p,
 		.appositeContainer .dependenciesModule .listContent p{ width:auto; }
-		.appositeContainer .issueModule .listContent p{ width:85px; }
+		.appositeContainer .issueModule .listContent p{ width:auto; }
 		.appositeContainer .reviewsModule .listContent p{
 			width:auto;
 			margin-bottom:2px;
@@ -8698,11 +8712,11 @@ P.billingAccountArchive A {
 .filterContainer #datefilter .text {
     width: 100px;
     color: #6c6c6c;
-    font-size: 12px;
+    font-size: 11px;
     height: 20px;
     line-height: 20px;
     border: 1px solid #BDBDBD;
-    padding: 0 6px;
+    padding: 0 5px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -8720,11 +8734,11 @@ P.billingAccountArchive A {
     display: inline;
     width: 56px;
     color: #6c6c6c;
-    font-size: 12px;
+    font-size: 11px;
     height: 20px;
     line-height: 20px;
     border: 1px solid #BDBDBD;
-    padding: 0 6px;
+    padding: 0 5px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -9215,10 +9229,10 @@ TABLE.pipelineStats TH.tableTitle span {
     display: inline;
     float: left;
     font-family: Arial,Helvetica,sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     height: 20px;
     line-height: 20px;
-    padding: 0 6px;
+    padding: 0 5px;
     width: 58px;
 }
 
@@ -9627,7 +9641,7 @@ a.downloadAllbtn:hover span {
                           border:0;
                           height:18px;
                          line-height:18px;
-                         padding:0 3px;
+                         padding:0 5px;
                          width:188px;
                          color:#333;
                          font-size:11px; 
@@ -9659,7 +9673,7 @@ a.downloadAllbtn:hover span {
                          .newSidebar .contestList .filter .dropdownWidget .dropList a{
                               display:block;
                              padding:3px 5px;
-                             text-decoration:none; 
+                             text-decoration:none;
                          }
                          .newSidebar .contestList .dropdownWidget .dropList .even a{
                              background:#F3F3F3;
@@ -9670,10 +9684,7 @@ a.downloadAllbtn:hover span {
                          }
                          .newSidebar .contestList .dropdownWidget .dropList .even{
                              background:#F3F3F3 !important;
-						}
-                        .newSidebar .contestList .dropdownWidget .dropList .even:hover{
-                            background:#ffffcc !important;
-						}
+                         }
                          .newSidebar .contestList .dropdownWidget .dropList .even:hover{
                             background:#ffffcc !important;
                          }
@@ -10149,6 +10160,9 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
 .feedbackModal .comment {
     padding: 0 20px 20px !important;
 }
+.dataTables_empty{
+	border:none !important;
+}
 .feedbackModal .buttonArea .button6 {
     display: inline !important;
     float: left !important;
@@ -10188,5 +10202,18 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     margin-top: 100px;
 }
 
+.contestFeePercentage{
+    padding: 0 5px;
+    font-size: 11px;
+}
+
+.contestFeeValue{
+    padding: 0 5px;
+}
+
+.searchText{
+    padding: 0 5px;
+    font-size: 11px;
+}
 
 

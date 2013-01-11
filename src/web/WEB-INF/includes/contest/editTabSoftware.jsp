@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.6
+  - Version: 1.8
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -32,6 +32,9 @@
   -
   - Version 1.7 (Release Assembly - TC Direct Cockpit Release Five)
   - - Add DR points flag check box
+  - 
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  - - Fix bug COCKPITUI-62.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -48,25 +51,37 @@
    </div><!-- End .caption -->
    												
 	 <div class="detailsContent_det_type">
-			<p class="det_font">
-         <span class="name"><strong>Contest Type</strong></span>
-         <span class="value"><strong>: <span id="rContestTypeName"></span></strong></span>
-         <br /> <br />
-         <span class="name2"><strong>Contest Name</strong></span>
-         <span class="value"><strong>: <span id="rContestName"></span></strong></span>
-         <br /> <br />
-         <span class="name2"><strong>Review Style</strong></span>
-         <span class="value"><strong>: TopCoder Community Review Board<span id="rReviewStyle"></span></strong></span>
-         <br /> <br />
-         <span class="name3"><strong>CCA is</strong></span>
-         <span class="value"><strong>: <span id="rCCA"></span></strong></span>		 
-		 <br /> <br />
-		 <span class="name2"><strong>Project Name</strong></span>
-         <span class="value"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></span>
-         <br/><br/>
-         <span class="name2"><strong>Copilot</strong></span>
-         <span class="value"><strong>: <span id="rCopilots"></span></strong></span>
-      </p>
+        <table cellspacing="10" class="det_font">
+            <tr>
+                <td class="first_tab_type" style="line-height: 28px;"><strong>Contest Type</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Contest Name</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Review Style</strong></td>
+                <td class="sec_tab_type"><strong>: TopCoder Community Review Board<span id="rReviewStyle"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>CCA is</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCCA"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Project Name</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Copilot</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
+            </tr>
+        </table>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- End Contest Type Display-->

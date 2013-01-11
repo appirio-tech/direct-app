@@ -1,6 +1,6 @@
 <%--
   - Author: minhu, Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 3rd step of analytics project creation.
@@ -9,6 +9,9 @@
   - 
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added id and class field for question elements.
+  - 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             Fix a text inconsistency bug.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +20,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>3</span>About the Problem</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
     <div class="stepContainer step4Container">

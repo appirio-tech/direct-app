@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 1st step of mobile project creation.
@@ -9,6 +9,9 @@
   - 
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added id and class field for question elements.
+  - 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+  -             change notes: Update button text to uppercase.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +20,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>1</span>Development target</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 
@@ -39,7 +42,7 @@
                 <!-- row -->
                 <div class="row projectName">
 
-                    <a href="javascript:;" class="toolTip" id="toolTip1"></a>
+                    <a href="javascript:;" class="toolTip" id="toolTip1" rel="Which type of app do you want to build"></a>
                     <span class="label question1"></span>
                 </div>
                 <!-- End .row -->

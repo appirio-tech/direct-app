@@ -1,8 +1,12 @@
 <%--
-  - Author: minhu
+  - Author: minhu, Ghost_141
   - Version: 1.0 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+  - - Fix text inconsistency bug.
+  - - Remove container2BottomLeft and container2BottomRight class in pagination part.
+  - 
   - The page to display the customer platform fee list.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -128,7 +132,7 @@
                                                 <th>Client Name</th>
                                                 <th>Payment Date</th>
                                                 <th>Amount</th>
-                                                <th>Modify Date</th>
+                                                <th>Modified Date</th>
 												<th></th>
                                             </tr>
                                         </thead>
@@ -164,8 +168,8 @@
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
-                                            <div class="container2BottomLeft">
-                                                <div class="container2BottomRight">
+                                            <div>
+                                                <div>
                                                     <div class="panel tableControlPanel"></div>
                                                 </div>
                                             </div>

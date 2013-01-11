@@ -20,6 +20,9 @@
  *
  * Release Assembly - TC Direct Project Forum Configuration Assembly 2 updates:
  * - Added styles for new popup modal windows.
+ *
+ * Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ * - Update the CSS styles to fix multiple issues.
  */
 
 html,body{
@@ -171,6 +174,7 @@ a:hover, a:active, a:focus, a:active {
 	}
 	.name{
 	    line-height: 28px;
+        
 	}
 	.fixWidthName {
 		float:left;
@@ -187,6 +191,9 @@ a:hover, a:active, a:focus, a:active {
 		padding-right:15px;
 		
 	}
+    .name3{
+
+    }
 	.bigin{
 		width:370px;
 		height:25px;
@@ -374,7 +381,11 @@ A.delete{
 .first_tab_prize{
 	width:350px;
 }
-
+.first_tab_type{
+    width: 150px;
+    padding-left: 10px;
+    font-size: 14px;
+}
 .sec_tab{
 	width:70px;
 }
@@ -384,6 +395,9 @@ A.delete{
 }
 .sec_tab_files{
 	width:480px;
+}
+.sec_tab_type{
+    font-size: 14px;
 }
 
 
@@ -1478,7 +1492,6 @@ overflow: auto;
     display: none;
     background: #000002;
 }
-
 #new-modal {
     top: 0;
     left: 0;
@@ -1560,7 +1573,6 @@ overflow: auto;
     background: url(../../images/preloader-corner.png) right -16px no-repeat;
     padding-right: 8px;
 }
-
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
     height: 8px;
     background: url(../../images/preloader-corner.png) left -8px repeat-x;
@@ -1616,8 +1628,8 @@ overflow: auto;
 
 .outLay input.text {
     height: 19px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
     border-top: 1px solid #717171;
     border-left: 1px solid #b4b4b4;
     border-right: 1px solid #b4b4b4;
@@ -1625,7 +1637,7 @@ overflow: auto;
     font-family: Arial, Helvetica, sans-serif;
     color: #333333;
     line-height: 18px;
-    font-size: 12px;
+    font-size: 11px;
     background: #ffffff url(../../images/modal-text-shadow.png) left top repeat-x;
 }
 
@@ -1689,7 +1701,7 @@ overflow: auto;
 		#new-modal .buttonArea .closeButton{
 			width:82px;
 			}
-
+            
 			#new-modal .buttonArea .button6 span.right{
 				padding:4px 20px 0 20px;
 				}
@@ -1934,9 +1946,9 @@ overflow: auto;
 						margin-top:12px;
 						margin-left:10px;
 						margin-right:10px;
-						padding:2px;
+						padding:2px 5px;
 						background:#f8f8f8;
-						font-size:12px;
+						font-size:11px;
 						border:#a2a1a5 solid 1px;
 						}
 
@@ -2029,6 +2041,152 @@ overflow: auto;
 						padding:4px 0 0 0;
 						text-align:center;
 						}
+
+/* addUserModal userManageModal assignProjectModal*/
+#addMoreUsersModal,
+#assignProjectModal,
+#userManageModal{
+	width:660px;
+	height:470px;
+	}
+	#addMoreUsersModal .modalBody,
+	#assignProjectModal .modalBody,
+	#userManageModal .modalBody{
+		background:#e6e6e6 url(../../images/modal-body-help.png) left top repeat-x;
+		}
+		#addMoreUsersModal .modalBody .modalBodyContent,
+		#assignProjectModal .modalBody .modalBodyContent,
+		#userManageModal .modalBody .modalBodyContent{
+			height:339px;
+			padding-left:67px;
+			padding-top:30px;
+			color:#333;
+			}
+			#addMoreUsersModal .modalBody .modalBodyContent .left,
+			#addMoreUsersModal .modalBody .modalBodyContent .right,
+			#assignProjectModal .modalBody .modalBodyContent .right,
+			#userManageModal .modalBody .modalBodyContent .left,
+			#assignProjectModal .modalBody .modalBodyContent .left,
+			#userManageModal .modalBody .modalBodyContent .right{
+				float:left;
+				width:220px;
+				height:300px;
+				border:1px solid #cacaca;
+				display:inline;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .subtitle,
+				#assignProjectModal .modalBody .modalBodyContent .subtitle,
+				#userManageModal .modalBody .modalBodyContent .subtitle{
+					background: transparent url(../../images/calendar_header.png) repeat-x scroll 0 0;
+					height:33px;
+					font-size: 13px;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .subtitle a.leftTxt,
+				#assignProjectModal .modalBody .modalBodyContent .subtitle a.leftTxt,
+				#userManageModal .modalBody .modalBodyContent .subtitle a.leftTxt{
+					display:block;
+					font-weight: bold;
+					color:#FFFFFe;
+					text-decoration: none;
+					float:left;
+					margin-top:8px;
+					margin-left:10px;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .subtitle a.rightTxt,
+				#assignProjectModal .modalBody .modalBodyContent .subtitle a.rightTxt,
+				#userManageModal .modalBody .modalBodyContent .subtitle a.rightTxt{
+					display:block;
+					color:#CCCCCC;
+					text-decoration: none;
+					float:right;
+					margin-top:8px;
+					margin-right:5px;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .searchBox,
+				#assignProjectModal .modalBody .modalBodyContent .searchBox,
+				#userManageModal .modalBody .modalBodyContent .searchBox{
+					padding:10px 0px 10px 10px;	
+					overflow: hidden;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .searchBox a.button1,
+				#assignProjectModal .modalBody .modalBodyContent .searchBox a.button1,
+				#userManageModal .modalBody .modalBodyContent .searchBox a.button1{
+					display: block;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .searchBox .searchTxt,
+				#assignProjectModal .modalBody .modalBodyContent .searchBox .searchTxt,
+				#userManageModal .modalBody .modalBodyContent .searchBox .searchTxt{
+					float:left;
+					margin-right:10px;
+					padding-top:2px;
+				}	
+				#addMoreUsersModal .modalBody .modalBodyContent .searchBox .searchTxt input,
+				#assignProjectModal .modalBody .modalBodyContent .searchBox .searchTxt input,
+				#userManageModal .modalBody .modalBodyContent .searchBox .searchTxt input{
+					width: 104px;
+					border:1px solid #acacac;
+					height:20px;
+					line-height:20px;
+					padding:0 5px;
+					font-size: 11px;
+					font-family:Arial, Helvetica, sans-serif;
+				}
+				
+				#addMoreUsersModal .modalBody .modalBodyContent .list,
+				#assignProjectModal .modalBody .modalBodyContent .list,
+				#userManageModal .modalBody .modalBodyContent .list{
+					overflow: auto;	
+					height:219px;
+					border-top:1px solid #CCCCCC;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .right .list,
+				#assignProjectModal .modalBody .modalBodyContent .right .list,
+				#userManageModal .modalBody .modalBodyContent .right .list{
+					height:266px;
+				}
+				
+				#addMoreUsersModal .modalBody .modalBodyContent .list .listItem,
+				#assignProjectModal .modalBody .modalBodyContent .list .listItem,
+				#userManageModal .modalBody .modalBodyContent .list .listItem{
+					padding: 3px 0px 3px 10px;
+					margin:1px 0px ;
+					font-size: 12px;
+					background: transparent url(../../images/dot.png) repeat-x scroll bottom center;
+					cursor: pointer;
+				}
+				
+				#addMoreUsersModal .modalBody .modalBodyContent .list .listItem.active,
+				#assignProjectModal .modalBody .modalBodyContent .list .listItem.active,
+				#userManageModal .modalBody .modalBodyContent .list .listItem.active{
+					background-color: #CCCCCD;
+				}
+				
+				
+			#addMoreUsersModal .modalBody .modalBodyContent .middle,
+			#assignProjectModal .modalBody .modalBodyContent .middle,
+			#userManageModal .modalBody .modalBodyContent .middle{
+				float:left;
+				width:74px;
+				display:inline;
+				text-align:center;
+				padding-top:130px;
+				}
+				#addMoreUsersModal .modalBody .modalBodyContent .middle a,
+				#assignProjectModal .modalBody .modalBodyContent .middle a,
+				#userManageModal .modalBody .modalBodyContent .middle a{
+					display:block;
+					}
+			
+			#addMoreUsersModal .modalBody .modalCommandBox .newButton1,
+			#assignProjectModal .modalBody .modalCommandBox .newButton1,
+			#userManageModal .modalBody .modalCommandBox .newButton1{
+				margin-left:4px;
+				}
+				#addMoreUsersModal .modalBody .modalCommandBox .newButton1 .btnC,
+				#assignProjectModal .modalBody .modalCommandBox .newButton1 .btnC,
+				#userManageModal .modalBody .modalCommandBox .newButton1 .btnC{
+					padding:0 23px;
+					}
 
 
 /* projectCopilotsList */

@@ -49,7 +49,8 @@ a.multiSelect.active {
 .multiSelectOptions LABEL {
 	padding: 0px 2px;
 	display: block;
-	white-space: nowrap;
+	white-space: normal;
+    margin: 1px;
 }
 
 .multiSelectOptions LABEL.optGroup
@@ -69,6 +70,7 @@ a.multiSelect.active {
 
 .multiSelectOptions input{
 	vertical-align: middle;
+    margin-right: 5px;
 }
 
 .multiSelectOptions LABEL.checked {

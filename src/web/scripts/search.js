@@ -76,8 +76,11 @@
  * Version 2.0 - (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
  * - Add new sort routine 'submission-number' to sort the submission number in the active contests table
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness
- * @version 2.0
+ * Version 2.1 - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+ * - update function to fix bugs.
+ * 
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141
+ * @version 2.1
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -285,13 +288,21 @@ $(document).ready(function() {
     };
 
     jQuery.fn.dataTableExt.oSort['number-trimmed-asc'] = function (a, b) {
+		a=a.replace(/\n/g,'');
+		b=b.replace(/\n/g,'');
+		if (a=="n/a"){var x=-1}else
         var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+		if (b=="n/a"){var y=-1}else
         var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     };
 
     jQuery.fn.dataTableExt.oSort['number-trimmed-desc'] = function (a, b) {
+		a=a.replace(/\n/g,'');
+		b=b.replace(/\n/g,'');
+		if (a=="n/a"){var x=-1}else
         var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+		if (b=="n/a"){var y=-1}else
         var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
@@ -516,14 +527,14 @@ $(document).ready(function() {
         ],
         "aoColumns": [
             { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "html-trimmed" },
             { "sType": "html" },
             { "sType": "date-direct" },
             { "sType": "date-direct" },
-            { "sType": "html" },
-            { "sType": "submission-number" },
-            { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "html-trimmed" },
             null,
             null
         ]

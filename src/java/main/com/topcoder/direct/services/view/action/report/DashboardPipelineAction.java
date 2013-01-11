@@ -70,8 +70,14 @@ import java.util.TreeSet;
   *   </ol>
   * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.1
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} to fix a text inconsistency bug.</li>
+ *   </ol>
+ * </p>
+ * @author isv, Ghost_141, TCSASSEMBLER
+ * @version 1.2
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -197,7 +203,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
 			// Validate the dates range
             if (startDate.compareTo(endDate) > 0) {
-                addActionError("Start date should be smaller than end date");
+                addActionError("Start date should be smaller than End date");
             }
 
             // If numerical filter type was specified then add it to list of existing filters set so far

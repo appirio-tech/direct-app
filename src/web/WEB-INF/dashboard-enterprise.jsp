@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, tangzx, flexme, Veve, GreatKevin, isv
+  - Author: isv, tangzx, flexme, Veve, GreatKevin, isv, Ghost_141
   -
-  - Version: 2.1 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
+  - Version: 2.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Enterprise Dashboard view.
@@ -23,6 +23,9 @@
   -
   - Version 2.1 - Release Assembly - TC Cockpit Performance Improvement Enterprise Dashboard 1 Assembly Change Note
   - Updated Enterprise Health area to load the data via AJAX call.
+  - 
+  - Version 2.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
+  - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -370,7 +373,7 @@
 
 
 														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
-																<div class="tooltipBox"> <span class="arrow"></span>
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
@@ -468,7 +471,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the customer</p>
+																		<p>The total member cost of the contests for the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -615,7 +618,7 @@
 													<tr>
 
                                                         <td class="fieldName"><div class="tooltipWrapper"> Cost Range:
-																<div class="tooltipBox"> <span class="arrow"></span>
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
@@ -850,7 +853,7 @@
 													<tr>
 
 														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
@@ -945,7 +948,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the whole market</p>
+																		<p>The total member cost of the contests for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1085,7 +1088,7 @@
 
 
 														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
@@ -1176,7 +1179,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the whole market</p>
+																		<p>The total member cost of the contests for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1238,7 +1241,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer average contest cost with market average contset cost</p>
+																		<p>Comparison of customer average contest cost with market average contest cost</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1696,7 +1699,7 @@
                                                         <div class="columns columnButton">
                                                             <a class="button6 applyButton" href="javascript:"
                                                                id="enterpriseDashboardSubmit">
-                                                                <span class="left"><span class="right">Apply</span></span>
+                                                                <span class="left"><span class="right">APPLY</span></span>
                                                             </a>
                                                         </div>
 
@@ -1971,7 +1974,7 @@
 											</div>
 											<!-- End .firstRow -->
 											<div class="secondRow">
-												<div class="filterContest"> <a class="button6 applyButton" href="javascript:;"> <span class="left"> <span class="right">Apply</span> </span> </a>
+												<div class="filterContest"> <a class="button6 applyButton" href="javascript:;"> <span class="left"> <span class="right">APPLY</span> </span> </a>
 													<div class="columns contestType"> <strong>Contest Type</strong>
 														<s:select list="viewData.projectCategories" multiple="true"
                                                                       cssClass="multiselect"

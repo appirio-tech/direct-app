@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.2
+  - Author: TCSASSEMBLER, Ghost_141
+  - Version: 1.3
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 1.
@@ -11,6 +11,8 @@
   - - Move custom project plan to the first
   - Version 1.2 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
                 change notes: new mobile and presentation project type flow. Removed old presentation flow.
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
+                Fix multiple bugs.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -19,7 +21,7 @@
     <!-- step title -->
     <div class="stepTitle">
         <h3><span>1</span>Name and summarize your new project.</h3>
-        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
+        <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">BACK TO DASHBOARD</a>
     </div>
     <!-- End .stepTitle -->
 
