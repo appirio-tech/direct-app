@@ -159,7 +159,10 @@ $(document).ready(function() {
      }
    }); //click
 
-
+    $('.customRadio').click(function() {
+       onFirstPlaceChangeKeyUp();
+    });
+    
     // digital run check box
     $('#DRCheckbox').click(function(){
         if($(this).is(":checked")) {
@@ -1600,78 +1603,75 @@ function calculateSecondPlacePrize(firstPlaceCost) {
 }
 
 function calculateReviewCost(firstPlacePrize, categoryId) {
-      var STANDARD_SUBMISSION_COUNT = 3;
-      var STANDARD_PASSED_SCREENING_COUNT = 3;
-      if (categoryId == getProjectCategoryIdByName('DEVELOPMENT')
-              || categoryId == getProjectCategoryIdByName('DESIGN')) {
-          // calculate as per component reviewer calculator.
-          return getComponentReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else if (categoryId == getProjectCategoryIdByName('SOFTWARE ASSEMBLY')) {
-          // calculate as per assembly reviewer calculator.
-          return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT) * 1.5 * 1.2;
-      } else if (categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')) {
-          // calculate as per assembly reviewer calculator.
-          return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT) * 1.5;
-      } else if (categoryId == getProjectCategoryIdByName('ARCHITECTURE')) {
-          return getArchitectureReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else if (categoryId == getProjectCategoryIdByName('SPECIFICATION')
-                      || categoryId == getProjectCategoryIdByName('TESTSUITES')
-                      || categoryId == getProjectCategoryIdByName('TESTSCENARIOS')
-                      || categoryId == getProjectCategoryIdByName('RIACOMPONENT')
-                      || categoryId == getProjectCategoryIdByName('RIABUILD')
-                      || categoryId == getProjectCategoryIdByName('UIPROTOTYPE')
-                      || categoryId == getProjectCategoryIdByName('REPORTING')) {
-          // calculate as per application reviewer calculator logic.
-          return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else {
-          return 0;
-      }
-
-      return firstPlacePrize;
+    var STANDARD_SUBMISSION_COUNT = 3;
+    var STANDARD_PASSED_SCREENING_COUNT = 3;
+    var SIC; // Screening Incremental Coefficient 
+    var BRC; // Base Review Coefficient
+    var RIC; // Review Incremental Coefficient
+    var FRC; // Final Review Coefficient
+    
+    if (categoryId == getProjectCategoryIdByName('DESIGN')) {
+        SIC = 0.01;
+        BRC = 0.12;
+        RIC = 0.05;
+        FRC = 0.05;
+    } else if (categoryId == getProjectCategoryIdByName('DEVELOPMENT')) {
+        SIC = 0.02;
+        BRC = 0.2;
+        RIC = 0.05;
+        FRC = 0.05;
+    } else if (categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')) {
+        SIC = 0.01;
+        BRC = 0.12;
+        RIC = 0.03;
+        FRC = 0.05;
+    } else if (categoryId == getProjectCategoryIdByName('ARCHITECTURE')) {
+        SIC = 0.01;
+        BRC = 0.12;
+        RIC = 0.05;
+        FRC = 0.05;
+    } else if (categoryId == getProjectCategoryIdByName('SOFTWARE ASSEMBLY')) {
+        SIC = 0.01;
+        BRC = 0.13;
+        RIC = 0.05;
+        FRC = 0.05;
+    } else if (categoryId == getProjectCategoryIdByName('TESTSCENARIOS')) {
+        SIC = 0.01;
+        BRC = 0.12;
+        RIC = 0.05;
+        FRC = 0.03;
+    } else if (categoryId == getProjectCategoryIdByName('TESTSUITES')) {
+        SIC = 0.01;
+        BRC = 0.12;
+        RIC = 0.05;
+        FRC = 0.03;
+    } else {
+        SIC = 0.01;
+        BRC = 0.08;
+        RIC = 0.03;
+        FRC = 0.03; 
+    }
+    return getScreeningCost(STANDARD_SUBMISSION_COUNT, SIC, firstPlacePrize) +
+            3 * getReviewCost(STANDARD_PASSED_SCREENING_COUNT, BRC, RIC, firstPlacePrize) + 
+            getAggregationCost() + getFinalReviewCost(FRC, firstPlacePrize);
 }
 
-function getComponentReviewCost(firstPlacePrize, submissionCount, passedScreeningCount) {
-    var prizePurse=1.5 * firstPlacePrize;
-    var initialPurse=0.40 * prizePurse;
-    var incrementalPurse=0.15 * prizePurse;
-    var screeningCost=(0.86 * initialPurse + incrementalPurse * (submissionCount - 1)) * 0.10;
-    var reviewCost=(0.86 * initialPurse + incrementalPurse * (passedScreeningCount - 1)) * 0.9 / 3.0;
-    var aggregationCost=0.04 * initialPurse;
-    var finalReviewerCost=0.10 * initialPurse;
-
-    return screeningCost + 3 * reviewCost + aggregationCost + finalReviewerCost;
+function getScreeningCost(submissionCount, incrementalCoefficient, firstPlacePrize) {
+    return submissionCount * incrementalCoefficient * firstPlacePrize;
 }
 
-function getApplicationReviewCost(firstPlacePrize, submissionCount, passedScreeningCount) {
-    var standardPrize = 750;
-    var calculatedBaseRate=15 + (firstPlacePrize - standardPrize) * 0.01;
-    var actualBaseRate=calculatedBaseRate;
-    var calculatedReviewCost=26 * calculatedBaseRate;
-
-    var screeningCost=actualBaseRate * 0.5 * submissionCount;
-    var reviewCost=(Math.max(0, submissionCount + 1 - passedScreeningCount) * 1.5 + 2 * passedScreeningCount) * actualBaseRate;
-    var aggregationCost=2 * actualBaseRate * 0.25;
-    var finalReviewerCost=2 * actualBaseRate * 0.75;
-
-    return screeningCost + 3 * reviewCost + aggregationCost + finalReviewerCost;
+function getReviewCost(passedScreeningCount, baseCoefficient, incrementalCoefficient, firstPlacePrize) {
+    return (baseCoefficient + passedScreeningCount * incrementalCoefficient) * firstPlacePrize;
 }
 
-function getArchitectureReviewCost(firstPlacePrize, submissionCount, passedScreeningCount) {
-
-        var multiplier = 1.5;
-        var standardPrize = 750;
-        var calculatedBaseRate=15 + (firstPlacePrize - standardPrize) * 0.01;
-        var actualBaseRate=calculatedBaseRate;
-        var calculatedReviewCost=26 * calculatedBaseRate;
-        
-        var screeningCost=actualBaseRate * 0.5 * submissionCount;
-        var reviewCost=(Math.max(0, submissionCount + 1 - passedScreeningCount) * 1.5 + 2 * passedScreeningCount) * actualBaseRate;
-        var aggregationCost=2 * actualBaseRate * 0.25;
-        var finalReviewerCost=2 * actualBaseRate * 0.75;
-        
-        return screeningCost * multiplier + 3 * reviewCost * multiplier + aggregationCost * multiplier + finalReviewerCost * multiplier;
+function getAggregationCost() {
+    var STANDARD_AGGREGATION_COST = 10;
+    return STANDARD_AGGREGATION_COST;
 }
 
+function getFinalReviewCost(finalReviewCoefficient, firstPlacePrize) {
+    return finalReviewCoefficient * firstPlacePrize;
+}
 
 function calculateReliabilityPrize(firstPlacePrize, secondPlacePrize, categoryId) {
     return (firstPlacePrize + secondPlacePrize) * 0.2;
