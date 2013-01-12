@@ -39,31 +39,48 @@
    </div><!-- End .caption -->
                                                 
      <div class="detailsContent_det_type">
-            <p class="det_font">
-         <span class="name2"><strong>Contest Type</strong></span>
-         <span class="value"><strong>: <span id="rContestTypeName"></span></strong></span>
-         <br /> <br />
-         <span class="name2"><strong>Contest Name</strong></span>
-         <span class="value"><strong>: <span id="rContestName"></span></strong></span>
-         <br /> <br />
-         <span class="name2"><strong>Review Style</strong></span>
-         <span class="value"><strong>: User Selection<span id="rReviewStyle"></span></strong></span>
-         <br /> <br />
-         <span class="name3"><strong>CCA is</strong></span>
-         <span class="value"><strong>: <span id="rCCA"></span></strong></span>
-		 <br /> <br />
-         <span class="name2 billingdisplay"><strong>Billing Account</strong></span>
-         <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
-         <br /> <br />
-         <span class="name2"><strong>Project Name</strong></span>
-         <span class="value"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></span>
-		 <br/><br/>
-         <span class="name2"><strong>Copilot</strong></span>
-         <span class="value"><strong>: <span id="rCopilots"></span></strong></span>
-         <br /> <br />
-         <span class="name2 adminFeeDisplay"><strong>Contest Fee</strong></span>
-         <span class="value adminFeeDisplay"><strong>: $<span id="rAdminFee"></span></strong></span>
-      </p>
+        <table cellspacing="10" class="det_font">
+            <tr>
+                <td class="first_tab_type"><strong>Contest Type</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Contest Name</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rContestName"></span></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Review Style</strong></td>
+                <td class="sec_tab_type"><strong>: User Selection<span id="rReviewStyle"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>CCA is</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCCA"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Billing Account</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Project Name</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></td>
+            </tr>
+            <tr></tr>            
+            <tr>
+                <td class="first_tab_type"><strong>Copilot</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
+            </tr>
+            <tr></tr>            
+            <tr>
+                <td class="first_tab_type"><strong>Contest Fee</strong></td>
+                <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
+            </tr>
+            <tr></tr>
+        </table>
     </div><!-- End .detailsContent -->                                              
 </div><!-- End .details -->
 <!-- End Contest Type Display-->

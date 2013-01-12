@@ -253,7 +253,7 @@ $(function() {
     $("#addMoreUsersModal").hide();
     $.permission.processAddUsers();
     if($('#addMoreUsersModal').hasClass('focusModal')){
-		modalPreloader('#assignProjectModal');
+		modalPreloader2('#assignProjectModal');
 	}else{
 		modalClose();
 	}

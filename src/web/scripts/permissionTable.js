@@ -134,7 +134,7 @@ function pbutton_submit() {
     var result = JSON.stringify(ret);
     var request = {permissionsJSON:result};
 
-    modalPreloader2();
+    modalPreloader();
 
     $.ajax({
         type:'POST',
@@ -1311,7 +1311,7 @@ $.permission = {
             $(this).empty();
         });
         $("#" + modalId + " .searchText").val("");
-        modalPreloader('#' + modalId);
+        modalPreloader2('#' + modalId);
     },
 
     /**

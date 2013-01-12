@@ -2656,7 +2656,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	 * object callback e.g. function(){}
 	 *
 	 */
-	modalPreloader = function(itemID,strMarginTop,callback){
+	modalPreloader2 = function(itemID,strMarginTop,callback){
 
 //        if($.browser.msie) {
 //            $('#new-modal #preloaderModal').remove();
@@ -2699,7 +2699,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
         },intPreloaderTimmer);
         
 	}
-    modalPreloader2 = function(itemID,strMarginTop,callback) {
+    modalPreloader = function(itemID,strMarginTop,callback) {
         //        if($.browser.msie) {
 //            $('#new-modal #preloaderModal').remove();
 //        }
@@ -2743,13 +2743,13 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	
 	//copilot Manage
 	$('.addMoreUserModal').live('click',function(){
-		modalPreloader('#addMoreUsersModal');
+		modalPreloader2('#addMoreUsersModal');
 		$('#addMoreUsersModal').addClass('focusModal');
 		return false;
 	});
 	$('.returnUserModal,.closeOtherModal').live('click',function(){
 		if($('#addMoreUsersModal').hasClass('focusModal')){
-			modalPreloader('#assignProjectModal');
+			modalPreloader2('#assignProjectModal');
             $('#addMoreUsersModal').removeClass('focusModal');
 		}else{
 			modalClose();
