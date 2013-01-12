@@ -1002,7 +1002,7 @@ $(document).ready(function (e) {
             onExceed:function (value) {
                 $('#durationOutput').val(value);
                 $('.datePickerView .radio').trigger('click').trigger('change');
-            }
+            },
             errorMessage:"Please input a positive integer for project duration."
         });
 
