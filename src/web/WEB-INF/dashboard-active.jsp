@@ -368,7 +368,7 @@
                                                     <td class="first">Bug Race</td>
                                                     <td>
                                                         <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                            <img src="/images/br_small.png"
+                                                            <img class="contestTypeIcon" src="/images/br_small.png"
                                                                  alt="BR"/>
 
                                                         </div>
