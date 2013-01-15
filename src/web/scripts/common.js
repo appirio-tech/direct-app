@@ -570,34 +570,6 @@ var allowedTags = [
 ];
 var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
 
-/**
- * init CKEditor template
- * used to test CKEditor templates
- */
- var initTemplate = function() {    
-    CKEDITOR.addTemplate('assembly_template_requirements', assembly_template_requirements_content);
-    CKEDITOR.addTemplate('assembly_template_guidelines', assembly_template_guidelines_content);
- }
- 
-/**
- * Sets up the CKEditor with template
- *
- * @param obj the obj id
- * @param templateName the name of the template
- */
-var setupCKEditorWithTemplate = function(obj, templateName) {
-	if (CKEDITOR.getTemplate(templateName) == undefined) {
-        initTemplate();
-    }
-    CKEDITOR.replace(obj, {
-        on:{ instanceReady : function( ev ) {
-               insert = CKEDITOR.getTemplate(templateName);
-               this.setData(insert.output());
-            }
-        },
-	 });
-}
-
 function sortDropDown(dropDownId) {
     // alert('sort ' + dropDownId);
     // get the select

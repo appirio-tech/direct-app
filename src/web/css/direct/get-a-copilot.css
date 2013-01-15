@@ -357,6 +357,10 @@ a.smallRed span.right {
 						font-size:12px;
 						/*float:left;*/
 					}
+                    
+                    .get-a-copilot .stepContainer .geryContent .rowItem .cke {
+                        float:left;
+                    }
 					
 					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem label {
 						width:390px;

@@ -462,8 +462,6 @@ $(document).ready(function() {
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
     CKEDITOR.replace( 'round2Info' );
-    setupCKEditorWithTemplate('swDetailedRequirements', 'assembly_template_requirements');
-    setupCKEditorWithTemplate('swGuidelines', 'assembly_template_guidelines');
 
     handleProjectDropDownChange();
 
