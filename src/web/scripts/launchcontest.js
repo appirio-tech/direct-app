@@ -462,6 +462,8 @@ $(document).ready(function() {
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
     CKEDITOR.replace( 'round2Info' );
+	CKEDITOR.replace( 'swDetailedRequirements' );
+	CKEDITOR.replace( 'swGuidelines' );
 
     handleProjectDropDownChange();
 
