@@ -244,9 +244,6 @@ $(document).ready(function (e) {
         }
 
 
-        if ($("#hasFullPermissionOnly").val() == 'true') {
-            $('.permissionsNotifications input').attr('disabled', 'disabled');
-        }
 
         sortDropDown("select[name='projectBillingAccount']");
 
@@ -581,11 +578,7 @@ $(document).ready(function (e) {
                                 $('#settingModal .settingTable .tableBody').css('overflow-y', 'auto');
                             }
 
-                            if($("#hasFullPermissionOnly").val() == 'true') {
-                                $('#settingModal input').attr('disabled', 'disabled');
-                            } else {
-                                $('#settingModal input').removeAttr('disabled');
-                            }
+                          
                         },
                         function (errorMessage) {
                             modalAllClose();
