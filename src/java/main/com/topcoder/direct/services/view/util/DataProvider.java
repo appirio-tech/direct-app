@@ -6260,7 +6260,7 @@ public class DataProvider {
 
         String filteredProjectIds = concatenate(projectIds, ", ");
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        String query = "enterprise_dashboard_total_spend";
+        String query = "enterprise_dashboard_total_spend_v2";
         Request request = new Request();
         request.setContentHandle(query);
         request.setProperty("tcdirectids", filteredProjectIds);
