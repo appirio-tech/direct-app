@@ -21,6 +21,7 @@
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
@@ -60,7 +61,14 @@
                                                rel="Total Amount Spent for the Projects each month is shown here.">!</a>
                                         </div>
                                         <!-- title -->
-
+                                        <div class="numberSection">
+                                            <div class="numberSectionInner">
+                                                <ul>
+                                                    <li class="last ajaxTableLoader"><img
+                                                            src="/images/rss_loading.gif" alt="loading"/></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="chartSection">
                                             <div id="chartTotalSpend">
                                                 <div class="ajaxTableLoader"><img src="/images/rss_loading.gif"
@@ -83,23 +91,12 @@
                                         <div class="financialTitle">
                                             <h3>Financials</h3>
                                             <a href="javascript:;" class="icon"
-                                               rel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a orci sit amet orci">!</a>
+                                               rel="Shows your monthly projects cost and the total sum">!</a>
                                         </div>
                                         <!-- title -->
 
                                         <div class="dataSection">
 
-                                            <div class="numberSection">
-                                                <div class="numberSectionInner">
-                                                    <ul>
-                                                        <li class="last ajaxTableLoader"><img
-                                                                src="/images/rss_loading.gif" alt="loading"/></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <!-- End .numberSection -->
-
-                                            <h4>Project Information</h4>
 
                                             <!-- table -->
                                             <div class="tableData">
@@ -107,23 +104,21 @@
                                                 <table border="0" cellspacing="0" cellpadding="0" id="financials">
                                                     <colgroup>
                                                         <col width="25%"/>
-                                                        <col/>
-                                                        <col width="11%"/>
-                                                        <col width="11%"/>
-                                                        <col width="11%"/>
+                                                        <col width="25%"/>
+                                                        <col width="25%"/>
+                                                        <col width="25%"/>
                                                     </colgroup>
                                                     <thead>
                                                     <tr>
-                                                        <th>Project Name</th>
-                                                        <th>Project Budget</th>
-                                                        <th>Total Budget</th>
-                                                        <th>Actual Cost</th>
-                                                        <th>Projected Cost</th>
+                                                        <th>Month</th>
+                                                        <th>Member Costs</th>
+                                                        <th>Contest Fees</th>
+                                                        <th>Total</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td colspan="5">
+                                                        <td colspan="4">
                                                             <div class="ajaxTableLoader"><img
                                                                     src="/images/rss_loading.gif" alt="loading"/></div>
                                                         </td>
@@ -165,23 +160,21 @@
      <table border="0" cellspacing="0" cellpadding="0">
          <colgroup>
              <col width="25%"/>
-             <col/>
-             <col width="11%"/>
-             <col width="11%"/>
-             <col width="11%"/>
+             <col width="25%"/>
+             <col width="25%"/>
+             <col width="25%"/>
          </colgroup>
          <thead>
          <tr>
-             <th>Project Name</th>
-             <th>Project Budget</th>
-             <th>Total Budget</th>
-             <th>Actual Cost</th>
-             <th>Projected Cost</th>
+             <th>Month</th>
+             <th>Member Costs</th>
+             <th>Contest Fees</th>
+             <th>Total</th>
          </tr>
          </thead>
          <tbody>
          <tr>
-             <td colspan="5">
+             <td colspan="4">
                  <div class="ajaxTableLoader"><img
                          src="/images/rss_loading.gif" alt="loading"/></div>
              </td>

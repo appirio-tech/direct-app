@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
@@ -11,6 +11,7 @@ import com.topcoder.security.TCSubject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,15 @@ import java.util.Map;
  *  dashboard.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 1)
+ * <ul>
+ *     <li>Adds a getter for getting current time in server</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class BaseDashboardAction extends BaseDirectStrutsAction {
 
@@ -225,5 +233,15 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
      */
     public void setAllowFuturePeek(boolean allowFuturePeek) {
         this.allowFuturePeek = allowFuturePeek;
+    }
+
+    /**
+     * Gets current time on the server.
+     *
+     * @return the current time on the server.
+     * @since 1.1
+     */
+    public Date getCalendarToday() {
+        return new Date();
     }
 }

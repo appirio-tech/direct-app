@@ -372,6 +372,10 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="enterpriseDashboardProjectsAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.DashboardProjectsAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
     <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

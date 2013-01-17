@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
@@ -22,8 +22,15 @@ import java.util.Map;
  * The action handles the ajax requests for financial part of the enterprise dashboard.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 1)
+ * <ul>
+ *     <li>Add new data in the return json of getTotalSpend Ajax call.</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class DashboardFinancialAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
 
@@ -80,6 +87,8 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
             for(EnterpriseDashboardTotalSpendDTO item : enterpriseDashboardTotalSpend) {
                 Map<String, String> m = new HashMap<String, String>();
                 m.put("label", AXIS_DATE_FORMAT.format(item.getDate()));
+                m.put("memberCost", String.valueOf(item.getMemberCost()));
+                m.put("contestFee", String.valueOf(item.getContestFee()));
                 m.put("spend", String.valueOf(item.getTotalSpend()));
                 m.put("average", String.valueOf(item.getAverageSpend()));
                 result.add(m);

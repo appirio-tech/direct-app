@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
@@ -8,15 +8,18 @@ import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.dashboard.calendar.DashboardMilestoneCalendarDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +28,15 @@ import java.util.Map;
  * The action handles the ajax requests for roadmap part of the enterprise dashboard.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 1)
+ * <ul>
+ *     <li>Add method {@link #getRoadmapCalendar()} to get roadmap calendar data via ajax.</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class DashboardRoadmapAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
 
@@ -46,6 +56,13 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
     private static final Map<MilestoneStatus, SortOrder> filters = new HashMap<MilestoneStatus, SortOrder>();
 
     /**
+     * List of all the available milestone status.
+     *
+     * @since 1.1
+     */
+    private static final List ALL_MILESTONE_STATUS = Arrays.asList(MilestoneStatus.values());
+
+    /**
      * Static constructor
      */
     static {
@@ -55,6 +72,12 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
         filters.put(MilestoneStatus.COMPLETED, SortOrder.DESCENDING);
     }
 
+    /**
+     * The view data of the action.
+     *
+     * @since 1.1
+     */
+    private DashboardMilestoneCalendarDTO viewData = new DashboardMilestoneCalendarDTO();
 
     /**
      * The form data of the action.
@@ -77,6 +100,26 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
      */
     public void setFormData(EnterpriseDashboardFilterForm formData) {
         this.formData = formData;
+    }
+
+    /**
+     * Gets view data for the roadmap calendar.
+     *
+     * @return the view data.
+     * @since 1.1
+     */
+    public DashboardMilestoneCalendarDTO getViewData() {
+        return viewData;
+    }
+
+    /**
+     * Sets view data for the roadmap calendar
+     *
+     * @param viewData the view data.
+     * @since 1.1
+     */
+    public void setViewData(DashboardMilestoneCalendarDTO viewData) {
+        this.viewData = viewData;
     }
 
     /**
@@ -173,6 +216,42 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
                 setResult(e);
             }
         }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the roadmap calendar json data via ajax.
+     *
+     * @return the result code.
+     * @throws Exception if there is any error.
+     * @since 1.1
+     */
+    public String getRoadmapCalendar() throws Exception {
+        Map<String, List<Map<String, String>>> result = new HashMap<String, List<Map<String, String>>>();
+
+        final Map<Long, String> projects = DataProvider.getEnterpriseDashboardFilteredProjects(getFormData());
+
+        viewData.setProjects(projects);
+
+        getViewData().setResponsiblePersonIds(new HashSet<Long>());
+        final List<Milestone> milestones;
+
+        if (projects == null || projects.size() == 0) {
+            milestones = new ArrayList<Milestone>();
+        } else {
+            milestones = getMilestoneService().getAllForProjects(new ArrayList<Long>(projects.keySet()), ALL_MILESTONE_STATUS, SortOrder.ASCENDING);
+        }
+
+        // extra all the responsible person user id from the milestone
+        for (Milestone m : milestones) {
+            if (m.getOwners() != null && m.getOwners().size() > 0) {
+                getViewData().getResponsiblePersonIds().add(m.getOwners().get(0).getUserId());
+            }
+        }
+
+        // set the milestones
+        viewData.setMilestones(milestones);
 
         return SUCCESS;
     }

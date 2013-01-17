@@ -519,7 +519,8 @@ input{
 	/* title */	
 	#mainSection .financialsSection .financialTitle{
 		height:49px;
-		border:#bdbdbd solid 1px;
+		border:#bdbdbd solid;
+                border-width: 1px 1px 0px 1px;
 		background:url(/images/bg_grey.png) repeat-x left top;
 		}
 		
@@ -554,19 +555,19 @@ input{
 			}
 			
 	/* numberSection */
-	#mainSection .financialsSection .numberSection{
+	#mainSection .totalSpendSection .numberSection{
 		border:#bdbdbd solid 1px;
 		border-top:0;
 		}
 		
-		#mainSection .financialsSection .numberSection .numberSectionInner{
+		#mainSection .totalSpendSection .numberSection .numberSectionInner{
 			height:74px;
 			margin:1px;
 			background:#ebebeb;
 			}
 		
-		#mainSection .financialsSection .numberSection li{
-			width:16.6%;
+		#mainSection .totalSpendSection .numberSection li{
+			width:25%;
 			height:48px;
 			float:left;
 			display:inline;
@@ -577,18 +578,18 @@ input{
 			background:url(/images/enterpriseDashboardDot.png) repeat-y right top;
 			}
 			
-		#mainSection .financialsSection .numberSection li.last{
+		#mainSection .totalSpendSection .numberSection li.last{
 			background-image:none;
 			}
 			
-			#mainSection .financialsSection .numberSection li.ajaxTableLoader{
+			#mainSection .totalSpendSection .numberSection li.ajaxTableLoader{
 				width:100%;
 				height:36px;
 				padding:12px 0 0 0;
 				text-align:center;
 				}
 			
-			#mainSection .financialsSection .numberSection li strong{
+			#mainSection .totalSpendSection .numberSection li strong{
 				display:block;
 				font-size:16px;
 				font-weight:bold;
@@ -748,7 +749,19 @@ input{
 			font-size:12px;
 			vertical-align:middle;
 			}
-			
+        #mainSection .sectionContainer .tableData table#financials td {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        #mainSection .sectionContainer .tableData table#financials td.month {
+            color:#7f0019;
+        }
+
+        #mainSection .sectionContainer #financials .total {
+            background-color: #F4F7DF;
+        }
+
 		#mainSection .projectsHealthSection .tableData table td{
 			padding:10px;
 			}
@@ -2453,7 +2466,7 @@ input{
 						height:36px;
 						padding:0 10px !important;
 						border:#bdbdbd solid 1px;
-						font-size:12px;
+						font-size:12px !important;
 						vertical-align:middle;
 						}
 						
@@ -2489,7 +2502,8 @@ input{
 							
 						#mainSection .overProjectsSection #overProjectsTableData td a.projectName{
 							display:block;
-							margin-left:20px;
+							/*margin-left:20px;*/
+                                                        margin-left:3px;
 							font-size:12px;
 							font-weight:bold;
 							color:#333333;
@@ -7491,4 +7505,19 @@ TABLE#activeContestData TD SPAN.failedReview{
     color: red;
     font-size: 11px;
     display: block;
+}
+
+.roadmapViewArea .fc-header-title h2 {
+    font-size: 15px !important;
+    margin-top: 8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: normal !important;
+    font-weight: bold !important;
+}
+
+.roadmapViewArea .milestoneTips .tipsTitle {
+    font-size: 10px !important;
+    line-height: normal !important;
+    font-weight: bold !important;
 }

@@ -57,73 +57,73 @@
                     <!-- End .filterPanel -->
 
                     <!-- Financial Section in OverView -->
-                    <div class="sectionContainer overFinancialSection">
-                        <div class="sectionInner">
+                    <%--<div class="sectionContainer overFinancialSection">--%>
+                        <%--<div class="sectionInner">--%>
 
-                            <div class="financailsTitle">
-                                <h3>Financials</h3>
-                                <a href="javascript:;" class="icon" rel="View the financial statistics of the filtered projects">!</a>
-                                <a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink">View all projects</a>
-                            </div>
-                            <!-- title -->
+                            <%--<div class="financailsTitle">--%>
+                                <%--<h3>Financials</h3>--%>
+                                <%--<a href="javascript:;" class="icon" rel="View the financial statistics of the filtered projects">!</a>--%>
+                                <%--<a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink">View all projects</a>--%>
+                            <%--</div>--%>
+                            <%--<!-- title -->--%>
 
-                            <div class="mainSection">
+                            <%--<div class="mainSection">--%>
 
-                                <div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>
+                                <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
 
-                                <div class="dateSection">
+                                <%--<div class="dateSection">--%>
 
-                                    <!-- side bar -->
-                                    <div class="financailSideBar">
-                                        <div class="sideBarInner">
-                                            <ul>
-                                                <li></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- End .financailSideBar -->
+                                    <%--<!-- side bar -->--%>
+                                    <%--<div class="financailSideBar">--%>
+                                        <%--<div class="sideBarInner">--%>
+                                            <%--<ul>--%>
+                                                <%--<li></li>--%>
+                                            <%--</ul>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--<!-- End .financailSideBar -->--%>
 
-                                    <!-- table -->
-                                    <div class="financailTableData">
-                                        <h4>Project Information</h4>
-                                        <table border="0" cellspacing="0" cellpadding="0" id="overviewFinancailData">
-                                            <colgroup>
-                                                <col width="23%" />
-                                                <col />
-                                                <col width="12%" />
-                                                <col width="12%" />
-                                                <col width="12%" />
-                                            </colgroup>
-                                            <thead>
-                                            <tr>
-                                                <th>Project Name</th>
-                                                <th>Project Budget</th>
-                                                <th>Total Budget</th>
-                                                <th>Actual Cost</th>
-                                                <th>Projected Cost</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="last">
-                                                <td colspan="5"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- End .financailTableData -->
+                                    <%--<!-- table -->--%>
+                                    <%--<div class="financailTableData">--%>
+                                        <%--<h4>Project Information</h4>--%>
+                                        <%--<table border="0" cellspacing="0" cellpadding="0" id="overviewFinancailData">--%>
+                                            <%--<colgroup>--%>
+                                                <%--<col width="23%" />--%>
+                                                <%--<col />--%>
+                                                <%--<col width="12%" />--%>
+                                                <%--<col width="12%" />--%>
+                                                <%--<col width="12%" />--%>
+                                            <%--</colgroup>--%>
+                                            <%--<thead>--%>
+                                            <%--<tr>--%>
+                                                <%--<th>Project Name</th>--%>
+                                                <%--<th>Project Budget</th>--%>
+                                                <%--<th>Total Budget</th>--%>
+                                                <%--<th>Actual Cost</th>--%>
+                                                <%--<th>Projected Cost</th>--%>
+                                            <%--</tr>--%>
+                                            <%--</thead>--%>
+                                            <%--<tbody>--%>
+                                            <%--<tr class="last">--%>
+                                                <%--<td colspan="5"></td>--%>
+                                            <%--</tr>--%>
+                                            <%--</tbody>--%>
+                                        <%--</table>--%>
+                                    <%--</div>--%>
+                                    <%--<!-- End .financailTableData -->--%>
 
-                                    <div class="clear"></div>
+                                    <%--<div class="clear"></div>--%>
 
-                                </div>
+                                <%--</div>--%>
 
-                            </div>
-                            <!-- End .mainSection -->
+                            <%--</div>--%>
+                            <%--<!-- End .mainSection -->--%>
 
-                            <div class="corner tl"></div>
-                            <div class="corner tr"></div>
+                            <%--<div class="corner tl"></div>--%>
+                            <%--<div class="corner tr"></div>--%>
 
-                        </div>
-                    </div>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <!-- End .overFinancialSection -->
 
                     <!-- left column -->

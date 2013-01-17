@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -41,6 +41,7 @@ import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDash
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectsWidgetDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.project.*;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
@@ -709,9 +710,17 @@ import java.util.Map.Entry;
  *     </li>
  * </ul>
  * </p>
+ *
+ * <p>
+ *  Version 6.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 1)
+ *  <ul>
+ *      <li></li>
+ *  </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, 
   *@GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.2
+ * @version 6.3
  * @since 1.0
  */
 public class DataProvider {
@@ -6191,6 +6200,49 @@ public class DataProvider {
     }
 
     /**
+     * Gets the data for the enterprise dashboard projects widget.
+     *
+     * @param filterForm the filter form
+     * @return a list of <code>EnterpriseDashboardProjectsWidgetDTO</code>
+     * @throws Exception if there is any error.
+     * @since 6.3
+     */
+    public static List<EnterpriseDashboardProjectsWidgetDTO>
+            getEnterpriseDashboardProjectsWidgetData(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        List<EnterpriseDashboardProjectsWidgetDTO> result = new ArrayList<EnterpriseDashboardProjectsWidgetDTO>();
+
+        if (projectIds == null || projectIds.length == 0) {
+            return result;
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_projects";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            EnterpriseDashboardProjectsWidgetDTO item = new EnterpriseDashboardProjectsWidgetDTO();
+            item.setDirectProjectId(resultContainer.getLongItem(i, "project_id"));
+            item.setDirectProjectName(resultContainer.getStringItem(i, "name"));
+            item.setActiveContestsNumber(resultContainer.getIntItem(i, "active_contests_number"));
+            if (resultContainer.getItem(i, "milestone_name").getResultData() != null) {
+                item.setMilestoneDueDate(resultContainer.getTimestampItem(i, "min_milestone_due_date"));
+                item.setMilestoneName(resultContainer.getStringItem(i, "milestone_name"));
+            }
+
+            result.add(item);
+        }
+
+        return result;
+    }
+
+    /**
      * Gets the enterprise dashboad total spend data.
      *
      * @param filterForm the <code>EnterpriseDashboardFilterForm</code> instance
@@ -6243,8 +6295,10 @@ public class DataProvider {
         for (int i = 0; i < recordNum; i++) {
             long monthCount = resultContainer.getLongItem(i, "monthcount");
             double monthCost = resultContainer.getDoubleItem(i, "monthcost");
+            double monthContestFee = resultContainer.getDoubleItem(i, "monthcontestfee");
             EnterpriseDashboardTotalSpendDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
-            item.setTotalSpend((long)Math.round(monthCost));
+            item.setMemberCost((long)Math.round(monthCost));
+            item.setContestFee((long)Math.round(monthContestFee));
         }
 
         List<EnterpriseDashboardTotalSpendDTO> result = new ArrayList<EnterpriseDashboardTotalSpendDTO>(resultMap.values());

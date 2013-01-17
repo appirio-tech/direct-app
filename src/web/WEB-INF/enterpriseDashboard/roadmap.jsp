@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
@@ -19,10 +19,14 @@
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=214041"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=215476"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
 </head>
 
@@ -49,6 +53,17 @@
                                 <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
                                 <!-- End .filterPanel -->
 
+                                <div class="roadmapViewArea" style="margin-top: 15px">
+                                    <div class="loading">
+                                        <img src="/images/loadingAnimation.gif" alt=""/>
+                                    </div>
+                                    <div class="milestoneCalView">
+
+                                    </div>
+                                </div>
+
+                            <span id="calendarToday" style="display:none"><s:date name="calendarToday"
+                                                                                  format="MM/dd/yyyy"/></span>
 
                                 <!-- start road map section -->
                                 <div class="sectionContainer roadMapSection">
@@ -181,6 +196,8 @@
                                     </div>
                                 </div>
                                 <!-- end road map section -->
+
+
 
                             </div>
                             <!-- End #mainSection -->

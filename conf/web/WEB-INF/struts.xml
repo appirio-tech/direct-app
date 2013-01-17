@@ -1674,7 +1674,16 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
-        </action>    
+        </action>
+        <action name="getRoadmapCalendar" method="getRoadmapCalendar" class="enterpriseDashboardRoadmapAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboardMilestoneCalendarData.jsp</result>
+        </action>
+        <action name="getProjectsWidget" method="getProjectsWidget" class="enterpriseDashboardProjectsAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
       </package>
     <package name="securityGroup" namespace="/group" extends="base">
         <default-interceptor-ref name="groupDefaultStack"/>

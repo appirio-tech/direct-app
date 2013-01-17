@@ -512,6 +512,105 @@ function renderTotalSpendChart(resultJson) {
     }else{
         $("#" + area).empty().append('<div class="noData">No data available</div>');
     }
+
+    var avarageMonthlySpend = 0;
+    var totalSpend = 0;
+
+    $.each(resultJson, function (idx, item) {
+        totalSpend += parseInt(item.spend);
+    });
+
+    avarageMonthlySpend = (totalSpend / resultJson.length).toFixed(1);
+    var startMonth = $(".timeLine .selectMonth:first span span").text();
+    var endMonth = $(".timeLine .selectMonth:last span span").text();
+    var strDataCost = '';
+    strDataCost += '<li>Spend This Month:<strong id="spendThisMonth">$ ' + '</strong></li>';
+    strDataCost += '<li>Spend Last Month:<strong id="spendLastMonth">$ ' + '</strong></li>';
+    strDataCost += '<li>Average Monthly Spend:<strong>$ ' + formatNum(avarageMonthlySpend) + '</strong></li>';
+    strDataCost += '<li class="last">' + startMonth + ' - ' + endMonth  + ' Total Spend:<strong>$ ' + formatNum(totalSpend) + '</strong></li>';
+
+    $(".totalSpendSection .numberSection ul").empty().append(strDataCost);
+
+    if(!resultJson.length) {
+        $("#financials tbody").empty().append('<tr><td colspan="5"><div class="noData">No data available</div></td></tr>');
+        return;
+    }
+    var strData = '';
+    var totalMemberCost = 0;
+    var totalContestFee = 0;
+    var totalSpend = 0;
+    $.each(resultJson, function (idx, item) {
+        strData += '<tr>';
+        strData += '<td class="month">';
+        strData += item.label;
+        strData += '</td>';
+        strData += '<td>$';
+        strData += formatNum(item.memberCost)
+        strData += '</td>';
+        strData += '<td>$';
+        strData += formatNum(item.contestFee);
+        strData += '</td>';
+        strData += '<td>$';
+        strData += formatNum(item.spend);
+        strData += '</td>';
+        strData += '</tr>';
+        totalMemberCost += parseFloat(item.memberCost);
+        totalContestFee += parseFloat(item.contestFee);
+        totalSpend += parseFloat(item.spend);
+    });
+
+    var totalData = '';
+
+    totalData += '<tfoot><tr class="total">';
+    totalData += '<td class="month">';
+    totalData += "Total";
+    totalData += '</td>';
+    totalData += '<td>$';
+    totalData += formatNum(totalMemberCost)
+    totalData += '</td>';
+    totalData += '<td>$';
+    totalData += formatNum(totalContestFee);
+    totalData += '</td>';
+    totalData += '<td>$';
+    totalData += formatNum(totalSpend);
+    totalData += '</td>';
+    totalData += '</tr></tfoot>';
+
+    if (resultJson.length) {
+        $("#financials").remove();
+        var newTable = $($("#tableTemplate").html()).attr('id', 'financials');
+        $(".tableData").empty().append(newTable);
+
+        $("#financials tbody").empty().append(strData);
+        $(totalData).insertAfter($("#financials tbody"));
+
+        financialTable = $('#financials').dataTable({
+            "iDisplayLength":-1,
+            "bFilter":false,
+            "bSort":true,
+            "oLanguage":{
+                "sLengthMenu":sStdMenu,
+                "oPaginate":{
+                    "sFirst":"",
+                    "sPrevious":"Prev",
+                    "sNext":"Next",
+                    "sLast":""
+                }
+            },
+            "sPaginationType":"full_numbers",
+            "sDom":'',
+            "aoColumns": [
+                { "sType": "html" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "money" }
+            ]
+        });
+        $("#financials").width('auto');
+        //$("table tbody").append($(totalData)).insertAfter($("#financials"));
+    } else {
+        $("#financials tbody").empty().append('<tr><td colspan="5"><div class="noData">No data available</div></td></tr>');
+    }
 };
 
 function renderOverviewFinancial(json) {
@@ -1345,6 +1444,51 @@ function renderProjectsPipeline(resultJson) {
     }
 }
 
+function renderOverviewProjects(resultJson) {
+    var strData = '';
+    if (resultJson.length) {
+        var length = resultJson.length >= 5 ? 5 : resultJson.length;
+        for (var i = 0; i < length; i++) {
+            var projectName = resultJson[i].name;
+            if(projectName.length > 45) {
+                projectName = projectName.substr(0, 45) + '...';
+            }
+            var milestoneName;
+            if (resultJson[i].milestoneName) {
+                milestoneName = resultJson[i].milestoneName;
+                if(milestoneName.length > 50) {
+                    milestoneName = milestoneName.substr(0, 50) + '...';
+                }
+            }
+
+            var projectLink = "/direct/projectOverview.action?formData.projectId=" +  resultJson[i].id;
+            var milestoneLink = '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson[i].id;
+
+            strData += '<tr>';
+            strData += '<td>';
+            strData += '<div class="showTip">';
+            strData += '<a href="' + projectLink + '" class="projectName" target="_blank" title="' + resultJson[i].name + '">' + projectName + '</a>';
+            strData += '</div>';
+            strData += '</td>';
+            strData += '<td class="alignCenter">';
+            if (resultJson[i].milestoneName) {
+                strData += '<a href="' + milestoneLink + '" target="_blank" title="'  + resultJson[i].milestoneName + '">' + milestoneName + '</a>';
+            }
+            strData += '</td></tr>';
+        }
+
+        if (resultJson.length) {
+            $("#overProjectsTableData tbody").empty().append(strData);
+            $('#overProjectsTableData tbody tr:odd').addClass('odd');
+            $("#overProjectsTableData .bar .barInner").each(function () {
+                $(this).css('width', $(this).parent().find('span').text());
+            });
+        } else {
+            $("#overProjectsTableData tbody").empty().append('<tr><td colspan="2"><div class="noData">No data available</div></td></tr>');
+        }
+    }
+}
+
 function renderOverviewRoadmap(resultJson) {
     var strDataOverDue = '', strDataUpcoming = '', strDataCompleted = '';
     var pattern = /^\w*/;
@@ -1513,6 +1657,8 @@ function loadTotalSpend(resultHandler) {
         $("#overviewTotalSpend").empty().html('<div class="ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></div>');
     } else if ($("#chartTotalSpend").length > 0) {
         $("#chartTotalSpend").empty().html('<div class="ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></div>');
+        $(".totalSpendSection .numberSectionInner ul").empty();
+        $(".totalSpendSection .numberSectionInner ul").html('<li class="last ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></li>');
     }
 
 
@@ -1669,6 +1815,31 @@ function loadRoadmap(resultHandler) {
     });
 }
 
+function loadProjects(resultHandler) {
+
+    if($(".overProjectsSection").length > 0) {
+        $("#overProjectsTableData tbody").empty().html('<tr><td colspan="2" class="alignCenter"><div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div></td></tr>');
+    }
+
+    $.ajax({
+        type: 'POST',
+        url:  "getProjectsWidget",
+        data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
+        cache: false,
+        timeout:100000,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult2(jsonResult,
+                function(result) {
+                    resultHandler(result);
+                },
+                function(errorMessage) {
+                    showErrors(errorMessage);
+                });
+        }
+    });
+}
+
 function loadCurrentPrevMonthSpend() {
     if(loadCurrentMonth || loadPreviousMonth) {
         var request = getEnterpriseDashboardRequest(100000, 0, true);
@@ -1720,17 +1891,18 @@ function renderOverviewTab() {
     currentMonthLoaded = false;
     prevMonthLoaded = false;
     loadTotalSpend(renderTotalSpendWidget);
-    loadFinancial(renderOverviewFinancial);
+    //loadFinancial(renderOverviewFinancial);
     loadCurrentPrevMonthSpend();
     loadPipeline(renderPipelineWidget);
     loadRoadmap(renderOverviewRoadmap);
+    loadProjects(renderOverviewProjects);
 }
 
 function renderFinancialTab() {
     currentMonthLoaded = false;
     prevMonthLoaded = false;
     loadTotalSpend(renderTotalSpendChart);
-    loadFinancial(renderFinancial);
+    // loadFinancial(renderFinancial);
     loadCurrentPrevMonthSpend();
 }
 
@@ -2307,9 +2479,11 @@ $(document).ready(function () {
     // roadmap page
     if ($(".roadmapIcon").parents("li").hasClass("active")) {
         loadRoadmap(renderRoadmapPage);
+        loadRoadmapCalendar();
 
         $("#filterButton").click(function(){
             loadRoadmap(renderRoadmapPage);
+            loadRoadmapCalendar();
         });
 
         $('.roadMapSection .tabPanel li a').live('click',function(){
@@ -3603,5 +3777,170 @@ function renderVolumeSummaryTable(volumeSummaryData) {
 
     $("div.volumeView").show();
     volumeTableLoaded = true;
+}
+
+function loadRoadmapCalendar() {
+
+    // modalPreloader();
+    $(".roadmapViewArea").css('min-height', '600px');
+    $(".roadmapViewArea .loading").css("opacity", "0.6");
+    $(".roadmapViewArea .loading").show();
+
+    isEnterpriseCalendarShown = false;
+
+
+    $.ajax({
+        type:'POST',
+        url:'getRoadmapCalendar',
+        data:{formData:getEnterpriseDashboardRequest(100000, 0, true)},
+        dataType:"html",
+        cache:false,
+        success:function (result) {
+
+            if (result.indexOf("calendarData") != -1) {
+
+                $(result).find("#allResponsiblePerson").insertAfter(".milestoneCalView");
+                calendarData = jQuery.parseJSON($(result).find("#calendarData").html());
+
+                if (calendarData != null) {
+                    $('.milestoneCalView').empty();
+
+                    // build the handle map
+                    var userHandleColorMap = {};
+
+                    $("#allResponsiblePerson a").each(function () {
+                        var handle = $.trim($(this).text());
+                        var color = $(this).attr('class');
+                        var url = $(this).attr('href');
+
+                        userHandleColorMap[handle] = {color:color, url:url};
+                    });
+
+                    console.log(userHandleColorMap);
+
+                    // update handle color and link first
+                    $.each(calendarData.events, function (index, item) {
+                        if (item.person && item.person.name) {
+                            if (userHandleColorMap[item.person.name] != null) {
+                                item.person.color = userHandleColorMap[item.person.name].color;
+                                item.person.url = userHandleColorMap[item.person.name].url;
+                            }
+                        }
+                    });
+
+                    $('.milestoneCalView').fullCalendar({
+                        header:{
+                            left:'prev',
+                            center:'title',
+                            right:'next'
+                        },
+                        editable:false,
+                        dayNamesShort:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                        //events:calendarData.events,
+                        eventRender:function (event, element) {
+                            var inner = element.find(".fc-event-inner");
+
+                            inner.click(function(e){
+                                e.preventDefault();
+                                window.open('projectMilestoneView?formData.viewType=list&formData.projectId=' + event.projectId, '');
+                            });
+
+                            var milestoneNameClass = "upcoming";
+
+                            switch (event["status"]) {
+                                case 'completed':
+                                    element.addClass("fc-milestone-completed");
+                                    if (event.person) {
+                                        $("<a/>", {
+                                            "text":event.person.name,
+                                            "href":event.person.url,
+                                            "class":event.person.color
+                                        }).appendTo(inner);
+                                    }
+                                    milestoneNameClass = "completed";
+                                    break;
+                                case 'upcoming':
+                                    element.addClass("fc-milestone-upcoming");
+                                    if (event.person) {
+                                        $("<a/>", {
+                                            "text":event.person.name,
+                                            "href":event.person.url,
+                                            "class":event.person.color
+                                        }).appendTo(inner);
+                                    }
+                                    milestoneNameClass = "upcoming";
+                                    break;
+                                case 'overdue':
+                                    element.addClass("fc-milestone-overdue");
+                                    if (event.person) {
+                                        $("<a/>", {
+                                            "text":event.person.name,
+                                            "href":event.person.url,
+                                            "class":event.person.color
+                                        }).appendTo(inner);
+                                    }
+                                    milestoneNameClass = "overdue";
+                                    break;
+                            }
+
+                            var name = $("<span class='milestoneName'></span>").addClass(milestoneNameClass).text(event.title);
+                            var project = $("<span></span>").text(event.projectName);
+
+                            inner.find(".fc-event-title").empty().append(name).append(project);
+
+                            var tcTip = $("<div/>", {
+                                "class":"milestoneTips"
+                            });
+                            $("<div/>", {
+                                "class":"triangle"
+                            }).appendTo(tcTip);
+                            $("<h2/>", {
+                                "text":event.title,
+                                "class":"tipsTitle"
+                            }).appendTo(tcTip);
+                            $("<h2/>", {
+                                "text":event.projectName,
+                                "class":"tipsTitle"
+                            }).appendTo(tcTip);
+                            $("<p/>", {
+                                "text":event.description
+                            }).appendTo(tcTip);
+                            tcTip.appendTo(inner.parent());
+
+                            inner.find(".fc-event-title").hover(function () {
+                                tcTip.css("top", $(this).height() + 5 + "px");
+                                inner.parent().css("z-index", 9);
+                                tcTip.show();
+                            }, function () {
+                                tcTip.hide();
+                                inner.parent().css("z-index", 8);
+                            });
+                        },
+                        eventAfterRender:function (event, element) {
+                            if (event["status"] == "overdue") {
+                                $('.milestoneCalView .fc-content tbody td:eq(' + element.data("tdIndex") + ")").addClass("fc-overdue");
+                            }
+                        },
+                        viewDisplay:function () {
+                            $(".milestoneCalView .fc-today .fc-day-number").html("TODAY");
+                            // this will be replaced with the ajax call in Assembly
+                            if (!isEnterpriseCalendarShown) {
+                                isEnterpriseCalendarShown = true;
+
+                                $.each(calendarData.events, function (index, item) {
+                                    $('.milestoneCalView').fullCalendar("renderEvent", item, true);
+                                })
+                            }
+                        }
+                    });
+                }
+
+                    // modalAllClose();
+                $(".roadmapViewArea .loading").hide();
+            } else {
+                showErrors("Fail to load the milestone data");
+            }
+        }
+    });
 }
 
