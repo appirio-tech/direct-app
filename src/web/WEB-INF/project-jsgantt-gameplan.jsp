@@ -53,6 +53,12 @@
     <!--[if IE 9]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
     <![endif]-->
+	
+<script type="text/javascript">
+//<![CDATA[
+window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
+//]]>
+</script>
 
     <!-- External javascript -->
     <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>

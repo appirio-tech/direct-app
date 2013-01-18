@@ -50,6 +50,12 @@
 <![endif]-->
 
 <!-- External javascript -->
+<script type="text/javascript">
+//<![CDATA[
+window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
+//]]>
+</script>
+
 <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>
 <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
 
