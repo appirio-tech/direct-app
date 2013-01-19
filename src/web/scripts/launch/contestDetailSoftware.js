@@ -224,12 +224,22 @@ $(document).ready(function(){
             	// pass
             }
             try {
-            	CKEDITOR.replace( 'swDetailedRequirements' );
+                var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+                CKEDITOR.replace('swDetailedRequirements', { 
+                    templates: 'detailed_requirements_templates',
+                    templates_files: DRTemplatesList    
+                });
+                CKEDITOR.loadTemplates(DRTemplatesList);
             } catch (err) {
             	// pass
             }
             try {
-            	CKEDITOR.replace( 'swGuidelines' );
+                var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
+                CKEDITOR.replace('swGuidelines', { 
+                    templates: 'software_guidelines_templates',
+                    templates_files: SGTemplatesList
+                });
+                CKEDITOR.loadTemplates(SGTemplatesList);
             } catch (err) {
             	// pass
             }

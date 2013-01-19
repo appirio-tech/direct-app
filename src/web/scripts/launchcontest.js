@@ -461,9 +461,20 @@ $(document).ready(function() {
     CKEDITOR.replace( 'contestDescription' );
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
-    CKEDITOR.replace( 'round2Info' );
-	CKEDITOR.replace( 'swDetailedRequirements' );
-	CKEDITOR.replace( 'swGuidelines' );
+    CKEDITOR.replace( 'round2Info' ); 
+    
+    var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
+    var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+    CKEDITOR.replace('swGuidelines', { 
+        templates: 'software_guidelines_templates',
+        templates_files: SGTemplatesList
+    });    
+    CKEDITOR.replace('swDetailedRequirements', { 
+        templates: 'detailed_requirements_templates',
+        templates_files: DRTemplatesList 
+    });
+    CKEDITOR.loadTemplates(SGTemplatesList);
+    CKEDITOR.loadTemplates(DRTemplatesList);
 
     handleProjectDropDownChange();
 

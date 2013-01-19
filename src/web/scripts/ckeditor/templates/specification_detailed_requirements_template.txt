@@ -1,0 +1,107 @@
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">1. Project Overview</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide a brief introduction to the project, background of the project, objectives and requirements of the project, etc. ]</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The entire system is a tool suite that;</p>
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+    <li>Collects data as the answers to questions (grouped into surveys).</li>
+    <li>Evaluates metrics for respondents based on submitted data/answers.</li>
+    <li>Categorizes respondents into peer groups based on submitted data or computed metric values.</li>
+    <li>Computes statistical data.</li>
+    <li>Generates various reports (in MS Excel and PowerPoint).</li>
+</ul>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The main component is a Visual Basic 6 application that controls the data processing and reporting part. It also provides direct data import from MS Excel files into DB2.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The scope of this project is to re-implement this Data Processing and Reporting (DPR) component using Java based technologies.</p>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">2. Competition Task Overview</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the competitor needs to achieve in the contest. Explain the current Specification requirements, scope and any other related information that will be useful for the competitor. ]</span></strong></p>
+<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+    
+    <p><strong>Tips for Success</strong></p>
+    <ul>
+        <li>Asking questions early and getting PM&#39;s feedback is very important for the success of this competition.</li>
+        <li>Raise questions if you feel anything is confusing, or if you have any questions on the provided documentation.</li>
+    </ul>
+</div>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This contest will provide the details of the interaction between the user and the application (GUI), except for any interactions already covered by Release 1 (excel configuration import, transaction history, retrieval and update of a report, viewing of log files, and request cancelling). It will not concern itself with the internal functionality such as report generation specifics.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">These interactions can currently be seen in the client&#39;s DPR usability and functional requirements document v5a.doc, especially in the usability and user mockup sections.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">From an architectural perspective, the requirements are mapped to the services and entities defined below. For a service and entity discussion, please refer to SDS 5.1 and 4 respectively. Also refer to SDS 5.3 for an in-depth process discussion, including the above sections in the client document.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This module will provide the following services found in the Services Class Diagram;</p>
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+    <li>SecurityService</li>
+    <li>DataRequestService</li>
+    <li>DataSourceService</li>
+    <li>SurveyService</li>
+    <li>DataRequestRespondentService</li>
+    <li>LookupService</li>
+    <li>FunctionService</li>
+    <li>CustomPeerGroupService</li>
+    <li>QuestionService</li>
+    <li>BusinessDriverService</li>
+    <li>MeasureService</li>
+    <li>RespondentService</li>
+</ul>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">It will also provide all entities found in the Entity Class Diagram except the following entities;</p>
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+    <li>CurrencyExchangeRate</li>
+    <li>ProcessReportingOutcome</li>
+    <li>ReportingOutcomeFilter</li>
+</ul>
+<p>
+    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">2.1 Contest Scope</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Scope of the contest should be included here. In case if the scope of the project is too long or complex and is divided into several parts, clearly provide what sections should be covered in this particular part of the contest. ]</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This contest only covers the &quot;Answer reports&quot; and &quot;Content management&quot; tabs and all underlying services that are needed to support those features.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Note: &quot;Import new configurations from Excel&quot; in &quot;Content management&quot; tab is already covered by another specification and thus doesn&#39;t need to be covered by this contest.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The spec needs to contain enough details to be considered acceptable, and the functional requirements and SRS are very important references. You will find a lot of useful information from them.</p>
+<p>
+    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">2.2 Special Notes (Optional)</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Any special notes such as what resource should get the precedence in creating the specification, etc come under this section. ]</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(255, 0, 0);">Please follow the wireframes if there is any inconsistency between wireframes and conceptualization document.</span></p>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">3. Technology Overview</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the technologies that should be used in the development phase of this project. ]</span></strong></p>
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+    <li>J2EE 1.6</li>
+    <li>JAVA 1.6</li>
+    <li>SUSE Linux Enterprise Server 10</li>
+    <li>DB2 9.5</li>
+    <li>WebSphere Application Server 7.0</li>
+    <li>EJB 3.0</li>
+    <li>JDBC 4.0</li>
+    <li>Spring 3.1:&nbsp;<a href="http://www.springsource.org/" target="_blank">http://www.springsource.org</a></li>
+    <li>Slf4j 1.6.4:&nbsp;<a href="http://www.slf4j.org/" target="_blank">http://www.slf4j.org</a></li>
+    <li>jQuery 1.7.2:&nbsp;<a href="http://jquery.com/" target="_blank">http://jquery.com</a></li>
+    <li>Struts 2.2.3:&nbsp;<a href="http://struts.apache.org/" target="_blank">http://struts.apache.org</a></li>
+    <li>Apache POI 3.8 :&nbsp;<a href="http://poi.apache.org/" target="_blank">http://poi.apache.org</a></li>
+</ul>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">4. Documentation Provided</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the provided documents (Conceptualization Document, Questionnaire Document, Wireframe, Storyboard etc) or the location where you have attached the documents (Forum, Download section, etc). Provide a brief description on each document. Give the link to the TopCoder UML Tool. ]</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The following documentations are provided as input:</p>
+<table class="confluenceTable" style="margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; border: 2px solid rgb(153, 153, 153); vertical-align: top; font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+    <colgroup>
+        <col width="200px" />
+        <col />
+    </colgroup>
+    <tbody>
+    <tr>
+        <th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Document</b></th>
+        <th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Description</b></th>
+    </tr>
+    <tr>
+        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://www.topcoder.com/wiki/download/attachments/33459841/Conceptualization_Document.rtf" target="_blank">Conceptualization Document</a></td>
+        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">This document organizes a description of the Client&#39;s current process and requirement, crucial business processes and participants, and proposes a new solution. It is sometimes called the &quot;BRD&quot; or &quot;Conceptualization&quot; document. You must replace the blue text and complete this template for submission.</td>
+    </tr>
+    <tr>
+        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://apps.topcoder.com/wiki/download/attachments/58164650/Questionnaire.doc?version=1" target="_blank">Questionnaire Document</a></td>
+        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">The Client will complete this Questionnaire and post it to the forum. You as the competitor, will need to analyze it and ask the right questions in order to fill out the BRD.</td>
+    </tr>
+    </tbody>
+</table>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">TopCoder UML Tool:&nbsp;<a href="http://apps.topcoder.com/wiki/display/tc/TopCoder+UML+Tool" target="_blank">http://apps.topcoder.com/wiki/display/tc/TopCoder+UML+Tool</a></p>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">5. Environment Setup (Optional)</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ If the contest requires SVN and VM details, include them in this section. If this is a TopCoder platform contest, provide detailed descriptions and related links on how to create a SSH key, Local deployment information, VM setup details, SVN etc. and also how the competitors should request the SVN permission. ]</span></strong></p>
+<p><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">5.1 VM (Optional)</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">We can provide VMs for competitors if you have any trouble in setting up a local environment. If you need a VM, please send an email to<a href="mailto:abc@gmail.com">abc@gmail.com</a>&nbsp;and cc&nbsp;<a href="mailto:foo@topcoder.com">foo@topcoder.com</a>. We will send out more information.</p>
+<p>
+    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">5.2 SVN (Optional)</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Each competitor will be given read access to&nbsp;<a href="">https://coder.topcoder.com/benchmark/clients/cronos/applications/direct/branches/qa</a>.</p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">If you don&#39;t already have access, please send an email to&nbsp;<a href="mailto:subversion@topcoder.com">subversion@topcoder.com</a>&nbsp;and cc&nbsp;<a href="mailto:abc@topcoder.com">abc@topcoder.com</a>.</p>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">6. Competitor Restrictions (Optional)</span></h2>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ If the contest has any restrictions such as NDA/CCA/Background checks, include them here. ]</span></strong></p>
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This competition requires a&nbsp;<a href="http://apps.topcoder.com/wiki/display/tc/Competition+Confidentiality+Agreement+(CCA)" target="_blank">CCA.</a></p>

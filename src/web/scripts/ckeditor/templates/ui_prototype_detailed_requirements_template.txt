@@ -1,0 +1,215 @@
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">1. Project Overview</span></h2>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the Project. Give a basic introduction and background of the project in this section. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Welcome to the TCO13 Main Site WordPress Theme Build contest! The goal of this contest is to create a functional WordPress Theme of TCO13. This website will be the face of TopCoder for the duration of the tournament.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">We already have the TCO13 HTML prototype which will serve as your guide in creating the WordPress theme. This HTML prototype, showcase the look and feel of the site, the pages animated transitions and process flow. Please note that the only page to be a complete load is the index file, the rest will be loaded via AJAX call.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This contest is focused in creating the pages outlined below. Pages and Templates should be built according to the WordPress template heirarchy&nbsp;<span style="white-space: nowrap;"><a href="" target="_blank" tppabs="http://codex.wordpress.org/Template_Hierarchy">http://codex.wordpress.org/Template_Hierarchy</a></span>.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">A draft TCO13 wordpress theme is also provided as your reference on some codes and IDs. Whether you choose to refactor this draft TCO13 theme or create new theme from scratch is at your discretion. Please follow the Competition Task Overview and let us know if you have any questions.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">2. Competition Task Overview</span></h2>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the user needs to achieve in this competition. Give a brief description about the current UI Prototype requirements. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">A WordPress theme is a folder containing all the images, CSS, JavaScript, and PHP files that describe the appearance and layout of a WordPress blog. The PHP files have a standard naming convention for page types, and contain and use template tags to call for specific information from the blog&#39;s database, such as a post title, the post date, its categories, and more.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">We want to leverage HTML5/CSS3 but we still need to support some older browsers. Feel free to use the HTML5 Shiv fix for Internet Explorer.</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.1 Key Requirements</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section should point out the major requirements of the competition. Most important requirement must be represented in RED for emphasis. ]</span></strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>Create a new theme or update the provided theme based is at your discretion.</li>
+	<li>Test in all the required browsers.</li>
+	<li><span style="color: rgb(255, 0, 0);">Provide ALL installation step by step, create details notes needed for your WordPress Theme.</span></li>
+	<li>Replicate the design of the approved Storyboards (PSD Files) for all pages.</li>
+	<li>Your pages must match the colors and structure of the provided storyboards.</li>
+	<li><span style="color: rgb(255, 0, 0);">Ensure your pages display correctly in all browsers. It is your responsibility to make sure the pages display correctly.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Ensure you submission clear of HTML and CSS Validation error and warning.</span></li>
+	<li>Create a Theme based on the provided Storyboard PSDs and existing WordPress Theme.</li>
+	<li>All content (headings, text, etc...) should be dynamic and editable via the WordPress Admin backend.</li>
+	<li>DO NOT just create static HTML/PHP templates and have them served up by WordPress - you much create the Admin functionality.</li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.2 Detailed Requirements</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Explain the requirements in detail under headings. ]</span></strong></p>
+
+<p><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(164, 31, 145);">Eg: Heading</span></strong></p>
+
+<p><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(164, 31, 145);">Give a brief description about the heading.</span></strong></p>
+
+<ul>
+	<li><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(164, 31, 145);">Detailed description goes here ?</span></strong></li>
+	<li><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(164, 31, 145);">Detailed description goes here ?</span></strong></li>
+	<li><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: rgb(164, 31, 145);">Detailed description goes here ?</span></strong></li>
+</ul>
+
+<p><strong style="line-height: 1.6em;">Home</strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>Carousel
+	<ul>
+		<li>main content will be carousel, your theme should support 3 different layout for this section/feature, these are:
+		<ul>
+			<li>2 column; image on left, text description on right. A good example of this is the item that has TCO13 logo.</li>
+			<li>2 column; text description on left, image on right. A good example is the &quot;Acme&quot; item.</li>
+			<li>1 column that supports image.</li>
+		</ul>
+		</li>
+		<li>All carousel item content include text and the images should be treated as content and not as a CSS background.</li>
+		<li>Carousel items should be sorted from the most recent to the oldest addition.</li>
+	</ul>
+	</li>
+	<li>Event Sponsors
+	<ul>
+		<li>Bottom content will be Events Sponsors.</li>
+		<li>We should be able to customize how they are sorted.</li>
+		<li>Each item should be link to their respected Sponsor page.</li>
+	</ul>
+	</li>
+</ul>
+
+<p><strong style="line-height: 1.6em;">Design</strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>Design page
+	<ul>
+		<li>The layout or look and feel of the content should be similar to the &quot;Overview / Competition Rules&quot; page of the provided prototype.</li>
+		<li>Get the content of this page from TCO13 Design Competition page.</li>
+		<li>For the Sidebar, set Event Sponsors and Recent Post widgets.</li>
+	</ul>
+	</li>
+	<li>Design Schedule page
+	<ul>
+		<li>The layout or look and feel of the content should be similar to the &quot;Studio Rules&quot; page of the provided prototype.</li>
+		<li>Get the content of this page from TCO13 Design Schedule page.</li>
+		<li>For the Sidebar, set Event Sponsors and Recent Post widgets.</li>
+	</ul>
+	</li>
+	<li>Design Rules page
+	<ul>
+		<li>The layout or look and feel of the content should be similar to the &quot;Studio Rules&quot; page of the provided prototype.</li>
+		<li>Get the content of this page from TCO13 Design Rules page.</li>
+		<li>For the Sidebar, set Event Sponsors and Recent Post widgets.</li>
+	</ul>
+	</li>
+	<li>Design Leaderboard page
+	<ul>
+		<li>Fetch leaderboard feed result for this page based on the Theme options settings, the provided draft WordPress theme has this script in fetching the feed (see JS file and includes/design.php).</li>
+		<li>The look and feel of this leaderboard table should be similar to the Studio Leaderboard page of the provided prototype.</li>
+		<li>For the Sidebar, set Event Sponsors and Recent Post widgets.</li>
+	</ul>
+	</li>
+	<li>Design Final Results page
+	<ul>
+		<li>See the &quot;Mod Dash Final Results&quot; page of the provided prototype for the look and feel of the main section.</li>
+		<li>Copy the content of TCO12 Design Final Results page for the main section of this page.</li>
+		<li>For the Sidebar, set Event Sponsors and Recent Post widgets.</li>
+	</ul>
+	</li>
+</ul>
+
+<p><strong style="line-height: 1.6em;">Photos</strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>See &quot;Photos&quot; page from the provided prototype.</li>
+	<li>Use this plugin http://co.deme.me/projects/flickr-gallery/ for the content of this page.</li>
+</ul>
+
+<p><strong style="line-height: 1.6em;">Arena</strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>Leave a placeholder holder for this page that says &quot;Coming soon...&quot;.</li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.3 Specific HTML/CSS/JavaScript Requirements</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the HTML/CSS/JavaScript Requirements which are specific to the competition. ]</span></strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li><span style="color: rgb(255, 0, 0);">You MUST use HTML5 and CSS3</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Validate your code - reviewers may accept minor validation errors, but please comment your reason for any validation errors. Use the validators listed in the scorecard.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Use CSS to space out objects, not clear/transparent images (GIFs or PNGs) and use proper structural CSS to lay out your page. Only use table tags for tables of data/information and not for page layout.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">No inline CSS styles - all styles must be placed in an external stylesheet.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Use semantically correct tags - use H tags for headers, etc. Use strong and em tags instead of bold and italic tags.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Element and Attribute names should be in lowercase and use a &quot;-&quot; or camel naming to separate multiple-word classes (i.e.. &quot;main-content&quot;, or &quot;mainContent).</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Label all CSS, JavaScript, or HTML hacks with explanations so others will understand.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">Your code must render properly in all browsers listed in the scorecard in both Mac and PC environments.</span></li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.4 Specific Wordpress Requirements (Optional)</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the WordPress requirements which are specific to the competition. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">In addition to following Wordpress standards and best practices, please note the following requirements.</p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>General Requirement - Do not break or override any of the standard Wordpress features. If you need to, please explicitly explain in your submission.</li>
+	<li>Make proper use of the Wordpress Menu system.</li>
+	<li>The editor must function as expected by our content editors. When then set styles via the rich editor, it should preview and display correctly on the site. This includes inserting images into posts, formatting fonts, positioning text around images, etc.</li>
+	<li>Do not hardcode URL paths. Everything should be relative.</li>
+	<li>Do not hardcode settings/config in the template code. Please create a &quot;Theme Options&quot; panel for configuration settings.</li>
+	<li>Use sidebars when appropriate. We should be able to add widgets to sidebars.</li>
+	<li>Use Widgets when appropriate. We&#39;d like to avoid doing a copy/paste to include the same functionality in multiple templates/pages.</li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.5 JavaScript Libraries/Plugins</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify the allowed JavaScript libraries to create this prototype or anything not to be used. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">All JavaScript must not have a copyright by a third party. You are encouraged to use your own scripts, or scripts that are free, publicly available and do not have copyright statements or author recognition requirements anywhere in the code.</p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>You are allowed to use the JQuery JavaScript library for this contest.</li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">2.6 Browser Requirements</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ List in which browsers the prototype should work. (Include the latest versions of the required browsers) ]</span></strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>IE8, IE9</li>
+	<li>FF 7+</li>
+	<li>Safari 5</li>
+	<li>Chrome Latest</li>
+</ul>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">3. References</span></h2>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide any links that will be required or useful in creating the prototype. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Tutorial- Building Custom WordPress Theme:</p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><a href="http://www.webdesignerwall.com/tutorials/building-custom-wordpress-theme" target="_blank">http://www.webdesignerwall.com/tutorials/building-custom-wordpress-theme</a></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><a href="http://www.wpdesigner.com/2007/02/19/so-you-want-to-create-wordpress-themes-huh/" target="_blank">http://www.wpdesigner.com/2007/02/19/so-you-want-to-create-wordpress-themes-huh/</a></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The WordPress Codex (a guide to template tags)</p>
+
+<p><a href="http://codex.wordpress.com/" style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;" target="_blank">http://codex.wordpress.com/</a></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Wordpress Developers Toolbox</p>
+
+<p><a href="http://www.smashingmagazine.com/2008/09/15/wordpress-developers-toolbox/" style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;" target="_blank">http://www.smashingmagazine.com/2008/09/15/wordpress-developers-toolbox/</a></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">4. Documentation Provided</span></h2>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the documents provided (Wireframe, Storyboards, etc) or the location where you have attached the documents or resources (Forum, Download section, etc). ]</span></strong></p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li><a href="">Wireframes.</a></li>
+	<li><a href="">Storyboards.</a></li>
+	<li><a href="">HTML Prototype.</a></li>
+	<li><a href="">WP Theme, plugins, and data.</a></li>
+</ul>
