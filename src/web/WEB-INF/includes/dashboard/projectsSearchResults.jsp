@@ -85,7 +85,13 @@
                     <td>${projectSummary.active.totalNumber}</td>
                     <td>${projectSummary.finished.totalNumber}</td>
                     <td>${projectSummary.cancelled.totalNumber}</td>
-                    <td><span class='<s:property value="projectStatusType.projectStatusName.toLowerCase()"/>'
+                    <s:if test="projectStatusType.projectStatusName.toLowerCase() == 'on hold'">
+                        <s:set var ="projectStatusClassName" value="%{'archived'}"/>
+                    </s:if>
+                    <s:else>
+                        <s:set var ="projectStatusClassName" value="projectStatusType.projectStatusName.toLowerCase()"/>
+                    </s:else>
+                    <td><span class='<s:property value="projectStatusClassName"/>'
                               id="projectStatus${projectSummary.projectId}"
                               name="<s:property value="projectStatusType.projectStatusId"/>">${projectStatusType.projectStatusName}</span>
                     </td>
@@ -97,7 +103,7 @@
                         </a>
                         <a class="short operation archiveOperation <s:if test='projectStatusType.projectStatusId != 1L'>hide</s:if>"
                            href="javascript:;" onclick="updateDirectProjectStatus(${projectSummary.projectId}, 2)">
-                            <img src="/images/archive-icon.png" alt=""/>Archive
+                            <img src="/images/archive-icon.png" alt=""/>On Hold
                         </a>
 
                         <a class="long operation deleteOperation <s:if test='projectStatusType.projectStatusId == 3L || projectStatusType.projectStatusId == 4L'>hide</s:if>"

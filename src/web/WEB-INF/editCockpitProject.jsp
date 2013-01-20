@@ -390,7 +390,7 @@
             <li>
                 <input autocomplete="off" name="projectStatus" type="radio" value="2"
                        <s:if test='viewData.project.projectStatusId == 2L'>checked="checked"</s:if> />
-                <label class="archivedStatus">Archived</label>
+                <label class="archivedStatus">On Hold</label>
             </li>
             <li>
                 <input autocomplete="off" name="projectStatus" type="radio" value="3"

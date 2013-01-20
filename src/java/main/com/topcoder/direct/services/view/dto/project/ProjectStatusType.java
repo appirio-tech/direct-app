@@ -21,7 +21,7 @@ public enum ProjectStatusType {
     /**
      * The archived project status.
      */
-    ARCHIVED(2L, "Archived"),
+    ARCHIVED(2L, "On Hold"),
 
     /**
      * The cancelled project status.

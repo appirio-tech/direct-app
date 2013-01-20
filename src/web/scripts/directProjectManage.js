@@ -40,8 +40,13 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                 function(result) {
                     if (result.updatedStatusId) {
 
+                        var statusClassName = result.updatedStatusName.toLowerCase();
+                        if (statusClassName == 'on hold') {
+                            statusClassName = 'archived';
+                        }
+
                         // update the project status
-                        $("#projectStatus" + result.directProjectId).attr("class", result.updatedStatusName.toLowerCase());
+                        $("#projectStatus" + result.directProjectId).attr("class", statusClassName);
                         $("#projectStatus" + result.directProjectId).html(result.updatedStatusName);
 
                         // update the project buttons

@@ -134,7 +134,15 @@
                                             <div class="projectStatus">
                                                 <h3>Project Status :</h3>
 
-                                                <p class="completedStatus">${viewData.projectGeneralInfo.statusLabel}</p>
+                                                <p class="completedStatus">
+                                                    <s:if test="viewData.projectGeneralInfo.statusLabel.toLowerCase() == 'archived'">
+                                                        On Hold
+                                                    </s:if>
+                                                    <s:else>
+                                                        ${viewData.projectGeneralInfo.statusLabel}
+                                                    </s:else>
+
+                                                </p>
 
                                                 <div class="clearFix"></div>
                                             </div>
