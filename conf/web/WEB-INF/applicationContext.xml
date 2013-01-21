@@ -302,6 +302,10 @@
 		<property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="export" value="true"/>
     </bean>
+
+    <bean id="instantSearchAction" class="com.topcoder.direct.services.view.action.search.InstantSearchAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
     
     <bean id="projectMilestoneViewAction" class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneViewAction"
           scope="prototype" parent="baseDirectStrutsAction">

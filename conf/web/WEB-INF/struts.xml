@@ -181,6 +181,17 @@
             </result>
         </action>
 
+        <action name="instantSearch" method="instantSearch" class="instantSearchAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="searchAll" class="instantSearchAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success">/WEB-INF/search/searchAll.jsp</result>
+        </action>
+
         <action name="dashboard" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard.jsp</result>

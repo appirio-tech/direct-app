@@ -44,6 +44,8 @@ import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashb
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectsWidgetDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.project.*;
+import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
+import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
@@ -96,6 +98,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -718,6 +723,13 @@ import java.util.Map.Entry;
  *  </ul>
  * </p>
  *
+ * <p>
+ * Version 6.3 (Module Assembly - TopCoder Cockpit Instant Search)
+ * <ul>
+ *     <li>Add method {@link #getInstantSearchResult(String, long)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, 
   *@GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
  * @version 6.3
@@ -729,6 +741,31 @@ public class DataProvider {
      * The suffiex for 'monthly'
      */
     private static final String MONTHLY_SUFFIX = "_monthly";
+
+
+    private static final String INSTANT_SERACH_CONTEST = "select first ? pi.value as contest_name, p.project_id as contest_id, p.project_category_id as contest_type_id,\n" +
+            "tdp.project_id as direct_project_id, tdp.name as direct_project_name\n" +
+            "from project p, project_info pi, tc_direct_project tdp\n" +
+            "where p.project_id = pi.project_id\n" +
+            "and pi.project_info_type_id = 6\n" +
+            "and p.project_category_id != 27\n" +
+            "and exists (select resource_id from user_permission_grant upg\n" +
+            "                    where upg.user_id=DECODE(?,0,upg.user_id,?) and upg.permission_type_id IN (0,1,2,3) and upg.resource_id = p.tc_direct_project_id)\n" +
+            "and UPPER(pi.value) like ?\n" +
+            "and p.tc_direct_project_id = tdp.project_id";
+
+
+    private static final String INSTANT_SERACH_PROJECT = "select first ? distinct tdp.project_id, tdp.name, dpt.name as project_type, dpc.name as project_category, c.name as client_name\n" +
+            "from tc_direct_project tdp\n" +
+            "LEFT OUTER JOIN direct_project_type dpt on tdp.direct_project_type_id = dpt.direct_project_type_id\n" +
+            "LEFT OUTER JOIN direct_project_category dpc on tdp.direct_project_category_id = dpc.direct_project_category_id\n" +
+            "LEFT OUTER JOIN corporate_oltp:direct_project_account dpa  on tdp.project_id = dpa.project_id\n" +
+            "LEFT OUTER JOIN time_oltp:client_project cp ON cp.project_id = dpa.billing_account_id\n" +
+            "LEFT OUTER JOIN time_oltp:client c ON c.client_id = cp.client_id\n" +
+            "WHERE exists (select resource_id from user_permission_grant upg\n" +
+            "                          where upg.user_id=DECODE(?,0,upg.user_id,?) and upg.permission_type_id IN (0,1,2,3) and upg.resource_id = tdp.project_id)\n" +
+            "      and UPPER(tdp.name) like ?";
+
     /**
      * <p>Constructs new <code>DataProvider</code> instance. This implementation does nothing.</p>
      */
@@ -7156,6 +7193,167 @@ public class DataProvider {
             result.put(paymentId, costDTO);
         }
         return result;
+    }
+
+    /**
+     * Gets the result for the instant search and search all.
+     *
+     * @param searchKey the search key.
+     * @param searchNumber the search number.
+     * @return the search result
+     * @throws Exception if there is any error.
+     * @since 6.2
+     */
+    public static Map<String, List> getInstantSearchResult(String searchKey, long searchNumber) throws Exception {
+        if(searchKey == null || searchKey.length() < 3) {
+            throw new IllegalArgumentException("The instant search query must contain at least 3 characters");
+        }
+
+        final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("global_instant_search");
+
+        if(DirectUtils.isTcStaff(currentUser)) {
+            request.setProperty("uid", String.valueOf(0));
+        } else {
+            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+        }
+
+        request.setProperty("searchKey", searchKey.toUpperCase());
+        request.setProperty("searchNumber", String.valueOf(searchNumber));
+
+        ResultSetContainer resultSetContainer;
+
+        // gets the contests search result
+        resultSetContainer = dataAccess.getData(request).get("contests_instant_search");
+        List<ContestSearchResult> contestResults = new ArrayList<ContestSearchResult>();
+
+        for (ResultSetRow row : resultSetContainer) {
+            ContestSearchResult contestResult = new ContestSearchResult();
+            contestResult.setContestId(row.getLongItem("contest_id"));
+            contestResult.setContestName(row.getStringItem("contest_name"));
+            contestResult.setContestTypeId(row.getLongItem("contest_type_id"));
+            // the last parameter of forIdAndFlag is not used
+            contestResult.setContestTypeName(ContestType.forIdAndFlag(contestResult.getContestTypeId(), false).getName());
+            contestResult.setProjectId(row.getLongItem("direct_project_id"));
+            contestResult.setProjectName(row.getStringItem("direct_project_name"));
+            contestResults.add(contestResult);
+        }
+
+        // gets the projects search result
+        resultSetContainer = dataAccess.getData(request).get("projects_instant_search");
+        List<ProjectSearchResult> projectResults = new ArrayList<ProjectSearchResult>();
+
+        for (ResultSetRow row : resultSetContainer) {
+            ProjectSearchResult projectResult = new ProjectSearchResult();
+            projectResult.setProjectId(row.getLongItem("project_id"));
+            projectResult.setProjectName(row.getStringItem("name"));
+            if (row.getItem("project_type").getResultData() != null) {
+                projectResult.setProjectTypeName(row.getStringItem("project_type"));
+            }
+            if (row.getItem("project_category").getResultData() != null) {
+                projectResult.setProjectCategoryName(row.getStringItem("project_category"));
+            }
+            if (row.getItem("client_name").getResultData() != null) {
+                projectResult.setClientName(row.getStringItem("client_name"));
+            }
+            projectResults.add(projectResult);
+        }
+
+        Map<String, List> result = new HashMap<String, List>();
+
+        result.put("contests", contestResults);
+        result.put("projects", projectResults);
+
+        return result;
+    }
+
+    public static Map<String, List> getInstantSearchResultV2(String searchKey, long searchNumber) throws Exception {
+        if (searchKey == null || searchKey.length() < 3) {
+            throw new IllegalArgumentException("The instant search query must contain at least 3 characters");
+        }
+
+        final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        long userId;
+
+        if (DirectUtils.isTcStaff(currentUser)) {
+            userId = 0;
+        } else {
+            userId = currentUser.getUserId();
+        }
+
+        Connection connection = null;
+        PreparedStatement getContestsInstantSearch = null;
+        PreparedStatement getProjectsInstantSearch = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+            getContestsInstantSearch = connection.prepareStatement(INSTANT_SERACH_CONTEST);
+            getProjectsInstantSearch = connection.prepareStatement(INSTANT_SERACH_PROJECT);
+
+            getContestsInstantSearch.setLong(1, searchNumber);
+            getContestsInstantSearch.setLong(2, userId);
+            getContestsInstantSearch.setLong(3, userId);
+            getContestsInstantSearch.setString(4, "%" + searchKey.toUpperCase() + "%");
+
+            getProjectsInstantSearch.setLong(1, searchNumber);
+            getProjectsInstantSearch.setLong(2, userId);
+            getProjectsInstantSearch.setLong(3, userId);
+            getProjectsInstantSearch.setString(4, "%" + searchKey.toUpperCase() + "%");
+
+            resultSet = getContestsInstantSearch.executeQuery();
+            List<ContestSearchResult> contestResults = new ArrayList<ContestSearchResult>();
+            while (resultSet.next()) {
+                ContestSearchResult contestResult = new ContestSearchResult();
+                contestResult.setContestId(resultSet.getLong("contest_id"));
+                contestResult.setContestName(resultSet.getString("contest_name"));
+                contestResult.setContestTypeId(resultSet.getLong("contest_type_id"));
+                // the last parameter of forIdAndFlag is not used
+                contestResult.setContestTypeName(ContestType.forIdAndFlag(contestResult.getContestTypeId(), false).getName());
+                contestResult.setProjectId(resultSet.getLong("direct_project_id"));
+                contestResult.setProjectName(resultSet.getString("direct_project_name"));
+                contestResults.add(contestResult);
+            }
+
+
+            resultSet = getProjectsInstantSearch.executeQuery();
+            List<ProjectSearchResult> projectResults = new ArrayList<ProjectSearchResult>();
+            while (resultSet.next()) {
+                ProjectSearchResult projectResult = new ProjectSearchResult();
+                projectResult.setProjectId(resultSet.getLong("project_id"));
+                projectResult.setProjectName(resultSet.getString("name"));
+                if (resultSet.getObject("project_type") != null) {
+                    projectResult.setProjectTypeName(resultSet.getString("project_type"));
+                }
+                if (resultSet.getObject("project_category") != null) {
+                    projectResult.setProjectCategoryName(resultSet.getString("project_category"));
+                }
+                if (resultSet.getObject("client_name") != null) {
+                    projectResult.setClientName(resultSet.getString("client_name"));
+                }
+                projectResults.add(projectResult);
+            }
+
+            Map<String, List> result = new HashMap<String, List>();
+
+            result.put("contests", contestResults);
+            result.put("projects", projectResults);
+
+            return result;
+
+
+        } finally {
+            DatabaseUtils.close(resultSet);
+            DatabaseUtils.close(getContestsInstantSearch);
+            DatabaseUtils.close(getProjectsInstantSearch);
+            DatabaseUtils.close(connection);
+        }
+
     }
 }
 

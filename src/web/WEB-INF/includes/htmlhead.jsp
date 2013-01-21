@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, TCSASSEMBLER
-  - Version: 1.2.1
-  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin
+  - Version: 1.3
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: HTML header file linking to the CSS and javascript files. It is included by all the other JSP pages.
   -
@@ -16,6 +16,9 @@
   -
   - Version 1.2.2 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
   - remove include of TinyMCE, replaced with CKEditor.
+  -
+  - Version 1.3 (Module Assembly - TopCoder Cockpit Instant Search)
+  - - Add css and js for the instant search feature
 --%>
 <title>TopCoder Cockpit</title>
 
@@ -31,6 +34,7 @@
 <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
 
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
@@ -83,3 +87,4 @@ window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
 <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
 <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
+<script type="text/javascript" src="/scripts/instantSearch.js"></script>

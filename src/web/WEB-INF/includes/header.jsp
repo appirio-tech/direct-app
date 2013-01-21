@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
-  - Version: 2.4
-  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin
+  - Version: 2.5
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
   - It renders the common page headers.
@@ -40,6 +40,7 @@
   - Version 2.4 (Release Assembly - TopCoder Security Groups - Release 5) change notes:
   - - Added hasWritePermission variable if current page is in project context.
   - - For the pages under project context, hide some edit project links if user doesn't have permission.
+  - Version 2.5 (Module Assembly - TopCoder Cockpit Instant Search) change notes: Add instant search box
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -85,6 +86,9 @@
                     <s:else>
                         <a class="logo" href="javascript:;"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
                     </s:else>
+                </c:when>
+                <c:when test="${requestScope.CURRENT_TAB eq 'searchAll'}">
+                    <a class="logo resultsPageLogo" href="javascript:;"> Search Results </a>
                 </c:when>
                 <c:otherwise>
                     <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
@@ -456,6 +460,16 @@
     <!-- End #tabs0 -->
 
 	<div class="helloUser">
+        <div class="instantSearch">
+            <div class="instantSearchBg">
+                <input name="instantSearchInput" value="Search for contests, projects and features" />
+                <span class="searchIcon"></span>
+            </div>
+            <div class="resultDropDown">
+                <div class="ajaxLoading"><img src="/images/fading-squares.gif" alt="" width="60" height="9" /></div>
+                <div class="quickResultList"></div>
+            </div>
+        </div>
         <ul>
             <li>
                 <strong>Hello</strong> <link:currentUser/>|
@@ -538,7 +552,7 @@
     </ui:isProjectPage>
 
     <ui:isDashboardPage>
-        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise'}">
+        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise' && requestScope.CURRENT_TAB ne 'searchAll'}">
             <div id="tabs1">
                  <ul>
                      <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
