@@ -90,7 +90,7 @@
 										</div>
 										
 										<div class="rightSide">
-											<span class="label">Request Date Between:</span>
+											<span class="label">Request Date between:</span>
 											<div class="secondColumn specialColumn">
 												<div class="fLeft">
 													<input type="text" name="formData.startDate"  id="startDateReceived" class="text date-pick dp-applied" />

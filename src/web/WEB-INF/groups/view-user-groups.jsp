@@ -177,7 +177,7 @@
 											<td class="multirowsCell"><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td class="multirowsCell"><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:iterator value="resources" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}s</s:iterator></td>
-											<td><s:iterator value="members" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}s</s:iterator></td>
+											<td><s:iterator value="members" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 										</tr>
 										</s:iterator>
 									</tbody>
