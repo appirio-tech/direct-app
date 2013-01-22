@@ -446,6 +446,11 @@ function showSuccessfulMessage(message) {
     displayOperationSuccess("#demoModal", "Message", message);
 }
 
+function showSuccessfulMessageWithOperation(message, text, handler) {
+    displayOperationSuccess("#demoModal", "Message", message, text, handler);
+}
+
+
 /**
  * Shows the warning message after operation finishes
  *
