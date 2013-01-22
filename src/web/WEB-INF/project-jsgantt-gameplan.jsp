@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
 
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
@@ -90,6 +91,8 @@ window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
     <link rel="stylesheet" href="/css/direct/jsgantt.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jsgantt.js"></script>
     <script type="text/javascript" src="/scripts/directgantt.js"></script>
+    <script type="text/javascript" src="/scripts/instantSearch.js"></script>
+
     <ui:projectPageType tab="gameplan"/>
 </head>
 
