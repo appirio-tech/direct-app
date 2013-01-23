@@ -617,10 +617,6 @@
     </if:isSecurityGroupsUIAccessible>
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
-          
-            <li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
-                <a href="<s:url action="dashboardSearchView" namespace="/"/>"><span>Search</span></a>
-            </li>
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardNotifications" namespace="/"/>"><span>Settings</span></a>
             </li>

@@ -423,13 +423,6 @@ var instantSearchFeaturesList = {
             "reqAdmin": "no"
         },
         {
-            "title":    "Search Project",
-            "link":     "/direct/dashboardSearchView",
-            "brief":    "Search your cockpit projects and contests by name",
-            "group":    "Project",
-            "reqAdmin": "no"
-        },
-        {
             "title":    "Notification Settings",
             "link":     "/direct/dashboardNotifications",
             "brief":    "Manage your forum / timeline notifications on your cockpit projects and contests",
