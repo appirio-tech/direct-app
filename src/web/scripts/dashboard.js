@@ -2617,13 +2617,14 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	modalClose = function() {
         $('#modalBackground').hide();
 		$('#new-modal #preloaderModal').hide();
-        $('.outLay').hide();
+		$('#new-modal .outLay').hide();
+        //$('.outLay').hide();
     }
 
     modalAllClose = function() {
         $('#modalBackground').hide();
 		$('#new-modal .outLay').hide();
-        $('.outLay').hide();
+        //$('.outLay').hide();
     }
     
     /**
