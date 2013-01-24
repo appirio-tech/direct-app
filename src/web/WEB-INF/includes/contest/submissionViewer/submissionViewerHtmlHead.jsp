@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="/css/direct/jScrollPane.css?v=176771" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/jquery.selectbox.css?v=185283"  type="text/css" />
+<link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
 <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355"  type="text/css" />
 </s:if>
@@ -60,6 +61,7 @@
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
 <script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
+<script type="text/javascript" src="/scripts/instantSearch.js"></script>
 
 <script type="text/javascript" src="/scripts/jquery.select.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/studio.js?v=213622"></script>
