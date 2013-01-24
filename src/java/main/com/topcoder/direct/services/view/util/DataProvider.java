@@ -4737,11 +4737,11 @@ public class DataProvider {
 		String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
         if (!hasInvoice) {
-			commandName = "dashboard_billing_cost_invoice_report_v3";
-            queryName = "dashboard_billing_cost_invoice_report_v3";
+			commandName = "dashboard_billing_cost_invoice_report_v4";
+            queryName = "dashboard_billing_cost_invoice_report_v4";
         } else {
-			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v3";
-            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v3";
+			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
+            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
         }
 
         if(contestId > 0) {
