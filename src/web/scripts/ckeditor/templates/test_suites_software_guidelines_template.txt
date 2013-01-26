@@ -1,0 +1,42 @@
+<p><span style="color:#c00000;"><strong>11. Submission Deliverables</strong></span></p>
+
+<p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the list of deliverables that a competitor must provide for the completion of the current contest. If the current contest needs a special documentation or deliverable other than usual, then clearly mention the requirement in the submission deliverables. If there present any restrictions on the compatibility of the documents then also include the details here. ]</em></span></p>
+
+<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
+
+<p><span style="line-height: 1.6em;">The competitors in this competition are expected to provide the following deliverables: &nbsp;</span></p>
+
+<ul>
+	<li>Updated DIRECT build.xml for test scripts (if changed).</li>
+	<li>Updated DIRECT setup guide for running test scripts (if changed).</li>
+	<li>Implemented test scripts using Selenium and their configuration.</li>
+	<li>Testing data in SQL script and any other updated documents.</li>
+</ul>
+
+<div>
+<div>
+<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<p><span style="color:#FF0000;"><strong>Note:</strong></span></p>
+Please use configuration.properties for values, which might change as the testing data could change. The sample configuration.properties is provided in the contest forum. We need to configure the browser path, login name and other parameters before running the automated tests.</div>
+</div>
+
+<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong>11.1. </strong><strong>Milestone Deliverables </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+</div>
+
+<p><span style="color:#002060;"><em>[If the current contest includes a Milestone event, then mention the necessary deliverables needed in order to receive the Milestone prize.]</em></span></p>
+
+<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
+
+<p><span style="line-height: 1.6em;">To receive the Milestone prize, please submit the Test Scripts by covering all the scope as mentioned in contest objective section, and based on the client feedback update your final submission.</span></p>
+
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">12. Final Submission</strong></span></p>
+
+<p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the various guidelines must be followed by the contestants in the process of final submission.]</em></span></p>
+
+<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
+
+<ul>
+	<li>Your final submission must contain a single .zip file with all the submission deliverables.</li>
+	<li>For each member, the final submission should be uploaded to the Online Review Tool.</li>
+	<li>You must not include any identifying information, such as your handle, in your submission. Your submission should be anonymous and you will be scored down in screening for not complying.</li>
+</ul>

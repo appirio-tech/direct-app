@@ -49,6 +49,27 @@ CKEDITOR.addTemplates("detailed_requirements_templates", {
             description: "Specification Detailed Requirements.",
             html: '',
             path: '/scripts/ckeditor/templates/specification_detailed_requirements_template.txt'
+        },
+        {
+            title: "Bug Hunt",
+            image: "template.gif",
+            description: "Bug Hunt Detailed Requirements.",
+            html: '',
+            path: '/scripts/ckeditor/templates/bug_hunt_detailed_requirements_template.txt'
+        },
+        {
+            title: "Test Scenarios",
+            image: "template.gif",
+            description: "Test Scenarios Detailed Requirements.",
+            html: '',
+            path: '/scripts/ckeditor/templates/test_scenarios_detailed_requirements_template.txt'
+        },
+        {
+            title: "Test Suites",
+            image: "template.gif",
+            description: "Test Suites Detailed Requirements.",
+            html: '',
+            path: '/scripts/ckeditor/templates/test_suites_detailed_requirements_template.txt'
         }
     ]
 });

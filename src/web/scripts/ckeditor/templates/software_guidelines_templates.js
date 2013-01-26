@@ -49,6 +49,27 @@ CKEDITOR.addTemplates("software_guidelines_templates", {
             description: "Specification Software Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/specification_software_guidelines_template.txt'
+        },
+        {
+            title: "Test Scenarios",
+            image: "template.gif",
+            description: "Test Scenarios Software Guidelines.",
+            html: '',
+            path: '/scripts/ckeditor/templates/test_scenarios_software_guidelines_template.txt'
+        },
+        {
+            title: "Test Suites",
+            image: "template.gif",
+            description: "Test Suites Software Guidelines.",
+            html: '',
+            path: '/scripts/ckeditor/templates/test_suites_software_guidelines_template.txt'
+        },
+        {
+            title: "Bug Hunt",
+            image: "template.gif",
+            description: "Bug Hunt Software Guidelines.",
+            html: '',
+            path: '/scripts/ckeditor/templates/bug_hunt_software_guidelines_template.txt'
         }
     ]
 });
