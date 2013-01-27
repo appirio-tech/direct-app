@@ -202,12 +202,7 @@ $(document).ready(function(){
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
-            
-            try {
-            	CKEDITOR.replace( 'contestDescription' );
-            } catch (err) {
-            	// pass
-            }
+
             try {
             	CKEDITOR.replace( 'contestIntroduction' );
             } catch (err) {
@@ -240,6 +235,16 @@ $(document).ready(function(){
                     templates_files: SGTemplatesList
                 });
                 CKEDITOR.loadTemplates(SGTemplatesList);
+            } catch (err) {
+            	// pass
+            }
+            try {
+                var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
+                CKEDITOR.replace('contestDescription', { 
+                    templates: 'studio_contest_spec_templates',
+                    templates_files: StudioContestSpecTemplates
+                });
+                CKEDITOR.loadTemplates(StudioContestSpecTemplates);
             } catch (err) {
             	// pass
             }

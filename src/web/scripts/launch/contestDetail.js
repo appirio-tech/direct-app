@@ -114,11 +114,16 @@ $(document).ready(function(){
             showTypeSectionEdit();
             populateTypeSection();
             showTypeSectionDisplay();
-            
-            CKEDITOR.replace( 'contestDescription' );
+           
             CKEDITOR.replace( 'contestIntroduction' );
             CKEDITOR.replace( 'round1Info' );
             CKEDITOR.replace( 'round2Info' );
+            var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
+            CKEDITOR.replace('contestDescription', { 
+                templates: 'studio_contest_spec_templates',
+                templates_files: StudioContestSpecTemplates 
+            });
+            CKEDITOR.loadTemplates(StudioContestSpecTemplates);
           },
           function(errorMessage) {
               showServerError(errorMessage);

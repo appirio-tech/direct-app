@@ -458,13 +458,13 @@ $(document).ready(function() {
         $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
     }
     
-    CKEDITOR.replace( 'contestDescription' );
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
     CKEDITOR.replace( 'round2Info' ); 
     
     var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
     var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+    var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
     CKEDITOR.replace('swGuidelines', { 
         templates: 'software_guidelines_templates',
         templates_files: SGTemplatesList
@@ -473,8 +473,13 @@ $(document).ready(function() {
         templates: 'detailed_requirements_templates',
         templates_files: DRTemplatesList 
     });
+    CKEDITOR.replace('contestDescription', { 
+        templates: 'studio_contest_spec_templates',
+        templates_files: StudioContestSpecTemplates 
+    });
     CKEDITOR.loadTemplates(SGTemplatesList);
     CKEDITOR.loadTemplates(DRTemplatesList);
+    CKEDITOR.loadTemplates(StudioContestSpecTemplates);
 
     handleProjectDropDownChange();
 
