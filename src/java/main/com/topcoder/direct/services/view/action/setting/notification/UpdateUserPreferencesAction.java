@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.action.notification;
+package com.topcoder.direct.services.view.action.setting.notification;
 
 import java.util.List;
 

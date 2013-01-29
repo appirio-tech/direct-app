@@ -94,9 +94,12 @@
  *  
  *  Version 3.0 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
  *  - Update a method to fix a text inconsistency bug.
+ *
+ *  Version 3.1 - Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring
+ *  - Add selector for the setting pages.
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141
- * @version 3.0
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve
+ * @version 3.1
  */
 
 var mouse_is_inside;
@@ -146,6 +149,19 @@ $(document).ready(function(){
             window.location.href = '/direct/dashboardProjectMetricsReport' + synchronizeFilters();
         } else if (reportType == 'JIRA_ISSUES') {
             window.location.href = '/direct/dashboardJiraIssuesReport' + synchronizeFilters();
+        }
+    });
+
+    $("#selectSetting").change(function() {
+        var setting = $(this).val();
+        if (setting == 'notifications') {
+            window.location.href = '/direct/settings/notifications';
+        } else if (setting == 'permissions') {
+            window.location.href = '/direct/settings/permissions';
+        } else if (setting == 'fee') {
+            window.location.href = '/direct/settings/admin/contestFee';
+        } else if (setting == 'sync') {
+            window.location.href = '/direct/settings/admin/syncUser';
         }
     });
 	

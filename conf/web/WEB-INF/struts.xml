@@ -618,8 +618,8 @@
 
         <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardNotifications</param>
-                <param name="pn">perm</param>
+                <param name="actionName">permissions</param>
+                <param name="namespace">/settings</param>
             </result>
             <!--<interceptor-ref name="preProcessor"/>-->
             <!-- <result name="success">/WEB-INF/notification/dashboard-notifications.jsp?pn=perm</result>-->
@@ -657,16 +657,16 @@
             <result name="error" type="json"/>
         </action>
         
-        <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction">
-            <!--<interceptor-ref name="securedPreProcessorStack"/>-->
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <!--<interceptor-ref name="preProcessor"/>-->
-            <result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>
-        </action>
+        <!--<action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">-->
+            <!--&lt;!&ndash;<interceptor-ref name="securedPreProcessorStack"/>&ndash;&gt;-->
+            <!--<interceptor-ref name="baseStack"/>-->
+            <!--<interceptor-ref name="defaultStack"/>-->
+            <!--<interceptor-ref name="authnInterceptor"/>-->
+            <!--&lt;!&ndash;<interceptor-ref name="preProcessor"/>&ndash;&gt;-->
+            <!--<result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>-->
+        <!--</action>-->
 
-        <action name="updateNotifications" class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction">
+        <action name="updateNotifications" class="com.topcoder.direct.services.view.action.setting.notification.UpdateNotificationsAction">
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -981,8 +981,8 @@
 
         <action name="cancelFeesManagement" class="com.topcoder.direct.services.view.action.ForwardAction">
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardNotifications</param>
-                <param name="pn">fee</param>
+                <param name="actionName">contestFee</param>
+                <param name="namespace">/settings/admin</param>
             </result>
         </action>
 
@@ -999,8 +999,8 @@
         <action name="saveContestFeesAction" class="saveContestFeesAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardNotifications</param>
-                <param name="pn">fee</param>
+                <param name="actionName">contestFee</param>
+                <param name="namespace">/settings/admin</param>
             </result>
             <result name="input">/WEB-INF/billing/billing_account_contest_fee.jsp</result>
         </action>
@@ -1008,8 +1008,8 @@
         <action name="createContestFeesAction" class="createContestFeesAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardNotifications</param>
-                <param name="pn">fee</param>
+                <param name="actionName">contestFee</param>
+                <param name="namespace">/settings/admin</param>
             </result>
             <result name="input">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
         </action>
@@ -1518,6 +1518,40 @@
         <action name="updatePreferences" class="updateUserPreferencesAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
+        </action>
+    </package>
+
+    <package name="settings" namespace="/settings" extends="base">
+        <action name="notifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
+            <param name="settingType">notifications</param>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/setting/notifications.jsp</result>
+        </action>
+        <action name="permissions" class="com.topcoder.direct.services.view.action.setting.DashboardSettingAction">
+            <param name="settingType">permissions</param>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/setting/permissions.jsp</result>
+        </action>
+    </package>
+
+    <package name="adminSettings" namespace="/settings/admin" extends="base">
+        <action name="contestFee" class="com.topcoder.direct.services.view.action.setting.DashboardSettingAction">
+            <param name="settingType">contestFee</param>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/setting/contestFeeAdmin.jsp</result>
+        </action>
+        <action name="syncUser" class="com.topcoder.direct.services.view.action.setting.DashboardSettingAction">
+            <param name="settingType">syncUser</param>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/setting/jiraSyncUser.jsp</result>
         </action>
     </package>
 

@@ -1,17 +1,9 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.action.notification;
+package com.topcoder.direct.services.view.action.setting.notification;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.setting.DashboardSettingAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.notification.UserPreferenceDTO;
@@ -26,33 +18,48 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.RowNotFoundException;
 import com.topcoder.web.ejb.user.UserPreference;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * Presents notification settings page in dashboard.
- *
+ * <p/>
  * <p>
  * Version 1.1 (Release Assembly - Project Contest Fee Management ) Change notes:
- *   <ol>
- *     <li>Added viewContestFeeOption flag to indicate the contest-fee option should be displayed or not</li>
- *   </ol>
+ * <ol>
+ * <li>Added viewContestFeeOption flag to indicate the contest-fee option should be displayed or not</li>
+ * </ol>
+ * </p>
+ * <p/>
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit Project Forum Settings) Change notes:
+ * <ol>
+ * <li>Added {@link #projectNotifications} and its getter and setter</li>
+ * <li>Updated {@link #executeAction()} to populate the projectNotifications for the view</li>
+ * </ol>
  * </p>
  *
  * <p>
- * Version 1.2 (Release Assembly - TC Cockpit Project Forum Settings) Change notes:
- *   <ol>
- *     <li>Added {@link #projectNotifications} and its getter and setter</li>
- *     <li>Updated {@link #executeAction()} to populate the projectNotifications for the view</li>
- *   </ol>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
+ * <ul>
+ *     <li>Removed properties <code>viewContestFeeOption</code> and <code>syncUser</code></li>
+ * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.2
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.3
  */
-public class DashboardNotificationsAction extends BaseDirectStrutsAction {
+public class DashboardNotificationsAction extends DashboardSettingAction {
+
     private static final List<UserPreferenceDTO> PREFERENCES;
 
-    private CommonDTO viewData =  new CommonDTO();
+    private CommonDTO viewData = new CommonDTO();
 
-    private  SessionData sessionData;
+    private SessionData sessionData;
 
     /**
      * List of current notifications.
@@ -71,24 +78,13 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
      */
     private List<DirectProjectNotification> projectNotifications;
 
-    /**
-     * The user can view contest fee option or not.
-     *
-     * @since 1.1
-     */
-    private boolean viewContestFeeOption;
 
-    /**
-     * Represents whether the user can sync user with JIRA and wiki.
-     */
-    private boolean syncUser;
-    
     static {
         PREFERENCES = new ArrayList<UserPreferenceDTO>();
 
         UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(29);
-        userPreferenceDTO.setDesc("Contest Timelines: Receive individual contest status notifications when each contest advances phases.");
+        userPreferenceDTO.setDesc("Contest Timeline: Receive individual contest status notifications when each contest advances phases.");
         PREFERENCES.add(userPreferenceDTO);
 
         userPreferenceDTO = new UserPreferenceDTO();
@@ -100,21 +96,21 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         userPreferenceDTO.setPreferenceId(31);
         userPreferenceDTO.setDesc("Project Forum Communication: Receive project forum communication for questions posted in your project forum.");
         PREFERENCES.add(userPreferenceDTO);
-}
+    }
 
     /**
      * Executes action by fetching necessary data from the back-end.
-     *
+     * <p/>
      * <p>
-     *     Updated in version 1.2 (Release Assembly - TC Cockpit Project Forum Settings)
-     *     - Populate the projectNotifications to redener in the view.
+     * Updated in version 1.2 (Release Assembly - TC Cockpit Project Forum Settings)
+     * - Populate the projectNotifications to redener in the view.
      * </p>
      *
      * @throws Exception if any error occurs
      */
     protected void executeAction() throws Exception {
 
-        if(getProjectServiceFacade() == null) {
+        if (getProjectServiceFacade() == null) {
             throw new IllegalStateException("Project Service Facade is not initialized.");
         }
 
@@ -128,9 +124,6 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         }
 
         request.setAttribute("currentUserHandle", sessionData.getCurrentUserHandle());
-
-        viewContestFeeOption = DirectUtils.isSuperAdmin(user) || DirectUtils.isTCAccounting(user);
-        syncUser = DirectUtils.isTcStaff(user);
 
         notifications = getContestServiceFacade().getNotificationsForUser(user, user.getUserId());
 
@@ -166,9 +159,9 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
             preference.setValue(value);
             preferences.add(preference);
         }
-		
-		
-		// dont call for now
+
+
+        // dont call for now
         projectNotifications = new ArrayList<DirectProjectNotification>(); //getProjectServiceFacade().getProjectNotifications(user, user.getUserId());
         Collections.sort(projectNotifications, new ProjectNotificationComparator());
     }
@@ -230,32 +223,6 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         this.preferences = preferences;
     }
 
-    /**
-     * Getter for the view contest fee option.
-     *
-     * @return the view contest fee option.
-     */
-    public boolean isViewContestFeeOption() {
-        return viewContestFeeOption;
-    }
-
-    /**
-     * Setter for the view contest fee option.
-     *
-     * @param viewContestFeeOption the view contest fee option.
-     */
-    public void setViewContestFeeOption(boolean viewContestFeeOption) {
-        this.viewContestFeeOption = viewContestFeeOption;
-    }
-
-    /**
-     * Returns whether the user can sync user with JIRA and wiki.
-     * 
-     * @return the syncUser true if the user can sync user with JIRA and wiki, false otherwise.
-     */
-    public boolean isSyncUser() {
-        return syncUser;
-    }
 
     /**
      * Gets the project notifications.
@@ -279,6 +246,7 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
 
     /**
      * The comparator used to sort project notifications by name
+     *
      * @since 1.2
      */
     private static class ProjectNotificationComparator implements Comparator<DirectProjectNotification> {

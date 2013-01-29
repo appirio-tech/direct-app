@@ -618,7 +618,7 @@
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
-                <a href="<s:url action="dashboardNotifications" namespace="/"/>"><span>Settings</span></a>
+                <a href="<s:url action="notifications" namespace="/settings"/>"><span>Settings</span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_TAB eq 'reports'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardReports" namespace="/"/>"><span>Reports</span></a>

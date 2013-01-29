@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render permission data to page, and handle
@@ -32,8 +32,11 @@
  * Version 2.1 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
  * - Update to use newly added modal.
  *
- * @author TCSASSEMBLER
- * @version 2.0
+ * Version 2.2 - Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring
+ * - Loads the permissions data when the permission setting page finishes loading.
+ *
+ * @author Veve
+ * @version 2.2
  */
 //$(function() {
 /**
@@ -56,6 +59,17 @@ $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
     });
     return aData;
 }
+
+$(document).ready(function(){
+    $("#projects").after($("#permissions"));
+    $("#permissions_wrapper").remove();
+    $("#projects").remove();
+    $("#permissions").wrap('<div id="projects"/>');
+
+
+    requestPermissions();
+    $(".paging_permission_button .next").removeClass("next");
+})
 
 /**
    * Create the ajax processor.
@@ -155,9 +169,13 @@ function pbutton_submit() {
                             var permissionId = item.permissionId;
                             var removeTotalProject = item.removeTotalProject;
 
-                            $.permission.projects[projectId].userPermissions[userId].originalPperm = permission;
+                            if($.permission.projects[projectId].userPermissions[userId])  {
+                                $.permission.projects[projectId].userPermissions[userId].originalPperm = permission;
+                                $.permission.projects[projectId].userPermissionIds[userId] = permissionId;
+                            }
+
                             $.permission.projects[projectId].updateUserPermissions = {};
-                            $.permission.projects[projectId].userPermissionIds[userId] = permissionId;
+
 
                             if (permission == "") {
                                 // remove

@@ -427,13 +427,18 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
-    <bean id="dashboardNotificationsAction"
-          class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction"
+    <bean id="dashboardSettingAction"
+          class="com.topcoder.direct.services.view.action.setting.DashboardSettingAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="dashboardNotificationsAction"
+          class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction"
+          parent="dashboardSettingAction" scope="prototype">
+    </bean>
+
     <bean id="updateNotificationsAction"
-          class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction"
+          class="com.topcoder.direct.services.view.action.setting.notification.UpdateNotificationsAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
@@ -966,7 +971,7 @@
     </bean>
 
      <bean id="updateUserPreferencesAction"
-      class="com.topcoder.direct.services.view.action.notification.UpdateUserPreferencesAction"
+      class="com.topcoder.direct.services.view.action.setting.notification.UpdateUserPreferencesAction"
       scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.action.notification;
+package com.topcoder.direct.services.view.action.setting.notification;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;

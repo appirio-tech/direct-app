@@ -10216,4 +10216,7 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     font-size: 11px;
 }
 
+#selectSetting {
+    width: 190px !important;
+}
 

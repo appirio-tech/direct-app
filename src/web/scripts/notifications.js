@@ -7,8 +7,11 @@
  *  Version 1.2 - (Release Assembly - TC Cockpit Project Forum Settings) changes:
  *  - Add codes for handling the new project notification table.
  *
- * @author TCSASSEMBLER
- * @version 1.2
+ *  Version 1.3 - (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
+ *  - Change the preference loading ajax url to absolute.
+ *
+ * @author Veve
+ * @version 1.3
  */
 if (!window.notifications) var notifications = {
 //    pageNumber: 0,
@@ -128,7 +131,7 @@ function savePreference() {
     
     $.ajax({
         type: 'POST',
-        url:'preference/updatePreferences',
+        url: ctx + '/preference/updatePreferences',
         data: request,
         dataType: "json",
         cache:false,

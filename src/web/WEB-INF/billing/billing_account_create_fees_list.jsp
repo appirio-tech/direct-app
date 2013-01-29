@@ -107,8 +107,7 @@
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a>
                                 &gt;
-                                <s:url action="dashboardNotifications" namespace="/" id="feeMainPage">
-                                    <s:param name="pn">fee</s:param>
+                                <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
                                 </s:url>
                                 <strong><a href="<s:property value="#feeMainPage"/>">Contest Fee Management</a></strong>
                             </div>
