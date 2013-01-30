@@ -424,28 +424,28 @@ var instantSearchFeaturesList = {
         },
         {
             "title":    "Notification Settings",
-            "link":     "/direct/dashboardNotifications",
+            "link":     "/direct/settings/notifications",
             "brief":    "Manage your forum / timeline notifications on your cockpit projects and contests",
             "group":    "Settings",
             "reqAdmin": "no"
         },
         {
             "title":    "Permission Settings",
-            "link":     "/direct/dashboardNotifications",
+            "link":     "/direct/settings/permissions",
             "brief":    "Manage the permissions of your cockpit projects - you can assign permission to new users to your project or change / delete existing permissions",
             "group":    "Settings",
             "reqAdmin": "no"
         },
         {
             "title":    "Contest Fee Management",
-            "link":     "/direct/dashboardNotifications",
+            "link":     "/direct/settings/contestFee",
             "brief":    "Manage the contest fee for all clients on TopCoder Platform",
             "group":    "Admin",
             "reqAdmin": "yes"
         },
         {
             "title":    "Sync User",
-            "link":     "/direct/manageCopilotFeedback",
+            "link":     "/direct/settings/syncUser",
             "brief":    "Synchronize user information from TopCoder Persistence from JIRA",
             "group":    "Admin",
             "reqAdmin": "yes"
