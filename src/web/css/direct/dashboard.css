@@ -10220,3 +10220,19 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     width: 190px !important;
 }
 
+.sorting_asc {
+    background: url("/images/sort_asc.png") no-repeat scroll right center transparent;
+}
+.sorting_desc {
+    background: url("/images/sort_desc.png") no-repeat scroll right center transparent;
+}
+.sorting {
+    background: url("/images/sort_both.png") no-repeat scroll right center transparent;
+}
+.sorting_asc_disabled {
+    background: url("/images/sort_asc_disabled.png") no-repeat scroll right center transparent;
+}
+.sorting_desc_disabled {
+    background: url("/images/sort_desc_disabled.png") no-repeat scroll right center transparent;
+}
+

@@ -95,13 +95,28 @@ var countMonth = function(d) {
     return d.getYear() * 12 + d.getMonth();
 };
 
+if (jQuery.fn.dataTableExt) {
+    jQuery.fn.dataTableExt.oSort['financial-date-asc'] = function(a, b) {
+        var x = Date.parse("01'" + a);
+        var y = Date.parse("01'" + b);
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['financial-date-desc'] = function(a, b) {
+        var x = Date.parse("01'" + a);
+        var y = Date.parse("01'" + b);
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+}
+
+
 function getFilterSynParameters() {
     if($("#filterModal").length > 0) {
         var customer = $("#clientFilter").val();
         var project = $("#projectFilter").val();
         var status = $("#projectStatusFilter").val();
-        var metaFilter = $("#metaFilter").val();
-        var metaValueFilter = $("#metaValueFilter").val();
+        var metaFilter = encodeURI($("#metaFilter").val());
+        var metaValueFilter = encodeURI($("#metaValueFilter").val());
         var zoom = $("#zoomSelect").find("a.current").parent().attr('class');
         var startMonth = $(".timeLine .selectMonth:first span span").text();
         var endMonth = $(".timeLine .selectMonth:last span span").text();
@@ -166,7 +181,7 @@ function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
     $("#silderBar a.filterSynEnabled").each(function(){
         var url = $(this).attr("href").split("?")[0];
         url = url + '?' + syncParameters;
-        $(this).attr("href", url);
+        $(this).attr("href", decodeURI(url));
     })
 
     return formData;
@@ -201,12 +216,12 @@ function renderTotalSpendWidget(resultJson) {
         });
     }
 
-    var interval = 20000;
-    var maxY = 160000;
+    var interval = 2000;
+    var maxY = 16000;
 
     if (max > 0) {
-        interval = Math.ceil(max/160000) * 20000;
-        maxY = interval * 8;
+        interval = Math.ceil(max/16000) * 2000;
+        maxY = interval * 9;
     }
 
     max = max + max / 2;
@@ -370,12 +385,12 @@ function renderTotalSpendChart(resultJson) {
         });
     }
 
-    var interval = 20000;
-    var maxY = 160000;
+    var interval = 2000;
+    var maxY = 16000;
 
     if (max > 0) {
-        interval = Math.ceil(max/160000) * 20000;
-        maxY = interval * 8;
+        interval = Math.ceil(max/16000) * 2000;
+        maxY = interval * 9;
     }
 
     max = max + max / 2;
@@ -599,8 +614,11 @@ function renderTotalSpendChart(resultJson) {
             },
             "sPaginationType":"full_numbers",
             "sDom":'',
+            "aaSorting": [
+                [0,'asc']
+            ],
             "aoColumns": [
-                { "sType": "html" },
+                { "sType": "financial-date" },
                 { "sType": "money" },
                 { "sType": "money" },
                 { "sType": "money" }
@@ -1446,8 +1464,9 @@ function renderProjectsPipeline(resultJson) {
 
 function renderOverviewProjects(resultJson) {
     var strData = '';
+    var length;
     if (resultJson.length) {
-        var length = resultJson.length >= 5 ? 5 : resultJson.length;
+        length = resultJson.length >= 5 ? 5 : resultJson.length;
         for (var i = 0; i < length; i++) {
             var projectName = resultJson[i].name;
             if(projectName.length > 45) {
@@ -1475,6 +1494,13 @@ function renderOverviewProjects(resultJson) {
                 strData += '<a href="' + milestoneLink + '" target="_blank" title="'  + resultJson[i].milestoneName + '">' + milestoneName + '</a>';
             }
             strData += '</td></tr>';
+        }
+
+
+        if (length < 5) {
+            for(var left = 1; left <= (5 - length); ++ left) {
+                strData += "<tr></tr>"
+            }
         }
 
         if (resultJson.length) {
@@ -2277,7 +2303,7 @@ $(document).ready(function () {
         var sReg = "(?:\\?|&){1}" + paraName + "=([^&]*)"
         var re = new RegExp(sReg, "gi");
         re.exec(sUrl);
-        return RegExp.$1;
+        return decodeURI(RegExp.$1);
     }
 
     $('.blankPage').attr('target', '_blank');
@@ -3815,8 +3841,6 @@ function loadRoadmapCalendar() {
 
                         userHandleColorMap[handle] = {color:color, url:url};
                     });
-
-                    console.log(userHandleColorMap);
 
                     // update handle color and link first
                     $.each(calendarData.events, function (index, item) {
