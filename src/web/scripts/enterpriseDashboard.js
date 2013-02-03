@@ -169,8 +169,8 @@ function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
     var currentMonth = countMonth(Date.today());
     var prevMonth = countMonth(Date.today().addMonths(-1));
 
-    var startMonth = countMonth(Date.parse(startMonth));
-    var endMonth = countMonth(Date.parse(endMonth));
+    var startMonth = countMonth(Date.parse("01'" + $(".timeLine .selectMonth:first span span").text()));
+    var endMonth = countMonth(Date.parse("01'" + $(".timeLine .selectMonth:last span span").text()));
 
     loadCurrentMonth = currentMonth < startMonth || currentMonth > endMonth;
     loadPreviousMonth = prevMonth < startMonth || prevMonth > endMonth;
@@ -2739,7 +2739,7 @@ $(document).ready(function () {
             var result = {};
             result.endYear = currentYear;
             result.endMonth = currentMonth;
-            result.startYear = currentYear - (currentMonth - monthNumber + 1) < 0 ? 1 : 0;
+            result.startYear = currentYear - ((currentMonth - monthNumber + 1) < 0 ? 1 : 0);
             result.startMonth = ((currentMonth - monthNumber + 1) + 12) % 12;
             return result;
         }
@@ -2751,7 +2751,7 @@ $(document).ready(function () {
             var result = {};
             result.endYear = currentYear;
             result.endQuarter = currentQuarter;
-            result.startYear = currentYear - (currentQuarter - 4) < 0 ? 1 : 0;
+            result.startYear = currentYear - ((currentQuarter - 4) < 0 ? 1 : 0);
             result.startQuarter = ((currentQuarter - 4) + 12) % 12;
             return result;
         }
