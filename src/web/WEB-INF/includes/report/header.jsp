@@ -28,16 +28,16 @@
                 <label for="selectReport">Select a Report:</label>
                 <span class="settingPanel">
                     <select name="select" id="selectReport">
+                        <option value="BILLING_COST" <s:if test="viewData.reportType.toString() == 'BILLING_COST'">selected="selected"</s:if>>
+                            Competition Costs(Invoice History)</option>
                         <option value="PIPELINE" <s:if test="viewData.reportType.toString() == 'PIPELINE'">selected="selected"</s:if>>
-                            Pipeline</option>
+                            Competition Pipeline</option>
                         <option value="COST" <s:if test="viewData.reportType.toString() == 'COST'">selected="selected"</s:if>>
                             Cost Analysis</option>
-                        <option value="BILLING_COST" <s:if test="viewData.reportType.toString() == 'BILLING_COST'">selected="selected"</s:if>>
-                            Invoice History</option>
-                        <option value="PARTICIPATION" <s:if test="viewData.reportType.toString() == 'PARTICIPATION'">selected="selected"</s:if>>
-                            Participation Metrics</option>
                         <option value="PROJECT_METRICS" <s:if test="viewData.reportType.toString() == 'PROJECT_METRICS'">selected="selected"</s:if>>
                             Project Metrics</option>
+                        <option value="PARTICIPATION" <s:if test="viewData.reportType.toString() == 'PARTICIPATION'">selected="selected"</s:if>>
+                            Participation Metrics</option>
                         <option value="JIRA_ISSUES" <s:if test="viewData.reportType.toString() == 'JIRA_ISSUES'">selected="selected"</s:if>>
                             Jira Issues</option>
                     </select>
