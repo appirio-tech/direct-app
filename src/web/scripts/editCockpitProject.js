@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for edit project page..
  *
@@ -25,9 +25,12 @@
  *  Version 2.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  *  - Fix a text inconsistency bug.
  *  - Fix bug COCKPITUI-240.
+ *
+ * Version 2.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * - Add TopCoder account managers in edit cockpit project page.
  * 
- * @author GreatKevin, Ghost_141, TCSDEVELOPER
- * @version 2.4
+ * @author GreatKevin, Ghost_141, GreatKevin
+ * @version 2.5
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -894,8 +897,16 @@ $(document).ready(function (e) {
             var metadataId = p.find("span").attr('name');
             var operations = [];
             var operation = {};
-            var modalName = p.parent().find(".triggerManagerModal").attr('name');
-            var keyId = (modalName == 'clientManagersModal' ? 1 : 2);
+            var modalName = p.parent().parent().find(".triggerManagerModal").attr('name');
+            var keyId = 0;
+
+            if(modalName == 'clientManagersModal') {
+                keyId = 1;
+            } else if (modalName == 'projectManagersModal') {
+                keyId = 2;
+            } else if (modalName == 'accountManagersModal') {
+                keyId = 14;
+            }
 
             operation.KeyId = keyId;
             operation.id = metadataId;
@@ -906,11 +917,14 @@ $(document).ready(function (e) {
             formData.projectId = $("input[name='editProjectId']").val();
             if (modalName == 'clientManagersModal') {
                 formData.clientManagers = operations;
-            } else {
+            } else if (modalName == 'projectManagersModal') {
                 formData.projectManagers = operations;
+            } else if (modalName == 'accountManagersModal') {
+                formData.accountManagers = operations;
             }
 
-            var requestURL = (modalName == 'clientManagersModal' ? 'saveClientProjectManagers' : 'saveTopCoderManagers');
+            var requestURL = (modalName == 'clientManagersModal' ? 'saveClientProjectManagers' :
+                (modalName == 'accountManagersModal' ? 'saveTopCoderAccountManagers' : 'saveTopCoderManagers'));
 
             modalPreloader();
 
@@ -1540,8 +1554,19 @@ $(document).ready(function (e) {
 
             if(modal.attr('id') == 'addUserModal') return;
 
-            var metadataKey = modal.attr('id') == 'clientManagersModal' ? 1 : 2;
-            var requestURL = modal.attr('id') == 'clientManagersModal' ? 'saveClientProjectManagers' : 'saveTopCoderManagers';
+            var metadataKey;
+            var modalName = modal.attr('id');
+
+            if(modalName == 'clientManagersModal') {
+                metadataKey = 1;
+            } else if (modalName == 'projectManagersModal') {
+                metadataKey = 2;
+            } else if (modalName == 'accountManagersModal') {
+                metadataKey = 14;
+            }
+
+            var requestURL = (modalName == 'clientManagersModal' ? 'saveClientProjectManagers' :
+                (modalName == 'accountManagersModal' ? 'saveTopCoderAccountManagers' : 'saveTopCoderManagers'));
 
             modal.find(".addUserLeft ul").empty();
 
@@ -1597,10 +1622,12 @@ $(document).ready(function (e) {
 
             modalPreloader();
 
-            if (modal.attr('id') == 'clientManagersModal') {
+            if (modalName == 'clientManagersModal') {
                 formData.clientManagers = operations;
-            } else {
+            } else if (modalName == 'projectManagersModal') {
                 formData.projectManagers = operations;
+            } else if (modalName == 'accountManagersModal') {
+                formData.accountManagers = operations;
             }
 
 

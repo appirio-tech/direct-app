@@ -1,9 +1,12 @@
 <%--
-  - Author: GreatKevin, TCSDEVELOPER, Ghost_141
-  - Version: 1.3
-  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, Ghost_141, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment contains all the modal windows of the edit project page.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+  - - Add management modal for add / remove TopCoder Account Managers in edit cockpit project jsp page.
   -
   - Version 1.3 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - - Fix multiple bugs.
@@ -64,7 +67,7 @@
                 <div class="addUserRight">
                     <!-- title -->
                     <div class="addUserTitle">
-                        <p>Chosen managers</p>
+                        <p>Chosen users</p>
                         <a href="javascript:;" class="removeAll">Remove All</a>
                     </div>
                     <!-- End .addUserTitle -->
@@ -100,7 +103,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>Manage Topcoder Managers</span>
+                    <span>Manage TopCoder Platform Specialists</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -138,7 +141,81 @@
                 <div class="addUserRight">
                     <!-- title -->
                     <div class="addUserTitle">
-                        <p>Chosen managers</p>
+                        <p>Chosen users</p>
+                        <a href="javascript:;" class="removeAll">Remove All</a>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="buttonArea">
+                <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                <div class="clearFix"></div>
+            </div>
+        </div>
+        <!-- End .content -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+</div>
+
+<div id="accountManagersModal" class="userManagementModal outLay">
+    <div class="inner">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>Manage Topcoder Account Managers</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <!-- content -->
+        <div class="modalBody">
+            <div class="addUserForm">
+                <div class="addUserLeft">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Available users</p>
+                        <a href="javascript:;" class="selectAll">Select All</a>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- search -->
+                    <div class="searchBox">
+                        <input type="text" class="text" value="" />
+                        <a href="javascript:;" class="downloadProfile"><span class="profileLeft">Search</span></a>
+                    </div>
+                    <!-- End .searchBox -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="addUserButton">
+                    <a href="javascript:;" class="addItem">Add</a>
+                    <a href="javascript:;" class="removeItem">Add</a>
+                </div>
+                <div class="addUserRight">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Chosen users</p>
                         <a href="javascript:;" class="removeAll">Remove All</a>
                     </div>
                     <!-- End .addUserTitle -->

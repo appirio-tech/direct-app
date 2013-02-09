@@ -35,6 +35,9 @@
   - 
   - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix bug COCKPITUI-62.
+  -
+  - Version 1.9 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+  - - Uses the billing accounts of the project only for the project prize edit.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -383,8 +386,8 @@
                      <div class="prizeBillingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                          	<option value="-1">Please select an existing account</option>
-                           <s:iterator value="billingProjects">
-                           <option value='<s:property value="projectId" />'><s:property value="name" /></option>
+                           <s:iterator value="billingAccountsForProject">
+                                <option value='<s:property value="id" />'><s:property value="name" /></option>
                            </s:iterator>
                         </select>
                      </div>

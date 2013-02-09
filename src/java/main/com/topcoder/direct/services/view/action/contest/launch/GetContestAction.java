@@ -1,8 +1,9 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -147,8 +148,15 @@ import java.util.Map;
  * </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, GreatKevin
- * @version 1.9
+ * <p>
+ * Version 2.0 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ul>
+ *     <li>Adds the billing accounts of the project which the contest is in into action</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu
+ * @version 2.0
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -231,6 +239,13 @@ public class GetContestAction extends ContestAction {
      * @since 1.5
      */
     private String contestEndDate;
+
+    /**
+     * The billing accounts of the project.
+     *
+     * @since 2.0
+     */
+    private List<Project> billingAccountsForProject;
     
     /**
      * <p>
@@ -357,6 +372,10 @@ public class GetContestAction extends ContestAction {
                     getViewData().getDashboard());
         }
 
+        // set billing accounts for the direct project
+        billingAccountsForProject =
+                getProjectServiceFacade().getBillingAccountsByProject(softwareCompetition.getProjectHeader().getTcDirectProjectId());
+
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
         getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
@@ -425,6 +444,16 @@ public class GetContestAction extends ContestAction {
      */
     public void setProjectId(long projectId) {
         this.projectId = projectId;
+    }
+
+    /**
+     * Gets the billing accounts of the direct project the contest is in
+     *
+     * @return a list of billing accounts
+     * @since 2.0
+     */
+    public List<Project> getBillingAccountsForProject() {
+        return billingAccountsForProject;
     }
 
     /**

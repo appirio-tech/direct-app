@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -32,8 +32,15 @@ import java.util.Map;
  *     - Add the property <code>canAccessPermissionEdit</code>
  * </p>
  *
- * @version 1.2
- * @author GreatKevin, TCSASSEMBLER
+ * <p>
+ *     Version 1.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ *     - Add the property <code>accountManagers</code>
+ *     - Add the property <code>topcoderManagersEmails</code>
+ *     - Add the property <code>accountManagersHandles</code>
+ * </p>
+ *
+ * @version 1.3
+ * @author GreatKevin
  */
 public class ProjectGeneralInfoDTO {
 
@@ -101,6 +108,20 @@ public class ProjectGeneralInfoDTO {
     private List<Long> topcoderManagers = new ArrayList<Long>();
 
     /**
+     * The TopCoder account managers of the project.
+     *
+     * @since 1.3
+     */
+    private List<Long> accountManagers = new ArrayList<Long>();
+
+    /**
+     * The TopCoder platform specialists emails.
+     *
+     * @since 1.3
+     */
+    private Map<Long, String> topcoderManagersEmails = new HashMap<Long, String>();
+
+    /**
      * The client managers handles map.
      */
     private Map<Long, String> clientManagersHandles = new HashMap<Long, String>();
@@ -109,6 +130,13 @@ public class ProjectGeneralInfoDTO {
      * The topcoder managers handles map.
      */
     private Map<Long, String> topcoderManagersHandles = new HashMap<Long, String>();
+
+    /**
+     * The TopCoder account managers handles map.
+     *
+     * @since 1.3
+     */
+    private Map<Long, String> accountManagersHandles = new HashMap<Long, String>();
 
     /**
      * The project copilots handle.
@@ -341,6 +369,46 @@ public class ProjectGeneralInfoDTO {
     }
 
     /**
+     * Gets the account managers.
+     *
+     * @return the account managers
+     * @since 1.3
+     */
+    public List<Long> getAccountManagers() {
+        return accountManagers;
+    }
+
+    /**
+     * Sets the account managers.
+     *
+     * @param accountManagers the account managers.
+     * @since 1.3
+     */
+    public void setAccountManagers(List<Long> accountManagers) {
+        this.accountManagers = accountManagers;
+    }
+
+    /**
+     * Gets the TopCoder platform specialists emails.
+     *
+     * @return the TopCoder platform specialists emails.
+     * @since 1.3
+     */
+    public Map<Long, String> getTopcoderManagersEmails() {
+        return topcoderManagersEmails;
+    }
+
+    /**
+     * Sets the TopCoder platform specialists emails.
+     *
+     * @param topcoderManagersEmails the TopCoder platform specialists emails.
+     * @since 1.3
+     */
+    public void setTopcoderManagersEmails(Map<Long, String> topcoderManagersEmails) {
+        this.topcoderManagersEmails = topcoderManagersEmails;
+    }
+
+    /**
      * Gets the business impact rating.
      *
      * @return the business impact rating.
@@ -500,26 +568,80 @@ public class ProjectGeneralInfoDTO {
         this.projectedDuration = projectedDuration;
     }
 
+    /**
+     * Gets the handles of the client managers.
+     *
+     * @return the handles of the client managers.
+     */
     public Map<Long, String> getClientManagersHandles() {
         return clientManagersHandles;
     }
 
+    /**
+     * Sets the handles of the client managers.
+     *
+     * @param clientManagersHandles the handles of the client managers.
+     */
     public void setClientManagersHandles(Map<Long, String> clientManagersHandles) {
         this.clientManagersHandles = clientManagersHandles;
     }
 
+    /**
+     * Gets the handles of the TopCoder platform specialists.
+     *
+     * @return the handles of the TopCoder platform specialists.
+     */
     public Map<Long, String> getTopcoderManagersHandles() {
         return topcoderManagersHandles;
     }
 
+    /**
+     * Sets the handles of the TopCoder platform specialists.
+     *
+     * @param topcoderManagersHandles the handles of the TopCoder platform specialists.
+     */
     public void setTopcoderManagersHandles(Map<Long, String> topcoderManagersHandles) {
         this.topcoderManagersHandles = topcoderManagersHandles;
     }
 
+    /**
+     * Gets the handles of the TopCoder Account managers.
+     *
+     * @return the handles of the TopCoder Account managers.
+     *
+     * @since 1.3
+     *
+     */
+    public Map<Long, String> getAccountManagersHandles() {
+        return accountManagersHandles;
+    }
+
+    /**
+     * Sets the handles of the TopCoder Account managers.
+     *
+     * @param accountManagersHandles the handles of the TopCoder Account managers.
+     * @since 1.3
+     */
+    public void setAccountManagersHandles(Map<Long, String> accountManagersHandles) {
+        this.accountManagersHandles = accountManagersHandles;
+    }
+
+    /**
+     * Gets the handles of the copilots
+     *
+     * @return the handles of the copilots
+     * @since 1.3
+     */
     public Map<Long, String> getCopilotHandles() {
         return copilotHandles;
     }
 
+    /**
+     * Sets the handles of the copilots.
+     *
+     * @param copilotHandles the handles of the copilots.
+     * @since 1.3
+     */
     public void setCopilotHandles(Map<Long, String> copilotHandles) {
         this.copilotHandles = copilotHandles;
     }

@@ -1,8 +1,8 @@
 <%--
-  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang
+  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin
   -
-  - Version: 1.5
-  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
   -
@@ -33,6 +33,9 @@
   - - Add Configure Project Forum button inside the project forum section.
   - Version 1.6 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - - Fix bug COCKPITUI-208.
+  - Version 1.7 - Release Assembly - TopCoder Direct Cockpit Release Assembly Ten
+  - - Add TopCoder Account Managers in the project general information section
+  - - Add email icon with mail to for TopCoder Platform Specialists
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -412,19 +415,40 @@
                                             <!-- End .clientManagers -->
 
                                             <!-- TopCoder Project Managers -->
-                                            <div class="projectManagers">
-                                                <h3>TopCoder Project Managers :</h3>
+                                            <div class="projectManagers platformManagers">
+                                                <h3>TopCoder Platform Specialists :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.topcoderManagers == null || viewData.projectGeneralInfo.topcoderManagers.size == 0">
                                                     <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
-                                                        TopCoder Project Manager</a>
+                                                        TopCoder Platform Specialists</a>
                                                     </c:if>
                                                 </s:if>
                                                 <s:else>
                                                     <ul>
                                                         <s:iterator value="viewData.projectGeneralInfo.topcoderManagers"
+                                                                    var="managerId">
+                                                            <li><link:user userId="${managerId}"/><a href="mailto:${viewData.projectGeneralInfo.topcoderManagersEmails[managerId]}"><img src="/images/icon-email.png"/></a></li>
+                                                        </s:iterator>
+                                                    </ul>
+                                                </s:else>
+                                                </ul>
+                                            </div>
+
+                                            <div class="projectManagers">
+                                                <h3>TopCoder Account Managers :</h3>
+
+                                                <s:if test="viewData.projectGeneralInfo.accountManagers == null || viewData.projectGeneralInfo.accountManagers.size == 0">
+                                                    <c:if test="${hasWritePermission}">
+                                                        <a class="projectEditLink"
+                                                           href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
+                                                            TopCoder Account Managers</a>
+                                                    </c:if>
+                                                </s:if>
+                                                <s:else>
+                                                    <ul>
+                                                        <s:iterator value="viewData.projectGeneralInfo.accountManagers"
                                                                     var="managerId">
                                                             <li><link:user userId="${managerId}"/></li>
                                                         </s:iterator>
@@ -432,6 +456,7 @@
                                                 </s:else>
                                                 </ul>
                                             </div>
+
                                         </div>
 
                                         <dl class="additionalInfo">

@@ -179,6 +179,7 @@ a:hover, a:active, a:focus, a:active {
 	.fixWidthName {
 		float:left;
 		width:120px;
+                padding-right: 10px;
 	}
 	.gray_name{
 		padding-right:20px;

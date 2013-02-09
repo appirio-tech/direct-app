@@ -1,17 +1,23 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
+import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.HomePageDTO;
 
 /**
  * <p>A <code>Struts 2</code> action used for handling requests for viewing landing page for application.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * - Change to extend <code>BaseDirectStrutsAction</code>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.1
  */
-public class LandingPage extends AbstractAction implements ViewAction<HomePageDTO> {
+public class LandingPage extends BaseDirectStrutsAction implements ViewAction<HomePageDTO> {
 
     /**
      * <p>A <code>HomePageDTO</code> providing the viewData for displaying by <code>Landing Page</code> view.</p>
@@ -31,5 +37,15 @@ public class LandingPage extends AbstractAction implements ViewAction<HomePageDT
      */
     public HomePageDTO getViewData() {
         return this.viewData;
+    }
+
+    /**
+     * Do nothing.
+     *
+     * @throws Exception - would never happen.
+     * @since 1.1
+     */
+    @Override
+    protected void executeAction() throws Exception {
     }
 }

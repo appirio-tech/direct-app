@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -32,6 +32,11 @@ import java.util.List;
  *     - Add the property {@link #projectBillingAccountId}
  * </p>
  *
+ * <p>
+ *     Version 1.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ *     - Add the property {@link #accountManagers}
+ * </p>
+ *
  * @author GreatKevin
  * @version 1.3
  */
@@ -58,9 +63,17 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
     private List<ProjectMetadataOperation> clientManagers;
 
     /**
-     * The topcoder managers of the project.
+     * The TopCoder platform specialists of the project.
      */
     private List<ProjectMetadataOperation> projectManagers;
+
+
+    /**
+     * The TopCoder account managers.
+     *
+     * @since 1.3
+     */
+    private List<ProjectMetadataOperation> accountManagers;
 
     /**
      * The budget of the project.
@@ -245,6 +258,26 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setProjectManagers(List<ProjectMetadataOperation> projectManagers) {
         this.projectManagers = projectManagers;
+    }
+
+    /**
+     * Gets TopCoder account managers.
+     *
+     * @return TopCoder account managers.
+     * @since 1.3
+     */
+    public List<ProjectMetadataOperation> getAccountManagers() {
+        return accountManagers;
+    }
+
+    /**
+     * Sets TopCoder account managers.
+     *
+     * @param accountManagers TopCoder account managers.
+     * @since 1.3
+     */
+    public void setAccountManagers(List<ProjectMetadataOperation> accountManagers) {
+        this.accountManagers = accountManagers;
     }
 
     /**

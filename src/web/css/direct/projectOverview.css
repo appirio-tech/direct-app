@@ -421,7 +421,7 @@
 }
 
 .managersBox .clientManagers ul li a {
-    color: #ff9900;
+    /*color: #ff9900;*/
     text-decoration: none;
 }
 
@@ -1427,4 +1427,10 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
 #forumErrorModal .buttonArea .cancelButton {
     float: left;
     margin-left: 150px;
+}
+
+.platformManagers .mailTo{
+    clear:both;
+    background:url(/images/icon-email.png) left 4px no-repeat;
+    padding-left:18px;
 }

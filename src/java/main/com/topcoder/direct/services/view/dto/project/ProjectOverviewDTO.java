@@ -1,26 +1,12 @@
 /*
- * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
@@ -28,6 +14,15 @@ import com.topcoder.excel.impl.ExcelSheet;
 import com.topcoder.excel.impl.ExcelWorkbook;
 import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -70,9 +65,15 @@ import com.topcoder.excel.output.WorkbookSaver;
  * <li>Added {@link #projectGeneralInfo} property with respective accessor/mutator methods.</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 1.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Added TopCoder Account Managers data into the export excel file</li>
+ * </ol>
+ * </p>
  *
- * @author isv, Blues
- * @version 1.4
+ * @author isv, Blues, GreatKevin
+ * @version 1.5
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
         UpcomingActivitiesDTO.Aware,
@@ -396,15 +397,28 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
             }
         }
 
-        // TopCoder managers
+        // TopCoder Platform Specialists
         row = sheet.getRow(rowIndex++);
-        row.getCell(1).setStringValue("TopCoder Project Managers");
+        row.getCell(1).setStringValue("TopCoder Platform Specialists");
         if(getProjectGeneralInfo().getTopcoderManagers() == null || getProjectGeneralInfo().getTopcoderManagers().size() <= 0) {
             row.getCell(2).setStringValue(NOT_SET);
         } else {
             index = 2;
 
             for(String handle : getProjectGeneralInfo().getTopcoderManagersHandles().values()) {
+                row.getCell(index++).setStringValue(handle);
+            }
+        }
+
+        // TopCoder Account Managers
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("TopCoder Account Managers");
+        if(getProjectGeneralInfo().getAccountManagers() == null || getProjectGeneralInfo().getAccountManagers().size() <= 0) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            index = 2;
+
+            for(String handle : getProjectGeneralInfo().getAccountManagersHandles().values()) {
                 row.getCell(index++).setStringValue(handle);
             }
         }

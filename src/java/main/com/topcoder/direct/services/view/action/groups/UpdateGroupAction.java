@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.groups;
 
@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
@@ -21,7 +23,6 @@ import com.topcoder.security.groups.model.GroupAuditRecord;
 import com.topcoder.security.groups.model.GroupInvitation;
 import com.topcoder.security.groups.model.GroupMember;
 import com.topcoder.security.groups.model.ResourceType;
-import com.topcoder.security.groups.services.GroupInvitationService;
 import com.topcoder.security.groups.services.SecurityGroupException;
 
 /**
@@ -80,8 +81,15 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  * </ol>
  * </p>
  *
- * @author woodjhon, hanshuai, flexme, minhu, TCSASSEMBLER
- * @version 1.3
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten) change notes:
+ * <ol>
+ *     <li>Synchronize WIKI and JIRA users when a group is updated and new members are added into the group</li>
+ * </ol>
+ * </p>
+ *
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin
+ * @version 1.4
  */
 @SuppressWarnings("serial")
 public class UpdateGroupAction extends CreateUpdateGroupAction {
@@ -163,6 +171,17 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
             for (GroupMember member : group.getGroupMembers()) {
                 if (newMemberUserIds.contains(member.getUserId())) {
                     newMembers.add(member);
+                }
+            }
+
+            for (GroupMember newMember : newMembers) {
+                final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+                try {
+                    getUserServiceFacade().syncJiraUser(currentUser, newMember.getHandle());
+                    getUserServiceFacade().getConfluenceUser(currentUser, newMember.getHandle());
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
                 }
             }
             

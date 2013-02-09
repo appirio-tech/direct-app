@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin, TCSDEVELOPER
-  - Version: 1.2.2
+  - Author: GreatKevin
+  - Version: 1.3
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
@@ -22,6 +22,9 @@
   -
   - Version 1.2.2 (Release Assembly - TopCoder Direct Project Audit v1.0) changes
   - - Fix the bug when rendering the completion date.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+  - - Add TopCoder Account Managers add and remove
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -195,7 +198,7 @@
             <input type="hidden" id="hasFullPermissionOnly" value="true">
         </s:if>
     <div class="projectMetaAreaField oddRowItem">
-        <h4 class="projectMetaLabel cmIcon">Client Manager Handles :</h4>
+        <h4 class="projectMetaLabel cmIcon">Client Managers :</h4>
 
         <div class="memberList">
             <ul>
@@ -208,7 +211,7 @@
     </div>
 
     <div class="projectMetaAreaField">
-        <h4 class="projectMetaLabel pmIcon">Project Manager Handles :</h4>
+        <h4 class="projectMetaLabel pmIcon">TopCoder Platform Specialists  :</h4>
 
         <div class="memberList">
             <ul>
@@ -220,6 +223,19 @@
             <a name="projectManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
         </div>
     </div>
+
+        <div class="projectMetaAreaField oddRowItem">
+            <h4 class="projectMetaLabel cmIcon">TopCoder Account Managers :</h4>
+
+            <div class="memberList">
+                <ul>
+                    <s:iterator value="viewData.tcAccountManagerIds" var="id">
+                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user userId="${metadataValue}" styleClass="memberLink"/></li>
+                    </s:iterator>
+                </ul>
+                <a name="accountManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
+            </div>
+        </div>
 
     </s:if>
 
@@ -676,7 +692,6 @@
 </div>
 <!-- End #wrapper -->
 
-<jsp:include page="includes/project/edit/editProjectPageModals.jsp"/>
 <jsp:include page="groups/tooltip.jsp"/>
 <jsp:include page="includes/popups.jsp"/>
 

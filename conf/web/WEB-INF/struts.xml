@@ -564,6 +564,13 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="saveTopCoderAccountManagers" class="saveCockpitProjectSettingAction"
+                method="saveTopCoderAccountManagers">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="saveTopCoderManagers" class="saveCockpitProjectSettingAction"
                 method="saveTopCoderManagers">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

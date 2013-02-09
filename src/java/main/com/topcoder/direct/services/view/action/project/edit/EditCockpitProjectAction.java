@@ -1,19 +1,10 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.edit;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
@@ -31,6 +22,7 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
 import com.topcoder.security.groups.services.GroupService;
@@ -89,8 +81,17 @@ import com.topcoder.service.project.ProjectType;
  *   </ol>
  * </p>
  *
- * @version 2.3
- * @author GreatKevin, TCSDEVELOPER
+ * <p>
+ * Version 2.4 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Add TopCoder Account Managers project metadata handling</li>
+ *     <li>Add billings accounts the user has access to through security groups to
+ *     available billing accounts. Update method {@link #getAvailableBillingAccounts()}</li>
+ * </ol>
+ * </p>
+ *
+ * @version 2.4
+ * @author GreatKevin
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -160,6 +161,13 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
      * @since 2.0
      */
     private long userId;
+
+    /**
+     * The security groups the user has access to
+     *
+     * @since 2.4
+     */
+    private List<Group> userGroups;
 
     /**
      * <p>A <code>GroupService</code> providing the interface to security groups service.</p>
@@ -392,10 +400,10 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         groupSearchCriteria.setUserId(currentUser.getUserId());
 
         Long clientIdForProject = viewData.getClientId();
-        List<Group> groups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+        userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
         List<Group> assignedGroups = new ArrayList<Group>();
         List<Group> unassignedGroups = new ArrayList<Group>();
-        for (Group group : groups) {
+        for (Group group : userGroups) {
             List<DirectProject> directProjects = group.getDirectProjects();
             boolean assigned = false;
             if (directProjects != null) {
@@ -464,6 +472,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
                 getViewData().setCostLevelRating(data);
             } else if (keyId == 13L) {
                 getViewData().setDifficultyRating(data);
+            } else if (keyId == 14L) {
+                // TopCoder account manager ids
+                getViewData().getTcAccountManagerIds().add(data);
             }
         }
     }
@@ -536,7 +547,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
      * @throws Exception if there is any error.
      * @since 2.1
      */
-    public List<IdNamePair> getAvailableBillingAccounts() throws Exception {
+    public Collection<IdNamePair> getAvailableBillingAccounts() throws Exception {
         final List<ProjectData> allBillingProjects = getBillingProjects();
         Set<Long> associatedBillings = new HashSet<Long>();
         for(Project bp : viewData.getBillingAccounts()) {
@@ -544,18 +555,32 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         }
 
 
-        List<IdNamePair> result = new ArrayList<IdNamePair>();
+        Map<Long, IdNamePair> result = new HashMap<Long, IdNamePair>();
 
         for(ProjectData bp : allBillingProjects) {
             if(!associatedBillings.contains(bp.getProjectId())) {
                 IdNamePair billing = new IdNamePair();
                 billing.setId(bp.getProjectId());
                 billing.setName(bp.getName());
-                result.add(billing);
+                result.put(bp.getProjectId(), billing);
             }
         }
 
-        return result;
+        // add billing accounts in the security groups the user has access to
+        for(Group securityGroup : userGroups) {
+            final List<BillingAccount> securityGroupBillingAccounts
+                    = securityGroup.getBillingAccounts();
+            for(BillingAccount ba : securityGroupBillingAccounts) {
+                if (!result.containsKey(ba.getId())) {
+                    IdNamePair billing = new IdNamePair();
+                    billing.setId(ba.getId());
+                    billing.setName(ba.getName());
+                    result.put(ba.getId(), billing);
+                }
+            }
+        }
+
+        return result.values();
     }
 
     /**

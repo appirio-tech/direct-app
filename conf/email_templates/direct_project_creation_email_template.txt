@@ -1,0 +1,4 @@
+Project Name\: %PROJECT_NAME%
+Project Link\: <a href\='https\://www.topcoder.com/direct/projectOverview?formData.projectId\=%PROJECT_ID%'>%PROJECT_NAME%</a>
+Creation Time\: %PROJECT_CREATION_TIME%
+Creator Handle\: %CREATION_USER%

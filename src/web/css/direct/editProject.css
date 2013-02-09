@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * This css used to render edit project page.
  *
@@ -14,9 +14,12 @@
  * 
  * Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  * - Update the CSS styles to fix multiple issues.
+ *
+ * Version 1.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * - Adjust project properties label padding
  * 
- * Author: GreatKevin, TCSDEVELOPER, Ghost_141
- * Version 1.4
+ * Author: GreatKevin, Ghost_141
+ * Version 1.5
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -221,7 +224,7 @@ h3.projectMetaAreaLabel {
     border-top: 1px solid #cfcfcd;
     border-left: 1px solid #cfcfcd;
     border-right: 1px solid #cfcfcd;
-    padding-left: 194px;
+    padding-left: 230px;
     padding-top: 10px;
     position: relative;
 }
@@ -232,7 +235,7 @@ h3.projectMetaAreaLabel {
 
 .multiMetaArea h4.projectMetaLabel {
     display: block;
-    width: 158px;
+    width: 220px;
     padding-left: 21px;
     top: 13px;
     left: 9px;

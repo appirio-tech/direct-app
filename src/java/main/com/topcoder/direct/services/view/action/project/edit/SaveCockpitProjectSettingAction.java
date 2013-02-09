@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.edit;
 
@@ -23,6 +23,10 @@ import com.topcoder.direct.services.view.form.SaveProjectSettingsForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.services.GroupService;
+import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.facade.contest.notification.ContestNotification;
 import com.topcoder.service.facade.contest.notification.ProjectNotification;
 import com.topcoder.service.facade.project.notification.DirectProjectNotification;
@@ -70,8 +74,14 @@ import com.topcoder.shared.security.AuthorizationException;
  *       check the write permission before executing the actions.
  * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 2.2
+ * <p>
+ *     Version 2.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ *     - Add support to manage TopCoder account managers of the project
+ *     - Add checking for adding billing accounts against security groups
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 2.3
  */
 @WriteProject
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
@@ -103,6 +113,12 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     private static final long TOPCODER_MANAGER_METADATA_KEY = 2L;
 
     /**
+     * Constant to represent the project metadata key id for TopCoder account managers.
+     * @since 2.3
+     */
+    private static final long TOPCODER_ACCOUNT_MANAGER_METADATA_KEY = 14L;
+
+    /**
      * constant for completed project status id.
      *
      */
@@ -112,6 +128,13 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * The form of saving project settings.
      */
     private SaveProjectSettingsForm formData = new SaveProjectSettingsForm();
+
+    /**
+     * The security group service.
+     *
+     * @since 2.3
+     */
+    private GroupService groupService;
 
     /**
      * Gets form data.
@@ -129,6 +152,26 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      */
     public void setFormData(SaveProjectSettingsForm formData) {
         this.formData = formData;
+    }
+
+    /**
+     * Gets the group service.
+     *
+     * @return the group service.
+     * @since 2.3
+     */
+    public GroupService getGroupService() {
+        return groupService;
+    }
+
+    /**
+     * Sets the group service.
+     *
+     * @param groupService the group service.
+     * @since 2.3
+     */
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     /**
@@ -344,23 +387,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     @WriteProject
     public String saveClientProjectManagers() {
         try {
-            Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
-            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-
-            persistAllProjectMetadata(getFormData().getClientManagers(), currentUser.getUserId());
-
-            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), CLIENT_MANAGER_METADATA_KEY);
-
-            updateManagerPermissions(values, currentUser);
-
-            for (DirectProjectMetadata value : values) {
-                Map<String, String> user = new HashMap<String, String>();
-                user.put("userId", value.getMetadataValue());
-                user.put("handle", getUserService().getUserHandle(Long.parseLong(value.getMetadataValue())));
-                result.put(String.valueOf(value.getId()), user);
-            }
-
-            setResult(result);
+            setResult(saveProjectResources(getFormData().getClientManagers(), CLIENT_MANAGER_METADATA_KEY));
         } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);
@@ -378,22 +405,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     @WriteProject
     public String saveTopCoderManagers() {
         try {
-            Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
-            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-
-            persistAllProjectMetadata(getFormData().getProjectManagers(), currentUser.getUserId());
-
-            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), TOPCODER_MANAGER_METADATA_KEY);
-
-            updateManagerPermissions(values, currentUser);
-
-            for (DirectProjectMetadata value : values) {
-                Map<String, String> user = new HashMap<String, String>();
-                user.put("userId", value.getMetadataValue());
-                user.put("handle", getUserService().getUserHandle(Long.parseLong(value.getMetadataValue())));
-                result.put(String.valueOf(value.getId()), user);
-            }
-            setResult(result);
+            setResult(saveProjectResources(getFormData().getProjectManagers(), TOPCODER_MANAGER_METADATA_KEY));
         } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);
@@ -401,6 +413,55 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Handles the save TopCoder account managers ajax request.
+     *
+     * @return result code.
+     * @since 2.3
+     */
+    @WriteProject
+    public String saveTopCoderAccountManagers() {
+        try {
+            setResult(saveProjectResources(getFormData().getAccountManagers(), TOPCODER_ACCOUNT_MANAGER_METADATA_KEY));
+        } catch (Throwable e) {
+
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the save project resources operation.
+     *
+     * @param resources the project resources.
+     * @param resourceKey the resource key id.
+     * @return the json result of the saved project resources.
+     * @throws Exception if there is any error.
+     * @since 2.3
+     */
+    private Map<String, Map<String, String>> saveProjectResources(List<ProjectMetadataOperation> resources, long resourceKey) throws Exception {
+        Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        persistAllProjectMetadata(resources, currentUser.getUserId());
+
+        List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), resourceKey);
+
+        updateManagerPermissions(values, currentUser);
+
+        for (DirectProjectMetadata value : values) {
+            Map<String, String> user = new HashMap<String, String>();
+            user.put("userId", value.getMetadataValue());
+            user.put("handle", getUserService().getUserHandle(Long.parseLong(value.getMetadataValue())));
+            result.put(String.valueOf(value.getId()), user);
+        }
+
+        return result;
     }
 
     /**
@@ -516,13 +577,37 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     private String canAccessBillingAccount(long billingAccountId) throws Exception {
         final List<ProjectData> billingProjects = getBillingProjects();
 
+        // 1) check billing accounts the user has direct permission
         for(ProjectData bp : billingProjects) {
             if(bp.getProjectId() == billingAccountId) {
                 return bp.getName();
             }
         }
 
+        // 2) check security groups the user has permission with
+        for(Group g : getUserSecurityGroups()) {
+            for(BillingAccount ba : g.getBillingAccounts()) {
+                if (ba.getId() == billingAccountId) {
+                    return ba.getName();
+                }
+            }
+        }
+
         return null;
+    }
+
+    /**
+     * Gets the security groups the user has access to
+     *
+     * @return the security groups the user has access to
+     * @throws Exception if there is any error.
+     * @since 2.3
+     */
+    private List<Group> getUserSecurityGroups() throws Exception {
+        GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
+        groupSearchCriteria.setUserId(DirectUtils.getTCSubjectFromSession().getUserId());
+
+        return  getGroupService().search(groupSearchCriteria, 0, 0).getValues();
     }
 
     /**

@@ -1,15 +1,11 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
 import com.topcoder.direct.services.view.form.LoginForm;
-import com.topcoder.shared.security.SimpleResource;
-import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.SimpleRequest;
-import com.topcoder.web.common.SimpleResponse;
-import com.topcoder.web.common.security.BasicAuthentication;
-import com.topcoder.web.common.security.SessionPersistor;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
 /**
@@ -21,9 +17,16 @@ import org.apache.struts2.ServletActionContext;
  * <li>Added {@link #forwardUrl} property to support redirecting to the latest link after user login in.</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Synchronize the user with WIKI and JIRA when the user is logged into the Cockpit</li>
+ * </ol>
+ * </p>
  * 
- * @author isv, TCSASSEMBER
- * @version 1.1
+ * @author isv, GreatKevin
+ * @version 1.2
  */
 public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
@@ -89,6 +92,20 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
         if (SUCCESS.equals(result)) {
             getSessionData().getSession().removeAttribute("redirectBackUrl");
             forwardUrl = ServletActionContext.getRequest().getParameter("forwardUrl");
+
+            final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+            final String userHandle = getUserService().getUserHandle(currentUser.getUserId());
+            try {
+                getUserServiceFacade().syncJiraUser(currentUser, userHandle);
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
+            }
+            try {
+                getUserServiceFacade().getConfluenceUser(currentUser, userHandle);
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
+            }
+
             if (forwardUrl != null && forwardUrl.trim().length() > 0) {
                 // should be redirected
                 return "forward";

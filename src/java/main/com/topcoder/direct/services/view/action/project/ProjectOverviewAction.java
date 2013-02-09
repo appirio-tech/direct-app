@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -130,9 +130,17 @@ import java.util.Map;
  *     <li>Add the logic of getting copilots feedback for the project overview page</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 2.2 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Read TopCoder Account Managers for the project</li>
+ *     <li>Add the email addresses for the TopCoder Platform Specialists</li>
+ * </ol>
+ * </p>
  * 
  * @author isv, Veve, Blues, GreatKevin
- * @version 2.1
+ * @version 2.2
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -380,6 +388,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                     for(long managerId : viewData.getProjectGeneralInfo().getTopcoderManagers()) {
                         viewData.getProjectGeneralInfo().getTopcoderManagersHandles().put(managerId, userService.getUserHandle(managerId));
                     }
+                    for (long accountManagerId : viewData.getProjectGeneralInfo().getAccountManagers()) {
+                        viewData.getProjectGeneralInfo().getAccountManagersHandles().put(accountManagerId, userService.getUserHandle(accountManagerId));
+                    }
                     for(ProjectCopilotStatDTO copilot : getCopilotStats()) {
                         viewData.getProjectGeneralInfo().getCopilotHandles().put(copilot.getCopilotInfo().getUserId(), copilot.getCopilotInfo().getHandle());
                     }
@@ -518,6 +529,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         final List<DirectProjectMetadata> metadata = getProjectMetadataService().getProjectMetadataByProject(getFormData().getProjectId());
         List<Long> clientManagers = new ArrayList<Long>();
         List<Long> tcManagers = new ArrayList<Long>();
+        List<Long> accountManagers = new ArrayList<Long>();
         Map<String, List<String>> additionalProjectInfo = new HashMap<String, List<String>>();
 
         for (DirectProjectMetadata m : metadata) {
@@ -558,6 +570,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 13L) {
                 // difficulty rating
                 getViewData().getProjectGeneralInfo().setDifficultyRating(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 14L) {
+                // topcoder account managers
+                accountManagers.add(Long.parseLong(m.getMetadataValue()));
             }
 
             if (clientId > 0) {
@@ -577,6 +592,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         getViewData().getProjectGeneralInfo().setAdditionalProjectInfo(additionalProjectInfo);
         getViewData().getProjectGeneralInfo().setClientManagers(clientManagers);
         getViewData().getProjectGeneralInfo().setTopcoderManagers(tcManagers);
+        getViewData().getProjectGeneralInfo().setAccountManagers(accountManagers);
+
+        for(Long platformManagerId : tcManagers) {
+            getViewData().getProjectGeneralInfo().getTopcoderManagersEmails().put(platformManagerId, userService.getEmailAddress(platformManagerId));
+        }
 
         int actualCost = 0;
 

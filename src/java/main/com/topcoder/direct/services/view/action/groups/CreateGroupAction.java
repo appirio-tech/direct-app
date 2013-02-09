@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.groups;
 
@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
@@ -73,9 +75,16 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  *   <li>Fix the <code>NullPointException</code> bug of {@link #executeAction()}.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Synchronize WIKI and JIRA users when a group is created and new members are added into the group</li>
+ * </ol>
+ * </p>
  * 
- * @author woodjhon, hanshuai, flexme, minhu, TCSASSEMBLER
- * @version 1.4
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin
+ * @version 1.5
  */
 @SuppressWarnings("serial")
 public class CreateGroupAction extends CreateUpdateGroupAction {
@@ -134,6 +143,17 @@ public class CreateGroupAction extends CreateUpdateGroupAction {
             long groupId = getGroupService().add(getGroup());
             HelperUtility.sendInvitations(this.getAuditService(), getGroupInvitationService(), getAcceptRejectUrlBase(),
                 getRegistrationUrl(), getGroup().getGroupMembers(), isSkipInvitationEmail());
+
+            for (GroupMember member : getGroup().getGroupMembers()) {
+                final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+                try {
+                    getUserServiceFacade().syncJiraUser(currentUser, member.getHandle());
+                    getUserServiceFacade().getConfluenceUser(currentUser, member.getHandle());
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
             
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("groupId", new Long(groupId));

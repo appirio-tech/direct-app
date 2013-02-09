@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project.edit;
 
@@ -44,8 +44,15 @@ import java.util.*;
  *   </ol>
  * </p>
  *
- * @version 1.4
- * @author GreatKevin, TCSDEVELOPER
+ * <p>
+ * Version 1.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * <ol>
+ *     <li>Add {@link #tcAccountManagerIds} and its getter and setter</li>
+ * </ol>
+ * </p>
+ *
+ * @version 1.5
+ * @author GreatKevin
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
@@ -68,6 +75,13 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * The TopCoder Project Manager ids of the project.
      */
     private Set<DirectProjectMetadata> tcManagerIds = new LinkedHashSet<DirectProjectMetadata>();
+
+    /**
+     * The TopCoder Account Manager ids of the project.
+     *
+     * @since 1.5
+     */
+    private Set<DirectProjectMetadata> tcAccountManagerIds = new LinkedHashSet<DirectProjectMetadata>();
 
     /**
      * The SVN URL of the project.
@@ -258,6 +272,26 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setTcManagerIds(Set<DirectProjectMetadata> tcManagerIds) {
         this.tcManagerIds = tcManagerIds;
+    }
+
+    /**
+     * Gets TopCoder Account Manager ids of the project
+     *
+     * @return TopCoder Account Manager ids of the project
+     * @since 1.5
+     */
+    public Set<DirectProjectMetadata> getTcAccountManagerIds() {
+        return tcAccountManagerIds;
+    }
+
+    /**
+     * Sets TopCoder Account Manager ids of the project
+     *
+     * @param tcAccountManagerIds TopCoder Account Manager ids of the project
+     * @since 1.5
+     */
+    public void setTcAccountManagerIds(Set<DirectProjectMetadata> tcAccountManagerIds) {
+        this.tcAccountManagerIds = tcAccountManagerIds;
     }
 
     /**

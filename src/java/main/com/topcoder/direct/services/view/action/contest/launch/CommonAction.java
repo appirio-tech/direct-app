@@ -1,27 +1,23 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
 
-import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
-import com.topcoder.service.project.ProjectData;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -44,8 +40,14 @@ import com.topcoder.service.project.ProjectData;
  * - Add method {@link #getBillingAccountsForProject()} to handle ajax request to get billing accounts for project.
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
+ * - Updates method {@link #getBillingAccountsForProject()} to return all the billing accounts of the project without
+ * checking the billing account permission of the users.
+ * </p>
+ *
  * @author BeBetter, pvmagacho, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -169,15 +171,6 @@ public class CommonAction extends BaseContestFeeAction {
      */
     public String getBillingAccountsForProject() {
         try {
-            // get the billing accounts the user has access to
-            List<ProjectData> billingProjects = getBillingProjects();
-
-            Set<Long> billingProjectIds = new HashSet<Long>();
-
-            for(ProjectData p : billingProjects) {
-                billingProjectIds.add(p.getProjectId());
-            }
-
             // gets the billing accounts associated to the project
             List<Project> billingAccountsByProject = getProjectServiceFacade().getBillingAccountsByProject(getDirectProjectId());
 
@@ -185,13 +178,10 @@ public class CommonAction extends BaseContestFeeAction {
 
             // filter out the billing accounts user has access to
             for(Project p : billingAccountsByProject) {
-                if(billingProjectIds.contains(p.getId())) {
                     result.put(String.valueOf(p.getId()), p.getName());
-                }
             }
 
             setResult(result);
-
         } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);
