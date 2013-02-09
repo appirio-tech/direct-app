@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -183,8 +183,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme
- * @version 1.6.7
+ * <p>
+ * Version  1.6.8 ( Release Assembly - TopCoder Direct Prize-Project Link Update version 1.0) updates
+ * <ol>
+ *     <li>Update {@link #populateCompetition()} to save projectId into prizes.</li>
+ * </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx
+ * @version 1.6.8
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -700,6 +707,11 @@ public class SaveDraftContestAction extends ContestAction {
         if (prizes != null) {
             for (Prize prize : prizes) {
                 if (prize.getPrizeAmount() > 0) {
+                	if (projectId > 0) {
+                		prize.setProjectId(projectId);
+                	} else {
+                		prize.setProjectId(softwareCompetition.getProjectHeader().getTcDirectProjectId());
+                	}
                     newPrizes.add(prize);
                 }
             }

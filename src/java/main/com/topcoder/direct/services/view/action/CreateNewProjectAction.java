@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
@@ -89,9 +89,17 @@ import java.util.*;
  * project.</li>
  * </ol>
  * </p>
- * 
- * @author Veve, isv, KennyAlive, Ghost_141
- * @version 1.4
+ * <p>
+ * Version 1.5 (Release Assembly - Release Assembly - TopCoder Direct Prize-Project
+ * Link Update) change notes:
+ * <ol>
+ * <li>Modified {@link #createCopilotDraftPosting()} to save the project id into the
+ * prizes of new copilot posting project.</li>
+ * </ol>
+ * </p>
+ *
+ * @author Veve, isv, KennyAlive, Ghost_141, frozenfx
+ * @version 1.5
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -548,11 +556,13 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         firstPlace.setNumberOfSubmissions(1);
         firstPlace.setPlace(1);
         firstPlace.setPrizeAmount(150);
+        firstPlace.setProjectId(directProject.getProjectId());
 
         Prize secondPlace = new Prize();
         secondPlace.setNumberOfSubmissions(1);
         secondPlace.setPlace(2);
         secondPlace.setPrizeAmount(75);
+        secondPlace.setProjectId(directProject.getProjectId());
 
         com.topcoder.management.project.PrizeType prizeType = new com.topcoder.management.project.PrizeType();
         prizeType.setDescription("Contest Prize");
