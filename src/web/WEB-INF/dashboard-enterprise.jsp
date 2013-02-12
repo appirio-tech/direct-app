@@ -1,8 +1,8 @@
 <%--
-  - Author: isv, tangzx, flexme, Veve, GreatKevin, isv, Ghost_141
+  - Author: isv, tangzx, flexme, Veve, GreatKevin, isv, Ghost_141, csy2012
   -
-  - Version: 2.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 2.3 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
+  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Enterprise Dashboard view.
   -
@@ -26,6 +26,11 @@
   - 
   - Version 2.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
   - Fix multiple bugs.
+  - 
+  - Version 2.3 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0 Change Note
+  - Aligned "Group By" section and "Billing Account" in Filters section.
+  - Fixed the bottom border issue for "Enterprise Health" table.
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -1649,13 +1654,13 @@
                                                 <div class="firstRow">
                                                     <div class="datePicker">
                                                         <div>
-                                                            <span class="label">Start: </span>
+                                                            <span class="label"><strong>Start: </strong></span>
                                                             <s:textfield name="formData.startDate" readonly="true"
                                                                          id="startDateEnterprise"
                                                                          cssClass="text date-pick"/>
                                                         </div>
                                                         <div>
-                                                            <span class="label">End: </span>
+                                                            <span class="label"><strong>End: </strong></span>
                                                             <s:textfield name="formData.endDate" readonly="true"
                                                                          id="endDateEnterprise" cssClass="text date-pick"/>
                                                         </div>
@@ -1681,15 +1686,15 @@
                                                                       cssClass="multiselect"
                                                                       id="formData.projectCategoryIds"
                                                                       name="formData.projectCategoryIds" size="5"/>
-                                                        </div>
-
+                                                        </div>														
+	
                                                         <div class="columns" id="customerNameFilter">
                                                             <strong>Customer Name</strong><br/>
                                                             <s:select list="viewData.clientAccounts" id="formData.customerIds"
                                                                       name="formData.customerIds" size="1"/>
-                                                        </div>
-
-                                                        <div class="columns" id="clientBillingProjectsFilter">
+                                                        </div>															
+														
+                                                        <div class="columns" id="clientBillingProjectsFilter" style="width:200px;">
                                                             <strong>Billing Account</strong><br/>
                                                             <s:select list="viewData.clientBillingProjects"
                                                                       id="formData.billingAccountIds"

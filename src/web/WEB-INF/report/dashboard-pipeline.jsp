@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Blues, Ghost_141
-  - Version: 1.6
+  - Author: isv, Blues, Ghost_141, csy2012
+  - Version: 1.7
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
@@ -23,6 +23,9 @@
   - 
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - 
+  - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0) changes:
+  - - Changed the font to bold for "FROM" and "TO".   
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -142,9 +145,10 @@
                                     <!-- end .filterRow -->
                                     <div class="clearFix"></div>
                                     <div class="filterRow adjustFilterRow">
-                                        From <s:textfield cssClass="text" name="formData.numericalFilterMinValue"
+                                     	<strong> From </strong>
+                                     	<s:textfield cssClass="text" name="formData.numericalFilterMinValue"
                                                           size="10" maxlength="10" id="numericalFilterMinValue"/>
-                                        <span class="to">To</span> <s:textfield cssClass="text"
+                                        <span class="to"><strong>To</strong></span> <s:textfield cssClass="text"
                                                                                 name="formData.numericalFilterMaxValue"
                                                                                 size="10" maxlength="10"
                                                                                 id="numericalFilterMaxValue"/>
@@ -678,11 +682,11 @@
                                         <td>
                                             <c:if test="${not empty contest.manager}"><c:out value="${contest.manager}"/></c:if>
                                         </td>
-                                        <td>
+                                        <td class="singleLineCol">
                                             &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.createTime)}"
                                                             pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>
-                                        <td class="last">
+                                        <td class="last singleLineCol">
                                             &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.modifyTime)}"
                                                                   pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>

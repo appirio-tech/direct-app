@@ -2,11 +2,14 @@
   - Author: TCSASSEMBLER
   -
   - Version: 1.0
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
+  -
+  - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0)
+  - - Fixed long description of milestones. 
   -
   - Description: This page renders the project milestones batch creation view.
   -
@@ -116,12 +119,9 @@
                                                         </s:if>
                                                     </div>
                                                     <div class="projectD">
-                                                         <span class="long">
                                                                <span>
                                                                    <s:property value="description"/>
                                                                </span>
-                                                         </span>
-
                                                     </div>
                                                 </div>
                                                 <div class="actions">
@@ -162,12 +162,10 @@
                                                             <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
                                                         </s:if>
                                                     </div>
-                                                    <div class="projectD">
-                                                         <span class="long">
+                                                    <div class="projectD">                                                        
                                                                <span>
                                                                    <s:property value="description"/>
                                                                </span>
-                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="actions">
@@ -178,7 +176,7 @@
 
                                         </s:iterator >
                                     </dl>
-                                    <!-- end completed .milestoneList -->
+                                    <!-- end upcoming .milestoneList -->
 
                                     <!-- start completed .milestoneList -->
                                     <dl class="milestoneList completed <s:if test="viewData.completedMilestones.size == 0">hide</s:if>">
@@ -210,12 +208,10 @@
                                                             <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
                                                         </s:if>
                                                     </div>
-                                                    <div class="projectD">
-                                                         <span class="long">
+                                                    <div class="projectD">                                                        
                                                                <span>
                                                                    <s:property value="description"/>
-                                                               </span>
-                                                         </span>
+                                                               </span>                                                    
                                                     </div>
                                                 </div>
                                                 <div class="actions">
@@ -260,11 +256,11 @@
 
                                             </div>
                                             <div class="projectD">
-                                                <span class="short">
+                                                <span class="short longdesc">
                                                   {4}
                                                   <a href="javascript:;">more</a>
                                                 </span>
-                                                <span class="long hide">
+                                                <span class="long longdesc hide">
                                                     <span>
                                                         {5}
                                                     </span>

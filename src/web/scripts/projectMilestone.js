@@ -1,9 +1,12 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
  *
  * Javascript for for the project management pages.
  *
  * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * 
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+ * - Update the CSS to fix layout issue for milestone long description. 
  */
 var calendarData;
 var userHandleColorMap = {};
@@ -118,7 +121,17 @@ var insertMilestoneIntoList = function (result) {
 
 $(document).ready(function () {
 
-    loadUserHandleColorMap();
+    loadUserHandleColorMap();    
+    
+    $(".milestoneManage .milestoneList.overdue dd, .milestoneManage .milestoneList.completed dd,.milestoneManage .milestoneList.upcoming dd").each(function(){
+    	var longDesc=$(this).find(".project .projectD span").text();    	
+    	if(longDesc.length>200  ){    
+    		$(this).find(".project .projectD span").addClass('longdesc');    		
+    	}    	
+    });
+    
+    
+
 
     // initialize all the date pickers used in project milestone pages
     $(" .multiMilestones .dueDate input,.newOutLay .dateLine input.text").datePicker({

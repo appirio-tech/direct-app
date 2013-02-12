@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2013 TopCoder Inc., All Rights Reserved.
  *
  * Used for the new project creation process, included by the JSP file dashboard-create-new-project.jsp
  *
@@ -10,6 +10,9 @@
  * 
  * @version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  *              Update the CSS styles to fix multiple issues.
+ * 
+ * @version 1.3(Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+ *              Updated the CSS styles to apply sprites image for custom project. 
  */
 @charset "utf-8";
 /* CSS Document */
@@ -1278,22 +1281,24 @@ table {
 			padding-top:3px;
 			background:url(/images/selectProject_bg_hover.png) repeat-y left top;
 			}
-			
+		
+		/* sprits image for custom */
 		.stepFirst .projectItem .projectContainer .custom{
-			width:273px;
-			height:285px;
-			background:url(/images/custom.png) no-repeat center 4px;
+			background: url("/images/custom_sprites.png") no-repeat scroll -273px 1.5px transparent;
+			height: 285px;
+			width: 273px;
 			}
 			
 		.stepFirst .projectItem .hover .custom{
-			width:273px;
-			height:285px;
-			background:url(/images/custom_hover.png) no-repeat center top;
+			background: url("/images/custom_sprites.png") no-repeat scroll 0 1.5px transparent;
+			height: 285px;
+			width: 273px;		
 			}
-			
+		
+		
 			/* radioBox */
 			.stepFirst .projectItem .radioBox{
-				height:17px;
+				height:15px;
 				padding:12px 0 0 0;
 				margin-left:4px;
 				}
@@ -1321,7 +1326,7 @@ table {
             .stepFirst .projectItem .projectContainer .comingSoon{
 				width:262px;
 				margin:0 auto;
-                margin-top: -12px;
+                margin-top: -10px;
 				padding:3px;
 				border:none;
 				}

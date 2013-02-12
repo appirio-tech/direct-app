@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * <p>
@@ -8,6 +8,9 @@
  * 
  * @author TCSASSEMBLER
  * @version 1.0
+ * @Version 1.1 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
+ * Changes: Re-use same modal windows for manage copilot screen.
+ * 
  * @since TC Direct Manage Copilots Assembly
  */
 $(function() {
@@ -184,6 +187,232 @@ $(function() {
 
     // update rows
     updateRows();
+    
+    $('.copilotManage').click(function(e) {      	
+    	modalLoad("#copilotManageModal");
+    	// mapping of copilot profile id to
+    var copilotMapping = {};
+
+	$('#copilotManageModal .addUserForm .addUserLeft ul').empty();
+	$('#copilotManageModal .addUserForm .addUserRight ul').empty();
+	
+	$('#manageUserDialog .right .list .listItem').remove();
+
+	// initiate right panel
+	initiateDialogRightPanel(e);	
+	
+	setListClickEvent();
+
+    $('#copilotsList input').each(function(index,item) {
+    	
+    	if ($('#manageUserDialog .right .list .listItem[name=' + $(item).attr("name") + ']').length == 0)
+    	{	   	   
+          $('#copilotManageModal .addUserForm .addUserLeft ul').append('<li name="' + $(this).attr('name') + '">' + $(this).val() + '</li>');           
+       }else{    	  
+         $('#copilotManageModal .addUserForm .addUserRight ul').append('<li name="' + $(this).attr('name') + '">' + $(this).val() + '</li>');
+       }
+    });
+    
+    setListClickEvent();
+    
+    // scroll
+    $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
+
+    // list selected
+    $('#copilotManageModal .addUserForm .addUserList li').live('click', function() {
+        if ($(this).hasClass('selected')) {            
+        } else {
+            $(this).addClass('selected');
+        }
+    });
+
+    // select all
+    $('#copilotManageModal .addUserForm .selectAll').click(function() {
+        $('#copilotManageModal .addUserForm .addUserLeft ul li').filter(":visible").addClass('selected');
+    });
+
+    // remove all
+    $('#copilotManageModal .addUserForm .removeAll').click(function() {
+        $('#copilotManageModal .addUserForm .addUserLeft ul').append($('#copilotManageModal .addUserForm .addUserRight ul').html());
+        $('#copilotManageModal .addUserForm .addUserRight ul').empty();
+        if ($('#copilotManageModal .addUserForm .addUserLeft .addUserList ul').height() >= 219) {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'visible');
+        }
+        if ($('#copilotManageModal .addUserForm .addUserRight .addUserList ul').height() >= 266) {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'visible');
+        }
+    });
+
+    // add item
+    $('#copilotManageModal .addUserForm .addItem').live('click', function() {
+        $("#copilotManageModal .errorMessage").html('');
+        $('#copilotManageModal .addUserForm .addUserLeft ul li.selected').each(function() {
+            $('#copilotManageModal .addUserForm .addUserRight ul').append('<li name="' + $(this).attr('name') + '">' + $(this).html() + '</li>');
+            $(this).remove();
+        });
+        if ($('#copilotManageModal .addUserForm .addUserLeft .addUserList ul').height() >= 219) {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'visible');
+        }
+        if ($('#copilotManageModal .addUserForm .addUserRight .addUserList ul').height() >= 266) {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'visible');
+        }
+    });
+
+    // remove item
+    $('#copilotManageModal .addUserForm .removeItem').live('click', function() {
+        $('#copilotManageModal .addUserForm .addUserRight ul li.selected').each(function() {
+            $('#copilotManageModal .addUserForm .addUserLeft ul').append('<li name="' + $(this).attr('name') + '" id="' + $(this).attr('id') + '">' + $(this).html() + '</li>');
+            $(this).remove();
+        });
+        if ($('#copilotManageModal .addUserForm .addUserLeft .addUserList ul').height() >= 219) {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'visible');
+        }
+        if ($('#copilotManageModal .addUserForm .addUserRight .addUserList ul').height() >= 266) {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'scroll');
+        } else {
+            $('#copilotManageModal .addUserForm .addUserRight .addUserList').css('overflow-y', 'visible');
+        }
+    });
+
+    // handle the copilot management widget search feature
+    $("#copilotManageModal .searchBox a").live('click', function() {
+        var searchText = $("#copilotManageModal .searchBox input").val().toLowerCase();
+        var leftList = $("#copilotManageModal .addUserLeft .addUserList ul li");
+
+        leftList.each(function() {
+
+            $(this).html(copilotMapping[$(this).attr('name')]);
+
+            $(this).show();
+        });
+
+        if ($.trim(searchText).length == 0) {
+            return;
+        } else {
+            leftList.each(function() {
+                var copilotHandle = $.trim($(this).html());
+                var copilotHandleLower = copilotHandle.toLowerCase();
+                var index = copilotHandleLower.indexOf(searchText);
+                if (index == -1) {
+                    // hide
+                    $(this).hide();
+                } else {
+                    var highlighted = copilotHandle.substring(0, index - 1) + '<strong>' +
+                        copilotHandle.substring(index, index + searchText.length) +
+                        '</strong>' + copilotHandle.substring(index + searchText.length);
+                    $(this).html(highlighted);
+                }
+
+            });
+        }
+    });
+    
+ // get the operations performed on the project copilots management widget
+    var getCopilotWidgetOperations = function() {
+        var tr = $(e.target).parent().parent().parent();
+        var projectId = tr.attr("name").substring("project_".length);        
+        var operations = [];
+        // check the right list to determine add and remove
+        var rightList = $("#copilotManageModal .addUserRight .addUserList ul li");
+        var leftList = $("#copilotManageModal .addUserLeft .addUserList ul li");
+
+        // handle remove actions
+        var copilots = [];
+        var copilotProjectIds = [];
+        tr.nextUntil('.trNormal').each(function(index, item) {
+            var span = $(item).children().first().find("span");
+            var name = span.attr("name");
+            if ($('#copilotManageModal .addUserRight .addUserList ul li[name=' + name + ']').length == 0) {
+                var copilotProfileId = name
+                        .substring('copilot_'.length);
+                var copilotProjectId = $(
+                        '#project_' + projectId + "_copilot_"
+                                + copilotProfileId).val();
+                operations[operations.length] = {
+                    projectId : parseInt(projectId),
+                    copilotProfileId : parseInt(copilotProfileId),
+                    copilotProjectId : parseInt(copilotProjectId),
+                    operation : 'REMOVE'
+                };
+            }
+        });
+
+        // handle add actions
+        $('#copilotManageModal .addUserRight .addUserList ul li').each(function(index, item) {
+            var copilotProfileId = $(item).attr("name").substring(
+                    'copilot_'.length);
+            if ($('#project_' + projectId + "_copilot_"
+                    + copilotProfileId).length == 0) {
+                operations[operations.length] = {
+                    projectId : parseInt(projectId),
+                    copilotProfileId : parseInt(copilotProfileId),
+                    // copilotProjectId :
+                    // parseInt(copilotProjectId),
+                    operation : 'ADD'
+                };
+            }
+        });
+
+        return operations;
+    }
+    
+ // save the project copilots information
+    $('#copilotManageModal .saveButton').live('click', function() {
+
+        var request = {
+            copilotProjectOperations : getCopilotWidgetOperations()
+        };
+
+        modalAllClose();
+        modalPreloader();
+
+        $.ajax({
+            type : 'post',
+            url : 'processCopilotProjects',
+            cache : false,
+            data : request,
+            dataType : 'json',
+            success : function(result) {
+                modalAllClose();
+
+                if (!result.result) {
+                    showErrors(result.error.errorMessage);
+                    return;
+                }
+                location.reload(true);
+                hanldeCopilotProjectOperationsResult(result);
+                
+            },
+            error: function(result) {
+                showErrors("Error when saving project copilots");
+            }
+        });
+
+        return false;
+    });
+
+
+    // close button
+    $('#copilotManageModal .cancelButton').live('click', function() {
+        modalAllClose();
+        if (widgetResult != null) {
+            initializeWidget(widgetResult);
+        }
+        return false;
+    });    
+    });
+    /** end copilot management widget codes **/
+    
 });
 
 /**
@@ -258,6 +487,16 @@ function setItemClickEvent() {
 };
 
 /**
+ * Set list click event.
+ */
+function setListClickEvent() {
+    $("#copilotManageModal .addUserForm .addUserList ul li").unbind("click");
+    $("#copilotManageModal .addUserForm .addUserList ul li").click(function() {
+        $(this).toggleClass('active');
+    });
+};
+
+/**
  * Remove one copilot project.
  * 
  * @param projectId
@@ -320,31 +559,30 @@ function hanldeCopilotProjectOperationsResult(jsonResult, isRemove) {
 		projectName = $('.trNormal[name=project_' + data[0].projectId + '] .tdTitle .longWordsBreak').html();
 		handle = $('#copilotsList input[name=copilot_' + data[0].copilotProfileId + ']').val();
 
-        $.each( ["makeSureDialog", "removeProjectDialog" ], function(index, item) {
-            $('#' + item + ' .closeDialog').unbind("click");
-            $('#' + item + ' .closeDialog').click(function() {
-                $('#' + item).dialog("close");
-                handleOperationsResult(data);
+        $.each( ["makeSureDialog", "copilotRemoveModal","copilotSaveSuccessModal" ], function(index, item) {
+            $('#' + item + ' .closeModal').unbind("click");
+            $('#' + item + ' .closeModal').click(function() {                
+            	modalAllClose();    
+                handleOperationsResult(data);                            
                 
                 return false;
             });
 
-            $('#' + item + ' .foot .okey2Button').unbind("click");
-            $('#' + item + ' .foot .okey2Button').click(function() {
-                $('#' + item).dialog("close");
-                handleOperationsResult(data);
-                
+            $('#' + item + ' .newButton1 .btnC').unbind("click");
+            $('#' + item + ' .newButton1 .btnC').click(function() {                
+            	modalAllClose();    
+            	handleOperationsResult(data);
+                                
                 return false;
             });
+        
         });
     
-		if (isRemove) {
-            $('#removeProjectDialog .projectName').html(projectName);
-            $('#removeProjectDialog .handle').html(handle);
-            $('#removeProjectDialog').dialog("open");	    
-		} else {
-            $('#makeSureDialog .projectName').html(projectName);
-            $('#makeSureDialog').dialog("open");
+		if (isRemove) {  
+			location.reload(true);
+            showSuccessfulMessage('The Copilot <span class="messageContestName">' + handle + '</span> has been removed from Project <span class="messageContestName">'+projectName+'</span>successfully.');
+		} else {            
+            showSuccessfulMessage('Copilots of project <span class="messageContestName">' + projectName + '</span> have been saved successfully.');
 		}
     } else {
         initDialog('errorDialog', 400);

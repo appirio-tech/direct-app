@@ -222,7 +222,8 @@ $(document).ready(function(){
     $('.closeProjectCopilot').click(function(){
       $('.trChild').removeClass("newDeleteStatus");
       $(this).parent().parent().addClass('newDeleteStatus');
-      $('#removeProjectDialog').dialog("open");
+      //$('#removeProjectDialog').dialog("open");
+      modalLoad("#copilotRemoveModal");
       return false;
     })
   }

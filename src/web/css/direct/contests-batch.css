@@ -99,6 +99,12 @@
     float: left;
 }
 
+#area1 .buttonBar div.postpone span.warningLocation{
+	position:absolute;
+	left:150px;
+}
+
+
 #area1 .buttonBar div.postpone span.warning {
     color: #C22F2F;
     display: none;

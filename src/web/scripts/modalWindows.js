@@ -15,7 +15,7 @@ function closeModal() {
  * Adjust the overlay background and model window and display them
  */
 function adjustAndShow(modal) {
-	$("#modal-background").css("height", document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+	$("#modal-background").css("height", document.body.scrollHeight > document.body.offsetHeight ? (document.body.scrollHeight>$(window).height()? document.body.scrollHeight :$(window).height()) : (document.body.offsetHeight>$(window).height()? document.body.offsetHeight:$(window).height()));
 	$("#modal-background, " + modal).show();
 	$("#new-modal-window").css("margin-left", - $("#new-modal-window").width() / 2 + "px").css("margin-top", - $("#new-modal-window").height() / 2 + "px");
 	var height = 0;

@@ -1,7 +1,7 @@
 <%--
   - Author: Blues, GreatKevin, duxiaoyang
-  - Version: 1.4
-  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.5
+  - Copyright (C) 2010-2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: The footer of the topcoder cockpit.
   -
@@ -19,6 +19,11 @@
   -
   - Version 1.4 (Release Assembly - TC Direct Project Forum Configuration Assembly 2) changes:
   - Added quotes for rightSidebarData to avoid JavaScript error.
+  -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
+  - Matched font size title for sub dropdown on "Select Customer" and "Select Project". 
+  - Made both read only.
+  -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -47,7 +52,7 @@
                     
                     <div class="dropdownWidget customerSelectMask">
                         <div class="inputSelect">
-                            <input type="text" value="All Customers" />
+                            <input class="paddingleft" type="text" readonly="readonly" value="All Customers" />
                             <a href="javascript:;" class="arrow"></a>
                         </div>
                         <div class="contestsDropDown">
@@ -82,10 +87,10 @@
                         <div class="inputSelect">
                         <ui:isProjectContextSet>
                             <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideProjectList();"
-                                         onkeyup="filterProject();"/>
+                                         onkeyup="filterProject();" readonly="true" />
                         </ui:isProjectContextSet>
                         <ui:noProjectContextSet>
-                            <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();"/>
+                            <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();" readonly="true"/>
                         </ui:noProjectContextSet>
                         </div>
                         

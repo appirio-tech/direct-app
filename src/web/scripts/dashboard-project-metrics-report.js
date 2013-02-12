@@ -15,7 +15,7 @@ $(document).ready(function() {
     $('select.multiselect').each(function() {
         var obj = this;
         var name = $(obj).attr("name");
-        var box = $("<div/>").addClass("multiSelectBox").css("overflow-x", "hidden");
+        var box = $("<div/>").addClass("multiSelectBox1").css("overflow-x", "hidden");
         var selectAllRow = $("<div/>").addClass("multiOptionRow");
         selectAllRow.html("<input type='checkbox'><label title='Select All'>Select All</label>");
         selectAllRow.appendTo(box);

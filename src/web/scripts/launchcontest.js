@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -37,14 +37,32 @@
  * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
  *
- * @author GreatKevin, TCASSEMBLER
- * @version 1.8
+ * Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) change notes:
+ * - Fixed a drop down layout issue for a lenghthy project name.  
+ * 
+ * @author GreatKevin, TCASSEMBLER, csy2012
+ * @version 1.9
  */
 $(document).ready(function() {
 
     // reset the fake form to prevent Firefox from caching local form data
     document.getElementById("fakeForm").reset();
-
+    
+    //truncate the project name    
+    $(".addNewContest .row .projectSelect1 select option").each(function(){
+    	if($(this).text().length>60){
+    		var txt=$(this).text().substr(0,60)+'...';
+    		$(this).text(txt);    		
+    	}
+    });	
+    
+    //truncate the billing account, copilot and round type
+    $(".addNewContest .row .billingSelect1 select option,.addNewContest .row .copilotSelect1 select option, .schedule #roundTypeDiv .roundelect1 select option").each(function(){
+    	if($(this).text().length>60){
+    		var txt=$(this).text().substr(0,50)+'...';
+    		$(this).text(txt);    		
+    	}
+    });	
     // Drop Down Select Project
     $(".dropdown dt a").click(function() {
         $(".dropdown dd ul").toggle();
@@ -493,7 +511,7 @@ var copilotDropdownFlag = false;
 
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
-    var value = $('.projectSelect select').getSetSSValue();
+    var value = $('.projectSelect1 select').getSetSSValue();
 
     var billingAccounts = getBillingAccountsByDirectProjectId(value);
 

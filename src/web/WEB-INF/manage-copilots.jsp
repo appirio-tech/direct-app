@@ -1,10 +1,15 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Manage copilot projects page.
   - Since: TC Direct Manage Copilots Assembly
+  -
+  - Version 1.1 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
+  - - Fixed upper case issue for SAVE and CANCEL buttons in Copilot Management popup, and scroll issue in IE for copilot removal.  
+  - -  Re-use same modal windows for manage copilot screen.
+  -    
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -74,13 +79,13 @@
                                                                 <s:iterator value="viewData.copilotProjects">
                                                                     <tr class="trNormal" name="project_${project.id}">
                                                                         <td class="tdTitle"><a href="javascript:;" class="expand">Expand</a>
-                                                                            <a class="longWordsBreak listTitle" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="project.id"/></s:url>">
+                                                                            <a class="longWordsBreak listTitle longdesc" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="project.id"/></s:url>">
                                                                                 ${project.name}
                                                                             </a>
                                                                         </td>
                                                                         <td>${fn:length(copilots)}</td>
                                                                         <td></td>
-                                                                        <td><a href="javascript:;" class="downloadProfile addCopilotUsers"><span class="profileLeft">Add Copilot</span></a></td>
+                                                                        <td><a href="javascript:;" class="downloadProfile triggerModal copilotManage" name="copilotManage"> <span class="profileLeft">Add Copilot</span></a></td>
                                                                     </tr>
                                                                     
                                                                     <s:iterator value="copilots" status="stat">
@@ -213,8 +218,8 @@
             <div class="foot">
                 <div class="separator"></div>
                 <div class="buttons">
-                    <a class="button6 saveDialogButton makeSureButton" href="javascript:void(0)"><span class="left"><span class="right">Save</span></span></a>
-                    <a class="button10 closeDialog" href="javascript:void(0)"><span class="left"><span class="right">Cancel</span></span></a>
+                    <a class="button6 saveDialogButton makeSureButton" href="javascript:void(0)"><span class="left"><span class="right">SAVE</span></span></a>
+                    <a class="button6 closeDialog" href="javascript:void(0)"><span class="left"><span class="right">CANCEL</span></span></a>
                 </div>
             </div>    
         </div>  
@@ -244,7 +249,7 @@
             </div> 
             
             <div class="body">
-                The Copilot <span class="b handle"></span> has been removed from Project <span class="b projectName"></span>
+                The Copilot <span class="b handle addSpace"> </span> has been removed from Project <span class="b projectName"></span>
             </div>
             
             <div class="foot">

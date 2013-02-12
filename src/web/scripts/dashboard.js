@@ -97,9 +97,12 @@
  *
  *  Version 3.1 - Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring
  *  - Add selector for the setting pages.
+ *
+ *  Version 3.2 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
+ *  - Add padding for the project mask.
  * 
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve
- * @version 3.1
+ * @version 3.2
  */
 
 var mouse_is_inside;
@@ -317,7 +320,11 @@ $(document).ready(function(){
             li.appendTo(dropDown);
         })
 
-        if (!hasCurrentProject) input.val("Select a project here");
+        if (!hasCurrentProject){
+        	$(".contestList .filter .projectSelectMask .inputSelect input").addClass("paddingleft");
+        	input.val("Select a project here");
+        }
+        
 
         if (typeof isInProjectScope != 'undefined' && !isInProjectScope) {
 

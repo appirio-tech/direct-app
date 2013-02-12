@@ -81,7 +81,6 @@
 			margin:0;
 			padding:0;
 			list-style:none;
-			cursor:pointer;
 			}
 			
 			#launchContestOut .tabOut li a{
@@ -1790,8 +1789,7 @@
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
 	color:#333;
-	line-height:28px;
-	cursor:pointer;
+	line-height:28px;	
 	background:url(/images/tabContest_select.gif) no-repeat;
 	}
 	
@@ -1817,8 +1815,7 @@
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
 	color:#333;
-	line-height:28px;
-	cursor:pointer;
+	line-height:28px;	
 	background:url(/images/billing_select.gif) no-repeat;
 	}
 	
@@ -1909,7 +1906,7 @@
 	font-size:12px;
 	color:#545b66;
 	line-height:22px;
-	cursor:pointer;
+	/* cursor:pointer; */
 	background:url(/images/numSelect.gif) no-repeat;
 	}
 	
@@ -2893,4 +2890,41 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 div.selectSpan{
 	float:left;
 	margin-right:4px;
+}
+
+.roundelect1,
+.projectSelect1,
+.billingSelect1,
+.copilotSelect1
+{
+	width: 370px;
+	float: left;
+	display: inline;
+	margin-right: 26px;	
+}
+.roundelect1 select,
+.projectSelect1 select,
+.billingSelect1 select,
+.copilotSelect1 select
+{
+	width: 362px;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+}
+.roundelect1,
+.billingSelect1,
+.copilotSelect1
+{
+	width: 283px;
+	float: left;
+	display: inline;
+	margin-right: 26px;	
+}
+.roundelect1 select,
+.billingSelect1 select,
+.copilotSelect1 select
+{
+	width: 281px;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
 }

@@ -1,7 +1,7 @@
 <%--
   - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang, Ghost_141
-  - Version: 2.5
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 2.6
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -52,8 +52,12 @@
   -
   - Version 2.4 - Release Assembly - TC Direct Project Forum Configuration Assembly 2
   - - Added popup for forum configuration on project overview page
+  -
   - Version 2.5 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
-  - - Fix multiple bugs.
+  - - Fixed multiple bugs.
+  -
+  - Version 2.6 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
+  - - Fixed multiple bugs.  
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -398,7 +402,73 @@
             <!-- end .modalFooter -->
         </div>
     </div>
-        <!-- end copilot manage modal -->
+    <!-- end copilot manage modal -->
+    
+ 	<!-- #copilotRemoveModal -->
+    <div id="copilotRemoveModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>Remove Copilot</span>
+                    <a href="javascript:" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+            	<br/>
+                <p style="padding:5px;">The Copilot <span class="b handle addSpace"> </span> has been removed from Project <span class="b projectName">.</span></p>
+                <br/> 
+            </div>
+            <div class="modalCommandBox"> 
+                <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #copilotRemoveModal -->	
+    
+    <!-- #copilotSaveSuccessModal -->
+    <div id="copilotSaveSuccessModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>Confirmation</span>
+                    <a href="javascript:" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+            	<br/>
+                <p style="padding:5px;">Copilots of project <span class="b projectName"></span> have been saved.</p>
+                <br/> 
+            </div>
+            <div class="modalCommandBox"> 
+                <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #copilotSaveSuccessModal -->        
         
     <!-- #addFeedbackModal -->
     <div id="addFeedbackModal" class="outLay">
@@ -1543,8 +1613,8 @@
                                 <div class="modalBody">
                                     <div class="confirmInfo">
                                         <p>
-                                            Are you sure you want to delete the project milestone?
-                                            <span>You cannot undo after removal.</span>
+                                            Are you sure you want to delete the project milestone?<br/>
+                                            You cannot undo after removal.
                                         </p>
                                     </div>
                                     <div class="buttonArea">
@@ -2741,10 +2811,10 @@
                     <p>The completion date marks when the project milestone is finished.</p>
                 </dd>
             </dl>
-            <div class="buttonLine">
-                <input type="button" class="done" value="DONE" />
-                <span>or</span>
-                <a class="cancel" href="javascript:;">Cancel</a>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 done"><span  class="btnR"><span class="btnC"  onclick="">DONE</span></span></a>
+                <span class="verticalAlign">or</span>
+                <a class="cancel verticalAlign" href="javascript:;">Cancel</a>
             </div>
         </div>
 
@@ -2767,8 +2837,8 @@
                     <p>The completion date marks when your project is completed.</p>
                 </dd>
             </dl>
-            <div class="buttonLine">
-                <input type="button" class="done" value="DONE" />
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 done"><span class="btnR"><span class="btnC" onclick="">DONE</span></span></a>
                 <span>or</span>
                 <a class="cancel" href="javascript:;">Cancel</a>
             </div>

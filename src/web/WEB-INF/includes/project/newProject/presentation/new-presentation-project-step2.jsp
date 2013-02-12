@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the 2nd step of presentation project creation.
@@ -12,6 +12,11 @@
   - 
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   -             change notes: Update button text to uppercase.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Layout Part 2 Bugs Termination)
+  - 			change notes: Marked the mandatory fields with * [Title, Summary] in the Page
+  - 			change notes: Displayed the text "this is an oral presentation without visual aids" in one row. 
+
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -26,7 +31,6 @@
 
     <!-- step first -->
     <div class="stepFirst2 stepSecond2 stepContainer2">
-
         <div class="geryContent">
 
             <!-- top bar -->
@@ -41,28 +45,29 @@
                 <!-- row -->
                 <div class="row">
                     <a href="javascript:;" class="toolTip" rel='What is the title of your presentation? '></a>
-                    <span class="label question15"></span>
+                    <span class="label question15"><span class="red">*</span></span>
+                    <span class="intro">All fields marked with <span class="red">*</span> are mandatory</span>
                     <div class="clear"></div>
                     <div class="input">
-                        <input id="presentationTitle" class="title limit" type="text"/>
+                        <input id="presentationTitle" class="title limit" type="text"/>                        
                     </div>
                     <div class="clear"></div>
                     <p class="message">
-                        <span class="errorText">This field cannot be left empty.</span>
+                        <span class="errorText" >This field cannot be left empty.</span>
                         <span class="remaning"><span class="num">30</span> char remaining.</span>
                     </p>
                 </div>
                 <!-- row -->
                 <div class="row">
                     <a href="javascript:;" class="toolTip" rel='Please describe in a sentence or brief paragraph the subject of your presentation.'></a>
-                    <span class="label question16"></span>
+                    <span class="label question16"><span class="red">*</span></span>
                     <div class="clear"></div>
                     <div class="input">
                         <textarea id="presentationSummary" rows="" cols=""></textarea>
                     </div>
                     <div class="clear"></div>
                     <p class="message">
-                        <span class="errorText">This field cannot be left empty.</span>
+                        <span class="errorText" >This field cannot be left empty.</span>
                     </p>
                 </div>
             </div>
@@ -95,7 +100,7 @@
                     <label class="questionOption72"><input id="onLargeScreen" checked="checked" type="radio" name="visuals"/></label>
                     <label class="questionOption73"><input id="onOwnComputer" type="radio" name="visuals"/></label>
                     <label class="questionOption74"><input id="onPrintedCopy" type="radio" name="visuals"/></label>
-                    <label class="questionOption75"><input id="oralPresentation" type="radio" name="visuals"/></label>
+                    <label class="questionOption75 singleLineCol" style="width:280px;"><input id="oralPresentation" type="radio" name="visuals"/></label>
                     <div class="clear"></div>
                     <label class="last questionOption76"><input id="otherPresentationVisualAid" value="other" type="radio" name="visuals"/></label>
                     <span class="input"><input id="otherPresentationVisualAidVal" disabled="disabled" name="visualsOther" class="waterMark visuals" title="other" type="text" value="other"/></span>

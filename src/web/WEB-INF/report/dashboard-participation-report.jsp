@@ -1,7 +1,7 @@
 <%--
-  - Author: bugbuka, Ghost_141
-  - Version: 1.3 (Release Assembly - TopCoder Cockpit Direct UI - Text and Layout Part 1 Bugs Termination)
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: bugbuka, Ghost_141, csy2012
+  - Version: 1.4 (Release Assembly - TopCoder Cockpit Direct UI layout Part 2 Bugs Termination)
+  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
   - - Add logics to display Milestone Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
@@ -15,6 +15,9 @@
   - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) 
   - - Update layout to fix a layout issue.
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) 
+  - - Fixed the "Aggregation Participation Metrics Report" Table header issue.
   - 
   - Description: This page renders the view for participation metrics report including form and report data.
   -
@@ -38,7 +41,7 @@
 <div id="wrapper">
 <div id="wrapperInner">
 <div id="container">
-<div id="content">
+<div id="content" class="participationReportContent">
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
@@ -206,32 +209,8 @@
     </tbody>
 </table>
 
-<table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <th class="tableTitle" colspan="8">
-                <a href="javascript:void(0)" class="expand">&nbsp;</a>
-                <span>Aggregation Participation Metrics Report</span>
-            </th>
-            <th class="tableTitle viewType" colspan="4">
-                <div>
-                <label for="aggregationParticipationReportType">View By:</label>
-                <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
-                    <option value="project" selected="selected">Project</option>
-                    <option value="billing">Billing Account</option>
-                    <option value="type">Contest Type</option>
-                    <option value="status">Contest Status</option>
-                    <option value="contest">Contest</option>
-                </select>
-                </div>
-            </th>
-        </tr>
-    </thead>
-</table>
-
-
 <div class="resultTableContainer projectAggregationReport">
-<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+<table id="participationMetricsReportAggregationArea" class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
         <col width="14%" />
         <col width="6%" />
@@ -249,6 +228,26 @@
         <col width="10%" />
     </colgroup>
     <thead>
+        <tr>
+            <th class="tableTitle" colspan="7">
+                <a href="javascript:void(0)" class="expand">&nbsp;</a>
+                <span>Aggregation Participation Metrics Report</span>
+            </th>
+            <th class="tableTitle">&nbsp;</th>
+            <th class="tableTitle viewType" colspan="6">
+                
+                <label for="aggregationParticipationReportType">View By:</label>
+                <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
+                    <option value="project" selected="selected">Project</option>
+                    <option value="billing">Billing Account</option>
+                    <option value="type">Contest Type</option>
+                    <option value="status">Contest Status</option>
+                    <option value="contest">Contest</option>
+                </select>
+                
+            </th>
+        </tr>
+
         <tr class="projectAggregationCostReport scData subTheadRow">
             <th class="tableColumn first">Project</th>
             <th class="tableColumn">Total<br />Registrations</th>

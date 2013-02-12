@@ -8,8 +8,11 @@
  * Version 1.1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info)
  * - Fix a small bug causing js error in the project overview page.
  *
- * @author isv, GreatKevin
- * @version 1.1.1
+ * Version 1.1.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+ * - Fix a small rendering issue for project health table.
+ *
+ * @author isv, GreatKevin, csy2012
+ * @version 1.1.2
  */
 $(document).ready(function(){
     // Color the rows for projects in Enterprise Health area
@@ -134,6 +137,11 @@ $(document).ready(function(){
 
                                                 $('#enterpriseHealthTableBody').append(html);
                                             }
+                                            if(n<5 && n>0){
+                                            	var _html='<tr><td colspan="5"/></tr>';
+                                            	$('#enterpriseHealthTableBody').append(_html);
+                       						}
+                                            
                                         },
                                         function (errorMessage) {
                                             showServerError(errorMessage);

@@ -268,6 +268,7 @@ $(document).ready(function () {
      */
     $("#area1 .buttonBar div.postpone a.postponeBtn").click(function () {
         $("span.warning").hide();
+        $("span").removeClass("warningLocation");
         $("input.days").removeClass("empty");
         var rows = $("#contestTable tbody tr input[type=checkbox]:checked").parent().parent();
         var postpone = eval($("#area1 .buttonBar div.postpone input.days").val());
@@ -288,6 +289,7 @@ $(document).ready(function () {
             });
         } else {
             $("span.warning").hide();
+            $("span.daysEmpty").addClass("warningLocation");
             $("span.daysEmpty").show();
             $("input.days").addClass("empty");
         }

@@ -1164,8 +1164,23 @@ a{
 			padding-top:3px;
 			background:url(../../images/selectProject_bg_hover.png) repeat-y left top;
 			}
+		
+		/* sprites image for custom */	
+		.stepFirst .projectItem .projectContainer .custom{
+			background: url("/images/custom_sprites.png") no-repeat scroll -273px 1.5px transparent;
+			height: 285px;
+			width: 273px;
+			}
 			
-		.stepSecond .projectItem .projectContainer .custom{
+		.stepFirst .projectItem .hover .custom{
+			background: url("/images/custom_sprites.png") no-repeat scroll 0 1.5px transparent;
+			height: 285px;
+			width: 273px;			
+			}
+			
+			
+ 		/*
+ 		.stepSecond .projectItem .projectContainer .custom{
 			width:273px;
 			height:285px;
 			background:url(../../images/custom.png) no-repeat center 4px;
@@ -1175,11 +1190,12 @@ a{
 			width:273px;
 			height:285px;
 			background:url(../../images/custom_hover.png) no-repeat center top;
-			}
+			} 
+		*/
 			
 			/* radioBox */
 			.stepSecond .projectItem .radioBox{
-				height:17px;
+				height:15px;
 				padding:12px 0 0 0;
 				margin-left:4px;
 				}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render permission data to page, and handle
@@ -34,9 +34,12 @@
  *
  * Version 2.2 - Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring
  * - Loads the permissions data when the permission setting page finishes loading.
+ * 
+ * Version 2.2.1 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
+ * - Fix the permission setting page rendering.
  *
- * @author Veve
- * @version 2.2
+ * @author Veve, csy2012
+ * @version 2.2.1
  */
 //$(function() {
 /**
@@ -951,7 +954,7 @@ $.permission = {
           html += "<a userid=-1 href=\"javascript:showDeleteOneselfError()\" class='removeProject'></a>";
         } else {
           html += "<a userid = ";
-          html += this.userId + " class='removeProject'></a>";
+          html += this.userId + " href=\"javascript:void(0)\" class='removeProject'></a>";
         }
 
         html += "</tr>";

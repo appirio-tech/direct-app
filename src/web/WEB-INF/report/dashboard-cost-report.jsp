@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, flexme, GreatKevin, Ghost_141
-  - Version: 1.8
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012
+  - Version: 1.9
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
   - - Add a popup window to support the cost breakdown data.
@@ -29,6 +29,10 @@
   - 
   - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - 
+  - Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+  - - Fixed the date, title layout issue for 'cost breakdown view' result table.   
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -486,7 +490,7 @@
     <c:forEach items="${viewData.costDetails}" var="item" varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="pipelineDetailsRow" id="contest_${item.contest.id}">
-            <td>
+            <td class="firstCol">
                 <c:out value="${item.client.name}"/>
             </td>
             <td>
@@ -517,10 +521,10 @@
             <td>
                 <c:out value="${item.status}"/>
             </td>
-            <td>
+            <td  class="singleLineCol">
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${item.launchDate}"/>
             </td>
-            <td>
+            <td  class="singleLineCol">
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${item.completionDate}"/>
             </td>
             <td>
@@ -537,7 +541,7 @@
                     <fmt:formatNumber value="${item.actualCost}" pattern="$###,##0.00"/>
                 </c:if>
             </td>
-            <td>
+            <td class="lastCol">
                 <fmt:formatNumber value="${item.total}" pattern="$###,##0.00"/>
             </td>
 
@@ -610,6 +614,7 @@
 								<th class="tableColumn sorting">Contest Id</th>
                                 <th class="tableColumn sorting">Contest Type</th>
                                 <th class="tableColumn sorting">Status</th>
+                                <th class="tableColumn sorting">Launch Date</th>
                                 <th class="tableColumn sorting">Completion Date</th>
                                 <th class="tableColumn sorting">Contest Fee</th>
                                 <th class="tableColumn sorting">Estimated Member Cost</th>

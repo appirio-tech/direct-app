@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141
+  - Author: TCSASSEMBLER, Ghost_141, csy2012
   - Version: 1.0 (Module Assembly - JIRA issues loading update and report creation)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
@@ -7,6 +7,9 @@
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Update layout to fix a layout issue.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
+  - Update layout to fix a date layout issue.  
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -27,7 +30,7 @@
 <div id="wrapper">
 <div id="wrapperInner">
 <div id="container">
-<div id="content">
+<div id="content" class="jiraReportContent">
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
@@ -199,7 +202,7 @@
 						 <td>
                             <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketTitle}</a>
                         </td>
-                        <td>
+                        <td  class="singleLineCol">
                             <s:date name="launchDate" format="yyyy-MM-dd" />
                         </td>
                        

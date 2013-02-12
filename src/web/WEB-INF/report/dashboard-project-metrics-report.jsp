@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER, Ghost_141
-  - Version: 1.1 (Release Assembly - TopCoder Cockpit Direct UI - Text and Layout Part 1 Bugs Termination)
+  - Author: TCSASSEMBER, Ghost_141, csy2012
+  - Version: 1.2 (Release Assembly - TopCoder Cockpit Direct UI - Text and Layout Part 2 Bugs Termination)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for project metrics report including form and report data.
@@ -9,6 +9,9 @@
   - 
   - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Update the layout to fix a layout issue.
+  - 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0) changes:
+  - - Update the layout to fix a layout issue.  
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -29,7 +32,7 @@
 <div id="wrapper">
 <div id="wrapperInner">
 <div id="container">
-<div id="content">
+<div id="content" class="projectMetricsReportContent">
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
@@ -106,8 +109,8 @@
                 </div>
                 <!-- end .filterBillingAccount -->
                 <div class="multiSelectArea">
-                    <div class="multiSelectAreaInner">
-                        <label class="multiSelectAreaTitle">Status:</label>
+                     <div class="multiSelectAreaInner"> 
+                        <label class="multiSelectAreaTitle1">Status:</label>
                         <s:select list="viewData.projectStatus" multiple="true"
                                       cssClass="multiselect"
                                       id="formData.projectStatusIds"

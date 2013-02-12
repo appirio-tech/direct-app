@@ -92,6 +92,9 @@
  * 
  * - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  * - Update the CSS to fix multiple issues.
+ * 
+ * - (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+ * - Update the CSS to fix multiple issues. 
  */
 
 
@@ -108,7 +111,7 @@ BODY#page{
 ---------------*/
 
 #content{
-	min-width: 1280px;
+	min-width: 1100px;
 }
 
 /*-------------
@@ -187,6 +190,13 @@ BODY#page{
 	
 	#header .helloUser A.help:hover{
 		background: url(../../images/help_ico6.png) no-repeat right -17px;
+	}
+	
+	#header .truncate {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis; 
+		width:200px;
 	}
 
 /*-----------------
@@ -2300,7 +2310,8 @@ TABLE.projectStats{
 		background: transparent url(../../images/calendar_header.png) repeat-x;
 	}
 	
-	TABLE.projectStats TH.first{
+	TABLE.projectStats TH.first,
+	TABLE.pipelineStats TH.first{
 		border-left: 1px solid #37302d;
 	}
 	
@@ -2311,6 +2322,10 @@ TABLE.projectStats{
 		padding: 13px 0;
 		border: 1px solid #a8abad;
 		width: 10%;
+	}
+	
+    #projects #permissions_wrapper TABLE.projectStats tbody.checkPermissions TD{
+		border-left:none;
 	}
 	
 	TABLE.projectStats TD.date{
@@ -2456,6 +2471,7 @@ TABLE.notifications TR.applyForAll TD.markRed{
 	font-size:12px;
 	color: #c60000;
 	font-weight:bold;
+	border-left:0px;
 }
 
 TABLE.notifications TR.alternate{
@@ -4881,10 +4897,6 @@ TABLE.pipelineStats TH.tableTitle, TABLE.billingCostReport TH.tableTitle {
     background: transparent url(../../images/calendar_header.png) repeat-x;
 }
 
-TABLE.pipelineStats TH.first, TABLE.billingCostReport TH.first  {
-    border-left: 1px solid #37302d;
-}
-
 TABLE.pipelineStats TD {
     font-size: 11px;
     text-align: center;
@@ -4944,11 +4956,6 @@ TABLE.pipelineStats TR.alt TD, TABLE.billingCostReport TR.alt TD {
 TABLE.pipelineStats TR.total TD, TABLE.billingCostReport TR.total TD {
 	background-color: #CCC8C9;
     font-weight: bold;
-}
-
-TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
-	background-color: #CCC8C9;
-	color: #000;
 }
 
 #breakdownBody TH.tableColumn {
@@ -5360,18 +5367,19 @@ TABLE.newManageStatus TR TD.tdTitle .listTitle{
 		text-decoration:underline;
 	}
 TABLE.newManageStatus TR TD .closeProjectCopilot{
-	display:block;
+	background: transparent url(../../images/delete1.png) no-repeat;
+	display: block;
 	margin:0 auto;
-	width:20px;
-	height:18px;
+	height:23px;
+	width:23px;
 	text-indent:-9999px;
 	overflow:hidden;
-	text-decoration:none;
-	background:url(../../images/button_close_project_copilot.png) left top no-repeat;
+	text-decoration:none;	
 }
 TABLE.newManageStatus TR TD .closeProjectCopilot:hover{
 	text-decoration:none;
 	background-position:left -18px;
+	background: transparent url(../../images/deleted1-icon.png) no-repeat;
 }
 
 TABLE.newManageStatus TH.thOne{
@@ -6774,7 +6782,7 @@ A.button11{
 }
 
 #allProjectsPageContent {
-    min-width: 1380px;
+    min-width: 1100px;
 }
 
 table.resultTable td.last a {
@@ -6782,10 +6790,10 @@ table.resultTable td.last a {
     text-align: left;
 }
 table.resultTable td.last a.short {
-    width: 57px;
+    width: 87px;
 }
 table.resultTable td.last a.long {
-    width: 86px;
+    width: 127px;
 }
     table.resultTable td.last a img {
         margin-right: 3px;
@@ -7784,15 +7792,6 @@ div.rightColumn .activity TABLE {
     padding-right: 5px;
 }
 
-#participationMetricsReportsSection .pipelineStats thead tr.scData th,
-#participationMetricsReportsSection .pipelineStats thead tr.subTheadRow th{
-    background:#eaeaea url(../../images/bg-sub-table-header.png) left top repeat-x;
-    border-right:1px solid #bdbdbd;
-    font-size:12px;
-    padding-left:2px;
-    padding-right:2px;
-}
-
 #participationMetricsReportBasicMetrics tbody td{
     font-size:32px;
     font-weight:bold;
@@ -8017,15 +8016,6 @@ div.rightColumn .activity TABLE {
 #projectMetricsReportArea th.viewType{
     text-align: right;
     padding-right: 5px;
-}
-
-#projectMetricsReportsSection .pipelineStats thead tr.scData th,
-#projectMetricsReportsSection .pipelineStats thead tr.subTheadRow th{
-    background:#eaeaea url(../../images/bg-sub-table-header.png) left top repeat-x;
-    border-right:1px solid #bdbdbd;
-    font-size:12px;
-    padding-left:2px;
-    padding-right:2px;
 }
 
 #projectMetricsReportArea thead tr.scData th,
@@ -8788,6 +8778,25 @@ P.billingAccountArchive A {
     display: block;
 }
 
+.multiSelectArea label.multiSelectAreaTitle1 {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 0%;
+    color: #333333;
+    padding-bottom: 12px;
+    padding-top:16px;
+    display: block;
+}
+
+.multiSelectArea .multiSelectBox1 {
+    width: 100%;
+    margin-left: 0%;
+    height: 126px;
+    border: 1px solid #bdbdbd;
+    overflow: scroll;
+    background-color: ##fffffc;
+}
+
 .multiSelectArea .multiSelectBox {
     width: 90%;
     margin-left: 10%;
@@ -8806,6 +8815,19 @@ P.billingAccountArchive A {
 }
 
 .multiSelectArea .multiSelectBox .multiOptionRow {
+    clear: left;
+    padding-left: 5px;
+    min-height: 13px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 100%;
+}
+
+.multiSelectArea .multiSelectBox1 .multiOptionRowChecked {
+    background-color: #dee7f7;
+}
+
+.multiSelectArea .multiSelectBox1 .multiOptionRow {
     clear: left;
     padding-left: 5px;
     min-height: 13px;
@@ -9310,7 +9332,7 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 #billingCostReportsPage #invoiceStatusFilter .multiSelectArea {
     width: 100%;
-    min-width: 150px;
+    min-width: 100px;
 }
 
 #billingCostReportsPage #groupFilter {
@@ -9328,7 +9350,7 @@ TABLE.pipelineStats TH.tableTitle span {
 
 #billingCostReportsPage #groupFilter .multiSelectArea, #billingCostReportsPage #groupFilter .filterRow {
     width: 100%;
-    min-width: 150px;
+    min-width: 100px;
 }
 
 #billingCostReportsPage .filterContainer #groupFilter .filterRowLeft {
@@ -9352,7 +9374,7 @@ TABLE.pipelineStats TH.tableTitle span {
 
 #billingCostReportsPage .multiSelectArea .multiSelectBox {
     width: 90%;
-    height: 240px;
+    height: 180px;
 }
 
 #billingCostReportsPage .multiSelectArea .multiSelectBox .multiOptionRow {
@@ -9462,15 +9484,23 @@ img.indicator {
 }
 
 #content.pipelineReportContent {
-    min-width:1170px;
+    min-width:1100px;
 }
 
 #content.costReportContent {
-    min-width:1200px;
+    min-width:1100px;
 }
-
+#content.jiraReportContent{
+	min-width:1100px;
+}
+#content.participationReportContent{
+	min-width:1100px;
+}
+#content.projectMetricsReportContent{
+	min-width:1100px;
+}
 #content.billingCostReportContent {
-    min-width:1480px;
+    min-width:1100px;
 }
 #billingCostDetails .processBtn {
     width:60px !important;
@@ -9641,7 +9671,7 @@ a.downloadAllbtn:hover span {
                           border:0;
                           height:18px;
                          line-height:18px;
-                         padding:0 5px;
+                         padding:0 2px;
                          width:188px;
                          color:#333;
                          font-size:11px; 
@@ -10160,8 +10190,10 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
 .feedbackModal .comment {
     padding: 0 20px 20px !important;
 }
-.dataTables_empty{
-	border:none !important;
+#activeContests table .dataTables_empty,
+#pipelineDetails .dataTables_empty{
+	border-right:none !important;
+	border-left:none !important;
 }
 .feedbackModal .buttonArea .button6 {
     display: inline !important;
@@ -10235,4 +10267,75 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
 .sorting_desc_disabled {
     background: url("/images/sort_desc_disabled.png") no-repeat scroll right center transparent;
 }
+.singleLineCol{
+	overflow:hidden; 
+	white-space:nowrap;
+}
 
+#billingCostReportsPage .filterContainer .rightFilterContent{
+    width:400px;
+}
+
+TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn,
+#participationMetricsReports .pipelineStats TH .tableColumn, 
+#costReportAggregationArea .pipelineStats .resultTable  TH .tableColumn,
+#participationMetricsReportBasicMetrics .subTheadRow .tableColumn,
+.popups #contestDViewPopup .popContent .breakdownBody table,
+#billingCostReportSection .resultTableContainer table .pipelineStats .basicInvoiceHist tr .tableColumn,
+TH .tableColumn,
+#projectMetricsReportsSection .pipelineStats thead tr.scData th,
+#projectMetricsReportsSection .pipelineStats thead tr.subTheadRow th
+ {
+	background-color: #CCC8C9;
+	color: #000;
+	border:1px solid #bdbdbd
+}
+
+.longdesc{
+	word-wrap:break-word;
+}
+#rightflow{
+	float:right;
+	padding-top:0px; 
+	padding-right:5px;
+}
+.verticalAlign{
+	vertical-align: 50%;
+}
+
+.addSpace{
+	white-space:no-wrap;
+}
+
+.noWrapWidth{
+	width:280px;
+}
+TABLE.pipelineStats TD.lastCol{
+	border-right:none;
+}
+TABLE.pipelineStats TD.firstCol,
+TABLE.billingCostReport TD.firstCol
+{
+	border-left:none;
+}
+
+#contestDViewPopup .dashboardTable
+{
+	border:none;
+}
+
+a.multiSelect,select{
+    font-size: 11px;
+	font-family: Arial,Helvetica,sans-serif;
+}
+TABLE.projectStats TD a.copilotManage{
+	text-decoration: none;
+}
+.contestList .filter .dropdownWidget .inputSelect input.paddingleft, .paddingleft{
+	padding-left:2px;
+}
+select{	
+	 overflow:hidden;
+	 border: 1px solid #BDBDBD;
+	 background: #fff;
+}

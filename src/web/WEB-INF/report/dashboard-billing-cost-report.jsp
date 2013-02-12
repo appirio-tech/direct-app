@@ -1,7 +1,7 @@
 <%--
   - Author: Blues, GreatKevin, notpad, Ghost_141
-  - Version: 2.1
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 2.2
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
@@ -35,6 +35,9 @@
   - 
   - Version 2.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Update layout to fix a layout issue.
+  - 
+  - Version 2.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
+  - - Update layout to fix a layout issue.  
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -425,7 +428,7 @@
         ">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Invoice History Details</span>
-            <span style="float:right;padding-top:4px; padding-right:5px">
+            <span style="float:right;padding-top:0px; padding-right:5px">
                 <s:set var="totalPayment" value="viewData.totalAmount" scope="page"/>
                 Total Amount: <fmt:formatNumber value="${totalPayment}" pattern="$###,##0.00"/>
             </span>
@@ -471,7 +474,7 @@
 
     <s:iterator value="viewData.entries" status="statusValue">
         <tr class="$pipelineDetailsRow">
-            <td>
+            <td class="singleLineCol firstCol">
                 <s:date name="paymentDate" format="yyyy-MM-dd" />
             </td>
             <td>
@@ -514,7 +517,7 @@
             <td>
                  <s:property value="status"/>
             </td>
-            <td>
+            <td class="singleLineCol">
                  <s:date name="launchDate" format="yyyy-MM-dd" />
             </td>
             <td>

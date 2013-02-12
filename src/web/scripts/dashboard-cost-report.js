@@ -1,6 +1,6 @@
 /**
  * AUTHOR: Blues, flexme, TCSASSEMBLER
- * VERSION: 1.5
+ * VERSION: 1.6
  *
  * Version 1.1 change: add toggle trigger for billing cost report.
  *
@@ -18,6 +18,9 @@
  *
  * Version 1.5 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) change log:
  * - Add ajax indicator for dropdown change and add group by and group values filter
+ * 
+ * Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
+ * - Fixed the cost breakdown table header layout issue. 
  *
  * Submits the cost report form and trigger cost report excel download.
  */
@@ -343,7 +346,7 @@ $(document).ready(function() {
                             var breakdown = breakDownMap[projectId];
                             var fullfillment = 0;
                             if (!breakdown) {
-                                breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
+                                breakdown = ["0.00","0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
                             } else {
                                 if (breakdown.fullfillment > 0) {
                                     fullfillment = 1;
@@ -425,13 +428,22 @@ $(document).ready(function() {
                         classes = "pipelineDetailsRow alt";
                     }
                     var tr = $("<tr class='" + classes + "' rel='" + projectId + "'></tr>");
+                    var cnt=0;
                     $(this).children("td:not(:last)").each(function () {
-                        tr.append("<td>" + $(this).text() + "</td>");
+                    	if(cnt==0){
+                    		tr.append("<td class='firstCol'>" + $(this).text() + "</td>");
+                    	}
+                    	else if(cnt == 8){
+                    		tr.append("<td class='singleLineCol'>" + $(this).text() + "</td>");
+                    	}else{
+                    		tr.append("<td>" + $(this).text() + "</td>");
+                    	}
+                    	cnt++;
                     });
                     for (var i = 0; i < 9; i++) {
                         tr.append("<td></td>");
                     }
-                    tr.append("<td>" + $(this).children("td:last").text() + "</td>");
+                    tr.append("<td>" + $(this).children("td:last").addClass("lastCol"). text() + "</td>");
                     tbody.append(tr);
                 }
             });
@@ -444,7 +456,7 @@ $(document).ready(function() {
             $("#dataTableLength").trigger("change");
 
             if (projectIds.length > 0) {
-                $("#breakdownBody table").append("<tfoot><tr><td colspan='9' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
+                $("#breakdownBody table").append("<tfoot><tr><td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr></tfoot>");
                 loadBreakdownData(projectIds);
             }
         } else {

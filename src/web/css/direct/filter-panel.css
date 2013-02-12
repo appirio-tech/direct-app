@@ -122,14 +122,13 @@
 
 .filterPanel .filterContent .inner .column1 {
     float: left;
-    width: 37.5%;
+    width: 270px;
     height: 65px;
-    margin-left: 25px;
-    min-width: 380px;
+    margin-left: 15px;
+    min-width: 270px;
 }
 
 .filterPanel .filterContent .inner .row {
-    width: 100%;
     float: left;
     margin-top: 10px;
 }
@@ -141,22 +140,22 @@
 }
 
 .filterPanel .filterContent .inner .column1 .row .title {
-    width: 100px;
+    width: 105px;
 }
 
 .filterPanel .filterContent .inner .column1 .row .short {
     width: 65px;
 }
 
-#customerFilter, #projectNameFilter {
-    width: 270px;
+#customerFilter, #projectNameFilter, #copilotPostingStatusFilter {
+    width: 150px;
 }
 
 #allProjectsFilter #customerFilter {
-    width: 200px;
+    width: 150px;
 }
 #projectManagerFilter {
-    width: 200px;
+    width: 150px;
 }
 
 #projectStatusFilter {
@@ -168,7 +167,7 @@
 }
 
 #CopilotPosingFilter .column1 {
-    min-width: 450px;
+    min-width: 350px;
 }
 
 #CopilotPosingFilter .column1 .title {
@@ -182,25 +181,26 @@
 
 .filterPanel .filterContent .inner .column2 {
     float: left;
-    width: 23.5%;
-    min-width: 240px;
+    width: 270px;
+    min-width: 270px;
     height: 65px;
-    margin-left: -10px;
-    margin-right: -15px;
+    margin-left: -20px;
+    margin-right: 10px;
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column2 {
-    width: 27.5%;
-    margin-left: -50px;
+    width: 240px;
+    margin-left: 10px;
+    margin-right: -10px;
 }
 
 .filterPanel .filterContent .inner .column2 select {
-    width: 90px;
+    width: 80px;
 
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column2 select {
-    width: 150px;
+    width: 120px;
 
 }
 
@@ -209,14 +209,14 @@
 }
 
 .filterPanel .filterContent .inner .column2 .title {
-    width: 90px;
+    width: 110px;
 }
 
 .filterPanel .filterContent .inner .column3 {
     float: left;
-    width: 340px;
+    width: 320px;
     height: 65px;
-    margin-left: 25px;
+    margin-left: 15px;
 }
 
 .filterPanel .filterContent .inner .column3 .row {
@@ -274,7 +274,7 @@
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
-    width: 100px;
+    width: 90px;
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column3 {

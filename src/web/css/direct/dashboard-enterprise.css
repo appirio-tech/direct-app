@@ -11,6 +11,9 @@
  * 
  * - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 change notes:
  * - Update CSS styles to fix multiple issues.
+ * 
+ * - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0 change notes:
+ * - Update CSS styles to fix multiple issues.
  */
 .chartCollapse a.expand{
   display:inline-block;
@@ -32,9 +35,10 @@
 	width:10.5%;
 */
 	float:left;
-	padding:5px 5px 5px 10px;
+	padding:5px 5px 5px 5px;
 	margin:10px 40px 10px 10px;
 	height:35px;
+	width:200px;
 }
 
 * +html .timeDimension {margin-bottom:0px;}
@@ -288,8 +292,8 @@ a.button6 span.right{
 .filterArea .datePicker{
   display:block;
   height:25px;
-  width:39%;
-  min-width:300px;
+  width:390px;
+  min-width:390px;
   background:#F5F5F5 ;
   margin-top:10px;
   padding:10px;
@@ -301,17 +305,18 @@ a.button6 span.right{
 .filterArea .datePicker span.label,.filterArea .datePicker input{
 	font-size:12px;
 	float:left;
-	width:65px;
+	width:75px;
+	height: 20px;
 }
 
 .filterArea .datePicker div{
-	margin-right:12px;
+	margin-right:24px;
 	float:left;
 }
 
 .filterArea .datePicker span.label{
 	padding:2px 5px 0px 0px;
-	width:30px;
+	width:40px;
 	float:left;
 }
 
@@ -339,7 +344,11 @@ a.dp-choose-date { margin-right:0px;}
 .filterContest select{ 
 	font-size:12px;
 	border:1px solid #a9acae;
-    width:178px;
+    width:158px;
+}
+
+a.multiSelect, select{ 
+	font-size:12px;
 }
 
 .filterContest .paymentType select{
@@ -1106,7 +1115,7 @@ td.fontGreen{
 					.volumeView .filterLinkArea .filterArea .firstRow .timeDimension{
 						/* width:30%;
 						min-width:219px; */
-						width:10.5%;
+						width:180px;
 						min-width:90px;
 						margin:5px 0 0 0;
 						padding:8px 0 11px 14px;
@@ -1118,7 +1127,7 @@ td.fontGreen{
 						}
 						.volumeView .filterLinkArea .filterArea .firstRow .timeDimension select{
 							border:1px solid #a9acae;
-                            width: 80px;
+                            width: 176px;
 						}
 				.volumeView .filterLinkArea .filterArea .secondRow{
 					width:100%;

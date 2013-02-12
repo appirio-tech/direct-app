@@ -78,6 +78,10 @@
 	float:left;
 }
 
+.permissions table td a.removeProject:hover{
+	background: transparent url(../../images/deleted1-icon.png) no-repeat;
+}
+
 .permissions table td a.subgroup{
 	 text-decoration: none;
 }
@@ -210,7 +214,7 @@
 }
 
 .ui-dialog a.dialogClose{
-	background: transparent url(../../images/close_ico.png) no-repeat scroll 0 0;
+	background: transparent url(../../images/close_ico.png) no-repeat 0 0;
 	height:15px;
 	width:15px;
 	display: block;
