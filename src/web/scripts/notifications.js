@@ -152,7 +152,7 @@ function syncUser() {
     
     $.ajax({
         type: 'POST',
-        url:'syncUser?handle=' + handle,
+        url: ctx + '/syncUser?handle=' + handle,
         dataType: "json",
         cache:false,
         beforeSend:modalPreloader,
