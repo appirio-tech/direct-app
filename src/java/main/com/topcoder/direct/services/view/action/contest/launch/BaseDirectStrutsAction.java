@@ -12,7 +12,6 @@ import com.topcoder.direct.services.project.milestone.ResponsiblePersonService;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.services.AuthorizationService;
-import com.topcoder.service.contest.eligibility.dao.ContestEligibilityManager;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
@@ -135,17 +134,8 @@ import java.util.List;
  *     </li>
  * </ul>
  * </p>
- *
- * <p>
- * Version 1.9 (BUGR-7954)
- * <ul>
- *     <li>
- *         Add {@link #contestEligibilityManager} and corresponding get/set methods.
- *     </li>
- * </ul>
- * </p>
- * @author fabrizyo, FireIce, murphydog, GreatKevin, tangzx
- * @version 1.9
+ * @author fabrizyo, FireIce, murphydog, GreatKevin
+ * @version 1.8
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -275,14 +265,7 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * Represents the user service facade.
      */
     private UserServiceFacade userServiceFacade;
-
-    /**
-     * The contest eligibility manager.
-     *
-     * @since 1.9
-     */
-    private ContestEligibilityManager contestEligibilityManager;    
-
+    
     /**
      * <p>
      * Creates a <code>BaseDirectStrutsAction</code> instance.
@@ -755,26 +738,6 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     public void setUserServiceFacade(UserServiceFacade userServiceFacade) {
         this.userServiceFacade = userServiceFacade;
-    }
-
-    /**
-     * Get contest eligibility manager.
-     *
-     * @return the manager
-     * @since 1.9
-     */
-    public ContestEligibilityManager getContestEligibilityManager() {
-        return contestEligibilityManager;
-    }
-
-    /**
-     * Set the contest eligibility manager.
-     *
-     * @param contestEligibilityManager
-     * @since 1.9
-     */
-    public void setContestEligibilityManager(ContestEligibilityManager contestEligibilityManager) {
-        this.contestEligibilityManager = contestEligibilityManager;
     }
 
     /**

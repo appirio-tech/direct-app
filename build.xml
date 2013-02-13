@@ -221,7 +221,6 @@
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
     	<copy file="${topcoder_security_groups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${review_application_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- third-party libs -->
         <copy file="${asm.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -584,8 +583,6 @@
                 <include name="test.properties" />
                 <include name="commons-logging.properties" />
                 <include name="project_fee_hibernate.cfg.xml" />
-                <include name="ReviewApplicationManagement.xml" />
-                <include name="SearchBundleManager.xml" />
             </fileset>
             <fileset dir="${tokenized_conf}/components">
                 <include name="com/topcoder/security/Util.properties" />
@@ -596,8 +593,6 @@
                 <include name="com/topcoder/randomstringimg/Colors.xml" />
                 <include name="com/topcoder/randomstringimg/movie-characters" />
                 <include name="com/topcoder/randomstringimg/RandomStringImage.xml" />
-                <include name="com/topcoder/management/review/application/impl/ReviewApplicationManagerImpl.properties" />
-                <include name="com/topcoder/management/review/application/impl/ReviewAuctionManagerImpl.properties" />
             </fileset>
         </copy>
         <copy todir="${jboss.home}/server/${server.name}/lib" flatten="true"  overwrite="true">
