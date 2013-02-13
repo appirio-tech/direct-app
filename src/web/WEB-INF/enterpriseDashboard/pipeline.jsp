@@ -6,6 +6,9 @@
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Add the projects pipeline chart into the pipeline page
   -
+  - Version 1.2 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+  - Add contest / project pipeline drill-in popup
+  -
   - Description: The pipeline page the new enterprise dashboard
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,10 +26,38 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
-    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript"  src="/scripts/jsrender-min.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script id="contestPipelineDrillInTemplate" type="text/x-jsrender">
+        <tr>
+            <td class="first">
+                <a href="../projectOverview.action?formData.projectId={{:directProjectId}}" target="_blank">{{:directProjectName}}</a>
+            </td>
+            <td>
+                <a href="../contest/detail.action?projectId={{:contestId}}" target="_blank">{{:contestName}}</a>
+            </td>
+            <td>{{:contestStatus}}</td>
+            <td>{{:startDate}}</td>
+            <td>{{:endDate}}</td>
+            <td>
+                {{:copilot}}
+            </td>
+        </tr>
+    </script>
+    <script id="projectPipelineDrillInTemplate" type="text/x-jsrender">
+        <tr>
+            <td class="first">
+                <a href="../projectOverview.action?formData.projectId={{:directProjectId}}" target="_blank">{{:directProjectName}}</a>
+            </td>
+            <td>{{:projectStatus}}</td>
+            <td>{{:startDate}}</td>
+            <td>{{:endDate}}</td>
+        </tr>
+    </script>
 </head>
 
 <body id="page" class="dashboardPage">
@@ -153,6 +184,71 @@
 <!-- End #wrapper -->
 <jsp:include page="../includes/enterpriseDashboard/filterPopup.jsp"/>
 
+<div class="popUps">
+    <div class="expandViewPopup" id="contestPipelineViewPopup" style="display:none">
+        <div class="close">
+            <a href="javascript:void(0)" id="contestPipelineViewClose"></a>.
+        </div>
+        <div class="popContent">
+            <h2><span id="contestPipelineViewPopupMonth"></span><a class="exportLink" href="javascript:;" target="_blank">Export</a></h2>
+
+            <div class="dashboardTable pipelineTable">
+                <div class="tableWrapper">
+                    <table id="contestPipelineDrillInTable" cellpadding="0" cellspacing="0">
+                        <thead>
+                        <tr class="head">
+                            <th class="first noBT">Project Name</th>
+                            <th class="noBT">Contest Name</th>
+                            <th class="noBT">Status</th>
+                            <th class="noBT">Start Date</th>
+                            <th class="noBT">End Date</th>
+                            <th class="noBT">Copilot</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hide handler">
+        <a href="#" id="contestPipelineViewHandler"></a>
+    </div>
+</div>
+
+<div class="popUps">
+    <div class="expandViewPopup" id="projectPipelineViewPopup" style="display:none">
+        <div class="close">
+            <a href="javascript:void(0)" id="projectPipelineViewClose"></a>.
+        </div>
+        <div class="popContent">
+            <h2><span id="projectPipelineViewPopupMonth"></span><a class="exportLink" href="javascript:;" target="_blank">Export</a></h2>
+
+            <div class="dashboardTable pipelineTable">
+                <div class="tableWrapper">
+                    <table id="projectPipelineDrillInTable" cellpadding="0" cellspacing="0">
+                        <thead>
+                        <tr class="head">
+                            <th class="first noBT">Project Name</th>
+                            <th class="noBT">Project Status</th>
+                            <th class="noBT">Project Creation Time</th>
+                            <th class="noBT">Project Completion Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hide handler">
+        <a href="#" id="projectPipelineViewHandler"></a>
+    </div>
+</div>
 
 </body>
 <!-- End #page -->

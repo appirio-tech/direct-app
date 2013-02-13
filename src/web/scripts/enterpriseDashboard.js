@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for new Enterprise Dashboard
  *
@@ -28,8 +28,11 @@
  * Version 1.7 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
  * - Add JS for pipeline page - projects pipeline
  *
+ * Version 1.8 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+ * - Add JS for enerprise dashboard total spend, contest / project pipeline drill-in.
+ *
  * @author GreatKevin, hanshuai, GreatKevin
- * @version 1.7
+ * @version 1.8
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -141,6 +144,23 @@ function formatNum(strNum){
     return a + "" + b + "" + c;
 }
 
+if($.views) {
+    $.views.helpers({
+        formatMoney: formatMoney
+    });
+}
+
+
+function formatMoney(strNum) {
+    return '$' + formatNum(strNum);
+}
+
+function setScrollY(nTable, val) {
+    var oSettings = nTable.fnSettings();
+    oSettings.oScroll.sY = val;
+    nTable.fnDraw(false);
+}
+
 function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
     var formData = {};
     formData.clientId = $("#clientFilter").val();
@@ -169,8 +189,8 @@ function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
     var currentMonth = countMonth(Date.today());
     var prevMonth = countMonth(Date.today().addMonths(-1));
 
-    var startMonth = countMonth(Date.parse("01'" + $(".timeLine .selectMonth:first span span").text()));
-    var endMonth = countMonth(Date.parse("01'" + $(".timeLine .selectMonth:last span span").text()));
+    var startMonth = countMonth(Date.parse(startMonth));
+    var endMonth = countMonth(Date.parse(endMonth));
 
     loadCurrentMonth = currentMonth < startMonth || currentMonth > endMonth;
     loadPreviousMonth = prevMonth < startMonth || prevMonth > endMonth;
@@ -496,6 +516,48 @@ function renderTotalSpendChart(resultJson) {
                 },
                 symbolPadding: 5,
                 symbolWidth: 12
+            },
+            plotOptions: {
+                series: {
+                    events: {
+                        click : function(event) {
+                            $('#financialViewPopupMonth').text(event.point.category);
+                            var requestData = getEnterpriseDashboardRequest(100000, 0, true);
+
+                            // set start and end month to the drilled-in month
+                            requestData.startMonth = event.point.category;
+                            requestData.endMonth = event.point.category;
+
+                            modalPreloader();
+
+                            $.ajax({
+                                type: 'POST',
+                                url:  "getTotalSpendDrillIn",
+                                data: {formData:requestData},
+                                cache: false,
+                                timeout:100000,
+                                dataType: 'json',
+                                success: function(jsonResult) {
+                                    handleJsonResult(jsonResult,
+                                        function(result) {
+                                            if($("#financialViewPopup .dataTables_wrapper").length > 0) {
+                                                $("#financialDrillInTable").dataTable().fnDestroy();
+                                            }
+                                            $("#financialDrillInTable tbody").empty().html($("#financialDrillInTemplate").render(result));
+
+                                            $("#financialViewPopup a.exportLink").attr('href', 'getTotalSpendDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+
+                                            $("#financialViewHandler").data("overlay").load();
+                                        },
+                                        function(errorMessage) {
+                                            showErrors(errorMessage);
+                                        });
+                                }
+                            });
+
+                        }
+                    }
+                }
             },
             series: [{
                 name: 'Total Spend',
@@ -1273,7 +1335,59 @@ function renderPipelinePage(resultJson) {
                     borderColor:Highcharts.getOptions().borderColor
                 },
                 series:{
-                    pointWidth:48
+                    pointWidth:48,
+                    events: {
+                        click : function(event) {
+                            $('#contestPipelineViewPopupMonth').text(event.point.category);
+                            var requestData = getEnterpriseDashboardRequest(100000, 0, true);
+                            // set start and end month to the drilled-in month
+                            var currentMonth = event.point.category;
+                            requestData.startMonth = currentMonth.substring(5, 8).toUpperCase() + '\'' + parseInt(currentMonth).toString().substring(2, 4);
+                            requestData.endMonth = requestData.startMonth;
+
+                            modalPreloader();
+
+                            $.ajax({
+                                type: 'POST',
+                                url:  "getContestsPipelineDrillIn",
+                                data: {formData:requestData},
+                                cache: false,
+                                timeout:100000,
+                                dataType: 'json',
+                                success: function(jsonResult) {
+                                    handleJsonResult(jsonResult,
+                                        function(result) {
+                                            if($("#contestPipelineViewPopup .dataTables_wrapper").length > 0) {
+                                                $("#contestPipelineDrillInTable").dataTable().fnDestroy();
+                                            }
+
+                                            var tableData = [];
+
+                                            $.each(result, function(index, value){
+                                                var rowData = [];
+                                                rowData.push('<a href="../projectOverview.action?formData.projectId=' + value.directProjectId + '" target="_blank">' + value.directProjectName + '</a>');
+                                                rowData.push('<a href="../contest/detail.action?projectId=' + value.contestId + '" target="_blank">' + value.contestName + '</a>');
+                                                rowData.push(value.contestStatus);
+                                                rowData.push(value.startDate);
+                                                rowData.push(value.endDate);
+                                                rowData.push(value.copilot);
+                                                tableData.push(rowData);
+                                            })
+
+
+                                            $("#contestPipelineDrillInTable tbody").empty().data('tableData', tableData);
+
+                                            $("#contestPipelineViewPopup a.exportLink").attr('href', 'getContestsPipelineDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+
+                                            $("#contestPipelineViewHandler").data("overlay").load();
+                                        },
+                                        function(errorMessage) {
+                                            showErrors(errorMessage);
+                                        });
+                                }
+                            });
+                        }
+                    }
                 }
             },
             series:[
@@ -1439,7 +1553,45 @@ function renderProjectsPipeline(resultJson) {
                     borderColor:Highcharts.getOptions().borderColor
                 },
                 series:{
-                    pointWidth:48
+                    pointWidth:48,
+                    events: {
+                        click : function(event) {
+                            $('#projectPipelineViewPopupMonth').text(event.point.category);
+                            var requestData = getEnterpriseDashboardRequest(100000, 0, true);
+                            // set start and end month to the drilled-in month
+                            var currentMonth = event.point.category;
+                            requestData.startMonth = currentMonth.substring(5, 8).toUpperCase() + '\'' + parseInt(currentMonth).toString().substring(2, 4);
+                            requestData.endMonth = requestData.startMonth;
+
+                            modalPreloader();
+
+                            $.ajax({
+                                type: 'POST',
+                                url:  "getProjectsPipelineDrillIn",
+                                data: {formData:requestData},
+                                cache: false,
+                                timeout:100000,
+                                dataType: 'json',
+                                success: function(jsonResult) {
+                                    handleJsonResult(jsonResult,
+                                        function(result) {
+                                            if($("#projectPipelineViewPopup .dataTables_wrapper").length > 0) {
+                                                $("#projectPipelineDrillInTable").dataTable().fnDestroy();
+                                            }
+                                            $("#projectPipelineDrillInTable tbody").empty().html($("#projectPipelineDrillInTemplate").render(result));
+
+                                            $("#projectPipelineViewPopup a.exportLink").attr('href', 'getProjectsPipelineDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+
+                                            $("#projectPipelineViewHandler").data("overlay").load();
+                                        },
+                                        function(errorMessage) {
+                                            showErrors(errorMessage);
+                                        });
+                                }
+                            });
+                        }
+                    }
+
                 }
             },
             series:[
@@ -2315,6 +2467,49 @@ $(document).ready(function () {
         moveMonth();
     }
 
+    if ($('.expandViewPopup').length > 0) {
+        $(window).resize(function () {
+            var containerW = $(window).width();
+            var containerH = $(window).height();
+            var visibleOverlay;
+            var wWid = containerW > 1540 ? 1500 : containerW - 40;
+            var hHht = containerH > 800 ? 750 : containerH - 50;
+            var curOverlayDataTable;
+
+            if ($("#contestPipelineViewPopup").is(':visible')) {
+                visibleOverlay = $("#contestPipelineViewPopup");
+                curOverlayDataTable = $("#contestPipelineDrillInTable").dataTable();
+                var calHeight = 168 + 22 * $("#contestPipelineDrillInTable tbody tr").length;
+                hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
+            }
+            if ($("#projectPipelineViewPopup").is(':visible')) {
+                visibleOverlay = $("#projectPipelineViewPopup");
+                curOverlayDataTable = $("#projectPipelineDrillInTable").dataTable();
+                var calHeight = 168 + 22 * $("#projectPipelineDrillInTable tbody tr").length;
+                hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
+            }
+            if ($("#financialViewPopup").is(':visible')) {
+                visibleOverlay = $("#financialViewPopup");
+                curOverlayDataTable = $("#financialDrillInTable").dataTable();
+                var calHeight = 168 + 22 * $("#financialDrillInTable tbody tr").length;
+                hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
+            }
+
+            if (visibleOverlay) {
+                visibleOverlay.css("width", wWid + "px");
+                visibleOverlay.css("height", hHht + "px");
+                var top = (containerH / 2) - (visibleOverlay.outerHeight() / 2);
+                var left = (containerW / 2) - (visibleOverlay.outerWidth() / 2);
+                visibleOverlay.css("top", top);
+                visibleOverlay.css("left", left);
+                hHht = $(window).height() > 800 ? 600 : $(window).height() - 136;
+                setScrollY(curOverlayDataTable, hHht + "px");
+                curOverlayDataTable.fnAdjustColumnSizing();
+                curOverlayDataTable.fnDraw(false);
+            }
+        });
+    }
+
     //window resize
     $(window).resize(function () {
         modalPosition();
@@ -2488,6 +2683,42 @@ $(document).ready(function () {
         $("#filterButton").click(function(){
             renderFinancialTab();
         });
+
+        // setup drill-in for total spend chart in financial page
+        $("#financialViewHandler").overlay({
+            closeOnClick: false,
+            mask: {
+                color: '#000000',
+                loadSpeed: 200,
+                opacity: 0.6
+            },
+            top: "5%",
+            close: "#financialViewClose",
+            fixed: true,
+            target: $("#financialViewPopup"),
+            onBeforeLoad: function () {
+                var wWid = $(window).width() > 1540 ? 1400 : $(window).width() - 50;
+                var calHeight = 168 + 22 * $("#financialDrillInTable tbody tr").length;
+                var hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
+                $("#financialViewPopup").css("width", wWid + "px");
+                $("#financialViewPopup").css("height", hHht + "px");
+            },
+            onLoad: function () {
+                var hHht = $(window).height() > 800 ? 600 : $(window).height() - 136;
+
+                var table = $("#financialViewPopup").find('table').dataTable({
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bSort": true,
+                    "bInfo": false,
+                    "bAutoWidth": true,
+                    "sScrollX": "100%",
+                    "sScrollY": hHht + "px",
+                    "bScrollCollapse": true
+                });
+            }
+        });
     }
 
     // pipeline
@@ -2499,6 +2730,79 @@ $(document).ready(function () {
             loadPipeline(renderPipelinePage);
             loadProjectPipeline(renderProjectsPipeline);
         });
+
+        $("#contestPipelineViewHandler").overlay({
+            closeOnClick: false,
+            mask: {
+                color: '#000000',
+                loadSpeed: 200,
+                opacity: 0.6
+            },
+            top: "2%",
+            close: "#contestPipelineViewClose",
+            fixed: true,
+            target: $("#contestPipelineViewPopup"),
+            onBeforeLoad: function () {
+                var wWid = $(window).width() > 1540 ? 1400 : $(window).width() - 50;
+                var calHeight = 168 + 22 * $("#contestPipelineDrillInTable tbody").data("tableData").length;
+                var hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
+                $("#contestPipelineViewPopup").css("width", wWid + "px");
+                $("#contestPipelineViewPopup").css("height", hHht + "px");
+            },
+            onLoad: function () {
+                var hHht = $(window).height() > 800 ? 600 : $(window).height() - 136;
+
+                var table = $("#contestPipelineViewPopup").find('table').dataTable({
+                    "aaData": $("#contestPipelineDrillInTable tbody").data("tableData"),
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bSort": true,
+                    "bInfo": false,
+                    "bAutoWidth": true,
+                    "sScrollX": "100%",
+                    "sScrollY": hHht + "px",
+                    "bScrollCollapse": true
+                });
+            }
+        });
+
+        $("#projectPipelineViewHandler").overlay({
+            closeOnClick: false,
+            mask: {
+                color: '#000000',
+                loadSpeed: 200,
+                opacity: 0.6
+            },
+            top: "5%",
+            close: "#projectPipelineViewClose",
+            fixed: true,
+            target: $("#projectPipelineViewPopup"),
+            onBeforeLoad: function () {
+                var wWid = $(window).width() > 1540 ? 1400 : $(window).width() - 50;
+                var calHeight = 168 + 22 * $("#projectPipelineDrillInTable tbody tr").length;
+                var hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 150;
+                $("#projectPipelineViewPopup").css("width", wWid + "px");
+                $("#projectPipelineViewPopup").css("height", hHht + "px");
+            },
+            onLoad: function () {
+                var hHht = $(window).height() > 800 ? 600 : $(window).height() - 136;
+
+                var table = $("#projectPipelineViewPopup").find('table').dataTable({
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bDeferRender": true,
+                    "bFilter": false,
+                    "bSort": false,
+                    "bInfo": false,
+                    "bAutoWidth": true,
+                    "sScrollX": "100%",
+                    "sScrollY": hHht + "px",
+                    "bScrollCollapse": true
+                });
+            }
+        });
+
     }
 
 

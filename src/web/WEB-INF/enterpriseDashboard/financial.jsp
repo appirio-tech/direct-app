@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+  - - Add total spend chart drill-in popup
   -
   - Description: The financial page the new enterprise dashboard
 --%>
@@ -20,11 +23,23 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
-    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
     <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script id="financialDrillInTemplate" type="text/x-jsrender">
+        <tr>
+            <td class="first">
+                <a href="../projectOverview?formData.projectId={{:directProjectId}}" target="_blank">{{:directProjectName}}</a>
+            </td>
+            <td>{{:~formatMoney(memberCost)}}</td>
+            <td>{{:~formatMoney(contestFee)}}</td>
+            <td>{{:~formatMoney(spend)}}</td>
+        </tr>
+    </script>
 </head>
 
 <body id="page" class="dashboardPage">
@@ -155,6 +170,38 @@
 </div>
 <!-- End #wrapper -->
 <jsp:include page="../includes/enterpriseDashboard/filterPopup.jsp"/>
+
+<div class="popUps">
+    <div class="expandViewPopup" id="financialViewPopup" style="display:none">
+        <div class="close">
+            <a href="javascript:void(0)" id="financialViewClose"></a>.
+        </div>
+        <div class="popContent">
+
+            <h2>Total Spend - <span id="financialViewPopupMonth"></span><a class="exportLink" href="javascript:;" target="_blank">Export</a></h2>
+
+            <div class="dashboardTable financialTable">
+                <div class="tableWrapper">
+                    <table id="financialDrillInTable" cellpadding="0" cellspacing="0">
+                        <thead>
+                        <tr class="head">
+                            <th class="first noBT">Project Name</th>
+                            <th class="noBT">Member Cost</th>
+                            <th class="noBT">Contest Fees</th>
+                            <th class="noBT">Total Cost</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hide handler">
+        <a href="#" id="financialViewHandler"></a>
+    </div>
+</div>
 
 <span class="hide" id="tableTemplate">
      <table border="0" cellspacing="0" cellpadding="0">

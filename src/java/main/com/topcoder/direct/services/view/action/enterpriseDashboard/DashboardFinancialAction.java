@@ -7,9 +7,20 @@ import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.excel.Row;
+import com.topcoder.excel.Sheet;
+import com.topcoder.excel.Workbook;
+import com.topcoder.excel.impl.ExcelSheet;
+import com.topcoder.excel.impl.ExcelWorkbook;
+import com.topcoder.excel.output.Biff8WorkbookSaver;
+import com.topcoder.excel.output.WorkbookSaver;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +40,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+ * <ul>
+ *     <li>Add method {@link #getTotalSpendDrillIn()} to handle Total Spend Drill-in Ajax request</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class DashboardFinancialAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
 
@@ -43,6 +61,20 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
      * The form data of the action.
      */
     private EnterpriseDashboardFilterForm formData = new EnterpriseDashboardFilterForm();
+
+    /**
+     * The export input stream of total spend drill-in.
+     *
+     * @since 1.2
+     */
+    private InputStream financialDrillInStream;
+
+    /**
+     * The flag to determine whether to export the drill-in result to excel file.
+     *
+     * @since 1.2
+     */
+    private boolean export;
 
     /**
      * Gets the form data of the action.
@@ -60,6 +92,26 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
      */
     public void setFormData(EnterpriseDashboardFilterForm formData) {
         this.formData = formData;
+    }
+
+    /**
+     * Gets the total spend financial drill-in export stream.
+     *
+     * @return the total spend financial drill-in export stream
+     * @since 1.2
+     */
+    public InputStream getFinancialDrillInStream() {
+        return financialDrillInStream;
+    }
+
+    /**
+     * Sets the export flag.
+     *
+     * @param export the export flag.
+     * @since 1.2
+     */
+    public void setExport(boolean export) {
+        this.export = export;
     }
 
     /**
@@ -106,6 +158,82 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
 
         return SUCCESS;
     }
+
+    /**
+     * Gets the total spend drill-in ajax request.
+     *
+     * @return result code.
+     * @since 1.2
+     */
+    public String getTotalSpendDrillIn() {
+        try {
+            final List<TotalSpendDrillInDTO> drillInDTOList =
+                    DataProvider.getEnterpriseDashboardTotalSpendDrillIn(getFormData());
+
+            if(export) {
+                Workbook workbook = new ExcelWorkbook();
+                Sheet sheet = new ExcelSheet("Total Spend " + getFormData().getStartMonth(), (ExcelWorkbook) workbook);
+
+                // set up the sheet header first
+                Row row = sheet.getRow(1);
+                int index = 1;
+
+                row.getCell(index++).setStringValue("Project Name");
+                row.getCell(index++).setStringValue("Member Cost");
+                row.getCell(index++).setStringValue("Contest Fees");
+                row.getCell(index++).setStringValue("Total Cost");
+
+                // insert sheet data from 2nd row
+                int rowIndex = 2;
+
+                for(TotalSpendDrillInDTO data: drillInDTOList) {
+                    // project name
+                    row = sheet.getRow(rowIndex++);
+                    row.getCell(1).setStringValue(data.getDirectProjectName());
+                    row.getCell(2).setNumberValue(data.getMemberCost());
+                    row.getCell(3).setNumberValue(data.getContestFee());
+                    row.getCell(4).setNumberValue(data.getTotalSpend());
+                }
+
+                workbook.addSheet(sheet);
+
+                // Create a new WorkBookSaver
+                WorkbookSaver saver = new Biff8WorkbookSaver();
+                ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+                saver.save(workbook, saveTo);
+                this.financialDrillInStream = new ByteArrayInputStream(saveTo.toByteArray());
+
+                return "download";
+
+            } else {
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+                for(TotalSpendDrillInDTO item : drillInDTOList) {
+                    Map<String, String> m = new HashMap<String, String>();
+                    m.put("directProjectId", String.valueOf(item.getDirectProjectId()));
+                    m.put("directProjectName", item.getDirectProjectName());
+                    m.put("memberCost", String.valueOf(item.getMemberCost()));
+                    m.put("contestFee", String.valueOf(item.getContestFee()));
+                    m.put("spend", String.valueOf(item.getTotalSpend()));
+                    result.add(m);
+                }
+
+                setResult(result);
+            }
+
+        } catch (Throwable e) {
+
+            e.printStackTrace(System.err);
+
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+
 
     /**
      * Handles the ajax request to get the data for the financial section.

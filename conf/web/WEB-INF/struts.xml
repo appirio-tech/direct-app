@@ -1707,6 +1707,17 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        <action name="getTotalSpendDrillIn" method="getTotalSpendDrillIn" class="enterpriseDashboardFinancialAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">financialDrillInStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
         <action name="getFinancialStatistics" method="getFinancialStatistics" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
@@ -1717,10 +1728,32 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        <action name="getContestsPipelineDrillIn" method="getContestsPipelineDrillIn" class="enterpriseDashboardPipelineAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=contests_pipeline_${formData.startMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">contestPipelineDrillInStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
         <action name="getProjectsPipeline" method="getProjectsPipeline" class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
+        </action>
+        <action name="getProjectsPipelineDrillIn" method="getProjectsPipelineDrillIn" class="enterpriseDashboardPipelineAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=projects_pipeline_${formData.startMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">projectPipelineDrillInStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
         </action>
         <action name="getProjectsMilestones" method="getProjectsMilestones" class="enterpriseDashboardRoadmapAction">
             <interceptor-ref name="securedDefaultStack"/>

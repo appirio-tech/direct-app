@@ -18,29 +18,32 @@ import java.util.Date;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+ * <ul>
+ *     <li>Add property {@link #memberCostSum}</li>
+ *     <li>Add property {@link #contestFeeSum}</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class EnterpriseDashboardTotalSpendDTO implements Serializable {
 
     /**
-     * The total spend of the month.
+     * The sum of member cost.
+     *
+     * @since 1.2
      */
-    private long totalSpend;
+    private double memberCostSum;
 
     /**
-     * The member cost of the month.
+     * The sum of contest fee.
      *
-     * @since 1.1
+     * @since 1.2
      */
-    private long memberCost;
-
-    /**
-     * The contest fee of the month.
-     *
-     * @since 1.1
-     */
-    private long contestFee;
+    private double contestFeeSum;
 
     /**
      * The average spend of the month.
@@ -59,15 +62,6 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
      */
     public long getTotalSpend() {
         return getMemberCost() + getContestFee();
-    }
-
-    /**
-     * Sets the total spend.
-     *
-     * @param totalSpend the total spend.
-     */
-    public void setTotalSpend(long totalSpend) {
-        this.totalSpend = totalSpend;
     }
 
     /**
@@ -113,17 +107,7 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
      * @since 1.1
      */
     public long getMemberCost() {
-        return memberCost;
-    }
-
-    /**
-     * Sets the member cost of the month.
-     *
-     * @param memberCost the member cost of the month.
-     * @since 1.1
-     */
-    public void setMemberCost(long memberCost) {
-        this.memberCost = memberCost;
+        return Math.round(this.memberCostSum);
     }
 
     /**
@@ -133,16 +117,46 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
      * @since 1.1
      */
     public long getContestFee() {
-        return contestFee;
+        return Math.round(contestFeeSum);
     }
 
     /**
-     * Sets the contest fee of the month.
+     * Gets the member cost sum.
      *
-     * @param contestFee the contest fee of the month
-     * @since 1.1
+     * @return the member cost sum.
+     * @since 1.2
      */
-    public void setContestFee(long contestFee) {
-        this.contestFee = contestFee;
+    public double getMemberCostSum() {
+        return memberCostSum;
+    }
+
+    /**
+     * Sets the member cost sum.
+     *
+     * @param memberCostSum the member cost sum.
+     * @since 1.2
+     */
+    public void setMemberCostSum(double memberCostSum) {
+        this.memberCostSum = memberCostSum;
+    }
+
+    /**
+     * Gets the contest fee sum.
+     *
+     * @return the contest fee sum.
+     * @since 1.2
+     */
+    public double getContestFeeSum() {
+        return contestFeeSum;
+    }
+
+    /**
+     * Sets the contest fee sum.
+     *
+     * @param contestFeeSum the contest fee sum.
+     * @since 1.2
+     */
+    public void setContestFeeSum(double contestFeeSum) {
+        this.contestFeeSum = contestFeeSum;
     }
 }

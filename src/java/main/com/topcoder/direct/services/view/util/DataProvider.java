@@ -38,11 +38,14 @@ import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRa
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.ProjectPipelineDrillInDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectsWidgetDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
 import com.topcoder.direct.services.view.dto.project.*;
 import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
 import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
@@ -730,9 +733,19 @@ import java.util.Map.Entry;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.4 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+ * <ul>
+ *     <li>Add method {@link #getEnterpriseDashboardTotalSpendDrillIn(EnterpriseDashboardFilterForm)}</li>
+ *     <li>Add method {@link #getEnterpriseDashboardContestsPipelineDrillIn(EnterpriseDashboardFilterForm)}</li>
+ *     <li>Add method {@link #getEnterpriseDashboardProjectsPipelineDrillIn(EnterpriseDashboardFilterForm)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, 
-  *@GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.3
+  *@author GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin,
+ * @author bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
+ * @version 6.4
  * @since 1.0
  */
 public class DataProvider {
@@ -6302,23 +6315,22 @@ public class DataProvider {
         request.setContentHandle(query);
         request.setProperty("tcdirectids", filteredProjectIds);
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
-        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        DateFormat sourceDateFormatter = new SimpleDateFormat("MMM''yy");
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(sourceDataFormatter.parse(filterForm.getStartMonth()));
+        calendar.setTime(sourceDateFormatter.parse(filterForm.getStartMonth()));
         calendar.add(Calendar.MONTH, -2);
         request.setProperty("sdt", dateFormatter.format(calendar.getTime()));
-        request.setProperty("edt", dateFormatter.format(sourceDataFormatter.parse(filterForm.getEndMonth())));
+        request.setProperty("edt", dateFormatter.format(sourceDateFormatter.parse(filterForm.getEndMonth())));
 
         long startMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
 
-        calendar.setTime(sourceDataFormatter.parse(filterForm.getEndMonth()));
+        calendar.setTime(sourceDateFormatter.parse(filterForm.getEndMonth()));
 
         long endMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
 
         Map<Long, EnterpriseDashboardTotalSpendDTO> resultMap = new LinkedHashMap<Long, EnterpriseDashboardTotalSpendDTO>();
         for(long m = startMonthCount; m <= endMonthCount; m++) {
             EnterpriseDashboardTotalSpendDTO item = new EnterpriseDashboardTotalSpendDTO();
-            item.setTotalSpend(0);
             int year = (int) m / 12;
             int month = (int) m % 12;
             calendar.set(Calendar.YEAR, year);
@@ -6334,8 +6346,8 @@ public class DataProvider {
             double monthCost = resultContainer.getDoubleItem(i, "monthcost");
             double monthContestFee = resultContainer.getDoubleItem(i, "monthcontestfee");
             EnterpriseDashboardTotalSpendDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
-            item.setMemberCost((long)Math.round(monthCost));
-            item.setContestFee((long)Math.round(monthContestFee));
+            item.setMemberCostSum(item.getMemberCostSum() + monthCost);
+            item.setContestFeeSum(item.getContestFeeSum() + monthContestFee);
         }
 
         List<EnterpriseDashboardTotalSpendDTO> result = new ArrayList<EnterpriseDashboardTotalSpendDTO>(resultMap.values());
@@ -6346,6 +6358,55 @@ public class DataProvider {
         }
 
         return result.subList(2, result.size());
+    }
+
+    /**
+     * Gets the data for the total spend drill-in for enterprise dashboard.
+     *
+     * @param filterForm the enterprise dashboard filter form
+     * @return a list of <code>TotalSpendDrillInDTO</code>
+     * @throws Exception if there is any error
+     * @since 6.4
+     */
+    public static List<TotalSpendDrillInDTO> getEnterpriseDashboardTotalSpendDrillIn(
+            EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if(projectIds == null || projectIds.length == 0) {
+            return new ArrayList<TotalSpendDrillInDTO>();
+        }
+
+        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+            throw new IllegalArgumentException("Drill-in can only check one month at a time");
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_total_spend_v2";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDateFormatter = new SimpleDateFormat("MMM''yy");
+        request.setProperty("sdt", dateFormatter.format(sourceDateFormatter.parse(filterForm.getStartMonth())));
+        request.setProperty("edt", dateFormatter.format(sourceDateFormatter.parse(filterForm.getEndMonth())));
+
+        List<TotalSpendDrillInDTO> result = new ArrayList<TotalSpendDrillInDTO>();
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            TotalSpendDrillInDTO item = new TotalSpendDrillInDTO();
+            double monthCost = resultContainer.getDoubleItem(i, "monthcost");
+            double monthContestFee = resultContainer.getDoubleItem(i, "monthcontestfee");
+            long directProjectId = resultContainer.getLongItem(i, "direct_project_id");
+            String directProjectName = resultContainer.getStringItem(i, "direct_project_name");
+            item.setDirectProjectId(directProjectId);
+            item.setDirectProjectName(directProjectName);
+            item.setMemberCostSum(monthCost);
+            item.setContestFeeSum(monthContestFee);
+            result.add(item);
+        }
+        return result;
     }
 
     /**
@@ -6453,6 +6514,110 @@ public class DataProvider {
         return result;
     }
 
+
+    /**
+     * Gets the drill-in data for contests pipeline of enterprise dashboard.
+     *
+     * @param filterForm the enterprise dashboard filter form.
+     * @return a list of <code>ContestPipelineDrillInDTO</code>
+     * @throws Exception if there is any error.
+     * @since 6.4
+     */
+    public static List<ContestPipelineDrillInDTO>
+            getEnterpriseDashboardContestsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if(projectIds == null || projectIds.length == 0) {
+            return new ArrayList<ContestPipelineDrillInDTO>();
+        }
+
+        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+            throw new IllegalArgumentException("Drill-in can only check one month at a time");
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_contests_pipeline";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        Date startDate = sourceDataFormatter.parse(filterForm.getStartMonth());
+        Date endDate = sourceDataFormatter.parse(filterForm.getEndMonth());
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+
+        List<ContestPipelineDrillInDTO> result = new ArrayList<ContestPipelineDrillInDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            ContestPipelineDrillInDTO item = new ContestPipelineDrillInDTO();
+            String currentPhase = resultContainer.getStringItem(i, "current_phase");
+            String status = resultContainer.getStringItem(i, "sname");
+            String newStatus = resultContainer.getStringItem(i, "newstatus");
+            String phases = resultContainer.getStringItem(i, "phases");
+
+            item.setContestId(resultContainer.getLongItem(i, "contest_id"));
+            item.setContestName(resultContainer.getStringItem(i, "contest_name"));
+            item.setDirectProjectId(resultContainer.getLongItem(i, "direct_project_id"));
+            item.setDirectProjectName(resultContainer.getStringItem(i, "direct_project_name"));
+            item.setStartDate(resultContainer.getTimestampItem(i, "start_date"));
+
+            if(resultContainer.getItem(i, "copilot").getResultData() != null) {
+                item.setCopilotHandle(resultContainer.getStringItem(i, "copilot"));
+            }
+
+
+            if (currentPhase != null && ((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+                // active
+                item.setContestStatus("Active");
+            } else if (newStatus != null && ((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+                // all phases are done, then it is completed
+                if (phases != null && ((String)phases).trim().equalsIgnoreCase("Completed"))
+                {
+                    item.setContestStatus("Finsihed");
+                }
+                else if (phases != null && ((String)phases).trim().equalsIgnoreCase("Active"))
+                {
+                    item.setContestStatus("Active");
+                }
+                else
+                {
+                    if(newStatus.trim().equalsIgnoreCase("Draft")) {
+                        item.setContestStatus("Draft");
+                    } else {
+                        item.setContestStatus("Scheduled");
+                    }
+                }
+            } else if(!((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+
+                if (((String)status).equalsIgnoreCase(ProjectStatus.CANCELLED_CLIENT_REQUEST.getName())
+                        || ((String)status).equalsIgnoreCase(ProjectStatus.CANCELLED_REQUIREMENTS_INFEASIBLE.getName()))
+                {
+                    item.setContestStatus("Failed");
+                }
+                else if (((String)status).equalsIgnoreCase(ProjectStatus.DRAFT.getName()))
+                {
+                    item.setContestStatus("Draft");
+                }
+                else
+                {
+                    item.setContestStatus("Finished");
+                }
+            }
+
+            if (item.getContestStatus().equals("Finished")) {
+                item.setEndDate(resultContainer.getTimestampItem(i, "end_date"));
+            }
+
+            result.add(item);
+        }
+
+        return result;
+    }
+
     /**
      * Gets the projects pipeline data for new enterprise dashboard, each
      * <code>EnterpriseDashboardMonthProjectPipelineDTO</code> represents
@@ -6523,6 +6688,61 @@ public class DataProvider {
 
         List<EnterpriseDashboardMonthProjectPipelineDTO> result =
                 new ArrayList<EnterpriseDashboardMonthProjectPipelineDTO>(resultMap.values());
+
+        return result;
+    }
+
+    /**
+     * Gets the drill-in data for projects pipeline of enterprise dashboard.
+     *
+     *
+     * @param filterForm the enterprise dashboard filter form
+     * @return a list of <code>ProjectPipelineDrillInDTO</code>
+     * @throws Exception if there is any error.
+     * @since 6.4
+     */
+    public static List<ProjectPipelineDrillInDTO>
+        getEnterpriseDashboardProjectsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if (projectIds == null || projectIds.length == 0) {
+            return new ArrayList<ProjectPipelineDrillInDTO>();
+        }
+
+        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+            throw new IllegalArgumentException("Drill-in can only check one month at a time");
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_projects_pipeline";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        Date startDate = sourceDataFormatter.parse(filterForm.getStartMonth());
+        Date endDate = sourceDataFormatter.parse(filterForm.getEndMonth());
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+
+        List<ProjectPipelineDrillInDTO> result = new ArrayList<ProjectPipelineDrillInDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            ProjectPipelineDrillInDTO item = new ProjectPipelineDrillInDTO();
+            item.setDirectProjectId(resultContainer.getLongItem(i, "project_id"));
+            item.setDirectProjectName(resultContainer.getStringItem(i, "name"));
+            item.setProjectStartDate(resultContainer.getTimestampItem(i, "create_date"));
+            long projectStatusId = resultContainer.getLongItem(i, "project_status_id");
+            item.setDirectProjectStatus(ProjectStatusType.getProjectStatusType(projectStatusId).getProjectStatusName());
+            if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
+                item.setProjectCompletionDate(resultContainer.getTimestampItem(i, "completion_date"));
+            }
+
+            result.add(item);
+        }
 
         return result;
     }
