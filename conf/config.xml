@@ -744,6 +744,11 @@
 				<Value>com.topcoder.clients.dao.ejb3.MockValidator</Value>
 			</Property>
 		</Property>
+        <Property name="validator:null">
+            <Property name="type">
+                <Value>com.topcoder.util.datavalidator.NullValidator</Value>
+            </Property>
+        </Property> 
 	</Config>
 
 	<Config name="com.topcoder.search.builder.strategy.factory">
@@ -762,5 +767,21 @@
 				</Property>
 			</Property>
 		</Property>
+        <Property name="dbStrategy">
+            <Property name="type">
+                <Value>com.topcoder.search.builder.database.DatabaseSearchStrategy</Value>
+            </Property>
+            <Property name="params">
+                <Property name="param1">
+                    <Property name="type">
+                        <Value>String</Value>
+                    </Property>
+                    <Property name="value">
+                        <Value>DBSearchStrategy</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>        
 	</Config>
+
 </CMConfig>

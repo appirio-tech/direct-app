@@ -3,52 +3,44 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.topcoder.clients.model.ProjectContestFee;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.management.project.ProjectPropertyType;
-import com.topcoder.management.project.ProjectType;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.CompDocumentation;
-import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.clients.model.Project;
+import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
-import com.topcoder.management.project.FileType;
-import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.ProjectStatus;
-import com.topcoder.management.project.ProjectStudioSpecification;
+import com.topcoder.management.project.*;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
+import com.topcoder.management.review.application.ReviewAuction;
+import com.topcoder.management.review.application.ReviewAuctionManager;
+import com.topcoder.management.review.application.ReviewAuctionManagerException;
+import com.topcoder.management.review.application.ReviewAuctionType;
+import com.topcoder.management.review.application.impl.ReviewAuctionManagerImpl;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.contest.eligibility.dao.ContestEligibilityPersistenceException;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.contest.SoftwareContestPaymentResult;
-import com.topcoder.service.payment.PaymentType;
-import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.pipeline.CompetitionType;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.util.config.ConfigManager;
+import com.topcoder.util.config.Property;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -190,8 +182,19 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx
- * @version 1.6.8
+ * <p>
+ * Version  1.6.9 (BUGR-7954) updates
+ * <ol>
+ *     <li>Add {@link #addReviewAuction(SoftwareCompetition)} to add review auction when activate contest.</li>
+ *     <li>Add {@link #getEligibilityGroupId(long)} to get eligibility group id.</li>
+ *     <li>Add {@link #getBillingProjectId(SoftwareCompetition)} to get billing project id.</li>
+ *     <li>Add {@link #reviewAuctionManager} to process review auctions.</li>
+ *     <li>Add some static fields used while adding review auctions.</li>
+ * </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, tangzx
+ * @version 1.6.9
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -329,6 +332,35 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private static final long PROJECT_CATEGORY_SPEC = 6;
+
+    /**
+     * The project category id of copilot contest.
+     *
+     * @since 1.6.9
+     */
+    private static final long PROJECT_CATEGORY_COPILOT = 29;
+
+    /**
+     * The project category id of bug hunt.
+     *
+     * @since 1.6.9
+     */
+    private static final long PROJECT_CATEGORY_BUG_HUNT = 9;
+
+    /**
+     * The spec review phase type id.
+     *
+     * @since 1.6.9
+     */
+    private static final long SPEC_REVIEW_PHASE_TYPE_ID = 14;
+
+    /**
+     * The review phase type id.
+     *
+     * @since 1.6.9
+     */
+    private static final long REVIEW_PHASE_TYPE_ID = 4;
+
 
     /**
      * <p>
@@ -542,6 +574,82 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.6.5
      */
     private String specReviewStartMode;
+
+    /**
+     * The review auction manager.
+     *
+     * @since 1.6.8
+     */
+    private static ReviewAuctionManager reviewAuctionManager = new ReviewAuctionManagerImpl();
+
+    /**
+     * The categories which should exclue review auctions.
+     *
+     * @since 1.6.8
+     */
+    private static final Set<Long> EXCLUDE_REVIEW_AUCTION_CATEGORIES;
+
+    /**
+     * The regular review type.
+     *
+     * @since 1.6.8
+     */
+    private static ReviewAuctionType REGULAR_REVIEW_TYPE;
+
+    /**
+     * The dev review type.
+     *
+     * @since 1.6.8
+     */
+    private static ReviewAuctionType DEV_REVIEW_TYPE;
+
+    /**
+     * The spec review type.
+     *
+     * @since 1.6.8
+     */
+    private static ReviewAuctionType SPEC_REVIEW_TYPE;
+
+    /**
+     * The const string for configuration files.
+     */
+    private static final String CONTEST_ELIGIBILITY_MAPPING_PREFIX = "ContestEligibilityMapping";
+
+    /**
+     * The const string for configuration name space.
+     */
+    private static final String CONTEST_ELIGIBILITY_MAPPING_NAMESPACE
+            = "com.topcoder.service.facade.contest.ejb.ContestServiceFacadeBean";
+
+    /**
+     * The const string for configuration EligibilityGroupId key.
+     */
+    private static final String ELIGIBILITY_ID = "EligibilityGroupId";
+
+    /**
+     * The init of static fields.
+     */
+    static {
+        EXCLUDE_REVIEW_AUCTION_CATEGORIES = new HashSet<Long>();
+        EXCLUDE_REVIEW_AUCTION_CATEGORIES.add(PROJECT_CATEGORY_COPILOT);
+        EXCLUDE_REVIEW_AUCTION_CATEGORIES.add(PROJECT_CATEGORY_BUG_HUNT);
+
+        try {
+            List<ReviewAuctionType> types = reviewAuctionManager.getAuctionTypes();
+            for (ReviewAuctionType type : types) {
+                if (type.getId() == 1) {
+                    REGULAR_REVIEW_TYPE = type;
+                } else if (type.getId() == 2) {
+                    DEV_REVIEW_TYPE = type;
+                } else if (type.getId() == 3) {
+                    SPEC_REVIEW_TYPE = type;
+                }
+            }
+        } catch (ReviewAuctionManagerException e) {
+            // ignore, it will never happen
+        }
+    }
+
 
     /**
      * <p>
@@ -1157,12 +1265,15 @@ public class SaveDraftContestAction extends ContestAction {
                     milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
         }
 
-
-        // return result.getSoftwareCompetition();
-        // retrieve the software contest again, seems the contest sale is not updated
-        return getContestServiceFacade().getSoftwareContestByProjectId(
+        SoftwareCompetition ret = getContestServiceFacade().getSoftwareContestByProjectId(
                 DirectStrutsActionsHelper.getTCSubjectFromSession(),
                 result.getSoftwareCompetition().getProjectHeader().getId());
+
+        if (competitionType == CompetitionType.SOFTWARE) {
+            addReviewAuction(ret);
+        }
+
+        return ret;
     }
 
     /**
@@ -1911,5 +2022,105 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setSpecReviewStartMode(String specReviewStartMode) {
         this.specReviewStartMode = specReviewStartMode;
+    }
+
+
+    /**
+     * Add review auction if needed.
+     *
+     * @param softwareCompetition the contest
+     * @throws ReviewAuctionManagerException if fail to create review auction.
+     * @throws ContestEligibilityPersistenceException if fail to get contest eligibility
+     * @since 1.6.8
+     */
+    private void addReviewAuction(SoftwareCompetition softwareCompetition) throws ReviewAuctionManagerException, ContestEligibilityPersistenceException {
+        if (EXCLUDE_REVIEW_AUCTION_CATEGORIES.contains(
+                softwareCompetition.getProjectHeader().getProjectCategory().getId())) {
+            return;
+        }
+
+        boolean hasEligibility = getContestEligibilityManager().haveEligibility(
+                new Long[] { softwareCompetition.getProjectHeader().getId() }, false).size() > 0;
+        long billingProjectId = getBillingProjectId(softwareCompetition);
+
+        // if creating contest, eligiblity is not commited, so above will not get back result
+        if (billingProjectId != 0
+                && getEligibilityGroupId(billingProjectId) != null) {
+            hasEligibility = true;
+        }
+
+        if (!hasEligibility) {
+            return;
+        }
+
+        boolean hasSpecReview = false;
+        boolean hasReview = false;
+        for (com.topcoder.project.phases.Phase p : softwareCompetition.getProjectPhases().getPhases()) {
+            if (p.getPhaseType().getId() == SPEC_REVIEW_PHASE_TYPE_ID) {
+                hasSpecReview = true;
+            }
+            if (p.getPhaseType().getId() == REVIEW_PHASE_TYPE_ID) {
+                hasReview = true;
+            }
+        }
+
+        if (hasSpecReview) {
+            ReviewAuction reviewAuction = new ReviewAuction();
+            reviewAuction.setProjectId(softwareCompetition.getProjectHeader().getId());
+            reviewAuction.setAuctionType(SPEC_REVIEW_TYPE);
+            reviewAuctionManager.createAuction(reviewAuction);
+        }
+        if (hasReview) {
+            ReviewAuction reviewAuction = new ReviewAuction();
+            reviewAuction.setProjectId(softwareCompetition.getProjectHeader().getId());
+
+            if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == PROJECT_CATEGORY_DEV) {
+                reviewAuction.setAuctionType(DEV_REVIEW_TYPE);
+            } else {
+                reviewAuction.setAuctionType(REGULAR_REVIEW_TYPE);
+            }
+            reviewAuctionManager.createAuction(reviewAuction);
+        }
+    }
+
+    /**
+     * get billing project id
+     *
+     * @param contest the contest to check
+     * @return billing project id, if it is 0, then no billing project
+     * @since 1.6.8
+     */
+    private long getBillingProjectId(SoftwareCompetition contest)  {
+        String billingProject = contest.getProjectHeader().getProperty(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY);
+
+        if (billingProject != null  && !billingProject.equals("") && !billingProject.equals("0")) {
+            return Long.parseLong(billingProject);
+        }
+        return 0;
+    }
+
+
+    /**
+     * Find eligibility group id for the client.
+     *
+     * @param billingProjectId;
+     *          The ID of the billingProjectId.
+     * @return
+     *          The id of the eligibility group.
+     * @since 1.6.8
+     */
+    private Long getEligibilityGroupId(long billingProjectId) {
+        try {
+            ConfigManager cfgMgr = ConfigManager.getInstance();
+            Property rootProperty = cfgMgr.getPropertyObject(CONTEST_ELIGIBILITY_MAPPING_NAMESPACE,
+                    CONTEST_ELIGIBILITY_MAPPING_PREFIX);
+            Property eligibility = rootProperty.getProperty(Long.toString(billingProjectId));
+            if (eligibility != null) {
+                return Long.valueOf((String)(eligibility.getValue(ELIGIBILITY_ID)));
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
