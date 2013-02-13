@@ -49,7 +49,7 @@ $(document).ready(function() {
     document.getElementById("fakeForm").reset();
     
     //truncate the project name    
-    $(".addNewContest .row .projectSelect1 select option").each(function(){
+    $(".addNewContest .row .projectSelect select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,60)+'...';
     		$(this).text(txt);    		
@@ -57,7 +57,7 @@ $(document).ready(function() {
     });	
     
     //truncate the billing account, copilot and round type
-    $(".addNewContest .row .billingSelect1 select option,.addNewContest .row .copilotSelect1 select option, .schedule #roundTypeDiv .roundelect1 select option").each(function(){
+    $(".addNewContest .row .billingSelect select option,.addNewContest .row .copilotSelect select option, .schedule #roundTypeDiv .roundelect select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,50)+'...';
     		$(this).text(txt);    		
@@ -511,7 +511,7 @@ var copilotDropdownFlag = false;
 
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
-    var value = $('.projectSelect1 select').getSetSSValue();
+    var value = $('.projectSelect select').getSetSSValue();
 
     var billingAccounts = getBillingAccountsByDirectProjectId(value);
 

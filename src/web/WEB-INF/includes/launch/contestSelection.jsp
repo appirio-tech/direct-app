@@ -93,7 +93,7 @@
       <!-- Project Name -->
       <div class="row">
           <label>Project Name :</label>
-          <div class="projectSelect1">
+          <div class="projectSelect">
               <select id="projects" name="tcProject">
                 <option value="-1">Please select an existing project</option>
                 <s:iterator value="projects" var="proj">
@@ -109,8 +109,8 @@
       <!-- Billing Account -->
       <div class="row">
           <label>Billing Account :</label>
-          <div class="billingSelect1">
-             <select id="billingProjects1" name="billingProject">
+          <div class="billingSelect">
+             <select id="billingProjects" name="billingProject">
                 <option value="0">Please select an existing account</option>
              </select>
           </div>
@@ -120,7 +120,7 @@
       <!-- Copilot for Software Contest -->
       <div class="row">
           <label>Copilot :</label>
-          <div class="copilotSelect1">
+          <div class="copilotSelect">
               <select id="contestCopilot" name="contestCopilot">
                 <option value="0">Unassigned</option>
                 <s:iterator value="currentProjectCopilots" var="copilot">
@@ -142,7 +142,7 @@
       <!-- Round Type -->
       <div class="row" id="roundTypeDiv">
         <label>Round Type:</label>
-          <div class="roundelect1">
+          <div class="roundelect">
               <select id="roundTypes">
                 <option value="single">Contest will be run in single-rounds</option>
                 <option value="multi">Contest will be run in multi-rounds</option>
