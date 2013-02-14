@@ -2715,7 +2715,13 @@ $(document).ready(function () {
                     "bAutoWidth": true,
                     "sScrollX": "100%",
                     "sScrollY": hHht + "px",
-                    "bScrollCollapse": true
+                    "bScrollCollapse": true,
+                    "aoColumns": [
+                        { "sType": "html" },
+                        { "sType": "money" },
+                        { "sType": "money" },
+                        { "sType": "money" }
+                    ]
                 });
             }
         });
