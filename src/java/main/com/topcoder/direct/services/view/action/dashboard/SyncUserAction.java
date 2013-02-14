@@ -38,6 +38,7 @@ public class SyncUserAction extends BaseDirectStrutsAction {
      * @throws Exception if any error occurs
      */
     protected void executeAction() throws Exception {
+	
         TCSubject user = DirectUtils.getTCSubjectFromSession();
         if (!DirectUtils.isTcStaff(user)) {
             throw new DirectException("Have no permission to sync user");
@@ -49,13 +50,13 @@ public class SyncUserAction extends BaseDirectStrutsAction {
         try {
             userServiceFacade.syncJiraUser(user, handle);
         } catch (Exception e) {
-		    System.out.println("---------------------------------------------e-"+e);
+		    System.out.println("----------------syncJiraUser-----------------------------e-"+e);
             syncJIRA = false;
         }
         try {
             userServiceFacade.getConfluenceUser(user, handle);
         } catch (Exception e) {
-			System.out.println("--------33333333333333333333333-------------------------------------e-"+e);
+			System.out.println("--------getConfluenceUser-------------------------------------e-"+e);
             syncWIKI = false;
         }
         Map<String, Boolean> result = new HashMap<String, Boolean>();
