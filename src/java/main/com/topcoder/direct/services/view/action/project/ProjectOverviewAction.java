@@ -376,7 +376,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 setCopilotStats(DataProvider.getDirectProjectCopilotStats(formData.getProjectId()));
 
                 // set the copilot feedback data
-		setCopilotsFeedback();
+		        setCopilotsFeedback();
 
                 // set all data for project general information table to the view data
                 setProjectGeneralInfo(project);

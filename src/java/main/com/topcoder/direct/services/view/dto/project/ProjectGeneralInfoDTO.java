@@ -196,7 +196,7 @@ public class ProjectGeneralInfoDTO {
         } else if (project.getProjectStatusId() == 2L) {
             return "Archived";
         } else if (project.getProjectStatusId() == 3L) {
-            return "Deleted";
+            return "Cancelled";
         } else if (project.getProjectStatusId() == 4L) {
             return "Completed";
         } else if (project.getProjectStatusId() == 5L) {
