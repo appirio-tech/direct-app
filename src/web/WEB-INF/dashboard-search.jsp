@@ -195,38 +195,42 @@
 
                         </s:if>
 
+                        <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+                            <s:include value="includes/dashboard/pmProjectsSearchRiskFilter.jsp"/>
+                        </s:if>                        
+                        
                         <div class="container2 resultTableContainer" id="resultsContainer">
                             <div>
 
-                                                    <s:if test="viewData.resultType.name() == 'PROJECTS'">
-                                                        <s:include value="includes/dashboard/projectsSearchResults.jsp"/>
-                                                    </s:if>
-                                                    <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
-                                                        <s:include value="includes/dashboard/pmProjectsSearchResults.jsp"/>
-                                                    </s:if>
-                                                    <s:if test="viewData.resultType.name() == 'CONTESTS'">
-                                                        <s:include value="includes/dashboard/contestsSearchResults.jsp"/>
-                                                    </s:if>
-                                                    <s:if test="viewData.resultType.name() == 'MEMBERS'">
-                                                        <s:include value="includes/dashboard/membersSearchResults.jsp"/>
-                                                    </s:if>
+                                <s:if test="viewData.resultType.name() == 'PROJECTS'">
+                                    <s:include value="includes/dashboard/projectsSearchResults.jsp"/>
+                                </s:if>
+                                <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+                                    <s:include value="includes/dashboard/pmProjectsSearchResults.jsp"/>
+                                </s:if>
+                                <s:if test="viewData.resultType.name() == 'CONTESTS'">
+                                    <s:include value="includes/dashboard/contestsSearchResults.jsp"/>
+                                </s:if>
+                                <s:if test="viewData.resultType.name() == 'MEMBERS'">
+                                    <s:include value="includes/dashboard/membersSearchResults.jsp"/>
+                                </s:if>
 
-                                                </div>
+                            </div>
 
-                                                 <div class="container2Left">
-                                                        <div class="container2Right">
-                                                            <div class="container2Bottom">
-                                                                <div>
-                                                                    <div>
+                            <div class="container2Left">
+                                <div class="container2Right">
+                                    <div class="container2Bottom">
+                                        <div>
+                                            <div>
 
-                                                                        <div class="panel tableControlPanel"></div>
+                                                <div class="panel tableControlPanel"></div>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                <!-- End .container2Content -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End .container2Left -->
 
                         </div>
                         <!-- End .container2 -->

@@ -342,3 +342,155 @@
 #enterpriseCalendarFilter.filterPanel .filterContent .inner .column3 .row .title {
     width: 130px;
 }
+
+#riskFilterPanelForm a.redBtn {
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+a.redBtn {
+    margin: 0 auto;
+    display: inline-block;
+    height: 21px;
+    padding-left: 3px;
+    background: transparent url(/images/filter-panel/red-button.png) left top no-repeat;
+    overflow: hidden;
+    line-height: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 11px;
+}
+a.redBtn span.left {
+    display: inline-block;
+    height: 21px;
+    width: 108px;
+    padding-right: 3px;
+    text-align: center;
+    background: url(/images/filter-panel/red-button-right.png) right top no-repeat;
+    overflow: hidden;
+    cursor: pointer;
+}
+a.redBtn:hover{
+	background-position:left -21px;
+}
+a.redBtn:hover span.left{
+    background-position:right -21px;
+}
+
+.riskPanel .filterContent {
+    background: url(/images/filter-panel/panel-cotent-l.png) repeat-y left top;
+    height: 50px;
+    padding-left: 6px;
+}
+
+.riskPanel .filterContent .rightSide {
+    background: url(/images/filter-panel/panel-cotent-r.png) repeat-y right top;
+    height: 50px;
+    padding-right: 6px;
+}
+
+.riskPanel .filterContent .inner .column1 {
+    float: left;
+    width: 85%;
+    height: 40px;
+    margin-left: 25px;
+    min-width: 400px;
+}
+
+.riskPanel .filterContent .inner select {
+    width: 50px;
+}
+
+.riskPanel .riskFilterPrefix {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #333;
+    font-weight: bold;
+}
+
+.riskPanel .filterContent .inner .row {
+    padding-right: 35px;
+    width: auto;
+    float: left;
+    margin-top: 10px;
+}
+
+.riskPanel .filterContent .inner .column1 .row .title {
+    padding-right: 10px;
+    width: auto;
+}
+
+.riskPanel .filterContent .inner .column2 select {
+    width: 50px;
+
+}
+
+.riskPanel .filterContent .inner .column2 .title {
+    width: 60px;
+}
+
+.riskPanel .riskField .riskError {
+    font-size: 11px;
+    color: red;
+}
+
+.greenDiff {
+    color: green;
+}
+.greenDiff2 {
+    color: green;
+    margin-right: 20px;
+}
+.redDiff {
+    color: red;
+}
+.redDiff2 {
+    color: red;
+    margin-right: 20px;
+}
+
+#allProjectsPageContent #mainContent .search {
+    height: auto;
+    overflow: hidden;
+}
+
+#allProjectsPageContent #mainContent .search .datefilter {
+    float:left;
+}
+
+#allProjectsPageContent #mainContent .search .datefilter #startDate, #allProjectsPageContent #mainContent .search .datefilter #endDate {
+    width:80px;
+}
+
+#pmProjectsResult .budgetRow .costPercentage, #pmProjectsResult .budgetRow .allThreeCosts div {
+    font-weight:normal;
+}
+
+#pmProjectsResult .budgetRow .allThreeCosts {
+    width:180px; 
+    font-weight:normal;
+}
+
+#pmProjectsResult .diffRow .diffPercentage, #pmProjectsResult .diffRow .allDiffInfo div {
+    font-weight:normal;
+}
+
+#pmProjectsResult .diffRow .allDiffInfo {
+    width:100px; 
+    font-weight:normal;
+}
+
+#pmProjectsResult .durationRow .durationPercentage, #pmProjectsResult .durationRow .allThreeDurations div {
+    font-weight:normal;
+}
+
+#pmProjectsResult .durationRow .allThreeDurations {
+    width:180px; 
+    font-weight:normal;
+}
+
+#pmProjectsResult .latestThreePostersDiv {
+    width: 180px;
+}

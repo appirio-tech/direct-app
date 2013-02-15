@@ -79,8 +79,11 @@
  * Version 2.1 - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  * - update function to fix bugs.
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141
- * @version 2.1
+ * Version 2.2 - (Release Assembly - TC Cockpit Operations Dashboard Improvements 2)
+ * - Handle 'Historical Cost Difference' column hover event.
+ * 
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx
+ * @version 2.2
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -497,14 +500,19 @@ $(document).ready(function() {
             { "sType": "html" },
             { "sType": "direct-percentage" },
             { "sType": "direct-percentage" },
+            { "sType": "direct-percentage" },
             { "sType": "html" },
             { "sType": "direct-percentage" },
             { "sType": "link-number" },
             { "sType": "last-posters" },
-            { "sType": "html" },
+            { 
+                "iDataSort": 16
+            },
             null,
             null,
             null,
+            null,
+            { "sType": "numeric" },
             null
         ]
 
@@ -1188,6 +1196,15 @@ $(document).ready(function() {
 	$(".durationRow ").live('mouseout', function() {
         $(".durationPercentage", this).show();
         $(".allThreeDurations", this).hide();
+    });
+    
+    $(".diffRow").live('mouseover', function() {
+        $(".diffPercentage", this).hide();
+        $(".allDiffInfo", this).show();
+    });
+    $(".diffRow").live('mouseout', function() {
+        $(".diffPercentage", this).show();
+        $(".allDiffInfo", this).hide();
     });
 });
    

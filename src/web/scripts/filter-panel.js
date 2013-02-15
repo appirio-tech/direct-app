@@ -23,8 +23,11 @@
  * Version 1.6 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
  * - Update the contest status filter to correctly filter unique contest status.
  *
- * @author GreatKevin
- * @version 1.6
+ * Version 1.7 (Release Assembly - TC Cockpit Operations Dashboard Improvements 2) changes:
+ * - add risk filter handler and parseNumberFromString.
+ *
+ * @author GreatKevin, tangzx
+ * @version 1.7
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -869,5 +872,141 @@ $(function() {
         $("#projectStatusFilter").val("Active");
         $("#projectStatusFilter").trigger('change'); 
     }
+    
+    // set risk filter
+    if (handleName == "pmProjectsResult") {
+        var defaultMinVal = -1;
+        var defaultMaxVal = 9999999;
+        
+        var riskFilterLength = 4;
+        var riskDataIndex = 17;
+        var riskArray = [];
+        for (var i = 0; i < riskFilterLength; i++) {
+            riskArray.push([defaultMinVal, defaultMaxVal]);
+        }
+        
+        $.fn.dataTableExt.afnFiltering.push(
+            function (oSettings, aData, iDataIndex) {
+                var riskData = aData[riskDataIndex].toLowerCase().split("</span>");
+                
+                for (var i = 0; i < riskFilterLength; i++) {
+                    // the data here will always be valid number
+                    var str = $.trim(riskData[i].substring(riskData[i].indexOf('>') + 1));
+                    
+                    var numbers = str.split(";");
+                    var hasValid = false;
+                    
+                    for (var j = 0; j < numbers.length; j++) {
+                        var data = parseFloat($.trim(numbers[j]));
+                        
+                        // data == -1 means no data
+                        if (data == -1) {
+                            if ($.trim($($('.riskFieldDiv .riskField input[type=text]')[i]).val()).length > 0 
+                                && $($('.riskFieldDiv .riskField .riskError')[i]).hasClass('hide')) {
+                                return false;
+                            }
+                            hasValid = true;
+                            break;
+                        }
+                        
+                        if (data > riskArray[i][0] && data < riskArray[i][1]) {
+                            hasValid = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!hasValid) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        );
+        
+        $('#applyRiskFilters').click(function() {
+            $('.riskFieldDiv .riskField').each(function(index, item) {
+                var isMax = $(item).find('select').val() == 'lt';
+                var str = $(item).find("input[type=text]").val();
+                
+                if ($.trim(str).length == 0) {
+                    $(item).find('.riskError').addClass('hide');
+                    
+                    riskArray[index][0] = defaultMinVal;
+                    riskArray[index][1] = defaultMaxVal;
+                    
+                    return;
+                }
+                
+                var num = parseNumberFromString(str);
+                if (isNaN(num) && str) {
+                    $(item).find('.riskError').removeClass('hide');
+                    
+                    riskArray[index][0] = defaultMinVal;
+                    riskArray[index][1] = defaultMaxVal;
+                } else {
+                    $(item).find('.riskError').addClass('hide');
+                    
+                    riskArray[index][0] = defaultMinVal;
+                    riskArray[index][1] = defaultMaxVal;
+                    
+                    if (isMax) {
+                        riskArray[index][1] = num;
+                    } else {
+                        riskArray[index][0] = num;
+                    }
+                }
+            });
+            
+            tableHandle.fnDraw();
+        });
+    }
 
 });
+
+/**
+ * Parse string to number.
+ *
+ * @param str the string to parse.
+ * @return the result, NaN if invalid.
+ * @since 1.7
+ */
+function parseNumberFromString(str) {
+    var ret = parseFloat(str);
+    
+    if (isNaN(ret)) {
+        return ret;
+    }
+    
+    var p = 0;
+    var tmp = str;
+    
+    // remove '0' in start
+    while (p < str.length && str[p] == '0') {
+        p++;
+    }
+    if (p == str.length) {
+        return 0;
+    }
+    tmp = str.substring(p);
+    
+    // remove '0' in end
+    if (tmp.indexOf('.') > -1) {
+        if (tmp[0] == '.') {
+            tmp = '0' + tmp;
+        }
+        p = tmp.length - 1;
+        while (p > -1 && tmp[p] == '0') {
+            p--;
+        }
+        tmp = tmp.substring(0, p + 1);
+        
+        if (tmp[tmp.length - 1] == '.') {
+            tmp = tmp.substring(0, tmp.length - 1);
+        }
+    }
+    
+    if ("" + ret != tmp) {
+        return NaN;
+    }
+    return ret;
+}

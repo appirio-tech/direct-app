@@ -675,7 +675,7 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getLatestThreePosters(String)}</li>
  * </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 5.9  (Module Assembly - TC Cockpit Invoice History Page Update)
  * <ol>
@@ -742,10 +742,17 @@ import java.util.Map.Entry;
  * </ul>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, 
-  *@author GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin,
- * @author bugbuka, Blues, GreatKevin, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.4
+ * <p>
+ * Version 6.5 (Module Assembly - TC Cockpit Operations Dashboard Improvements 2)
+ * <ul>
+ *     <li>Update method {@link #getPMProjectData}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
+ * @author GreatKevin, duxiaoyang, minhu,
+ * @author bugbuka, leo_lol, morehappiness, notpad
+ * @version 6.5
  * @since 1.0
  */
 public class DataProvider {
@@ -1559,11 +1566,19 @@ public class DataProvider {
             data.setProjectedDuration(row.getStringItem("projected_duration"));
 
             data.setMessageNumber(row.getIntItem("message_number"));
-            
+
             data.setProjectManagerName(row.getStringItem("name_of_project_manager"));
 
             data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
             data.setHasLateContests(row.getBooleanItem("has_late_contests"));
+
+            data.setPhaseLateContestsNum(row.getIntItem("phase_late_contests_number"));
+            data.setLaunchLateContestsNum(row.getIntItem("launch_late_contests_number"));
+            data.setMilestoneLateContestsNum(row.getIntItem("milestone_late_contests_number"));
+            data.setStalledContestsNum(row.getIntItem("stalled_contests_number"));
+            data.setApOffContestsNum(row.getIntItem("ap_off_contests_number"));
+            data.setHistoricalProjectedCost(row.getDoubleItem("historical_projected_cost"));
+
             projectData.add(data);
         }
 
@@ -1579,11 +1594,11 @@ public class DataProvider {
      */
     private static List<ForumPoster> getLatestThreePosters(String lastPosters) throws Exception {
         List<ForumPoster> posters = new ArrayList<ForumPoster>();
-		
+
 		if (lastPosters == null || lastPosters.equals("")) {
 			return posters;
 		}
-		
+
         String[] postersStr = lastPosters.split(";");
         for(String p : postersStr) {
             String[] parts = p.split(","); // userid,handle,days
@@ -7399,9 +7414,9 @@ public class DataProvider {
             }
         }
         request.setProperty("payids", concatenate(paymentIdsList, ","));
-        
+
         Map<Long, BillingCostReportEntryDTO> result = new HashMap<Long, BillingCostReportEntryDTO>();
-        
+
         // query result by contestIds and paymentIds
         final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("tc_direct_payment_second_installment");
         for (int i = 0; i < resultSetContainer.size(); i++) {
