@@ -140,6 +140,16 @@
             <version name="RELEASE" path="release"/>
         </versions>
     </project>
+	
+	<project
+        name="review_application_management"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/review_application_management"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
 
     <project
         name="client_project_entities_dao"
