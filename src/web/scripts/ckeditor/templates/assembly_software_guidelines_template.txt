@@ -1,131 +1,112 @@
 <p><em style="color: rgb(0, 112, 192);">[This contest specification will be made available to all competitors for an Assembly competition. It is intended to give the competitors (and reviewers) all the necessary information and detailed instructions to understand what is expected for the Assembly competition.</em></p>
 
-<p><span style="color:#0070c0;"><strong><em>This specification should not include any company specific information or proprietary information because it will be available to users who have not signed confidentiality assignments.</em></strong></span></p>
+<p><span style="color: rgb(0, 112, 192);"><strong><em>This specification should not include any company specific information or proprietary information because it will be available to users who have not signed confidentiality assignments.</em></strong></span></p>
 
-<p><span style="color:#0070c0;"><em>This specification will be reviewed internally by TopCoder to verify the following points:</em></span></p>
-
-<ul>
-	<li><span style="color:#0070c0;"><em>Is the spec clear? Is it attractive to competitors? Is there anything that could be done to clarify or improve the specification? &nbsp;&nbsp; </em></span></li>
-	<li><span style="color:#0070c0;"><em>Are the requirements for the competition clear in detail and scope? </em></span></li>
-	<li><span style="color:#0070c0;"><em>Are the deliverables for the competition clear in detail and scope? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </em></span></li>
-	<li><span style="color:#0070c0;"><em>Is the design clear - are there any details that are missing that competitors will need to complete in this project? </em></span></li>
-	<li><span style="color:#0070c0;"><em>Is the timeline appropriate? </em></span></li>
-	<li><span style="color:#0070c0;"><em>Is the prize structure appropriate? </em></span></li>
-	<li><span style="color:#0070c0;"><em>Overall the specification is appropriate for production? </em></span></li>
-</ul>
-
-<p><span style="color:#0070c0;"><em>The Architect will be responsible for this specification. However, there are numerous sections that will be completed by the Copilot or the Project Manager.]</em></span></p>
-
-<p><span style="color:#FF0000;"><strong>Please remove all the instructions in blue and examples highlighted in yellow, including this one, before publishing your contest specification.</strong></span></p>
-
-
-<p style="margin-left:22.5pt;"><br />
-<strong>1.&nbsp;&nbsp; Submission Deliverables</strong></p>
-
-<p style="margin-left:22.5pt;">A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial</a>&nbsp;</p>
-
-<p style="margin-left:22.5pt;"><span style="color:#0070c0;"><em>[Document any specific deliverables associated with this competition]</em></span></p>
-
-<p style="margin-left:22.5pt;"><span style="background-color:#FFFF00;">EXAMPLE:</span><br />
-<span style="background-color:#FFFF00;">Below is an overview of the deliverables:</span></p>
+<p><span style="color: rgb(0, 112, 192);"><em>This specification will be reviewed internally by TopCoder to verify the following points:</em></span></p>
 
 <ul>
-	<li><span style="background-color:#FFFF00;">Fully Implemented IM Tool functionality defined by the requirements documentation for the sections defined in the milestone sections.</span></li>
-	<li><span style="background-color:#FFFF00;">A complete and detailed deployment documented explaining how to deploy the application including configuration information.</span></li>
-	<li><span style="background-color:#FFFF00;">JUNIT Tests to verify your application successfully meets the requirements of the application.</span></li>
-	<li><span style="background-color:#FFFF00;">The Ant build script to create the war files. This can be highly variable per competition so be sure to specify necessary deliverables clearly.</span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Is the spec clear? Is it attractive to competitors? Is there anything that could be done to clarify or improve the specification? &nbsp;&nbsp;</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Are the requirements for the competition clear in detail and scope?</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Are the deliverables for the competition clear in detail and scope? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Is the design clear - are there any details that are missing that competitors will need to complete in this project?</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Is the timeline appropriate?</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Is the prize structure appropriate?</em></span></li>
+	<li><span style="color: rgb(0, 112, 192);"><em>Overall the specification is appropriate for production?</em></span></li>
 </ul>
 
-<p style="margin-left:22.5pt;"><strong>2.&nbsp;&nbsp; Support</strong></p>
+<p><span style="color: rgb(0, 112, 192);"><em>The Architect will be responsible for this specification. However, there are numerous sections that will be completed by the Copilot or the Project Manager.]</em></span></p>
 
-<p style="margin-left:22.5pt;"><span style="color:#0070c0;"><em>[List any support obligations for this project here.]</em></span></p>
+<h2><strong><span style="color:#FF0000;"><span style="line-height: 1.6em;">Submission Deliverables</span></span></strong></h2>
 
-<p style="margin-left:22.5pt;"><span style="background-color:#FFFF00;">EXAMPLE:</span></p>
+<p><span style="font-size:12px;">A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial&nbsp;</a></span></p>
 
-<p style="margin-left:22.5pt;"><span style="background-color:#FFFF00;">Standard 30-days support is required.</span></p>
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Document any specific deliverables associated with this competition]</strong></span></span></p>
 
-<p style="margin-left:22.5pt;"><span style="background-color:#FFFF00;">Upon completion winner is responsible to check in all changes into the SVN branch.</span></p>
+<p><span style="font-size:12px;">EXAMPLE:<br />
+Below is an overview of the deliverables:</span></p>
 
-<p style="margin-left:22.5pt;"><strong>3.&nbsp;&nbsp; Final Submission</strong></p>
+<ul>
+	<li><span style="font-size:12px;">Fully Implemented IM Tool functionality defined by the requirements documentation for the sections defined in the milestone sections.</span></li>
+	<li><span style="font-size:12px;">A complete and detailed deployment documented explaining how to deploy the application including configuration information.</span></li>
+	<li><span style="font-size:12px;">JUNIT Tests to verify your application successfully meets the requirements of the application.</span></li>
+	<li><span style="font-size:12px;">The Ant build script to create the war files. This can be highly variable per competition so be sure to specify necessary deliverables clearly.</span></li>
+</ul>
 
-<p style="margin-left:22.5pt;">For each member, the final submission should be uploaded to the Online Review Tool.</p>
+<h2><span style="color:#FF0000;"><strong>Support</strong></span></h2>
 
-<p><span style="color:#0070c0;"><em>[Add any special instructions or restrictions on submission here.]</em></span></p>
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[List any support obligations for this project here.]</strong></span></span></p>
 
-<p style="margin-left:22.5pt;"><strong>4.&nbsp;&nbsp; Environment Setup</strong></p>
+<p><span style="font-size:12px;">EXAMPLE:</span></p>
 
-<p style="margin-left:22.5pt;"><span style="color:#0070c0;"><em>[By preparing a ready-to-use development environment, you can greatly increase the chances for a high quality submission. Try to give competitors an environment that needs minimal configuration and setup so members can focus on coding a solution rather than preparing to code one. Absolutely critical to this setup is providing valid test data. Relying on competitors to make their test data is error prone and will lead to other issues in downstream development efforts.]</em></span></p>
+<p><span style="font-size:12px;">Standard 30-days support is required.</span></p>
 
-<p style="margin-left:40.5pt;"><strong>4.1 Source code setup</strong></p>
+<p><span style="font-size:12px;">Upon completion winner is responsible to check in all changes into the SVN branch.</span></p>
 
-<p style="margin-left:40.5pt;"><span style="color:#0070c0;"><em>[The architect should document how the source code should be set up and packaged if different from the standard used in&nbsp;Assemblies.]</em></span></p>
+<h2><span style="color:#FF0000;"><strong>Final Submission</strong></span></h2>
 
-<p style="margin-left:40.5pt;"><strong>4.2 Build Setup</strong></p>
+<p><span style="font-size:12px;">For each member, the final submission should be uploaded to the Online Review Tool.</span></p>
 
-<p style="margin-left:40.5pt;"><span style="color:#0070c0;"><em>[Document all the ant tasks that are required.]</em></span></p>
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Add any special instructions or restrictions on submission here.]</strong></span></span></p>
 
-<p style="margin-left:40.5pt;"><span style="background-color:#FFFF00;">The ant &#39;compile&#39; and ant &#39;build&#39; commands should be implemented to compile the source code and create the war file.</span></p>
+<h2><span style="color:#FF0000;"><strong>Environment Setup</strong></span></h2>
 
-<p style="margin-left:40.5pt;"><span style="color:#0070c0;"><em>[Add something about how you can run an ant task to clear test data]</em></span></p>
+<p><span style="font-size:12px;"><strong><span style="color:#a41f91;">[By preparing a ready-to-use development environment, you can greatly increase the chances for a high quality submission. Try to give competitors an environment that needs minimal configuration and setup so members can focus on coding a solution rather than preparing to code one. Absolutely critical to this setup is providing valid test data. Relying on competitors to make their test data is error prone and will lead to other issues in downstream development efforts.]</span></strong></span></p>
 
-<p style="margin-left:40.5pt;"><span style="color:#0070c0;"><em>[Add something about how you can run an ant task to load the lookup / sample data]</em></span></p>
+<p><strong><span style="color:#0000FF;">Source code setup</span></strong></p>
 
-<p style="margin-left:40.5pt;"><strong>4.3 SVN Access</strong></p>
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[The architect should document how the source code should be set up and packaged if different from the standard used in Assemblies.]</strong></span></span></p>
 
-<p style="margin-left:35.4pt;"><span style="color:#0070c0;"><em>[Each member&nbsp;might need to&nbsp;be assigned SVN&nbsp;access. Please list all SVN branches which members need to request access to.]</em></span></p>
+<p><span style="color:#0000FF;"><strong>Build Setup</strong></span></p>
 
-<p style="margin-left:40.5pt;">Access to the following repositories will be provided</p>
+<p><span style="font-size:12px;"><strong><span style="color:#a41f91;">[Document all the ant tasks that are required.]</span></strong></span></p>
 
-<table border="1" cellpadding="0">
+<p><span style="font-size:12px;">The ant &#39;compile&#39; and ant &#39;build&#39; commands should be implemented to compile the source code and create the war file.</span></p>
+
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Add something about how you can run an ant task to clear test data]</strong></span></span></p>
+
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Add something about how you can run an ant task to load the lookup / sample data]</strong></span></span></p>
+
+<p><strong><span style="color:#0000FF;">SVN Access</span></strong></p>
+
+<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Each member might need to be assigned SVN access. Please list all SVN branches which members need to request access to.]</strong></span></span></p>
+
+<div>
+<table style="border: 2px solid rgb(153, 153, 153); margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; vertical-align: top; font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<colgroup>
+		<col width="200px" />
+		<col />
+	</colgroup>
 	<tbody>
 		<tr>
-			<td style="width:201px;">
-			<p style="margin-left:40.5pt;"><strong>Repository Name </strong></p>
-			</td>
-			<td style="width:344px;">
-			<p style="margin-left:40.5pt;"><strong>URL </strong></p>
-			</td>
+			<th style="border: none; color: rgb(0, 0, 0); line-height: normal; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><strong>Repository Name</strong></th>
+			<th style="border: none; color: rgb(0, 0, 0); line-height: normal; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><strong>URL</strong></th>
 		</tr>
 		<tr>
-			<td style="width:201px;">
-			<p><span style="background-color:#FFFF00;">Online Review</span></p>
-			</td>
-			<td style="width:344px;">
-			<p><a href="https://coder.topcoder.com/tcs/clients/name/branches"><span style="background-color:#FFFF00;">https://coder.topcoder.com/tcs/clients/name/branches</span></a></p>
-			</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">Online Review</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="https://coder.topcoder.com/tcs/clients/name/branches">https://coder.topcoder.com/tcs/clients/name/branches</a></td>
 		</tr>
 		<tr>
-			<td style="width:201px;">
-			<p><span style="background-color:#FFFF00;">Studio</span></p>
-			</td>
-			<td style="width:344px;">
-			<p><a href="https://coder.topcoder.com/client/branches/name"><span style="background-color:#FFFF00;">https://coder.topcoder.com/client/branches/name</span></a></p>
-			</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">Studio</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="https://coder.topcoder.com/client/branches/name">https://coder.topcoder.com/client/branches/name</a></td>
 		</tr>
 		<tr>
-			<td style="width:201px;">
-			<p><span style="background-color:#FFFF00;">Databases</span></p>
-			</td>
-			<td style="width:344px;">
-			<p><a href="https://coder.topcoder.com/client/trunk"><span style="background-color:#FFFF00;">https://coder.topcoder.com/client/trunk</span></a></p>
-			</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">Databases</td>
+			<td style="border-color: white; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: solid; line-height: normal; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="https://coder.topcoder.com/client/trunk">https://coder.topcoder.com/client/trunk</a></td>
 		</tr>
 	</tbody>
 </table>
+</div>
 
-<p style="margin-left:22.5pt;"><br />
-<strong>5.&nbsp;&nbsp; Development Environment</strong></p>
+<h2><span style="color:#FF0000;"><strong>Development Environment</strong></span></h2>
 
-<p style="margin-left:.25in;"><span style="color:#0070c0;"><em>[This section should document what environment software will be available to each member.</em></span></p>
+<p><span style="font-size:12px;"><strong><span style="color:#a41f91;">[This section should document what environment software will be available to each member.</span></strong></span></p>
 
-<p style="margin-left:.25in;"><span style="color:#0070c0;"><em>For example: </em></span></p>
+<p><span style="font-size:12px;"><strong><span style="color:#a41f91;">For example:</span></strong></span></p>
 
 <ul>
-	<li><span style="color:#0070c0;"><em>SVN access</em></span></li>
-	<li><span style="color:#0070c0;"><em>Amazon VM(s)</em></span></li>
-	<li><span style="color:#0070c0;"><em>VPN access</em></span></li>
+	<li><span style="font-size:12px;"><strong><span style="color:#a41f91;">SVN access</span></strong></span></li>
+	<li><span style="font-size:12px;"><strong><span style="color:#a41f91;">Amazon VM(s)</span></strong></span></li>
+	<li><span style="font-size:12px;"><strong><span style="color:#a41f91;">VPN access</span></strong></span></li>
 </ul>
 
-<p style="margin-left:.25in;"><span style="color:#0070c0;"><em>Document how members will be given access / permissions]</em></span></p>
-
-<p>&nbsp;</p>
+<p><span style="font-size:12px;"><strong><span style="color:#a41f91;"><span style="line-height: 1.6em;">Document how members will be given access / permissions]</span></span></strong></span></p>
