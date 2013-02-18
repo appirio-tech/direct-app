@@ -550,6 +550,11 @@
   <property name="file_upload.path" value="file_upload/${file_upload.version}" />
   <property name="file_upload.jar" value="${tcs_libdir}/${file_upload.path}/${file_upload.jar.name}" />
   
+  <property name="review_application_management.version" value="1.0.0" />
+  <property name="review_application_management.jar.name" value="review_application_management.jar" />
+  <property name="review_application_management.path" value="review_application_management/${review_application_management.version}" />
+  <property name="review_application_management.jar" value="${tcs_libdir}/${review_application_management.path}/${review_application_management.jar.name}" />  
+
   <property name="shared.jar.name" value="shared.jar" />
   <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
 
@@ -790,6 +795,7 @@
     <pathelement location="${spell_check.jar}" />
     <pathelement location="${topcoder_security_groups.jar}" />
     <pathelement location="${topcoder_commons_utility.jar}" />
+    <pathelement location="${review_application_management.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">
