@@ -364,6 +364,11 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             projectNotifications.put(p.getUserId(), false);
         }
 
+        // TC staff has full permission to manage cockpit project resources and notifications
+        if(DirectUtils.isTcStaff(currentUser)) {
+            this.viewData.setHasFullPermission(true);
+        }
+
         final List<Long> watchedUserIds = getProjectServiceFacade().getWatchedUserIdsForProjectForum(currentUser, users, getFormData().getProjectId());
 
         for(Long watchedUserId : watchedUserIds) {
