@@ -72,6 +72,11 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
     private boolean allowFuturePeek;
 
     /**
+     * The default project status used for filtering - Active is default.
+     */
+    private long defaultProjectStatus = 1L;
+
+    /**
      * Gets the clients map.
      *
      * @return the clients map.
@@ -179,6 +184,15 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
         }
 
         return monthOptions;
+    }
+
+    /**
+     * Gets the default project status used for filter.
+     *
+     * @return the default project status id.
+     */
+    public long getDefaultProjectStatus() {
+        return defaultProjectStatus;
     }
 
     /**

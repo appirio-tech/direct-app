@@ -47,7 +47,7 @@
                             <div>
                                 <label>Select Project Status</label>
                                 <s:select list="directProjectStatus"
-                                          id="projectStatusFilter" size="1"/>
+                                          id="projectStatusFilter" size="1" value="defaultProjectStatus"/>
                             </div>
                         </div>
                     </div>
