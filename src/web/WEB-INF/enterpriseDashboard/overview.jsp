@@ -280,6 +280,32 @@
 
                     <!-- middle column -->
                     <div class="middleColumn">
+					
+						 <!-- pipeline -->
+                        <div class="sectionContainer overpipelineSection">
+                            <div class="sectionInner">
+
+                                <div class="pipelinehTitle">
+                                    <h3>Pipeline</h3>
+                                    <a href="javascript:;" class="icon" rel="A graph depicting the projects in Pipeline is shown here.">!</a>
+                                    <a href="<s:url action='pipeline' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
+                                </div>
+                                <!-- title -->
+
+                                <!-- container -->
+                                <div class="containerSection">
+                                    <div id="overviewPipeline">
+                                        <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
+                                    </div>
+                                </div>
+                                <!-- End .containerSection -->
+
+                                <div class="corner tl"></div>
+                                <div class="corner tr"></div>
+
+                            </div>
+                        </div>
+                        <!-- End .overpipelineSection -->
 
                         <!-- Projects Health -->
                         <div class="sectionContainer overprojectsHealthSection">
@@ -306,31 +332,7 @@
                         </div>
                         <!-- End .overprojectsHealthSection -->
 
-                        <!-- pipeline -->
-                        <div class="sectionContainer overpipelineSection">
-                            <div class="sectionInner">
-
-                                <div class="pipelinehTitle">
-                                    <h3>Pipeline</h3>
-                                    <a href="javascript:;" class="icon" rel="A graph depicting the projects in Pipeline is shown here.">!</a>
-                                    <a href="<s:url action='pipeline' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
-                                </div>
-                                <!-- title -->
-
-                                <!-- container -->
-                                <div class="containerSection">
-                                    <div id="overviewPipeline">
-                                        <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
-                                    </div>
-                                </div>
-                                <!-- End .containerSection -->
-
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
-
-                            </div>
-                        </div>
-                        <!-- End .overpipelineSection -->
+                       
 
                     </div>
                     <!-- End .middleColumn -->
@@ -345,7 +347,7 @@
                                 <div class="projectTitle">
                                     <h3>Projects</h3>
                                     <a href="javascript:;" class="icon" rel="List of recently modified/ created projects is shown here. Hover on Project Name  to see more details.">!</a>
-                                    <a href="javascript:;" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='allProjects'/>" class="viewAllLink">View All</a>
                                 </div>
                                 <!-- title -->
 
