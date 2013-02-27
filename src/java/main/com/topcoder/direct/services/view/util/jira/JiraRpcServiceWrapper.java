@@ -163,20 +163,25 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if any error occurs.
      */
     public static void createIssue(String project, int issueTypeId, String summary, String description, String reporter) throws Exception {
-        // if soap session is not established, initialize a soap session first
-        if (soapSession == null) {
-            initializeSoapSession();
-        }
+		try {
+			// if soap session is not established, initialize a soap session first
+			if (soapSession == null) {
+				initializeSoapSession();
+			}
 
-        JiraSoapService service = soapSession.getJiraSoapService();
-        String token = soapSession.getAuthenticationToken();
-        RemoteIssue issue = new RemoteIssue();
-        issue.setProject(project);
-        issue.setType(String.valueOf(issueTypeId));
-        issue.setSummary(summary);
-        issue.setDescription(description);
-        issue.setReporter(reporter);
-        service.createIssue(token, issue);
+			JiraSoapService service = soapSession.getJiraSoapService();
+			String token = soapSession.getAuthenticationToken();
+			RemoteIssue issue = new RemoteIssue();
+			issue.setProject(project);
+			issue.setType(String.valueOf(issueTypeId));
+			issue.setSummary(summary);
+			issue.setDescription(description);
+			issue.setReporter(reporter);
+			service.createIssue(token, issue);
+		} catch (Exception ex) {
+			logger.error("Error in createIssue" + ex);
+            throw ex;
+		}
     }
 
     /**
@@ -189,14 +194,19 @@ public class JiraRpcServiceWrapper {
      * @since 1.2
      */
     public static TcJiraIssue createIssue(RemoteIssue issue, Long securityLevelId)   throws Exception {
-        // if soap session is not established, initialize a soap session first
-        if (soapSession == null) {
-            initializeSoapSession();
-        }
+		try {
+			// if soap session is not established, initialize a soap session first
+			if (soapSession == null) {
+				initializeSoapSession();
+			}
 
-        JiraSoapService service = soapSession.getJiraSoapService();
-        String token = soapSession.getAuthenticationToken();
-        return new TcJiraIssue(service.createIssueWithSecurityLevel(token, issue, securityLevelId));
+			JiraSoapService service = soapSession.getJiraSoapService();
+			String token = soapSession.getAuthenticationToken();
+			return new TcJiraIssue(service.createIssueWithSecurityLevel(token, issue, securityLevelId));
+		} catch (Exception ex) {
+			logger.error("Error in createIssue(RemoteIssue issue, Long securityLevelId)" + ex);
+            throw ex;
+		}
     }
     
     /**
@@ -209,13 +219,18 @@ public class JiraRpcServiceWrapper {
      * @since 1.4
      */
     public static void addAttachments(String issueKey, String[] fileNames, String[] base64Data) throws Exception {
-        if (soapSession == null) {
-            initializeSoapSession();
-        }
+		try {
+			if (soapSession == null) {
+				initializeSoapSession();
+			}
 
-        JiraSoapService service = soapSession.getJiraSoapService();
-        String token = soapSession.getAuthenticationToken();
-        service.addBase64EncodedAttachmentsToIssue(token, issueKey, fileNames, base64Data);
+			JiraSoapService service = soapSession.getJiraSoapService();
+			String token = soapSession.getAuthenticationToken();
+			service.addBase64EncodedAttachmentsToIssue(token, issueKey, fileNames, base64Data);
+		} catch (Exception ex) {
+			logger.error("Error in addAttachments" + ex);
+            throw ex;
+		}
     }
     
     /**
