@@ -52,10 +52,10 @@
                     
                     <div class="dropdownWidget customerSelectMask">
                         <div class="inputSelect">
-                            <input class="paddingleft" type="text" readonly="readonly" value="All Customers" />
+                            <input class="paddingleft" type="text" value="All Customers" onfocus="showHideCustomerList();" onkeyup="filterCustomer();" onkeydown="selectCustomer(event);" />
                             <a href="javascript:;" class="arrow"></a>
                         </div>
-                        <div class="contestsDropDown">
+                        <div class="contestsDropDown" id="dropDown2">
                             <ul class="dropList">
                                 <s:if test="viewData.userProjects.projectsCustomers.size <= 1">
                                     <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
@@ -87,10 +87,10 @@
                         <div class="inputSelect">
                         <ui:isProjectContextSet>
                             <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideProjectList();"
-                                         onkeyup="filterProject();" readonly="true" />
+                                         onkeyup="filterProject();" onkeydown="selectProject(event);" readonly="false" />
                         </ui:isProjectContextSet>
                         <ui:noProjectContextSet>
-                            <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();" readonly="true"/>
+                            <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();" onkeydown="selectProject(event);" readonly="false"/>
                         </ui:noProjectContextSet>
                         </div>
                         

@@ -496,6 +496,8 @@ $(document).ready(function(){
         if($(".projectSelectMask .contestsDropDown UL").height() > 200) {
             $(".projectSelectMask .contestsDropDown UL").css('width', 233);
         }
+        var input = $(".projectSelectMask .inputSelect>input")[0];
+        input.originalValue = input.value;
 	}
 
     showHideCustomerList = function(){
@@ -512,26 +514,167 @@ $(document).ready(function(){
             list.hide();    
         }        
         //contestsDropDown.slideToggle(100);
+        var input = $(".customerSelectMask .inputSelect>input")[0];
+        input.originalValue = input.value;
 	}
 	
 	/*TCCC-2398*/
 	/*-------------------------- filter the project --*/
 	
 	filterProject = function(){
-		if ($("#dropDown1").attr("display") == "none") {
+		if (!$("#dropDown1 .dropList").is(":visible")) {
 			showHideProjectList();
 		}
-        var typedText = $(".projectSelectMask .inputSelect>input")[0].value;
-
+        var input = $(".projectSelectMask .inputSelect>input")[0];
+        var typedText = input.value;
+        if (input.value != input.originalValue) {
+            input.originalValue = input.value;
+        } else {
+            return;
+        }
+        var idx = 0;
         $("#dropDown1>ul>li").each(function() {
             if ($(this).find("a")[0].innerHTML.toLowerCase().indexOf(typedText.toLowerCase()) == -1) {
-                $(this).css('display', 'none');
+                $(this).css('display', 'none').removeClass("hover");
             } else {
-                $(this).css('display', '');
+                ++idx;
+                $(this).css('display', '').removeClass("even");
+                if (idx % 2 == 0) {
+                    $(this).addClass("even");
+                }
+            }
+        });
+	}
+    
+    selectProject = function(e) {
+        if (!$("#dropDown1 .dropList").is(":visible")) {
+			showHideProjectList();
+		}
+        var code = e.which ? e.which : e.keyCode;
+        var current = $("#dropDown1>ul>li.hover:visible");
+        var selected;
+        if (code == 38) {
+            // up
+            if (current.size() == 0) {
+                selected = $("#dropDown1>ul>li:visible:first");
+            } else {
+                selected = current.prev(":visible");
+            }
+        } else if (code == 40) {
+            // down
+            if (current.size() == 0) {
+                selected = $("#dropDown1>ul>li:visible:first");
+            } else {
+                selected = current.next(":visible");
+            }
+        } else if (code == 13) {
+            // enter
+            if (current.size() > 0) {
+                $("a", current).each(function() {
+                    this.click();
+                });
+            }
+            return;
+        } else {
+            return;
+        }
+        if (selected.size() > 0) {
+            $("#dropDown1>ul>li").removeClass("hover");
+            selected.addClass("hover");
+            var container = $("#dropDown1");
+            var cHeight = container.height() - 25;
+            var u = container[0].scrollTop;
+            var v = u + cHeight;
+            var offsetTop = selected[0].offsetTop;
+            var offsetBottom = offsetTop + selected.height();
+            if (offsetTop < u) {
+                container.animate({
+                    scrollTop: offsetTop
+                }, 20);
+            } else if (offsetBottom > v) {
+                container.animate({
+                    scrollTop: offsetBottom - cHeight
+                }, 20);
+            }
+        }
+    }
+    
+	filterCustomer = function(){
+		if (!$("#dropDown2 .dropList").is(":visible")) {
+			showHideCustomerList();
+		}
+        var input = $(".customerSelectMask .inputSelect>input")[0];
+        var typedText = input.value;
+        if (input.value != input.originalValue) {
+            input.originalValue = input.value;
+        } else {
+            return;
+        }
+        var idx = 0;
+        $("#dropDown2>ul>li").each(function() {
+            if ($(this).find("a")[0].innerHTML.toLowerCase().indexOf(typedText.toLowerCase()) == -1) {
+                $(this).css('display', 'none').removeClass("hover");
+            } else {
+                ++idx;
+                $(this).css('display', '').removeClass("even");
+                if (idx % 2 == 0) {
+                    $(this).addClass("even");
+                }
             }
         });
 	}
 
+    selectCustomer = function(e) {
+        if (!$("#dropDown2 .dropList").is(":visible")) {
+			showHideCustomerList();
+		}
+        var code = e.which ? e.which : e.keyCode;
+        var current = $("#dropDown2>ul>li.hover:visible");
+        var selected;
+        if (code == 38) {
+            // up
+            if (current.size() == 0) {
+                selected = $("#dropDown2>ul>li:visible:first");
+            } else {
+                selected = current.prev(":visible");
+            }
+        } else if (code == 40) {
+            // down
+            if (current.size() == 0) {
+                selected = $("#dropDown2>ul>li:visible:first");
+            } else {
+                selected = current.next(":visible");
+            }
+        } else if (code == 13) {
+            // enter
+            if (current.size() > 0) {
+                current.trigger("click");
+            }
+            return;
+        } else {
+            return;
+        }
+        if (selected.size() > 0) {
+            $("#dropDown2>ul>li").removeClass("hover");
+            selected.addClass("hover");
+            var container = $("#dropDown2");
+            var cHeight = container.height() - 25;
+            var u = container[0].scrollTop;
+            var v = u + cHeight;
+            var offsetTop = selected[0].offsetTop;
+            var offsetBottom = offsetTop + selected.height();
+            if (offsetTop < u) {
+                container.animate({
+                    scrollTop: offsetTop
+                }, 20);
+            } else if (offsetBottom > v) {
+                container.animate({
+                    scrollTop: offsetBottom - cHeight
+                }, 20);
+            }
+        }
+    }
+    
     $(".customerSelectMask .inputSelect input").focus(function(){
         showHideCustomerList();
     });

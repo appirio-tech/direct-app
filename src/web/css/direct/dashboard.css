@@ -9715,9 +9715,11 @@ a.downloadAllbtn:hover span {
                          .newSidebar .contestList .dropdownWidget .dropList .even{
                              background:#F3F3F3 !important;
                          }
-                         .newSidebar .contestList .dropdownWidget .dropList .even:hover{
+                         .newSidebar .contestList .dropdownWidget .dropList .even:hover,
+                         .newSidebar .contestList .dropdownWidget .dropList li.hover{
                             background:#ffffcc !important;
                          }
+                         .newSidebar .contestList .dropdownWidget .dropList li.hover a,
                           .newSidebar .contestList .dropdownWidget .dropList a:hover,
                           .newSidebar .contestList .dropdownWidget .dropList .even a:hover{
                                 background:#ffffcc;   
