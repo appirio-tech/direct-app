@@ -17,9 +17,9 @@
             <Value>@projectCreationEmailCCAddresses@</Value>
         </Property>
         <Property name="projectCreationEmailTemplatePath">
-          <Value>@projectCreationEmailTemplatePath@</Value>
+          <Value>email_templates/direct_project_creation_email_template.txt</Value>
         </Property>
         <Property name="projectCreationEmailFromAddress">
-          <Value>@projectCreationEmailFromAddress@</Value>
+          <Value>support@topcoder.com</Value>
     </Config>
 </CMConfig>
