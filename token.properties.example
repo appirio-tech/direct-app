@@ -348,5 +348,3 @@
 ############################
 @projectCreationEmailToAddresses@=testuser1@topcoder.com;testuser2@topcoder.com
 @projectCreationEmailCCAddresses@=testuser3@topcoder.com;testuser4@topcoder.com
-@projectCreationEmailTemplatePath@=email_templates/direct_project_creation_email_template.txt
-@projectCreationEmailFromAddress@=service@topcoder.com
