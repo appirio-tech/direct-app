@@ -342,3 +342,11 @@
 # A comma-separated list of handles of users which are allowed to access Security Groups UI. Empty value means
 # that all users are allowed to access Security Groups UI
 @securityGroupsManagers@=heffan,super
+
+############################
+# ProjectServiceFacade.xml #
+############################
+@projectCreationEmailToAddresses@=testuser1@topcoder.com;testuser2@topcoder.com
+@projectCreationEmailCCAddresses@=testuser3@topcoder.com;testuser4@topcoder.com
+@projectCreationEmailTemplatePath@=email_templates/direct_project_creation_email_template.txt
+@projectCreationEmailFromAddress@=service@topcoder.com

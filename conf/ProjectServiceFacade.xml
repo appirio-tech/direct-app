@@ -10,5 +10,16 @@
         <Property name="userBeanProviderUrl">
           <Value>@userBeanProviderUrl@</Value>
         </Property>
+        <Property name="projectCreationEmailToAddresses">
+          <Value>@projectCreationEmailToAddresses@</Value>
+        </Property>
+        <Property name="projectCreationEmailCCAddresses">
+            <Value>@projectCreationEmailCCAddresses@</Value>
+        </Property>
+        <Property name="projectCreationEmailTemplatePath">
+          <Value>@projectCreationEmailTemplatePath@</Value>
+        </Property>
+        <Property name="projectCreationEmailFromAddress">
+          <Value>@projectCreationEmailFromAddress@</Value>
     </Config>
 </CMConfig>
