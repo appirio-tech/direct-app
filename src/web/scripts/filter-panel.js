@@ -100,7 +100,7 @@ function filterbyCustomer(id, filterStr) {
         if (filterStr.indexOf('All') != -1) {
             searchPattern = '';
         }
-        tableHandle.fnFilter(searchPattern, 11);
+        tableHandle.fnFilter(searchPattern, 12);
     }
     else if (handleName == "activeContests") {
         tableHandle.fnFilter(searchPattern, 10);
@@ -171,6 +171,11 @@ var setupFilterPanel = function () {
     //all projects or Platform Managers's projects
     if (handleName == "projectsResult" || handleName == "pmProjectsResult") {
         var projectStatusFilter = tableHandle.fnGetColumnData(8);
+        
+        if (handleName == "pmProjectsResult") {
+            projectStatusFilter = tableHandle.fnGetColumnData(7);
+        }
+        
         var len = projectStatusFilter.length;
         var statusMap = {};
         for (var i = 0; i < len; i++) {
@@ -543,7 +548,12 @@ var setupFilterPanel = function () {
     $('#projectStatusFilter').change(function () {
         var str = $(this).val();
         if (str.indexOf('All') != -1)str = '';
-        tableHandle.fnFilter(str, 8);
+        
+        if (handleName == "pmProjectsResult") {
+            tableHandle.fnFilter(str, 7);
+        } else {
+            tableHandle.fnFilter(str, 8);
+        }
     });
     $('#contestTypeFilter').change(function () {
         var str = $(this).val();
@@ -621,34 +631,32 @@ var setupFilterPanel = function () {
     if (handleName == "pmProjectsResult") {
         var values = {};
     
-        $("#pmProjectsResult table.projectStats tr").each(function(){
-            var metadataTD = $(this).find("td.projectManagerMeta");
-            metadataTD.find(".metadataProjectManager").each(function() {
-                values[$(this).find(".metadataValue").text()] = $(this).find("a").text();
-            });
-        });
+        var managerFilter = tableHandle.fnGetColumnData(15);
         
-        $.each(values, function(item) {
-            $("#projectManagerFilter").append($("<option></option>").attr('value', item).text(values[item]));
+        var len = managerFilter.length;
+        var managerMap = {};
+        for (var i = 0; i < len; i++) {
+            var index1 = managerFilter[i].indexOf('>');
+            var index2 = managerFilter[i].indexOf('<', 1);
+            var value = managerFilter[i].substring(index1 + 1, index2);
+
+            managerMap[value] = true;
+        }
+
+        $.each(managerMap, function (key, value) {
+            //$('#projectManagerFilter').append("<option value=" + key + ">" + key + "</option>");
         });
     
         $("#projectManagerFilter").change(function() {
             var searchPattern = $(this).val();
             if (searchPattern== '-1') {
-                searchPattern = '<span>none</span>';
+                searchPattern = '<span></span>';
             }
             if (searchPattern.indexOf('All') != -1) {
                 searchPattern = '';
             }
 
-            if (handleName == "pmProjectsResult") {
-                if ($(this).val()== '-1') {
-                    searchPattern = '<span></span>';
-                }
-                tableHandle.fnFilter(searchPattern, 14);
-            } else {
-                tableHandle.fnFilter(searchPattern, 18);
-            }
+            tableHandle.fnFilter(searchPattern, 15);
         }).val('').trigger('change');
         
     }        
@@ -739,7 +747,7 @@ $(function() {
                 if (filterValue == 'all') {
                     return true;
                 } else {
-                    var dd = (handleName == "pmProjectsResult") ? aData[12] : aData[11];
+                    var dd = (handleName == "pmProjectsResult") ? aData[13] : aData[11];
                     if (dd == null || $.trim(dd).length == 0) {
                         return filterValue == 'none';
                     }

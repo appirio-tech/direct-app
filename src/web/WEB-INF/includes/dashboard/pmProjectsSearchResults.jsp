@@ -40,6 +40,7 @@
                 <col width="">
                 <col width="">
                 <col width="">
+                <col width="">
             </colgroup>
 
             <thead>
@@ -56,6 +57,7 @@
                 <th># of Project Forum Posts</th>
                 <th>Last Posters</th>
                 <th>Status</th>
+                <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
@@ -290,7 +292,17 @@
                             </c:choose>                         
                         </span>
                     </td>
-                    
+                    <!-- used for forum sorting -->
+                    <td class="hide">
+                        <c:choose>
+                            <c:when test="${fn:length(projectSummary.latestThreePosters) > 0}">
+                                ${fn:substringBefore(projectSummary.latestThreePosters[0].daysSincePost, ".")}
+                            </c:when>
+                            <c:otherwise>
+                                0
+                            </c:otherwise>
+                        </c:choose> 
+                    </td>                    
                 </tr>
             </s:iterator>
 

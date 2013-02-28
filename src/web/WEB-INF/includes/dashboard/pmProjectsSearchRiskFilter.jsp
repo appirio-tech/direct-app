@@ -48,10 +48,7 @@
                             <span class='title'>Forum Activity</span>
                             <select id='forumActivityOp'>
                                 <option value='lt'>&lt;</option>
-                                <!-- 
-                                '>' is meaningless for forum activity
                                 <option value='gt'>&gt;</option>
-                                -->
                             </select>
                             <input type='text' size='5'/>
                             <span class='riskFilterPrefix'>days</span>

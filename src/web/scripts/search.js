@@ -504,7 +504,9 @@ $(document).ready(function() {
             { "sType": "html" },
             { "sType": "direct-percentage" },
             { "sType": "link-number" },
-            { "sType": "last-posters" },
+            {
+                "iDataSort": 18
+            },
             { 
                 "iDataSort": 16
             },
@@ -513,7 +515,8 @@ $(document).ready(function() {
             null,
             null,
             { "sType": "numeric" },
-            null
+            null,
+            { "sType": "numeric" }
         ]
 
     });
