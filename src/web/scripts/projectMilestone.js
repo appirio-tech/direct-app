@@ -356,12 +356,15 @@ $(document).ready(function () {
         var ms = $(this).parents("dd:eq(0)");
 
         $("#editMilestoneModal").find("input[name='projectName']").val($.trim(ms.find(".projectT label").text())).trigger('keyup');
+
         var description = '';
-        if(ms.find(".projectD .long span").length > 0) {
-            description = ms.find(".projectD .long span").html();
+
+        if (ms.find(".projectD span.longdesc").length > 0) {
+            description = ms.find(".projectD span.longdesc").html();
         } else {
-            description = ms.find(".projectD span.short").html();
+            description = ms.find(".projectD span").html();
         }
+
 
         $("#editMilestoneModal").find("textarea[name='projectDesc']").val($.trim(description)).trigger('keyup');
 
