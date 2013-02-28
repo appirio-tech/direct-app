@@ -21,5 +21,6 @@
         </Property>
         <Property name="projectCreationEmailFromAddress">
           <Value>support@topcoder.com</Value>
+		</Property>
     </Config>
 </CMConfig>
