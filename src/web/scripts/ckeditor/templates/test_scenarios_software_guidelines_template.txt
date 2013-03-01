@@ -1,4 +1,4 @@
-<p><span style="color:#c00000;"><strong>10. Submission Deliverables</strong></span></p>
+<p><span style="color:#c00000;"><strong>Submission Deliverables</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the list of deliverables that a competitor must provide for the completion of the current contest. If the current contest needs a special documentation or deliverable other than usual, then clearly mention the requirement in the submission deliverables. If there present any restrictions on the compatibility of the documents then also include the details here. ]</em></span></p>
 
@@ -33,7 +33,7 @@
 	</tbody>
 </table>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong style="line-height: 1.6em;">10.1 Milestone Deliverables </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong style="line-height: 1.6em;">Milestone Deliverables </strong></span></span><strong style="line-height: 1.6em;">(optional)</strong></p>
 
 <p><span style="color:#002060;">&nbsp;<em>[If the current contest includes a Milestone event, then mention the necessary deliverables needed in order to receive the Milestone prize.]</em></span></p>
 
@@ -41,7 +41,7 @@
 
 <p><span style="line-height: 1.6em;">To receive the Milestone prize, please submit the Test Scenarios document by covering all the scope as mentioned in contest objective section, and based on the client feedback update your final submission.</span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">11. Final Submission</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Final Submission</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the various guidelines must be followed by the contestants in the process of final submission.]</em></span></p>
 

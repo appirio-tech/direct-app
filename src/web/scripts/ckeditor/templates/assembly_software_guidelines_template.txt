@@ -32,16 +32,6 @@ Below is an overview of the deliverables:</span></p>
 	<li><span style="font-size:12px;">The Ant build script to create the war files. This can be highly variable per competition so be sure to specify necessary deliverables clearly.</span></li>
 </ul>
 
-<h2><span style="color:#FF0000;"><strong>Support</strong></span></h2>
-
-<p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[List any support obligations for this project here.]</strong></span></span></p>
-
-<p><span style="font-size:12px;">EXAMPLE:</span></p>
-
-<p><span style="font-size:12px;">Standard 30-days support is required.</span></p>
-
-<p><span style="font-size:12px;">Upon completion winner is responsible to check in all changes into the SVN branch.</span></p>
-
 <h2><span style="color:#FF0000;"><strong>Final Submission</strong></span></h2>
 
 <p><span style="font-size:12px;">For each member, the final submission should be uploaded to the Online Review Tool.</span></p>
@@ -71,7 +61,7 @@ Below is an overview of the deliverables:</span></p>
 <p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Each member might need to be assigned SVN access. Please list all SVN branches which members need to request access to.]</strong></span></span></p>
 
 <div>
-<table style="border: 2px solid rgb(153, 153, 153); margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; vertical-align: top; font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+<table style="border: 2px solid rgb(153, 153, 153); margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; vertical-align: top; font-size: 12px; line-height: 16px;">
 	<colgroup>
 		<col width="200px" />
 		<col />

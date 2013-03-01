@@ -1,10 +1,10 @@
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Project Overview</span></h2>
+<h2 style=" padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Project Overview</span></h2>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the Project. Give a basic introduction and background of the project in this section. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the Project. Give a basic introduction and background of the project in this section. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+<p style=" font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
 
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+<ul style=" font-size: 12px; line-height: 16px;">
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -12,48 +12,46 @@
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 </ul>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In posuere felis nec tortor. Pellentesque faucibus. Ut accumsan ultricies elit. Maecenas at justo id velit placerat molestie. Donec dictum lectus non odio. Cras a ante vitae enim iaculis aliquam. Mauris nunc quam, venenatis nec, euismod sit amet, egestas placerat, est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+<p style=" font-size: 12px; line-height: 16px;">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In posuere felis nec tortor. Pellentesque faucibus. Ut accumsan ultricies elit. Maecenas at justo id velit placerat molestie. Donec dictum lectus non odio. Cras a ante vitae enim iaculis aliquam. Mauris nunc quam, venenatis nec, euismod sit amet, egestas placerat, est. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+<h2 style=" padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Competition Task Overview</span></h2>
 
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Competition Task Overview</span></h2>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the user needs to achieve in this competition. Give a brief description about the current architecture contest requirements. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the user needs to achieve in this competition. Give a brief description about the current architecture contest requirements. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa.</p>
+<p style=" font-size: 12px; line-height: 16px;">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Detailed Requirements</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Detailed Requirements</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to explain the requirements in detail here. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to explain the requirements in detail here. ]</span></strong></p>
-
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+<ul style=" font-size: 12px; line-height: 16px;">
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 </ul>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Mauris vel lacus vitae felis vestibulum volutpat. Etiam est nunc, venenatis in, tristique eu, imperdiet ac, nisl. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In iaculis facilisis massa. Etiam eu urna. Sed porta. Suspendisse quam leo, molestie sed, luctus quis, feugiat in, pede.</p>
+<p style=" font-size: 12px; line-height: 16px;">Mauris vel lacus vitae felis vestibulum volutpat. Etiam est nunc, venenatis in, tristique eu, imperdiet ac, nisl. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In iaculis facilisis massa. Etiam eu urna. Sed porta. Suspendisse quam leo, molestie sed, luctus quis, feugiat in, pede.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Open Source Library</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Open Source Library</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify the allowed Open Source libraries to be used to create this architecture or anything not to be used. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify the allowed Open Source libraries to be used to create this architecture or anything not to be used. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Mauris vel lacus vitae felis vestibulum volutpat. Etiam est nunc, venenatis in, tristique eu, imperdiet ac, nisl.</p>
+<p style=" font-size: 12px; line-height: 16px;">Mauris vel lacus vitae felis vestibulum volutpat. Etiam est nunc, venenatis in, tristique eu, imperdiet ac, nisl.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">TC Components</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">TC Components</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify whether TC components are allowed in this contest. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify whether TC components are allowed in this contest. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet.</p>
+<p style=" font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Technology Overview</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">Technology Overview</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the technologies that can be used to fulfill the requirements of this competition. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the technologies that can be used to fulfill the requirements of this competition. ]</span></strong></p>
 
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+<ul style=" font-size: 12px; line-height: 16px;">
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -64,39 +62,35 @@
 	<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
 </ul>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">VM, SVN (Optional)</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: blue;">VM, SVN (Optional)</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the VM/SVN information that are required to set up the environment, and also the links that will be helpful in setting up the VM/SVN. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the VM/SVN information that are required to set up the environment, and also the links that will be helpful in setting up the VM/SVN. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong>VM:</strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong>VM:</strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Before asking your own VM, you need to have a public key on your profile before asking for the VM.</p>
+<p style=" font-size: 12px; line-height: 16px;">Before asking your own VM, you need to have a public key on your profile before asking for the VM.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">How to generate a key:&nbsp;<a href="http://apps.topcoder.com/wiki/display/projects/Generate+SSH+Key">http://apps.topcoder.com/wiki/display/projects/Generate+SSH+Key</a></p>
+<p style=" font-size: 12px; line-height: 16px;">How to generate a key:&nbsp;<a href="http://apps.topcoder.com/wiki/display/projects/Generate+SSH+Key">http://apps.topcoder.com/wiki/display/projects/Generate+SSH+Key</a></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">How to connect using it:&nbsp;<a href="http://apps.topcoder.com/wiki/display/projects/Connect+Using+SSH+Key">http://apps.topcoder.com/wiki/display/projects/Connect+Using+SSH+Key</a></p>
+<p style=" font-size: 12px; line-height: 16px;">How to connect using it:&nbsp;<a href="http://apps.topcoder.com/wiki/display/projects/Connect+Using+SSH+Key">http://apps.topcoder.com/wiki/display/projects/Connect+Using+SSH+Key</a></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Competition Engine VM Setup:&nbsp;<a href="http://apps.topcoder.com/wiki/display/docs/Competition+Engine+VM+Setup">http://apps.topcoder.com/wiki/display/docs/Competition+Engine+VM+Setup</a></p>
+<p style=" font-size: 12px; line-height: 16px;">Competition Engine VM Setup:&nbsp;<a href="http://apps.topcoder.com/wiki/display/docs/Competition+Engine+VM+Setup">http://apps.topcoder.com/wiki/display/docs/Competition+Engine+VM+Setup</a></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong>SVN:</strong></p>
+<p style=" font-size: 12px; line-height: 16px;"><strong>SVN:</strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Competitors can request SVN access to study existing code. Please send your request to subversion@topcoder.com along with the contest id/name and your handle.</p>
+<p style=" font-size: 12px; line-height: 16px;">Competitors can request SVN access to study existing code. Please send your request to subversion@topcoder.com along with the contest id/name and your handle.</p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+<h2 style=" padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">References</span></h2>
 
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">References</span></h2>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide any links that will be required or useful in creating the architecture. ]</span></strong></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide any links that will be required or useful in creating the architecture. ]</span></strong></p>
+<p style=" font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet:&nbsp;<a href="" target="_blank">http://www.loremipsum.com/projects/</a></p>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet:&nbsp;<a href="" target="_blank">http://www.loremipsum.com/projects/</a></p>
+<h2 style=" padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Documentation Provided</span></h2>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">&nbsp;</p>
+<p style=" font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the documents provided (Requirements Documentation, Application Source Code, etc) or the location where you have attached the documents or resources (Forum, Download section, etc). ]</span></strong></p>
 
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Documentation Provided</span></h2>
-
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the documents provided (Requirements Documentation, Application Source Code, etc) or the location where you have attached the documents or resources (Forum, Download section, etc). ]</span></strong></p>
-
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+<ul style=" font-size: 12px; line-height: 16px;">
 	<li><a href="">Lorem ipsum dolor sit amet</a></li>
 	<li><a href="">Mauris vel lacus vitae</a></li>
 	<li><a href="">Pellentesque</a></li>

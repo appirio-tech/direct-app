@@ -1,8 +1,8 @@
-<p><span style="color:#c00000;"><strong>10. Bug Report Process </strong></span></p>
+<p><span style="color:#c00000;"><strong>Bug Report Process </strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Normally in this section indicate the different requirements associated with logging the issues in JIRA. If the current contest contains different rounds rather than regular ones, then also indicate the details here.]</em></span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">10.1 Bug Report Format</strong></span></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">Bug Report Format</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Include the details about the format that must be followed by the contestants while logging the issues in JIRA.]</em></span></p>
 
@@ -19,7 +19,7 @@
 </ul>
 
 <div>
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <p><span style="color:#FF0000;">&nbsp;<strong>Important Notice:</strong></span></p>
 
 <ul>
@@ -28,7 +28,7 @@
 </ul>
 </div>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong style="color: rgb(192, 0, 0); font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em;">10.2 Ticket Logging</strong></p>
+<p style="font-size: 12px; line-height: 16px;"><span style="color:#0000FF;"><strong style="color: rgb(192, 0, 0); font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em;">Ticket Logging</strong></span></p>
 </div>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Include the details about the place where the user must log the issues.]</em></span></p>
@@ -37,7 +37,7 @@
 
 <p>You will log your tickets here: <a href="https://apps.topcoder.com/bugs/browse/MDF2JBH"><span style="color:#00b0f0;">https://apps.topcoder.com/bugs/browse/MDF2JBH</span></a><span style="color:#00b050;"> </span>and when creating a bug you MUST select the Journal Tool JIRA component. Bugs will not be counted if a selection is not made.</p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">10.3 Scoring</strong></span></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">Scoring</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[In this section provide the details about the strategy followed by the reviewers in the process of scoring the issues. Also include the details about the special case in which the contestants don&rsquo;t take first or second &nbsp;but submitted the bugs that aren&rsquo;t covered in the first or second place submissions.]</em></span></p>
 
@@ -45,20 +45,20 @@
 
 <p><strong style="line-height: 1.6em;">The Scoring guidelines followed for the contest are given below:</strong></p>
 
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <ul>
 	<li>For scoring, the submitter with the most accepted bugs will win. The submitter with the second most accepted bugs will receive second place.</li>
 	<li>For submitters who submit but don&#39;t take first or second, if they submit bugs that aren&#39;t covered in the first or second place submission, they will receive $5 for each unique bug reported <strong>up to a maximum of the 2nd place prize</strong>.&nbsp;</li>
 </ul>
 </div>
 
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <p><span style="color: rgb(255, 0, 0);">&nbsp;<strong>Important Notice:</strong></span></p>
 
 <p>If two submitters submit the same bug report, the submitter who submitted the report first into JIRA will get credit for the bug. The second submitter will not.&nbsp;</p>
 </div>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong>10.4 Tips </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong>Tips </strong></span><strong style="line-height: 1.6em;">(optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Include any tips for the success of the project.]</em></span></p>
 
@@ -72,7 +72,7 @@
 	<li>Double check your steps to reproduce and test cases to make sure they are clear. Make sure your steps include creation of any necessary data.</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">11. Submission Deliverables</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Submission Deliverables</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the list of deliverables that a competitor must provide for the completion of the current contest. If the current contest needs a special documentation or deliverable other than usual, then clearly mention the requirement in the submission deliverables. If there present any restrictions on the compatibility of the documents then also include the details here. ]</em></span></p>
 
@@ -80,7 +80,7 @@
 
 <p><span style="line-height: 1.6em;">You need report your issues in JIRA. Please submit a text file contains the bugs you reported to OR.</span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">12. Final Submission</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Final Submission</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the various guidelines must be followed by the contestants in the process of final submission.]</em></span></p>
 

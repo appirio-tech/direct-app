@@ -1,44 +1,31 @@
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">7. Submission Deliverables</span></h2>
-<p>
-    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">7.1 Milestone Deliverables (Optional)</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ In this section list down what are the deliverables required in the milestone submission. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The milestone submission deliverable should consist of the following sections of the Specification Document.</p>
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
-    <li>Logical requirements</li>
-    <li>Activity diagrams.</li>
-    <li>Use Case diagrams.</li>
-</ul>
-<p>
-    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">7.2 Final Deliverables</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ In this section list down what are the deliverables required in the final submission. Any extra deliverables other than the below mentioned deliverables should also be included. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The following deliverables should be included in your submission:</p>
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
-    <li>Logical requirements</li>
-    <li>Activity diagrams.</li>
-    <li>Use Case diagrams.</li>
-</ul>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">8. Submission Guidelines</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the submission process. How does submitter prepare the files to upload? What are the files and where to upload them? Etc. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">For each member, the final submission should be uploaded to the&nbsp;<a href="https://software.topcoder.com/review/jsp/login.jsp;jsessionid=D4C5843A8BFC61E3631E143FE4F92D48">Online Review Tool.</a></p>
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Submission Deliverables</span></h2>
 
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">9. Payment</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section is on the payment methods and how the submitter is getting paid once the competition is over. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">TopCoder will compensate members with first and second place submissions. Initial payment for the winning member will be distributed in two installments. The first payment will be made at the closure of the approval phase. The second payment will be made at the completion of the support period.</p>
-<p>
-    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">9.1 Milestone (Optional)</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Describe the details of milestone submission expectations, milestone payments and related information. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">For the milestone, the top two (2) submissions will be chosen and ranked by the client. Read the followings carefully.</p>
+<p><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">Milestone Deliverables (Optional)</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ In this section list down what are the deliverables required in the milestone submission. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The milestone submission deliverable should consist of the following sections of the Specification Document.</p>
+
 <ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
-    <li>The winners are selected completely at the client&#39;s discretion.</li>
-    <li>You must upload your milestone to Online Review. The timestamp of your submission will be used to determine if you are eligible for a milestone review and payment. The milestone deadline will be posted to the forum.</li>
-    <li>If you are selected to win a milestone payment,<span style="color: rgb(255, 0, 0);">YOUR FINAL SUBMISSION MUST PASS THE REVIEW TO EARN YOUR MILESTONE PAYMENT.</span>&nbsp;If you do not pass the review, you will not be awarded the payment.</li>
+	<li>Logical requirements</li>
+	<li>Activity diagrams.</li>
+	<li>Use Case diagrams.</li>
 </ul>
-<p>
-    <strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">9.2 Reliability Rating and Bonus</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Use this section to explain how the reliability bonus will be granted for the contest depending on the ratings of the competitors. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The reliability bonus for each particular project depends on the reliability rating of the participants at the moment of registration for that project. A participant with no previous projects is considered to have no reliability rating, and therefore gets no bonus.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Reliability bonus does not apply to Digital Run winnings. Since reliability rating is based on the past 15 projects, it can only have 15 discrete values.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Read&nbsp;<a href="http://apps.topcoder.com/wiki/display/tc/Reliability+Ratings+and+Bonuses">more</a>.</p>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">10. Support</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Specify the details of any support that the winner should provide for the contest such as expected duration of support. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Standard 90 days support.</p>
+
+<p><strong style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="color: blue;">Final Deliverables</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ In this section list down what are the deliverables required in the final submission. Any extra deliverables other than the below mentioned deliverables should also be included. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The following deliverables should be included in your submission:</p>
+
+<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
+	<li>Logical requirements</li>
+	<li>Activity diagrams.</li>
+	<li>Use Case diagrams.</li>
+</ul>
+
+<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Submission Guidelines</span></h2>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the submission process. How does submitter prepare the files to upload? What are the files and where to upload them? Etc. ]</span></strong></p>
+
+<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">For each member, the final submission should be uploaded to the&nbsp;<a href="https://software.topcoder.com/review/jsp/login.jsp;jsessionid=D4C5843A8BFC61E3631E143FE4F92D48">Online Review Tool.</a></p>

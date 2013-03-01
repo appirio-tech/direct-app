@@ -10,7 +10,7 @@
 
 <p><span style="color:#002060;"><strong style="line-height: 1.6em;"><em>This specification template contains both mandatory and optional sections. For optional sections, these were indicated by an optional tag. </em></strong><strong style="line-height: 1.6em;"><em>Please remove all the optional sections that were not in scope for the current contest, and update the numbering accordingly, before publishing the contest specification.</em></strong></span></p>
 
-<p><span style="color:#c00000;"><strong>1. Project Overview</strong></span></p>
+<p><span style="color:#c00000;"><strong>Project Overview</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide an overall description of the project.]</em></span></p>
 
@@ -24,7 +24,7 @@
 
 <p>The scope of this contest is to hunt bugs for both the Business User Console application and the TV and Movie Rating Game application.</p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">2. Contest Objective</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Contest Objective</strong></span></p>
 
 <p><span style="color:#002060;"><em>[Provide the main objective of the current contest. Provide the information about the current contest goals as much as possible, so it will be very useful for a competitor to deliver a promising product, which will meet the client&rsquo;s requirements to a higher extent. Include any unusual or additional requirements in this section clearly.]</em></span></p>
 
@@ -46,7 +46,7 @@
 	<li>Read this wiki and make sure all issues mentioned in it are fixed: <a href="http://apps.topcoder.com/wiki/display/~wendell/Release+Assembly+-+TV+and+Movie+Rating+Game+Assembly"><span style="color:#00b0f0;">http://apps.topcoder.com/wiki/display/~wendell/Release+Assembly+-+TV+and+Movie+Rating+Game+Assembly</span></a></li>
 </ul>
 
-<p><span style="color:#c00000;"><strong>2.1 Browser Requirements </strong></span><strong>(optional)</strong></p>
+<p><span style="color:#0000FF;"><strong>Browser Requirements (optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em>[In this section include the details about various browsers in which the given application must be tested.]</em></span></p>
 
@@ -54,7 +54,7 @@
 
 <p><em>The given application must be tested in all mainstream browsers.</em></p>
 
-<p><span style="color:#c00000;"><strong>2.2 Users </strong></span><strong>(optional)</strong></p>
+<p><span style="color:#0000FF;"><strong>Users (optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em>[Include the details about the user credentials that should be used to find out the bugs present in the given application.]</em></span></p>
 
@@ -67,7 +67,7 @@
 	<li>CDVR2USER2 / SongPage2</li>
 </ul>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong>3. Contest Guidelines </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong>Contest Guidelines </strong></span><strong style="line-height: 1.6em;">(optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em>[If the current contest includes any guidelines, then include the details here.]</em></span></p>
 
@@ -89,7 +89,7 @@
 <p>You must also be the first person to report the issue and submit it while submission phase is open.&nbsp; JIRA will allow you to file issues before and after the submission phase, but these will NOT be counted.</p>
 </div>
 
-<p><strong><span style="color:#c00000;">4. Technologies</span></strong></p>
+<p><strong><span style="color:#c00000;">Technologies</span></strong></p>
 
 <p><em style="color: rgb(0, 32, 96); line-height: 1.6em;">[In this section include the full list of technologies involved in the current project.]</em></p>
 
@@ -103,9 +103,9 @@
 	<li>HTML5</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong>5. Provided Resources </strong></span></p>
+<p><span style="color:#c00000;"><strong>Provided Resources </strong></span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">5.1 Documentation Provided</strong></span></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">Documentation Provided</strong></span></p>
 
 <p><span style="color:#002060;"><span style="line-height: 1.6em;">&nbsp;</span><em style="line-height: 1.6em;">[In this section include the links to the provided documents or the location of the documents (like Download section, contest forum, etc). These documents will be available to the registered users, so by using these documents the contestants will work towards the current project.]</em></span></p>
 
@@ -118,7 +118,7 @@
 	<li>Source code</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">5.2 VM </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">VM (optional)</strong></span></p>
 
 <p><span style="color:#002060;"><span style="line-height: 1.6em;">&nbsp;</span><em style="line-height: 1.6em;">[If the current project requires VM, then include the details here.]</em></span></p>
 
@@ -131,7 +131,7 @@
 	<li>TV and Movie Rating Game: links to the games can be found in the running experiments. The homepage <a href="http://ec2-50-17-84-14.compute-1.amazonaws.com:8080/hercules/"><span style="color:#00b0f0;">http://ec2-50-17-84-14.compute-1.amazonaws.com:8080/hercules/</span></a><span style="color:#00b050;"> </span>should be removed or simply show some greeting message.</li>
 </ul>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong style="line-height: 1.6em;">5.3 SVN </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong style="line-height: 1.6em;">SVN </strong></span><strong style="line-height: 1.6em;">(optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires SVN, then include the details here.]</em></span></p>
 
@@ -166,13 +166,13 @@
 
 <p>&nbsp;</p>
 
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <p><strong>SVN Request:</strong></p>
 
 <p>Please email&nbsp;<a href="mailto:support@topcoder.com">support@topcoder.com</a>&nbsp;to get read access to the SVN, include the SVN links, Contest title, and your handle.</p>
 </div>
 
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><span style="font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em; color: rgb(192, 0, 0);"><strong style="line-height: 1.6em;">5.4 Additional Resources </strong></span><strong style="font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em;">(optional)</strong></p>
+<p style="font-size: 12px; line-height: 16px;"><span style="color:#0000FF;"><span style="font-size: 13px; line-height: 1.6em;"><strong style="line-height: 1.6em;">Additional Resources </strong></span><strong style="font-size: 13px; line-height: 1.6em;">(optional)</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any additional resources besides the input document, then provide the details here.]</em></span></p>
 
@@ -185,42 +185,14 @@
 	<li><a href="http://apps.topcoder.com/wiki/pages/viewpage.action?pageId=35691122"><span style="color:#00b0f0;">How to compete in Bug Hunt competitions.</span></a></li>
 </ul>
 
-<p><strong style="color: rgb(192, 0, 0); line-height: 1.6em;">6. Payment</strong></p>
-
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">6.1 Base Payment</strong></span></p>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the details about the payment strategy followed for the current contest.]</em></span></p>
-
-<p><em><strong><span style="line-height: 1.6em;">Example:</span></strong></em></p>
-
-<p>TopCoder will compensate members with first and second place submissions. Initial payment for the winning member will be distributed in two installments. The first payment will be made at the close of the approval phase. The second payment will be made at the completion of the support period.</p>
-
-<p><em>Winning Submission and Second Place payments are shown at the top of the contest page.</em></p>
-
-<p><strong style="color: rgb(192, 0, 0); line-height: 1.6em;">7. Contest Prize Eligibility</strong></p>
+<p><strong style="color: rgb(192, 0, 0); line-height: 1.6em;">Contest Prize Eligibility</strong></p>
 
 <p><em style="color: rgb(0, 32, 96); line-height: 1.6em;">[In this section indicate the minimum review score that must be received for any final submission in order to receive the contest prize.]</em></p>
 
 <p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
 
 <div>
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <p>The submitter with the most accepted bugs will win the contest.</p>
 </div>
 </div>
-
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">8. Competitor Restrictions </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any additional documents from the competitors like CCA/NDA/Background check, then include the details here.]</em></span></p>
-
-<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
-
-<p><span style="line-height: 1.6em;">CCA is required for the current project.</span></p>
-
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong>9. Standard Support </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any support from the winner of this contest, then include the details here.]</em></span></p>
-
-<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
-
-<p><span style="line-height: 1.6em;">Standard 30 days support is required.</span></p>

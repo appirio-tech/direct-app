@@ -110,36 +110,6 @@ The working environment requirement details for this application are outlined in
 	</tbody>
 </table>
 
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;">&nbsp;</h2>
-
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Payment</span></h2>
-
-<p><strong><span style="color: rgb(0, 0, 255);">Base Payment</span></strong></p>
-
-<p><span style="font-size:12px;">TopCoder will compensate members with first and second place submissions. Initial payment for the winning member will be distributed in two installments. The first payment will be made at the close of the approval phase. The second payment will be made at the completion of the support period.</span></p>
-
-<p><span style="font-size:12px;">Winning Submission and Second Place payments are shown at the top of the contest details page.</span></p>
-
-<p><strong><span style="color: rgb(0, 0, 255);">Milestones</span></strong></p>
-
-<p><span style="font-size:12px;"><strong><span style="color: rgb(164, 31, 172);">[Adjust this section for your milestone details.]</span></strong></span></p>
-
-<p><span style="font-size:12px;">For the milestone, the top two (2) submissions will be chosen and ranked by the client.&nbsp;<span style="color: rgb(255, 0, 0);">Read below carefully......</span></span></p>
-
-<ul>
-	<li><span style="font-size:12px;"><strong>The winners are completely at the client&#39;s discretion. &nbsp;</strong></span></li>
-	<li><span style="font-size:12px;">You must upload your milestone to Online Review. &nbsp; The timestamp of your submission will be used to determine if you are eligible for a milestone review and Payment. &nbsp;The milestone deadline will be posted to the forum.</span></li>
-	<li><span style="font-size:12px;">If you are selected to win a milestone Payment,&nbsp;<span style="color: rgb(255, 0, 0);">YOUR FINAL SUBMISSION MUST PASS REVIEW TO EARN YOUR MILESTONE PAYMNENT.</span>&nbsp;If you do not pass review, you will not be awarded the payment.</span></li>
-</ul>
-
-<p><span style="font-size:12px;"><strong><span style="color: rgb(164, 31, 172);">[General Guidance: Total milestone is usually 50% of the first place payment.]</span></strong></span></p>
-
-<p><span style="font-size:12px;">Milestone payments are shown at the top of the contest details page.</span></p>
-
-<h2><strong><span style="color: rgb(255, 0, 0);">Competitor Restrictions</span></strong></h2>
-
-<p><span style="font-size:12px;"><strong><span style="color: rgb(164, 31, 172);">[Document here what the NDA / Background check requirements are for this project. Remove if not needed.]</span></strong></span></p>
-
 <h2><strong><span style="color: rgb(255, 0, 0);">Project Dependencies</span></strong></h2>
 
 <p><span style="font-size:12px;">Custom / New Generic Components</span></p>

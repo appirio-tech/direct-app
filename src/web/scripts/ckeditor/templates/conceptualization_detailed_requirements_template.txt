@@ -1,95 +1,125 @@
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">1. Project Overview</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the Project. Give a brief introduction and background of the project in this section. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae.</p>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">2. Competition Task Overview</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the competitor needs to achieve in the contest. Give a brief description about the current Conceptualization requirements. ]</span></strong></p>
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
-    
-    <p><strong>Tips for Success</strong></p>
-    <ul>
-        <li>Asking questions early and getting PM&#39;s feedback is very important for the success of this conceptualization competition.</li>
-        <li>Submit milestone submission and get valuable feedback from PM.</li>
-        <li>Creativity is important. We want competitors to think outside the box in this contest, coming up with possible ideas and functionality that may be useful to the client.</li>
-    </ul>
-</div>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Select the relevant milestone round format below (Single Round/Multi-Round) and remove the irrelevant section. ]</span></strong></p>
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(240, 192, 0); background-color: rgb(255, 255, 206); padding: 10px; margin: 5px;">
-    
-    <p><strong>Single Round Contest</strong></p>
-    <p><span style="color: rgb(255, 0, 0);">This Conceptualization Contest uses the Milestone Round format. Read carefully ALL SECTIONS of this contest specification to ensure you understand the contest. You may use the &quot;Contact PM&quot; to clarify any rules of the contest.</span></p>
-    <ol>
-        <li><span style="color: rgb(255, 0, 0);">This competition will consist of One Round with a milestone.</span></li>
-        <li><span style="color: rgb(255, 0, 0);">This contest will be scored against a new scorecard located here:<a href="http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes" target="_blank">http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes</a>.</span></li>
-    </ol>
-    <div style="padding-left: 40px;">
-        <ul>
-            <li>The milestone submissions will be judged solely by the client.</li>
-            <li>The client will pick the top two submissions and rank them according to their preference.</li>
-            <li>The client is&nbsp;<strong>NOT</strong>&nbsp;obligated to award prizes if they feel the submissions lack effort or scope.</li>
-            <li>After determining the top two winners, the client will share feedback about use cases, scope, and process flows.</li>
-        </ul>
-    </div>
-</div>
-<div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(240, 192, 0); background-color: rgb(255, 255, 206); padding: 10px; margin: 5px;">
-    
-    <p><strong>Multi-Round Contest</strong></p>
-    <p><span style="color: rgb(255, 0, 0);">This Conceptualization Contest uses the Milestone Round format. Read carefully ALL SECTIONS of this contest specification to ensure you understand the contest. You may use the &quot;Contact PM&quot; to clarify any rules of the contest.</span></p>
-    <ol>
-        <li><span style="color: rgb(255, 0, 0);">This competition will consist of Two rounds.</span></li>
-        <li><span style="color: rgb(255, 0, 0);">This contest will be scored against a new scorecard located here:<a href="http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes" target="_blank">http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes</a>.</span></li>
-    </ol>
-    <div style="padding-left: 40px;">
-        <ul>
-            <li>The milestone submissions will be judged solely by the client.</li>
-            <li>The client will pick the top two submissions and rank them according to their preference.</li>
-            <li>The client is&nbsp;<strong>NOT</strong>&nbsp;obligated to award prizes if they feel the submissions lack effort or scope.</li>
-            <li>After determining the top two winners, the client will share feedback about use cases, scope, and process flows.</li>
-        </ul>
-    </div>
-</div>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Competitors will be responsible for submitting the FINAL DELIVERABLE specified in section 7.2. The MILESTONE DELIVERABLE is optional. Ensure you have understood what is expected from you in the Milestone Submission and Final Submission, and also the difference between these two.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This contest will have a milestone deliverable. The milestone deliverable is a subset of the final document outlined in section 7.1. Competitors are allowed to submit before the specified deadline in the timeline to earn a payment.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The milestone submission deliverable will consist of a subset of the Conceptualization Document. The payout of the milestone payment is contingent on the member making a submission that passes review. Please refer to section 9.1.</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">The milestone review is scheduled for 24 hours. You may continue working and posting questions during the milestone review.</p>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">3. References</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide any links that will be required or useful in creating the Conceptualization Document. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><a href="" target="_blank">http://www.loremipsum.com/tutorials/</a></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><a href="" target="_blank">http://www.loremipsum.com/2007/02/19/</a></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
-<p><a href="" style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;" target="_blank">http://codex.loremipsum.com/</a></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
-<p><a href="" style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;" target="_blank">http://www.loremipsum.com/2008/09/15/</a></p>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">4. Technology Overview</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the technologies that should be used in the development phase of this project. ]</span></strong></p>
-<ul style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
-    <li>Lorem ipsum dolor sit.</li>
-    <li>Lorem ipsum dolor sit.</li>
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Project Overview</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the Project. Give a brief introduction and background of the project in this section. ]</span></strong></p>
+
+<p style="font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa.</p>
+
+<p style="font-size: 12px; line-height: 16px;">Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum.</p>
+
+<p style="font-size: 12px; line-height: 16px;">Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae.</p>
+
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Competition Task Overview</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section includes the requirements that the competitor needs to achieve in the contest. Give a brief description about the current Conceptualization requirements. ]</span></strong></p>
+
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
+<p><strong>Tips for Success</strong></p>
+
+<ul>
+	<li>Asking questions early and getting PM&#39;s feedback is very important for the success of this conceptualization competition.</li>
+	<li>Submit milestone submission and get valuable feedback from PM.</li>
+	<li>Creativity is important. We want competitors to think outside the box in this contest, coming up with possible ideas and functionality that may be useful to the client.</li>
 </ul>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">5. Documentation Provided</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the provided documents or the location where you have attached the documents (Forum, Download section, etc). ]</span></strong></p>
-<table class="confluenceTable" style="margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; border: 2px solid rgb(153, 153, 153); vertical-align: top; font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">
-    <colgroup>
-        <col width="200px" />
-        <col />
-    </colgroup>
-    <tbody>
-    <tr>
-        <th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Document Name</b></th>
-        <th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Document Description</b></th>
-    </tr>
-    <tr>
-        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://www.topcoder.com/wiki/download/attachments/33459841/Conceptualization_Document.rtf" target="_blank">BRD Submission Template</a></td>
-        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">This is the Conceptualization Document template. Fill it out and submit it both for the Milestone and Final Submission.</td>
-    </tr>
-    <tr>
-        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://apps.topcoder.com/wiki/download/attachments/58164650/Questionnaire.doc?version=1" target="_blank">Questionnaire Document</a></td>
-        <td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">Client provided document describing the application in forum.&nbsp;&nbsp;<b>You should analyze this document and post questions to the forum to engage with the client</b>.</td>
-    </tr>
-    </tbody>
+</div>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Select the relevant milestone round format below (Single Round/Multi-Round) and remove the irrelevant section. ]</span></strong></p>
+
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(240, 192, 0); background-color: rgb(255, 255, 206); padding: 10px; margin: 5px;">
+<p><strong>Single Round Contest</strong></p>
+
+<p><span style="color: rgb(255, 0, 0);">This Conceptualization Contest uses the Milestone Round format. Read carefully ALL SECTIONS of this contest specification to ensure you understand the contest. You may use the &quot;Contact PM&quot; to clarify any rules of the contest.</span></p>
+
+<ol>
+	<li><span style="color: rgb(255, 0, 0);">This competition will consist of One Round with a milestone.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">This contest will be scored against a new scorecard located here:<a href="http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes" target="_blank">http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes</a>.</span></li>
+</ol>
+
+<div style="padding-left: 40px;">
+<ul>
+	<li>The milestone submissions will be judged solely by the client.</li>
+	<li>The client will pick the top two submissions and rank them according to their preference.</li>
+	<li>The client is&nbsp;<strong>NOT</strong>&nbsp;obligated to award prizes if they feel the submissions lack effort or scope.</li>
+	<li>After determining the top two winners, the client will share feedback about use cases, scope, and process flows.</li>
+</ul>
+</div>
+</div>
+
+<div style="font-size: 12px; line-height: 16px; border: 1px solid rgb(240, 192, 0); background-color: rgb(255, 255, 206); padding: 10px; margin: 5px;">
+<p><strong>Multi-Round Contest</strong></p>
+
+<p><span style="color: rgb(255, 0, 0);">This Conceptualization Contest uses the Milestone Round format. Read carefully ALL SECTIONS of this contest specification to ensure you understand the contest. You may use the &quot;Contact PM&quot; to clarify any rules of the contest.</span></p>
+
+<ol>
+	<li><span style="color: rgb(255, 0, 0);">This competition will consist of Two rounds.</span></li>
+	<li><span style="color: rgb(255, 0, 0);">This contest will be scored against a new scorecard located here:<a href="http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes" target="_blank">http://www.topcoder.com/wiki/display/tc/Conceptualization+Changes</a>.</span></li>
+</ol>
+
+<div style="padding-left: 40px;">
+<ul>
+	<li>The milestone submissions will be judged solely by the client.</li>
+	<li>The client will pick the top two submissions and rank them according to their preference.</li>
+	<li>The client is&nbsp;<strong>NOT</strong>&nbsp;obligated to award prizes if they feel the submissions lack effort or scope.</li>
+	<li>After determining the top two winners, the client will share feedback about use cases, scope, and process flows.</li>
+</ul>
+</div>
+</div>
+
+<p style="font-size: 12px; line-height: 16px;">Competitors will be responsible for submitting the FINAL DELIVERABLE specified in <strong>Submission Deliverables</strong> section. The MILESTONE DELIVERABLE is optional. Ensure you have understood what is expected from you in the Milestone Submission and Final Submission, and also the difference between them.</p>
+
+<p style="font-size: 12px; line-height: 16px;">This contest will have a milestone deliverable. The milestone deliverable is a subset of the final document outlined in <strong style="font-size: 12px; line-height: 16px;">Milestone Deliverable </strong>section. Competitors are allowed to submit before the specified deadline in the timeline to earn a payment.</p>
+
+<p style="font-size: 12px; line-height: 16px;">The milestone submission deliverable will consist of a subset of the Conceptualization Document. The payout of the milestone payment is contingent on the member making a submission that passes review.</p>
+
+<p style="font-size: 12px; line-height: 16px;">The milestone review is scheduled for 24 hours. You may continue working and posting questions during the milestone review.</p>
+
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">References</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide any links that will be required or useful in creating the Conceptualization Document. ]</span></strong></p>
+
+<p style="font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
+
+<p style="font-size: 12px; line-height: 16px;"><a href="" target="_blank">http://www.loremipsum.com/tutorials/</a></p>
+
+<p style="font-size: 12px; line-height: 16px;"><a href="" target="_blank">http://www.loremipsum.com/2007/02/19/</a></p>
+
+<p style="font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
+
+<p><a href="" style="font-size: 12px; line-height: 16px;" target="_blank">http://codex.loremipsum.com/</a></p>
+
+<p style="font-size: 12px; line-height: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit:</p>
+
+<p><a href="" style="font-size: 12px; line-height: 16px;" target="_blank">http://www.loremipsum.com/2008/09/15/</a></p>
+
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Technology Overview</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ You have to point out the technologies that should be used in the development phase of this project. ]</span></strong></p>
+
+<ul style="font-size: 12px; line-height: 16px;">
+	<li>Lorem ipsum dolor sit.</li>
+	<li>Lorem ipsum dolor sit.</li>
+</ul>
+
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Documentation Provided</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Under this you can give the links to the provided documents or the location where you have attached the documents (Forum, Download section, etc). ]</span></strong></p>
+
+<table class="confluenceTable" style="margin: 0px 0px 10px; padding: 0px; border-collapse: collapse; border: 2px solid rgb(153, 153, 153); vertical-align: top; font-size: 12px; line-height: 16px;">
+	<colgroup>
+		<col width="200px" />
+		<col />
+	</colgroup>
+	<tbody>
+		<tr>
+			<th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Document Name</b></th>
+			<th class="confluenceTh" style="color: rgb(0, 0, 0); line-height: normal; border: none; padding: 2px 4px; background-color: rgb(229, 229, 229); vertical-align: middle;"><b>Document Description</b></th>
+		</tr>
+		<tr>
+			<td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://www.topcoder.com/wiki/download/attachments/33459841/Conceptualization_Document.rtf" target="_blank">BRD Submission Template</a></td>
+			<td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">This is the Conceptualization Document template. Fill it out and submit it both for the Milestone and Final Submission.</td>
+		</tr>
+		<tr>
+			<td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);"><a href="http://apps.topcoder.com/wiki/download/attachments/58164650/Questionnaire.doc?version=1" target="_blank">Questionnaire Document</a></td>
+			<td class="confluenceTd" style="line-height: normal; border-width: 1px 0px 0px; border-style: solid; border-color: white; padding: 2px 4px; vertical-align: top; background-color: rgb(245, 245, 245);">Client provided document describing the application in forum.&nbsp;&nbsp;<b>You should analyze this document and post questions to the forum to engage with the client</b>.</td>
+		</tr>
+	</tbody>
 </table>
-<h2 style="font-family: Arial, Helvetica, Verdana, sans-serif; padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">6. Competitor Restrictions (Optional)</span></h2>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ Provide the required NDA/CCA/Background checks for this contest. ]</span></strong></p>
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;">This competition requires a&nbsp;<a href="http://apps.topcoder.com/wiki/display/tc/Competition+Confidentiality+Agreement+(CCA)" target="_blank">CCA</a></p>

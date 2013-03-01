@@ -10,7 +10,7 @@
 
 <p><span style="color:#002060;"><strong style="line-height: 1.6em;"><em>This specification template contains both mandatory and optional sections. For optional sections, these were indicated by an optional tag. </em></strong><strong style="line-height: 1.6em;"><em>Please remove all the optional sections that were not in scope for the current contest, and update the numbering accordingly, before publishing the contest specification.</em></strong></span></p>
 
-<h2><strong style="color: rgb(192, 0, 0); font-size: 13px; line-height: 1.6em;">1. Project Overview</strong></h2>
+<h2><strong style="color: rgb(192, 0, 0); font-size: 13px; line-height: 1.6em;">Project Overview</strong></h2>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide an overall description of the project. Include any tips for the success of the project.]</em></span></p>
 
@@ -46,7 +46,7 @@
 </div>
 </div>
 
-<p><strong style="line-height: 1.6em; color: rgb(192, 0, 0);">2. Contest Objective</strong></p>
+<p><strong style="line-height: 1.6em; color: rgb(192, 0, 0);">Contest Objective</strong></p>
 </div>
 
 <p><span style="color:#002060;"><em>[Provide the main objective of the current contest. Provide the information about the current contest goals as much as possible, so it will be very useful for a competitor to deliver a promising product, which will meet the client&rsquo;s requirements to a higher extent. Include any unusual or additional requirements in this section clearly.]</em></span></p>
@@ -57,7 +57,7 @@
 
 <p><span style="line-height: 1.6em;">The main task here is to develop a Selenium test script in Java that will execute all the tests automatically.</span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">3. Automated Framework</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Automated Framework</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[List the details about the framework must be used to generate the Test Scripts. This Section will be used by the competitors to decide whether they can capable of delivering the final deliverables or not.]</em></span></p>
 
@@ -69,7 +69,7 @@
 	<li>Selenium</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong>4. Required Browsers </strong></span><strong>(optional)</strong></p>
+<p><span style="color:#c00000;"><strong>Required Browsers </strong></span><strong>(optional)</strong></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the list of browsers in which the test scripts must be executed.]</em></span></p>
 
@@ -83,7 +83,7 @@
 	<li>Chrome 4+ (Mac and PC)</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">5. Technologies</strong></span></p>
+<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">Technologies</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[In this section include the full list of technologies involved in the current project.]</em></span></p>
 
@@ -98,9 +98,9 @@
 	<li>Selenium</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong>6. Provided Resources </strong></span></p>
+<p><span style="color:#c00000;"><strong>Provided Resources </strong></span></p>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">6.1 Documentation Provided</strong></span></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">Documentation Provided</strong></span></p>
 
 <p><span style="color:#002060;"><span style="line-height: 1.6em;">&nbsp;</span><em style="line-height: 1.6em;">[In this section include the links to the provided documents or the location of the documents (like Download section, contest forum, etc). These documents will be available to the registered users, so by using these documents the contestants will work towards the current project.]</em></span></p>
 
@@ -112,7 +112,7 @@
 	<li>Test Scenarios document</li>
 </ul>
 
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">6.2 VM </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><strong style="line-height: 1.6em;">VM (optional)</strong></span></p>
 
 <p><span style="color:#002060;"><span style="line-height: 1.6em;">&nbsp;</span><em style="line-height: 1.6em;">[If the current project requires VM, then include the details here.]</em></span></p>
 
@@ -150,7 +150,7 @@
 </div>
 </div>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong>6.3 SVN </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong>SVN </strong></span><strong style="line-height: 1.6em;">(optional)</strong></span></p>
 </div>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires SVN, then include the details here.]</em></span></p>
@@ -193,7 +193,7 @@
 </div>
 </div>
 
-<p><span style="line-height: 1.6em; color: rgb(192, 0, 0);"><strong style="line-height: 1.6em;">6.4 Additional Resources </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
+<p><span style="color:#0000FF;"><span style="line-height: 1.6em;"><strong style="line-height: 1.6em;">Additional Resources </strong></span><strong style="line-height: 1.6em;">(optional)</strong></span></p>
 </div>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any additional resources besides the input document, then provide the details here.]</em></span></p>
@@ -207,37 +207,7 @@
 	<li><a href="http://seleniumhq.org/projects/remote-control/">Features of Selenium RC</a></li>
 </ul>
 
-<p><span style="color:#c00000;"><strong>7. Payment</strong></span></p>
-
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">7.1 Base Payment</strong></span></p>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[Provide the details about the payment strategy followed for the current contest.]</em></span></p>
-
-<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
-
-<p>TopCoder will compensate members with first and second place submissions. Initial payment for the winning member will be distributed in two installments. The first payment will be made at the close of the approval phase. The second payment will be made at the completion of the support period.</p>
-
-<p><em>Winning Submission and Second Place payments are shown at the top of the contest page.</em></p>
-
-<p><span style="color:#c00000;"><strong>7.2 Milestones </strong></span><strong>(optional)</strong></p>
-
-<p><span style="color:#002060;"><em>[If the current contest includes a Milestone event then provide the details here. Provide the minimum requirements needed to receive the Milestone prize. </em><em>Also clearly mention the details about the authority in deciding the winners of the Milestone event.]</em></span></p>
-
-<p><span style="color:#002060;"><em>[General Guidance: Total milestone is usually 50% of the first place payment.]</em></span></p>
-
-<p><strong><em>Example:</em></strong></p>
-
-<p>For the milestone, the top two (2) submissions will be chosen and ranked by the client. <span style="color:#FF0000;">Read below carefully......</span></p>
-
-<ul>
-	<li>The winners are completely at the client&#39;s discretion.&nbsp;&nbsp;</li>
-	<li>You must upload your milestone to Online Review.&nbsp;&nbsp; The timestamp of your submission will be used to determine if you are eligible for a milestone review and Payment.&nbsp; The milestone deadline will be posted to the forum.</li>
-	<li>If you are selected to win a milestone Payment, <span style="color:#FF0000;"><strong>YOUR FINAL SUBMISSION MUST PASS REVIEW TO EARN YOUR MILESTONE PAYMNENT.</strong></span><span style="color:#00b050;">&nbsp;</span>If you do not pass review,&nbsp;you will not be awarded the payment.</li>
-</ul>
-
-<p><em>Milestone payments are shown at the top of the contest page.</em></p>
-
-<p><span style="color:#c00000;"><strong>8. Contest Prize Eligibility</strong></span></p>
+<p><span style="color:#c00000;"><strong>Contest Prize Eligibility</strong></span></p>
 
 <p><span style="color:#002060;"><em style="line-height: 1.6em;">[In this section indicate the minimum review score that must be received for any final submission in order to receive the contest prize.]</em></span></p>
 
@@ -247,21 +217,4 @@
 <div style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px; border: 1px solid rgb(0, 153, 0); background-color: rgb(221, 255, 221); padding: 10px; margin: 5px;">
 <p>TopCoder will compensate members with first and second place submissions that have a Review score of at least 75.</p>
 </div>
-
-<p style="font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 12px; line-height: 16px;"><br />
-<span style="font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em; color: rgb(192, 0, 0);"><strong style="line-height: 1.6em;">9. Competitor Restrictions </strong></span><strong style="font-family: sans-serif, Arial, Verdana, 'Trebuchet MS'; font-size: 13px; line-height: 1.6em;">(optional)</strong></p>
 </div>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any additional documents from the competitors like CCA/NDA/Background check, then include the details here.]</em></span></p>
-
-<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
-
-<p><span style="line-height: 1.6em;">CCA is required for the current project.</span></p>
-
-<p><span style="color:#c00000;"><strong style="line-height: 1.6em;">10. Standard Support </strong></span><strong style="line-height: 1.6em;">(optional)</strong></p>
-
-<p><span style="color:#002060;"><em style="line-height: 1.6em;">[If the current project requires any support from the winner of this contest, then include the details here.]</em></span></p>
-
-<p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
-
-<p><span style="line-height: 1.6em;">Standard 30 days support is required.</span></p>
