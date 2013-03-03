@@ -312,7 +312,57 @@ $(document).ready(function(){
         }
         setupContestFee(billingAccountId);
     });
+    
+    $('#projects').change(function() {
+        handleProjectDropDownChange();
+    });
+    
+    handleProjectDropDownChange();
 });
+
+// method to populate copilots selection based on the project selection change
+function handleProjectDropDownChange() {
+    var value = $('#projects').val();
+
+    var billingAccounts = getBillingAccountsByDirectProjectId(value);
+
+    $("#billingProjects").empty();
+    $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
+
+    $.each(billingAccounts, function(key, value) {
+        $("#billingProjects").append($('<option></option>').val(key).html(value));
+    });
+    $("#billingProjects").val(0);
+
+    if(value > 0) {
+        $("a.addBilling").show();
+        $("a.addBilling").attr("href", "../editProject?formData.projectId=" + value + "#addBillingAccount");
+    } else {
+        $("a.addBilling").hide();
+        $("a.addBilling").attr("href", "javascript:;");
+    }
+
+    var result = getCopilotsByDirectProjectId(value);
+
+    var copilots = result.copilots;
+    var selected = result.selected;
+    var $contestCopilots = $("#contestCopilot");
+
+    $contestCopilots.html("");
+
+    $contestCopilots.append($('<option></option>').val(0).html("Unassigned"));
+
+    $.each(copilots, function(key, value) {
+        $contestCopilots.append($('<option></option>').val(key).html(value));
+    });
+
+    // set the selection drop down value
+    $contestCopilots.val(selected);
+
+    // we only refresh stylish selection when it's not hidden
+    $('.copilotSelect select').resetSS();
+    $('.copilotSelect select').getSetSSValue(selected);
+}
 
 (function($) {
     /**

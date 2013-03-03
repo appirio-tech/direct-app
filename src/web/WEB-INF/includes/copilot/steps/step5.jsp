@@ -37,10 +37,8 @@
                 <label>Select your billing account<span class="red">*</span></label>
                 <select id="billingProjects" name="billingProject">
                     <option value="0">Please select an existing account</option>
-                    <s:iterator value="billingProjects">
-                    <option value='<s:property value="projectId" />'><s:property value="name" /></option>
-                    </s:iterator>
-                </select>                
+                </select>
+                <a href="javascript:;" target="_blank" class="addBilling hide">Add Billing to project</a>                
             </div>
             <!--End .rowItem-->
         </div>
