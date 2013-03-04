@@ -46,13 +46,13 @@
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-	<!-- topcoder maintenance module 
+	<!-- topcoder maintenance module -->
 	<div id="topcoder-maintenance-notification">
 		<div class="content">
 			<div class="alert">
 				<span class="title">TopCoder System Maintenance</span>
 				<span class="desc">
-					TopCoder will be performing a network security upgrade on Tuesday, September 4th between 20:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4).
+					TopCoder will be performing a network upgrade on Thursday, March 7th between 19:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4).
 					During these times, you may experience some sporadic system outages.
 					We apologize for any inconvenience that this may cause.
 
@@ -65,7 +65,7 @@
 			</div>
 
 		</div>
-	</div>-->
+	</div>
 <!-- topcoder maintenance module ends -->
 
 <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
