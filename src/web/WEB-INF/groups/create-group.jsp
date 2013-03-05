@@ -55,7 +55,7 @@
 					
 						<div id="wholeAreaHeader">
                             <c:if test="${not empty group}">
-                                <h2 class="updateGroupTitle">Update Group - <s:property value="#attr.group.name"/></h2>
+                                <h2 class="updateGroupTitle">Edit Group - <s:property value="#attr.group.name"/></h2>
                             </c:if>
                             <c:if test="${empty group}">
                                 <h2 class="createGroupsTitle">Create New Group</h2>
@@ -82,12 +82,18 @@
 										<col width="50%" />
 									</colgroup>
 									<tbody>
-										<tr class="firstRow">
-											<td class="firstColumn">Group Name:</td>
-											<td><input type="text" class="text" id="groupName" id="inputCreateGroupName" value="<s:property value="#attr.group.name"/>"/></td>
+										<tr class="firstRow" id="groupNameFieldRow">
+											<td class="firstColumn">Group Name:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>
+											<td>
+												<input type="text" class="text" id="groupName" id="inputCreateGroupName" value="<s:property value="#attr.group.name"/>"/>
+										    </td>											
 										</tr>
-										<tr>
-											<td class="firstColumn">Group Access Rights:</td>
+										<tr id="accessRightsFieldRow">
+											<td class="firstColumn">Group Access Rights:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>											
 											<td>
 												<div class="attributesWrapper">
                                                     <input type="radio" id="reportRadio" name="defaultPerm" value="REPORT" <c:if test="${group.defaultPermission eq 'REPORT'}">checked="checked"</c:if>  autocomplete="off"/>
@@ -101,8 +107,10 @@
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td class="firstColumn">Customer Name:</td>
+										<tr id="customerNameFieldRow">
+											<td class="firstColumn">Customer Name:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>											
 											<td>
 												<select id="selectCreateCustomerName" autocomplete="off">
                                                     <c:forEach items="${clients}" var="client" varStatus="vs">
@@ -111,8 +119,10 @@
 												</select>
 											</td>
 										</tr>
-										<tr>
-											<td class="firstColumn">Billing Accounts:</td>
+										<tr id="billingAccountsFieldRow">
+											<td class="firstColumn">Billing Accounts:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>											
 											<td>
 												<div class="multiSelectBox" id="billingAccounts">
 													<div class="multiOptionRow">
@@ -141,8 +151,10 @@
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td class="firstColumn">Projects:</td>
+										<tr id="projectsFieldRow">
+											<td class="firstColumn">Projects:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>											
 											<td>
 												<div class="multiSelectBox" id="directProjects">
 													<div class="multiOptionRow">
@@ -171,8 +183,10 @@
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td class="firstColumn">Resource Restrictions:</td>
+										<tr id="resourceRestrictFieldRow">
+											<td class="firstColumn">Resource Restrictions:
+												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
+											</td>											
 											<td>
 												<div class="restrictionsWrapper">
                                                     <c:set var="isB" value="${false}"/>
@@ -345,7 +359,7 @@
 							<a id="createGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">CREATE GROUP</span></span></a>
                             </c:if>
                             <c:if test="${not empty group}">
-                            <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">Update group details</span></span></a>
+                            <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">Edit group details</span></span></a>
                             <input type="hidden" id="groupId" value="${group.id}"/>
                             </c:if>
                             
@@ -474,6 +488,9 @@
 	<!-- end #noChangeConfirmModal -->
 </div>
 <!-- end modal -->
+
+<!-- tooltips -->
+<%@ include file="tooltip.jsp" %>
 
 </body>
 <!-- End #page -->

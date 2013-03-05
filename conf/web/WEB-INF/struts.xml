@@ -35,8 +35,8 @@
             <interceptor name="loggingInterceptor"
                          class="loggingInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
-
-	    <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
+            <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
+            <interceptor name="securityGroupsTcStaffOnlyInterceptor" class="securityGroupsTcStaffOnlyInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
@@ -87,6 +87,13 @@
             </interceptor-stack>
 
             <interceptor-stack name="groupDefaultStack">
+                <interceptor-ref name="baseStack"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="securityGroupsAccessInterceptor"/>
+                <interceptor-ref name="securityGroupsTcStaffOnlyInterceptor"/>
+            </interceptor-stack>
+            <interceptor-stack name="groupPublicStack">
                 <interceptor-ref name="baseStack"/>
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
@@ -1809,12 +1816,14 @@
             <result name="success">/WEB-INF/groups/create-group.jsp</result>
         </action>
         <action name="viewInvitationStatusAction" class="viewInvitationStatusAction">
+            <interceptor-ref name="groupPublicStack"/>
             <result name="success">/WEB-INF/groups/view-invitations.jsp</result>
         </action>
         <action name="viewPendingApprovalUserAction" class="viewPendingApprovalUserAction">
             <result name="success">/WEB-INF/groups/view-pending-approvals.jsp</result>
         </action>
         <action name="searchReceivedInvitations" class="viewInvitationStatusAction">
+            <interceptor-ref name="groupPublicStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
@@ -1823,6 +1832,7 @@
             <result name="error" type="json" />
         </action>
         <action name="acceptRejectGroupInvitationAction" class="acceptRejectGroupInvitationAction">
+            <interceptor-ref name="groupPublicStack"/>
             <result type="chain">
                 <param name="actionName">viewInvitationStatusAction</param>
                 <param name="namespace">/group</param>

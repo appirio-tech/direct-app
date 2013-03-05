@@ -676,7 +676,11 @@ function updateMultiRowsCell() {
             var row = lines[i].trim();
             if (row.length > 0) rows.push(row);
         }
-        $(this).html(tooltipOnMultiRows(rows));
+        if($(this).hasClass('alignCenter')) {
+        	$(this).html(tooltipOnMultiRows(rows, 2));
+        } else {
+        	$(this).html(tooltipOnMultiRows(rows));
+        }
     });
     tooltipOnMultiRowsEvents();
 }

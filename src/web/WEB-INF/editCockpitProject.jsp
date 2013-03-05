@@ -1,7 +1,7 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
   -
@@ -25,6 +25,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
   - - Add TopCoder Account Managers add and remove
+  -
+  - Version 1.4 (Release Assembly - TopCoder Security Groups - Release 6) changes
+  - - Update group permissions.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -598,11 +601,8 @@
         <h3>Group Permissions</h3>
         <table border="0" cellpadding="0" cellspacing="0" class="tableHeader">
             <colgroup>
-                <col width="15%"/>
-                <col width="10%"/>
                 <col/>
                 <col/>
-                <col width="12%"/>
                 <col/>
                 <col width="120"/>
             </colgroup>
@@ -610,9 +610,6 @@
             <tr>
                 <th class="userColumn"><span>Group Name</span></th>
                 <th>Access Rights</th>
-                <th>Accounts</th>
-                <th>Projects</th>
-                <th>Resource Resttrictions</th>
                 <th>Group Members</th>
                 <th><a name="addGroupModal" class="buttonRed1 triggerModal" href="javascript:;" id="addGroup"><span>ADD GROUP</span></a></th>
             </tr>
@@ -628,25 +625,6 @@
                         <s:property value="defaultPermission"/>
                     </td>
                     <td class="alignCenter multirowsCell">
-                        <s:iterator value="billingAccounts" var="billingAccount" status="loop">
-                            <s:if test="#loop.index > 0"><br/></s:if>
-                            <s:property value="#billingAccount.name"/>
-                        </s:iterator>
-                    </td>
-                    <td class="alignCenter multirowsCell">
-                        <s:iterator value="directProjects" var="directProject" status="loop">
-                            <s:if test="#loop.index > 0"><br/></s:if>
-                            <c:out value="${tcdirect:resolveDirectProject(directProject.directProjectId).name}"/>
-                        </s:iterator>
-                    </td>
-                    <td class="alignCenter">
-                        <s:iterator value="restrictions" var="restriction" status="loop">
-                            <s:if test="#loop.index > 0"><br/></s:if>
-                            <s:if test="#restriction.toString() == 'PROJECT'">Projects</s:if>
-                            <s:if test="#restriction.toString() == 'BILLING_ACCOUNT'">Billing Accounts</s:if>
-                        </s:iterator>
-                    </td>
-                    <td class="alignCenter">
                         <s:iterator value="groupMembers" var="member" status="loop">
                             <s:if test="#loop.index > 0"><br/></s:if>
                             <c:out value="${tcdirect:resolveUser(member.userId).handle}"/>

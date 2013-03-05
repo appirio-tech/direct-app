@@ -1,4 +1,12 @@
-USERNAME is %USERNAME%
-GROUP_NAME is %GROUP_NAME%
-ACCEPTANCE_URL is %ACCEPTANCE_URL%
-REJECTION_URL is  %REJECTION_URL%
+
+Hello %USERNAME%,
+    %INVITER_HANDLE% has invited you to join the group named %GROUP_NAME%. 
+    By accepting the invitation below, you will gain access to projects in the TopCoder Platform tools as specified by the group permissions.
+    Click %ACCEPTANCE_URL% to accept the invitation.
+    Click %REJECTION_URL% to reject the invitation if you do not want to join the group or you feel you received this email in error.
+
+    Thanks for using the TopCoder Platform.
+
+    The TopCoder Team
+If you need support, please email support@topcoder.com
+If you would like to update your TopCoder notifications, you can visit %EDIT_NOTIFICATION_URL%

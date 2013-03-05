@@ -100,6 +100,9 @@
         <property name="emailSender">
             <value>@SecurityGroup.InvitationEmailSender@</value>
         </property>
+        <property name="editNotificationUrl">
+            <value>@SecurityGroup.EditNotificationUrl@</value>
+        </property>
     </bean>
     
     <bean id="groupBillingAccountService"
@@ -243,6 +246,12 @@
           class="com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor">
         <property name="allowedUsers" value="@securityGroupsManagers@"/>
         <property name="userService" ref="userService"/>
+    </bean>
+    
+    <bean id="securityGroupsTcStaffOnlyInterceptor" scope="prototype"
+          class="com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyInterceptor">
+        <property name="allowedUsers" value="@securityGroupsManagers@"/>
+        <property name="tcStaffOnly" value="@securityGroupsManagersOnly@"/>
     </bean>
 
     <bean id="saveSecurityGroupPermissionsAction"

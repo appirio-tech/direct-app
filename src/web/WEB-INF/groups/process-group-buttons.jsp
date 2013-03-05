@@ -10,6 +10,6 @@
 </div>
 <div class="rightSide">
     <a class="button7 viewGroupButton" href="<s:url action='viewGroupAction' namespace='/group'/>"><span class="left">VIEW GROUP</span></a>
-    <a class="button7 updateGroupButton" href="<s:url action='enterUpdateGroup' namespace='/group'/>"><span class="left">UPDATE GROUP</span></a>
+    <a class="button7 updateGroupButton" href="<s:url action='enterUpdateGroup' namespace='/group'/>"><span class="left">EDIT GROUP</span></a>
     <a class="button7 grayButton7 triggerModal deleteGroupButton" href="javascript:;" rel="#deleteGroupModal"><span class="left">DELETE GROUP</span></a>
 </div>

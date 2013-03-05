@@ -193,7 +193,7 @@
 							<div class="groupDetailsButton">
                                 <c:if test="${not groupFullPermission}">
 								<a class="newButton1 newButtonGray triggerModal deleteGroupButton" href="javascript:;"><span class="btnR"><span class="btnC">DELETE GROUP</span></span></a>
-								<a class="newButton1 updateGroupButton" href="<s:url action="enterUpdateGroup" namespace="/group"><s:param name="groupId">${group.id}</s:param></s:url>"><span class="btnR"><span class="btnC">UPDATE GROUP</span></span></a>
+								<a class="newButton1 updateGroupButton" href="<s:url action="enterUpdateGroup" namespace="/group"><s:param name="groupId">${group.id}</s:param></s:url>"><span class="btnR"><span class="btnC">EDIT GROUP</span></span></a>
                                 </c:if>
 							</div>
 							

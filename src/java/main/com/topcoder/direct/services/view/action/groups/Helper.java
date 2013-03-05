@@ -9,6 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.DirectProject;
@@ -118,7 +120,8 @@ final class Helper {
             String rejectUrl = urlPrefix + ACCEPTED_FALSE_URL;
             // send invitation
 
-            groupInvitationService.sendInvitation(invitation, instance.getRegistrationUrl(), acceptUrl, rejectUrl);
+            groupInvitationService.sendInvitation(invitation, instance.getRegistrationUrl(), acceptUrl, rejectUrl,
+                        getUserHandle());
         }
     }
 
@@ -379,4 +382,20 @@ final class Helper {
         request.setAttribute("errorPageMessage", "Sorry, you have no permission to create/view/update the group.");
         return false;
     }
+    
+    /**
+     * <p>
+     * Gets the tc handle from session.
+     * </p>
+     *
+     * @return the TCSubject instance from session
+     * @since Direct Launch Software Contests Assembly
+     */
+    public static String getUserHandle() {
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        if (request == null) {
+            return null;
+        }
+        return new SessionData(request.getSession()).getCurrentUserHandle();
+    }    
 }

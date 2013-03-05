@@ -334,7 +334,7 @@ final class HelperUtility {
                 String rejectUrl = urlPrefix + ACCEPTED_FALSE_URL;
                 // send invitation    
                 groupInvitationService.sendInvitation(invitation, registrationUrl,
-                    acceptUrl, rejectUrl);
+                    acceptUrl, rejectUrl, Helper.getUserHandle());
             }
         }
     }

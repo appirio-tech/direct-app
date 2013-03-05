@@ -69,15 +69,16 @@ import java.util.TreeSet;
   *     <li>Updated {@link #executeAction()} to add filter by group by and group values.</li>
   *   </ol>
   * </p>
+  * 
+  * <p>
+  * Version 1.2 (Release Assembly - TopCoder Security Groups Release 6 v1.0) change notes:
+  * <ol>
+  * 	<li>Updated {@link #executeAction()} method to support security groups.</li>
+  * </ol>
+  * </p>
  *
- * <p>
- * Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) Change notes:
- *   <ol>
- *     <li>Updated {@link #executeAction()} to fix a text inconsistency bug.</li>
- *   </ol>
- * </p>
- * @author isv, Ghost_141, TCSASSEMBLER
- * @version 1.2
+ * @author isv, TCSASSEMBLER
+ * @version 1.1
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -178,6 +179,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
         }
         // for contest without client
         allClients.put(0L, "One Off");
+        allClients.putAll(DirectUtils.getAllClients(currentUser));
 
         getViewData().setClients(allClients);
         getViewData().setGroupKeys(new LinkedHashMap<Long, String>());
@@ -203,7 +205,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
 			// Validate the dates range
             if (startDate.compareTo(endDate) > 0) {
-                addActionError("Start date should be smaller than End date");
+                addActionError("Start date should be smaller than end date");
             }
 
             // If numerical filter type was specified then add it to list of existing filters set so far

@@ -502,7 +502,7 @@ $(document).ready(function(){
                 members.push(mem);
                 if (mh[handle] && ok) {
                     ok = false;
-                    showErrors("User " + handle + " occurs multiple times");
+                    showErrors("User " + handle + " shows multiple times");
                 }
                 mh[handle] = true;
             }
@@ -616,11 +616,81 @@ $(document).ready(function(){
         return tot;
     }
     
+    function checkHandleExist(handle) {
+        var exist = false;
+        $.ajax({
+            type: 'GET',
+            url:  ctx+"/group/searchUser",
+            data: {handle: handle},
+            cache: false,
+            dataType: 'json',
+            beforeSend: modalPreloader, 
+            async : false,
+            success: function (jsonResult) {
+                handleJsonResult(jsonResult,
+                function(result) {
+                    for(var i=0;i<result.length;i++) {
+                        if(handle == result[i].handle) {
+                            exist = true;
+                            break;
+                        }
+                    }
+                },
+                function(errorMessage) {
+                    modalClose();
+                    showServerError(errorMessage);
+                });
+            }
+        });
+        return exist;
+    }
+    
+    $('#hahaButton').click(function(){
+        var x = validateMember();
+    });
+
+    //make sure every user exists.
+    function validateMember() {
+        var handles = new Array();
+        //retrieve user handles and search if not empty.
+        $("#groupMemberTable tbody tr").each(function() {
+            var inp = $(this).find(".firstColumn input[type='text']");
+            var handle = inp.val().trim();
+            if(handle.length > 0) {
+                if (!checkStrLen(handle)) {
+                    showErrors("Handle can't exceed 45 characters");
+                    return false;
+                }
+                for(var i=0;i<handles.length;i++) {
+                    if( handle == handles[i]) {
+                        showErrors('Duplicate handle: ' + handle);
+                        return false;
+                    }
+                }
+                handles.push(handle);
+            }
+        });
+
+        for(var i=0;i<handles.length;i++) {
+            var exist = checkHandleExist(handles[i]);
+            if(!exist) {
+                showErrors('User with handle: ' + handles[i] + ' doesn\'t exist.');
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
     // create group
     $("#createGroup").click(function() {
         var group = validateGroup();
         if (group === false) {
             return;
+        }
+        var userExist = validateMember();
+        if(userExist == false) {
+            return ;
         }
         var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
         $("#sendInvitationModal .modalBody .preloaderTips").text("Sending invitation email(s)... please wait, this may take a while.");
@@ -673,6 +743,10 @@ $(document).ready(function(){
             modalLoad("#noChangeConfirmModal");
             return;
         }
+        var userExist = validateMember();
+        if(userExist == false) {
+            return ;
+        }        
         var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
         var hasNew = hasNewMembers(oldGroupMemberHandles, getGroupMemberHandles());
         $.ajax({
@@ -1360,7 +1434,7 @@ $(document).ready(function(){
                 }
                 if (mh[handle]) {
                     ok = false;
-                    showErrors("User " + handle + " occurs multiple times");
+                    showErrors("User " + handle + " shows multiple times");
                     return false;
                 }
                 handles.push(handle);
@@ -1503,4 +1577,72 @@ $(document).ready(function(){
     function modalSendInvitation() {
         modalLoad('#sendInvitationModal');    
     }
+    
+    //tooltips popup.
+    var prevPopup = null;
+    showPopup = function(myLink,myPopupId){
+        var myLinkLeft = myLinkTop  = 0;
+        
+        /* hide the previous popup */
+        if( prevPopup )
+            $(prevPopup).css("display","none");
+
+        prevPopup = $('#'+myPopupId);
+        
+        /* get the position of the current link */
+        do{
+            myLinkLeft += myLink.offsetLeft;
+            myLinkTop += myLink.offsetTop;
+        }while( myLink = myLink.offsetParent );
+        
+        /* set the position of the popup */
+        var popUpHeight2 = $('#'+myPopupId).height()/2;
+
+        myLinkTop -= popUpHeight2;
+    
+        $('#'+myPopupId).css("top",myLinkTop+'px');
+        $('#'+myPopupId).css("left",( myLinkLeft + 50 )+'px');
+        
+        /* set the positio of the arrow inside the popup */
+        $(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
+        
+        /* show the popup */
+        $('#'+myPopupId).css("display","block");
+    }
+    
+    $('#groupNameFieldRow .helpme').hover(function(){
+    	showPopup(this, 'groupNameHelpMsg');
+    }, function(){
+    	$('#groupNameHelpMsg').hide();
+    });
+
+    $('#accessRightsFieldRow .helpme').hover(function(){
+    	showPopup(this, 'accessRightsHelpMsg');
+    }, function(){
+    	$('#accessRightsHelpMsg').hide();
+    });
+    
+    $('#customerNameFieldRow .helpme').hover(function(){
+    	showPopup(this, 'customerNameHelpMsg');
+    }, function(){
+    	$('#customerNameHelpMsg').hide();
+    });
+    
+    $('#billingAccountsFieldRow .helpme').hover(function(){
+    	showPopup(this, 'billingAccountsHelpMsg');
+    }, function(){
+    	$('#billingAccountsHelpMsg').hide();
+    });
+    
+    $('#projectsFieldRow .helpme').hover(function(){
+    	showPopup(this, 'projectsHelpMsg');
+    }, function(){
+    	$('#projectsHelpMsg').hide();
+    });
+    
+    $('#resourceRestrictFieldRow .helpme').hover(function(){
+    	showPopup(this, 'resourceRestrictHelpMsg');
+    }, function(){
+    	$('#resourceRestrictHelpMsg').hide();
+    });
 });
