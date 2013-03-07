@@ -359,7 +359,7 @@
 							<a id="createGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">CREATE GROUP</span></span></a>
                             </c:if>
                             <c:if test="${not empty group}">
-                            <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">Edit group details</span></span></a>
+                            <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">SAVE GROUP</span></span></a>
                             <input type="hidden" id="groupId" value="${group.id}"/>
                             </c:if>
                             
