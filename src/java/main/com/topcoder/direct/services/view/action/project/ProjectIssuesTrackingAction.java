@@ -116,8 +116,8 @@ public class ProjectIssuesTrackingAction extends AbstractAction implements FormA
 
                 }
                 // set project bugs
-                String directProjectName = getSessionData().getCurrentProjectContext().getName();
-                List<TcJiraIssue> bugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectName);
+                Long directProjectID = getSessionData().getCurrentProjectContext().getId();
+                List<TcJiraIssue> bugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectID);
                 getViewData().setProjectBugs(bugs);
 
                 getSessionData().setCurrentSelectDirectProjectID(

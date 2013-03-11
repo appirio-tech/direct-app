@@ -68,7 +68,7 @@
 	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
 
     <!-- the JQL query used for direct project -->
-	<directProjectJQLQuery>"Application or Component Name" ~ "\"@directProjectName@\"" and ProjectID is empty</directProjectJQLQuery>
+	<directProjectJQLQuery>"Cockpit Project ID"  = @directProjectID@ and ProjectID is empty</directProjectJQLQuery>
 
 	<!-- the max result number -->
 	<maxResultNumber>10000</maxResultNumber>

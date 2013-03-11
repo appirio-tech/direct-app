@@ -137,12 +137,11 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 				TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
 				List<ProjectBriefDTO> userProjects = getViewData().getUserProjects().getProjects();
-				Set<String> directProjectNames = new HashSet<String>();
+				Set<Long> directProjectID = new HashSet<Long>();
 				for(ProjectBriefDTO p : userProjects) {
-					directProjectNames.add(p.getName());
-				}
+					directProjectID.add(p.getId());				}
 				// add the direct project bugs
-				List<TcJiraIssue> projectBugs = new ArrayList<TcJiraIssue>();  //JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectNames); 
+				List<TcJiraIssue> projectBugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectID); 
 
 				if (contests.isEmpty()) {
 					getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());

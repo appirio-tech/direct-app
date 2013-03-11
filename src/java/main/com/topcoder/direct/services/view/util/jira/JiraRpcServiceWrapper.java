@@ -291,42 +291,41 @@ public class JiraRpcServiceWrapper {
     }
 
 
-    /**
-     * Gets TcJiraIssues of the given direct project name.
+     /**
+     * Gets TcJiraIssues of the given direct project ID.
      *
-     * @param directProjectName a direct project name.
+     * @param directProjectID a direct project ID.
      * @return a list of TcJiraIssues.
      * @throws Exception if an unexpected error occurs.
      * @since 1.5
      */
-    public static List<TcJiraIssue> getIssuesForDirectProject(String directProjectName) throws Exception {
+    public static List<TcJiraIssue> getIssuesForDirectProject(Long directProjectID) throws Exception {
 
-        // when the input is null or empty, return an empty result
-        if (directProjectName == null || directProjectName.length() == 0 ) {
-            return  new ArrayList<TcJiraIssue>();
+        // throw IllegalArgumentException when the project id is not positive
+        if (directProjectID <= 0 ) {
+            throw new IllegalArgumentException("directProject id should be positive.");
         }
-
         // build the JQL query first
         String directProjectQuery = ConfigUtils.getIssueTrackingConfig().getDirectProjectJQLQuery();
 
-        String jqlQuery = directProjectQuery.replaceAll("@directProjectName@", directProjectName) + " order by Created DESC";
+        String jqlQuery = directProjectQuery.replaceAll("@directProjectID@", directProjectID.toString()) + " order by Created DESC";
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
 
         return result;
     }
 
     /**
-     * Gets TcJiraIssues of the given direct project name set.
+     * Gets TcJiraIssues of the given direct project ID set.
      *
-     * @param directProjectNameSet a direct project name set.
+     * @param directProjectIDSet a direct project ID set.
      * @return a list of TcJiraIssues.
      * @throws Exception if an unexpected error occurs.
      * @since 1.5
      */
-    public static List<TcJiraIssue> getIssuesForDirectProject(Set<String> directProjectNameSet) throws Exception {
+    public static List<TcJiraIssue> getIssuesForDirectProject(Set<Long> directProjectIDSet) throws Exception {
 
         // when the input is null or empty, return an empty result
-        if (directProjectNameSet == null || directProjectNameSet.size() == 0 ) {
+        if (directProjectIDSet == null || directProjectIDSet.size() == 0 ) {
             return  new ArrayList<TcJiraIssue>();
         }
 
@@ -334,15 +333,14 @@ public class JiraRpcServiceWrapper {
         jqlQuery.append("(");
         boolean first = true;
         // build the JQL query first
-        for(String directProjectName : directProjectNameSet) {
+        for(Long directProjectID : directProjectIDSet) {
             if(!first) {
                 jqlQuery.append(" OR ");
             } else {
                 first = false;
             }
-            jqlQuery.append("\"Application or Component Name\" ~ \"\\\"");
-            jqlQuery.append(directProjectName);
-            jqlQuery.append("\\\"\"");
+            jqlQuery.append("\"Cockpit Project ID\" = ");
+            jqlQuery.append(directProjectID);
         }
         jqlQuery.append(") AND ProjectID is empty ORDER BY Created DESC"); 
 
@@ -361,6 +359,7 @@ public class JiraRpcServiceWrapper {
         }
         return result;
     }
+
 
     /**
      * Gets the bug race for the direct project.
