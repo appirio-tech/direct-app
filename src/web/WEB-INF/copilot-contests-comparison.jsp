@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-<c:set var="PAGE_TYPE" value="copilot" scope="request"/>
-<c:set var="CURRENT_TAB" value="copilotPostings" scope="request"/>
+<c:set var="PAGE_TYPE" value="project" scope="request"/>
+<c:set var="CURRENT_TAB" value="contests" scope="request"/>
 <c:set var="CURRENT_SUB_TAB" value="copilotContestSubmissions" scope="request"/>
 
 <c:set var="copilotProfilesMap" value="${requestScope.copilotProfilesMap}"/>
@@ -42,8 +42,9 @@
 
 <div class="currentPage">
     <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
-    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-    <strong>My Copilot Selection Contests</strong>
+    <s:property value="sessionData.currentProjectContext.name"/> &gt;
+    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilot Posting</a> &gt;
+    <strong><c:out value="${viewData.contestStats.contest.title}"/></strong>
 </div>
 <!-- End .currentPage -->
 
