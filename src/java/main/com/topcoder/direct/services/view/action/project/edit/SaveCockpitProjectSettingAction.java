@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.action.project.edit;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -342,9 +341,13 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
         // check current user has full permission to proceed
         boolean hasFullPermission = false;
 
-        for (Permission p : allPermissionsOfProject) {
-            if (p.getUserId() == currentUser.getUserId() && p.getPermissionType().getPermissionTypeId() == PROJECT_FULL_PERMISSION_TYPE_ID) {
-                hasFullPermission = true;
+        if (DirectUtils.isTcStaff(currentUser)) {
+            hasFullPermission = true;
+        } else {
+            for (Permission p : allPermissionsOfProject) {
+                if (p.getUserId() == currentUser.getUserId() && p.getPermissionType().getPermissionTypeId() == PROJECT_FULL_PERMISSION_TYPE_ID) {
+                    hasFullPermission = true;
+                }
             }
         }
 
