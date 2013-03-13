@@ -75,7 +75,7 @@
                                 <option value='gt'>&gt;</option>
                             </select>
                             <input type='text' size='5'/>
-                            <span class='riskFilterPrefix'>%</span>
+                            <span class='riskFilterPrefix'>days</span>
                             <br/>
                             <span class="riskError hide">The duration input is invalid.</span>
                         </div>

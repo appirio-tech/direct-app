@@ -274,7 +274,8 @@
                         <span>
                             <c:choose>
                                 <c:when test="${projectSummary.totalBudget > 0}">
-                                    ${projectSummary.actualCost / projectSummary.totalBudget * 100} ; ${projectSummary.projectedCost / projectSummary.totalBudget * 100}
+                                    ${(projectSummary.actualCost > projectSummary.projectedCost ? projectSummary.actualCost : projectSummary.projectedCost)
+                                        / projectSummary.totalBudget * 100}
                                 </c:when>
                                 <c:otherwise>
                                     -1
@@ -283,8 +284,9 @@
                         </span>
                         <span>
                             <c:choose>
-                                <c:when test="${projectSummary.projectedDuration > 0}">
-                                    ${projectSummary.actualDuration / projectSummary.projectedDuration * 100}
+                                <c:when test="${projectSummary.plannedDuration > 0}">
+                                    ${(projectSummary.actualDuration > projectSummary.projectedDuration ? projectSummary.actualDuration : projectSummary.projectedDuration)
+                                        - projectSummary.plannedDuration}
                                 </c:when>
                                 <c:otherwise>
                                     -1
