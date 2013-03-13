@@ -1,8 +1,9 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.action.contest;
+package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.view.action.contest.JIRAAttachmentBaseAction;
 import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
 import com.atlassian.jira.rpc.soap.client.RemoteIssue;
 import com.topcoder.direct.services.configs.ConfigUtils;
@@ -11,6 +12,7 @@ import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActio
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.JIRAIssueDTO;
 import com.topcoder.direct.services.view.form.JIRAIssueForm;
+import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
@@ -19,29 +21,13 @@ import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 
 /**
- * <p>This class is a Struts action class used to create a JIRA issue. The created JIRA issue will
- * be stored in <code>result</code> instance. So it can be used in an AJAX way.</p>
- *
- * <p>
- * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
- *   <ol>
- *     <li>The based class was changed to <code>JIRAAttachmentBaseAction</code>.</li>
- *     <li>Update {@link #executeAction()} to process the JIRA attachments.</li>
- *     <li>Added method {@link #getIssueKey()} to get the corresponding issue key.</li>
- *   </ol>
- * </p>
- *
- * <p>
- * Version 1.2 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
- *   <ol>
- *     <li>Update {@link #executeAction()} to process the direct project bugs</li>
- *   </ol>
- * </p>
+ * <p>This class is a Struts action class used to create a JIRA issue associated to Cockpit project ID.
+ * The created JIRA issue will be stored in <code>result</code> instance. So it can be used in an AJAX way.</p>
  * 
- * @author xjtufreeman, TCSASSEMBLER
- * @version 1.2
+ * @author notpad
+ * @version 1.0
  */
-public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
+public class CreateProjectJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
      * <p>Represents the serial version unique id.</p>
      */
@@ -101,7 +87,7 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
      * <p>Empty constructor.</p>
      */
-    public CreateJIRAIssueAction() {
+    public CreateProjectJIRAIssueAction() {
         
     }
     
@@ -113,20 +99,20 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
      */
     public void executeAction() throws Exception {
         long projectId = getProjectId();
+        boolean granted = AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+        if (!granted) {
+            setResult("Sorry, you don't have permission to access this project.");
+            return;
+        }
         IssueTrackingConfig config = ConfigUtils.getIssueTrackingConfig();
-
-
-        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        // get the contest instance
-
-
+        
         String tcDirectProjectName;
-        // the contestId or projectId field
+        // the projectId field
         String projectOrContestId = config.getProjectIDField();
-        SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        DirectUtils.setSoftwareCompetitionDirectProjectName(competition, getProjects());
-        tcDirectProjectName = competition.getProjectHeader().getTcDirectProjectName();
+        projectOrContestId = config.getDirectProjectIDField();
+        ProjectServiceFacade projectServiceFacade = getProjectServiceFacade();
+        tcDirectProjectName = projectServiceFacade.getProject(currentUser, projectId).getName();
 
         // create a new JIRA issue
         RemoteIssue remoteIssue = new RemoteIssue();

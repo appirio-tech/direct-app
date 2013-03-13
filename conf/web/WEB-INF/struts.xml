@@ -443,6 +443,10 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
         </action>
+        <action name="addProjectBugRace" class="createProjectJIRABugIssueAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+        </action>
 
         <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

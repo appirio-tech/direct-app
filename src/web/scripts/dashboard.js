@@ -1339,10 +1339,14 @@ $(document).ready(function(){
     
     // add a new JIRA issue (Bug Race)
     $('#bugRace .btnCreate').click(function() {
+        var bugRaceUrl = 'addBugRace';
+        if($("#bugForm #projectBug").val() == 'true') {
+            bugRaceUrl = 'addProjectBugRace';
+        }
         if (validateBugForm(this)) {
             $.ajax({
                 type: 'POST',
-                url:'addBugRace',
+                url: bugRaceUrl,
                 data: $('#bugForm').serialize(),
                 dataType: "json",
                 cache:false,

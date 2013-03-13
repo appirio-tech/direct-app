@@ -1204,6 +1204,11 @@
         <property name="jiraProject" value="@jiraBugRaceProject@"/>
         <property name="issueTypeId" value="1"/>
     </bean>
+    <bean id="createProjectJIRABugIssueAction" class="com.topcoder.direct.services.view.action.project.CreateProjectJIRAIssueAction"
+          scope="prototype" parent="baseJIRAAttachmentAction">
+        <property name="jiraProject" value="@jiraBugRaceProject@"/>
+        <property name="issueTypeId" value="1"/>
+    </bean>
     <bean id="updateJIRAIssueAction" class="com.topcoder.direct.services.view.action.contest.UpdateJIRAIssueAction"
           scope="prototype" parent="baseJIRAAttachmentAction">
     </bean>
