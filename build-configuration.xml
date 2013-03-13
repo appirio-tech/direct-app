@@ -96,8 +96,20 @@
       <fileset dir="${prop_dir}">
         <include name="**/*.properties" />
         <include name="**/*.xml" />
+        <include name="**/*.sh" />
       </fileset>
     </copy>
+      <if>
+          <isset property="env"/>
+          <then>
+              <if>
+                  <equals arg1="${env}" arg2="${env_ci}"/>
+                  <then>
+                      <chmod file="${basedir}/start-firefox-cockpit.sh" perm="755"/>
+                  </then>
+              </if>
+          </then>
+      </if>
   </target>
 
   <!--  This tasks execute svn operations against cached credentials,
