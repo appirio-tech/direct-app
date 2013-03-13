@@ -143,7 +143,8 @@ public class TestHelper {
             return prop;
         } catch (IOException e) {
             // simply return null, it will never happen
-            Assert.fail("Failed to read config file: " + TEST_CONFIG_FILE + ": " + e.getMessage());
+            System.out.println("Failed to read config file: " + TEST_CONFIG_FILE + ": " + e.getMessage());
+            e.printStackTrace();
             return null;
         } finally {
             if (in != null) {
