@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
+import junit.framework.Assert;
 
 
 /**
@@ -142,6 +143,7 @@ public class TestHelper {
             return prop;
         } catch (IOException e) {
             // simply return null, it will never happen
+            Assert.fail("Failed to read config file: " + TEST_CONFIG_FILE + ": " + e.getMessage());
             return null;
         } finally {
             if (in != null) {
