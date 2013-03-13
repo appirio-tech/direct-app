@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.copilot.management;
 
@@ -16,8 +16,17 @@ import java.util.Properties;
 /**
  * The Helper class for test.
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * <p>
+ * Version 1.1 Change notes:
+ *   <ol>
+ *     <li>Added {@link #getBrowserStopperScript()} method.</li>
+ *     <li>Added {@link #tearDown()} method.</li>
+ *     <li>Added {@link #getPort()} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author TCSDEVELOPER, isv
+ * @version 1.1
  */
 public class TestHelper {
     /** Represent the thread sleep time. */
@@ -30,11 +39,6 @@ public class TestHelper {
      * <p>Represents the test properties.</p>
      */
     private static final Properties PROPERTIES;
-
-    /**
-     * <p>Represents base context.</p>
-     */
-    private static final int PORT = 4444;
 
     static {
         PROPERTIES = loadProperties(TEST_CONFIG_FILE);
@@ -87,7 +91,7 @@ public class TestHelper {
      * @throws Exception if any error occurred
      */
     static Selenium getIndexPage() throws Exception {
-        Selenium browser = new DefaultSelenium("localhost", PORT, getBrowser(), getIndex());
+        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getIndex());
         browser.start();
         browser.open(getIndex());
 
@@ -125,7 +129,7 @@ public class TestHelper {
      * @throws Exception if any error occurred
      */
     static Selenium getCopilotPoolPage() throws Exception {
-        Selenium browser = new DefaultSelenium("localhost", PORT, getBrowser(), getIndex());
+        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getIndex());
         browser.start();
         browser.open(PROPERTIES.getProperty("copilot_pool"));
 
@@ -179,5 +183,41 @@ public class TestHelper {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Tears down the testing environment.
+     *
+     * @throws Exception if any error occurs.
+     * @since 1.1
+     */
+    static void tearDown() throws Exception {
+        String browserStopperScript = getBrowserStopperScript();
+        if (browserStopperScript != null && browserStopperScript.trim().length() > 0) {
+            Process stopperProcess = Runtime.getRuntime().exec(browserStopperScript);
+            stopperProcess.waitFor();
+        }
+    }
+
+    /**
+     * To get the script for stopping the browser (optional).
+     *
+     * @return the path to script for stopping the browser.
+     * @throws Exception if any error occurred.
+     * @since 1.1
+     */
+    static String getBrowserStopperScript() throws Exception {
+        return PROPERTIES.getProperty("browserStopperScript");
+    }
+
+    /**
+     * To get the port for base index URL.
+     *
+     * @return base index port
+     * @throws Exception if any error occurred
+     * @since 1.1
+     */
+    static int getPort() throws Exception {
+        return Integer.parseInt(PROPERTIES.getProperty("seleniumPort"));
     }
 }

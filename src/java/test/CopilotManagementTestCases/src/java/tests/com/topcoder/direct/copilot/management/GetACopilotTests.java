@@ -36,6 +36,7 @@ public class GetACopilotTests extends TestCase {
      */
     public void tearDown() throws Exception {
         browser.stop();
+        TestHelper.tearDown();
         super.tearDown();
     }
 

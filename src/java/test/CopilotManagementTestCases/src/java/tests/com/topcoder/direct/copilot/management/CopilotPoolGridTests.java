@@ -38,6 +38,7 @@ public class CopilotPoolGridTests extends TestCase {
      */
     public void tearDown() throws Exception {
         browser.stop();
+        TestHelper.tearDown();
         super.tearDown();
     }
 
