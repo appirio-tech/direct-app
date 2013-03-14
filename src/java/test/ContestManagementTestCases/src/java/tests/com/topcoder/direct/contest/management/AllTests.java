@@ -24,14 +24,14 @@ public class AllTests extends TestCase {
         final TestSuite suite = new TestSuite();
 
         // functional tests
-        suite.addTestSuite(CreateContestsTests.class);
+//        suite.addTestSuite(CreateContestsTests.class);
         suite.addTestSuite(ViewContestsTests.class);
-        suite.addTestSuite(EditContestsTests.class);
-        suite.addTestSuite(DetailsTabTests.class);
-        suite.addTestSuite(SpecReviewTabTests.class);
-        suite.addTestSuite(RegistraintsTabTests.class);
-        suite.addTestSuite(SubmissionsTabTests.class);
-        suite.addTestSuite(RecieptTabTests.class);
+//        suite.addTestSuite(EditContestsTests.class);
+//        suite.addTestSuite(DetailsTabTests.class);
+//        suite.addTestSuite(SpecReviewTabTests.class);
+//        suite.addTestSuite(RegistraintsTabTests.class);
+//        suite.addTestSuite(SubmissionsTabTests.class);
+//        suite.addTestSuite(RecieptTabTests.class);
 
         return suite;
     }
