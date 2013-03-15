@@ -146,7 +146,7 @@
                      <div class="billingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                             <option value="-1">Please select an existing account</option>
-                           <s:iterator value="billingProjects">
+                           <s:iterator value="billingAccountsForProject">
                            <option value='<s:property value="projectId" />'><s:property value="name" /></option>
                            </s:iterator>
                         </select>

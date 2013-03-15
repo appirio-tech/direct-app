@@ -202,8 +202,8 @@
                 <li>
                     <label>Billing Account :</label>
                     <strong id="billingProjectNameTextLabel">
-                        <c:forEach items="${billingProjects}" var="p">
-                            <c:if test="${p.projectId eq projectHeader.properties['Billing Project']}">
+                        <c:forEach items="${billingAccountsForProject}" var="p">
+                            <c:if test="${p.id eq projectHeader.properties['Billing Project']}">
                                 <c:out value="${p.name}"/>
                             </c:if>
                         </c:forEach>
@@ -279,9 +279,9 @@
                 <div class="billingSelect">
                     <select id="billingProjects2">
                         <option value="0">Please select an existing account</option>
-                        <c:forEach items="${billingProjects}" var="p">
-                            <option value="${p.projectId}"
-                                <c:if test="${p.projectId eq projectHeader.properties['Billing Project']}">selected="selected"</c:if>>
+                        <c:forEach items="${billingAccountsForProject}" var="p">
+                            <option value="${p.id}"
+                                <c:if test="${p.id eq projectHeader.properties['Billing Project']}">selected="selected"</c:if>>
                                 <c:out value="${p.name}"/>
                             </option>
                         </c:forEach>
