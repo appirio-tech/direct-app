@@ -22,6 +22,7 @@ import java.util.Properties;
  *     <li>Added {@link #getBrowserStopperScript()} method.</li>
  *     <li>Added {@link #tearDown()} method.</li>
  *     <li>Added {@link #getPort()} method.</li>
+ *     <li>Added {@link #getDomain()} method.</li>
  *   </ol>
  * </p>
  *
@@ -91,7 +92,7 @@ public class TestHelper {
      * @throws Exception if any error occurred
      */
     static Selenium getIndexPage() throws Exception {
-        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getIndex());
+        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getDomain());
         browser.start();
         browser.open(getIndex());
 
@@ -219,5 +220,16 @@ public class TestHelper {
      */
     static int getPort() throws Exception {
         return Integer.parseInt(PROPERTIES.getProperty("seleniumPort"));
+    }
+
+    /**
+     * To get the domain for Selenium server.
+     *
+     * @return the domai for Selenium server.
+     * @throws Exception if any error occurred.
+     * @since 1.1
+     */
+    static String getDomain() throws Exception {
+        return properties.getProperty("seleniumDomain");
     }
 }

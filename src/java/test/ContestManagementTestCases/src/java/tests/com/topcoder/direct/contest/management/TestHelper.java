@@ -10,7 +10,6 @@ import java.util.Properties;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
-import junit.framework.Assert;
 
 
 /**
@@ -22,6 +21,7 @@ import junit.framework.Assert;
  *     <li>Added {@link #getBrowserStopperScript()} method.</li>
  *     <li>Added {@link #tearDown()} method.</li>
  *     <li>Added {@link #getPort()} method.</li>
+ *     <li>Added {@link #getDomain()} method.</li>
  *   </ol>
  * </p>
  *
@@ -94,7 +94,7 @@ public class TestHelper {
      * @throws Exception if any error occurred
      */
     static Selenium getIndexPage() throws Exception {
-        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getIndex());
+        Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getDomain());
         browser.start();
         browser.open(getIndex());
 
@@ -184,7 +184,8 @@ public class TestHelper {
      * @throws Exception if any error.
      */
 	static void performSoftwareStep2(Selenium browser) throws Exception {
-		browser.type("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body", "This is test contest.");
+		browser.type("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body",
+                "This is test contest.");
 		browser.type("dom=document.getElementById('swGuidelines_ifr').contentDocument.body", "This is test contest.");
 		browser.type("css=#swUploadButtonDiv > input[name='document']", TestHelper.getUploadFile());
 		browser.type("swFileDescription", "This is requirement doc.");
@@ -220,6 +221,7 @@ public class TestHelper {
     static void tearDown() throws Exception {
         String browserStopperScript = getBrowserStopperScript();
         if (browserStopperScript != null && browserStopperScript.trim().length() > 0) {
+            System.out.println("Calling browserStopperScript: " + browserStopperScript);
             Process stopperProcess = Runtime.getRuntime().exec(browserStopperScript);
             stopperProcess.waitFor();
         }
@@ -245,5 +247,16 @@ public class TestHelper {
      */
     static int getPort() throws Exception {
         return Integer.parseInt(properties.getProperty("seleniumPort"));
+    }
+
+    /**
+     * To get the domain for Selenium server.
+     *
+     * @return the domai for Selenium server.
+     * @throws Exception if any error occurred.
+     * @since 1.1
+     */
+    static String getDomain() throws Exception {
+        return properties.getProperty("seleniumDomain");
     }
 }
