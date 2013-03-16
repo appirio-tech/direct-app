@@ -194,6 +194,9 @@
         <property name="proxyInterface" value="com.topcoder.service.facade.permission.PermissionServiceFacade"/>
     </bean>
 
+    <bean id="projectPaymentCalculator" class="com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator">
+    </bean>
+
     <!--  FileUpload -->
     <bean id="fileUpload" class="com.topcoder.servlet.request.LocalFileUpload">
         <constructor-arg index="0">
@@ -557,6 +560,11 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="getReviewCostAction" class="com.topcoder.direct.services.view.action.contest.launch.GetReviewCostAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+          <property name="projectPaymentCalculator" ref="projectPaymentCalculator"/>
+    </bean>
+    
     <bean id="searchUserAction"
           class="com.topcoder.direct.services.view.action.dashboard.SearchUserAction"
           scope="prototype" parent="baseDirectStrutsAction">

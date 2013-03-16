@@ -95,7 +95,7 @@
   <property name="command_line_utility.path" value="command_line_utility/${command_line_utility.version}" />
   <property name="command_line_utility.jar" value="${tcs_libdir}/${command_line_utility.path}/${command_line_utility.jar.name}" />
 
-  <property name="configuration_api.version" value="1.0" />
+  <property name="configuration_api.version" value="1.1.0" />
   <property name="configuration_api.jar.name" value="configuration_api.jar" />
   <property name="configuration_api.path" value="configuration_api/${configuration_api.version}" />
   <property name="configuration_api.jar" value="${tcs_libdir}/${configuration_api.path}/${configuration_api.jar.name}" />
@@ -555,11 +555,17 @@
   <property name="review_application_management.path" value="review_application_management/${review_application_management.version}" />
   <property name="review_application_management.jar" value="${tcs_libdir}/${review_application_management.path}/${review_application_management.jar.name}" />  
 
+  <property name="project_payment_calculator.version" value="1.0.0" />
+  <property name="project_payment_calculator.jar.name" value="project_payment_calculator.jar" />
+  <property name="project_payment_calculator.path" value="project_payment_calculator/${project_payment_calculator.version}" />
+  <property name="project_payment_calculator.jar" value="${tcs_libdir}/${project_payment_calculator.path}/${project_payment_calculator.jar.name}" />  
+
   <property name="shared.jar.name" value="shared.jar" />
   <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
 
   <property name="tcwebcommon.jar.name" value="tcwebcommon.jar" />
   <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}" />
+  
   <!-- 3rd party dependencies -->
   <property name="asm.jar" value="${ext_libdir}/asm/asm-2.2.3.jar" />
   <property name="asm-commons.jar" value="${ext_libdir}/asm/asm-commons-2.2.3.jar" />
@@ -796,6 +802,7 @@
     <pathelement location="${topcoder_security_groups.jar}" />
     <pathelement location="${topcoder_commons_utility.jar}" />
     <pathelement location="${review_application_management.jar}" />
+    <pathelement location="${project_payment_calculator.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">

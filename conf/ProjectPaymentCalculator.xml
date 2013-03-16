@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<CMConfig>
+    <!-- Default project payment calculator -->
+	<Config
+		name="com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator">
+		<Property name="logger_name">
+			<Value>my_logger</Value>
+		</Property>
+		<Property name="connection_name">
+			<Value>my_connection</Value>
+		</Property>
+		<!-- configuration for DBConnectionFactoryImpl -->
+		<Property name="db_connection_factory_config">
+			<Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+				<Property name="connections">
+					<Property name="default">
+						<Value>my_connection</Value>
+					</Property>
+
+					<Property name="my_connection">
+						<Property name="producer">
+							<Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+						</Property>
+						<Property name="parameters">
+							<Property name="jdbc_driver">
+								<Value>com.informix.jdbc.IfxDriver</Value>
+							</Property>
+							<Property name="jdbc_url">
+								<Value>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=informixoltp_tcp</Value>
+							</Property>
+							<Property name="user">
+								<Value>@database.username@</Value>
+							</Property>
+							<Property name="password">
+								<Value>@database.password@</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+
+	<!-- Project payment adjustment calculator -->
+	<Config
+		name="com.topcoder.management.payment.calculator.impl.ProjectPaymentAdjustmentCalculator">
+		<!-- configuration for ObjectFactory -->
+		<Property name="object_factory_config">
+			<Property name="DefaultProjectPaymentCalculator">
+				<Property name="type">
+					<Value>com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator</Value>
+				</Property>
+			</Property>
+		</Property>
+		<Property name="project_payment_calculator_key">
+			<Value>DefaultProjectPaymentCalculator</Value>
+		</Property>
+		<Property name="logger_name">
+			<Value>adjustment_calculator_logger</Value>
+		</Property>
+		<Property name="connection_name">
+			<Value>my_connection</Value>
+		</Property>
+		<!-- configuration for DBConnectionFactoryImpl -->
+		<Property name="db_connection_factory_config">
+			<Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+				<Property name="connections">
+					<Property name="default">
+						<Value>my_connection</Value>
+					</Property>
+
+					<Property name="my_connection">
+						<Property name="producer">
+							<Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+						</Property>
+						<Property name="parameters">
+							<Property name="jdbc_driver">
+								<Value>com.informix.jdbc.IfxDriver</Value>
+							</Property>
+							<Property name="jdbc_url">
+								<Value>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=informixoltp_tcp</Value>
+							</Property>
+							<Property name="user">
+								<Value>@database.username@</Value>
+							</Property>
+							<Property name="password">
+								<Value>@database.password@</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

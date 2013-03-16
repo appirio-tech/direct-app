@@ -1542,9 +1542,6 @@ function onFirstPlaceChange() {
         return;
    }
    calcPrizes(value);
-   
-   var billingProjectId = $('select#billingProjects').val();
-   fillPrizes(billingProjectId);
 }
 
 function calcPrizes(firstPlacePrizeValue) {
@@ -1558,7 +1555,6 @@ function calcPrizes(firstPlacePrizeValue) {
    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
    contestCost.firstPlaceCost = firstPlace;
    contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
-   contestCost.reviewBoardCost = calculateReviewCost(contestCost.firstPlaceCost,categoryId);
    if (projectCategoryId != REPORTING_ID) 
    {
        contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
@@ -1567,6 +1563,47 @@ function calcPrizes(firstPlacePrizeValue) {
        contestCost.reliabilityBonusCost = 0;
        contestCost.drCost = 0;
    }
+   
+    $.ajax({
+        type: 'POST',
+        url:  ctx+"/launch/getReviewCostAjax",
+        data: {'projectCategoryId' : categoryId, 'prize' : contestCost.firstPlaceCost},
+        cache: false,
+        dataType: 'json',
+        async : true,
+        success: function (jsonResult) {
+            handleJsonResult(jsonResult,
+            function(result) {
+                if(result) {
+                    var reviewBoardCost = 0;
+                    if (result.screeningCost) {
+                        reviewBoardCost += result.screeningCost;
+                    }
+                    if (result.reviewCost) {
+                        reviewBoardCost += 3 * result.reviewCost;
+                    }
+                    if (result.aggregationCost) {
+                        reviewBoardCost += result.aggregationCost;
+                    }
+                    if (result.finalReviewCost) {
+                        reviewBoardCost += result.finalReviewCost;
+                    }                    
+                    if (result.specReviewCost) {
+                        contestCost.specReviewCost = result.specReviewCost;
+                    }
+                    contestCost.reviewBoardCost = reviewBoardCost;
+                    var billingProjectId = $('select#billingProjects').val();
+                    // if the first prize value has been changed, this request should be ignored
+                    if (contestCost.firstPlaceCost == firstPlacePrizeValue) {
+                        fillPrizes(billingProjectId);
+                    }
+                }
+            },
+            function(errorMessage) {
+                showServerError(errorMessage);
+            })
+        }
+   });
 }
 
 /**
@@ -1600,77 +1637,6 @@ function calcDR(drPoints){
 
 function calculateSecondPlacePrize(firstPlaceCost) {
     return firstPlaceCost * 0.5;
-}
-
-function calculateReviewCost(firstPlacePrize, categoryId) {
-    var STANDARD_SUBMISSION_COUNT = 3;
-    var STANDARD_PASSED_SCREENING_COUNT = 3;
-    var SIC; // Screening Incremental Coefficient 
-    var BRC; // Base Review Coefficient
-    var RIC; // Review Incremental Coefficient
-    var FRC; // Final Review Coefficient
-    
-    if (categoryId == getProjectCategoryIdByName('DESIGN')) {
-        SIC = 0.01;
-        BRC = 0.12;
-        RIC = 0.05;
-        FRC = 0.05;
-    } else if (categoryId == getProjectCategoryIdByName('DEVELOPMENT')) {
-        SIC = 0.02;
-        BRC = 0.2;
-        RIC = 0.05;
-        FRC = 0.05;
-    } else if (categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')) {
-        SIC = 0.01;
-        BRC = 0.12;
-        RIC = 0.03;
-        FRC = 0.05;
-    } else if (categoryId == getProjectCategoryIdByName('ARCHITECTURE')) {
-        SIC = 0.01;
-        BRC = 0.12;
-        RIC = 0.05;
-        FRC = 0.05;
-    } else if (categoryId == getProjectCategoryIdByName('SOFTWARE ASSEMBLY')) {
-        SIC = 0.01;
-        BRC = 0.13;
-        RIC = 0.05;
-        FRC = 0.05;
-    } else if (categoryId == getProjectCategoryIdByName('TESTSCENARIOS')) {
-        SIC = 0.01;
-        BRC = 0.12;
-        RIC = 0.05;
-        FRC = 0.03;
-    } else if (categoryId == getProjectCategoryIdByName('TESTSUITES')) {
-        SIC = 0.01;
-        BRC = 0.12;
-        RIC = 0.05;
-        FRC = 0.03;
-    } else {
-        SIC = 0.01;
-        BRC = 0.08;
-        RIC = 0.03;
-        FRC = 0.03; 
-    }
-    return getScreeningCost(STANDARD_SUBMISSION_COUNT, SIC, firstPlacePrize) +
-            3 * getReviewCost(STANDARD_PASSED_SCREENING_COUNT, BRC, RIC, firstPlacePrize) + 
-            getAggregationCost() + getFinalReviewCost(FRC, firstPlacePrize);
-}
-
-function getScreeningCost(submissionCount, incrementalCoefficient, firstPlacePrize) {
-    return submissionCount * incrementalCoefficient * firstPlacePrize;
-}
-
-function getReviewCost(passedScreeningCount, baseCoefficient, incrementalCoefficient, firstPlacePrize) {
-    return (baseCoefficient + passedScreeningCount * incrementalCoefficient) * firstPlacePrize;
-}
-
-function getAggregationCost() {
-    var STANDARD_AGGREGATION_COST = 10;
-    return STANDARD_AGGREGATION_COST;
-}
-
-function getFinalReviewCost(finalReviewCoefficient, firstPlacePrize) {
-    return finalReviewCoefficient * firstPlacePrize;
 }
 
 function calculateReliabilityPrize(firstPlacePrize, secondPlacePrize, categoryId) {
