@@ -95,9 +95,9 @@ public class TestHelper {
      */
     static Selenium getIndexPage() throws Exception {
         Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getDomain());
+        browser.setTimeout(getTimeout());
         browser.start();
         browser.open(getIndex());
-        browser.setTimeout(getTimeout());
         return browser;
     }
 
