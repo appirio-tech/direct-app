@@ -97,7 +97,7 @@ public class TestHelper {
         Selenium browser = new DefaultSelenium("localhost", getPort(), getBrowser(), getDomain());
         browser.start();
         browser.open(getIndex());
-
+        browser.setTimeout(getTimeout());
         return browser;
     }
 
