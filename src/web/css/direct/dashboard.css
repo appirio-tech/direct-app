@@ -8564,7 +8564,7 @@ P.billingAccountArchive A {
 
 #area1 .select .selectInnerBox .selectInner .settingPanel {
     float: left;
-    width: auto;
+    width: 190px;
     display: inline;
     height: 26px;
     padding: 8px 20px 0px;
