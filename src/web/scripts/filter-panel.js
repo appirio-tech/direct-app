@@ -912,12 +912,14 @@ $(function() {
                             if ($.trim($($('.riskFieldDiv .riskField input[type=text]')[i]).val()).length > 0 
                                 && $($('.riskFieldDiv .riskField .riskError')[i]).hasClass('hide')) {
                                 return false;
+                                
+                            } else {
+	                            // match this row anyway since the input in the current filter is invalid
+	                            hasValid = true;
+	                            break;
                             }
-                            hasValid = true;
-                            break;
-                        }
-                        
-                        if (data > riskArray[i][0] && data < riskArray[i][1]) {
+                            
+                        } else if (data > riskArray[i][0] && data < riskArray[i][1]) {
                             hasValid = true;
                             break;
                         }

@@ -285,8 +285,7 @@
                         <span>
                             <c:choose>
                                 <c:when test="${projectSummary.plannedDuration > 0}">
-                                    ${(projectSummary.actualDuration > projectSummary.projectedDuration ? projectSummary.actualDuration : projectSummary.projectedDuration)
-                                        - projectSummary.plannedDuration}
+                                	${tcdirect:maxLong(0, tcdirect:maxLong(projectSummary.actualDuration, projectSummary.projectedDuration) - projectSummary.plannedDuration)}                                
                                 </c:when>
                                 <c:otherwise>
                                     -1

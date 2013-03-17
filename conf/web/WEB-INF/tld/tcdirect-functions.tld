@@ -159,4 +159,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean hasWriteProjectPermission(long)</function-signature>
     </function>
+    
+    <function>
+        <name>maxLong</name>
+        <function-class>java.lang.Math</function-class>
+        <function-signature>long max(long, long)</function-signature>
+    </function>
 </taglib>
