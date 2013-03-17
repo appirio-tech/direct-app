@@ -1,7 +1,7 @@
 // JavaScript Document
-var allowMaintenance = true;
+var allowMaintenance = false;
 
-var switchMaintenance = true;
+var switchMaintenance = false;
 var switchIE = true;
 
 $(function(){
