@@ -218,10 +218,11 @@ $(document).ready(function(){
             } catch (err) {
             	// pass
             }
+            var categoryId = getContestType(true)[1];
             try {
                 var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
                 CKEDITOR.replace('swDetailedRequirements', { 
-                    templates: 'detailed_requirements_templates',
+                    templates: getDRTemplatesName(categoryId),
                     templates_files: DRTemplatesList    
                 });
                 CKEDITOR.loadTemplates(DRTemplatesList);
@@ -231,7 +232,7 @@ $(document).ready(function(){
             try {
                 var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
                 CKEDITOR.replace('swGuidelines', { 
-                    templates: 'software_guidelines_templates',
+                    templates: getSGTemplatesName(categoryId),
                     templates_files: SGTemplatesList
                 });
                 CKEDITOR.loadTemplates(SGTemplatesList);
@@ -241,7 +242,7 @@ $(document).ready(function(){
             try {
                 var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
                 CKEDITOR.replace('contestDescription', { 
-                    templates: 'studio_contest_spec_templates',
+                    templates: getStudioTemplatesName(categoryId),
                     templates_files: StudioContestSpecTemplates
                 });
                 CKEDITOR.loadTemplates(StudioContestSpecTemplates);
@@ -374,7 +375,25 @@ var preCost = 0;
  */
 function onContestTypeChange() {
    	  var contestType = getContestType(true)[0];
-   	  var typeId = getContestType(true)[1];   	  
+   	  var typeId = getContestType(true)[1];
+      var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
+      var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+      var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
+      CKEDITOR.replace('swGuidelines', { 
+          templates: getSGTemplatesName(typeId),
+          templates_files: SGTemplatesList
+      });    
+      CKEDITOR.replace('swDetailedRequirements', { 
+          templates: getDRTemplatesName(typeId),
+          templates_files: DRTemplatesList 
+      });
+      CKEDITOR.replace('contestDescription', { 
+          templates: getStudioTemplatesName(typeId),
+          templates_files: StudioContestSpecTemplates 
+      });
+      CKEDITOR.loadTemplates(SGTemplatesList);
+      CKEDITOR.loadTemplates(DRTemplatesList);
+      CKEDITOR.loadTemplates(StudioContestSpecTemplates);  
    	  var currentTypeId = -1;
    	  if(isContestSaved()) {
    	  	 currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;

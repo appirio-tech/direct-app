@@ -1947,3 +1947,73 @@ function beforeAjax() {
 function afterAjax() {
 	 modalClose();
 }
+
+function getDRTemplatesName(categoryId) {
+    if (categoryId == 14) {
+        return "assembly_detailed_requirements_templates";
+    } else if (categoryId == 19) {
+        return "ui_prototype_detailed_requirements_templates";
+    } else if (categoryId == 7) {
+        return "architecture_detailed_requirements_templates";
+    } else if (categoryId == 23) {
+        return "conceptualization_detailed_requirements_templates";
+    } else if (categoryId == 6) {
+        return "specification_detailed_requirements_templates";
+    } else if (categoryId == 9) {
+        return "bug_hunt_detailed_requirements_templates";
+    } else if (categoryId == 26) {
+        return "test_scenarios_detailed_requirements_templates";
+    } else if (categoryId == 13) {
+        return "test_suites_detailed_requirements_templates";
+    } else {
+        return "default_detailed_requirements_templates";
+    }
+}
+
+function getSGTemplatesName(categoryId) {
+    if (categoryId == 14) {
+        return "assembly_software_guidelines_templates";
+    } else if (categoryId == 19) {
+        return "ui_prototype_software_guidelines_templates";
+    } else if (categoryId == 7) {
+        return "architecture_software_guidelines_templates";
+    } else if (categoryId == 23) {
+        return "conceptualization_software_guidelines_templates";
+    } else if (categoryId == 6) {
+        return "specification_software_guidelines_templates";
+    } else if (categoryId == 9) {
+        return "bug_hunt_software_guidelines_templates";
+    } else if (categoryId == 26) {
+        return "test_scenarios_software_guidelines_templates";
+    } else if (categoryId == 13) {
+        return "test_suites_software_guidelines_templates";
+    } else {
+        return "default_software_guidelines_templates";
+    }
+}
+
+function getStudioTemplatesName(categoryId) {
+    if (categoryId == 32) {
+        return "app_frontend_contest_spec_templates";
+    } else if (categoryId == 16) {
+        return "banner_or_icon_design_contest_spec_templates";
+    } else if (categoryId == 31) {
+        return "front-end_flash_design_contest_spec_templates";
+    } else if (categoryId == 22) {
+        return "ideagen_contest_spec_templates";
+    } else if (categoryId == 20) {
+        return "logo_design_contest_spec_templates";
+    } else if (categoryId == 30) {
+        return "widget_or_mobile_design_contest_spec_templates";
+    } else if (categoryId == 21) {
+        return "print_or_presentation_design_contest_spec_templates";
+    } else if (categoryId == 34) {
+        return "studio_other_design_contest_spec_templates";
+    } else if (categoryId == 17) {
+        return "web_design_contest_spec_templates";
+    } else if (categoryId == 18) {
+        return "wireframe_contest_spec_templates";
+    } else {
+        return "default_studio_contest_spec_templates";
+    }
+}
