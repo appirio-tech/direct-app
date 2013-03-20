@@ -713,7 +713,7 @@ $(document).ready(function(){
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
         
-        /*
+        
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
             // call method defined by filter panel
             filterbyCustomer($(this).data("id"),$(this).find('a').html());
@@ -723,7 +723,7 @@ $(document).ready(function(){
             }
             updateBreadcrumb(customer);
         }
-        */
+        
         return false;
     })
 	

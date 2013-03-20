@@ -650,7 +650,7 @@ var setupFilterPanel = function () {
         $("#projectManagerFilter").change(function() {
             var searchPattern = $(this).val();
             if (searchPattern== '-1') {
-                searchPattern = '<span></span>';
+                searchPattern = 'none';
             }
             if (searchPattern.indexOf('All') != -1) {
                 searchPattern = '';
