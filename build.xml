@@ -389,11 +389,13 @@
                 <include name="css/direct/**/*.css"/>
                 <include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
+				<exclude name="scripts/ckeditor/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/scorecard/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
+				<include name="scripts/ckeditor/templates/**/*.*"/>
             </fileset>
             <fileset dir="${srcdir}/ppt_web">
                 <include name="css/**/*.*"/>
