@@ -177,7 +177,13 @@ $(document).ready(function(){
        $('#billingProjects').bind("change", function() {
            updateContestFee();
        });
-
+    
+    var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
+    var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+    var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
+    CKEDITOR.loadTemplates(SGTemplatesList);
+    CKEDITOR.loadTemplates(DRTemplatesList);
+    CKEDITOR.loadTemplates(StudioContestSpecTemplates);  
 
    	//Get the contest and populate each section
    // loading some configuration data
@@ -218,38 +224,6 @@ $(document).ready(function(){
             } catch (err) {
             	// pass
             }
-            var categoryId = getContestType(true)[1];
-            try {
-                var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
-                CKEDITOR.replace('swDetailedRequirements', { 
-                    templates: getDRTemplatesName(categoryId),
-                    templates_files: DRTemplatesList    
-                });
-                CKEDITOR.loadTemplates(DRTemplatesList);
-            } catch (err) {
-            	// pass
-            }
-            try {
-                var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
-                CKEDITOR.replace('swGuidelines', { 
-                    templates: getSGTemplatesName(categoryId),
-                    templates_files: SGTemplatesList
-                });
-                CKEDITOR.loadTemplates(SGTemplatesList);
-            } catch (err) {
-            	// pass
-            }
-            try {
-                var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
-                CKEDITOR.replace('contestDescription', { 
-                    templates: getStudioTemplatesName(categoryId),
-                    templates_files: StudioContestSpecTemplates
-                });
-                CKEDITOR.loadTemplates(StudioContestSpecTemplates);
-            } catch (err) {
-            	// pass
-            }
-            
             //execute some actions specific for component design/dev
             //onContestTypeChange();
             $("#contestLoading").hide();
@@ -374,49 +348,61 @@ var preCost = 0;
  * event handler function when contest type is changed.
  */
 function onContestTypeChange() {
-   	  var contestType = getContestType(true)[0];
-   	  var typeId = getContestType(true)[1];
-      var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
-      var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
-      var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
-      CKEDITOR.replace('swGuidelines', { 
-          templates: getSGTemplatesName(typeId),
-          templates_files: SGTemplatesList
-      });    
-      CKEDITOR.replace('swDetailedRequirements', { 
-          templates: getDRTemplatesName(typeId),
-          templates_files: DRTemplatesList 
-      });
-      CKEDITOR.replace('contestDescription', { 
-          templates: getStudioTemplatesName(typeId),
-          templates_files: StudioContestSpecTemplates 
-      });
-      CKEDITOR.loadTemplates(SGTemplatesList);
-      CKEDITOR.loadTemplates(DRTemplatesList);
-      CKEDITOR.loadTemplates(StudioContestSpecTemplates);  
-   	  var currentTypeId = -1;
-   	  if(isContestSaved()) {
-   	  	 currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-   	  }   	  
- 
-   	  if(isContestSaved() && mainWidget.competitionType != contestType) {   	  	
-   	  	   showErrors("You can not switch between studio and software after it is saved.");
-   	  	 
-   	  	   return;
-   	  }
-   	  
-   	  mainWidget.competitionType = contestType;
-   	     	  
-   	  if(isDevOrDesign()) {
-   	  	 $('.component').show();
-   	  } else {
-   	  	 $('.component').hide();
-   	  }
+    var contestType = getContestType(true)[0];
+    var typeId = getContestType(true)[1];
+    var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
+    var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
+    var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
+    if (contestType == 'SOFTWARE') {
+        var swGuidelines = CKEDITOR.instances['swGuidelines'];
+        if (swGuidelines) {
+            swGuidelines.destroy(true);
+        }
+        var swDetailedRequirements = CKEDITOR.instances['swDetailedRequirements'];
+        if (swDetailedRequirements) {
+            swDetailedRequirements.destroy(true);
+        }
+        CKEDITOR.replace('swGuidelines', { 
+            templates: getSGTemplatesName(typeId),
+            templates_files: SGTemplatesList
+        });    
+        CKEDITOR.replace('swDetailedRequirements', { 
+            templates: getDRTemplatesName(typeId),
+            templates_files: DRTemplatesList 
+        });
+    } else {
+        var contestDescription = CKEDITOR.instances['contestDescription'];
+        if (contestDescription) {
+            contestDescription.destroy(true);
+        }
+        CKEDITOR.replace('contestDescription', { 
+            templates: getStudioTemplatesName(typeId),
+            templates_files: StudioContestSpecTemplates 
+        });
+    }
+    var currentTypeId = -1;
+    if(isContestSaved()) {
+     currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    }   	  
 
-   	  if(typeId == currentTypeId) {
-   	  	 // it is a revert, nothing to do here
-   	  	 return;
-   	  }
+    if(isContestSaved() && mainWidget.competitionType != contestType) {   	  	
+       showErrors("You can not switch between studio and software after it is saved.");
+     
+       return;
+    }
+
+    mainWidget.competitionType = contestType;
+          
+    if(isDevOrDesign()) {
+     $('.component').show();
+    } else {
+     $('.component').hide();
+    }
+
+    if(typeId == currentTypeId) {
+     // it is a revert, nothing to do here
+     return;
+    }
 }
 
 /**
