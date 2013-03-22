@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file defines classes to store informations about contest.
@@ -36,9 +36,17 @@
  *  - Add constant SOFTWARE_CATEGORY_ID_ASSEMBLY
  * </p>
  *
+ * <p>
+ *  Version 1.5 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
+ *  - Remove constant SOFTWARE_CATEGORY_ID_MARATHON
+ *  - Add constant ALGORITHM_CATEGORY_ID_MARATHON
+ *  - Add entity com.topcoder.direct.ProjectMMSpecification
+ *  - Update entity com.topcoder.direct.Project to support mm specification
+ *  - Update entity com.topcoder.direct.MainWidget to support ALGORITHM contest
+ * </p>
  * 
- * @author duxiaoyang, TCSASSEMBLER
- * @version 1.4.1
+ * @author duxiaoyang, bugbuka
+ * @version 1.5
  */
 if(!com) {
    var com = {};
@@ -62,6 +70,8 @@ var CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC =2 ;
 var CONTEST_DETAILED_STATUS_SCHEDULED =9 ;
 var MILESTONE_PRIZE_TYPE_ID = 14;
 var CONTEST_PRIZE_TYPE_ID = 15;
+
+
 
 /**
  * Prize class.
@@ -88,6 +98,16 @@ com.topcoder.direct.Prize = function(place, amount, prizeType, numberOfSubmissio
 	
 	this.numberOfSubmissions = numberOfSubmissions;
 };
+
+/**
+ * Marathon Match specification class.
+ */
+com.topcoder.direct.ProjectMMSpecification = function() {
+    this.problemId = "-1"
+    this.problemName = "";
+    this.matchDetails = "";
+    this.matchRules = "";
+}
 
 /**
  * Project studio specification class.
@@ -144,8 +164,9 @@ var SOFTWARE_CATEGORY_ID_DEVELOPMENT = 2;
 var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
-var SOFTWARE_CATEGORY_ID_MARATHON = 37;
 var SOFTWARE_CATEGORY_ID_ASSEMBLY = 14;
+
+var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 
 var DRAFT_STATUS = "Draft";
  
@@ -174,7 +195,7 @@ var projectCategoryArray = [
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
+{id:ALGORITHM_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
 {id:9,                                 name:'Bug Hunt',   label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false}
 ];
 
@@ -276,6 +297,8 @@ com.topcoder.direct.Project = function() {
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
 	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
+	  
+	  this.projectMMSpecification = new com.topcoder.direct.ProjectMMSpecification();
 	  
 	  this.prizes = [];
 	  
@@ -494,7 +517,7 @@ com.topcoder.direct.MainWidget = function() {
   // allowStockArt
   this.allowStockArt = true;
 
-  //'STUDIO' or 'SOFTWARE'
+  //'STUDIO', 'SOFTWARE', or 'ALGORITHM'
   this.competitionType = null;
   
   // software competition
@@ -506,6 +529,10 @@ com.topcoder.direct.MainWidget = function() {
   
   this.isSoftwareContest =  function() {
   	 return 'SOFTWARE' == this.competitionType;
+  }
+  
+  this.isAlgorithmContest =  function() {
+     return 'ALGORITHM' == this.competitionType;
   }
 }
 

@@ -6,6 +6,10 @@
  *
  *  Version 1.1 - TC Cockpit Post a Copilot Assembly 
  *  - Update to set the file input. 
+ * 
+ *  Version 1.2 - Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ *  - Update to support launching mm contest.
+ * 
  */
 (function () {
     /* global window */
@@ -227,7 +231,11 @@
     }
 
     // direct extension
-    function getFileInput(studio) {
+    function getFileInput(studio, algorithm) {
+        if(algorithm) {
+            return $("#alUploadButtonDiv input[type='file']").get(0);
+        }
+        
     	if(studio) {
     	   return $("#uploadButtonDiv input[type='file']").get(0);
     	} else {
@@ -246,7 +254,7 @@
      * upload button. Tested dimentions up to 500x500px
      * @param {Object} options See defaults below.
      */
-    window.AjaxUpload = function(button, options, studio){
+    window.AjaxUpload = function(button, options, studio, algorithm){
         this._settings = {
             // Location of the server-side upload script
             action: 'upload.php',
@@ -290,6 +298,7 @@
         // indicates it is upload for studio or software
         // default it is for studio
         this.studio = studio;
+        this.algorithm = algorithm;
         
         if(button) {                 
            // button isn't necessary a dom element
@@ -333,7 +342,7 @@
            this._rerouteClicks();
         } else {           
           // DOM element                 
-          this._input = getFileInput(this.studio);
+          this._input = getFileInput(this.studio, this.algorithm);
           
           this._button = null;    
           //this._disabled = true;              
@@ -702,7 +711,11 @@
             // get ready for next request            
             // this._createInput();
             
-            if(this.studio) {
+            
+            if(this.algorithm) {
+              $('#alUploadButtonDiv').html('<input name="document" type="file" />');
+              this._input = getFileInput(this.studio, this.algorithm);
+            }else if(this.studio) {
               $('#uploadButtonDiv').html('<input name="document" type="file" />');
 			  this._input = getFileInput(this.studio);
             } else {

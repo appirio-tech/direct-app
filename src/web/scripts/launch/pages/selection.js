@@ -18,9 +18,14 @@
  * 
  * Version 1.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
+ * 
+ * Version 1.5 Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ * - Update method validateFieldsContestSelection to support algorithm contest
+ * - Add method validateFieldsContestSelectionAlgorithm
+ * - Update method continueContestSelection to support algorithm contest 
  *
- * @version 1.4
- * @author TCSDEVELOPER
+ * @version 1.5
+ * @author TCSDEVELOPER, bugbuka
  */
 $(document).ready(function() {	 
 	 initContestNamesFromDesign();
@@ -56,8 +61,10 @@ function validateFieldsContestSelection() {
    	
    if(mainWidget.isSoftwareContest()) {
    	  return validateFieldsContestSelectionSoftware();
-   } else {
+   } else if(mainWidget.isStudioContest()){
    	  return validateFieldsContestSelectionStudio();
+   } else { // Algorithm contest
+      return validateFieldsContestSelectionAlgorithm();
    }
 } 
 
@@ -93,6 +100,65 @@ function initCompetitionSelectionCommonData() {
     mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
     
     mainWidget.softwareCompetition.multiRound = isMultiRound;
+}
+
+function validateFieldsContestSelectionAlgorithm() {
+   var categoryId = getContestType()[1];
+   var contestName = $('input#contestName').val();
+   var tcProjectId = parseInt($('select#projects').val());
+   var billingProjectId = parseInt($('select#billingProjects').val());
+
+   var copilotUserId = parseInt($('select#contestCopilot').val());
+   var copilotName = $('select#contestCopilot option:selected').text();
+
+   var startDate = getDateByIdPrefix('start');
+   var endDate = getDateByIdPrefix('end');
+   
+   //validation
+   var errors = [];
+
+   //validate contest
+   validateContestName(contestName, errors);
+   
+   validateTcProject(tcProjectId, errors);
+   
+   // validate schedule
+   if(startDate >= endDate) {
+       errors.push('The end date should be after the start date.');
+   }
+   
+   if(errors.length > 0) {
+       showErrors(errors);
+       return false;
+   }
+      
+   initCompetitionSelectionCommonData();
+   
+   // set the copilot user id and user name
+   mainWidget.softwareCompetition.copilotUserId = copilotUserId;
+   mainWidget.softwareCompetition.copilotUserName = copilotName;
+
+   delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
+
+   if(copilotUserId == 0) {
+       mainWidget.softwareCompetition.copilotCost = 0;
+   } else {
+       mainWidget.softwareCompetition.copilotCost = copilotFees[categoryId].copilotFee;
+   }
+
+   if($('#lccCheckBox').is(':checked')) {
+       mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+   } else {
+       mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+   }
+
+
+   mainWidget.softwareCompetition.subEndDate = endDate;
+
+   //prizes is on category id
+   fillPrizes();
+   
+   return true;
 }
 
 function validateFieldsContestSelectionSoftware() {
@@ -310,7 +376,9 @@ function continueContestSelection() {
 
    if(mainWidget.isSoftwareContest()) {
    	  showPage('overviewSoftwarePage');
-   } else {
+   }else if(mainWidget.isAlgorithmContest()){
+   	  showPage('overviewAlgorithmPage');
+   } else {// studio contest
       if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
         $("#viewableSubmFlag").attr("disabled","disabled");
         $("#viewableSubmFlag").attr("checked","");

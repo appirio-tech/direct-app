@@ -57,7 +57,8 @@
 	}
 	
 	/** tab **/
-	#launchContestOut .tabOut{
+	#launchContestOut .tabOut,
+	#overviewAlgorithmPage .tabOut{
 		padding-top:10px;
 		text-align:left;
 		}
@@ -147,6 +148,13 @@
 			border:#bdbdbd solid 1px;
 			border-left:0;
 			}
+			
+        #overviewAlgorithmPage .tabContest{
+            height:50px;
+            position:relative;
+            border:#bdbdbd solid 1px;
+            border-left:0;
+            }
 			
     #launchContestOut .tabContest1 {
          border:medium none;
@@ -274,6 +282,19 @@
 			height:28px;
 			margin-top:17px;
 			}
+			
+			
+        #overviewAlgorithmPage .problemDiv{
+            padding-bottom: 20px;
+            border:#bdbdbd solid 1px;
+        }
+        
+        #overviewAlgorithmPage .problemDiv .row{
+            height:20px;
+            margin-left:14px;
+            margin-top:8px;
+            }
+			
 			
 			/** label **/
 			#launchContestOut .addNewContest label{
@@ -607,6 +628,15 @@
 			font-weight: bold;
 			text-align:center;
 			}
+			
+        .prizesTable td.first{
+            width:28%;
+            }
+            
+        .prizesTable td.middleRight{
+            text-align:right; 
+            padding-right:60px
+            }
 		
 			.prizesTable td.large{
 				width:auto;
@@ -1162,7 +1192,8 @@
 				}
 			
 			/** button **/	
-			.prizesInner .addButton{
+			.prizesInner .addButton,
+			.prizesInner .alAddButton{
 				width:22px;
 				height:21px;
 				float:left;
@@ -1705,13 +1736,13 @@
 	}
 	
 	/** file box **/
-	#cboxFiles, #swCboxFiles {
+	#cboxFiles, #swCboxFiles, #alCboxFiles {
 		height:48px;
 		padding-right:0;
 	}
 		
 	/** tip link **/
-	#cboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .stockArtsInner .tipLink,
+	#cboxFiles .tipLink, #alCboxFiles .tipLink, .deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .stockArtsInner .tipLink,
 	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .maxSubmissionsInner .tipLink, .submissionVisibilityInner .tipLink{
 		width:auto;
 		float:right;
@@ -1724,13 +1755,13 @@
 		margin-top:6px;
 	}
 	
-	#cboxFiles dl, #swCboxFiles dl{
+	#cboxFiles dl, #swCboxFiles dl, #alCboxFiles dl{
 		width:90%;
 		float:left;
 		display:inline;
 	}
 	
-	#cboxFiles dt,#cboxFiles dd,#swCboxFiles dt,#swCboxFiles dd{
+	#cboxFiles dt,#cboxFiles dd,#swCboxFiles dt,#swCboxFiles dd, #alCboxFiles dt,#alCboxFiles dd{
 		width:45%;
 		float:left;
 		display:inline;
@@ -1781,6 +1812,11 @@
 	}
 
 /** tabContest and project select **/
+.tabOut .tabContest .newListSelected,.projectSelect .newListSelected{
+    width:547px;
+    background:url(/images/tabContest_select2.gif) no-repeat;
+    }
+    
 .tabContest .newListSelected,.projectSelect .newListSelected{
 	width:362px;
 	height:28px;
@@ -1793,6 +1829,10 @@
 	background:url(/images/tabContest_select.gif) no-repeat;
 	}
 	
+    .tabOut .tabContest .selectedTxt,.projectSelect .selectedTxt{
+        width:547px;
+        }
+        
 	.tabContest .selectedTxt,.projectSelect .selectedTxt{
 		width:359px;
 		overflow:hidden;
@@ -1805,9 +1845,13 @@
 		position:absolute !important;
 		margin-top:-3px !important;
 		}
+		
+    .tabContest .newList{
+        width:555px !important;
+        }
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected {
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected {
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1824,11 +1868,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt {
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt, .problemSelect .selectedTxt {
 		width:281px;
 		}
 	
-	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .copilotsSelect .newList, .projectsSelect .newList{
+	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList{
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;
@@ -2170,7 +2214,10 @@ div.dp-popup td.disabled {
 
 /** stylish select additional styles (payment-method.html) **/
 .selectDesing .newList {
-	background: white url(/images/list_vert_line.gif) no-repeat 184px 0px;
+    background-image: url(/images/list_vert_line.gif), url(/images/list_vert_line.gif);
+    background-repeat: no-repeat, no-repeat;
+    background-position: 184px 0px, 370px 0px;
+	background-color: white, white;
 	}
 	
 .selectDesing li.newListOptionTitle {

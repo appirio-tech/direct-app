@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.5
+  - Author: GreatKevin, bugbuka
+  - Version: 1.6
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -25,6 +25,9 @@
   - 
   - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) change notes:
   - Fixed a drop down layout issue for a lenghthy project name.  
+  -
+  - Version 1.6 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
+  - Update to support launching mm contest. 
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -42,6 +45,8 @@
                            <optgroup label="Studio">
                            </optgroup>
                            <optgroup label="Software">
+                           </optgroup>
+                           <optgroup label="Algorithm">
                            </optgroup>
                        </select>
                   </div>
@@ -160,6 +165,15 @@
           <input id="startDate" name="startDate" type="text"  class="text date-pick" readonly="true"/>
           <div class="startEtSelect">
             <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+          </div>
+          <span>ET (UTC-05)</span>
+      </div>
+      
+      <div id="endDateDiv" class="row">
+        <label>End:</label>
+          <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+          <div class="endEtSelect">
+            <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
           <span>ET (UTC-05)</span>
       </div>

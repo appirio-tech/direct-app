@@ -3,21 +3,22 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -45,9 +46,14 @@ import java.util.Map;
  * - Updates method {@link #getBillingAccountsForProject()} to return all the billing accounts of the project without
  * checking the billing account permission of the users.
  * </p>
+ * 
+ * <p>
+ * Version 1.5 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
+ * - New method {@link #getActiveProblemSet()} to return active problems as JSON.
+ * </p>
  *
- * @author BeBetter, pvmagacho, GreatKevin
- * @version 1.4
+ * @author BeBetter, pvmagacho, GreatKevin, bugbuka
+ * @version 1.5
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -115,6 +121,31 @@ public class CommonAction extends BaseContestFeeAction {
         setResult(result);
         return SUCCESS;
     }
+    
+    /**
+     * <p>
+     * Gets the active problems.
+     * </p>
+     * 
+     * @return the active problems.
+     * @since 1.5
+     */
+    public String getActiveProblemSet() throws Exception {
+
+        // gets the billing accounts associated to the project
+        List<ProblemDTO> problems = DataProvider.getActiveProblemSet();
+
+        Map<String, String> result = new HashMap<String, String>();
+
+        // filter out the billing accounts user has access to
+        for(ProblemDTO p : problems) {
+            result.put(String.valueOf(p.getId()), p.getName());
+        }
+
+        setResult(result);
+        return SUCCESS;
+    }
+    
 
     /**
      * <p>
@@ -190,7 +221,7 @@ public class CommonAction extends BaseContestFeeAction {
 
         return SUCCESS;
     }
-
+    
     /**
      * <p>
      * Gets the billing project information.

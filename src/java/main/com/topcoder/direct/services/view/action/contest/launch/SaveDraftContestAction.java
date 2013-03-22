@@ -14,10 +14,6 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.topcoder.clients.model.ProjectContestFee;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.management.project.ProjectPropertyType;
-import com.topcoder.management.project.ProjectType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -27,14 +23,18 @@ import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.clients.model.Project;
+import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectMMSpecification;
+import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectStudioSpecification;
 import com.topcoder.management.resource.Resource;
@@ -189,9 +189,18 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Update {@link #populateCompetition()} to save projectId into prizes.</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version  1.6.9 ( Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) updates
+ * <ol>
+ *     <li>Update {@link #executeAction()} to support marathon match contest.</li>
+ *     <li>Add {@link #initializeMMCompetition(SoftwareCompetition)} to initialize marathon match competition.</li>
+ *     <li>Update {@link #activateSoftwareCompetition(SoftwareCompetition)} to support marathon match contest.</li>
+ * </ol>
+ * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx
- * @version 1.6.8
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka
+ * @version 1.6.9
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -329,6 +338,14 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private static final long PROJECT_CATEGORY_SPEC = 6;
+    
+    /**
+     * <p>
+     * The constant for marathon match category.
+     * </p>
+     * @since 1.6.9
+     */
+    private static final long PROJECT_CATEGORY_MM = 37;
 
     /**
      * <p>
@@ -601,13 +618,14 @@ public class SaveDraftContestAction extends ContestAction {
             initializeCompetition(softwareCompetition);
             populateCompetition(softwareCompetition);
 
-            if (competitionType == CompetitionType.STUDIO || competitionType == CompetitionType.SOFTWARE) {
+            if ( competitionType == CompetitionType.STUDIO || competitionType == CompetitionType.SOFTWARE || competitionType == CompetitionType.ALGORITHM) {
                 if (isActivation(softwareCompetition)) {
                     softwareCompetition = activateSoftwareCompetition(softwareCompetition);
                 } else {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
                             tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
                 }
+                
                 setResult(getSoftwareResult(softwareCompetition));
             } else {
                 // the competition type is unknown, add error field instead of exception
@@ -835,13 +853,46 @@ public class SaveDraftContestAction extends ContestAction {
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
 
-        if (!DirectUtils.isStudio(softwareCompetition)) {
+        if(softwareCompetition.getProjectHeader().getProjectCategory().getId() == PROJECT_CATEGORY_MM) {
+            initializeMMCompetition(softwareCompetition);
+        } else if (!DirectUtils.isStudio(softwareCompetition)) {
             initializeSoftwareCompetition(softwareCompetition);
         } else {
             initializeStudioCompetition(softwareCompetition);
         }
     }
 
+    /**
+     * initialize the marathon match competition
+     * 
+     * @param mmCompetition the marathon match competition to be initialized
+     * @since 1.6.9
+     */
+    private void initializeMMCompetition(SoftwareCompetition mmCompetition) {
+     // asset DTO
+        AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
+        assetDTOTemp.setRootCategory(getReferenceDataBean().getNotSetCatalog());
+        assetDTOTemp.getCategories().add(getReferenceDataBean().getNotSetCategory());
+        
+        if (softwareCompetition.getProjectHeader().getProjectMMSpecification() == null) {
+            softwareCompetition.getProjectHeader().setProjectMMSpecification(new ProjectMMSpecification());
+        }
+        ProjectMMSpecification projectMMSpecification = softwareCompetition.getProjectHeader().getProjectMMSpecification();
+        if (projectMMSpecification.getProblemName() == null) {
+            projectMMSpecification.setProblemName("");
+        }
+        if (projectMMSpecification.getMatchDetails() == null) {
+            projectMMSpecification.setMatchDetails("");
+        }
+        if (projectMMSpecification.getMatchRules() == null) {
+            projectMMSpecification.setMatchRules("");
+        }
+        
+        if (softwareCompetition.getProjectHeader().getPrizes() == null) {
+            softwareCompetition.getProjectHeader().setPrizes(new ArrayList<Prize>());
+        }
+    }
+    
     /**
      * <p>
      * Initializes the software competition object for studio contest.
@@ -1164,6 +1215,7 @@ public class SaveDraftContestAction extends ContestAction {
                 DirectStrutsActionsHelper.getTCSubjectFromSession(),
                 result.getSoftwareCompetition().getProjectHeader().getId());
     }
+
 
     /**
      * <p>

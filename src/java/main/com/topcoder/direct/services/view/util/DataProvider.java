@@ -3,71 +3,35 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
-import com.topcoder.clients.invoices.model.InvoiceType;
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
-import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
-import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.*;
-import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
-import com.topcoder.direct.services.view.dto.contest.*;
-import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
-import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
-import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
-import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
-import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.ProjectPipelineDrillInDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectsWidgetDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
-import com.topcoder.direct.services.view.dto.project.*;
-import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
-import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
-import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.management.deliverable.Submission;
-import com.topcoder.management.deliverable.Upload;
-import com.topcoder.management.project.ProjectStatus;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.CommonProjectContestData;
-import com.topcoder.service.facade.contest.ForumPoster;
-import com.topcoder.service.facade.contest.ProjectSummaryData;
-import com.topcoder.service.project.ProjectData;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
-import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
-import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
-import com.topcoder.web.common.tag.HandleTag;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -96,21 +60,118 @@ import org.apache.poi.ss.util.WorkbookUtil;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Map.Entry;
+import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
+import com.topcoder.clients.invoices.model.InvoiceType;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
+import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
+import com.topcoder.direct.services.view.dto.ClientBillingDirectProjectMappingDTO;
+import com.topcoder.direct.services.view.dto.ClientUserStatsDTO;
+import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
+import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
+import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
+import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
+import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestReceiptEntry;
+import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
+import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
+import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
+import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
+import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
+import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
+import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
+import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectsWidgetDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.ProjectPipelineDrillInDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatusType;
+import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
+import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
+import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
+import com.topcoder.management.project.ProjectStatus;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ForumPoster;
+import com.topcoder.service.facade.contest.ProjectSummaryData;
+import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
+import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.web.common.tag.HandleTag;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -748,11 +809,18 @@ import java.util.Map.Entry;
  *     <li>Update method {@link #getPMProjectData}</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 6.6 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
+ * <ul>
+ *     <li>Add method {@link #getActiveProblemSet()}</li>
+ * </ul>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad
- * @version 6.5
+ * @author bugbuka, leo_lol, morehappiness, notpad, bugbuka
+ * @version 6.6
  * @since 1.0
  */
 public class DataProvider {
@@ -7589,6 +7657,32 @@ public class DataProvider {
             DatabaseUtils.close(connection);
         }
 
+    }
+    
+    /**
+     * get active problems
+     * 
+     * @return the active problems
+     * @throws Exception if there is any error.
+     * @since 6.6
+     */
+    public static List<ProblemDTO> getActiveProblemSet() throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("active_problems");
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+
+        final ResultSetContainer templateResult = queryData.get("active_problems");
+        List<ProblemDTO> problems = new ArrayList<ProblemDTO>();
+        for (ResultSetContainer.ResultSetRow row : templateResult) {
+            ProblemDTO problem = new ProblemDTO();
+            problem.setId(row.getLongItem("problem_id"));
+            problem.setName(row.getStringItem("problem_name"));
+            problems.add(problem);
+        }
+
+        return problems;
+        
     }
 }
 

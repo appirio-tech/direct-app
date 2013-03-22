@@ -9,13 +9,61 @@
  * 
  * Version 1.3 TC Direct Replatforming Release 4 change note
  * - Add support to save the stock arts allowed flag for the studio contests.
+ * 
+ * Version 1.4 Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ * - Add method updateReviewAlgorithm.
+ * - Update method backReview to support algorithm contest.
+ * - Update method continueReview to support algorithm contest.
  *
- * @author TCSASSEMBER
- * @version 1.3
+ * @author bugbuka
+ * @version 1.4
  */
 /**
  * Rerender the review page.
  */ 
+function updateReviewAlgorithm() {
+   $('#ralContestTypeName').html($("#contestTypes option[value=ALGORITHM"+ mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
+   $('#ralContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   $('#ralProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
+
+   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+   $('#ralBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
+   
+   $('#ralStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
+   
+   // to do 
+   $('#ralEndDate').html(formatDateForReview(mainWidget.softwareCompetition.subEndDate));
+   
+   $('#ralProblemStatement').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName);
+   $('#ralMatchDetails').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails);
+   $('#ralMatchRules').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules);
+   
+   //prizes
+   var html = "";
+   var placeMap = {1:"1st Place",2:"2nd Place", 3:"3rd Place", 4:"4th Place", 5:"5th Place"};
+   $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize) {
+       if (prize.prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+           return;
+       }
+       var place = prize.place;
+       var amount = prize.prizeAmount;
+       html = html +
+        '<label class="first">' + placeMap[place] + '</label>' +
+        '<span class="dw">$</span>' +
+        '<span class="numberDor">' + amount + '</span>';
+   });
+   $('#ralPrizes').html(html);
+   
+   // uploads
+   html = "";
+   $.each(swDocuments, function(i, doc) {
+       html = html + 
+             "<dt>" + doc.fileName + "</dt>" +
+             "<dd>" + doc.description + "</dd>";
+   });
+   $('#alDocUploadList').html(html);   
+} 
+ 
 function updateReviewSoftware() {
    $('#rswContestTypeName').html($("#contestTypes option[value=SOFTWARE"+ mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
    $('#rswContestName').html(mainWidget.softwareCompetition.assetDTO.name);
@@ -159,8 +207,10 @@ function validateFieldsReview() {
 function backReview() {
    if(mainWidget.isSoftwareContest()) {
    	  showPage('overviewSoftwarePage');
-   } else {
+   } else if(mainWidget.isStudioContest()) {
    	  showPage('overviewPage');
+   } else {
+      showPage('overviewAlgorithmPage');
    }
 }
 
@@ -169,9 +219,11 @@ function continueReview() {
        return;
    }
    if(mainWidget.isSoftwareContest()) {
-   	  showPage('orderReviewSoftwarePage');
+      showPage('orderReviewSoftwarePage');
+   } else if(mainWidget.isStudioContest()){
+      showPage('orderReviewPage');
    } else {
-   	  showPage('orderReviewPage');
+      showPage('orderReviewAlgorithmPage');
    }
 
 

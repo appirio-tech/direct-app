@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.2
-  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: bugbuka
+  - Version: 1.3
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of creating project in dashboard.
   -
@@ -9,6 +9,10 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) changes:
   - - Add tooltip for "Create Bug Hunt Contest" checkbox
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) changes:
+  - - Update to support launching mm contest.
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -61,6 +65,10 @@
                              <div id="overviewSoftwarePage" class="launchpage hide">
                                <jsp:include page="includes/launch/overviewSoftware.jsp"/>
                              </div>
+                             
+                             <div id="overviewAlgorithmPage" class="launchpage">
+                               <jsp:include page="includes/launch/overviewAlgorithm.jsp"/>
+                             </div>
 
                              <div id="reviewPage" class="launchpage hide">
                                <jsp:include page="includes/launch/review.jsp"/>
@@ -69,13 +77,21 @@
                              <div id="reviewSoftwarePage" class="launchpage hide">
                                <jsp:include page="includes/launch/reviewSoftware.jsp"/>
                              </div>
-
+                             
+                             <div id="reviewAlgorithmPage" class="launchpage hide">
+                               <jsp:include page="includes/launch/reviewAlgorithm.jsp"/>
+                             </div>
+                             
                              <div id="orderReviewPage" class="launchpage hide">
                                <jsp:include page="includes/launch/orderReview.jsp"/>
                              </div>
 
                              <div id="orderReviewSoftwarePage" class="launchpage hide">
                                <jsp:include page="includes/launch/orderReviewSoftware.jsp"/>
+                             </div>
+                             
+                             <div id="orderReviewAlgorithmPage" class="launchpage hide">
+                               <jsp:include page="includes/launch/orderReviewAlgorithm.jsp"/>
                              </div>
 
                             </div>

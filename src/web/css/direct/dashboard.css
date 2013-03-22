@@ -95,6 +95,10 @@
  * 
  * - (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
  * - Update the CSS to fix multiple issues. 
+ * 
+ * - (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
+ * - Update the CSS for launching contest update for marathon match.
+ *
  */
 
 
@@ -4719,28 +4723,28 @@ hr.plain {
    overflow:hidden;
    */
 }
-#swUploadButtonDiv,#uploadButtonDiv{
-	padding-left:10px;
+#swUploadButtonDiv, #uploadButtonDiv, #alUploadButtonDiv{
+    padding-left:10px;
 }
-#swUploadButtonDiv input,#uploadButtonDiv input{
-	border:1px solid #C1C1C1;
+#swUploadButtonDiv input, #uploadButtonDiv input, #alUploadButtonDiv input{
+    border:1px solid #C1C1C1;
 }
 #rContestName{
    word-wrap:break-word;
 }
-#swUploadSection, #uploadSection{
-	font-size:13px;
+#swUploadSection, #uploadSection, #alUploadSection{
+    font-size:13px;
 }
-#swUploadSection textarea, #uploadSection textarea{
-	border:1px solid #C1C1C1;
+#swUploadSection textarea, #uploadSection textarea, #alUploadSection textarea{
+    border:1px solid #C1C1C1;
 }
-#swUploadSection a.button6, #uploadSection a.button6{
-	float:none;
-	display:inline-block;
+#swUploadSection a.button6, #uploadSection a.button6, #alUploadSection a.button6{
+    float:none;
+    display:inline-block;
 }
-#swUploadSection #swDocumentList,#uploadSection #documentList{
-	margin-bottom:10px;
-	font-size:12px;
+#swUploadSection #swDocumentList,#uploadSection #documentList, #alUploadSection #alDocumentList{
+    margin-bottom:10px;
+    font-size:12px;
 }
 #swFileDescription{
 	max-width: 500px;

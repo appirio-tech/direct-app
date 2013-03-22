@@ -40,8 +40,11 @@
  * Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) change notes:
  * - Fixed a drop down layout issue for a lenghthy project name.  
  * 
- * @author GreatKevin, TCASSEMBLER, csy2012
- * @version 1.9
+ * Version 2.0 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
+ * - Update to support launching mm contest.
+ * 
+ * @author GreatKevin, TCASSEMBLER, csy2012, bugbuka
+ * @version 2.0
  */
 $(document).ready(function() {
 
@@ -57,7 +60,7 @@ $(document).ready(function() {
     });	
     
     //truncate the billing account, copilot and round type
-    $(".addNewContest .row .billingSelect select option,.addNewContest .row .copilotSelect select option, .schedule #roundTypeDiv .roundelect select option").each(function(){
+    $(".addNewContest .row .billingSelect select option,.addNewContest .row .copilotSelect select option, .schedule #roundTypeDiv .roundelect select option, #overviewAlgorithmPage .problemDiv select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,50)+'...';
     		$(this).text(txt);    		
@@ -386,11 +389,14 @@ $(document).ready(function() {
     // populate the select option for software group
     $.each(projectCategoryArray, function(i, projectCategory) {
         // not show copilot contest type
-        if (projectCategory.id != 29 && projectCategory.typeId != 3) {
+        if (projectCategory.id != 29 && projectCategory.id != ALGORITHM_CATEGORY_ID_MARATHON && projectCategory.typeId != 3) {
             $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
         }
         if (projectCategory.typeId == 3) {
         	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Studio']");
+        }
+        if (projectCategory.id == ALGORITHM_CATEGORY_ID_MARATHON) {
+            $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Algorithm']");
         }
     });
     
@@ -481,13 +487,21 @@ $(document).ready(function() {
     if ($('.date-pick').length > 0) {
         $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
     }
-    
+   
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
     CKEDITOR.replace( 'round2Info' ); 
     
-    handleProjectDropDownChange();
+    CKEDITOR.replace( 'matchDetails' );
+    CKEDITOR.replace( 'matchRules' );
+    
 
+    handleProjectDropDownChange();
+    
+    handleProblemsDropDownChange();
+    
+    $('#overviewAlgorithmPage').hide();
+    
 }); // end of jQuery onload
 
 //capacity dates
@@ -540,6 +554,20 @@ function handleProjectDropDownChange() {
     // we only refresh stylish selection when it's not hidden
     $('.copilotSelect select').resetSS();
     $('.copilotSelect select').getSetSSValue(selected);
+}
+
+function handleProblemsDropDownChange() {
+    var problems = getActiveProblemSet();
+
+    $("#problems").empty();
+    $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
+
+    $.each(problems, function(key, value) {
+        $("#problems").append($('<option></option>').val(key).html(value));
+    });
+    $("#problems").val(-1);
+    $("#problems").resetSS();
+    $("#problems").getSetSSValue(-1);
 }
 
 function updateRoundDurationLabels() {
@@ -607,9 +635,16 @@ function onContestTypeChange() {
         $("#assembly_bug_hunt").hide();
         $("#bug_hunt_CheckBox").removeAttr('checked');
     }
+    
+    if(typeId == ALGORITHM_CATEGORY_ID_MARATHON && contestType == 'ALGORITHM') {
+        // show the end date for marathon match
+        $("#endDateDiv").show();
+    } else {
+        $("#endDateDiv").hide();
+    }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
-        showErrors("You can not switch between studio and software after it is saved.");
+        showErrors("You can not switch between studio, software and algorithm after it is saved.");
 
         return;
     }
@@ -701,6 +736,18 @@ function onContestTypeChange() {
           $(".schedule").css("margin-bottom","0px");
 
           getCapacityDatesForStudioSubType(getContestType(true)[1]);
+      }
+      
+      if(mainWidget.isAlgorithmContest()) {
+          $.each(studioSubtypeFees, function(i, fee) {
+               if(fee.id == typeId) {
+                 // not set yet, auto fill
+                 if(isEmpty($('#prize3').val())) {
+                     $('#alPrize1').val(fee.firstPlaceCost)
+                     $('#alPrize2').val(fee.secondPlaceCost)
+                 }
+              }
+          });
       }
       updateContestFee();      
 }

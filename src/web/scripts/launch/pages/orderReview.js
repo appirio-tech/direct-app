@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Rerender the order review page.
@@ -21,10 +21,60 @@
  *
  * Version 1.5 - Release Assembly - TC Direct Cockpit Release Four updates:
  * - ask user to choose start spec review when activating the contest in launch contest
+ * 
+ * Version 1.6 - Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ * - add updateOrderReviewAlgorithm method to update order review page of algorithm contest
+ * - update backOrderReview method to support algorithm contest
  *
- * @author pvmagacho, GreatKevin
- * @version 1.5
+ * @author pvmagacho, GreatKevin, bugbuka
+ * @version 1.6
  */
+
+/**
+ * Update order review page of algorithm contest.
+ */
+function updateOrderReviewAlgorithm() {
+   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
+
+   $('#alorDate').html(formatDateForReview(new Date()));   
+   $('#alorContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   var isMultiRound = mainWidget.softwareCompetition.multiRound;
+   $('#alorProject').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
+
+   $('#alorBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
+
+   $('#alorStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));  
+   
+   //prizes
+   var contestPrizesTotal = 0;
+   var html = "";
+   var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+   $.each(prizes, function(i, prize) {
+       if (prize.prizeType.id != CONTEST_PRIZE_TYPE_ID) {
+           return;
+       }
+       var place = prize.place;
+       var amount = prize.prizeAmount;
+       contestPrizesTotal += amount;
+       html +=
+       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
+   });
+   html += '<td style="width:47%;"></td>';
+   html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
+   $('#alorPrizesTR').html(html);
+
+   var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
+   $('#alorCopilotFee').html(copilotCost.formatMoney(2));
+
+   var adminFee = 0;
+   $('#alorAdminFee1').html('$'+adminFee.formatMoney(0));
+   $('#alorAdminFee2').html('$'+(adminFee + copilotCost).formatMoney(0));
+   
+   var total = contestPrizesTotal + adminFee + copilotCost;
+   $('#alorTotal').html('$' + total.formatMoney(0));
+}
+
+
 /**
  * Update order review page of software contest.
  */
@@ -225,8 +275,10 @@ function validateFieldsOrderReview() {
 function backOrderReview() {
    if(mainWidget.isSoftwareContest()) {
    	  showPage('reviewSoftwarePage');
-   } else {
+   } else if (mainWidget.isStudioContest()){
    	  showPage('reviewPage');
+   } else {
+      showPage('reviewAlgorithmPage');
    }	   
 }
 

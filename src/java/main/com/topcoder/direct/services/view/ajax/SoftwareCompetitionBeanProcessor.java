@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
@@ -54,8 +54,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <li>Add document url to the response.</li>
  * </ul>
  * </p>
- * @author BeBetter, TCSDEVELOPER, morehappiness
- * @version 1.4
+ * 
+ * <p>
+ * Version 1.5 - Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ * <ul>
+ * <li>Update {@link #getMapResult(SoftwareCompetition)} to support marathon match specification.</li>
+ * </ul>
+ * </p>
+ * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka
+ * @version 1.5
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -222,8 +229,9 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             result.put("multiRoundEndDate", DirectUtils.getDateString(DirectUtils.getMultiRoundEndDate(bean)));
         }
         
-        // for studio contest
-        if (DirectUtils.isStudio(bean)) {
+        if(DirectUtils.isMM(bean)){
+            result.put("projectMMSpecification", bean.getProjectHeader().getProjectMMSpecification());
+        } else if (DirectUtils.isStudio(bean)) {
             result.put("projectStudioSpecification", bean.getProjectHeader().getProjectStudioSpecification());
             result.put("fileTypes", bean.getProjectHeader().getProjectFileTypes());
         }

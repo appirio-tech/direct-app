@@ -1233,6 +1233,12 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        
+        <action name="getActiveProblemSet" method="getActiveProblemSet" class="commonAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
     </package>
 
     <package name="contest" namespace="/contest" extends="base">

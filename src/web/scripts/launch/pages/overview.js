@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Overview Page.
@@ -22,9 +22,14 @@
  *
  * Version 1.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
+ * 
+ * Version 1.5 Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
+ * - update validateFieldsOverview method to support algorithm contest.
+ * - add method validateFieldsOverviewAlgorithm
+ * - update continueOverview method to support algorithm contest.
  *
- * @author TCSASSEMBER
- * @version 1.4
+ * @author bugbuka
+ * @version 1.5
  */
 $(document).ready(function() {
    //technologies
@@ -79,8 +84,10 @@ $(document).ready(function() {
 function validateFieldsOverview() {
    if(mainWidget.isSoftwareContest()) {
        return validateFieldsOverviewSoftware();
-   } else {
+   } else if (mainWidget.isStudioContest()){
        return validateFieldsOverviewStudio();
+   } else { // isAlgorithmContest
+       return validateFieldsOverviewAlgorithm();
    }
 }
 
@@ -278,6 +285,44 @@ function validateFieldsOverviewStudio() {
    return true;
 }
 
+function validateFieldsOverviewAlgorithm() {
+   var matchDetails = CKEDITOR.instances.matchDetails.getData();
+   var matchRules = CKEDITOR.instances.matchRules.getData();
+
+   //validation
+   var errors = [];
+
+   if(!checkRequired(matchDetails)) {
+       errors.push('Match Details is empty.');
+   }
+
+   if(!checkRequired(matchRules)) {
+       errors.push('Match Rules is empty.');
+   }
+
+   var prizes = validatePrizes(errors);
+
+   if(errors.length > 0) {
+       showErrors(errors);
+       return false;
+   }
+
+   var problemId = $('.problemSelect select').getSetSSValue();
+   var problemName = (problemId == -1)?"&nbsp;":$("#problems option[value="+ problemId +"]").text();
+   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemId = problemId;
+   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName = problemName;
+   
+   //update
+   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
+   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules = matchRules;
+   
+   
+   mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+   
+   // mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+
+   return true;
+}
 
 function backOverview() {
    showPage('contestSelectionPage');
@@ -294,8 +339,10 @@ function continueOverview() {
           return;
        }
        showPage('reviewSoftwarePage');
-   } else {
+   } else if(mainWidget.isStudioContest()) {
        showPage('reviewPage');
+   } else { // Algorithm contest
+       showPage('reviewAlgorithmPage');
    }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -28,15 +28,12 @@ import com.topcoder.management.resource.Resource;
 import com.topcoder.management.review.data.Review;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.user.UserServiceException;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
@@ -47,13 +44,10 @@ import com.topcoder.management.project.CopilotContestExtraInfoType;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectType;
-import com.topcoder.management.resource.Resource;
-import com.topcoder.management.review.data.Review;
 import com.topcoder.project.phases.Phase;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.service.ContestSaleData;
-import com.topcoder.project.service.ProjectServices;
 import com.topcoder.search.builder.SearchBuilderException;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
@@ -62,8 +56,6 @@ import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.permission.Permission;
-import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
@@ -75,7 +67,6 @@ import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.IOUtils;
-import org.apache.struts2.ServletActionContext;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -433,15 +424,21 @@ import java.util.*;
  *   </ol>
  * </p>
  *
- *
  * <p>
  * Version 1.9.5 (Release Assembly - TC Direct Cockpit Release Eight)
  * <ul>
  *     <li>Add method {@link #isMilestoneSubmissionPhaseClosed(com.topcoder.service.project.SoftwareCompetition)}</li>
  * </ul>
  * </p>
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.9.5
+ * 
+ * <p>
+ * Version 1.9.6 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
+ * <ul>
+ *     <li>Add method {@link #isMM(com.topcoder.service.project.SoftwareCompetition)}</li>
+ * </ul>
+ * </p>
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, bugbuka
+ * @version 1.9.6
  */
 public final class DirectUtils {
     /**
@@ -1354,6 +1351,17 @@ public final class DirectUtils {
      */
     public static boolean isStudio(SoftwareCompetition competition) {
         return competition.getProjectHeader().getProjectCategory().getProjectType().getId() == ProjectType.STUDIO.getId();
+    }
+    
+    /**
+     * <p>Checks whether a <code>SoftwareCompetition</code> is a marathon match contest or not.</p>
+     *
+     * @param competition the <code>SoftwareCompetition</code> to check
+     * @return true if the contest is a marathon match contest, false otherwise.
+     * @since 1.9.6
+     */
+    public static boolean isMM(SoftwareCompetition competition) {
+        return competition.getProjectHeader().getProjectCategory().getId() == 37;
     }
 
     /**
