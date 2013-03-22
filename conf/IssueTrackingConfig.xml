@@ -65,7 +65,7 @@
     <securityNDAId>10043</securityNDAId>
     
 	<!-- the JQL query used for software contest -->
-	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
+	<softwareContestJQLQuery>"Contest ID" ~ </softwareContestJQLQuery>
 
     <!-- the JQL query used for direct project -->
 	<directProjectJQLQuery>"Cockpit Project ID"  = @directProjectID@ and ProjectID is empty</directProjectJQLQuery>
