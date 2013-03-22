@@ -342,7 +342,7 @@ public class JiraRpcServiceWrapper {
             jqlQuery.append("\"Cockpit Project ID\" = ");
             jqlQuery.append(directProjectID);
         }
-        jqlQuery.append(") AND ProjectID is empty ORDER BY Created DESC"); 
+        jqlQuery.append(") AND \"Contest ID\" is empty ORDER BY Created DESC"); 
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery.toString());
         for(TcJiraIssue issue : result) {
