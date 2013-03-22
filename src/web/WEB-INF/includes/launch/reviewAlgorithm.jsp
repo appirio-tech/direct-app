@@ -1,0 +1,95 @@
+<%--
+  - Author: bugbuka
+  - Version: 1.0
+  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: review page for algorithm contest.
+--%>
+<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+
+<!-- tabHead -->
+<div class="tabHead">
+	<ul>
+		<li class="current">Algorithm</li>
+		<li id="ralContestTypeName"></li>
+	</ul>
+	<a href="javascript:showPage('contestSelectionPage');" class="button6 draft"><span class="left"><span class="right">EDIT</span></span></a>								
+	<div class="tr"></div>								
+</div>
+
+<!-- overviewBox -->
+<div class="overviewBox">
+	<table class="overviewData" cellpadding="0" cellspacing="0">
+		<tr>
+			<th>Contest Name :</th>
+			<td><span id="ralContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+		</tr>
+		<tr>
+			<th>Project Name :</th>
+			<td><span id="ralProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+		</tr>
+		<tr>
+			<th>Billing Account :</th>
+			<td><span id="ralBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+		</tr>
+		<tr>
+			<th>Start :</th>
+			<td><span id="ralStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+		</tr>
+        <tr>
+            <th>End :</th>
+            <td><span id="ralEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+        </tr>
+	</table>
+</div>
+<!-- End .overviewBox -->
+
+<!-- contentList -->
+<div class="contentList previewMask">
+	<dl>
+        <dt>Problem Statement :</dt>
+        <dd><span id="ralProblemStatement"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>        
+	
+		<dt>Match Details :</dt>
+		<dd><span id="ralMatchDetails"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+
+		<dt>Match Rules :</dt>
+		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+	</dl>
+</div>
+<!-- end .contentList -->
+              
+<div class="cboxOut">
+              	
+  <!-- title -->
+	<h3>Files: </h3>
+                  
+  <!-- cboxFiles -->
+	<div class="cbox" id="alCboxFiles">		
+		<dl id="alDocUploadList">
+		</dl>                      
+    <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>		
+</div>
+<!-- end #cboxFiles -->
+                  
+</div>
+
+<!-- prizes -->
+<div class="prizes">
+    <h3>Contest Prizes:</h3>
+    
+    <div class="prizesInner">
+        <div  id="ralPrizes">
+        </div>
+        <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
+    </div>    
+</div>
+<!-- end .prizes -->
+
+<div class="buttonBox">	
+    <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
+    <a href="javascript:saveAsDraftReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
+		<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>  
+    <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
+    <a href="javascript:backReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>		
+</div>
