@@ -682,28 +682,6 @@ $(document).ready(function(){
         showHideCustomerList();
     });
 
-    var updateBreadcrumb = function(customer) {
-        var breadcrumb = $("#area1 .currentPage");
-        var lastText = breadcrumb.find("strong");
-        breadcrumb.find(".customer").remove();
-        if (customer == "") {
-            lastText.text("All Active Contests");
-        } else {
-            lastText.text("Active Contests");
-            lastText.before($("<a/>", {
-                "text":customer,
-                "class":"customer",
-                "href":"#"
-            }));
-            lastText.before($("<span/>", {
-                "text":" > ",
-                "class":"customer"
-            }));
-        }
-    }
-
-
-
     $(".customerSelectMask UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
@@ -713,7 +691,7 @@ $(document).ready(function(){
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
         
-        
+        /*
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
             // call method defined by filter panel
             filterbyCustomer($(this).data("id"),$(this).find('a').html());
@@ -723,7 +701,7 @@ $(document).ready(function(){
             }
             updateBreadcrumb(customer);
         }
-        
+        */
         return false;
     })
 	

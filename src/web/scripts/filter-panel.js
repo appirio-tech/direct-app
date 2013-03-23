@@ -320,17 +320,33 @@ var setupFilterPanel = function () {
         }
     }
 
+    var updateBreadcrumb = function(customer) {
+        var breadcrumb = $("#area1 .currentPage");
+        var lastText = breadcrumb.find("strong");
+        breadcrumb.find(".customer").remove();
+        if (customer == "") {
+            lastText.text("All Active Contests");
+        } else {
+            lastText.text("Active Contests");
+            lastText.before($("<a/>", {
+                "text":customer,
+                "class":"customer",
+                "href":"#"
+            }));
+            lastText.before($("<span/>", {
+                "text":" > ",
+                "class":"customer"
+            }));
+        }
+    }
 
     $('#customerFilter').change(function () {
         var str = $(this).val();
-        $(".customerSelectMask").find(".inputSelect input").val(str);
-
         var customerId;
 
         $(".customerSelectMask  ul li a").each(function (index, element) {
             if ($(this).html() == str) {
                 customerId = $(this).parent().data("id");
-                $(this).parent().trigger('click');
             }
         });
 
@@ -390,6 +406,9 @@ var setupFilterPanel = function () {
                 $("#groupValue").attr('disabled', true);
             }
             $("#groupBy").trigger("change");
+        } else if ($("#activeContestsFilter").size() > 0 || $("#CopilotPosingFilter").size() > 0) {     // active contests page or copilot posting page
+            filterbyCustomer(customerId, str);
+            updateBreadcrumb(str);
         }
 
         // handle the customer change for enterprise calendar
