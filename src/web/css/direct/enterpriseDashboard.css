@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+* Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
 *
 * This css used to render the new enterprise dashboard section.
 *
@@ -23,8 +23,11 @@
 * Version 1.6 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
 * - Add new styles for enterprise dashboard drill-in popup
 *
+* Version 1.7 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+* - Add styles to fix bugs of release 2
+*
 * Author: GreatKevin, hanshuai, GreatKevin
-* Version 1.6
+* Version 1.7
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -3155,7 +3158,7 @@ input{
 				
 			.selectFilter .row .column label,
 			.selectFilter .row .column span.label{
-				display:block;
+				display:inline;
 				padding:6px 0 0 0;
 				font-size:12px;
 				font-weight:bold;
@@ -3490,7 +3493,7 @@ input{
 .financialsSection .sectionInner .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:100px;
 	text-align:center;
 	}
@@ -3498,7 +3501,7 @@ input{
 #chartTotalSpend .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:260px;
 	text-align:center;
 	}
@@ -3506,7 +3509,7 @@ input{
 .pipelineSection .sectionInner .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:400px;
 	text-align:center;
 	}
@@ -3514,7 +3517,7 @@ input{
 .projectsHealthSection .pieCharts .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:250px;
 	text-align:center;
 	}
@@ -3522,7 +3525,7 @@ input{
 .projectsHealthSection .tableData .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:100px;
 	text-align:center;
 	}
@@ -3530,7 +3533,7 @@ input{
 .roadMapSection .tableData .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:100px;
 	text-align:center;
 	}
@@ -3541,7 +3544,7 @@ input{
 .overCommunitySection table .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:100px;
 	text-align:center;
 	}
@@ -3552,7 +3555,7 @@ input{
 #overviewPipeline .noData{
 	font-size:14px;
 	font-weight:bold;
-	color:#FF0000;
+	color:grey;
 	line-height:220px;
 	text-align:center;
 	}
@@ -7748,3 +7751,22 @@ TABLE#activeContestData TD SPAN.failedReview{
     color: red;
     padding-left: 8px;
 }
+
+.enterpriseOverView #dataTableLength {
+    width: 40px;
+}
+
+img.indicator {
+    padding-left:10px;
+}
+
+.roadMapSection .tabPanel a.current,
+.overRoadMapSection .tabPanel a.current,
+.roadMapSection .tabPanel a.current span,
+.overRoadMapSection .tabPanel a.current span {
+    cursor: default !important;
+}
+
+
+
+

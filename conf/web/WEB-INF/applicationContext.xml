@@ -363,6 +363,18 @@
         <property name="allowFuturePeek" value="true"/>
     </bean>
 
+    <bean id="enterpriseDashboardPipelineEntryAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.BaseDashboardAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="allowFuturePeek" value="true"/>
+        <property name="defaultProjectStatus" value="0"/>
+    </bean>
+
+    <bean id="enterpriseDashboardFinancialEntryAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.BaseDashboardAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="allowFuturePeek" value="true"/>
+        <property name="defaultProjectStatus" value="0"/>
+    </bean>
+
     <bean id="enterpriseDashboardFinancialAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.DashboardFinancialAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

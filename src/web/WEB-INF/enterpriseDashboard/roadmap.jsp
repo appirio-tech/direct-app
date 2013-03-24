@@ -1,7 +1,10 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - - Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - Add history.js to support push state and back-compatible with IE with hash-fallback
   -
   - Description: The roadmap page the new enterprise dashboard
 --%>
@@ -27,6 +30,7 @@
     <script type="text/javascript" src="/scripts/exporting.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=215476"></script>
+    <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
 </head>
 
@@ -53,7 +57,7 @@
                                 <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
                                 <!-- End .filterPanel -->
 
-                                <div class="roadmapViewArea" style="margin-top: 15px">
+                                <div class="roadmapViewArea" style="margin-top: 15px; min-height: 400px">
                                     <div class="loading">
                                         <img src="/images/loadingAnimation.gif" alt=""/>
                                     </div>
@@ -113,7 +117,7 @@
                                                             </colgroup>
                                                             <thead>
                                                             <tr>
-                                                                <th>OverDue Releases</th>
+                                                                <th>Overdue Releases</th>
                                                                 <th>Project</th>
                                                                 <th>Due Date</th>
                                                             </tr>
@@ -227,7 +231,7 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>OverDue Releases</th>
+                    <th>Overdue Releases</th>
                     <th>Project</th>
                     <th>Due Date</th>
                 </tr>

@@ -9,8 +9,16 @@ import java.util.Date;
 /**
  * The DTO for the enterprise dashboard contests pipeline drill-in.
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ul>
+ *     <li>Add the property {@link #yearMonthLabel} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
+ * @version 1.1
+ * @since  1.0 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
  */
 public class ContestPipelineDrillInDTO implements Serializable {
 
@@ -53,6 +61,13 @@ public class ContestPipelineDrillInDTO implements Serializable {
      * The copilot handle.
      */
     private String copilotHandle;
+
+    /**
+     * The year and month label representing a month in a year.
+     *
+     * @since 1.1
+     */
+    private String yearMonthLabel;
 
     /**
      * Gets the direct project id.
@@ -196,5 +211,25 @@ public class ContestPipelineDrillInDTO implements Serializable {
      */
     public void setCopilotHandle(String copilotHandle) {
         this.copilotHandle = copilotHandle;
+    }
+
+    /**
+     * Gets the year month label.
+     *
+     * @return the year month label.
+     * @since 1.1
+     */
+    public String getYearMonthLabel() {
+        return yearMonthLabel;
+    }
+
+    /**
+     * Sets the year month label.
+     *
+     * @param yearMonthLabel the year month label.
+     * @since 1.1
+     */
+    public void setYearMonthLabel(String yearMonthLabel) {
+        this.yearMonthLabel = yearMonthLabel;
     }
 }

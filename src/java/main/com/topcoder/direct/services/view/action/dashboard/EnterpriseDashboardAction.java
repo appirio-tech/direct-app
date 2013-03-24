@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
@@ -105,9 +105,16 @@ import javax.servlet.http.HttpServletRequest;
  *     </li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ol>
+ *     <li>Refactor method convertMapKeyToString to DirectUtils as a common static utility method</li>
+ * </ol>
+ * </p>
  * 
  * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, GreatKevin
- * @version 2.2
+ * @version 2.3
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -883,8 +890,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         TCSubject currentUser = getCurrentUser();
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("billings", convertMapKeyToString(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
-        result.put("projects", convertMapKeyToString(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        result.put("billings", DirectUtils.convertMapKeyToString(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        result.put("projects", DirectUtils.convertMapKeyToString(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
         setResult(result);
 
         return SUCCESS;
@@ -901,7 +908,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     public String getCostBreakDown() throws Exception {
         Date startDate = DirectUtils.getDate(formData.getStartDate());
         Date endDate = DirectUtils.getDate(formData.getEndDate());
-        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(getCurrentUser(), formData.getProjectIds(), formData.getProjectCategoryIds(), startDate, endDate)));
+        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(getCurrentUser(),
+                formData.getProjectIds(), formData.getProjectCategoryIds(), startDate, endDate)));
         return SUCCESS;
     }
     
@@ -915,7 +923,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         TCSubject currentUser = getCurrentUser();
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("projects", convertMapKeyToString(DirectUtils.getProjectsForBilling(currentUser,
+        result.put("projects", DirectUtils.convertMapKeyToString(DirectUtils.getProjectsForBilling(currentUser,
                 getFormData().getBillingAccountIds()[0])));
         setResult(result);
 
@@ -1515,19 +1523,4 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 			}
         });
     }
-
-    /**
-     * Helper method to convert the key of Map<Long, String> to String, returns a Map<String, String>.
-     *
-     * @param toConvert the map to convert.
-     * @return the converted Map<String, String> instance.
-     */
-    static Map<String, String> convertMapKeyToString(Map<Long, String> toConvert) {
-        Map<String, String> result = new HashMap<String, String>();
-        for(Map.Entry<Long, String> e : toConvert.entrySet()) {
-            result.put(String.valueOf(e.getKey()), e.getValue());
-        }
-        return  result;
-    }
-
 }

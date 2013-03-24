@@ -31,8 +31,13 @@
  * Version 1.8 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
  * - Add JS for enerprise dashboard total spend, contest / project pipeline drill-in.
  *
+ * Version 1.9 （Release Assembly - TC Cockpit New Enterprise Dashboard Release 2）
+ * - Fix all the issues in release 2
+ * - Update filter synchronization logic
+ * - Add push state and backward support for IE
+ *
  * @author GreatKevin, hanshuai, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -161,59 +166,114 @@ function setScrollY(nTable, val) {
     nTable.fnDraw(false);
 }
 
-function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
+function getFilterSelectorValue(filterName) {
+    var filter = $("#" + filterName);
+    if(filter.find("option").length == 0) {
+        return 0;
+    } else {
+        return filter.val();
+    }
+}
+
+function getFilterSelectorText(filterName) {
+    var filter = $("#" + filterName);
+    if(filter.find("option").length == 0) {
+        return "None";
+    } else {
+        return filter.find("option:selected").text();
+    }
+}
+
+function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate, noSync) {
     var formData = {};
-    formData.clientId = $("#clientFilter").val();
-    formData.directProjectId =  $("#projectFilter").val();
-    formData.projectStatusId = $("#projectStatusFilter").val();
-    formData.projectFilterId = $("#metaFilter").val();
+    formData.clientId = getFilterSelectorValue('clientFilter');
+    formData.directProjectId =  getFilterSelectorValue('projectFilter');
+    formData.projectStatusId = getFilterSelectorValue('projectStatusFilter');
+    formData.projectFilterId = getFilterSelectorValue('metaFilter');
     formData.projectFilterValue = $("#metaValueFilter").val();
     var startMonth = $(".timeLine .selectMonth:first span span").text();
     var endMonth = $(".timeLine .selectMonth:last span span").text();
 
     if(requireDate == true) {
+
+    }
+
+    if(requireDate == true) {
         formData.startMonth = startMonth;
         formData.endMonth = endMonth;
     }
+
     formData.pageSize = pageSize;
     formData.pageNumber = pageNumber;
 
     // render header part
-    $("#headerClient").text($("#clientFilter option:selected").text());
-    $("#headerProject").text($("#projectFilter option:selected").text());
-    $("#headerProjectStatus").text($("#projectStatusFilter option:selected").text());
-    $("#headerFilter").text($("#metaFilter option:selected").text());
-    $("#headerFilterValue").text($("#metaValueFilter option:selected").text());
-    $("#headerDate").text(startMonth == endMonth ? startMonth : startMonth + ' - ' + endMonth);
+    $("#headerClient").text(getFilterSelectorText('clientFilter'));
+    $("#headerProject").html(getFilterSelectorText('projectFilter'));
+    $("#headerProjectStatus").text(getFilterSelectorText('projectStatusFilter'));
+    $("#headerFilter").html(getFilterSelectorText('metaFilter'));
+    $("#headerFilterValue").html(getFilterSelectorText('metaValueFilter'));
+    $("#headerDate").text(startMonth == "" ? "None" : (startMonth == endMonth ? startMonth : startMonth + ' - ' + endMonth));
 
-    var currentMonth = countMonth(Date.today());
-    var prevMonth = countMonth(Date.today().addMonths(-1));
+    if(startMonth != "" && endMonth != "") {
+        var currentMonth = countMonth(Date.today());
+        var prevMonth = countMonth(Date.today().addMonths(-1));
 
-    var startMonth = countMonth(Date.parse(startMonth));
-    var endMonth = countMonth(Date.parse(endMonth));
+        var startMonth = countMonth(Date.parse(startMonth));
+        var endMonth = countMonth(Date.parse(endMonth));
 
-    loadCurrentMonth = currentMonth < startMonth || currentMonth > endMonth;
-    loadPreviousMonth = prevMonth < startMonth || prevMonth > endMonth;
+        loadCurrentMonth = currentMonth < startMonth || currentMonth > endMonth;
+        loadPreviousMonth = prevMonth < startMonth || prevMonth > endMonth;
+    }
 
-    var syncParameters = getFilterSynParameters();
+    if (!noSync) {
+        var syncParameters = getFilterSynParameters();
 
-    // update sync
-    $("#silderBar a.filterSynEnabled").each(function(){
-        var url = $(this).attr("href").split("?")[0];
-        url = url + '?' + syncParameters;
-        $(this).attr("href", decodeURI(url));
-    })
+        //history.pushState(syncParameters, "", getActionNameFromURL() + "?" + decodeURI(syncParameters));
+        window.History.pushState(syncParameters, "TopCoder Cockpit - Enterprise Dashboard", "?" + decodeURI(syncParameters));
+
+        // sync in left sidebar
+        $("#silderBar a.filterSynEnabled, a.viewAllSync").each(function () {
+            var url = $(this).attr("href").split("?")[0];
+            if (history.pushState) {
+                url = url + '?' + syncParameters;
+            } else {
+                url = url.split("#")[0]
+                url = url + '#' + getActionNameFromURL($(this).attr("href")) + "?" + syncParameters;
+            }
+
+            $(this).attr("href", decodeURI(url));
+        })
+
+
+    }
 
     return formData;
 }
 
+function getActionNameFromURL(url) {
+    var a = url.lastIndexOf('/');
+    var b = url.indexOf('?');
+    var actionName;
+    if (b > 0) {
+        actionName = url.substring(a+1, b);
+    } else {
+        actionName = url.substr(a + 1);
+    }
+
+    if(actionName.indexOf('#') != -1) {
+        return actionName.split('#')[0];
+    } else {
+        return actionName;
+    }
+}
+
 function renderCurrentPrevMonthSpend() {
     if(currentMonthLoaded && $("#spendThisMonth").length > 0) {
-        $("#spendThisMonth").text("$" + formatNum(currentMonthTotal));
+        $("#spendThisMonth").text("$" + currentMonthTotal ? formatNum(currentMonthTotal) : 0);
     }
 
     if(prevMonthLoaded && $("#spendLastMonth").length > 0) {
-        $("#spendLastMonth").text("$" + formatNum(prevMonthTotal));
+        $("#spendLastMonth").text("$" + prevMonthTotal ? formatNum(prevMonthTotal) : 0);
     }
 }
 
@@ -532,24 +592,24 @@ function renderTotalSpendChart(resultJson) {
 
                             $.ajax({
                                 type: 'POST',
-                                url:  "getTotalSpendDrillIn",
+                                url: ctx + "/enterpriseDashboard/getTotalSpendDrillIn",
                                 data: {formData:requestData},
                                 cache: false,
                                 timeout:100000,
                                 dataType: 'json',
-                                success: function(jsonResult) {
+                                success: function (jsonResult) {
                                     handleJsonResult(jsonResult,
-                                        function(result) {
-                                            if($("#financialViewPopup .dataTables_wrapper").length > 0) {
+                                        function (result) {
+                                            if ($("#financialViewPopup .dataTables_wrapper").length > 0) {
                                                 $("#financialDrillInTable").dataTable().fnDestroy();
                                             }
                                             $("#financialDrillInTable tbody").empty().html($("#financialDrillInTemplate").render(result));
 
-                                            $("#financialViewPopup a.exportLink").attr('href', 'getTotalSpendDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+                                            $("#financialViewPopup a.exportLink").attr('href', 'getTotalSpendDrillIn?' + $.param({formData: requestData, 'export': true})).text("Export to Excel (" + result.length + " records)");
 
                                             $("#financialViewHandler").data("overlay").load();
                                         },
-                                        function(errorMessage) {
+                                        function (errorMessage) {
                                             showErrors(errorMessage);
                                         });
                                 }
@@ -590,19 +650,18 @@ function renderTotalSpendChart(resultJson) {
         $("#" + area).empty().append('<div class="noData">No data available</div>');
     }
 
-    var avarageMonthlySpend = 0;
     var totalSpend = 0;
 
     $.each(resultJson, function (idx, item) {
         totalSpend += parseInt(item.spend);
     });
 
-    avarageMonthlySpend = (totalSpend / resultJson.length).toFixed(1);
+    avarageMonthlySpend = totalSpend > 0 ? (totalSpend / resultJson.length).toFixed(1) : 0;
     var startMonth = $(".timeLine .selectMonth:first span span").text();
     var endMonth = $(".timeLine .selectMonth:last span span").text();
     var strDataCost = '';
-    strDataCost += '<li>Spend This Month:<strong id="spendThisMonth">$ ' + '</strong></li>';
-    strDataCost += '<li>Spend Last Month:<strong id="spendLastMonth">$ ' + '</strong></li>';
+    strDataCost += '<li>Spend This Month:<strong id="spendThisMonth">$ 0' + '</strong></li>';
+    strDataCost += '<li>Spend Last Month:<strong id="spendLastMonth">$ 0' + '</strong></li>';
     strDataCost += '<li>Average Monthly Spend:<strong>$ ' + formatNum(avarageMonthlySpend) + '</strong></li>';
     strDataCost += '<li class="last">' + startMonth + ' - ' + endMonth  + ' Total Spend:<strong>$ ' + formatNum(totalSpend) + '</strong></li>';
 
@@ -1037,6 +1096,7 @@ function renderPipelineWidget(resultJson) {
     var draftData = new Array();
     var failedData = new Array();
     var scheduledData = new Array();
+    var max = 0;
     if (resultJson.length) {
         for (var i = 0; i < resultJson.length; i++) {
             xAxisCate.push(resultJson[i].date);
@@ -1045,6 +1105,13 @@ function renderPipelineWidget(resultJson) {
             draftData.push(parseInt(resultJson[i].draftContests) == 0 ? null : parseInt(resultJson[i].draftContests));
             failedData.push(parseInt(resultJson[i].failedContests) == 0 ? null : parseInt(resultJson[i].failedContests));
             scheduledData.push(parseInt(resultJson[i].scheduledContests) == 0 ? null : parseInt(resultJson[i].scheduledContests));
+
+            var tmp = parseInt(resultJson[i].completedContests) + parseInt(resultJson[i].activeContests)
+                + parseInt(resultJson[i].draftContests) + parseInt(resultJson[i].failedContests) + parseInt(resultJson[i].scheduledContests);
+
+            if (tmp > max) {
+                max = tmp;
+            }
         }
     }
 
@@ -1101,7 +1168,8 @@ function renderPipelineWidget(resultJson) {
                 labels:{
                     enabled:false
                 },
-                gridLineWidth:0
+                gridLineWidth:0,
+                max : max + max/3
             },
             legend:{
                 align:'left',
@@ -1109,6 +1177,8 @@ function renderPipelineWidget(resultJson) {
                 borderWidth:0,
                 borderRadius:0,
                 y:-10,
+                x:-10,
+                width:400,
                 itemStyle:{
                     fontFamily:'Arial',
                     fontSize:'9px',
@@ -1349,7 +1419,7 @@ function renderPipelinePage(resultJson) {
 
                             $.ajax({
                                 type: 'POST',
-                                url:  "getContestsPipelineDrillIn",
+                                url:  ctx + "/enterpriseDashboard/getContestsPipelineDrillIn",
                                 data: {formData:requestData},
                                 cache: false,
                                 timeout:100000,
@@ -1377,7 +1447,7 @@ function renderPipelinePage(resultJson) {
 
                                             $("#contestPipelineDrillInTable tbody").empty().data('tableData', tableData);
 
-                                            $("#contestPipelineViewPopup a.exportLink").attr('href', 'getContestsPipelineDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+                                            $("#contestPipelineViewPopup a.exportLink").attr('href', 'getContestsPipelineDrillIn?' + $.param({formData:requestData,'export':true})).text("Export to Excel (" + result.length + " records)");
 
                                             $("#contestPipelineViewHandler").data("overlay").load();
                                         },
@@ -1447,7 +1517,7 @@ function renderProjectsPipeline(resultJson) {
         });
     }
 
-    $('.pipelineSection .projectsPipeline ul').empty().append('<li class="finished">Total Completed Projects<strong>' + completedDataTotal + '</strong></li><li class="active">Total Started Projects<strong>' + startedDataTotal + '</strong></li>');
+    $('.pipelineSection .projectsPipeline ul').empty().append('<li class="finished">Total Completed Projects<strong>' + completedDataTotal + '</strong></li><li class="active last">Total Started Projects<strong>' + startedDataTotal + '</strong></li>');
     if (resultJson.length) {
         chart = new Highcharts.Chart({
             chart:{
@@ -1567,7 +1637,7 @@ function renderProjectsPipeline(resultJson) {
 
                             $.ajax({
                                 type: 'POST',
-                                url:  "getProjectsPipelineDrillIn",
+                                url:  ctx + "/enterpriseDashboard/getProjectsPipelineDrillIn",
                                 data: {formData:requestData},
                                 cache: false,
                                 timeout:100000,
@@ -1580,7 +1650,7 @@ function renderProjectsPipeline(resultJson) {
                                             }
                                             $("#projectPipelineDrillInTable tbody").empty().html($("#projectPipelineDrillInTemplate").render(result));
 
-                                            $("#projectPipelineViewPopup a.exportLink").attr('href', 'getProjectsPipelineDrillIn?' + $.param({formData:requestData,export:true})).text("Export to Excel (" + result.length + " records)");
+                                            $("#projectPipelineViewPopup a.exportLink").attr('href', 'getProjectsPipelineDrillIn?' + $.param({formData:requestData,'export':true})).text("Export to Excel (" + result.length + " records)");
 
                                             $("#projectPipelineViewHandler").data("overlay").load();
                                         },
@@ -1612,12 +1682,13 @@ function renderProjectsPipeline(resultJson) {
     } else {
         $('.pipelineSection #projectPipelineChart').empty().append('<div class="noData">No data available</div>');
     }
+    $(".filterPanelButton .xls").attr('href', 'getPipelineExport?' + $.param({formData: getEnterpriseDashboardRequest(10000, 0, true)}));
 }
 
 function renderOverviewProjects(resultJson) {
     var strData = '';
     var length;
-    if (resultJson.length) {
+    if (resultJson.length && resultJson.length > 0) {
         length = resultJson.length >= 5 ? 5 : resultJson.length;
         for (var i = 0; i < length; i++) {
             var projectName = resultJson[i].name;
@@ -1661,16 +1732,16 @@ function renderOverviewProjects(resultJson) {
             $("#overProjectsTableData .bar .barInner").each(function () {
                 $(this).css('width', $(this).parent().find('span').text());
             });
-        } else {
-            $("#overProjectsTableData tbody").empty().append('<tr><td colspan="2"><div class="noData">No data available</div></td></tr>');
         }
+    } else {
+        $("#overProjectsTableData tbody").empty().append('<tr><td colspan="2"><div class="noData">No data available</div></td></tr>');
     }
 }
 
 function renderOverviewRoadmap(resultJson) {
     var strDataOverDue = '', strDataUpcoming = '', strDataCompleted = '';
     var pattern = /^\w*/;
-    if (resultJson.overdue.length  && resultJson.overdue.length > 0) {
+    if (resultJson.overdue && resultJson.overdue.length  && resultJson.overdue.length > 0) {
         var overdueLength = resultJson.overdue.length > 3 ? 3 : resultJson.overdue.length;
         for (i = 0; i < overdueLength; i++) {
             strDataOverDue += '<tr>';
@@ -1690,7 +1761,7 @@ function renderOverviewRoadmap(resultJson) {
         $(".overRoadMapSection #overDueData tbody").empty().append('<tr><td colspan="2" class="alignCenter"><div class="noData">No data available</div></td></tr>');
     }
 
-    if (resultJson.upcoming.length && resultJson.upcoming.length > 0) {
+    if (resultJson.upcoming && resultJson.upcoming.length && resultJson.upcoming.length > 0) {
         var upcomingLength = resultJson.upcoming.length > 3 ? 3 : resultJson.upcoming.length;
         for (i = 0; i < upcomingLength; i++) {
             strDataUpcoming += '<tr>';
@@ -1710,7 +1781,7 @@ function renderOverviewRoadmap(resultJson) {
         $(".overRoadMapSection #upcomingData tbody").empty().append('<tr><td colspan="2" class="alignCenter"><div class="noData">No data available</div></td></tr>');
     }
 
-    if (resultJson.completed.length && resultJson.completed.length > 0) {
+    if (resultJson.completed && resultJson.completed.length && resultJson.completed.length > 0) {
         var completedLength = resultJson.completed.length > 3 ? 3 : resultJson.completed.length;
 
         for (i = 0; i < completedLength; i++) {
@@ -1842,7 +1913,7 @@ function loadTotalSpend(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getTotalSpend",
+        url:  ctx + "/enterpriseDashboard/getTotalSpend",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -1885,7 +1956,7 @@ function loadPipeline(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getContestsPipeline",
+        url:  ctx + "/enterpriseDashboard/getContestsPipeline",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -1908,7 +1979,7 @@ function loadProjectPipeline(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getProjectsPipeline",
+        url: ctx + "/enterpriseDashboard/getProjectsPipeline",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -1942,7 +2013,7 @@ function loadFinancial(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getFinancialStatistics",
+        url: ctx + "/enterpriseDashboard/getFinancialStatistics",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -1976,7 +2047,7 @@ function loadRoadmap(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getProjectsMilestones",
+        url:  ctx + "/enterpriseDashboard/getProjectsMilestones",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -2001,7 +2072,7 @@ function loadProjects(resultHandler) {
 
     $.ajax({
         type: 'POST',
-        url:  "getProjectsWidget",
+        url:  ctx + "/enterpriseDashboard/getProjectsWidget",
         data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
         cache: false,
         timeout:100000,
@@ -2037,7 +2108,7 @@ function loadCurrentPrevMonthSpend() {
 
         $.ajax({
             type: 'POST',
-            url:  "getTotalSpend",
+            url:  ctx + "/enterpriseDashboard/getTotalSpend",
             data: {formData:request},
             cache: false,
             dataType: 'json',
@@ -2082,14 +2153,15 @@ function renderFinancialTab() {
     loadTotalSpend(renderTotalSpendChart);
     // loadFinancial(renderFinancial);
     loadCurrentPrevMonthSpend();
+    $(".filterPanelButton .xls").attr('href', 'getTotalSpendExport?' + $.param({formData: getEnterpriseDashboardRequest(10000, 0, true)}));
 }
 
 function getRequestForAnalysis() {
     var request = {};
-    request.customerIds = [$("#customer").val()];
+    request.customerIds = [getFilterSelectorValue('customer')];
     customerName = $("#customer option:selected").text();
-    request.billingAccountIds = [$("#billingAccount").val()];
-    request.projectIds = [$("#project").val()];
+    request.billingAccountIds = [getFilterSelectorValue('billingAccount')];
+    request.projectIds = [getFilterSelectorValue('project')];
     var projectCategoryIds = [];
     $(".selectWrapper ul li:gt(0)").each(function(){
         if($(this).hasClass("selected")) {
@@ -2151,7 +2223,7 @@ function getRequestForAnalysis() {
 
 $(document).ready(function () {
 
-    $("#clientFilter").attr("autocomplete","off");
+    $(".filterContainer select").attr("autocomplete","off");
 
     $('.triggerModal').live('click', function () {
         modalLoad('#' + $(this).attr('name'));
@@ -2343,18 +2415,90 @@ $(document).ready(function () {
 
     $('#zoomSelect .sixMonths a').trigger('click');
 
+    sortDropDown("#projectStatusFilter");
+
     $("#clientFilter").change(function(){
+
+        showIndicator($("#projectFilter"));
+        showIndicator($("#metaFilter"));
+        showIndicator($("#metaValueFilter"));
+        var requestData = getEnterpriseDashboardRequest(10000, 0, true, true);
+        requestData.projectFilterId = 0;
+        requestData.projectFilterValue = "None";
+
         $.ajax({
             type: 'POST',
-            url:  "dashboardGetOptionsForClientAJAX",
-            data: {'formData.customerIds':$("#clientFilter").val()},
+            url:  ctx + "/enterpriseDashboard/getOptionsForClientAJAX",
+            data: {formData:requestData},
             cache: false,
-            async: false,
+            async: true,
             dataType: 'json',
             success: function(jsonResult) {
                 handleJsonResult2(jsonResult,
                     function(result) {
                         var projects = result.projects;
+                        var $project = $("#projectFilter");
+
+                        $project.html("");
+                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $.each(projects, function(key, value) {
+                            $project.append($('<option></option>').val(key).html(value));
+                        });
+
+                        $project.val(0);
+
+                        sortDropDown("#projectFilter");
+
+                        var $projectFilters = $("#metaFilter");
+                        $projectFilters.empty();
+
+                        $projectFilters.append($("<option></option>").attr('value', 0).text("None"));
+
+                        $.each(result.projectFilters, function (key, value) {
+                            $projectFilters.append($("<option></option>").attr('value', key).text(value));
+                        });
+
+                        $projectFilters.val(0);
+
+                        var $projectFilterValues = $("#metaValueFilter");
+                        $projectFilterValues.empty();
+
+                        $projectFilterValues.append($("<option></option>").attr('value', 'None').text("None"));
+
+                        $.each(result, function (index, value) {
+                            $projectFilterValues.append($("<option></option>").attr('value', value).text(value));
+                        });
+
+                        $projectFilterValues.val('None');
+
+                        hideIndicator($("#projectFilter"));
+                        hideIndicator($("#metaFilter"));
+                        hideIndicator($("#metaValueFilter"));
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+    });
+
+    $("#projectStatusFilter").change(function () {
+
+        if($("#projectStatusFilter option").length == 0) return;
+
+        showIndicator($("#projectFilter"));
+
+        $.ajax({
+            type:'POST',
+            url: ctx + "/enterpriseDashboard/getFilteredProjects",
+            data:{formData:getEnterpriseDashboardRequest(100000, 0, true, true)},
+            cache:false,
+            async: true,
+            dataType:'json',
+            success:function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        var projects = result;
                         var $project = $("#projectFilter");
 
                         $project.html("");
@@ -2371,56 +2515,28 @@ $(document).ready(function () {
                         }
 
                         sortDropDown("#projectFilter");
-                    },
-                    function(errorMessage) {
-                        showErrors(errorMessage);
-                    });
-            }
-        });
 
-        $.ajax({
-            type:'POST',
-            url:ctx + "/getGroupByOptionsForCustomer",
-            data:{customerId:$("#clientFilter").val()},
-            cache:false,
-            async: false,
-            dataType:'json',
-            success:function (jsonResult) {
-                handleJsonResult2(jsonResult,
-                    function (result) {
-                        var selector = $("#metaFilter");
-                        selector.empty();
-
-                        selector.append($("<option></option>").attr('value', 0).text("None"));
-
-                        $.each(result, function (index, value) {
-                            selector.append($("<option></option>").attr('value', value.id).text(value.name));
-                        });
-
-                        selector.val(0);
-
-                        if(projectFilterToSync) {
-                            selector.val(projectFilterToSync);
-                            projectFilterToSync = null;
-                        }
-
-                        selector.trigger('change');
+                        hideIndicator($("#projectFilter"));
                     },
                     function (errorMessage) {
                         showErrors(errorMessage);
                     });
             }
         });
-
     });
 
     $("#metaFilter").change(function () {
+
+        if($("#metaFilter option").length == 0) return;
+
+        showIndicator($("#metaValueFilter"));
+
         $.ajax({
             type:'GET',
             url:ctx + "/getGroupValuesForGroupBy",
             data:{groupKeyId:$("#metaFilter").val()},
             cache:false,
-            async: false,
+            async: true,
             dataType:'json',
             success:function (jsonResult) {
                 handleJsonResult2(jsonResult,
@@ -2441,6 +2557,57 @@ $(document).ready(function () {
                             projectFilterValueToSync = null;
                         }
 
+                        hideIndicator($("#metaValueFilter"));
+
+                    },
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+    });
+
+    $("#metaValueFilter").change(function () {
+
+        if($("#metaValueFilter option").length == 0) return;
+        var requestData = getEnterpriseDashboardRequest(100000, 0, true, true);
+
+        if(requestData.projectFilterValue == 'None') {
+            // if project filter value is None, do not filter by project filter
+            requestData.projectFilterId = 0;
+        }
+
+        showIndicator($("#projectFilter"));
+
+        $.ajax({
+            type:'POST',
+            url: ctx + "/enterpriseDashboard/getFilteredProjects",
+            data:{formData:requestData},
+            cache:false,
+            async: true,
+            dataType:'json',
+            success:function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        var projects = result;
+                        var $project = $("#projectFilter");
+
+                        $project.html("");
+                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $.each(projects, function(key, value) {
+                            $project.append($('<option></option>').val(key).html(value));
+                        });
+
+                        $project.val(0);
+
+                        if(projectToSync) {
+                            $project.val(projectToSync);
+                            projectToSync = null;
+                        }
+
+                        sortDropDown("#projectFilter");
+
+                        hideIndicator($("#projectFilter"));
                     },
                     function (errorMessage) {
                         showErrors(errorMessage);
@@ -2619,27 +2786,32 @@ $(document).ready(function () {
         $(".date-pick").datePicker();
     }
 
-
     // filter sync
-    if($("#silderBar .active a.filterSynEnabled").length > 0 && getUrlPara('customer')) {
+    if ($("#silderBar .active a.filterSynEnabled").length > 0 && $("#silderBar .active a.analyticsIcon").length <= 0 && getUrlPara('customer')) {
         var customer = getUrlPara('customer');
-        projectToSync = getUrlPara('project');
         var status = getUrlPara('status');
-        projectFilterToSync = getUrlPara('metaFilter');
-        projectFilterValueToSync = getUrlPara('metaValueFilter');
+
         var zoom = getUrlPara('zoom');
         var startMonth = getUrlPara('startMonth');
         var endMonth = getUrlPara('endMonth');
-        $("#clientFilter").val(customer).trigger('change');
-        $("#projectStatusFilter").val(status).trigger('change');
 
-        if(zoom && zoom != 'null') {
+        projectToSync = getUrlPara('project');
+        projectFilterToSync = getUrlPara('metaFilter');
+        projectFilterValueToSync = getUrlPara('metaValueFilter');
+
+        $("#projectStatusFilter").val(status);
+        $("#clientFilter").val(customer);
+        var syncRequestData = getEnterpriseDashboardRequest(10000, 0, true, true);
+        syncRequestData.projectFilterId = projectFilterToSync;
+        syncRequestData.projectFilterValue = projectFilterValueToSync;
+
+        if (zoom && zoom != 'null') {
             $("#zoomSelect").find("li a").removeClass("current");
             var zoomButton = $("#zoomSelect").find("li." + zoom).find("a");
             zoomButton.click();
         } else {
-            $(".monthList .timeLine li").each(function(){
-                if($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
+            $(".monthList .timeLine li").each(function () {
+                if ($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
                     step = $(this).index();
                     return false;
                 }
@@ -2648,15 +2820,92 @@ $(document).ready(function () {
             moveMonth();
             $("#zoomSelect").find("li a.current").click();
 
-            $(".monthList .timeLine li").each(function(){
-                if($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
+            $(".monthList .timeLine li").each(function () {
+                if ($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
                     $(this).find("a").click();
                 }
-                if(startMonth != endMonth && $(this).find("span span").text() == endMonth.replace('%27', "'").toUpperCase()) {
+                if (startMonth != endMonth && $(this).find("span span").text() == endMonth.replace('%27', "'").toUpperCase()) {
                     $(this).find("a").click();
                 }
             });
         }
+        $("#headerClient").text(getFilterSelectorText('clientFilter'));
+        $("#headerProject").html('<img src="/images/dots-white.gif"/>');
+        $("#headerProjectStatus").text(getFilterSelectorText('projectStatusFilter'));
+        $("#headerFilter").html('<img src="/images/dots-white.gif"/>');
+        $("#headerFilterValue").html('<img src="/images/dots-white.gif"/>');
+        $("#headerDate").text(startMonth == endMonth ? startMonth : startMonth + ' - ' + endMonth);
+
+        // get options for the synchronized client
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/enterpriseDashboard/getOptionsForClientAJAX",
+            data: {formData: syncRequestData},
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        var projects = result.projects;
+                        var $project = $("#projectFilter");
+
+                        $project.html("");
+                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $.each(projects, function (key, value) {
+                            $project.append($('<option></option>').val(key).html(value));
+                        });
+
+                        $project.val(0);
+
+                        if (projectToSync) {
+                            $project.val(projectToSync);
+                            projectToSync = null;
+                        }
+
+                        sortDropDown("#projectFilter");
+
+                        var $projectFilters = $("#metaFilter");
+                        $projectFilters.empty();
+
+                        $projectFilters.append($("<option></option>").attr('value', 0).text("None"));
+
+                        $.each(result.projectFilters, function (key, value) {
+                            $projectFilters.append($("<option></option>").attr('value', key).text(value));
+                        });
+
+                        $projectFilters.val(0);
+
+                        if (projectFilterToSync) {
+                            $projectFilters.val(projectFilterToSync);
+                            projectFilterToSync = null;
+                        }
+
+                        if (result.projectFilterValues) {
+                            var $projectFilterValues = $("#metaValueFilter");
+                            $projectFilterValues.empty();
+
+                            $projectFilterValues.append($("<option></option>").attr('value', 'None').text("None"));
+
+                            $.each(result.projectFilterValues, function (index, value) {
+                                $projectFilterValues.append($("<option></option>").attr('value', value).text(value));
+                            });
+
+                            $projectFilterValues.val('None');
+
+                            if (projectFilterValueToSync) {
+                                $projectFilterValues.val(projectFilterValueToSync);
+                                projectFilterValueToSync = null;
+                            }
+                        }
+                    },
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+
+        // $("#projectStatusFilter").val(status).trigger('change');
     }
 
 
@@ -2665,7 +2914,10 @@ $(document).ready(function () {
         renderOverviewTab();
 
         $("#filterButton").click(function(){
-            renderOverviewTab();
+            if(validateFilterPanel()) {
+                modalAllClose();
+                renderOverviewTab();
+            }
         });
 
         $('.overRoadMapSection .tabPanel li a').live('click',function(){
@@ -2678,10 +2930,14 @@ $(document).ready(function () {
 
     // financial page
     if ($(".financialsIcon").parents("li").hasClass("active")) {
+        $(".filterPanelButton .xls").show();
         renderFinancialTab();
 
         $("#filterButton").click(function(){
-            renderFinancialTab();
+            if(validateFilterPanel()) {
+                modalAllClose();
+                renderFinancialTab();
+            }
         });
 
         // setup drill-in for total spend chart in financial page
@@ -2729,12 +2985,17 @@ $(document).ready(function () {
 
     // pipeline
     if ($(".pipelineIcon").parents("li").hasClass("active")) {
+        $(".filterPanelButton .xls").show();
         loadPipeline(renderPipelinePage);
         loadProjectPipeline(renderProjectsPipeline);
 
         $("#filterButton").click(function(){
-            loadPipeline(renderPipelinePage);
-            loadProjectPipeline(renderProjectsPipeline);
+            if(validateFilterPanel()) {
+                modalAllClose();
+                loadPipeline(renderPipelinePage);
+                loadProjectPipeline(renderProjectsPipeline);
+            }
+
         });
 
         $("#contestPipelineViewHandler").overlay({
@@ -2818,8 +3079,11 @@ $(document).ready(function () {
         loadRoadmapCalendar();
 
         $("#filterButton").click(function(){
-            loadRoadmap(renderRoadmapPage);
-            loadRoadmapCalendar();
+            if(validateFilterPanel()) {
+                modalAllClose();
+                loadRoadmap(renderRoadmapPage);
+                loadRoadmapCalendar();
+            }
         });
 
         $('.roadMapSection .tabPanel li a').live('click',function(){
@@ -2866,6 +3130,14 @@ $(document).ready(function () {
             "sPaginationType":"full_numbers",
             "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>'
         });
+
+        setTimeout(function () {
+            $(".filterContainer select").each(function () {
+                sortDropDown('#' + $(this).attr('id'));
+            })
+        }, 1000);
+
+
     }
 
     // analysis
@@ -2941,7 +3213,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url:  "dashboardGetOptionsForBillingAJAX",
+                url:  ctx + "/enterpriseDashboard/dashboardGetOptionsForBillingAJAX",
                 data: {'formData.billingAccountIds':billingId},
                 cache: false,
                 dataType: 'json',
@@ -3368,7 +3640,7 @@ $(document).ready(function () {
             volumeTableLoaded = false;
             $.ajax({
                 type:'POST',
-                url:'dashboardEnterpriseAJAX',
+                url: ctx + '/dashboardEnterpriseAJAX',
                 data:request,
                 cache:false,
                 dataType:'json',
@@ -3376,10 +3648,10 @@ $(document).ready(function () {
                     handleJsonResult(jsonResult,
                         function(result) {
                             // update the chart viewer header
-                            $(".filterPanelHeader h3").text($("#customer option:selected").text());
-                            $("#projectHeader").text($("#project option:selected").text());
-                            $("#billingHeader").text($("#billingAccount option:selected").text());
-                            $("#groupHeader").text($("#timeDimension option:selected").text());
+                            $(".filterPanelHeader h3").text(getFilterSelectorText('customer'));
+                            $("#projectHeader").text(getFilterSelectorText('project'));
+                            $("#billingHeader").text(getFilterSelectorText('billingAccount'));
+                            $("#groupHeader").text(getFilterSelectorText('timeDimension'));
                             $("#timeHeader").text(data.startDate + ' to ' + data.endDate);
                             analysisData = result;
 
@@ -3413,7 +3685,7 @@ $(document).ready(function () {
             var data = request.formData;
             $.ajax({
                 type:'POST',
-                url:'dashboardEnterpriseAJAX',
+                url: ctx + '/dashboardEnterpriseAJAX',
                 data:request,
                 cache:false,
                 dataType:'json',
@@ -3447,7 +3719,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type:'POST',
-                url:'../dashboardEnterpriseTableViewCall',
+                url: ctx + '/dashboardEnterpriseTableViewCall',
                 data:request,
                 cache:false,
                 dataType:'json',
@@ -3586,7 +3858,7 @@ $(document).ready(function () {
 function loadOptionsByClientId(clientId) {
     $.ajax({
         type: 'POST',
-        url:  "dashboardGetOptionsForClientAJAX",
+        url:  ctx + "/dashboardGetOptionsForClientAJAX",
         data: {'formData.customerIds':clientId},
         cache: false,
         dataType: 'json',
@@ -4127,7 +4399,7 @@ function loadRoadmapCalendar() {
 
     $.ajax({
         type:'POST',
-        url:'getRoadmapCalendar',
+        url: ctx + '/enterpriseDashboard/getRoadmapCalendar',
         data:{formData:getEnterpriseDashboardRequest(100000, 0, true)},
         dataType:"html",
         cache:false,
@@ -4276,5 +4548,16 @@ function loadRoadmapCalendar() {
             }
         }
     });
+}
+
+function validateFilterPanel() {
+    // validate whether start month and end month
+    if ($(".timeLine .selectMonth").length == 0) {
+        $("#zoomSelect .validationMessage").show();
+        return false;
+    } else {
+        $("#zoomSelect .validationMessage").hide();
+        return true;
+    }
 }
 

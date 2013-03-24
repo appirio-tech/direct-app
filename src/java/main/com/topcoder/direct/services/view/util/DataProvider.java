@@ -3,63 +3,6 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
@@ -172,6 +115,61 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import com.topcoder.web.common.tag.HandleTag;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
+import org.w3c.dom.Document;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -817,10 +815,20 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.7 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ul>
+ *     <li>Adds method {@link #getFilteredProjectsResult(int, int, long, long[], long, String)}</li>
+ *     <li>Updates method {@link #getEnterpriseDashboardTotalSpendDrillIn(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm, boolean)}</li>
+ *     <li>Updates method {@link #getEnterpriseDashboardContestsPipelineDrillIn(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm, boolean)}</li>
+ *     <li>Updates method {@link #getEnterpriseDashboardProjectsPipelineDrillIn(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm, boolean)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, bugbuka
- * @version 6.6
+ * @author bugbuka, leo_lol, morehappiness, notpad, bugbuka, GreatKevin
+ * @version 6.7
  * @since 1.0
  */
 public class DataProvider {
@@ -1463,9 +1471,9 @@ public class DataProvider {
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
             data.setHasWritePermission(resultContainer.getBooleanItem(i, "has_write_permission"));
-            System.out.println("xxx:" + resultContainer.getItem(i, "completion_date").getResultData() == null);
+           
             if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
-                System.out.println("XXXXXX:" + resultContainer.getTimestampItem(i, "completion_date"));
+                
                 data.setProjectCompletionDate(resultContainer.getTimestampItem(i, "completion_date"));
             }
             if (resultContainer.getItem(i, "project_forum_id").getResultData() != null) {
@@ -6305,20 +6313,41 @@ public class DataProvider {
             }
         }
 
+        return getFilteredProjectsResult(filterForm.getPageSize(), filterForm.getPageNumber(),
+                filterForm.getProjectStatusId(), projectIds, filterForm.getProjectFilterId(), filterForm.getProjectFilterValue());
+    }
+
+
+    /**
+     * Gets the filtered projects for the Enterprise Dashboard Filter panel
+     *
+     * @param pageSize the paging size
+     * @param pageNumber the paging number
+     * @param statusId the status id.
+     * @param projectIds an array of project ids
+     * @param projectFilterId  the id of the project filter
+     * @param projectFilterValue  the value of project filter applied
+     * @return the filtered projects storing in a map, the key is the project id, the value is the project name.
+     * @throws Exception if there is any error
+     * @since 6.6
+     */
+    public static Map<Long, String> getFilteredProjectsResult(int pageSize, int pageNumber, long statusId,
+                                                               long[] projectIds, long projectFilterId,
+                                                               String projectFilterValue) throws Exception {
         String tcDirectProjectIds = concatenate(projectIds, ", ");
 
         // page size should start from 0
-        String pagination = "SKIP " + filterForm.getPageSize() * filterForm.getPageNumber() + " FIRST " + filterForm.getPageSize();
+        String pagination = "SKIP " + pageSize * pageNumber + " FIRST " + pageSize;
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         String query = "enterprise_dashboard_filter_projects";
         Request request = new Request();
         request.setContentHandle(query);
         request.setProperty("pagination", pagination);
-        request.setProperty("directProjectStatusId", String.valueOf(filterForm.getProjectStatusId()));
+        request.setProperty("directProjectStatusId", String.valueOf(statusId));
         request.setProperty("tcdirectids", tcDirectProjectIds);
-        request.setProperty("metakeyid", String.valueOf(filterForm.getProjectFilterId()));
-        request.setProperty("metavalue", filterForm.getProjectFilterValue());
+        request.setProperty("metakeyid", String.valueOf(projectFilterId));
+        request.setProperty("metavalue", projectFilterValue);
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
         final int recordNum = resultContainer.size();
@@ -6447,19 +6476,20 @@ public class DataProvider {
      * Gets the data for the total spend drill-in for enterprise dashboard.
      *
      * @param filterForm the enterprise dashboard filter form
+     * @param  singleMonth whether getting data for single month
      * @return a list of <code>TotalSpendDrillInDTO</code>
      * @throws Exception if there is any error
      * @since 6.4
      */
     public static List<TotalSpendDrillInDTO> getEnterpriseDashboardTotalSpendDrillIn(
-            EnterpriseDashboardFilterForm filterForm) throws Exception {
+            EnterpriseDashboardFilterForm filterForm, boolean singleMonth) throws Exception {
         long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
 
         if(projectIds == null || projectIds.length == 0) {
             return new ArrayList<TotalSpendDrillInDTO>();
         }
 
-        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+        if(singleMonth && !filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
             throw new IllegalArgumentException("Drill-in can only check one month at a time");
         }
 
@@ -6477,8 +6507,13 @@ public class DataProvider {
         List<TotalSpendDrillInDTO> result = new ArrayList<TotalSpendDrillInDTO>();
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
         final int recordNum = resultContainer.size();
+        Calendar calendar = Calendar.getInstance();
         for (int i = 0; i < recordNum; i++) {
             TotalSpendDrillInDTO item = new TotalSpendDrillInDTO();
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            calendar.set(Calendar.YEAR, (int) monthCount/100);
+            calendar.set(Calendar.MONTH, (int) (monthCount % 100) - 1);
+            item.setYearMonthLabel(dateFormatter.format(calendar.getTime()));
             double monthCost = resultContainer.getDoubleItem(i, "monthcost");
             double monthContestFee = resultContainer.getDoubleItem(i, "monthcontestfee");
             long directProjectId = resultContainer.getLongItem(i, "direct_project_id");
@@ -6602,19 +6637,20 @@ public class DataProvider {
      * Gets the drill-in data for contests pipeline of enterprise dashboard.
      *
      * @param filterForm the enterprise dashboard filter form.
+     * @param singleMonth whether getting data for single month
      * @return a list of <code>ContestPipelineDrillInDTO</code>
      * @throws Exception if there is any error.
      * @since 6.4
      */
     public static List<ContestPipelineDrillInDTO>
-            getEnterpriseDashboardContestsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm) throws Exception {
+            getEnterpriseDashboardContestsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm, boolean singleMonth) throws Exception {
         long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
 
         if(projectIds == null || projectIds.length == 0) {
             return new ArrayList<ContestPipelineDrillInDTO>();
         }
 
-        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+        if(singleMonth && !filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
             throw new IllegalArgumentException("Drill-in can only check one month at a time");
         }
 
@@ -6635,8 +6671,14 @@ public class DataProvider {
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
         final int recordNum = resultContainer.size();
+        Calendar calendar = Calendar.getInstance();
+
         for (int i = 0; i < recordNum; i++) {
             ContestPipelineDrillInDTO item = new ContestPipelineDrillInDTO();
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            calendar.set(Calendar.YEAR, (int) monthCount/100);
+            calendar.set(Calendar.MONTH, (int) (monthCount % 100) - 1);
+            item.setYearMonthLabel(dateFormatter.format(calendar.getTime()));
             String currentPhase = resultContainer.getStringItem(i, "current_phase");
             String status = resultContainer.getStringItem(i, "sname");
             String newStatus = resultContainer.getStringItem(i, "newstatus");
@@ -6780,19 +6822,20 @@ public class DataProvider {
      *
      *
      * @param filterForm the enterprise dashboard filter form
+     * @param  singleMonth whether getting data for single month
      * @return a list of <code>ProjectPipelineDrillInDTO</code>
      * @throws Exception if there is any error.
      * @since 6.4
      */
     public static List<ProjectPipelineDrillInDTO>
-        getEnterpriseDashboardProjectsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        getEnterpriseDashboardProjectsPipelineDrillIn(EnterpriseDashboardFilterForm filterForm, boolean singleMonth) throws Exception {
         long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
 
         if (projectIds == null || projectIds.length == 0) {
             return new ArrayList<ProjectPipelineDrillInDTO>();
         }
 
-        if(!filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
+        if(singleMonth && !filterForm.getStartMonth().equals(filterForm.getEndMonth())) {
             throw new IllegalArgumentException("Drill-in can only check one month at a time");
         }
 
@@ -6810,11 +6853,16 @@ public class DataProvider {
         request.setProperty("edt", dateFormatter.format(endDate));
 
         List<ProjectPipelineDrillInDTO> result = new ArrayList<ProjectPipelineDrillInDTO>();
+        Calendar calendar = Calendar.getInstance();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             ProjectPipelineDrillInDTO item = new ProjectPipelineDrillInDTO();
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            calendar.set(Calendar.YEAR, (int) monthCount/100);
+            calendar.set(Calendar.MONTH, (int) (monthCount % 100) - 1);
+            item.setYearMonthLabel(dateFormatter.format(calendar.getTime()));
             item.setDirectProjectId(resultContainer.getLongItem(i, "project_id"));
             item.setDirectProjectName(resultContainer.getStringItem(i, "name"));
             item.setProjectStartDate(resultContainer.getTimestampItem(i, "create_date"));

@@ -6,9 +6,9 @@ package com.topcoder.direct.services.view.action.enterpriseDashboard;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.ProjectPipelineDrillInDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.ProjectPipelineDrillInDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.excel.Row;
@@ -25,52 +25,64 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>
  * The action handles the ajax requests for pipeline part of the enterprise dashboard.
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
  * <ol>
- *     <li>
- *      Add method {@link #getProjectsPipeline()} to handle the ajax request to get projects pipeline data.
- *     </li>
+ * <li>
+ * Add method {@link #getProjectsPipeline()} to handle the ajax request to get projects pipeline data.
+ * </li>
  * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.2 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
  * <ul>
- *     <li>
- *     Add method {@link #getContestsPipelineDrillIn()} to handle the ajax request to drill in contest pipeline
- *     </li>
- *     <li>
- *     Add method {@link #getProjectsPipelineDrillIn()} to handle the ajax request to drill in project pipeline
- *     </li>
+ * <li>
+ * Add method {@link #getContestsPipelineDrillIn()} to handle the ajax request to drill in contest pipeline
+ * </li>
+ * <li>
+ * Add method {@link #getProjectsPipelineDrillIn()} to handle the ajax request to drill in project pipeline
+ * </li>
+ * </ul>
+ * </p>
+ * <p/>
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ul>
+ * <li>Add property {@link #pipelineExport} and its getter</li>
+ * <li>Add method {@link #getPipelineExportAll()}</li>
  * </ul>
  * </p>
  *
  * @author GreatKevin
- * @version 1.2
+ * @version 1.3
  * @since Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part
  */
-public class DashboardPipelineAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
+public class DashboardPipelineAction extends BaseDirectStrutsAction implements
+        FormAction<EnterpriseDashboardFilterForm> {
     /**
      * The date format to display the X axis of pipeline chart.
      */
-    private static final DateFormat AXIS_DATE_FORMAT = new SimpleDateFormat("yyyy MMMMM");
+    private final DateFormat AXIS_DATE_FORMAT = new SimpleDateFormat("yyyy MMMMM");
 
     /**
      * The date format for the drill-in data.
      *
      * @since 1.2
      */
-    private static final DateFormat DRILL_IN_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+    private final DateFormat DRILL_IN_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
 
     /**
      * The export stream for the contest pipeline drill-in.
@@ -85,6 +97,13 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
      * @since 1.2
      */
     private InputStream projectPipelineDrillInStream;
+
+    /**
+     * The export stream for the project pipeline export.
+     *
+     * @since 1.3
+     */
+    private InputStream pipelineExport;
 
     /**
      * The export flag for the pipeline drill-in.
@@ -120,7 +139,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
      * Sets the export flag.
      *
      * @param export the export flag.
-     *
      * @since 1.2
      */
     public void setExport(boolean export) {
@@ -149,6 +167,16 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
     }
 
     /**
+     * Gets the pipeline export all stream.
+     *
+     * @return the pipeline export all stream.
+     * @since 1.3
+     */
+    public InputStream getPipelineExport() {
+        return pipelineExport;
+    }
+
+    /**
      * Empty, ajax requests are handled via action methods invocation.
      *
      * @throws Exception if there is any error.
@@ -171,7 +199,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
             final List<EnterpriseDashboardMonthPipelineDTO> enterpriseDashboardPipelines =
                     DataProvider.getEnterpriseDashboardContestsPipeline(getFormData());
 
-            for(EnterpriseDashboardMonthPipelineDTO item : enterpriseDashboardPipelines) {
+            for (EnterpriseDashboardMonthPipelineDTO item : enterpriseDashboardPipelines) {
                 Map<String, String> m = new HashMap<String, String>();
                 m.put("date", AXIS_DATE_FORMAT.format(item.getDate()));
                 m.put("activeContests", String.valueOf(item.getTotalActiveContests()));
@@ -184,8 +212,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
 
             setResult(result);
         } catch (Throwable e) {
-
-            e.printStackTrace(System.err);
 
             if (getModel() != null) {
                 setResult(e);
@@ -205,38 +231,13 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
         try {
             // get the date from data provider via query
             List<ContestPipelineDrillInDTO> data =
-                    DataProvider.getEnterpriseDashboardContestsPipelineDrillIn(getFormData());
+                    DataProvider.getEnterpriseDashboardContestsPipelineDrillIn(getFormData(), true);
 
             if (export) {
                 Workbook workbook = new ExcelWorkbook();
-                Sheet sheet = new ExcelSheet("Contest Pipeline " + getFormData().getStartMonth(), (ExcelWorkbook) workbook);
 
-                // set up the sheet header first
-                Row row = sheet.getRow(1);
-                int index = 1;
-
-                row.getCell(index++).setStringValue("Project Name");
-                row.getCell(index++).setStringValue("Contest Name");
-                row.getCell(index++).setStringValue("Status");
-                row.getCell(index++).setStringValue("Start Date");
-                row.getCell(index++).setStringValue("End Date");
-                row.getCell(index++).setStringValue("Copilot");
-
-                // insert sheet data from 2nd row
-                int rowIndex = 2;
-
-                for (ContestPipelineDrillInDTO line : data) {
-                    // project name
-                    row = sheet.getRow(rowIndex++);
-                    row.getCell(1).setStringValue(line.getDirectProjectName());
-                    row.getCell(2).setStringValue(line.getContestName());
-                    row.getCell(3).setStringValue(line.getContestStatus());
-                    row.getCell(4).setStringValue(DRILL_IN_DATE_FORMAT.format(line.getStartDate()));
-                    row.getCell(5).setStringValue(line.getEndDate() == null ? "None" : DRILL_IN_DATE_FORMAT.format(line.getEndDate()));
-                    row.getCell(6).setStringValue(line.getCopilotHandle() == null ? "None" : line.getCopilotHandle());
-                }
-
-                workbook.addSheet(sheet);
+                workbook.addSheet(createContestPipelineDrillInSheet(workbook, "Contest Pipeline " + getFormData()
+                        .getStartMonth(), data));
 
                 // Create a new WorkBookSaver
                 WorkbookSaver saver = new Biff8WorkbookSaver();
@@ -265,9 +266,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
             }
 
         } catch (Throwable e) {
-
-            e.printStackTrace(System.err);
-
             if (getModel() != null) {
                 setResult(e);
             }
@@ -290,7 +288,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
             final List<EnterpriseDashboardMonthProjectPipelineDTO> enterpriseDashboardPipelines =
                     DataProvider.getEnterpriseDashboardProjectsPipeline(getFormData());
 
-            for(EnterpriseDashboardMonthProjectPipelineDTO item : enterpriseDashboardPipelines) {
+            for (EnterpriseDashboardMonthProjectPipelineDTO item : enterpriseDashboardPipelines) {
                 Map<String, String> m = new HashMap<String, String>();
                 m.put("date", AXIS_DATE_FORMAT.format(item.getDate()));
                 m.put("startedProjectsNumber", String.valueOf(item.getTotalStartedProjects()));
@@ -300,7 +298,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
 
             setResult(result);
         } catch (Throwable e) {
-            e.printStackTrace(System.err);
             if (getModel() != null) {
                 setResult(e);
             }
@@ -318,35 +315,14 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
     public String getProjectsPipelineDrillIn() {
         try {
             // get the date from data provider via query
-            List<ProjectPipelineDrillInDTO> data = DataProvider.getEnterpriseDashboardProjectsPipelineDrillIn(getFormData());
+            List<ProjectPipelineDrillInDTO> data = DataProvider.getEnterpriseDashboardProjectsPipelineDrillIn
+                    (getFormData(), true);
 
             if (export) {
                 Workbook workbook = new ExcelWorkbook();
-                Sheet sheet = new ExcelSheet("Projects Pipeline " + getFormData().getStartMonth(), (ExcelWorkbook) workbook);
 
-                // set up the sheet header first
-                Row row = sheet.getRow(1);
-                int index = 1;
-
-                row.getCell(index++).setStringValue("Project Name");
-                row.getCell(index++).setStringValue("Project Status");
-                row.getCell(index++).setStringValue("Project Creation Time");
-                row.getCell(index++).setStringValue("Project Completion Time");
-
-                // insert sheet data from 2nd row
-                int rowIndex = 2;
-
-                for (ProjectPipelineDrillInDTO line : data) {
-                    // project name
-                    row = sheet.getRow(rowIndex++);
-                    row.getCell(1).setStringValue(line.getDirectProjectName());
-                    row.getCell(2).setStringValue(line.getDirectProjectStatus());
-                    row.getCell(3).setStringValue(DRILL_IN_DATE_FORMAT.format(line.getProjectStartDate()));
-                    row.getCell(4).setStringValue(line.getProjectCompletionDate() == null ?
-                            "None" : DRILL_IN_DATE_FORMAT.format(line.getProjectCompletionDate()));
-                }
-
-                workbook.addSheet(sheet);
+                workbook.addSheet(createProjectPipelineDrillInSheet(workbook, "Project Pipeline " + getFormData()
+                        .getStartMonth(), data));
 
                 // Create a new WorkBookSaver
                 WorkbookSaver saver = new Biff8WorkbookSaver();
@@ -364,19 +340,176 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction implements F
                     m.put("directProjectName", item.getDirectProjectName());
                     m.put("projectStatus", item.getDirectProjectStatus());
                     m.put("startDate", DRILL_IN_DATE_FORMAT.format(item.getProjectStartDate()));
-                    m.put("endDate", item.getProjectCompletionDate() == null ? "" : DRILL_IN_DATE_FORMAT.format(item.getProjectStartDate()));
+                    m.put("endDate", item.getProjectCompletionDate() == null ? "" : DRILL_IN_DATE_FORMAT.format(item
+                            .getProjectStartDate()));
                     result.add(m);
                 }
 
                 setResult(result);
             }
         } catch (Throwable e) {
-            e.printStackTrace(System.err);
             if (getModel() != null) {
                 setResult(e);
             }
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Handles the request to export all project and contest pipeline data into excel file
+     *
+     * @return the result code.
+     * @since 1.3
+     */
+    public String getPipelineExportAll() {
+        try {
+            final List<ProjectPipelineDrillInDTO> projectPipelineData =
+                    DataProvider.getEnterpriseDashboardProjectsPipelineDrillIn(getFormData(), false);
+
+            Workbook workbook = new ExcelWorkbook();
+
+            Map<Date, List<ProjectPipelineDrillInDTO>> projectSheetsMap = new TreeMap<Date,
+                    List<ProjectPipelineDrillInDTO>>();
+            Map<Date, List<ContestPipelineDrillInDTO>> contestSheetsMap = new TreeMap<Date,
+                    List<ContestPipelineDrillInDTO>>();
+
+            // initialize the project sheets map and contest sheets map
+            DateFormat formDateFormatter = new SimpleDateFormat("MMM''yy");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(formDateFormatter.parse(getFormData().getStartMonth()));
+            long startMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+            calendar.setTime(formDateFormatter.parse(getFormData().getEndMonth()));
+            long endMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+
+            for (long m = startMonthCount; m <= endMonthCount; m++) {
+                calendar.set(Calendar.YEAR, (int) m / 12);
+                calendar.set(Calendar.MONTH, (int) m % 12);
+                // put in an empty array list first
+                projectSheetsMap.put(calendar.getTime(), new ArrayList<ProjectPipelineDrillInDTO>());
+                contestSheetsMap.put(calendar.getTime(), new ArrayList<ContestPipelineDrillInDTO>());
+            }
+
+            for (ProjectPipelineDrillInDTO projectData : projectPipelineData) {
+                projectSheetsMap.get(dateFormatter.parse(projectData.getYearMonthLabel())).add(projectData);
+            }
+
+            for (Map.Entry<Date, List<ProjectPipelineDrillInDTO>> entry : projectSheetsMap.entrySet()) {
+                workbook.addSheet(createProjectPipelineDrillInSheet(workbook, "Project Pipeline " + formDateFormatter
+                        .format(entry.getKey()), entry.getValue()));
+            }
+
+            List<ContestPipelineDrillInDTO> contestPipelineData =
+                    DataProvider.getEnterpriseDashboardContestsPipelineDrillIn(getFormData(), false);
+
+            for (ContestPipelineDrillInDTO contestData : contestPipelineData) {
+                contestSheetsMap.get(dateFormatter.parse(contestData.getYearMonthLabel())).add(contestData);
+            }
+
+            for (Map.Entry<Date, List<ContestPipelineDrillInDTO>> entry : contestSheetsMap.entrySet()) {
+                workbook.addSheet(createContestPipelineDrillInSheet(workbook, "Contest Pipeline " + formDateFormatter
+                        .format(entry.getKey()), entry.getValue()));
+            }
+
+            // Create a new WorkBookSaver
+            WorkbookSaver saver = new Biff8WorkbookSaver();
+            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+            saver.save(workbook, saveTo);
+            this.pipelineExport = new ByteArrayInputStream(saveTo.toByteArray());
+            return "download";
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Creates the excel sheet for a specified workbook with the given sheet name and sheet data for
+     * contest pipeline drill in.
+     *
+     * @param workbook  the work book the sheet is in
+     * @param sheetName the name of the sheet.
+     * @param sheetData the sheet data
+     * @return the created sheet
+     * @throws Exception if any error
+     * @since 1.3
+     */
+    private Sheet createContestPipelineDrillInSheet(Workbook workbook, String sheetName,
+                                                    List<ContestPipelineDrillInDTO> sheetData) throws Exception {
+        Sheet sheet = new ExcelSheet(sheetName, (ExcelWorkbook) workbook);
+
+        // set up the sheet header first
+        Row row = sheet.getRow(1);
+        int index = 1;
+
+        row.getCell(index++).setStringValue("Project Name");
+        row.getCell(index++).setStringValue("Contest Name");
+        row.getCell(index++).setStringValue("Status");
+        row.getCell(index++).setStringValue("Start Date");
+        row.getCell(index++).setStringValue("End Date");
+        row.getCell(index++).setStringValue("Copilot");
+
+        // insert sheet data from 2nd row
+        int rowIndex = 2;
+
+        for (ContestPipelineDrillInDTO line : sheetData) {
+            // project name
+            row = sheet.getRow(rowIndex++);
+            index = 1;
+            row.getCell(index++).setStringValue(line.getDirectProjectName());
+            row.getCell(index++).setStringValue(line.getContestName());
+            row.getCell(index++).setStringValue(line.getContestStatus());
+            row.getCell(index++).setStringValue(DRILL_IN_DATE_FORMAT.format(line.getStartDate()));
+            row.getCell(index++).setStringValue(line.getEndDate() == null ? "None" : DRILL_IN_DATE_FORMAT.format(line
+                    .getEndDate()));
+            row.getCell(index++).setStringValue(line.getCopilotHandle() == null ? "None" : line.getCopilotHandle());
+        }
+
+        return sheet;
+    }
+
+    /**
+     * Creates the excel sheet for a specified workbook with the given sheet name and sheet data for
+     * project pipeline drill in.
+     *
+     * @param workbook  the work book the sheet is in
+     * @param sheetName the name of the sheet.
+     * @param sheetData the sheet data
+     * @return the created sheet
+     * @throws Exception if any error
+     * @since 1.3
+     */
+    private Sheet createProjectPipelineDrillInSheet(Workbook workbook, String sheetName,
+                                                    List<ProjectPipelineDrillInDTO> sheetData) throws Exception {
+        Sheet sheet = new ExcelSheet(sheetName, (ExcelWorkbook) workbook);
+
+        // set up the sheet header first
+        Row row = sheet.getRow(1);
+        int index = 1;
+
+        row.getCell(index++).setStringValue("Project Name");
+        row.getCell(index++).setStringValue("Project Status");
+        row.getCell(index++).setStringValue("Project Creation Time");
+        row.getCell(index++).setStringValue("Project Completion Time");
+
+        // insert sheet data from 2nd row
+        int rowIndex = 2;
+
+        for (ProjectPipelineDrillInDTO line : sheetData) {
+            // project name
+            row = sheet.getRow(rowIndex++);
+            index = 1;
+            row.getCell(index++).setStringValue(line.getDirectProjectName());
+            row.getCell(index++).setStringValue(line.getDirectProjectStatus());
+            row.getCell(index++).setStringValue(DRILL_IN_DATE_FORMAT.format(line.getProjectStartDate()));
+            row.getCell(index++).setStringValue(line.getProjectCompletionDate() == null ?
+                    "None" : DRILL_IN_DATE_FORMAT.format(line.getProjectCompletionDate()));
+        }
+
+        return sheet;
     }
 }

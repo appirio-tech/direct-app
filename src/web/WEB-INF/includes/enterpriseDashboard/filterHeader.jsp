@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSASSEMLBER
-  - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+  - Author: GreatKevin
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Hide export icons, only show them when needed via JS
   -
   - Description: The filter header of the new enterprise dashboard
 --%>
@@ -19,9 +22,9 @@
             </dl>
         </div>
         <div class="filterPanelButton">
-            <a href="javascript:;" class="xls">XLS</a>
-            <a href="javascript:;" class="pdf">PDF</a>
-            <a href="javascript:;" class="print">PRINT</a>
+            <a href="javascript:;" class="xls" style="display: none">XLS</a>
+            <a href="javascript:;" class="pdf" style="display: none">PDF</a>
+            <a href="javascript:;" class="print" style="display: none">PRINT</a>
         </div>
     </div>
     <!-- header of filter panel -->

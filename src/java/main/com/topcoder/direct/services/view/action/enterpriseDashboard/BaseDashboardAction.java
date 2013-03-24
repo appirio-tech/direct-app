@@ -3,18 +3,24 @@
  */
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -29,8 +35,17 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ul>
+ *     <li>Adds method {@link #getFilteredProjects()}</li>
+ *     <li>Adds method {@link #getOptionsForClient()}</li>
+ *     <li>Adds properties {@link #formData} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class BaseDashboardAction extends BaseDirectStrutsAction {
 
@@ -75,6 +90,35 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
      * The default project status used for filtering - Active is default.
      */
     private long defaultProjectStatus = 1L;
+
+    /**
+     * The form data of the action.
+     *
+     * @since 1.2
+     */
+    private EnterpriseDashboardFilterForm formData = new EnterpriseDashboardFilterForm();
+
+    /**
+     * Gets the form data of the action.
+     *
+     * @return the form data of the action.
+     *
+     * @since 1.2
+     */
+    public EnterpriseDashboardFilterForm getFormData() {
+        return this.formData;
+    }
+
+    /**
+     * Sets the form data of the action.
+     *
+     * @param formData the form data of the action.
+     *
+     * @since 1.2
+     */
+    public void setFormData(EnterpriseDashboardFilterForm formData) {
+        this.formData = formData;
+    }
 
     /**
      * Gets the clients map.
@@ -196,6 +240,17 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
     }
 
     /**
+     * Sets the default project status used for filter.
+     *
+     * @param defaultProjectStatus the default project status id.
+     *
+     * @since 1.2
+     */
+    public void setDefaultProjectStatus(long defaultProjectStatus) {
+        this.defaultProjectStatus = defaultProjectStatus;
+    }
+
+    /**
      * Prepares the data for displaying the enterprise dashboard page and filter panel.
      *
      * @throws Exception if there is error
@@ -222,9 +277,17 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
                 // get projects for the first client
                 getClientProjects().put(0L, "All Projects");
                 final Map<Long, String> projectsForClient = DirectUtils.getProjectsForClient(currentUser, client.getKey());
+
+                long[] projectIdsToFilter = new long[projectsForClient.size()];
+                int count = 0;
                 for(Long projectId : projectsForClient.keySet()) {
-                    getClientProjects().put(projectId, projectsForClient.get(projectId));
+                    projectIdsToFilter[count++] = projectId;
                 }
+
+                Map<Long, String> filteredProjectIds = DataProvider.getFilteredProjectsResult(10000, 0,
+                        getDefaultProjectStatus(), projectIdsToFilter, 0, "");
+
+                getClientProjects().putAll(filteredProjectIds);
 
                 // get metadata keys for the first client
                 getClientMetadataKeys().put(0L, "None");
@@ -257,5 +320,80 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
      */
     public Date getCalendarToday() {
         return new Date();
+    }
+
+
+    /**
+     * Gets the filtered projects for the Enterprise Dashboard filter panel
+     *
+     * @return the result code.
+     *
+     * @since 1.2
+     */
+    public String getFilteredProjects() {
+        try {
+            setResult(DirectUtils.convertMapKeyToString(DataProvider.getEnterpriseDashboardFilteredProjects(getFormData())));
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the options of filter panel when a client is selected. It gets the projects of the client, project filters
+     * of the client and project filter values if a project filter is specified.
+     *
+     * @return tje result code.
+     * @since 1.2
+     */
+    public String getOptionsForClient() {
+        try {
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            // get projects for the client and match the given project status
+            result.put("projects", DirectUtils.convertMapKeyToString(DataProvider
+                    .getEnterpriseDashboardFilteredProjects(getFormData())));
+
+
+            // get the project filters of a client
+            final List<DirectProjectMetadataKey> clientProjectMetadataKeys = getMetadataKeyService()
+                    .getClientProjectMetadataKeys(getFormData().getClientId(), true);
+            Map<String, String> keyResult = new HashMap<String, String>();
+            for (DirectProjectMetadataKey key : clientProjectMetadataKeys) {
+                keyResult.put(String.valueOf(key.getId()), key.getName());
+            }
+
+            result.put("projectFilters", keyResult);
+
+            // get the project filter values if a project filter is selected in filter panel
+            if (getFormData().getProjectFilterId() > 0) {
+                final List<DirectProjectMetadata> projectMetadataByKey = getMetadataService().getProjectMetadataByKey
+                        (getFormData().getProjectFilterId());
+
+                Set<String> valuesSet = new LinkedHashSet<String>();
+
+                for (DirectProjectMetadata metadata : projectMetadataByKey) {
+                    valuesSet.add(metadata.getMetadataValue());
+                }
+
+                // Map to store the ajax result
+                List<String> values = new ArrayList<String>(valuesSet);
+
+                Collections.sort(values);
+                result.put("projectFilterValues", values);
+            }
+
+            setResult(result);
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
     }
 }

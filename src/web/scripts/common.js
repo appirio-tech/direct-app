@@ -32,6 +32,9 @@
  *
  * Version 1.9 - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
  * - Update method to fix a bug in Chrome.
+ *
+ * Version 2.0 - (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * - Update method sortDropDown
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -597,10 +600,10 @@ function sortDropDown(dropDownId) {
 
         // sort the array by the value (change val to text to sort by text instead)
         arrVals.sort(function(a, b) {
-            if (a.val == 0) {
+            if (a.val == 0 || a.val == 'All') {
                 return -1;
             }
-            if (b.val == 0) {
+            if (b.val == 0 || a.val == 'All') {
                 return 1;
             }
 

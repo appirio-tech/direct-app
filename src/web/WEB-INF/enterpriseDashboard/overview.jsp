@@ -7,8 +7,11 @@
   -
   - Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part) updates:
   - Add roadmap section in overview.
-
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Add history.js to support push state and back-compatible with IE with hash-fallback
+  -
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: The overview page of the new enterprise dashboard
 --%>
@@ -30,6 +33,7 @@
 
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript"  src="/scripts/enterpriseDashboard.js"></script>
 </head>
 
@@ -136,7 +140,7 @@
                                 <div class="totalSpendTitle">
                                     <h3>Total Spend</h3>
                                     <a href="javascript:;" class="icon" rel="Total Amount Spent for the Projects each month is shown here.">!</a>
-                                    <a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink viewAllSync">View All</a>
                                 </div>
                                 <!-- title -->
 
@@ -162,7 +166,7 @@
                                 <div class="roadMapTitle">
                                     <h3>Road Map</h3>
                                     <a href="javascript:;" class="icon" rel="Showing the Overdue, Upcoming, and Completed Releases.">!</a>
-                                    <a href="<s:url action='roadmap' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='roadmap' namespace='/enterpriseDashboard'/>" class="viewAllLink viewAllSync">View All</a>
                                 </div>
                                 <!-- title -->
 
@@ -191,7 +195,7 @@
                                                     </colgroup>
                                                     <thead>
                                                     <tr>
-                                                        <th>OverDue Releases</th>
+                                                        <th>Overdue Releases</th>
                                                         <th>Due Date</th>
                                                     </tr>
                                                     </thead>
@@ -288,7 +292,7 @@
                                 <div class="pipelinehTitle">
                                     <h3>Pipeline</h3>
                                     <a href="javascript:;" class="icon" rel="A graph depicting the projects in Pipeline is shown here.">!</a>
-                                    <a href="<s:url action='pipeline' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='pipeline' namespace='/enterpriseDashboard'/>" class="viewAllLink viewAllSync">View All</a>
                                 </div>
                                 <!-- title -->
 
@@ -402,7 +406,7 @@
                                             <col width="55%" />
                                         </colgroup>
                                         <thead>
-                                        <tr>
+                                        <tr style="height: 30px">
                                             <th>Country Name</th>
                                             <th>%</th>
                                         </tr>
@@ -410,7 +414,7 @@
                                         <tbody>
                                         <tr>
                                             <td colspan="2" class="alignCenter">
-                                                <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
+                                                <div class="ajaxTableLoader"></div>
                                             </td>
                                         </tr>
                                         </tbody>

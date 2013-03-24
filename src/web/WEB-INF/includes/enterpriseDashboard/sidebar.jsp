@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin, hanshuai
+  - Author: GreatKevin, hanshuai, GreatKevin
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
   -
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
@@ -14,7 +14,10 @@
   - Version 1.4 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
   - - Add link for the analysis icon in the sidebar
   -
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Version 1.5 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Update the tip text for roadmap
+  -
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: The side bar of the new enterprise dashboard
 --%>
@@ -26,7 +29,7 @@
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'overview'}">class="active"</c:if>> <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>" class="overviewIcon filterSynEnabled" title="Overview" rel="Summarizes statistics about your projects and general platform usage.">Overview</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'financial'}">class="active"</c:if>><a href='<s:url action="financial" namespace="/enterpriseDashboard"/>' class="financialsIcon filterSynEnabled" title="Financials" rel="Your financial data.">Financials</a></li>
         <li><a href="javascript:;" class="projectHealthIcon" title="Project Health" rel="Showing the overall projects Health of all projects.">Project Health</a></li>
-        <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'roadmap'}">class="active"</c:if>><a href="<s:url action="roadmap" namespace="/enterpriseDashboard"/>" class="roadmapIcon filterSynEnabled" title="Roadmap" rel="Aggregate view of all your project milestones.">Roadmap</a></li>
+        <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'roadmap'}">class="active"</c:if>><a href="<s:url action="roadmap" namespace="/enterpriseDashboard"/>" class="roadmapIcon filterSynEnabled" title="Road map" rel="Aggregate view of all your project milestones.">Road map</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'pipeline'}">class="active"</c:if>><a href='<s:url action="pipeline" namespace="/enterpriseDashboard"/>' class="pipelineIcon filterSynEnabled" title="Pipeline" rel="A historical and future view of your contest and project pipeline.">Pipeline</a></li>
         <li><a href="javascript:;" class="communityIcon" title="Community" rel="See what your community looks like.">Community</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'analysis'}">class="active"</c:if>><a href="<s:url action="analysis" namespace="/enterpriseDashboard"/>" class="analyticsIcon filterSynEnabled" title="Analytics" rel="Gain insight into your platform usage.  See average cost, duration, fulfillment, volume, etc.">Analytics</a></li>

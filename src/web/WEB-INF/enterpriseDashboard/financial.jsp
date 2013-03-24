@@ -1,10 +1,13 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
   - - Add total spend chart drill-in popup
+  -
+  - Version 1.2 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Add history.js to support push state and back-compatible with IE with hash-fallback
   -
   - Description: The financial page the new enterprise dashboard
 --%>
@@ -29,6 +32,7 @@
     <script type="text/javascript" src="/scripts/search.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
     <script id="financialDrillInTemplate" type="text/x-jsrender">
         <tr>

@@ -1707,11 +1707,11 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/overview.jsp</result>
         </action>
-        <action name="financial" class="enterpriseDashboardEntryAction">
+        <action name="financial" class="enterpriseDashboardFinancialEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/financial.jsp</result>
         </action>
-        <action name="pipeline" class="enterpriseDashboardEntryFuturePeekAction">
+        <action name="pipeline" class="enterpriseDashboardPipelineEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
         </action>
@@ -1740,6 +1740,17 @@
                 <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_export.xls</param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">financialDrillInStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        <action name="getTotalSpendExport" method="getTotalSpendExportAll" class="enterpriseDashboardFinancialAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_${formData.endMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">financialExportStream</param>
                 <param name="bufferSize">1024</param>
             </result>
         </action>
@@ -1780,6 +1791,17 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+        <action name="getPipelineExport" method="getPipelineExportAll" class="enterpriseDashboardPipelineAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=pipeline_${formData.startMonth}_${formData.endMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">pipelineExport</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
         <action name="getProjectsMilestones" method="getProjectsMilestones" class="enterpriseDashboardRoadmapAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
@@ -1790,6 +1812,16 @@
             <result name="success">/WEB-INF/dashboardMilestoneCalendarData.jsp</result>
         </action>
         <action name="getProjectsWidget" method="getProjectsWidget" class="enterpriseDashboardProjectsAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="getFilteredProjects" method="getFilteredProjects" class="enterpriseDashboardEntryAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="getOptionsForClientAJAX" method="getOptionsForClient" class="enterpriseDashboardEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />

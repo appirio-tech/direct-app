@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
@@ -24,9 +25,13 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>
@@ -47,8 +52,16 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+ * <ul>
+ *     <li>Add property {@link #financialExportStream}</li>
+ *     <li>Add method {@link #getTotalSpendExportAll()}</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class DashboardFinancialAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
 
@@ -68,6 +81,13 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
      * @since 1.2
      */
     private InputStream financialDrillInStream;
+
+    /**
+     * The export input stream for the total spend export all.
+     *
+     * @since 1.3
+     */
+    private InputStream financialExportStream;
 
     /**
      * The flag to determine whether to export the drill-in result to excel file.
@@ -102,6 +122,16 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
      */
     public InputStream getFinancialDrillInStream() {
         return financialDrillInStream;
+    }
+
+    /**
+     * Gets the total spend export all stream
+     *
+     * @return the total spend export all stream
+     * @since 1.3
+     */
+    public InputStream getFinancialExportStream() {
+        return financialExportStream;
     }
 
     /**
@@ -168,34 +198,13 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
     public String getTotalSpendDrillIn() {
         try {
             final List<TotalSpendDrillInDTO> drillInDTOList =
-                    DataProvider.getEnterpriseDashboardTotalSpendDrillIn(getFormData());
+                    DataProvider.getEnterpriseDashboardTotalSpendDrillIn(getFormData(), true);
 
             if(export) {
                 Workbook workbook = new ExcelWorkbook();
-                Sheet sheet = new ExcelSheet("Total Spend " + getFormData().getStartMonth(), (ExcelWorkbook) workbook);
 
-                // set up the sheet header first
-                Row row = sheet.getRow(1);
-                int index = 1;
-
-                row.getCell(index++).setStringValue("Project Name");
-                row.getCell(index++).setStringValue("Member Cost");
-                row.getCell(index++).setStringValue("Contest Fees");
-                row.getCell(index++).setStringValue("Total Cost");
-
-                // insert sheet data from 2nd row
-                int rowIndex = 2;
-
-                for(TotalSpendDrillInDTO data: drillInDTOList) {
-                    // project name
-                    row = sheet.getRow(rowIndex++);
-                    row.getCell(1).setStringValue(data.getDirectProjectName());
-                    row.getCell(2).setNumberValue(data.getMemberCost());
-                    row.getCell(3).setNumberValue(data.getContestFee());
-                    row.getCell(4).setNumberValue(data.getTotalSpend());
-                }
-
-                workbook.addSheet(sheet);
+                workbook.addSheet(createTotalSpendDrillInSheet(workbook, "Total Spend " + getFormData().getStartMonth
+                        (), drillInDTOList));
 
                 // Create a new WorkBookSaver
                 WorkbookSaver saver = new Biff8WorkbookSaver();
@@ -222,9 +231,64 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
             }
 
         } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
 
-            e.printStackTrace(System.err);
+        return SUCCESS;
+    }
 
+
+    /**
+     * Handles the total spend export all data request.
+     *
+     * @return result code.
+     * @since 1.3
+     */
+    public String getTotalSpendExportAll() {
+        try {
+            final List<TotalSpendDrillInDTO> drillInDTOList =
+                    DataProvider.getEnterpriseDashboardTotalSpendDrillIn(getFormData(), false);
+
+            Workbook workbook = new ExcelWorkbook();
+
+            // sheets map store all the sheets, one sheet per month
+            Map<Date, List<TotalSpendDrillInDTO>> sheetsMap = new TreeMap<Date, List<TotalSpendDrillInDTO>>();
+
+            // initialize the sheets map, from start month to end month, each month will have an entry in sheetsMap
+            DateFormat formDateFormatter = new SimpleDateFormat("MMM''yy");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(formDateFormatter.parse(getFormData().getStartMonth()));
+            long startMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+            calendar.setTime(formDateFormatter.parse(getFormData().getEndMonth()));
+            long endMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+
+            for (long m = startMonthCount; m <= endMonthCount; m++) {
+                calendar.set(Calendar.YEAR, (int) m / 12);
+                calendar.set(Calendar.MONTH, (int) m % 12);
+                // put in an empty array list first
+                sheetsMap.put(calendar.getTime(), new ArrayList<TotalSpendDrillInDTO>());
+            }
+
+            for (TotalSpendDrillInDTO data : drillInDTOList) {
+                sheetsMap.get(dateFormatter.parse(data.getYearMonthLabel())).add(data);
+            }
+
+            // Add all the sheets into the workbook, one sheet per month
+            for (Map.Entry<Date, List<TotalSpendDrillInDTO>> entry : sheetsMap.entrySet()) {
+                workbook.addSheet(createTotalSpendDrillInSheet(workbook, "Total Spend " + dateFormatter.format(entry
+                        .getKey()), entry.getValue()));
+            }
+
+            // Create a new WorkBookSaver
+            WorkbookSaver saver = new Biff8WorkbookSaver();
+            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+            saver.save(workbook, saveTo);
+            this.financialExportStream = new ByteArrayInputStream(saveTo.toByteArray());
+            return "download";
+        } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);
             }
@@ -262,15 +326,54 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
 
             setResult(result);
         } catch (Throwable e) {
-
-            e.printStackTrace(System.err);
-
             if (getModel() != null) {
                 setResult(e);
             }
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Creates the excel sheet for a specified workbook with the given sheet name and sheet data for
+     * total spend drill in.
+     *
+     * @param workbook the work book the sheet is in
+     * @param sheetName the name of the sheet.
+     * @param sheetData the sheet data
+     * @return the created sheet
+     * @throws Exception if any error
+     * @since 1.3
+     */
+    private static Sheet createTotalSpendDrillInSheet(Workbook workbook, String sheetName,
+                                                      List<TotalSpendDrillInDTO> sheetData) throws Exception {
+        Sheet sheet = new ExcelSheet(sheetName, (ExcelWorkbook) workbook);
+
+        // set up the sheet header first
+        Row row = sheet.getRow(1);
+        int index = 1;
+
+        row.getCell(index++).setStringValue("Project Name");
+        row.getCell(index++).setStringValue("Member Cost");
+        row.getCell(index++).setStringValue("Contest Fees");
+        row.getCell(index++).setStringValue("Total Cost");
+
+        // insert sheet data from 2nd row
+        int rowIndex = 2;
+
+        for(TotalSpendDrillInDTO data: sheetData) {
+            // get the next row, and increase index
+            row = sheet.getRow(rowIndex++);
+
+            // set column index, start from 1
+            index = 1;
+            row.getCell(index++).setStringValue(data.getDirectProjectName());
+            row.getCell(index++).setNumberValue(data.getMemberCost());
+            row.getCell(index++).setNumberValue(data.getContestFee());
+            row.getCell(index++).setNumberValue(data.getTotalSpend());
+        }
+
+        return sheet;
     }
 
 }

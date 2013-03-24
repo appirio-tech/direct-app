@@ -1,6 +1,6 @@
 <%--
   - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin
-  - Version: 2.5
+  - Version: 2.6
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -41,6 +41,8 @@
   - - Added hasWritePermission variable if current page is in project context.
   - - For the pages under project context, hide some edit project links if user doesn't have permission.
   - Version 2.5 (Module Assembly - TopCoder Cockpit Instant Search) change notes: Add instant search box
+  - Version 2.6 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Change the cursor style for header logo
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -81,10 +83,10 @@
                 </c:when>
                 <c:when test="${requestScope.CURRENT_TAB eq 'enterprise'}">
                     <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
-                        <a class="logo" href="javascript:;" style="left: 25px; top: 60px"> <img src="/images/all_projects_ico.png" alt="Operations DashBoard" class="projectTitle"/><span id="projectTitleSpan">Operations DashBoard</span></a>
+                        <a class="logo" href="javascript:;" style="left: 25px; top: 60px; cursor:default"> <img src="/images/all_projects_ico.png" alt="Operations DashBoard" class="projectTitle"/><span id="projectTitleSpan">Operations DashBoard</span></a>
                     </s:if>
                     <s:else>
-                        <a class="logo" href="javascript:;"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
+                        <a class="logo" href="javascript:;" style="cursor:default"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
                     </s:else>
                 </c:when>
                 <c:when test="${requestScope.CURRENT_TAB eq 'searchAll'}">

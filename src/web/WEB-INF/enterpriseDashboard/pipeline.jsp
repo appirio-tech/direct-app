@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.0 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part)
+  - Version: 1.3
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
@@ -8,6 +8,9 @@
   -
   - Version 1.2 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
   - Add contest / project pipeline drill-in popup
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - - Add history.js to support push state and back-compatible with IE with hash-fallback
   -
   - Description: The pipeline page the new enterprise dashboard
 --%>
@@ -31,6 +34,7 @@
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
     <script type="text/javascript"  src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
     <script id="contestPipelineDrillInTemplate" type="text/x-jsrender">
         <tr>
