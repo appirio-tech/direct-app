@@ -42,7 +42,8 @@
 
 <div class="currentPage">
     <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
-    <s:property value="sessionData.currentProjectContext.name"/> &gt;
+    <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'><s:property
+            value="sessionData.currentProjectContext.name"/></a> &gt;
     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilot Posting</a> &gt;
     <strong><c:out value="${viewData.contestStats.contest.title}"/></strong>
 </div>

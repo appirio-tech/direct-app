@@ -6035,6 +6035,10 @@ public class DataProvider {
             userIds[index++] = c.getUserId();
         }
 
+        if (copilots.size() == 0) {
+            return;
+        }
+
         String requestInput = concatenate(userIds, ",");
 
         String commandName = "copilots_info";

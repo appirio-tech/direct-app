@@ -48,7 +48,7 @@
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                <strong>My Copilot Selection Contests</strong>
+                                <strong>My Copilot Postings</strong>
                             </div>
                             <!-- End .currentPage -->
 
