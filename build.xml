@@ -389,7 +389,6 @@
                 <include name="css/direct/**/*.css"/>
                 <include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
-				<exclude name="scripts/ckeditor/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/copilot/**/*.*"/>
