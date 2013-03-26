@@ -139,7 +139,7 @@
         <ui:isDashboardPage>
             <ul>
                 <li class="on">
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
+                    <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>"><span>Dashboards</span></a>
                 
                     <div class="subNav">
                         <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
