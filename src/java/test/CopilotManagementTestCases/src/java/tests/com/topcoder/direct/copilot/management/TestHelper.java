@@ -205,10 +205,9 @@ public class TestHelper {
      * To get the script for stopping the browser (optional).
      *
      * @return the path to script for stopping the browser.
-     * @throws Exception if any error occurred.
      * @since 1.1
      */
-    static String getBrowserStopperScript() throws Exception {
+    static String getBrowserStopperScript() {
         return PROPERTIES.getProperty("browserStopperScript");
     }
 
@@ -216,10 +215,9 @@ public class TestHelper {
      * To get the port for base index URL.
      *
      * @return base index port
-     * @throws Exception if any error occurred
      * @since 1.1
      */
-    static int getPort() throws Exception {
+    static int getPort() {
         return Integer.parseInt(PROPERTIES.getProperty("seleniumPort"));
     }
 
@@ -227,10 +225,21 @@ public class TestHelper {
      * To get the domain for Selenium server.
      *
      * @return the domai for Selenium server.
-     * @throws Exception if any error occurred.
      * @since 1.1
      */
-    static String getDomain() throws Exception {
+    static String getDomain() {
         return PROPERTIES.getProperty("seleniumDomain");
     }
+
+    /**
+     * To get the path to directory where to put files with content of browser pages for failed tests.
+     *
+     * @return the path to directory.
+     * @since 1.1
+     */
+    static String getBrowserPageContentsDir() {
+        return PROPERTIES.getProperty("browserPageContentsDir");
+    }
+
+
 }

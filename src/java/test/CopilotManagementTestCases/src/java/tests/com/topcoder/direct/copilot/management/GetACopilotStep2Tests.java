@@ -14,9 +14,7 @@ import junit.framework.TestCase;
  * @author TCSDEVELOPER
  * @version 1.0
  */
-public class GetACopilotStep2Tests extends TestCase {
-    /** Represents the Selenium Instance. */
-    private Selenium browser;
+public class GetACopilotStep2Tests extends BaseTestCase {
 
     /**
      * Sets up the testing environment.
@@ -27,17 +25,6 @@ public class GetACopilotStep2Tests extends TestCase {
         browser = TestHelper.getIndexPage();
         TestHelper.loginUser(browser);
         super.setUp();
-    }
-
-    /**
-     * Tears down the testing environment.
-     *
-     * @throws Exception if any error occurs.
-     */
-    public void tearDown() throws Exception {
-        browser.stop();
-        TestHelper.tearDown();
-        super.tearDown();
     }
 
     /**

@@ -6,20 +6,13 @@ package com.topcoder.direct.copilot.management;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
-
-import com.thoughtworks.selenium.Selenium;
-
-
 /**
  * Functional test for cockpit copilot management.
  *
  * @author TCSDEVELOPER
  * @version 1.0
  */
-public class MyCopilotPostingRegistrantsTests extends TestCase {
-    /** Represents the Selenium Instance. */
-    private Selenium browser;
+public class MyCopilotPostingRegistrantsTests extends BaseTestCase {
 
     /**
      * Sets up the testing environment.
@@ -30,17 +23,6 @@ public class MyCopilotPostingRegistrantsTests extends TestCase {
         browser = TestHelper.getIndexPage();
         TestHelper.loginUser(browser);
         super.setUp();
-    }
-
-    /**
-     * Tears down the testing environment.
-     *
-     * @throws Exception if any error occurs.
-     */
-    public void tearDown() throws Exception {
-        browser.stop();
-        TestHelper.tearDown();
-        super.tearDown();
     }
 
     /**

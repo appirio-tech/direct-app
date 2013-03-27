@@ -3,10 +3,6 @@
  */
 package com.topcoder.direct.copilot.management;
 
-import com.thoughtworks.selenium.Selenium;
-
-import junit.framework.TestCase;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,9 +13,7 @@ import java.util.List;
  * @author TCSDEVELOPER
  * @version 1.0
  */
-public class MyCopilotPostingTests extends TestCase {
-    /** Represents the Selenium Instance. */
-    private Selenium browser;
+public class MyCopilotPostingTests extends BaseTestCase {
 
     /**
      * Sets up the testing environment.
@@ -34,17 +28,6 @@ public class MyCopilotPostingTests extends TestCase {
         browser.click("link=My Copilot Postings");
         browser.waitForPageToLoad(TestHelper.getTimeout());
         super.setUp();
-    }
-
-    /**
-     * Tears down the testing environment.
-     *
-     * @throws Exception if any error occurs.
-     */
-    public void tearDown() throws Exception {
-        browser.stop();
-        TestHelper.tearDown();
-        super.tearDown();
     }
 
     /**

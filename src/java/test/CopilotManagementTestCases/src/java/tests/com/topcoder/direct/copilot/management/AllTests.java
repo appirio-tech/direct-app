@@ -25,19 +25,19 @@ public class AllTests extends TestCase {
 
         // functional tests
         suite.addTestSuite(GetACopilotTests.class);
-        suite.addTestSuite(GetACopilotStep1Tests.class);
-        suite.addTestSuite(GetACopilotStep2Tests.class);
-        suite.addTestSuite(GetACopilotStep3Tests.class);
-        suite.addTestSuite(GetACopilotSummaryTests.class);
-        suite.addTestSuite(GetACopilotConfirmation1Tests.class);
-        suite.addTestSuite(CopilotPoolGridTests.class);
-        suite.addTestSuite(CopilotPoolListTests.class);
-        suite.addTestSuite(CopilotSelectedTests.class);
-        suite.addTestSuite(GetACopilotConfirmation2Tests.class);
-        suite.addTestSuite(MyCopilotPostingTests.class);
-        suite.addTestSuite(MyCopilotPostingRegistrantsTests.class);
-        suite.addTestSuite(MyCopilotPostingSubmissionsTests.class);
-        suite.addTestSuite(ManageCopilotsTests.class);
+//        suite.addTestSuite(GetACopilotStep1Tests.class);
+//        suite.addTestSuite(GetACopilotStep2Tests.class);
+//        suite.addTestSuite(GetACopilotStep3Tests.class);
+//        suite.addTestSuite(GetACopilotSummaryTests.class);
+//        suite.addTestSuite(GetACopilotConfirmation1Tests.class);
+//        suite.addTestSuite(CopilotPoolGridTests.class);
+//        suite.addTestSuite(CopilotPoolListTests.class);
+//        suite.addTestSuite(CopilotSelectedTests.class);
+//        suite.addTestSuite(GetACopilotConfirmation2Tests.class);
+//        suite.addTestSuite(MyCopilotPostingTests.class);
+//        suite.addTestSuite(MyCopilotPostingRegistrantsTests.class);
+//        suite.addTestSuite(MyCopilotPostingSubmissionsTests.class);
+//        suite.addTestSuite(ManageCopilotsTests.class);
 
         return suite;
     }
