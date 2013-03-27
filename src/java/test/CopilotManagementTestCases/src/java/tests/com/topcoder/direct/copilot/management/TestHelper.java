@@ -231,6 +231,6 @@ public class TestHelper {
      * @since 1.1
      */
     static String getDomain() throws Exception {
-        return properties.getProperty("seleniumDomain");
+        return PROPERTIES.getProperty("seleniumDomain");
     }
 }
