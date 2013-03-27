@@ -28,6 +28,8 @@
                          class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
             <interceptor name="contestAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ContestAccessInterceptor"/>
+            <interceptor name="tcStaffAccessGuard"
+                         class="com.topcoder.direct.services.view.interceptor.TCStaffAccessInterceptor"/>
             <interceptor name="internalStatsGuard"
                          class="com.topcoder.direct.services.view.interceptor.InternalStatsAccessInterceptor"/>
             <interceptor name="authnInterceptor"
@@ -68,9 +70,13 @@
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
             </interceptor-stack>
+            <interceptor-stack name="securedTCStaffStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="tcStaffAccessGuard"/>
+            </interceptor-stack>
             <interceptor-stack name="securedInternalStatsStack">
                 <interceptor-ref name="defaultStack"/>
-				
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="internalStatsGuard"/>
             </interceptor-stack>
@@ -791,6 +797,16 @@
                 <param name="inputName">inputStream</param>
                 <param name="bufferSize">1024</param>            
             </result>
+        </action>
+        <action name="platformSpecialistsReport" class="platformSpecialistsReportAction">
+            <interceptor-ref name="securedTCStaffStack"/>
+            <result name="success">/WEB-INF/report/platform-specialist-report.jsp</result>
+        </action>
+
+        <action name="getPlatformSpecialistsReportData" method="getPlatformSpecialistsReportData" class="platformSpecialistsReportAction">
+            <interceptor-ref name="securedTCStaffStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         
         <action name="dashboardGetJiraIssuesReport" class="dashboardJiraIssuesReportAction">

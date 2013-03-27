@@ -395,6 +395,10 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="platformSpecialistsReportAction" class="com.topcoder.direct.services.view.action.report.PlatformSpecialistsReportAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
     <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

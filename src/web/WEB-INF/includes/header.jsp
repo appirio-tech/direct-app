@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin
-  - Version: 2.6
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
+  - Version: 2.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -40,9 +40,11 @@
   - Version 2.4 (Release Assembly - TopCoder Security Groups - Release 5) change notes:
   - - Added hasWritePermission variable if current page is in project context.
   - - For the pages under project context, hide some edit project links if user doesn't have permission.
-  - Version 2.5 (Module Assembly - TopCoder Cockpit Instant Search) change notes: Add instant search box
+  - Version 2.5 (Module Assembly - TopCoder Cockpit Instant Search) change notes: Add instant search box.
   - Version 2.6 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
-  - - Change the cursor style for header logo
+  - - Change the cursor style for header logo 
+  - Version 2.7 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph) change notes:
+  - - Add link to TopCoder Platform Specialists report, the report can only be accessed by TC staff.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -88,6 +90,8 @@
                     <s:else>
                         <a class="logo" href="javascript:;" style="cursor:default"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
                     </s:else>
+                </c:when>
+                <c:when test="${requestScope.CURRENT_TAB eq 'platformSpecialistsReport'}">
                 </c:when>
                 <c:when test="${requestScope.CURRENT_TAB eq 'searchAll'}">
                     <a class="logo resultsPageLogo" href="javascript:;"> Search Results </a>
@@ -147,6 +151,7 @@
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
+                            <a href="<s:url action="platformSpecialistsReport" namespace="/"/>">Platform Specialists Report</a>
                         </c:if>
                     </div>
                 </li>
@@ -554,7 +559,7 @@
     </ui:isProjectPage>
 
     <ui:isDashboardPage>
-        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise' && requestScope.CURRENT_TAB ne 'searchAll'}">
+        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise' && requestScope.CURRENT_TAB ne 'searchAll' && requestScope.CURRENT_TAB ne 'platformSpecialistsReport'}">
             <div id="tabs1">
                  <ul>
                      <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>

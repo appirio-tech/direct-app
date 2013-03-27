@@ -74,6 +74,7 @@ import com.topcoder.direct.services.view.dto.dashboard.participationreport.Parti
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.specialistreport.PlatformSpecialistReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
@@ -825,10 +826,18 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.8 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph)
+ * <ul>
+ *     <li>Add method {@link #getPlatformSpecialistReportData(long, String, String)}</li>
+ *     <li>Add method {@link #getAllPlatformSpecialists()}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, bugbuka, GreatKevin
- * @version 6.7
+ * @author bugbuka, leo_lol, morehappiness, notpad
+ * @version 6.8
  * @since 1.0
  */
 public class DataProvider {
@@ -7710,7 +7719,7 @@ public class DataProvider {
         }
 
     }
-    
+
     /**
      * get active problems
      * 
@@ -7736,5 +7745,88 @@ public class DataProvider {
         return problems;
         
     }
+
+    /**
+     * Gets the all topcoder platform specialists.
+     *
+     * @return all the topcoder platform specialists. The key is the user id, the value is the user handle.
+     * @throws Exception if any error.
+     * @since 6.8
+     */
+    public static Map<Long, String> getAllPlatformSpecialists() throws Exception{
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
+
+        final String queryName = "get_all_platform_specialists";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            map.put(row.getLongItem("user_id"), row.getStringItem("handle"));
+        }
+
+        return map;
+    }
+
+    /**
+     * Gets the report data for the platform specialist report.
+     *
+     * @param userIds the user ids of the platform specialists
+     * @param startDate the start date of the report
+     * @param endDate the end date of the report
+     * @return a list of <code>PlatformSpecialistReportDTO</code>
+     * @throws Exception if any error
+     * @since 6.8
+     */
+    public static List<PlatformSpecialistReportDTO> getPlatformSpecialistReportData(String userIds, String startDate,
+                                                                                    String endDate) throws Exception {
+        final String queryName = "member_spend_by_platform_specialist";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("uids", userIds);
+
+        DateFormat queryDateFormat = new SimpleDateFormat("yyyy-MM");
+        DateFormat timelineDateFormat = new SimpleDateFormat("MMM''yy");
+
+        Date startTime = timelineDateFormat.parse(startDate);
+        request.setProperty("sdt", queryDateFormat.format(startTime));
+        Date endTime = timelineDateFormat.parse(endDate);
+        request.setProperty("edt", queryDateFormat.format(endTime));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startTime);
+
+        long startMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+        calendar.setTime(endTime);
+        long endMonthCount = calendar.get(Calendar.YEAR) * 12 + calendar.get(Calendar.MONTH);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        Map<Long, PlatformSpecialistReportDTO> resultMap = new HashMap<Long, PlatformSpecialistReportDTO>();
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            long uid = row.getLongItem("user_id");
+            String handle = row.getStringItem("handle");
+            long monthCount = row.getLongItem("monthcount");
+            double memberSpent = row.getDoubleItem("member_spent");
+            long monthKey = (monthCount/100) * 12 + (monthCount % 100 -1);
+
+            PlatformSpecialistReportDTO pmDTO = resultMap.get(uid);
+            if (pmDTO == null) {
+                pmDTO = new PlatformSpecialistReportDTO();
+                pmDTO.setUserId(uid);
+                pmDTO.setUserHandle(handle);
+                // intialize month spent result
+                for(long i = startMonthCount; i <= endMonthCount; ++i) {
+                    pmDTO.getMonthsMemberSpend().put(i, 0.0);
+                }
+                resultMap.put(uid, pmDTO);
+            }
+
+            pmDTO.getMonthsMemberSpend().put(monthKey, pmDTO.getMonthsMemberSpend().get(monthKey) + memberSpent);
+        }
+
+        return new ArrayList<PlatformSpecialistReportDTO>(resultMap.values());
+    }
+
 }
 
