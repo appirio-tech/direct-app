@@ -1523,6 +1523,7 @@
                         SELECT DISTINCT review_id,
                                review.resource_id AS resource_id,
                                review.submission_id AS submission_id,
+							   review.project_phase_id as project_phase_id,
                                review.scorecard_id AS scorecard_id,
                                committed,
                                score,
