@@ -1,84 +1,127 @@
 %if:PAID='NO'%
 
+<p>
 A message from TopCoder.
+</p>
 
+<p>
 We have scheduled your competition.  The contest will now undergo a specification review before it launches, which will be performed by the TopCoder Community %COMPETITION_TYPE% review board.
+</p>
 
+<p>
 You can track the status of this competition, and all your competitions, by visiting http\://www.topcoder.com/direct
+</p>
 
-There you can\: 
+<p>
+There you can\:
+<br/>
+<ul>
+    <li>Engage the TopCoder Community in your projects</li>
+    <li>Track the progress of your projects and competitions</li>
+    <li>View metrics and performance statistics for your projects and competitions</li>
+    <li>Collaborate with your team members and the TopCoder Community</li>
+    <li>Modify competitions that have not launched</li>
+    <li>Select winners (if necessary for this competition) and download the results of each competition</li>
+    <li>And much more</li>
+</ul>
+</p>
 
-        + Engage the TopCoder Community in your projects
-        + Track the progress of your projects and competitions
-        + View metrics and performance statistics for your projects and competitions
-        + Collaborate with your team members and the TopCoder Community
-        + Modify competitions that have not launched
-        + Select winners (if necessary for this competition) and download the results of each competition
-        + And much more
-
+<p>
 The following competition(s) have been scheduled\:
+</p>
 %endif%
 %if:PAID='YES'%
+<p>
 Your contest payment has been updated\:
+</p>
 %endif%
---------------------------------------------------------------------
 
-Competition Type\:   %COMPETITION_TYPE%
-Competition Title\:  %COMPETITION_TITLE%
+<p>
+--------------------------------------------------------------------
+</p>
+
+<p>
+Competition Type\:   %COMPETITION_TYPE%<br/>
+Competition Title\:  %COMPETITION_TITLE%<br/>
 %if:CONTEST_INDICATOR='SUBJECTIVE'%
-Review Style\:  User Selection
+Review Style\:  User Selection<br/>
 %endif%
 %if:CONTEST_INDICATOR='OBJECTIVE'%
-Review Style\:  TopCoder Community Review Board.
+Review Style\:  TopCoder Community Review Board.<br/>
 %endif%
-Project\:       %PROJECT_NAME%
-Scheduled Launch Time\:  %LAUNCH_TIME%
+Project\:       %PROJECT_NAME%<br/>
+Scheduled Launch Time\:  %LAUNCH_TIME%<br/>
 %if:PAID='NO'%
-*Estimated Cost\:    $%CONTEST_COST%
+*Estimated Cost\:    $%CONTEST_COST%<br/>
+</p>
 
----------------------------------------------------------------------
-Total\:      $%TOTAL_COST%
--------------------------------------------------------------------
+<p>
+---------------------------------------------------------------------<br/>
+Total\:      $%TOTAL_COST%<br/>
+---------------------------------------------------------------------<br/>
+<br/>
 %endif%
 %if:PAID='YES'%
----------------------------------------------------------------------
-*Updated Estimated Cost\:    $%CONTEST_COST%
-
-Updated Total Cost\:      $%TOTAL_COST%
--------------------------------------------------------------------
+---------------------------------------------------------------------<br/>
+*Updated Estimated Cost\:    $%CONTEST_COST%<br/>
+<br/>
+Updated Total Cost\:      $%TOTAL_COST%<br/>
+---------------------------------------------------------------------<br/>
+<br/>
+</p>
 %endif%
 
 
-# * The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Cockpit (http\://www.topcoder.com/direct) at the conclusion of the competition.
-#
-#You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.
-#
---------------------------------------------------------------------
+<p>
+# * The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Cockpit (http\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
+#<br/>
+#You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.<br/>
+#<br/>
+--------------------------------------------------------------------<br/>
+</p>
 
+<p>
 This competition was ordered by\:
+</p>
 
+<p>
+<ul>
 #    %if:PURCHASE_TYPE='CC'%
-#    %PURCHASER_NAME%
-#    %PURCHASER_ADDRESS%
-#    %PURCHASER_CITY%, %PURCHASER_STATE% %PURCHASER_ZIP%
-#    %PURCHASER_COUNTRY%
+#    <li>%PURCHASER_NAME%</li>
+#    <li>%PURCHASER_ADDRESS%</li>
+#    <li>%PURCHASER_CITY%, %PURCHASER_STATE% %PURCHASER_ZIP%</li>
+#    <li>%PURCHASER_COUNTRY%</li>
 #    %endif%
 #    %if:PURCHASE_TYPE='PO'%
-#    Client Name\: %CLIENT_NAME%
-#    Project Name\: %PROJECT_NAME%
-#    PO \#\: %PO_NUMBER%
+#    <li>Client Name\: %CLIENT_NAME%</li>
+#    <li>Project Name\: %PROJECT_NAME%</li>
+#    <li>PO \#\: %PO_NUMBER%</li>
 #    %endif%
-    %PURCHASER_DETAILS%
-    Purchased By\: %PURCHASED_BY%
+    <li>%PURCHASER_DETAILS%</li>
+    <li>Purchased By\: %PURCHASED_BY%</li>
+</ul>
+</p>
 
+<p>
 --------------------------------------------------------------------
+</p>
 
+<p>
 If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
+</p>
 
+<p>
 ---------------------------------------------------------------------
+</p>
 
+<p>
 Please note\: This e-mail was sent from a notification-only address that cannot accept incoming e-mail. Please do not reply to this message.
+</p>
 
+<p>
 Thank you for working with TopCoder.
+</p>
 
+<p>
 ---------------------------------------------------------------------
+</p>

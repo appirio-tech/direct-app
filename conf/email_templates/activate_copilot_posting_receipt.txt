@@ -1,77 +1,104 @@
 %if:PAID='NO'%
 
+<p>
 A message from TopCoder.
+</p>
 
-Thank you for engaging the TopCoder Copilots.  Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately.  Once the Copilot Opportunity is posted, you can 
-expect to recieve email updates as the Copilot Opportunity progresses as well as when Copilots ask you questions in the forums.  The Copilots have 3 days to ask questions and submit their plans for your project.  After the competition submission phase is complete, you 
+<p>
+Thank you for engaging the TopCoder Copilots.  Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately.  Once the Copilot Opportunity is posted, you can
+expect to recieve email updates as the Copilot Opportunity progresses as well as when Copilots ask you questions in the forums.  The Copilots have 3 days to ask questions and submit their plans for your project.  After the competition submission phase is complete, you
 will be able to review all of the Copilots and their submissions, and then choose one or more Copilots to manage your project.
+</p>
 
+<p>
 You can track the status of this competition, and all your competitions, by visiting https\://www.topcoder.com/direct
+</p>
 
+<p>
 There you can\: 
-
-        + Engage the TopCoder Community in your projects
-        + Track progress and manage your projects and competitions
-        + View metrics and performance statistics for your projects and competitions
-        + Collaborate with your team members and the TopCoder Community
-        + Manage competitions
-        + Select winners (if necessary for this competition) and download the results of each competition
-        + And much more
-
+<br/>
+<ul>
+    <li>Engage the TopCoder Community in your projects</li>
+    <li>Track progress and manage your projects and competitions</li>
+    <li>View metrics and performance statistics for your projects and competitions</li>
+    <li>Collaborate with your team members and the TopCoder Community</li>
+    <li>Manage competitions</li>
+    <li>Select winners (if necessary for this competition) and download the results of each competition</li>
+    <li>And much more</li>
+</ul>
+</p>
+<p>
 The following Copilot Opportunity has been scheduled\:
+</p>
 %endif%
 %if:PAID='YES'%
+<p>
 An additional payment has been applied for the Copilot Opportunity\:
+</p>
 %endif%
---------------------------------------------------------------------
+--------------------------------------------------------------------<br/>
 
-Project Name\:       %PROJECT_NAME%
-Copilot Opportunity Title\:  %COMPETITION_TITLE%
-Review Style\:  User Selection.
-Scheduled Launch Time\:  %LAUNCH_TIME%
+<p>
+Project Name\:       %PROJECT_NAME%<br/>
+Copilot Opportunity Title\:  %COMPETITION_TITLE%<br/>
+Review Style\:  User Selection.<br/>
+Scheduled Launch Time\:  %LAUNCH_TIME%<br/>
 %if:PAID='NO'%
-*Estimated Cost\:    $%CONTEST_COST%
-
----------------------------------------------------------------------
-Total\:      $%TOTAL_COST%
--------------------------------------------------------------------
+*Estimated Cost\:    $%CONTEST_COST%<br/>
+</p>
+<br/>
+---------------------------------------------------------------------<br/>
+Total\:      $%TOTAL_COST%<br/>
+-------------------------------------------------------------------<br/>
 %endif%
 %if:PAID='YES'%
----------------------------------------------------------------------
-Additional Cost\:      $%TOTAL_COST%
--------------------------------------------------------------------
+---------------------------------------------------------------------<br/>
+Additional Cost\:      $%TOTAL_COST%<br/>
+-------------------------------------------------------------------<br/>
 %endif%
 
-# * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Cockpit (https\://www.topcoder.com/direct) at the conclusion of the competition.
-#
-#You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.
-#
+<p>
+# * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Cockpit (https\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
+#<br/>
+#You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.<br/>
+#<br/>
 --------------------------------------------------------------------
+</p>
 
-This competition was ordered by\:
-
+<p>
+This competition was ordered by\:<br/>
+<br/>
+<ul>
 #    %if:PURCHASE_TYPE='CC'%
-#    %PURCHASER_NAME%
-#    %PURCHASER_ADDRESS%
-#    %PURCHASER_CITY%, %PURCHASER_STATE% %PURCHASER_ZIP%
-#    %PURCHASER_COUNTRY%
+#    <li>%PURCHASER_NAME%</li>
+#    <li>%PURCHASER_ADDRESS%</li>
+#    <li>%PURCHASER_CITY%, %PURCHASER_STATE% %PURCHASER_ZIP%</li>
+#    <li>%PURCHASER_COUNTRY%</li>
 #    %endif%
 #    %if:PURCHASE_TYPE='PO'%
-#    Customer Name\: %CLIENT_NAME%
-#    Project Name\: %PROJECT_NAME%
-#    PO \#\: %PO_NUMBER%
+#    <li>Customer Name\: %CLIENT_NAME%</li>
+#    <li>Project Name\: %PROJECT_NAME%</li>
+#    <li>PO \#\: %PO_NUMBER%</li>
 #    %endif%
-    %PURCHASER_DETAILS%
-    Purchased By\: %PURCHASED_BY%
+    <li>%PURCHASER_DETAILS%</li>
+    <li>Purchased By\: %PURCHASED_BY%</li>
+</ul>
+<br/>
+--------------------------------------------------------------------<br/>
+</p>
 
---------------------------------------------------------------------
+<p>
+If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.<br/>
+<br/>
+---------------------------------------------------------------------<br/>
+</p>
 
-If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
-
----------------------------------------------------------------------
-
+<p>
 Please note\: This e-mail was sent from a notification-only address that cannot accept incoming e-mail. Please do not reply to this message.
+</p>
 
-Thank you for working with TopCoder.
-
----------------------------------------------------------------------
+<p>
+Thank you for working with TopCoder.<br/>
+<br/>
+---------------------------------------------------------------------<br/>
+</p>
