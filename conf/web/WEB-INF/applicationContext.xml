@@ -194,9 +194,6 @@
         <property name="proxyInterface" value="com.topcoder.service.facade.permission.PermissionServiceFacade"/>
     </bean>
 
-    <bean id="projectPaymentCalculator" class="com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator">
-    </bean>
-
     <!--  FileUpload -->
     <bean id="fileUpload" class="com.topcoder.servlet.request.LocalFileUpload">
         <constructor-arg index="0">
@@ -536,6 +533,14 @@
         <property name="cloudVMService" ref="cloudVMService"/>
     </bean>
 
+    <bean id="clientInvoiceManageAction"
+          class="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction"
+          scope="prototype"  parent="baseDirectStrutsAction">
+        <property name="clientService" ref="groupClientService"/>
+        <property name="invoiceUploadPersistence" ref="clientInvoiceUploadPersistence"/>
+        <property name="invoiceUploadRootPath" value="@invoiceUploadRootPath@"/>
+    </bean>
+
     <bean id="projectGamePlanDataAction"
           class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
           scope="prototype">
@@ -576,11 +581,6 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
-    <bean id="getReviewCostAction" class="com.topcoder.direct.services.view.action.contest.launch.GetReviewCostAction"
-          scope="prototype" parent="baseDirectStrutsAction">
-          <property name="projectPaymentCalculator" ref="projectPaymentCalculator"/>
-    </bean>
-    
     <bean id="searchUserAction"
           class="com.topcoder.direct.services.view.action.dashboard.SearchUserAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -1151,6 +1151,11 @@
 
     <bean name="customerPlatformFeePersistence" class="com.topcoder.clients.dao.impl.CustomerPlatformFeeDAOImpl" scope="prototype">
         <property name="loggerName" value="com.topcoder.clients.dao.impl.CustomerPlatformFeeDAOImpl"/>
+        <property name="sessionFactory" ref="projectFeeSessionFactory"/>
+    </bean>
+
+    <bean name="clientInvoiceUploadPersistence" class="com.topcoder.clients.dao.impl.ClientInvoiceUploadDAOImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.clients.dao.impl.ClientInvoiceUploadDAOImpl"/>
         <property name="sessionFactory" ref="projectFeeSessionFactory"/>
     </bean>
 

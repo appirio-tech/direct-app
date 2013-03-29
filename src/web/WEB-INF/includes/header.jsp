@@ -45,9 +45,11 @@
   - - Change the cursor style for header logo 
   - Version 2.7 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph) change notes:
   - - Add link to TopCoder Platform Specialists report, the report can only be accessed by TC staff.
+  - Version 2.6 (Release Assembly - TopCoder Cockpit - Billing Management) change notes: add billing tab
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
+<%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 	<!-- topcoder maintenance module -->
@@ -630,7 +632,15 @@
             <li <c:if test="${requestScope.CURRENT_TAB eq 'reports'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardReports" namespace="/"/>"><span>Reports</span></a>
             </li>
-
+            <%
+                if (ClientInvoiceManageAction.canViewBillingTab()) {
+            %>
+            <li <c:if test="${requestScope.CURRENT_TAB eq 'billing'}">class="on"</c:if>>
+                <a href="<s:url action="billing" namespace="/"/>"><span>Billing</span></a>
+            </li>
+            <%
+                }
+            %>
             <%
                 if (DashboardVMAction.isApplicable()) {
             %>

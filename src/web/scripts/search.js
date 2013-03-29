@@ -81,9 +81,12 @@
  * 
  * Version 2.2 - (Release Assembly - TC Cockpit Operations Dashboard Improvements 2)
  * - Handle 'Historical Cost Difference' column hover event.
+ *
+ * Version 2.3 - (Release Assembly - TopCoder Cockpit - Billing Management)
+ * - Add sort handling for the invoice date in client invoice page.
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx
- * @version 2.2
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, TCSASSEMBLER
+ * @version 2.3
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -273,6 +276,48 @@ $(document).ready(function() {
 		} else {
 			var y = 10000000000000;
 		}
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
+
+    jQuery.fn.dataTableExt.oSort['date-trimmed-asc'] = function (aa, bb) {
+        var a = trim(aa.replace(/<.*?>/g, "").toLowerCase());
+        var b = trim(bb.replace(/<.*?>/g, "").toLowerCase());
+
+        if (trim(a) != '') {
+            var frDatea = a.split('/');
+            var x = (frDatea[2] * 1000 + frDatea[0] * 50  + frDatea[1] * 1) * 1;
+        } else {
+            var x = 100000000000000;
+        }
+
+        if (trim(b) != '') {
+            var frDateb = b.split('/');
+            var y = (frDateb[2] * 1000 + frDateb[0] * 50  + frDateb[1] * 1) * 1;
+        } else {
+            var y = 100000000000000;
+        }
+        var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        return z;
+    };
+
+    jQuery.fn.dataTableExt.oSort['date-trimmed-desc'] = function (aa, bb) {
+        var a = trim(aa.replace(/<.*?>/g, "").toLowerCase());
+        var b = trim(bb.replace(/<.*?>/g, "").toLowerCase());
+
+        if (trim(a) != '') {
+            var frDatea = a.split('/');
+            var x = (frDatea[2] * 1000 + frDatea[0] * 50  + frDatea[1] * 1) * 1;
+        } else {
+            var x = 100000000000000;
+        }
+
+        if (trim(b) != '') {
+            var frDateb = b.split('/');
+            var y = (frDateb[2] * 1000 + frDateb[0] * 50  + frDateb[1] * 1) * 1;
+        } else {
+            var y = 100000000000000;
+        }
         var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
         return z;
     };

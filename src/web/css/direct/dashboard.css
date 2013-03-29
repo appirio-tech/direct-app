@@ -94,7 +94,10 @@
  * - Update the CSS to fix multiple issues.
  * 
  * - (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
- * - Update the CSS to fix multiple issues. 
+ * - Update the CSS to fix multiple issues.
+ *
+ * - (Release Assembly - TopCoder Cockpit - Billing Management)
+ * - Add CSS for the client invoice page
  * 
  * - (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - Update the CSS for launching contest update for marathon match.
@@ -10345,3 +10348,240 @@ select{
 	 border: 1px solid #BDBDBD;
 	 background: #fff;
 }
+
+.clientInvoice h2.header {
+    margin: 23px 2px;
+    font-size: 18px
+}
+
+div.clientInvoiceManageRow {
+    border-style: solid;
+    border-color:  #d0d0d0;
+    border-width: 1px 1px 0px 1px;
+    padding: 15px 0px;
+    width: 80%
+}
+
+div.clientInvoiceManageRow.last {
+    border-width: 1px;
+}
+
+.clientInvoice .fieldName {
+    display: inline;
+    color: #585858;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.clientInvoice .fieldName2 {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.clientInvoice .title {
+    float:left;
+}
+
+.clientInvoice .toLabel {
+    margin: 0px 5px;
+    font-size: 12px;
+}
+
+.clientInvoice select {
+    width: 200px;
+}
+
+.clientInvoice .timeRange {
+    height: 20px;
+    padding: 10px 0px;
+}
+
+.clientInvoice .uploadRow {
+    height: 30px;
+    padding-top: 5px;
+}
+
+.clientInvoice input.date-pick {
+    color: #6C6C6C;
+    float: left;
+    font-family: Arial;
+    font-size: 11px;
+    height: 18px;
+    padding: 0 5px;
+    width: 60px;
+}
+
+.clientInvoice a.dp-choose-date {
+    margin-right: 0px;
+}
+
+.clientInvoice #invoiceUploadButton {
+    margin: 8px 90px;
+    float: left;
+}
+
+.clientInvoice .errorMessage, .clientInvoice .errorMessage2 {
+    font-size: 11px;
+    color: red;
+    padding-left: 5px;
+    display: none;
+}
+
+#clientInvoicesFilter {
+    font-size: 11px;
+    padding-left: 8px;
+}
+
+.clientInvoice .clientInvoicesResult {
+    padding-left: 40px;
+    font-size: 12px;
+}
+
+.clientInvoice .clientInvoicesResult li {
+    padding: 6px 0px;
+}
+
+.clientInvoice .clientInvoicesResult a {
+    padding: 0px 8px;
+}
+
+.clientInvoice .clientInvoicesResult span {
+    font-style: italic;
+}
+
+.clientInvoice  .tableData {
+    width: 80%;
+    margin-top: 40px;
+}
+
+.clientInvoice  .tableData table {
+    border: 1px solid #BDBDBD;
+    border-collapse: collapse;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.clientInvoice  .tableData table th {
+    background: url("/images/bg_table_th.png") repeat-x scroll left top #E8E8E8;
+    border: 1px solid #BDBDBD;
+    font-size: 12px;
+    height: 28px;
+    padding: 0 10px;
+    vertical-align: middle;
+    cursor: hand;
+}
+
+.clientInvoice .tableData table td {
+    line-height: 14px;
+    border: 1px solid #BDBDBD;
+    font-size: 12px;
+    height: 39px;
+    padding: 0 10px;
+    vertical-align: middle;
+}
+
+.clientInvoice  .pagePanel {
+    background: url("/images/bg_page.png") repeat-x scroll left top transparent;
+    border: 1px solid #BDBDBD;
+    height: 41px;
+}
+
+.clientInvoice .bottomPagePanel {
+    border-top: 0 none;
+}
+.clientInvoice .pageTotal {
+    display: inline;
+    float: left;
+    width: auto;
+}
+.clientInvoice .pagePanel .dataTables_info {
+    display: inline;
+    float: left;
+    font-size: 12px;
+    line-height: 40px;
+    padding: 0 0 0 14px;
+    width: auto;
+}
+.clientInvoice .showPage {
+    display: inline;
+    float: left;
+    font-size: 12px;
+    line-height: 40px;
+    margin-left: 6px;
+    width: auto;
+}
+.clientInvoice .showPage em {
+    margin-right: 6px;
+}
+.clientInvoice .showPage span {
+    margin-right: 6px;
+}
+.clientInvoice .pagePanel span.totalNumber {
+    padding: 0;
+}
+.clientInvoice .pagePanel span em.line {
+    font-style: normal;
+    padding: 0 6px;
+}
+.clientInvoice .pageNum {
+    display: inline;
+    float: right;
+    margin: 0 16px 0 0;
+    width: auto;
+}
+.clientInvoice .pageNum span span {
+    color: #333333;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 40px;
+    padding: 0 3px;
+    text-decoration: underline;
+}
+.clientInvoice .pageNum span span:hover {
+    text-decoration: none;
+}
+.clientInvoice .pageNum span.paginate_active {
+    font-weight: bold;
+    text-decoration: none !important;
+}
+.clientInvoice .pageNum span.previous {
+    background: url("/images/bg_prev.png") no-repeat scroll left center transparent;
+    color: #333333;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 40px;
+    padding: 0 3px 0 10px;
+    text-decoration: underline;
+}
+.clientInvoice .pageNum span.next {
+    background: url("/images/bg_next.png") no-repeat scroll right center transparent;
+    color: #333333;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 40px;
+    padding: 0 10px 0 3px;
+    text-decoration: underline;
+}
+.clientInvoice .pageNum span.previous:hover, .clientInvoice .pageNum span.next:hover {
+    text-decoration: none;
+}
+
+.clientInvoice a.deleteLink {
+    background: url("/images/remove-milestone-icon.png") no-repeat scroll 0 0 transparent;
+    padding-left: 16px;
+    margin-left: 5px
+}
+
+.clientInvoice .uploadTitle {
+    background: url("/images/bg_calendar_filter_title_bg.png") repeat-x scroll left top #E7E7E7;
+    border-bottom: 1px solid #BDBDBD;
+    height: 30px;
+    color: #585858;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px 0px;
+}
+
+

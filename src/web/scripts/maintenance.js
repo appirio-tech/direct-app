@@ -1,4 +1,14 @@
-// JavaScript Document
+/**
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ *
+ * The JS script for displaying maintenance notice.
+ *
+ *  Version 1.1 - (Release Assembly - TopCoder Cockpit - Billing Management)
+ *  - Fix the JS error under Chrome and Firefox
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1
+ */
 var allowMaintenance = false;
 
 var switchMaintenance = false;
@@ -52,7 +62,7 @@ $(function(){
 
 	// display ie6 banner function
 showMaintenanceNotification = function() {
-    if($('#ie6-notification').offset().top == 0){
+    if($('#ie6-notification').length > 0 && $('#ie6-notification').offset().top == 0){
     	if (switchIE) {
          if (switchMaintenance) {
          	 $('body').animate({paddingTop:140},slide_during);
@@ -70,7 +80,7 @@ showMaintenanceNotification = function() {
 }
 	// hide maintainance banner function
 	hideMaintenanceNotification = function(flag) {
-   	if($('#ie6-notification').offset().top == 0){
+   	if($('#ie6-notification').length > 0  && $('#ie6-notification').offset().top == 0){
    		if (flag == 0)  {
         $('body').animate({paddingTop:51},slide_during);
       } else {

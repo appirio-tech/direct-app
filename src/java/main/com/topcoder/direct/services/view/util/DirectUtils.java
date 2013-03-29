@@ -79,6 +79,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -458,14 +461,24 @@ import java.util.Set;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, bugbuka, GreatKevin
- * @version 1.9.6
+ * <p>
+ * Version 1.9.8 (Release Assembly - TopCoder Cockpit - Billing Management)
+ * <ul>
+ *     <li>Add method {@link #getUserClientId(long)}</li>
+ *     <li>Add method {@link #isClientUser(long)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
+ * @version 1.9.8
  */
 public final class DirectUtils {
     /**
      * Constant for date format.
      */
     public static final String DATE_FORMAT = "MM/dd/yyyy";
+
+    public static final String TIME_OLTP_DATABASE = "java:TimeDS";
 
     /**
      * Draft status list.
@@ -596,6 +609,9 @@ public final class DirectUtils {
      * @since 1.8.5
      */
     private static final int FINAL_FIX_UPLOAD_TYPE_ID = 3;
+
+    private static final String IS_CLIENT_USER_SQL = "SELECT client_id FROM client_user_xref cux, user_account ua, common_oltp:user u"
+     + " WHERE cux.user_id = ua.user_account_id AND UPPER(ua.user_name) = UPPER(u.handle) AND u.user_id = ?";
     
     /**
      * <p>
@@ -2406,4 +2422,51 @@ public final class DirectUtils {
     }
 
 
+    }
+
+    /**
+     * Gets the client id of the given user id. If the user is not a client, 0 is returned.
+     *
+     * @param userId the id of the user to check.
+     * @return the client id of the given user, if the user is not a client, 0 is returned.
+     * @throws Exception if there is any error.
+     * @since 1.9.8
+     */
+    public static long getUserClientId(long userId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseUtils.getDatabaseConnection(TIME_OLTP_DATABASE);
+
+            statement = connection.prepareStatement(IS_CLIENT_USER_SQL);
+
+            statement.setLong(1, userId);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getLong("client_id");
+            } else {
+                return 0;
+            }
+        } finally {
+            DatabaseUtils.close(resultSet);
+            DatabaseUtils.close(statement);
+            DatabaseUtils.close(connection);
+        }
+    }
+
+    /**
+     * Checks whether the user is a client user.
+     *
+     * @param userId the user id ot check.
+     * @return whether the user is a client user.
+     * @throws Exception if any error.
+     * @since 1.9.8
+     */
+    public static boolean isClientUser(long userId) throws Exception {
+        return getUserClientId(userId) > 0;
+    }
 }

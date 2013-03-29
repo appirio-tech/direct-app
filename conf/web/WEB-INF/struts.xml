@@ -703,6 +703,43 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+
+        <action name="billing" class="clientInvoiceManageAction">
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/billing/client_invoice.jsp</result>
+        </action>
+        <action name="uploadClientInvoice" method="uploadClientInvoice" class="clientInvoiceManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="deleteClientInvoice" method="deleteClientInvoice" class="clientInvoiceManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="filterClientInvoices" method="filterClientInvoices" class="clientInvoiceManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="downloadInvoiceUpload" method="downloadInvoiceUpload" class="clientInvoiceManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="contentType">application/pdf</param>
+                <param name="inputName">invoiceDownloadStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
         
         <action name="dashboardVMAction" class="dashboardVMAction">
             <interceptor-ref name="authnInterceptor"/>
@@ -941,14 +978,6 @@
         </action>
 
         <action name="projectContestsCalendarView" method="getContestsCalendar" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-        
-        <action name="getReviewCostAjax" class="getReviewCostAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
