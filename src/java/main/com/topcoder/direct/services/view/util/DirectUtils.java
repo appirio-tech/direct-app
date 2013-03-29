@@ -2422,8 +2422,6 @@ public final class DirectUtils {
     }
 
 
-    }
-
     /**
      * Gets the client id of the given user id. If the user is not a client, 0 is returned.
      *
