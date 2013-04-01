@@ -262,10 +262,13 @@ public class SubmitApprovalAction extends BaseDirectStrutsAction {
         
         // Determine which scorecard is to be used for Approval review
         Long scorecardId = null;
+		Phase approvalPhase = null;
         Set<Phase> phases = softwareCompetition.getProjectPhases().getPhases();
         for (Phase phase : phases) {
             if (phase.getPhaseType().getId() == PhaseType.APPROVAL_PHASE.getId()) {
                 scorecardId = Long.parseLong(phase.getAttribute(SCORECARD_ID_PHASE_ATTRIBUTE_KEY).toString());
+				approvalPhase = phase;
+				break;
             }
         }
         if (scorecardId == null) {
@@ -311,6 +314,7 @@ public class SubmitApprovalAction extends BaseDirectStrutsAction {
         Review approvalReview = new Review();
         approvalReview.setAuthor(approverResource.getId());
         approvalReview.setCommitted(true);
+		approvalReview.setProjectPhase(approvalPhase.getId());
         approvalReview.setCreationUser(String.valueOf(currentUser.getUserId()));
         approvalReview.setCreationTimestamp(new Date());
         approvalReview.setModificationUser(String.valueOf(currentUser.getUserId()));
