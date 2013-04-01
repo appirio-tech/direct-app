@@ -1154,7 +1154,7 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-        
+
     </package>
 
     <package name="base" namespace="/base" extends="default">

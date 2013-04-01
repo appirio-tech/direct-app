@@ -3,6 +3,21 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.payments.entities.CashOutflowPotential;
+import com.topcoder.direct.payments.entities.CashOutflowPotentialResult;
+import com.topcoder.direct.payments.entities.DateRange;
+import com.topcoder.direct.payments.entities.PaymentHistory;
+import com.topcoder.direct.payments.entities.PaymentHistoryCriteria;
+import com.topcoder.direct.payments.entities.PaymentHistoryResult;
+import com.topcoder.direct.payments.entities.PaymentMethod;
+import com.topcoder.direct.payments.entities.PaymentStatus;
+import com.topcoder.direct.payments.entities.PaymentTrend;
+import com.topcoder.direct.payments.entities.PaymentTrendSearchCriteria;
+import com.topcoder.direct.payments.entities.PaymentsByStatus;
+import com.topcoder.direct.payments.entities.PaymentsByStatusResult;
+import com.topcoder.direct.payments.entities.PullablePayments;
+import com.topcoder.direct.payments.entities.TopMemberPayment;
+import com.topcoder.direct.payments.entities.TopMemberPaymentCriteria;
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
@@ -833,6 +848,18 @@ import java.util.Set;
  *     <li>Add method {@link #getAllPlatformSpecialists()}</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 6.9(Module Assembly - TopCoder Direct Member Payments Dashboard Backend Assembly v1.0) change notes:
+ * <ol>
+ *     <li>Added method {@link #getPullablePayments()}.</li>
+ *     <li>Added method {@link #getPaymentsByStatus(Date, Date)}.</li>
+ *     <li>Added method {@link #getPotentialMemberPayments(Date, Date)}.</li>
+ *      <li>Added method {@link #getPaymentHistory(PaymentHistoryCriteria)}.</li>
+ *      <li>Added method {@link #getPaymentsTrends(PaymentTrendSearchCriteria)}.</li>
+ *      <li>Added method {@link #getTopMemberPayments(TopMemberPaymentCriteria)}.</li>
+ * </ol>
+ * <p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
@@ -7826,6 +7853,335 @@ public class DataProvider {
         }
 
         return new ArrayList<PlatformSpecialistReportDTO>(resultMap.values());
+    }
+
+    /**
+     * Get member pullable payments.
+     * 
+     * @return
+     *      an instance of {@link PullablePayments}.
+     * @throws Exception
+     *      if a generic error occurs
+     */
+    public static PullablePayments getPullablePayments() throws Exception {
+      final String queryName = "get_pullable_payments";
+      DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+      Request request = new Request();
+      request.setContentHandle(queryName);
+      
+      final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+
+      PullablePayments payments = new PullablePayments();
+      for(ResultSetContainer.ResultSetRow row : resultSet) {
+        int paymentMethodId = row.getIntItem("payment_method_id");
+        double paymentAmount = row.getDoubleItem("net_amount");
+
+        if(paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
+          payments.setPaypalPayments(paymentAmount);
+        } else if(paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
+          payments.setPayoneerPayments(paymentAmount);
+        } else if(paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
+          payments.setWesternUnionPayments(paymentAmount);
+        }
+      }
+      return payments;
+    }
+    
+    /**
+     * Get member payments by status for given days.
+     * 
+     * @param startDate
+     *      start date
+     * @param endDate
+     *      end date
+     * @return
+     *      a list of {@link PaymentsByStatusResult} instances.
+     * @throws Exception
+     *      if a generic error occurs
+     */
+    public static List<PaymentsByStatusResult> getPaymentsByStatus(Date startDate, Date endDate) throws Exception {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Specified dates should not be null");
+        }
+        
+      final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+      final String queryName = "get_payments_by_status";
+      DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+      Request request = new Request();
+      request.setContentHandle(queryName);
+      request.setProperty("sda", dateFormatter.format(startDate));
+      request.setProperty("ed", dateFormatter.format(endDate));
+
+      List<PaymentsByStatus> payments = new ArrayList<PaymentsByStatus>(); 
+      final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+      for(int i=0;i<resultSet.size();i++) {
+        double amount = resultSet.getDoubleItem(i, "net_amount");
+        int statusId = resultSet.getIntItem(i, "payment_status_id");
+        Date updateDate = resultSet.getTimestampItem(i, "date_modified");
+
+        PaymentsByStatus paymentByStatus = new PaymentsByStatus();
+        paymentByStatus.setStatusUpdateDate(updateDate);
+        if(statusId == PaymentStatus.PAID.getPaymentStatusId()) {
+          paymentByStatus.setPaidPayments(amount);
+        } else if(statusId == PaymentStatus.ON_HOLD.getPaymentStatusId()) {
+          paymentByStatus.setOnHoldPayments(amount);
+        } else if(statusId == PaymentStatus.OWED.getPaymentStatusId() ||
+            statusId == PaymentStatus.ACCRUING.getPaymentStatusId()) {
+          paymentByStatus.setOwedOrAccruingPayments(amount);
+        } else if(statusId == PaymentStatus.ENTERED_INTO_PAYMENT_SYSTEM.getPaymentStatusId()) {
+          paymentByStatus.setPaymentsEnteredIntoPaymentSystem(amount);
+        }
+        payments.add(paymentByStatus);
+      }
+      DateRange dateRange = new DateRange();
+      dateRange.setFromDate(startDate);
+      dateRange.setToDate(endDate);
+
+      PaymentsByStatusResult paymentByStatusResult = new PaymentsByStatusResult();
+      paymentByStatusResult.setDateRange(dateRange);
+      paymentByStatusResult.setPaymentsByStatus(payments);
+
+      List<PaymentsByStatusResult> result = new ArrayList<PaymentsByStatusResult>();
+      result.add(paymentByStatusResult);
+      return result;
+    }
+
+    /**
+     * Get member potential payments for given days.
+     * 
+     * @param startDate
+     *            start date
+     * @param endDate
+     *            end date
+     * @param paymentMethodIdParameter
+     *            the payment method ID
+     * @return a list of {@link CashOutflowPotentialResult} instances.
+     * @throws Exception
+     *             if a generic error occurs
+     */
+    public static List<CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate, String paymentMethodIdParameter) 
+        throws Exception {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Specified dates should not be null");
+        }
+
+        final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        final String queryName = "get_potential_member_payments";
+        DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("sda", dateFormatter.format(startDate));
+        request.setProperty("ed", dateFormatter.format(endDate));
+        request.setProperty("paymentMethodId", String.valueOf(paymentMethodIdParameter));        
+
+        List<CashOutflowPotential> paypalPotential = new ArrayList<CashOutflowPotential>();
+        List<CashOutflowPotential> payoneerPotential = new ArrayList<CashOutflowPotential>();
+        List<CashOutflowPotential> westernUnionPotential = new ArrayList<CashOutflowPotential>();
+        final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+
+        for (int i = 0; i < resultSet.size(); i++) {
+            double amount = resultSet.getDoubleItem(i, "net_amount");
+            int paymentMethodId = resultSet.getIntItem(i, "payment_method_id");
+            Date dueDate = resultSet.getTimestampItem(i, "date_due");
+
+            CashOutflowPotential potential = new CashOutflowPotential();
+            potential.setDueDate(dueDate);
+            potential.setPayments(amount);
+            if (paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
+                paypalPotential.add(potential);
+            } else if (paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
+                payoneerPotential.add(potential);
+            } else if (paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
+                westernUnionPotential.add(potential);
+            }
+        }
+
+        List<CashOutflowPotentialResult> result = new ArrayList<CashOutflowPotentialResult>();
+
+        CashOutflowPotentialResult paypalResult = new CashOutflowPotentialResult();
+        paypalResult.setPaymentMethod(PaymentMethod.PAYPAL);
+        paypalResult.setItems(paypalPotential);
+        result.add(paypalResult);
+
+        CashOutflowPotentialResult payoneerResult = new CashOutflowPotentialResult();
+        payoneerResult.setPaymentMethod(PaymentMethod.PAYONEER);
+        payoneerResult.setItems(payoneerPotential);
+        result.add(payoneerResult);
+
+        CashOutflowPotentialResult westernUnionResult = new CashOutflowPotentialResult();
+        westernUnionResult.setPaymentMethod(PaymentMethod.WESTERN_UNION);
+        westernUnionResult.setItems(westernUnionPotential);
+        result.add(westernUnionResult);
+
+        return result;
+    }
+
+    /**
+     * Get member payment history with given criteria.
+     * 
+     * @param criteria
+     *      search criteria
+     * @return
+     *      a list of {@link PaymentHistoryResult} instances.
+     * @throws Exception
+     */
+    public static List<PaymentHistoryResult> getPaymentHistory(PaymentHistoryCriteria criteria) throws Exception {
+        Date startDate = criteria.getStartDate();
+        Date endDate = criteria.getEndDate();
+        
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Specified dates should not be null");
+        }
+        
+        final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+      final String queryName = "get_payment_history";
+      DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+      Request request = new Request();
+      request.setContentHandle(queryName);
+      request.setProperty("sda", dateFormatter.format(startDate));
+      request.setProperty("ed", dateFormatter.format(endDate));
+
+      List<PaymentHistory> paypalPaymentHistory = new ArrayList<PaymentHistory>();
+      List<PaymentHistory> payoneerPaymentHistory = new ArrayList<PaymentHistory>();
+      List<PaymentHistory> westernUnionPaymentHistory = new ArrayList<PaymentHistory>();
+      final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+      for(int i=0;i<resultSet.size();i++) {
+        double amount = resultSet.getDoubleItem(i, "net_amount");
+        int paymentMethodId = resultSet.getIntItem(i, "payment_method_id");
+        int monthDate = resultSet.getIntItem(i, "date_month");
+        int yearDate = resultSet.getIntItem(i, "date_year");
+
+        PaymentHistory history = new PaymentHistory();
+        history.setAmount(amount);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, yearDate);
+        calendar.set(Calendar.MONTH, monthDate - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        history.setMonthDate(calendar.getTime());
+        if(paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
+          paypalPaymentHistory.add(history);
+        } else if(paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
+          payoneerPaymentHistory.add(history);
+        } else if(paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
+          westernUnionPaymentHistory.add(history);
+        }
+      }
+      List<PaymentHistoryResult> paymentHistoryResult = new ArrayList<PaymentHistoryResult>();
+
+      PaymentHistoryResult paypalResult = new PaymentHistoryResult();
+      paypalResult.setPaymentMethod(PaymentMethod.PAYPAL);
+      paypalResult.setItems(paypalPaymentHistory);
+      paymentHistoryResult.add(paypalResult);
+
+      PaymentHistoryResult payoneerResult = new PaymentHistoryResult();
+      payoneerResult.setPaymentMethod(PaymentMethod.PAYONEER);
+      payoneerResult.setItems(payoneerPaymentHistory);
+      paymentHistoryResult.add(payoneerResult);
+
+      PaymentHistoryResult westernUnionResult = new PaymentHistoryResult();
+      westernUnionResult.setPaymentMethod(PaymentMethod.WESTERN_UNION);
+      westernUnionResult.setItems(westernUnionPaymentHistory);
+      paymentHistoryResult.add(westernUnionResult);
+
+      return paymentHistoryResult;
+    }
+
+    /**
+     * Get member payment trend by given criteria.
+     * 
+     * @param criteria
+     *      search criteria
+     * @return
+     *      a list of {@link PaymentTrend} instances.
+     * @throws Exception
+     *      if a generic error occurs
+     */
+    public static List<PaymentTrend> getPaymentsTrends(PaymentTrendSearchCriteria criteria) throws Exception {
+        Date startDate = criteria.getStartDate();
+        Date endDate = criteria.getEndDate();
+        
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Specified dates should not be null");
+        }
+      final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+      DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+      Request request = new Request();
+      String queryName = "";
+      if(criteria.getPaymentStatusId() == PaymentStatus.PAID.getPaymentStatusId()) {
+        queryName = "get_paid_payments_trends";
+        request.setProperty("psid", String.valueOf(PaymentStatus.PAID.getPaymentStatusId()));
+      } else if(criteria.getPaymentStatusId() == PaymentStatus.OWED.getPaymentStatusId()) {
+        queryName = "get_created_payments_trends";
+        request.setProperty("psid", String.valueOf(PaymentStatus.OWED.getPaymentStatusId()));
+      }
+      
+        request.setProperty("sda", dateFormatter.format(startDate));      
+        request.setProperty("ed", dateFormatter.format(endDate));
+      if(null != criteria.getSortingColumn()) {
+        request.setProperty("sc", criteria.getSortingColumn());
+      }
+      if(null != criteria.getSortOrder()) {
+        request.setProperty("sdir", criteria.getSortOrder());
+      }
+      ResultSetContainer resultSet = null;
+
+      request.setContentHandle(queryName);
+    resultSet = dataAccess.getData(request).get(queryName);
+
+    List<PaymentTrend> paymentTrends = new ArrayList<PaymentTrend>();
+    if(null != resultSet) {
+      for(int i=0;i<resultSet.size();i++) {
+        double amount = resultSet.getDoubleItem(i, "net_amount");
+        Date datePaid = resultSet.getTimestampItem(i, "date_paid");
+
+        PaymentTrend trend = new PaymentTrend();
+        trend.setPayments(amount);
+        trend.setCreatedOrPaidDate(datePaid);
+        paymentTrends.add(trend);
+      }
+    }
+      return paymentTrends;
+    }
+
+    /**
+     * Get top member payments via criteria.
+     * 
+     * @param criteria
+     *      search criteria
+     * @return
+     *      a list of {@link TopMemberPayment} instances
+     * @throws Exception
+     *      if a generic error occurs
+     */
+    public static List<TopMemberPayment> getTopMemberPayments(TopMemberPaymentCriteria criteria) throws Exception {
+      final String queryName = "top_10_payments_summary";
+      DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+      Request request = new Request();
+      request.setContentHandle(queryName);
+      if(null != criteria.getSortColumn()) {
+        request.setProperty("sc", criteria.getSortColumn());
+      }
+      if(null != criteria.getSortOrder()) {
+        request.setProperty("sdir", criteria.getSortOrder());
+      }
+      if(criteria.getResultLimit() <= 0) {
+        request.setProperty("rl", "10");
+      } else {
+        request.setProperty("rl", String.valueOf(criteria.getResultLimit()));
+      }
+      List<TopMemberPayment> topMemberPayments = new ArrayList<TopMemberPayment>();
+      final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+      for(int i=0;i<resultSet.size();i++) {
+        double amount = resultSet.getDoubleItem(i, "net_amount");
+        String handle = resultSet.getStringItem(i, "handle");
+
+        TopMemberPayment payment = new TopMemberPayment();
+        payment.setAmount(amount);
+        payment.setHandle(handle);
+
+        topMemberPayments.add(payment);
+      }
+      return topMemberPayments;
     }
 
 }

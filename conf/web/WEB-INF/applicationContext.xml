@@ -1251,4 +1251,31 @@
     <bean id="deleteProjectForumsAction" class="com.topcoder.direct.services.view.action.project.DeleteProjectForumsAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+
+    <bean id="paypalService" class="com.topcoder.direct.payments.services.impl.PayPalServiceImpl">                                  
+        <property name="baseUrl" value="@paypal.baseUrl@"/>
+        <property name="username" value="@paypal.username@"/>
+        <property name="password" value="@paypal.password@"/>
+        <property name="signature" value="@paypal.signature@"/>
+    </bean>
+    
+    <bean id="payoneerService" class="@payoneerService@">
+        <property name="baseApiUrl" value="@payoneer.baseApiUrl@"/>
+        <property name="username" value="@payoneer.username@"/>
+        <property name="password" value="@payoneer.password@"/>
+        <property name="partnerId" value="@payoneer.partnerId@"/>
+    </bean>
+        
+    <bean id="pullablePaymentsService" class="com.topcoder.direct.payments.services.impl.PullablePaymentsServiceImpl">
+        <property name="paypalService" ref="paypalService"/>
+        <property name="payoneerService" ref="payoneerService"/>
+    </bean>
+    
+    <bean id="paymentsService" class="com.topcoder.direct.payments.services.impl.PaymentsServiceImpl">
+        <property name="paymentMethodID" value="@paymentsService.paymentMethodID@"/>
+    </bean>
+    
+    <bean id="paymentStatsService" class="com.topcoder.direct.payments.services.impl.PaymentStatsServiceImpl">
+        <property name="defaultResultLimit" value="@paymemtStatsService.resultLimit@"/>
+    </bean>
 </beans>
