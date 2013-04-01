@@ -145,7 +145,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
      */
-    MARATHON("Marathon", "M", 0), // TODO unknown
+    MARATHON("Marathon Match", "Mm", 37), // TODO unknown
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Design</code> contest type.</p>
