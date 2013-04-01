@@ -79,7 +79,7 @@ public enum ProjectPhaseType {
     /**
      * The post moterm type.
      */
-    POST_MOTERM(12, "postMoterm", "Post Moterm", 21),
+    POST_MOTERM(12, "postMortem", "Post Mortem", 21),
     
     /**
      * The milestone submission type.
