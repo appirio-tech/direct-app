@@ -2867,7 +2867,7 @@ A.buttonRed1{
 }
 
 .editIcon {
-    background: url(/images/edit/editIcon.png) 0 0 no-repeat;
+    background: url(/images/edit-project-icon.png) 0 0 no-repeat;
     width: 26px;
     height: 22px;
     display: block;
@@ -2877,11 +2877,9 @@ A.buttonRed1{
     position: relative;
     z-index: 100;
     margin: 5px 0 0 6px;
-    text-decoration: none;
+    text-decoration: underline;
 }
-.editIcon:hover {
-    background-position: 0 -22px;
-}
+
 
 #header .logo {
     position: relative!important;
