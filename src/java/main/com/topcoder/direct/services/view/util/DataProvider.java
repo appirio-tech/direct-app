@@ -5854,22 +5854,26 @@ public class DataProvider {
      */
     private static boolean setReportQueryParameters(Request request, TCSubject currentUser, long clientId, long billingAccountId, long projectId) {
         setUserPermissionQueryParameter(request, currentUser);
+		
+		request.setProperty("tcdirectid", "0");
+        request.setProperty("billingaccountid", "0");
+        request.setProperty("clientid", "0");
+		
+		boolean anySet = false;
+			
         if (projectId > 0) {
             request.setProperty("tcdirectid", String.valueOf(projectId));
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", "0");
-        } else if (billingAccountId > 0) {
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", String.valueOf(billingAccountId));
-            request.setProperty("clientid", "0");
-        } else if (clientId >= 0) {
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", String.valueOf(clientId));
-        } else {
-            return false;
+			anySet = true;
         }
-        return true;
+		if (billingAccountId > 0) {
+            request.setProperty("billingaccountid", String.valueOf(billingAccountId));
+			anySet = true;
+        }
+		if (clientId >= 0) {
+            request.setProperty("clientid", String.valueOf(clientId));
+			anySet = true;
+        }
+        return anySet;
     }
 
     /**
