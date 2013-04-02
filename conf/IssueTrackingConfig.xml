@@ -68,7 +68,7 @@
 	<softwareContestJQLQuery>"Contest ID" ~ </softwareContestJQLQuery>
 
     <!-- the JQL query used for direct project -->
-	<directProjectJQLQuery>"Cockpit Project ID"  = @directProjectID@ and ProjectID is empty</directProjectJQLQuery>
+	<directProjectJQLQuery>"Cockpit Project ID"  = @directProjectID@ and "Contest ID" is empty</directProjectJQLQuery>
 
 	<!-- the max result number -->
 	<maxResultNumber>10000</maxResultNumber>
