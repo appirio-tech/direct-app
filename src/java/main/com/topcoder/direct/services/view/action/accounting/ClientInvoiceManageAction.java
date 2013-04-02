@@ -358,7 +358,7 @@ public class ClientInvoiceManageAction extends BaseDirectStrutsAction {
             setClientInvoices(invoiceUploadPersistence.getAllByClientId(userClientId));
         }
 
-        if (DirectUtils.isCockpitAdmin(currentUser)) {
+        if (DirectUtils.isTCAccounting(currentUser)) {
             // prepare all clients options for the admin to choose
             setClients(clientService.getAllClients());
         }
