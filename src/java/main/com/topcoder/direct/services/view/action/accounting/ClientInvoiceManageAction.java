@@ -167,7 +167,7 @@ public class ClientInvoiceManageAction extends BaseDirectStrutsAction {
      * @return whether the client invoice upload / management feature is available to current user.
      */
     public boolean isClientInvoiceUploadViewable() {
-        return DirectUtils.isCockpitAdmin(DirectUtils.getTCSubjectFromSession());
+        return DirectUtils.isTCAccounting(DirectUtils.getTCSubjectFromSession());
     }
 
     /**
@@ -599,6 +599,6 @@ public class ClientInvoiceManageAction extends BaseDirectStrutsAction {
      */
     public static boolean canViewBillingTab() throws Exception {
         return DirectUtils.isClientUser(DirectUtils.getTCSubjectFromSession().getUserId())
-                || DirectUtils.isCockpitAdmin(DirectUtils.getTCSubjectFromSession());
+                || DirectUtils.isTCAccounting(DirectUtils.getTCSubjectFromSession());
     }
 }
