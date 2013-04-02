@@ -145,7 +145,12 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 
 				if (contests.isEmpty()) {
 					getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
-					getViewData().setProjectBugRaces(projectBugs);
+					if (this instanceof ActiveContestsAction) {
+						getViewData().setProjectBugRaces(projectBugs); 
+					} 
+					else if (this instanceof ProjectContestsAction) {
+						getViewData().setProjectBugRaces(JiraRpcServiceWrapper.getIssuesForDirectProject(getSessionData().getCurrentProjectContext().getId()));
+					}
 				} else {
 					if (this instanceof ActiveContestsAction)
 					{
@@ -209,12 +214,21 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 
 						// add bug races to the contests
 						Set<Long> contestIds = new HashSet<Long>();
+						
+						Long directProjectId = getSessionData().getCurrentProjectContext().getId();
 
-						for(ProjectContestDTO c : contests) {
+						for (ProjectContestDTO c : contests) {
 							contestIds.add(c.getContest().getId());
 						}
 
-						final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds, null);
+						List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds, null);
+						
+						List<TcJiraIssue> projectIssues = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectId);
+						
+						for (TcJiraIssue issue : projectIssues) {
+							bugRaceForDirectProject.add(issue);
+							
+						}
 
 						getViewData().setProjectBugRaces(bugRaceForDirectProject);
 					}
