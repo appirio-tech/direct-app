@@ -26,6 +26,9 @@
  *
  * Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
  * - Update the CSS styles to fix a drop down issue. 
+ *
+ * TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
+ * - Add CSS styles for Wireframe Viewer Modal Window.
  */
 
 html,body{
@@ -3059,4 +3062,20 @@ ul.errorMessage {
     margin-left: 2px;
 }
 
+#frame_window{
+    position:relative;
+    display:block;
+    color:white;
+    width:100%;
+    height:100%;
+    margin: 0 0;
+    top: 0px;
+    left:0;
+    z-index:2;
+}
 
+#showWireframeModal .modalBody .modalBodyContent{
+    height: 100%;
+    padding-right:5px;
+    color:#333;
+}

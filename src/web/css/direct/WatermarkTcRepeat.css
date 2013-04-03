@@ -1,0 +1,17 @@
+/**
+ * Author: TCSASSEMBLER
+ * Version: 1.0 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0)
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ *
+ * CSS file for watermark.
+ */
+@CHARSET "utf-8";
+BODY {
+	background-image: url('../../images/tc.png');
+	background-repeat: repeat;
+	background-position: center;
+}
+DIV {
+	opacity: 0.90;
+	filter: alpha(opacity=90); /* For IE8 and earlier */
+}

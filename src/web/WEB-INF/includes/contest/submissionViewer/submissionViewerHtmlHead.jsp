@@ -1,15 +1,19 @@
 <%--
-  - Author: isv, flexme, minhu
+  - Author: isv, flexme, minhu, TCSASSEMBLER
   -
+  - Version 1.6 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
+  -   Added wireframe-viewer.js if and only if the contest type is wireframe.
+  - Version 1.5 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0) change notes:
+  -   Added JS for Wireframe Viewer Modal Window.
   - Version 1.4 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
   -   Moved bank-single to its owning jsp to avoid JS initializing issue.
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added some JS, CSS files for NOWINNER pages.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.4
+  - Version: 1.6
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders HTML HEAD area to be included into Studio Submissions Grid, List and
   - Single views.
@@ -73,6 +77,13 @@
 <script type="text/javascript" src="/scripts/ui.droppable.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/ui.accordion.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
+<c:set var="isWireframeContest" value="${false}" scope="request"/>
+<c:if test="${viewData.contestStats.contest.typeId eq 18}">
+    <c:set var="isWireframeContest" value="${true}" scope="request"/>
+</c:if>
+<c:if test="${isWireframeContest}">
+<script type="text/javascript" src="/scripts/wireframe-viewer.js"></script>
+</c:if>
 
 <s:if test="formData.viewType.toString() == 'GRID'">
     <script type="text/javascript" src="/scripts/bank-grid.js?v=211035"></script>

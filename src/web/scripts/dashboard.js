@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for dashboard.
  *
@@ -100,9 +100,14 @@
  *
  *  Version 3.2 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
  *  - Add padding for the project mask.
- * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve
- * @version 3.2
+ *
+ * <p>
+ * Version 3.2.1 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) Change notes:
+ * - Update function modalPosition to use jQuery to get the viewport size.
+ * </p>
+ *
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
+ * @version 3.2.1
  */
 
 var mouse_is_inside;
@@ -2739,13 +2744,8 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 
 	/* position modal */
 	modalPosition = function(){
-		var wWidth  = window.innerWidth;
-		var wHeight = window.innerHeight;
-
-		if (wWidth==undefined) {
-			wWidth  = document.documentElement.clientWidth;
-			wHeight = document.documentElement.clientHeight;
-		}
+        var wWidth = $(window).width();
+        var wHeight = $(window).height();
 
 		var boxLeft = parseInt((wWidth / 2) - ( $("#new-modal").width() / 2 ));
 		var boxTop  = parseInt((wHeight / 2) - ( $("#new-modal").height() / 2 ));

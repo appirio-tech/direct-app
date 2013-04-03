@@ -1,11 +1,14 @@
 <%--
-  - Author: isv, flexme, minhu
+  - Author: isv, flexme, minhu, TCSASSEMBLER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: remove firstSlots class on single page.
   - Version 1.2 (Direct Submission Viewer Release 4) change notes: Replaced "submissionId" with "submission" attribute.
   - Version 1.3 (TC Direct Release Assembly 7) change notes: not to show link if user has no write permission.
   - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
   - Version 1.5 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes: Updated to follow the new prototype.
-  - Version: 1.5
+  - Version 1.6 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
+  - - Add submissionId as "rel" attribute to the "actButtonzoom" link.
+  - - Display the text of "actButtonzoom" link based on the contest type.
+  - Version: 1.6
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -99,14 +102,14 @@
                             <s:param name="formData.submissionId" value="%{#attr['submissionId']}"/>
                             <s:param name="formData.roundType" value="formData.roundType"/>
                             </s:url>"
-               class="actButtonzoom"><span></span></a>
+               class="actButtonzoom" rel="${submissionId}"><span></span></a>
 
             <div class="dialog-mini-wrapper">
                 <div class="dialog-mini-arrow"></div>
                 <div class="dialog-mini-sm">
                     <div class="dialog-mini-sm-inside">
                         <div class="dialog-mini-sm-outside">
-                            View Larger Size
+                            <c:if test="${not isWireframeContest}">View Larger Size</c:if><c:if test="${isWireframeContest}">Wireframe Viewer</c:if>
                         </div>
                     </div>
                 </div>

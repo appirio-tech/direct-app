@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang, Ghost_141
-  - Version: 2.6
+  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang, Ghost_141, TCSASSEMBLER
+  - Version: 2.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -54,10 +54,14 @@
   - - Added popup for forum configuration on project overview page
   -
   - Version 2.5 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
-  - - Fixed multiple bugs.
+  - - Fix multiple bugs.
   -
   - Version 2.6 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
   - - Fixed multiple bugs.  
+  -
+  - Version 2.7 - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
+  - - Added Wireframe Viewer Modal Window.
+  -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -239,6 +243,35 @@
         <!-- end .modalFooter -->
     </div>
         <!-- end #addNewProjectModal -->
+
+        <!-- #showWireframeModal -->
+        <div id="showWireframeModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        Submission ID: <span id="submissionIdInTitle"></span>
+                        <a id="validator" href='javascript:;'>Validate Wireframe</a>
+                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalCloseAddNewProject();">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <div class="modalBody">
+                <div class="modalBodyContent">
+                    <iframe id="frame_window" name="my_frame" src=""></iframe>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+        <!-- end .modalFooter -->
+    </div>
+
 
         <!-- #processInvoiceRecord -->
         <div id="processInvoiceRecordModal" class="outLay">
@@ -2205,7 +2238,7 @@
             <div class="modalBody">
                 <div class="leaveNotes">
                     <div class="iconNotice"><img alt="notice" src="/images/modal-notice.png" /></div>
-                    <h3>Your updates havenâ€™t been saved</h3>
+                    <h3>Your updates haven¡¯t been saved</h3>
                     <p>Would you like to save it?</p>
                 </div>
 

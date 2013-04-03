@@ -94,14 +94,16 @@
  * - Update the CSS to fix multiple issues.
  * 
  * - (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
- * - Update the CSS to fix multiple issues.
+ * - Update the CSS to fix multiple issues. 
  *
  * - (Release Assembly - TopCoder Cockpit - Billing Management)
  * - Add CSS for the client invoice page
  * 
  * - (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - Update the CSS for launching contest update for marathon match.
- *
+ ¡Á
+ * - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
+ * - Change the cursor CSS style of thumb in submission viewer page to default.
  */
 
 
@@ -4097,6 +4099,7 @@ a.toggleViewList:hover, a.toggleViewGrid:hover, a.toggleViewPrev:hover, a.toggle
 	width: 206px;
 	text-decoration: none;
 	padding: 3px; 
+    cursor:default;
 }
 #submissionGrid  li a.thumbGrid span{
 	display:block;
@@ -4262,6 +4265,7 @@ a.thumbList{
 	text-decoration: none; 
 	margin: 0 auto;
 	position:relative;
+    cursor:default;
 }
 a.thumbList span{
 	display:block;
@@ -10348,7 +10352,6 @@ select{
 	 border: 1px solid #BDBDBD;
 	 background: #fff;
 }
-
 .clientInvoice h2.header {
     margin: 23px 2px;
     font-size: 18px

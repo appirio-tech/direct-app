@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Studio submissions grid view page.
@@ -19,8 +19,13 @@
  * - Updated to follow the new prototype.
  * </p>
  *
- * @author minhu
- * @version 1.0.3
+ * <p>
+ * Version 1.0.4 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0) Change notes:
+ * - Remove setting the href attribute, click the link will open the Wireframe Viewer Modal Window.
+ * </p>
+ * 
+ * @author minhu, TCSASSEMBLER
+ * @version 1.0.4
  */
  
 var listLikes = new Array();
@@ -572,10 +577,12 @@ $(document).ready(function(){
         var f = arrPrize[index];
         var s = arrSlot[index];
 
+        var submissionUrl = "/direct/viewWireframeSubmission.action?submissionId=" + $itemlabel;
+
         $('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass(s);
         if (link.hasClass('disabledControl')) {
-            $("#" + f).html('<a href="' +
-                            getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item +
+            $("#" + f).html('<a href="javascript:;" onclick="activate_modal(\''+ submissionUrl + '\',' + $itemlabel + ')"' + 
+                            'class="thumb"><span></span><img src="' + $item +
                             '" alt="" /></a><label>' + $itemlabel + '</label>');
         } else {
             $("#" + f).html('<a href="#" id="remove' + f + '" class="btn_remove"></a><a href="' +
@@ -644,8 +651,4 @@ $(document).ready(function(){
         $("#bankSelectionButton").hide();
         $(".btn_remove").hide();
     }
-	
-	$('.thumbGrid').each(function(){
-	   $(this).attr("href",getSinglePage($(this).parent().find('.submissionID').html()));    
-	});
 }); 

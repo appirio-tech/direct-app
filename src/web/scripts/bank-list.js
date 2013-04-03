@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Studio submissions list view page.
@@ -14,8 +14,13 @@
  * - Added click event handler for thumb images.
  * </p>
  *
- * @author minhu
- * @version 1.0.2
+ * <p>
+ * Version 1.0.3 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) Change notes:
+ * - Remove setting the href attribute, click the image thumb will do nothing.
+ * </p>
+ *
+ * @author minhu, TCSASSEMBLER
+ * @version 1.0.3
  */
  
 var listLikes = new Array();
@@ -663,9 +668,5 @@ $(document).ready(function(){
     if (!hasContestWritePermission) {
         $("#bankSelectionButton").hide();
         $(".btn_remove").hide();
-    }	 
-	
-	$('.thumbList').each(function(){
-	   $(this).attr("href",getSinglePage($(this).parents("tr").attr('id').substring(11)));    
-	});
+    }
 }); 

@@ -3,6 +3,52 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileLock;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.axis.encoding.Base64;
+import org.apache.commons.io.IOUtils;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.clients.invoices.model.InvoiceType;
@@ -61,45 +107,6 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.dwload.CacheClearer;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
-import org.apache.axis.encoding.Base64;
-import org.apache.commons.io.IOUtils;
-import org.apache.struts2.ServletActionContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * <p>
@@ -440,6 +447,7 @@ import java.util.Set;
  *   </ol>
  * </p>
  *
+ *
  * <p>
  * Version 1.9.5 (Release Assembly - TC Direct Cockpit Release Eight)
  * <ul>
@@ -469,7 +477,25 @@ import java.util.Set;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
+ * <p>
+ * Version 1.9.6 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0)
+ * <ul>
+ *     <li>Add method {@link #createFile(InputStream, String)}</li>
+ *     <li>Add method {@link #storeZipStream(InputStream, String)}</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>
+ * Version 1.9.7 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0)
+ * <ul>
+ *     <li>Update method {@link #getContestStats(TCSubject, long, SoftwareCompetition)} to
+ *     set the contest type id.</li>
+ *     <li>Update method {@link #storeZipStream(InputStream, String)} to always set the first directory name
+ *     to be lower case.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
  * @version 1.9.8
  */
 public final class DirectUtils {
@@ -777,6 +803,7 @@ public final class DirectUtils {
         contest.setProject(project);
         contest.setSoftware(!isStudio);
         contest.setContestTypeName(resultContainer.getStringItem(recordIndex, "type"));
+        contest.setTypeId((int) softwareCompetition.getProjectHeader().getProjectCategory().getId());
 
         ContestStatsDTO dto = new ContestStatsDTO();
         dto.setCurrentStatus(resultContainer.getStringItem(recordIndex, "status"));
@@ -2421,7 +2448,6 @@ public final class DirectUtils {
         return  result;
     }
 
-
     /**
      * Gets the client id of the given user id. If the user is not a client, 0 is returned.
      *
@@ -2466,5 +2492,85 @@ public final class DirectUtils {
      */
     public static boolean isClientUser(long userId) throws Exception {
         return getUserClientId(userId) > 0;
+    }
+
+    /**
+     * create file using the input InputStream object, FileLock is used to ensure the file is only created once. 
+     * 
+     * @param is the InputStream object
+     * @param absoluteFileName the absolute file name
+     * @throws IOException if IOException occurs.
+     * @since 1.9.6
+     */
+    public static void createFile(InputStream is, String absoluteFileName) throws IOException {
+        File f = new File(absoluteFileName);
+
+        if (!f.getParentFile().exists()) {
+            f.getParentFile().mkdirs();
+        }
+
+        FileOutputStream out = new FileOutputStream(absoluteFileName);
+        FileLock lock = out.getChannel().lock();
+
+        try {
+            byte[] buf = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+        } finally {
+            if (lock != null) {
+                lock.release();
+            }
+            out.close();
+        }
+    }
+    
+    /**
+     * store the zip inputstream into the specified directory.
+     * 
+     * @param inputStream the InputStream object
+     * @param dir the destination directory
+     * @return number of files Extracted
+     * @throws IOException if IOException occurs.
+     * @since 1.9.6
+     */
+    public static int storeZipStream(InputStream inputStream, String dir) throws IOException {
+
+        ZipInputStream zis = new ZipInputStream(inputStream);
+        try {
+            ZipEntry entry = null;
+            int countEntry = 0;
+            if (!dir.endsWith(File.separator)){
+                dir += File.separator;
+            }
+                
+            // check inputStream is ZIP or not
+            if ((entry = zis.getNextEntry()) != null) {
+
+                do {
+                    String entryName = entry.getName();
+                    String firstDir = entryName.split("/")[0];
+                    entryName = firstDir.toLowerCase() + entryName.substring(firstDir.length());
+                    // Directory Entry should end with FileSeparator
+                    if (!entry.isDirectory()) {
+                        // Directory will be created while creating file with in it.
+                        String fileName = dir + entryName;
+                        createFile(zis, fileName);
+                        countEntry++;
+                    }
+                } while ((entry = zis.getNextEntry()) != null);
+
+                return countEntry;
+            } else {
+                throw new IOException("Given file is not a Compressed one");
+            }
+        } finally {
+            try {
+                zis.close();
+            } catch (IOException e) {
+                // ignore
+            }
+        }
     }
 }

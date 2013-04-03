@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -20,9 +20,12 @@ import java.io.Serializable;
  *     Version 1.3 (Module Assembly - TC Cockpit Project Contests Batch Edit) changes:
  *     - Add the field {@link #billingAccountId}
  * </p>
+ * <p>Version 1.4 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
+ * - Add property {@link #typeId} to store the id of the contest type.
+ * </p>
  *
- * @author isv, GreatKevin
- * @version 1.3
+ * @author isv, GreatKevin, TCSASSEMBLER
+ * @version 1.4
  */
 public class ContestBriefDTO implements Serializable {
 
@@ -50,6 +53,13 @@ public class ContestBriefDTO implements Serializable {
      * <p>A <code>String</code> providing the contest type.</p>
      */
     private String contestTypeName;
+
+    /**
+     * <p>An <code>int</code> providing the id of the contest type.</p>
+     *
+     * @since 1.4
+     */
+    private int typeId;
 
     /**
      * The billing account id of the contest.
@@ -200,6 +210,26 @@ public class ContestBriefDTO implements Serializable {
      */
     public void setBillingAccountId(long billingAccountId) {
         this.billingAccountId = billingAccountId;
+    }
+
+    /**
+     * Gets the id of the contest type.
+     * 
+     * @return the id of the contest type.
+     * @since 1.4
+     */
+    public int getTypeId() {
+        return typeId;
+    }
+
+    /**
+     * Sets the id of the contest type.
+     *
+     * @param typeId the id of the contest type.
+     * @since 1.4
+     */
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     /**
