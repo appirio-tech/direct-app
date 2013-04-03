@@ -89,6 +89,7 @@ function filterbyCustomer(id, filterStr) {
         searchPattern = "<span>"+ id + "</span>";
     }
     if (handleName == "projectsResult") {
+        $('#customerFilter').val(id);
         tableHandle.fnFilter(searchPattern, 10);
     }
     else if (handleName == "pmProjectsResult") {
@@ -165,8 +166,11 @@ var setupFilterPanel = function () {
     $('.customerSelectMask .contestsDropDown li a').each(function () {
         var value = $(this).html();
 
-        if (value != 'All Customers')
-            $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
+        if (handleName != "projectsResult") {
+            if (value != 'All Customers')
+                $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
+        }
+
     })
     //all projects or Platform Managers's projects
     if (handleName == "projectsResult" || handleName == "pmProjectsResult") {
@@ -341,14 +345,20 @@ var setupFilterPanel = function () {
     }
 
     $('#customerFilter').change(function () {
-        var str = $(this).val();
-        var customerId;
+        var str = '';
+        var customerId= -1;
 
-        $(".customerSelectMask  ul li a").each(function (index, element) {
-            if ($(this).html() == str) {
-                customerId = $(this).parent().data("id");
-            }
-        });
+        if ($("#allProjectsFilter").size() > 0) {
+            customerId = $(this).val();
+            str = $(this).find("option:selected").text();
+        } else {
+            str = $(this).val();
+            $(".customerSelectMask  ul li a").each(function (index, element) {
+                if ($(this).html() == str) {
+                    customerId = $(this).parent().data("id");
+                }
+            });
+        }
 
         // handle the change of project filters and project filter values select, only apply for
         // all projects page and project search page

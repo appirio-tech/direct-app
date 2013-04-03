@@ -118,11 +118,18 @@
                                                 <div class='row'>
                                                     <span class='title'>Customer </span>
                                                     <select id='customerFilter'>
-                                                        <option value='All Customers'>All Customers</option>
 														<s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
-                                                            <c:forEach var="customer" items="${customers}">
-                                                                <option value='${customer}'>${customer}</option>
-                                                            </c:forEach>
+                                                            <option value='All Customers'>All Customers</option>
+                                                            <s:iterator value="customers">
+                                                                <option value='<s:property value="key"/>'><s:property value="key"/></option>
+                                                            </s:iterator>
+                                                        </s:if>
+                                                        <s:if test="viewData.resultType.name() == 'PROJECTS'">
+                                                            <option value=''>All Customers</option>
+                                                            <s:iterator value="customers">
+                                                                <option value='<s:property value="value"/>'><s:property value="key"/></option>
+                                                            </s:iterator>
+                                                            <option value='none'>No Customer</option>
                                                         </s:if>
                                                     </select>
                                                 </div>

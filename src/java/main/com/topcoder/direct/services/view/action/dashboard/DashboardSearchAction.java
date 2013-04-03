@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * <p>
@@ -120,7 +121,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      * The customer names.
      * @since 2.3
      */
-    private List<String> customers = new ArrayList<String>();
+    private Map<String, Long> customers = new TreeMap<String, Long>();
     /**
      * The project manager names.
      * @since 2.3
@@ -164,7 +165,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      * @return the customers
      * @since 2.3
      */
-    public List<String> getCustomers() {
+    public Map<String, Long> getCustomers() {
         return customers;
     }
 
@@ -219,8 +220,8 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                 for (DashboardProjectSearchResultDTO item : projects) {
                     allProjectIds.add(item.getData().getProjectId());
                     helperMap.put(item.getData().getProjectId(), item);
-                    if(!customers.contains(item.getData().getCustomerName())) {
-                        customers.add(item.getData().getCustomerName());
+                    if(!customers.containsKey(item.getData().getCustomerName()) && !item.getData().getCustomerName().toLowerCase().equals("none")) {
+                        customers.put(item.getData().getCustomerName(), item.getData().getCustomerId());
                     }
                     if(item.getData().getProjectManagerName() != null && 0 != item.getData().getProjectManagerName().trim().length()) {
                         String pmNames = item.getData().getProjectManagerName();
@@ -232,7 +233,6 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                         }
                     }
                 }
-                Collections.sort(customers);
                 Collections.sort(projectManagers);
 
                 if (this.getMetadataKeyService() == null) {

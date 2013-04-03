@@ -1531,6 +1531,14 @@ public class DataProvider {
             // cancelled
             data.getCancelled().setTotalNumber(resultContainer.getIntItem(i, "num_cancelled"));
 
+            if(resultContainer.getItem(i, "customer_id").getResultData() != null) {
+                data.setCustomerId(resultContainer.getLongItem(i, "customer_id"));
+                data.setCustomerName(resultContainer.getStringItem(i, "customer_name"));
+            } else {
+                data.setCustomerId(-1);
+                data.setCustomerName("none");
+            }
+
             projectData.add(data);
         }
 
@@ -1582,28 +1590,11 @@ public class DataProvider {
             });
         }
 
-        // gets the project ids
-        long[] projectIds = new long[filteredProjects.size()];
-        int k = 0;
-        for (ProjectSummaryData psd : filteredProjects) {
-            projectIds[k++] = psd.getProjectId();
-        }
-
-        final Map<Long, Long> projectsCustomers = getProjectsCustomers(projectIds);
-
+        // perform transfrom from ProjectSummaryData to DashboardProjectSearchResultDTO
         return (List<DashboardProjectSearchResultDTO>) CollectionUtils.collect(filteredProjects, new Transformer() {
             //@Override
             public Object transform(Object data) {
                 ProjectSummaryData project = (ProjectSummaryData) data;
-
-                Long customerId = projectsCustomers.get(project.getProjectId());
-
-                if (customerId == null) {
-                    project.setCustomerId(-1);
-                } else {
-                    project.setCustomerId(customerId);
-                }
-
                 DashboardProjectSearchResultDTO dto = new DashboardProjectSearchResultDTO();
                 dto.setData(project);
                 return dto;
@@ -1658,6 +1649,7 @@ public class DataProvider {
             ProjectSummaryData data = new ProjectSummaryData();
             data.setProjectId(row.getLongItem("tc_direct_project_id"));
             data.setProjectName(row.getStringItem("tc_direct_project_name"));
+            data.setCustomerId(row.getLongItem("customer_id"));
             data.setCustomerName(row.getStringItem("customer_name"));
             data.setDirectProjectStatusId(row.getLongItem("project_status_id"));
             data.setProjectCreationDate(getDate(row, "start_date"));
