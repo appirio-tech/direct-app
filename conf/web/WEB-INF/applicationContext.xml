@@ -983,6 +983,14 @@
         class="com.topcoder.direct.services.view.action.contest.SaveSoftwareMilestoneReviewAction"
         scope="prototype" parent="baseDirectStrutsAction"></bean>
         
+    <bean id="viewWireframeSubmissionAction"
+        class="com.topcoder.direct.services.view.action.contest.ViewWireframeSubmissionAction"
+        scope="prototype">
+        <property name="fileUpload" ref="fileUpload"/>
+        <property name="wireframeDirectory" value="@wireframeDirectory@"/>
+        <property name="wireframeIndexPage" value="@wireframeIndexPage@"/>
+    </bean>
+    
     <bean id="downloadSoftwareSubmissionAction"
           class="com.topcoder.direct.services.view.action.contest.DownloadSoftwareSubmissionAction"
           scope="prototype" parent="baseDirectStrutsAction">

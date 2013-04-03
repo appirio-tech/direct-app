@@ -9,6 +9,7 @@
     <constant name="struts.objectFactory" value="spring"/>
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.locale" value="en_US"/>
+    <constant name="struts.i18n.encoding" value="utf-8"></constant>
     <constant name="struts.custom.i18n.resources" value="Messages"/>
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.convention.exclude.parentClassLoader" value="true" />
@@ -1153,6 +1154,11 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
+        </action>
+        
+        <action name="viewWireframeSubmission" class="viewWireframeSubmissionAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="redirect">/viewWireframePage/${submissionId}/${wireframeIndexPage}</result>
         </action>
 
     </package>
