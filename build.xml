@@ -300,7 +300,7 @@
         </copy>
     	<copy file="${jackson-core.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
     	<copy file="${jackson-mapper.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-
+    	<copy file="${yuicompressor.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- EJB components -->
         <copy file="${catalog_entities.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -394,7 +394,7 @@
 				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/scorecard/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
-				<include name="scripts/ckeditor/templates/**/*.*"/>
+                <include name="scripts/ckeditor/templates/**/*.*"/>
             </fileset>
             <fileset dir="${srcdir}/ppt_web">
                 <include name="css/**/*.*"/>
@@ -536,7 +536,18 @@
       </copy>
     </target>
 
+    <target name="deleteSymlink">
+        <symlink action="delete" link="${symlinkName}"/>
+    </target>
+    	
     <target name="deploy-internal" description="Deploy the direct related configurations and libs">
+        <foreach param="symlinkName" target="deleteSymlink">
+            <path>
+                <dirset dir="${jboss_deploy_dir}">
+                    <include name="${distfilename}.ear/${distfilename}.war/viewWireframePage/*"/>
+                </dirset>
+            </path>
+        </foreach>
         <delete file="${jboss_deploy_dir}/${distfilename}.ear"/>
         <delete dir="${jboss_deploy_dir}/${distfilename}.ear"/>
 
@@ -690,6 +701,7 @@
             <classes dir="${tokenized_conf}/web" includes="Messages.properties"/>
             <classes dir="${configdir}" includes="xwork-conversion.properties"/>
             <fileset dir="${webdir}">
+                <include name="viewWireframePage"/>
                 <include name="**/*.jsp"/>
             </fileset>
             <lib dir="${ext_libdir}/jstl" includes="*.jar"/>

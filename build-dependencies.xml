@@ -565,7 +565,6 @@
 
   <property name="tcwebcommon.jar.name" value="tcwebcommon.jar" />
   <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}" />
-  
   <!-- 3rd party dependencies -->
   <property name="asm.jar" value="${ext_libdir}/asm/asm-2.2.3.jar" />
   <property name="asm-commons.jar" value="${ext_libdir}/asm/asm-commons-2.2.3.jar" />
@@ -653,6 +652,9 @@
 
     <!-- jRSS -->
    <property name="jrss.jar" value="${ext_libdir}/jrss/jrss.jar" />
+
+  <!-- YUI Compressor -->
+  <property name="yuicompressor.jar" value="${ext_libdir}/yuicompressor/2.4.7/yuicompressor-2.4.7.jar"/>
 
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
@@ -822,6 +824,7 @@
     <pathelement location="${javaee.jar}" />
     <pathelement location="${aws-java-sdk.jar}" />
     <pathelement location="${jrss.jar}" />
+    <pathelement location="${yuicompressor.jar}" />
   </path>
 
 </project>
