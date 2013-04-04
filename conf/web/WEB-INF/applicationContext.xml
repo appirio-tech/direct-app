@@ -986,7 +986,8 @@
     <bean id="viewWireframeSubmissionAction"
         class="com.topcoder.direct.services.view.action.contest.ViewWireframeSubmissionAction"
         scope="prototype">
-        <property name="fileUpload" ref="fileUpload"/>
+        <property name="studioSubmissionBase" value="@studio.submission.base@"/>
+		<property name="userService" ref="userService"/>
         <property name="wireframeDirectory" value="@wireframeDirectory@"/>
         <property name="wireframeIndexPage" value="@wireframeIndexPage@"/>
     </bean>
