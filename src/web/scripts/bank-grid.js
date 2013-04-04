@@ -616,21 +616,27 @@ $(document).ready(function(){
 			}
 		});
 		// set like submissions from cookie
-		for (var i = 0; i < bankData.listLikes.length; i++) {
-			var label = bankData.listLikes[i];
-			$("#submission-" + label).find(".likeSubmission").click();
+		if (bankData.listLikes) {
+			for (var i = 0; i < bankData.listLikes.length; i++) {
+				var label = bankData.listLikes[i];
+				$("#submission-" + label).find(".likeSubmission").click();
+			}
 		}
 		// set dislike submissions from cookie
-		for (var i = 0; i < bankData.listDislikes.length; i++) {
-			var label = bankData.listDislikes[i];
-			$("#submission-" + label).find(".dislikeSubmission").click();
+		if (bankData.listDislikes) {
+			for (var i = 0; i < bankData.listDislikes.length; i++) {
+				var label = bankData.listDislikes[i];
+				$("#submission-" + label).find(".dislikeSubmission").click();
+			}
 		}
 		// set extra purchase from cookie
-		for (var i = 0; i < bankData.listExtra.length; i++) {
-			var label = bankData.listExtra[i];
-			$("#submission-" + label).find(".extraSlot").click();
-			if (hasCheckout) {
-				$('#submission-' + label).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("dollarSlot");
+		if (bankData.listExtra) {
+			for (var i = 0; i < bankData.listExtra.length; i++) {
+				var label = bankData.listExtra[i];
+				$("#submission-" + label).find(".extraSlot").click();
+				if (hasCheckout) {
+					$('#submission-' + label).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("dollarSlot");
+				}
 			}
 		}
 		if (hasCheckout) {
