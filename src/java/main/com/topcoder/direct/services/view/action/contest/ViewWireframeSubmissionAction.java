@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.action.contest;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -15,13 +17,16 @@ import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.UploadManager;
 import com.topcoder.management.deliverable.search.SubmissionFilterBuilder;
 import com.topcoder.search.builder.filter.Filter;
-import com.topcoder.servlet.request.FileUpload;
+import com.topcoder.service.user.UserService;
+import com.topcoder.servlet.request.LocalFileUpload;
 import com.topcoder.servlet.request.UploadedFile;
 import com.topcoder.util.objectfactory.ObjectFactory;
 import com.topcoder.util.objectfactory.impl.ConfigManagerSpecificationFactory;
+
 
 /**
  * This struts action extends the AbstractAction, and it's used to unzip the wireframe submission into a local
@@ -57,6 +62,12 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
      * Represent the class name of the action.
      */
     private static final String CLASS_NAME = ViewWireframeSubmissionAction.class.getName();
+	
+	 /**
+     * <code>UserService</code> injected by Spring.
+     */
+    private UserService userService;
+
 
     /**
      * The wireframe submission can be access via "/direct/viewWireframePage/$submissionId/$page" 
@@ -64,9 +75,9 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
     private static final String VIEW_WIREFRAME_PAGE = "viewWireframePage";
     
     /**
-     * The FileUpload to retrieve the wireframe submission. It's injected from spring configuration.
+     * The studio submission base to retrieve the wireframe submission. It's injected from spring configuration.
      */
-    private FileUpload fileUpload;
+    private static String studioSubmissionBase;
 
     /**
      * The directory to unzip the wireframe submission. It's injected from spring configuration.
@@ -82,6 +93,27 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
      * The submission id of the wireframe submission. It's injected from request parameter.
      */
     private String submissionId;
+	
+	
+	 /**
+     * <p>
+     * Getter of userService field.
+     * </p>
+     * @return the userService
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * <p>
+     * Setter of userService field.
+     * </p>
+     * @param userService the userService to set
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Empty constructor.
@@ -90,22 +122,22 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
     }
 
     /**
-     * Gets the <code>FileUpload</code> service.
+     * Gets the studioSubmissionBase
      * 
-     * @return the <code>FileUpload</code> service
+     * @return the studioSubmissionBase service
      */
-    public FileUpload getFileUpload() {
-        return fileUpload;
+    public String getStudioSubmissionBase() {
+        return studioSubmissionBase;
     }
 
     /**
-     * Sets the <code>FileUpload</code> service.
+     * Sets the studioSubmissionBase.
      * 
-     * @param fileUpload
-     *            the <code>FileUpload</code> service
+     * @param studioSubmissionBase
+     *            the studioSubmissionBase
      */
-    public void setFileUpload(FileUpload fileUpload) {
-        this.fileUpload = fileUpload;
+    public void setStudioSubmissionBase(String studioSubmissionBase) {
+        this.studioSubmissionBase = studioSubmissionBase;
     }
 
     /**
@@ -188,8 +220,8 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
                 // if there is already a submissionId sub-directory in wireframeDirectory, do not extract. 
                 File file = new File(wireframeDirectory, submissionId);
                 if (!file.exists()) {
-                    UploadedFile uploadedFile = retrieveWireframeSubmissionFile();
-                    ZipInputStream zis = new ZipInputStream(uploadedFile.getInputStream());
+                    FileInputStream uploadedFile = retrieveWireframeSubmissionFile();
+                    ZipInputStream zis = new ZipInputStream(uploadedFile);
                     try {
                         ZipEntry entry = zis.getNextEntry();
                         boolean found = false;
@@ -243,7 +275,7 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
      * @return the wireframe submission file
      * @throws Exception if any error occurs.
      */
-    private UploadedFile retrieveWireframeSubmissionFile() throws Exception {
+    private FileInputStream retrieveWireframeSubmissionFile() throws Exception {
         
         ObjectFactory objectFactory = new ObjectFactory(new ConfigManagerSpecificationFactory(
             "com.topcoder.util.objectfactory"));
@@ -258,9 +290,20 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
         if (submission == null) {
             throw new Exception("Cannot find submission " + submissionId);
         }
-        
-        UploadedFile uploadedFile = fileUpload.getUploadedFile(submission.getUpload().getParameter());
-        return uploadedFile;
+        Upload upload = submission.getUpload();
+		
+		long projectId = upload.getProject();
+		long submitterId = Long.parseLong(submission.getCreationUser());
+		String handle = getUserService().getUserHandle(submitterId);
+
+		
+        File file = new File(studioSubmissionBase + File.separator + projectId + File.separator
+                        + handle.toLowerCase() + "_" + submitterId + File.separator
+                        + submission.getUpload().getParameter());
+        FileInputStream is = new FileInputStream(file);
+				
+        return is;
     }
-    
+	
+	
 }

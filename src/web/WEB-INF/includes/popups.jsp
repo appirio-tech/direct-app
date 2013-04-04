@@ -250,7 +250,7 @@
                 <div class="modalHeaderRight">
                     <div class="modalHeaderCenter">
                         Submission ID: <span id="submissionIdInTitle"></span>
-                        <a id="validator" href='javascript:;'>Validate Wireframe</a>
+                        <!--<a id="validator" href='javascript:;'>Validate Wireframe</a>-->
                         <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalCloseAddNewProject();">Close</a>
                     </div>
                 </div>
