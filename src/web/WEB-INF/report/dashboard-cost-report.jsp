@@ -537,9 +537,9 @@
 
                  <c:set var="status" value="${fn:trim(item.status)}"/>
                 <%-- only display the actual cost when the contest is finished --%>
-                <c:if test="${status == 'Finished'}">
+                <%--<c:if test="${status == 'Finished'}"> --%>
                     <fmt:formatNumber value="${item.actualCost}" pattern="$###,##0.00"/>
-                </c:if>
+                <%--</c:if>--%>
             </td>
             <td class="lastCol">
                 <fmt:formatNumber value="${item.total}" pattern="$###,##0.00"/>

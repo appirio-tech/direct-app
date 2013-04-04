@@ -280,10 +280,10 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
             // aggregate the contest fee
             item.setTotalContestFees(item.getTotalContestFees() + c.getContestFee());
 
-            if (c.getStatus().equals("Finished")) {
+            //if (c.getStatus().equals("Finished")) {
                 // if the status is finished, aggregate the actual member cost
                 item.setTotalActualMemberCosts(item.getTotalActualMemberCosts() + c.getActualCost());
-            }
+            //}
 
             // aggregate the estimated member cost
             item.setTotalEstimatedMemberCosts(item.getTotalEstimatedMemberCosts() + c.getEstimatedCost());
