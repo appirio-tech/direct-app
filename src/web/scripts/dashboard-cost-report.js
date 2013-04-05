@@ -351,7 +351,7 @@ $(document).ready(function() {
                                 if (breakdown.fullfillment > 0) {
                                     fullfillment = 1;
                                 }
-                                breakdown = [breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
+                                breakdown = [breakdown.contestFee, breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
                                     breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc];
                             }
                             totalCompleted += fullfillment;
