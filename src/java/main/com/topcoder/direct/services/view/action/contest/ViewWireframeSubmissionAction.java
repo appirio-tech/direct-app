@@ -230,6 +230,7 @@ public class ViewWireframeSubmissionAction extends AbstractAction {
                                 found = true;
                                 break;
                             }
+							entry = zis.getNextEntry();
                         }
                         if (!found) {
                             throw new DirectException("Cann't find " + WIREFRAME_HTML_ZIP + " in the submission");
