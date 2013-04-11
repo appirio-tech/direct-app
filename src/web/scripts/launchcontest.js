@@ -453,10 +453,6 @@ $(document).ready(function() {
     onContestTypeChange();
 
 
-    $('#billingProjects').bind("change", function() {
-        updateContestFee();
-    });
-
     $('#addNewProject').click(function() {
         clearAddNewProjectForm();
         modalLoad("#addNewProjectModal");
@@ -524,6 +520,10 @@ function handleProjectDropDownChange() {
     });
     $("#billingProjects").val(0);
     $("#billingProjects").resetSS();
+    $('#billingProjects').bind("change", function() {
+        updateContestFee();
+    });
+
     $("#billingProjects").getSetSSValue(0);
 
     if(value > 0) {
