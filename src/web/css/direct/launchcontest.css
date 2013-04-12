@@ -778,7 +778,7 @@
 			
 			/** label **/
 			#launchContestOut .schedule label{
-				width:125px;
+				width:150px;
 				float:left;
 				display:inline;
 				margin-left:14px;
@@ -788,7 +788,7 @@
 				}
 			
 			/** select **/	
-			#launchContestOut .schedule .startSelect,#launchContestOut .schedule .milestoneSelect,#launchContestOut .schedule .endSelect{
+			#launchContestOut .schedule .startSelect,#launchContestOut .schedule .checkpointSelect,#launchContestOut .schedule .endSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -809,7 +809,7 @@
                 font-size: 11px;
 				}
 				
-			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .milestoneEtSelect,#launchContestOut .schedule .endEtSelect{
+			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .checkpointEtSelect,#launchContestOut .schedule .endEtSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -1881,7 +1881,7 @@
 		}
 
 /** date select **/		
-.startSelect .newListSelected,.milestoneSelect .newListSelected,.endSelect .newListSelected{
+.startSelect .newListSelected,.checkpointSelect .newListSelected,.endSelect .newListSelected{
 	width:196px;
 	height:22px;
 	padding:0 5px;
@@ -1894,11 +1894,11 @@
 	background:url(/images/startSelect.gif) no-repeat;
 	}
 	
-	.startSelect .selectedTxt,.milestoneSelect .selectedTxt,.endSelect .selectedTxt{
+	.startSelect .selectedTxt,.checkpointSelect .selectedTxt,.endSelect .selectedTxt{
 		width:196px;
 		}
 	
-	.startSelect .newList,.milestoneSelect .newList,.endSelect .newList{
+	.startSelect .newList,.checkpointSelect .newList,.endSelect .newList{
 		width:203px;
 		border:#ccc solid 1px;
 		background:#fff;
@@ -1907,7 +1907,7 @@
 		}
 
 /** time select **/		
-.startEtSelect .newListSelected,.milestoneEtSelect .newListSelected,.endEtSelect .newListSelected{
+.startEtSelect .newListSelected,.checkpointEtSelect .newListSelected,.endEtSelect .newListSelected{
 	width:49px;
 	height:22px;
 	padding:0 5px;
@@ -1922,11 +1922,11 @@
 	background:url(/images/timeSelect.gif) no-repeat;
 	}
 	
-	.startEtSelect .selectedTxt,.milestoneEtSelect .selectedTxt,.endEtSelect .selectedTxt{
+	.startEtSelect .selectedTxt,.checkpointEtSelect .selectedTxt,.endEtSelect .selectedTxt{
 		width:49px;
 		}
 	
-	.startEtSelect .newList,.milestoneEtSelect .newList,.endEtSelect .newList{
+	.startEtSelect .newList,.checkpointEtSelect .newList,.endEtSelect .newList{
 		width:56px;
 		border:#ccc solid 1px;
 		background:#fff;

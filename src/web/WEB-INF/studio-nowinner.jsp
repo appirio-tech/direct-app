@@ -96,7 +96,7 @@
                                                         <span class="left"><span class="right">DO NOT CHOOSE A WINNER </span></span></a>
 
                                                     <link:studioSubmissionsGrid contestId="${viewData.contestId}" 
-                                                                                milestoneRound="${formData.isMilestoneRound}"
+                                                                                checkpointRound="${formData.isCheckpointRound}"
                                                                                 styleClass="button6 btnSelectAWinner">
                                                         <span class="left"><span class="right">SELECT A WINNER</span></span>
                                                     </link:studioSubmissionsGrid>

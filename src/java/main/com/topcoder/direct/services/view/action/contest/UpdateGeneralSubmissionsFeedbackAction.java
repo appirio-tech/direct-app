@@ -14,7 +14,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 
 /**
- * <p>A <code>Struts</code> action to be used for processing requests for updating general feedback for milestone round.
+ * <p>A <code>Struts</code> action to be used for processing requests for updating general feedback for checkpoint round.
  * </p>
  *
  * <p>
@@ -77,8 +77,8 @@ public class UpdateGeneralSubmissionsFeedbackAction extends ContestAction {
         }
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE)) {
-            throw new DirectException("The milestone review phase is not open.");
+        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE)) {
+            throw new DirectException("The checkpoint review phase is not open.");
         }
         
         // only works for studio contest

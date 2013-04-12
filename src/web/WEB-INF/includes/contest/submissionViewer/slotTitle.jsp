@@ -16,30 +16,30 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
-<s:set var="isCurrentMilestoneRound" value="formData.roundType.toString() == 'MILESTONE'" scope="page"/>
+<s:set var="isCurrentCheckpointRound" value="formData.roundType.toString() == 'CHECKPOINT'" scope="page"/>
 <c:set var="studioServerName" value="<%=ApplicationServer.STUDIO_SERVER_NAME%>"/>
 
 <div class="SubmissionSlotTitle">
     <div class="left">
         <s:if test="formData.viewType.toString() == 'GRID'">
             <h3 id="subFilterText">All Submissions</h3>
-            <link:studioSubmissionsList contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
+            <link:studioSubmissionsList contestId="${contestId}" checkpointRound="${isCurrentCheckpointRound}"
                                         styleClass="toggleViewList">Switch to List View</link:studioSubmissionsList>
         </s:if>
         <s:if test="formData.viewType.toString() == 'LIST'">
             <h3 id="subFilterText">All Submissions</h3>
-            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
+            <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${isCurrentCheckpointRound}"
                                         styleClass="toggleViewList">Switch to Grid View</link:studioSubmissionsGrid>
         </s:if>
         <s:if test="formData.viewType.toString() == 'SINGLE'">
             <h3>Submission ID: <s:property value="formData.submissionId"/>(<link:studioSubmissionDownload
                     submissionId="${viewData.submission.id}">Download</link:studioSubmissionDownload>)</h3>
-            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
+            <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${isCurrentCheckpointRound}"
                                         styleClass="toggleViewList">See More Submissions</link:studioSubmissionsGrid>
         </s:if>
-        <s:if test="viewData.hasMilestoneRound && formData.roundType.toString() != 'MILESTONE'">
-            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${true}"
-                                        styleClass="toggleViewMilestone">Show Milestone Submissions</link:studioSubmissionsGrid>
+        <s:if test="viewData.hasCheckpointRound && formData.roundType.toString() != 'CHECKPOINT'">
+            <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${true}"
+                                        styleClass="toggleViewCheckpoint">Show Checkpoint Submissions</link:studioSubmissionsGrid>
         </s:if>
     </div>
     <c:if test="${viewData.submissionsCount > 0}">

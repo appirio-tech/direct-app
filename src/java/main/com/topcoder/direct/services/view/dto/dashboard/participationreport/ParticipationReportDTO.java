@@ -45,7 +45,7 @@ import com.topcoder.excel.output.WorkbookSaver;
  *    <li>Updated method {@link #getInputStream()}, remove the catch Throwable block.</li>
  *    <li>Updated method {@link #insertSheetData(Sheet)} to insert the table that is being viewed</li>
  *    <li>Updated method {@link #generateParticipationReportHeader(Sheet, String, int)} and 
- *    method {@link #generateParticipationReport(Sheet, List, int)} to add column "Milestone Submissions" and "Final Submissions"
+ *    method {@link #generateParticipationReport(Sheet, List, int)} to add column "Checkpoint Submissions" and "Final Submissions"
  *    </li>
  * </ol>
  * </p>
@@ -182,11 +182,11 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
         row.getCell(index++).setStringValue("Unique Registrants");
         row.getCell(index++).setStringValue("Registrant Countries");
         row.getCell(index++).setStringValue("Total Submissions");
-        row.getCell(index++).setStringValue("Milestone Submissions");
+        row.getCell(index++).setStringValue("Checkpoint Submissions");
         row.getCell(index++).setStringValue("Final Submissions");
         row.getCell(index++).setStringValue("Unique Submitters");
         row.getCell(index++).setStringValue("Submitter Countries");
-        row.getCell(index++).setStringValue("Milestone Winners");
+        row.getCell(index++).setStringValue("Checkpoint Winners");
         row.getCell(index++).setStringValue("Final Winners");
         row.getCell(index++).setStringValue("Total Winners");
         row.getCell(index++).setStringValue("Total Unique Winners");
@@ -216,11 +216,11 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
             row.getCell(index++).setNumberValue(dto.getUniqueRegistrants());
             row.getCell(index++).setNumberValue(dto.getRegistrantCountries());
             row.getCell(index++).setNumberValue(dto.getTotalSubmissions());
-            row.getCell(index++).setNumberValue(dto.getMilestoneSubmissions());
+            row.getCell(index++).setNumberValue(dto.getCheckpointSubmissions());
             row.getCell(index++).setNumberValue(dto.getFinalSubmissions());
             row.getCell(index++).setNumberValue(dto.getUniqueSubmitters());
             row.getCell(index++).setNumberValue(dto.getSubmitterContries());
-            row.getCell(index++).setNumberValue(dto.getMilestoneWinners());
+            row.getCell(index++).setNumberValue(dto.getCheckpointWinners());
             row.getCell(index++).setNumberValue(dto.getFinalWinners());
             row.getCell(index++).setNumberValue(dto.getTotalWinners());
             row.getCell(index++).setNumberValue(dto.getTotalUniqueWinners());

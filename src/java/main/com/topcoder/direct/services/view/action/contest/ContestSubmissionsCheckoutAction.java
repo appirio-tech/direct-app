@@ -42,7 +42,7 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </p>
  *
  * <p>
- * Version 1.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
  *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
@@ -180,33 +180,33 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
 
-            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
-            getViewData().setHasMilestoneRound(hasMilestoneRound);
+            boolean hasCheckpointRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasCheckpointRound(hasCheckpointRound);
             getViewData().setPrizes(DirectUtils.getContestPrizes(softwareCompetition));
             getViewData().setAdditionalPrize(DirectUtils.getAdditionalPrize(softwareCompetition));
 
-            if (hasMilestoneRound) {
-                Prize milestonePrize = DirectUtils.getMilestonePrize(softwareCompetition);
-                getViewData().setMilestonePrize(milestonePrize.getPrizeAmount());
+            if (hasCheckpointRound) {
+                Prize checkpointPrize = DirectUtils.getCheckpointPrize(softwareCompetition);
+                getViewData().setCheckpointPrize(checkpointPrize.getPrizeAmount());
 
 
                 if (getFormData().getRoundType() == ContestRoundType.FINAL) {
-                    List<Submission> milestoneSubmissions = DirectUtils.getStudioContestSubmissions(projectId, ContestRoundType.MILESTONE, currentUser, contestServiceFacade);
+                    List<Submission> checkpointSubmissions = DirectUtils.getStudioContestSubmissions(projectId, ContestRoundType.CHECKPOINT, currentUser, contestServiceFacade);
 
                     int count = 0;
 
-                    for (Submission submission : milestoneSubmissions) {
+                    for (Submission submission : checkpointSubmissions) {
                         if (submission.isExtra() || submission.getFinalScore()!= null && submission.getFinalScore() > 10.0) {
                             count++;
                         }
                     }
 
-                    getViewData().setMilestoneAwardNumber(milestonePrize.getNumberOfSubmissions() > count ? count : milestonePrize.getNumberOfSubmissions());
+                    getViewData().setCheckpointAwardNumber(checkpointPrize.getNumberOfSubmissions() > count ? count : checkpointPrize.getNumberOfSubmissions());
                 }
             }
 
-            if (getFormData().getRoundType() == ContestRoundType.MILESTONE) {
-                getViewData().setMilestoneRoundFeedbackText(softwareCompetition.getProjectHeader().getProjectStudioSpecification().getGeneralFeedback());
+            if (getFormData().getRoundType() == ContestRoundType.CHECKPOINT) {
+                getViewData().setCheckpointRoundFeedbackText(softwareCompetition.getProjectHeader().getProjectStudioSpecification().getGeneralFeedback());
             }
 
             // Set submissions data
@@ -215,7 +215,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             if (roundType == ContestRoundType.FINAL) {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
             } else {
-                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
+                reviewPhaseType = PhaseType.CHECKPOINT_REVIEW_PHASE;
             }
             List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);
             if (DirectUtils.isPhaseScheduled(softwareCompetition, reviewPhaseType)) {

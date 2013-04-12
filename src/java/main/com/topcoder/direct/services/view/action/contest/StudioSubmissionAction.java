@@ -86,12 +86,12 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   Version 1.7 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
  *   <ul>
  *     <li>Updated {@link #executeAction()} method to add support for full size view and get image file names,
- *      and set the milestoneReviewOpen flag to viewData.</code>
+ *      and set the checkpointReviewOpen flag to viewData.</code>
  *   </ul>
  * </p>
  *
  * <p>
- * Version 1.8 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.8 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
  *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
@@ -212,9 +212,9 @@ public class StudioSubmissionAction extends ContestAction {
             if (roundType == ContestRoundType.FINAL) {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
             } else {
-                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
-                viewData.setMilestoneReviewPhaseOpen(DirectUtils.isPhaseOpen(softwareCompetition,
-                        PhaseType.MILESTONE_REVIEW_PHASE));
+                reviewPhaseType = PhaseType.CHECKPOINT_REVIEW_PHASE;
+                viewData.setCheckpointReviewPhaseOpen(DirectUtils.isPhaseOpen(softwareCompetition,
+                        PhaseType.CHECKPOINT_REVIEW_PHASE));
             }
             viewData.setPhaseOpen(true);
 
@@ -222,8 +222,8 @@ public class StudioSubmissionAction extends ContestAction {
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
 
-            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
-            getViewData().setHasMilestoneRound(hasMilestoneRound);
+            boolean hasCheckpointRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasCheckpointRound(hasCheckpointRound);
 
             // Set submissions count
             List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);

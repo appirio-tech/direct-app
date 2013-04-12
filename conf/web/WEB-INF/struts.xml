@@ -1326,12 +1326,12 @@
         <action name="submissions" class="contestSubmissionsAction">
             <result name="grid">/WEB-INF/studio-submissions-grid.jsp</result>
             <result name="list">/WEB-INF/studio-submissions-list.jsp</result>
-            <result name="milestone" type="redirectAction">
+            <result name="checkpoint" type="redirectAction">
                 <param name="actionName">submissions</param>
                 <param name="namespace">/contest</param>
                 <param name="projectId">${projectId}</param>
                 <param name="formData.viewType">GRID</param>
-                <param name="formData.roundType">MILESTONE</param>
+                <param name="formData.roundType">CHECKPOINT</param>
             </result>
         </action>
 
@@ -1365,7 +1365,7 @@
             <result>/WEB-INF/studio-final-checkout-confirmation.jsp</result>
         </action>
 
-        <action name="saveContestMilestoneSubmissionRank" class="saveContestSubmissionRankAction">
+        <action name="saveContestCheckpointSubmissionRank" class="saveContestSubmissionRankAction">
             <result type="redirectAction">
                 <param name="actionName">submissions</param>
                 <param name="namespace">/contest</param>
@@ -1388,14 +1388,14 @@
         <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/software-submissions-list.jsp</result>
-            <result name="milestone" type="redirectAction">
+            <result name="checkpoint" type="redirectAction">
                             <param name="actionName">softwareSubmissions</param>
                             <param name="projectId">${formData.projectId}</param>
-                            <param name="roundType">MILESTONE</param>
+                            <param name="roundType">CHECKPOINT</param>
             </result>
         </action>
 
-        <action name="downloadAllSoftwareMilestoneSubmissions" class="downloadAllSoftwareMilestoneSubmissions">
+        <action name="downloadAllSoftwareCheckpointSubmissions" class="downloadAllSoftwareCheckpointSubmissions">
             <interceptor-ref name="securedContestStack"/>
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
@@ -1415,7 +1415,7 @@
             </result>
         </action>
 
-        <action name="saveSoftwareMilestoneReviewAction" class="saveSoftwareMilestoneReviewAction">
+        <action name="SaveSoftwareCheckpointReviewAction" class="SaveSoftwareCheckpointReviewAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>

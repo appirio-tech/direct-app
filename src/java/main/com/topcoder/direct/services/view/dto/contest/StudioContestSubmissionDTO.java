@@ -59,7 +59,7 @@ import com.topcoder.management.deliverable.Submission;
  *   Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
  *   <ul>
  *     <li>Changed submissionArtifactNum to {@link #submissionArtifacts}.</code>
- *     <li>Added {@link #milestoneReviewPhaseOpen}.</code>
+ *     <li>Added {@link #checkpointReviewPhaseOpen}.</code>
  *   </ul>
  * </p>
  * 
@@ -86,9 +86,9 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     private List<String> submissionArtifacts;
 
     /**
-     * <p>A <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.</p>
+     * <p>A <code>boolean</code> providing the flag indicating whether contest has checkpoint round set or not.</p>
      */
-    private boolean hasMilestoneRound;
+    private boolean hasCheckpointRound;
 
     /**
      * <p>A <code>int</code> providing the total number of submissions for requested contest..</p>
@@ -172,11 +172,11 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     
     
     /**
-     * The flag indicates whether milestone review phase is open.
+     * The flag indicates whether checkpoint review phase is open.
      * 
      * @since 1.6
      */
-    private boolean milestoneReviewPhaseOpen;
+    private boolean checkpointReviewPhaseOpen;
     
     /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -243,22 +243,22 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
    
 
     /**
-     * <p>Gets the flag indicating whether contest has milestone round set or not.</p>
+     * <p>Gets the flag indicating whether contest has checkpoint round set or not.</p>
      *
-     * @return a <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.
+     * @return a <code>boolean</code> providing the flag indicating whether contest has checkpoint round set or not.
      */
-    public boolean getHasMilestoneRound() {
-        return this.hasMilestoneRound;
+    public boolean getHasCheckpointRound() {
+        return this.hasCheckpointRound;
     }
 
     /**
-     * <p>Sets the flag indicating whether contest has milestone round set or not.</p>
+     * <p>Sets the flag indicating whether contest has checkpoint round set or not.</p>
      *
-     * @param hasMilestoneRound a <code>boolean</code> providing the flag indicating whether contest has milestone round
+     * @param hasCheckpointRound a <code>boolean</code> providing the flag indicating whether contest has checkpoint round
      * set or not.
      */
-    public void setHasMilestoneRound(boolean hasMilestoneRound) {
-        this.hasMilestoneRound = hasMilestoneRound;
+    public void setHasCheckpointRound(boolean hasCheckpointRound) {
+        this.hasCheckpointRound = hasCheckpointRound;
     }
 
     /**
@@ -487,22 +487,22 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     }
 
     /**
-     * Sets the milestoneReviewPhaseOpen flag.
+     * Sets the checkpointReviewPhaseOpen flag.
      * 
-     * @param milestoneReviewPhaseOpen the milestoneReviewPhaseOpen to set
+     * @param checkpointReviewPhaseOpen the checkpointReviewPhaseOpen to set
      * @since 1.6
      */
-    public void setMilestoneReviewPhaseOpen(boolean milestoneReviewPhaseOpen) {
-        this.milestoneReviewPhaseOpen = milestoneReviewPhaseOpen;
+    public void setCheckpointReviewPhaseOpen(boolean checkpointReviewPhaseOpen) {
+        this.checkpointReviewPhaseOpen = checkpointReviewPhaseOpen;
     }
 
     /**
-     * Gets the milestoneReviewPhaseOpen flag.
+     * Gets the checkpointReviewPhaseOpen flag.
      * 
-     * @return the milestoneReviewPhaseOpen
+     * @return the checkpointReviewPhaseOpen
      * @since 1.6
      */
-    public boolean isMilestoneReviewPhaseOpen() {
-        return milestoneReviewPhaseOpen;
+    public boolean isCheckpointReviewPhaseOpen() {
+        return checkpointReviewPhaseOpen;
     }
 }

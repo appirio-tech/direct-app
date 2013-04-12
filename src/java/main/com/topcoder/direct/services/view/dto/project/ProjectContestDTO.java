@@ -31,7 +31,7 @@ import java.util.Date;
  * <p>
  * Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
  * <ol>
- *     <li>Add properties {@link #milestoneSubmissionNumber}, {@link #finalSubmissionNumber} and {@link #isMultipleRound}</li>
+ *     <li>Add properties {@link #checkpointSubmissionNumber}, {@link #finalSubmissionNumber} and {@link #isMultipleRound}</li>
  * </ol>
  * </p>
  *
@@ -56,11 +56,11 @@ public class ProjectContestDTO implements Serializable {
     private int submissionsNumber;
 
     /**
-     * The milestone submission number.
+     * The checkpoint submission number.
      *
      * @since  1.3
      */
-    private int milestoneSubmissionNumber;
+    private int checkpointSubmissionNumber;
 
     /**
      * The final submission number.
@@ -439,23 +439,23 @@ public class ProjectContestDTO implements Serializable {
     }
 
     /**
-     * Gets the milestone submission number.
+     * Gets the checkpoint submission number.
      *
-     * @return the milestone submission number.
+     * @return the checkpoint submission number.
      * @since 1.3
      */
-    public int getMilestoneSubmissionNumber() {
-        return milestoneSubmissionNumber;
+    public int getCheckpointSubmissionNumber() {
+        return checkpointSubmissionNumber;
     }
 
     /**
-     * Sets the milestone submission number.
+     * Sets the checkpoint submission number.
      *
-     * @param milestoneSubmissionNumber the milestone submission number.
+     * @param checkpointSubmissionNumber the checkpoint submission number.
      * @since 1.3
      */
-    public void setMilestoneSubmissionNumber(int milestoneSubmissionNumber) {
-        this.milestoneSubmissionNumber = milestoneSubmissionNumber;
+    public void setCheckpointSubmissionNumber(int checkpointSubmissionNumber) {
+        this.checkpointSubmissionNumber = checkpointSubmissionNumber;
     }
 
     /**

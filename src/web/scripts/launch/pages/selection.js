@@ -173,7 +173,7 @@ function validateFieldsContestSelectionSoftware() {
    var copilotName = $('select#contestCopilot option:selected').text();
 
    var startDate = getDateByIdPrefix('start');
-   var milestoneDateHours = $('#milestoneDateDay').val() * 24 + parseInt($("#milestoneDateHour").val());
+   var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
    
    //validation
    var errors = [];
@@ -191,8 +191,8 @@ function validateFieldsContestSelectionSoftware() {
    validateTcProject(tcProjectId, errors);
    
    if(isMultiRound) {
-      if(milestoneDateHours == 0) {
-	     errors.push('Milestone duration must be positive.');
+      if(checkpointDateHours == 0) {
+	     errors.push('Checkpoint duration must be positive.');
       }
    }
       
@@ -231,8 +231,8 @@ function validateFieldsContestSelectionSoftware() {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
    }
    if (mainWidget.softwareCompetition.multiRound) {
-	   mainWidget.softwareCompetition.milestoneDate = new Date();
-	   mainWidget.softwareCompetition.milestoneDate.setTime(startDate.getTime() + milestoneDateHours * 60 * 60 * 1000);
+	   mainWidget.softwareCompetition.checkpointDate = new Date();
+	   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
    }
    
    //prizes is on category id
@@ -294,7 +294,7 @@ function validateFieldsContestSelectionStudio() {
 
    //dates
    var startDate = getDateByIdPrefix('start');
-   var milestoneDateHours = $('#milestoneDateDay').val() * 24 + parseInt($("#milestoneDateHour").val());
+   var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
    var endDateHours = $('#endDateDay').val() * 24 + parseInt($("#endDateHour").val())
    //validation
    var errors = [];
@@ -303,11 +303,11 @@ function validateFieldsContestSelectionStudio() {
    validateTcProject(tcProjectId, errors);
 
    if(isMultiRound) {
-      if (milestoneDateHours == 0) {
+      if (checkpointDateHours == 0) {
          errors.push('Round 1 duration should be positive.');
       }
    } else {
-	   milestoneDateHours = 0;
+	   checkpointDateHours = 0;
    }
    if (endDateHours == 0) {
 	   if (isMultiRound){
@@ -340,12 +340,12 @@ function validateFieldsContestSelectionStudio() {
 
    mainWidget.softwareCompetition.projectHeader.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
    if (mainWidget.softwareCompetition.multiRound) {
-	   mainWidget.softwareCompetition.milestoneDate = new Date();
-	   mainWidget.softwareCompetition.milestoneDate.setTime(startDate.getTime() + milestoneDateHours * 60 * 60 * 1000);
+	   mainWidget.softwareCompetition.checkpointDate = new Date();
+	   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
    }
    // set end date
    mainWidget.softwareCompetition.subEndDate = new Date();
-   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (milestoneDateHours + endDateHours) * 60 * 60 * 1000);
+   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + endDateHours) * 60 * 60 * 1000);
    if($('#lccCheckBox').is(':checked')) {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
        enableMCEPlaceholderText = true;

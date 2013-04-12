@@ -958,11 +958,11 @@
         <property name="isAJAX" value="true"/>
     </bean>
 
-    <bean id="downloadAllSoftwareMilestoneSubmissions"
+    <bean id="downloadAllSoftwareCheckpointSubmissions"
           class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
-        <property name="roundType" value="MILESTONE" />
+        <property name="roundType" value="CHECKPOINT" />
     </bean>
 
     <bean id="downloadAllSoftwareFinalSubmissions"
@@ -979,8 +979,8 @@
         <property name="roundType" value="FINAL" />
     </bean>
 
-    <bean id="saveSoftwareMilestoneReviewAction"
-        class="com.topcoder.direct.services.view.action.contest.SaveSoftwareMilestoneReviewAction"
+    <bean id="SaveSoftwareCheckpointReviewAction"
+        class="com.topcoder.direct.services.view.action.contest.SaveSoftwareCheckpointReviewAction"
         scope="prototype" parent="baseDirectStrutsAction"></bean>
         
     <bean id="viewWireframeSubmissionAction"

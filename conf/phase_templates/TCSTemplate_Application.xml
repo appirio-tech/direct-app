@@ -15,8 +15,8 @@
         <PhaseType id="approval" typeId="11" typeName="Approval"/>
         <PhaseType id="specification_submission" typeId="13" typeName="Specification Submission"/>
         <PhaseType id="specification_review" typeId="14" typeName="Specification Review"/>
-        <PhaseType id="milestone_submission" typeId="15" typeName="Milestone Submission"/>
-        <PhaseType id="milestone_review" typeId="17" typeName="Milestone Review"/>
+        <PhaseType id="checkpoint_submission" typeId="15" typeName="Checkpoint Submission"/>
+        <PhaseType id="checkpoint_review" typeId="17" typeName="Checkpoint Review"/>
     </PhaseTypes>
     <!-- A set of project phases defined in this template. -->
     <Phases>
@@ -31,12 +31,12 @@
             <Dependency id="specificationReviewPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
         </Phase>
 
-        <Phase id="milestoneSubmissionPhase" length="259200000" type="milestone_submission" phaseId="15">
+        <Phase id="checkpointSubmissionPhase" length="259200000" type="checkpoint_submission" phaseId="15">
             <Dependency id="registrationPhase" isDependencyStart="true" isDependentStart="true" lagTime="300000"/>
         </Phase>
                 
-        <Phase id="milestoneReviewPhase" length="86400000" type="milestone_review" phaseId="17">
-            <Dependency id="milestoneSubmissionPhase" isDependentStart="true" lagTime="0"/>
+        <Phase id="checkpointReviewPhase" length="86400000" type="checkpoint_review" phaseId="17">
+            <Dependency id="checkpointSubmissionPhase" isDependentStart="true" lagTime="0"/>
         </Phase>
 
         <Phase id="submissionPhase" length="432000000" type="submission"  phaseId="2">

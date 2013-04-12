@@ -52,7 +52,7 @@
     <script type="text/javascript" src="/scripts/bank-single.js?v=211279"></script>
     <script type="text/javascript">
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
-        var milestoneReviewPhaseOpen = ${viewData.milestoneReviewPhaseOpen};
+        var checkpointReviewPhaseOpen = ${viewData.checkpointReviewPhaseOpen};
     </script>    
 </head>
 
@@ -63,7 +63,7 @@
 <s:set var="roundType" value="formData.roundType.toString()" scope="page"/>
 <s:set var="contestId" value="projectId" scope="page"/>
 <s:set var="feedbackAction" scope="page"><s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">Edit</s:if><s:else>Add</s:else> Feedback</s:set>
-<s:if test="!viewData.milestoneReviewPhaseOpen"><s:set var="feedbackAction" scope="page">View Feedback</s:set></s:if>
+<s:if test="!viewData.checkpointReviewPhaseOpen"><s:set var="feedbackAction" scope="page">View Feedback</s:set></s:if>
 
 <body id="page">
 <div id="wrapper">
@@ -244,7 +244,7 @@
                                 <span class="corner bl"></span>
                                 <span class="corner br"></span>                                 
                                   <!-- Add Feedback -->
-                                  <s:if test="formData.roundType.toString() == 'MILESTONE'">
+                                  <s:if test="formData.roundType.toString() == 'CHECKPOINT'">
                                   <div class="addFeedback">
                                     <a href="#" class="addFeedbackButton">${feedbackAction}</a>    
                                   </div>
@@ -373,7 +373,7 @@
 
 <div id="modalBackground"></div>
 <div id="new-modal">
-  <s:if test="formData.roundType.toString() == 'MILESTONE' && !viewData.milestoneReviewPhaseOpen">
+  <s:if test="formData.roundType.toString() == 'CHECKPOINT' && !viewData.checkpointReviewPhaseOpen">
         <!-- #alertModalView -->
         <div id="alertModalView" class="submissions smodal_2">
             <div class="modalHeader">
@@ -406,7 +406,7 @@
         </div>
         <!-- end #alertModalView -->
   </s:if>
-  <s:if test="formData.roundType.toString() == 'MILESTONE' && viewData.milestoneReviewPhaseOpen">
+  <s:if test="formData.roundType.toString() == 'CHECKPOINT' && viewData.checkpointReviewPhaseOpen">
         <!-- #alertModal2 -->
         <div id="alertModal2" class="submissions smodal_1">
             <div class="modalHeader">

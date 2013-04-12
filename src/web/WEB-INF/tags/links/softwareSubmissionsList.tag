@@ -4,7 +4,7 @@
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two)
-  - - update to support round type MILESTONE and FINAL
+  - - update to support round type CHECKPOINT and FINAL
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Five)
   - - update to support null round type.
@@ -17,20 +17,20 @@
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
 
 <%@ attribute name="contestId" required="true" type="java.lang.Long" %>
-<%@ attribute name="milestoneRound" required="false" type="java.lang.Boolean" %>
+<%@ attribute name="checkpointRound" required="false" type="java.lang.Boolean" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
 
 <c:choose>
-    <c:when test="${milestoneRound == true}">
+    <c:when test="${checkpointRound == true}">
         <a href="<s:url action="softwareSubmissions" namespace="/contest">
                      <s:param name="projectId" value="%{#attr['contestId']}"/>
-                     <s:param name="roundType" value="'MILESTONE'"/>
+                     <s:param name="roundType" value="'CHECKPOINT'"/>
                  </s:url>" <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
     <jsp:doBody/>
         </a>
     </c:when>
-    <c:when test="${milestoneRound == false}">
+    <c:when test="${checkpointRound == false}">
         <a href="<s:url action="softwareSubmissions" namespace="/contest">
                      <s:param name="projectId" value="%{#attr['contestId']}"/>
                      <s:param name="roundType" value="'FINAL'"/>

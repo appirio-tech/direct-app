@@ -10,7 +10,7 @@
   - 1.Apply to new dashboard prototype. 
   -
   - Version 1.3 (Release Assembly - TC Direct Cockpit Release One) change notes:
-  - - Add milestone submission number and final submission number in registration box if
+  - - Add checkpoint submission number and final submission number in registration box if
   -   the contest is of multiple rounds
   -
   - Version 1.4 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
@@ -209,7 +209,7 @@
                     </s:if>
                     <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">                        
                         <s:if test="viewData.contestStats.multipleRound">
-                        	<label>Milestone submissions</label>: ${viewData.contestStats.milestoneSubmissionNumber}                          
+                        	<label>Checkpoint submissions</label>: ${viewData.contestStats.checkpointSubmissionNumber}                          
                           <label>Final submissions</label>: ${viewData.contestStats.finalSubmissionNumber}
                         </s:if>
                         <s:else>

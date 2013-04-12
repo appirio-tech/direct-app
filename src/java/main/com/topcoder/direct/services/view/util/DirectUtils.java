@@ -147,7 +147,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * Version 1.5 (Direct Submission Viewer Release 2) Change notes:
  * <ul>
  * <li>Update {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} method
- * to use getMilestoneSubmissionsForContest and getFinalSubmissionsForContest methods to retrieve submissions.
+ * to use getCheckpointSubmissionsForContest and getFinalSubmissionsForContest methods to retrieve submissions.
  * </li>
  * <li>Add {@link #getContestPrizeNumber(SoftwareCompetition, ContestRoundType)} method
  * to get the number of a contest's prizes.</li>
@@ -253,7 +253,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 1.7.1 (TC Direct Replatforming Release 3) Change notes:
  *   <ol>
- *     <li>Add {@link #MILESTONE_PRIZE_TYPE_ID} and {@link #CONTEST_PRIZE_TYPE_ID} constants.</li>
+ *     <li>Add {@link #CHECKPOINT_PRIZE_TYPE_ID} and {@link #CONTEST_PRIZE_TYPE_ID} constants.</li>
  *     <li>Add {@link #isPhaseScheduled(SoftwareCompetition, PhaseType)} method.</li>
  *     <li>Update {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} and
  *     {@link #getContestPrizeNumber(SoftwareCompetition, ContestRoundType)} methods to work with the new studio contest type.</li>
@@ -346,7 +346,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 1.8.3 (Release Assembly - TC Direct Cockpit Release One) changes:
  * <ol>
- *     <li>Update {@link #getContestStats(com.topcoder.security.TCSubject, long)}</li> to add milestone submission number,
+ *     <li>Update {@link #getContestStats(com.topcoder.security.TCSubject, long)}</li> to add checkpoint submission number,
  *     final submission number and is multiple round flag.
  * </ol>
  * </p>
@@ -376,7 +376,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * </p>
  * 
  * <p>
- * Version 1.8.6 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.8.6 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
  *     <li>Updated {@link #getContestStats(TCSubject, long, SoftwareCompetition)} method to
  *     add parameter softwareCompetition.</li>
@@ -393,7 +393,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * Version 1.8.8 (Release Assembly - TC Direct Cockpit Release Five) change notes:
  * <li>
  *    Fix getContestCheckout(SoftwareCompetition competition, ContestRoundType roundType), it should check whether the
- *    milestone review/review phase is closed.
+ *    checkpoint review/review phase is closed.
  * </li>
  * </p>
  * <p>
@@ -451,7 +451,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 1.9.5 (Release Assembly - TC Direct Cockpit Release Eight)
  * <ul>
- *     <li>Add method {@link #isMilestoneSubmissionPhaseClosed(com.topcoder.service.project.SoftwareCompetition)}</li>
+ *     <li>Add method {@link #isCheckpointSubmissionPhaseClosed(com.topcoder.service.project.SoftwareCompetition)}</li>
  * </ul>
  * </p>
  * 
@@ -602,18 +602,18 @@ public final class DirectUtils {
     private static final long ONE_HOUR = 60 * 60 * 1000L;
 
     /**
-     * Represents the milestone submission type id.
+     * Represents the checkpoint submission type id.
      *
      * @since 1.7.2
      */
-    private static final int MILESTONE_SUBMISSION_TYPE_ID = 3;
+    private static final int CHECKPOINT_SUBMISSION_TYPE_ID = 3;
 
     /**
-     * Represents the prize type id for milestone submission.
+     * Represents the prize type id for checkpoint submission.
      *
      * @since 1.7.1
      */
-    private static final long MILESTONE_PRIZE_TYPE_ID = 14L;
+    private static final long CHECKPOINT_PRIZE_TYPE_ID = 14L;
 
     /**
      * Represents the prize type if for contest submission.
@@ -814,7 +814,7 @@ public final class DirectUtils {
         dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
         dto.setSvn(resultContainer.getStringItem(recordIndex, "svn"));
         dto.setShowSpecReview(resultContainer.getBooleanItem(recordIndex, "has_spec_review"));
-        dto.setMilestoneSubmissionNumber(resultContainer.getIntItem(recordIndex, "number_of_milestone_submission"));
+        dto.setCheckpointSubmissionNumber(resultContainer.getIntItem(recordIndex, "number_of_milestone_submission"));
         dto.setFinalSubmissionNumber(resultContainer.getIntItem(recordIndex, "number_of_final_submission"));
         dto.setMultipleRound(resultContainer.getBooleanItem(recordIndex, "is_multiple_round"));
         long forumId = -1;
@@ -838,9 +838,9 @@ public final class DirectUtils {
 
         // set additional properties here
         if (softwareCompetition != null) {
-            dto.setInMilestoneSubmissionOrMilestoneReview(isPhaseOpen(
-                softwareCompetition, PhaseType.MILESTONE_SUBMISSION_PHASE) || isPhaseOpen(
-                softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE));            
+            dto.setInCheckpointSubmissionOrCheckpointReview(isPhaseOpen(
+                softwareCompetition, PhaseType.CHECKPOINT_SUBMISSION_PHASE) || isPhaseOpen(
+                softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE));            
         }
         return dto;
     }
@@ -975,7 +975,7 @@ public final class DirectUtils {
             return false;
         }
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+            if (phase.getPhaseType().getId() == PhaseType.CHECKPOINT_SUBMISSION_PHASE.getId()) {
                 return true;
             }
         }
@@ -983,10 +983,10 @@ public final class DirectUtils {
     }
 
     /**
-     * <p>Gets the milestone submission phase end date for a multiround contest.
+     * <p>Gets the checkpoint submission phase end date for a multiround contest.
      *
      * @param softwareCompetition the multiround contest
-     * @return the milestone submission phase end date
+     * @return the checkpoint submission phase end date
      * @since 1.7
      */
     public static Date getMultiRoundEndDate(SoftwareCompetition softwareCompetition) {
@@ -995,7 +995,7 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+            if (phase.getPhaseType().getId() == PhaseType.CHECKPOINT_SUBMISSION_PHASE.getId()) {
                 return phase.getActualEndDate() != null ? phase.getActualEndDate() :
                     phase.getScheduledEndDate();
             }
@@ -1284,7 +1284,7 @@ public final class DirectUtils {
                                                                    ContestServiceFacade contestServiceFacade)
         throws UploadPersistenceException, SearchBuilderException {
         return Arrays.asList(contestServiceFacade.getSoftwareActiveSubmissions(projectId,
-                roundType == ContestRoundType.MILESTONE ? MILESTONE_SUBMISSION_TYPE_ID : CONTEST_SUBMISSION_TYPE_ID));
+                roundType == ContestRoundType.CHECKPOINT ? CHECKPOINT_SUBMISSION_TYPE_ID : CONTEST_SUBMISSION_TYPE_ID));
     }
 
     /**
@@ -1299,13 +1299,13 @@ public final class DirectUtils {
         int tot1 = 0;
         int tot2 = 0;
         for (Prize prize : competition.getProjectHeader().getPrizes()) {
-            if (prize.getPrizeType().getId() == MILESTONE_PRIZE_TYPE_ID) {
+            if (prize.getPrizeType().getId() == CHECKPOINT_PRIZE_TYPE_ID) {
                 tot1 += prize.getNumberOfSubmissions();
             } else if (prize.getPrizeType().getId() == CONTEST_PRIZE_TYPE_ID) {
                 tot2 += prize.getNumberOfSubmissions();
             }
         }
-        if (roundType == ContestRoundType.MILESTONE) {
+        if (roundType == ContestRoundType.CHECKPOINT) {
             return tot1;
         } else {
             return tot2;
@@ -1354,8 +1354,8 @@ public final class DirectUtils {
      */
     public static boolean getContestCheckout(SoftwareCompetition competition, ContestRoundType roundType) {
         for (Phase phase : competition.getProjectPhases().getPhases()) {
-            if (roundType == ContestRoundType.MILESTONE) {
-                if (phase.getPhaseType().getId() == PhaseType.MILESTONE_REVIEW_PHASE.getId()) {
+            if (roundType == ContestRoundType.CHECKPOINT) {
+                if (phase.getPhaseType().getId() == PhaseType.CHECKPOINT_REVIEW_PHASE.getId()) {
                     return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
                 }
             } else if (roundType == ContestRoundType.FINAL) {
@@ -1368,16 +1368,16 @@ public final class DirectUtils {
     }
 
     /**
-     * Checks whether the milestone submission phase is closed for a multiple round software contest.
+     * Checks whether the checkpoint submission phase is closed for a multiple round software contest.
      *
      * @param competition the software contest to check
-     * @return whether the milestone submission phase is closed for a multiple round software contest.
+     * @return whether the checkpoint submission phase is closed for a multiple round software contest.
      *
      * @since 1.9.5
      */
-    public static boolean isMilestoneSubmissionPhaseClosed(SoftwareCompetition competition) {
+    public static boolean isCheckpointSubmissionPhaseClosed(SoftwareCompetition competition) {
         for (Phase phase : competition.getProjectPhases().getPhases()) {
-            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+            if (phase.getPhaseType().getId() == PhaseType.CHECKPOINT_SUBMISSION_PHASE.getId()) {
                 return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
             }
         }
@@ -1826,12 +1826,12 @@ public final class DirectUtils {
     }
 
     /**
-     * <p>Gets the milestone prize.</p>
+     * <p>Gets the checkpoint prize.</p>
      *
      * @param softwareCompetition the studio competition
-     * @return the milestone prize or null
+     * @return the checkpoint prize or null
      */
-    public static Prize getMilestonePrize(SoftwareCompetition softwareCompetition) {
+    public static Prize getCheckpointPrize(SoftwareCompetition softwareCompetition) {
         List<Prize> prizes = softwareCompetition.getProjectHeader().getPrizes();
         for (Iterator<Prize> iter = prizes.iterator(); iter.hasNext();) {
             Prize prize = iter.next();

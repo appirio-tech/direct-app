@@ -10,7 +10,7 @@
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
  * Version 1.3 TC Direct Replatforming Release 2 change notes:
- * - Display the milestone prizes for software contest.
+ * - Display the checkpoint prizes for software contest.
  * - Display the specification review cost for studio contest.
  * - The studio contest can start specification review when the contest is activated.
  * 
@@ -92,22 +92,22 @@ function updateOrderReviewSoftware() {
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
    
-   //milestone prizes
-   var milestonePrizesTotal = 0;
+   //checkpoint prizes
+   var checkpointPrizesTotal = 0;
    if(!mainWidget.softwareCompetition.multiRound) {
-   	  $('#orswMilestonePrizesDiv').hide();
+   	  $('#orswCheckpointPrizesDiv').hide();
    } else {
-   	  $('#orswMilestonePrizesDiv').show();
+   	  $('#orswCheckpointPrizesDiv').show();
    	  var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
       var amount = prizes[prizes.length - 1].prizeAmount;   	  
       html = "";
    	  for(var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
-   	     milestonePrizesTotal += amount;	
+   	     checkpointPrizesTotal += amount;	
          html +=
          '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
    	  }
-      html += '<td class="last">$' + milestonePrizesTotal.formatMoney(2) + '</td>';
-      $('#orswMilestonePrizeTR').html(html);   	  
+      html += '<td class="last">$' + checkpointPrizesTotal.formatMoney(2) + '</td>';
+      $('#orswCheckpointPrizeTR').html(html);   	  
    }
    
    var firstPrize = mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost();
@@ -141,7 +141,7 @@ function updateOrderReviewSoftware() {
    $('#sworCopilotFee').html(parseFloat(mainWidget.softwareCompetition.copilotCost).formatMoney(2));
    var additionalFee = specificationReviewPayment + reviewPayment + contestFee + parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
-   $('#sworTotal').html((contestPrizeCost + milestonePrizesTotal + additionalFee).formatMoney(2));
+   $('#sworTotal').html((contestPrizeCost + checkpointPrizesTotal + additionalFee).formatMoney(2));
 }
 
 /**
@@ -183,22 +183,22 @@ function updateOrderReviewStudio() {
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
    $('#orPrizesTR').html(html);
    
-   //milestone prizes
-   var  milestonePrizesTotal = 0;
+   //checkpoint prizes
+   var  checkpointPrizesTotal = 0;
    if(!isMultiRound) {
-   	  $('#orMilestonePrizesDiv').hide();
+   	  $('#orCheckpointPrizesDiv').hide();
    } else {
-   	  $('#orMilestonePrizesDiv').show();
+   	  $('#orCheckpointPrizesDiv').show();
       
       var amount = prizes[prizes.length - 1].prizeAmount;   	  
       html = "";
    	  for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
-   	   milestonePrizesTotal += amount;	
+   	   checkpointPrizesTotal += amount;	
        html +=
        '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';          	  	
    	  }
-      html += '<td class="last">$'+ milestonePrizesTotal.formatMoney(0) +'</td>';
-      $('#orMilestonePrizeTR').html(html);   	  
+      html += '<td class="last">$'+ checkpointPrizesTotal.formatMoney(0) +'</td>';
+      $('#orCheckpointPrizeTR').html(html);   	  
    }
    
    var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();
@@ -212,7 +212,7 @@ function updateOrderReviewStudio() {
    if (typeof billingFeesPercentage != 'undefined' && billingFeesPercentage[billingProjectId]!= null) {
        var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
        if (contestFeePercentage!=null) {
-           var memberCost = contestPrizesTotal + milestonePrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
+           var memberCost = contestPrizesTotal + checkpointPrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
            mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
            mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
            mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee);
@@ -224,7 +224,7 @@ function updateOrderReviewStudio() {
    $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
    $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));
    
-   var total = contestPrizesTotal + milestonePrizesTotal + adminFee + specificationReviewPayment + copilotCost;
+   var total = contestPrizesTotal + checkpointPrizesTotal + adminFee + specificationReviewPayment + copilotCost;
    $('#orTotal').html('$' + total.formatMoney(0));
 }
 
@@ -236,13 +236,13 @@ function updateOrderReviewStudio() {
 function calculateStudioCupPoints() {
     var isMultiRound = mainWidget.softwareCompetition.multiRound;
     var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
-    var milestoneAmount = prizes[prizes.length - 1].prizeAmount;
-    var milestoneTotal = 0;
+    var checkpointAmount = prizes[prizes.length - 1].prizeAmount;
+    var checkpointTotal = 0;
 
     if (isMultiRound) {
 
         for (var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
-            milestoneTotal += milestoneAmount;
+            checkpointTotal += checkpointAmount;
         }
     }
 
@@ -256,7 +256,7 @@ function calculateStudioCupPoints() {
         contestPrizeTotal += amount;
     });
 
-    return (milestoneTotal + contestPrizeTotal) * 0.25;
+    return (checkpointTotal + contestPrizeTotal) * 0.25;
 
 }
 

@@ -56,9 +56,9 @@ public enum ContestStatus {
     DELETED("Deleted", "deleted", "View"),
 
     /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone</code> contest status.</p>
+     * <p>A <code>ContestStatus</code> corresponding to <code>Checkpoint</code> contest status.</p>
      */
-    MILESTONE("Milestone", "running", "View"),
+    CHECKPOINT("Checkpoint", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Awarding</code> contest status.</p>
@@ -198,19 +198,19 @@ public enum ContestStatus {
     PASSED_SPEC_REVIEW("Passed Spec Review", "running", "View"),
     
     /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Submission</code> contest status.</p>
+     * <p>A <code>ContestStatus</code> corresponding to <code>Checkpoint Submission</code> contest status.</p>
      */
-    MILESTONE_SUBMISSION("Milestone Submission", "running", "View"),
+    CHECKPOINT_SUBMISSION("Checkpoint Submission", "running", "View"),
     
     /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Screening</code> contest status.</p>
+     * <p>A <code>ContestStatus</code> corresponding to <code>Checkpoint Screening</code> contest status.</p>
      */
-    MILESTONE_SCREENING("Milestone Screening", "running", "View"),
+    CHECKPOINT_SCREENING("Checkpoint Screening", "running", "View"),
     
     /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Review</code> contest status.</p>
+     * <p>A <code>ContestStatus</code> corresponding to <code>Checkpoint Review</code> contest status.</p>
      */
-    MILESTONE_REVIEW("Milestone Review", "running", "View"),
+    CHECKPOINT_REVIEW("Checkpoint Review", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>

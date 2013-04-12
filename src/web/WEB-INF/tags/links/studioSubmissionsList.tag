@@ -14,15 +14,15 @@
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
 
 <%@ attribute name="contestId" required="true" type="java.lang.Long" %>
-<%@ attribute name="milestoneRound" required="false" type="java.lang.Boolean" %>
+<%@ attribute name="checkpointRound" required="false" type="java.lang.Boolean" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
 <c:choose>
-    <c:when test="${milestoneRound}">
+    <c:when test="${checkpointRound}">
         <a href="<s:url action="submissions" namespace="/contest">
                      <s:param name="projectId" value="%{#attr['contestId']}"/>
                      <s:param name="formData.viewType" value="'LIST'"/>
-                     <s:param name="formData.roundType" value="'MILESTONE'"/>
+                     <s:param name="formData.roundType" value="'CHECKPOINT'"/>
                  </s:url>" <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
             <jsp:doBody/>
         </a>

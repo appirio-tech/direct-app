@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 /**
- * <p>An enumeration over contest round types (milestone, final).</p>
+ * <p>An enumeration over contest round types (checkpoint, final).</p>
  *
  * @author isv
  * @version 1.0
@@ -12,9 +12,9 @@ package com.topcoder.direct.services.view.dto.contest;
 public enum ContestRoundType {
 
     /**
-     * <p>A <code>ContestRoundType</code> corresponding to <code>Milestone</code> contest round type.</p>
+     * <p>A <code>ContestRoundType</code> corresponding to <code>Checkpoint</code> contest round type.</p>
      */
-    MILESTONE,
+    CHECKPOINT,
 
     /**
      * <p>A <code>ContestRoundType</code> corresponding to <code>Final</code> contest round type.</p>

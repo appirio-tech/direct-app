@@ -646,7 +646,7 @@ function validateStepInputs() {
                 projectHeader.setReviewCost(0);
                 projectHeader.setReliabilityBonusCost(0);
                 projectHeader.setDRPoints(0);
-                projectHeader.setMilestoneBonusCost(0);
+                projectHeader.setCheckpointBonusCost(0);
                 projectHeader.setAdminFee(0);
                 projectHeader.setSpecReviewCost(0);                
                 

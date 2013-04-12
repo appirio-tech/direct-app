@@ -178,15 +178,15 @@
           <span>ET (UTC-05)</span>
       </div>
 
-      <!-- Milestone -->
-      <div class="row" id="mileStoneDiv">
+      <!-- Checkpoint -->
+      <div class="row" id="checkpointDiv">
         <label>Round 1 Duration:</label>
-        <div class="milestoneEtSelect">
-          <select id="milestoneDateDay" name="milestoneDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+        <div class="checkpointEtSelect">
+          <select id="checkpointDateDay" name="checkpointDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
         </div>
         <div class="selectSpan"><span>days</span></div>
-        <div class="milestoneEtSelect">
-          <select id="milestoneDateHour" name="milestoneDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+        <div class="checkpointEtSelect">
+          <select id="checkpointDateHour" name="checkpointDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
         </div>
         <div class="selectSpan"><span>hours</span></div>
         <div class="clear"></div>

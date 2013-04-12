@@ -68,7 +68,7 @@ var CONTEST_STATUS_ACTIVE_PUBLIC = 2 ;
 var CONTEST_DETAILED_STATUS_DRAFT =15 ;
 var CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC =2 ;
 var CONTEST_DETAILED_STATUS_SCHEDULED =9 ;
-var MILESTONE_PRIZE_TYPE_ID = 14;
+var CHECKPOINT_PRIZE_TYPE_ID = 14;
 var CONTEST_PRIZE_TYPE_ID = 15;
 
 
@@ -92,8 +92,8 @@ com.topcoder.direct.Prize = function(place, amount, prizeType, numberOfSubmissio
 	
 	if (prizeType == CONTEST_PRIZE_TYPE_ID) {
 		this.prizeType.description = "Contest Prize";
-	} else if (prizeType == MILESTONE_PRIZE_TYPE_ID) {
-		this.prizeType.description = "Milestone Prize";
+	} else if (prizeType == CHECKPOINT_PRIZE_TYPE_ID) {
+		this.prizeType.description = "Checkpoint Prize";
 	}
 	
 	this.numberOfSubmissions = numberOfSubmissions;
@@ -258,7 +258,7 @@ com.topcoder.direct.SoftwareCompetition = function() {
     
     this.multiRound = false;
     
-    this.milestoneDate = null;
+    this.checkpointDate = null;
 
     // hold the copilot user id
     this.copilotUserId = 0;
@@ -386,12 +386,12 @@ com.topcoder.direct.Project = function() {
 	  	  return this.properties['DR points'];
 	  }
 
-	  this.setMilestoneBonusCost = function(milestoneBonusCost) {
-	  	  this.properties['Milestone Bonus Cost'] = milestoneBonusCost;
+	  this.setCheckpointBonusCost = function(checkpointBonusCost) {
+	  	  this.properties['Checkpoint Bonus Cost'] = checkpointBonusCost;
 	  }
 
-	  this.getMilestoneBonusCost = function() {
-	  	  return this.properties['Milestone Bonus Cost'];
+	  this.getCheckpointBonusCost = function() {
+	  	  return this.properties['Checkpoint Bonus Cost'];
 	  }
 
 	  this.setAdminFee = function(adminFee) {

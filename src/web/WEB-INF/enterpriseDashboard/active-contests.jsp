@@ -3,7 +3,7 @@
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
-  - - Add milestone / final submission number to the submission column of active contests table.
+  - - Add checkpoint / final submission number to the submission column of active contests table.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Add readonly in data pick element.
@@ -228,8 +228,8 @@
                                                                             <s:if test="isStudio == true">
 
                                                                                 <s:if test="multipleRound">
-                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:studioSubmissionsGrid>:
-                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
+                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" checkpointRound="true">C(${checkpointSubmissionNumber})</link:studioSubmissionsGrid>:
+                                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" checkpointRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
                                                                                 </s:if>
                                                                                 <s:else>
                                                                                     <link:studioSubmissionsGrid contestId="${contest.id}">
@@ -241,8 +241,8 @@
                                                                             </s:if>
                                                                             <s:if test="isStudio == false">
                                                                                 <s:if test="multipleRound">
-                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:softwareSubmissionsList>:
-                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
+                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" checkpointRound="true">C(${checkpointSubmissionNumber})</link:softwareSubmissionsList>:
+                                                                                    <link:softwareSubmissionsList contestId="${contest.id}" checkpointRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
                                                                                 </s:if>
                                                                                 <s:else>
                                                                                     <link:softwareSubmissionsList contestId="${contest.id}">

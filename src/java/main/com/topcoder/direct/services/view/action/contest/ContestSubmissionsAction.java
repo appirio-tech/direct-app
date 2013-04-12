@@ -58,8 +58,8 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   Version 1.2 (Direct Submission Viewer Release 4) change notes:
  *   <ul>
  *     <li>Updated {@link #executeAction()} method to set hasCheckout flag to the view data.</li>
- *     <li>Updated {@link #executeAction()} and {@link #execute()} methods to redirect request to <code>Milestone</code>
- *     submissions view in case contest has milestone round which is not confirmed by client yet.</li>
+ *     <li>Updated {@link #executeAction()} and {@link #execute()} methods to redirect request to <code>Checkpoint</code>
+ *     submissions view in case contest has checkpoint round which is not confirmed by client yet.</li>
  *   </ul>   
  * </p>
  * 
@@ -92,7 +92,7 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </p>
  *
  * <p>
- * Version 1.7 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
  *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
@@ -129,10 +129,10 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
     private StudioContestSubmissionsDTO viewData;
 
     /**
-     * <p>A <code>boolean</code> flag indicating whether the request is to be redirected to <code>Milestone</code>
+     * <p>A <code>boolean</code> flag indicating whether the request is to be redirected to <code>Checkpoint</code>
      * submissions view.</p>
      */
-    private boolean redirectToMilestone;
+    private boolean redirectToCheckpoint;
 
     /**
      * <p>Constructs new <code>ContestSubmissionsAction</code> instance. This implementation does nothing.</p>
@@ -181,8 +181,8 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
     public String execute() throws Exception {
         String result = super.execute();
         if (SUCCESS.equals(result)) {
-            if (this.redirectToMilestone) {
-                return "milestone";
+            if (this.redirectToCheckpoint) {
+                return "checkpoint";
             } else {
                 SubmissionViewerType submissionViewerType = getFormData().getViewType();
                 if (submissionViewerType == SubmissionViewerType.GRID) {
@@ -219,12 +219,12 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
             
-            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
-            getViewData().setHasMilestoneRound(hasMilestoneRound);
+            boolean hasCheckpointRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasCheckpointRound(hasCheckpointRound);
             
-            // if Final round was requested and if milestone round is present then check if milestone round
-            // if confirmed. If Milestone round is not confirmed yet then cause the request to be redirected to
-            // Milestone submissions view
+            // if Final round was requested and if checkpoint round is present then check if checkpoint round
+            // if confirmed. If Checkpoint round is not confirmed yet then cause the request to be redirected to
+            // Checkpoint submissions view
             ContestRoundType roundType = getFormData().getRoundType();
 
             // if round type is not specified, default to FINAL
@@ -232,12 +232,12 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
                 roundType = ContestRoundType.FINAL;
             }
 
-            if (hasMilestoneRound) {
+            if (hasCheckpointRound) {
                 if (roundType == ContestRoundType.FINAL) {
-                    // if the milestone is not confirmed
-                    boolean isMilestoneRoundConfirmed = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
-                    if (!isMilestoneRoundConfirmed) {
-                        this.redirectToMilestone = true;
+                    // if the checkpoint is not confirmed
+                    boolean isCheckpointRoundConfirmed = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.CHECKPOINT);
+                    if (!isCheckpointRoundConfirmed) {
+                        this.redirectToCheckpoint = true;
                         return;
                     }
                 }
@@ -247,7 +247,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             if (roundType == ContestRoundType.FINAL) {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
             } else {
-                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
+                reviewPhaseType = PhaseType.CHECKPOINT_REVIEW_PHASE;
             }
             // set submission data
             List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);
@@ -327,7 +327,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
                 int prizeIndex = 0;
                 for (Submission submission : submissions) {
                     if (!submission.isExtra() && submission.getFinalScore() != null && submission.getFinalScore() > 10.0) {
-                        // milestone prize
+                        // checkpoint prize
                         contestRoundSelectionJSON.put(prizeSlotNames[prizeIndex++], 
                                 String.valueOf(submission.getId()));
                     }

@@ -17,7 +17,7 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
  * <ol>
  *   <li>Remove field <code>hasWin</code> and getter/setter for it.</li>
  *   <li>Added {@link #hasWinFinal} field and getter/setter for it.</li>
- *   <li>Added {@link #hasWinMilestone} field and getter/setter for it.</li>
+ *   <li>Added {@link #hasWinCheckpoint} field and getter/setter for it.</li>
  * </ol>
  * </p>
  * 
@@ -79,11 +79,11 @@ public class ParticipationContestDetailDTO implements Serializable {
     private boolean hasWinFinal;
 
     /**
-     * A flag indicates whether the registrant has win in the milestone round.
+     * A flag indicates whether the registrant has win in the checkpoint round.
      * 
      * @since 1.1
      */
-    private boolean hasWinMilestone;
+    private boolean hasWinCheckpoint;
 
     /**
      * Represents the contest status.
@@ -262,23 +262,23 @@ public class ParticipationContestDetailDTO implements Serializable {
     }
 
     /**
-     * Gets the flag indicates whether the registrant has win in the milestone round.
+     * Gets the flag indicates whether the registrant has win in the checkpoint round.
      *
-     * @return true if the registrant has win in the milestone round, false otherwise.
+     * @return true if the registrant has win in the checkpoint round, false otherwise.
      * @since 1.1
      */
-    public boolean isHasWinMilestone() {
-        return hasWinMilestone;
+    public boolean isHasWinCheckpoint() {
+        return hasWinCheckpoint;
     }
 
     /**
-     * Sets the flag indicates whether the registrant has win in the milestone round.
+     * Sets the flag indicates whether the registrant has win in the checkpoint round.
      *
-     * @param hasWin true if the registrant has win in the milestone round, false otherwise.
+     * @param hasWin true if the registrant has win in the checkpoint round, false otherwise.
      * @since 1.1
      */
-    public void setHasWinMilestone(boolean hasWinMilestone) {
-        this.hasWinMilestone = hasWinMilestone;
+    public void setHasWinCheckpoint(boolean hasWinCheckpoint) {
+        this.hasWinCheckpoint = hasWinCheckpoint;
     }
 
     /**

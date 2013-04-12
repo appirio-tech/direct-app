@@ -9,13 +9,13 @@
   - 1.Add dashboard header.    
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Two) change Notes:
-  - - add miletone submissions and sub tabs for switch between milestone and final round
+  - - add miletone submissions and sub tabs for switch between checkpoint and final round
   -
   - Version 1.3 (Module Assembly - Adding Contest Approval Feature in Direct) change Notes:
   - - added Approval section
   -
-  - Version 1.4 (Release Assembly - TopCoder Cockpit Software Milestone Management) change Notes:
-  - - updated to support software milestone management
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) change Notes:
+  - - updated to support software checkpoint management
   -
   - Version 1.5 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Updated to show approval phase status correctly
@@ -32,9 +32,9 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link type="text/css" media="all" href="/css/direct/milestone-management.css" rel="stylesheet">
+    <link type="text/css" media="all" href="/css/direct/checkpoint-management.css" rel="stylesheet">
     <script src="/scripts/jquery.dataTables-1.9.1.min.js" type="text/javascript"></script>
-    <script src="/scripts/milestone-management.js" type="text/javascript"></script>
+    <script src="/scripts/checkpoint-management.js" type="text/javascript"></script>
 </head>
 
 <body id="page">
@@ -91,8 +91,8 @@
                                                 <div id="bankSelectionHead">  
                                                 <ul id="bankSelectionTab" class="multiFinalUL">                                                  
                                                     <li class="off">
-                                                        <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE">
-                                                            <span>Milestone (${viewData.contestStats.milestoneSubmissionNumber})</span>
+                                                        <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=CHECKPOINT">
+                                                            <span>Checkpoint (${viewData.contestStats.checkpointSubmissionNumber})</span>
                                                         </a>
                                                     </li>
                                                     <li>
@@ -108,7 +108,7 @@
                                         <s:else>
                                             <div id="tcSoftwareMM">
                                             <div class="mmTabs">
-                                                <a class="on" href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE"><span>Milestone (${viewData.contestStats.milestoneSubmissionNumber})</span></a>
+                                                <a class="on" href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=CHECKPOINT"><span>Checkpoint (${viewData.contestStats.checkpointSubmissionNumber})</span></a>
                                                 <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL"><span>Final (${viewData.contestStats.finalSubmissionNumber})</span></a>
                                             </div>
                                         </s:else>                                            
@@ -457,9 +457,9 @@
                                             </c:if>
 
                                             </s:if>
-                                            <s:if test="roundType.toString() == 'MILESTONE'">
+                                            <s:if test="roundType.toString() == 'CHECKPOINT'">
                                               <c:choose>
-                                                <c:when test="${inMilestoneSubmissionPhase || inMilestoneReviewPhase && !hasWritePermission}">
+                                                <c:when test="${inCheckpointSubmissionPhase || inCheckpointReviewPhase && !hasWritePermission}">
                                                     <div class="mmDataTable"> 
                                                         <table cellpadding="0" cellspacing="0">
                                                             <colgroup>
@@ -470,7 +470,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th>
                                                                     <th>
                                                                         Submission Date/Time
@@ -497,20 +497,20 @@
                                                         </table>                                
                                                     </div>
                                                 </c:when>
-                                                <c:when test="${afterMilestoneReviewPhase || inMilestoneReviewPhase && milestoneReviewCommitted}">                                                
+                                                <c:when test="${afterCheckpointReviewPhase || inCheckpointReviewPhase && checkpointReviewCommitted}">                                                
                                                     <div class="notify">
-                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                        To pick checkpoint winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Checkpoints. Do not forget to provide checkpoint general feedback and individual feedback.
                                                     </div>                        
                                                     <div class="slotsMask">
                                                         <div class="slots">
-                                                            <h3>Milestone Winners</h3>
+                                                            <h3>Checkpoint Winners</h3>
                                                             <ul>
                                                                 <s:set var="places" value="{'1st','2nd','3rd','4th','5th'}"/>
-                                                                <c:forEach begin="1" end="${milestoneWinnersNumber}" step="1" var="num">                                                                
+                                                                <c:forEach begin="1" end="${checkpointWinnersNumber}" step="1" var="num">                                                                
                                                                 <li class="slot">
                                                                     <span class="slotR">
                                                                         <span class="text">
-                                                                            <span class="place">${places[num-1]} Prize ($${viewData.milestonePrizeAmount})</span>
+                                                                            <span class="place">${places[num-1]} Prize ($${viewData.checkpointPrizeAmount})</span>
                                                                         </span>
                                                                     </span>
                                                                 </li>
@@ -520,7 +520,7 @@
                                                         <div class="borderLine"></div>
                                                         <div class="feedback">
                                                             <h3>General Feedback</h3>
-                                                            <div class="fbArea">${viewData.milestoneSubmissionsGeneralFeedback}</div>
+                                                            <div class="fbArea">${viewData.checkpointSubmissionsGeneralFeedback}</div>
                                                         </div>
                                                         <div class="corner tl"></div>
                                                         <div class="corner tr"></div>
@@ -537,7 +537,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th> 
                                                                     <th>
                                                                         Feedback
@@ -548,7 +548,7 @@
                                                                 <s:iterator value="viewData.submissions" var="submission" status="loop">
                                                                 <tr>
                                                                     <td>
-                                                                        <input type="hidden" name="rankInput" class="finalRank" value="${11-submission.milestoneReviewScore/10}"/>
+                                                                        <input type="hidden" name="rankInput" class="finalRank" value="${11-submission.checkpointReviewScore/10}"/>
                                                                         <link:onlineReviewDownloadSubmission
                                                                                 projectId="${param.projectId}"
                                                                                 submissionId="${submission.submissionId}"
@@ -558,7 +558,7 @@
                                                                     </td>
                                                                     <td class="fbTd">
                                                                         <div class="fbMask">
-                                                                            <div class="fbArea show">${submission.milestoneFeedback}</div>
+                                                                            <div class="fbArea show">${submission.checkpointFeedback}</div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -567,21 +567,21 @@
                                                         </table>
                                                     </div>              
                                                 </c:when>
-                                                <c:when test="${inMilestoneReviewPhase && !milestoneReviewCommitted}">
+                                                <c:when test="${inCheckpointReviewPhase && !checkpointReviewCommitted}">
                                                     <div class="notify"> 
-                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                        To pick checkpoint winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Checkpoints. Do not forget to provide checkpoint general feedback and individual feedback.
                                                     </div>
                         
                                                     <div class="slotsMask">
                                                         <div class="slots">
-                                                            <h3>Milestone Winners</h3>
+                                                            <h3>Checkpoint Winners</h3>
                                                             <ul>
                                                                 <s:set var="places" value="{'1st','2nd','3rd','4th','5th'}"/>
-                                                                <c:forEach begin="1" end="${viewData.milestonePrizeNumber}" step="1" var="num">                                                                
+                                                                <c:forEach begin="1" end="${viewData.checkpointPrizeNumber}" step="1" var="num">                                                                
                                                                 <li class="slot">
                                                                     <span class="slotR">
                                                                         <span class="text">
-                                                                            <span class="place">${places[num-1]} Prize ($${viewData.milestonePrizeAmount})</span>
+                                                                            <span class="place">${places[num-1]} Prize ($${viewData.checkpointPrizeAmount})</span>
                                                                         </span>
                                                                     </span>
                                                                 </li>
@@ -592,7 +592,7 @@
                                                         <div class="borderLine"></div>
                                                         <div class="feedback">
                                                             <h3>General Feedback</h3>
-                                                            <s:if test="viewData.milestoneSubmissionsGeneralFeedback == ''||viewData.milestoneSubmissionsGeneralFeedback == null">
+                                                            <s:if test="viewData.checkpointSubmissionsGeneralFeedback == ''||viewData.checkpointSubmissionsGeneralFeedback == null">
                                                                 <div class="fbArea"></div>
                                                                 <div class="action">
                                                                     <a href="javascript:;" class="add">Provide Feedback</a>
@@ -600,7 +600,7 @@
                                                                 </div>
                                                             </s:if>
                                                             <s:else>                                                            
-                                                                <div class="fbArea show">${viewData.milestoneSubmissionsGeneralFeedback}</div>
+                                                                <div class="fbArea show">${viewData.checkpointSubmissionsGeneralFeedback}</div>
                                                                 <div class="action">
                                                                     <a href="javascript:;" class="add hide">Provide Feedback</a>
                                                                     <a href="javascript:;" class="edit">Edit</a>
@@ -625,7 +625,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
                                                                     </th>
                                                                     <th>
                                                                         Select Placement
@@ -639,7 +639,7 @@
                                                                 <s:iterator value="viewData.submissions" var="submission" status="loop">
                                                                 <tr>
                                                                     <td>
-                                                                        <input type="hidden" name="rankInput" value="${11-submission.milestoneReviewScore/10}"/>
+                                                                        <input type="hidden" name="rankInput" value="${11-submission.checkpointReviewScore/10}"/>
                                                                         <link:onlineReviewDownloadSubmission
                                                                                 projectId="${param.projectId}"
                                                                                 submissionId="${submission.submissionId}"
@@ -649,14 +649,14 @@
                                                                     </td>
                                                                     <td>
                                                                         <span class="prizes">
-                                                                            <c:forEach begin="1" end="${viewData.milestonePrizeNumber}" step="1" var="num"> 
+                                                                            <c:forEach begin="1" end="${viewData.checkpointPrizeNumber}" step="1" var="num"> 
                                                                             <a href="javascript:;" class="prize${num}">${num}</a>
                                                                             </c:forEach>
                                                                         </span>
                                                                     </td>
                                                                     <td class="fbTd">
                                                                         <div class="fbMask">
-                                                                            <s:if test="milestoneFeedback==''||milestoneFeedback==null">
+                                                                            <s:if test="checkpointFeedback==''||checkpointFeedback==null">
                                                                                 <div class="fbArea"></div>
                                                                                 <div class="edit hide">
                                                                                     <a href="javascript:;">Edit</a>
@@ -666,7 +666,7 @@
                                                                                 </div>
                                                                             </s:if>
                                                                             <s:else>
-                                                                                <div class="fbArea" style="display:block">${submission.milestoneFeedback}</div>
+                                                                                <div class="fbArea" style="display:block">${submission.checkpointFeedback}</div>
                                                                                 <div class='edit'>
                                                                                     <a href="javascript:;">Edit</a>
                                                                                 </div>
@@ -684,7 +684,7 @@
                         
                                                     <div class="ops">
                                                         <a href="javascript:;" class="saveit">Save &amp; Continue later</a> 
-                                                        <a class="newButton1 lock" href="javascript:;"><span class="btnR"><span class="btnC"><span class="icon">LOCK IN MILESTONES</span></span></span></a>
+                                                        <a class="newButton1 lock" href="javascript:;"><span class="btnR"><span class="btnC"><span class="icon">LOCK IN CHECKPOINTS</span></span></span></a>
                                                     </div>              
                                                 </c:when>
                                                 <c:otherwise></c:otherwise>

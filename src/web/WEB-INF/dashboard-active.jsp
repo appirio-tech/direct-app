@@ -297,8 +297,8 @@
                                                             <s:if test="isStudio == true">
 
                                                                 <s:if test="multipleRound">
-                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:studioSubmissionsGrid>:
-                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
+                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" checkpointRound="true">C(${checkpointSubmissionNumber})</link:studioSubmissionsGrid>:
+                                                                    <link:studioSubmissionsGrid contestId="${contest.id}" checkpointRound="false">F(${finalSubmissionNumber})</link:studioSubmissionsGrid>
                                                                 </s:if>
                                                                 <s:else>
                                                                     <link:studioSubmissionsGrid contestId="${contest.id}">
@@ -310,8 +310,8 @@
                                                             </s:if>
                                                             <s:if test="isStudio == false">
                                                                 <s:if test="multipleRound">
-                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="true">M(${milestoneSubmissionNumber})</link:softwareSubmissionsList>:
-                                                                    <link:softwareSubmissionsList contestId="${contest.id}" milestoneRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
+                                                                    <link:softwareSubmissionsList contestId="${contest.id}" checkpointRound="true">C(${checkpointSubmissionNumber})</link:softwareSubmissionsList>:
+                                                                    <link:softwareSubmissionsList contestId="${contest.id}" checkpointRound="false">F(${finalSubmissionNumber})</link:softwareSubmissionsList>
                                                                 </s:if>
                                                                 <s:else>
                                                                     <link:softwareSubmissionsList contestId="${contest.id}">

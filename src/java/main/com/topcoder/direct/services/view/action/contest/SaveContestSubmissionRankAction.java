@@ -21,7 +21,7 @@ import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>
- * A <code>Struts</code> action to be used for handling requests for save rank of milestone submissions for
+ * A <code>Struts</code> action to be used for handling requests for save rank of checkpoint submissions for
  * <code>Studio</code> contest.
  * </p>
  * 
@@ -35,8 +35,8 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <p>
  *   Version 1.2 (TC Direct Replatforming Release 5) change notes:
  *   <ul>
- *     <li>Changed the class name from <code>SaveMilestoneAction</code> to <code>SaveContestSubmissionRankAction</code> because
- *     this action can save submissions rank for both Milestone Round and Final Round.</li>
+ *     <li>Changed the class name from <code>SaveCheckpointAction</code> to <code>SaveContestSubmissionRankAction</code> because
+ *     this action can save submissions rank for both Checkpoint Round and Final Round.</li>
  *   </ul>
  * </p>
  *
@@ -54,7 +54,7 @@ public class SaveContestSubmissionRankAction extends ContestAction {
 
     /**
      * <p>
-     * A <code>String</code> providing the ranking of the milestone submissions.
+     * A <code>String</code> providing the ranking of the checkpoint submissions.
      * </p>
      */
     private String ranks;
@@ -85,10 +85,10 @@ public class SaveContestSubmissionRankAction extends ContestAction {
 
     /**
      * <p>
-     * Gets the ranking of the milestone submissions.
+     * Gets the ranking of the checkpoint submissions.
      * </p>
      * 
-     * @return A <code>String</code> providing the ranking of the milestone submissions.
+     * @return A <code>String</code> providing the ranking of the checkpoint submissions.
      */
     public String getRanks() {
         return ranks;
@@ -96,11 +96,11 @@ public class SaveContestSubmissionRankAction extends ContestAction {
 
     /**
      * <p>
-     * Sets the ranking of the milestone submissions.
+     * Sets the ranking of the checkpoint submissions.
      * </p>
      * 
      * @param ranks
-     *            A <code>String</code> providing the ranking of the milestone submissions.
+     *            A <code>String</code> providing the ranking of the checkpoint submissions.
      */
     public void setRanks(String ranks) {
         this.ranks = ranks;
@@ -156,7 +156,7 @@ public class SaveContestSubmissionRankAction extends ContestAction {
 
     /**
      * <p>
-     * Handles the incoming request. Save the ranking of the milestone submissions.
+     * Handles the incoming request. Save the ranking of the checkpoint submissions.
      * </p>
      * 
      * @throws Exception
@@ -175,7 +175,7 @@ public class SaveContestSubmissionRankAction extends ContestAction {
         }
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        PhaseType phaseType = roundType == ContestRoundType.MILESTONE ? PhaseType.MILESTONE_REVIEW_PHASE : PhaseType.REVIEW_PHASE;
+        PhaseType phaseType = roundType == ContestRoundType.CHECKPOINT ? PhaseType.CHECKPOINT_REVIEW_PHASE : PhaseType.REVIEW_PHASE;
         if (!DirectUtils.isPhaseOpen(softwareCompetition, phaseType)) {
             throw new DirectException("The phase is not open.");
         }

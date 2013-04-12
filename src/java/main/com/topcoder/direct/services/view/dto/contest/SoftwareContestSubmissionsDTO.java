@@ -26,7 +26,7 @@ import java.util.List;
  * </p>
  *
  * <p>Version 1.0.3 (Release Assembly - TC Direct Cockpit Release Two) change notes:
-  * - add property milestoneWinners to store the winner of the milestone round.
+  * - add property checkpointWinners to store the winner of the checkpoint round.
   * </p>
  *
  * <p>
@@ -38,11 +38,11 @@ import java.util.List;
  * </p>
  *
  * <p>
- * Version 1.0.5 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.0.5 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
- *     <li>Added {@link #milestonePrizeNumber} property.</li>
- *     <li>Added {@link #milestonePrizeAmount} property.</li>
- *     <li>Added {@link #milestoneSubmissionsGeneralFeedback} property.</li>
+ *     <li>Added {@link #checkpointPrizeNumber} property.</li>
+ *     <li>Added {@link #checkpointPrizeAmount} property.</li>
+ *     <li>Added {@link #checkpointSubmissionsGeneralFeedback} property.</li>
  *   </ol>
  * </p>
  *
@@ -90,10 +90,10 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
     private boolean showSpecReview;
 
     /**
-     * The milestone winners of the contest.
+     * The checkpoint winners of the contest.
      * @since 1.0.3
      */
-    private List<SoftwareContestWinnerDTO> milestoneWinners;
+    private List<SoftwareContestWinnerDTO> checkpointWinners;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether the section for performing approval by user is to
@@ -126,25 +126,25 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
     private String approvalComment;
     
     /**
-     * <p>The maximum number of milestone prize winners.</p>
+     * <p>The maximum number of checkpoint prize winners.</p>
      * 
      * @since 1.0.5
      */
-    private int milestonePrizeNumber;
+    private int checkpointPrizeNumber;
     
     /**
-     * <p>The milestone prize amount.</p>
+     * <p>The checkpoint prize amount.</p>
      * 
      * @since 1.0.5
      */
-    private double milestonePrizeAmount;
+    private double checkpointPrizeAmount;
     
     /**
-     * <p>The milestone submissions general feedback.</p>
+     * <p>The checkpoint submissions general feedback.</p>
      * 
      * @since 1.0.5
      */
-    private String milestoneSubmissionsGeneralFeedback;       
+    private String checkpointSubmissionsGeneralFeedback;       
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsDTO</code> instance. This implementation does nothing.</p>
@@ -354,23 +354,23 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
     }
 
     /**
-     * Gets the milestone winners.
+     * Gets the checkpoint winners.
      *
-     * @return the milestone winners.
+     * @return the checkpoint winners.
      * @since 1.0.3
      */
-    public List<SoftwareContestWinnerDTO> getMilestoneWinners() {
-        return milestoneWinners;
+    public List<SoftwareContestWinnerDTO> getCheckpointWinners() {
+        return checkpointWinners;
     }
 
     /**
-     * Sets the milestone winners.
+     * Sets the checkpoint winners.
      *
-     * @param milestoneWinners the milestone winners.
+     * @param checkpointWinners the checkpoint winners.
      * @since 1.0.3
      */
-    public void setMilestoneWinners(List<SoftwareContestWinnerDTO> milestoneWinners) {
-        this.milestoneWinners = milestoneWinners;
+    public void setCheckpointWinners(List<SoftwareContestWinnerDTO> checkpointWinners) {
+        this.checkpointWinners = checkpointWinners;
     }
 
     /**
@@ -418,63 +418,63 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
     }
 
     /**
-     * Gets the maximum number of milestone prize winners.
+     * Gets the maximum number of checkpoint prize winners.
      * 
-     * @return the maximum number of milestone prize winners
+     * @return the maximum number of checkpoint prize winners
      * @since 1.0.5
      */
-    public int getMilestonePrizeNumber() {
-        return milestonePrizeNumber;
+    public int getCheckpointPrizeNumber() {
+        return checkpointPrizeNumber;
     }
 
     /**
-     * Sets the maximum number of milestone prize winners.
+     * Sets the maximum number of checkpoint prize winners.
      * 
-     * @param milestonePrizeNumber the maximum number of milestone prize winners to set
+     * @param checkpointPrizeNumber the maximum number of checkpoint prize winners to set
      * @since 1.0.5
      */
-    public void setMilestonePrizeNumber(int milestonePrizeNumber) {
-        this.milestonePrizeNumber = milestonePrizeNumber;
+    public void setCheckpointPrizeNumber(int checkpointPrizeNumber) {
+        this.checkpointPrizeNumber = checkpointPrizeNumber;
     }
 
     /**
-     * Gets the milestone prize amount.
+     * Gets the checkpoint prize amount.
      * 
-     * @return the milestone prize amount
+     * @return the checkpoint prize amount
      * @since 1.0.5
      */
-    public double getMilestonePrizeAmount() {
-        return milestonePrizeAmount;
+    public double getCheckpointPrizeAmount() {
+        return checkpointPrizeAmount;
     }
 
     /**
-     * Sets the milestone prize amount.
+     * Sets the checkpoint prize amount.
      * 
-     * @param milestonePrizeAmount the milestone prize amount to set
+     * @param checkpointPrizeAmount the checkpoint prize amount to set
      * @since 1.0.5
      */
-    public void setMilestonePrizeAmount(double milestonePrizeAmount) {
-        this.milestonePrizeAmount = milestonePrizeAmount;
+    public void setCheckpointPrizeAmount(double checkpointPrizeAmount) {
+        this.checkpointPrizeAmount = checkpointPrizeAmount;
     }
 
     /**
-     * Sets the milestone submissions general feedback.
+     * Sets the checkpoint submissions general feedback.
      * 
-     * @param milestoneSubmissionsGeneralFeedback the milestone submissions general feedback to set
+     * @param checkpointSubmissionsGeneralFeedback the checkpoint submissions general feedback to set
      * @since 1.0.5
      */
-    public void setMilestoneSubmissionsGeneralFeedback(String milestoneSubmissionsGeneralFeedback) {
-        this.milestoneSubmissionsGeneralFeedback = milestoneSubmissionsGeneralFeedback;
+    public void setCheckpointSubmissionsGeneralFeedback(String checkpointSubmissionsGeneralFeedback) {
+        this.checkpointSubmissionsGeneralFeedback = checkpointSubmissionsGeneralFeedback;
     }
 
     /**
-     * Gets the milestone submissions general feedback.
+     * Gets the checkpoint submissions general feedback.
      * 
-     * @return the milestone submissions general feedback
+     * @return the checkpoint submissions general feedback
      * @since 1.0.5
      */
-    public String getMilestoneSubmissionsGeneralFeedback() {
-        return milestoneSubmissionsGeneralFeedback;
+    public String getCheckpointSubmissionsGeneralFeedback() {
+        return checkpointSubmissionsGeneralFeedback;
     }
 
     public boolean isApprovalRejected() {

@@ -71,7 +71,7 @@ $(document).ready(function () {
 			return false;			  
 		}); 
   
-    $(".milestoneConfirmation, .winnersLockIn").click(function () {
+    $(".checkpointConfirmation, .winnersLockIn").click(function () {
         if ($("ul#bankSelectionItemList li label").length <= 0) {
             showErrors("Please select at least one submission.");
             return false;

@@ -13,7 +13,7 @@
  * - Changes were made to work for the new studio contest type and multiround type.
  * 
  * Version 1.2 TC Direct Replatforming Release 2 change note
- * - The software contest can set milestone prizes.
+ * - The software contest can set checkpoint prizes.
  *
  * Version 1.3 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
@@ -220,7 +220,7 @@ $(document).ready(function() {
 
     });
 
-    $("#milestoneDateDay").val(3).trigger('change');
+    $("#checkpointDateDay").val(3).trigger('change');
     $("#endDateDay").val(3).trigger('change');
 
     /* init pop */
@@ -402,18 +402,18 @@ $(document).ready(function() {
     
 
     if ($('select').length > 0) {
-        $('.selectSoftware select,.selectDesing select,.startSelect select,.milestoneSelect select,.endSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+        $('.selectSoftware select,.selectDesing select,.startSelect select,.checkpointSelect select,.endSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
         var SelectOptions = {
             ddMaxHeight: '220px',
             yscroll: true
         };
-        $('.billingSelect select,.roundelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select').sSelect(SelectOptions);
+        $('.billingSelect select,.roundelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select').sSelect(SelectOptions);
         $('.projectSelect select').sSelect(SelectOptions).change(function() {
              handleProjectDropDownChange();
         });
         //$('#catalogSelect').sSelect();
         $('.selectDesing div.selectedTxt').html('Select Contest Type');
-        $("#mileStoneDiv").hide();
+        $("#checkpointDiv").hide();
     }
 
     /* Optgroup 2 columns fix */
@@ -464,15 +464,15 @@ $(document).ready(function() {
         var roundType = $('#roundTypes').val();
 	updateRoundDurationLabels();
         if(roundType == 'single') {
-           $('#mileStoneDiv').hide();
-           $('#milestonePrizeDiv').hide();
-           $('#swMilestonePrizeDiv').hide();
+           $('#checkpointDiv').hide();
+           $('#checkpointPrizeDiv').hide();
+           $('#swCheckpointPrizeDiv').hide();
            $('#round1InfoDiv').hide();
            $('#round2InfoDiv').hide();
         } else {
-           $('#mileStoneDiv').show();
-           $('#milestonePrizeDiv').show();           
-           $('#swMilestonePrizeDiv').show();
+           $('#checkpointDiv').show();
+           $('#checkpointPrizeDiv').show();           
+           $('#swCheckpointPrizeDiv').show();
            $('#round1InfoDiv').show();
            $('#round2InfoDiv').show();
         }
@@ -574,12 +574,12 @@ function updateRoundDurationLabels() {
 	var contestType = getContestType(true)[0];
 	var roundType = $('#roundTypes').val();
     if(contestType == "SOFTWARE") {
-		$("#mileStoneDiv label").html("Milestone Duration:");
+		$("#checkpointDiv label").html("Checkpoint Duration:");
 	} else {
 		if (roundType == "single") {
 			$("#endDiv label").html("Round 1 Duration:");
 		} else {
-			$("#mileStoneDiv label").html("Round 1 Duration:");
+			$("#checkpointDiv label").html("Round 1 Duration:");
 			$("#endDiv label").html("Round 2 Duration:");
 		}
 	}
@@ -669,7 +669,7 @@ function onContestTypeChange() {
     	  $("#roundTypeDiv").show();
       } else {
     	  $("#roundTypeDiv").hide();
-    	  $("#mileStoneDiv").hide();
+    	  $("#checkpointDiv").hide();
     	  mainWidget.softwareCompetition.multiRound = false;
       }
 

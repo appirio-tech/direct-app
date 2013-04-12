@@ -20,7 +20,7 @@
  * - Change time zone from GMT-04 to UTC-05.
  * - Update removeDocument method to add "studio:true" parameter.
  * Version 1.3 TC Direct Replatforming Release 2 change notes:
- * - Add support to set milestone prizes for software contest.
+ * - Add support to set checkpoint prizes for software contest.
  * - The studio contest can have specification review cost.
  * Version 1.4 TC Direct Replatforming Release 4 change notes:
  * - Add support to set Maximum Submissions for studio contest.
@@ -49,7 +49,7 @@
  * - Update the submission end date and contest end date when the contest was updated.
  *
  * Version 2.0 (Release Assembly - TC Direct Cockpit Release Five) change notes:
- * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
+ * - Fix the DR points, checkpoint prizes, contest fee percentage calculation etc.
  *
  * Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association) change notes:
  * - Add method getBillingAccountsByDirectProjectId(directProjectId)
@@ -481,18 +481,18 @@ function updateContestFee( ) {
                 });
                 
                 var isMultiRound = mainWidget.softwareCompetition.multiRound;
-                //milestone prizes
-                var  milestonePrizesTotal = 0;
+                //checkpoint prizes
+                var  checkpointPrizesTotal = 0;
                 if(isMultiRound) {
                     var amount = prizes[prizes.length - 1].prizeAmount;       
                     for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
-                        milestonePrizesTotal += amount; 
+                        checkpointPrizesTotal += amount;    
                     }
                 }
                 var specificationReviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost());
                 var reviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getReviewCost());
                 var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
-                var memberCost = contestPrizesTotal + milestonePrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
+                var memberCost = contestPrizesTotal + checkpointPrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
                 mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
                 mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
                 mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee.toString());
@@ -797,9 +797,9 @@ function saveAsDraftRequestSoftware() {
       request['selectedDesignId'] = mainWidget.softwareCompetition.assetDTO.directjsDesignId;         
    }
    
-   //milestone
+   //checkpoint
    if(mainWidget.softwareCompetition.multiRound) {
-      request['milestoneDate'] = formatDateForRequest(mainWidget.softwareCompetition.milestoneDate);
+      request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
    }
    
    // the first page also gets some data
@@ -839,9 +839,9 @@ function saveAsDraftRequestStudio() {
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
 
-   //milestone
+   //checkpoint
    if(mainWidget.softwareCompetition.multiRound) {
-      request['milestoneDate'] = formatDateForRequest(mainWidget.softwareCompetition.milestoneDate);
+      request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
    }
    // end date
    request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
@@ -1007,14 +1007,14 @@ function showPage(pageId) {
 
    $('#'+pageId).show();
    
-   if (pageId == "overviewPage" && $("#milestonePrizeDiv").is(":visible") && !$("#milestonePrizeDiv .numSelect select").data('customized')) {
-       $("#milestonePrizeDiv .numSelect select").data('customized',true);
-       $("#milestonePrizeDiv .numSelect select").sSelect();
-       $('#milestonePrizeDiv div div div div').html('5');
-       $('#milestoneSubmissionNumber').val('5');
-       $('#milestonePrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
-       $('#milestonePrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
-       $('#milestonePrize').val('50');
+   if (pageId == "overviewPage" && $("#checkpointPrizeDiv").is(":visible") && !$("#checkpointPrizeDiv .numSelect select").data('customized')) {
+       $("#checkpointPrizeDiv .numSelect select").data('customized',true);
+       $("#checkpointPrizeDiv .numSelect select").sSelect();
+       $('#checkpointPrizeDiv div div div div').html('5');
+       $('#checkpointSubmissionNumber').val('5');
+       $('#checkpointPrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
+       $('#checkpointPrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
+       $('#checkpointPrize').val('50');
    }
    if (pageId == "overviewSoftwarePage") {
 
@@ -1023,14 +1023,14 @@ function showPage(pageId) {
        }
    }
 
-   if (pageId == "overviewSoftwarePage" && $("#swMilestonePrizeDiv").is(":visible") && !$("#swMilestonePrizeDiv .numSelect select").data('customized')){
-        $("#swMilestonePrizeDiv .numSelect select").data('customized',true);
-        $("#swMilestonePrizeDiv .numSelect select").sSelect();
-        $('#swMilestonePrizeDiv div div div div').html('2');
-        $('#swMilestoneSubmissionNumber').val('2');
-        $('#swMilestonePrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
-        $('#swMilestonePrizeDiv div div div ul li:eq(1) a').addClass('hiLite');
-        $('#swMilestonePrize').val('200');
+   if (pageId == "overviewSoftwarePage" && $("#swCheckpointPrizeDiv").is(":visible") && !$("#swCheckpointPrizeDiv .numSelect select").data('customized')){
+        $("#swCheckpointPrizeDiv .numSelect select").data('customized',true);
+        $("#swCheckpointPrizeDiv .numSelect select").sSelect();
+        $('#swCheckpointPrizeDiv div div div div').html('2');
+        $('#swCheckpointSubmissionNumber').val('2');
+        $('#swCheckpointPrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
+        $('#swCheckpointPrizeDiv div div div ul li:eq(1) a').addClass('hiLite');
+        $('#swCheckpointPrize').val('200');
    }
    
    $('html, body').animate({scrollTop:0}, 'fast');
@@ -1521,7 +1521,7 @@ function getCurrentContestTotal(useDomElem) {
             }
        });
        if ($('#roundTypes').val() == 'multi') {
-           total += parseFloat($('#milestonePrize').val()) * parseFloat($('#milestoneSubmissionNumber').val());
+           total += parseFloat($('#checkpointPrize').val()) * parseFloat($('#checkpointSubmissionNumber').val());
        }
        // spec review cost
        total += feeObject.specReviewCost;
@@ -1599,7 +1599,7 @@ function updateSoftwarePrizes() {
        projectHeader.properties['Digital Run Flag'] = 'Off';
    }
 
-   projectHeader.setMilestoneBonusCost(0);
+   projectHeader.setCheckpointBonusCost(0);
    projectHeader.setAdminFee(contestFee);
 
    if(contestCost.specReviewCost == undefined) {
@@ -1612,7 +1612,7 @@ function updateSoftwarePrizes() {
    prizes.push(new com.topcoder.direct.Prize(1, contestCost.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
    prizes.push(new com.topcoder.direct.Prize(2, contestCost.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
    if(mainWidget.softwareCompetition.multiRound) {
-       prizes.push(new com.topcoder.direct.Prize(1, parseFloat($('#swMilestonePrize').val()), MILESTONE_PRIZE_TYPE_ID, parseInt($('#swMilestoneSubmissionNumber').val())));
+       prizes.push(new com.topcoder.direct.Prize(1, parseFloat($('#swCheckpointPrize').val()), CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#swCheckpointSubmissionNumber').val())));
    }
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 
@@ -1635,7 +1635,7 @@ function updateAlgorithmPrizes() {
        var prizes = [];
        prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-       prizes.push(new com.topcoder.direct.Prize(1, 0, MILESTONE_PRIZE_TYPE_ID, 1));
+       prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
        projectHeader.prizes = prizes;
        projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
    }
@@ -1661,7 +1661,7 @@ function updateStudioPrizes() {
        var prizes = [];
        prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-       prizes.push(new com.topcoder.direct.Prize(1, 0, MILESTONE_PRIZE_TYPE_ID, 1));
+       prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
        projectHeader.prizes = prizes;
        projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
    }
@@ -1730,10 +1730,10 @@ function onDigitalRunChangeKeyUp() {
 }
 
 /**
- * Handle milestone prize field key up event or milestone numberOfSubmission change event.
+ * Handle checkpoint prize field key up event or checkpoint numberOfSubmission change event.
  */
-function onMilestonePrizeChangeKeyUp() {
-    var value = $('#swMilestonePrize').val();
+function onCheckpointPrizeChangeKeyUp() {
+    var value = $('#swCheckpointPrize').val();
     if(!checkRequired(value) || !checkNumber(value)) {
         return;
     }
@@ -1859,29 +1859,29 @@ function calculateDRPoint(firstPlacePrize, secondPlacePrize, reliabilityPrize) {
    return (firstPlacePrize + secondPlacePrize + reliabilityPrize) * 0.25;
 }
 
-function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost, actualFee) {
+function getContestTotal(feeObject, prizeType, useDomElem, noCheckpointCost, actualFee) {
     var contestCost = getContestCost(feeObject, prizeType);
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + ($('#DRCheckbox').is(":checked") ? contestCost.drCost : 0) + (actualFee == null ? feeObject.contestFee : actualFee)
     + (contestCost.specReviewCost != undefined ? contestCost.specReviewCost : feeObject.specReviewCost);
 
-    if (noMilestoneCost) {
+    if (noCheckpointCost) {
         return total;
     }
     if (!useDomElem) {
         var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
         for (var i = 0; i < prizes.length; i++) {
-            if (prizes[i].prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+            if (prizes[i].prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
                 total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
             }
         }
     } else if (mainWidget.softwareCompetition.multiRound) {
 
-        var prize = parseFloat($("#swMilestonePrize").val());
+        var prize = parseFloat($("#swCheckpointPrize").val());
         if (!prize) {
             prize = 0;
         }
-        total += prize * parseFloat($("#swMilestoneSubmissionNumber").val());
+        total += prize * parseFloat($("#swCheckpointSubmissionNumber").val());
     }
     return total;
 }

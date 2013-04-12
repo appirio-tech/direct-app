@@ -82,19 +82,19 @@ public enum ProjectPhaseType {
     POST_MOTERM(12, "postMortem", "Post Mortem", 21),
     
     /**
-     * The milestone submission type.
+     * The checkpoint submission type.
      */
-    MILESTONE_SUBMISSION(15, "milestoneSubmission", "Milestone Submission", 4),
+    CHECKPOINT_SUBMISSION(15, "checkpointSubmission", "Checkpoint Submission", 4),
     
     /**
-     * The milestone submission type.
+     * The checkpoint submission type.
      */
-    MILESTONE_SCREENING(16, "milestoneScreening", "Milestone Screening", 5),
+    CHECKPOINT_SCREENING(16, "checkpointScreening", "Checkpoint Screening", 5),
     
     /**
-     * The milestone submission type.
+     * The checkpoint submission type.
      */
-    MILESTONE_REVIEW(17, "milestoneReview", "Milestone Review", 6),
+    CHECKPOINT_REVIEW(17, "checkpointReview", "Checkpoint Review", 6),
 
     /**
      * The secondary Reviewer Review phase.

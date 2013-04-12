@@ -17,13 +17,13 @@ import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>
- * This struts action is used to save software milestone review placements and feedbacks.
+ * This struts action is used to save software checkpoint review placements and feedbacks.
  * </p>
  * 
  * @author TCSASSEMBER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Software Milestone Management)
+ * @version 1.0 (Release Assembly - TopCoder Cockpit Software Checkpoint Management)
  */
-public class SaveSoftwareMilestoneReviewAction extends ContestAction {
+public class SaveSoftwareCheckpointReviewAction extends ContestAction {
     /**
      * <p>
      * Represents the serial version unique id.
@@ -58,15 +58,15 @@ public class SaveSoftwareMilestoneReviewAction extends ContestAction {
 
     /**
      * <p>
-     * Constructs new <code>SaveSoftwareMilestoneReviewAction</code> instance.
+     * Constructs new <code>SaveSoftwareCheckpointReviewAction</code> instance.
      * </p>
      */
-    public SaveSoftwareMilestoneReviewAction() {
+    public SaveSoftwareCheckpointReviewAction() {
     }
 
     /**
      * <p>
-     * Handles the incoming request. Save the placements and feedbacks of the milestone submissions.
+     * Handles the incoming request. Save the placements and feedbacks of the checkpoint submissions.
      * </p>
      * 
      * @throws Exception if an unexpected error occurs
@@ -86,8 +86,8 @@ public class SaveSoftwareMilestoneReviewAction extends ContestAction {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
             currentUser, getProjectId());
-        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE)) {
-            throw new DirectException("The MILESTONE_REVIEW_PHASE is not open.");
+        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE)) {
+            throw new DirectException("The CHECKPOINT_REVIEW_PHASE is not open.");
         }
         
         // only works for software contest
@@ -96,7 +96,7 @@ public class SaveSoftwareMilestoneReviewAction extends ContestAction {
         }
         
         // save the review
-        contestServiceFacade.saveSoftwareMilestoneReviewWithRankAndFeedback(currentUser, getProjectId(),
+        contestServiceFacade.saveSoftwareCheckpointReviewWithRankAndFeedback(currentUser, getProjectId(),
             submissionIds, placements, feedbacks, committed, generalFeedback);
         
         Map<String, String> result = new HashMap<String, String>();

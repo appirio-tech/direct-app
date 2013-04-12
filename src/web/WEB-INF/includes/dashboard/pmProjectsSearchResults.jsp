@@ -227,8 +227,8 @@
                         <c:if test="${projectSummary.launchLateContestsNum > 0}">
                             Launch Late (${projectSummary.launchLateContestsNum}) <br/>
                         </c:if>
-                        <c:if test="${projectSummary.milestoneLateContestsNum > 0}">
-                            Milestone Late (${projectSummary.milestoneLateContestsNum}) <br/>
+                        <c:if test="${projectSummary.checkpointLateContestsNum > 0}">
+                            Checkpoint Late (${projectSummary.checkpointLateContestsNum}) <br/>
                         </c:if>
                         <c:if test="${projectSummary.stalledContestsNum > 0}">
                             Phase Blocked (${projectSummary.stalledContestsNum}) <br/>
@@ -257,7 +257,7 @@
                     <!-- used for status sorting -->
                     <td class="hide">
                         ${projectSummary.phaseLateContestsNum + projectSummary.launchLateContestsNum + 
-                        projectSummary.milestoneLateContestsNum + projectSummary.stalledContestsNum + projectSummary.apOffContestsNum} 
+                        projectSummary.checkpointLateContestsNum + projectSummary.stalledContestsNum + projectSummary.apOffContestsNum} 
                     </td>
                     <td class="hide">
                         <span>${projectSummary.projectFulfillment}</span>

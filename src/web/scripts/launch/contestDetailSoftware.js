@@ -11,7 +11,7 @@
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
  * Version 1.3 TC Direct Replatforming Release 2 change note
- * - add support to support milestone prizes for software contest.
+ * - add support to support checkpoint prizes for software contest.
  * - add support to switch the number of rounds when the contest is draft.
  *
  * Version 1.1.2 (TC Direct - Software Creation Update Assembly) Change notes:
@@ -54,7 +54,7 @@
  * - and round2 info fields.
  *
  * Version 1.8 (Release Assembly - TC Direct Cockpit Release Five) change notes:
- * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
+ * - Fix the DR points, checkpoint prizes, contest fee percentage calculation etc.
  *
  * Version 1.9 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
  * - Always use the value stored in project info (49) as the copilot cost of the contest
@@ -73,7 +73,7 @@ $(document).ready(function(){
 
 	  /* init select */
 	  if($('select').length > 0){
-	  	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	  	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.checkpointSelect select,.endSelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
 	  	
 	  	//$('.selectDesing div.selectedTxt').html('Select Contest Type');
 	  }
@@ -248,19 +248,19 @@ $(document).ready(function(){
         var roundType = $('#roundTypes').val();
         if(roundType == 'single') {
 		   $('#endEditDiv .name_label').html('<strong>Round 1 Duration:</strong>');
-           $('#mileStoneEditDiv').hide();
-           $('#milestonePrizeDiv').hide();  	
+           $('#checkpointEditDiv').hide();
+           $('#checkpointPrizeDiv').hide();  	
            $('#roundInfoDiv').hide();	     
-           $('#rMileStoneTR').hide();
+           $('#rCheckpointTR').hide();
            $('#rMultiRoundInfoDiv').hide();                 
         } else {
 		   $('#endEditDiv .name_label').html('<strong>Round 2 Duration:</strong>');
-           $('#mileStoneEditDiv').show();
-           $('#milestonePrizeDiv').show();  	
+           $('#checkpointEditDiv').show();
+           $('#checkpointPrizeDiv').show();  	
            $('#roundInfoDiv').show();	     
-           $('#rMileStoneTR').show();
+           $('#rCheckpointTR').show();
            $('#rMultiRoundInfoDiv').show();                 
-		   $(".milestoneEtSelect select,.numSelect select").each(function(index){
+		   $(".checkpointEtSelect select,.numSelect select").each(function(index){
 				if(!$(this).is(":hidden") && !$(this).data('customized')){
 					$(this).data('customized',true);
 					$(this).sSelect({ddMaxHeight: '220',yscroll: true});
@@ -268,7 +268,7 @@ $(document).ready(function(){
 			}); 	
 		   if (!mainWidget.softwareCompetition.multiRound) {
 			   var startDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
-			   $('#milestoneDate').datePicker().val(getDatePart(new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000))).trigger('change');
+			   $('#checkpointDate').datePicker().val(getDatePart(new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000))).trigger('change');
 		   }
         }
    });
@@ -468,7 +468,7 @@ function initContest(contestJson) {
    //contest data
    mainWidget.softwareCompetition.multiRound = contestJson.hasMulti;
    if (contestJson.hasMulti) {
-	   mainWidget.softwareCompetition.milestoneDate = parseDate(contestJson.multiRoundEndDate);
+	   mainWidget.softwareCompetition.checkpointDate = parseDate(contestJson.multiRoundEndDate);
    }
    mainWidget.softwareCompetition.projectHeader.id = contestJson.contestId;
    mainWidget.softwareCompetition.projectHeader.projectCategory= contestJson.projectCategory;
@@ -979,12 +979,12 @@ function showTypeSectionEdit() {
 
 /**
  * Gets the milstone prizes as array. The first element is the prize for each winner, the second element is
- * the number of the milestone submissions.
+ * the number of the checkpoint submissions.
  */
-function getMilestonePrizes() {
+function getCheckpointPrizes() {
 	var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
 	for (var i = 0; i < prizes.length; i++) {
-		if (prizes[i].prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+		if (prizes[i].prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
 			return [prizes[i].prizeAmount, prizes[i].numberOfSubmissions];
 		}
 	}
@@ -1007,10 +1007,10 @@ function populateRoundSection() {
 	var isMultiRound = mainWidget.softwareCompetition.multiRound;
 	var subDuration = getDurationDayHour(startDate, subEndDate);
 	if (isMultiRound) {
-		var milestoneDate = mainWidget.softwareCompetition.milestoneDate;
-		var milestonePrizes = getMilestonePrizes();
-		var milestoneDuration = getDurationDayHour(startDate, milestoneDate);
-		subDuration = getDurationDayHour(milestoneDate, subEndDate);
+		var checkpointDate = mainWidget.softwareCompetition.checkpointDate;
+		var checkpointPrizes = getCheckpointPrizes();
+		var checkpointDuration = getDurationDayHour(startDate, checkpointDate);
+		subDuration = getDurationDayHour(checkpointDate, subEndDate);
 	}
 	
 	//edit
@@ -1026,18 +1026,18 @@ function populateRoundSection() {
 		$('#type').show();
 	}
 	if(!isMultiRound) {	
-		$('#mileStoneEditDiv').hide();  		     
+		$('#checkpointEditDiv').hide();  		     
 	      
-	    $('#milestonePrizeDiv').hide();  	
+	    $('#checkpointPrizeDiv').hide();  	
 	    $('#roundInfoDiv').hide();	     
 	} else {
-		$('#mileStoneEditDiv').show();  	
-		$('#milestoneDateDay').val(milestoneDuration[0]).trigger('change');
-		$('#milestoneDateHour').val(milestoneDuration[1]).trigger('change');
+		$('#checkpointEditDiv').show();  	
+		$('#checkpointDateDay').val(checkpointDuration[0]).trigger('change');
+		$('#checkpointDateHour').val(checkpointDuration[1]).trigger('change');
 		 	  
-		$('#milestonePrizeDiv').show();
-		$('#milestonePrize, #swMilestonePrize').val(milestonePrizes[0]);
-		$('#milestoneSubmissionNumber, #swMilestoneSubmissionNumber').val(milestonePrizes[1]).trigger('change');
+		$('#checkpointPrizeDiv').show();
+		$('#checkpointPrize, #swCheckpointPrize').val(checkpointPrizes[0]);
+		$('#checkpointSubmissionNumber, #swCheckpointSubmissionNumber').val(checkpointPrizes[1]).trigger('change');
 		 	  
 		$('#roundInfoDiv').show();	     
 		if (mainWidget.competitionType == "STUDIO") {
@@ -1059,16 +1059,16 @@ function populateRoundSection() {
 	$('#rSubEndDateRO').html(formatDateForReview(subEndDate));
    
     if(!isMultiRound) {	
-    	$('#rMileStoneTR').hide();
+    	$('#rCheckpointTR').hide();
         $('#rMultiRoundInfoDiv').hide();      
   	} else {
-  		$('#rMileStoneTR').show();  	
-  	 	$('#rMilestoneDate').html(formatDateForReview(milestoneDate));
-  	 	$('#rMilestoneDateRO').html(formatDateForReview(milestoneDate));
+  		$('#rCheckpointTR').show();  	
+  	 	$('#rCheckpointDate').html(formatDateForReview(checkpointDate));
+  	 	$('#rCheckpointDateRO').html(formatDateForReview(checkpointDate));
   	 	  	 	  
         $('#rMultiRoundInfoDiv').show();
-        $('#rMPrizesAmount').text('$'+milestonePrizes[0].formatMoney(2));
-        $('#rMPrizesNumberOfSubmissions').html(milestonePrizes[1]);
+        $('#rMPrizesAmount').text('$'+checkpointPrizes[0].formatMoney(2));
+        $('#rMPrizesNumberOfSubmissions').html(checkpointPrizes[1]);
         if (mainWidget.competitionType == "STUDIO") {
         	$('#rRound1Info').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction);
         	$('#rRound2Info').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction);
@@ -1079,7 +1079,7 @@ function populateRoundSection() {
 function saveRoundSection() {
    var preStartDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
    var preSubEndDate = mainWidget.softwareCompetition.subEndDate;
-   var preMilestoneDate = mainWidget.softwareCompetition.milestoneDate;
+   var preCheckpointDate = mainWidget.softwareCompetition.checkpointDate;
    if(!validateFieldsRoundSection()) {
        return;
    }
@@ -1099,7 +1099,7 @@ function saveRoundSection() {
 		 if (jsonResult.error) {
 			 mainWidget.softwareCompetition.assetDTO.directjsProductionDate = preStartDate;
 			 mainWidget.softwareCompetition.subEndDate = preSubEndDate;
-			 mainWidget.softwareCompetition.milestoneDate = preMilestoneDate;
+			 mainWidget.softwareCompetition.checkpointDate = preCheckpointDate;
 		 }
          populateRoundSection();  
          populatePrizeSection();
@@ -1111,14 +1111,14 @@ function saveRoundSection() {
 }
 
 /**
- * Gets the index of milestone type prize from a list of prizes.
+ * Gets the index of checkpoint type prize from a list of prizes.
  * 
  * @param prizes the list of prizes
- * @returns {Number} the index of milestone type prize
+ * @returns {Number} the index of checkpoint type prize
  */
-function getMilestonePrize(prizes) {
+function getCheckpointPrize(prizes) {
 	for (var i = 0; i < prizes.length; i++) {
-		if (prizes[i].prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+		if (prizes[i].prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
 			return i;
 		}
 	}
@@ -1142,12 +1142,12 @@ function getCKEditorContent(id) {
 function validateFieldsRoundSection() {
 	var isMultiRound = ('multi' == $('#roundTypes').val());
 	var startDate = getDateByIdPrefix('start');
-	var milestoneDateHours = $('#milestoneDateDay').val() * 24 + parseInt($('#milestoneDateHour').val());
+	var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($('#checkpointDateHour').val());
 
 	var round1Info = getCKEditorContent('round1Info'); 
 	var round2Info = getCKEditorContent('round2Info');
-	//milestone prize
-	var milestonePrizeInput;
+	//checkpoint prize
+	var checkpointPrizeInput;
    
 	//validation
 	var errors = [];
@@ -1155,11 +1155,11 @@ function validateFieldsRoundSection() {
     if (startDate < getServerTime()) {
         // errors.push('Start Date must be in future.');
     }
-    if (isMultiRound && milestoneDateHours == 0) {
+    if (isMultiRound && checkpointDateHours == 0) {
 		if (mainWidget.competitionType == "STUDIO") {
 			errors.push('Round 1 duration should be positive.');
 		} else {
-			errors.push('Milestone duration must be positive.');
+			errors.push('Checkpoint duration must be positive.');
 		}
     }
 	if (mainWidget.competitionType == "STUDIO") {
@@ -1173,21 +1173,21 @@ function validateFieldsRoundSection() {
 		}
 	}
 
-	var milestonePrize;
+	var checkpointPrize;
 	if(isMultiRound) {
 		if (mainWidget.competitionType == "STUDIO") {
-			milestonePrizeInput = $('#milestonePrize').val();
+			checkpointPrizeInput = $('#checkpointPrize').val();
 		} else {
-			milestonePrizeInput = $('#swMilestonePrize').val();
+			checkpointPrizeInput = $('#swCheckpointPrize').val();
 		}
-		milestonePrize = parseFloat(milestonePrizeInput);
-		if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
-			errors.push('Milestone prize is invalid.');
+		checkpointPrize = parseFloat(checkpointPrizeInput);
+		if(!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
+			errors.push('Checkpoint prize is invalid.');
 		} else {
-            // If registration is already started then check that the milestone prize is not decreased
+            // If registration is already started then check that the checkpoint prize is not decreased
             if (phaseOpen) {
-                if (milestonePrize < getMilestonePrizes()[0]){
-                    errors.push('The milestone prize can not be decreased');
+                if (checkpointPrize < getCheckpointPrizes()[0]){
+                    errors.push('The checkpoint prize can not be decreased');
                 }
             }
         }
@@ -1201,7 +1201,7 @@ function validateFieldsRoundSection() {
 				errors.push('Round 2 information is empty.');
 			}
 			
-			// set milestone prizes
+			// set checkpoint prizes
 			var find = false;
 			var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
 			if (!prizes) {
@@ -1212,25 +1212,25 @@ function validateFieldsRoundSection() {
 				newPrizes.push(new com.topcoder.direct.Prize(prizes[i].place, prizes[i].prizeAmount, prizes[i].prizeType.id, prizes[i].numberOfSubmissions));
 			}
 			prizes = newPrizes;
-			var ind = getMilestonePrize(prizes);
+			var ind = getCheckpointPrize(prizes);
 			if (ind == -1) {
-				prizes.push(new com.topcoder.direct.Prize(1, milestonePrize, MILESTONE_PRIZE_TYPE_ID, parseInt($('#milestoneSubmissionNumber').val())));
+				prizes.push(new com.topcoder.direct.Prize(1, checkpointPrize, CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#checkpointSubmissionNumber').val())));
 			} else {
-				prizes[ind].prizeAmount = milestonePrize;
-				prizes[ind].numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
+				prizes[ind].prizeAmount = checkpointPrize;
+				prizes[ind].numberOfSubmissions = parseInt($('#checkpointSubmissionNumber').val());
 			}
 		}
 	} else if (mainWidget.competitionType == "STUDIO") {
-		// remove the milestone prize
+		// remove the checkpoint prize
 		var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
 		var newPrizes = [];
 		for (var i = 0; i < prizes.length; i++) {
-			if (prizes[i].prizeType.id != MILESTONE_PRIZE_TYPE_ID) {
+			if (prizes[i].prizeType.id != CHECKPOINT_PRIZE_TYPE_ID) {
 				newPrizes.push(prizes[i]);
 			}
 		}
 		prizes = newPrizes;
-		milestoneDateHours = 0;
+		checkpointDateHours = 0;
 	}
 
 	// check total payment
@@ -1247,15 +1247,15 @@ function validateFieldsRoundSection() {
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    mainWidget.softwareCompetition.startDate = startDate;
-   mainWidget.softwareCompetition.milestoneDate = new Date();
-   mainWidget.softwareCompetition.milestoneDate.setTime(startDate.getTime() + milestoneDateHours * 60 * 60 * 1000);
+   mainWidget.softwareCompetition.checkpointDate = new Date();
+   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
 
    if (mainWidget.competitionType == "STUDIO") {
 	   mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
 	   mainWidget.softwareCompetition.subEndDate = new Date();
-	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (milestoneDateHours + subEndDateHours) * 60 * 60 * 1000);
+	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
    return true;
 }
@@ -1268,7 +1268,7 @@ function showRoundSectionDisplay() {
 function showRoundSectionEdit() {
 	$(".contest_round").css("display","none");
 	$(".contest_round_edit").css("display","block");
-	$(".roundelect select,.startEtSelect select,.milestoneEtSelect select,.numSelect select,.endEtSelect select").each(function(index){
+	$(".roundelect select,.startEtSelect select,.checkpointEtSelect select,.numSelect select,.endEtSelect select").each(function(index){
 		if(!$(this).is(":hidden") && !$(this).data('customized')){
 			$(this).data('customized',true);
 			$(this).sSelect({ddMaxHeight: '220',yscroll: true});
@@ -1443,9 +1443,9 @@ function updateContestCostData() {
 
     var total = firstPlacePrize + secondPlacePrize + reviewCost + reliability + specReview + digitalRun + contestFee + copilotFee;
 
-    // add milestone prize if there is any
+    // add checkpoint prize if there is any
     $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize){
-        if(prize.prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+        if(prize.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
             total += prize.numberOfSubmissions * prize.prizeAmount;
         }
     });
@@ -1564,11 +1564,11 @@ function validateFieldsPrizeSection() {
 		if (!prizes) {
 			prizes = [];
 		}
-		var ind = getMilestonePrize(prizes);
-		// store milestone prizes first
-		var milestonePrize = null;
+		var ind = getCheckpointPrize(prizes);
+		// store checkpoint prizes first
+		var checkpointPrize = null;
 		if (ind != -1) {
-			milestonePrize = prizes[ind];
+			checkpointPrize = prizes[ind];
 		}
 		
 		var prizes = validatePrizes(errors);
@@ -1579,9 +1579,9 @@ function validateFieldsPrizeSection() {
 		if (!prizes) {
 			prizes = [];
 		}
-		if (milestonePrize) {
-			dr += parseInt($('#milestoneSubmissionNumber').val()) * milestonePrize.prizeAmount;
-			prizes.push(milestonePrize);
+		if (checkpointPrize) {
+			dr += parseInt($('#checkpointSubmissionNumber').val()) * checkpointPrize.prizeAmount;
+			prizes.push(checkpointPrize);
 		}
 
 		//save the DR points

@@ -22,10 +22,10 @@ var prizes = new Array();
 var listExtra = new Array();
 // prize of additional purchase
 var additionalPrize;
-// milestone prize
-var milestonePrize;
-// number of milestone submission that have been awarded
-var milestoneAwardNumber;
+// checkpoint prize
+var checkpointPrize;
+// number of checkpoint submission that have been awarded
+var checkpointAwardNumber;
 // the bank data
 var bankData;
 
@@ -61,11 +61,11 @@ function updateSummary() {
 		html += '<tr><td class="label">Additional Purchases:</td><td>' + extraNumber + '</td><td class="sum">' + fmoney(additionalPrize) + '</td><td class="sum">' + fmoney(totalExtra) + '</td></tr>';
 		total += parseFloat(totalExtra);
 	}
-	// milestone payment
-  if (milestoneAwardNumber > 0) {
-	    var totalMilestone = milestoneAwardNumber * milestonePrize;
-	    html += '<tr><td class="label">Milestone Prizes:</td><td>' + milestoneAwardNumber + '</td><td class="sum">' + fmoney(milestonePrize) + '</td><td class="sum">' + fmoney(totalMilestone) + '</td></tr>';
-			total += parseFloat(totalMilestone);
+	// checkpoint payment
+  if (checkpointAwardNumber > 0) {
+	    var totalCheckpoint = checkpointAwardNumber * checkpointPrize;
+	    html += '<tr><td class="label">Checkpoint Prizes:</td><td>' + checkpointAwardNumber + '</td><td class="sum">' + fmoney(checkpointPrize) + '</td><td class="sum">' + fmoney(totalCheckpoint) + '</td></tr>';
+			total += parseFloat(totalCheckpoint);
   }	
 	html += '<tr class="total"><td class="label">Total</td><td colspan="3" class="sum">' + fmoney(total) + '</td></tr>';
 	$("#summary").html(html);
@@ -117,9 +117,9 @@ $(document).ready(function(){
     $(".dollarSlots").parent().parent().parent().appendTo($("#submissionList tbody")).show(); 
     
 
-    milestonePrize = $("#milestonePrize").val();
+    checkpointPrize = $("#checkpointPrize").val();
 	  additionalPrize = $("#additionalPrize").val();
-	  milestoneAwardNumber = $("#milestoneAwardNumber").val();
+	  checkpointAwardNumber = $("#checkpointAwardNumber").val();
 	  for (var i = 1; i <= prizeNumber; i++) {
 	      prizes[i] = $("#prize_" + i).val();
 	  }

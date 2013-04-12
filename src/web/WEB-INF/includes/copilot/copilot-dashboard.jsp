@@ -254,7 +254,7 @@
         <div class="column">
             <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">
                 <s:if test="viewData.contestStats.multipleRound">
-                    <label>Milestone submissions</label>: ${viewData.contestStats.milestoneSubmissionNumber}
+                    <label>Checkpoint submissions</label>: ${viewData.contestStats.checkpointSubmissionNumber}
                     <label>Final submissions</label>: ${viewData.contestStats.finalSubmissionNumber}
                 </s:if>
                 <s:else>

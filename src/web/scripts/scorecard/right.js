@@ -587,7 +587,7 @@ $(document).ready(function(){
                 start: new Date(y, m, 13)
             },
             {
-                title: '<a href=# class=milestone onmouseover=showPopup(this,\'contestLaunch11\')>Milestone Feed back</a>',
+                title: '<a href=# class=checkpoint onmouseover=showPopup(this,\'contestLaunch11\')>Checkpoint Feed back</a>',
                 start: new Date(y, m, 17)
             },
             {

@@ -19,16 +19,16 @@
         <h3>Selection Bank</h3>
         <ul id="bankSelectionTab">
             <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
-            <s:if test="viewData.hasMilestoneRound">
-                <li <s:if test="formData.roundType.toString() != 'MILESTONE'">class="off"</s:if>>
-                    <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${true}">
-                        <span>Milestone (R1)</span>
+            <s:if test="viewData.hasCheckpointRound">
+                <li <s:if test="formData.roundType.toString() != 'CHECKPOINT'">class="off"</s:if>>
+                    <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${true}">
+                        <span>Checkpoint (R1)</span>
                     </link:studioSubmissionsGrid>
                 </li>
 
                 <s:if test="formData.roundType.toString() == 'FINAL'">
                     <li>
-                        <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
+                        <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${false}">
                             <span>Final (R2)</span>
                         </link:studioSubmissionsGrid>
                     </li>
@@ -36,7 +36,7 @@
                 <s:else>
                     <li class="off">
                         <s:if test="viewData.hasCheckout">
-                            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
+                            <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${false}">
                                 <span>Final (R2)</span>
                             </link:studioSubmissionsGrid>
                         </s:if>
@@ -47,7 +47,7 @@
             </s:if>
             <s:else>
                 <li>
-                    <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
+                    <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${false}">
                         <span>Final (R1)</span>
                     </link:studioSubmissionsGrid>
                 </li>
@@ -100,19 +100,19 @@
 
         <div id="bankSelectionButton">
         <s:if test="!viewData.hasCheckout" >
-            <s:if test="formData.roundType.toString() == 'MILESTONE'">
+            <s:if test="formData.roundType.toString() == 'CHECKPOINT'">
                 <s:if test="viewData.phaseOpen">
-                <link:studioCheckout contestId="${projectId}" milestoneRound="${true}" styleClass="buttonBankSelection milestoneConfirmation">
-                    <span class="left"><span class="right">CONFIRM MILESTONE</span></span>
+                <link:studioCheckout contestId="${projectId}" checkpointRound="${true}" styleClass="buttonBankSelection checkpointConfirmation">
+                    <span class="left"><span class="right">CONFIRM CHECKPOINT</span></span>
                 </link:studioCheckout>
                 </s:if>
                 <s:else>
                 <a href="javascript:;" class="buttonBankSelection"><span class="left"><span
-                         class="right">CONFIRM MILESTONE</span></span></a>
+                         class="right">CONFIRM CHECKPOINT</span></span></a>
                 </s:else>
             </s:if>
             <s:else>
-                <link:studioCheckout contestId="${projectId}" milestoneRound="${false}"
+                <link:studioCheckout contestId="${projectId}" checkpointRound="${false}"
                                      styleClass="buttonBankSelection winnersLockIn">
                     <span class="left"><span class="right">Lock-in Winners</span></span>
                 </link:studioCheckout>

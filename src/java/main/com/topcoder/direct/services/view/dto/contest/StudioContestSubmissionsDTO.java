@@ -31,9 +31,9 @@ import com.topcoder.management.resource.Resource;
  * <li>Added {@link #billingAccounts} private field and getter/setter for it.</li>
  * <li>Added {@link #prizes} private field and getter/setter for it.</li>
  * <li>Added {@link #hasCheckout} private field and getter/setter for it.</li>
- * <li>Added {@link #milestonePrize} private field and getter/setter for it.</li>
+ * <li>Added {@link #checkpointPrize} private field and getter/setter for it.</li>
  * <li>Added {@link #additionalPrize} private field and getter/setter for it.</li>
- * <li>Added {@link #milestoneAwardNumber} private field and getter/setter for it.</li>
+ * <li>Added {@link #checkpointAwardNumber} private field and getter/setter for it.</li>
  * <li>Added {@link #paidSubmissions} private field and getter/setter for it.</li>
  * </ul>
  * </p>
@@ -41,7 +41,7 @@ import com.topcoder.management.resource.Resource;
  * <p>
  * Version 1.4 (Direct Submission Viewer Release 4) change notes:
  * <ul>
- * <li>Added {@link #milestoneRoundFeedbackText} private field and getter/setter for it.</li>
+ * <li>Added {@link #checkpointRoundFeedbackText} private field and getter/setter for it.</li>
  * </ul>
  * </p>
  *
@@ -68,8 +68,8 @@ import com.topcoder.management.resource.Resource;
  * <p>
  *   Version 1.7 (TC Direct Replatforming Release 5) change notes:
  *   <ul>
- *     <li>Remove <code>billingAccounts</code>, <code>prizes</code>, <code>milestonePrize</code>, <code>additionalPrize</code>,
- *     <code>milestoneAwardNumber</code>, <code>paidSubmissions</code> and <code>submitterHandles</code> fields, also the getters/setters
+ *     <li>Remove <code>billingAccounts</code>, <code>prizes</code>, <code>checkpointPrize</code>, <code>additionalPrize</code>,
+ *     <code>checkpointAwardNumber</code>, <code>paidSubmissions</code> and <code>submitterHandles</code> fields, also the getters/setters
  *     are removed.</li>
  *     <li>Added {@link #submissionResources} property with respective accessor/mutator methods.</li>
  *   </ul>
@@ -97,10 +97,10 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
 
     /**
      * <p>
-     * A <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.
+     * A <code>boolean</code> providing the flag indicating whether contest has checkpoint round set or not.
      * </p>
      */
-    private boolean hasMilestoneRound;
+    private boolean hasCheckpointRound;
 
     /**
      * <p>
@@ -117,11 +117,11 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     private boolean hasCheckout;
 
     /**
-     * <p>A <code>String</code> providing the text for milestone round overall feedback.</p>
+     * <p>A <code>String</code> providing the text for checkpoint round overall feedback.</p>
      *
      * @since 1.4
      */
-    private String milestoneRoundFeedbackText;
+    private String checkpointRoundFeedbackText;
     
     /**
      * <p>
@@ -176,10 +176,10 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
 
     /**
      * <p>
-     * A <code>double</code> providing the milestone prize.
+     * A <code>double</code> providing the checkpoint prize.
      * </p>
      */
-    private double milestonePrize;
+    private double checkpointPrize;
 
     /**
      * <p>
@@ -190,10 +190,10 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
 
     /**
      * <p>
-     * An <code>int</code> providing the number of milestone submissions which should award.
+     * An <code>int</code> providing the number of checkpoint submissions which should award.
      * </p>
      */
-    private int milestoneAwardNumber;
+    private int checkpointAwardNumber;
     
     /**
      * <p>
@@ -251,25 +251,25 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
 
     /**
      * <p>
-     * Gets the flag indicating whether contest has milestone round set or not.
+     * Gets the flag indicating whether contest has checkpoint round set or not.
      * </p>
      * 
-     * @return a <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.
+     * @return a <code>boolean</code> providing the flag indicating whether contest has checkpoint round set or not.
      */
-    public boolean getHasMilestoneRound() {
-        return this.hasMilestoneRound;
+    public boolean getHasCheckpointRound() {
+        return this.hasCheckpointRound;
     }
 
     /**
      * <p>
-     * Sets the flag indicating whether contest has milestone round set or not.
+     * Sets the flag indicating whether contest has checkpoint round set or not.
      * </p>
      * 
-     * @param hasMilestoneRound
-     *            a <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.
+     * @param hasCheckpointRound
+     *            a <code>boolean</code> providing the flag indicating whether contest has checkpoint round set or not.
      */
-    public void setHasMilestoneRound(boolean hasMilestoneRound) {
-        this.hasMilestoneRound = hasMilestoneRound;
+    public void setHasCheckpointRound(boolean hasCheckpointRound) {
+        this.hasCheckpointRound = hasCheckpointRound;
     }
 
     /**
@@ -337,23 +337,23 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     }
 
     /**
-     * <p>Gets the text for milestone round overall feedback.</p>
+     * <p>Gets the text for checkpoint round overall feedback.</p>
      *
-     * @return a <code>String</code> providing the text for milestone round overall feedback.
+     * @return a <code>String</code> providing the text for checkpoint round overall feedback.
      * @since 1.4
      */
-    public String getMilestoneRoundFeedbackText() {
-        return this.milestoneRoundFeedbackText;
+    public String getCheckpointRoundFeedbackText() {
+        return this.checkpointRoundFeedbackText;
     }
 
     /**
-     * <p>Sets the text for milestone round overall feedback.</p>
+     * <p>Sets the text for checkpoint round overall feedback.</p>
      *
-     * @param milestoneRoundFeedbackText a <code>String</code> providing the text for milestone round overall feedback.
+     * @param checkpointRoundFeedbackText a <code>String</code> providing the text for checkpoint round overall feedback.
      * @since 1.4
      */
-    public void setMilestoneRoundFeedbackText(String milestoneRoundFeedbackText) {
-        this.milestoneRoundFeedbackText = milestoneRoundFeedbackText;
+    public void setCheckpointRoundFeedbackText(String checkpointRoundFeedbackText) {
+        this.checkpointRoundFeedbackText = checkpointRoundFeedbackText;
     }
 
     /**
@@ -482,24 +482,24 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     }
 
     /**
-     * Gets the milestone prize.
+     * Gets the checkpoint prize.
      *
-     * @return A <code>double</code> providing the milestone prize.
+     * @return A <code>double</code> providing the checkpoint prize.
      * @since 1.2
      */
-    public double getMilestonePrize() {
-        return milestonePrize;
+    public double getCheckpointPrize() {
+        return checkpointPrize;
     }
 
     /**
-     * Sets the milestone prize.
+     * Sets the checkpoint prize.
      *
-     * @param milestonePrize
-     *            A <code>double</code> providing the milestone prize.
+     * @param checkpointPrize
+     *            A <code>double</code> providing the checkpoint prize.
      * @since 1.2
      */
-    public void setMilestonePrize(double milestonePrize) {
-        this.milestonePrize = milestonePrize;
+    public void setCheckpointPrize(double checkpointPrize) {
+        this.checkpointPrize = checkpointPrize;
     }
 
     /**
@@ -524,24 +524,24 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     }
 
     /**
-     * Gets the number of milestone submissions which should award.
+     * Gets the number of checkpoint submissions which should award.
      *
-     * @return An <code>int</code> providing the number of milestone submissions which should award.
+     * @return An <code>int</code> providing the number of checkpoint submissions which should award.
      * @since 1.2
      */
-    public int getMilestoneAwardNumber() {
-        return milestoneAwardNumber;
+    public int getCheckpointAwardNumber() {
+        return checkpointAwardNumber;
     }
 
     /**
-     * Sets the number of milestone submissions which should award.
+     * Sets the number of checkpoint submissions which should award.
      *
-     * @param milestoneAwardNumber
-     *            An <code>int</code> providing the number of milestone submissions which should award.
+     * @param checkpointAwardNumber
+     *            An <code>int</code> providing the number of checkpoint submissions which should award.
      * @since 1.2
      */
-    public void setMilestoneAwardNumber(int milestoneAwardNumber) {
-        this.milestoneAwardNumber = milestoneAwardNumber;
+    public void setCheckpointAwardNumber(int checkpointAwardNumber) {
+        this.checkpointAwardNumber = checkpointAwardNumber;
     }
 
 }

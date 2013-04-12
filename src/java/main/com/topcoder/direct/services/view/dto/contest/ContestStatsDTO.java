@@ -21,12 +21,12 @@ import com.topcoder.service.project.CompetitionPrize;
  *
  * <p>
  * Version 1.1 (Release Assembly - TC Direct Cockpit Release One) changes:
- * - Add property milestoneSubmissionNumber, finalSubmissionNumber and isMultipleRound
+ * - Add property checkpointSubmissionNumber, finalSubmissionNumber and isMultipleRound
  * </p>
  * 
  * <p>
- * Version 1.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) changes:
- * - Add property {@link #inMilestoneSubmissionOrMilestoneReview}.
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) changes:
+ * - Add property {@link #inCheckpointSubmissionOrCheckpointReview}.
  * </p>
  *
  * @author isv, Veve, TCSASSEMBLER
@@ -111,10 +111,10 @@ public class ContestStatsDTO implements Serializable {
     private String paymentReferenceId;
 
     /**
-     * The number of milestone submissions.
+     * The number of checkpoint submissions.
      * @since 1.1
      */
-    private int milestoneSubmissionNumber;
+    private int checkpointSubmissionNumber;
 
     /**
      * The number of final submissions.
@@ -129,10 +129,10 @@ public class ContestStatsDTO implements Serializable {
     private boolean isMultipleRound;
 
     /**
-     * Whether current phase is in milestone submission or milestone review.
+     * Whether current phase is in checkpoint submission or checkpoint review.
      * @since 1.2
      */
-    private boolean inMilestoneSubmissionOrMilestoneReview;
+    private boolean inCheckpointSubmissionOrCheckpointReview;
 
     /**
      * The current status of the contest.
@@ -434,23 +434,23 @@ public class ContestStatsDTO implements Serializable {
     }
 
     /**
-     * Gets the number of milestone submissions.
+     * Gets the number of checkpoint submissions.
      *
-     * @return the number of milestone submissions.
+     * @return the number of checkpoint submissions.
      * @since 1.1
      */
-    public int getMilestoneSubmissionNumber() {
-        return milestoneSubmissionNumber;
+    public int getCheckpointSubmissionNumber() {
+        return checkpointSubmissionNumber;
     }
 
     /**
-     * Sets the number of milestone submissions.
+     * Sets the number of checkpoint submissions.
      *
-     * @param milestoneSubmissionNumber the number of milestone submissions.
+     * @param checkpointSubmissionNumber the number of checkpoint submissions.
      * @since 1.1
      */
-    public void setMilestoneSubmissionNumber(int milestoneSubmissionNumber) {
-        this.milestoneSubmissionNumber = milestoneSubmissionNumber;
+    public void setCheckpointSubmissionNumber(int checkpointSubmissionNumber) {
+        this.checkpointSubmissionNumber = checkpointSubmissionNumber;
     }
 
     /**
@@ -514,23 +514,23 @@ public class ContestStatsDTO implements Serializable {
     }
 
     /**
-     * Sets the flag that indicates whether current phase is in milestone submission or milestone review.
+     * Sets the flag that indicates whether current phase is in checkpoint submission or checkpoint review.
      * 
-     * @param inMilestoneSubmissionOrMilestoneReview the flag that indicates whether current phase is
-     *      in milestone submission or milestone review
+     * @param inCheckpointSubmissionOrCheckpointReview the flag that indicates whether current phase is
+     *      in checkpoint submission or checkpoint review
      * @since 1.2
      */
-    public void setInMilestoneSubmissionOrMilestoneReview(boolean inMilestoneSubmissionOrMilestoneReview) {
-        this.inMilestoneSubmissionOrMilestoneReview = inMilestoneSubmissionOrMilestoneReview;
+    public void setInCheckpointSubmissionOrCheckpointReview(boolean inCheckpointSubmissionOrCheckpointReview) {
+        this.inCheckpointSubmissionOrCheckpointReview = inCheckpointSubmissionOrCheckpointReview;
     }
 
     /**
-     * Gets the flag that indicates whether current phase is in milestone submission or milestone review.
+     * Gets the flag that indicates whether current phase is in checkpoint submission or checkpoint review.
      * 
-     * @return the flag that indicates whether current phase is in milestone submission or milestone review
+     * @return the flag that indicates whether current phase is in checkpoint submission or checkpoint review
      * @since 1.2
      */
-    public boolean isInMilestoneSubmissionOrMilestoneReview() {
-        return inMilestoneSubmissionOrMilestoneReview;
+    public boolean isInCheckpointSubmissionOrCheckpointReview() {
+        return inCheckpointSubmissionOrCheckpointReview;
     }
 }

@@ -119,7 +119,7 @@
                 <reviewBoardCost>578</reviewBoardCost>
                 <reliabilityBonusCost>240</reliabilityBonusCost>
                 <drCost>360</drCost>
-                <milestoneBonusCost>600</milestoneBonusCost>
+                <checkpointBonusCost>600</checkpointBonusCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1000</firstPlaceCost>
@@ -127,7 +127,7 @@
                 <reviewBoardCost>720</reviewBoardCost>
                 <reliabilityBonusCost>300</reliabilityBonusCost>
                 <drCost>450</drCost>
-                <milestoneBonusCost>600</milestoneBonusCost>
+                <checkpointBonusCost>600</checkpointBonusCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1200</firstPlaceCost>
@@ -135,7 +135,7 @@
                 <reviewBoardCost>862</reviewBoardCost>
                 <reliabilityBonusCost>360</reliabilityBonusCost>
                 <drCost>540</drCost>
-                <milestoneBonusCost>600</milestoneBonusCost>
+                <checkpointBonusCost>600</checkpointBonusCost>
             </billingLevel>
         </contestCost>
 	</contestType>

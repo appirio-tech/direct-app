@@ -11,7 +11,7 @@ import java.util.List;
  *
  * <p>
  * Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) updates:
- * - Add the field <code>milestonePrizeNumber</code> to show how many milestone submission can have milestone prize.
+ * - Add the field <code>checkpointPrizeNumber</code> to show how many checkpoint submission can have checkpoint prize.
  * </p>
  *
  * <p>
@@ -61,15 +61,15 @@ public class ContestReceiptDTO implements Serializable {
     private double fifthPlacePrize;
     
     /**
-     * Represents the milestone prize.
+     * Represents the checkpoint prize.
      */
-    private double milestonePrize;
+    private double checkpointPrize;
     
     /**
-     * Represents how many submissions have been paid with milestone prize.
+     * Represents how many submissions have been paid with checkpoint prize.
      * @since 1.1
      */
-    private int milestonePrizeNumber;
+    private int checkpointPrizeNumber;
     
     /**
      * Represents the DR points.
@@ -233,41 +233,41 @@ public class ContestReceiptDTO implements Serializable {
     }
 
     /**
-     * Gets the milestone prize.
+     * Gets the checkpoint prize.
      * 
-     * @return the milestone prize.
+     * @return the checkpoint prize.
      */
-    public double getMilestonePrize() {
-        return milestonePrize;
+    public double getCheckpointPrize() {
+        return checkpointPrize;
     }
 
     /**
-     * Sets the milestone prize.
+     * Sets the checkpoint prize.
      * 
-     * @param milestonePrize the milestone prize.
+     * @param checkpointPrize the checkpoint prize.
      */
-    public void setMilestonePrize(double milestonePrize) {
-        this.milestonePrize = milestonePrize;
+    public void setCheckpointPrize(double checkpointPrize) {
+        this.checkpointPrize = checkpointPrize;
     }
 
     /**
-     * Gets the number of milestone prize.
+     * Gets the number of checkpoint prize.
      *
-     * @return the number of milestone prize.
+     * @return the number of checkpoint prize.
      * @since 1.1
      */
-    public int getMilestonePrizeNumber() {
-        return milestonePrizeNumber;
+    public int getCheckpointPrizeNumber() {
+        return checkpointPrizeNumber;
     }
 
     /**
-     * Sets the number of milestone prize.
+     * Sets the number of checkpoint prize.
      *
-     * @param milestonePrizeNumber the number of milestone prize.
+     * @param checkpointPrizeNumber the number of checkpoint prize.
      * @since 1.1
      */
-    public void setMilestonePrizeNumber(int milestonePrizeNumber) {
-        this.milestonePrizeNumber = milestonePrizeNumber;
+    public void setCheckpointPrizeNumber(int checkpointPrizeNumber) {
+        this.checkpointPrizeNumber = checkpointPrizeNumber;
     }
 
     /**

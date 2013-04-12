@@ -98,7 +98,7 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </p>
  * <p>
  * Version 1.4 - TC Direct Replatforming Release 1: Replatforming this class to create Studio contest
- * the same as the software contest. And add milestone support for both studio contest and software contest.
+ * the same as the software contest. And add checkpoint support for both studio contest and software contest.
  * </p>
  * 
  * <p>
@@ -388,10 +388,10 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Milestone date of the contest if any.
+     * Checkpoint date of the contest if any.
      * </p>
      */
-    private Date milestoneDate = new Date();
+    private Date checkpointDate = new Date();
 
     /**
      * <p>
@@ -594,7 +594,7 @@ public class SaveDraftContestAction extends ContestAction {
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
         if (!hasMulti) {
-            milestoneDate = null;
+            checkpointDate = null;
         }
         if (projectId > 0) {
             softwareCompetition.setProjectHeaderReason("user update");
@@ -607,7 +607,7 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition = activateSoftwareCompetition(softwareCompetition);
             } else {
                 softwareCompetition = contestServiceFacade.updateSoftwareContest(tcSubject, softwareCompetition,
-                        tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                        tcDirectProjectId, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
             }
             setResult(getSoftwareResult(softwareCompetition));
         } else {
@@ -623,7 +623,7 @@ public class SaveDraftContestAction extends ContestAction {
                     softwareCompetition = activateSoftwareCompetition(softwareCompetition);
                 } else {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
-                            tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                            tcDirectProjectId, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
                 }
                 
                 setResult(getSoftwareResult(softwareCompetition));
@@ -1195,7 +1195,7 @@ public class SaveDraftContestAction extends ContestAction {
         if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
             result = getContestServiceFacade().processContestPurchaseOrderSale(
                     getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
-                    milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                    checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
         } else {
             boolean startSpecReviewNow = false;
 
@@ -1205,7 +1205,7 @@ public class SaveDraftContestAction extends ContestAction {
 
             result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
                     getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
-                    milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
+                    checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
         }
 
 
@@ -1413,8 +1413,8 @@ public class SaveDraftContestAction extends ContestAction {
      * 
      * @return the mile stone date
      */
-    public Date getMilestoneDate() {
-        return milestoneDate;
+    public Date getCheckpointDate() {
+        return checkpointDate;
     }
 
     /**
@@ -1422,11 +1422,11 @@ public class SaveDraftContestAction extends ContestAction {
      * Sets the mile stone date.
      * </p>
      * 
-     * @param milestoneDate
-     *            the milestone date
+     * @param checkpointDate
+     *            the checkpoint date
      */
-    public void setMilestoneDate(Date milestoneDate) {
-        this.milestoneDate = milestoneDate;
+    public void setCheckpointDate(Date checkpointDate) {
+        this.checkpointDate = checkpointDate;
     }
 
     /**

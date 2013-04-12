@@ -119,7 +119,7 @@
                                                     <div class="messageTop"><div class="messageBottom"><div class="messageLeft"><div class="messageRight">
                                                         <div class="messageTopLeft"><div class="messageTopRight"><div class="messageBottomLeft"><div class="messageBottomRight">
                                                             <div class="messageInner">
-                                                                <p>A contest can be run in single round or multiple rounds. Both has the same treatment, except that in multiple rounds you encourage (and reward) competitors to submit at a specified milestone date and you give them prizes and feedbacks, for some (usually top 5) or all submissions. Multiple round always useful for some complex projects.</p>
+                                                                <p>A contest can be run in single round or multiple rounds. Both has the same treatment, except that in multiple rounds you encourage (and reward) competitors to submit at a specified checkpoint date and you give them prizes and feedbacks, for some (usually top 5) or all submissions. Multiple round always useful for some complex projects.</p>
                                                             </div><!-- .messageInner -->
                                                         </div></div></div></div>
                                                     </div></div></div></div>
@@ -156,7 +156,7 @@
                                                                     <td><strong>Start by:</strong> Next 3 days, 00/00/0000 at 00:00 ETC (GMT-05)</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="column1"><strong>Milestone Date/Time</strong></td>
+                                                                    <td class="column1"><strong>Checkpoint Date/Time</strong></td>
                                                                     <td><strong>Run it for:</strong> 3 days after Start Time, 00/00/0000 at 00:00 ETC (GMT-05)</td>
                                                                 </tr>
                                                                 <tr>

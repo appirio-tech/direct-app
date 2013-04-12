@@ -6,7 +6,7 @@
   - Description: order review page for software contest page.
   -
   - Version 1.1 - TC Direct Replatforming Release 2 Change Note
-  - - Add milestone prizes section.
+  - - Add checkpoint prizes section.
   - 
   - Version 1.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
   - - Fix multiple bugs.
@@ -71,10 +71,10 @@
   			<td class="last"><span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
-  <div id="orswMilestonePrizesDiv">
-    <h3>Milestone Prizes</h3>
+  <div id="orswCheckpointPrizesDiv">
+    <h3>Checkpoint Prizes</h3>
     <table class="prizesTable">
-      <tr id="orswMilestonePrizeTR"></tr>
+      <tr id="orswCheckpointPrizeTR"></tr>
     </table>
   </div>
 	<h3>Additional Costs:</h3>

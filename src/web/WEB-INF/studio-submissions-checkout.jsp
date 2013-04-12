@@ -60,15 +60,15 @@
                                         <div class="container2BottomClear">
                                             <div class="containerNoPadding">
                                                 
-                                                <div class="bankSelectionButtonMilestone">
+                                                <div class="bankSelectionButtonCheckpoint">
                                                     <div id="bankSelectionButton">
                                                         <jsp:include page="includes/contest/submissionViewer/checkoutButtons.jsp"/>
                                                     </div>
                                                 </div>
                                              
                                                 <div class="SubmissionSlotTitle">
-                                                    <s:if test="formData.roundType.toString() == 'MILESTONE'">
-                                                        <h3>Milestone Selection Summary</h3>
+                                                    <s:if test="formData.roundType.toString() == 'CHECKPOINT'">
+                                                        <h3>Checkpoint Selection Summary</h3>
                                                     </s:if>
                                                     <s:else>
                                                         <h3>Final Selection Summary</h3>
@@ -134,8 +134,8 @@
                                                  </div><!-- End #purchaseSummary -->
                                                 </s:if>
 
-                                                <s:if test="formData.roundType.toString() == 'MILESTONE'">
-                                                <div id="milestoneRoundComment">
+                                                <s:if test="formData.roundType.toString() == 'CHECKPOINT'">
+                                                <div id="checkpointRoundComment">
                                                     <table>
                                                         <thead>
                                                             <tr>
@@ -150,12 +150,12 @@
                                                             <td>
                                                                 <c:choose>
                                                                     <c:when test="${viewData.hasCheckout}">
-                                                                        ${viewData.milestoneRoundFeedbackText}
+                                                                        ${viewData.checkpointRoundFeedbackText}
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                     	<s:if test="viewData.phaseOpen">
                                                                         <textarea class="txtFeedback" cols="10" rows="5"
-                                                                                  id="feedbackTextMilestoneRound">${viewData.milestoneRoundFeedbackText}</textarea>
+                                                                                  id="feedbackTextCheckpointRound">${viewData.checkpointRoundFeedbackText}</textarea>
                                                                         <div class="generalFeedbackAction">
                                                                         <a href="javascript:" class="button6" rel="${contestId}"
                                                                            id="saveGeneralFeedback">
@@ -200,8 +200,8 @@
 <jsp:include page="includes/contest/submissionViewer/contestVars.jsp"/>
 <input type="hidden" id="prizeNumber" value="${viewData.prizeNumber}" />
 <input type="hidden" id="additionalPrize" value="${viewData.additionalPrize}" />
-<input type="hidden" id="milestonePrize" value="${viewData.milestonePrize}" />
-<input type="hidden" id="milestoneAwardNumber" value="${viewData.milestoneAwardNumber}" />
+<input type="hidden" id="checkpointPrize" value="${viewData.checkpointPrize}" />
+<input type="hidden" id="checkpointAwardNumber" value="${viewData.checkpointAwardNumber}" />
 <s:iterator value="viewData.prizes">
 <s:set var="place" value="place" scope="page"/>
 <s:set var="prizeAmount" value="prizeAmount" scope="page"/>

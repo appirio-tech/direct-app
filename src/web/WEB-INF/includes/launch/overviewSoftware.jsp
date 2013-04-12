@@ -13,7 +13,7 @@
   - - both studio contest and software contest.
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change Note
-  - - Add milestone prizes section to support milestone prizes for software contest.
+  - - Add checkpoint prizes section to support checkpoint prizes for software contest.
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
   - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
@@ -157,18 +157,18 @@
           
       	</div>
       	
-      	<!-- Milestone Prizes -->
-	<div class="mPrizes hide" id="swMilestonePrizeDiv">
+      	<!-- Checkpoint Prizes -->
+	<div class="mPrizes hide" id="swCheckpointPrizeDiv">
     
-        <h3><span class="icon">Milestone Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+        <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
         <div class="mPrizesInner">
         	<label class="first">Pay</label>
             <span class="dw">$</span>
-            <input type="text" id="swMilestonePrize" class="prizesInput" value="" />
+            <input type="text" id="swCheckpointPrize" class="prizesInput" value="" />
             <strong>for each submission up to</strong>
             <div class="numSelect">
-            	<select id="swMilestoneSubmissionNumber" >
+            	<select id="swCheckpointSubmissionNumber" >
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

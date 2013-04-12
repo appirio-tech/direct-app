@@ -16,8 +16,8 @@
 
 <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
 
-<s:if test="formData.roundType.toString() == 'MILESTONE'">
-    <form id="checkoutForm" action="<s:url action="saveContestMilestoneSubmissionRank" namespace="/contest"/>" method="POST">
+<s:if test="formData.roundType.toString() == 'CHECKPOINT'">
+    <form id="checkoutForm" action="<s:url action="saveContestCheckpointSubmissionRank" namespace="/contest"/>" method="POST">
     <input type="hidden" name="ranks" id="ranks" />
     <input type="hidden" name="additionalPurchases" id="additionalPurchases" />
     <input type="hidden" name="roundType" value="${formData.roundType}" />

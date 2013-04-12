@@ -18,9 +18,9 @@
   - - Add support for multi round type. 
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change noets:
-  - - Added milestone prizes section to support milestone prizes for software contest.
+  - - Added checkpoint prizes section to support checkpoint prizes for software contest.
   -
-  - Version 1.3 (Direct Replatforming Release 4) changes: Add milestone end time edit support for softare contest.
+  - Version 1.3 (Direct Replatforming Release 4) changes: Add checkpoint end time edit support for softare contest.
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change notes)
   - Fix the contest requirements preview and integrate the new cockpit tinyMCE editor.
@@ -197,10 +197,10 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rStartDate"></span></td>
              </tr>
-             <tr id="rMileStoneTR">
-                <td class="first_tab"><strong>Milestone End Date/Time</strong></td>
+             <tr id="rCheckpointTR">
+                <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
-                <td><span id="rMilestoneDate"></span></td>
+                <td><span id="rCheckpointDate"></span></td>
              </tr>
              <tr>
                 <td class="first_tab"><strong>Submission End Date/Time</strong></td>
@@ -216,7 +216,7 @@
         
          <div id="rMultiRoundInfoDiv">
 		   <p class="det_font">
-             <span class="name"><strong>Milestone Prizes</strong></span>
+             <span class="name"><strong>Checkpoint prizes</strong></span>
              <br /><br />
              <span class="small_info_spec">
            	  Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
@@ -245,10 +245,10 @@
                         <td class="sec_tab">&nbsp;</td>
                         <td><span id="rStartDateRO"></span></td>
                     </tr>
-                    <tr id="rMileStoneTR">
-                        <td class="first_tab"><strong>Milestone End Date/Time</strong></td>
+                    <tr id="rCheckpointTR">
+                        <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                         <td class="sec_tab">&nbsp;</td>
-                        <td><span id="rMilestoneDateRO"></span></td>
+                        <td><span id="rCheckpointDateRO"></span></td>
                     </tr>
                     <tr>
                         <td class="first_tab"><strong>Submission End Date/Time</strong></td>
@@ -284,15 +284,15 @@
                <span>EST (UTC-05)</span>
              </div>
              
-             <!-- Milestone -->
-             <div id="mileStoneEditDiv" class="row">
-                <span class="name_label"><strong>Milestone Duration:</strong></span>
-                 <div class="milestoneEtSelect">
-                   <select id="milestoneDateDay" name="milestoneDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+             <!-- Checkpoint -->
+             <div id="checkpointEditDiv" class="row">
+                <span class="name_label"><strong>Checkpoint Duration:</strong></span>
+                 <div class="checkpointEtSelect">
+                   <select id="checkpointDateDay" name="checkpointDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
                  </div>
                  <div class="selectSpan"><span>days</span></div>
-                 <div class="milestoneEtSelect">
-                   <select id="milestoneDateHour" name="milestoneDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+                 <div class="checkpointEtSelect">
+                   <select id="checkpointDateHour" name="checkpointDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
                   </div>
                   <div class="selectSpan"><span>hours</span></div>
                   <div class="clear"></div>
@@ -300,16 +300,16 @@
 			 <!-- End -->
              </div><!-- end .schedule -->
              
-             <!-- Milestone Prizes -->
-	           <div class="mPrizes" id="milestonePrizeDiv">               
-                   <h3><span class="icon">Milestone Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                   
+             <!-- Checkpoint prizes -->
+	           <div class="mPrizes" id="checkpointPrizeDiv">               
+                   <h3><span class="icon">Checkpoint prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                   
                    <div class="mPrizesInner">
                    	<label class="first">Pay</label>
                        <span class="dw">$</span>
-                       <input type="text" id="swMilestonePrize" class="prizesInput" value="" />
+                       <input type="text" id="swCheckpointPrize" class="prizesInput" value="" />
                        <strong>for each submission up to</strong>
                        <div class="numSelect">
-                       	<select id="swMilestoneSubmissionNumber" >
+                       	<select id="swCheckpointSubmissionNumber" >
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

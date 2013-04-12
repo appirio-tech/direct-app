@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>A <code>Struts</code> action to be used for processing requests for checking general feedback for milestone round.
+ * <p>A <code>Struts</code> action to be used for processing requests for checking general feedback for checkpoint round.
  * </p>
  *
  * @author FireIce
@@ -32,7 +32,7 @@ public class HasGeneralSubmissionsFeedbackAction extends ContestAction {
 
 
     /**
-     * <p>Handles the incoming request. Check whether contest has general milestone feedback.</p>
+     * <p>Handles the incoming request. Check whether contest has general checkpoint feedback.</p>
      *
      * @throws Exception if an unexpected error occurs.
      */
@@ -45,8 +45,8 @@ public class HasGeneralSubmissionsFeedbackAction extends ContestAction {
         TCSubject currentUser = getCurrentUser();
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE)) {
-            throw new DirectException("The milestone review phase is not open.");
+        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE)) {
+            throw new DirectException("The checkpoint review phase is not open.");
         }
         
         // only works for studio contest

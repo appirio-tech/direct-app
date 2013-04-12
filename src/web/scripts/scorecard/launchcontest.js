@@ -7,14 +7,14 @@ $(document).ready(function(){
 			   "Component Development" || value=="RIA Component"||value=="RIA Build"||value=="UI Prototype"||value=="Software Assembly"||
 			   value=="Test Suites"||value=="Test Scenarios")
 			{
-				$("#milestone").css("display","none");
+				$("#checkpoint").css("display","none");
 				$("#end").css("display","none");
 				$("#type").css("display","none");
 				$(".schedule").css("height","70px");
 				$(".schedule").css("margin-bottom","105px");
 			}
 			else{
-				$("#milestone").css("display","block");
+				$("#checkpoint").css("display","block");
 				$("#end").css("display","block");
 				$("#type").css("display","block");
 				$(".schedule").css("height","165px");
@@ -207,11 +207,11 @@ $(document).ready(function(){
 			var value=$(this).val();
 			if(value == "Contest will be run in single-rounds")
 			{
-				$("#milestone").css("display","none");
+				$("#checkpoint").css("display","none");
 				$(".schedule").css("height","150px");
 			}
 			else {
-				$("#milestone").css("display","block");
+				$("#checkpoint").css("display","block");
 				$(".schedule").css("height","165px");
 			}
 								
@@ -356,7 +356,7 @@ $(document).ready(function(){
 		}); 
 	/* init select */
 	if($('select').length > 0){
-		$('.selectSoftware select,.selectDesign select,.catalogSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+		$('.selectSoftware select,.selectDesign select,.catalogSelect select,.roundelect select,.startSelect select,.checkpointSelect select,.endSelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
 		
 		$('.projectSelect select').sSelect({ddMaxHeight: '200px'});
 		

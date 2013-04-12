@@ -114,8 +114,8 @@
 <jsp:include page="includes/contest/submissionViewer/contestVars.jsp"/>
 <input type="hidden" id="prizeNumber" value="${viewData.prizeNumber}" />
 <input type="hidden" id="additionalPrize" value="${viewData.additionalPrize}" />
-<input type="hidden" id="milestonePrize" value="${viewData.milestonePrize}" />
-<input type="hidden" id="milestoneAwardNumber" value="${viewData.milestoneAwardNumber}" />
+<input type="hidden" id="checkpointPrize" value="${viewData.checkpointPrize}" />
+<input type="hidden" id="checkpointAwardNumber" value="${viewData.checkpointAwardNumber}" />
 <s:iterator value="viewData.prizes">
 <s:set var="place" value="place" scope="page"/>
 <s:set var="prizeAmount" value="prizeAmount" scope="page"/>

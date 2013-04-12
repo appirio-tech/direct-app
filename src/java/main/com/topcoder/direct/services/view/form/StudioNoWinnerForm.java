@@ -90,11 +90,11 @@ public class StudioNoWinnerForm extends ContestIdForm {
     }
 
     /**
-     * <p>Checks if the current round for contest is <code>Milestone</code> round or not.</p>
+     * <p>Checks if the current round for contest is <code>Checkpoint</code> round or not.</p>
      *
-     * @return <code>true</code> if current round type is <code>Milestone</code> ; <code>false</code> otherwise.
+     * @return <code>true</code> if current round type is <code>Checkpoint</code> ; <code>false</code> otherwise.
      */
-    public boolean getIsMilestoneRound() {
-        return getRoundType() == ContestRoundType.MILESTONE;
+    public boolean getIsCheckpointRound() {
+        return getRoundType() == ContestRoundType.CHECKPOINT;
     }
 }

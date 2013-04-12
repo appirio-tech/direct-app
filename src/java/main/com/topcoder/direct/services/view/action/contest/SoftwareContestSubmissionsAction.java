@@ -65,7 +65,7 @@ import org.apache.log4j.Logger;
  * <p>
   * Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) Change notes:
   * <ol>
-  * <li>Updated {@link #executeAction()} method to set milestone submissions data.</li>
+  * <li>Updated {@link #executeAction()} method to set checkpoint submissions data.</li>
   * </ol>
   * </p>
  *
@@ -77,9 +77,9 @@ import org.apache.log4j.Logger;
  * </p>
  *
  * <p>
- * Version 1.3 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
- *     <li>Updated to support software milestone management.</li>
+ *     <li>Updated to support software checkpoint management.</li>
  *   </ol>
  * </p>
  *
@@ -93,7 +93,7 @@ import org.apache.log4j.Logger;
  * <p>
  * Version 1.5 (Release Assembly - TC Direct Cockpit Release Eight)
  * <ul>
- *     <li>Update the action execution logic to allow open final tab when there is no milestone submissions.</li>
+ *     <li>Update the action execution logic to allow open final tab when there is no checkpoint submissions.</li>
  * </ul>
  * </p>
  *
@@ -157,26 +157,26 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
     /**
      * <p>
-     *   Flag used to determine whether redirect to milestone round. It will be set to true if milestone review is
+     *   Flag used to determine whether redirect to checkpoint round. It will be set to true if checkpoint review is
      *   open and final review is not started.
      * </p>
      * @since 1.1
      */
-    private boolean redirectToMilestone;
+    private boolean redirectToCheckpoint;
 
     /**
-     * <p>Flag used to determine whether current phase is milestone submission.</p>
+     * <p>Flag used to determine whether current phase is checkpoint submission.</p>
      * 
      * @since 1.3
      */ 
-    private boolean inMilestoneSubmissionPhase;
+    private boolean inCheckpointSubmissionPhase;
 
     /**
-     * <p>Flag used to determine whether current phase is milestone review.</p>
+     * <p>Flag used to determine whether current phase is checkpoint review.</p>
      * 
      * @since 1.3
      */ 
-    private boolean inMilestoneReviewPhase;
+    private boolean inCheckpointReviewPhase;
 
 
     /**
@@ -187,11 +187,11 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     private boolean inReviewPhase;
 
     /**
-     * <p>Flag used to determine whether the milestone review is committed.</p>
+     * <p>Flag used to determine whether the checkpoint review is committed.</p>
      * 
      * @since 1.3
      */ 
-    private boolean milestoneReviewCommitted;
+    private boolean checkpointReviewCommitted;
 
     /**
      * <p>Flag used to determine whether the user has write permission on the contest.</p>
@@ -201,18 +201,18 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     private boolean hasWritePermission;
 
     /**
-     * <p>Flag used to determine whether current phase is after milestone review.</p>
+     * <p>Flag used to determine whether current phase is after checkpoint review.</p>
      * 
      * @since 1.3
      */ 
-    private boolean afterMilestoneReviewPhase;
+    private boolean afterCheckpointReviewPhase;
 
     /**
-     * <p>The number of milestone winners.</p>
+     * <p>The number of checkpoint winners.</p>
      * 
      * @since 1.3
      */ 
-    private int milestoneWinnersNumber;
+    private int checkpointWinnersNumber;
 
     /**
      * <p>A <code>SoftwareContestSubmissionsDTO</code> providing the view data for displaying by <code>Software Contest
@@ -319,8 +319,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     }
 
     /**
-     * Overrides the {@link #execute()} to check redirectToMilestone, if true, return the result 'milestone' to redirect
-     * to milestone submissions page.
+     * Overrides the {@link #execute()} to check redirectToCheckpoint, if true, return the result 'checkpoint' to redirect
+     * to checkpoint submissions page.
      *
      * @return the result code
      * @throws Exception if an unexpected error occurs.
@@ -330,8 +330,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     public String execute() throws Exception {
         String result = super.execute();
         if (SUCCESS.equals(result)) {
-            if (this.redirectToMilestone) {
-                return "milestone";
+            if (this.redirectToCheckpoint) {
+                return "checkpoint";
             }
         }
         return result;
@@ -343,7 +343,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      *
      * <p>
      *  Updates in version 1.1:
-     *  - adds codes to get milestone submissions data if the round type is milestone round.
+     *  - adds codes to get checkpoint submissions data if the round type is checkpoint round.
      * </p>
      *
      * <p>
@@ -367,7 +367,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         SoftwareCompetition softwareCompetition 
             = getContestServiceFacade().getSoftwareContestByProjectId(currentUser, getFormData().getProjectId());
 
-        boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
+        boolean hasCheckpointRound = DirectUtils.isMultiRound(softwareCompetition);
 
         // get the round type
         ContestRoundType roundType = getRoundType();
@@ -378,13 +378,13 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
             setRoundType(roundType);
         }
 
-        if (hasMilestoneRound) {
+        if (hasCheckpointRound) {
             if (roundType == ContestRoundType.FINAL) {
-                boolean isMilestoneSubmissionClosed =
-                    DirectUtils.isMilestoneSubmissionPhaseClosed(softwareCompetition);
-                if (!isMilestoneSubmissionClosed) {
-                    // if the milestone is not confirmed, redirect to milestone submission page
-                    this.redirectToMilestone = true;
+                boolean isCheckpointSubmissionClosed =
+                    DirectUtils.isCheckpointSubmissionPhaseClosed(softwareCompetition);
+                if (!isCheckpointSubmissionClosed) {
+                    // if the checkpoint is not confirmed, redirect to checkpoint submission page
+                    this.redirectToCheckpoint = true;
                     return;
                 }
             }
@@ -398,24 +398,24 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
             inReviewPhase = DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.REVIEW_PHASE);
         } else {
-            inMilestoneSubmissionPhase = DirectUtils.isPhaseOpen(
-                softwareCompetition, PhaseType.MILESTONE_SUBMISSION_PHASE);
-            inMilestoneReviewPhase = DirectUtils.isPhaseOpen(
-                softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE);
-            if (!inMilestoneReviewPhase) {
+            inCheckpointSubmissionPhase = DirectUtils.isPhaseOpen(
+                softwareCompetition, PhaseType.CHECKPOINT_SUBMISSION_PHASE);
+            inCheckpointReviewPhase = DirectUtils.isPhaseOpen(
+                softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE);
+            if (!inCheckpointReviewPhase) {
                 // closed = not open and not scheduled
-                afterMilestoneReviewPhase = !DirectUtils.isPhaseScheduled(
-                    softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE);
+                afterCheckpointReviewPhase = !DirectUtils.isPhaseScheduled(
+                    softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE);
             }
-            DataProvider.setSoftwareMilestoneSubmissionsData(getViewData());
+            DataProvider.setSoftwareCheckpointSubmissionsData(getViewData());
             // sort the winner DTOs
-            Collections.sort(getViewData().getMilestoneWinners(), new Comparator<SoftwareContestWinnerDTO>(){
+            Collections.sort(getViewData().getCheckpointWinners(), new Comparator<SoftwareContestWinnerDTO>(){
                 // sort based on placement
                 public int compare(SoftwareContestWinnerDTO o1, SoftwareContestWinnerDTO o2) {
                     return o1.getPlacement() - o2.getPlacement();
                 }                
             });
-            // sort the milestone submissions 
+            // sort the checkpoint submissions 
             Collections.sort(getViewData().getSubmissions(), new Comparator<SoftwareSubmissionDTO>(){
                 // sort based on review score
                 public int compare(SoftwareSubmissionDTO o1, SoftwareSubmissionDTO o2) {
@@ -432,29 +432,29 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
             });
             
             // get submission feedback and review score
-            if (inMilestoneReviewPhase || afterMilestoneReviewPhase) {
-                milestoneReviewCommitted = true;
+            if (inCheckpointReviewPhase || afterCheckpointReviewPhase) {
+                checkpointReviewCommitted = true;
             }
-            milestoneWinnersNumber = 0;
+            checkpointWinnersNumber = 0;
             for (SoftwareSubmissionDTO dto : getViewData().getSubmissions()) {
                 if (dto.getReviews() != null && dto.getReviews().size() > 0) {
                     SoftwareSubmissionReviewDTO review = dto.getReviews().get(0);
-                    dto.setMilestoneFeedback(review.getMilestoneFeedback());
-                    dto.setMilestoneReviewScore(review.getFinalScore());
+                    dto.setCheckpointFeedback(review.getCheckpointFeedback());
+                    dto.setCheckpointReviewScore(review.getFinalScore());
                     if (!review.getCommitted()) {
                         // if there's a review not committed, set the flag to false
-                        milestoneReviewCommitted = false;
+                        checkpointReviewCommitted = false;
                     }
-                    if (review.getFinalScore() > 10.1)milestoneWinnersNumber++;
+                    if (review.getFinalScore() > 10.1)checkpointWinnersNumber++;
                 } else {
                     // there's no review yet, set the flag to false
-                    milestoneReviewCommitted = false;                    
+                    checkpointReviewCommitted = false;                    
                 }
             }           
             
             // get general feedback
-            getViewData().setMilestoneSubmissionsGeneralFeedback(
-                getProjectServices().getSoftwareMilestoneSubmissionsGeneralFeedback(getProjectId()));
+            getViewData().setCheckpointSubmissionsGeneralFeedback(
+                getProjectServices().getSoftwareCheckpointSubmissionsGeneralFeedback(getProjectId()));
         }
 
         // For normal request flow prepare various data to be displayed to user
@@ -656,13 +656,13 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     }
 
     /**
-     * Gets the flag used to determine whether current phase is milestone submission.
+     * Gets the flag used to determine whether current phase is checkpoint submission.
      * 
-     * @return the flag used to determine whether current phase is milestone submission
+     * @return the flag used to determine whether current phase is checkpoint submission
      * @since 1.3
      */
-    public boolean isInMilestoneSubmissionPhase() {
-        return inMilestoneSubmissionPhase;
+    public boolean isInCheckpointSubmissionPhase() {
+        return inCheckpointSubmissionPhase;
     }
 
     /**
@@ -676,33 +676,33 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     }
 
     /**
-     * Gets the flag used to determine whether current phase is milestone review.
+     * Gets the flag used to determine whether current phase is checkpoint review.
      * 
-     * @return the flag used to determine whether current phase is milestone review
+     * @return the flag used to determine whether current phase is checkpoint review
      * @since 1.3
      */
-    public boolean isInMilestoneReviewPhase() {
-        return inMilestoneReviewPhase;
+    public boolean isInCheckpointReviewPhase() {
+        return inCheckpointReviewPhase;
     }
 
     /**
-     * Gets the flag used to determine whether current phase is after milestone review.
+     * Gets the flag used to determine whether current phase is after checkpoint review.
      * 
-     * @return the flag used to determine whether current phase is after milestone review
+     * @return the flag used to determine whether current phase is after checkpoint review
      * @since 1.3
      */
-    public boolean isAfterMilestoneReviewPhase() {
-        return afterMilestoneReviewPhase;
+    public boolean isAfterCheckpointReviewPhase() {
+        return afterCheckpointReviewPhase;
     }
 
     /**
-     * Gets the flag used to determine whether the milestone review is committed.
+     * Gets the flag used to determine whether the checkpoint review is committed.
      * 
-     * @return the flag used to determine whether the milestone review is committed
+     * @return the flag used to determine whether the checkpoint review is committed
      * @since 1.3
      */
-    public boolean isMilestoneReviewCommitted() {
-        return milestoneReviewCommitted;
+    public boolean isCheckpointReviewCommitted() {
+        return checkpointReviewCommitted;
     }
 
     /**
@@ -716,13 +716,13 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     }
 
     /**
-     * Gets the number of milestone winners.
+     * Gets the number of checkpoint winners.
      * 
-     * @return the number of milestone winners
+     * @return the number of checkpoint winners
      * @since 1.3
      */
-    public int getMilestoneWinnersNumber() {
-        return milestoneWinnersNumber;
+    public int getCheckpointWinnersNumber() {
+        return checkpointWinnersNumber;
     }
 
     /**

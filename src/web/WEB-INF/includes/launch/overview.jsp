@@ -107,18 +107,18 @@
     </div>
     <!-- end .prizes -->
     
-    <!-- Milestone Prizes -->
-	<div class="mPrizes hide" id="milestonePrizeDiv">
+    <!-- Checkpoint Prizes -->
+	<div class="mPrizes hide" id="checkpointPrizeDiv">
     
-        <h3><span class="icon">Milestone Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+        <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
         <div class="mPrizesInner">
         	<label class="first">Pay</label>
             <span class="dw">$</span>
-            <input type="text" id="milestonePrize" class="prizesInput" value="" />
+            <input type="text" id="checkpointPrize" class="prizesInput" value="" />
             <strong>for each submission up to</strong>
             <div class="numSelect">
-            	<select id="milestoneSubmissionNumber" >
+            	<select id="checkpointSubmissionNumber" >
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

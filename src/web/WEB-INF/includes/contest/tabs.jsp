@@ -10,13 +10,13 @@
   - Version 1.2 (Direct Replatforming Release 4) changes: remove the condition test on whether it's studio contest or not.
   - Version 1.3 (TC Cockpit Bug Tracking R1 Contest Tracking  assembly) changes: Add new tab for the issue tracking for
   - software and studio contest.
-  - Version 1.4 (Release Assembly - TC Direct Cockpit Release One) changes: Add milestone submission number and final submission
+  - Version 1.4 (Release Assembly - TC Direct Cockpit Release One) changes: Add checkpoint submission number and final submission
   - number in the submission tab title for multiple round contest
-  - Version 1.5 (Release Assembly - TopCoder Cockpit Software Milestone Management) changes:
-  - Add milestoneRound parameter for the submissions tab link of studioSubmissionsGrid and softwareSubmissionsList.
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) changes:
+  - Add checkpointRound parameter for the submissions tab link of studioSubmissionsGrid and softwareSubmissionsList.
   -
   - Version 1.5.1 (Release Assembly - TC Direct Cockpit Release Five) changes:
-  - - Remove the round information in the submission tab link, the link will automatically detect the milestone/final sub tab.
+  - - Remove the round information in the submission tab link, the link will automatically detect the checkpoint/final sub tab.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -49,8 +49,8 @@
                         <span class="submissionTabSpan">
                             <span class="noCursor left">
                                     <span class="noCursor right"><link:studioSubmissionsGrid contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:studioSubmissionsGrid> (
-                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:studioSubmissionsGrid>/
-                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:studioSubmissionsGrid>
+                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" checkpointRound="true" styleClass="submissionClick">C:${viewData.contestStats.checkpointSubmissionNumber}</link:studioSubmissionsGrid>/
+                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" checkpointRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:studioSubmissionsGrid>
                                         )
                                     </span>
                             </span>
@@ -69,8 +69,8 @@
                         <span class="submissionTabSpan">
                             <span class="noCursor left">
                                     <span class="noCursor right"><link:softwareSubmissionsList contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:softwareSubmissionsList> (
-                                         <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:softwareSubmissionsList>/
-                                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
+                                         <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="true" styleClass="submissionClick">C:${viewData.contestStats.checkpointSubmissionNumber}</link:softwareSubmissionsList>/
+                                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
                                         )
                                     </span>
                             </span>

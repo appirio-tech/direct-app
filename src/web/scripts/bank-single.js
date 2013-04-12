@@ -279,7 +279,7 @@ $(document).ready(function() {
 
 	// alert modal
 	$('.addFeedbackButton').live('click',function(){
-        modalLoad(milestoneReviewPhaseOpen ? "#alertModal2" : "#alertModalView");
+        modalLoad(checkpointReviewPhaseOpen ? "#alertModal2" : "#alertModalView");
 		return false;
 	});
 	$("#closeViewBtn,#alertModalViewClose").live('click',function(){

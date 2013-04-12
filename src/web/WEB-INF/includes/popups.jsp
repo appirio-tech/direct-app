@@ -583,7 +583,7 @@
 
         <div class="modalBody">
             <div class="modalBodyContent">
-                <p>Milestone winners and Feedback saved.</p> 
+                <p>Checkpoint winners and Feedback saved.</p> 
             </div>
             <div class="modalCommandBox"> 
                 <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -613,7 +613,7 @@
 
         <div class="modalBody">
             <div class="modalBodyContent">
-                <p>Milestone winners and Feedback locked.</p> 
+                <p>Checkpoint winners and Feedback locked.</p> 
             </div>
             <div class="modalCommandBox"> 
                 <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
@@ -635,7 +635,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>Lock In Milestones</span>
+                    <span>Lock In Checkpoints</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -668,7 +668,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>Lock In Milestones</span>
+                    <span>Lock In Checkpoints</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -699,7 +699,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>Lock In Milestones</span>
+                    <span>Lock In Checkpoints</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -708,7 +708,7 @@
 
         <div class="modalBody">
             <div class="modalBodyContent">
-                <p><strong>No Milestone Winners are selected.</strong>Are you sure you don't want to select any milestone winners for this contest?<span>You cannot undo or provide feedback after lock in.</span></p>
+                <p><strong>No Checkpoint Winners are selected.</strong>Are you sure you don't want to select any milestone winners for this contest?<span>You cannot undo or provide feedback after lock in.</span></p>
             </div>
             <div class="modalCommandBox">
                 <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">GO BACK TO SELECT MILESTONE WINNERS</span></span></a>
@@ -731,7 +731,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                <span>Lock In Milestones</span>
+                <span>Lock In Checkpoints</span>
                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
             </div>
         </div>

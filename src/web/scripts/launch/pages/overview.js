@@ -13,7 +13,7 @@
  * - Many changes were made to work for the new studio contest type and multiround type.
  * 
  * Version 1.2 TC Direct Replatforming Release 2 change notes:
- * - The software contest can set milestone prizes.
+ * - The software contest can set checkpoint prizes.
  * - The studio contest can have specification review cost.
  *
  * Version 1.3 TC Direct Replatforming Release 4 change notes:
@@ -75,8 +75,8 @@ $(document).ready(function() {
        onDigitalRunChangeKeyUp();
     });
     
-    $('#swMilestonePrize').bind('keyup', onMilestonePrizeChangeKeyUp);
-    $('#swMilestoneSubmissionNumber').bind('change', onMilestonePrizeChangeKeyUp);
+    $('#swCheckpointPrize').bind('keyup', onCheckpointPrizeChangeKeyUp);
+    $('#swCheckpointSubmissionNumber').bind('change', onCheckpointPrizeChangeKeyUp);
 }); // end of initiation
 
 
@@ -96,8 +96,8 @@ function validateFieldsOverviewSoftware() {
    var softwareGuidelines = CKEDITOR.instances.swGuidelines.getData();
 
    var rootCategoryId = $('#catalogSelect').val();
-   //milestone prize and submission numbers
-   var milestonePrizeInput = $('#swMilestonePrize').val();
+   //checkpoint prize and submission numbers
+   var checkpointPrizeInput = $('#swCheckpointPrize').val();
 
 
    //validation
@@ -142,9 +142,9 @@ function validateFieldsOverviewSoftware() {
    }
 
    if(mainWidget.softwareCompetition.multiRound) {
-      var milestonePrize = parseFloat(milestonePrizeInput);
-      if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
-         errors.push('Milestone prize is invalid.');
+      var checkpointPrize = parseFloat(checkpointPrizeInput);
+      if(!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
+         errors.push('Checkpoint prize is invalid.');
       }      
    }
    
@@ -185,8 +185,8 @@ function validateFieldsOverviewStudio() {
    var round1Info = CKEDITOR.instances.round1Info.getData();
    var round2Info = CKEDITOR.instances.round2Info.getData();
 
-    //milestone prize and submission numbers
-    var milestonePrizeInput = $('#milestonePrize').val();
+    //checkpoint prize and submission numbers
+    var checkpointPrizeInput = $('#checkpointPrize').val();
 
    //validation
    var errors = [];
@@ -210,11 +210,11 @@ function validateFieldsOverviewStudio() {
    var fileTypes = fileTypesResult[0];
    var otherFileTypes = fileTypesResult[1];
 
-   var milestonePrize;
+   var checkpointPrize;
    if(mainWidget.softwareCompetition.multiRound) {
-      milestonePrize = parseFloat(milestonePrizeInput);
-       if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
-           errors.push('Milestone prize is invalid.');
+      checkpointPrize = parseFloat(checkpointPrizeInput);
+       if(!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
+           errors.push('Checkpoint prize is invalid.');
        }
 
       if(!checkRequired(round1Info)) {
@@ -225,8 +225,8 @@ function validateFieldsOverviewStudio() {
           errors.push('Round 2 information is empty.');
       }
       
-	  dr += parseInt($('#milestoneSubmissionNumber').val()) * milestonePrize;
-      prizes.push(new com.topcoder.direct.Prize(1, milestonePrize, MILESTONE_PRIZE_TYPE_ID, parseInt($('#milestoneSubmissionNumber').val())));
+	  dr += parseInt($('#checkpointSubmissionNumber').val()) * checkpointPrize;
+      prizes.push(new com.topcoder.direct.Prize(1, checkpointPrize, CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#checkpointSubmissionNumber').val())));
       mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
       mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
    }

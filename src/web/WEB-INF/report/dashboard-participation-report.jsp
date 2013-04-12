@@ -4,11 +4,11 @@
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
-  - - Add logics to display Milestone Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
+  - - Add logics to display Checkpoint Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
   -
   - Version 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade) change log:
   - - Added a new option "Contest" to the "View By" dropdown list.
-  - - Added two new columns "Milestone Submissions" and "Final Submissions" to the table for all view type.
+  - - Added two new columns "Checkpoint Submissions" and "Final Submissions" to the table for all view type.
   - - Split the "Aggregation Participation Metrics Report" table into multiple tables to support sorting and pagination.
   - - Show indicator when “Customer Name” or “Billing Account” has been changed.
   -
@@ -254,11 +254,11 @@
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
-            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Checkpoint<br />Submissions</th>
             <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Checkpoint<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
@@ -276,11 +276,11 @@
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
             <td>${item.totalSubmissions}</td>
-            <td>${item.milestoneSubmissions}</td>
+            <td>${item.checkpointSubmissions}</td>
             <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
+            <td>${item.checkpointWinners}</td>
             <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
@@ -337,11 +337,11 @@
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
-            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Checkpoint<br />Submissions</th>
             <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Checkpoint<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
@@ -359,11 +359,11 @@
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
             <td>${item.totalSubmissions}</td>
-            <td>${item.milestoneSubmissions}</td>
+            <td>${item.checkpointSubmissions}</td>
             <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
+            <td>${item.checkpointWinners}</td>
             <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
@@ -418,11 +418,11 @@
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
-            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Checkpoint<br />Submissions</th>
             <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Checkpoint<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
@@ -440,11 +440,11 @@
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
             <td>${item.totalSubmissions}</td>
-            <td>${item.milestoneSubmissions}</td>
+            <td>${item.checkpointSubmissions}</td>
             <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
+            <td>${item.checkpointWinners}</td>
             <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
@@ -500,11 +500,11 @@
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
-            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Checkpoint<br />Submissions</th>
             <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Checkpoint<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
@@ -522,11 +522,11 @@
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
             <td>${item.totalSubmissions}</td>
-            <td>${item.milestoneSubmissions}</td>
+            <td>${item.checkpointSubmissions}</td>
             <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
+            <td>${item.checkpointWinners}</td>
             <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
@@ -584,11 +584,11 @@
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
-            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Checkpoint<br />Submissions</th>
             <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Checkpoint<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
@@ -606,11 +606,11 @@
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
             <td>${item.totalSubmissions}</td>
-            <td>${item.milestoneSubmissions}</td>
+            <td>${item.checkpointSubmissions}</td>
             <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
+            <td>${item.checkpointWinners}</td>
             <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>

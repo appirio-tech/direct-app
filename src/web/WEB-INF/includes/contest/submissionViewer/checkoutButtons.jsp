@@ -14,12 +14,12 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
 
-<s:if test="formData.roundType.toString() == 'MILESTONE'">
+<s:if test="formData.roundType.toString() == 'CHECKPOINT'">
     <s:if test="viewData.hasCheckout == false">
     <s:if test="viewData.phaseOpen">
-    <a href="#" class="buttonBankSelection saveMilestone"><span class="left"><span class="right">SAVE MILESTONE</span></span></a>
+    <a href="#" class="buttonBankSelection saveCheckpoint"><span class="left"><span class="right">SAVE CHECKPOINT</span></span></a>
     </s:if>
-    <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${true}" styleClass="buttonBankSelection">
+    <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${true}" styleClass="buttonBankSelection">
         <span class="left"><span class="right">MAKE CHANGES</span></span>
     </link:studioSubmissionsGrid>
     </s:if>
@@ -29,7 +29,7 @@
 	<s:if test="viewData.phaseOpen">
     <a href="#" class="buttonBankSelection checkout"><span class="left"><span class="right">CHECKOUT</span></span></a>
     </s:if>
-    <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}" styleClass="buttonBankSelection">
+    <link:studioSubmissionsGrid contestId="${contestId}" checkpointRound="${false}" styleClass="buttonBankSelection">
         <span class="left"><span class="right">MAKE CHANGES</span></span>
     </link:studioSubmissionsGrid>
     </s:if>

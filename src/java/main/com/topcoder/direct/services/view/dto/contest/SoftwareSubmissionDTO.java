@@ -19,10 +19,10 @@ import java.util.List;
  *   </ol>
  * </p>
  * <p>
- * Version 1.0.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.0.2 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
- *     <li>Added {@link #milestoneFeedback} property.</li>
- *     <li>Added {@link #milestoneReviewScore} property.</li>
+ *     <li>Added {@link #checkpointFeedback} property.</li>
+ *     <li>Added {@link #checkpointReviewScore} property.</li>
  *   </ol>
  * </p>
  *
@@ -94,19 +94,19 @@ public class SoftwareSubmissionDTO implements Serializable {
     private long uploadId;
     
     /**
-     * <p>A <code>String</code> providing the feedback for the milestone submission.</p>
+     * <p>A <code>String</code> providing the feedback for the checkpoint submission.</p>
      *
      * @since 1.0.2
      */
-    private String milestoneFeedback;
+    private String checkpointFeedback;
 
     
     /**
-     * <p>A <code>Float</code> providing the milestone review score for the milestone submission.</p>
+     * <p>A <code>Float</code> providing the checkpoint review score for the checkpoint submission.</p>
      *
      * @since 1.0.2
      */
-    private Float milestoneReviewScore;
+    private Float checkpointReviewScore;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -335,43 +335,43 @@ public class SoftwareSubmissionDTO implements Serializable {
     }
 
     /**
-     * Sets the feedback for the milestone submission.
+     * Sets the feedback for the checkpoint submission.
      * 
-     * @param milestoneFeedback the feedback for the milestone submission to set
+     * @param checkpointFeedback the feedback for the checkpoint submission to set
      * @since 1.0.2
      */
-    public void setMilestoneFeedback(String milestoneFeedback) {
-        this.milestoneFeedback = milestoneFeedback;
+    public void setCheckpointFeedback(String checkpointFeedback) {
+        this.checkpointFeedback = checkpointFeedback;
     }
 
     /**
-     * Gets the feedback for the milestone submission.
+     * Gets the feedback for the checkpoint submission.
      * 
-     * @return the feedback for the milestone submission
+     * @return the feedback for the checkpoint submission
      * @since 1.0.2
      */
-    public String getMilestoneFeedback() {
-        return milestoneFeedback;
+    public String getCheckpointFeedback() {
+        return checkpointFeedback;
     }
 
     /**
-     * Sets the milestone review score for the milestone submission.
+     * Sets the checkpoint review score for the checkpoint submission.
      * 
-     * @param milestoneReviewScore the milestone review score for the milestone submission to set
+     * @param checkpointReviewScore the checkpoint review score for the checkpoint submission to set
      * @since 1.0.2
      */
-    public void setMilestoneReviewScore(Float milestoneReviewScore) {
-        this.milestoneReviewScore = milestoneReviewScore;
+    public void setCheckpointReviewScore(Float checkpointReviewScore) {
+        this.checkpointReviewScore = checkpointReviewScore;
     }
 
     /**
-     * Gets the milestone review score for the milestone submission.
+     * Gets the checkpoint review score for the checkpoint submission.
      * 
-     * @return the milestone review score for the milestone submission
+     * @return the checkpoint review score for the checkpoint submission
      * @since 1.0.2
      */
-    public Float getMilestoneReviewScore() {
-        return milestoneReviewScore;
+    public Float getCheckpointReviewScore() {
+        return checkpointReviewScore;
     }
 
 }

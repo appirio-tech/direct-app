@@ -44,7 +44,7 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * Version 1.3 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
  *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>

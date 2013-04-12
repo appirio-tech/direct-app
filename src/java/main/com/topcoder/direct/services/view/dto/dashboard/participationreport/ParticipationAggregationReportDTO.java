@@ -13,7 +13,7 @@ import java.io.Serializable;
  * <p>
  * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
  * <ol>
- *   <li>Added {@link #milestoneWinners} field and getter/setter for it.</li>
+ *   <li>Added {@link #checkpointWinners} field and getter/setter for it.</li>
  *   <li>Added {@link #finalWinners} field and getter/setter for it.</li>
  *   <li>Added {@link #totalUniqueWinners} field and getter/setter for it.</li>
  * </ol>
@@ -24,7 +24,7 @@ import java.io.Serializable;
  * <ol> 
  *   <li>Removed {@link #totalSubmitters} field and getter/setter for it.</li>
  *   <li>Added {@link #totalSubmissions} field and getter/setter for it.</li>
- *   <li>Added {@link #milestoneSubmissions} field and getter/setter for it.</li>
+ *   <li>Added {@link #checkpointSubmissions} field and getter/setter for it.</li>
  *   <li>Added {@link #finalSubmissions} field and getter/setter for it.</li>
  * </ol>
  * </p>
@@ -67,11 +67,11 @@ public class ParticipationAggregationReportDTO implements Serializable {
     private int totalSubmissions;
     
     /**
-     * Represents the number of milestone submissions of the aggregation group.
+     * Represents the number of checkpoint submissions of the aggregation group.
      * 
      * @since 1.2
      */
-    private int milestoneSubmissions;
+    private int checkpointSubmissions;
     
     /**
      * Represents the number of final submissions of the aggregation group.
@@ -91,11 +91,11 @@ public class ParticipationAggregationReportDTO implements Serializable {
     private int submitterContries;
     
     /**
-     * Represents the number of milestone winners (Repeatable) of the aggregation group.
+     * Represents the number of checkpoint winners (Repeatable) of the aggregation group.
      *
      * @since 1.1
      */
-    private int milestoneWinners;
+    private int checkpointWinners;
 
     /**
      * Represents the number of final winners (Repeatable) of the aggregation group.
@@ -220,23 +220,23 @@ public class ParticipationAggregationReportDTO implements Serializable {
     }
 
     /**
-     * Gets the number of milestone submissions of the aggregation group.
+     * Gets the number of checkpoint submissions of the aggregation group.
      * 
-     * @return the number of milestone submissions of the aggregation group.
+     * @return the number of checkpoint submissions of the aggregation group.
      * @since 1.2
      */ 
-    public int getMilestoneSubmissions() {
-        return milestoneSubmissions;
+    public int getCheckpointSubmissions() {
+        return checkpointSubmissions;
     }
 
     /**
-     * Sets the number of milestone submissions of the aggregation group.
+     * Sets the number of checkpoint submissions of the aggregation group.
      * 
-     * @param milestoneSubmissions the number of milestone submissions of the aggregation group.
+     * @param checkpointSubmissions the number of checkpoint submissions of the aggregation group.
      * @since 1.2
      */
-    public void setMilestoneSubmissions(int milestoneSubmissions) {
-        this.milestoneSubmissions = milestoneSubmissions;
+    public void setCheckpointSubmissions(int checkpointSubmissions) {
+        this.checkpointSubmissions = checkpointSubmissions;
     }
 
     /**
@@ -332,23 +332,23 @@ public class ParticipationAggregationReportDTO implements Serializable {
     }
 
     /**
-     * Gets the number of milestone winners (Repeatable) of the aggregation group.
+     * Gets the number of checkpoint winners (Repeatable) of the aggregation group.
      *
-     * @return the number of milestone winners (Repeatable) of the aggregation group.
+     * @return the number of checkpoint winners (Repeatable) of the aggregation group.
      * @since 1.1
      */
-    public int getMilestoneWinners() {
-        return milestoneWinners;
+    public int getCheckpointWinners() {
+        return checkpointWinners;
     }
 
     /**
-     * Sets the number of milestone winners (Repeatable) of the aggregation group.
+     * Sets the number of checkpoint winners (Repeatable) of the aggregation group.
      *
-     * @param milestoneWinners the number of milestone winners (Repeatable) of the aggregation group.
+     * @param checkpointWinners the number of checkpoint winners (Repeatable) of the aggregation group.
      * @since 1.1
      */
-    public void setMilestoneWinners(int milestoneWinners) {
-        this.milestoneWinners = milestoneWinners;
+    public void setCheckpointWinners(int checkpointWinners) {
+        this.checkpointWinners = checkpointWinners;
     }
 
     /**

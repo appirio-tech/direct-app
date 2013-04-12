@@ -710,7 +710,7 @@
 				background:url(../../../images/date_input.gif) no-repeat;
 				}
 				
-			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .milestoneEtSelect,#launchContestOut .schedule .endEtSelect{
+			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .checkpointEtSelect,#launchContestOut .schedule .endEtSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -1786,7 +1786,7 @@ div.newListSelected ul.newList a{
 		}
 
 /** time select **/		
-.startEtSelect .newListSelected,.milestoneEtSelect .newListSelected,.endEtSelect .newListSelected{
+.startEtSelect .newListSelected,.checkpointEtSelect .newListSelected,.endEtSelect .newListSelected{
 	width:49px;
 	height:22px;
 	padding:0 5px;
@@ -1801,11 +1801,11 @@ div.newListSelected ul.newList a{
 	background:url(../../../images/timeSelect.gif) no-repeat;
 	}
 	
-	.startEtSelect .selectedTxt,.milestoneEtSelect .selectedTxt,.endEtSelect .selectedTxt{
+	.startEtSelect .selectedTxt,.checkpointEtSelect .selectedTxt,.endEtSelect .selectedTxt{
 		width:49px;
 		}
 	
-	.startEtSelect .newList,.milestoneEtSelect .newList,.endEtSelect .newList{
+	.startEtSelect .newList,.checkpointEtSelect .newList,.endEtSelect .newList{
 		width:56px;
 		border:#ccc solid 1px;
 		background:#fff;

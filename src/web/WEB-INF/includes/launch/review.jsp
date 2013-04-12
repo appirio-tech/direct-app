@@ -6,7 +6,7 @@
   - Description: review page for studio contest.
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
-  - - Change Milestone Date to Milestone End Date.
+  - - Change Checkpoint Date to Checkpoint End Date.
   - - Remove End Date for project.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
@@ -46,9 +46,9 @@
             <th>Start :</th>
             <td><span id="rStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
         </tr>
-        <tr id="rMileStoneTR">
-            <th>Milestone End :</th>
-            <td><span id="rMilestoneDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+        <tr id="rCheckpointTR">
+            <th>Checkpoint End :</th>
+            <td><span id="rCheckpointDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
         </tr>
         <tr>
             <th>End :</th>
@@ -103,9 +103,9 @@
 </div>
 <!-- end .prizes -->
 
-<!-- Milestone Prizes -->
+<!-- Checkpoint prizes -->
 <div class="mPrizes" id="rMPrizesDiv">
-    <h3>Milestone Prizes:</h3>
+    <h3>Checkpoint prizes:</h3>
     
     <div class="mPrizesInner">
         <label class="first">Pay</label>

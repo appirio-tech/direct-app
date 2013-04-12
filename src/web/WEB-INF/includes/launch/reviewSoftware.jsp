@@ -9,7 +9,7 @@
   - - Add multiround type support to software contest.
   -
   - Version 1.2 - TC Direct Replatforming Release 2 
-  - - Added milestone prizes section.
+  - - Added checkpoint prizes section.
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
 --%>
@@ -48,9 +48,9 @@
 			<th>Start :</th>
 			<td><span id="rswStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
-		<tr id="rswMileStoneTR">
-            <th>Milestone End :</th>
-            <td><span id="rswMilestoneDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+		<tr id="rswCheckpointTR">
+            <th>Checkpoint End :</th>
+            <td><span id="rswCheckpointDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
         </tr>
 	</table>
 </div>
@@ -99,9 +99,9 @@
 </div>
 <!-- end .prizes -->
 
-<!-- Milestone Prizes -->
+<!-- Checkpoint Prizes -->
 <div class="mPrizes" id="rswMPrizesDiv">
-    <h3>Milestone Prizes:</h3>
+    <h3>Checkpoint Prizes:</h3>
     
     <div class="mPrizesInner">
         <label class="first">Pay</label>

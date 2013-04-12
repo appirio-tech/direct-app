@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
- * This struts action is used to download all software milestone submissions for the milestone round or final
+ * This struts action is used to download all software checkpoint submissions for the checkpoint round or final
  * round of the software contest.
  * </p>
  *
@@ -32,7 +32,7 @@ import java.util.zip.ZipOutputStream;
  * Version 1.1 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
  * <ol>
  *  <li>Update the action class to new name 'DownloadAllSoftwareSubmissionsAction'</li>
- *  <li>Update the action to support download all for milestone and final round of software contest./li>
+ *  <li>Update the action to support download all for checkpoint and final round of software contest./li>
  *  <li>Add special handle for the copilot posting contest</li>
  * </ol>
  * </p>
@@ -50,11 +50,11 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
     private static final long FINAL_SUBMISSION_TYPE_ID = 1L;
 
     /**
-     * The id of the milestone submission type.
+     * The id of the checkpoint submission type.
      *
      * @since 1.1
      */
-    private static final long MILESTONE_SUBMISSION_TYPE_ID = 3L;
+    private static final long CHECKPOINT_SUBMISSION_TYPE_ID = 3L;
 
     /**
      * The id of the upload type - submission.
@@ -92,11 +92,11 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
     private static final String COPILOT_POSTING_SUBMISSION = "-Copilot Posting Submission";
 
     /**
-     * Suffix name for download all zip of milestone round submissions.
+     * Suffix name for download all zip of checkpoint round submissions.
      *
      * @since 1.1
      */
-    private static final String MILESTONE_SUBMISSIONS = "All_Milestone_Submissions.zip";
+    private static final String CHECKPOINT_SUBMISSIONS = "All_Checkpoint_Submissions.zip";
 
     /**
      * Suffix name for download all zip of final round submissions.
@@ -131,11 +131,11 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
     private ContestRoundType roundType;
 
     /**
-     * Whether the contest has milestone round.
+     * Whether the contest has checkpoint round.
      *
      * @since 1.1
      */
-    private boolean hasMilestoneRound;
+    private boolean hasCheckpointRound;
 
     /**
      * Whether the contest is of type "Copilot Posting"
@@ -167,10 +167,10 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
      *
      * <p>
      * Update in version 1.1 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
-     * - remove using DataProvider.setSoftwareMilestoneSubmissionsData(dto) to get milestone submission ids. The method
+     * - remove using DataProvider.setSoftwareCheckpointSubmissionsData(dto) to get checkpoint submission ids. The method
      * gets a lot of unneeded data. Instead, it checks the submission and upload to find out submissions of different
      * types.
-     * - Add support for milestone and final round.
+     * - Add support for checkpoint and final round.
      * </p>
      * 
      * @throws Exception if any error occurred
@@ -182,10 +182,10 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
                 getCurrentUser(), getProjectId());
         contest = getContestServiceFacade().getSoftwareContestByProjectId(getCurrentUser(), getProjectId());
 
-        hasMilestoneRound = DirectUtils.isMultiRound(contest);
+        hasCheckpointRound = DirectUtils.isMultiRound(contest);
 
-        if(hasMilestoneRound == false && roundType == ContestRoundType.MILESTONE) {
-            throw new IllegalArgumentException("The contest does not have milestone round");
+        if(hasCheckpointRound == false && roundType == ContestRoundType.CHECKPOINT) {
+            throw new IllegalArgumentException("The contest does not have checkpoint round");
         }
 
         // check if the contest is copilot posting
@@ -212,7 +212,7 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
     private boolean isSubmissionToInclude(Submission sub) {
         // check the round type to use different submission type id
         long submissionTypeId =
-                (roundType == ContestRoundType.MILESTONE ? MILESTONE_SUBMISSION_TYPE_ID : FINAL_SUBMISSION_TYPE_ID);
+                (roundType == ContestRoundType.CHECKPOINT ? CHECKPOINT_SUBMISSION_TYPE_ID : FINAL_SUBMISSION_TYPE_ID);
         final Upload upload = sub.getUpload();
 
         // Checks
@@ -319,9 +319,9 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
             String template = "attachment; filename=\"" + contest.getProjectHeader().getProjectCategory().getName()
                     + "_" + getProjectId() + "_%s\"";
 
-            if(hasMilestoneRound) {
-                if(roundType == ContestRoundType.MILESTONE) {
-                    return String.format(template, MILESTONE_SUBMISSIONS);
+            if(hasCheckpointRound) {
+                if(roundType == ContestRoundType.CHECKPOINT) {
+                    return String.format(template, CHECKPOINT_SUBMISSIONS);
                 } else {
                     return String.format(template, FINAL_SUBMISSIONS);
                 }

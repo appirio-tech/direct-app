@@ -137,18 +137,18 @@ $(document).ready(function(){
    $('#roundTypes').bind("change", function() {
         var roundType = $('#roundTypes').val();
         if(roundType == 'single') {
-           $('#mileStoneEditDiv').hide();
-           $('#milestonePrizeDiv').hide();  	
+           $('#checkpointEditDiv').hide();
+           $('#checkpointPrizeDiv').hide();  	
            $('#roundInfoDiv').hide();	     
-           $('#rMileStoneTR').hide();
+           $('#rCheckpointTR').hide();
            $('#rMultiRoundInfoDiv').hide();                 
         } else {
-           $('#mileStoneEditDiv').show();
-           $('#milestonePrizeDiv').show();  	
+           $('#checkpointEditDiv').show();
+           $('#checkpointPrizeDiv').show();  	
            $('#roundInfoDiv').show();	     
-           $('#rMileStoneTR').show();
+           $('#rCheckpointTR').show();
            $('#rMultiRoundInfoDiv').show();                 
-		   $(".milestoneEtSelect select,.numSelect select").each(function(index){
+		   $(".checkpointEtSelect select,.numSelect select").each(function(index){
 				if(!$(this).is(":hidden") && !$(this).data('customized')){
 					$(this).data('customized',true);
 					$(this).sSelect({ddMaxHeight: '220',yscroll: true});
@@ -223,7 +223,7 @@ $(document).ready(function(){
 function initSelect() {
   /* init select */
   if($('select').length > 0){
-	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.checkpointSelect select,.endSelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
 	
 	//$('.selectDesing div.selectedTxt').html('Select Contest Type');
   }	
@@ -253,8 +253,8 @@ function initContest(contestJson) {
    //multi round
    mainWidget.competition.contestData.multiRound = contestJson.multiRound;
    if(mainWidget.competition.contestData.multiRound) {
-      mainWidget.milestonePrizeData.amount = contestJson.milestonePrize.amount;
-      mainWidget.milestonePrizeData.numberOfSubmissions = contestJson.milestonePrize.numberOfSubmissions;
+      mainWidget.checkpointPrizeData.amount = contestJson.checkpointPrize.amount;
+      mainWidget.checkpointPrizeData.numberOfSubmissions = contestJson.checkpointPrize.numberOfSubmissions;
       mainWidget.competition.contestData.multiRoundData.roundOneIntroduction = contestJson.multiRoundData.roundOneIntroduction;
       mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction = contestJson.multiRoundData.roundTwoIntroduction;
    }
@@ -262,7 +262,7 @@ function initContest(contestJson) {
    //dates
    mainWidget.competition.startDate = parseDate(contestJson.startTime);
    mainWidget.competition.endDate = parseDate(contestJson.endTime);
-   mainWidget.competition.milestoneDate = parseDate(contestJson.multiRoundData.milestoneDate);
+   mainWidget.competition.checkpointDate = parseDate(contestJson.multiRoundData.checkpointDate);
 
    //prizes
    mainWidget.competition.contestData.prizes = [];
@@ -485,18 +485,18 @@ function populateRoundSection() {
 	$('#endTime').val(getRoundedTime(mainWidget.competition.endDate));
 	
    if(!isMultiRound) {	
-      $('#mileStoneEditDiv').hide();  		     
+      $('#checkpointEditDiv').hide();  		     
       
-      $('#milestonePrizeDiv').hide();  	
+      $('#checkpointPrizeDiv').hide();  	
       $('#roundInfoDiv').hide();	     
 	 } else {
-	 	  $('#mileStoneEditDiv').show();  	
-	 	  $('#milestoneDate').datePicker().val(getDatePart(mainWidget.competition.milestoneDate)).trigger('change');
-	 	  $('#milestoneTime').val(getRoundedTime(mainWidget.competition.milestoneDate));
+	 	  $('#checkpointEditDiv').show();  	
+	 	  $('#checkpointDate').datePicker().val(getDatePart(mainWidget.competition.checkpointDate)).trigger('change');
+	 	  $('#checkpointTime').val(getRoundedTime(mainWidget.competition.checkpointDate));
 	 	  
-	 	  $('#milestonePrizeDiv').show();
-	 	  $('#milestonePrize').val(mainWidget.milestonePrizeData.amount);
-	 	  $('#milestoneSubmissionNumber').val(mainWidget.milestonePrizeData.numberOfSubmissions);
+	 	  $('#checkpointPrizeDiv').show();
+	 	  $('#checkpointPrize').val(mainWidget.checkpointPrizeData.amount);
+	 	  $('#checkpointSubmissionNumber').val(mainWidget.checkpointPrizeData.numberOfSubmissions);
 	 	  
 	 	  $('#roundInfoDiv').show();	     
       $('#round1Info').val(mainWidget.competition.contestData.multiRoundData.roundOneIntroduction);
@@ -511,15 +511,15 @@ function populateRoundSection() {
    
 	
    if(!isMultiRound) {	
-      $('#rMileStoneTR').hide();
+      $('#rCheckpointTR').hide();
       $('#rMultiRoundInfoDiv').hide();      
 	 } else {
-	 	  $('#rMileStoneTR').show();  	
-	 	  $('#rMilestoneDate').html(formatDateForReview(mainWidget.competition.milestoneDate));
+	 	  $('#rCheckpointTR').show();  	
+	 	  $('#rCheckpointDate').html(formatDateForReview(mainWidget.competition.checkpointDate));
 	 	  	 	  
       $('#rMultiRoundInfoDiv').show();
-      $('#rMPrizesAmount').text('$'+mainWidget.milestonePrizeData.amount.formatMoney(2));
-      $('#rMPrizesNumberOfSubmissions').html(mainWidget.milestonePrizeData.numberOfSubmissions);
+      $('#rMPrizesAmount').text('$'+mainWidget.checkpointPrizeData.amount.formatMoney(2));
+      $('#rMPrizesNumberOfSubmissions').html(mainWidget.checkpointPrizeData.numberOfSubmissions);
       $('#rRound1Info').html(mainWidget.competition.contestData.multiRoundData.roundOneIntroduction);
       $('#rRound2Info').html(mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction);	 	  
 	 }
@@ -561,12 +561,12 @@ function validateFieldsRoundSection() {
    //dates
    var startDate = getDateByIdPrefix('start');
    var endDate = getDateByIdPrefix('end');
-   var milestoneDate = getDateByIdPrefix('milestone');
+   var checkpointDate = getDateByIdPrefix('checkpoint');
 
    var round1Info = CKEDITOR.instances.round1Info.getData();
    var round2Info = CKEDITOR.instances.round2Info.getData();
-   //milestone prize and submission numbers
-   var milestonePrizeInput = $('#milestonePrize').val();
+   //checkpoint prize and submission numbers
+   var checkpointPrizeInput = $('#checkpointPrize').val();
    
 
    //validation
@@ -577,15 +577,15 @@ function validateFieldsRoundSection() {
        errors.push('Start date should be smaller than end date.');
    }
 
-   var milestonePrize;
+   var checkpointPrize;
    if(isMultiRound) {
-      if(startDate >= milestoneDate || milestoneDate >= endDate) {
-         errors.push('Milestone date should be between start date and end date.');
+      if(startDate >= checkpointDate || checkpointDate >= endDate) {
+         errors.push('Checkpoint date should be between start date and end date.');
       }
 
-      milestonePrize = parseFloat(milestonePrizeInput);
-       if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
-           errors.push('Milestone prize is invalid.');
+      checkpointPrize = parseFloat(checkpointPrizeInput);
+       if(!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
+           errors.push('Checkpoint prize is invalid.');
        }
        
       if(!checkRequired(round1Info)) {
@@ -609,9 +609,9 @@ function validateFieldsRoundSection() {
    mainWidget.competition.endDate = endDate;
 
    if(isMultiRound) {
-      mainWidget.competition.milestoneDate = milestoneDate;
-      mainWidget.milestonePrizeData.amount = milestonePrize;
-      mainWidget.milestonePrizeData.numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
+      mainWidget.competition.checkpointDate = checkpointDate;
+      mainWidget.checkpointPrizeData.amount = checkpointPrize;
+      mainWidget.checkpointPrizeData.numberOfSubmissions = parseInt($('#checkpointSubmissionNumber').val());
       mainWidget.competition.contestData.multiRoundData.roundOneIntroduction = round1Info;
       mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction = round2Info;
    }
@@ -627,7 +627,7 @@ function showRoundSectionDisplay() {
 function showRoundSectionEdit() {
 	$(".contest_round").css("display","none");
 	$(".contest_round_edit").css("display","block");
-	$(".roundelect select,.startEtSelect select,.milestoneEtSelect select,.numSelect select,.endEtSelect select").each(function(index){
+	$(".roundelect select,.startEtSelect select,.checkpointEtSelect select,.numSelect select,.endEtSelect select").each(function(index){
 		if(!$(this).is(":hidden") && !$(this).data('customized')){
 			$(this).data('customized',true);
 			$(this).sSelect({ddMaxHeight: '220',yscroll: true});

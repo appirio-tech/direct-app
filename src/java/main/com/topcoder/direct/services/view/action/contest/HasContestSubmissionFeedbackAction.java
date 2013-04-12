@@ -70,7 +70,7 @@ public class HasContestSubmissionFeedbackAction extends ContestAction {
         TCSubject currentUser = getCurrentUser();
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        PhaseType phaseType = (roundType == ContestRoundType.MILESTONE ? PhaseType.MILESTONE_REVIEW_PHASE : PhaseType.REVIEW_PHASE);
+        PhaseType phaseType = (roundType == ContestRoundType.CHECKPOINT ? PhaseType.CHECKPOINT_REVIEW_PHASE : PhaseType.REVIEW_PHASE);
         if (!DirectUtils.isPhaseOpen(softwareCompetition, phaseType)) {
             throw new DirectException("The phase is not open.");
         }

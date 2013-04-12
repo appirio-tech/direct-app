@@ -69,10 +69,10 @@
 	</table>
 	
 
-  <div id="orMilestonePrizesDiv">
-	  <h3>Milestone Prizes</h3>
+  <div id="orCheckpointPrizesDiv">
+	  <h3>Checkpoint Prizes</h3>
 	  <table class="prizesTable">
-	  	<tr id="orMilestonePrizeTR">
+	  	<tr id="orCheckpointPrizeTR">
 	  	</tr>
 	  </table>
   </div>

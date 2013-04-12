@@ -580,7 +580,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectHeader.setProperty(ProjectPropertyType.PAYMENTS_PROJECT_PROPERTY_KEY, "150");
         projectHeader.setProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY, "150");
         projectHeader.setProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
-        projectHeader.setProperty(ProjectPropertyType.MILESTONE_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
         projectHeader.setProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY, "0");
         projectHeader.setProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY, "75");
         projectHeader.setProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY, "0");

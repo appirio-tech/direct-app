@@ -86,7 +86,7 @@
                                                         <span class="left"><span class="right">NO, THANK YOU</span></span></a>
 
                                                     <link:studioSubmissionsGrid contestId="${viewData.contestId}"
-                                                                                milestoneRound="${formData.isMilestoneRound}"
+                                                                                checkpointRound="${formData.isCheckpointRound}"
                                                                                 styleClass="button6 btnRunAgian">
                                                         <span class="left"><span class="right">RUN THIS CONTEST AGAIN</span></span>
                                                     </link:studioSubmissionsGrid>

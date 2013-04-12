@@ -155,7 +155,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Milestone Prizes</p>
+                    <p>Checkpoint Prizes</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

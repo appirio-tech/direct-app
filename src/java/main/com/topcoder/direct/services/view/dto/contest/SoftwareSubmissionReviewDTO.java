@@ -11,9 +11,9 @@ import java.io.Serializable;
  * <p>A <code>DTO</code> class providing the data for single software contest submission review.</p>
  *
  * <p>
- * Version 1.0.1 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ * Version 1.0.1 (Release Assembly - TopCoder Cockpit Software Checkpoint Management) Change notes:
  *   <ol>
- *     <li>Added {@link #milestoneFeedback} property.</li>
+ *     <li>Added {@link #checkpointFeedback} property.</li>
  *   </ol>
  * </p>
  *
@@ -49,11 +49,11 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     private Float initialScore;
     
     /**
-     * <p>A <code>String</code> providing the feedback for the milestone submission.</p>
+     * <p>A <code>String</code> providing the feedback for the checkpoint submission.</p>
      *
      * @since 1.0.1
      */
-    private String milestoneFeedback;
+    private String checkpointFeedback;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionReviewDTO</code> instance. This implementation does nothing.</p>
@@ -182,27 +182,27 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
                ", reviewId=" + reviewId +
                ", initialScore=" + initialScore +
                ", committed=" + committed +
-               ", milestoneFeedback=" + milestoneFeedback +
+               ", checkpointFeedback=" + checkpointFeedback +
                '}';
     }
 
     /**
-     * Sets the feedback for the milestone submission.
+     * Sets the feedback for the checkpoint submission.
      * 
-     * @param milestoneFeedback the feedback for the milestone submission to set
+     * @param checkpointFeedback the feedback for the checkpoint submission to set
      * @since 1.0.1
      */
-    public void setMilestoneFeedback(String milestoneFeedback) {
-        this.milestoneFeedback = milestoneFeedback;
+    public void setCheckpointFeedback(String checkpointFeedback) {
+        this.checkpointFeedback = checkpointFeedback;
     }
 
     /**
-     * Gets the feedback for the milestone submission.
+     * Gets the feedback for the checkpoint submission.
      * 
-     * @return the feedback for the milestone submission
+     * @return the feedback for the checkpoint submission
      * @since 1.0.1
      */
-    public String getMilestoneFeedback() {
-        return milestoneFeedback;
+    public String getCheckpointFeedback() {
+        return checkpointFeedback;
     }
 }

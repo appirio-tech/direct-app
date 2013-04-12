@@ -4,7 +4,7 @@
   - Version 1.3
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
-  - - Add the milestone prize for software contest receipt if exists
+  - - Add the checkpoint prize for software contest receipt if exists
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Five) changes:
   - - Add Launch By information to the JSP page
@@ -214,23 +214,23 @@
                                                             <%--<td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + drPoints + reliabilityBonusCost}" pattern="0.00"/></td>--%>
                                                         <%--</tr>--%>
                                                     <%--</tbody></table>--%>
-                                                    <%--<s:if test="contestReceipt.milestonePrize > 0">--%>
-                                                        <%--<h3>Milestone Prizes:</h3>--%>
+                                                    <%--<s:if test="contestReceipt.checkpointPrize > 0">--%>
+                                                        <%--<h3>Checkpoint Prizes:</h3>--%>
                                                         <%--<table class="prizesTable">--%>
                                                             <%--<tbody>--%>
                                                             <%--<tr>--%>
-                                                                <%--<s:set id="milestoneSinglePrize" name="milestoneSinglePrize"--%>
-                                                                       <%--value="(contestReceipt.milestonePrize / contestReceipt.milestonePrizeNumber)"--%>
+                                                                <%--<s:set id="checkpointSinglePrize" name="checkpointSinglePrize"--%>
+                                                                       <%--value="(contestReceipt.checkpointPrize / contestReceipt.checkpointPrizeNumber)"--%>
                                                                        <%--scope="page"/>--%>
 
-                                                                <%--<c:forEach var="currentIndex" begin="1" end="${contestReceipt.milestonePrizeNumber}">--%>
+                                                                <%--<c:forEach var="currentIndex" begin="1" end="${contestReceipt.checkpointPrizeNumber}">--%>
 
-                                                                    <%--<td>${currentIndex}:${milestoneSinglePrize}</td>--%>
+                                                                    <%--<td>${currentIndex}:${checkpointSinglePrize}</td>--%>
 
                                                                 <%--</c:forEach>--%>
 
 
-                                                                <%--<td class="last">$${milestonePrize}</td>--%>
+                                                                <%--<td class="last">$${checkpointPrize}</td>--%>
                                                             <%--</tr>--%>
                                                             <%--</tbody>--%>
                                                         <%--</table>--%>

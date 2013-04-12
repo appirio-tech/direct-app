@@ -5,7 +5,7 @@
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
  * Version 1.2 TC Direct Replatforming Release 2 change note
- * - Display milestone prizes for software contest.
+ * - Display checkpoint prizes for software contest.
  * 
  * Version 1.3 TC Direct Replatforming Release 4 change note
  * - Add support to save the stock arts allowed flag for the studio contests.
@@ -42,7 +42,7 @@ function updateReviewAlgorithm() {
    var html = "";
    var placeMap = {1:"1st Place",2:"2nd Place", 3:"3rd Place", 4:"4th Place", 5:"5th Place"};
    $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize) {
-       if (prize.prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+       if (prize.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
            return;
        }
        var place = prize.place;
@@ -83,13 +83,13 @@ function updateReviewSoftware() {
    var isMultiRound = mainWidget.softwareCompetition.multiRound;
    $('#rswRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
    if (!isMultiRound) {
-	   $('#rswMileStoneTR').hide();
+	   $('#rswCheckpointTR').hide();
 	   $('#rswMPrizesDiv').hide();
 	   $('.rswMultiInfo').hide();
    } else {
-	   $('#rswMileStoneTR').show();
+	   $('#rswCheckpointTR').show();
 	   $('.rswMultiInfo').show();
-	   $('#rswMilestoneDate').html(formatDateForReview(mainWidget.softwareCompetition.milestoneDate));
+	   $('#rswCheckpointDate').html(formatDateForReview(mainWidget.softwareCompetition.checkpointDate));
 	   $('#rswMPrizesDiv').show();
 	   var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
 	   $('#rswMPrizesAmount').html(prizes[prizes.length - 1].prizeAmount);
@@ -118,13 +118,13 @@ function updateReviewStudio() {
    $('#rRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
 
    if(!isMultiRound) {
-       $('#rMileStoneTR').hide();
+       $('#rCheckpointTR').hide();
        $('#rMPrizesDiv').hide();
        
        $('.rMultiInfo').hide();
    } else {
-       $('#rMileStoneTR').show();
-       $('#rMilestoneDate').html(formatDateForReview(mainWidget.softwareCompetition.milestoneDate));
+       $('#rCheckpointTR').show();
+       $('#rCheckpointDate').html(formatDateForReview(mainWidget.softwareCompetition.checkpointDate));
 
        var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
        $('#rMPrizesDiv').show();
@@ -146,7 +146,7 @@ function updateReviewStudio() {
    var html = "";
    var placeMap = {1:"1st Place",2:"2nd Place", 3:"3rd Place", 4:"4th Place", 5:"5th Place"};
    $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize) {
-	   if (prize.prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+	   if (prize.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
 		   return;
 	   }
        var place = prize.place;

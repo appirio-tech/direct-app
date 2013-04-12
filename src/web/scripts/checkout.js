@@ -31,10 +31,10 @@ var prizes = new Array();
 var listExtra = new Array();
 // prize of additional purchase
 var additionalPrize;
-// milestone prize
-var milestonePrize;
-// number of milestone submission that have been awarded
-var milestoneAwardNumber;
+// checkpoint prize
+var checkpointPrize;
+// number of checkpoint submission that have been awarded
+var checkpointAwardNumber;
 // the bank data
 var bankData;
 // a flag indicate whether the submissions have already been checked out
@@ -79,12 +79,12 @@ function updateSummary() {
         html += '<tr><td class="label">Additional Purchases:</td><td>' + extraNumber + '</td><td class="sum">' + fmoney(additionalPrize) + '</td><td class="sum">' + fmoney(totalExtra) + '</td></tr>';
         total += parseFloat(totalExtra);
     }
-    // milestone payment
+    // checkpoint payment
     if (hasCheckout == "false") {
-        if (milestoneAwardNumber > 0) {
-            var totalMilestone = milestoneAwardNumber * milestonePrize;
-            html += '<tr><td class="label">Milestone Prizes:</td><td>' + milestoneAwardNumber + '</td><td class="sum">' + fmoney(milestonePrize) + '</td><td class="sum">' + fmoney(totalMilestone) + '</td></tr>';
-            total += parseFloat(totalMilestone);
+        if (checkpointAwardNumber > 0) {
+            var totalCheckpoint = checkpointAwardNumber * checkpointPrize;
+            html += '<tr><td class="label">Checkpoint Prizes:</td><td>' + checkpointAwardNumber + '</td><td class="sum">' + fmoney(checkpointPrize) + '</td><td class="sum">' + fmoney(totalCheckpoint) + '</td></tr>';
+            total += parseFloat(totalCheckpoint);
         }
     }
     html += '<tr class="total"><td class="label">Total</td><td colspan="3" class="sum">' + fmoney(total) + '</td></tr>';
@@ -133,7 +133,7 @@ $(document).ready(function(){
     // save general feedback text
     $("#saveGeneralFeedback").click(function() {
         var contestId = $(this).attr("rel");
-        var feedback = $("#feedbackTextMilestoneRound").val();
+        var feedback = $("#feedbackTextCheckpointRound").val();
         feedback = $.trim(feedback);
         if (feedback.length == 0) {
             showErrors("Feedback content can't be empty.");
@@ -200,9 +200,9 @@ $(document).ready(function(){
             }
         });
 
-        milestonePrize = $("#milestonePrize").val();
+        checkpointPrize = $("#checkpointPrize").val();
         additionalPrize = $("#additionalPrize").val();
-        milestoneAwardNumber = $("#milestoneAwardNumber").val();
+        checkpointAwardNumber = $("#checkpointAwardNumber").val();
         for (var i = 1; i <= prizeNumber; i++) {
             prizes[i] = $("#prize_" + i).val();
         }
@@ -233,7 +233,7 @@ $(document).ready(function(){
 
     for (var i = 0; i < number; i++) {
         var label = bankData ? bankData[arrPrize[i]] : null;
-        if (label || (roundType == "MILESTONE")) {
+        if (label || (roundType == "CHECKPOINT")) {
 
             if(roundType == 'FINAL') {
                 finalRoundWinnerChosen = true;
@@ -245,7 +245,7 @@ $(document).ready(function(){
     }
 
     if(roundType == "FINAL" && !finalRoundWinnerChosen ) {
-        $('<tr><td></td><td></td><td></td><td class="left"><div class="warningMilestone">There is no selection winner for final round'
+        $('<tr><td></td><td></td><td></td><td class="left"><div class="warningCheckpoint">There is no selection winner for final round'
         + '. You can go back to the <a href="submissions.action?projectId=' + contestId + '&formData.viewType=GRID&formData.roundType=' + roundType + '">submissions viewer</a> and add one / make necessary changes.</div></td></tr>').appendTo($("#submissionList tbody"));
     }
 
@@ -259,13 +259,13 @@ $(document).ready(function(){
         }
     }
     
-    // save milestone or check out final submissions
-    $(".saveMilestone, .checkout").click(function() {
+    // save checkpoint or check out final submissions
+    $(".saveCheckpoint, .checkout").click(function() {
         var number = Math.min(submissionsNumber, prizeNumber);
 
         var canSave = true;
         // check each submission's feedback text
-        if (roundType == "MILESTONE") {
+        if (roundType == "CHECKPOINT") {
             for (var i = 0; i < number; i++) {
                 var label = bankData ? bankData[arrPrize[i]] : null;
                 if (label) {
@@ -327,7 +327,7 @@ $(document).ready(function(){
 
             if(prizesChosen <= 0) {
                     
-                var roundMessage = "milestone round";
+                var roundMessage = "checkpoint round";
                     
                 if(roundType == 'FINAL') {
                     roundMessage = "final round";
@@ -368,9 +368,9 @@ $(document).ready(function(){
         return false;
     });
 
-    milestonePrize = $("#milestonePrize").val();
+    checkpointPrize = $("#checkpointPrize").val();
     additionalPrize = $("#additionalPrize").val();
-    milestoneAwardNumber = $("#milestoneAwardNumber").val();
+    checkpointAwardNumber = $("#checkpointAwardNumber").val();
     for (var i = 1; i <= prizeNumber; i++) {
         prizes[i] = $("#prize_" + i).val();
     }

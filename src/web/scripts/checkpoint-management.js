@@ -1,9 +1,9 @@
 /**
  * Author: TCSASSEMBLER
- * Version: 1.0 (Release Assembly - TopCoder Cockpit Software Milestone Management)
+ * Version: 1.0 (Release Assembly - TopCoder Cockpit Software Checkpoint Management)
  * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  *
- * The Javascript File used for software milestone management.
+ * The Javascript File used for software checkpoint management.
  */
 $(document).ready(function() {
     // dataTable
@@ -217,7 +217,7 @@ $(document).ready(function() {
     var committed=false;
     $("#tcSoftwareMM .ops a.saveit").click(function(){
         committed=false;
-        lockinMilestoneReview();
+        lockinCheckpointReview();
         return false;
     });
        
@@ -242,8 +242,8 @@ $(document).ready(function() {
         return false;
     });
     
-    // lockin the milestone review
-    var lockinMilestoneReview = function() {
+    // lockin the checkpoint review
+    var lockinCheckpointReview = function() {
         var placements=[];
         var feedbacks=[];
         var submissionIds=[];
@@ -265,7 +265,7 @@ $(document).ready(function() {
        modalPreloader();
        $.ajax({
             type: 'POST',
-            url:  "saveSoftwareMilestoneReviewAction",
+            url:  "saveSoftwareCheckpointReviewAction",
             data: {projectId:projectId,
                     placements:placements,feedbacks:feedbacks,submissionIds:submissionIds,
                     committed:committed,generalFeedback:generalFeedback},
@@ -287,7 +287,7 @@ $(document).ready(function() {
     };
     
     $('#lockinSuccessModal a.newButton1').unbind('click').click(function(){
-        window.location.href="softwareSubmissions?roundType=MILESTONE&projectId="+$('#projectIdInput').val();
+        window.location.href="softwareSubmissions?roundType=CHECKPOINT&projectId="+$('#projectIdInput').val();
         modalClose();
         modalPreloader();
         return false;
@@ -297,13 +297,13 @@ $(document).ready(function() {
         if(slotsManage.noSlots()){
             modalLoad("#lockinNoWinnerModal");
         } else {
-            lockinMilestoneReview();   
+            lockinCheckpointReview();   
         }
         return false;
     })  
     $("#lockinNoWinnerModal a.lockinBtn,#lockinConfirmModal .yesBtn").click(function(){
         modalClose();
-        lockinMilestoneReview(); 
+        lockinCheckpointReview(); 
         return false;
     })
     
