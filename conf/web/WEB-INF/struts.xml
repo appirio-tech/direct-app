@@ -986,14 +986,6 @@
             <result name="error" type="json" />
         </action>
         
-        <action name="getReviewCostAjax" class="getReviewCostAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
         <action name="updateProjectForumWatchAJAX" class="updateProjectForumWatchAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1221,6 +1213,11 @@
     <package name="launch" namespace="/launch" extends="base">
         <action name="home" class="launchContestAction">
             <result>/WEB-INF/launch-contest.jsp</result>
+        </action>
+
+        <action name="getReviewCostAjax" class="getReviewCostAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="createProject" class="createProjectAction">
