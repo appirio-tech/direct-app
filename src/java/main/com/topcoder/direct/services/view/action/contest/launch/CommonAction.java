@@ -155,14 +155,15 @@ public class CommonAction extends BaseContestFeeAction {
      * @return the success page
      * @throws Exception if any error occurs
      */
-    public String getStudioConfigs() throws Exception {
+    public String getContestConfigs() throws Exception {
         Map<String, Object> configs = new HashMap<String, Object>();
         configs.put("overview", ConfigUtils.getStudioOverviews());
-        configs.put("fees", ConfigUtils.getStudioContestFees());
         configs.put("fileTypes", ConfigUtils.getFileTypes().getFileTypes());
+        configs.put("studioContestFees", ConfigUtils.getStudioContestFees());
         configs.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
-        configs.put("billingInfos", getBillingProjectInfos());
+        configs.put("algorithmContestFees", ConfigUtils.getAlgorithmSubtypeContestFees());
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
+        configs.put("billingInfos", getBillingProjectInfos());
         setResult(configs);
         return SUCCESS;
     }

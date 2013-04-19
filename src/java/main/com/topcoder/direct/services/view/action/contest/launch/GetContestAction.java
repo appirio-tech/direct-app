@@ -155,8 +155,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu
- * @version 2.0
+ * <p>
+ * Version 2.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * <ol>
+ *     <li>Adds the method {@link #isMarathon()} to check whether the contest is of type marathon</li>
+ * </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve
+ * @version 2.1
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -489,6 +496,18 @@ public class GetContestAction extends ContestAction {
      */
     public boolean isSoftware() {
         return !DirectUtils.isStudio(softwareCompetition);
+    }
+
+    /**
+     * <p>
+     * Determines if the contest is marathon contest or not.
+     * </p>
+     *
+     * @return true if it's marathon contest, false otherwise.
+     * @since 2.1
+     */
+    public boolean isMarathon() {
+        return DirectUtils.isMM(softwareCompetition);
     }
 
     /**

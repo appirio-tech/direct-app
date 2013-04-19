@@ -24,8 +24,12 @@
  * - Add method validateFieldsContestSelectionAlgorithm
  * - Update method continueContestSelection to support algorithm contest 
  *
- * @version 1.5
- * @author TCSDEVELOPER, bugbuka
+ * Version 1.6 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * 1) Remove fillPrizes() from validateFieldsContestSelectionAlgorithm(), it does not have the prize structure the same
+ * as software contest.
+ *
+ * @version 1.6
+ * @author bugbuka, Veve
  */
 $(document).ready(function() {	 
 	 initContestNamesFromDesign();
@@ -156,7 +160,7 @@ function validateFieldsContestSelectionAlgorithm() {
    mainWidget.softwareCompetition.subEndDate = endDate;
 
    //prizes is on category id
-   fillPrizes();
+   // fillPrizes();
    
    return true;
 }

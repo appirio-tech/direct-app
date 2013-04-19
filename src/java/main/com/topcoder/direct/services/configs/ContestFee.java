@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -17,8 +17,15 @@ import javax.xml.bind.annotation.XmlType;
  * The contest fee class for xml handling.
  * </p>
  *
- * @author BeBetter
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * <ol>
+ *     <li>Add property {@link #algorithmSubtypeContestFees}</li>
+ * </ol>
+ * </p>
+ *
+ * @author BeBetter, Veve
+ * @version 1.1
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "contestType")
@@ -47,6 +54,14 @@ public class ContestFee {
     @XmlElement(name = "subType")
     private List<StudioSubtypeContestFee> studioSubtypeContestFees;
 
+    /**
+     * Contest Fee configurations for Algorithm contest sub types.
+     *
+     * @since 1.1
+     */
+    @XmlElement(name = "algorithmSubtype")
+    private List<AlgorithmSubtypeContestFee> algorithmSubtypeContestFees;
+
     // Below is when the element holds the data for software
     /**
      * <p>
@@ -69,8 +84,24 @@ public class ContestFee {
      */
     private ContestCost contestCost;
 
+    /**
+     * Checks whether current contest fee configuration is for studio contest.
+     *
+     * @return true if yes, false otherwise.
+     * @since 1.1
+     */
     public boolean isStudioFee() {
         return "STUDIO".equals(id);
+    }
+
+    /**
+     * Checks whether current contest fee configuration is for algorithm contest.
+     *
+     * @return true if yes, false otherwise.
+     * @since 1.1
+     */
+    public boolean isAlgorithmFee() {
+        return "ALGORITHM".equals(id);
     }
 
     /**
@@ -129,6 +160,21 @@ public class ContestFee {
             studioSubtypeContestFees = new ArrayList<StudioSubtypeContestFee>();
         }
         return studioSubtypeContestFees;
+    }
+
+    /**
+     * <p>
+     * Gets the algorithm subtype contest fees.
+     * </p>
+     *
+     * @return the algorithm subtype contest fee
+     * @since 1.1
+     */
+    public List<AlgorithmSubtypeContestFee> getAlgorithmSubtypeContestFees() {
+        if (algorithmSubtypeContestFees == null) {
+            algorithmSubtypeContestFees = new ArrayList<AlgorithmSubtypeContestFee>();
+        }
+        return algorithmSubtypeContestFees;
     }
 
     /**

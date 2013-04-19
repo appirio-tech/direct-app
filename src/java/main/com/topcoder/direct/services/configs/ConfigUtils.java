@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -30,9 +30,14 @@ import javax.xml.bind.JAXBContext;
  * Version 1.2 - TC Cockpit Bug Tracking R1 Contest Tracking Assembly 1.0 change notes:
  * - Add the logic to load issue tracking configs from configuration file IssueTrackingConfig.xml
  * </p>
+ *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * - Add static configuration field algorithmSubtypeContestFees
+ * </p>
  * 
  * @author BeBetter, Veve
- * @version 1.2
+ * @version 1.3
  */
 public final class ConfigUtils {
     /**
@@ -62,6 +67,16 @@ public final class ConfigUtils {
      * </p>
      */
     private static List<StudioSubtypeContestFee> studioSubtypeContestFees;
+
+
+    /**
+     * <p>
+     * Algorithm subtype contest fees
+     * </p>
+     *
+     * @since 1.3
+     */
+    private static List<AlgorithmSubtypeContestFee> algorithmSubtypeContestFees;
 
     /**
      * <p>
@@ -121,7 +136,9 @@ public final class ConfigUtils {
      * <p> version 1.2 changes - add load of issue tracking configuration</p>
      */
     private static void init() throws Exception {
+        // load configuration using JAXB
         JAXBContext overviewJaxbContext = JAXBContext.newInstance(Overview.class);
+
         overview = (Overview) overviewJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/overview.xml"));
 
@@ -143,6 +160,8 @@ public final class ConfigUtils {
         for (ContestFee contestFee : contestFees.getContestFees()) {
             if (contestFee.isStudioFee()) {
                 studioSubtypeContestFees = contestFee.getStudioSubtypeContestFees();
+            } else if (contestFee.isAlgorithmFee()) {
+                algorithmSubtypeContestFees = contestFee.getAlgorithmSubtypeContestFees();
             } else {
                 softwareContestFees.put(contestFee.getContestTypeId() + "", contestFee);
             }
@@ -231,6 +250,18 @@ public final class ConfigUtils {
      */
     public static List<StudioSubtypeContestFee> getStudioContestFees() {
         return studioSubtypeContestFees;
+    }
+
+    /**
+     * <p>
+     * Gets algorithm subtype contest fees.
+     * </p>
+     *
+     * @return algorithm subtype contest fees.
+     * @since 1.3
+     */
+    public static List<AlgorithmSubtypeContestFee> getAlgorithmSubtypeContestFees() {
+        return algorithmSubtypeContestFees;
     }
 
     /**

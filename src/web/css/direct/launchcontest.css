@@ -1,5 +1,15 @@
+/*
+* Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+*
+* This css used to render the launch new contest flow.
+*
+* Version 1.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+* 1) Fix the contest type drop down background issue in contest details page.
+*
+* Author: TCSASSEMBLER
+* Version 1.1
+*/
 @charset "utf-8";
-/* CSS Document */
 
 /** title **/
 #launchContestOut h2{
@@ -778,7 +788,7 @@
 			
 			/** label **/
 			#launchContestOut .schedule label{
-				width:150px;
+				width:125px;
 				float:left;
 				display:inline;
 				margin-left:14px;
@@ -1812,10 +1822,10 @@
 	}
 
 /** tabContest and project select **/
-.tabOut .tabContest .newListSelected,.projectSelect .newListSelected{
-    width:547px;
-    background:url(/images/tabContest_select2.gif) no-repeat;
-    }
+/*.tabOut .tabContest .newListSelected,.projectSelect .newListSelected{*/
+    /*width:547px;*/
+    /*background:url(/images/tabContest_select2.gif) no-repeat;*/
+    /*}*/
     
 .tabContest .newListSelected,.projectSelect .newListSelected{
 	width:362px;
@@ -1849,6 +1859,11 @@
     .tabContest .newList{
         width:555px !important;
         }
+
+    .contestDetailsContainer .tabContest .newList {
+        width:370px !important;
+        background-position: 370px 0px;
+    }
 
 /** billing  and round select **/
 .billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected {

@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Veve, GreatKevin, Ghost_141
-  - Version: 1.5
-  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Veve, GreatKevin, Ghost_141, Veve
+  - Version: 1.6
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
   - Version 1.1 change notes: add issue tracking health status into dashboard page.
@@ -18,13 +18,16 @@
   -
   - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix multiple bugs.
+  -
+  - Version 1.6 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+  - - Add support for marathon contest dashboard
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="dashboardTable contestDashboard 
-    <s:if test="!viewData.contestStats.isStudio">softWareDashboard softwareDetail</s:if>
+    <s:if test="!viewData.contestStats.isStudio && !marathon">softWareDashboard softwareDetail</s:if>
     <s:else>studioDashboard studioDetails</s:else>
     ">
     
@@ -128,7 +131,7 @@
         <!-- End .content -->
     </div>
     <!-- End .dashboardModule -->
-    <div class="appositeContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
+    <div class="appositeContainer <s:if test="viewData.contestStats.isStudio || marathon">studio</s:if>">
         <div class="dashboardModule registrationModule">
         
             <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
@@ -166,7 +169,7 @@
                 <span class="bl"></span>
                 <span class="br"></span>
                 <div class="listContent">
-                    <s:if test="viewData.contestStats.isStudio">
+                    <s:if test="viewData.contestStats.isStudio || marathon">
                         <div class="wrap">
                         <div class="column first">
                     </s:if>
@@ -202,7 +205,7 @@
                         </div>
                         <!-- End .tooltipContainer -->
                     </div>
-                    <s:if test="viewData.contestStats.isStudio">
+                    <s:if test="viewData.contestStats.isStudio || marathon">
                         </div>
                         <!-- End .column -->
                         <div class="column">
@@ -227,7 +230,7 @@
                             N/A
                         </s:else>
                     </p>
-                    <s:if test="viewData.contestStats.isStudio">
+                    <s:if test="viewData.contestStats.isStudio || marathon">
                         </div>
                         <!-- End .column -->
                         <div class="clear"></div>
@@ -275,7 +278,7 @@
             <!-- End .content -->
         </div>
         <!-- End .dashboardModule -->
-        <s:if test="!viewData.contestStats.isStudio">
+        <s:if test="!viewData.contestStats.isStudio && !marathon">
         <div class="dashboardModule reviewsModule">
             <h1 class="heading">
                 <span class="tl"></span>

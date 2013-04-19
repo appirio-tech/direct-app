@@ -47,7 +47,7 @@
             <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Contest Name</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rContestName"></span></span></strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -105,10 +105,6 @@
                                 <span class="name fixWidthName"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                 
                                     <select id="contestTypes">
-                                         <optgroup label="Studio">
-                                         </optgroup>														                            
-                                         <optgroup label="Software">
-                                         </optgroup>														                             
                                      </select>
                                   </div>                                                
                            </div> <!-- End of .selectX -->                                                                                        

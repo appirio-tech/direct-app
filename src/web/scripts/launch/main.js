@@ -88,6 +88,7 @@ var isCancelled;
  */
 var studioSubtypeOverviews = [];
 var studioSubtypeFees = [];
+var algorithmSubtypeFees = [];
 var fileTypes = [];
 var billingInfos = [];
 var copilotFees = {};
@@ -132,7 +133,7 @@ $(document).ready(function() {
    // loading some configuration data
    $.ajax({
       type: 'POST',
-      url:  ctx+"/launch/getStudioConfigs",
+      url:  ctx+"/launch/getContestConfigs",
       data: {},
       cache: false,
       dataType: 'json',
@@ -141,7 +142,8 @@ $(document).ready(function() {
           handleJsonResult(jsonResult,
           function(result) {
             studioSubtypeOverviews = result.overview;
-            studioSubtypeFees = result.fees;
+            studioSubtypeFees = result.studioContestFees;
+            algorithmSubtypeFees = result.algorithmContestFees;
             fileTypes = result.fileTypes;
             softwareContestFees = result.softwareContestFees;
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
@@ -457,15 +459,15 @@ $(document).ready(function() {
  * </p>
  */
 function updateContestFee( ) {
-    var isStudio = ('STUDIO' == getContestType(true)[0]);    
+    var isStudio = ('STUDIO' == getContestType(true)[0]);
+    var isAlgorithm = ('ALGORITHM' == getContestType(true)[0])
     var contestTypeId = getContestType(true)[1];    
     var billingProjectId = $('select#billingProjects').val();
     
     var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
     
-    if(isStudio) {      
-        //for studio    
-        
+    if(isStudio || isAlgorithm) {
+        //for studio or algorithm
         var contestFeePercentage = null;
         if (billingFeesPercentage[billingProjectId]!= null) {
             contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
@@ -508,13 +510,24 @@ function updateContestFee( ) {
              mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = billingContestFee;
              mainWidget.softwareCompetition.adminFee = billingContestFee;
         } else {
-           $.each(studioSubtypeFees, function(i, feeItem) {
-               if(feeItem.id == contestTypeId) {
-                  // update contest fees
-                   mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = feeItem.contestFee;
-                   mainWidget.softwareCompetition.adminFee = feeItem.contestFee;
-               }
-           });          
+            if(isStudio) {
+                // get studio contest fee from studio configuration
+                $.each(studioSubtypeFees, function(i, feeItem) {
+                    if(feeItem.id == contestTypeId) {
+                        mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = feeItem.contestFee;
+                        mainWidget.softwareCompetition.adminFee = feeItem.contestFee;
+                    }
+                });
+            }
+            if(isAlgorithm) {
+                // get algorithm contest fee from algorithm configuration
+                $.each(algorithmSubtypeFees, function(i, feeItem) {
+                    if(feeItem.id == contestTypeId) {
+                        mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = feeItem.contestFee;
+                        mainWidget.softwareCompetition.adminFee = feeItem.contestFee;
+                    }
+                });
+            }
         }        
         mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee);
     } else {
@@ -1219,7 +1232,6 @@ function getContestType(ignoreTextCheck) {
    if(!ignoreTextCheck && $('.selectDesing div.selectedTxt').html() == 'Select Contest Type') {
        return [null,null];
    }
-
    var typeValues = $('#contestTypes').val().match(/^(STUDIO|SOFTWARE|ALGORITHM)(\d+)$/);
    return [typeValues[1],parseInt(typeValues[2])];
 }
@@ -1354,7 +1366,8 @@ function fillPrizes(billingProjectId) {
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
     var feeObject = softwareContestFees[projectCategoryId];
-    if (!feeObject) {
+    if (!feeObject && mainWidget.isSoftwareContest()) {
+        // does not check feeObject is the contest is not software contest
         showErrors('no fee found for project category ' + projectCategoryId);
         return;
     }
@@ -1475,38 +1488,45 @@ function fillPrizes(billingProjectId) {
  * Gets current total contest fee.
  */
 function getCurrentContestTotal(useDomElem) {
-   if(!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
-       return 0;
-   }
-
-   var prizeType = $('input[name="prizeRadio"]:checked').val();
-   var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
-   var feeObject;
-   if (mainWidget.competitionType == "STUDIO") {
-       for (var i = 0; i < studioSubtypeFees.length; i++) {
-           if (studioSubtypeFees[i].id == projectCategoryId) {
-               feeObject = studioSubtypeFees[i];
-               break;
-           }
-       } 
-   } else {
-       feeObject = softwareContestFees[projectCategoryId];
-   }
-       
-   if(!feeObject) {
-        showErrors('no fee found for project category ' + projectCategoryId);
+   if (!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
         return 0;
-   }
-   
-   if (mainWidget.competitionType == "STUDIO") {
-       var total = parseFloat(mainWidget.softwareCompetition.adminFee);
-       var prizeInputs = [];
-       var lastPrizeIndex = -1;
-       var stop = false;
-       $.each($('div.prizes .prizesInput'),function(i, element) {
+    }
+
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+    var feeObject;
+    if (mainWidget.isStudioContest()) {
+        for (var i = 0; i < studioSubtypeFees.length; i++) {
+            if (studioSubtypeFees[i].id == projectCategoryId) {
+                feeObject = studioSubtypeFees[i];
+                break;
+            }
+        }
+    } else if (mainWidget.isAlgorithmContest()) {
+        for (var i = 0; i < algorithmSubtypeFees.length; i++) {
+            if (algorithmSubtypeFees[i].id == projectCategoryId) {
+                feeObject = algorithmSubtypeFees[i];
+                break;
+            }
+        }
+    } else {
+        feeObject = softwareContestFees[projectCategoryId];
+    }
+
+    if (!feeObject) {
+        showErrors('no fee found for project category' + projectCategoryId);
+        return 0;
+    }
+
+    if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
+        var total = parseFloat(mainWidget.softwareCompetition.adminFee);
+        var prizeInputs = [];
+        var lastPrizeIndex = -1;
+        var stop = false;
+        $.each($('div.prizes .prizesInput'), function (i, element) {
             var value = $.trim($(this).val());
             prizeInputs.push(value);
-            if(isNotEmpty(value)) {
+            if (isNotEmpty(value)) {
                 if (!stop) {
                     lastPrizeIndex = i;
                 }
@@ -1514,18 +1534,21 @@ function getCurrentContestTotal(useDomElem) {
                 stop = true;
             }
         });
-       prizeInputs.splice(lastPrizeIndex+1,10);
-       $.each(prizeInputs, function(i, value) {
+        prizeInputs.splice(lastPrizeIndex + 1, 10);
+
+        $.each(prizeInputs, function (i, value) {
             if (checkRequired(value) && checkNumber(value)) {
                 total += parseFloat(value);
             }
-       });
+        });
        if ($('#roundTypes').val() == 'multi') {
            total += parseFloat($('#checkpointPrize').val()) * parseFloat($('#checkpointSubmissionNumber').val());
        }
        // spec review cost
-       total += feeObject.specReviewCost;
-       return total;
+        if (feeObject.specReviewCost) {
+            total += feeObject.specReviewCost;
+        }       
+        return total;
    }
    
    return getContestTotal(feeObject, prizeType, useDomElem);
@@ -1628,7 +1651,7 @@ function updateAlgorithmPrizes() {
    //update all fees
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
-   var feeObject = getStudioContestCost(projectCategoryId);
+   var feeObject = getAlgorithmContestCost(projectCategoryId);
    if (projectHeader.prizes.length == 0) {
        projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
        projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
@@ -1637,10 +1660,11 @@ function updateAlgorithmPrizes() {
        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
        prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
        projectHeader.prizes = prizes;
-       projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
+       projectHeader.setDRPoints(0);
+       // projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
    }
-   projectHeader.setReviewCost(feeObject.reviewCost);
-   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
+   projectHeader.setReviewCost(0);
+   projectHeader.setSpecReviewCost(0);
 
    projectHeader.setAdminFee(0);
    projectHeader.setContestFeePercentage(0);
@@ -1906,6 +1930,14 @@ function getStudioContestCost(projectCategoryId) {
     } 
 }
 
+function getAlgorithmContestCost(projectCategoryId) {
+    for (var i = 0; i < algorithmSubtypeFees.length; i++) {
+        if (algorithmSubtypeFees[i].id == projectCategoryId) {
+            return algorithmSubtypeFees[i];
+        }
+    }
+}
+
 
 /**
  * Software Technology/Category functions
@@ -2009,7 +2041,7 @@ function validatePrizes(errors) {
 
    //validation
    if(prizeInputs.length < 2) {
-       errors.push('At least first & second place prizes should be set!');
+       errors.push('At least first & second place prizes should be set');
        errorsAdded = true;
    }
 

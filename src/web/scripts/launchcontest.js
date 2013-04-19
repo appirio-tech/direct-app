@@ -453,6 +453,10 @@ $(document).ready(function() {
     onContestTypeChange();
 
 
+    $('#billingProjects').bind("change", function() {
+        updateContestFee();
+    });
+
     $('#addNewProject').click(function() {
         clearAddNewProjectForm();
         modalLoad("#addNewProjectModal");
@@ -739,7 +743,7 @@ function onContestTypeChange() {
       }
       
       if(mainWidget.isAlgorithmContest()) {
-          $.each(studioSubtypeFees, function(i, fee) {
+          $.each(algorithmSubtypeFees, function(i, fee) {
                if(fee.id == typeId) {
                  // not set yet, auto fill
                  if(isEmpty($('#prize3').val())) {

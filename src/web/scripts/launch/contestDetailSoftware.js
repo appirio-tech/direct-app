@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript
@@ -61,9 +61,12 @@
  *
  * Version 2.0 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
- * 
- * @author isv, minhu, pvmagacho, GreatKevin
- * @version 2.0
+ *
+ * Version 2.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * 1) Add supports for marathon contest details page - initialize the marathon contest details specification
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve
+ * @version 2.1
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -224,6 +227,14 @@ $(document).ready(function(){
             } catch (err) {
             	// pass
             }
+            if(mainWidget.isAlgorithmContest()) {
+                        try {
+                            CKEDITOR.replace('marathonMatchDetails');
+                            CKEDITOR.replace('marathonMatchRules');
+                        } catch (err) {
+                            // ignore
+                        }
+            }            
             //execute some actions specific for component design/dev
             //onContestTypeChange();
             $("#contestLoading").hide();
@@ -353,7 +364,7 @@ function onContestTypeChange() {
     var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
     var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
     var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
-    if (contestType == 'SOFTWARE') {
+    if (contestType == 'SOFTWARE' && typeId != 37) {
         var swGuidelines = CKEDITOR.instances['swGuidelines'];
         if (swGuidelines) {
             swGuidelines.destroy(true);
@@ -370,7 +381,7 @@ function onContestTypeChange() {
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList 
         });
-    } else {
+    } else if (contestType == 'STUDIO'){
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {
             contestDescription.destroy(true);
@@ -379,16 +390,18 @@ function onContestTypeChange() {
             templates: getStudioTemplatesName(typeId),
             templates_files: StudioContestSpecTemplates 
         });
+    } else if (contestType == 'ALGORITHM') {
+        // algorithm has only one type now, no need to destory
     }
     var currentTypeId = -1;
     if(isContestSaved()) {
      currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
     }   	  
 
-    if(isContestSaved() && mainWidget.competitionType != contestType) {   	  	
-       showErrors("You can not switch between studio and software after it is saved.");
-     
-       return;
+
+    if (isContestSaved() && mainWidget.competitionType != contestType) {
+        showErrors("You can not switch between studio / software / algorithm after it is saved.");
+        return;
     }
 
     mainWidget.competitionType = contestType;
@@ -422,45 +435,64 @@ function fixFileTypeIds() {
 }
 
 function initContest(contestJson) {
-   if (!contestJson.projectStudioSpecification) {
-      mainWidget.competitionType = 'SOFTWARE';
-      delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
-   } else {
-	  mainWidget.competitionType = 'STUDIO';
-	  mainWidget.softwareCompetition.projectHeader.projectStudioSpecification = contestJson.projectStudioSpecification;
-	  var fileTypes = [];
-	  var types = contestJson.fileTypes;
-	  if (types) {
-		  for (var i = 0; i < types.length; i++) {
-			  fileTypes.push(types[i].description);
-		  }
-	  }
-	  mainWidget.softwareCompetition.fileTypes = fileTypes;
-	  delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.creationTimestamp;
-	  delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.creationUser;
-	  delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationTimestamp;
-	  delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationUser;
-   }
-    
-    var isStudio = mainWidget.competitionType == 'STUDIO';
-	  //general initialization
-	      // populate the select option for software group
-    $.each(projectCategoryArray,function(i, projectCategory) {
-    	// not show copilot contest type
-        if (projectCategory.id != 29 && projectCategory.typeId != 3 && !isStudio) {
+    if (contestJson.projectMMSpecification) {
+        mainWidget.competitionType = 'ALGORITHM';
+        // set  marathon match specification to main widget
+        mainWidget.softwareCompetition.projectHeader.projectMMSpecification = contestJson.projectMMSpecification;
+        delete mainWidget.softwareCompetition.projectHeader.projectMMSpecification.creationTimestamp;
+        delete mainWidget.softwareCompetition.projectHeader.projectMMSpecification.creationUser;
+        delete mainWidget.softwareCompetition.projectHeader.projectMMSpecification.modificationTimestamp;
+        delete mainWidget.softwareCompetition.projectHeader.projectMMSpecification.modificationUser;
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
+    } else if (!contestJson.projectStudioSpecification) {
+        mainWidget.competitionType = 'SOFTWARE';
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
+    } else {
+        mainWidget.competitionType = 'STUDIO';
+        mainWidget.softwareCompetition.projectHeader.projectStudioSpecification = contestJson.projectStudioSpecification;
+        var fileTypes = [];
+        var types = contestJson.fileTypes;
+        if (types) {
+            for (var i = 0; i < types.length; i++) {
+                fileTypes.push(types[i].description);
+            }
+        }
+        mainWidget.softwareCompetition.fileTypes = fileTypes;
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.creationTimestamp;
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.creationUser;
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationTimestamp;
+        delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationUser;
+    }
+
+    var isStudio = (mainWidget.competitionType == 'STUDIO');
+    var isSoftware = (mainWidget.competitionType == 'SOFTWARE');
+    var isAlgorithm = (mainWidget.competitionType == 'ALGORITHM');
+
+    //general initialization
+    // populate the select option for software group
+    $.each(projectCategoryArray, function (i, projectCategory) {
+        // not show copilot contest type
+        if (isSoftware && projectCategory.id != 29 && projectCategory.id != 37 && projectCategory.typeId != 3) {
             if ($("optgroup[label='Software']").length > 0) {
-                $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
+                $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
             } else {
-                $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("#contestTypes");
+                $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("#contestTypes");
             }
 //            $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
         }
-        if (projectCategory.typeId == 3 && isStudio) {
-        	if ($("optgroup[label='Studio']").length > 0) {
-        		$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Studio']");
-        	} else {
-        		$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("#contestTypes");
-        	}
+        if (isStudio && projectCategory.typeId == 3) {
+            if ($("optgroup[label='Studio']").length > 0) {
+                $("<option/>").val("STUDIO" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Studio']");
+            } else {
+                $("<option/>").val("STUDIO" + projectCategory.id).text(projectCategory.label).appendTo("#contestTypes");
+            }
+        }
+        if (isAlgorithm && projectCategory.id == 37) {
+            if ($("optgroup[label='Algorithm']").length > 0) {
+                $("<option/>").val("ALGORITHM" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Algorithm']");
+            } else {
+                $("<option/>").val("ALGORITHM" + projectCategory.id).text(projectCategory.label).appendTo("#contestTypes");
+            }
         }
     });
     
@@ -1020,6 +1052,10 @@ function populateRoundSection() {
 	$('#startTime').val(getRoundedTime(startDate));
 	$('#endDateDay').val(subDuration[0]).trigger('change');
 	$('#endDateHour').val(subDuration[1]).trigger('change');
+        if(mainWidget.isAlgorithmContest()) {
+          $('#endDate').datePicker().val(getDatePart(endDate)).trigger('change');
+          $('#endTime').val(getRoundedTime(endDate));
+        }
 	if (!hasMultiRound(mainWidget.softwareCompetition.projectHeader.projectCategory.id) || !canEditMultiRound) {
 		$('#type').hide();
    	} else {
@@ -1231,7 +1267,15 @@ function validateFieldsRoundSection() {
 		}
 		prizes = newPrizes;
 		checkpointDateHours = 0;
+
 	}
+  
+        if (mainWidget.isAlgorithmContest()) {
+           var algoEndDat = getDateByIdPrefix('end');
+           if (algoEndDat <= startDate) {
+               errors.push("Contest end date must be later than the contest start date.");
+           }
+        }
 
 	// check total payment
 	/**if(getCurrentContestTotal(true) < mainWidget.softwareCompetition.paidFee) {
@@ -1257,6 +1301,11 @@ function validateFieldsRoundSection() {
 	   mainWidget.softwareCompetition.subEndDate = new Date();
 	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
+ 
+    if (mainWidget.isAlgorithmContest()) {
+        mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
+    }
+
    return true;
 }
 
@@ -1303,7 +1352,7 @@ function populatePrizeSection(initFlag) {
   	 $('.billingdisplay').hide();   	   	 
   }
 
-	if (mainWidget.competitionType == "STUDIO") {
+	if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
 		var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
 		var maxPlace = 0;
 		for (var i = 1; i <= 5; i++) {
@@ -1357,7 +1406,7 @@ function updateContestCostData() {
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
     var feeObject = softwareContestFees[projectCategoryId];
-    if (!feeObject && mainWidget.competitionType != 'STUDIO') {
+    if (!feeObject && mainWidget.competitionType != 'STUDIO' && mainWidget.competitionType != 'ALGORITHM') {
         showErrors('no fee found for project category ' + projectCategoryId);
         return;
     }
@@ -1453,7 +1502,7 @@ function updateContestCostData() {
     $('#swTotal,#rswTotal').html(total.formatMoney(2));
 
     //totals
-    if (mainWidget.competitionType != 'STUDIO') {
+    if (mainWidget.competitionType != 'STUDIO' && mainWidget.competitionType != 'ALGORITHM') {
         $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
         $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
         $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
@@ -1844,6 +1893,25 @@ function populateSpecSection(initFlag) {
           }
       }
   }
+
+   if(mainWidget.isAlgorithmContest()) {
+        var marathonSpec = mainWidget.softwareCompetition.projectHeader.projectMMSpecification;
+        $("#rProblemStatement").text(marathonSpec.problemName);
+        $("#rMatchDetails").html(marathonSpec.matchDetails);
+        $("#rMatchRules").html(marathonSpec.matchRules);
+        $("#marathonMatchDetails").val(marathonSpec.matchDetails);
+        $("#marathonMatchRules").val(marathonSpec.matchRules);
+        var problems = getActiveProblemSet();
+
+        $("#problems").empty();
+        $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
+
+        $.each(problems, function(key, value) {
+            $("#problems").append($('<option></option>').val(key).html(value));
+        });
+        $("#problems").val(marathonSpec.problemId);
+        $("#rProblemStatement").text(marathonSpec.problemName);
+    }
 }
 
 function saveSpecSection() {
@@ -1871,113 +1939,145 @@ function saveSpecSection() {
 }
 
 function validateFieldsSpecSection() {
-   var detailedRequirements = getCKEditorContent('swDetailedRequirements');
-   var softwareGuidelines = getCKEditorContent('swGuidelines');
-   var privateDescription = getCKEditorContent('swPrivateDescription');
-   var contestDescription = getCKEditorContent('contestDescription');
-   var contestIntroduction = getCKEditorContent('contestIntroduction');
-   
-   var rootCategoryId = $('#catalogSelect').val();
-	
-   //validation
-   var errors = [];
+    // for software contest
+    var detailedRequirements = getCKEditorContent('swDetailedRequirements');
+    var softwareGuidelines = getCKEditorContent('swGuidelines');
+    var privateDescription = getCKEditorContent('swPrivateDescription');
 
-   if (mainWidget.competitionType == "STUDIO") {
-	   if(!checkRequired(contestIntroduction)) {
-	       errors.push('Contest introduction is empty.');
-	   }
+    // for studio contest
+    var contestDescription = getCKEditorContent('contestDescription');
+    var contestIntroduction = getCKEditorContent('contestIntroduction');
 
-	   if(!checkRequired(contestDescription)) {
-	       errors.push('Contest description is empty.');
-	   }
-	   
-	   var fileTypesResult = validateFileTypes(errors);
-	   var fileTypes = fileTypesResult[0];
-	   var otherFileTypes = fileTypesResult[1];
-   } else {
-	   if (mainWidget.softwareCompetition.projectHeader.projectCategory.id != 29 ) {
-		   if(!checkRequired(detailedRequirements)) {
-			   errors.push('Detailed requirements is empty.');
-		   }
+    // for algorithm contest
+    var matchDetails = getCKEditorContent('marathonMatchDetails');
+    var matchRules = getCKEditorContent('marathonMatchRules');
+    var matchProblemId = $("#problems").getSetSSValue();
+    var matchProblemName = $("#problems option:selected").text();
 
-		   if(!checkRequired(softwareGuidelines)) {
-			   errors.push('Software guidelines is empty.');
-		   }
+    var rootCategoryId = $('#catalogSelect').val();
 
-		   if(isDevOrDesign()) {
-			   if( rootCategoryId <= 0 ) {
-				   errors.push('No catalog is selected.');
-			   }
-	      
-			   if($('#select2_categories option').length == 0) {
-				   errors.push('No category is selected.');
-			   }
-		   }
+    //validation
+    var errors = [];
 
-		   if(isTechnologyContest()) {
-			   if($('#masterTechnologiesChoosenSelect option').length == 0) {
-				   errors.push('No technology is selected.');
-			   }      
-		   }
-	   }
-   }
+    if (mainWidget.isStudioContest()) {
+        if (!checkRequired(contestIntroduction)) {
+            errors.push('Contest introduction is empty.');
+        }
 
-   var maxSubmissions = $('#maxSubmissions').val();
+        if (!checkRequired(contestDescription)) {
+            errors.push('Contest description is empty.');
+        }
 
-   if (!(optional(maxSubmissions) || (/^\d+$/.test(maxSubmissions) && parseInt(maxSubmissions) > 0))) {
-      errors.push('Max Submissions field should be empty or positive integer.');
-   }
-	
-   if(errors.length > 0) {
-       showErrors(errors);
-       return false;
-   }
-   
-   if (mainWidget.competitionType == "STUDIO") {
-	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription = contestDescription;
-	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction = contestIntroduction;
-	   mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
-   } else {
-	   mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
-	   mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
-	   mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
-   }
-   
-   if(isDevOrDesign()) {
-     mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;
-     mainWidget.softwareCompetition.assetDTO.directjsCategories =
-      $.map($('#select2_categories option'), function(option,i){
-     	   return option.value;
-     });   
-   }
-   
-   if(isTechnologyContest()) {
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
-      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
-     	   return option.value;
-     });   
-   }
-   
-   mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'] = '' + $('#allowStockArt').is(":checked");
-   // sets the Maximum Submissions
-   if ($.trim(maxSubmissions).length == 0) {
-       mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = '';
-   } else {
-       mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = parseInt(maxSubmissions);
-   }
-   mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = '' + $('#viewableSubmFlag').is(":checked");
+        var fileTypesResult = validateFileTypes(errors);
+        var fileTypes = fileTypesResult[0];
+        var otherFileTypes = fileTypesResult[1];
+    } else if (mainWidget.isSoftwareContest()) {
+        if (mainWidget.softwareCompetition.projectHeader.projectCategory.id != 29) {
+            if (!checkRequired(detailedRequirements)) {
+                errors.push('Detailed requirements is empty.');
+            }
 
-   return true;	
+            if (!checkRequired(softwareGuidelines)) {
+                errors.push('Software guidelines is empty.');
+            }
+
+            if (isDevOrDesign()) {
+                if (rootCategoryId <= 0) {
+                    errors.push('No catalog is selected.');
+                }
+
+                if ($('#select2_categories option').length == 0) {
+                    errors.push('No category is selected.');
+                }
+            }
+
+            if (isTechnologyContest()) {
+                if ($('#masterTechnologiesChoosenSelect option').length == 0) {
+                    errors.push('No technology is selected.');
+                }
+            }
+        }
+    } else if (mainWidget.isAlgorithmContest()) {
+
+        if(!checkRequired(matchDetails)) {
+            errors.push('Marathon Match Details cannot be empty');
+        }
+
+        if(!checkRequired(matchRules)) {
+            errors.push('Marathon Match Rules cannot be empty');
+        }
+
+        if(matchProblemId <= 0) {
+            errors.push('You should select a problem statement');
+        }
+    }
+
+    var maxSubmissions = $('#maxSubmissions').val();
+
+    if (!(optional(maxSubmissions) || (/^\d+$/.test(maxSubmissions) && parseInt(maxSubmissions) > 0))) {
+        errors.push('Max Submissions field should be empty or positive integer.');
+    }
+
+    if (errors.length > 0) {
+        showErrors(errors);
+        return false;
+    }
+
+    if (mainWidget.isStudioContest()) {
+        mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription = contestDescription;
+        mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction = contestIntroduction;
+        mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
+    } else if (mainWidget.isSoftwareContest()) {
+        mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
+        mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
+        mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
+    } else if (mainWidget.isAlgorithmContest()) {
+        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
+        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules = matchRules;
+        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemId = matchProblemId;
+        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName = matchProblemName;
+    }
+
+    if (isDevOrDesign()) {
+        mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;
+        mainWidget.softwareCompetition.assetDTO.directjsCategories =
+            $.map($('#select2_categories option'), function (option, i) {
+                return option.value;
+            });
+    }
+
+    if (isTechnologyContest()) {
+        mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
+            $.map($('#masterTechnologiesChoosenSelect option'), function (option, i) {
+                return option.value;
+            });
+    }
+
+    mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'] = '' + $('#allowStockArt').is(":checked");
+    // sets the Maximum Submissions
+    if ($.trim(maxSubmissions).length == 0) {
+        mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = '';
+    } else {
+        mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = parseInt(maxSubmissions);
+    }
+    mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = '' + $('#viewableSubmFlag').is(":checked");
+
+    return true;
 }
 
 function showSpecSectionDisplay() {
-		$(".contest_spec").css("display","block");
-		$(".contest_spec_edit").css("display","none");												
+    $(".contest_spec").css("display", "block");
+    $(".contest_spec_edit").css("display", "none");
 }
 
 function showSpecSectionEdit() {
-		$(".contest_spec").css("display","none");
-		$(".contest_spec_edit").css("display","block");												
+    $(".contest_spec").css("display", "none");
+    $(".contest_spec_edit").css("display", "block");
+
+    if(mainWidget.isAlgorithmContest()) {
+        $("#problems").resetSS();
+        $("#problems").getSetSSValue();
+    }
 }
 
 /**
@@ -2001,20 +2101,21 @@ function rollbackDocuments() {
 }
 
 function populateDocumentSection() {
-	//edit
-  swRefreshDocuments();	
-	
-	//display
-	var html = "";
-	var template = unescape($('#documentTemplate tbody').html());
-	$.each(swDocuments, function(i,document) {
-		 html += $.validator.format(template,(i+1),document['fileName'],document['description'], document['documentId']);
-	});
-	$('#documentTable').html(html);
-	
-   if(hasRequirementDocument()) {
-      $('.reqDocCheck').hide();
-   }	
+    //edit
+    swRefreshDocuments();
+
+    //display
+    var html = "";
+    var template = unescape($('#documentTemplate tbody').html());
+    $.each(swDocuments, function (i, document) {
+        html += $.validator.format(template, (i + 1), document['fileName'], document['description'],
+            document['documentId']);
+    });
+    $('#documentTable').html(html);
+
+    if (hasRequirementDocument()) {
+        $('.reqDocCheck').hide();
+    }
 }
 
 function showDocumentSectionDisplay() {

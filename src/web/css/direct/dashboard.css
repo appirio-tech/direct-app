@@ -104,6 +104,9 @@
  ¡Á
  * - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  * - Change the cursor CSS style of thumb in submission viewer page to default.
+ *
+ * - (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+ * - Fix the extra border line in the studio and marathon prize section in launch contest and contest details pages
  */
 
 
@@ -10586,5 +10589,10 @@ div.clientInvoiceManageRow.last {
     font-weight: bold;
     padding: 5px 10px 0px;
 }
+
+#alExtraPrizes, #extraPrizes {
+    border-top: none;
+}
+
 
 

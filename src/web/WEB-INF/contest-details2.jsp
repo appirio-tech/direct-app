@@ -1,7 +1,7 @@
 <%--
-  - Author: BeBetter, isv, GreatKevin, Ghost_141
-  - Version: 1.6
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
+  - Version: 1.7
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -20,6 +20,8 @@
   -   page can access the session on the first hit.
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - Version 1.7 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
+  - - Adds support for marathon contest details page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -89,11 +91,14 @@
                         <div class="container2Left"><div class="container2Right"><div class="container2Bottom" style="background: url(../../images/container2_bottom.png) repeat-x bottom;">
                             <div><div>
 
-                            <div class="container2Content_det">
+                            <div class="container2Content_det contestDetailsContainer">
 
-                            <s:if test="software">
-                               <jsp:include page="includes/contest/editTabSoftware.jsp"/>
+                            <s:if test="marathon">
+                               <jsp:include page="includes/contest/editTabMarathon.jsp"/>
                             </s:if>
+                            <s:elseif test="software">
+                                <jsp:include page="includes/contest/editTabSoftware.jsp"/>
+                            </s:elseif>
                             <s:else>
                                <jsp:include page="includes/contest/editTab.jsp"/>
                             </s:else>

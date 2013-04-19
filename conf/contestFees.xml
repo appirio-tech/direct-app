@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- since BUGR-1737 -->
 <contestTypes>
+    <contestType id="ALGORITHM" contestTypeId="-1">
+        <algorithmSubtype contestTypeId="37">  <!-- Banners/Icons -->
+            <contestFee>0</contestFee>
+            <firstPlaceCost>2000</firstPlaceCost>
+            <secondPlaceCost>1000</secondPlaceCost>
+        </algorithmSubtype>
+    </contestType>
 	<contestType id="STUDIO" contestTypeId="-999">
 		<subType contestTypeId="16">  <!-- Banners/Icons -->
 			<contestFee>0</contestFee>
@@ -449,34 +456,6 @@
 	</contestType>  
 	<contestType contestTypeId="36"> 	
 	<!-- REPORTING -->
-		<contestFee>0</contestFee>
-        <specReviewCost>50</specReviewCost>
-		<contestCost>
-            <billingLevel id="low">
-                <firstPlaceCost>800</firstPlaceCost>
-                <secondPlaceCost>400</secondPlaceCost>
-                <reviewBoardCost>466</reviewBoardCost>
-                <reliabilityBonusCost>0</reliabilityBonusCost>
-                <drCost>0</drCost>
-            </billingLevel>
-            <billingLevel id="medium">
-                <firstPlaceCost>1000</firstPlaceCost>
-                <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>580</reviewBoardCost>
-                <reliabilityBonusCost>0</reliabilityBonusCost>
-                <drCost>0</drCost>
-            </billingLevel>
-            <billingLevel id="high">
-                <firstPlaceCost>1200</firstPlaceCost>
-                <secondPlaceCost>600</secondPlaceCost>
-                <reviewBoardCost>694</reviewBoardCost>
-                <reliabilityBonusCost>0</reliabilityBonusCost>
-                <drCost>0</drCost>
-            </billingLevel>
-        </contestCost>
-	</contestType>
-    <contestType contestTypeId="37"> 	
-	<!-- MM -->
 		<contestFee>0</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
