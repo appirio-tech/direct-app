@@ -47,18 +47,19 @@
         <property name="sessionFactory" ref="securityGroupsSessionFactory" />
     </bean>
 
+    <bean id="groupProjectService"
+        class="com.topcoder.security.groups.services.hibernate.HibernateDirectProjectService"
+        parent="baseGroupService">
+    </bean>
+
     <bean id="groupAuthorizationService"
         class="com.topcoder.security.groups.services.hibernate.HibernateAuthorizationService"
         parent="baseGroupService" init-method="afterPropertiesSet">
+        <property name="directProjectService" ref="groupProjectService" />
     </bean>
 
     <bean id="groupAuditService"
         class="com.topcoder.security.groups.services.hibernate.HibernateGroupAuditService"
-        parent="baseGroupService">
-    </bean>
-
-    <bean id="groupProjectService"
-        class="com.topcoder.security.groups.services.hibernate.HibernateDirectProjectService"
         parent="baseGroupService">
     </bean>
 

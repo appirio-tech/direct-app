@@ -4869,13 +4869,34 @@ public class DataProvider {
 		String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
         if (!hasInvoice) {
-			commandName = "dashboard_billing_cost_invoice_report_v4";
-            queryName = "dashboard_billing_cost_invoice_report_v4";
+			commandName = "dashboard_billing_cost_invoice_report_v5";
+            queryName = "dashboard_billing_cost_invoice_report_v5";
         } else {
-			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
-            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
+			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v5";
+            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v5";
         }
 
+        long userId;
+        if (DirectUtils.isTcOperations(currentUser) || DirectUtils.isTcStaff(currentUser)) {
+            // TC Staff or TC Operations can access all direct projects
+            userId = 0;
+        } else {
+            userId = currentUser.getUserId();
+        }
+        
+        List<ProjectBriefDTO> projects = getUserProjectsList(userId);
+        long[] projectIds = new long[projects.size()];
+        int index = 0;
+        for(ProjectBriefDTO project : projects) {
+            projectIds[index] = project.getId();
+            index++;
+        }
+        if (index == 0) {
+            return data;
+        }
+        
+        String tcDirectProjectIds = concatenate(projectIds, ", ");
+        
         if(contestId > 0) {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
@@ -4888,6 +4909,7 @@ public class DataProvider {
                 return data;
             }
         }
+        request.setProperty("tcdirectids", tcDirectProjectIds);
         if (hasInvoice) {
             request.setProperty("invoicenumber", invoiceNumber);
         }
