@@ -254,7 +254,7 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 				return result;
 			}
 		}catch (Exception e) {
-			logger.error("Error in ProjectContestsAction "+e);
+			logger.error("Error in ProjectContestsAction "+e, e);
 			throw e;
 		}
     }
