@@ -19,8 +19,12 @@
  * - Remove setting the href attribute, click the image thumb will do nothing.
  * </p>
  *
- * @author minhu, TCSASSEMBLER
- * @version 1.0.3
+ * <p>
+ * Version 1.0.4 (BUGR 8472) Change notes:
+ * - Add call to decodeURIComponent()
+ * </p>
+ * @author minhu, TCSASSEMBLER, TMALBONPH
+ * @version 1.0.4
  */
  
 var listLikes = new Array();
@@ -229,6 +233,7 @@ $(document).ready(function(){
 			cdata = {};
 			cdata[contestId] = {};
 		} else {
+			cdata = decodeURIComponent(cdata);
 			cdata = jQuery.parseJSON(cdata);
 			if (!cdata[contestId]) {
 				cdata[contestId] = {};
@@ -626,6 +631,7 @@ $(document).ready(function(){
 	// get bank data from cookie
 	var bankData = $.cookie(COOKIE_NAME);
 	if (bankData) {
+		bankData = decodeURIComponent(bankData);
 		bankData = jQuery.parseJSON(bankData);
 		if (bankData && bankData[contestId]) {
 			bankData = bankData[contestId][roundType];

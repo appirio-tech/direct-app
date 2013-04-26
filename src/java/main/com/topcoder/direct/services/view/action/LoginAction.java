@@ -24,9 +24,18 @@ import org.apache.struts2.ServletActionContext;
  *     <li>Synchronize the user with WIKI and JIRA when the user is logged into the Cockpit</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * <ol>
+ *     <li>Fix the error that when login failed, it shows error page. Instead it shows error message
+ *     "Username or password is not valid" now
+ *     </li>
+ * </ol>
+ * </p>
  * 
  * @author isv, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
@@ -89,7 +98,7 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
     @Override
     public String execute() throws Exception {
         String result = super.execute();
-        if (SUCCESS.equals(result)) {
+        if (SUCCESS.equals(result) && getResultCode() != RC_INVALID_CREDENTIALS) {
             getSessionData().getSession().removeAttribute("redirectBackUrl");
             forwardUrl = ServletActionContext.getRequest().getParameter("forwardUrl");
 

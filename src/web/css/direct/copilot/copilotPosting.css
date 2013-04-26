@@ -1607,4 +1607,204 @@ ul.feedbacks{
     margin-top: 12px;
 }
 
-/*End Copilot Feedback Stats*/
+.gridview-table .pickCPBox{
+    padding:6px 0;
+}
+.listview-table .pickCPBox{
+    padding:28px 0;
+}
+.pickCPBox{
+    height:45px;
+    overflow:hidden;
+    width:92px;
+    margin:0 auto;
+}
+.pickCPBox .pickCopilotCell{
+    float:left;
+    width:39px;
+    height:38px;
+    text-align:left;
+    padding-top:7px;
+    padding-left:7px;
+}
+.pickCPBox .pickCopilotCell.active{
+    background:url(../../../images/copilotPosting/btn-pick-copilot.png) 0 -135px  no-repeat;
+}
+.pickCPBox .pickCopilotCell a{
+    display:inline-block;
+    width:31px;
+    height:31px;
+    text-align:center;
+    line-height:32px;
+    font-size:23px;
+    font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    text-decoration:none;
+    color:#909090;
+    background:url(../../../images/copilotPosting/btn-pick-copilot.png) -7px -7px  no-repeat;
+    overflow:hidden;
+}
+.pickCPBox .pickCopilotCell.active .pickCopilotPrimary,
+.pickCPBox .pickCopilotCell .pickCopilotPrimary:hover{
+    background-position:-7px -97px;
+    color:#fff;
+}
+.pickCPBox .pickCopilotCell.active .pickCopilotSecondary,
+.pickCPBox .pickCopilotCell .pickCopilotSecondary:hover{
+    background-position:-7px -52px;
+    color:#4f4f4f;
+}
+
+.copilotPostingCommand{
+    height:24px;
+    overflow:hidden;
+    padding-top:20px;
+}
+.copilotPostingCommand .btn{
+    float:right;
+    margin-left:6px;
+}
+.btnForgiveChooseCopilot .ico{
+    padding-left:15px;
+    font-size:11px;
+    background:url(../../../images/copilotPosting/ico-btn-remove.png) left center no-repeat;
+}
+.btnConfirmPlacements .ico{
+    padding-left:15px;
+    font-size:11px;
+    background:url(../../../images/copilotPosting/ico-btn-tick-cp.png) left center no-repeat;
+}
+
+.btn.disabled {
+    padding-left: 4px;
+}
+.btn.disabled, .btn.disabled .bRt, .btn.disabled .bMid {
+    background-image: url(../../../images/copilotPosting/btn-white-disable.png);
+    color: #d3d3d3;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    text-shadow:none;
+}
+.btn.disabled:hover, .btn.disabled:hover .bRt, .btn.disabled:hover .bMid {
+    background-image: url(../../../images/copilotPosting/btn-white-disable.png);
+}
+.btnConfirmPlacements.disabled .ico{
+    background:url(../../../images/copilotPosting/ico-btn-tick-cp-diable.png) left center no-repeat;
+}
+.btnForgiveChooseCopilot.disabled .ico{
+    background:url(../../../images/copilotPosting/ico-btn-remove-disable.png) left center no-repeat;
+}
+
+/* modal */
+#modalBackground {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    display: none;
+    background: #000000;
+}
+
+#new-modal {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 10001;
+}
+.newModal .barTop {
+    background: url(../../../images/modal-corner.png) no-repeat left top;
+    padding-left: 8px;
+}
+.newModal .barTopR {
+    background: url(../../../images/modal-corner.png) no-repeat right top;
+    padding-right: 8px;
+}
+.newModal .barTopM {
+    background: url(../../../images/modal-bg-horizontal.png) repeat-x left top;
+    height: 9px;
+    overflow: hidden;
+}
+
+.newModal .barMid {
+    background-color: #000;
+    padding-left: 4px;
+}
+.newModal .barMidR {
+    background-color: #000;
+    padding-right: 4px;
+}
+.newModal .barMidM {
+    background: url("../../images/modalBg.png") repeat-x scroll left top #E8E8E8;
+}
+
+.newModal .barBot {
+    background: url(../../../images/modal-corner.png) no-repeat left -9px;
+    padding-left: 8px;
+}
+.newModal .barBotR {
+    background: url(../../../images/modal-corner.png) no-repeat right -9px;
+    padding-right: 8px;
+}
+.newModal .barBotM {
+    background: url(../../../images/modal-bg-horizontal.png) repeat-x left -9px;
+    height: 9px;
+    overflow: hidden;
+}
+
+#new-modal .outLay {
+    position: relative;
+}
+#new-modal .inner {
+    margin: 0 4px;
+    background: url(../../../images/modalBg.png) repeat-x left top #e8e8e8;
+}
+#forgiveChooseCopilotConfirmModal .modalContainer{
+    font-size:14px;
+    line-height:16px;
+    padding:30px 50px 27px;
+    text-align:center;
+}
+/* buttonArea */
+#forgiveChooseCopilotConfirmModal .buttonArea {
+    height: 52px;
+    background: #e8e8e8;
+    border:0;
+    padding-left:102px;
+}
+
+#forgiveChooseCopilotConfirmModal .buttonArea .button6 {
+    width: 60px;
+    float: left;
+    display: block;
+    margin:0 5px;
+}
+#forgiveChooseCopilotConfirmModal strong.red{
+    color:#b60000;
+}
+
+#cofirmChooseCopilotConfirmModal .modalContainer{
+    font-size:14px;
+    line-height:16px;
+    padding:30px 50px 27px;
+    text-align:center;
+}
+/* buttonArea */
+#cofirmChooseCopilotConfirmModal .buttonArea {
+    height: 52px;
+    background: #e8e8e8;
+    border:0;
+    padding-left:102px;
+}
+
+#cofirmChooseCopilotConfirmModal .buttonArea .button6 {
+    width: 60px;
+    float: left;
+    display: block;
+    margin:0 5px;
+}
+#cofirmChooseCopilotConfirmModal strong.red{
+    color:#b60000;
+}

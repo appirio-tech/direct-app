@@ -62,9 +62,12 @@
  *
  * Version 2.4 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - Update to support launching mm contest.
+ *
+ * Version 2.5 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * - Fix the error that when user changes billing account, the prize gets reset.
  * 
- * @author isv, GreatKevin, bugbuka
- * @version 2.4
+ * @author isv, GreatKevin, bugbuka, GreatKevin
+ * @version 2.5
  */
 
  /**

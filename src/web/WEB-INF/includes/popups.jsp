@@ -1,5 +1,5 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang, Ghost_141, TCSASSEMBLER
+  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin
   - Version: 2.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
@@ -61,6 +61,9 @@
   -
   - Version 2.7 - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
   - - Added Wireframe Viewer Modal Window.
+  -
+  - Version 2.8 - Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly
+  - - Adds the copilot posting winner pickup confirmation dialogue
   -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -197,6 +200,76 @@
             </div>
         </div>
         <!-- end ajax preloader modal -->
+
+        <div id="cofirmChooseCopilotConfirmModal" class="outLay newModal">
+            <div class="barTop">
+                <div class="barTopR">
+                    <div class="barTopM"></div>
+                </div>
+            </div>
+            <div class="barMid">
+                <div class="barMidR">
+                    <div class="barMidM">
+                        <!-- content -->
+                        <div class="modal-content">
+                            <div class="modalContainer">
+                                <dl>
+                                    <dd>
+                                        Are you sure you don't want to choose a <strong class="red">runner-up</strong>?
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="buttonArea">
+                                <a href="javascript:;" title="YES" class="button6"><span class="left"><span class="right">YES</span></span></a>
+                                <a href="javascript:;" title="NO" class="closebutton button6"><span class="left"><span class="right">NO</span></span></a>
+                            </div>
+                        </div>
+                        <!-- End .content -->
+                    </div>
+                </div>
+            </div>
+            <div class="barBot">
+                <div class="barBotR">
+                    <div class="barBotM"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="forgiveChooseCopilotConfirmModal" class="outLay newModal">
+            <div class="barTop">
+                <div class="barTopR">
+                    <div class="barTopM"></div>
+                </div>
+            </div>
+            <div class="barMid">
+                <div class="barMidR">
+                    <div class="barMidM">
+                        <!-- content -->
+                        <div class="modal-content">
+                            <div class="modalContainer">
+                                <dl>
+                                    <dd>
+                                        Are you sure you don't want to choose any <strong class="red">copilot</strong>?
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="buttonArea">
+                                <a href="javascript:;" title="YES" class="button6"><span class="left"><span class="right">YES</span></span></a>
+                                <a href="javascript:;" title="NO" class="closebutton button6"><span class="left"><span class="right">NO</span></span></a>
+                            </div>
+                        </div>
+                        <!-- End .content -->
+                    </div>
+                </div>
+            </div>
+            <div class="barBot">
+                <div class="barBotR">
+                    <div class="barBotM"></div>
+                </div>
+            </div>
+        </div>
 
                 <!-- #addNewProjectModal -->
         <div id="addNewProjectModal" class="outLay">

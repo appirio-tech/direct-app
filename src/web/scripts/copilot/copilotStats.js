@@ -4,8 +4,11 @@
  * Version 2.0 (Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp)
  * - Add codes for copilot posting submissions and comparison
  *
+ * Version 2.1 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * - Add codes for new copilot posting first / second place winner pickup flow
+ *
  * @author GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 
 $(document).ready(function() {
@@ -103,174 +106,6 @@ $(document).ready(function() {
     });
     $('.track a').mouseleave(function() {
         window.setTimeout("$('.trackFlyout').addClass('hide')", 500);
-    });
-
-    $("a.noCopilotChoosen").click(function () {
-        var item = this;
-        var parentItem;
-        if ($("#compareItems").length > 0) {
-            parentItem = "li";
-        } else if ($(".switch a.gridview").hasClass("active")) {
-            parentItem = "td";
-        } else {
-            parentItem = "tr";
-        }
-        showConfirmation("Do not choose any copilot ?",
-            "Are you sure you don't want to choose any copilot for this copilot posting ?",
-            "YES",
-            function () {
-                var request = buildSelectCopilotRequest(item, 100);
-
-                closeModal();
-                modalPreloader();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'selectCopilotAjax',
-                    data: request,
-                    dataType: "json",
-                    cache: false,
-                    async: true,
-                    success: function (jsonResult) {
-                        handleJsonResult(jsonResult,
-                            function (result) {
-                                $(".unPickedCP").hide();
-                                $(".fLeft .seprator").remove();
-                                $(".fLeft .noCopilotChoosen").remove();
-                            },
-                            function (errorMessage) {
-                                showServerError(errorMessage);
-                            });
-                    }
-                });
-            }
-        )
-    });
-
-    $("a.noRunnerUpChosen").live('click', function(){
-        var item = this;
-        var parentItem;
-        if ($("#compareItems").length > 0) {
-            parentItem = "li";
-        } else if ($(".switch a.gridview").hasClass("active")) {
-            parentItem = "td";
-        } else {
-            parentItem = "tr";
-        }
-        showConfirmation("Do not choose Runner-up ?",
-            "Are you sure you don't want to choose runner-up for this copilot posting ?",
-            "YES",
-            function () {
-                var request = buildSelectCopilotRequest(item, 3);
-
-                closeModal();
-                modalPreloader();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'selectCopilotAjax',
-                    data: request,
-                    dataType: "json",
-                    cache: false,
-                    async: true,
-                    success: function (jsonResult) {
-                        handleJsonResult(jsonResult,
-                            function (result) {
-                                $(".btn-pickup-rup").hide();
-                                $(".fLeft .seprator").remove();
-                                $(".fLeft .noRunnerUpChosen").remove();
-                            },
-                            function (errorMessage) {
-                                showServerError(errorMessage);
-                            });
-                    }
-                });
-            }
-        )
-    });
-
-    /* pickup copilot */
-    $('.btn-pickup').click(function() {
-        var item = this;
-        var parentItem;
-        if($("#compareItems").length > 0) {
-            parentItem = "li";
-        } else if($(".switch a.gridview").hasClass("active")) {
-            parentItem = "td";
-        } else {
-            parentItem = "tr";
-        }
-        showConfirmation("Choose copilot",
-            "Choose " + $(this).parents(parentItem).find(".userHandleHolder").html() +
-            " as the copilot winner of this copilot posting?",
-            "YES",
-            function() {
-                var request = buildSelectCopilotRequest(item, 1);
-
-                closeModal();
-                modalPreloader();
-
-                $.ajax({
-                    type: 'POST',
-                    url:'selectCopilotAjax',
-                    data: request,
-                    dataType: "json",
-                    cache:false,
-                    async:true,
-                    success: function(jsonResult) {
-                        handleJsonResult(jsonResult,
-                            function(result) {
-                                pickupCopilot(item);
-                            },
-                            function(errorMessage) {
-                                showServerError(errorMessage);
-                            });
-                    }
-                });
-            }
-        )
-    });
-    
-    /* pickup runner up */
-    $('.btn-pickup-rup').click(function() {
-        var item = this;
-        var parentItem;
-        if($("#compareItems").length > 0) {
-            parentItem = "li";
-        } else if($(".switch a.gridview").hasClass("active")) {
-            parentItem = "td";
-        } else {
-            parentItem = "tr";
-        }
-        showConfirmation("Choose Runner-up",
-            "Choose " + $(this).parents(parentItem).find(".userHandleHolder").html() +
-                " as the runner-up of this copilot posting?",
-            "YES",
-            function() {
-                var request = buildSelectCopilotRequest(item, 2);
-
-                closeModal();
-                modalPreloader();
-
-                $.ajax({
-                    type: 'POST',
-                    url:'selectCopilotAjax',
-                    data: request,
-                    dataType: "json",
-                    cache:false,
-                    async:true,
-                    success: function(jsonResult) {
-                        handleJsonResult(jsonResult,
-                            function(result) {
-                                pickupRunnerup(item);
-                            },
-                            function(errorMessage) {
-                                showServerError(errorMessage);
-                            });
-                    }
-                });
-            }
-        )
     });
 
     /* close compare row and adujust column after removal functions */
@@ -532,7 +367,133 @@ $(document).ready(function() {
         $('.switch.btn-nexPrev a').addClass('disabled');
     }
 
+    $(".pickCPBox .pickCopilotCell a").live("click", function(){
+        var $this = $(this);
+        var $parent = $this.parent(".pickCopilotCell");
+        if($parent.hasClass("active")){
+            if($parent.has(".pickCopilotPrimary").length > 0){
+                $(".pickCPBox .pickCopilotCell").has(".pickCopilotSecondary").removeClass("active");
+            }
+            $parent.removeClass("active");
+        }else{
+            if(!$parent.siblings(".pickCopilotCell").has(".pickCopilotPrimary").hasClass("active")){
+                $this.closest(".pickCPBox").find(".pickCopilotCell").removeClass("active");
+                if($this.hasClass("pickCopilotPrimary")){
+                    $(".pickCPBox .pickCopilotCell").has(".pickCopilotPrimary").removeClass("active");
+                }
+                if($this.hasClass("pickCopilotSecondary")){
+                    if($(".pickCPBox .pickCopilotCell.active").has(".pickCopilotPrimary").length > 0){
+                        $(".pickCPBox .pickCopilotCell").has(".pickCopilotSecondary").removeClass("active");
+                    }else{
+                        return false;
+                    }
+                }
+                $parent.addClass("active");
+            }
+        }
+        if($(".pickCPBox .pickCopilotCell.active").length>0){
+            $(".btnConfirmPlacements").removeClass("disabled");
+            $(".btnForgiveChooseCopilot").addClass("disabled");
+        }else{
+            $(".btnConfirmPlacements").addClass("disabled");
+            $(".btnForgiveChooseCopilot").removeClass("disabled");
+        }
+    });
+
+    //click "I DON'T WANT TO CHOOSE ANY COPILOT" button to load modal window
+    $(".btnForgiveChooseCopilot").live("click", function(){
+        if(!$(this).hasClass("disabled")){
+            modalLoad("#forgiveChooseCopilotConfirmModal");
+        }
+        return false;
+    });
+
+    //click "NO" button to close modal window.
+    $("#forgiveChooseCopilotConfirmModal .closebutton, #cofirmChooseCopilotConfirmModal .closebutton").live("click", function(){
+        modalAllClose();
+        return false;
+    });
+
+    //click "CONFIRM PLACEMENTS" button to confirm copilot.
+    $(".btnConfirmPlacements").live("click", function () {
+        if (!$(this).hasClass("disabled")) {
+            if ($(".pickCPBox .pickCopilotCell.active").has(".pickCopilotSecondary").length == 0) {
+                modalLoad("#cofirmChooseCopilotConfirmModal");
+                return;
+            }
+
+            sendChooseCopilotAjaxRequest();
+        }
+
+        return false;
+    });
+
+    // click YES of "Choose no runner-up" confirmation dialogue
+    $("#cofirmChooseCopilotConfirmModal .button6:eq(0)").live('click', function(){
+        sendChooseCopilotAjaxRequest();
+    });
+
+    // click YES of "Choose no copilot" confirmation dialogue
+    $("#forgiveChooseCopilotConfirmModal .button6:eq(0)").click(function(){
+        sendChooseCopilotAjaxRequest();
+    });
+
 });
+
+function sendChooseCopilotAjaxRequest() {
+
+    var parentItem;
+    if($("#compareItems").length > 0) {
+        parentItem = "li";
+    } else if($(".switch a.gridview").hasClass("active")) {
+        parentItem = "td";
+    } else {
+        parentItem = "tr";
+    }
+
+    var request = buildSelectCopilotRequest(parentItem);
+
+    closeModal();
+    modalPreloader();
+
+    $.ajax({
+        type: 'POST',
+        url:'selectCopilotAjax',
+        data: request,
+        dataType: "json",
+        cache:false,
+        async:true,
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    if(result.resultCode && result.resultCode == 'success') {
+                        // highlight copilot / runner if exists
+                        $(".pickCPBox .pickCopilotCell").closest(parentItem).removeClass("rowSelCP rowSelRUP");
+                        $(".pickCPBox .pickCopilotCell").has(".pickCopilotPrimary").each(function () {
+                            if ($(this).hasClass("active")) {
+                                $(this).closest(parentItem).removeClass("rowSelRUP").addClass("rowSelCP");
+                                $(this).closest(parentItem).find(".cellCopilot").append('<span class="ribbonCP"></span>');
+                            }
+                        });
+                        $(".pickCPBox .pickCopilotCell").has(".pickCopilotSecondary").each(function () {
+                            if ($(this).hasClass("active")) {
+                                $(this).closest(parentItem).removeClass("rowSelCP").addClass("rowSelRUP");
+                                $(this).closest(parentItem).find(".cellCopilot").append('<span class="ribbonRUP"></span>');
+                            }
+                        });
+
+                        // hide all pickup buttons
+                        $(".pickCPBox").hide();
+                        // hide command buttons
+                        $(".copilotPostingCommand").hide();
+                    }
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+}
 
 var rup = false;
 
@@ -638,28 +599,28 @@ function pickupRunnerup(item) {
 
 
 
-function buildSelectCopilotRequest(item, placement) {
-    var parentItem;
-    if($("#compareItems").length > 0) {
-        parentItem = "li";
-    } else if($(".switch a.gridview").hasClass("active")) {
-        parentItem = "td";
-    } else {
-        parentItem = "tr";
-    }
+function buildSelectCopilotRequest(parentItem) {
+
     var projectId = $("input[name=contestId]").val();
     var directProjectId = $("input[name=directProjectId]").val();
-    var submissionId = $(item).parents(parentItem).find("input[name=submissionId]").val();
-    var profileId = $(item).parents(parentItem).find("input[name=profileId]").val();
+    var winnerSubmissionId = -1;
+    var winnerCopilotProfileId = -1
+    var secondPlaceSubmissionId = -1;
 
-    if(!submissionId) {
-        submissionId = $("input[name=submissionId]:eq(0)").val();
-    }
+    $(".pickCPBox .pickCopilotCell").has(".pickCopilotPrimary").each(function () {
+        if ($(this).hasClass("active")) {
+            winnerSubmissionId = $(this).closest(parentItem).find("input[name=submissionId]").val();
+            winnerCopilotProfileId = $(this).closest(parentItem).find("input[name=profileId]").val()
+        }
+    });
+    $(".pickCPBox .pickCopilotCell").has(".pickCopilotSecondary").each(function () {
+        if ($(this).hasClass("active")) {
+            secondPlaceSubmissionId = $(this).closest(parentItem).find("input[name=submissionId]").val();
+        }
+    });
 
-    if(!profileId) {
-        profileId = $("input[name=profileId]:eq(0)").val();
-    }
+    var request = {projectId: projectId, tcDirectProjectId: directProjectId,
+        winnerSubmissionId: winnerSubmissionId, winnerProfileId: winnerCopilotProfileId, secondPlaceSubmissionId: secondPlaceSubmissionId};
 
-    return {projectId: projectId, tcDirectProjectId: directProjectId,
-        submissionId: submissionId, profileId: profileId, placement: placement};
+    return request;
 }

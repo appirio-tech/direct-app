@@ -35,11 +35,18 @@ import java.util.Map;
  * <p>
  *     Version 1.3 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
  *     - Add the property <code>accountManagers</code>
- *     - Add the property <code>topcoderManagersEmails</code>
+ *     - Add the property <code>projectResourceEmails</code>
  *     - Add the property <code>accountManagersHandles</code>
  * </p>
  *
- * @version 1.3
+ * <p>
+ *     Version 1.4 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ *     <ol>
+ *         <li>Update topcoderManagerEmails to proejctResourcesEmails</li>
+ *     </ol>
+ * </p>
+ *
+ * @version 1.4
  * @author GreatKevin
  */
 public class ProjectGeneralInfoDTO {
@@ -119,7 +126,7 @@ public class ProjectGeneralInfoDTO {
      *
      * @since 1.3
      */
-    private Map<Long, String> topcoderManagersEmails = new HashMap<Long, String>();
+    private Map<Long, String> projectResourceEmails = new HashMap<Long, String>();
 
     /**
      * The client managers handles map.
@@ -394,18 +401,18 @@ public class ProjectGeneralInfoDTO {
      * @return the TopCoder platform specialists emails.
      * @since 1.3
      */
-    public Map<Long, String> getTopcoderManagersEmails() {
-        return topcoderManagersEmails;
+    public Map<Long, String> getProjectResourceEmails() {
+        return projectResourceEmails;
     }
 
     /**
      * Sets the TopCoder platform specialists emails.
      *
-     * @param topcoderManagersEmails the TopCoder platform specialists emails.
+     * @param projectResourceEmails the TopCoder platform specialists emails.
      * @since 1.3
      */
-    public void setTopcoderManagersEmails(Map<Long, String> topcoderManagersEmails) {
-        this.topcoderManagersEmails = topcoderManagersEmails;
+    public void setProjectResourceEmails(Map<Long, String> projectResourceEmails) {
+        this.projectResourceEmails = projectResourceEmails;
     }
 
     /**

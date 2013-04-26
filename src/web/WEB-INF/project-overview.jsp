@@ -1,7 +1,7 @@
 <%--
   - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin
   -
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -36,6 +36,8 @@
   - Version 1.7 - Release Assembly - TopCoder Direct Cockpit Release Assembly Ten
   - - Add TopCoder Account Managers in the project general information section
   - - Add email icon with mail to for TopCoder Platform Specialists
+  - Version 1.8 - Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly
+  - - Add email icon with mail to for Client Managers and TopCoder Account Managers
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -405,7 +407,7 @@
                                                     <ul>
                                                         <s:iterator value="viewData.projectGeneralInfo.clientManagers"
                                                                     var="managerId">
-                                                            <li><link:user userId="${managerId}"/></li>
+                                                            <li><link:user userId="${managerId}"/><a href="mailto:${viewData.projectGeneralInfo.projectResourceEmails[managerId]}"><img src="/images/icon-email.png"/></a></li>
                                                         </s:iterator>
                                                     </ul>
                                                 </s:else>
@@ -429,7 +431,7 @@
                                                     <ul>
                                                         <s:iterator value="viewData.projectGeneralInfo.topcoderManagers"
                                                                     var="managerId">
-                                                            <li><link:user userId="${managerId}"/><a href="mailto:${viewData.projectGeneralInfo.topcoderManagersEmails[managerId]}"><img src="/images/icon-email.png"/></a></li>
+                                                            <li><link:user userId="${managerId}"/><a href="mailto:${viewData.projectGeneralInfo.projectResourceEmails[managerId]}"><img src="/images/icon-email.png"/></a></li>
                                                         </s:iterator>
                                                     </ul>
                                                 </s:else>
@@ -450,7 +452,7 @@
                                                     <ul>
                                                         <s:iterator value="viewData.projectGeneralInfo.accountManagers"
                                                                     var="managerId">
-                                                            <li><link:user userId="${managerId}"/></li>
+                                                            <li><link:user userId="${managerId}"/><a href="mailto:${viewData.projectGeneralInfo.projectResourceEmails[managerId]}"><img src="/images/icon-email.png"/></a></li>
                                                         </s:iterator>
                                                     </ul>
                                                 </s:else>

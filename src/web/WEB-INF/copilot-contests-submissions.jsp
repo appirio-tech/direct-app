@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141
-  - Version: 2.1
+  - Version: 2.3
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
@@ -20,6 +20,9 @@
   - 
   - Version 2.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Update the button text to uppercase.
+  -
+  - Version 2.2 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+  - - Adds new buttons for the new copilot posting winners pickup flow
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -112,15 +115,6 @@
                                             <div class="caption">
                                                 <div class="fLeft">
                                                     <a href="<s:url action='downloadAllCopilotPostingSubmissions' namespace='/copilot'/>?projectId=${param.projectId}" class="download link">Download all Submissions</a>
-                                                    <c:if test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                        <span class="seprator">&nbsp;</span>
-                                                        <a href="javascript:;" class="choose link noCopilotChoosen">I don't want to choose any copilot</a>
-                                                    </c:if>
-                                                    <c:if test="${firstPlaceWinner ne null && secondPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                        <span class="seprator">&nbsp;</span>
-                                                        <a href="javascript:;" class="choose link noRunnerUpChosen">I don't want to choose runner-up copilot</a>
-                                                    </c:if>
-
                                                 </div>
                                                 <div class="fRight">
                                                     <a class="btn btn-compare"
@@ -197,15 +191,15 @@
                                                                     </p>
                                                                     <p class="compare">
                                                                         <input type="checkbox" id="chkList${userId}" class="chkCompare"> <label for="chkList${userId}">Compare</label>
-                                                                    </p>
-                                                                    <c:choose>
-                                                                        <c:when test="${userId eq firstPlaceWinner.id}">
-                                                                            <span class="ribbon"></span>
-                                                                        </c:when>
-                                                                        <c:when test="${userId eq secondPlaceWinner.id}">
-                                                                            <span class="ribbon"></span>
-                                                                        </c:when>
-                                                                    </c:choose>
+                                                                    </p> <span class="ribbon"></span>
+                                                                    <%--<c:choose>--%>
+                                                                        <%--<c:when test="${userId eq firstPlaceWinner.id}">--%>
+                                                                            <%--<span class="ribbon"></span>--%>
+                                                                        <%--</c:when>--%>
+                                                                        <%--<c:when test="${userId eq secondPlaceWinner.id}">--%>
+                                                                            <%--<span class="ribbon"></span>--%>
+                                                                        <%--</c:when>--%>
+                                                                    <%--</c:choose>--%>
                                                                 </div>
                                                                 <div class="colRt">
                                                                     <div class="top">
@@ -292,20 +286,9 @@
                                                                 <s:if test="inReviewPhase">
                                                                     <c:choose>
                                                                         <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                                            <div class="unPickedCP row">
-                                                                                <a class="btn btn-red btn-pickup"
-                                                                                   href="javascript:;">
-                                                                            <span class="bRt"> <span class="bMid"> <span
-                                                                                    class="ico">CHOOSE</span></span></span></a><br>
-                                                                                <a class="btn btn-white btn-pickup-rup" style="display:none"
-                                                                                   href="javascript:;">
-                                                                                    <span class="bRt"> <span class="bMid"> CHOOSE AS RUNNER-UP</span></span></a>
-                                                                            </div>
-                                                                            <div class="pickedCP">
-                                                                                <span class="pikedAsCP">CHOSEN AS COPILOT</span>
-                                                                            </div>
-                                                                            <div class="pickedRunnerUp">
-                                                                                <span class="pikedAsRUP">CHOSEN AS RUNNER-UP</span>
+                                                                            <div class="pickCPBox">
+                                                                                <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotPrimary">1</a></div>
+                                                                                <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotSecondary">2</a></div>
                                                                             </div>
                                                                         </c:when>
                                                                         <c:when test="${userId eq firstPlaceWinner.id}">
@@ -414,14 +397,15 @@
                                                                 <p class="compare">
                                                                     <input type="checkbox" id="chkGrid${userId}" class="chkCompare"> <label for="chkGrid${userId}">Compare</label>
                                                                 </p>
-                                                                <c:choose>
-                                                                    <c:when test="${userId eq firstPlaceWinner.id}">
-                                                                        <span class="ribbon"></span>
-                                                                    </c:when>
-                                                                    <c:when test="${userId eq secondPlaceWinner.id}">
-                                                                        <span class="ribbon"></span>
-                                                                    </c:when>
-                                                                </c:choose>
+                                                                <span class="ribbon"></span>
+                                                                <%--<c:choose>--%>
+                                                                    <%--<c:when test="${userId eq firstPlaceWinner.id}">--%>
+                                                                        <%--<span class="ribbon"></span>--%>
+                                                                    <%--</c:when>--%>
+                                                                    <%--<c:when test="${userId eq secondPlaceWinner.id}">--%>
+                                                                        <%--<span class="ribbon"></span>--%>
+                                                                    <%--</c:when>--%>
+                                                                <%--</c:choose>--%>
                                                             </div>
                                                             <div class="colGrp">
                                                                 <!-- /.col1 -->
@@ -505,21 +489,9 @@
                                                                         <s:if test="inReviewPhase">
                                                                             <c:choose>
                                                                                 <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
-                                                                                    <div class="unPickedCP">
-                                                                                        <a class="btn btn-red btn-pickup"
-                                                                                           href="javascript:;"><span
-                                                                                                class="bRt"> <span class="bMid">
-                                                                                <span class="ico">CHOOSE</span></span></span></a>
-                                                                                        <a class="btn btn-white btn-pickup-rup" style="display:none"
-                                                                                           href="javascript:;">
-                                                                                    <span class="bRt"> <span
-                                                                                            class="bMid">CHOOSE AS RUNNER-UP</span></span></a>
-                                                                                    </div>
-                                                                                    <div class="pickedCP">
-                                                                                        <span class="pikedAsCP">PICKED AS COPILOT</span>
-                                                                                    </div>
-                                                                                    <div class="pickedRunnerUp">
-                                                                                        <span class="pikedAsRUP">PICKED AS RUNNER-UP</span>
+                                                                                    <div class="pickCPBox">
+                                                                                        <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotPrimary">1</a></div>
+                                                                                        <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotSecondary">2</a></div>
                                                                                     </div>
                                                                                 </c:when>
                                                                                 <c:when test="${userId eq firstPlaceWinner.id}">
@@ -644,7 +616,17 @@
                                         </div>
                                     </div>
                                     <!-- end .getCopilotsStep -->
+                                    <s:if test="!allSubmissionReviewed">
+                                        <div class="copilotPostingCommand">
+                                            <a class="btn btn-white btnForgiveChooseCopilot" href="#"><span class="bRt"><span
+                                                    class="bMid"><span
+                                                    class="ico">I DON'T WANT TO CHOOSE ANY COPILOT</span></span></span></a>
+                                            <a class="btn btn-red btnConfirmPlacements disabled" href="#"><span
+                                                    class="bRt"><span class="bMid"><span
+                                                    class="ico">CONFIRM PLACEMENTS</span></span></span></a>
+                                        </div>
 
+                                    </s:if>
 
                                 </div>
                                 <!-- end .orderReview -->

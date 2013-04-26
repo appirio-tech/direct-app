@@ -138,9 +138,16 @@ import java.util.Map;
  *     <li>Add the email addresses for the TopCoder Platform Specialists</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.3 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * <ul>
+ *     <li>Adds email data for client managers and TopCoder platform managers.</li>
+ * </ul>
+ * </p>
  * 
  * @author isv, Veve, Blues, GreatKevin
- * @version 2.2
+ * @version 2.3
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -595,7 +602,15 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         getViewData().getProjectGeneralInfo().setAccountManagers(accountManagers);
 
         for(Long platformManagerId : tcManagers) {
-            getViewData().getProjectGeneralInfo().getTopcoderManagersEmails().put(platformManagerId, userService.getEmailAddress(platformManagerId));
+            getViewData().getProjectGeneralInfo().getProjectResourceEmails().put(platformManagerId, userService.getEmailAddress(platformManagerId));
+        }
+
+        for(Long clientManagerId : clientManagers) {
+            getViewData().getProjectGeneralInfo().getProjectResourceEmails().put(clientManagerId, userService.getEmailAddress(clientManagerId));
+        }
+
+        for(Long accountManagerId : accountManagers) {
+            getViewData().getProjectGeneralInfo().getProjectResourceEmails().put(accountManagerId, userService.getEmailAddress(accountManagerId));
         }
 
         int actualCost = 0;

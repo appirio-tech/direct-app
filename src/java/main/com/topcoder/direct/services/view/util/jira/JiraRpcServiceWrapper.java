@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util.jira;
 
@@ -72,9 +72,16 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  *     </li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.6 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * <ol>
+ *     Updates the Jira query to get bug race to exclude copilot payments ticket from the result.
+ * </ol>
+ * </p>
  *  
- * @author Veve, xjtufreeman, TCSASSEMBLER
- * @version 1.5
+ * @author Veve, xjtufreeman, GreatKevin
+ * @version 1.6
  */
 public class JiraRpcServiceWrapper {
 
@@ -404,7 +411,7 @@ public class JiraRpcServiceWrapper {
 
         // remove the last " OR " which is not needed
         String jqlQuery = (statusFilter != null ? ("(" + statusFilter + ") AND ") : "") + (jqlQueryBuilder.length() > 0 ? "(" + jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
-                ") AND" : "") + " (project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " OR issuetype='Client Task') order by Created DESC";
+                ") AND" : "") + " ((project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " AND issuetype!='Copilot Payment') OR issuetype='Client Task') order by Created DESC";
 
         System.out.println("@@@@@@ " + jqlQuery);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
@@ -62,9 +62,16 @@ import java.util.Set;
   *   <li>Updated method {@link #executeAction()()} to apply filter of group vy and group values</li>
   * </ol>
   * </p>
+ *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * <ul>
+ *     <li>Updates the cost report contest status to divide finished status into 3 status: completed, failed, cancelled</li>
+ * </ul>
+ * </p>
  * 
- * @author Blues, flexme, TCSASSEMBLER
- * @version 1.3
+ * @author Blues, flexme, GreatKevin
+ * @version 1.4
  */
 public class DashboardCostReportAction extends DashboardReportBaseAction<DashboardCostReportForm, CostReportDTO> {
 
@@ -96,6 +103,57 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
      * Represents the contest status IDs parameter string.
      */
     private static final String statusIdParam = "formData.statusIds=";
+
+    /**
+     * <p>The contest status used by report. There are 5 status used for report. It's initialized in the
+     * static constructor of this action class.</p>
+     *
+     * @since 1.4
+     */
+    protected static final Map<Long, String> COST_REPORT_CONTEST_STATUS;
+
+    /**
+     * <p>The status used by report. There are 5 status used for billing cost report. it's initialized in the
+     * static constructor of this action class.</p>
+     *
+     * @since 1.4
+     */
+    protected static final Map<String, Long> COST_REPORT_CONTEST_STATUS_IDS;
+
+
+    static {
+
+        // initialize the cost report contest status
+        COST_REPORT_CONTEST_STATUS = new HashMap<Long, String>();
+        COST_REPORT_CONTEST_STATUS_IDS = new HashMap<String, Long>();
+
+        IdNamePair scheduled = new IdNamePair();
+        IdNamePair active = new IdNamePair();
+        IdNamePair completed = new IdNamePair();
+        IdNamePair failed = new IdNamePair();
+        IdNamePair cancelled = new IdNamePair();
+        scheduled.setId(1);
+        scheduled.setName("Scheduled");
+        active.setId(2);
+        active.setName("Active");
+        completed.setId(3);
+        completed.setName("Completed");
+        failed.setId(4);
+        failed.setName("Failed");
+        cancelled.setId(5);
+        cancelled.setName("Cancelled");
+        COST_REPORT_CONTEST_STATUS.put(scheduled.getId(), scheduled.getName());
+        COST_REPORT_CONTEST_STATUS.put(active.getId(), active.getName());
+        COST_REPORT_CONTEST_STATUS.put(completed.getId(), completed.getName());
+        COST_REPORT_CONTEST_STATUS.put(failed.getId(), failed.getName());
+        COST_REPORT_CONTEST_STATUS.put(cancelled.getId(), cancelled.getName());
+
+        COST_REPORT_CONTEST_STATUS_IDS.put(scheduled.getName().toLowerCase(), scheduled.getId());
+        COST_REPORT_CONTEST_STATUS_IDS.put(active.getName().toLowerCase(), active.getId());
+        COST_REPORT_CONTEST_STATUS_IDS.put(completed.getName().toLowerCase(), completed.getId());
+        COST_REPORT_CONTEST_STATUS_IDS.put(failed.getName().toLowerCase(), failed.getId());
+        COST_REPORT_CONTEST_STATUS_IDS.put(cancelled.getName().toLowerCase(), cancelled.getId());
+    }
 
     /**
      * <p>Constructs new <code>DashboardCostReportAction</code> instance</p>
@@ -152,6 +210,19 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
 
+        boolean statusIdsAreSet = (statusIds != null) && (statusIds.length > 0);
+        if (getViewData().isShowJustForm() || !statusIdsAreSet) {
+            statusIds = new long[COST_REPORT_CONTEST_STATUS.size()];
+            int count = 0;
+            for (Long l : COST_REPORT_CONTEST_STATUS.keySet()) {
+                statusIds[count] = l;
+                count++;
+            }
+            getFormData().setStatusIds(statusIds);
+        }
+
+        getViewData().setContestStatus(COST_REPORT_CONTEST_STATUS);
+
         // parse out studio categories ids
         List<Long> softwareProjectCategoriesList = new ArrayList<Long>();
         List<Long> studioProjectCategoriesList = new ArrayList<Long>();
@@ -168,7 +239,7 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         // If necessary get and process report data
         if (!getViewData().isShowJustForm()) {
             List<CostDetailsDTO> costDetails = DataProvider.getDashboardCostReportDetails(getCurrentUser(), projectId, softwareProjectCategories, studioProjectCategories,
-                    customerId, billingAccountId, statusIds, startDate, endDate, REPORT_CONTEST_STATUS_IDS);
+                    customerId, billingAccountId, statusIds, startDate, endDate, COST_REPORT_CONTEST_STATUS_IDS);
 
             costDetails = filterByGroups(costDetails);
 
@@ -310,7 +381,7 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         } else if (aggregationType == CostAggregationType.STATUS_AGGREGATION) {
             IdNamePair status = new IdNamePair();
             status.setName(costDetail.getStatus());
-            status.setId(REPORT_CONTEST_STATUS_IDS.get(status.getName().toLowerCase()));
+            status.setId(COST_REPORT_CONTEST_STATUS_IDS.get(status.getName().toLowerCase()));
             return status;
         } else return costDetail.getContestType();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.copilot;
 
@@ -21,8 +21,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+ * <ul>
+ *     <li>Adds properties {@link #winnerProfileId}, {@link #winnerSubmissionId}, {@link #secondPlaceSubmissionId}</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class SelectCopilotAction extends BaseDirectStrutsAction {
 
@@ -37,19 +44,26 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
     private long projectId;
 
     /**
-     * <p>A <code>long</code> providing the ID for copilot profile.</p>
+     * The winner profile id.
+     *
+     * @since 1.2
      */
-    private long profileId;
+    private long winnerProfileId;
 
     /**
-     * <p>A <code>int</code> providing the placement for copilot.</p>
+     * The winner submission id.
+     *
+     * @since 1.2
      */
-    private int placement;
+    private long winnerSubmissionId;
 
     /**
-     * <p>A <code>long</code> providing the submission ID.</p>
+     * The second place submission id.
+     *
+     * @since 1.2
      */
-    private long submissionId;
+    private long secondPlaceSubmissionId;
+
 
     /**
      * <p>Constructs new <code>SelectCopilotAction</code> instance. This implementation does nothing.</p>
@@ -67,8 +81,8 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
      */
     @Override
     protected void executeAction() throws Exception {
-        getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProfileId(), 
-                                                getSubmissionId(), getPlacement(), getProjectId());
+        getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProjectId(), getWinnerProfileId(),
+                                                getWinnerSubmissionId(), getSecondPlaceSubmissionId());
     }
 
     /**
@@ -84,8 +98,8 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
 
             Map<String, String> result = new HashMap<String, String>();
 
-            getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProfileId(),
-                    getSubmissionId(), getPlacement(), getProjectId());
+            getContestServiceFacade().selectCopilot(getCurrentUser(), getTcDirectProjectId(), getProjectId(), getWinnerProfileId(),
+                                                    getWinnerSubmissionId(), getSecondPlaceSubmissionId());
 
             result.put("resultCode", "success");
 
@@ -99,41 +113,65 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
 
         return SUCCESS;
     }
-    
+
     /**
-     * <p>Gets the placement for copilot.</p>
+     * Gets the copilot profile id of the winner.
      *
-     * @return a <code>int</code> providing the placement for copilot.
+     * @return the copilot profile id of the winner.
+     * @since 1.2
      */
-    public int getPlacement() {
-        return this.placement;
+    public long getWinnerProfileId() {
+        return winnerProfileId;
     }
 
     /**
-     * <p>Sets the placement for copilot.</p>
+     * Sets copilot profile id of the winner.
      *
-     * @param placement a <code>int</code> providing the placement for copilot.
+     * @param winnerProfileId the copilot profile id of the winner.
+     * @since 1.2
      */
-    public void setPlacement(int placement) {
-        this.placement = placement;
+    public void setWinnerProfileId(long winnerProfileId) {
+        this.winnerProfileId = winnerProfileId;
     }
 
     /**
-     * <p>Gets the ID for copilot profile.</p>
+     * Gets the winner submission id.
      *
-     * @return a <code>long</code> providing the ID for copilot profile.
+     * @return the winner submission id.
+     * @since 1.2
      */
-    public long getProfileId() {
-        return this.profileId;
+    public long getWinnerSubmissionId() {
+        return winnerSubmissionId;
     }
 
     /**
-     * <p>Sets the ID for copilot profile.</p>
+     * Sets the winner submission id.
      *
-     * @param profileId a <code>long</code> providing the ID for copilot profile.
+     * @param winnerSubmissionId the winner submission id.
+     * @since 1.2
      */
-    public void setProfileId(long profileId) {
-        this.profileId = profileId;
+    public void setWinnerSubmissionId(long winnerSubmissionId) {
+        this.winnerSubmissionId = winnerSubmissionId;
+    }
+
+    /**
+     * Gets the second place submission id.
+     *
+     * @return the second place submission id.
+     * @since 1.2
+     */
+    public long getSecondPlaceSubmissionId() {
+        return secondPlaceSubmissionId;
+    }
+
+    /**
+     * Sets the second place submission id.
+     *
+     * @param secondPlaceSubmissionId the second place submission id.
+     * @since 1.2
+     */
+    public void setSecondPlaceSubmissionId(long secondPlaceSubmissionId) {
+        this.secondPlaceSubmissionId = secondPlaceSubmissionId;
     }
 
     /**
@@ -152,24 +190,6 @@ public class SelectCopilotAction extends BaseDirectStrutsAction {
      */
     public void setTcDirectProjectId(long tcDirectProjectId) {
         this.tcDirectProjectId = tcDirectProjectId;
-    }
-
-    /**
-     * <p>Gets the submission ID.</p>
-     *
-     * @return a <code>long</code> providing the submission ID.
-     */
-    public long getSubmissionId() {
-        return this.submissionId;
-    }
-
-    /**
-     * <p>Sets the submission ID.</p>
-     *
-     * @param submissionId a <code>long</code> providing the submission ID.
-     */
-    public void setSubmissionId(long submissionId) {
-        this.submissionId = submissionId;
     }
 
     /**

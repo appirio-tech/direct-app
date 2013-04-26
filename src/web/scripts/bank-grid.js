@@ -23,9 +23,13 @@
  * Version 1.0.4 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0) Change notes:
  * - Remove setting the href attribute, click the link will open the Wireframe Viewer Modal Window.
  * </p>
- * 
- * @author minhu, TCSASSEMBLER
- * @version 1.0.4
+ *
+ * <p>
+ * Version 1.0.5 (BUGR 8472) Change notes:
+ * - Add call to decodeURIComponent()
+ * </p>
+ * @author minhu, TCSASSEMBLER, TMALBONPH
+ * @version 1.0.5
  */
  
 var listLikes = new Array();
@@ -177,6 +181,7 @@ $(document).ready(function(){
 			cdata = {};
 			cdata[contestId] = {};
 		} else {
+			cdata = decodeURIComponent(cdata);
 			cdata = jQuery.parseJSON(cdata);
 			if (!cdata[contestId]) {
 				cdata[contestId] = {};

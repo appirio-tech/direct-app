@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.1
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
+  - - Adds new buttons for the new copilot posting winners pickup flow
   -
   - Description: This page renders the copilot posting submissions comparison mode.
 --%>
@@ -150,7 +153,6 @@
                 <li class="positiveFeedback <s:if test='positiveFeedbackNumber <= 0'>zeroPositiveFeedback</s:if>">${positiveFeedbackNumber}</li>
                 <li class="negativeFeedback <s:if test='negativeFeedbackNumber <= 0'>zeroNegativeFeedback</s:if>">${negativeFeedbackNumber}</li>
             </ul>
-
             <c:choose>
                 <c:when test="${userId eq firstPlaceWinner.id}">
                     <span class="ribbonCP"></span>
@@ -214,12 +216,9 @@
             <s:if test="inReviewPhase">
                 <c:choose>
                     <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
-                        <div class="unPickedCP row">
-                            <a href="javascript:;" class="btn btn-red btn-pickup"><span class="bRt">
-                            <span class="bMid"> <span class="ico"> CHOOSE</span></span></span></a>
-                            <br/>
-                            <a href="javascript:;" class="btn btn-white btn-pickup-rup" style="display:none"><span
-                            class="bRt"> <span class="bMid"> CHOOSE AS RUNNER-UP</span></span></a>
+                        <div class="pickCPBox">
+                            <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotPrimary">1</a></div>
+                            <div class="pickCopilotCell"><a href="javascript:;" class="pickCopilotSecondary">2</a></div>
                         </div>
                         <div class="pickedCP">
                             <span class="pikedAsCP">PICKED AS COPILOT</span>
@@ -285,6 +284,7 @@
 														</span>
     </div>
 </div>
+
 <!-- /.caption -->
 <!-- /.compare-table -->
 
@@ -367,11 +367,26 @@
 
     </div>
 </div>
+
+
 <!-- /.trackFlyout -->
 </div>
+
 <!-- End .container2Content_det -->
 </div>
+
 </div>
+<s:if test="!allSubmissionReviewed">
+    <div class="copilotPostingCommand">
+        <a class="btn btn-white btnForgiveChooseCopilot" href="#"><span class="bRt"><span
+                class="bMid"><span
+                class="ico">I DON'T WANT TO CHOOSE ANY COPILOT</span></span></span></a>
+        <a class="btn btn-red btnConfirmPlacements disabled" href="#"><span
+                class="bRt"><span class="bMid"><span
+                class="ico">CONFIRM PLACEMENTS</span></span></span></a>
+    </div>
+
+</s:if>
 </div>
 </div>
 <!-- end .getCopilotsStep -->
