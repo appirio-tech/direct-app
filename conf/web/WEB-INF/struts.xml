@@ -40,6 +40,7 @@
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
             <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
             <interceptor name="securityGroupsTcStaffOnlyInterceptor" class="securityGroupsTcStaffOnlyInterceptor"/>
+            <interceptor name="memberPaymentAuthorizationInterceptor" class="com.topcoder.direct.payments.interceptor.MemberPaymentAuthorizationInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
@@ -139,6 +140,13 @@
         <interceptor-ref name="authnInterceptor"/>
         <interceptor-ref name="contestFeeAccessInterceptor"/>
             </interceptor-stack>
+            
+            <interceptor-stack name="memberPaymentStack">
+                <interceptor-ref name="baseStack"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="memberPaymentAuthorizationInterceptor"/>
+            </interceptor-stack>            
         </interceptors>
 
         <default-interceptor-ref name="baseStack"/>
@@ -1993,6 +2001,48 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+    </package>
+    
+    <package name="payments" namespace="/payments" extends="base">
+        <default-interceptor-ref name="memberPaymentStack"/>
+        <action name="overview" class="paymentOverviewAction">
+            <result name="success">/WEB-INF/payments/payment.jsp</result>
+        </action>
+        
+        <action name="overview-print" class="paymentOverviewAction">
+            <result name="success">/WEB-INF/payments/payment-print.jsp</result>
+        </action>        
+        
+        <action name="pullablePayments" class="pullablePaymentsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
+        <action name="paymentStatus" class="paymentStatusDetailsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>        
+        
+        <action name="potentialCashOutFlow" class="potentialCashOutFlowDetailsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>        
+        
+        <action name="paymentsHistory" class="paymentsHistoryAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>   
+        
+        <action name="topMemberPayments" class="topMemberPaymentsStatsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>           
+
+        <action name="memberPaymentStats" class="memberPaymentStatsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>           
+        
     </package>
 
 </struts>

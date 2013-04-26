@@ -1289,11 +1289,51 @@
         <property name="payoneerService" ref="payoneerService"/>
     </bean>
     
-    <bean id="paymentsService" class="com.topcoder.direct.payments.services.impl.PaymentsServiceImpl">
-        <property name="paymentMethodID" value="@paymentsService.paymentMethodID@"/>
-    </bean>
+    <bean id="paymentsService" class="com.topcoder.direct.payments.services.impl.PaymentsServiceImpl"/>
     
     <bean id="paymentStatsService" class="com.topcoder.direct.payments.services.impl.PaymentStatsServiceImpl">
         <property name="defaultResultLimit" value="@paymemtStatsService.resultLimit@"/>
     </bean>
+    
+    <bean id="paymentLogger" class="com.topcoder.util.log.LogManager"
+        factory-method="getLog">
+        <constructor-arg value="paymentLogger" />
+    </bean>
+    
+    <bean id="basePaymentAction"
+          class="com.topcoder.direct.payments.actions.BaseAction"
+          abstract="true">
+        <property name="logger" ref="paymentLogger"/>
+    </bean>    
+    
+    <bean id="pullablePaymentsAction" class="com.topcoder.direct.payments.actions.PullablePaymentsAction" parent="basePaymentAction">
+        <property name="pullablePaymentsService" ref="pullablePaymentsService"/>
+    </bean>
+    
+    <bean id="paymentStatusDetailsAction" class="com.topcoder.direct.payments.actions.PaymentStatusDetailsAction" parent="basePaymentAction">
+        <property name="paymentsService" ref="paymentsService"/>
+        <property name="paymentsByStatusByDays" value="@paymentsByStatusByDays@"/>
+    </bean>    
+    
+    <bean id="potentialCashOutFlowDetailsAction" class="com.topcoder.direct.payments.actions.PotentialCashOutFlowDetailsAction" parent="basePaymentAction">
+        <property name="paymentsService" ref="paymentsService"/>
+        <property name="paypalPaymentMethodId" value="@paypalPaymentMethodId@"/>
+        <property name="payoneerPaymentMethodId" value="@payoneerPaymentMethodId@"/>
+        <property name="westernPaymentMethodId" value="@westernPaymentMethodId@"/>
+    </bean>     
+    
+    <bean id="paymentsHistoryAction" class="com.topcoder.direct.payments.actions.PaymentsHistoryAction" parent="basePaymentAction">
+        <property name="paymentsService" ref="paymentsService"/>
+    </bean>        
+    
+    <bean id="topMemberPaymentsStatsAction" class="com.topcoder.direct.payments.actions.TopMemberPaymentsStatsAction" parent="basePaymentAction">
+        <property name="paymentStatsService" ref="paymentStatsService"/>
+    </bean>        
+    
+    <bean id="memberPaymentStatsAction" class="com.topcoder.direct.payments.actions.MemberPaymentStatsAction" parent="basePaymentAction">
+        <property name="paymentStatsService" ref="paymentStatsService"/>
+    </bean>
+
+    <bean id="paymentOverviewAction" class="com.topcoder.direct.payments.actions.PaymentOverviewAction" parent="basePaymentAction"/>
+    
 </beans>
