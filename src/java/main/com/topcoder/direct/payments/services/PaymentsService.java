@@ -3,23 +3,26 @@
  */
 package com.topcoder.direct.payments.services;
 
+import com.topcoder.direct.payments.entities.*;
+
 import java.util.Date;
 import java.util.List;
-
-import com.topcoder.direct.payments.entities.CashOutflowPotentialResult;
-import com.topcoder.direct.payments.entities.PaymentHistoryCriteria;
-import com.topcoder.direct.payments.entities.PaymentHistoryResult;
-import com.topcoder.direct.payments.entities.PaymentsByStatus;
-import com.topcoder.direct.payments.entities.PaymentsByStatusResult;
+import java.util.Map;
 
 /**
  * <p>
  * This service is responsible for providing member payments by status,
  * potential member payments and payment history.
  * </p>
- * 
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Direct Member Payments Dashboard
+ *
+ * <p>
+ * Version 1.1 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * - update method{@link #getPotentialMemberPayments(java.util.Date, java.util.Date, int[])}
+ *      to accept multiple payment method ids.
+ * </p>
+ *
+ * @author TCSASSEMBLER, tangzx
+ * @version 1.1 (Module Assembly - TopCoder Direct Member Payments Dashboard
  *          Backend Assembly)
  * @since 1.0
  */
@@ -47,16 +50,19 @@ public interface PaymentsService {
      * This method is responsible for retrieving member potential payments for
      * given start and end date.
      * </p>
-     * 
+     *
      * @param startDate
      *            start date
      * @param endDate
      *            end date
-     * @return list of {@link CashOutflowPotentialResult} instances.
+     * @param paymentMethods
+     *            payment methods
+     * @return Map of {@link Integer} to {@link CashOutflowPotentialResult} instances.
      * @throws ServiceException
      *             if a generic error occurs
      */
-    public List<CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate)
+    public Map<Integer, CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate,
+                                                                               int[] paymentMethods)
         throws ServiceException;
 
     /**

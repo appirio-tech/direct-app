@@ -861,10 +861,20 @@ import java.util.Set;
  * </ol>
  * <p>
  *
+ * <p>
+ * Version 6.10 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0) change notes:
+ * <ol>
+ *     <li>Added method {@link #concatenate(int[], String)}.</li>
+ *     <li>Updated method {@link #getPotentialMemberPayments(java.util.Date, java.util.Date, int[])}.</li>
+ *     <li>Updated method {@link #getPaymentsTrends(PaymentTrendSearchCriteria)}</li>
+ *     <li>Updated method {@link #getTopMemberPayments(TopMemberPaymentCriteria)}</li>
+ * </ol>
+ * <p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad
- * @version 6.8
+ * @author bugbuka, leo_lol, morehappiness, notpad, TCSASSEMBLER
+ * @version 6.10
  * @since 1.0
  */
 public class DataProvider {
@@ -4876,7 +4886,6 @@ public class DataProvider {
             queryName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
         }
 
-
         if(contestId > 0) {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
@@ -5380,6 +5389,25 @@ public class DataProvider {
     private static String concatenate(long[] items, String delimiter) {
         StringBuilder b = new StringBuilder();
         for (Long id : items) {
+            if (b.length() > 0) {
+                b.append(delimiter);
+            }
+            b.append(id);
+        }
+        return b.toString();
+    }
+
+    /**
+     * <p>Build a string concatenating the specified values separated with specified delimiter.</p>
+     *
+     * @param items a <code>int</code> array providing the values to be concatenated.
+     * @param delimiter a <code>String</code> providing the delimiter to be inserted between concatenated items.
+     * @return a <code>String</code> providing the concatenated item values.
+     * @since 6.10
+     */
+    private static String concatenate(int[] items, String delimiter) {
+        StringBuilder b = new StringBuilder();
+        for (int id : items) {
             if (b.length() > 0) {
                 b.append(delimiter);
             }
@@ -7950,16 +7978,20 @@ public class DataProvider {
      *            start date
      * @param endDate
      *            end date
-     * @param paymentMethodIdParameter
-     *            the payment method ID
-     * @return a list of {@link CashOutflowPotentialResult} instances.
+     * @param paymentMethodIds
+     *            the payment method IDs
+     * @return Map of {@link Integer} to {@link CashOutflowPotentialResult} instances.
      * @throws Exception
      *             if a generic error occurs
      */
-    public static List<CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate, String paymentMethodIdParameter) 
+    public static Map<Integer, CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate,
+                                                                              int[] paymentMethodIds)
         throws Exception {
         if (startDate == null || endDate == null) {
             throw new IllegalArgumentException("Specified dates should not be null");
+        }
+        if (paymentMethodIds == null || paymentMethodIds.length == 0) {
+            throw new IllegalArgumentException("payment method ids should not be null/empty");
         }
 
         final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -7969,12 +8001,16 @@ public class DataProvider {
         request.setContentHandle(queryName);
         request.setProperty("sda", dateFormatter.format(startDate));
         request.setProperty("ed", dateFormatter.format(endDate));
-        request.setProperty("paymentMethodId", String.valueOf(paymentMethodIdParameter));        
+        request.setProperty("paymentMethodIds", concatenate(paymentMethodIds, ","));
 
-        List<CashOutflowPotential> paypalPotential = new ArrayList<CashOutflowPotential>();
-        List<CashOutflowPotential> payoneerPotential = new ArrayList<CashOutflowPotential>();
-        List<CashOutflowPotential> westernUnionPotential = new ArrayList<CashOutflowPotential>();
         final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
+
+        Map<Integer, CashOutflowPotentialResult> ret = new HashMap<Integer, CashOutflowPotentialResult>();
+        for (int method : paymentMethodIds) {
+            CashOutflowPotentialResult cashOutflowPotentialResult = new CashOutflowPotentialResult();
+            cashOutflowPotentialResult.setItems(new ArrayList<CashOutflowPotential>());
+            ret.put(method, cashOutflowPotentialResult);
+        }
 
         for (int i = 0; i < resultSet.size(); i++) {
             double amount = resultSet.getDoubleItem(i, "net_amount");
@@ -7984,33 +8020,16 @@ public class DataProvider {
             CashOutflowPotential potential = new CashOutflowPotential();
             potential.setDueDate(dueDate);
             potential.setPayments(amount);
-            if (paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
-                paypalPotential.add(potential);
-            } else if (paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
-                payoneerPotential.add(potential);
-            } else if (paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
-                westernUnionPotential.add(potential);
+
+            if (!ret.containsKey(paymentMethodId)) {
+                CashOutflowPotentialResult cashOutflowPotentialResult = new CashOutflowPotentialResult();
+                cashOutflowPotentialResult.setItems(new ArrayList<CashOutflowPotential>());
+                ret.put(paymentMethodId, cashOutflowPotentialResult);
             }
+            ret.get(paymentMethodId).getItems().add(potential);
         }
 
-        List<CashOutflowPotentialResult> result = new ArrayList<CashOutflowPotentialResult>();
-
-        CashOutflowPotentialResult paypalResult = new CashOutflowPotentialResult();
-        paypalResult.setPaymentMethod(PaymentMethod.PAYPAL);
-        paypalResult.setItems(paypalPotential);
-        result.add(paypalResult);
-
-        CashOutflowPotentialResult payoneerResult = new CashOutflowPotentialResult();
-        payoneerResult.setPaymentMethod(PaymentMethod.PAYONEER);
-        payoneerResult.setItems(payoneerPotential);
-        result.add(payoneerResult);
-
-        CashOutflowPotentialResult westernUnionResult = new CashOutflowPotentialResult();
-        westernUnionResult.setPaymentMethod(PaymentMethod.WESTERN_UNION);
-        westernUnionResult.setItems(westernUnionPotential);
-        result.add(westernUnionResult);
-
-        return result;
+        return ret;
     }
 
     /**
@@ -8130,10 +8149,12 @@ public class DataProvider {
       for(int i=0;i<resultSet.size();i++) {
         double amount = resultSet.getDoubleItem(i, "net_amount");
         Date datePaid = resultSet.getTimestampItem(i, "date_paid");
+        int paymentMethodId = resultSet.getIntItem(i, "payment_method_id");
 
         PaymentTrend trend = new PaymentTrend();
         trend.setPayments(amount);
         trend.setCreatedOrPaidDate(datePaid);
+        trend.setPaymentMethodId(paymentMethodId);
         paymentTrends.add(trend);
       }
     }
@@ -8171,10 +8192,21 @@ public class DataProvider {
       for(int i=0;i<resultSet.size();i++) {
         double amount = resultSet.getDoubleItem(i, "net_amount");
         String handle = resultSet.getStringItem(i, "handle");
+        long userId = resultSet.getLongItem(i, "user_id");
+        Date startDate = resultSet.getTimestampItem(i, "min_create_date");
 
         TopMemberPayment payment = new TopMemberPayment();
         payment.setAmount(amount);
         payment.setHandle(handle);
+        payment.setUserId(userId);
+        payment.setStartDate(startDate);
+        payment.setEndDate(new Date());
+        payment.setMemberLink(HandleTag.getLink(userId, "", "", null, null,
+                new String[]{"coderTextOrange", "coderTextWhite", "coderTextGray", "coderTextGreen",
+                        "coderTextBlue", "coderTextYellow", "coderTextRed"},
+                new String[]{"coderTextOrange", "coderTextBlack", "coderTextGray", "coderTextGreen",
+                        "coderTextBlue", "coderTextYellow", "coderTextRed"},
+                false));
 
         topMemberPayments.add(payment);
       }

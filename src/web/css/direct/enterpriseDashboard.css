@@ -26,8 +26,11 @@
 * Version 1.7 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
 * - Add styles to fix bugs of release 2
 *
-* Author: GreatKevin, hanshuai, GreatKevin
-* Version 1.7
+* Version 1.8 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+* - Add styles for payment slide bar.
+*
+* Author: GreatKevin, hanshuai, GreatKevin, tangzx
+* Version 1.8
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -235,7 +238,7 @@ input{
 	}
 	
 	#silderBar ul{
-		border-bottom:#bdbdbd solid 1px;
+		/*border-bottom:#bdbdbd solid 1px;*/
 		}
 		
 	#silderBar ul.lastActive{
@@ -266,6 +269,9 @@ input{
 			text-indent:-9999px;
 			background-repeat:no-repeat;
 			}
+		#silderBar li.active a {
+            border-top: #bdbdbd solid 1px;
+        }            
 		
 		#silderBar li a.overviewIcon{
 			background-image:url(/images/icon_overview.png);
@@ -276,6 +282,9 @@ input{
 		#silderBar li.active a.overviewIcon{
 			background-position:center -33px;
 			}
+        #silderBar li.active a.overviewIcon {
+            border-top-width: 0;
+        }    
 			
 		#silderBar li a.financialsIcon{
 			background-image:url(/images/icon_financials.png);
@@ -356,6 +365,20 @@ input{
 		#silderBar li.active a.latestActivityIcon{
 			background-position:center -34px;
 			}
+                    
+        #silderBar li a.memberPaymentIcon {
+            background-image: url(/images/icon_member_payments.png);
+            background-position: center 10px;
+            border-bottom: #bdbdbd solid 1px;
+        }
+        #silderBar li a.memberPaymentIcon:hover,
+        #silderBar li.active a.memberPaymentIcon {
+            background-position: center -37px;
+        }
+        #silderBar li.active a.memberPaymentIcon {
+            border-bottom-width: 0;
+            border-top-width: 0;
+        }
 			
 /* mainSection */
 #mainSection{

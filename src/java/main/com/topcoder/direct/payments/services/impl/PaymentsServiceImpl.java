@@ -3,20 +3,20 @@
  */
 package com.topcoder.direct.payments.services.impl;
 
-import java.util.Date;
-import java.util.List;
-
 import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.direct.payments.entities.CashOutflowPotentialResult;
 import com.topcoder.direct.payments.entities.PaymentHistoryCriteria;
 import com.topcoder.direct.payments.entities.PaymentHistoryResult;
 import com.topcoder.direct.payments.entities.PaymentsByStatus;
 import com.topcoder.direct.payments.entities.PaymentsByStatusResult;
-import com.topcoder.direct.payments.services.ConfigurationException;
 import com.topcoder.direct.payments.services.PaymentsService;
 import com.topcoder.direct.payments.services.PersistenceException;
 import com.topcoder.direct.payments.services.ServiceException;
 import com.topcoder.direct.services.view.util.DataProvider;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,9 +28,15 @@ import com.topcoder.direct.services.view.util.DataProvider;
  * <strong>Thread Safety: </strong> This class is immutable and thus is thread
  * safe.
  * </p>
- * 
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Direct Member Payments Dashboard
+ *
+ * <p>
+ * Version 1.1 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * - update method{@link #getPotentialMemberPayments(java.util.Date, java.util.Date, int[])}
+ *      to accept multiple payment method ids.
+ * </p>
+ *
+ * @author TCSASSEMBLER, tangzx
+ * @version 1.1 (Module Assembly - TopCoder Direct Member Payments Dashboard
  *          Backend Assembly)
  * @since 1.0
  */
@@ -40,11 +46,6 @@ public class PaymentsServiceImpl extends BaseService implements PaymentsService 
      * Stands for the name of this class.
      */
     private static final String CLASS_NAME = "PaymentsServiceImpl";
-
-    /**
-     * The payment method ID.
-     */
-    private String paymentMethodID;
 
     /**
      * <p>
@@ -86,27 +87,33 @@ public class PaymentsServiceImpl extends BaseService implements PaymentsService 
      * given start and end date.
      * </p>
      * 
+     *
+     *
      * @param startDate
      *            start date
      * @param endDate
      *            end date
-     * @return list of {@link CashOutflowPotentialResult} instances.
+     * @param paymentMethods
+     *            payment methods
+     * @return Map of {@link Integer} to {@link CashOutflowPotentialResult} instances.
      * @throws ServiceException
      *             if a generic error occurs
      */
-    public List<CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate)
+    public Map<Integer, CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate,
+                                                                               int[] paymentMethods)
         throws ServiceException {
-        final String signature = CLASS_NAME + "#getPotentialMemberPayments(startDate, endDate)";
+        final String signature = CLASS_NAME + "#getPotentialMemberPayments(startDate, endDate, paymentMethods)";
 
-        LoggingWrapperUtility.logEntrance(getLogger(), signature, new String[] {"startDate", "endDate"}, new Object[] {
-                startDate, endDate});
+        LoggingWrapperUtility.logEntrance(getLogger(), signature,
+                new String[] {"startDate", "endDate", "paymentMethods"},
+                new Object[] {startDate, endDate, paymentMethods});
         if (null == endDate) {
             endDate = new Date();
         }
         checkStartAndEndDate(getLogger(), startDate, endDate, signature);
         try {
-            List<CashOutflowPotentialResult> result = DataProvider.getPotentialMemberPayments(startDate, endDate,
-                paymentMethodID);
+            Map<Integer, CashOutflowPotentialResult> result = DataProvider.getPotentialMemberPayments(startDate,
+                    endDate, paymentMethods);
             LoggingWrapperUtility.logExit(getLogger(), signature, new Object[] {result});
             return result;
         } catch (Exception e) {
@@ -155,28 +162,6 @@ public class PaymentsServiceImpl extends BaseService implements PaymentsService 
      */
     @Override
     protected void checkConfiguration() {
-        if (null == paymentMethodID) {
-            throw new ConfigurationException(
-                "Payments Service is not set correctly. Missing definition for 'paymentMethodID' parameter");
-        }
-    }
-
-    /**
-     * Sets paymentMethodID.
-     * 
-     * @param paymentMethodID
-     *            the paymentMethodID to set
-     */
-    public void setPaymentMethodID(String paymentMethodID) {
-        this.paymentMethodID = paymentMethodID;
-    }
-
-    /**
-     * Gets paymentMethodID.
-     * 
-     * @return the paymentMethodID
-     */
-    public String getPaymentMethodID() {
-        return paymentMethodID;
+        // do nothing
     }
 }

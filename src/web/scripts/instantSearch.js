@@ -4,14 +4,22 @@
  * This javascript handles the instant search and search all.
  *
  * Version 1.0 (Module Assembly - TopCoder Cockpit Instant Search)
-
- * Author: TCSASSEMBLER
+ *
+ * Version 1.1 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * - Fix the issue if instance search input is not there
+ *
+ * @Author TCSASSEMBLER, TCSASSEMBLER
+ * @Version 1.1
  */
 var instantSearchDelay = 500;
 var searcherId = 0;
 var searcherLength = 0;
 
 function loadInstantSearch() {
+    if ($('.instantSearch input').length == 0) {
+        return;
+    }
+
     var q = $('.instantSearch input').val();
     if (q.length >= 3 && q != instantSearchHint && q.length !== searcherLength) {
         searcherLength = q.length;

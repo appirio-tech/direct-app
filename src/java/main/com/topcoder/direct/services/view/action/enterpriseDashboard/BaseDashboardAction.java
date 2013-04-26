@@ -44,8 +44,15 @@ import java.util.Set;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.2
+ * <p>
+ * Version 1.3 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * <ul>
+ *     <li>Adds properties {@link #canVisitPayment} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, tangzx
+ * @version 1.3
  */
 public class BaseDashboardAction extends BaseDirectStrutsAction {
 
@@ -90,6 +97,13 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
      * The default project status used for filtering - Active is default.
      */
     private long defaultProjectStatus = 1L;
+
+    /**
+     * Indicates whether current user has permission to visit payment page.
+     *
+     * @since 1.3
+     */
+    private boolean canVisitPayment;
 
     /**
      * The form data of the action.
@@ -258,6 +272,10 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
     @Override
     protected void executeAction() throws Exception {
         final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        // check whether current user can visit payment page
+        canVisitPayment = currentUser != null && DirectUtils.isTCAccounting(currentUser);
+
         // prepare the available clients for the filter panel
         setClients(DirectUtils.getAllClients(currentUser));
 
@@ -395,5 +413,15 @@ public class BaseDashboardAction extends BaseDirectStrutsAction {
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Get can visit payment page value.
+     *
+     * @return whether can visit payment page
+     * @since 1.3
+     */
+    public boolean isCanVisitPayment() {
+        return canVisitPayment;
     }
 }

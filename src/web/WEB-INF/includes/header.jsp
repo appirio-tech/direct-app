@@ -45,7 +45,8 @@
   - - Change the cursor style for header logo 
   - Version 2.7 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph) change notes:
   - - Add link to TopCoder Platform Specialists report, the report can only be accessed by TC staff.
-  - Version 2.6 (Release Assembly - TopCoder Cockpit - Billing Management) change notes: add billing tab
+  - Version 2.8 (Release Assembly - TopCoder Cockpit - Billing Management) change notes: add billing tab
+  - Version 2.9 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0) change notes: add member payment item
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -155,6 +156,9 @@
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                             <a href="<s:url action="platformSpecialistsReport" namespace="/"/>">Platform Specialists Report</a>
                         </c:if>
+                        <c:if test="${tcdirect:isTCAccounting()}">
+                            <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
+                        </c:if>                        
                     </div>
                 </li>
                 <li>
@@ -217,6 +221,9 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
+                        <c:if test="${tcdirect:isTCAccounting()}">
+                            <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
+                        </c:if> 
                     </div>
                 </li>
 
@@ -281,6 +288,9 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
+                        <c:if test="${tcdirect:isTCAccounting()}">
+                            <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
+                        </c:if> 
                     </div>
                 </li>
 
@@ -346,6 +356,9 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
+                        <c:if test="${tcdirect:isTCAccounting()}">
+                            <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
+                        </c:if> 
                     </div>
                 </li>
 
@@ -407,6 +420,9 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
+                        <c:if test="${tcdirect:isTCAccounting()}">
+                            <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
+                        </c:if> 
                     </div>
                 </li>
 

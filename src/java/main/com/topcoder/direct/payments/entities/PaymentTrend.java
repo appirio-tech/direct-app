@@ -13,9 +13,14 @@ import java.util.Date;
  * <p>
  * <strong>Thread Safety: </strong> This class is mutable and not thread safe.
  * </p>
- * 
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Direct Member Payments Dashboard
+ *
+ * <p>
+ * Version 1.1 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * - add paymentMethodId field and corresponding get/set method.
+ * </p>
+ *
+ * @author TCSASSEMBLER, tangzx
+ * @version 1.1 (Module Assembly - TopCoder Direct Member Payments Dashboard
  *          Backend Assembly)
  * @since 1.0
  */
@@ -30,6 +35,13 @@ public class PaymentTrend {
      * Stands for created or paid date.
      */
     private Date createdOrPaidDate;
+
+    /**
+     * The payment method id.
+     *
+     * @since 1.1
+     */
+    private int paymentMethodId;
 
     /**
      * The default empty ctor.
@@ -84,4 +96,23 @@ public class PaymentTrend {
         this.createdOrPaidDate = createdOrPaidDate;
     }
 
+    /**
+     * Set the payment method id.
+     *
+     * @return the payment method id.
+     * @since 1.1
+     */
+    public int getPaymentMethodId() {
+        return paymentMethodId;
+    }
+
+    /**
+     * Set the payment method id.
+     *
+     * @param paymentMethodId the payment method id.
+     * @since 1.1
+     */
+    public void setPaymentMethodId(int paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
+    }
 }

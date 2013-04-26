@@ -35,6 +35,7 @@
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'analysis'}">class="active"</c:if>><a href="<s:url action="analysis" namespace="/enterpriseDashboard"/>" class="analyticsIcon filterSynEnabled" title="Analytics" rel="Gain insight into your platform usage.  See average cost, duration, fulfillment, volume, etc.">Analytics</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'activeContests'}">class="active"</c:if>><a href='<s:url action="activeContests" namespace="/enterpriseDashboard"/>' class="activeContestIcon" title="Active Contests" rel="See your current activity.">Active Contests</a></li>
         <li><a href="javascript:;" class="latestActivityIcon" title="Latest Activity" rel="Your recently completed activity.">Latest Activity</a></li>
+        <li></li>
     </ul>
 </div>
 <!-- End #siderBar -->

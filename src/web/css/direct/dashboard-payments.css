@@ -1,0 +1,486 @@
+/*
+ * CSS for dashboard payments.
+ * 
+ *
+ * Version 1.0 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
+ * - First version of style for payment dashboard page.
+ * 
+ * Author: TCSASSEMBLER
+ * Version 1.0
+ */
+/* utilityBtns */
+.paymentPage #content {
+    min-width: 1300px;
+}
+.dashboardPaymentArea h2{
+	position: relative;
+	overflow: hidden;
+}
+.dashboardPaymentArea .utilityBtns {
+    width: auto;
+    display: block;
+    padding: 0;
+	position: absolute;
+	bottom: 12px;
+	right: 0;
+}
+
+.dashboardPaymentArea .utilityBtns a {
+    width: 20px;
+    height: 21px;
+    float: left;
+    display: inline;
+    margin-left: 12px;
+    text-indent: -9999px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+.dashboardPaymentArea .utilityBtns a.xls {
+    background-image: url(/images/icon_xls.png);
+}
+
+.dashboardPaymentArea .utilityBtns a.pdf {
+    background-image: url(/images/icon_pdf.png);
+}
+
+.dashboardPaymentArea .utilityBtns a.print {
+    background-image: url(/images/icon_print.png);
+}
+
+.dashboardPaymentArea .utilityBtns a:hover {
+    background-position: 0 -21px;
+}
+
+/*layout*/
+#mainSection .leftColumnTwoThird {
+    display: inline;
+    float: left;
+    width: 66%;
+}
+#mainSection .leftColumnTwoThirdLeft {
+    display: inline;
+    float: left;
+    width: 49%;
+}
+#mainSection .leftColumnTwoThirdRight {
+    display: inline;
+    float: right;
+    width: 48%;
+}
+#mainSection .leftColumnTwoThirdWhole {
+    display: inline;
+    float: left;
+	clear: left;
+	width: 100%;
+	overflow: hidden;
+}
+#mainSection .rightColumnOneThird {
+    display: inline;
+    float: right;
+    width: 32%;
+}
+/* Total Spend */
+#mainSection .memberPaymentBlockContainer {
+    margin: 0;
+	padding: 0 0 20px 0;
+    position: relative;
+	overflow: hidden;
+}
+/* title */
+#mainSection .memberPaymentBlockContainer .projectTitle {
+    height: 49px;
+    border: #bdbdbd solid 1px;
+    border-bottom: 0;
+    background: url(/images/bg_grey.png) repeat-x left top;
+}
+#mainSection .memberPaymentBlockContainer .projectTitle h3 {
+    width: auto;
+    float: left;
+    display: inline;
+    margin: 0 12px 0 10px;
+    padding: 0 0 0 41px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 48px;
+    background: url(/images/icon_payments_block_title.png) 0 0 no-repeat;
+}
+
+#mainSection .memberPaymentPaymentsBlock .projectTitle h3 {
+    background-position: 0 0;
+}
+#mainSection .memberPaymentCashOutflowBlock .projectTitle h3 {
+    background-position: 0 -80px;
+}
+#mainSection .memberPaymentByMethodBlock .projectTitle h3 {
+    background-position: 0 -160px;
+}
+#mainSection .memberPaymentAverageTotalBlock .projectTitle h3 {
+    background-position: 0 -240px;
+}
+#mainSection .memberPaymentStatusAllBlock .projectTitle h3 {
+    background-position: 0 -320px;
+}
+#mainSection .memberPaymentTopTenBlock .projectTitle h3 {
+    background-position: 0 -400px;
+}
+
+#mainSection .memberPaymentBlockContainer .projectTitle a.icon {
+    width: 18px;
+    height: 18px;
+    float: left;
+    display: inline;
+    margin: 16px 0 0 0;
+    text-indent: -9999px;
+    background-image: url(/images/icon_i.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+#mainSection .memberPaymentBlockContainer .projectTitle a.icon:hover {
+    background-position: 0 -18px;
+}
+
+#mainSection .memberPaymentBlockContainer .projectTitle a.viewAllLink {
+    width: auto;
+    float: right;
+    display: inline;
+    padding: 0 0 0 14px;
+    margin: 0 14px 0 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ff0000;
+    line-height: 48px;
+    text-decoration: none;
+    background-image: url(/images/icon_view_all.png);
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    bottom: auto;
+    position: static;
+    right: auto;
+}
+
+#mainSection .memberPaymentBlockContainer .projectTitle a.viewAllLink:hover {
+    text-decoration: underline;
+}
+
+/* table */
+#mainSection .memberPaymentBlockContainer table {
+    width: 100%;
+    table-layout: fixed;
+    border: #bdbdbd solid 1px;
+    border-collapse: collapse;
+    vertical-align: middle;
+	font-size: 12px;
+}
+#mainSection .memberPaymentBlockContainer table th {
+    height: 28px;
+    border: #bdbdbd solid 1px;
+    font-size: 12px;
+    vertical-align: middle;
+    table-layout: fixed;
+    background: url(/images/bg_table_th.png) repeat-x left top #e8e8e8;
+	text-align: center;
+	font-weight: bold;
+}
+#mainSection .memberPaymentBlockContainer table td {
+    height: 36px;
+    border: #bdbdbd solid 1px;
+    font-size: 12px;
+    vertical-align: middle;
+	text-align: center;
+}
+#mainSection .memberPaymentBlockContainer table td.greenTxt{
+	color: #1b9000;
+}
+#mainSection .memberPaymentBlockContainer table td.redTxt{
+	color: #d90304;
+}
+#mainSection .memberPaymentBlockContainer table .odd td {
+    background: #f8f8f8;
+}
+#mainSection .memberPaymentBlockContainer .noteRow{
+	padding: 7px 4px 0 0;
+}
+#mainSection .memberPaymentBlockContainer .noteRow .tblNote {
+	width: 130px;
+	display: inline-block;
+	padding-left: 10px;
+	font-weight: normal;
+	text-align: left;
+	background: url(/images/payment-lenged.png) 0 0 no-repeat;
+	white-space: nowrap;
+	line-height: 14px;
+	font-size: 11px;
+}
+#mainSection .memberPaymentBlockContainer .noteRow .redNote {
+	background-position: 0 -50px;
+	color: #cf0000;
+}
+#mainSection .memberPaymentBlockContainer .noteRow .greenNote {
+	background-position: 0 -100px;
+	color: #49a633;
+}
+#mainSection .memberPaymentBlockContainer table .totalRow td {
+	border-left-width: 0;
+	border-right-width: 0;
+	background-color: #eaeaea;
+	font-weight: bold;
+}
+#mainSection .memberPaymentBlockContainer #potentialCashOutflowTable .totalRow td,
+#mainSection .memberPaymentBlockContainer #statusOfPaymentsTable .totalRow td,
+#mainSection .memberPaymentBlockContainer #memberPaymentsTable .totalRow td,
+#mainSection .memberPaymentBlockContainer #paymentsByMethodTable .totalRow td {
+	font-size: 13px;
+	white-space: nowrap;
+}
+
+#mainSection .memberPaymentBlockContainer table .labelRow td {
+	background: url(/images/payment-lenged.png) 0 0 repeat-x;
+	height: 21px;
+}
+#mainSection .memberPaymentBlockContainer table .alignLeft {
+    text-align: left;
+    padding: 0 0 0 8px;
+}
+#mainSection .memberPaymentBlockContainer table .alignRight {
+    text-align: right;
+    padding: 0 6px 0 0;
+}
+#mainSection .memberPaymentByMethodBlock table th{
+	border-left-width: 0;
+	border-right-width: 0;
+}
+#mainSection .memberPaymentTopTenBlock .rowIdx{
+	width: 16px;
+	display:inline-block;
+	text-align: right;
+	color: #6b6b6b;
+}
+#mainSection .memberPaymentTopTenBlock .amountCol{
+	font-weight: bold;
+	font-size: 15px;
+}
+#mainSection .memberPaymentBlockContainer table td a {
+    text-decoration: none;
+}
+#mainSection .memberPaymentBlockContainer table td a:hover {
+    text-decoration: underline;
+}
+select.sortTop10{
+	width: 155px;	
+	height: 18px;
+}
+#mainSection #topMembeBalancesTable thead{
+	display: none;	
+}
+#mainSection .memberPaymentTopTenBlock .sortControl{
+	text-align: right;
+	padding: 5px 10px;
+	height: 18px;
+	line-height: 18px;
+	font-size: 12px;
+	font-weight:bold;
+	border: 1px solid #BDBDBD;
+	border-bottom-width: 0;
+	background: #E8E8E8 url("/images/bg_table_th.png") 0 0 repeat-x; 
+}
+/* corner */
+#mainSection .memberPaymentBlockContainer .corner {
+    width: 4px;
+    height: 4px;
+    overflow: hidden;
+    position: absolute;
+    background-image: url(/images/bg_corner.png);
+    background-repeat: no-repeat;
+}
+#mainSection .memberPaymentBlockContainer .tl {
+    top: 0;
+    left: 0;
+    background-position: 0 0;
+}
+#mainSection .memberPaymentBlockContainer .tr {
+    top: 0;
+    right: 0;
+    background-position: -4px 0;
+}
+
+/*Print page*/
+.paymentPrintVersion {
+	width: 1260px;
+	margin: 0 auto;
+    color: #333333;
+    font-family: Arial,Helvetica,sans-serif;
+}
+.paymentPrintVersion #mainSection{
+	margin: 0;	
+}
+.paymentPrintVersion #mainSection .leftColumnTwoThird {
+    width: 831px;
+}
+.paymentPrintVersion #mainSection .leftColumnTwoThirdLeft {
+    width: 403px;
+}
+.paymentPrintVersion #mainSection .leftColumnTwoThirdRight {
+    width: 403px;
+}
+.paymentPrintVersion #mainSection .rightColumnOneThird {
+    width: 403px;
+}
+.paymentPrintVersion #mainSection .memberPaymentBlockContainer{
+    padding-bottom: 25px;
+}
+.paymentPrintVersion #mainSection h2{
+	line-height: 44px;
+	padding-top: 45px;
+	position: relative;
+	border-bottom: 1px solid #333333;
+	margin-bottom: 44px;
+}
+.paymentPrintVersion #mainSection h2 .timeStamp{
+	line-height: 40px;
+	position: absolute;
+	top: 49px;
+	right: 0;
+	font-size: 16px;
+	line-height: 40px;
+}
+.paymentPrintVersion .footer{
+	line-height: 38px;
+	font-size: 16px;
+	border-top: 1px solid #333333;
+	padding-bottom: 70px;
+	margin-top: 166px;
+}
+
+
+
+/*Charts*/
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer{
+	border: 1px solid #bdbdbd;
+	height: 324px;
+	padding: 0 3px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .zoomControl{
+	height: 50px;
+	padding-left: 15px;
+	line-height: 50px;
+	font-size: 12px;
+	visibility: hidden;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .zoomControl label{
+	display: inline-block;
+	font-weight: bold;
+	margin-right: 6px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .zoomControl a{
+	margin-right: 7px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .zoomControl a:hover{
+	text-decoration: none;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer #averageTotalPayment{
+	height: 210px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper{
+	font-size: 11px;
+	height: 28px;
+	padding: 16px 20px 20px 53px;
+	line-height: 28px;
+	visibility: hidden;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper label {
+	color: #979797;
+	margin-right: 12px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul {
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul.payMethodLegend {
+	width: 305px;
+	padding-left: 15px;
+	background-color: #dbffa8;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.chartLegend {
+	float: left;
+	white-space: nowrap;
+	margin-right: 26px;
+	padding-left: 16px;
+	background: url(/images/payment-lenged.png) 0 0 no-repeat;
+	cursor: pointer;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.lastLegend{
+	margin-right: 0;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.skyblueLegend {
+	background-position: 0 -140px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.greenLegend {
+	background-position: 0 -190px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.blueLegend {
+	background-position: 0 -240px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.redLegend {
+	background-position: 0 -290px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.yellowLegend {
+	background-position: 0 -340px;
+}
+#mainSection .memberPaymentAverageTotalBlock .chartsContainer .chartLegendWrapper ul li.isChecked {
+	color: #999999;
+	background-position: 0 -390px;
+}
+/*Ajax loader size*/
+.noData{
+	text-align: center;	
+	line-height: 12px;
+	font-size: 12px;
+}
+#memberPaymentsTable .ajaxTableLoader, #memberPaymentsTable .noData{
+	height: 97px;
+	padding-top: 50px;
+}
+#potentialCashOutflowTable .ajaxTableLoader, #potentialCashOutflowTable .noData{
+	height: 97px;
+	padding-top: 50px;
+}
+#paymentsByMethodTable .ajaxTableLoader, #paymentsByMethodTable .noData{
+	height: 100px;
+	padding-top: 76px;
+}
+#averageTotalPayment .ajaxTableLoader, #averageTotalPayment .noData{
+	padding-top: 100px;	
+}
+#statusOfPaymentsTable .ajaxTableLoader, #statusOfPaymentsTable .noData{
+	height: 135px;
+	padding-top: 100px;
+}
+#topMembeBalancesTable .ajaxTableLoader, #topMembeBalancesTable .noData{
+	height: 237px;
+	padding-top: 169px;
+}
+#mainSection .memberPaymentTopTenBlock #topMembeBalancesTable tfoot .totalRow td {
+    font-size: 15px;
+}
+
+.chartZoomLink.selected {
+    text-decoration: none;
+}
+
+.memberPaymentAverageTotalBlock select {
+    width: 80px;
+}
+
+#mainSection .memberPaymentBlockContainer #memberPaymentsTable .even td,
+#mainSection .memberPaymentBlockContainer #potentialCashOutflowTable .even td,
+#mainSection .memberPaymentBlockContainer #paymentsByMethodTable .even td {
+    background: #f8f8f8;
+}
+#mainSection .memberPaymentBlockContainer #memberPaymentsTable .odd td,
+#mainSection .memberPaymentBlockContainer #potentialCashOutflowTable .odd td,
+#mainSection .memberPaymentBlockContainer #paymentsByMethodTable .odd td {
+    background: none;
+}
