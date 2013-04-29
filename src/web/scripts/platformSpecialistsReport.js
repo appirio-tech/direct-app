@@ -272,7 +272,7 @@ function renderPlatformSpecialistsReport() {
         url:  "getPlatformSpecialistsReportData",
         data: requestData,
         cache: false,
-        timeout:100000,
+        timeout:720000,
         dataType: 'json',
         success: function(jsonResult) {
             handleJsonResult2(jsonResult,
@@ -430,7 +430,7 @@ function getRequest() {
         request.userIds = $("#platformSpecialist").selectedValuesString();
         var options = $("a#platformSpecialist").next('.multiSelectOptions').find('INPUT:checkbox:checked').not('.optGroup, .selectAll');
         if (options.length >1) {
-            headerText = options.length + " platform specialists selected";
+            headerText = options.length + " SELECTED";
         } else if (options.length == 1 ) {
             headerText = options.parent().text();
         }
@@ -438,7 +438,7 @@ function getRequest() {
         request.userIds = $("#platformSpecialist").val();
 
         if(request.userIds.length > 1) {
-            headerText = request.userIds.length + " platform specialists selected";
+            headerText = request.userIds.length + " SELECTED";
         } else if (request.userIds.length == 1 ) {
             headerText = $("#platformSpecialist option:selected").text();
         }

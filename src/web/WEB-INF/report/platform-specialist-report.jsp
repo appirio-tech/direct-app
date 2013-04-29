@@ -50,13 +50,13 @@
                                 <div class="filterPanel">
                                     <div class="filterPanelHeader">
                                         <div class="filterPanelTitle">
-                                            <h3 id="headerPlatformSpecialist"></h3>
+                                            <h3>Member Spend</h3>
                                         </div>
 
                                     </div>
                                     <!-- header of filter panel -->
                                     <div class="filterPanelContainer">
-                                        <dl>
+                                        <dl><dt>Platform Specialists:</dt><dd style="background-position:right 15px;" id="headerPlatformSpecialist"></dd>
                                             <dt>Date Range :</dt>
                                             <dd class="last" id="headerDate"></dd>
                                         </dl>
