@@ -26,8 +26,11 @@
  * Version 1.7 (Release Assembly - TC Cockpit Operations Dashboard Improvements 2) changes:
  * - add risk filter handler and parseNumberFromString.
  *
- * @author GreatKevin, tangzx
- * @version 1.7
+ * Version 1.8 (Release Assembly - TC Cockpit Operations Dashboard Improvements 3) changes:
+ * - add duplication test before add value from contests dropdown.
+ *
+ * @author GreatKevin, tangzx, Fanazhe
+ * @version 1.8
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -167,7 +170,7 @@ var setupFilterPanel = function () {
         var value = $(this).html();
 
         if (handleName != "projectsResult") {
-            if (value != 'All Customers')
+            if (value != 'All Customers' && $('#customerFilter option[value=\'' + value + '\']').length == 0)
                 $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
         }
 
