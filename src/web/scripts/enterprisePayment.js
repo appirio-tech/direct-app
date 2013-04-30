@@ -188,7 +188,7 @@ function getFormattedNumber(number) {
     }
     ret = $.trim(ret);
     
-    return ret == '' ? '0' : ret;
+    return "$" + (ret == '' ? '0' : ret).replace(' ', ',');
 }
 
 /**
@@ -895,8 +895,8 @@ function loadTopTenMemberBalance() {
                             var row = $("<tr class='contentRow hide'>");
                             row.append($('<td><span class="rowIdx">' + (i+1) + '</span></td>'));
                             row.append($("<td class='alignLeft'>").html(item['memberLink']));
-                            var tmp = getFormattedNumber(item['amount']).replace(' ', ',');
-                            row.append($("<td class='alignRight amountCol'>").text('$' + tmp));
+                            var tmp = getFormattedNumber(item['amount']);
+                            row.append($("<td class='alignRight amountCol'>").text(tmp));
                             
                             row.append($("<td>").text(getDateString(item['startDate'].time) + ' - ' + getDateString(item['endDate'].time)));
                             $("#topMembeBalancesTable tbody").append(row);
@@ -937,4 +937,5 @@ function loadTopTenMemberBalance() {
 function getDateString(time) {
     return new Date(time).toString('MM.dd.yyyy');
 }
+
 
