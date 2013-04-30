@@ -236,7 +236,7 @@
     <div class="memberPaymentBlockContainer  memberPaymentStatusAllBlock">
         <div class="sectionInner">
             <div class="projectTitle">
-                <h3>Status of all 2012+ payments</h3>
+                <h3>Aging of all 2012+ payments</h3>
                 <a href="javascript:;" class="icon" rel="This table shows payments with different status">!</a>
             </div>
             <!-- title --><!-- container -->
