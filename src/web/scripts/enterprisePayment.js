@@ -908,7 +908,7 @@ function loadTopTenMemberBalance() {
                         row.append($('<td>'));
                         row.append($('<td class="alignLeft">').text('Total'));
                         
-                        total = '$' + getFormattedNumber(total).replace(' ', ',');
+                        total = getFormattedNumber(total).replace(' ', ',');
                         row.append($('<td class="alignRight">').text(total));
                         row.append($('<td>'));
                         
