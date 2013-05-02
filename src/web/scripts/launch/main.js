@@ -548,7 +548,8 @@ function updateContestFee( ) {
              }
         }         
           
-          resetSoftwarePrizes();
+          // resetSoftwarePrizes();
+          $('.customRadio').show();
           fillPrizes(billingProjectId);
     }
 }
