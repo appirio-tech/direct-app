@@ -4734,7 +4734,7 @@ public class DataProvider {
             costDTO.setStatus(row.getStringItem("contest_status").trim());
 
             // filter by status
-            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) {
+            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().trim().toLowerCase()))) {
                 continue;
             }
 
@@ -4798,7 +4798,7 @@ public class DataProvider {
             costDTO.setContest(contest);
             costDTO.setContestType(contestCategory);
 
-            if(costDTO.getStatus().equals("Finished")) {
+            if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) {
                 // for finished contest, total cost = actual cost + contest fee
                 costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
             } else {
