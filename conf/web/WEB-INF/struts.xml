@@ -1166,7 +1166,8 @@
         
         <action name="viewWireframeSubmission" class="viewWireframeSubmissionAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="redirect">/viewWireframePage/${submissionId}/${wireframeIndexPage}</result>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
     </package>

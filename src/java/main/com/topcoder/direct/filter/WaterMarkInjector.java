@@ -26,8 +26,16 @@ import javax.servlet.http.HttpServletResponse;
  *   </ol> 
  * </p>
  *
+ * <p>
+ *     Version 1.2 (Release Assembly - TopCoder Direct Wireframe Viewer Bug Fixes v1.0) change notes:
+ *     <ol>
+ *         <li>Added {@link #ERROR_HANDLE_JS} constant.</li>
+ *         <li>Updated {@link #processResponseContent(HttpServletRequest, String)} to inject the javascript code
+ *         to set the global handler for JS error.</li>
+ *     </ol>
+ * </p>
  * @author TCASSEMBLER
- * @version 1.1
+ * @version 1.2
  * @since Wireframe Viewer Modal Window Direct integration assembly v1.0
  */
 public class WaterMarkInjector extends WireframeBaseFilter {
@@ -37,6 +45,15 @@ public class WaterMarkInjector extends WireframeBaseFilter {
     private static final String CSS_LINK = "<link href=\"{0}\" type=\"text/css\" rel=\"stylesheet\">\n";
 
     /**
+     * The javascript code to be injected to html to set the global handler for JS error.
+     *
+     * @since 1.1
+     */
+    private static final String ERROR_HANDLE_JS = "<script type=\"text/javascript\">"
+            + "if (window.top && window.top.handleWireframeError) {"
+            + "window.onerror=window.top.handleWireframeError;"
+            + "window.handleWireframeError=window.top.handleWireframeError;}</script>";
+    /**
      * The mapping of HTML files to watermark images.
      */
     private final List<String[]> watermarkImageMapping = new ArrayList<String[]>();
@@ -44,7 +61,7 @@ public class WaterMarkInjector extends WireframeBaseFilter {
     /**
      * Initializes this filter with the watermark image mapping.
      * 
-     * @param fConfig
+     * @param filterConfig
      *            the filter configuration
      */
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -177,6 +194,20 @@ public class WaterMarkInjector extends WireframeBaseFilter {
             b.insert(
                     insertIndex,
                     "<!-- Copyright (C) "+ dateFm.format(date) +" TopCoder Inc., All Rights Reserved -->\n");
+
+            processedHtmlContent = b.toString().toLowerCase();
+            insertIndex = processedHtmlContent.indexOf("<head>");
+            if (insertIndex == -1) {
+                insertIndex = processedHtmlContent.indexOf("<html>");
+                if (insertIndex == -1) {
+                    insertIndex = 0;
+                } else {
+                    insertIndex += "<html>".length();
+                }
+            } else {
+                insertIndex += "<head>".length();
+            }
+            b.insert(insertIndex, ERROR_HANDLE_JS);
             processedHtmlContent = b.toString();
         }
 

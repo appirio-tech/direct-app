@@ -6,8 +6,13 @@
  * -Version 1.1 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) Change notes:
  * - - Make the wireframe viewer full screen.
  *
+ * -Version 1.2 (Release Assembly - TopCoder Direct Wireframe Viewer Bug Fixes v1.0) Change notes:
+ * - - Change the way to set the iframe's src attribute. Now first it will use AJAX to get the location
+ * - - of the index page, then set the iframe's src attribute directly. This can avoid the rendering
+ * - - BUG in FireFox.
+ *
  * @author TCSASSEMBLER
- * @version 1.1
+ * @version 1.2
  * @since TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  */
 
@@ -99,35 +104,35 @@ CrossSiteScriptingProcessor.prototype.loopNodeChildren = function(nodes) {
     {
         node = nodes[i];
         content = '';
-        if(node.nodeName === 'SCRIPT') {   // <script>... $UNTRUSTED DATA HERE$ бн </script>
+        if(node.nodeName === 'SCRIPT') {   // <script>... $UNTRUSTED DATA HERE$  </script>
             content = node.textContent || node.innerText;
             //console.log('[CrossSiteScriptingProcessor] Script: ' + content);
         } 
-        else if (node.nodeType === 8)  // <!--... $UNTRUSTED DATA HERE$ бн -->
+        else if (node.nodeType === 8)  // <!--... $UNTRUSTED DATA HERE$  -->
         {
             content = node.nodeValue;
             //console.log('[CrossSiteScriptingProcessor] Comment: ' + content);
         }
         else if(node.nodeType === 1)
         {
-            if(node.nodeName === 'STYLE') {  // <style>... $UNTRUSTED DATA HERE$ бн </style>
+            if(node.nodeName === 'STYLE') {  // <style>... $UNTRUSTED DATA HERE$  </style>
                 if(node.childNodes != null && node.childNodes[0] != undefined) {
                     content = node.childNodes[0].nodeValue;
                 }                       
                 //console.log('[CrossSiteScriptingProcessor] Style: ' + content);
-            } else if(node.nodeName == 'DIV') { // <div>... $UNTRUSTED DATA HERE$ бн </div>
+            } else if(node.nodeName == 'DIV') { // <div>... $UNTRUSTED DATA HERE$  </div>
                 content = node.innerText;
                 //console.log('[CrossSiteScriptingProcessor] Div: ' + content);
-            } else if(node.nodeName == 'BODY') { // <body> ... $UNTRUSTED DATA HERE$ бн </body>
+            } else if(node.nodeName == 'BODY') { // <body> ... $UNTRUSTED DATA HERE$  </body>
                 content = node.innerText;
                 //console.log('[CrossSiteScriptingProcessor] Body: ' + content);
             }
-            var attributes = node.attributes;  // <div... $UNTRUSTED DATA HERE$ бн =test /> in an attribute name
+            var attributes = node.attributes;  // <div... $UNTRUSTED DATA HERE$  =test /> in an attribute name
             for(var v = 0;  v < attributes.length; v++) {
                 //console.log('[CrossSiteScriptingProcessor] Attribute name: ' + attributes.item(v).nodeName);
                 this.checkContent(attributes.item(v).nodeName, node);
             }
-            var tagName = node.tagName;  // <... $UNTRUSTED DATA HERE$ бн href="/test" /> in a tag name
+            var tagName = node.tagName;  // <... $UNTRUSTED DATA HERE$  href="/test" /> in a tag name
             //console.log('[CrossSiteScriptingProcessor] Tag name: ' + tagName);
             if(tagName != undefined) {
                 this.checkContent(tagName, node);
@@ -359,6 +364,7 @@ function fixWindowSize() {
   */
 WireFramePopupWindow.prototype.showWireframe = function(FRAME_URL, submissionId){
     fixWindowSize();
+    hasAlert = false;
     modalLoad("#showWireframeModal");
     //$('#frame_window').fadeIn(500);
     $('#submissionIdInTitle').html(submissionId);
@@ -444,7 +450,25 @@ $(document).ready(function() {
     $('.actButtonzoom').click(function(){
         var submissionId = $(this).attr("rel");
         var submissionUrl = "/direct/viewWireframeSubmission.action?submissionId=" + submissionId;
-        activate_modal(submissionUrl, submissionId);  
+        $.ajax({
+            type: 'GET',
+            url: submissionUrl,
+            dataType: 'json',
+            cache:false,
+            async:true,
+            beforeSend: modalPreloader,
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        activate_modal("/direct" + result.indexPage, submissionId);
+                    },
+                    function(errorMessage) {
+                        modalClose();
+                        showServerError(errorMessage);
+                    }
+                );
+            }
+        });
         return false;
     });
 

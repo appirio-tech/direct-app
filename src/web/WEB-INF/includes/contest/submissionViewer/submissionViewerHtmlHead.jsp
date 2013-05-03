@@ -82,6 +82,20 @@
     <c:set var="isWireframeContest" value="${true}" scope="request"/>
 </c:if>
 <c:if test="${isWireframeContest}">
+<script type="text/javascript">
+    Object.defineProperty(window, '$axure', {
+        get : function() {
+            return $("#frame_window")[0].contentWindow.$axure;
+        }
+    });
+    var hasAlert = false;
+    window.handleWireframeError = function() {
+        if (hasAlert) return true;
+        hasAlert = true;
+        showErrors("We cannot show this submission in the wireframe viewer, you can still download the submission and view locally.");
+        return true;
+    };
+</script>
 <script type="text/javascript" src="/scripts/wireframe-viewer.js"></script>
 </c:if>
 
