@@ -123,21 +123,23 @@ var baseURL = ctx + "/payments/";
  */
 $.fn.dataTableExt.afnSortData['payment-method'] = function  ( oSettings, iColumn )
 {
-	var aData = [];
-	$( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
+    var aData = [];
+    $( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
         var v;
         
         if ($(this).text().trim() == 'Paypal') {
             v = 1;
         } else if ($(this).text().trim() == 'Payoneer') {
             v = 2;
-        } else {
+        } else if ($(this).text().trim() == 'Western Union') {
             v = 3;
+        } else {
+            v = 4;
         }
         
-		aData.push(v);
-	} );
-	return aData;
+        aData.push(v);
+    } );
+    return aData;
 }
 
 /* 
@@ -145,11 +147,11 @@ $.fn.dataTableExt.afnSortData['payment-method'] = function  ( oSettings, iColumn
  */
 $.fn.dataTableExt.afnSortData['payment-number'] = function  ( oSettings, iColumn )
 {
-	var aData = [];
-	$( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
-		aData.push($(this).text().replace(' ', ''));
-	} );
-	return aData;
+    var aData = [];
+    $( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
+        aData.push($(this).text().replace(' ', ''));
+    } );
+    return aData;
 }
 
 /**
@@ -224,9 +226,14 @@ function loadPaymentsTable(){
                         westRow.find('td:eq(2)').text(result['pullablePayments']['westernUnionPayments']);
                         westRow.find('td:eq(3)').text(result['paymentDiff']['westernUnionDiffAmount']);
                         
+                        var notSetRow = $("#memberPaymentsTable tbody tr.notSetRow");
+                        notSetRow.find('td:eq(1)').text(result['paymentBalance']['notSetBalance']);
+                        notSetRow.find('td:eq(2)').text(result['pullablePayments']['notSetPayments']);
+                        notSetRow.find('td:eq(3)').text(result['paymentDiff']['notSetDiffAmount']);                        
+                        
                         var totalRow = $("#memberPaymentsTable tfoot tr.totalRow");
                         
-                        for (var i = 1; i < 4; i++) {
+                        for (var i = 1; i < 5; i++) {
                             var total = 0;
                             
                             $("#memberPaymentsTable tbody tr.contentRow").each(function(index, row) {
@@ -305,6 +312,11 @@ function loadPotentialCashOutflowTable(){
                     } else {
                         // fill data
                         $.each(result['payments'], function(index, item) {
+                            // ignore not set data for potential cash out flow table
+                            if (item['paymentMethodName'] == 'Not Set') {
+                                return;
+                            }
+                        
                             var row = $("<tr>");
                             row.addClass("contentRow hide");
                             
@@ -824,8 +836,13 @@ function loadStatusOfPaymentsTable(){
                         $("#statusOfPaymentsTable tbody tr.noDataRow").removeClass('hide');
                     } else {
                         $.each(result, function(index, item) {
-                            var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' + 
-                                item['endDateStr'] + ' - ' + item['startDateStr'] + ' days ago</strong></td></tr>';
+                            if (!item['startDateStr']) {
+                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' + 
+                                    item['endDateStr'] + '+ days ago</strong></td></tr>';
+                            } else {
+                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' + 
+                                    item['endDateStr'] + ' - ' + item['startDateStr'] + ' days ago</strong></td></tr>';
+                            }
                             $("#statusOfPaymentsTable tbody").append(row);
                             
                             row = $("<tr class='contentRow hide'>");
@@ -898,7 +915,7 @@ function loadTopTenMemberBalance() {
                             var tmp = getFormattedNumber(item['amount']);
                             row.append($("<td class='alignRight amountCol'>").text(tmp));
                             
-                            row.append($("<td>").text(getDateString(item['startDate'].time) + ' - ' + getDateString(item['endDate'].time)));
+                            row.append($("<td>").text(item['paymentMethod']));
                             $("#topMembeBalancesTable tbody").append(row);
                             
                             total += item['amount'];
@@ -908,7 +925,7 @@ function loadTopTenMemberBalance() {
                         row.append($('<td>'));
                         row.append($('<td class="alignLeft">').text('Total'));
                         
-                        total = getFormattedNumber(total).replace(' ', ',');
+                        total = getFormattedNumber(total);
                         row.append($('<td class="alignRight">').text(total));
                         row.append($('<td>'));
                         

@@ -3,21 +3,21 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.direct.payments.entities.CashOutflowPotential;
-import com.topcoder.direct.payments.entities.CashOutflowPotentialResult;
-import com.topcoder.direct.payments.entities.DateRange;
-import com.topcoder.direct.payments.entities.PaymentHistory;
-import com.topcoder.direct.payments.entities.PaymentHistoryCriteria;
-import com.topcoder.direct.payments.entities.PaymentHistoryResult;
-import com.topcoder.direct.payments.entities.PaymentMethod;
-import com.topcoder.direct.payments.entities.PaymentStatus;
-import com.topcoder.direct.payments.entities.PaymentTrend;
-import com.topcoder.direct.payments.entities.PaymentTrendSearchCriteria;
-import com.topcoder.direct.payments.entities.PaymentsByStatus;
-import com.topcoder.direct.payments.entities.PaymentsByStatusResult;
-import com.topcoder.direct.payments.entities.PullablePayments;
-import com.topcoder.direct.payments.entities.TopMemberPayment;
-import com.topcoder.direct.payments.entities.TopMemberPaymentCriteria;
+import com.topcoder.direct.services.payments.entities.CashOutflowPotential;
+import com.topcoder.direct.services.payments.entities.CashOutflowPotentialResult;
+import com.topcoder.direct.services.payments.entities.DateRange;
+import com.topcoder.direct.services.payments.entities.PaymentHistory;
+import com.topcoder.direct.services.payments.entities.PaymentHistoryCriteria;
+import com.topcoder.direct.services.payments.entities.PaymentHistoryResult;
+import com.topcoder.direct.services.payments.entities.PaymentMethod;
+import com.topcoder.direct.services.payments.entities.PaymentStatus;
+import com.topcoder.direct.services.payments.entities.PaymentTrend;
+import com.topcoder.direct.services.payments.entities.PaymentTrendSearchCriteria;
+import com.topcoder.direct.services.payments.entities.PaymentsByStatus;
+import com.topcoder.direct.services.payments.entities.PaymentsByStatusResult;
+import com.topcoder.direct.services.payments.entities.PullablePayments;
+import com.topcoder.direct.services.payments.entities.TopMemberPayment;
+import com.topcoder.direct.services.payments.entities.TopMemberPaymentCriteria;
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
@@ -883,6 +883,27 @@ public class DataProvider {
      * The suffiex for 'monthly'
      */
     private static final String MONTHLY_SUFFIX = "_monthly";
+
+    
+    /**
+     * The name of paypal method.
+     */
+    private static final String PAYPAL_METHOD_NAME = "Paypal";
+
+    /**
+     * The name of payoneer method.
+     */
+    private static final String PAYONEER_METHOD_NAME = "Payoneer";
+
+    /**
+     * The name of western union method.
+     */
+    private static final String WESTERN_UNION_METHOD_NAME = "Western Union";
+
+    /**
+     * The name of not-set method.
+     */
+    private static final String NOT_SET_METHOD_NAME = "Not Set";
 
 
     private static final String INSTANT_SERACH_CONTEST = "select first ? pi.value as contest_name, p.project_id as contest_id, p.project_category_id as contest_type_id,\n" +
@@ -7902,11 +7923,15 @@ public class DataProvider {
         double paymentAmount = row.getDoubleItem("net_amount");
 
         if(paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
-          payments.setPaypalPayments(paymentAmount);
+            payments.setPaypalPayments(paymentAmount);
         } else if(paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
-          payments.setPayoneerPayments(paymentAmount);
+            payments.setPayoneerPayments(paymentAmount);
         } else if(paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
-          payments.setWesternUnionPayments(paymentAmount);
+            payments.setWesternUnionPayments(paymentAmount);
+        } else if (paymentMethodId == PaymentMethod.NOT_SET.getPaymentMethodId()
+                || paymentMethodId == -1) {
+            // we should treat it as NOT SET if there is no data in user_payment_method
+            payments.setNotSetPayments(payments.getNotSetPayments() + paymentAmount);
         }
       }
       return payments;
@@ -7973,9 +7998,7 @@ public class DataProvider {
 
     /**
      * Get member potential payments for given days.
-     * 
-     * @param startDate
-     *            start date
+     *
      * @param endDate
      *            end date
      * @param paymentMethodIds
@@ -7984,10 +8007,10 @@ public class DataProvider {
      * @throws Exception
      *             if a generic error occurs
      */
-    public static Map<Integer, CashOutflowPotentialResult> getPotentialMemberPayments(Date startDate, Date endDate,
+    public static Map<Integer, CashOutflowPotentialResult> getPotentialMemberPayments(Date endDate,
                                                                               int[] paymentMethodIds)
         throws Exception {
-        if (startDate == null || endDate == null) {
+        if (endDate == null) {
             throw new IllegalArgumentException("Specified dates should not be null");
         }
         if (paymentMethodIds == null || paymentMethodIds.length == 0) {
@@ -7999,7 +8022,6 @@ public class DataProvider {
         DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
-        request.setProperty("sda", dateFormatter.format(startDate));
         request.setProperty("ed", dateFormatter.format(endDate));
         request.setProperty("paymentMethodIds", concatenate(paymentMethodIds, ","));
 
@@ -8060,6 +8082,7 @@ public class DataProvider {
       List<PaymentHistory> paypalPaymentHistory = new ArrayList<PaymentHistory>();
       List<PaymentHistory> payoneerPaymentHistory = new ArrayList<PaymentHistory>();
       List<PaymentHistory> westernUnionPaymentHistory = new ArrayList<PaymentHistory>();
+      List<PaymentHistory> notSetPaymentHistory = new ArrayList<PaymentHistory>();
       final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
       for(int i=0;i<resultSet.size();i++) {
         double amount = resultSet.getDoubleItem(i, "net_amount");
@@ -8080,6 +8103,8 @@ public class DataProvider {
           payoneerPaymentHistory.add(history);
         } else if(paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
           westernUnionPaymentHistory.add(history);
+        } else if(paymentMethodId == PaymentMethod.NOT_SET.getPaymentMethodId()) {
+          notSetPaymentHistory.add(history);
         }
       }
       List<PaymentHistoryResult> paymentHistoryResult = new ArrayList<PaymentHistoryResult>();
@@ -8099,6 +8124,10 @@ public class DataProvider {
       westernUnionResult.setItems(westernUnionPaymentHistory);
       paymentHistoryResult.add(westernUnionResult);
 
+      PaymentHistoryResult notSetResult = new PaymentHistoryResult();
+      notSetResult.setPaymentMethod(PaymentMethod.NOT_SET);
+      notSetResult.setItems(notSetPaymentHistory);
+      paymentHistoryResult.add(notSetResult);
       return paymentHistoryResult;
     }
 
@@ -8193,20 +8222,27 @@ public class DataProvider {
         double amount = resultSet.getDoubleItem(i, "net_amount");
         String handle = resultSet.getStringItem(i, "handle");
         long userId = resultSet.getLongItem(i, "user_id");
-        Date startDate = resultSet.getTimestampItem(i, "min_create_date");
+        int paymentMethodId = resultSet.getIntItem(i, "payment_method_id");
 
         TopMemberPayment payment = new TopMemberPayment();
         payment.setAmount(amount);
         payment.setHandle(handle);
         payment.setUserId(userId);
-        payment.setStartDate(startDate);
-        payment.setEndDate(new Date());
         payment.setMemberLink(HandleTag.getLink(userId, "", "", null, null,
                 new String[]{"coderTextOrange", "coderTextWhite", "coderTextGray", "coderTextGreen",
                         "coderTextBlue", "coderTextYellow", "coderTextRed"},
                 new String[]{"coderTextOrange", "coderTextBlack", "coderTextGray", "coderTextGreen",
                         "coderTextBlue", "coderTextYellow", "coderTextRed"},
                 false));
+        if(paymentMethodId == PaymentMethod.PAYPAL.getPaymentMethodId()) {
+          payment.setPaymentMethod(PAYPAL_METHOD_NAME);
+        } else if(paymentMethodId == PaymentMethod.PAYONEER.getPaymentMethodId()) {
+          payment.setPaymentMethod(PAYONEER_METHOD_NAME);
+        } else if(paymentMethodId == PaymentMethod.WESTERN_UNION.getPaymentMethodId()) {
+          payment.setPaymentMethod(WESTERN_UNION_METHOD_NAME);
+        }  else if(paymentMethodId == PaymentMethod.NOT_SET.getPaymentMethodId()) {
+          payment.setPaymentMethod(NOT_SET_METHOD_NAME);
+        }   
 
         topMemberPayments.add(payment);
       }

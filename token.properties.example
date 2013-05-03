@@ -362,8 +362,8 @@
 @payoneer.partnerId@=partnerId
 @paymemtStatsService.resultLimit@=10
 @paymentsService.paymentMethodID@=2
-#@payoneerService@=com.topcoder.direct.payments.services.impl.PayoneerServiceImpl
-@payoneerService@=com.topcoder.direct.payments.services.impl.MockPayoneerServiceImpl
+#@payoneerService@=com.topcoder.direct.services.payments.impl.PayoneerServiceImpl
+@payoneerService@=com.topcoder.direct.services.payments.impl.MockPayoneerServiceImpl
 
 #######################################
 # Wireframe Submissions Configuration #

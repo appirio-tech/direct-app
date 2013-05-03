@@ -67,6 +67,13 @@
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                             </tr>
+                            <tr class="odd contentRow hide notSetRow">
+                                <td class="alignLeft">Not Set</input>
+                                </td>
+                                <td class="alignRight"></td>
+                                <td class="alignRight"></td>
+                                <td class="alignRight"></td>
+                            </tr>                            
                             <tr class="noDataRow hide"><td colspan="4"><div class="noData">No data available</div></td></tr>
                         </tbody>
                         <tfoot>
