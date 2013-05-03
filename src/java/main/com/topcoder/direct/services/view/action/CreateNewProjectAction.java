@@ -13,6 +13,10 @@ import java.util.Map;
 import javax.xml.datatype.DatatypeFactory;
 
 import com.topcoder.direct.services.copilot.model.CopilotProject;
+import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.services.GroupService;
+import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.project.entities.ProjectAnswer;
 import com.topcoder.service.project.entities.ProjectAnswerOption;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
@@ -97,9 +101,16 @@ import java.util.*;
  * prizes of new copilot posting project.</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 1.6 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+ * <ol>
+ *     <li>Update the action to set project billing id when creating the new project</li>
+ *     <li>Update the action to create draft copilot posting with the project billing account if it's set</li>
+ * </ol>
+ * </p>
  *
- * @author Veve, isv, KennyAlive, Ghost_141, frozenfx
- * @version 1.5
+ * @author Veve, isv, KennyAlive, Ghost_141, frozenfx, GreatKevin
+ * @version 1.6
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -177,6 +188,13 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * </p>
      */
     private ProjectData projectData;
+
+    /**
+     * The security group service.
+     *
+     * @since 1.6
+     */
+    private GroupService groupService;
 
     /**
      * Gets whether to create draft copilot posting.
@@ -385,6 +403,26 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     }
 
     /**
+     * Gets the group service.
+     *
+     * @return the group service.
+     * @since 1.6
+     */
+    public GroupService getGroupService() {
+        return groupService;
+    }
+
+    /**
+     * Sets the group service.
+     *
+     * @param groupService the group service.
+     * @since 1.6
+     */
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    /**
      * The main logic to create the new project and assign permissions to the
      * new project.
      * 
@@ -425,6 +463,16 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
             }
         }
         projectData.setProjectAnswers(getProjectData().getProjectAnswers());
+
+        // set project billing account id if exists
+        if(getProjectData().getProjectBillingAccountId() > 0) {
+
+            // check if user has access to the billing account
+            if(!canAccessBillingAccount(getProjectData().getProjectBillingAccountId())) {
+                throw new IllegalArgumentException("You don't have permission to access the billing account you set");
+            }
+            projectData.setProjectBillingAccountId(getProjectData().getProjectBillingAccountId());
+        }
 
         if (forums != null) {
             Map<String, String> forumsMap = new HashMap<String, String>();
@@ -535,7 +583,11 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectCategory.setProjectType(ProjectType.APPLICATION);
         projectHeader.setProjectCategory(projectCategory);
         projectHeader.setId(-1L);
-        projectHeader.setProperty("Billing Project", "0");
+        if (projectData.getProjectBillingAccountId() > 0) {
+            projectHeader.setProperty(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY, String.valueOf(projectData.getProjectBillingAccountId()));
+        } else {
+            projectHeader.setProperty(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY, "0");
+        }
         projectHeader.setProperty("Confidentiality Type", "public");
         projectHeader.setProperty("Copilot Cost", "0");
         projectHeader.setProperty("Project Name", name);
@@ -596,4 +648,40 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
         return cp;
     }
+
+    /**
+     * Checks whether the user has access to the specified billing account by id.
+     *
+     * @param billingAccountId the billing account id
+     * @return true if has access, false otherwise
+     * @throws Exception if any error
+     * @since 1.6
+     */
+    private boolean canAccessBillingAccount(long billingAccountId) throws Exception {
+        final List<ProjectData> billingProjects = getBillingProjects();
+
+        // 1) check billing accounts the user has direct permission
+        for(ProjectData bp : billingProjects) {
+            if(bp.getProjectId() == billingAccountId) {
+                return true;
+            }
+        }
+
+        GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
+        groupSearchCriteria.setUserId(DirectUtils.getTCSubjectFromSession().getUserId());
+
+        List<Group> userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+
+        // 2) check security groups the user has permission with
+        for(Group g : userGroups) {
+            for(BillingAccount ba : g.getBillingAccounts()) {
+                if (ba.getId() == billingAccountId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

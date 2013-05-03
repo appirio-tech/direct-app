@@ -1,21 +1,28 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
-import java.util.ArrayList;
+import com.topcoder.clients.model.Project;
+import com.topcoder.commons.utils.ValidationUtility;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.json.object.JSONArray;
+import com.topcoder.json.object.JSONObject;
+import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.services.GroupService;
+import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
+import com.topcoder.service.facade.project.ProjectServiceFacade;
+import com.topcoder.service.project.entities.ProjectQuestion;
+import com.topcoder.service.project.entities.ProjectQuestionOption;
+import org.apache.log4j.Logger;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.service.project.entities.ProjectQuestion;
-import com.topcoder.service.project.entities.ProjectQuestionOption;
-import com.topcoder.json.object.JSONArray;
-import com.topcoder.json.object.JSONObject;
-import com.topcoder.service.facade.project.ProjectServiceFacade;
 
 /**
  * <p>
@@ -26,9 +33,16 @@ import com.topcoder.service.facade.project.ProjectServiceFacade;
  * Version 1.0 (Release Assembly - TopCoder Cockpit Start New Project Data
  * Persistence)
  * </p>
+ *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+ * <ol>
+ *     <li>Add billing accounts for the user to choose for the new project</li>
+ * </ol>
+ * </p>
  * 
- * @author Ghost_141
- * @version 1.0
+ * @author Ghost_141, GreatKevin
+ * @version 1.1
  * @since 1.0
  */
 public class ViewCreateNewProjectAction extends AbstractAction {
@@ -69,6 +83,20 @@ public class ViewCreateNewProjectAction extends AbstractAction {
     private ProjectServiceFacade projectServiceFacade;
 
     /**
+     * Represents the group service.
+     *
+     * @since 1.1
+     */
+    private GroupService groupService;
+
+    /**
+     * Stores the available billing accounts the user has access to.
+     *
+     * @since 1.1
+     */
+    private Collection<IdNamePair> availableBillingAccounts;
+
+    /**
      * <p>
      * Create an instance of <code>ViewCreateNewProjectAction</code>.
      * </p>
@@ -89,6 +117,7 @@ public class ViewCreateNewProjectAction extends AbstractAction {
     public String execute() throws Exception {
         try {
             String result = super.execute();
+
             if (SUCCESS.equals(result)) {
                 projectQuestions = projectServiceFacade.getProjectQuestions();
                 ValidationUtility.checkNotNullNorEmpty(projectQuestions, "projectQuestions",
@@ -168,6 +197,28 @@ public class ViewCreateNewProjectAction extends AbstractAction {
     }
 
     /**
+     * Gets the group service.
+     *
+     * @return the group service.
+     *
+     * @since 1.1
+     */
+    public GroupService getGroupService() {
+        return groupService;
+    }
+
+    /**
+     * Sets the group service.
+     *
+     * @param groupService the group service.
+     *
+     * @since 1.1
+     */
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    /**
      * <p>
      * Set the projectServiceFacade.
      * </p>
@@ -179,4 +230,48 @@ public class ViewCreateNewProjectAction extends AbstractAction {
         this.projectServiceFacade = projectServiceFacade;
     }
 
+    /**
+     * Gets the available billing accounts the user has permission to use.
+     *
+     * @return the billing accounts the user has permission with
+     * @throws Exception if any error.
+     * @since 1.1
+     */
+    public Collection<IdNamePair> getAvailableBillingAccounts() throws Exception {
+        if (availableBillingAccounts == null) {
+            List<Project> billingAccountsOfUser = getProjectServiceFacade().getClientProjectsByUser(DirectStrutsActionsHelper
+                                                                                                            .getTCSubjectFromSession());
+            Map<Long, IdNamePair> result = new HashMap<Long, IdNamePair>();
+
+            for (Project bp : billingAccountsOfUser) {
+                IdNamePair billing = new IdNamePair();
+                billing.setId(bp.getId());
+                billing.setName(bp.getName());
+                result.put(bp.getId(), billing);
+            }
+
+            GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
+            groupSearchCriteria.setUserId(DirectUtils.getTCSubjectFromSession().getUserId());
+
+            List<Group> userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+
+            // add billing accounts in the security groups the user has access to
+            for (Group securityGroup : userGroups) {
+                final List<BillingAccount> securityGroupBillingAccounts
+                        = securityGroup.getBillingAccounts();
+                for (BillingAccount ba : securityGroupBillingAccounts) {
+                    if (!result.containsKey(ba.getId())) {
+                        IdNamePair billing = new IdNamePair();
+                        billing.setId(ba.getId());
+                        billing.setName(ba.getName());
+                        result.put(ba.getId(), billing);
+                    }
+                }
+            }
+
+            availableBillingAccounts =  result.values();
+        }
+
+        return availableBillingAccounts;
+    }
 }

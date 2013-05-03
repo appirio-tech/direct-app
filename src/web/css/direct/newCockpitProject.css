@@ -1064,8 +1064,19 @@ table {
                 float:left;
                 overflow:auto;
                 }
-		    .stepSecond .geryContent .row input.error,.stepSecond .geryContent .row textarea.error{
+		    .stepSecond .geryContent .row input.error,.stepSecond .geryContent .row textarea.error, .stepSecond .geryContent .row select.error{
                 background:#ffe4e4;
+            }
+
+            .stepSecond .geryContent .row select {
+                width: 270px;
+                float: left;
+                display: inline;
+            }
+
+
+            .stepSecond .geryContent .row select.error {
+                padding: 0px !important;
             }
 
             .stepContainer .geryContent .noteMask{ 

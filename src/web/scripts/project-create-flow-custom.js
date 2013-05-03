@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * JavaScript code related to custom project creation flow.
  *
@@ -15,9 +15,12 @@
  * @version 1.3 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence) change notes:
  *              added function for populate project answers.
  *              added initialize project question for custom project.
+ *
+ * @version 1.4 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+ *              Validates whether the project billing account is selected in step 1 of project creation flow
  * 
- * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY, Ghost_141
- * @version 1.3
+ * @author: KennyAlive, Ghost_141, GreatKevin
+ * @version 1.4
  */
  
 function initCustomProjectFlow() {
@@ -89,7 +92,16 @@ function initCustomStep1() {
         removeError($(".stepSecond .projectName input"));
         var valid2 = validate($(".stepSecond .projectName input"));
 
-        if (valid1 && valid2) {
+        removeError($(".stepSecond .projectBilling select"));
+        var valid3 = $(".stepSecond .projectBilling select").val() >= 0;
+
+        if (!valid3) {
+            $(".stepSecond .projectBilling .message").append('<span class="errorText">Please choose an option for project billing account.</span>');
+            $(".stepSecond .projectBilling select").addClass("error").val("");
+            $(".stepSecond .projectBilling select").after('<span class="errorIcon"></span>');
+        }
+
+        if (valid1 && valid2 && valid3) {
             goCreateProjectStep(2);
             return true;
         } else {

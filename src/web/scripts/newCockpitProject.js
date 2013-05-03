@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * Javascript file for the new creation project process.
  *
@@ -20,9 +20,12 @@
  * 				added populate project answer for mobile, presentation, analytic project type.
  *              added initProjectQuestions for initialize project question text by data from backend.
  * 				updated custom, mobile, presentation, analytics project type.
+ *
+ * @version 1.5 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+ *              Adds billing account id to the request when creating new cockpit project
  * 
- * @author: KennyAlive, TCSASSEMBLY, Ghost_141
- * @version 1.4
+ * @author: KennyAlive, Ghost_141, GreatKevin
+ * @version 1.5
  */
  
  var PROJECT_TYPE_CUSTOM = 9;
@@ -543,7 +546,10 @@ var createNewProject = function() {
 	} else if (projectType == PROJECT_TYPE_CUSTOM) {
 		request.projectData.projectAnswers = populateProjectAnswersForCustom();
 	}
-	
+
+    // setup project billing account
+    request.projectData.projectBillingAccountId = $(".stepSecond .projectBilling select").val();
+
     modalPreloader();
 
     $.ajax({
@@ -1069,6 +1075,14 @@ $(document).ready(function() {
         $(this).find('p').append($(this).attr('rel'));
     }, function() {
         $(this).empty();
+    });
+
+    $("#projectBillingAccount").change(function(){
+        var val = $(this).val();
+        if (val > -1) {
+            $(this).removeClass("error");
+            $(this).parent().find(".errorText, .errorIcon").hide();
+        }
     });
 
     // adjust the position of the modal window

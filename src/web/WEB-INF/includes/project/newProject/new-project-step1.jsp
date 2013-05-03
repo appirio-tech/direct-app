@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.3
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 1.
   -
@@ -13,6 +13,8 @@
                 change notes: new mobile and presentation project type flow. Removed old presentation flow.
   - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
                 Fix multiple bugs.
+  - Version 1.4 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+  - - Add project billing account is step 1 of new project creation flow
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -48,6 +50,13 @@ own project, and will not be shown to TopCoder members.
                     </dd>
                     <dd>If you are undecided on a name and description, you will be able to edit them later after you create the project.
                     </dd>
+                    <dd>
+                        You can choose the billing account used for this new project in the project billing account. If
+                        you don't have a billing account, the project created will be in DRAFT status until you
+                        associate a billing account to it to activate it. You can always associate a billing account to
+                        your project in Edit Project page. If you don't have a billing account, please contact your
+                        TopCoder Account Manager
+                    </dd>
                 </dl>
             </div>
             <!-- End .noteMask -->
@@ -80,6 +89,29 @@ own project, and will not be shown to TopCoder members.
                     <label>Project Description<span class="red">*</span></label>
                     <textarea id="newProjectDescription" rows="10" cols="10"></textarea>
 
+                    <div class="clear"></div>
+                    <p class="message">
+                    </p>
+                </div>
+                <!-- End .row -->
+
+                <!-- row -->
+                <div class="row projectBilling">
+
+                    <a href="javascript:;" class="toolTip" id="toolTip3"
+                       rel="&lt;p&gt;&lt;b&gt;The billing account used for your new project&lt;/b&gt;&lt;/p&gt;&lt;p&gt;
+                       You need to set a billing account to activate your new project&lt;/p&gt;
+                       &lt;p&gt;If billing account is not set, your new project will be in draft status&lt;/p&gt;
+                       ">
+                    </a>
+                    <label>Project Billing Account<span class="red">*</span></label>
+                    <select id="projectBillingAccount">
+                        <option value="-1">--Please select a billing account--</option>
+                        <option value="0">I don't have a billing account</option>
+                        <s:iterator value="availableBillingAccounts">
+                            <option value="<s:property value='id'/>"><s:property value='name'/></option>
+                        </s:iterator>
+                    </select>
                     <div class="clear"></div>
                     <p class="message">
                     </p>

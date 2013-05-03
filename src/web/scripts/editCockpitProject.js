@@ -28,9 +28,13 @@
  *
  * Version 2.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
  * - Add TopCoder account managers in edit cockpit project page.
+ *
+ * Version 2.6 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
+ * - Activates the project if the project is of draft status and a new billing account is added
+ * - Checks whether the project has billing account when activating the project
  * 
  * @author GreatKevin, Ghost_141, GreatKevin
- * @version 2.5
+ * @version 2.6
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -101,6 +105,9 @@ var setupEditProjectToolTip = function() {
 
 
 $(document).ready(function (e) {
+
+    $("#editProjectStatus").data('originalProjectStatusId', $("#editProjectStatus input[type=radio]:checked").val());
+
     updateMultiRowsCell();
     
     if ($('.editPage').length > 0) {
@@ -751,6 +758,41 @@ $(document).ready(function (e) {
                             newBilling.find("input").val(result.billingId);
                             $("#billingDisplay").append(newBilling);
 
+                            if($("#editProjectStatus").data('originalProjectStatusId') == 5) {
+                                showConfirmation("Activate your project ?", "Do you want to activate your draft project ?", "YES", function(){
+                                    if (validateEditProjectPage()) return false;
+
+                                    // set project to active
+                                    $("#editProjectStatus input[type=radio]:eq(1)").attr('checked','checked');
+
+                                    modalPreloader();
+
+                                    var request = buildSaveProjectRequest();
+
+                                    $.ajax({
+                                        type:'post',
+                                        url:"saveProjectSettings",
+                                        data:request,
+                                        cache:false,
+                                        dataType:'json',
+                                        success:function (jsonResult) {
+                                            handleJsonResult2(
+                                                jsonResult,
+                                                function (result) {
+                                                    // update to active status
+                                                    $("#editProjectStatus").data('originalProjectStatusId', 1);
+                                                    closeModal();
+                                                    modalAllClose();
+                                                },
+                                                function (errorMessage) {
+                                                    modalAllClose();
+                                                    showServerError(errorMessage);
+                                                });
+                                        }
+                                    });
+                                });
+                            }
+
                         },
                         function (errorMessage) {
                             modalAllClose();
@@ -1313,6 +1355,16 @@ $(document).ready(function (e) {
             if ($.trim($('textarea[name="projectDesc"]').val()).length == 0) {
                 errors.push("Project description cannot be empty");
             }
+
+            // check if there is billing account selected when activate the project
+            var currentProjectStatusId = $("#editProjectStatus input[type=radio]:checked").val();
+            if ($("#editProjectStatus").data('originalProjectStatusId') != 1 && currentProjectStatusId == 1) {
+                // change to active status, needs to validate if billing account associated
+                if($("#billingDisplay .billingAccountEntry input[type=hidden]").length == 0) {
+                    errors.push("You need to associate an active billing account to the project to activate it");
+                }
+            }
+
 
             if (errors.length > 0) {
                 showErrors(errors);

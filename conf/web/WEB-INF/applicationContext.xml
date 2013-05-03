@@ -822,12 +822,14 @@
           <property name="pptJIRAIssueTypeId" value="3"/>
           <property name="pptJIRAIssueReporter" value="anonymus"/>
           <property name="copilotURLPrefix" value="http://community.topcoder.com/tc?module=ProjectDetail&amp;pj="/>
+          <property name="groupService" ref="groupService"/>
     </bean>
 
     <bean id="viewCreateNewProjectAction"
           class="com.topcoder.direct.services.view.action.ViewCreateNewProjectAction"
           scope="prototype">
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
+        <property name="groupService" ref="groupService"/>
     </bean>
 
         <!-- For Copilot Profile and Copilot Project DAO-->
