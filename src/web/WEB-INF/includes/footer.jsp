@@ -10,6 +10,11 @@
   -
 --%>
 <%@ include file="taglibs.jsp" %>
+<%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
+<%@ page import="com.topcoder.direct.services.view.util.SessionData" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+
+
 <div id="footer">
 	<!--Update footer-->
  	<div class="socialNetwork">
@@ -56,6 +61,12 @@
 
 <% 
     String handle = (String) request.getSession().getAttribute("userHandle"); 
+	long userId = -1;
+	HttpServletRequest req = DirectUtils.getServletRequest();
+	if (req != null) {
+		userId = new SessionData(req.getSession()).getCurrentUserId();
+	}
+       
 %>
 
 
@@ -65,6 +76,13 @@
   _gaq.push(['_setAccount', 'UA-39594372-1']);
   _gaq.push(['_setDomainName', '.topcoder.com']);
   _gaq.push(['_trackPageview']);
+  _gaq.push(['_setCustomVar',
+      1,                   // This custom var is set to slot #1.  Required parameter.
+      'userid',     // The name acts as a kind of category for the user activity.  Required parameter.
+      '<%=userId%>',               // This value of the custom variable.  Required parameter.
+       1                 // Sets the scope to session-level.  Optional parameter.
+   ]);
+
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
