@@ -101,7 +101,7 @@
  * 
  * - (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - Update the CSS for launching contest update for marathon match.
- ¡Á
+ ï¿½ï¿½
  * - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  * - Change the cursor CSS style of thumb in submission viewer page to default.
  *
@@ -10592,6 +10592,98 @@ div.clientInvoiceManageRow.last {
 
 #alExtraPrizes, #extraPrizes {
     border-top: none;
+}
+
+.newSidebar .topBtns a{
+    margin-right:8px;
+    padding-top:27px;
+    height:18px;
+    line-height:16px;
+    color:#fff;
+    text-indent:-999999px;
+}
+.newSidebar .topBtns a:hover{
+    color:#fff;
+}
+.newSidebar .topBtns a.copilot {
+    background-image: url(/images/copilot-icon-new.png);
+    width: 79px;
+}
+
+.newSidebar .topBtns a.copilot:hover {
+    background-image: url(/images/copilot-icon-new-hover.png);
+}
+
+.newSidebar .topBtns a.start {
+    background-image: url(/images/start-project-icon-new.png);
+    width: 79px;
+}
+
+.newSidebar .topBtns a.start:hover {
+    background-image: url(/images/start-project-icon-new-hover.png);
+}
+
+.newSidebar .topBtns a.launch {
+    background-image: url(/images/launch-contest-icon-new.png);
+    width: 79px;
+}
+
+.newSidebar .topBtns a.launch:hover {
+    background-image: url(/images/launch-contest-icon-new-hover.png);
+    color: #fff;
+}
+#enterpriseDashboardTop{
+    float:right;
+    padding-top:40px;
+    padding-right:16px;
+}
+#enterpriseDashboardTop a{
+    float: left;
+    color: #FFFFFE;
+    padding-top: 27px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    margin-right: 7px;
+    text-decoration: none;
+    font-size: 10px;
+    text-align: center;
+    height:18px;
+    line-height:16px;
+    text-indent:-999999px;
+}
+#enterpriseDashboardTop  a:hover{
+    color:#fff;
+}
+#enterpriseDashboardTop a.copilot {
+    background-image: url(/images/copilot-icon-new.png);
+    width: 79px;
+}
+
+#enterpriseDashboardTop a.copilot:hover {
+    background-image: url(/images/copilot-icon-new-hover.png);
+}
+
+#enterpriseDashboardTop a.start {
+    background-image: url(/images/start-project-icon-new.png);
+    width: 79px;
+}
+
+#enterpriseDashboardTop a.start:hover {
+    background-image: url(/images/start-project-icon-new-hover.png);
+}
+
+#enterpriseDashboardTop a.launch {
+    background-image: url(/images/launch-contest-icon-new.png);
+    width: 79px;
+}
+
+#enterpriseDashboardTop a.launch:hover {
+    background-image: url(/images/launch-contest-icon-new-hover.png);
+    color: #fff;
+}
+
+.logoFooterWrapper {
+    margin-bottom: 2px;
 }
 
 

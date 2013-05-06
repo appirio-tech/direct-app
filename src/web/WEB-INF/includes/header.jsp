@@ -553,15 +553,15 @@
         </ul>
     </div><!-- End .helloUSer -->
 
-    <%-- link to community site --%>
-
-	<div>
-		<!-- TC Logo -->
-		<a onclick="window.open('https://www.topcoder.com/');" href="javascript:;" class="TCLogo"><img src="/images/tc-logo.png" alt="TopCoder"></a>
-		<p class="lookCP dashBoardLookCP">Looking for Community Portal?
-        <a onclick="window.open('https://community.topcoder.com/');" href="javascript:;"><strong>Go There Now</strong></a>
-    </p>
-	</div>
+    <ui:isDashboardPage>
+        <c:if test="${requestScope.CURRENT_TAB eq 'enterprise'}">
+            <div class="topBtns" id="enterpriseDashboardTop">
+                <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
+                <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>
+                <a href="${ctx}/launch/home" class="launch" title="Launch a new contest for your project">Launch Contest</a>
+            </div>
+        </c:if>
+    </ui:isDashboardPage>
 
 
     <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">

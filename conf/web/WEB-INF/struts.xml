@@ -170,8 +170,8 @@
         <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardActive</param>
-                <param name="namespace">/</param>
+                <param name="actionName">activeContests</param>
+                <param name="namespace">enterpriseDashboard/</param>
             </result>
             <result name="forward" type="redirect">${forwardUrl}</result>
             <result name="input">/WEB-INF/index.jsp</result>
