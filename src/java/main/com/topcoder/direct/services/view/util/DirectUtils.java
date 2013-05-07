@@ -2550,8 +2550,7 @@ public final class DirectUtils {
 
                 do {
                     String entryName = entry.getName();
-                    String firstDir = entryName.split("/")[0];
-                    entryName = firstDir.toLowerCase() + entryName.substring(firstDir.length());
+                    
                     // Directory Entry should end with FileSeparator
                     if (!entry.isDirectory()) {
                         // Directory will be created while creating file with in it.
