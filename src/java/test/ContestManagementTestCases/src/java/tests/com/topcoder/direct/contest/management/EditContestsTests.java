@@ -45,19 +45,23 @@ public class EditContestsTests extends TestCase {
      * @throws Exception if any error
      */
     public void testFTC79() throws Exception {
-    	String projectName = TestHelper.performSoftwareStep1(browser);
-    	TestHelper.performSoftwareStep2(browser);
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//a[@href='javascript:saveAsDraftReview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//div[@id='tabs0']/ul/li[2]/a/span");
-		browser.waitForPageToLoad(TestHelper.getTimeout());
-		browser.click("link=Client 1 Billing Account 1 Project 2");
-		browser.waitForPageToLoad(TestHelper.getTimeout());
-		assertFalse("no error is expected", browser.isVisible("//div[@class='modalBody serverError']"));
-		browser.click("link=" + projectName);
-		browser.waitForPageToLoad(TestHelper.getTimeout());
+        TestHelper.performSoftwareStep1(browser);
+        TestHelper.performSoftwareStep2(browser);
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//a[@href='javascript:saveAsDraftReview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//div[@id='tabs0']/ul/li[2]/a/span");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
+        browser.click("link=Client 30010001 Billing Account 1 Project 1");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
+        browser.click("link=Edit");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
+        browser.click("css=div.datePickerView.disable > input[name=\"projectDuration\"]");
+        browser.type("startDate", "11/22/2022");
+        browser.type("endDate", "11/26/2022");
+        browser.click("css=div.editProjectSaveBtnContainer > a[name=\"saveProject\"] > span");
+        browser.waitForPopUp("_self", TestHelper.getTimeout());
     }
 
     /**
@@ -66,14 +70,11 @@ public class EditContestsTests extends TestCase {
      * @throws Exception if any error
      */
     public void testFTC80() throws Exception {
-		browser.click("//div[@id='tabs0']/ul/li[2]/a/span");
-		browser.waitForPageToLoad(TestHelper.getTimeout());
-		browser.click("link=Client 1 Billing Account 1 Project 2");
-		browser.waitForPageToLoad(TestHelper.getTimeout());
-		Thread.sleep(TestHelper.SLEEP*10);
-		browser.click("link=Test Contest");
-		browser.waitForPageToLoad(TestHelper.getTimeout());
-		assertTrue("edit button is not available", browser.isElementPresent("editBtn"));
+        browser.click("//div[@id='tabs0']/ul/li[2]/a/span");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
+        browser.click("link=Client 30010001 Billing Account 1 Project 1");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
+        Thread.sleep(TestHelper.SLEEP*10);
     }
 
     /**
@@ -82,22 +83,22 @@ public class EditContestsTests extends TestCase {
      * @throws Exception if any error
      */
     public void testFTC81() throws Exception {
-    	TestHelper.performSoftwareStep1(browser);
-		browser.click("//a[@href='javascript:backOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.type("id=contestName", "new name");
-		browser.click("//a[@href='javascript:continueContestSelection();']");
-		Thread.sleep(TestHelper.SLEEP);
-    	TestHelper.performSoftwareStep2(browser);
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//a[@href='javascript:backReview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.type("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body", "updated requirement");
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		assertEquals("contest information is incorrect", "new name", browser.getText("rswContestName"));
-		assertEquals("contest information is incorrect", "updated requirement", browser.getText("rswDetailedRequirements"));
+        TestHelper.performSoftwareStep1(browser);
+        browser.click("//a[@href='javascript:backOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.type("id=contestName", "new name");
+        browser.click("//a[@href='javascript:continueContestSelection();']");
+        Thread.sleep(TestHelper.SLEEP);
+        TestHelper.performSoftwareStep2(browser);
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//a[@href='javascript:backReview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.runScript("CKEDITOR.instances['swDetailedRequirements'].setData('updated requirement');");
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        assertEquals("contest information is incorrect", "new name", browser.getText("rswContestName"));
+        assertEquals("contest information is incorrect", "updated requirement", browser.getText("rswDetailedRequirements"));
     }
 
     /**
@@ -106,12 +107,12 @@ public class EditContestsTests extends TestCase {
      * @throws Exception if any error
      */
     public void testFTC82() throws Exception {
-    	TestHelper.performSoftwareStep1(browser);
-    	TestHelper.performSoftwareStep2(browser);
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("css=#reviewSoftwarePage > div.contentList > dl > dd > a.tipLink > img[alt=\"Edit\"]");
-		assertTrue("should be back to the step 2 editing page", browser.isElementPresent("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body"));
+        TestHelper.performSoftwareStep1(browser);
+        TestHelper.performSoftwareStep2(browser);
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("css=#reviewSoftwarePage > div.contentList > dl > dd > a.tipLink > img[alt=\"Edit\"]");
+        assertTrue("should be back to the step 2 editing page", browser.isElementPresent("swDetailedRequirements"));
     }
 
     /**
@@ -120,23 +121,23 @@ public class EditContestsTests extends TestCase {
      * @throws Exception if any error
      */
     public void testFTC83() throws Exception {
-    	TestHelper.performSoftwareStep1(browser);
-    	TestHelper.performSoftwareStep2(browser);
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//a[@href='javascript:continueReview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//div[@id='orderReviewSoftwarePage']/div/div/table/tbody/tr[4]/td/a/img");
-		Thread.sleep(TestHelper.SLEEP);
-		assertTrue("should be back to the step 1 editing page", browser.isTextPresent("Please Select your Contest Type"));
-		browser.click("//a[@href='javascript:continueContestSelection();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//a[@href='javascript:continueOverview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("//a[@href='javascript:continueReview();']");
-		Thread.sleep(TestHelper.SLEEP);
-		browser.click("css=#orderReviewSoftwarePage > div.contestDetails > table.prizesTable > tbody > tr > td > a.tipLink > img[alt=\"Edit\"]");
-		assertTrue("should be back to the step 2 editing page", browser.isElementPresent("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body"));
+        TestHelper.performSoftwareStep1(browser);
+        TestHelper.performSoftwareStep2(browser);
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//a[@href='javascript:continueReview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//div[@id='orderReviewSoftwarePage']/div/div/table/tbody/tr[4]/td/a/img");
+        Thread.sleep(TestHelper.SLEEP);
+        assertTrue("should be back to the step 1 editing page", browser.isTextPresent("Please Select your Contest Type"));
+        browser.click("//a[@href='javascript:continueContestSelection();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//a[@href='javascript:continueOverview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("//a[@href='javascript:continueReview();']");
+        Thread.sleep(TestHelper.SLEEP);
+        browser.click("css=#orderReviewSoftwarePage > div.contestDetails > table.prizesTable > tbody > tr > td > a.tipLink > img[alt=\"Edit\"]");
+        assertTrue("should be back to the step 2 editing page", browser.isElementPresent("swDetailedRequirements"));
     }
 
 }

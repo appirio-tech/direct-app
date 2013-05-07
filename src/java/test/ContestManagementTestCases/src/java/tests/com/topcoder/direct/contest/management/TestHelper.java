@@ -109,19 +109,19 @@ public class TestHelper {
      * @throws Exception if any error occurred
      */
     static void loginUser(Selenium browser) throws Exception {
-    	browser.type("id=LoginForm_formData_username", properties.getProperty("user1.username"));
-		browser.type("id=LoginForm_formData_password", properties.getProperty("user1.password"));
-		browser.click("//a[@href='javascript:document.LoginForm.submit();']");
-		browser.waitForPageToLoad(getTimeout());
+        browser.type("id=LoginForm_formData_username", properties.getProperty("user1.username"));
+        browser.type("id=LoginForm_formData_password", properties.getProperty("user1.password"));
+        browser.click("//a[@href='javascript:document.LoginForm.submit();']");
+        browser.waitForPageToLoad(getTimeout());
     }
 
     /**
      * Get the upload file path.
      * @return the file path
      */
-	static String getUploadFile() {
-		return properties.getProperty("uploadfile");
-	}
+    static String getUploadFile() {
+        return properties.getProperty("uploadfile");
+    }
 
     /**
      * Load the Properties object from the configuration object.
@@ -161,56 +161,54 @@ public class TestHelper {
      * Perform the step 1 of creating new non-studio contest.
      * @throws Exception if any error.
      */
-	static String performSoftwareStep1(Selenium browser) throws Exception {
-    	browser.click("link=Launch New Contest");
-    	browser.waitForPageToLoad(TestHelper.getTimeout());
+    static String performSoftwareStep1(Selenium browser) throws Exception {
+        browser.click("link=Launch Contest");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
         browser.click("css=div.selectedTxt");
-		browser.click("link=Software Conceptualization");
-		browser.check("id=lccCheckBox");
-		String projectName = "Project " + System.currentTimeMillis();
-		browser.type("id=contestName", projectName);
-		browser.select("projects", "Client 1 Billing Account 1 Project 2");
-		browser.select("billingProjects", "Client 1 Billing Account 1");
-		browser.select("contestCopilot", "Unassigned");
-		browser.select("roundTypes", "Contest will be run in multi-rounds");
-		browser.type("startDate", "11/22/2022");
-		browser.click("//a[@href='javascript:continueContestSelection();']");
-		Thread.sleep(TestHelper.SLEEP);
-		return projectName;
-	}
+        browser.click("link=Software Conceptualization");
+        browser.check("id=lccCheckBox");
+        String projectName = "Project " + System.currentTimeMillis();
+        browser.type("id=contestName", projectName);
+        browser.select("projects", "Client 30010001 Billing Account 1 Project 1");
+        browser.select("contestCopilot", "Unassigned");
+        browser.select("roundTypes", "Contest will be run in multi-rounds");
+        browser.type("startDate", "11/22/2022");
+        browser.click("//a[@href='javascript:continueContestSelection();']");
+        Thread.sleep(TestHelper.SLEEP);
+        return projectName;
+    }
 
     /**
      * Perform the step 2 of creating new non-studio contest.
      * @throws Exception if any error.
      */
-	static void performSoftwareStep2(Selenium browser) throws Exception {
-		browser.type("dom=document.getElementById('swDetailedRequirements_ifr').contentDocument.body",
-                "This is test contest.");
-		browser.type("dom=document.getElementById('swGuidelines_ifr').contentDocument.body", "This is test contest.");
-		browser.type("css=#swUploadButtonDiv > input[name='document']", TestHelper.getUploadFile());
-		browser.type("swFileDescription", "This is requirement doc.");
-		browser.click("swFileUploadBtn");
-		Thread.sleep(TestHelper.SLEEP);
-	}
+    static void performSoftwareStep2(Selenium browser) throws Exception {
+        browser.runScript("CKEDITOR.instances['swDetailedRequirements'].setData('This is test contest.');");
+        browser.runScript("CKEDITOR.instances['swGuidelines'].setData('This is test contest.');");
+        browser.type("css=#swUploadButtonDiv > input[name='document']", TestHelper.getUploadFile());
+        browser.type("swFileDescription", "This is requirement doc.");
+        browser.click("swFileUploadBtn");
+        Thread.sleep(TestHelper.SLEEP);
+    }
 
     /**
      * Perform the step 1 of creating new studio contest.
      * @throws Exception if any error.
      */
-	static void performStudioStep1(Selenium browser) throws Exception {
-    	browser.click("link=Launch New Contest");
-    	browser.waitForPageToLoad(TestHelper.getTimeout());
+    static void performStudioStep1(Selenium browser) throws Exception {
+        browser.click("link=Launch Contest");
+        browser.waitForPageToLoad(TestHelper.getTimeout());
         browser.click("css=div.selectedTxt");
-		browser.click("link=Web Design");
-		browser.type("id=contestName", "Test Contest");
-		browser.select("projects", "Client 1 Billing Account 1 Project 2");
-		browser.select("billingProjects", "Client 1 Billing Account 1");
-		browser.select("contestCopilot", "Unassigned");
-		browser.select("roundTypes", "Contest will be run in multi-rounds");
-		browser.type("startDate", "11/22/2022");
-		browser.click("//a[@href='javascript:continueContestSelection();']");
-		Thread.sleep(TestHelper.SLEEP);
-	}
+        browser.click("link=Web Design");
+        browser.type("id=contestName", "Test Contest");
+        browser.select("projects", "Client 30010001 Billing Account 1 Project 1");
+        
+        browser.select("contestCopilot", "Unassigned");
+        browser.select("roundTypes", "Contest will be run in multi-rounds");
+        browser.type("startDate", "11/22/2022");
+        browser.click("//a[@href='javascript:continueContestSelection();']");
+        Thread.sleep(TestHelper.SLEEP);
+    }
 
     /**
      * Tears down the testing environment.
