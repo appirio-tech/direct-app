@@ -1429,7 +1429,7 @@
             </result>
         </action>
 
-        <action name="SaveSoftwareCheckpointReviewAction" class="SaveSoftwareCheckpointReviewAction">
+        <action name="saveSoftwareCheckpointReviewAction" class="saveSoftwareCheckpointReviewAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
