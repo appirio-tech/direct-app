@@ -5,6 +5,7 @@
     <PhaseTypes>
         <PhaseType id="registration" typeId="1" typeName="Registration"/>
         <PhaseType id="submission" typeId="2" typeName="Submission"/>
+		<PhaseType id="screening" typeId="3" typeName="Screening"/>
         <PhaseType id="review" typeId="4" typeName="Review"/>
     </PhaseTypes>
 <!--     A set of project phases defined in this template. -->
@@ -15,9 +16,13 @@
         <Phase id="submissionPhase" length="259200000" type="submission"  phaseId="2">
             <Dependency id="registrationPhase" isDependencyStart="true" isDependentStart="true" lagTime="300000"/>
         </Phase>
+		
+		<Phase id="screeningPhase" length="43200000" type="screening" phaseId="3">
+            <Dependency id="submissionPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+        </Phase>
 
         <Phase id="reviewPhase" length="172800000" type="review"  phaseId="4">
-            <Dependency id="submissionPhase" isDependentStart="true" lagTime="0"/>
+            <Dependency id="screeningPhase" isDependentStart="true" lagTime="0"/>
         </Phase>
 
     </Phases>
