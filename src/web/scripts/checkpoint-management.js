@@ -265,7 +265,7 @@ $(document).ready(function() {
        modalPreloader();
        $.ajax({
             type: 'POST',
-            url:  "saveSoftwareCheckpointReviewAction",
+            url:  ctx + "/contest/saveSoftwareCheckpointReviewAction",
             data: {projectId:projectId,
                     placements:placements,feedbacks:feedbacks,submissionIds:submissionIds,
                     committed:committed,generalFeedback:generalFeedback},
