@@ -310,7 +310,7 @@
                         <th>No.</th>
                         <th>Username</th>
                         <th>Amount</th>
-                        <th>Date</th>
+                        <th>Method</th>
                     </tr>
                     </thead>
                     <tbody>
