@@ -6,11 +6,13 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.model.BillingAccount;
+import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -25,6 +27,7 @@ import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectCategory;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.CompetitionPrize;
+import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 
 import javax.xml.datatype.DatatypeFactory;
@@ -226,6 +229,35 @@ public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * <p>
+     * Gets all billing projects for the direct project.
+     * </p>
+     *
+     * @return a list of billing projects
+     * @throws Exception if any error occurs
+     */
+    public List<ProjectData> getBillingProjects() throws Exception {
+        if (null == getProjectServiceFacade()) {
+            throw new IllegalStateException("The project service facade is not initialized");
+        }
+
+        List<Project> projects = getProjectServiceFacade().getBillingAccountsByProject(getFormData().getProjectId());
+
+        // wrap the data with project data, only id, name and description are retrieved
+        List<ProjectData> projectDatas = new ArrayList<ProjectData>();
+        for (Project project : projects) {
+            ProjectData projectData = new ProjectData();
+            projectData.setProjectId(project.getId());
+            projectData.setName(project.getName());
+            projectData.setDescription(project.getDescription());
+
+            projectDatas.add(projectData);
+        }
+
+        return projectDatas;
     }
 
     /**
