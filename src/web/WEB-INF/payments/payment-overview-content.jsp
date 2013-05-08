@@ -182,8 +182,8 @@
         <div class="memberPaymentBlockContainer  memberPaymentAverageTotalBlock">
             <div class="sectionInner">
                 <div class="projectTitle">
-                    <h3>Average total $ of payments</h3>
-                    <a href="javascript:;" class="icon" rel="This chart shows average member payments.">!</a>
+                    <h3>Payment Trends</h3>
+                    <a href="javascript:;" class="icon" rel="This chart shows the payment trends over time.">!</a>
                 </div>
                 <!-- title --><!-- container -->
                 <div class="chartsContainer">
@@ -243,8 +243,8 @@
     <div class="memberPaymentBlockContainer  memberPaymentStatusAllBlock">
         <div class="sectionInner">
             <div class="projectTitle">
-                <h3>Aging of all 2012+ payments</h3>
-                <a href="javascript:;" class="icon" rel="This table shows payments with different status">!</a>
+                <h3>Payment Aging</h3>
+                <a href="javascript:;" class="icon" rel="This table shows the age of payments dating back to Jan 1, 2012">!</a>
             </div>
             <!-- title --><!-- container -->
             <div class="tableContainer">
@@ -287,7 +287,7 @@
         <div class="sectionInner">
             <div class="projectTitle">
                 <h3>Top 10 Member Balances</h3>
-                <a href="javascript:;" class="icon" rel="This table shows members with top payments.">!</a>
+                <a href="javascript:;" class="icon" rel="This table shows the top member balances.">!</a>
             </div>
             <!-- title --><!-- container -->
             <div class="tableContainer">
