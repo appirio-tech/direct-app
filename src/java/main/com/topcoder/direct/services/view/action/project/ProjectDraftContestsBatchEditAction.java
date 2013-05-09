@@ -346,7 +346,7 @@ public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction
             // set to zero
             contest.getProjectHeader().setProperty("Contest Fee Percentage", "0");
 
-            if(billingAccount == null) {
+            if(billingAccount == null || billingAccount.getContestFees() == null) {
                 contest.getProjectHeader().setProperty("Admin Fee", "0");
                 return contest;
             } else {
