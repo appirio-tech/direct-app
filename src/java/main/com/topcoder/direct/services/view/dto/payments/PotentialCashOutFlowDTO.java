@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.view.dto.payments;
+package com.topcoder.direct.services.view.dto.payments;
 
 /**
  * <p>This class is used to hold potential cash out flow data.</p>

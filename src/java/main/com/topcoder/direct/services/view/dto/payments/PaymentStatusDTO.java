@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.view.dto.payments;
+package com.topcoder.direct.services.view.dto.payments;
 
 import java.util.Date;
 
