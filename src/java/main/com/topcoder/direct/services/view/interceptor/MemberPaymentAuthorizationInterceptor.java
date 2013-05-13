@@ -48,7 +48,7 @@ public class MemberPaymentAuthorizationInterceptor implements Interceptor {
      */
     public String intercept(ActionInvocation actionInvocation) throws Exception {
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        if (currentUser == null ||  !DirectUtils.isTCAccounting(currentUser)) {
+        if (currentUser == null ||  (!DirectUtils.isTCAccounting(currentUser) && !DirectUtils.isTcOperations(currentUser))) {
             HttpServletRequest request = DirectUtils.getServletRequest();
             request.setAttribute("errorPageMessage",
                     "Sorry, you don't have permission to access member payment page.");
