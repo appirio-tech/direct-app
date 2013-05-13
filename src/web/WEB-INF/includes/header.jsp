@@ -156,7 +156,7 @@
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                             <a href="<s:url action="platformSpecialistsReport" namespace="/"/>">Platform Specialists Report</a>
                         </c:if>
-                        <c:if test="${tcdirect:isTCAccounting()}">
+                        <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">
                             <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
                         </c:if>                        
                     </div>
@@ -221,7 +221,7 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
-                        <c:if test="${tcdirect:isTCAccounting()}">
+                        <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">
                             <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
                         </c:if> 
                     </div>
@@ -288,7 +288,7 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
-                        <c:if test="${tcdirect:isTCAccounting()}">
+                        <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">
                             <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
                         </c:if> 
                     </div>
@@ -356,7 +356,7 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
-                        <c:if test="${tcdirect:isTCAccounting()}">
+                       <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">
                             <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
                         </c:if> 
                     </div>
@@ -420,7 +420,7 @@
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
                         </c:if>
-                        <c:if test="${tcdirect:isTCAccounting()}">
+                        <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">
                             <a href="<s:url action="overview" namespace="/payments"/>">Member Payments Dashboard</a>
                         </c:if> 
                     </div>
