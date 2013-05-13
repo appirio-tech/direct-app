@@ -218,7 +218,6 @@
                     </div>
                     <div class="chartLegendWrapper">
                         <ul class="fLeft">
-                            <li class="chartLegend skyblueLegend">Created</li>
                             <li class="chartLegend greenLegend">Paid</li>
                         </ul>
                         <ul class="payMethodLegend fRight">

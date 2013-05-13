@@ -1730,9 +1730,9 @@ public class DataProvider {
     private static List<ForumPoster> getLatestThreePosters(String lastPosters) throws Exception {
         List<ForumPoster> posters = new ArrayList<ForumPoster>();
 
-		if (lastPosters == null || lastPosters.equals("")) {
-			return posters;
-		}
+    if (lastPosters == null || lastPosters.equals("")) {
+      return posters;
+    }
 
         String[] postersStr = lastPosters.split(";");
         for(String p : postersStr) {
@@ -2109,8 +2109,8 @@ public class DataProvider {
                 stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
 
                 stats.setProjectedCost(row.getDoubleItem("cost_draft") + row.getDoubleItem("cost_scheduled") +
-                		row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
-                		row.getDoubleItem("cost_cancelled"));
+                    row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
+                    row.getDoubleItem("cost_cancelled"));
 
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
@@ -2207,7 +2207,7 @@ public class DataProvider {
         }
 
 
-		if(DirectUtils.isTcStaff(currentUser)) {
+    if(DirectUtils.isTcStaff(currentUser)) {
             request.setProperty("uid", String.valueOf(0));
         } else {
             request.setProperty("uid", String.valueOf(currentUser.getUserId()));
@@ -4599,8 +4599,8 @@ public class DataProvider {
                 mappingDTO.setProjectId(directProjectId);
                 mappingDTO.setProjectName(directProjectName);
                 globalRecordCache.put(directProjectId, mappingDTO);
-				}
-			}
+        }
+      }
 
             globalResult.put("client.billing", globalClientBillingMap);
             globalResult.put("client.project", globalClientProjectMap);
@@ -4897,13 +4897,13 @@ public class DataProvider {
         Request request = new Request();
 
         String queryName;
-		String commandName;
+    String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
         if (!hasInvoice) {
-			commandName = "dashboard_billing_cost_invoice_report_v4";
+      commandName = "dashboard_billing_cost_invoice_report_v4";
             queryName = "dashboard_billing_cost_invoice_report_v4";
         } else {
-			commandName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
+      commandName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
             queryName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
         }
 
@@ -5896,24 +5896,24 @@ public class DataProvider {
      */
     private static boolean setReportQueryParameters(Request request, TCSubject currentUser, long clientId, long billingAccountId, long projectId) {
         setUserPermissionQueryParameter(request, currentUser);
-		
-		request.setProperty("tcdirectid", "0");
+    
+    request.setProperty("tcdirectid", "0");
         request.setProperty("billingaccountid", "0");
         request.setProperty("clientid", "0");
-		
-		boolean anySet = false;
-			
+    
+    boolean anySet = false;
+      
         if (projectId > 0) {
             request.setProperty("tcdirectid", String.valueOf(projectId));
-			anySet = true;
+      anySet = true;
         }
-		if (billingAccountId > 0) {
+    if (billingAccountId > 0) {
             request.setProperty("billingaccountid", String.valueOf(billingAccountId));
-			anySet = true;
+      anySet = true;
         }
-		if (clientId >= 0) {
+    if (clientId >= 0) {
             request.setProperty("clientid", String.valueOf(clientId));
-			anySet = true;
+      anySet = true;
         }
         return anySet;
     }
@@ -7323,7 +7323,7 @@ public class DataProvider {
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
         request.setProperty("sdt", dateFormat.format(startDate));
         request.setProperty("edt", dateFormat.format(endDate));
-		request.setProperty("uid", String.valueOf(userId));
+    request.setProperty("uid", String.valueOf(userId));
 
         ResultSetContainer projectContestResults = dataAccessor.getData(request).get("project_contest_submissions");
 
@@ -7560,7 +7560,7 @@ public class DataProvider {
         return showContestsDownload;
     }
 
-	/**
+  /**
      * <p>
      * This method retrieves client user stats.
      * </p>
@@ -8157,7 +8157,6 @@ public class DataProvider {
         request.setProperty("psid", String.valueOf(PaymentStatus.PAID.getPaymentStatusId()));
       } else if(criteria.getPaymentStatusId() == PaymentStatus.OWED.getPaymentStatusId()) {
         queryName = "get_created_payments_trends";
-        request.setProperty("psid", String.valueOf(PaymentStatus.OWED.getPaymentStatusId()));
       }
       
         request.setProperty("sda", dateFormatter.format(startDate));      

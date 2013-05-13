@@ -312,11 +312,6 @@ function loadPotentialCashOutflowTable(){
                     } else {
                         // fill data
                         $.each(result['payments'], function(index, item) {
-                            // ignore not set data for potential cash out flow table
-                            if (item['paymentMethodName'] == 'Not Set') {
-                                return;
-                            }
-                        
                             var row = $("<tr>");
                             row.addClass("contentRow hide");
                             
@@ -412,7 +407,7 @@ function loadPaymentsByMethodTable(){
                         thData += '</tr></thead>';
                         $("#paymentsByMethodTable tbody").before(thData);
                         
-                        var columnNames = ['Paypal', 'Payoneer', 'Western Union'];
+                        var columnNames = ['Paypal', 'Payoneer', 'Western Union', 'Not Set'];
                         $.each(columnNames, function(index, item) {
                             var row = $("<tr class='contentRow hide'>");
                             row.append($("<td class='alignLeft'>").text(item));
@@ -423,7 +418,7 @@ function loadPaymentsByMethodTable(){
                             $("#paymentsByMethodTable tbody").append(row);
                         });
                         
-                        var paymentNames = [ 'PAYPAL', 'PAYONEER', 'WESTERN_UNION'];
+                        var paymentNames = [ 'PAYPAL', 'PAYONEER', 'WESTERN_UNION', 'NOT_SET'];
                         $.each(paymentNames, function(index, item) {
                             var vRow = $("#paymentsByMethodTable tbody tr.contentRow:eq(" + index + ")");
                             $.each(result[item], function(ii, v) {
@@ -528,26 +523,30 @@ function renderChart(data) {
     var wuData = data['WESTERN_UNION'];
         
     var catList = []
-    var catTotalCreated = [];
     var catTotalPaid = [];
     var paypalPaid = [];
     var paypalGap = [];
+    var paypalCreated = [];
     var payoneerPaid = [];
     var payoneerGap = [];
+    var payoneerCreated = [];
     var wuPaid = [];
     var wuGap = [];
+    var wuCreated = [];
     var decoTop = [];
     var maxV = -1;
     
     for (var i = 0; i < paypalData.length; i++) {
         catList[i] = paypalData[i].timeStamp;
-        catTotalCreated[i] = parseInt(paypalData[i].created) + parseInt(payoneerData[i].created) + parseInt(wuData[i].created);
         catTotalPaid[i] = parseInt(paypalData[i].paid) + parseInt(payoneerData[i].paid) + parseInt(wuData[i].paid);
         paypalPaid[i] = parseInt(paypalData[i].paid);
+        paypalCreated[i] =  parseInt(paypalData[i].created);
         paypalGap[i] = Math.max(0, (parseInt(paypalData[i].created) - parseInt(paypalData[i].paid)));
         payoneerPaid[i] = parseInt(payoneerData[i].paid);
+        payoneerCreated[i] = parseInt(payoneerData[i].created);
         payoneerGap[i] = Math.max(0, (parseInt(payoneerData[i].created) - parseInt(payoneerData[i].paid)));
         wuPaid[i] = parseInt(wuData[i].paid);
+        wuCreated[i] = parseInt(wuData[i].created);
         wuGap[i] = Math.max(0, (parseInt(wuData[i].created) - parseInt(wuData[i].paid)));
         
         maxV = Math.max(maxV, paypalData[i].created);
@@ -618,7 +617,7 @@ function renderChart(data) {
             , {
                 type: 'column',
                 name: 'CreatedSub',
-                data: paypalGap,
+                data: paypalCreated,
                 stack: 'Paypal',
                 color:'#ffffff'
             }, {
@@ -640,7 +639,7 @@ function renderChart(data) {
             {
                 type: 'column',
                 name: 'CreatedSub',
-                data: payoneerGap,
+                data: payoneerCreated,
                 stack: 'Payoneer',
                 color:'#ffffff'
             }, {
@@ -662,7 +661,7 @@ function renderChart(data) {
             {
                 type: 'column',
                 name: 'CreatedSub',
-                data: wuGap,
+                data: wuCreated,
                 stack: 'Western Union',
                 color:'#ffffff'
             }, {
@@ -676,18 +675,7 @@ function renderChart(data) {
         ]);
     }
     seriesOption = seriesOption.concat([
-        {
-            type: 'line',
-            name: 'Created',
-            data: catTotalCreated,
-            marker: {
-                lineWidth: 2,
-                lineColor: '#00b0ff',
-                fillColor: '#00b0ff',
-                symbol: 'circle'
-            },
-            color:'#00b0ff'
-        }, {
+         {
             type: 'line',
             name: 'Paid',
             data: catTotalPaid,
@@ -758,14 +746,14 @@ function renderChart(data) {
                     if (this.series.name == "CreatedSub"){
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner">' +
                                     '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' + 
-                                    '<div>Paid:' + parseInt(( this.point.stackTotal - barTop - this.point.y)) + '</div>' +
-                                    '<div>Created:' +parseInt(( this.point.stackTotal - barTop )) + '</div>' +
+                                    '<div>Paid:' + parseInt(( this.point.stackTotal - barTop - this.y)) + '</div>' +
+                                    '<div>Created:' +parseInt(this.y) + '</div>' +
                                 '</div></div>';
                     }else if (this.series.name == "PaidSub"){
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner">' +
                                     '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' + 
-                                    '<div>Paid:' + parseInt(this.point.y) + '</div>' +
-                                    '<div>Created:' + parseInt((this.point.stackTotal - barTop )) + '</div>' +
+                                    '<div>Paid:' + parseInt(this.y) + '</div>' +
+                                    '<div>Created:' + parseInt((this.point.stackTotal - barTop - this.y)) + '</div>' +
                                 '</div></div>';
                     }else{
                         return '';    
