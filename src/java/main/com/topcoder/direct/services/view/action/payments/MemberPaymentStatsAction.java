@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.payments;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.view.dto.payments.PaymentTrendItem;
+import com.topcoder.direct.services.view.dto.payments.PaymentTrendItem;
 import com.topcoder.direct.services.payments.entities.PaymentMethod;
 import com.topcoder.direct.services.payments.entities.PaymentStatus;
 import com.topcoder.direct.services.payments.entities.PaymentTrend;

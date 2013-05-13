@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.payments;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.view.dto.payments.PotentialCashOutFlowDTO;
+import com.topcoder.direct.services.view.dto.payments.PotentialCashOutFlowDTO;
 import com.topcoder.direct.services.payments.entities.CashOutflowPotential;
 import com.topcoder.direct.services.payments.entities.CashOutflowPotentialResult;
 import com.topcoder.direct.services.payments.entities.PaymentMethod;
