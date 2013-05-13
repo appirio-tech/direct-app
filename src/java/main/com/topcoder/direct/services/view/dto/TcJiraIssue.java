@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
 
@@ -59,9 +59,16 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
  *     <li>Added method {@link #getRemoteIssue}. </li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.6 (BUGR-8693 TC Cockpit Add active bug races of project to the project overview page)
+ * <ul>
+ *   <li>Adds the method {@link #getCockpitProjectId()} to get the cockpit project ID set for this jira issue</li>
+ * </ul>
+ * </p>
  * 
- * @author Veve, GreatKevin, xjtufreeman, TCSASSEMBER
- * @version 1.5
+ * @author Veve, GreatKevin, xjtufreeman, Veve
+ * @version 1.6
  */
 public class TcJiraIssue implements Serializable {
 
@@ -732,10 +739,38 @@ public class TcJiraIssue implements Serializable {
         this.directProjectName = directProjectName;
     }
 
+    /**
+     * Gets the cockpit project ID set for this jira issue.
+     *
+     * @return the cockpit project ID set for this jira issue.
+     * @since 1.6
+     */
+   public Long getCockpitProjectId() {
+       RemoteCustomFieldValue[] values = this.issue.getCustomFieldValues();
+
+       for (RemoteCustomFieldValue value : values) {
+           if (value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getDirectProjectIDField().trim().toLowerCase())) {
+               return Long.parseLong(value.getValues()[0].trim());
+           }
+       }
+
+       return null;
+   }
+
+    /**
+     * Gets the client id.
+     *
+     * @return the client id.
+     */
     public long getClientId() {
         return clientId;
     }
 
+    /**
+     * Sets the client id.
+     *
+     * @param clientId the client id.
+     */
     public void setClientId(long clientId) {
         this.clientId = clientId;
     }

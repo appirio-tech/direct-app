@@ -73,8 +73,15 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.5
+ * <p>
+ * Version 1.6 (BUGR-8694 TC Cockpit Add project bug races to the project game plan)
+ * <ul>
+ *     <li>Adds project level bug races to the project game plan</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.6
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -413,15 +420,18 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         String directProjectName = gamePlan.getTcDirectProjectName();
 
         // the list to store bug race of the project
-        List<TcJiraIssue> bugRaceForDirectProject = null;
+        List<TcJiraIssue> contestLevelBugRaces = null;
 
         Set<Long> contestIds = getAllContestsIdsFromGamePlan(gamePlan);
 
         if(contestIds.size() > 0) {
             // if there are contest IDs, search for the bug races
-            bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
+            contestLevelBugRaces = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
         }
 
+        List<TcJiraIssue> projectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProject(directProjectId, null);
+
+        contestLevelBugRaces.addAll(projectLevelBugRaces);
 
         // DATA BEGIN
         if (!isJSGantt) {
@@ -429,7 +439,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 
             // get the start date of the project
-            Date directProjectStartDate = getDirectProjectStartDate(gamePlan, bugRaceForDirectProject);
+            Date directProjectStartDate = getDirectProjectStartDate(gamePlan, contestLevelBugRaces);
 
             // append the direct project header
             result.append("<projects><project id=\"" + directProjectId + "\" name=\"" +
@@ -543,7 +553,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             // generate bug race data
             if (contestIds.size() > 0) {
 
-                for (TcJiraIssue bugRace : bugRaceForDirectProject) {
+                for (TcJiraIssue bugRace : contestLevelBugRaces) {
                     String id = bugRace.getIssueKey();
                     String uniqueId = bugRace.getIssueId();
                     String name = bugRace.getIssueKey() + " " + bugRace.getTitle();

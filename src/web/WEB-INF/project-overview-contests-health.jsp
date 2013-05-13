@@ -1,11 +1,14 @@
 <%--
-  - Author: isv, GreatKevin
+  - Author: isv, GreatKevin, Veve
   -
-  - Version: 1.0 (Project Health Update assembly)
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2 (Project Health Update assembly)
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Five)
   - Hide the review column data if the contest is copilot posting or studio contest
+  -
+  - Version 1.2 (BUGR-8693 TC Cockpit Add active bug races of project to the project overview page)
+  - Adds the active bug races to the active contests of the project overview page
   -
   - Description: This page renders the project contests health view.
 --%>
@@ -291,4 +294,235 @@
             
         </td>
     </tr>
+</s:iterator>
+
+<s:iterator value="activeBugRaces" status="sta">
+<s:set var="currentPhaseStartTime" value="%{#attr['value'].dashboardData.currentPhase.startTime}" scope="page"/>
+<s:set var="currentPhaseEndTime" value="%{#attr['value'].dashboardData.currentPhase.endTime}" scope="page"/>
+<s:set var="currentPhaseName" value="%{#attr['value'].dashboardData.currentPhase.phaseName}" scope="page"/>
+<s:set var="nextPhaseName" value="%{#attr['value'].dashboardData.nextPhase.phaseName}" scope="page"/>
+<s:set var="nextPhaseStartTime" value="%{#attr['value'].dashboardData.nextPhase.startTime}" scope="page"/>
+<s:set var="nextPhaseEndTime" value="%{#attr['value'].dashboardData.nextPhase.endTime}" scope="page"/>
+<s:set var="numberOfRegistrants" value="%{#attr['value'].dashboardData.numberOfRegistrants}" scope="page"/>
+<tr <c:if test="${sta.even}">class='even'</c:if>>
+<td class="first">
+    <s:if test="votesNumber > 1" >
+        <a class="longWordsBreak green" href="<s:property value='issueLink'/>">
+            <s:property value='title'/>
+        </a>
+    </s:if>
+    <s:elseif test="votesNumber == 1" >
+        <a class="longWordsBreak orange" href="<s:property value='issueLink'/>">
+            <s:property value='title'/>
+        </a>
+    </s:elseif>
+    <s:else>
+        <a class="longWordsBreak red" href="<s:property value='issueLink'/>">
+            <s:property value='title'/>
+        </a>
+    </s:else>
+</td>
+<td class="alignTop">
+    <div class="unitContent">Bug Race</div>
+</td>
+<td class="alignTop">
+    <div class="unitContent">Submission</div>
+</td>
+<td class="alignTop">
+    <div class="unitContent dateNotice">Review&nbsp;</div>
+    <div class="unitContent dateFullFormat">
+    </div>
+</td>
+    <%-- Timeline --%>
+<td>
+        <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="green"></span>
+        </a>
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Timeline</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <p>
+                Timeline data not available. Bug Race competition ends upon successful submission review.
+            </p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+</td>
+    <%-- Registration --%>
+<td>
+    <s:if test="votesNumber > 1" >
+        <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="green"></span></a>
+    </s:if>
+    <s:elseif test="votesNumber == 1" >
+        <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="orange"></span></a>
+    </s:elseif>
+    <s:else>
+        <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="red"></span></a>
+    </s:else>
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Registration</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <s:if test="votesNumber > 1" >
+                <h3><c:out value="Registration is healthy."/></h3>
+            </s:if>
+            <s:elseif test="votesNumber == 1" >
+                <h3><c:out value="Registration is less than ideal."/></h3>
+                <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your bug race."/></p>
+            </s:elseif>
+            <s:else>
+                <h3><c:out value="Registration is poor."/></h3>
+                <p><c:out value="It is unlikely you will receive good bug race submissions. Consider increasing the prize or reduce the scope."/></p>
+            </s:else>
+            <p><strong># of registrants</strong> : <s:property value="votesNumber"/></p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+</td>
+    <%-- Review --%>
+<td>
+
+   <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+       <span class="green"></span>
+   </a>
+
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Review</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <p>Review performed by Copilot and/or project team.</p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+</td>
+    <%-- Forum --%>
+<td>
+        <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="green"></span></a>
+
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Forum</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <p>Please see comments in Bug Race ticket.</p>
+            <p><a href="<s:property value='issueLink'/>">View Ticket</a></p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+
+</td>
+
+    <%-- Dependencies --%>
+<td>
+   <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+        <span class="green"></span>
+   </a>
+
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Dependencies</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <p>
+                Dependency information not available.
+            </p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+</td>
+
+    <%-- Issue Tracking --%>
+<td>
+
+    <a href="<s:property value='issueLink'/>" class="tooltopsBtn">
+            <span class="green"></span></a>
+
+    <div class="tooltipBox">
+        <span class="arrow"></span>
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Issue Tracking</h2>
+                </div>
+            </div>
+        </div><!-- End .tooltipHeader -->
+
+        <div class="tooltipContent">
+            <p>
+                Not applicable
+            </p>
+        </div><!-- End .tooltipContent -->
+
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div><!-- End .tooltipFooter -->
+    </div><!-- End .tooltipBox -->
+
+</td>
+</tr>
 </s:iterator>

@@ -51,8 +51,8 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  * <p>
  * Version 1.3 (TopCoder Cockpit - Bug Race Project Contests View) change notes:
  * <ol>
- *     <li>Add method {@link #getBugRaceForDirectProject(java.util.List)}</li>
- *     <li>Add method {@link #getBugRaceForDirectProject(java.util.Set)}</li>
+ *     <li>Add method {@link #getBugRaceForDirectProject(java.util.List, String)}</li>
+ *     <li>Add method {@link #getBugRaceForDirectProject(java.util.Set, String)}</li>
  * </ol>
  * </p>
  *
@@ -66,8 +66,8 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  *
  * Version 1.5 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
  *   <ol>
- *     <li>Added method {@link #getIssuesForDirectProject(String)} to get project bugs for the given project.</li>
- *     <li>Added method {@link #getIssuesForDirectProject(java.util.Set<String> )} to get project bugs for set
+ *     <li>Added method {@link #getIssuesForDirectProject(Long)} to get project bugs for the given project.</li>
+ *     <li>Added method {@link #getIssuesForDirectProjects(java.util.Set<String> )} to get project bugs for set
  *         of project.
  *     </li>
  *   </ol>
@@ -79,9 +79,20 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  *     Updates the Jira query to get bug race to exclude copilot payments ticket from the result.
  * </ol>
  * </p>
+ *
+ * <p>
+ *
+ * Version 1.7 (BUGR-8693 TC Cockpit Add active bug races of project to the project overview page)
+ * <ul>
+ *     <li>Adds method {@link #getBugRacesForDirectProject(Long, String)} to get project level bug races of
+ *     a given direct project</li>
+ *     <li>Adds method {@link #getBugRacesForDirectProjects(java.util.Set, String)} to get project level bug races of
+ *     a list of direct projects</li>
+ * </ul>
+ * </p>
  *  
- * @author Veve, xjtufreeman, GreatKevin
- * @version 1.6
+ * @author Veve, xjtufreeman, GreatKevin, Veve
+ * @version 1.7
  */
 public class JiraRpcServiceWrapper {
 
@@ -329,7 +340,7 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if an unexpected error occurs.
      * @since 1.5
      */
-    public static List<TcJiraIssue> getIssuesForDirectProject(Set<Long> directProjectIDSet) throws Exception {
+    public static List<TcJiraIssue> getIssuesForDirectProjects(Set<Long> directProjectIDSet) throws Exception {
 
         // when the input is null or empty, return an empty result
         if (directProjectIDSet == null || directProjectIDSet.size() == 0 ) {
@@ -350,6 +361,82 @@ public class JiraRpcServiceWrapper {
             jqlQuery.append(directProjectID);
         }
         jqlQuery.append(") AND \"Contest ID\" is empty ORDER BY Created DESC"); 
+
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery.toString());
+        for(TcJiraIssue issue : result) {
+            RemoteCustomFieldValue[] customValues = issue.getRemoteIssue().getCustomFieldValues();
+            for (RemoteCustomFieldValue rcf : customValues) {
+                if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                        ConfigUtils.getIssueTrackingConfig().getDirectProjectIDField().trim().toLowerCase())) {
+                    issue.setDirectProjectId(Long.parseLong(rcf.getValues()[0].trim()));
+                } else if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                        ConfigUtils.getIssueTrackingConfig().getApplicationNameFieldId().trim().toLowerCase())) {
+                    issue.setDirectProjectName(rcf.getValues()[0].trim());
+                }
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * Gets the project level bug races for the specified direct project id and filtered by the specified status filter.
+     *
+     * @param directProjectId the direct project id.
+     * @param statusFilter the status filter sub JQL query
+     * @return a list of TopCoder Jira issues
+     * @throws Exception if there is anything error.
+     * @since 1.6
+     */
+    public static List<TcJiraIssue> getBugRacesForDirectProject(Long directProjectId, String statusFilter)
+            throws Exception {
+        // throw IllegalArgumentException when the project id is not positive
+        if (directProjectId <= 0) {
+            throw new IllegalArgumentException("directProject id should be positive.");
+        }
+        // build the JQL query first
+        String directProjectQuery = ConfigUtils.getIssueTrackingConfig().getDirectProjectJQLQuery();
+
+        String jqlQuery = (statusFilter != null ? ("(" + statusFilter + ") AND ") : "")
+                + directProjectQuery.replaceAll("@directProjectID@", directProjectId.toString())
+                + " AND project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName()
+                + " AND issuetype!='Copilot Payment' order by Created DESC";
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
+
+        return result;
+    }
+
+    /**
+     * Gets the project level bug races for the specified direct project set and filtered by the specified status filter.
+     *
+     * @param directProjectIDSet the set of direct project IDs
+     * @param statusFilter the status filter sub JQL query
+     * @return a list of TopCoder Jira issues
+     * @throws Exception if there is anything error.
+     * @since 1.6
+     */
+    public static List<TcJiraIssue> getBugRacesForDirectProjects(Set<Long> directProjectIDSet, String statusFilter) throws Exception {
+
+        // when the input is null or empty, return an empty result
+        if (directProjectIDSet == null || directProjectIDSet.size() == 0 ) {
+            return  new ArrayList<TcJiraIssue>();
+        }
+
+        StringBuffer jqlQuery = new StringBuffer();
+        jqlQuery.append((statusFilter != null ? ("(" + statusFilter + ") AND ") : ""));
+        jqlQuery.append("(");
+        boolean first = true;
+        // build the JQL query first
+        for(Long directProjectID : directProjectIDSet) {
+            if(!first) {
+                jqlQuery.append(" OR ");
+            } else {
+                first = false;
+            }
+            jqlQuery.append("\"Cockpit Project ID\" = ");
+            jqlQuery.append(directProjectID);
+        }
+        jqlQuery.append(") AND \"Contest ID\" is empty AND project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " AND issuetype!='Copilot Payment' ORDER BY Created DESC");
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery.toString());
         for(TcJiraIssue issue : result) {
@@ -413,7 +500,7 @@ public class JiraRpcServiceWrapper {
         String jqlQuery = (statusFilter != null ? ("(" + statusFilter + ") AND ") : "") + (jqlQueryBuilder.length() > 0 ? "(" + jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
                 ") AND" : "") + " ((project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " AND issuetype!='Copilot Payment') OR issuetype='Client Task') order by Created DESC";
 
-        System.out.println("@@@@@@ " + jqlQuery);
+        // System.out.println("@@@@@@ " + jqlQuery);
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
 
@@ -517,6 +604,8 @@ public class JiraRpcServiceWrapper {
     private static List<TcJiraIssue> getIssuesFromJQLQuery(String jqlQuery) throws Exception {
         // List to store the final result
         final List<TcJiraIssue> result = new ArrayList<TcJiraIssue>();
+
+        System.out.println("@@@ JQL Query to run:" + jqlQuery);
 
         try {
 
