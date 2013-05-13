@@ -89,7 +89,7 @@
                                 <!-- End .filterTitleRight -->
                             </div>
 
-                            <s:form method="get" action="dashboardPipelineReport" namespace="/"
+                            <s:form method="post" action="dashboardPipelineReport" namespace="/"
                                     id="DashboardSearchForm">
                             <fieldset>
                             <div class="filterContainer">

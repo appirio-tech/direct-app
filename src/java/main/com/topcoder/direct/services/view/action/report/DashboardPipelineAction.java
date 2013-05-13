@@ -169,14 +169,18 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
         this.sessionData = new SessionData(request.getSession());
         TCSubject currentUser = getCurrentUser();
 
+        // the follow is not needed, as getAllClients return all clients already.
+        /*
         List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
-        Map<Long, String> allClients = new HashMap<Long, String>();
+
         for (Project project : clientBillingProjects) {
             Client client = project.getClient();
             if (client != null) {
                 allClients.put(client.getId(), client.getName());  
             }
         }
+        */
+        Map<Long, String> allClients = new LinkedHashMap<Long, String>();
         // for contest without client
         allClients.put(0L, "One Off");
         allClients.putAll(DirectUtils.getAllClients(currentUser));
