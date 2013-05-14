@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.view.interceptor;
+package com.topcoder.direct.services.view.interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;

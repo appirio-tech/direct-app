@@ -40,7 +40,7 @@
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
             <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
             <interceptor name="securityGroupsTcStaffOnlyInterceptor" class="securityGroupsTcStaffOnlyInterceptor"/>
-            <interceptor name="memberPaymentAuthorizationInterceptor" class="com.topcoder.direct.view.interceptor.MemberPaymentAuthorizationInterceptor"/>
+            <interceptor name="memberPaymentAuthorizationInterceptor" class="com.topcoder.direct.services.view.interceptor.MemberPaymentAuthorizationInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
