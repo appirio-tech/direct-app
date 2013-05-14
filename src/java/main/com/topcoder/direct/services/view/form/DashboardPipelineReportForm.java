@@ -44,7 +44,7 @@ public class DashboardPipelineReportForm implements Serializable {
      */
     private static final ContestStatus[] DEFAULT_CONTEST_STATUSES_SELECTION
         = new ContestStatus[] {ContestStatus.DRAFT, ContestStatus.SCHEDULED, ContestStatus.ACTIVE,
-                               ContestStatus.COMPLETED, ContestStatus.CANCELLED};
+                               ContestStatus.COMPLETED, ContestStatus.FAILED, ContestStatus.CANCELLED};
 
     /**
      * <p>A <code>boolean</code> flag indicating whether the retrieved data is expected to be converted into

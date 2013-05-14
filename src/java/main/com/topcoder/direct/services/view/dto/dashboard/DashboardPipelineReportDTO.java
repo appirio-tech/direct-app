@@ -76,6 +76,7 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
         CONTEST_STATUSES.put(ContestStatus.SCHEDULED, "Scheduled");
         CONTEST_STATUSES.put(ContestStatus.ACTIVE, "Active");
         CONTEST_STATUSES.put(ContestStatus.COMPLETED, "Completed");
+		CONTEST_STATUSES.put(ContestStatus.FAILED, "Failed");
         CONTEST_STATUSES.put(ContestStatus.CANCELLED, "Cancelled");
 
         CONTEST_TYPES = new LinkedHashMap<ContestType, String>();

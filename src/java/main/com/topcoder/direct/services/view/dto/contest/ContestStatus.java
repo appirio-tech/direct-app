@@ -279,7 +279,14 @@ public enum ContestStatus {
      *
      * @since 1.3
      */
-    Late("Late", "stalled", "View");
+    Late("Late", "stalled", "View"),
+	
+	/**
+     * <p>A <code>ContestStatus</code> corresponding to all the failed contests</p>
+     *
+     * 
+     */
+    FAILED("Failed", "failed", "View");
 
     /**
      * <p>A <code>String</code> providing the state name. Such a name serves as a textual presentation of the status.
