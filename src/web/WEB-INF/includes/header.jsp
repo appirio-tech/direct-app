@@ -149,8 +149,7 @@
                     <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>"><span>Dashboards</span></a>
                 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -215,8 +214,7 @@
                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
                 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -282,8 +280,7 @@
                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -350,8 +347,7 @@
                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -414,8 +410,7 @@
                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -478,8 +473,7 @@
                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span>Dashboard</span></a>
 
                     <div class="subNav">
-                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
-                        <a href="<s:url action="dashboardEnterprise" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard</a>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <a href="<s:url action="operationsDashboardEnterprise" namespace="/"/>">Operations Dashboard</a>
                             <a href="<s:url action="clientUserStatsReport" namespace="/"/>">Client User Stats</a>
@@ -586,13 +580,10 @@
                              </a>
                          </li>
 
-                        <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                            <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Game Plan</span></a>
-                        </li>
 
-                        <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                        <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
                             <a href="javascript:;">
-                                <span>Contests<span class="arrow"></span></span>
+                                <span>Game Plan<span class="arrow"></span></span>
                             </a>
                             <div class="dropDwnLst">
                                 <div class="section">
