@@ -482,7 +482,7 @@ public class JiraRpcServiceWrapper {
     public static List<TcJiraIssue> getBugRaceForDirectProject(Set<Long> contestIds, String statusFilter) throws Exception {
 
         // when the input is null
-        if (contestIds == null) {
+        if (contestIds == null || contestIds.size() == 0) {
             return  new ArrayList<TcJiraIssue>();
         }
 
