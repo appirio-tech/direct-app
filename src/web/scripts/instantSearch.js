@@ -284,13 +284,6 @@ $(document).ready(function() {
 var instantSearchFeaturesList = {
     'Features': [
         {
-            "title":    "Cockpit Dashboard",
-            "link":     "/direct/dashboardEnterprise.action",
-            "brief":    "Allow you to view health of all your active cockpit projects. Provides the chart view, table view, volume view and comparison view of your cockpit projects",
-            "group":    "Dashboard",
-            "reqAdmin": "no"
-        },
-        {
             "title":    "Enterprise Dashboard - Overview",
             "link":     "/direct/direct/enterpriseDashboard/overview",
             "brief":    "Provides overview of your cockpit projects at enterprise level",
