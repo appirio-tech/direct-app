@@ -1,194 +1,124 @@
 Testsuite: com.topcoder.direct.contest.management.AllTests
-Tests run: 103, Failures: 11, Errors: 4, Time elapsed: 2,274.797 sec
+Tests run: 66, Failures: 9, Errors: 1, Time elapsed: 1,169.771 sec
 
-Testcase: testFTC1 took 14 sec
-Testcase: testFTC2 took 14.344 sec
-Testcase: testFTC3 took 22.156 sec
+Testcase: testFTC1 took 14.927 sec
+Testcase: testFTC2 took 15.02 sec
+Testcase: testFTC3 took 16.967 sec
+Testcase: testFTC4 took 15.936 sec
+Testcase: testFTC5 took 16.828 sec
+Testcase: testFTC6 took 15.641 sec
+Testcase: testFTC7 took 18.578 sec
+Testcase: testFTC8 took 16.803 sec
+Testcase: testFTC9 took 17.977 sec
+Testcase: testFTC10 took 16.767 sec
+Testcase: testFTC11 took 18.279 sec
+Testcase: testFTC12 took 17.079 sec
+Testcase: testFTC13 took 17.354 sec
+Testcase: testFTC14 took 17.707 sec
+Testcase: testFTC15 took 21.596 sec
+Testcase: testFTC16 took 21.487 sec
+Testcase: testFTC17 took 20.741 sec
+Testcase: testFTC18 took 20.829 sec
+Testcase: testFTC25 took 17.759 sec
+Testcase: testFTC26 took 14.052 sec
+Testcase: testFTC27 took 14.262 sec
+Testcase: testFTC29 took 13.747 sec
+	FAILED
+error box should be presented
+junit.framework.AssertionFailedError: error box should be presented
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC29(CreateContestsTests.java:973)
+
+Testcase: testFTC30 took 14.192 sec
+Testcase: testFTC31 took 12.656 sec
 	Caused an ERROR
-ERROR: Element Project 1323430652093 not found
-com.thoughtworks.selenium.SeleniumException: ERROR: Element Project 1323430652093 not found
-	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
-	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
-	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC3(CreateContestsTests.java:181)
+ERROR: Element //div[@class='helpArea'] not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element //div[@class='helpArea'] not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:112)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:106)
+	at com.thoughtworks.selenium.HttpCommandProcessor.getString(HttpCommandProcessor.java:275)
+	at com.thoughtworks.selenium.HttpCommandProcessor.getBoolean(HttpCommandProcessor.java:348)
+	at com.thoughtworks.selenium.DefaultSelenium.isVisible(DefaultSelenium.java:543)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC31(CreateContestsTests.java:1019)
 
-Testcase: testFTC4 took 12.516 sec
-Testcase: testFTC5 took 22.234 sec
-Testcase: testFTC6 took 14.344 sec
-Testcase: testFTC7 took 22.422 sec
-Testcase: testFTC8 took 14.531 sec
-Testcase: testFTC9 took 22.125 sec
-
-Testcase: testFTC10 took 11.328 sec
-	Caused an ERROR
-ERROR: Element //div[@id='swCatalogDiv']/div/div/div not found
-com.thoughtworks.selenium.SeleniumException: ERROR: Element //div[@id='swCatalogDiv']/div/div/div not found
-	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
-	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
-	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC10(CreateContestsTests.java:477)
-
-Testcase: testFTC11 took 11.094 sec
-	Caused an ERROR
-ERROR: Element //div[@id='swCatalogDiv']/div/div/div not found
-com.thoughtworks.selenium.SeleniumException: ERROR: Element //div[@id='swCatalogDiv']/div/div/div not found
-	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
-	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
-	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC11(CreateContestsTests.java:528)
-
-Testcase: testFTC12 took 15.672 sec
-Testcase: testFTC13 took 14.906 sec
-Testcase: testFTC14 took 12.734 sec
-	Caused an ERROR
-ERROR: There was an unexpected Confirmation! [Would you like to create the corresponding Component Development contest?]
-com.thoughtworks.selenium.SeleniumException: ERROR: There was an unexpected Confirmation! [Would you like to create the corresponding Component Development contest?]
-	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
-	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
-	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC14(CreateContestsTests.java:676)
-
-Testcase: testFTC15 took 13.766 sec
-Testcase: testFTC16 took 22.078 sec
-Testcase: testFTC17 took 11.781 sec
-Testcase: testFTC18 took 22.469 sec
-Testcase: testFTC25 took 10.672 sec
-Testcase: testFTC26 took 10.703 sec
-Testcase: testFTC27 took 14.828 sec
-Testcase: testFTC29 took 10.453 sec
+Testcase: testFTC32 took 16.092 sec
+Testcase: testFTC33 took 14.103 sec
+Testcase: testFTC34 took 13.558 sec
+Testcase: testFTC35 took 19.18 sec
+Testcase: testFTC36 took 13.69 sec
+Testcase: testFTC37 took 14.356 sec
+Testcase: testFTC38 took 13.544 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC29(CreateContestsTests.java:955)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC38(CreateContestsTests.java:1217)
 
-Testcase: testFTC30 took 10.625 sec
-Testcase: testFTC31 took 9.672 sec
-	FAILED
-popup should be closed
-junit.framework.AssertionFailedError: popup should be closed
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC31(CreateContestsTests.java:1002)
-
-Testcase: testFTC32 took 10.719 sec
-Testcase: testFTC33 took 10.469 sec
-Testcase: testFTC34 took 10.406 sec
-Testcase: testFTC35 took 10.844 sec
-	FAILED
-confirmation dialog should be displayed
-junit.framework.AssertionFailedError: confirmation dialog should be displayed
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC35(CreateContestsTests.java:1108)
-
-Testcase: testFTC36 took 10.578 sec
-Testcase: testFTC37 took 10.828 sec
-Testcase: testFTC38 took 10.86 sec
+Testcase: testFTC39 took 14.504 sec
+Testcase: testFTC40 took 13.689 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC38(CreateContestsTests.java:1194)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC40(CreateContestsTests.java:1277)
 
-Testcase: testFTC39 took 11.094 sec
-Testcase: testFTC40 took 10.688 sec
+Testcase: testFTC41 took 15.605 sec
+Testcase: testFTC42 took 14.536 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC40(CreateContestsTests.java:1251)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC42(CreateContestsTests.java:1321)
 
-Testcase: testFTC41 took 12.11 sec
-Testcase: testFTC42 took 12.578 sec
+Testcase: testFTC43 took 15.523 sec
+Testcase: testFTC44 took 14.835 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC42(CreateContestsTests.java:1293)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC44(CreateContestsTests.java:1365)
 
-Testcase: testFTC43 took 13.109 sec
-Testcase: testFTC44 took 12.125 sec
+Testcase: testFTC45 took 15.764 sec
+Testcase: testFTC46 took 14.981 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC44(CreateContestsTests.java:1335)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC46(CreateContestsTests.java:1414)
 
-Testcase: testFTC45 took 12.735 sec
-Testcase: testFTC46 took 12.437 sec
+Testcase: testFTC47 took 15.914 sec
+Testcase: testFTC48 took 15.437 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC46(CreateContestsTests.java:1381)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC48(CreateContestsTests.java:1462)
 
-Testcase: testFTC47 took 12.484 sec
-Testcase: testFTC48 took 12.547 sec
+Testcase: testFTC49 took 16.412 sec
+Testcase: testFTC50 took 15.668 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC48(CreateContestsTests.java:1427)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC50(CreateContestsTests.java:1510)
 
-Testcase: testFTC49 took 12.11 sec
-Testcase: testFTC50 took 12.343 sec
+Testcase: testFTC51 took 16.03 sec
+Testcase: testFTC52 took 14.991 sec
 	FAILED
 error box should be presented
 junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC50(CreateContestsTests.java:1473)
+	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC52(CreateContestsTests.java:1558)
 
-Testcase: testFTC51 took 12.719 sec
-Testcase: testFTC52 took 12.188 sec
-	FAILED
-error box should be presented
-junit.framework.AssertionFailedError: error box should be presented
-	at com.topcoder.direct.contest.management.CreateContestsTests.testFTC52(CreateContestsTests.java:1519)
-
-Testcase: testFTC56 took 11.906 sec
-Testcase: testFTC57 took 11.5 sec
-Testcase: testFTC58 took 12.203 sec
-Testcase: testFTC59 took 12.922 sec
-Testcase: testFTC60 took 12.75 sec
-Testcase: testFTC61 took 12.578 sec
-Testcase: testFTC62 took 13.156 sec
-Testcase: testFTC63 took 13.032 sec
-Testcase: testFTC64 took 13.109 sec
-Testcase: testFTC65 took 13.203 sec
-Testcase: testFTC66 took 13.234 sec
-Testcase: testFTC67 took 14.047 sec
-Testcase: testFTC68 took 13.266 sec
-Testcase: testFTC69 took 14.641 sec
-Testcase: testFTC70 took 13.656 sec
-Testcase: testFTC71 took 13.656 sec
-Testcase: testFTC72 took 25.422 sec
-Testcase: testFTC73 took 25.25 sec
-Testcase: testFTC74 took 25.453 sec
-Testcase: testFTC75 took 25.781 sec
-Testcase: testFTC76 took 11.344 sec
-Testcase: testFTC77 took 26.593 sec
-Testcase: testFTC78 took 24.922 sec
-Testcase: testFTC79 took 23.219 sec
-Testcase: testFTC80 took 18.781 sec
-Testcase: testFTC81 took 14.782 sec
-Testcase: testFTC82 took 12.75 sec
-Testcase: testFTC83 took 15.171 sec
-Testcase: testFTC84 took 33.079 sec
-Testcase: testFTC85 took 32.75 sec
-Testcase: testFTC86 took 33.671 sec
-Testcase: testFTC87 took 33.079 sec
-Testcase: testFTC88 took 32.89 sec
-Testcase: testFTC89 took 32.453 sec
-Testcase: testFTC91 took 26.25 sec
-Testcase: testFTC92 took 26.157 sec
-Testcase: testFTC93 took 22.656 sec
-Testcase: testFTC94 took 22.219 sec
-Testcase: testFTC96 took 25.125 sec
-Testcase: testFTC97 took 14.656 sec
-Testcase: testFTC100 took 22.656 sec
-Testcase: testFTC101 took 15.344 sec
-Testcase: testFTC102 took 15.047 sec
-Testcase: testFTC103 took 14.656 sec
-Testcase: testFTC104 took 20.844 sec
-Testcase: testFTC105 took 24.187 sec
-Testcase: testFTC106 took 24.891 sec
-Testcase: testFTC107 took 21.937 sec
-Testcase: testFTC108 took 22.25 sec
-Testcase: testFTC109 took 23.266 sec
-Testcase: testFTC110111 took 31.484 sec
-Testcase: testFTC115 took 77.375 sec
-Testcase: testFTC117 took 94.047 sec
-Testcase: testFTC118 took 92.734 sec
-Testcase: testFTC119 took 93.703 sec
-Testcase: testFTC120 took 92.703 sec
-Testcase: testFTC121 took 93.906 sec
-Testcase: testFTC122 took 92.813 sec
+Testcase: testFTC56 took 15.523 sec
+Testcase: testFTC57 took 14.313 sec
+Testcase: testFTC58 took 15.651 sec
+Testcase: testFTC59 took 14.842 sec
+Testcase: testFTC60 took 14.663 sec
+Testcase: testFTC61 took 16.094 sec
+Testcase: testFTC62 took 17.637 sec
+Testcase: testFTC63 took 18.993 sec
+Testcase: testFTC64 took 20.718 sec
+Testcase: testFTC65 took 19.275 sec
+Testcase: testFTC66 took 18.902 sec
+Testcase: testFTC67 took 19.158 sec
+Testcase: testFTC68 took 18.43 sec
+Testcase: testFTC69 took 16.534 sec
+Testcase: testFTC70 took 16.378 sec
+Testcase: testFTC71 took 15.182 sec
+Testcase: testFTC79 took 20.833 sec
+Testcase: testFTC80 took 19.096 sec
+Testcase: testFTC81 took 17.687 sec
+Testcase: testFTC82 took 15.666 sec
+Testcase: testFTC83 took 18.343 sec
