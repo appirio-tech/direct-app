@@ -2413,7 +2413,9 @@ public final class DirectUtils {
                 return false;
             }
         } catch (Exception e) {
-            throw new PermissionServiceException("Failed to authorize user against security groups", e);
+		    System.out.println("Failed to authorize user against security groups : "+e);
+			return false;
+            //throw new PermissionServiceException("Failed to authorize user against security groups", e);
         }
     }
 
