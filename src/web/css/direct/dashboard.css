@@ -9862,9 +9862,9 @@ a.downloadAllbtn:hover span {
     margin-right:20px;   
 }
 
-#tabProjectMilestone SPAN{
-width: 140px!important;
-}
+/*#tabProjectMilestone SPAN{*/
+    /*width: 140px!important;*/
+/*}*/
 
 #mainContent.noRightBar {
     background: none;
