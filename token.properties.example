@@ -364,6 +364,7 @@
 @paymentsService.paymentMethodID@=2
 #@payoneerService@=com.topcoder.direct.services.payments.impl.PayoneerServiceImpl
 @payoneerService@=com.topcoder.direct.services.payments.impl.MockPayoneerServiceImpl
+@westernUnionBalanceFileName@=/mnt/shared/western.txt
 
 #######################################
 # Wireframe Submissions Configuration #

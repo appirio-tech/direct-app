@@ -2869,6 +2869,26 @@ A.buttonRed1{
     padding-right:10px;
 }
 
+#setWesternUnionBalanceModal .noticeContent {
+    padding: 25px;
+    width: auto;
+    height: auto;
+}
+#setWesternUnionBalanceModal .noticeContent .modalRow {
+    min-height: 10px;
+    padding-bottom: 8px;
+}
+#setWesternUnionBalanceModal .noticeContent .modalRow label {
+    display: inline;
+    float: left;
+    font-weight: bold;
+    line-height: 22px;
+    width: 120px;
+}
+#setWesternUnionBalanceModal .noticeContent .modalRow .errorInfo {
+    color: red;
+}
+
 .editIcon {
     background: url(/images/edit-project-icon.png) 0 0 no-repeat;
     width: 26px;

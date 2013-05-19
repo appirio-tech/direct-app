@@ -436,6 +436,16 @@ select.sortTop10{
   line-height: 12px;
   font-size: 12px;
 }
+
+#memberPaymentsTable tbody tr.westRow .setBalance {
+    text-decoration: underline;
+    color: blue;
+}
+
+#memberPaymentsTable tbody tr.westRow .setBalance:hover {
+    text-decoration: none;
+}
+
 #memberPaymentsTable .ajaxTableLoader, #memberPaymentsTable .noData{
   height: 97px;
   padding-top: 50px;

@@ -302,7 +302,7 @@
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="userService" ref="userService"/>
-		<property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="export" value="true"/>
     </bean>
 
@@ -791,6 +791,12 @@
         <property name="transactionManager" ref="txManager"/>
     </bean>
 
+    <bean id="updateWesternUnionBalanceAmountAction"
+          class="com.topcoder.direct.services.view.action.payments.UpdateWesternUnionBalanceAmountAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="westernUnionService" ref="westernUnionService"/>
+    </bean>
+
     <bean id="dashboardBillingCostReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -869,8 +875,8 @@
     </bean>
 
     <bean id="milestoneLogger" class="com.topcoder.util.log.LogManager"
-    		factory-method="getLog">
-    		<constructor-arg value="milestoneLogger" />
+            factory-method="getLog">
+            <constructor-arg value="milestoneLogger" />
     </bean>
 
     <bean name="milestoneResponsiblePersonService" class="com.topcoder.direct.services.project.milestone.hibernate.HibernateResponsiblePersonService">
@@ -998,7 +1004,7 @@
         class="com.topcoder.direct.services.view.action.contest.ViewWireframeSubmissionAction"
         scope="prototype" parent="baseDirectStrutsAction">
         <property name="studioSubmissionBase" value="@studio.submission.base@"/>
-		<property name="userService" ref="userService"/>
+        <property name="userService" ref="userService"/>
         <property name="wireframeDirectory" value="@wireframeDirectory@"/>
     </bean>
     
@@ -1038,8 +1044,8 @@
           class="com.topcoder.direct.services.view.action.project.UpdateProjectForumWatchAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
-	
-	<bean id="syncUserAction"
+    
+    <bean id="syncUserAction"
           class="com.topcoder.direct.services.view.action.dashboard.SyncUserAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
@@ -1264,14 +1270,14 @@
           class="com.topcoder.direct.services.view.action.contest.SubmitApprovalAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
-	<bean id="addProjectForumAction" class="com.topcoder.direct.services.view.action.project.AddProjectForumAction"
+    <bean id="addProjectForumAction" class="com.topcoder.direct.services.view.action.project.AddProjectForumAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
     <bean id="deleteProjectForumsAction" class="com.topcoder.direct.services.view.action.project.DeleteProjectForumsAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
-    <bean id="paypalService" class="com.topcoder.direct.services.payments.impl.PayPalServiceImpl">                                  
+    <bean id="paypalService" class="com.topcoder.direct.services.payments.impl.PayPalServiceImpl">
         <property name="baseUrl" value="@paypal.baseUrl@"/>
         <property name="username" value="@paypal.username@"/>
         <property name="password" value="@paypal.password@"/>
@@ -1284,10 +1290,15 @@
         <property name="password" value="@payoneer.password@"/>
         <property name="partnerId" value="@payoneer.partnerId@"/>
     </bean>
+
+    <bean id="westernUnionService" class="com.topcoder.direct.services.payments.impl.WesternUnionServiceFileImpl" scope="singleton">
+        <property name="westernUnionBalanceFileName" value="@westernUnionBalanceFileName@"/>
+    </bean>
         
     <bean id="pullablePaymentsService" class="com.topcoder.direct.services.payments.impl.PullablePaymentsServiceImpl">
         <property name="paypalService" ref="paypalService"/>
         <property name="payoneerService" ref="payoneerService"/>
+        <property name="westernUnionService" ref="westernUnionService"/>
     </bean>
     
     <bean id="paymentsService" class="com.topcoder.direct.services.payments.impl.PaymentsServiceImpl"/>

@@ -47,33 +47,29 @@
                                 </td>
                             </tr>
                             <tr class="contentRow hide paypalRow">
-                                <td class="alignLeft">Paypal</input>
-                                </td>
+                                <td class="alignLeft">Paypal</td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                             </tr>
                             <tr class="odd contentRow hide payoneerRow">
-                                <td class="alignLeft">Payoneer</input>
-                                </td>
+                                <td class="alignLeft">Payoneer</td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                             </tr>
                             <tr class="contentRow hide westRow">
-                                <td class="alignLeft">Western Union</input>
-                                </td>
-                                <td class="alignRight"></td>
+                                <td class="alignLeft">Western Union</td>
+                                <td class="alignRight"><a href="javascript:;" class="setBalance"></a></td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                             </tr>
                             <tr class="odd contentRow hide notSetRow">
-                                <td class="alignLeft">Not Set</input>
-                                </td>
+                                <td class="alignLeft">Not Set</td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
                                 <td class="alignRight"></td>
-                            </tr>                            
+                            </tr>
                             <tr class="noDataRow hide"><td colspan="4"><div class="noData">No data available</div></td></tr>
                         </tbody>
                         <tfoot>

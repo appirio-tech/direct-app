@@ -6,14 +6,9 @@ package com.topcoder.direct.services.payments.impl;
 import javax.annotation.PostConstruct;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
+import com.topcoder.direct.services.payments.*;
 import com.topcoder.direct.services.payments.entities.PaymentBalance;
 import com.topcoder.direct.services.payments.entities.PullablePayments;
-import com.topcoder.direct.services.payments.ConfigurationException;
-import com.topcoder.direct.services.payments.PayPalService;
-import com.topcoder.direct.services.payments.PayoneerService;
-import com.topcoder.direct.services.payments.PersistenceException;
-import com.topcoder.direct.services.payments.PullablePaymentsService;
-import com.topcoder.direct.services.payments.ServiceException;
 import com.topcoder.direct.services.view.util.DataProvider;
 
 /**
@@ -50,6 +45,11 @@ public class PullablePaymentsServiceImpl extends BaseService implements Pullable
     private PayoneerService payoneerService;
 
     /**
+     * Represents the  Western Union service
+     */
+    private WesternUnionService westernUnionService;
+
+    /**
      * <p>
      * This method is responsible for checking aggregate members are initialized
      * or not. If any member is null, then it will throw ConfigugationException
@@ -84,8 +84,16 @@ public class PullablePaymentsServiceImpl extends BaseService implements Pullable
 
         LoggingWrapperUtility.logEntrance(getLogger(), signature, new String[] {}, new Object[] {});
         PaymentBalance paymentBalance = new PaymentBalance();
-        paymentBalance.setWesternUnionBalance(0.0);
+
         paymentBalance.setNotSetBalance(0.0);
+
+        try {
+            paymentBalance.setWesternUnionBalance(westernUnionService.getBalanceAmount());
+        } catch (ServiceException e) {
+            paymentBalance.setWesternUnionBalance(0.0);
+            LoggingWrapperUtility.logException(getLogger(), signature, new ServiceException(
+                    "Cannot get western union balance amount", e));
+        }
 
         try {
             paymentBalance.setPaypalBalance(paypalService.getBalanceAmount());
@@ -176,4 +184,26 @@ public class PullablePaymentsServiceImpl extends BaseService implements Pullable
         this.payoneerService = payoneerService;
     }
 
+    /**
+     * <p>
+     * Getter of westernUnionService field.
+     * </p>
+     *
+     * @return the westernUnionService
+     */
+    public WesternUnionService getWesternUnionService() {
+        return westernUnionService;
+    }
+
+    /**
+     * <p>
+     * Setter of westernUnionService field.
+     * </p>
+     *
+     * @param westernUnionService
+     *            the westernUnionService to set
+     */
+    public void setWesternUnionService(WesternUnionService westernUnionService) {
+        this.westernUnionService = westernUnionService;
+    }
 }

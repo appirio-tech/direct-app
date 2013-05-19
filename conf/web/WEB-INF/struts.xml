@@ -942,6 +942,14 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="updateWesternUnionBalanceAmount" class="updateWesternUnionBalanceAmountAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
          <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1010,7 +1018,7 @@
             <result name="error" type="json" />
         </action>
 
-		<action name="addProjectForumAJAX" class="addProjectForumAction">
+        <action name="addProjectForumAJAX" class="addProjectForumAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -1780,7 +1788,7 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
         </action>
-	    <action name="roadmap" class="enterpriseDashboardEntryFuturePeekAction">
+        <action name="roadmap" class="enterpriseDashboardEntryFuturePeekAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/roadmap.jsp</result>
         </action>

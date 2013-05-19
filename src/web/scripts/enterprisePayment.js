@@ -26,14 +26,90 @@ $(document).ready(function () {
     }, function () {
         $('.headerTip').remove();
     });
-    
+
+    $('#memberPaymentsTable tbody tr.westRow .setBalance').live('click', function() {
+        modalLoad('#setWesternUnionBalanceModal');
+    });
+
+    $('#setWesternUnionBalanceModal .newButtonSet').live('click', function() {
+        $('#setWesternUnionBalanceModal .noticeContent .modalRow .errorInfo').addClass('hide');
+        var amountStr = $('#setWesternUnionBalanceModal #westernUnionBalanceAmount').val().trim();
+
+        if (isEmpty(amountStr)) {
+            $('#setWesternUnionBalanceModal .noticeContent .modalRow .errorInfoEmpty').removeClass('hide');
+        }
+        else if (isNaN(amountStr)) {
+            $('#setWesternUnionBalanceModal .noticeContent .modalRow .errorInfoNaN').removeClass('hide');
+        }
+        else if(parseFloat(amountStr) < 0) {
+            $('#setWesternUnionBalanceModal .noticeContent .modalRow .errorInfoNotPositive').removeClass('hide');
+        } else {
+            updateWesternUnionBalanceAmount(parseFloat(amountStr), function(result) {
+               var oldAmountStr = $('#memberPaymentsTable tbody tr.westRow .setBalance').text();
+               
+               var total = parseFormattedNumber($("#memberPaymentsTable tfoot tr.totalRow td:eq(1)").text());
+               
+               var westernUnionDiff = parseFormattedNumber($('#memberPaymentsTable tbody tr.westRow td:eq(3)').text());
+
+               var difference = parseFormattedNumber($("#memberPaymentsTable tfoot tr.totalRow td:eq(3)").text());
+               if (oldAmountStr != 'Set Balance') {
+                   total -= parseFormattedNumber(oldAmountStr);
+               }
+
+               var newAmount = Math.round(parseFloat(amountStr));
+               total +=  newAmount;
+
+
+               // update western union balance amount
+               $('#memberPaymentsTable tbody tr.westRow .setBalance').text(getFormattedNumber(parseFloat(amountStr)));
+
+               // update the total.
+               $("#memberPaymentsTable tfoot tr.totalRow td:eq(1)").text(getFormattedNumber(total));
+               
+               
+               var westernUnionPullable = parseFormattedNumber($('#memberPaymentsTable tbody tr.westRow td:eq(2)').text());
+               
+               var westernUnionDiffTD = $('#memberPaymentsTable tbody tr.westRow td:eq(3)');
+               westernUnionDiffTD.removeClass('redTxt');
+               westernUnionDiffTD.removeClass('greenTxt');
+               
+               var westernUnionDiff = newAmount - westernUnionPullable;
+               
+               if (westernUnionDiff < 0) {
+                   westernUnionDiff = -westernUnionDiff;
+                   westernUnionDiffTD.addClass('redTxt');
+                } else {
+                   westernUnionDiffTD.addClass('greenTxt');
+                }
+               // update western union difference
+               westernUnionDiffTD.text(getFormattedNumber(westernUnionDiff));
+
+               var totalPull = parseFormattedNumber($("#memberPaymentsTable tfoot tr.totalRow td:eq(2)").text());
+               var totalDiffTD = $("#memberPaymentsTable tfoot tr.totalRow td:eq(3)");
+               totalDiffTD.removeClass('redTxt');
+               totalDiffTD.removeClass('greenTxt');
+               
+               var totalDiff = total - totalPull;
+               if (totalDiff < 0) {
+                   totalDiff = -totalDiff;
+                   totalDiffTD.addClass('redTxt');
+                } else {
+                    totalDiffTD.addClass('greenTxt');
+                }
+               // update difference
+                totalDiffTD.text(getFormattedNumber(totalDiff));
+            }, function() {
+                // TODO
+            });
+        }
+    });
     //table sort
     if ($("#topMembeBalancesTable").length > 0){
         $(".sortTop10").change(function (){
             if ($(this)[0].selectedIndex == "0"){
-                $("#topMembeBalancesTable").tablesorter( {sortList: [[0,0]], widgets: ['zebra']} ); 
+                $("#topMembeBalancesTable").tablesorter( {sortList: [[0,0]], widgets: ['zebra']} );
             }else {
-                $("#topMembeBalancesTable").tablesorter( {sortList: [[0,1]], widgets: ['zebra']} ); 
+                $("#topMembeBalancesTable").tablesorter( {sortList: [[0,1]], widgets: ['zebra']} );
             }
         });
     }
@@ -42,12 +118,12 @@ $(document).ready(function () {
     if ( $("#memberPaymentsTable").length > 0){
         loadPaymentsTable();
     }
-    
+
     //2 Potential Cash Outflow
     if ( $("#potentialCashOutflowTable").length > 0){
         loadPotentialCashOutflowTable();
     }
-    
+
     //3 Potential Cash Outflow
     if ( $("#paymentsByMethodTable").length > 0){
         loadPaymentsByMethodTable();
@@ -57,23 +133,23 @@ $(document).ready(function () {
     if ( $("#averageTotalPayment").length > 0){
         $('.memberPaymentAverageTotalBlock .chartZoomLink').click(function() {
             var id = $(this).attr("id");
-                
+
             $('.memberPaymentAverageTotalBlock .chartZoomLink.selected').removeClass('selected');
             $(this).addClass('selected');
-            
+
             $('.memberPaymentAverageTotalBlock select').addClass('hide');
             $('#' + id + 'Select').removeClass('hide');
-            
+
             loadPaymentAverageChart();
         });
-        
+
         $('.memberPaymentAverageTotalBlock select').bind('change', function() {
             loadPaymentAverageChart();
         });
-        
+
         loadPaymentAverageChart();
     }
-    
+
     //legend click
     $('.memberPaymentAverageTotalBlock .chartLegend').live('click', function () {
         var thisLabelTxt = $.trim($(this).text());
@@ -92,17 +168,17 @@ $(document).ready(function () {
         }
         return false;
     });
-    
+
     //5 Status of all payments
     if ( $("#statusOfPaymentsTable").length > 0){
         loadStatusOfPaymentsTable();
     }
-    
+
     //6 Top 10 Member Balances
     if ( $(".memberPaymentTopTenBlock").length > 0){
         loadTopTenMemberBalance();
     }
-    
+
     if ($('.paymentPrintVersion .timeStamp').length > 0) {
         $('.paymentPrintVersion .timeStamp').text(Date.now().toString('dd MMMM yyyy'));
     }
@@ -126,7 +202,7 @@ $.fn.dataTableExt.afnSortData['payment-method'] = function  ( oSettings, iColumn
     var aData = [];
     $( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
         var v;
-        
+
         if ($(this).text().trim() == 'Paypal') {
             v = 1;
         } else if ($(this).text().trim() == 'Payoneer') {
@@ -136,7 +212,7 @@ $.fn.dataTableExt.afnSortData['payment-method'] = function  ( oSettings, iColumn
         } else {
             v = 4;
         }
-        
+
         aData.push(v);
     } );
     return aData;
@@ -161,7 +237,7 @@ function loadPaymentAverageChart() {
     var id = $('.memberPaymentBlockContainer .chartZoomLink.selected').attr('id');
     var type = $('#' + id + 'Input').val();
     var range = $('#' + id + 'Select').val();
-    
+
     loadMemberPaymentAverageTotalChart(type, range);
 }
 
@@ -174,13 +250,13 @@ function loadPaymentAverageChart() {
 function getFormattedNumber(number) {
     var v = Math.round(number);
     var ret = '';
-    
+
     while (v > 1000) {
         var tmp = '' + v % 1000;
         while (tmp.length < 3) {
             tmp = '0' + tmp;
         }
-        
+
         ret = tmp + ' ' + ret;
         v /= 1000;
         v = ~~v;
@@ -189,8 +265,54 @@ function getFormattedNumber(number) {
         ret = v + ' ' + ret;
     }
     ret = $.trim(ret);
-    
+
     return "$" + (ret == '' ? '0' : ret).replace(' ', ',');
+}
+
+/**
+ * Parse the number string.
+ *
+ * @param numberStr the number string format.
+ * @return  the parsed number
+ */
+function parseFormattedNumber(numberStr) {
+    return parseInt(numberStr.substring(1).replace(',', ''));
+}
+
+/**
+ * Update western union balance amount.
+ *
+ * @param balanceAmount the balance amount
+ * @param succCallback the callback function which will be called when AJAX completed.
+ * @param errorCallback the callback function which will be called when AJAX failed.
+ */
+function updateWesternUnionBalanceAmount(balanceAmount, succCallback, errorCallback) {
+    var data = {balanceAmount: balanceAmount};
+    modalAllClose();
+    $.ajax({
+        type: 'POST',
+        url:'updateWesternUnionBalanceAmount',
+        data: data,
+        dataType: "json",
+        cache: false,
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    if (succCallback) {
+                        succCallback(result);
+                    }
+                },
+                function(errorMessage) {
+                    if (errorCallback) {
+                        errorCallback();
+                    }
+                    showServerError(errorMessage);
+                }
+            )
+        },
+        beforeSend: function() {modalPreloader();},
+        complete: function() {modalClose();}
+    });
 }
 
 /**
@@ -215,32 +337,37 @@ function loadPaymentsTable(){
                         paypalRow.find('td:eq(1)').text(result['paymentBalance']['paypalBalance']);
                         paypalRow.find('td:eq(2)').text(result['pullablePayments']['paypalPayments']);
                         paypalRow.find('td:eq(3)').text(result['paymentDiff']['paypalDiffAmount']);
-                        
+
                         var payoneerRow = $("#memberPaymentsTable tbody tr.payoneerRow");
                         payoneerRow.find('td:eq(1)').text(result['paymentBalance']['payoneerBalance']);
                         payoneerRow.find('td:eq(2)').text(result['pullablePayments']['payoneerPayments']);
                         payoneerRow.find('td:eq(3)').text(result['paymentDiff']['payoneerDiffAmount']);
-                        
+
                         var westRow = $("#memberPaymentsTable tbody tr.westRow");
-                        westRow.find('td:eq(1)').text(result['paymentBalance']['westernUnionBalance']);
+
+                        westRow.find('td:eq(1)').find('.setBalance').text(result['paymentBalance']['westernUnionBalance']);
                         westRow.find('td:eq(2)').text(result['pullablePayments']['westernUnionPayments']);
                         westRow.find('td:eq(3)').text(result['paymentDiff']['westernUnionDiffAmount']);
-                        
+
                         var notSetRow = $("#memberPaymentsTable tbody tr.notSetRow");
                         notSetRow.find('td:eq(1)').text(result['paymentBalance']['notSetBalance']);
                         notSetRow.find('td:eq(2)').text(result['pullablePayments']['notSetPayments']);
-                        notSetRow.find('td:eq(3)').text(result['paymentDiff']['notSetDiffAmount']);                        
-                        
+                        notSetRow.find('td:eq(3)').text(result['paymentDiff']['notSetDiffAmount']);
+
                         var totalRow = $("#memberPaymentsTable tfoot tr.totalRow");
-                        
+
                         for (var i = 1; i < 5; i++) {
                             var total = 0;
-                            
+
                             $("#memberPaymentsTable tbody tr.contentRow").each(function(index, row) {
                                 var td = $(row).find("td:eq(" + i + ")");
-                                var v = parseFloat(td.text());
+                                var infoBlock = td;
+                                if (td.find('.setBalance').length > 0) {
+                                    infoBlock = td.find('.setBalance');
+                                }
+                                var v = parseFloat(infoBlock.text());
                                 total += v;
-                                
+
                                 if (i == 3) {
                                     if (v < 0) {
                                         v = -v;
@@ -249,10 +376,13 @@ function loadPaymentsTable(){
                                         td.addClass('greenTxt');
                                     }
                                 }
-                                
-                                td.text(getFormattedNumber(v));
+                                if(infoBlock.hasClass('setBalance') && v == 0.0) {
+                                    infoBlock.text('Set Balance');
+                                } else {
+                                    infoBlock.text(getFormattedNumber(v));
+                                }
                             });
-                            
+
                             var tdClass;
                             if (i == 3) {
                                 if (total < 0) {
@@ -262,29 +392,28 @@ function loadPaymentsTable(){
                                     tdClass = 'greenTxt';
                                 }
                             }
-                            
+
                             totalRow.find("td:eq(" + i + ")").text(getFormattedNumber(total)).addClass(tdClass);
                         }
-                        
+
                         $("#memberPaymentsTable tbody tr.loadRow").remove();
                         $("#memberPaymentsTable tbody tr.noDataRow").remove();
                         $("#memberPaymentsTable tbody tr.contentRow").removeClass('hide');
                         $("#memberPaymentsTable tfoot tr.totalRow").removeClass('hide');
-                        
-                        $('#memberPaymentsTable').dataTable({    
-                            "iDisplayLength": -1,    
-                            "bFilter": false,    
-                            "bSort": true,    
-                            "sDom": '',    
-                            "aoColumns": [        
-                                { "sSortDataType": "payment-method" },     
-                                { "sSortDataType": "payment-number", "sType": "numeric" },     
-                                { "sSortDataType": "payment-number", "sType": "numeric" },     
+                        $('#memberPaymentsTable').dataTable({
+                            "iDisplayLength": -1,
+                            "bFilter": false,
+                            "bSort": true,
+                            "sDom": '',
+                            "aoColumns": [
+                                { "sSortDataType": "payment-method" },
+                                { "sSortDataType": "payment-number", "sType": "numeric" },
+                                { "sSortDataType": "payment-number", "sType": "numeric" },
                                 { "sSortDataType": "payment-number", "sType": "numeric" }
                             ]
                         });
                     }
-                    
+
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
@@ -314,69 +443,69 @@ function loadPotentialCashOutflowTable(){
                         $.each(result['payments'], function(index, item) {
                             var row = $("<tr>");
                             row.addClass("contentRow hide");
-                            
+
                             var td = $("<td class='alignLeft'>");
                             td.text(item['paymentMethodName']);
                             row.append(td);
-                            
+
                             $.each(item['cashAmounts'], function(ii, amount) {
                                 var td = $("<td class='alignRight'>").text(amount);
                                 row.append(td);
                             });
-                            
+
                             $("#potentialCashOutflowTable tbody").append(row);
                         });
-                        
+
                         var length = result['days'].length;
                         var row = $("<tr class='totalRow hide'>");
-                        
+
                         var td = $("<td class='alignLeft'>");
                         td.text('Total');
                         row.append(td);
-                        
+
                         for (var i = 1; i <= length; i++) {
                             var td = $("<td class='alignRight'>");
                             var total = 0;
-                            
+
                             $("#potentialCashOutflowTable tbody tr.contentRow").each(function(index, item) {
                                 var ctd = $(item).find('td:eq(' + i + ')');
                                 var v = parseFloat(ctd.text());
                                 total += v;
-                                
+
                                 ctd.text(getFormattedNumber(v));
                             });
-                            
+
                             td.text(getFormattedNumber(total));
                             row.append(td);
                         }
                         $("#potentialCashOutflowTable tfoot").append(row);
                         $("#potentialCashOutflowTable tbody tr:odd").addClass("odd");
-                        
+
                         $("#potentialCashOutflowTable tbody tr.loadRow").remove();
                         $("#potentialCashOutflowTable tbody tr.noDataRow").remove();
                         $("#potentialCashOutflowTable tbody tr.contentRow").removeClass('hide');
                         $("#potentialCashOutflowTable tfoot tr.totalRow").removeClass('hide');
-                        
+
                         var aoColumns = [{ "sSortDataType": "payment-method" }];
                         for (var i = 0; i< length; i++) {
                             aoColumns.push({ "sSortDataType": "payment-number", "sType": "numeric" });
                         }
-                        
-                        $('#potentialCashOutflowTable').dataTable({    
-                            "iDisplayLength": -1,    
-                            "bFilter": false,    
-                            "bSort": true,    
-                            "sDom": '',    
+
+                        $('#potentialCashOutflowTable').dataTable({
+                            "iDisplayLength": -1,
+                            "bFilter": false,
+                            "bSort": true,
+                            "sDom": '',
                             "aoColumns": aoColumns
-                        });                        
+                        });
                     }
-                    
+
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
                 });
         }
-    });    
+    });
 }
 
 /**
@@ -399,25 +528,25 @@ function loadPaymentsByMethodTable(){
                         var length = result['columns'].length;
                         var thData = "<thead><tr>";
                         thData += '<th class="alignLeft">Payment method</th>';
-                            
+
                         // fill datas
                         $.each(result['columns'], function(index, item) {
                             thData += '<th>' + item + '</th>';
                         });
                         thData += '</tr></thead>';
                         $("#paymentsByMethodTable tbody").before(thData);
-                        
+
                         var columnNames = ['Paypal', 'Payoneer', 'Western Union', 'Not Set'];
                         $.each(columnNames, function(index, item) {
                             var row = $("<tr class='contentRow hide'>");
                             row.append($("<td class='alignLeft'>").text(item));
-                            
+
                             for (var i = 0; i < length; i++) {
                                 row.append($("<td class='alignRight'>").text('0'));
                             }
                             $("#paymentsByMethodTable tbody").append(row);
                         });
-                        
+
                         var paymentNames = [ 'PAYPAL', 'PAYONEER', 'WESTERN_UNION', 'NOT_SET'];
                         $.each(paymentNames, function(index, item) {
                             var vRow = $("#paymentsByMethodTable tbody tr.contentRow:eq(" + index + ")");
@@ -425,59 +554,59 @@ function loadPaymentsByMethodTable(){
                                 vRow.find("td.alignRight:eq(" + ii + ")").text(v);
                             });
                         });
-                        
+
                         var row = $("<tr class='totalRow hide'>");
-                        
+
                         var td = $("<td class='alignLeft'>");
                         td.text('Total');
                         row.append(td);
-                        
+
                         for (var i = 1; i <= length; i++) {
                             var td = $("<td class='alignRight'>");
                             var total = 0;
-                            
+
                             $("#paymentsByMethodTable tbody tr.contentRow").each(function(index, item) {
                                 var ctd = $(item).find('td:eq(' + i + ')');
-                                if ($.trim(ctd.text()).length > 0) {                                    
+                                if ($.trim(ctd.text()).length > 0) {
                                     var v = parseFloat(ctd.text());
                                     total += v;
-                                    
+
                                     ctd.text(getFormattedNumber(v));
                                 }
                             });
-                            
+
                             td.text(getFormattedNumber(total));
                             row.append(td);
                         }
                         $("#paymentsByMethodTable tfoot").append(row);
-                        
+
                         $("#paymentsByMethodTable tbody tr:odd").addClass("odd");
-                        
+
                         $("#paymentsByMethodTable tbody tr.loadRow").remove();
                         $("#paymentsByMethodTable tbody tr.noDataRow").remove();
                         $("#paymentsByMethodTable tbody tr.contentRow").removeClass('hide');
                         $("#paymentsByMethodTable tfoot tr.totalRow").removeClass('hide');
-                        
+
                         var aoColumns = [{ "sSortDataType": "payment-method" }];
                         for (var i = 0; i< length; i++) {
                             aoColumns.push({ "sSortDataType": "payment-number", "sType": "numeric" });
                         }
-                        
-                        $('#paymentsByMethodTable').dataTable({    
-                            "iDisplayLength": -1,    
-                            "bFilter": false,    
-                            "bSort": true,    
-                            "sDom": '',    
+
+                        $('#paymentsByMethodTable').dataTable({
+                            "iDisplayLength": -1,
+                            "bFilter": false,
+                            "bSort": true,
+                            "sDom": '',
                             "aoColumns": aoColumns
-                        });                          
+                        });
                     }
-                    
+
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
                 });
         }
-    });    
+    });
 }
 
 /**
@@ -487,7 +616,7 @@ function loadMemberPaymentAverageTotalChart(zoomType, range){
     $(".memberPaymentAverageTotalBlock .chartLegendWrapper").css("visibility", "hidden");
     $(".memberPaymentAverageTotalBlock .zoomControl").css("visibility", "hidden");
     $("#averageTotalPayment").html('<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading"/></div>');
-    
+
     $.ajax({
         type: 'GET',
         url:  baseURL + "memberPaymentStats",
@@ -511,7 +640,7 @@ function loadMemberPaymentAverageTotalChart(zoomType, range){
                     showErrors(errorMessage);
                 });
         }
-    });    
+    });
 }
 
 /**
@@ -521,7 +650,7 @@ function renderChart(data) {
     var paypalData = data['PAYPAL'];
     var payoneerData = data['PAYONEER'];
     var wuData = data['WESTERN_UNION'];
-        
+
     var catList = []
     var catTotalPaid = [];
     var paypalPaid = [];
@@ -535,7 +664,7 @@ function renderChart(data) {
     var wuCreated = [];
     var decoTop = [];
     var maxV = -1;
-    
+
     for (var i = 0; i < paypalData.length; i++) {
         catList[i] = paypalData[i].timeStamp;
         catTotalPaid[i] = parseInt(paypalData[i].paid) + parseInt(payoneerData[i].paid) + parseInt(wuData[i].paid);
@@ -548,7 +677,7 @@ function renderChart(data) {
         wuPaid[i] = parseInt(wuData[i].paid);
         wuCreated[i] = parseInt(wuData[i].created);
         wuGap[i] = Math.max(0, (parseInt(wuData[i].created) - parseInt(wuData[i].paid)));
-        
+
         maxV = Math.max(maxV, paypalData[i].created);
         maxV = Math.max(maxV, paypalData[i].paid);
         maxV = Math.max(maxV, payoneerData[i].created);
@@ -574,9 +703,9 @@ function renderChart(data) {
     for (var i = 0; i < paypalData.length; i++) {
         decoTop[i] = barTop;
     }
-    
+
     var withBar = paypalData.length <= 12;
-    
+
     if (withBar) {
         $('.memberPaymentAverageTotalBlock .chartLegendWrapper .payMethodLegend .chartLegend').removeClass('hide');
         $('.memberPaymentAverageTotalBlock .chartLegendWrapper .paidByLabel').removeClass('hide');
@@ -584,7 +713,7 @@ function renderChart(data) {
         $('.memberPaymentAverageTotalBlock .chartLegendWrapper .payMethodLegend .chartLegend').addClass('hide');
         $('.memberPaymentAverageTotalBlock .chartLegendWrapper .paidByLabel').addClass('hide');
     }
-    
+
     var xAxisOption = {
         labels:{
             style:{
@@ -601,9 +730,9 @@ function renderChart(data) {
     if (withBar) {
         xAxisOption['categories'] = catList;
     }
-    
+
     var seriesOption = [];
-    
+
     if (withBar) {
         seriesOption = seriesOption.concat([
             {
@@ -613,7 +742,7 @@ function renderChart(data) {
                 stack: 'Paypal',
                 color:'#00aeff'
             }
-            
+
             , {
                 type: 'column',
                 name: 'CreatedSub',
@@ -627,15 +756,15 @@ function renderChart(data) {
                 stack: 'Paypal',
                 color:'#13487e'
             }
-            
+
             , {
                 type: 'column',
                 name: 'TopBorder',
                 data: decoTop,
                 stack: 'Payoneer',
                 color:'#00aeff'
-            }, 
-            
+            },
+
             {
                 type: 'column',
                 name: 'CreatedSub',
@@ -649,15 +778,15 @@ function renderChart(data) {
                 stack: 'Payoneer',
                 color:'#d67002'
             }
-            
+
             , {
                 type: 'column',
                 name: 'TopBorder',
                 data: decoTop,
                 stack: 'Western Union',
                 color:'#00aeff'
-            }, 
-            
+            },
+
             {
                 type: 'column',
                 name: 'CreatedSub',
@@ -671,11 +800,11 @@ function renderChart(data) {
                 data: wuPaid,
                 stack: 'Western Union',
                 color:'#edd400'
-            }        
+            }
         ]);
     }
     seriesOption = seriesOption.concat([
-         {
+        {
             type: 'line',
             name: 'Paid',
             data: catTotalPaid,
@@ -688,10 +817,10 @@ function renderChart(data) {
             color:'#85d524'
         }
     ]);
-    
+
     //build chart
     averageTotalPayment = new Highcharts.Chart({
-        chart: { 
+        chart: {
             renderTo: 'averageTotalPayment',
             marginTop: 4,
             marginBottom: 20
@@ -715,7 +844,7 @@ function renderChart(data) {
             tickInterval:hInterval,
             lineWidth: 0,
             gridLineWidth: 2,
-            gridLineColor: '#e8e8e8'            
+            gridLineColor: '#e8e8e8'
         },
         credits : {
             enabled : false
@@ -739,30 +868,30 @@ function renderChart(data) {
             formatter:function () {
                 if (this.series.type == "line"){
                     return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner">' +
-                            '<strong>' + this.point.category + '</strong>' + 
-                            '<div>' + this.series.name + ':' + this.point.y + '</div>' +
+                        '<strong>' + this.point.category + '</strong>' +
+                        '<div>' + this.series.name + ':' + this.point.y + '</div>' +
                         '</div></div>';
                 }else{
                     if (this.series.name == "CreatedSub"){
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner">' +
-                                    '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' + 
-                                    '<div>Paid:' + parseInt(( this.point.stackTotal - barTop - this.y)) + '</div>' +
-                                    '<div>Created:' +parseInt(this.y) + '</div>' +
-                                '</div></div>';
+                            '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' +
+                            '<div>Paid:' + parseInt(( this.point.stackTotal - barTop - this.y)) + '</div>' +
+                            '<div>Created:' +parseInt(this.y) + '</div>' +
+                            '</div></div>';
                     }else if (this.series.name == "PaidSub"){
                         return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner">' +
-                                    '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' + 
-                                    '<div>Paid:' + parseInt(this.y) + '</div>' +
-                                    '<div>Created:' + parseInt((this.point.stackTotal - barTop - this.y)) + '</div>' +
-                                '</div></div>';
+                            '<strong>' + this.series.options.stack + '<br/>' + this.point.category + '</strong>' +
+                            '<div>Paid:' + parseInt(this.y) + '</div>' +
+                            '<div>Created:' + parseInt((this.point.stackTotal - barTop - this.y)) + '</div>' +
+                            '</div></div>';
                     }else{
-                        return '';    
+                        return '';
                     }
                 }
             }
         },
         plotOptions:{
-            
+
             column:{
                 stacking:'normal',
                 dataLabels:{
@@ -781,12 +910,12 @@ function renderChart(data) {
                 borderWidth: 0,
                 groupPadding: 0.2,
                 pointPadding: 0.07
-            }, 
-            
+            },
+
             line:{
                 shadow:false
             },
-            
+
             series: {
                 marker: {
                     enabled: withBar,
@@ -794,9 +923,9 @@ function renderChart(data) {
                         hover: {
                             enabled: true
                         }
-                    }                    
+                    }
                 }
-            }           
+            }
         },
         series: seriesOption
     });
@@ -825,14 +954,14 @@ function loadStatusOfPaymentsTable(){
                     } else {
                         $.each(result, function(index, item) {
                             if (!item['startDateStr']) {
-                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' + 
+                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' +
                                     item['endDateStr'] + '+ days ago</strong></td></tr>';
                             } else {
-                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' + 
+                                var row = '<tr class="labelRow"><td class="alignLeft" colspan="5">Creation Date: <strong>' +
                                     item['endDateStr'] + ' - ' + item['startDateStr'] + ' days ago</strong></td></tr>';
                             }
                             $("#statusOfPaymentsTable tbody").append(row);
-                            
+
                             row = $("<tr class='contentRow hide'>");
                             row.append($("<td class='alignRight'>").text(item['owedOrAccruingPayments']));
                             row.append($("<td class='alignRight'>").text(item['onHoldPayments']));
@@ -841,39 +970,39 @@ function loadStatusOfPaymentsTable(){
                             row.append($("<td class='alignRight'>").text(item['totalPayment']));
                             $("#statusOfPaymentsTable tbody").append(row);
                         });
-                        
+
                         $("#statusOfPaymentsTable tbody").append('<tr class="labelRow"><td class="alignLeft" colspan="5">TOTAL</td></tr>');
                         var row = $("<tr class='totalRow hide'>");
                         for (var i = 0; i < 5; i++) {
                             var td = $("<td class='alignRight'>");
                             var total = 0;
-                            
+
                             $("#statusOfPaymentsTable tbody tr.contentRow").each(function(index, item) {
                                 var ctd = $(item).find('td:eq(' + i + ')');
-                                if ($.trim(ctd.text()).length > 0) {                                    
+                                if ($.trim(ctd.text()).length > 0) {
                                     var v = parseFloat(ctd.text());
                                     total += v;
-                                    
+
                                     ctd.text(getFormattedNumber(v));
                                 }
                             });
-                            
+
                             td.text(getFormattedNumber(total));
                             row.append(td);
                         }
                         $("#statusOfPaymentsTable tbody").append(row);
-                        
+
                         $("#statusOfPaymentsTable tbody tr.loadRow").addClass('hide');
                         $("#statusOfPaymentsTable tbody tr.contentRow").removeClass('hide');
                         $("#statusOfPaymentsTable tbody tr.totalRow").removeClass('hide');
                     }
-                    
+
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
                 });
         }
-    });    
+    });
 }
 
 /**
@@ -894,7 +1023,7 @@ function loadTopTenMemberBalance() {
                         $("#topMembeBalancesTable tbody tr.noDataRow").removeClass('hide');
                     } else {
                         $("#topMembeBalancesTable tbody").empty();
-                        
+
                         var total = 0;
                         $.each(result, function(i, item) {
                             var row = $("<tr class='contentRow hide'>");
@@ -902,35 +1031,35 @@ function loadTopTenMemberBalance() {
                             row.append($("<td class='alignLeft'>").html(item['memberLink']));
                             var tmp = getFormattedNumber(item['amount']);
                             row.append($("<td class='alignRight amountCol'>").text(tmp));
-                            
+
                             row.append($("<td>").text(item['paymentMethod']));
                             $("#topMembeBalancesTable tbody").append(row);
-                            
+
                             total += item['amount'];
                         });
-                        
+
                         var row = $("<tr class='totalRow hide'>");
                         row.append($('<td>'));
                         row.append($('<td class="alignLeft">').text('Total'));
-                        
+
                         total = getFormattedNumber(total);
                         row.append($('<td class="alignRight">').text(total));
                         row.append($('<td>'));
-                        
+
                         $("#topMembeBalancesTable").append($('<tfoot>').append(row));
-                        
+
                         $("#topMembeBalancesTable tbody tr:odd").addClass("odd");
                         $("#topMembeBalancesTable tbody tr.loadRow").addClass('hide');
                         $("#topMembeBalancesTable tbody tr.contentRow").removeClass('hide');
                         $("#topMembeBalancesTable tr.totalRow").removeClass('hide');
                     }
-                    
+
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
                 });
         }
-    });     
+    });
 }
 
 /**
@@ -942,5 +1071,3 @@ function loadTopTenMemberBalance() {
 function getDateString(time) {
     return new Date(time).toString('MM.dd.yyyy');
 }
-
-
