@@ -373,3 +373,9 @@
 @wireframeIndexPage@=submission/index.html
 @trustedIPs@=192.168.150.250;202.120.2.101
 @watermarkImageMapping@=/viewWireframePage/;/css/direct/WatermarkTcRepeat.css
+
+#########################
+# Assets configuration #
+#########################
+@assetUploadBasePath@=/tmp/assetupload
+@assetUploadTempFileRoot@=/tmp/assetuploadtemp

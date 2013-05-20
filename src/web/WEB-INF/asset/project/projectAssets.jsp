@@ -97,7 +97,7 @@
 <div id="SectionForDateVersion" class="assetsWrapper">
 
 <!-- start filter panel -->
-<div class='filterPanel'>
+<div class='filterPanel hide'>
     <div class='filterHead'>
         <div class='rightSide'>
             <div class='inner'>
@@ -248,7 +248,7 @@
 
 <div class="viewOptionArea">
     <div class="optionAreaSide">
-        <div class="allAssetsCheckbox">
+        <div class="allAssetsCheckbox" style="display:none !important">
             <input type="checkbox" id="checkVersionDate"/>
             <label for="checkVersionDate">All Assets</label>
         </div>
@@ -266,7 +266,7 @@
         <!-- End .batchOperation -->
     </div>
     <div class="operationView">
-        <div class="view">
+        <div class="view"  style="display:none !important">
             <label>View :</label>
 
             <div class="optionWrapper">
@@ -279,7 +279,7 @@
             </div>
         </div>
         <!-- End .view -->
-        <div class="groupBy">
+        <div class="groupBy hide">
             <label>Group by :</label>
 
             <div class="optionWrapper">
@@ -383,11 +383,11 @@
                         <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT
                         </td>
                         <td class="managementCell">
-                            <a href="javascript:;" class="upload">Upload New Version</a>
+                            <a href="javascript:;" class="upload" style="display:none !important">Upload New Version</a>
                             <a href="<s:url action='downloadAsset'><s:param name='assetId' value='id'/><s:param name='assetVersionId' value='currentVersion.id'/></s:url>"
                                class="download">Download</a>
-                            <a href="javascript:;" class="edit">Edit File Details</a>
-                            <a href="javascript:;" class="remove">Remove</a>
+                            <a href="javascript:;" class="edit" style="display:none !important">Edit File Details</a>
+                            <a href="javascript:;" class="remove" style="display:none !important">Remove</a>
                         </td>
                     </tr>
                 </s:iterator>
@@ -418,7 +418,7 @@
 <div id="SectionForCategoryVersion" class="assetsWrapper">
 
 <!-- start filter panel -->
-<div class='filterPanel'>
+<div class='filterPanel hide'>
     <div class='filterHead'>
         <div class='rightSide'>
             <div class='inner'>
@@ -569,7 +569,7 @@
 
 <div class="viewOptionArea">
     <div class="optionAreaSide">
-        <div class="allAssetsCheckbox">
+        <div class="allAssetsCheckbox" style="display:none !important">
             <input type="checkbox" id="checkVersionCategory"/>
             <label for="checkVersionCategory">All Assets</label>
         </div>
@@ -587,7 +587,7 @@
         <!-- End .batchOperation -->
     </div>
     <div class="operationView">
-        <div class="view">
+        <div class="view" style="display:none !important">
             <label>View :</label>
 
             <div class="optionWrapper">
@@ -694,10 +694,10 @@
                         <td class="uploaderCell"><link:user userId="${currentVersion.uploader.id}"/></td>
                         <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT</td>
                         <td class="managementCell">
-                            <a href="javascript:;" class="upload">Upload New Version</a>
+                            <a href="javascript:;" class="upload"  style="display:none !important">Upload New Version</a>
                             <a href="<s:url action='downloadAsset'><s:param name='assetId' value='id'/><s:param name='assetVersionId' value='currentVersion.id'/></s:url>" class="download">Download</a>
-                            <a href="javascript:;" class="edit">Edit File Details</a>
-                            <a href="javascript:;" class="remove">Remove</a>
+                            <a href="javascript:;" class="edit" style="display:none !important">Edit File Details</a>
+                            <a href="javascript:;" class="remove" style="display:none !important">Remove</a>
                         </td>
 
                     </tr>
