@@ -1,0 +1,4519 @@
+/*
+ * CSS for pages under project assets tab.
+ *
+ * Change logs:
+ * Version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0):
+ * - Added this file.
+ */
+
+@charset "utf-8";
+/* CSS Document */
+#content{
+	min-width:1100px;
+	}
+	
+#content.asset{
+	min-width:1240px;
+	}
+	
+#area1 .areaHeader{
+	padding:30px 0 20px 0;
+	}
+	
+textarea{
+	width:100%;
+	height:100%;
+	color:#000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	border:0;
+	overflow:visible;
+	}
+	
+.imageView{
+	cursor:pointer;
+	}
+/* Color of Handle */
+.green{
+	color:#3a9200 !important;
+	}
+	
+.blue{
+	color:#4486ff !important;
+	}
+	
+.orange{
+	color:#eea800 !important;
+	}
+	
+.red{
+	color:#4486ff !important;
+	}
+	
+.clearFix{
+	height:0;
+	line-height:0;
+	overflow:hidden;
+	clear:both;
+	}
+	
+a.button7 span.right{
+	height:24px;
+	padding:0 27px;
+	line-height:24px;
+	}
+	
+#new-modal .outLay .modalHeader .modalHeaderCenter{
+    height:40px;
+    font-size:14px;
+    line-height:34px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    color:#000000;
+    padding:6px 0 0 22px;
+    background:url(/images/modal-header.png) left -40px repeat-x;
+	}
+	
+/* Button For Modal */
+.btnGreyModal{
+	width:auto;
+	display:inline-block;
+	padding:0 0 0 4px;
+	text-decoration:none;
+	background-image:url(/images/bg-view-option.png);
+	background-repeat:no-repeat;
+	background-position:0 -697px;
+	}
+	
+.btnGreyModal:hover{
+	text-decoration:none;
+	background-position:0 -769px;
+	}
+	
+	.btnGreyModal span.btnR{
+		width:auto;
+		display:inline-block;
+		padding:0 4px 0 0;
+		background-image:url(/images/bg-view-option.png);
+		background-repeat:no-repeat;
+		background-position:right -745px;
+		}
+		
+	.btnGreyModal:hover span.btnR{
+		background-position:right -817px;
+		}
+		
+	.btnGreyModal span.btnC{
+		width:auto;
+		height:24px;
+		display:inline-block;
+		font-size:12px;
+		font-weight:bold;
+		line-height:24px;
+		cursor:pointer;
+		padding:0 18px;
+		background-image:url(/images/bg-view-option.png);
+		background-repeat:repeat-x;
+		background-position:0 -721px;
+		}
+		
+	.btnGreyModal:hover span.btnC{
+		background-position:0 -793px;
+		}
+		
+.newSidebar #contestsTable td{
+	cursor:pointer;
+	}
+
+/* Main Title */
+.mainTitle{
+	width:auto;
+	float:left;
+	display:inline;
+	margin:0 0 0 22px;
+	position:relative;
+	top:45px;
+	}
+	
+	.mainTitle h1{
+		width:auto;
+		float:left;
+		display:inline;
+		padding:0 0 0 50px;
+		font-size:16px;
+		line-height:28px;
+		background-image:url(/images/project_logo.png);
+		background-repeat:no-repeat;
+		background-position:0 0;
+		}
+	
+	.mainTitle .iconEdit{
+		width:26px;
+		height:22px;
+		float:left;
+		display:inline;
+		margin:3px 0 0 6px;
+		text-indent:-9999px;
+		background-image:url(/images/edit/editIcon.png);
+		background-repeat:no-repeat;
+		background-position:0 0;
+		}
+		
+	.mainTitle .iconEdit:hover{
+		background-position:0 -22px;
+		}
+		
+/* Assets Title */
+#area1 h2.asssetsTitle{
+	padding:0 0 0 43px;
+	line-height:30px;
+	background-image:url(/images/icon-title.png);
+	}
+	
+/* Upload Button */
+#area1 .btnUpload{
+	margin:10px 0 0 0;
+	}
+	
+	#area1 .btnUpload .right{
+		padding:4px 20px 0 20px;
+		}
+	
+	#area1 .btnUpload .icon{
+		display:block;
+		padding:0 0 0 14px;
+		background-image:url(/images/icon-assets.png);
+		background-repeat:no-repeat;
+		background-position:0 3px;
+		}
+		
+/* Filter For Assets */
+#filterPanelForm .filterContent{
+	height:140px;
+	padding:0 0 0 6px;
+	}
+	
+	#filterPanelForm .filterContent .rightSide{
+		height:100%;
+		}
+		
+	#filterPanelForm .filterContent .inner{
+		padding:15px 14px;
+		}
+		
+		/* Column */
+		#filterPanelForm .filterContent .columnCategory{
+			width:264px;
+			float:left;
+			display:inline;
+			margin:0 2% 0 0;
+			}
+			
+		#filterPanelForm .filterContent .columnUploader{
+			width:234px;
+			float:left;
+			display:inline;
+			margin:0 2% 0 0;
+			}
+			
+		#filterPanelForm .filterContent .columnDateRange{
+			width:auto;
+			float:right;
+			display:inline;
+			}
+			
+		/* Multi Select Area */
+		#filterPanelForm .filterContent .multiSelectArea{
+			width:100%;
+			float:none;
+			}
+			
+			#filterPanelForm .filterContent .multiSelectArea .multiSelectAreaTitle{
+				width:auto;
+				float:left;
+				display:inline;
+				margin:0 10px 0 0;
+				}
+				
+			#filterPanelForm .filterContent .multiSelectArea .multiSelectBox{
+				width:194px;
+				height:108px;
+				float:left;
+				display:inline;
+				margin:0;
+				}
+				
+			#filterPanelForm .filterContent .columnUploader .multiSelectArea .multiSelectBox{
+				width:164px;
+				}
+				
+				#filterPanelForm .filterContent .multiSelectArea .multiSelectBox label{
+					width:auto;
+					font-size:12px;
+					}
+					
+		/* Date Range */
+		#filterPanelForm .filterContent .columnDateRange label{
+			display:block;
+			font-size:12px;
+			font-weight:bold;
+			}
+			
+		#filterPanelForm .filterContent .columnDateRange .dateRangeRow{
+			height:22px;
+			padding:10px 0 0 0;
+			}
+			
+			#filterPanelForm .filterContent .columnDateRange .dateRangeRow span{
+				width:42px;
+				float:left;
+				display:inline;
+				font-size:12px;
+				line-height:22px;
+				}
+				
+			#filterPanelForm .filterContent .columnDateRange .dateRangeRow input{
+				width:100px;
+				height:20px;
+				border:1px solid #bdbdbd;
+				padding:0 6px;
+				font-family:Arial, Helvetica, sans-serif;
+				font-size:12px;
+				color:#6c6c6c;
+				line-height:20px;				
+				}
+				
+		  /* Apply */
+		  #filterPanelForm .filterContent .columnDateRange .buttonApply{
+			  height:24px;
+			  padding:6px 0 0 0;
+			  }
+			  
+			  #filterPanelForm .filterContent .columnDateRange .buttonApply .clearLink{
+				  width:auto;
+				  float:right;
+				  display:inline;
+				  margin:0 18px 0 0;
+				  font-size:11px;
+				  line-height:24px;
+				  }
+				  
+				 #filterPanelForm .filterContent .columnDateRange .buttonApply .clearLink:hover{
+					 text-decoration:none;
+					 }
+					 
+/* View Option Area */
+.viewOptionArea{
+	padding:0 0 8px 0;
+	text-align:right;
+	}
+	
+	.optionAreaSide{
+		width:470px;
+		min-height:28px;
+		float:left;
+		display:inline;
+		padding:7px 0 7px 0;
+		text-align:left;
+		}
+		
+	.viewOptionArea .operationView{
+		width:440px;
+		padding:7px 0 7px 0;
+		display:inline-block;
+		}
+	
+	/* All Assets */
+	.viewOptionArea .allAssetsCheckbox{
+		width:auto;
+		float:left;
+		display:inline;
+		padding:7px 0;
+		}
+		
+		.viewOptionArea .allAssetsCheckbox input{
+			width:13px;
+			height:13px;
+			float:left;
+			display:inline;
+			}
+			
+		.viewOptionArea .allAssetsCheckbox label{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 0 0 5px;
+			font-size:11px;
+			line-height:13px;
+			cursor:pointer;
+			}
+			
+	/* View Option */	
+	.viewOptionArea .groupBy,
+	.viewOptionArea .view{
+		width:auto;
+		float:right;
+		display:inline;
+		margin:0 0 0 10px;
+		}
+	
+		.viewOptionArea .groupBy label,
+		.viewOptionArea .view label{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 5px 0 0;
+			font-size:12px;
+			font-weight:bold;
+			color:#000000;
+			line-height:28px;
+			}
+	
+		.viewOptionArea .optionWrapper{
+			width:auto;
+			float:left;
+			display:inline;
+			}
+			
+			.viewOptionArea .optionWrapper li{
+				width:auto;
+				float:left;
+				display:inline;
+				list-style:none;
+				}
+				
+			.viewOptionArea .optionWrapper li.last{
+				border-left:#a6a6a6 solid 1px;
+				}
+				
+				.viewOptionArea .optionWrapper li a{
+					width:auto;
+					float:left;
+					display:inline;
+					padding:0 0 0 4px;
+					text-decoration:none;
+					background-image:url(/images/bg-view-option.png);
+					background-repeat:no-repeat;
+					background-position:0 0;
+					}
+					
+				.viewOptionArea .optionWrapper li.last a{
+					padding:0 4px 0 0;
+					background-position:right -56px;
+					}
+					
+				.viewOptionArea .optionWrapper li a:hover,
+				.viewOptionArea .optionWrapper li.active a{
+					background-position:0 -84px;
+					}
+					
+				.viewOptionArea .optionWrapper li.last a:hover,
+				.viewOptionArea .optionWrapper li.last.active a{
+					background-position:right -140px;
+					}
+					
+					.viewOptionArea .optionWrapper li a span{
+						width:71px;
+						height:28px;
+						float:left;
+						display:inline;
+						font-size:11px;
+						line-height:28px;
+						text-align:center;
+						cursor:pointer;
+						background-image:url(/images/bg-view-option.png);
+						background-repeat:repeat-x;
+						background-position:0 -28px;
+						}
+						
+					.viewOptionArea .optionWrapper li a:hover span,
+					.viewOptionArea .optionWrapper li.active a span{
+						background-position:0 -112px;
+						}
+						
+					.viewOptionArea .optionWrapper li a.date span{
+						width:57px;
+						}
+						
+					.viewOptionArea .view .optionWrapper li a span{
+						width:104px;
+						}
+						
+					.viewOptionArea .view .optionWrapper li.last a span{
+						width:64px;
+						}
+						
+					/* Icon */					
+					.viewOptionArea .optionWrapper li a span.icon{
+						width:auto !important;
+						float:left;
+						display:inline;
+						padding:0 0 0 18px;
+						background-image:url(/images/icon-assets.png);
+						background-repeat:no-repeat;
+						}
+						
+					.viewOptionArea .optionWrapper li a.date span.icon,
+					.viewOptionArea .optionWrapper li a.date:hover span.icon,
+					.viewOptionArea .optionWrapper li.active a.date span.icon,
+					.viewOptionArea .optionWrapper li.active a.date:hover span.icon{
+						margin:0 0 0 6px;
+						background-position:0 -23px;
+						}
+						
+					.viewOptionArea .optionWrapper li a.category span.icon,
+					.viewOptionArea .optionWrapper li a.category:hover span.icon,
+					.viewOptionArea .optionWrapper li.active a.category span.icon,
+					.viewOptionArea .optionWrapper li.active a.category:hover span.icon{
+						margin:0 0 0 6px;
+						background-position:0 -53px;
+						}
+						
+					.viewOptionArea .optionWrapper li a.currentVersion span.icon,
+					.viewOptionArea .optionWrapper li a.currentVersion:hover span.icon,
+					.viewOptionArea .optionWrapper li.active a.currentVersion span.icon,
+					.viewOptionArea .optionWrapper li.active a.currentVersion:hover span.icon{
+						margin:0 0 0 4px;
+						background-position:0 -83px;
+						}
+						
+					.viewOptionArea .optionWrapper li a.myFile span.icon,
+					.viewOptionArea .optionWrapper li a.myFile:hover span.icon,
+					.viewOptionArea .optionWrapper li.active a.myFile span.icon,
+					.viewOptionArea .optionWrapper li.active a.myFile:hover span.icon{
+						margin:0 0 0 6px;
+						background-position:0 -113px;
+						}
+						
+#SectionForCategoryVersion,
+#SectionForDateProfile,
+#SectionForCategoryProfile{
+	display:none;
+	}
+						
+/* Table For Assets */
+#filterPanelForm .resultTableContainer{
+	position:relative;
+	}
+	
+	#filterPanelForm .resultTableContainer .corner{
+		width:6px;
+		height:5px;
+		overflow:hidden;
+		position:absolute;
+		background-image:url(/images/bg-assets-table-header.png);
+		background-repeat:no-repeat;
+		}
+		
+	#filterPanelForm .resultTableContainer .tl{
+		top:0;
+		left:-1px;
+		background-position:0 0;
+		}
+		
+	#filterPanelForm .resultTableContainer .tr{
+		top:0;
+		right:-1px;
+		background-position:0 -5px;
+		}
+		
+		#filterPanelForm table{
+			/*table-layout:fixed;*/
+			}
+		
+		#filterPanelForm table th{
+			height:37px;
+			white-space:nowrap;
+			background-image:url(/images/bg-assets-table-header.png);
+			background-repeat:repeat-x;
+			background-position:0 -10px;
+			}
+			
+			/* Sorting */
+			#filterPanelForm table th div{
+				height:14px;
+				display:inline;
+				padding:0 14px;
+				line-height:14px;
+				position:relative;
+				}
+				
+				#filterPanelForm table th div span{
+					width:9px;
+					height:14px;
+					display:block;
+					position:absolute;
+					right:0;
+					text-indent:-9999px;
+					background-repeat:no-repeat;
+					}
+				
+				#filterPanelForm table th.sorting_asc div span{	
+					background-image:url(/images/icon-assets.png);		
+					background-position:0 -265px;
+					}
+					
+				#filterPanelForm table th.sorting_asc:hover div span{
+					background-position:0 -295px;
+					}
+					
+				#filterPanelForm table th.sorting_desc div span{	
+					background-image:url(/images/icon-assets.png);		
+					background-position:0 -325px;
+					}
+					
+				#filterPanelForm table th.sorting_desc:hover div span{
+					background-position:0 -355px;
+					}
+			
+		#filterPanelForm table td{
+			height:60px;
+			padding:16px 4px 6px 4px;
+			font-size:12px;
+			vertical-align:top;
+			text-align:left;
+			border:#a8abad solid 1px;
+			}
+			
+		#filterPanelForm table td.dataTables_empty{
+			text-align:center;
+			line-height:50px;
+			}
+			
+		#filterPanelForm table tr.even td{
+			background-color:#f3f3f3;
+			}
+			
+		#filterPanelForm table tr.odd td{
+			background-color:#ffffff;
+			}
+			
+		#filterPanelForm table td.groupTitle{
+			height:32px;
+			border-left:0;
+			padding:0 14px;
+			font-size:14px;
+			font-weight:bold;
+			text-align:left;
+			line-height:32px;
+			background-image:url(/images/bg-assets-table-header.png);
+			background-repeat:repeat-x;
+			background-position:0 -47px;
+			}
+			
+		#filterPanelForm table td.first{
+			border-left:0;
+			}
+			
+			#filterPanelForm table td .fileDetailsSection{
+				width:428px;
+				}
+			
+			/* File Detsils */
+			#filterPanelForm table td.fileDetailsCell input{
+				width:13px;
+				height:13px;
+				float:left;
+				display:inline;
+				margin:8px 8px 10px 0;
+				}
+				
+			#filterPanelForm table td.fileDetailsCell .fileSection{
+				width:396px;
+				float:left;
+				display:inline;
+				}
+				
+			#filterPanelForm table td.fileDetailsCell .fileDetails{
+				width:auto;
+				float:left;
+				display:inline;
+				}
+				
+				#filterPanelForm table td.fileDetailsCell .fileDetails ul{
+					height:17px;
+					}
+				
+				#filterPanelForm table td.fileDetailsCell .fileDetails li{
+					width:auto;
+					height:17px;
+					float:left;
+					display:inline;
+					margin:0 6px 0 0;
+					line-height:17px;
+					background-image:url(/images/bg-assets-table-header.png);
+					background-repeat:no-repeat;
+					background-position:0 -79px;
+					}
+					
+				#filterPanelForm table td.fileDetailsCell .fileDetails li.first{
+					background-image:none;
+					}
+					
+					#filterPanelForm table td.fileDetailsCell .fileDetails li a{
+						font-weight:bold;
+						color:#363636;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li a:hover{
+						text-decoration:none;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li span{
+						padding:0 0 0 8px;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li a.version{
+						padding:0 0 0 8px;
+						color:#666666;
+						text-decoration:none;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li a.modifyVersion{
+						color:#ff0000;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li a.version:hover{
+						text-decoration:underline;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails li span.size{
+						font-weight:normal;
+						color:#999999;
+						}
+						
+				#filterPanelForm table td.fileDetailsCell .fileDetails p{
+					width:290px;
+					margin:6px 0 0 0;
+					font-size:11px;
+					color:#566666;
+					line-height:14px;
+					}
+					
+					#filterPanelForm table td.fileDetailsCell .fileDetails p span{
+						padding:0;
+						font-weight:normal;
+						}
+						
+					#filterPanelForm table td.fileDetailsCell .fileDetails p span.moreText{
+						display:none;
+						}
+					
+					#filterPanelForm table td.fileDetailsCell .fileDetails p a:hover{
+						text-decoration:none;
+						}
+			
+			/* Category */		
+			#filterPanelForm table td.categoryCell strong{
+				color:#363636;
+				line-height:17px;
+				} 
+				
+			/* Uploader */
+			#filterPanelForm table td.uploaderCell{
+				text-align:center;
+				}
+				
+				#filterPanelForm table td.uploaderCell a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#filterPanelForm table td.uploaderCell a:hover{
+					text-decoration:underline;
+					}
+				
+				#filterPanelForm table td.uploaderCell .green{
+					color:#3a9200;
+					}
+					
+				#filterPanelForm table td.uploaderCell .orange{
+					color:#eea800;
+					}
+				
+			/* Date */
+			#filterPanelForm table td.dateCell{
+				font-size:12px;
+				text-align:center;
+				line-height:17px;
+				} 
+					
+			/* Management */
+			#filterPanelForm table td.managementCell a{
+				width:108px;
+				margin:0 0 10px 0;
+				padding:0 0 0 20px;
+				display:inline-block;
+				font-size:11px;
+				line-height:17px;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				}
+				
+			#filterPanelForm table td.managementCell a:hover{
+				text-decoration:none;
+				}
+				
+			#filterPanelForm table td.managementCell a.upload{
+				background-position:0 -150px;
+				}
+				
+			#filterPanelForm table td.managementCell a.download{
+				width:54px;
+				background-position:0 -178px;
+				}
+				
+			#filterPanelForm table td.managementCell a.edit{
+				background-position:2px -206px;
+				}
+				
+			#filterPanelForm table td.managementCell a.remove{
+				width:54px;
+				background-position:2px -238px;
+				}
+				
+			#filterPanelForm #dataTableLength{
+				margin:6px 0 0 0;
+				}
+				
+			#filterPanelForm .dataTables_paginate span a{
+				padding:0 3px;
+				color:#000000;
+				}
+				
+		/* Bottom */
+		#filterPanelForm .container2Bottom{
+			height:30px;
+			}
+			
+		/* Search Result */
+		.resultSearch{
+			display:none;
+			height:37px;
+			line-height:36px;
+			border-top:#bdbdbd solid 1px;
+			}
+			
+			.resultSearch .allAssets{
+				width:auto;
+				float:right;
+				display:inline;
+				}
+				
+				.resultSearch .allAssets a{
+					font-size:12px;
+					color:#ff0000;
+					text-decoration:none;
+					}
+					
+				.resultSearch .allAssets a:hover{
+					text-decoration:underline;
+					}
+				
+			.resultSearch .result{
+				font-size:14px;
+				}
+				
+				.resultSearch .result .num{
+					color:#ff0000;
+					}
+					
+/* Batch Operation */
+.batchOperation{
+	width:auto;
+	float:left;
+	display:none;
+	padding:6px 0;
+	line-height:15px;
+	}
+	
+	.batchOperation li{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 0 0 6px;
+		list-style:none;
+		}
+		
+		.batchOperation li a{
+			width:auto;
+			float:left;
+			display:inline;
+			font-size:11px;
+			color:#333333;
+			padding:0 0 0 18px;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			}
+			
+		.batchOperation li a:hover{
+			text-decoration:none;
+			}
+			
+		.batchOperation li a.delete{
+			background-position:0 -390px;
+			}
+			
+		.batchOperation li a.edit{
+			background-position:0 -420px;
+			}
+			
+		.batchOperation li a.download{
+			background-position:0 -450px;
+			}
+			
+		.batchOperation li a.setPermission{
+			background-position:0 -480px;
+			}
+			
+/* Upload File Page */
+.uploadSection{
+	width:auto;
+	}
+
+	.uploadSection .sectionHeaderL{
+		padding:0 0 0 4px;
+		background-image:url(/images/bg-newbox-header.png);
+		background-repeat:no-repeat;
+		background-position:0 0;
+		}
+
+	.uploadSection .sectionHeaderR{
+		padding:0 4px 0 0;
+		background-image:url(/images/bg-newbox-header.png);
+		background-repeat:no-repeat;
+		background-position:right -72px;
+		}
+
+	.uploadSection .sectionHeaderM{
+		height:36px;
+		background:url(/images/bg-newbox-header.png);
+		background-repeat:repeat-x;
+		background-position:0 -36px;
+		}
+		
+	.uploadSection .sectionHeader h2{
+		padding:0 0 0 10px;
+		font-size:14px;
+		line-height:36px;
+		}
+		
+		.uploadSection .sectionHeader h2 span{
+			font-weight:normal;
+			}
+		
+	.uploadSection .sectionHeader .btnUpload,
+	.uploadSection .sectionHeader .btnCancelUploading{
+		margin:5px 1px 0 0 !important;
+		}
+		
+	.uploadSection .sectionHeader .btnBack{
+		margin:5px 10px 0 0;
+		}
+		
+		a.btnCancelUploading span.right{
+			padding:4px 10px 0 10px;
+			}
+			
+		/* Process Bar For All File */
+		.uploadSection .sectionHeader .uploading,
+		.uploadSection .sectionHeader .uploadSucess{
+			width:580px;
+			float:right;
+			display:inline;
+			}
+			
+		.uploadSection .sectionHeader .uploadSucess{
+			display:none;
+			}
+		
+		/* Upload Sucess */	
+		.uploadSection .sectionHeader .uploadSucess p{
+			width:auto;
+			float:right;
+			display:inline;
+			font-size:14px;
+			line-height:36px;
+			}
+			
+		.uploadSection .sectionHeader .uploadSucess .button6,
+		.uploadSection .sectionHeader .uploadSucess .button7{
+			margin:5px 1px 0 10px;
+			}
+		
+		/* Uploading */
+		.uploadSection .sectionHeader .uploading .allFileProcessBar{
+			width:auto;
+			float:right;
+			display:inline;
+			margin:0 10px 0 0;
+			}
+			
+			.uploadSection .sectionHeader .uploading .allFileProcessBar .allFileInfor{
+				width:auto;
+				float:left;
+				display:inline;
+				font-size:14px;
+				line-height:36px;
+				}
+				
+				.uploadSection .sectionHeader .uploading .allFileProcessBar .allFileInfor em{
+					font-style:normal;
+					}
+				
+			/* Process Bar */
+			.uploadSection .sectionHeader .uploading .allFileProcessBar .processBar{
+				width:202px;
+				float:left;
+				display:inline;
+				margin:7px 10px 0 10px;
+				}
+				
+				.uploadSection .sectionHeader .uploading .allFileProcessBar .processBarInner{
+					height:19px;
+					position:relative;
+					overflow:hidden;
+					border:#bdbdbd solid 1px;
+					background-image:url(/images/bg-view-option.png);
+					background-repeat:repeat-x;
+					background-position:0 -318px;
+					}
+					
+				.uploadSection .sectionHeader .uploading .allFileProcessBar .processed{
+					border:#037f00 solid 1px;
+					position:absolute;
+					top:-1px;
+					bottom:-1px;
+					background-color:#24a200;
+					}
+				
+			.uploadSection .sectionHeader .uploading .allFileProcessBar .remainTime{
+				width:auto;
+				float:left;
+				display:inline;
+				font-size:12px;
+				line-height:36px;
+				color:#666666;
+				}
+		
+	/* Container */
+	.uploadSection .sectionContainer{
+		padding:18px 20px 18px 20px;
+		border:#bdbdbd solid 1px;
+		border-top:0;
+		}
+		
+	#processing{
+		padding:0;
+		}
+		
+		/* Dynamic Upload */
+		.uploadSection #dynamicUpload{
+			width:64%;
+			float:left;
+			display:inline;
+			position:relative;
+			}
+			
+			.uploadSection #dynamicUpload .corner{
+				width:4px;
+				height:4px;
+				overflow:hidden;
+				position:absolute;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				}
+				
+			.uploadSection #dynamicUpload .tl{
+				top:0;
+				left:0;
+				background-position:0 -96px;
+				}
+				
+			.uploadSection #dynamicUpload .tr{
+				top:0;
+				right:0;
+				background-position:0 -104px;
+				}
+				
+			.uploadSection #dynamicUpload .bl{
+				bottom:0;
+				left:0;
+				background-position:0 -100px;
+				}
+				
+			.uploadSection #dynamicUpload .br{
+				bottom:0;
+				right:0;
+				background-position:0 -108px;
+				}
+			
+			.uploadSection #dynamicUpload .dynamicUpload{
+				min-height:220px;
+				padding:0 0 20px 0;
+				background-color:#eeffcb;
+				border:#bee3b0 solid 1px;
+				}
+				
+				.uploadSection #dynamicUpload .dragPre{
+					padding:80px 0 0 0;
+					text-align:center;
+					}
+					
+					.uploadSection #dynamicUpload .dragPre p{
+						font-size:16px;
+						line-height:30px;
+						}
+						
+				.uploadSection #dynamicUpload .dragSucess{
+					display:none;
+					padding:0 20px;
+					text-align:left;
+					}
+					
+					.uploadSection #dynamicUpload .dragSucess p{
+						padding:4px 0 0 0;
+						border-bottom:#bee3b0 solid 1px;
+						font-size:14px;
+						line-height:34px;
+						}
+						
+					.uploadSection #dynamicUpload .dragSucess li{
+						line-height:48px;
+						list-style:none;
+						border-bottom:#bee3b0 solid 1px;
+						}
+						
+						.uploadSection #dynamicUpload .dragSucess li span.icon-file-small{
+							width:22px;
+							float:left;
+							display:inline;
+							margin:9px 12px 0 10px;
+							cursor:default;
+							}
+							
+						.uploadSection #dynamicUpload .dragSucess li .removeFile{
+							width:10px;
+							height:11px;
+							float:right;
+							display:inline;
+							margin:20px 14px 0 0;
+							text-indent:-9999px;
+							background-image:url(/images/icon-assets.png);
+							background-repeat:no-repeat;
+							background-position:0 -510px;
+							}
+							
+						.uploadSection #dynamicUpload .dragSucess li .removeFile:hover{
+							background-position:0 -540px;
+							}
+							
+						.uploadSection #dynamicUpload .dragSucess li .fileName{
+							font-size:12px;
+							font-weight:bold;
+							}
+							
+							.uploadSection #dynamicUpload .dragSucess li .fileName span{
+								color:#999999;
+								}
+								
+		/* Common Upload */
+		.uploadSection .commonUpload{
+			width:30%;
+			float:right;
+			display:inline;
+			margin:0 20px 0 10px;
+			text-align:left;
+			}
+			
+			.uploadSection .commonUpload label{
+				display:block;
+				padding:10px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:32px;
+				color:#313131;
+				text-indent:4px;
+				}
+				
+			.uploadSection .commonUpload .uploadRow{
+				height:25px;
+				padding:0 0 10px 0;
+				}
+				
+			.uploadSection .commonUpload .commonButton{
+				min-height:25px;
+				}
+				
+				.uploadSection .commonUpload .btnMoreFile{
+					width:auto;
+					float:left;
+					display:inline;
+					padding:0 0 0 4px;
+					text-decoration:none;
+					background-image:url(/images/bg-view-option.png);
+					background-repeat:no-repeat;
+					background-position:0 -168px;
+					}
+					
+				.uploadSection .commonUpload .btnMoreFile:hover{
+					background-position:0 -243px;
+					}
+					
+					.uploadSection .commonUpload .btnMoreFile span{
+						width:auto;
+						float:left;
+						display:inline;
+						padding:0 4px 0 0;
+						cursor:pointer;
+						background-image:url(/images/bg-view-option.png);
+						background-repeat:no-repeat;
+						background-position:right -218px;
+						}
+						
+					.uploadSection .commonUpload .btnMoreFile:hover span{
+						background-position:right -293px;
+						}
+						
+					.uploadSection .commonUpload .btnMoreFile span span{
+						width:auto;
+						height:25px;
+						float:left;
+						display:inline;
+						padding:0 10px;
+						font-size:11px;
+						line-height:25px;
+						text-align:center;
+						/* Text shadow */
+						text-shadow:#ffffff 0px 1px 0;
+						background-image:url(/images/bg-view-option.png);
+						background-repeat:repeat-x;
+						background-position:0 -193px;
+						}
+						
+					.uploadSection .commonUpload .btnMoreFile:hover span span{
+						background-position:0 -268px;
+						}
+						
+					.uploadSection .commonUpload .btnMoreFile span span.icon,
+					.uploadSection .commonUpload .btnMoreFile:hover span span.icon{
+						width:auto;
+						float:left;
+						display:inline;
+						line-height:25px;
+						padding:0 0 0 12px;
+						color:#313131;
+						background-image:url(/images/icon-assets.png);
+						background-repeat:no-repeat;
+						background-position:0 -562px;
+						}
+						
+		/* File Uploading Section */
+		.uploadSection .fileUploadingSection{
+			padding:0 20px 0 20px;
+			}
+			
+			.uploadSection .fileUploadingSection .itemSection{
+				margin:18px 10px;
+				display:inline-block;
+				}
+			
+			.uploadSection .fileUploadingSection .fileUploadItem{
+				position:relative;
+				padding:18px 20px;
+				text-align:center;
+				border:#bdbdbd solid 1px;
+				}
+					
+				/* Upload Sucess */
+				.uploadSection .fileUploadingSection .fileUploadItem .uploadSucess{
+					display:none;
+					padding:2px 0 10px 0;
+					margin:0 0 8px 0;
+					border-bottom:#bdbdbd solid 1px;
+					}
+				
+					.uploadSection .fileUploadingSection .fileUploadItem .uploadSucess p{
+						font-size:11px;
+						color:#666666;
+						line-height:16px;
+						}
+						
+						.uploadSection .fileUploadingSection .fileUploadItem .uploadSucess p span{
+							font-weight:bold;
+							}
+							
+						.uploadSection .fileUploadingSection .fileUploadItem .uploadSucess p span.green{
+							color:#3a9200;
+							}	
+				
+				.uploadSection .fileUploadingSection .removeFileUploadItem{
+					width:10px;
+					height:11px;
+					display:block;
+					position:absolute;
+					top:7px;
+					right:7px;
+					text-indent:-9999px;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					background-position:0 -510px;
+					}
+					
+				.uploadSection .fileUploadingSection .removeFileUploadItem:hover{
+					background-position:0 -540px;
+					}
+					
+				.uploadSection .fileUploadingSection .icon-file{
+					margin:0 auto;
+					}
+					
+				.uploadSection .fileUploadingSection .fileName{
+					margin:4px 0 0 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#363636;
+					line-height:22px;
+					}
+					
+					.uploadSection .fileUploadingSection .fileName a:hover{
+						text-decoration:none;
+						}
+					
+				.uploadSection .fileUploadingSection .processInfor{
+					margin:0 0 4px 0;
+					font-size:11px;
+					color:#666666;
+					line-height:22px;
+					}
+					
+				/* Process Bar */
+				.uploadSection .fileUploadingSection .processBar{
+					margin:0 0 8px 0;
+					}
+				
+					.uploadSection .fileUploadingSection .processBar .processBarInner{
+						width:100%;
+						height:13px;
+						position:relative;
+						overflow:hidden;
+						text-align:left;
+						border:#bdbdbd solid 1px;
+						background-image:url(/images/bg-view-option.png);
+						background-repeat:repeat-x;
+						background-position:0 -337px;
+						}
+						
+						.uploadSection .fileUploadingSection .processBar .processed{
+							border:#037f00 solid 1px;
+							position:absolute;
+							top:-1px;
+							bottom:-1px;
+							background-color:#24a200;
+							}
+							
+				/* Select Category */
+				.uploadSection .fileUploadingSection .selectCategory{
+					position:relative;
+					text-align:left;
+					z-index:1;
+					}
+					
+					.uploadSection .fileUploadingSection .selectCategory label{
+						display:block;
+						font-size:12px;
+						font-weight:bold;
+						line-height:24px;
+						}
+					
+					.uploadSection .fileUploadingSection .selectCategory select{
+						width:100%;
+						font-size:11px;
+						}
+						
+					.uploadSection .fileUploadingSection .selectCategory .linksBox{
+						text-align:right;
+						line-height:14px;
+						}
+						
+					.uploadSection .fileUploadingSection .selectCategory .LinkNewCategory{
+						display:inline-block;
+						margin:4px 0 0 0;
+						padding:0 0 0 13px;
+						font-size:11px;
+						color:#313131;
+						line-height:14px;
+						background-image:url(/images/icon-assets.png);
+						background-repeat:no-repeat;
+						background-position:0 -566px;
+						}
+						
+					.uploadSection .fileUploadingSection .selectCategory .LinkNewCategory:hover{
+						text-decoration:none;
+						}
+				
+				/* Add Description */ 		
+				.uploadSection .fileUploadingSection .addDescription{
+					text-align:left;
+					}
+					
+					.uploadSection .fileUploadingSection .addDescription label{
+						margin:0 0 6px 0;
+						display:block;
+						font-size:12px;
+						font-weight:bold;
+						line-height:14px;
+						}
+						
+					.uploadSection .fileUploadingSection .addDescription .textarea{
+						height:50px;
+						padding:6px 10px;
+						border:#acadb2 solid 1px;
+						background-color:#fffffe;
+						}
+						
+						.uploadSection .fileUploadingSection .addDescription textarea{
+							height:50px;
+							}
+						
+				/* Select Access */
+				.uploadSection .fileUploadingSection .selectAccess{
+					text-align:left;
+					position:relative;
+					}
+					
+					.uploadSection .fileUploadingSection .selectAccess strong.label{
+						display:block;
+						font-size:12px;
+						font-weight:bold;
+						line-height:24px;
+						}
+						
+					.uploadSection .fileUploadingSection .selectAccess .radioBox{
+						width:auto;
+						}
+						
+					.uploadSection .fileUploadingSection .selectAccess .radioBox input{
+						width:13px;
+						height:13px;
+						position:relative;
+						top:2px;
+						display:inline-block;
+						}
+						
+					.uploadSection .fileUploadingSection .selectAccess .radioBox label{
+						width:auto;
+						display:inline-block;
+						margin:0 23px 0 0;
+						font-size:12px;
+						line-height:13px;
+						}
+						
+					.uploadSection .fileUploadingSection .selectAccess .radioBox label.private{
+						margin:0 10px 0 0;
+						}
+						
+					.uploadSection .fileUploadingSection .selectAccess .accessOperate{
+						white-space:nowrap;
+						visibility:hidden;
+						font-size:11px;
+						line-height:13px;
+						}
+						
+						.uploadSection .fileUploadingSection .selectAccess .accessOperate a{
+							white-space:nowrap;
+							color:#000000;
+							}
+							
+						.uploadSection .fileUploadingSection .selectAccess .accessOperate a:hover{
+							text-decoration:none;
+							}
+						
+						.uploadSection .fileUploadingSection .selectAccess .accessOperate span{
+							margin:0 2px;
+							color:#bdbdbd;
+							}
+							
+	/* File Version */
+	.versionView{
+		min-height:290px;
+		position:relative;
+		text-align:right;
+		background-color:#f3f3f3;
+		border:#bdbdbd solid 1px;
+		border-top:0;
+		}
+		
+		/* versionViewDetails */
+		.versionView .versionViewDetails{
+			width:25%;
+			top:0;
+			left:0;
+			position:absolute;
+			padding:40px 0;
+			text-align:center;
+			}
+			
+			.versionView .versionViewDetails .icon-lastest{
+				position:relative;
+				}
+				
+				.versionView .versionViewDetails .icon-lastest .icon{
+					width:56px;
+					height:56px;
+					position:absolute;
+					top:-40px;
+					left:0;
+					text-indent:-9999px;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					background-position:0 -660px;
+					}
+			
+			.versionView .versionViewDetails .fileIcon{
+				width:44px;
+				height:58px;
+				position:relative;
+				margin:0 auto;
+				cursor:pointer;
+				}
+				
+				.versionView .versionViewDetails .fileIcon img{
+					width:44px;
+					height:58px;
+					display:block;
+					}
+			
+			.versionView .versionViewDetails .icon-file{
+				margin:0 auto 8px auto;
+				}
+				
+			.versionView .versionViewDetails .fileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			.versionView .versionViewDetails .fileName:hover{
+				text-decoration:none;
+				}
+				
+			.versionView .versionViewDetails .versionAndSize{
+				font-size:12px;
+				line-height:18px;
+				}
+				
+				.versionView .versionViewDetails .versionAndSize .version{
+					font-weight:bold;
+					}
+					
+				.versionView .versionViewDetails .versionAndSize .line{
+					font-size:18px;
+					font-weight:normal;
+					color:#d8d8d8;
+					}
+					
+				.versionView .versionViewDetails .versionAndSize .versionSize{
+					color:#999999;
+					}
+					
+			.versionView .versionViewDetails .fileNameDes{
+				margin:2px 0;
+				font-size:11px;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			.versionView .versionViewDetails .cateogry{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			.versionView .versionViewDetails .uploader{
+				font-size:11px;
+				color:#363636;
+				line-height:18px;
+				}
+				
+				.versionView .versionViewDetails .uploader a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				.versionView .versionViewDetails .uploader a:hover{
+					text-decoration:underline;
+					}
+					
+			.versionView .versionViewDetails .time{
+				font-size:11px;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			.versionView .versionViewDetails .editVersion{
+				width:auto;
+				display:inline-block;
+				margin:10px 0 0 0;
+				padding:0 0 0 4px;
+				text-decoration:none;
+				background-image:url(/images/bg-view-option.png);
+				background-repeat:no-repeat;
+				background-position:0 -168px;
+				}
+				
+			.versionView .versionViewDetails .editVersion:hover{
+				background-position:0 -243px;
+				}
+				
+				.versionView .versionViewDetails .editVersion span{
+					width:auto;
+					display:inline-block;
+					padding:0 4px 0 0;
+					cursor:pointer;
+					background-image:url(/images/bg-view-option.png);
+					background-repeat:no-repeat;
+					background-position:right -218px;
+					}
+					
+				.versionView .versionViewDetails .editVersion:hover span{
+					background-position:right -293px;
+					}
+					
+				.versionView .versionViewDetails .editVersion span span{
+					width:auto;
+					height:25px;
+					display:inline-block;
+					padding:0 10px;
+					font-size:11px;
+					line-height:25px;
+					text-align:center;
+					/* Text shadow */
+					text-shadow:#ffffff 0px 1px 0;
+					background-image:url(/images/bg-view-option.png);
+					background-repeat:repeat-x;
+					background-position:0 -193px;
+					}
+					
+				.versionView .versionViewDetails .editVersion:hover span span{
+					background-position:0 -268px;
+					}
+					
+				.versionView .versionViewDetails .editVersion span span.icon,
+				.versionView .versionViewDetails .editVersion:hover span span.icon{
+					width:auto;
+					display:inline-block;
+					line-height:25px;
+					padding:0 0 0 20px;
+					color:#313131;
+					background-image:url(/images/edit-icon.png);
+					background-repeat:no-repeat;
+					background-position:0 center;
+					}
+			
+		.versionView .versionViewTable{
+			width:75%;
+			float:right;
+			display:inline;
+			position:relative;
+			}
+			
+			.versionView .versionViewTable table{
+				width:100%;
+				table-layout:fixed;
+				}
+			
+			.versionView .versionViewTable table th{
+				height:37px;
+				font-size:12px;
+				color:#ffffff;
+				text-align:center;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:repeat-x;
+				background-position:0 -10px;
+				}
+				
+				/* Sorting */
+				.versionView .versionViewTable table th div{
+					height:14px;
+					display:inline;
+					padding:0 14px;
+					line-height:14px;
+					position:relative;
+					}
+					
+					.versionView .versionViewTable table th div span{
+						width:9px;
+						height:14px;
+						display:inline-block;
+						position:absolute;
+						right:0;
+						text-indent:-9999px;
+						background-repeat:no-repeat;
+						}
+					
+					.versionView .versionViewTable table th.sorting_asc div span{	
+						background-image:url(/images/icon-assets.png);		
+						background-position:0 -265px;
+						}
+						
+					.versionView .versionViewTable table th.sorting_asc:hover div span{
+						background-position:0 -295px;
+						}
+						
+					.versionView .versionViewTable table th.sorting_desc div span{	
+						background-image:url(/images/icon-assets.png);		
+						background-position:0 -325px;
+						}
+						
+					.versionView .versionViewTable table th.sorting_desc:hover div span{
+						background-position:0 -355px;
+						}
+				
+			.versionView .versionViewTable table td{
+				height:60px;
+				padding:16px 10px 6px 10px;
+				font-size:12px;
+				vertical-align:top;
+				text-align:left;
+				cursor:pointer;
+				border-top:#a8abad solid 1px;
+				border-left:#a8abad solid 1px;
+				}
+				
+			.versionView .versionViewTable table tr.even td{
+				background-color:#fffffe;
+				}
+				
+			.versionView .versionViewTable table tr.odd td{
+				background-color:#f3f3f3;
+				}
+				
+			.versionView .versionViewTable table tr.selected td{
+				background-color:#eeffcb;
+				}
+				
+			.versionView .versionViewTable table tr td.uploaderCell,
+			.versionView .versionViewTable table tr td.timeCell{
+				text-align:center;
+				}
+				
+			/* First Cell */			
+				.versionView .versionViewTable .hArrow{
+					width:14px;
+					height:27px;
+					position:absolute;
+					left:-13px;
+					top:63px;
+					z-index:10;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					background-position:-200px 0;
+					}
+				
+				.versionView .fileDetailsCell .fileDetails{
+					width:140px;
+					}
+				
+				.versionView .fileDetailsCell .fileDetails ul{
+					height:17px;
+					}
+				
+				.versionView .fileDetailsCell .fileDetails li{
+					width:auto;
+					height:17px;
+					float:left;
+					display:inline;
+					margin:0 8px 0 0;
+					line-height:20px;
+					background-image:url(/images/bg-assets-table-header.png);
+					background-repeat:no-repeat;
+					background-position:0 -79px;
+					}
+					
+				.versionView .fileDetailsCell .fileDetails li.versionList{
+					background-image:none;
+					}
+						
+					.versionView .fileDetailsCell .fileDetails li span{
+						padding:0 0 0 8px;
+						}
+						
+					.versionView .fileDetailsCell .fileDetails li span.version{
+						padding:0;
+						font-weight:bold;
+						text-decoration:none;
+						}
+						
+					.versionView .fileDetailsCell .fileDetails li span.size{
+						font-weight:normal;
+						color:#999999;
+						}
+						
+				.versionView .fileDetailsCell p{
+					width:auto;
+					margin:6px 0 0 0;
+					font-size:12px;
+					color:#566666;
+					line-height:14px;
+					}
+				
+				/* Uploader Cell */	
+				.versionView .versionViewTable table td.uploaderCell a{
+					font-weight:bold;
+					line-height:18px;
+					text-decoration:none;
+					}
+				
+				.versionView .versionViewTable table td.uploaderCell a:hover{
+					text-decoration:underline;
+					}
+						
+				/* Management */
+				.versionView .versionViewTable td.managementCell a{
+					width:120px;
+					margin:0 0 13px 0;
+					padding:0 0 0 22px;
+					display:inline-block;
+					font-size:11px;
+					line-height:17px;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					}
+					
+				.versionView .versionViewTable td.managementCell a:hover{
+					text-decoration:none;
+					}
+					
+				.versionView .versionViewTable td.managementCell a.upload{
+					background-position:0 -150px;
+					}
+					
+				.versionView .versionViewTable td.managementCell a.download{
+					width:54px;
+					background-position:0 -178px;
+					}
+					
+				.versionView .versionViewTable td.managementCell a.edit{
+					margin:0 0 0 0;
+					background-position:2px -206px;
+					}
+					
+				.versionView .versionViewTable td.managementCell a.remove{
+					width:54px;
+					margin:0 0 0 0;
+					background-position:2px -238px;
+					}
+		
+	/* Button Box */
+	.uploadSection .uploadButtonBox{
+		height:24px;
+		padding:15px 0;
+		}
+		
+		.uploadSection .uploadButtonBox .btnUploadVersion{
+			margin:3px 0 !important;
+			}
+		
+		.uploadSection .uploadButtonBox .btnBack{
+			margin:3px 10px;
+			}
+			
+/* Edit Bitch */
+.uploadSection .sectionHeader .editBitchButtons .button6,
+.uploadSection .sectionHeader .editBitchButtons .button7{
+	margin:5px 1px 0 10px;
+	}
+	
+.uploadSection .fileUploadingSection .fileUploadItem .bitchEdit{
+	padding:2px 0 10px 0;
+	margin:0 0 8px 0;
+	border-bottom:#bdbdbd solid 1px;
+	}
+
+	.uploadSection .fileUploadingSection .fileUploadItem .bitchEdit p{
+		font-size:11px;
+		color:#666666;
+		line-height:16px;
+		}
+		
+		.uploadSection .fileUploadingSection .fileUploadItem .bitchEdit p a{
+			font-weight:bold;
+			text-decoration:none;
+			}
+			
+		.uploadSection .fileUploadingSection .fileUploadItem .bitchEdit p a:hover{
+			text-decoration:underline;
+			}
+			
+/* Icon */	
+.icon-file-small{
+	width:22px;
+	height:29px;
+	float:left;
+	display:inline;
+	margin:0 10px 0 0;
+	}
+	
+.icon-file{
+	width:44px;
+	height:58px;
+	display:block;
+	position:relative;
+	}
+	
+.iconView{
+	width:21px;
+	height:20px;
+	display:block;
+	position:absolute;
+	bottom:0;
+	right:0;
+	text-indent:-9999px;
+	cursor:pointer;
+	background-image:url(/images/icon-assets.png);
+	background-repeat:no-repeat;
+	background-position:-200px -400px;
+	}
+	
+.icon-file:hover .iconView{
+	background-position:-200px -500px;
+	}
+			
+/***
+Start Modal
+***/
+#modalBackground{
+	position:fixed;
+	}
+/* Saving */
+#savingModal{
+    width:100px;
+    height:80px;
+	}
+
+	#savingModal .modalBody{
+		height:auto;
+		min-height:10px;
+		padding-top:4px;
+		text-align:center;
+		background:url(/images/preloader-body.png) left -2px repeat-x;
+		}
+	
+		#savingModal .modalBody .preloaderTips{
+			padding-top:5px;
+			font-size:12px;
+			color:#333333;
+			}
+			
+/* DeletingModal */
+#deletingModal{
+    width:100px;
+    height:80px;
+	}
+
+	#deletingModal .modalBody{
+		height:auto;
+		min-height:10px;
+		padding-top:4px;
+		text-align:center;
+		background:url(/images/preloader-body.png) left -2px repeat-x;
+		}
+	
+		#deletingModal .modalBody .preloaderTips{
+			padding-top:5px;
+			font-size:12px;
+			color:#333333;
+			}
+
+/* Remove File */
+#removeFileFromCockpit{
+	width:490px;
+	}
+	
+	/* Modal Content */
+	#removeFileFromCockpit .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#removeFileFromCockpit .fileDetails{
+			width:186px;
+			min-height:198px;
+			float:left;
+			display:inline;
+			text-align:center;
+			padding:20px 0 0 0;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:right -169px;
+			}
+			
+			#removeFileFromCockpit .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#removeFileFromCockpit .fileDetails .fileName,
+			#removeFileFromCockpit .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#removeFileFromCockpit .fileDetails .fileName:hover,
+			#removeFileFromCockpit .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#removeFileFromCockpit .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#removeFileFromCockpit .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#removeFileFromCockpit .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#removeFileFromCockpit .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#removeFileFromCockpit .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#removeFileFromCockpit .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#removeFileFromCockpit .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#removeFileFromCockpit .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#removeFileFromCockpit .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#removeFileFromCockpit .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Delete Comfirm */
+		#removeFileFromCockpit .deleteComfirm{
+			width:250px;
+			float:left;
+			display:inline;
+			padding:20px 0 0 28px;
+			}
+			
+			#removeFileFromCockpit .deleteComfirm p.comfirmTxt{
+				font-size:14px;
+				line-height:50px;
+				}
+				
+			#removeFileFromCockpit .deleteComfirm div.radioRow{
+				clear:both;
+				height:14px;
+				padding:5px 0 10px 0;
+				}
+				
+				#removeFileFromCockpit .deleteComfirm div.radioRow input{
+					width:13px;
+					height:13px;
+					float:left;
+					display:inline;
+					margin:0 6px 0 14px;
+					}
+					
+				#removeFileFromCockpit .deleteComfirm div.radioRow label{
+					width:auto;
+					float:left;
+					display:inline;
+					font-size:12px;
+					font-weight:bold;
+					line-height:13px;
+					cursor:pointer;
+					}
+					
+			#removeFileFromCockpit .deleteComfirm .deleteIntro{
+				padding:15px 0 0 0;
+				font-size:12px;
+				line-height:16px;
+				}
+	
+	#removeFileFromCockpit .modalCommandBox .newButton1{
+		margin:0 13px;
+		}
+		
+/* Edit File Details */
+#editFileDetails{
+	width:550px;
+	}
+	
+	/* Modal Content */
+	#editFileDetails .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#editFileDetails .fileDetails{
+			width:186px;
+			min-height:198px;
+			float:left;
+			display:inline;
+			text-align:center;
+			}
+			
+			#editFileDetails .fileDetails .versionSection{
+				padding:20px 0 0 0;
+				}
+			
+			#editFileDetails .fileDetails .lastVersion{
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:0 -660px;
+				}
+			
+			#editFileDetails .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#editFileDetails .fileDetails .fileName,
+			#editFileDetails .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#editFileDetails .fileDetails .fileName:hover,
+			#editFileDetails .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#editFileDetails .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#editFileDetails .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#editFileDetails .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#editFileDetails .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#editFileDetails .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#editFileDetails .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#editFileDetails .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#editFileDetails .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#editFileDetails .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#editFileDetails .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Upload File Section */
+		#editFileDetails .editFileSection{
+			width:300px;
+			float:left;
+			display:inline;
+			padding:16px 30px 0 26px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+			
+			#editFileDetails .editFileSection h2{
+				font-size:14px;
+				line-height:18px;
+				}
+				
+			/* Select Category */
+			#editFileDetails .editFileSection .selectCategory{
+				margin:16px 0 0 0;
+				position:relative;
+				text-align:left;
+				z-index:1;
+				}
+				
+				#editFileDetails .editFileSection .selectCategory label{
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:26px;
+					}
+				
+				#editFileDetails .editFileSection .selectCategory select{
+					width:100%;
+					font-size:11px;
+					}
+					
+				#editFileDetails .editFileSection .selectCategory .linksBox{
+					text-align:right;
+					line-height:14px;
+					}
+					
+				#editFileDetails .editFileSection .selectCategory .LinkNewCategory{
+					display:inline-block;
+					margin:4px 0 0 0;
+					padding:0 0 0 13px;
+					font-size:11px;
+					color:#313131;
+					line-height:14px;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					background-position:0 -566px;
+					}
+					
+				#editFileDetails .editFileSection .selectCategory .LinkNewCategory:hover{
+					text-decoration:none;
+					}
+			
+			/* Add Description */ 		
+			#editFileDetails .editFileSection .addDescription{
+				margin:12px 0 0 0;
+				text-align:left;
+				}
+				
+				#editFileDetails .editFileSection .addDescription label{
+					margin:0 0 6px 0;
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:14px;
+					}
+					
+				#editFileDetails .editFileSection .addDescription .textarea{
+					height:70px;
+					padding:6px 10px;
+					border:#acadb2 solid 1px;
+					background:#fffffe;
+					}
+					
+					#editFileDetails .editFileSection .addDescription textarea{
+						height:70px;
+						}
+					
+			/* Select Access */
+			#editFileDetails .editFileSection .selectAccess{
+				margin:12px 0 25px 0;
+				text-align:left;
+				position:relative;
+				}
+				
+				#editFileDetails .editFileSection .selectAccess strong.label{
+					padding:0 0 4px 0;
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:24px;
+					}
+					
+				#editFileDetails .editFileSection .selectAccess .radioBox input{
+					width:13px;
+					height:13px;
+					float:left;
+					display:inline;
+					}
+					
+				#editFileDetails .editFileSection .selectAccess .radioBox label{
+					width:auto;
+					float:left;
+					display:inline;
+					cursor:pointer;
+					margin:0 23px 0 7px;
+					font-size:12px;
+					line-height:13px;
+					}
+					
+				#editFileDetails .editFileSection .selectAccess .radioBox label.private{
+					margin:0 10px 0 7px;
+					}
+					
+				#editFileDetails .editFileSection .selectAccess .accessOperate{
+					width:auto;
+					float:left;
+					display:inline;
+					visibility:hidden;
+					font-size:11px;
+					line-height:13px;
+					}
+					
+					#editFileDetails .editFileSection .selectAccess .accessOperate a{
+						color:#000000;
+						}
+						
+					#editFileDetails .editFileSection .selectAccess .accessOperate a:hover{
+						text-decoration:none;
+						}
+					
+					#editFileDetails .editFileSection .selectAccess .accessOperate span{
+						margin:0 2px;
+						color:#bdbdbd;
+						}
+	
+	#editFileDetails .btnGreyModal,
+	#editFileDetails .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#editFileDetails .btnGreyModal{
+		margin:0 12px 0 146px;
+		}
+		
+/* Batch Delete */
+#batchDelete{
+	width:665px;
+	}
+	
+	/* Modal Content */
+	#batchDelete .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File List */
+		#batchDelete .fileList{
+			width:245px;
+			min-height:224px;
+			float:left;
+			display:inline;
+			padding:0 0 0 20px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:right 0;
+			}
+			
+			#batchDelete .fileList p{
+				margin:0 4px 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:46px;
+				}
+				
+			#batchDelete .fileList li{
+				list-style:none;
+				padding:0 0 10px 0;
+				}
+				
+				#batchDelete .fileList div.item{
+					min-height:29px;
+					}
+					
+				#batchDelete .fileList div.item span.icon-file-small{
+					cursor:default;
+					}
+					
+				#batchDelete .fileList div.item span.fileName{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 6px 5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#363636;
+					line-height:19px;
+					}
+					
+				#batchDelete .fileList div.item span.size{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#999999;
+					line-height:19px;
+					}
+		
+		/* File Deleteing */			
+		#batchDelete .fileDeleteing{
+			width:350px;
+			float:left;
+			display:inline;
+			padding:0 20px 0 20px;
+			}
+			
+			#batchDelete .fileDeleteing .icon-delete{
+				width:80px;
+				height:90px;
+				float:left;
+				display:inline;
+				text-indent:-9999px;
+				margin:38px 0 0 0;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-200px -300px;
+				}
+				
+			#batchDelete .fileDeleteing .fileDeleteingInfor{
+				width:255px;
+				float:left;
+				display:inline;
+				margin:0 0 0 15px;
+				}
+				
+				#batchDelete .fileDeleteing .fileDeleteingInfor h2{
+					margin:32px 0 20px 0;
+					font-size:14px;
+					line-height:18px;
+					}
+					
+				#batchDelete .fileDeleteing .fileDeleteingInfor p{
+					margin:0 0 24px 0;
+					font-size:12px;
+					line-height:18px;
+					}
+					
+				#batchDelete .fileDeleteing .fileDeleteingInfor span.note{
+					margin:0 0 10px 0;
+					font-size:12px;
+					line-height:18px;
+					font-style:italic;
+					}
+		
+		/* Button */								
+		#batchDelete .btnGreyModal,
+		#batchDelete .btnSucess{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 12px;
+			}
+			
+		#batchDelete .btnGreyModal{
+			margin:0 12px 0 222px;
+			}
+					
+			#batchDelete .btnGreyModal .btnC,
+			#batchDelete .btnSucess .btnC{
+				width:47px;
+				}
+					
+/* Batch Deleted */
+#batchDeleted{
+	width:665px;
+	}
+	
+	/* Modal Content */
+	#batchDeleted .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File List */
+		#batchDeleted .fileList{
+			width:245px;
+			min-height:224px;
+			float:left;
+			display:inline;
+			padding:0 0 0 20px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:right 0;
+			}
+			
+			#batchDeleted .fileList p{
+				margin:0 4px 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:46px;
+				}
+				
+			#batchDeleted .fileList li{
+				list-style:none;
+				padding:0 0 10px 0;
+				}
+				
+				#batchDeleted .fileList div.item{
+					min-height:29px;
+					}
+					
+				#batchDeleted .fileList div.item span.icon-file-small{
+					cursor:default;
+					}
+					
+				#batchDeleted .fileList div.item span.fileName{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 6px 5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#363636;
+					line-height:19px;
+					}
+					
+				#batchDeleted .fileList div.item span.size{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#999999;
+					line-height:19px;
+					}
+					
+		/* File Deleted */			
+		#batchDeleted .fileDeleted{
+			width:350px;
+			float:left;
+			display:inline;
+			padding:0 20px 0 20px;
+			}
+			
+			#batchDeleted .fileDeleted .icon-delete{
+				width:80px;
+				height:90px;
+				float:left;
+				display:inline;
+				text-indent:-9999px;
+				margin:60px 0 0 0;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-200px -300px;
+				}
+				
+			#batchDeleted .fileDeleted .fileDeletedInfor{
+				width:255px;
+				float:left;
+				display:inline;
+				margin:0 0 0 15px;
+				}
+				
+				#batchDeleted .fileDeleted .fileDeletedInfor h2{
+					margin:56px 0 20px 0;
+					font-size:14px;
+					line-height:18px;
+					}
+					
+				#batchDeleted .fileDeleted .fileDeletedInfor span.note{
+					width:220px;
+					display:block;
+					margin:0 0 10px 0;
+					font-size:12px;
+					line-height:18px;
+					font-style:italic;
+					}
+		
+		/* Button */					
+		  #batchDeleted  .btnGreyModal,
+		  #batchDeleted  .btnSucess{
+			  margin:0 12px;
+			  }
+					  
+			  #batchDeleted  .btnGreyModal .btnC,
+			  #batchDeleted  .btnSucess .btnC{
+				  width:47px;
+				  }
+					
+/* Batch Download */
+#batchDownload{
+	width:665px;
+	}
+	
+	/* Modal Content */
+	#batchDownload .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File List */
+		#batchDownload .fileList{
+			width:245px;
+			min-height:224px;
+			float:left;
+			display:inline;
+			padding:0 0 0 20px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:right 0;
+			}
+			
+			#batchDownload .fileList p{
+				margin:0 4px 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:46px;
+				}
+				
+			#batchDownload .fileList li{
+				list-style:none;
+				padding:0 0 10px 0;
+				}
+				
+				#batchDownload .fileList div.item{
+					min-height:29px;
+					}
+					
+				#batchDownload .fileList div.item span.icon-file-small{
+					cursor:default;
+					}
+					
+				#batchDownload .fileList div.item span.fileName{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 6px 5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#363636;
+					line-height:19px;
+					}
+					
+				#batchDownload .fileList div.item span.size{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#999999;
+					line-height:19px;
+					}
+		
+		/* File Downloading */			
+		#batchDownload .fileDownloading{
+			width:327px;
+			float:left;
+			display:inline;
+			padding:0 35px 0 28px;
+			}
+			
+			#batchDownload .fileDownloading dt{
+				margin:44px 0 0 0;
+				display:inline-block;
+				font-size:14px;
+				font-weight:bold;
+				line-height:42px;
+				}
+				
+			#batchDownload .fileDownloading dd{
+				display:inline-block;
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:42px;
+				}
+				
+			#batchDownload .fileDownloading .processBar{
+				height:19px;
+				position:relative;
+				overflow:hidden;
+				border:#bdbdbd solid 1px;
+				background-image:url(/images/bg-view-option.png);
+				background-repeat:repeat-x;
+				background-position:0 -318px;
+				}
+				
+			#batchDownload .fileDownloading .processBarInner{
+				border:#037f00 solid 1px;
+				position:absolute;
+				top:-1px;
+				bottom:-1px;
+				background-color:#24a200;
+				}
+				
+			#batchDownload .fileDownloading .fileInfor{
+				padding:10px 0 0 0;
+				min-height:14px;
+				}
+				
+				#batchDownload .fileDownloading .fileInfor .fileSize{
+					width:auto;
+					float:left;
+					display:inline;
+					font-size:12px;
+					line-height:14px;
+					color:#666666;
+					}
+					
+				#batchDownload .fileDownloading .fileInfor .ramainTime{
+					width:auto;
+					float:right;
+					display:inline;
+					font-size:12px;
+					line-height:14px;
+					color:#666666;
+					}
+					
+		/* File Downloaded */			
+		#batchDownload .fileDondloaded{
+			width:327px;
+			float:left;
+			display:none;
+			padding:0 35px 0 28px;
+			}
+			
+			#batchDownload .fileDondloaded h2{
+				padding:34px 0 0 0;
+				font-size:14px;
+				line-height:28px;
+				}
+				
+			#batchDownload .fileDondloaded .fileDdownloadInfor p{
+				padding:0 0 8px 0;
+				font-size:12px;
+				line-height:28px;
+				}
+				
+			#batchDownload .fileDondloaded .fileDdownloadInfor .icon-file{
+				width:44px;
+				float:left;
+				display:inline;
+				margin:0 12px 0 0;
+				position:static;
+				cursor:default;
+				}
+				
+			#batchDownload .fileDondloaded .fileDdownloadInfor .filaName{
+				width:270px;
+				float:left;
+				display:inline;
+				margin:20px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				}
+				
+				#batchDownload .fileDondloaded .fileDdownloadInfor .filaName span{
+					color:#999999;
+					}
+		
+		/* Button */			
+		#batchDownload .downloadedButtons{
+			display:none;
+			}
+			
+			#batchDownload .btnDownload .icon{
+				padding:0 0 0 15px;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-391px 3px;
+				}
+				
+/* Batch Set Permission */
+#batchSetPermission{
+	width:665px;
+	}
+	
+	/* Modal Content */
+	#batchSetPermission .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File List */
+		#batchSetPermission .fileList{
+			width:245px;
+			min-height:224px;
+			float:left;
+			display:inline;
+			padding:0 0 0 20px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:right 0;
+			}
+			
+			#batchSetPermission .fileList p{
+				margin:0 4px 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:46px;
+				}
+				
+			#batchSetPermission .fileList li{
+				list-style:none;
+				padding:0 0 10px 0;
+				}
+				
+				#batchSetPermission .fileList div.item{
+					min-height:29px;
+					}
+					
+				#batchSetPermission .fileList div.item span.icon-file-small{
+					cursor:default;
+					}
+					
+				#batchSetPermission .fileList div.item span.fileName{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 6px 5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#363636;
+					line-height:19px;
+					}
+					
+				#batchSetPermission .fileList div.item span.size{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:5px 0;
+					font-size:12px;
+					font-weight:bold;
+					color:#999999;
+					line-height:19px;
+					}
+		
+		/* File Downloading */			
+		#batchSetPermission .fileSetPermission{
+			width:360px;
+			float:left;
+			display:inline;
+			padding:0 20px 0 10px;
+			}
+			
+			#batchSetPermission .icon-clock{
+				width:92px;
+				height:86px;
+				float:left;
+				display:inline;
+				margin:40px 0 0 0;
+				text-indent:-9999px;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-300px -600px;
+				}
+				
+			#batchSetPermission .setPermissionSection{
+				width:268px;
+				float:left;
+				display:inline;
+				padding:36px 0 0 0;
+				}
+				
+				#batchSetPermission .setPermissionSection h2{
+					margin:0 0 18px 0;
+					font-size:14px;
+					line-height:18px;
+					}
+					
+				#batchSetPermission .setPermissionSection .selectAccess{
+					margin:0 0 50px 0;
+					position:relative;
+					z-index:10;
+					}
+					
+					#batchSetPermission .setPermissionSection .selectAccess strong.label{
+						margin:0 0 8px 0;
+						display:block;
+						font-size:12px;
+						line-height:18px;
+						}
+						
+						#batchSetPermission .setPermissionSection .selectAccess .radioBox input{
+							width:13px;
+							height:13px;
+							float:left;
+							display:inline;
+							}
+							
+						#batchSetPermission .setPermissionSection .selectAccess .radioBox label{
+							width:auto;
+							float:left;
+							display:inline;
+							margin:0 22px 0 6px;
+							font-size:12px;
+							line-height:13px;
+							cursor:pointer;
+							}
+							
+						#batchSetPermission .setPermissionSection .selectAccess .radioBox label.private{
+							margin:0 10px 0 6px;
+							}
+							
+						
+					#batchSetPermission .setPermissionSection .selectAccess .accessOperate{
+						width:auto;
+						float:left;
+						display:inline;
+						visibility:hidden;
+						font-size:11px;
+						line-height:13px;
+						}
+						
+						#batchSetPermission .setPermissionSection .selectAccess .accessOperate a{
+							color:#000000;
+							}
+							
+						#batchSetPermission .setPermissionSection .selectAccess .accessOperate a:hover{
+							text-decoration:none;
+							}
+						
+						#batchSetPermission .setPermissionSection .selectAccess .accessOperate span{
+							margin:0 2px;
+							color:#bdbdbd;
+							}
+							
+				#batchSetPermission .setPermissionSection .note{
+					font-size:12px;
+					font-style:italic;
+					}
+		
+		/* Button */			
+		#batchSetPermission .btnGreyModal,
+		#batchSetPermission .newButton1{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 12px;
+			}
+			
+		#batchSetPermission .btnGreyModal{
+			margin:0 12px 0 205px;
+			}
+			
+/* Upload File Version */
+#uploadFileVersion{
+	width:490px;
+	}
+	
+	/* Modal Content */
+	#uploadFileVersion .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#uploadFileVersion .fileDetails{
+			width:186px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			text-align:center;
+			padding:20px 0 0 0;
+			}
+			
+			#uploadFileVersion .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				}
+				
+			#uploadFileVersion .fileDetails .fileName,
+			#uploadFileVersion .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#uploadFileVersion .fileDetails .fileName:hover,
+			#uploadFileVersion .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#uploadFileVersion .fileDetails li{
+				width:auto;
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#uploadFileVersion .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#uploadFileVersion .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadFileVersion .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#uploadFileVersion .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadFileVersion .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadFileVersion .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#uploadFileVersion .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadFileVersion .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#uploadFileVersion .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Delete Comfirm */
+		#uploadFileVersion .uploadComfirm{
+			width:250px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			padding:20px 0 0 28px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+			
+			#uploadFileVersion .uploadComfirm h2{
+				margin:18px 0 0 0;
+				font-size:14px;
+				line-height:18px;
+				}
+				
+			#uploadFileVersion .uploadComfirm p{
+				margin:28px 0 24px 0;
+				font-size:12px;
+				line-height:18px;
+				}
+					
+			#uploadFileVersion .uploadComfirm span.note{
+				display:block;
+				font-size:12px;
+				font-style:italic;
+				line-height:18px;
+				}
+	
+	#uploadFileVersion .btnGreyModal,
+	#uploadFileVersion .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#uploadFileVersion .btnGreyModal{
+		margin:0 12px 0 100px;
+		}
+
+/* Select File For Version */		
+#selectFileForVersion{
+	width:490px;
+	}
+	
+	/* Modal Content */
+	#selectFileForVersion .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#selectFileForVersion .fileDetails{
+			width:186px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			text-align:center;
+			padding:20px 0 0 0;
+			}
+			
+			#selectFileForVersion .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#selectFileForVersion .fileDetails .fileName,
+			#selectFileForVersion .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#selectFileForVersion .fileDetails .fileName:hover,
+			#selectFileForVersion .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#selectFileForVersion .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#selectFileForVersion .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#selectFileForVersion .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#selectFileForVersion .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#selectFileForVersion .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#selectFileForVersion .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#selectFileForVersion .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#selectFileForVersion .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#selectFileForVersion .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#selectFileForVersion .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Select File Section */
+		#selectFileForVersion .selectFileSection{
+			width:250px;
+			min-height:177px;
+			float:left;
+			display:inline;
+			padding:20px 0 24px 28px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+		
+			#selectFileForVersion .selectFileSection #dynamicUpload{
+				position:relative;
+				}
+				
+				#selectFileForVersion .selectFileSection #dynamicUpload .corner{
+					width:4px;
+					height:4px;
+					overflow:hidden;
+					position:absolute;
+					background-image:url(/images/bg-assets-table-header.png);
+					background-repeat:no-repeat;
+					}
+					
+				#selectFileForVersion .selectFileSection #dynamicUpload .tl{
+					top:0;
+					left:0;
+					background-position:0 -96px;
+					}
+					
+				#selectFileForVersion .selectFileSection #dynamicUpload .tr{
+					top:0;
+					right:0;
+					background-position:0 -104px;
+					}
+					
+				#selectFileForVersion .selectFileSection #dynamicUpload .bl{
+					bottom:0;
+					left:0;
+					background-position:0 -100px;
+					}
+					
+				#selectFileForVersion .selectFileSection #dynamicUpload .br{
+					bottom:0;
+					right:0;
+					background-position:0 -108px;
+					}
+				
+				#selectFileForVersion .selectFileSection #dynamicUpload .dynamicUpload{
+					min-height:105px;
+					padding:0 0 10px 0;
+					background-color:#eeffcb;
+					border:#bee3b0 solid 1px;
+					border-bottom:0;
+					}
+					
+				#selectFileForVersion .selectFileSection #dynamicUpload .bottom{
+					height:5px;
+					overflow:hidden;
+					}
+					
+					#selectFileForVersion .selectFileSection #dynamicUpload .bottomL{
+						padding:0 0 0 5px;
+						background-image:url(/images/bg-assets-table-header.png);
+						background-repeat:no-repeat;
+						background-position:0 -112px;
+						}
+						
+					#selectFileForVersion .selectFileSection #dynamicUpload .bottomR{
+						padding:0 5px 0 0;
+						background-image:url(/images/bg-assets-table-header.png);
+						background-repeat:no-repeat;
+						background-position:right -117px;
+						}
+						
+					#selectFileForVersion .selectFileSection #dynamicUpload .bottomM{
+						height:5px;
+						padding:0;
+						background-image:url(/images/bg-assets-table-header.png);
+						background-repeat:repeat-x;
+						background-position:left -122px;
+						}
+					
+					#selectFileForVersion .selectFileSection #dynamicUpload .dragPre{
+						padding:40px 0 0 0;
+						text-align:center;
+						}
+						
+						#selectFileForVersion .selectFileSection #dynamicUpload .dragPre p{
+							width:200px;
+							margin:0 auto;
+							font-size:13px;
+							line-height:18px;
+							text-align:center;
+							}
+							
+					#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess{
+						display:none;
+						padding:0 12px;
+						}
+						
+						#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess p{
+							padding:10px 0 12px 0;
+							border-bottom:#bee3b0 solid 1px;
+							font-size:13px;
+							line-height:16px;
+							}
+							
+						#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li{
+							line-height:14px;
+							list-style:none;
+							border-bottom:#bee3b0 solid 1px;
+							}
+							
+							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li span.icon-file-small{
+								width:22px;
+								float:left;
+								display:inline;
+								margin:9px 12px 0 10px;
+								cursor:default;
+								}
+								
+							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .removeFile{
+								width:10px;
+								height:11px;
+								float:right;
+								display:inline;
+								margin:20px 14px 0 0;
+								text-indent:-9999px;
+								background-image:url(/images/icon-assets.png);
+								background-repeat:no-repeat;
+								background-position:0 -510px;
+								}
+								
+							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .removeFile:hover{
+								background-position:0 -540px;
+								}
+								
+							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .fileName{
+								width:150px;
+								padding:10px 0;
+								font-size:12px;
+								font-weight:bold;
+								overflow:hidden;
+								}
+								
+								#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .fileName span{
+									display:block;
+									color:#999999;
+									}
+									
+		#selectFileForVersion .commonUpload{
+			width:auto;
+			}
+			
+			#selectFileForVersion .commonUpload label{
+				display:block;
+				padding:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:30px;
+				}
+	
+	#selectFileForVersion .btnGreyModal,
+	#selectFileForVersion .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#selectFileForVersion .btnGreyModal{
+		margin:0 12px 0 134px;
+		}
+		
+		#selectFileForVersion .btnUpload .right{
+			padding:4px 20px 0 20px;
+			}
+		
+		#selectFileForVersion .btnUpload .icon{
+			display:block;
+			padding:0 0 0 14px;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			background-position:0 7px;
+			}
+			
+/* Uploading File Version */
+#uploadingFileVersion{
+	width:490px;
+	}
+	
+	/* Modal Content */
+	#uploadingFileVersion .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#uploadingFileVersion .fileDetails{
+			width:186px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			text-align:center;
+			padding:20px 0 0 0;
+			}
+			
+			#uploadingFileVersion .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#uploadingFileVersion .fileDetails .fileName,
+			#uploadingFileVersion .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#uploadingFileVersion .fileDetails .fileName:hover,
+			#uploadingFileVersion .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#uploadingFileVersion .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#uploadingFileVersion .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#uploadingFileVersion .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadingFileVersion .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#uploadingFileVersion .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadingFileVersion .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadingFileVersion .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#uploadingFileVersion .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadingFileVersion .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#uploadingFileVersion .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Uploading File Section */
+		#uploadingFileVersion .uploadingFileSection{
+			width:240px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			padding:20px 28px 0 28px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+			
+			#uploadingFileVersion .uploadingFileSection h2{
+				padding:14px 0 18px 0;
+				font-size:14px;
+				font-weight:normal;
+				line-height:18px;
+				}
+				
+			#uploadingFileVersion .uploadingFileSection .fileGroup{
+				min-height:29px;
+				padding:0 0 14px 0;
+				}
+				
+				#uploadingFileVersion .uploadingFileSection .fileGroup .fileName{
+					padding:5px 0;
+					font-size:12px;
+					color:#363636;
+					font-weight:bold;
+					}
+					
+					#uploadingFileVersion .uploadingFileSection .fileGroup .fileName span{
+						color:#999999;
+						}
+					
+			#uploadingFileVersion .uploadingFileSection .processBar{
+				height:19px;
+				position:relative;
+				overflow:hidden;
+				border:#bdbdbd solid 1px;
+				background-image:url(/images/bg-view-option.png);
+				background-repeat:repeat-x;
+				background-position:0 -318px;
+				}
+				
+			#uploadingFileVersion .uploadingFileSection .processBarInner{
+				border:#037f00 solid 1px;
+				position:absolute;
+				top:-1px;
+				bottom:-1px;
+				background-color:#24a200;
+				}
+				
+			#uploadingFileVersion .uploadingFileSection .fileInfor{
+				padding:10px 0 0 0;
+				min-height:14px;
+				}
+				
+				#uploadingFileVersion .uploadingFileSection .fileInfor .fileSize{
+					width:auto;
+					float:left;
+					display:inline;
+					font-size:12px;
+					line-height:14px;
+					color:#666666;
+					}
+					
+				#uploadingFileVersion .uploadingFileSection .fileInfor .ramainTime{
+					width:auto;
+					float:right;
+					display:inline;
+					font-size:12px;
+					line-height:14px;
+					color:#666666;
+					}
+	
+	#uploadFileVersion .btnGreyModal,
+	#uploadFileVersion .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#uploadFileVersion .btnGreyModal{
+		margin:0 12px 0 100px;
+		}
+		
+/* Upload Cancel */
+#uploadCancel{
+	width:490px;
+	display:block;
+	}
+	
+	/* Modal Content */
+	#uploadCancel .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#uploadCancel .fileDetails{
+			width:186px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			text-align:center;
+			padding:20px 0 0 0;
+			}
+			
+			#uploadCancel .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#uploadCancel .fileDetails .fileName,
+			#uploadCancel .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#uploadCancel .fileDetails .fileName:hover,
+			#uploadCancel .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#uploadCancel .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#uploadCancel .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#uploadCancel .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadCancel .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#uploadCancel .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadCancel .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadCancel .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#uploadCancel .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadCancel .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#uploadCancel .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Delete Comfirm */
+		#uploadCancel .cancelComfirm{
+			width:230px;
+			min-height:201px;
+			float:left;
+			display:inline;
+			padding:20px 26px 0 22px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+			
+			#uploadCancel .cancelComfirm .icon-alert{
+				width:50px;
+				height:50px;
+				float:left;
+				display:inline;
+				margin:0 10px 0 0;
+				text-indent:-9999px;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-320px -500px;
+				}
+				
+			#uploadCancel .cancelComfirm h2{
+				padding:14px 0 22px 0;
+				font-size:14px;
+				font-weight:normal;
+				line-height:18px;
+				text-indent:3px;
+				}
+				
+			#uploadCancel .cancelComfirm p{
+				font-size:12px;
+				line-height:18px;
+				}
+	
+	#uploadCancel .btnGreyModal,
+	#uploadCancel .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#uploadCancel .btnGreyModal{
+		margin:0 12px 0 106px;
+		}
+		
+/* Upload Finish */
+#uploadFinish{
+	width:550px;
+	display:block;
+	}
+	
+	/* Modal Content */
+	#uploadFinish .modalBodyContent{
+		border-top:#cccccc solid 1px;
+		}
+		
+		/* File Details */
+		#uploadFinish .fileDetails{
+			width:186px;
+			min-height:198px;
+			float:left;
+			display:inline;
+			text-align:center;
+			}
+			
+			#uploadFinish .fileDetails .versionSection{
+				padding:20px 0 0 0;
+				}
+			
+			#uploadFinish .fileDetails .lastVersion{
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:-343px -40px;
+				}
+			
+			#uploadFinish .fileDetails .icon-file{
+				margin:0 auto 8px auto;
+				cursor:default;
+				}
+				
+			#uploadFinish .fileDetails .fileName,
+			#uploadFinish .fileDetails .defaultFileName{
+				font-size:12px;
+				font-weight:bold;
+				color:#363636;
+				line-height:18px;
+				}
+				
+			#uploadFinish .fileDetails .fileName:hover,
+			#uploadFinish .fileDetails .defaultFileName:hover{
+				text-decoration:none;
+				}
+				
+			#uploadFinish .fileDetails li{
+				height:17px;
+				margin:4px 0;
+				padding:0 7px;
+				display:inline-block;
+				font-size:12px;
+				color:#999999;
+				line-height:17px;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:0 -79px;
+				}
+				
+			#uploadFinish .fileDetails li.first{
+				background-image:none;
+				}
+				
+				#uploadFinish .fileDetails li .version{
+					color:#333333;
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadFinish .fileDetails li .modifyVersion{
+					color:#ff0000;
+					}
+					
+			#uploadFinish .fileDetails .description{
+				font-size:11px;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadFinish .fileDetails .fileCategory{
+				margin:4px 0 0 0;
+				font-size:12px;
+				font-weight:bold;
+				line-height:20px;
+				color:#363636;
+				}
+				
+			#uploadFinish .fileDetails .uploadBy{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+				#uploadFinish .fileDetails .uploadBy a{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#uploadFinish .fileDetails .uploadBy a:hover{
+					text-decoration:underline;
+					}
+					
+			#uploadFinish .fileDetails .date{
+				font-size:11px;
+				line-height:18px;
+				color:#363636;
+				}
+				
+		/* Upload File Section */
+		#uploadFinish .editFileSection{
+			width:300px;
+			float:left;
+			display:inline;
+			padding:16px 30px 0 26px;
+			background-image:url(/images/line-double.png);
+			background-repeat:repeat-y;
+			background-position:left -169px;
+			}
+			
+			#uploadFinish .editFileSection h2{
+				font-size:14px;
+				line-height:18px;
+				}
+				
+			/* Select Category */
+			#uploadFinish .editFileSection .selectCategory{
+				margin:16px 0 0 0;
+				position:relative;
+				text-align:left;
+				z-index:1;
+				}
+				
+				#uploadFinish .editFileSection .selectCategory label{
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:26px;
+					}
+				
+				#uploadFinish .editFileSection .selectCategory select{
+					width:100%;
+					font-size:11px;
+					}
+					
+				#uploadFinish .editFileSection .selectCategory .linksBox{
+					text-align:right;
+					line-height:14px;
+					}
+					
+				#uploadFinish .editFileSection .selectCategory .LinkNewCategory{
+					display:inline-block;
+					margin:4px 0 0 0;
+					padding:0 0 0 13px;
+					font-size:11px;
+					color:#313131;
+					line-height:14px;
+					background-image:url(/images/icon-assets.png);
+					background-repeat:no-repeat;
+					background-position:0 -566px;
+					}
+					
+				#uploadFinish .editFileSection .selectCategory .LinkNewCategory:hover{
+					text-decoration:none;
+					}
+			
+			/* Add Description */ 		
+			#uploadFinish .editFileSection .addDescription{
+				margin:12px 0 0 0;
+				text-align:left;
+				}
+				
+				#uploadFinish .editFileSection .addDescription label{
+					margin:0 0 6px 0;
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:14px;
+					}
+					
+				#uploadFinish .editFileSection .addDescription .textarea{
+					height:70px;
+					padding:6px 10px;
+					border:#acadb2 solid 1px;
+					background-color:#fffffe;
+					}
+					
+					#uploadFinish .editFileSection .addDescription textarea{
+						height:70px;
+						}
+					
+			/* Select Access */
+			#uploadFinish .editFileSection .selectAccess{
+				margin:12px 0 25px 0;
+				text-align:left;
+				position:relative;
+				}
+				
+				#uploadFinish .editFileSection .selectAccess strong.label{
+					padding:0 0 4px 0;
+					display:block;
+					font-size:12px;
+					font-weight:bold;
+					line-height:24px;
+					}
+					
+				#uploadFinish .editFileSection .selectAccess .radioBox input{
+					width:13px;
+					height:13px;
+					float:left;
+					display:inline;
+					}
+					
+				#uploadFinish .editFileSection .selectAccess .radioBox label{
+					width:auto;
+					float:left;
+					display:inline;
+					margin:0 23px 0 7px;
+					font-size:12px;
+					line-height:13px;
+					}
+					
+				#uploadFinish .editFileSection .selectAccess .radioBox label.private{
+					margin:0 10px 0 7px;
+					}
+					
+				#uploadFinish .editFileSection .selectAccess .accessOperate{
+					width:auto;
+					float:left;
+					display:inline;
+					visibility:hidden;
+					font-size:11px;
+					line-height:13px;
+					}
+					
+					#uploadFinish .editFileSection .selectAccess .accessOperate a{
+						color:#000000;
+						}
+						
+					#uploadFinish .editFileSection .selectAccess .accessOperate a:hover{
+						text-decoration:none;
+						}
+					
+					#uploadFinish .editFileSection .selectAccess .accessOperate span{
+						margin:0 2px;
+						color:#bdbdbd;
+						}
+	
+	#uploadFinish .btnGreyModal,
+	#uploadFinish .newButton1{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 12px;
+		}
+		
+	#uploadFinish .btnGreyModal{
+		margin:0 12px 0 100px;
+		}
+		
+/* View Image Modal */
+#imageViewModal{
+	width:1046px;
+	position:absolute;
+	display:none;
+	z-index:10001;
+	}
+	
+	#imageViewModal .imageViewModalInner{
+		height:762px;
+		position:relative;
+		background-color:#fffffe;
+		}
+		
+		#imageViewModal .imageViewModalInner .closeModal{
+			position:absolute;
+			right:0;
+			top:0;
+			display:block;
+			width:30px;
+			height:30px;
+			text-indent:-9999px;
+			z-index:1;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			background-position:-200px -550px;
+			}
+		
+		#imageViewModal .imageViewModalInner .closeModal:hover{
+			background-position:-200px -600px;
+			}
+			
+		#imageViewModal .imageViewModalInner .viewSection{
+			height:762px;
+			text-align:center;
+			line-height:762px;
+			}
+			
+			#imageViewModal .imageViewModalInner .viewSection img{
+				text-align:center;
+				vertical-align:middle;
+				}
+			
+	#imageViewModal .imageViewModalFooter{
+		padding:20px 0;
+		text-align:center;
+		}
+		
+		#imageViewModal .imageViewModalFooter span.fileName{
+			display:inline-block;
+			margin:0 30px 0 0;
+			font-size:18px;
+			font-weight:bold;
+			line-height:24px;
+			color:#ffffff;
+			}
+			
+		#imageViewModal .imageViewModalFooter .btnImageModal{
+			width:auto;
+			display:inline-block;
+			margin:0 3px;
+			padding:0 0 0 5px;
+			text-decoration:none;
+			background-image:url(/images/bg-assets-table-header.png);
+			background-repeat:no-repeat;
+			background-position:0 -127px;
+			}
+			
+			#imageViewModal .imageViewModalFooter .btnImageModal span{
+				width:auto;
+				display:inline-block;
+				padding:0 5px 0 0;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:right -175px;
+				}
+				
+			#imageViewModal .imageViewModalFooter .btnImageModal span span{
+				width:117px;
+				height:24px;
+				display:inline-block;
+				padding:0;
+				font-size:11px;
+				color:#d1d1d1;
+				line-height:24px;
+				cursor:pointer;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:repeat-x;
+				background-position:0 -151px;
+				}
+				
+			#imageViewModal .imageViewModalFooter .btnImageModal:hover span span{
+				color:#ffffff;
+				}
+				
+/* View Image Version Modal */
+#ImageVersionViewModal{
+	width:1046px;
+	display:none;
+	position:absolute;
+	z-index:10001;
+	}
+	
+	#ImageVersionViewModal .imageViewModalInner{
+		height:762px;
+		position:relative;
+		background-color:#fffffe;
+		}
+		
+		#ImageVersionViewModal .imageViewModalInner .closeModal{
+			position:absolute;
+			right:0;
+			top:0;
+			display:block;
+			width:30px;
+			height:30px;
+			text-indent:-9999px;
+			z-index:1;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			background-position:-200px -550px;
+			}
+		
+		#ImageVersionViewModal .imageViewModalInner .closeModal:hover{
+			background-position:-200px -600px;
+			}
+			
+		#ImageVersionViewModal .viewSection{
+			width:829px;
+			height:762px;
+			text-align:center;
+			line-height:762px;
+			}
+			
+			#ImageVersionViewModal .viewSection li{
+				height:762px;
+				display:none;
+				line-height:762px;
+				list-style:none;
+				}
+			
+			#ImageVersionViewModal .viewSection li.first{
+				display:block;
+				}
+			
+			#ImageVersionViewModal .viewSection img{
+				width:800px;
+				vertical-align:middle;
+				text-align:center;
+				}
+			
+		#ImageVersionViewModal .navigation{
+			width:216px;
+			position:absolute;
+			top:0;
+			bottom:0;
+			right:0;
+			border-left:#d1d1d1 solid 1px;
+			background-color:#fcfcfc;
+			}
+			
+			#ImageVersionViewModal .navigation h2{
+				padding:26px 0 0 20px;
+				font-size:14px;
+				color:#000000;
+				line-height:18px;
+				}
+				
+			#ImageVersionViewModal .navigation p.note{
+				padding:0 0 8px 20px;
+				font-size:11px;
+				color:#666666;
+				line-height:18px;
+				}
+				
+			#ImageVersionViewModal .navigation li{
+				padding:4px 0 0 20px;
+				cursor:pointer;
+				list-style:none;
+				}
+				
+			#ImageVersionViewModal .navigation li:hover{
+				background-color:#e6e6e6;
+				}
+			
+				#ImageVersionViewModal .navigation .version{
+					font-size:12px;
+					font-weight:bold;
+					color:#ff0000;
+					line-height:19px;
+					}
+					
+				#ImageVersionViewModal .navigation .currentVersion .version{
+					color:#363636;
+					}
+					
+					#ImageVersionViewModal .navigation .version span{
+						display:none;
+						}
+						
+					#ImageVersionViewModal .navigation .currentVersion .version span{
+						display:inline;
+						font-weight:normal;
+						color:#999999;
+						}
+						
+				#ImageVersionViewModal .navigation .uploader{
+					font-size:11px;
+					line-height:19px;
+					color:#363636;
+					}
+					
+					#ImageVersionViewModal .navigation .uploader a{
+						font-weight:bold;
+						text-decoration:none;
+						}
+						
+					#ImageVersionViewModal .navigation .uploader a:hover{
+						text-decoration:underline;
+						}
+					
+				#ImageVersionViewModal .navigation .time{
+					font-size:11px;
+					line-height:19px;
+					color:#363636;
+					}
+			
+	#ImageVersionViewModal .imageViewModalFooter{
+		padding:20px 0;
+		text-align:center;
+		}
+		
+		#ImageVersionViewModal .imageViewModalFooter span.fileName{
+			display:inline-block;
+			margin:0 30px 0 0;
+			font-size:18px;
+			font-weight:bold;
+			line-height:24px;
+			color:#ffffff;
+			}
+			
+		#ImageVersionViewModal .imageViewModalFooter .btnImageModal{
+			width:auto;
+			display:inline-block;
+			margin:0 3px;
+			padding:0 0 0 5px;
+			text-decoration:none;
+			background-image:url(/images/bg-assets-table-header.png);
+			background-repeat:no-repeat;
+			background-position:0 -127px;
+			}
+			
+			#ImageVersionViewModal .imageViewModalFooter .btnImageModal span{
+				width:auto;
+				display:inline-block;
+				padding:0 5px 0 0;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:no-repeat;
+				background-position:right -175px;
+				}
+				
+			#ImageVersionViewModal .imageViewModalFooter .btnImageModal span span{
+				width:117px;
+				height:24px;
+				display:inline-block;
+				padding:0;
+				font-size:11px;
+				color:#d1d1d1;
+				line-height:24px;
+				cursor:pointer;
+				background-image:url(/images/bg-assets-table-header.png);
+				background-repeat:repeat-x;
+				background-position:0 -151px;
+				}
+				
+			#ImageVersionViewModal .imageViewModalFooter .btnImageModal:hover span span{
+				color:#ffffff;
+				}
+			
+/* Essential FileDrop element configuration: */
+.fd-file{
+	display:none;
+	}
+	
+/* Pop Up */
+.popUpPrivateAccess{
+	width:172px;
+	position:absolute;
+	z-index:10;
+	display:none;
+	}
+	
+	.popUpPrivateAccess .popUpPrivateAccseeInner{
+		border:#bdbdbd solid 1px;
+		background-image:url(/images/bg-tip.png);
+		background-repeat:repeat-x;
+		background-position:0 0;
+		background-color:#e9e9e9;
+		position:relative;
+		}
+		
+		.popUpPrivateAccess .popUpPrivateAccessSArrow{
+			width:8px;
+			height:15px;
+			overflow:hidden;
+			position:absolute;
+			left:-8px;
+			top:110px;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			background-position:0 -630px;
+			}
+			
+		#uploadFinish .popUpPrivateAccess .popUpPrivateAccessSArrow,
+		#editFileDetails .popUpPrivateAccess .popUpPrivateAccessSArrow{
+			width:9px;
+			top:auto;
+			background-position:-100px -630px;
+			}
+		
+		.popUpPrivateAccess .popUpPrivateAccessSection{
+			padding:2px 12px;
+			}
+			
+			.popUpPrivateAccess .group{
+				padding:4px 0 4px 0;
+				background-image:url(/images/hLine-double.png);
+				background-repeat:repeat-x;
+				background-position:0 bottom;
+				}
+				
+			.popUpPrivateAccess .group div{
+				height:14px;
+				padding:4px 0 4px 20px;
+				}
+				
+			.popUpPrivateAccess .group div.firstItem{
+				padding:4px 0 4px 0;
+				}
+				
+				.popUpPrivateAccess .group input{
+					width:13px;
+					height:13px;
+					float:left;
+					display:inline;
+					margin:0 6px 0 0;
+					}
+					
+				.popUpPrivateAccess .group label,
+				.popUpPrivateAccess .group span{
+					width:auto;
+					float:left;
+					display:inline;
+					font-size:11px;
+					font-weight:bold;
+					line-height:13px;
+					color:#666666;
+					cursor:pointer;
+					}
+					
+				.popUpPrivateAccess .group .firstItem label,
+				.popUpPrivateAccess .group .firstItem span{
+					color:#333333;
+					}
+					
+			.popUpPrivateAccess .linksBox{
+				text-align:right;
+				}
+				
+				.popUpPrivateAccess a{
+					display:inline-block;
+					font-size:11px;
+					color:#313131;
+					line-height:22px;
+					/* Text Shadow */
+					text-shadow:#ffffff 0 1px 0;
+					}
+					
+				.popUpPrivateAccess a:hover{
+					text-decoration:none;
+					}
+					
+/* Pop Up */
+.popUpPrivateAccessView{
+	width:172px;
+	position:absolute;
+	z-index:10;
+	display:none;
+	}
+	
+	.popUpPrivateAccessView .popUpPrivateAccseeInner{
+		border:#bdbdbd solid 1px;
+		background-image:url(/images/bg-tip.png);
+		background-repeat:repeat-x;
+		background-position:0 bottom;
+		background-color:#fffffe;
+		position:relative;
+		}
+		
+		.popUpPrivateAccessView .popUpPrivateAccessSArrow{
+			width:8px;
+			height:15px;
+			overflow:hidden;
+			position:absolute;
+			background-image:url(/images/icon-assets.png);
+			background-repeat:no-repeat;
+			background-position:0 -630px;
+			}
+		
+		.popUpPrivateAccessView .popUpPrivateAccessSection{
+			padding:2px 12px;
+			}
+			
+		.outLay .popUpPrivateAccessView .popUpPrivateAccessSArrow{
+			width:9px;
+			background-position:-100px -630px;
+			}
+			
+			.popUpPrivateAccessView .group{
+				padding:4px 0 4px 0;
+				background-image:url(/images/hLine-double.png);
+				background-repeat:repeat-x;
+				background-position:0 bottom;
+				}
+				
+			.popUpPrivateAccessView .group div{
+				height:14px;
+				padding:4px 0 4px 20px;
+				}
+				
+			.popUpPrivateAccessView .group div.firstItem{
+				padding:4px 0 4px 0;
+				}
+					
+				.popUpPrivateAccessView .group label{
+					width:auto;
+					float:left;
+					display:inline;
+					font-size:11px;
+					font-weight:bold;
+					line-height:13px;
+					cursor:pointer;
+					}
+					
+			.popUpPrivateAccessView .linksBox{
+				text-align:right;
+				}
+				
+				.popUpPrivateAccessView a{
+					display:inline-block;
+					font-size:11px;
+					color:#313131;
+					line-height:22px;
+					/* Text Shadow */
+					text-shadow:#ffffff 0 1px 0;
+					}
+					
+				.popUpPrivateAccessView a:hover{
+					text-decoration:none;
+					}
+					
+/* Pop Up */
+.popUpNewCategory{
+	position:absolute;
+	display:none;
+	left:auto;
+	}
+	
+	.popUpNewCategory .popUpNewCategoryInner{
+		width:223px;
+		height:93px;
+		position:relative;
+		padding:0 15px;
+		border:#bdbdbd solid 1px;
+		background-image:url(/images/bg-view-option.png);
+		background-repeat:repeat-x;
+		background-position:0 -350px;
+		}
+		
+	.popUpNewCategory .popUpNewCategoryArrow{
+		width:15px;
+		height:9px;
+		overflow:hidden;
+		position:absolute;
+		left:122px;
+		top:-9px;
+		background-image:url(/images/icon-assets.png);
+		background-repeat:no-repeat;
+		background-position:0 -600px;
+		}
+		
+	.outLay .popUpNewCategory .popUpNewCategoryArrow{
+		left:auto;
+		right:54px;
+		}
+		
+		.popUpNewCategory label{
+			display:block;
+			padding:5px 0 0 0;
+			font-size:12px;
+			font-weight:normal !important;
+			line-height:30px;
+			}
+			
+		.popUpNewCategory input{
+			width:218px;
+			margin:0 0 8px 0;
+			}
+			
+		.popUpNewCategory .linksBox{
+			text-align:right;
+			line-height:14px;
+			}
+			
+			.popUpNewCategory span{
+				font-size:12px;
+				color:#c3c3c3;
+				}
+			
+			.popUpNewCategory a{
+				display:inline-block;
+				font-size:11px;
+				color:#313131;
+				/* Text Shadow */
+				text-shadow:#ffffff 0 1px 0;
+				}
+				
+			.popUpNewCategory a:hover{
+				text-decoration:none;
+				}
+				
+			.popUpNewCategory a.linkAddCategory{
+				padding:0 0 0 13px;
+				background-image:url(/images/icon-assets.png);
+				background-repeat:no-repeat;
+				background-position:0 -567px;
+				}
+				
+#filterPanelForm .multiSelectBox .multiOptionRow{
+	width:auto;
+	}
+	
+		
+#filterPanelForm table td.managementCell,
+#filterPanelForm table td.groupTitle{
+	border-right:0;
+	} 

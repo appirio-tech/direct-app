@@ -165,4 +165,23 @@
         <function-class>java.lang.Math</function-class>
         <function-signature>long max(long, long)</function-signature>
     </function>
+
+    <function>
+        <name>fileSizeDisplay</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getFileSizeDisplay(long)</function-signature>
+    </function>
+
+    <function>
+        <name>limitStringLength</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getLimitedLengthString(java.lang.String,int)</function-signature>
+    </function>
+
+    <function>
+        <name>fileTypeIcon</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getAssetFileTypeIcon(java.lang.String)</function-signature>
+    </function>
+
 </taglib>

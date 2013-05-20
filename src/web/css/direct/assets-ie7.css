@@ -1,0 +1,41 @@
+/*
+ * CSS for pages under project assets tab under IE 7.
+ *
+ * Change logs:
+ * Version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0):
+ * - Added this file.
+ *
+ */
+
+
+@charset "utf-8";
+.dataTables_length{
+	width:133px;
+	vertical-align:middle;
+	float:right;
+	display:table-cell;
+	}
+	
+	.dataTables_length .perpage{
+		position:static;
+		margin:-20px 0 0 0;
+		}
+
+/* Upload */		
+.uploadSection .fileUploadingSection .itemSection{
+	display:inline;
+	}
+	
+#uploadFileVersion .fileDetails li,
+#selectFileForVersion .fileDetails li,
+#uploadingFileVersion .fileDetails li,
+#uploadFinish .fileDetails li,
+#uploadCancel .fileDetails li,
+#editFileDetails .fileDetails li,
+#removeFileFromCockpit .fileDetails li{
+	display:inline;
+	}
+	
+	.uploadSection .fileUploadingSection .selectAccess .radioBox input{
+		top:-2px;
+		}

@@ -1,8 +1,9 @@
 /*
- * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.view.dto.asset.project.AssetFileTypes;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
@@ -14,6 +15,7 @@ import com.topcoder.security.groups.services.dto.ProjectDTO;
 import com.topcoder.security.groups.services.dto.UserDTO;
 import com.topcoder.service.pipeline.CommonPipelineData;
 import com.topcoder.service.user.UserServiceException;
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -95,8 +97,17 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author isv, pvmagacho, TCSDEVELOPER, flexme
- * @version 1.1.8
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0)
+ * <ul>
+ *     Adds method {@link #getLimitedLengthString(String, int)}
+ *     Adds method {@link #getFileSizeDisplay(long)}
+ *     Adds method {@link #getAssetFileTypeIcon(String)}
+ * </ul>
+ * </p>
+ *
+ * @author isv, pvmagacho, flexme, GreatKevin
+ * @version 1.2
  */
 public class JSPHelper {
 
@@ -533,6 +544,45 @@ public class JSPHelper {
         }
 
         return user;
+    }
+
+    /**
+     * Gets the display friendly string with the given file size in bytes.
+     *
+     * @param fileSizeInBytes file size in bytes.
+     * @return the display friendly string for the file size.
+     * @since 1.2
+     */
+    public static String getFileSizeDisplay(long fileSizeInBytes) {
+        return FileUtils.byteCountToDisplaySize(fileSizeInBytes);
+    }
+
+
+    /**
+     * Gets the trimmed string for displaying text in a limited area in JSP.
+     *
+     * @param originalString the original string
+     * @param lengthLimit the length limit
+     * @return the trimmed string.
+     * @since 1.2
+     */
+    public static String getLimitedLengthString(String originalString, int lengthLimit) {
+        if(originalString.length() <= lengthLimit) {
+            return originalString;
+        } else {
+            return originalString.substring(0, lengthLimit - 2) + "...";
+        }
+    }
+
+    /**
+     * Gets the file type icon name according to the file type.
+     *
+     * @param fileType the file type name.
+     * @return the file icon name.
+     * @since 1.2
+     */
+    public static String getAssetFileTypeIcon(String fileType) {
+        return AssetFileTypes.getFileTypeIconName(fileType);
     }
 
     /**

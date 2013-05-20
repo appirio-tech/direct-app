@@ -307,6 +307,50 @@
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
         </action>
 
+        <action name="assetTest" class="asssetTestAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/assetTest.jsp</result>
+        </action>
+
+        <action name="assetTest" class="asssetTestAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/assetTest.jsp</result>
+        </action>
+
+        <action name="projectAssets" class="projectAssetsAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/asset/project/projectAssets.jsp</result>
+        </action>
+
+        <action name="projectAssetUpload" class="projectAssetManageAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/asset/project/projectAssetUpload.jsp</result>
+        </action>
+
+        <action name="uploadAssetFile" class="projectAssetManageAction" method="uploadAssetFile">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="downloadAsset" method="downloadAssetVersion" class="projectAssetManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename="${uploadFileName}"</param>
+                <param name="contentType">${assetDownloadMIMEType}</param>
+                <param name="inputName">assetDownloadStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+        <action name="saveAssetFile" class="projectAssetManageAction" method="saveAssetFile">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">

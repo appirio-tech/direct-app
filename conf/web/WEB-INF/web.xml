@@ -10,7 +10,11 @@
     
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>WEB-INF/securityGroupsApplicationContext.xml,WEB-INF/applicationContext.xml;</param-value>
+        <param-value>
+            classpath:/META-INF/asset/applicationContext.xml
+            WEB-INF/securityGroupsApplicationContext.xml
+            WEB-INF/applicationContext.xml
+        </param-value>
     </context-param>
 
     <filter>

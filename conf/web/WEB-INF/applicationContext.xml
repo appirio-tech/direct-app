@@ -1306,7 +1306,30 @@
     <bean id="paymentStatsService" class="com.topcoder.direct.services.payments.impl.PaymentStatsServiceImpl">
         <property name="defaultResultLimit" value="@paymemtStatsService.resultLimit@"/>
     </bean>
-    
+
+    <bean id="baseAbstractAssetAction" abstract="true"
+          class="com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="assetService" ref="assetService"/>
+        <property name="assetVersionService" ref="assetVersionService"/>
+        <property name="assetPermissionService" ref="assetPermissionService"/>
+        <property name="assetCategoryService" ref="assetCategoryService"/>
+        <property name="fileTypeIconService" ref="assetFileTypeIconService"/>
+        <property name="managerService" ref="assetManagerService"/>
+    </bean>
+
+    <bean id="projectAssetsAction"
+          class="com.topcoder.direct.services.view.action.asset.project.ProjectAssetsAction"
+          scope="prototype" parent="baseAbstractAssetAction">
+    </bean>
+
+    <bean id="projectAssetManageAction"
+          class="com.topcoder.direct.services.view.action.asset.project.ProjectAssetManageAction"
+          scope="prototype" parent="baseAbstractAssetAction">
+        <property name="assetUploadTempFileRoot" value="@assetUploadTempFileRoot@"></property>
+        <property name="transactionManager" ref="assetTransactionManager"/>
+    </bean>
+
     <bean id="paymentLogger" class="com.topcoder.util.log.LogManager"
         factory-method="getLog">
         <constructor-arg value="paymentLogger" />

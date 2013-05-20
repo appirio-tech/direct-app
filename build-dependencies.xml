@@ -478,6 +478,14 @@
   <property name="topcoder_cockpit_project_milestone_services.jar"
               value="${tcs_libdir}/${topcoder_cockpit_project_milestone_services.path}/${topcoder_cockpit_project_milestone_services.jar.name}"/>
 
+  <property name="topcoder_cockpit_asset_services.version" value="1.0.0"/>
+  <property name="topcoder_cockpit_asset_services.jar.name"
+              value="topcoder_cockpit_asset_services.jar"/>
+  <property name="topcoder_cockpit_asset_services.path"
+              value="topcoder_cockpit_asset_services/${topcoder_cockpit_asset_services.version}"/>
+  <property name="topcoder_cockpit_asset_services.jar"
+              value="${tcs_libdir}/${topcoder_cockpit_asset_services.path}/${topcoder_cockpit_asset_services.jar.name}"/>
+
   <property name="topcoder_commons_utility.version" value="1.0.0" />
   <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar" />
   <property name="topcoder_commons_utility.path" value="topcoder_commons_utility/${topcoder_commons_utility.version}" />
@@ -659,6 +667,16 @@
   <!-- joda-time -->
   <property name="joda-time.jar" value="${ext_libdir}/joda-time/joda-time-2.1.jar" />
 
+
+  <property name="log4j.jar" value="${ext_libdir}/hibernate/slf4j-log4j12-1.5.8.jar" />
+
+  <!-- MIME util -->
+  <property name="mime-util.jar" value="${ext_libdir}/mime-util/mime-util.jar"/>
+
+  <!-- slf4j -->
+  <property name="slf4j.jar" value="${ext_libdir}/mime-util/slf4j-api-1.5.11.jar"/>
+
+
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
     <pathelement location="${ejb-api.jar}" />
@@ -800,6 +818,7 @@
     <pathelement location="${topcoder_cockpit_project_metadata_entities.jar}" />
     <pathelement location="${topcoder_cockpit_project_metadata_services.jar}" />
     <pathelement location="${topcoder_cockpit_project_milestone_services.jar}" />
+    <pathelement location="${topcoder_cockpit_asset_services.jar}" />
     <pathelement location="${random_string_generator.jar}" />
     <pathelement location="${random_string_image.jar}" />
     <pathelement location="${spell_check.jar}" />
@@ -827,6 +846,7 @@
     <pathelement location="${aws-java-sdk.jar}" />
     <pathelement location="${jrss.jar}" />
     <pathelement location="${joda-time.jar}" />
+    <pathelement location="${mime-util.jar}" />
     <pathelement location="${yuicompressor.jar}" />
   </path>
 

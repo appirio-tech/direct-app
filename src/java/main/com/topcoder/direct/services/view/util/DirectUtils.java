@@ -15,21 +15,7 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -43,6 +29,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import eu.medsea.mimeutil.MimeType;
+import eu.medsea.mimeutil.MimeUtil;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
@@ -494,9 +482,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *     to be lower case.</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.9.9 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0)
+ * <ul>
+ *     <li>Adds method {@link #trim(java.util.Date)}</li>
+ * </ul>
+ * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
- * @version 1.9.8
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
+ * @version 1.9.9
  */
 public final class DirectUtils {
     /**
@@ -2572,6 +2567,45 @@ public final class DirectUtils {
             } catch (IOException e) {
                 // ignore
             }
+        }
+    }
+
+    /**
+     * Trims the time part of a <code>java.util.Date</code>
+     *
+     * @param date the date instance to trim.
+     * @return the trimmed date instance.
+     * @since 1.9.9
+     */
+    public static Date trim(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+
+    /**
+     * Gets the MIME type of the file.
+     *
+     * @param file the file
+     * @return the MIME type in string format
+     * @since 1.9.9
+     */
+    public static String getFileMIMEType(File file) {
+        MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
+        MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+
+        Collection mimeTypes = MimeUtil.getMimeTypes(file);
+
+        if (mimeTypes.size() > 0) {
+            return ((MimeType) mimeTypes.toArray()[0]).toString();
+        } else {
+            return null;
         }
     }
 }

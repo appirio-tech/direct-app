@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman
-  - Version: 2.7
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin
+  - Version: 3.0
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -47,6 +47,8 @@
   - - Add link to TopCoder Platform Specialists report, the report can only be accessed by TC staff.
   - Version 2.8 (Release Assembly - TopCoder Cockpit - Billing Management) change notes: add billing tab
   - Version 2.9 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0) change notes: add member payment item
+  - Version 3.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes:
+  - - Added assets tab under project dashboard
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -611,6 +613,10 @@
                          <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
                             <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Issue Tracking</span></a>
                         </li>
+
+                         <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="on"</c:if>>
+                             <a href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Assets</span></a>
+                         </li>
                     </ul>
                 </div>
         </c:if>
