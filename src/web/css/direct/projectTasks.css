@@ -1,0 +1,1569 @@
+/*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the project tasks pages.
+ *
+ * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
+ * @author TCSASSEMBLER
+ */
+.taskPage #content{
+	min-width: 1347px
+}
+.taskPage #mainContent{
+	overflow: visible;
+}
+.taskPage #area1{
+	z-index: 1;	
+}
+.addTaskPanel{
+	position: relative;
+	margin-top: 26px;
+	background: url(/images/tabs3_bg.png) 0 0 repeat-x;
+	z-index: 10;
+}
+	.addTaskPanel .panelHeader{
+		height: 34px;
+		overflow: hidden;
+    	background: url(/images/tabs3_left.png) 0 0 no-repeat;
+	}
+		.addTaskPanel .panelHeader h3{
+			line-height: 36px;
+			height: 34px;
+			overflow: hidden;
+			padding-left: 37px;
+			background: url(/images/icon-project-task.png) 16px 10px no-repeat;
+			color: #333333;
+			font-weight: bold;
+			font-size: 12px;
+			text-shadow: 0px 1px 0px #ffffff;			
+		}
+		.addTaskPanel .panelHeader .jsAddTaskDetailedPopup{
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			line-height: 34px;
+			height: 34px;
+			background: url(/images/tabs3_bg_hover.png) 0 0 repeat-x;
+			border-left: 1px solid #bdbdbd;
+			text-decoration: none;
+			font-size: 12px;
+			font-weight: normal;
+			color: #ff0000;
+		}
+			.addTaskPanel .panelHeader .jsAddTaskDetailedPopup span{
+				display: block;
+				height: 34px;
+				background: url(/images/tabs3_right.png) 100% -40px no-repeat;
+				padding: 0 16px 0 0;
+				text-decoration: none;
+			}
+				.addTaskPanel .panelHeader .jsAddTaskDetailedPopup span span{
+					display: block;
+					height: 34px;
+					background: url(/images/icon-task-more-details.png) 15px 10px no-repeat;
+					padding: 0 0 0 36px;
+				}
+		.addTaskPanel .panelHeader .jsAddTaskDetailedPopup:hover{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+			.addTaskPanel .panelHeader .jsAddTaskDetailedPopup:hover span{
+				cursor: pointer;
+			}
+	.addTaskPanel .panelContent{
+		background-color: #f5f5f5;
+		border: 1px solid #cccccc;
+		border-top-width: 0;
+		padding: 15px 96px 15px 15px;
+		height: 24px;
+		position: relative;
+	}
+	.addTaskPanel .panelContent form{
+		display: block;
+		height: 24px;
+	}
+	.addTaskPanel .col1{
+		width: 22%;
+		min-width:207px;
+	}
+	.addTaskPanel .col2{
+		width: 14%;
+		min-width:137px;
+	}
+	.addTaskPanel .col3{
+		width: 24%;
+		min-width:222px;
+	}
+	.addTaskPanel .col4{
+		width: 19%;
+		min-width:183px;
+	}
+	.addTaskPanel .col5{
+		width: 18%;
+		min-width:170px;
+	}
+	.addTaskPanel input{
+		font-family: Arial,Helvetica,sans-serif;
+		font-size: 11px;
+	}
+	.addTaskPanel .textInput{
+		padding: 4px 6px;
+		width: 179px;
+		margin-right: 14px;
+		color: #666666;
+		border: 1px solid #bdbdbd;
+	}
+	.addTaskPanel .focused{
+		color: #333333;
+	}
+	.addTaskPanel select{
+		color: #333333;
+		margin-top: 1px;
+		padding: 1px;
+		height: 21px;
+	}
+	.addTaskPanel #quickTaskStatus{
+		width: 122px;
+		margin-right: 15px;
+	}
+	.addTaskPanel .task-date-pick{
+		padding: 2px 5px;
+		width: 58px;
+		color: #666666;
+		border: 1px solid #bdbdbd;
+	}
+	.addTaskPanel .selected{
+		color: #333333;
+	}
+	.addTaskPanel .dp-choose-date{
+		margin-left: 3px;
+		margin-right: 15px;	
+	}
+	.addTaskPanel .taskMultiSelector {
+		width: 168px;	
+		margin-right: 15px;
+	}
+	.addTaskPanel .corner{
+		background: url(/images/gray-corners-custom.png) 0 0 no-repeat;
+		display: block;
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		overflow: hidden;
+	}
+	.addTaskPanel .cornerBl{
+		left: 0;
+		bottom: 0;
+		background-position: 0 -4px;		
+	}
+	.addTaskPanel .cornerBr{
+		right: 0;
+		bottom: 0;
+		background-position: -4px -4px;
+	}
+	.addTaskPanel #quickAssignTask{
+		width: 170px;
+	}
+	.addTaskPanel .quickAddTaskBtn{
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		margin: 0;
+	}
+	.addTaskPanel .quickAddTaskBtn span{
+		padding: 0 0 0 28px;
+		width: 36px;
+		height: 24px;
+		line-height: 22px;
+		text-align: left;
+		display: block;
+		position: relative;
+	}
+	.addTaskPanel .quickAddTaskBtn span i{
+		position: absolute;
+		display: block;
+		width: 12px;
+		height: 14px;
+		background: url(/images/icon-project-task.png) 0 -40px no-repeat;
+		top: 5px;
+		left: 8px;
+	}
+.taskMultiSelector {
+	position: relative;
+}
+	.taskMultiSelector .trigger{
+		margin-right: 24px;
+		cursor: pointer;
+	}
+		.taskMultiSelector .trigger .msValue, .taskMultiSelector .trigger .msValue:hover{
+			display: block;
+			height: 24px;
+			line-height: 24px;
+			font-size: 11px;
+			color: #333333;
+			overflow: hidden;
+			padding-left: 7px;
+			background: url(/images/task-multi-selector.png) 0 0 no-repeat;
+			text-decoration: none;
+		}
+		.taskMultiSelector .trigger .selectorArrow{
+			display: block;
+			height: 24px;
+			width: 24px;
+			background: url(/images/task-multi-selector.png) 100% -48px no-repeat;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+		.taskMultiSelector .trigger .hidden{
+			display: none;
+		}
+	.taskMultiSelector .dropDown{
+		display: none;
+		position: absolute;
+		top: 23px;
+		left: 0;
+		border: 1px solid #bdbdbd;
+		background-color: #ffffff;
+	}
+		.taskMultiSelectorOpen .dropDown ul{
+			padding: 7px 0 6px 0;
+			overflow-y: auto;
+			overflow-x: hidden;
+			max-height: 120px;
+			border-bottom: 1px solid #dddddd;
+			position: relative;
+			list-style-type: none;
+		}
+			.taskMultiSelectorOpen .dropDown ul li{
+				padding: 5px 0 3px 32px;
+				font-size: 11px;
+				line-height: 16px!important;
+				position: relative;
+				list-style-type: none;
+				min-height: 16px!important;
+			}
+				.taskMultiSelectorOpen .dropDown ul li input{
+					position: absolute;
+					top: 6px;
+					left: 12px;
+					width: 13px;
+					height: 13px;
+				}
+				.taskMultiSelectorOpen .dropDown ul li label{
+					display: inline-block;
+					line-height: 16px!important;
+					font-size: 11px;
+					cursor: pointer;
+					padding: 0;
+				}
+		.taskMultiSelectorOpen .dropDown .btnWrapper{
+			height: 24px;
+			padding: 7px 0;
+			background-color: #f5f5f5;
+			text-align: center;
+		}
+				.taskMultiSelectorOpen .dropDown .btnWrapper a span{
+					padding: 0 26px 0 22px;
+				}
+	
+	.taskMultiSelectorOpen .dropDown{
+		display: block;	
+	}
+		
+		.taskMultiSelectorOpen .trigger span{
+			background-position: 0 -24px;
+		}
+		.taskMultiSelectorOpen .trigger .selectorArrow{
+			background-position: 100% -72px;
+		}
+.taskListContainer{
+	padding: 20px 0 0 243px;
+	min-height: 540px;
+	position: relative;
+	z-index: 9;
+}
+	.taskListContainer ul, .taskListContainer ul li{
+		list-style-type: none;
+	}
+	.taskListContainer .taskListFilter{
+		width: 191px;
+		position: absolute;
+		top: 20px;
+		left: 0;
+		border: 1px solid #cccccc;
+		background-color: #f5f5f5;
+		padding: 9px 15px 14px 15px;
+		font-size: 11px;
+	}
+	.taskListFilter .fieldLabel{
+		padding: 6px 1px;
+		line-height: 12px;
+		font-size: 11px;
+		font-weight: bold;
+		color: #333333;
+	}
+	.taskListFilter .searchTaskByName{
+		height: 22px;
+		background: url("/images/filter-panel/search_icon.png") no-repeat scroll 98% 3px #FFFFFF;
+		border: 1px solid #bdbdbd;
+		height: 20px;
+		width: 189px;
+		margin-bottom: 13px;
+	}
+		.taskListFilter .searchTaskByName input{
+			border-width: 0;
+			width: 144px;
+			padding: 1px 0 0 6px;
+		}
+	.taskListFilter select{
+		color: #333333;
+		margin-top: 1px;
+		padding: 1px;
+		height: 21px;
+		width: 191px;
+		margin-bottom: 12px;
+	}
+.dueDateFilter{
+	margin-bottom: 14px;	
+	height: 22px;
+}
+	.dueDateFilter input{
+		width: 58px;
+		border: 1px solid #bdbdbd;
+		padding: 3px 0;
+		font-family: Arial,Helvetica,sans-serif;
+		font-size: 11px;
+		color: #333333;
+	}
+	.dueDateFilter .dp-choose-date{
+		margin: 0 0 0 2px;	
+	}
+	.dueDateFilter span.fLeft{
+		display: block;
+		width: 21px;
+		line-height: 22px;
+		text-align: center;
+	}
+	.taskListFilter #filterByPriority{
+		margin-bottom: 9px;
+	}
+	.taskListFilter #filterByPriority li{
+		padding: 2px 0 3px 1px;
+		height: 17px;
+	}
+		.priorityLabel {
+			background-image: url(/images/icon-task-priority.png);
+			background-repeat: no-repeat;
+			padding-left: 24px;
+			height: 17px;
+			line-height: 17px;
+			display: inline-block;
+			cursor: pointer;
+		}
+		.taskListFilter #filterByPriority input {
+			height:12px;
+			width: 12px;
+			margin-right: 6px;
+			vertical-align: text-top;
+		}
+	.priorityHigh{
+		background-position: 0 0;	
+	}
+	.priorityNormal{
+		background-position: 0 -17px;	
+	}
+	.priorityLow{
+		background-position: 0 -34px;	
+	}
+	.taskListFilter #filterByStatus{
+		margin-bottom: 2px;
+	}
+	.taskListFilter #filterByStatus li{
+		height: 12px;
+		line-height: 12px;
+		padding: 0 0 10px 1px;
+	}
+		.taskListFilter #filterByStatus li input{
+			height:12px;
+			width: 12px;
+			margin-right: 6px;
+			vertical-align: text-top;
+		}
+		.taskListFilter #filterByStatus li label{
+			display: inline-block;
+			cursor: pointer;
+		}
+	.taskListFilter #filerByPM{
+		z-index: 10;
+		margin-bottom: 10px;
+	}
+	.taskListFilter #filerByContest{
+		z-index: 9;
+	}
+	.taskListFilter .corner{
+		background: url(/images/gray-corners-custom.png) 0 0 no-repeat;
+		display: block;
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		overflow: hidden;
+	}
+	.taskListFilter .cornerTl{
+		top: -1px;
+		left: -1px;
+		background-position: 0 0;
+	}
+	.taskListFilter .cornerTr{
+		top: -1px;
+		right: -1px;
+		background-position: 0 -4px;
+	}
+	.taskListFilter .cornerBl{
+		left: -1px;
+		bottom: -1px;
+		background-position: 0 -4px;		
+	}
+	.taskListFilter .cornerBr{
+		right: -1px;
+		bottom: -1px;
+		background-position: -4px -4px;
+	}
+.taskListControlPanel {
+	height: 84px;
+	border: 1px solid #bdbdbd;
+	position: relative;
+	background: url(/images/task-list-bg.png) 0 -16px repeat-x;
+	padding: 12px 14px 14px 14px;
+	margin-bottom: 20px;
+}
+	.taskListControlPanel h2{
+		height: 38px;
+		line-height: 38px;
+		padding: 0 0 6px 44px;
+		color: #333333;
+		font-size: 18px;
+		font-weight: bold;
+		border-bottom: 1px solid #bdbdbd;
+		background: url(/images/icon-task-list.png) 3px 0 no-repeat;
+	}
+	.taskListControlPanel .taskListSummary{
+		position: absolute;
+		top: 12px;
+		right: 15px;	
+	}
+		.taskListControlPanel .taskListSummary .emptyTxt{
+			line-height: 34px;
+			font-size: 11px;
+			color: #333333;
+			white-space: nowrap;
+		}
+		.taskListControlPanel .taskListSummary .summaryTxt{
+			line-height: 26px;
+			font-size: 11px;
+			color: #333333;
+			white-space: nowrap;
+			text-indent: 2px;
+		}
+.progressBarBg {
+    width: 195px;
+    height: 13px;
+    padding: 2px;
+    background: url(/images/total_bg.png) no-repeat left center;
+    position: relative;
+}
+	.progressBarBg .progressBar {
+		width: auto;
+		height: 13px;
+		float: left;
+		display: inline;
+		overflow: hidden;
+		position: absolute;
+		left: 2px;
+		top: 2px;
+	}
+	.progressBarBg .progressBarLeft {
+		width: auto;
+		float: left;
+		display: inline;
+		padding-left: 4px;
+		background-position: left 0;
+		background-repeat: no-repeat;
+		background-image: url(/images/actual_green.png);
+	}
+	.progressBarBg .progressBarRight {
+		width: auto;
+		float: left;
+		display: inline;
+		padding-right: 4px;
+		background-position: right -26px;
+		background-repeat: no-repeat;
+		background-image: url(/images/actual_green.png);
+	}
+	.progressBarBg .progressBarMid {
+		width: 10px;
+		float: left;
+		display: inline;
+		height: 13px;
+		background-position: left -13px;
+		background-repeat: repeat-x;
+		background-image: url(/images/actual_green.png);
+	}
+.smallProgressBarBg {
+    width: 116px;
+    height: 10px;
+    padding: 2px;
+    background: url(/images/small-progress-bg.png) 0 0 no-repeat;
+    position: relative;
+}
+	.smallProgressBarBg .smallProgressBar {
+		width: auto;
+		height: 10px;
+		float: left;
+		display: inline;
+		overflow: hidden;
+		position: absolute;
+		left: 2px;
+		top: 2px;
+	}
+	.smallProgressBarBg .smallProgressBarLeft {
+		width: auto;
+		float: left;
+		display: inline;
+		padding-left: 3px;
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		background-image: url(/images/small-progress-green.png);
+	}
+	.smallProgressBarBg .smallProgressBarRight {
+		width: auto;
+		float: left;
+		display: inline;
+		padding-right: 3px;
+		background-position: 100% -20px;
+		background-repeat: no-repeat;
+		background-image: url(/images/small-progress-green.png);
+	}
+	.smallProgressBarBg .smallProgressBarMid {
+		width: 10px;
+		float: left;
+		display: inline;
+		height: 10px;
+		background-position: 0 -10px;
+		background-repeat: repeat-x;
+		background-image: url(/images/small-progress-green.png);
+	}
+	.taskListControlPanel .taskListControlArea{
+		padding: 14px 1px 0 2px;
+		height: 24px;
+		border-top: 1px solid #ffffff;
+	}
+		.taskListControlPanel .taskListControlArea label{
+			font-size: 12px;
+			color: #333333;
+			font-weight: bold;
+			line-height: 24px;
+		}
+		.taskListControlPanel .taskListControlArea select {
+			color: #333333;
+			height: 21px;
+			width: 150px;
+			font-size: 11px;
+			padding: 1px;
+			margin: 2px 20px 0 12px;
+		}
+		.taskListControlPanel .taskListControlArea .addTaskList {
+			margin: 0;
+		}
+		.taskListControlPanel .taskListControlArea .addTaskList span{
+			padding: 0 12px 0 22px;
+			position: relative;
+		}
+		.taskListControlPanel .taskListControlArea .addTaskList span i{
+			position: absolute;
+			display: block;
+			width: 9px;
+			height: 10px;
+			background: url(/images/icon-project-task.png) 0 -80px no-repeat;
+			top: 8px;
+			left: 9px;
+		}
+	.taskListControlPanel .corner{
+		background: url(/images/task-list-bg.png) 0 0 no-repeat;
+		display: block;
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		overflow: hidden;
+	}
+	.taskListControlPanel .cornerTl{
+		top: -1px;
+		left: -1px;
+		background-position: 0 0;
+	}
+	.taskListControlPanel .cornerTr{
+		top: -1px;
+		right: -1px;
+		background-position: 0 -4px;
+	}
+	.taskListControlPanel .cornerBl{
+		left: -1px;
+		bottom: -1px;
+		background-position: 0 -8px;		
+	}
+	.taskListControlPanel .cornerBr{
+		right: -1px;
+		bottom: -1px;
+		background-position: 0 -12px;
+	}
+.taskListPanel{
+	margin-bottom: 20px;
+	position: relative;
+}
+	.taskListPanel .taskListPanelHeader{
+		height: 40px;
+		padding: 0 0 0 10px;
+		background: url(/images/tabs5.png) 0 0 no-repeat;
+	}
+	.taskListPanel .taskListPanelHeaderRight{
+		height: 40px;
+		padding: 0 10px 0 0;
+		background: url(/images/tabs5.png) 100% -80px no-repeat;
+	}
+	.taskListPanel .taskListPanelHeaderInner{
+		height: 40px;
+		padding: 0 6px 0 0;
+		background: url(/images/tabs5.png) 0 -40px repeat-x;
+	}
+		.taskListPanel .taskListPanelHeaderInner h3{
+			padding: 0 0 0 36px;
+			color: #333333;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 40px;
+			background: url(/images/icon-task-list.png) 5px -100px no-repeat;
+		}
+		.taskListPanel .taskListPanelHeaderInner h3.defaultList {
+			background-position: 5px -60px;
+		}
+		.taskListPanel .taskListPanelHeaderInner a{
+			margin: 8px 0 0 5px;
+		}
+		.taskListPanel .taskListPanelHeaderInner .hide{
+			display: none;	
+		}
+.buttonGray {
+    display: block;
+    background: transparent url(/images/edit/grayBtn-left.png) left top no-repeat;
+    font-size: 11px;
+    -webkit-text-size-adjust: none;
+    color: #333333;
+    line-height: 25px;
+    font-weight: normal;
+    text-align: left;
+    padding-left: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+	.buttonGray span {
+		display: block;
+		background: transparent url(/images/edit/grayBtn-right.png) right top no-repeat;
+		cursor: pointer;
+		height: 25px;
+		padding-right: 4px;
+		position: relative;
+	}
+.buttonGray:hover {
+    background-position: left -25px;
+}
+	.buttonGray:hover span {
+		background-position: right -25px;
+	}
+	.taskListPanel .taskListPanelHeaderInner .buttonGray span i{
+			background-image: url("/images/icon-project-task.png");
+			background-repeat: no-repeat ;
+			display: block;
+			position: absolute;
+			width: 20px;
+			height: 25px;
+			top: 0;
+	}
+	.addNewTaskToList span{
+		padding: 0 10px 0 27px;
+	}
+		.addNewTaskToList span i{
+			background-position: 0 -115px;
+			left: 6px;
+		}
+	.editTaskList span {
+		padding: 0 24px 0 41px;
+	}
+		.editTaskList span i{
+			background-position: 0 -152px;
+			left: 20px;
+		}
+	.deleteTaskList span{
+		padding: 0 17px 0 35px;
+	}
+		.deleteTaskList span i{
+			background-position: 0 -194px;
+			left: 14px;
+		}
+	.resolveTaskList span{
+		padding: 0 14px 0 29px;
+	}
+		.resolveTaskList span i{
+			background-position: 0 -233px;
+			left: 11px;
+		}
+	.taskListContent{
+		border: 1px solid #bdbdbd;
+		border-top-width: 0;
+		padding: 15px 15px 17px 14px;	
+	}
+		.taskListContent .emptyHint{
+			padding-top: 6px;
+			line-height: 20px;
+			font-size: 14px;
+			color: #666666;
+		}
+			.taskListContent .emptyHint p{
+				padding-bottom: 8px;
+			}
+			.taskListContent .emptyHint h4{
+				line-height: 22px;
+				padding-bottom: 3px;
+				font-size: 14px;
+				font-weight: bold;
+				color: #333333;
+			}
+			.taskListContent .emptyHint .linkswrapper{
+				line-height: 13px;
+				font-size: 12px;
+				color: #666666;
+			}
+				.taskListContent .emptyHint .linkswrapper a{
+					color: #ed0000;
+					text-decoration: none;
+				}
+				.taskListContent .emptyHint .linkswrapper a:hover{
+					text-decoration: underline;
+				}
+
+	.taskListContent .taskListInfo{
+		line-height: 15px;
+		padding-bottom: 5px;
+		position: relative;
+		color: #333333;
+	}
+		.taskListContent .taskListInfo .associatedInfo{
+			font-size: 12px;
+			line-height: 15px;
+			padding: 0 250px 13px 0;
+		}
+			.taskListContent .taskListInfo .associatedInfo a{
+				text-decoration: underline;
+			}
+			.taskListContent .taskListInfo .associatedInfo a:hover{
+				text-decoration: none;
+				cursor: pointer;
+			}
+		.taskListContent .taskListInfo .taskListProgress{
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+			.taskListContent .taskListInfo .taskListProgress p{
+				font-size: 11px;
+				line-height: 14px;
+				padding-right: 10px;
+				white-space: nowrap;
+			}
+		.taskListContent .taskListInfo .taksListBrief{
+			color: #666666;
+			font-size: 11px;
+			line-height: 16px;
+			
+		}
+	.taskListPanel .corner{
+		background: url(/images/white_corner.png) 0 0 no-repeat;
+		display: block;
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		overflow: hidden;
+	}
+	.taskListPanel .cornerBl{
+		bottom: 0;
+		left: 0;
+		background-position: 0 -4px;
+	}
+	.taskListPanel .cornerBr{
+		right: 0;
+		bottom: 0;
+		background-position: -4px -4px;
+	}
+.taskItem {
+	border: 1px solid #e5e5e5;
+	margin-top: 15px;
+}
+.clearLeftFix{
+    clear: left;
+    display: block;
+    height: 2px;
+    overflow: hidden;
+}
+.taskItemHeader{
+	background-color: #e5e5e5;
+	height: 40px;
+}
+	.taskItemHeader .checkBoxWrapper {
+		height: 18px;
+		padding: 11px 0 0 16px;
+		color: #333333;
+		font-size: 12px;
+		font-weight: bold;
+		max-width: 500px;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.taskItemHeader .checkBoxWrapper input {
+		vertical-align: text-top;
+		width: 12px;
+		height: 12px;
+		margin-right: 7px;
+	}
+.taskItemLink {
+	line-height: 18px;	
+	display: inline-block;
+	padding: 0 13px 0 21px;
+	margin: 11px 0 0 10px;
+	font-size: 11px;
+	text-decoration: underline;
+	background-image: url("/images/icon-project-task.png");
+	background-repeat: no-repeat;
+}
+.taskItemLink:hover {
+	text-decoration: none;
+}
+.taskEditLink {
+	background-position: 0 -156px;
+}
+.taskDeleteLink {
+	background-position: 0 -198px;
+}
+.taskMoreDetailsLink {
+	background-position: 0 -276px;
+}
+.taskCancelSave {
+	background-position: 2px -555px;
+	padding-left: 17px;
+}
+.taskEditSave {
+	background-position: 0 -515px;
+	padding-left: 17px;
+	
+}
+.taskItemContent{
+	padding: 8px 0 15px 15px;
+	min-height: 52px;
+	overflow: hidden;
+}
+.taskItemContent label{
+	display: block;
+	line-height: 21px;
+	font-size: 12px;
+	padding-top: 2px;
+}
+.taskItemContent p{
+	font-size: 11px;
+}
+.taskItemContent .leftCol{
+	width: 57%;
+	float: left;
+}
+.taskItemContent .rightCol{
+	width: 42%;
+	float: left;
+}
+.taskItemContent .col1{
+	width: 25%;
+	float: left;
+	height: 41px;
+}
+.taskItemContent .col2{
+	width: 34%;
+	height: 41px;
+	float: left;
+}
+.taskItemContent .col3{
+	width: 18%;
+	height: 41px;
+	float: left;
+}
+.taskItemContent .col4{
+	width: 21%;
+	height: 41px;
+	float: left;
+	position: relative;
+}
+.taskItemContent .col4 div{
+	width: 40px;
+	padding: 0 0 0 6px;
+	height: 41px;
+}
+.taskItemContent .col5{
+	width: 94%;
+	padding: 9px 25px 0 0;
+	float: left;
+	clear: left;
+	display: none;
+}
+.taskItemContent .col7{
+	clear: left;
+	display: none;
+}
+.taskItemDetailed .col5, .taskItemDetailed .col7{
+	display: block;	
+}
+
+.statusText0 {
+    font-weight: bold;
+    color: #999999;
+}
+
+.statusText1 {
+    font-weight: bold;
+    color: #228aea;
+}
+
+.statusText3 {
+    font-weight: bold;
+    color: #00a900;
+}
+
+.statusText2 {
+    font-weight: bold;
+    color: #ec0008;
+}
+.dateTxt, .noteTxt{
+	color: #666666;	
+}
+.overDueAlert{
+	display: none;	
+	font-size: 11px;
+	font-weight: bold;
+	color: #e70000;
+	position: absolute;
+	line-height: 18px;
+	bottom: -18px;
+	left: 0;
+}
+.taskItemContent .isOverdue div{
+	background-color: #e70000;	
+}
+.taskItemContent .isOverdue label, .taskItemContent .isOverdue p{
+	color: #ffffff;	
+}
+.taskItemContent .isOverdue .overDueAlert{
+	display: block;
+}
+.taskAttachmentUl{
+	padding-bottom: 1px;	
+	overflow: hidden;
+}
+	.taskAttachmentUl li{
+		width: 142px;
+		height: 22px;
+		padding-bottom: 4px;
+		float: left;
+		overflow: hidden;
+		margin-right: 11px;
+	}
+		.taskAttachmentUl li a, .editTaskAttachment li a.taskAttachment {
+			padding-left: 21px;
+			display: inline-block;
+			font-size: 11px;
+			background-image: url("/images/icon-project-task.png");
+			background-repeat: no-repeat;
+			line-height: 22px;
+			text-decoration: underline;
+		}
+		.taskAttachmentUl li a:hover, .editTaskAttachment li a.taskAttachment:hover{
+			text-decoration: none;
+		}
+.typeZip{
+	background-position: 0 -317px;
+}
+.typePdf{
+	background-position: 0 -357px;
+}
+.typeDoc{
+	background-position: 0 -397px;
+}
+.taskAssociateUl{
+	overflow: hidden;	
+}
+	.taskAssociateUl li{
+		height: 16px;
+		display: block;
+	}
+		.taskAssociateUl li a{
+			display: inline-block;
+			font-size: 11px;
+			color: #666666;
+			line-height: 16px;
+			float: left;
+			text-decoration: underline;
+		}
+		.taskAssociateUl li a:hover{
+			text-decoration: none;
+		}
+.completedTaskTogger {
+	height: 14px;
+	overflow: hidden;
+	padding: 15px 9px 0 16px;	
+}
+.completedTasksNum{
+	padding: 2px 0 0 20px;
+	line-height: 12px;	
+	font-size: 12px;
+	font-weight: bold;
+	background: url("/images/icon-project-task.png") 0 -440px no-repeat;
+}
+.showCompletedTasks{
+	padding: 2px 0 0 0;
+	line-height: 12px;	
+	font-size: 11px;
+}
+.showCompletedTasks:hover{
+	text-decoration: none;
+}
+.completedTaskList{
+	margin-bottom: 0	
+}
+.completedTaskListTogger{
+	height: 40px;
+	padding: 0 0 0 10px;
+	background: url(/images/tabs5.png) 0 -120px no-repeat;
+}
+.completedTaskListToggerRight{
+	height: 40px;
+	padding: 0 10px 0 0;
+	background: url(/images/tabs5.png) 100% -160px no-repeat;
+}
+.completedTaskListToggerInner{
+	height: 40px;
+	padding: 0 6px 0 0;
+	background: url(/images/tabs5.png) 0 -200px repeat-x;
+}
+.completedTaskListNum {
+	line-height: 16px;	
+	margin: 13px 0 0 6px;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0 0 0 23px;
+	background: url("/images/icon-project-task.png") 0 -480px no-repeat;
+}
+.showCompletedTaskLists {
+	line-height: 16px;	
+	margin: 12px 0 0 0;
+	font-size: 12px;
+}
+.showCompletedTaskLists:hover {
+	text-decoration: none;
+}
+.completedTaskListsShowed{
+	background-position: 0 -240px;
+}
+	.completedTaskListsShowed .completedTaskListToggerRight{
+		background-position:  100% -280px
+	}
+.completedTaskList .taskListPanelHeader{
+	background-position: 0 -321px;
+	height: 39px;
+}
+.completedTaskList .taskListPanelHeaderRight{
+	background-position: 100% -361px;
+	height: 39px;
+}
+.completedTaskList .taskListPanelHeaderInner{
+	height: 39px;
+	background-position: 0 -41px;
+}
+	.completedTaskList .taskListPanelHeaderInner h3 {
+		line-height: 39px;
+	}
+	.completedTaskList .taskListPanelHeaderInner a {
+		margin: 7px 0 0 5px;
+	}
+.completedItem .priorityLabel {
+	text-decoration: line-through;	
+}
+.completedTaskList .corner{
+	display: none;	
+}
+.singlePt .completedTaskListTogger {
+	display: none;	
+}
+.singlePt .completedTaskList .taskListPanelHeader{
+	background-position: 0 0;
+	height: 40px;
+}
+.singlePt .completedTaskList .taskListPanelHeaderRight{
+	background-position: 100% -80px;
+	height: 40px;
+}
+.singlePt .completedTaskList .taskListPanelHeaderInner{
+	height: 40px;
+	background-position: 0 -40px;
+}
+.singlePt .completedTaskList .corner{
+	display: block;	
+}
+.groupByDueDate .taskListContent{
+	padding: 5px 15px 20px 14px
+}
+.taskListPanel .taskListPanelHeaderInner h3.dateList {
+	background-image: none;
+	padding-left: 6px;
+}
+.taskListPanel .taskListPanelHeaderInner h3.dateList {
+	background-image: none;
+	padding-left: 6px;
+}
+.overDueList .taskListPanelHeader{
+	padding-left: 105px;
+	background: url("/images/tabs5-overdue.png") 0 0 no-repeat;
+}
+
+/*Modal*/
+#new-modal .outLay .modalHeader .modalHeaderCenter{
+    height: 36px;
+    line-height: 36px;
+    padding: 4px 0 0 14px;
+}
+.popups .taskForm{
+    border-top: 1px solid #CCCCCC;
+    padding: 20px 50px 0 50px;
+	list-style-type: none;
+	font-size: 11px;
+}
+.popups .taskForm li{
+	padding-bottom: 12px;
+	list-style-type: none;
+	clear: both;
+	min-height: 25px;
+}
+.popups .taskForm li .fieldName{
+	float: left;
+	width: 120px;
+	font-size: 12px;
+	line-height: 25px;
+}
+.popups .taskForm li div.right{
+	float: left;
+	width: 418px;
+}
+.taskPage .popups input.text  {
+    border: 1px solid #BDBDBD;
+    color: #333333;
+    padding: 4px 6px;
+	font-family:Arial,Helvetica,sans-serif;
+	background-image: none;
+	height: 15px;
+	width: 405px;
+	line-height: 14px;
+}
+.taskPage .popups input.fileInput  {
+    color: #333333;
+	font-family:Arial,Helvetica,sans-serif;
+	height: 25px;
+	width: 360px;
+}
+.taskPage .popups input.invalid  {
+    border: 1px solid #FF0000;
+	background-color: #FFE1E0;
+}
+.taskPage .popups input.task-date-pick{
+	width: 116px;
+}
+.taskPage .popups .dp-choose-date{
+	margin: 2px 0 0 6px;	
+}
+.taskPage .popups .taskMultiSelector {
+	width: 168px;	
+}
+.popups .taskForm div.right .fieldNote{
+	text-align: right;
+	color: #999999;
+	line-height: 20px;
+}
+.popups .taskForm div.right  .rightRow{
+	min-height: 25px;
+	padding-bottom: 6px;	
+}
+.popups .taskForm div.right .errorMessage{
+	display: none;
+	float: left;
+}
+.taskPage .popups textarea  {
+    border: 1px solid #BDBDBD;
+    padding: 4px 6px;
+	font-family:Arial,Helvetica,sans-serif;
+	line-height: 14px;
+	resize: none;
+	overflow: auto;
+	width: 405px;
+	height: 59px;
+	font-size: 11px;
+    color: #333333;
+}
+.taskPage .popups  select {
+    color: #333333;
+    height: 21px;
+    margin-top: 1px;
+    padding: 1px;
+	width: 156px;
+}
+.taskPage .popups .selectDisabled select {
+    color: #999999;
+}
+.taskPage .popups .buttonArea{
+	clear: both;
+}
+/* Add project task modal*/
+#addProjectTaskModal{
+	width: 647px;
+}
+#addProjectTaskModal .fixedHeightTaskFormWrapper{
+	height: 570px;
+}
+#addProjectTaskModal .fixedHeightTaskFormWrapper ul{
+	max-height: 550px;
+	overflow-y: auto;
+	
+}
+#addProjectTaskModal .fixedHeightTaskFormWrapper ul li{
+	width: 539px;
+}
+#addProjectTaskModal .tasknameField, #addProjectTaskListModal .taskListNameRow{
+	height: 58px;
+	padding-bottom: 0;
+}
+#addProjectTaskModal .noteField, #addProjectTaskListModal .taskListNoteRow{
+	height: 84px;
+	padding-bottom: 0;
+	position: relative;
+}
+#addProjectTaskModal .noteField .fieldNote, #addProjectTaskListModal .taskListNoteRow .fieldNote{
+	position: absolute;
+	bottom: -5px;
+	right: 0;
+}
+#addProjectTaskModal .buttonArea{
+	padding-left: 215px;
+}
+#addProjectTaskModal .buttonArea a.button6 {
+	margin-right: 30px;
+	width: 90px;
+	text-align: center;
+}
+.associateField input{
+	vertical-align: text-top;
+	width: 12px;
+	height: 12px;
+}
+.associateField .chxLbl{
+	display: inline-block;
+	width: 110px;
+	cursor: pointer;
+	padding-left: 4px;
+	font-size: 12px;
+}
+.newTaskAddFile:hover{
+	text-decoration: none;	
+}
+/* Add project task list modal*/
+#addProjectTaskSuccessModal, #addProjectTaskListSuccessModal, #editProjectTaskListSuccessModal, #resolveTaskListSuccessModal{
+	width: 288px;
+}
+#addProjectTaskSuccessModal .modalBody .confirmInfo, #addProjectTaskListSuccessModal .modalBody .confirmInfo, #editProjectTaskListSuccessModal .modalBody .confirmInfo {
+    background: url("/images/modal-success2.png") 15px 31px no-repeat;
+    list-style: none outside none;
+    margin: 0;
+    min-height: 16px;
+    padding: 42px 0 42px 72px;
+	line-height: 16px;
+}
+#resolveTaskListSuccessModal .modalBody .confirmInfo {
+    background: url("/images/modal-success2.png") 15px 31px no-repeat;
+    list-style: none outside none;
+    margin: 0;
+    min-height: 16px;
+    padding: 33px 25px 29px 72px;
+	line-height: 20px;
+}
+#addProjectTaskSuccessModal .buttonArea .button6, #addProjectTaskListSuccessModal .buttonArea .button6, #editProjectTaskListSuccessModal .buttonArea .button6, #resolveTaskListSuccessModal .buttonArea .button6 {
+	width: 48px;
+}
+#addProjectTaskSuccessModal .buttonArea .button6 span.right, #addProjectTaskListSuccessModal .buttonArea .button6 span.right, #editProjectTaskListSuccessModal .buttonArea .button6 span.right, #resolveTaskListSuccessModal .buttonArea .button6 span.right {
+    padding: 4px 10px 0;
+	text-align: center;
+}
+#addProjectTaskListModal, #editProjectTaskListModal{
+	width: 647px;
+}
+.popups .taskForm div.right .radioRow{
+	min-height: 20px;
+	padding-top: 5px;
+}
+.radioRow input{
+	vertical-align: text-top;
+	width: 12px;
+	height: 12px;
+}
+.radioRow label{
+	display: inline-block;
+	cursor: pointer;
+	padding-left: 4px;
+	margin-right: 44px; 
+	font-size: 12px;
+}
+#addProjectTaskListModal .permissionRow, #editProjectTaskListModal .permissionRow{
+	height: 50px;	
+}
+#addProjectTaskListModal .buttonArea, #editProjectTaskListModal .buttonArea{
+	padding-left: 215px;
+}
+#addProjectTaskListModal .buttonArea a.button6, #editProjectTaskListModal .buttonArea a.button6 {
+	margin-right: 30px;
+	width: 90px;
+	text-align: center;
+}
+
+/*Resolve modal*/
+#resolveTaskListModal{
+	width: 368px;
+}
+#resolveTaskListModal .modalBody .confirmInfo {
+    background: url("/images/modal-confirmation.png") 16px 31px no-repeat;
+    list-style: none outside none;
+    margin: 0;
+    padding: 33px 25px 29px 78px;
+	line-height: 20px;
+}
+#resolveTaskListModal .buttonArea{
+	padding-left: 116px;
+}
+#resolveTaskListModal .buttonArea .button6 {
+	width: 48px;
+	float: left;
+	margin-right: 32px;
+}
+#resolveTaskListModal .buttonArea .button6 span.right {
+    padding: 4px 10px 0;
+	text-align: center;
+}
+/*Delete task list / Delete task modal*/
+#deleteTaskListModal, #deleteTaskModal{
+	width: 368px;
+}
+#deleteTaskListModal .modalBody .confirmInfo, #deleteTaskModal .modalBody .confirmInfo {
+    background: url("/images/modal-delete.png") 25px 26px no-repeat;
+    list-style: none outside none;
+    margin: 0;
+    padding: 28px 25px 34px 88px;
+	line-height: 20px;
+	min-height: 36px;
+}
+#deleteTaskListModal .buttonArea, #deleteTaskModal .buttonArea{
+	padding-left: 116px;
+}
+#deleteTaskListModal .buttonArea .button6, #deleteTaskModal .buttonArea .button6 {
+	width: 48px;
+	float: left;
+	margin-right: 32px;
+}
+#deleteTaskListModal .buttonArea .button6 span.right, #deleteTaskModal .buttonArea .button6 span.right {
+    padding: 4px 10px 0;
+	text-align: center;
+}
+#deleteTaskListSuccessModal, #deleteTaskSuccessModal{
+	width: 288px;
+}
+#deleteTaskListSuccessModal .modalBody .confirmInfo, #deleteTaskSuccessModal .modalBody .confirmInfo {
+    background: url("/images/modal-delete-success.png") 35px 26px no-repeat;
+    list-style: none outside none;
+    margin: 0;
+    min-height: 16px;
+    padding: 38px 0 48px 92px;
+	line-height: 16px;
+}
+
+#deleteTaskListSuccessModal .buttonArea .button6, #deleteTaskSuccessModal .buttonArea .button6 {
+	width: 48px;
+}
+#deleteTaskListSuccessModal .buttonArea .button6 span.right, #deleteTaskSuccessModal .buttonArea .button6 span.right {
+    padding: 4px 10px 0;
+	text-align: center;
+}
+
+/*Edit Task*/
+.editTaskItem{
+	z-index: 100;
+	font-size: 11px;
+}
+.editTaskItem .taskItemContent{
+	overflow: visible;	
+}
+.editTaskItem .taskItemHeader .inputWrapper {
+	padding: 11px 0 0 15px;
+}
+.editTaskItem .taskItemHeader .inputWrapper input{
+    border: 1px solid #BDBDBD;
+    color: #666666;
+    padding: 2px 6px;
+    width: 417px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+	display: block;	
+}
+.quickEditTaskItem .taskItemContent{
+	height: 50px;
+}
+.quickEditCol1{
+	width: 26%;
+	float: left;
+}
+	.quickEditCol1 .taskMultiSelector {
+		width: 170px;
+	}
+.quickEditCol2{
+	width: 26%;
+	float: left;
+}
+	.editTaskItem select {
+		color: #333333;
+		height: 21px;
+		margin-top: 1px;
+		padding: 1px;
+		width: 170px;
+	}
+.quickEditCol3{
+	width: 20%;
+	float: left;
+}
+.quickEditTaskItem .quickEditCol3 .task-date-pick {
+    border: 1px solid #BDBDBD;
+    color: #333333;
+    padding: 2px 5px;
+    width: 56px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+}
+.editColLeft{
+	width: 57%;
+	float: left;	
+}
+.editColLeft .editCol1-l{
+	width: 39%;
+	float: left;	
+	height: 64px;
+	clear: left;
+}
+.editColLeft .editCol1-r{
+	width: 56%;
+	margin-left: 4%;
+	float: left;
+	height: 64px;	
+}
+.editColLeft .editCol1-w{
+	width: 100%;
+	clear: left;	
+}
+.editColLeft .editCol1-w .editCol1-l, .editColLeft .editCol1-w .editCol1-r{
+	height: 61px;
+}
+.editColLeft .editCol1-w .editCol1-l select, .editColLeft .editCol1-w .editCol1-r select{
+	margin-top: 10px;
+}
+.editColLeft .selectDisabled select{
+	color: #999999;
+}
+.editColRight{
+	width: 42%;
+	float: left;	
+}
+.editTaskItem label {
+	line-height: 22px;
+}
+.editTaskItem label.chxLbl {
+	line-height: 12px;
+	font-size: 11px;
+}
+.editTaskItem .taskMultiSelector {
+	width: 170px;	
+}
+.editTaskItem .task-date-pick {
+    border: 1px solid #BDBDBD;
+    color: #333333;
+    padding: 2px 2px;
+    width: 59px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+}
+.editTaskItem .dp-choose-date {
+	margin: 0 0 0 5px;
+}
+.editTaskItem .dueDateWrapper span.fLeft{
+	width: 29px;
+	text-align: center;
+	display: inline-block;
+	line-height: 24px;
+}
+.editTaskItem  textarea  {
+    border: 1px solid #BDBDBD;
+    padding: 4px 6px;
+	font-family:Arial,Helvetica,sans-serif;
+	line-height: 14px;
+	resize: none;
+	overflow: auto;
+	width: 92%;
+	height: 59px;
+	font-size: 11px;
+    color: #333333;
+}
+.editTaskAttachment li{
+	width: 240px;
+	display: block;
+	height: 22px;
+	padding-bottom: 4px;
+	margin-right: 11px;
+}
+.editTaskAttachment li a.taskAttachment {
+	max-width: 160px;
+	overflow: hidden;
+	float: left;
+}
+.editTaskAttachment li a.removeFile {
+	float: right;
+	line-height: 22px;
+	color: #ff0000;
+}
+.editTaskAttachment li a.removeFile:hover {
+	text-decoration: none;
+}
+.editTaskItem .newFileList{
+	width: 264px;
+	padding: 12px 0 8px 0;	
+}
+.editTaskItem .newFileList input{
+	width: 264px;
+}
+.editTaskItem .newFileList .rightRow{
+	padding: 0 0 6px 0;	
+}

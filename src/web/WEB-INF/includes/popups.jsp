@@ -68,6 +68,8 @@
   -  Version 2.9 Release Assembly - TopCoder Copilot Feedback Updates
   - - Adds 4 ratings to the copilot feedback add, edit, view modal windows
   -
+  - Version 3.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
+  - - Adds the modal window for the project tasks page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -833,7 +835,9 @@
     <!-- end .modalFooter -->
 </div>
     <!-- end #lockinNoFeedbackModal -->
-    
+        <s:if test='%{#request.CURRENT_TAB  == "tasks" && #request.PAGE_TYPE  == "project"}'>
+            <jsp:include page="./modal/projectTaskModals.jsp"/>
+        </s:if>
         <s:if test='%{#request.CURRENT_TAB  == "overview" && #request.PAGE_TYPE  == "project"}'>
             <div id="projectDescModal" class="outLay">
                 <div class="inner">

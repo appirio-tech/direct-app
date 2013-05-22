@@ -525,5 +525,15 @@
             <version name="RELEASE" path="release"/>
         </versions>
     </project>
+
+    <project
+            name="topcoder_cockpit_task_management_services"
+            svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/tc_-_cockpit_tasks_management_backend_task_management_services"
+            buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
     
 </projects>

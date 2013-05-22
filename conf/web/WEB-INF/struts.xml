@@ -399,6 +399,17 @@
             <result name="success">/WEB-INF/contest-view.jsp</result>
         </action>
 
+        <action name="projectTasks" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/task/project/projectTasks.jsp</result>
+        </action>
+
+        <action name="quickCreateNewTask" method="quickAddTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="batchDraftContestsEdit" class="batchDraftContestsEditAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/contest-draft-batch-edit.jsp</result>

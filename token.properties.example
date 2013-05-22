@@ -379,3 +379,12 @@
 #########################
 @assetUploadBasePath@=/tmp/assetupload
 @assetUploadTempFileRoot@=/tmp/assetuploadtemp
+
+##################
+# Project Tasks  #
+##################
+@taskEmailSender@=donotreply@topcoder.com
+@taskCreationEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; has been created.
+@taskCreationEmailBodyTemplatePath@=email_templates/create_task_email_template.txt
+@taskStatusChangeEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; status has been changed.
+@taskStatusChangeEmailBodyTemplatePath@=email_templates/update_task_status_email_template.txt
