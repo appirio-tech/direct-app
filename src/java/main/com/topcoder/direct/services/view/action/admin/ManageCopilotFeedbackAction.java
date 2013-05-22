@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.admin;
 
@@ -10,7 +10,6 @@ import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.web.common.PermissionException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,15 @@ import java.util.Map;
  * This action handles all the requests from copilot feedback management admin page.
  * </p>
  *
- * @author TCSASSEMBLER
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Copilot Feedback Updates)
+ * <ul>
+ *     <li>Updates {@link #changeFeedbackStatus()} to add copilot feedback ratings</li>
+ *     <li>Updates {@link #updateFeedbackAdmin()} to add copilot feedback ratings</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
  * @version 1.0
  */
 public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
@@ -187,6 +194,13 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
     /**
      * The method handles the ajax request for the admin to change the feedback status.
      *
+     * <p>
+     * Updates in version 1.1 (Release Assembly - TopCoder Copilot Feedback Updates)
+     * <ul>
+     *     <li>Add copilot feedback ratings</li>
+     * </ul>
+     * </p>
+     *
      * @return the result code.
      */
     public String changeFeedbackStatus() {
@@ -205,12 +219,20 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
             }
 
             CopilotProjectFeedback feedbackToUpdate = new CopilotProjectFeedback();
+
+            // update status
             feedbackToUpdate.setStatus(getStatus());
+
+            // copy other properties
             feedbackToUpdate.setUpdaterId(currentUserId);
             feedbackToUpdate.setAnswer(feedback.isAnswer());
             feedbackToUpdate.setText(feedback.getText());
             feedbackToUpdate.setAuthorId(feedback.getAuthorId());
             feedbackToUpdate.setSubmitDate(feedback.getSubmitDate());
+            feedbackToUpdate.setTimelineRating(feedback.getTimelineRating());
+            feedbackToUpdate.setQualityRating(feedback.getQualityRating());
+            feedbackToUpdate.setCommunicationRating(feedback.getCommunicationRating());
+            feedbackToUpdate.setManagementRating(feedback.getManagementRating());
 
             getCopilotProjectDAO().updateCopilotProjectFeedback(feedbackToUpdate, getCopilotProjectId());
 
@@ -228,6 +250,11 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
 
     /**
      * Updates the feedback in administrator role.
+     *
+     * <p>
+     * Version 1.1 (Release Assembly - TopCoder Copilot Feedback Updates)
+     * - Adds copilot feedback ratings
+     * </p>
      *
      * @return the result code
      */
@@ -255,6 +282,10 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
             // update
             feedbackToUpdate.setAnswer(getFeedback().isAnswer());
             feedbackToUpdate.setText(getFeedback().getText());
+            feedbackToUpdate.setTimelineRating(getFeedback().getTimelineRating());
+            feedbackToUpdate.setQualityRating(getFeedback().getQualityRating());
+            feedbackToUpdate.setCommunicationRating(getFeedback().getCommunicationRating());
+            feedbackToUpdate.setManagementRating(getFeedback().getManagementRating());
 
             getCopilotProjectDAO().updateCopilotProjectFeedback(feedbackToUpdate, getCopilotProjectId());
 

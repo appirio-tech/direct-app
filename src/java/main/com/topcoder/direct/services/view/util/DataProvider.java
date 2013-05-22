@@ -871,10 +871,17 @@ import java.util.Set;
  * </ol>
  * <p>
  *
+ * <p>
+ * Version 6.11 (Release Assembly - TopCoder Copilot Feedback Updates)
+ * <ul>
+ *     <li>Updates {@link #getAllCopilotFeedback()} to fill added copilot feedback ratings data</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, TCSASSEMBLER
- * @version 6.10
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin
+ * @version 6.11
  * @since 1.0
  */
 public class DataProvider {
@@ -1150,6 +1157,21 @@ public class DataProvider {
             long copilotUserId = resultContainer.getLongItem(i, "copilot_user_id");
             long directProjectId = resultContainer.getLongItem(i, "direct_project_id");
             String directProjectName = resultContainer.getStringItem(i, "direct_project_name");
+
+            if(resultContainer.getItem(i, "time_rating").getResultData() != null) {
+                feedback.setTimelineRating(Integer.parseInt(resultContainer.getStringItem(i, "time_rating")));
+            }
+
+            if(resultContainer.getItem(i, "quality_rating").getResultData() != null) {
+                feedback.setQualityRating(Integer.parseInt(resultContainer.getStringItem(i, "quality_rating")));
+            }
+            if(resultContainer.getItem(i, "communication_rating").getResultData() != null) {
+                feedback.setCommunicationRating(Integer.parseInt(resultContainer.getStringItem(i, "communication_rating")));
+            }
+
+            if(resultContainer.getItem(i, "management_rating").getResultData() != null) {
+                feedback.setManagementRating(Integer.parseInt(resultContainer.getStringItem(i, "management_rating")));
+            }
 
             feedback.setAuthorId(feedackAuthorId);
             feedback.setSubmitDate(submitDate);

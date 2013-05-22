@@ -101,12 +101,15 @@
  * 
  * - (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - Update the CSS for launching contest update for marathon match.
- ��
+ *
  * - TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  * - Change the cursor CSS style of thumb in submission viewer page to default.
  *
  * - (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * - Fix the extra border line in the studio and marathon prize section in launch contest and contest details pages
+ *
+ * - (Release Assembly - TopCoder Copilot Feedback Updates)
+ * - Add css for copilot feedback ratings
  */
 
 
@@ -9867,11 +9870,11 @@ a.downloadAllbtn:hover span {
 /*}*/
 
 #mainContent.noRightBar {
-    background: none;
+    background: #FFF none repeat-y right
 }
 
 .noRightBar #area1 {
-    padding-right: 0px;
+    padding-right: 25px;
 }
 
 .noRightBar #area2 {
@@ -10195,12 +10198,18 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     width: 660px !important;
 }
 .feedbackModal .question {
-    padding: 20px !important;
+    padding: 20px 20px 10px 20px !important;
 }
-.feedbackModal .question input {
+
+.feedbackModal .rating {
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.feedbackModal .question input, .feedbackModal .rating input {
     margin-right: 5px !important;
 }
-.feedbackModal .question label {
+.feedbackModal .question label, .feedbackModal .rating label {
     margin-right: 20px !important;
 }
 .feedbackModal .comment {
@@ -10685,6 +10694,47 @@ div.clientInvoiceManageRow.last {
 .logoFooterWrapper {
     margin-bottom: 2px;
 }
+
+.rating .pRatings dd label {
+    float: left;
+    width: 134px;
+}
+
+.ratingEdit {
+    overflow: hidden;
+    float: left;
+}
+
+.ratingEdit span {
+    float: left;
+    background: url(/images/rating2.png) no-repeat 0 0;
+    height: 13px;
+    width: 17px;
+    margin-right: 1px;
+    cursor: pointer;
+}
+
+.ratingEdit span.active {
+    background-position: 0 -13px;
+}
+
+.rating .pRatings {
+    margin-top: 15px;
+}
+
+.rating .pRatings dd {
+    overflow: hidden;
+}
+
+.rating .pRatings dt, .question .pRatings dd {
+    margin-bottom: 6px;
+}
+
+#copilotFeedback td span.feedbackRating {
+    font-weight: normal;
+    padding-left: 2px;
+}
+
 
 
 

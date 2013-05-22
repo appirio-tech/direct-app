@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * <p>
  *  Version 1.0: Provides project copilots management and project forum creation features to project overview page.
@@ -27,8 +27,11 @@
  *  - Added event listeners for forum configuration popups
  * </p>
  *
- * @author Blues, GreatKevin, duxiaoyang
- * @version 1.4
+ * Version 1.5 (Release Assembly - TopCoder Copilot Feedback Updates)
+ * - Add 4 ratings to the copilot feedback
+ *
+ * @author Blues, GreatKevin, duxiaoyang, GreatKevin
+ * @version 1.5
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
 var iProjectBudget;
@@ -971,7 +974,49 @@ $(document).ready(function() {
             }
         });
     });
-  // copilot feedback
+
+    // copilot feedback
+
+    // Create copilot feedback rating pickers
+
+    $(".ratingEdit span").live("mouseenter", function () {
+        var wrapper = $(this).parent();
+        var index = wrapper.find("span").index($(this));
+        wrapper.find("span").removeClass("active");
+        wrapper.find("span:lt(" + (index + 1) + ")").addClass("active");
+    });
+    $(".ratingEdit span").live("mouseleave", function () {
+        var wrapper = $(this).parent();
+        var index = wrapper.find("span").index($(this));
+        var rating = wrapper.data("rating");
+        wrapper.find("span").removeClass("active");
+        wrapper.find("span:lt(" + rating + ")").addClass("active");
+    });
+    $(".ratingEdit span").live("click", function () {
+        var wrapper = $(this).parent();
+        var index = wrapper.find("span").index($(this));
+        wrapper.find("span:lt(" + index + ")").addClass("active");
+        wrapper.data("rating", index + 1);
+        return false;
+    });
+
+    $(".ratingEdit").each(function () {
+        var _this = $(this);
+        for (var i = 0; i < 5; i++) {
+            var span = $("<span/>").appendTo(_this);
+        }
+
+        // check the value
+        var item = $(this).parent();
+        var value = item.find("input[name='rating']").val();
+
+        if (value <= 0) {
+            _this.data("rating", 0);
+        } else {
+            $(this).find("span:eq(" + (value - 1) + ")").trigger('mouseenter').trigger('click');
+        }
+
+    });
 
     // 1) new copilot feedback
     $("a[name='newCopilotFeedbackModal']").click(function(){
@@ -980,9 +1025,10 @@ $(document).ready(function() {
         $("#newCopilotFeedbackModal input[type='radio']").each(function(){
            $(this).attr('checked', false);
         });
+        $("#newCopilotFeedbackModal .rating .ratingEdit span").removeClass('active');
         $("#newCopilotFeedbackModal .errorMessage").text('');
         // fill in current copilot handle
-        $("#newCopilotFeedbackModal .question p span").html($("div.copilotsListButtonBox").data('copilot'));
+        $("#newCopilotFeedbackModal span.copilotHandleSpan").html($("div.copilotsListButtonBox").data('copilot'));
         // show modal
         modalLoad('#' + $(this).attr('name'));
 
@@ -1001,11 +1047,19 @@ $(document).ready(function() {
 
         var feedbackAnswer = $('input[name=workAgain]:checked', '#newCopilotFeedbackModal').val() == "yes";
         var feedbackText = $('.comment textarea', '#newCopilotFeedbackModal').val();
+        var timelineRating = $(".rating .ratingEdit:eq(0) span.active", '#newCopilotFeedbackModal').length;
+        var qualityRating = $(".rating .ratingEdit:eq(1) span.active", '#newCopilotFeedbackModal').length;
+        var communicationRating = $(".rating .ratingEdit:eq(2) span.active", '#newCopilotFeedbackModal').length;
+        var managementRating = $(".rating .ratingEdit:eq(3) span.active", '#newCopilotFeedbackModal').length;
 
         var formData = {};
         var feedback = {};
         feedback.answer = feedbackAnswer;
         feedback.text = feedbackText;
+        feedback.timelineRating = timelineRating;
+        feedback.qualityRating = qualityRating;
+        feedback.communicationRating = communicationRating;
+        feedback.managementRating = managementRating;
         formData.copilotProjectId = $('#newCopilotFeedbackModal').data('copilotProjectId');
         formData.feedback = feedback;
         formData.projectId = tcDirectProjectId;
@@ -1027,6 +1081,10 @@ $(document).ready(function() {
                             copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackStatus').val('Pending'));
                             copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackAnswer').val(feedbackAnswer));
                             copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackText').val(feedbackText));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackTimelineRating').val(timelineRating));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackQualityRating').val(qualityRating));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackCommunicationRating').val(communicationRating));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackManagementRating').val(managementRating));
                             setupCopilotFeedbackCurrent($('#projectCopilotsCarousel').data('jcarousel').first);
                             showSuccessfulMessage("Your copilot feedback is added. It will be displayed on the copilot profile when approved.")
                         } else {
@@ -1047,10 +1105,19 @@ $(document).ready(function() {
 
     // 2) edit feedback modal
     $("a[name='editCopilotFeedbackModal']").click(function(){
-        // clear inputs
+        // clear inputs and populate feedback data
         $("#editCopilotFeedbackModal textarea").val($("div.copilotsListButtonBox").data('copilotFeedbackText'));
         var feedbackAnswer = $("div.copilotsListButtonBox").data('copilotFeedbackAnswer') == 'true' ? 'yes' : 'no';
         $("#editCopilotFeedbackModal input[name=workAgain][value=" + feedbackAnswer + "]").attr('checked', 'checked');
+        $("#editCopilotFeedbackModal .rating .ratingEdit span").removeClass('active');
+        $("#editCopilotFeedbackModal .rating .ratingEdit:eq(0) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackTimelineRating') + ")")
+            .addClass('active').parents('.ratingEdit').data("rating", $("div.copilotsListButtonBox").data('copilotFeedbackTimelineRating'));
+        $("#editCopilotFeedbackModal .rating .ratingEdit:eq(1) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackQualityRating') + ")")
+            .addClass('active').parents('.ratingEdit').data("rating", $("div.copilotsListButtonBox").data('copilotFeedbackQualityRating'));
+        $("#editCopilotFeedbackModal .rating .ratingEdit:eq(2) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackCommunicationRating') + ")")
+            .addClass('active').parents('.ratingEdit').data("rating", $("div.copilotsListButtonBox").data('copilotFeedbackCommunicationRating'));
+        $("#editCopilotFeedbackModal .rating .ratingEdit:eq(3) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackManagementRating') + ")")
+            .addClass('active').parents('.ratingEdit').data("rating", $("div.copilotsListButtonBox").data('copilotFeedbackManagementRating'));
 
         // fill in current copilot handle
         $("#editCopilotFeedbackModal .question p span").html($("div.copilotsListButtonBox").data('copilot'));
@@ -1067,12 +1134,20 @@ $(document).ready(function() {
 
         var feedbackAnswer = $('input[name=workAgain]:checked', '#editCopilotFeedbackModal').val() == "yes";
         var feedbackText = $('.comment textarea', '#editCopilotFeedbackModal').val();
+        var timelineRating = $(".rating .ratingEdit:eq(0) span.active", '#editCopilotFeedbackModal').length;
+        var qualityRating = $(".rating .ratingEdit:eq(1) span.active", '#editCopilotFeedbackModal').length;
+        var communicationRating = $(".rating .ratingEdit:eq(2) span.active", '#editCopilotFeedbackModal').length;
+        var managementRating = $(".rating .ratingEdit:eq(3) span.active", '#editCopilotFeedbackModal').length;
 
         var formData = {};
         var feedback = {};
         feedback.answer = feedbackAnswer;
         feedback.text = feedbackText;
         feedback.status = "Pending";
+        feedback.timelineRating = timelineRating;
+        feedback.qualityRating = qualityRating;
+        feedback.communicationRating = communicationRating;
+        feedback.managementRating = managementRating;
         formData.copilotProjectId = $('#editCopilotFeedbackModal').data('copilotProjectId');
         formData.feedback = feedback;
         formData.projectId = tcDirectProjectId;
@@ -1093,6 +1168,10 @@ $(document).ready(function() {
                             var copilotInfo = getCurrentCopilotContainer().find(".userInfor");
                             copilotInfo.find('input[name=copilotFeedbackAnswer]').val(feedbackAnswer);
                             copilotInfo.find('input[name=copilotFeedbackText]').val(feedbackText);
+                            copilotInfo.find('input[name=copilotFeedbackTimelineRating]').val(timelineRating);
+                            copilotInfo.find('input[name=copilotFeedbackQualityRating]').val(qualityRating);
+                            copilotInfo.find('input[name=copilotFeedbackCommunicationRating]').val(communicationRating);
+                            copilotInfo.find('input[name=copilotFeedbackManagementRating]').val(managementRating);
                             setupCopilotFeedbackCurrent($('#projectCopilotsCarousel').data('jcarousel').first);
                         } else {
                             showServerError("Unknown error happened");
@@ -1114,12 +1193,31 @@ $(document).ready(function() {
 
     // 3) view feedback modal
     $("a[name='viewCopilotFeedbackModal']").click(function(){
+        // populate feedback data
+
+        // 1) feedback comment
         $("#viewCopilotFeedbackModal .comment span.text").text($("div.copilotsListButtonBox").data('copilotFeedbackText'));
+
+        // 2) feedback answer
         var feedbackAnswer = $("div.copilotsListButtonBox").data('copilotFeedbackAnswer') == 'true' ? 'YES' : 'NO';
         $("#viewCopilotFeedbackModal .question span.answer").text(feedbackAnswer);
 
+        // 3) feedback ratings
+        var rating = $("div.copilotsListButtonBox").data('copilotFeedbackTimelineRating');
+        if(rating && rating > 0) {
+            $("#viewCopilotFeedbackModal .rating .ratingView span").removeClass("active");
+            $("#viewCopilotFeedbackModal .rating .ratingView:eq(0) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackTimelineRating') + ")").addClass('active');
+            $("#viewCopilotFeedbackModal .rating .ratingView:eq(1) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackQualityRating') + ")").addClass('active');
+            $("#viewCopilotFeedbackModal .rating .ratingView:eq(2) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackCommunicationRating') + ")").addClass('active');
+            $("#viewCopilotFeedbackModal .rating .ratingView:eq(3) span:lt(" + $("div.copilotsListButtonBox").data('copilotFeedbackManagementRating') + ")").addClass('active');
+            $("#viewCopilotFeedbackModal div.rating").show();
+        } else {
+            $("#viewCopilotFeedbackModal div.rating").hide();
+        }
+
+
         // fill in current copilot handle
-        $("#viewCopilotFeedbackModal .question span.copilotHandle").html($("div.copilotsListButtonBox").data('copilot'));
+        $("#viewCopilotFeedbackModal span.copilotHandleSpan").html($("div.copilotsListButtonBox").data('copilot'));
         // show modal
         modalLoad('#' + $(this).attr('name'));
         $('#' + $(this).attr('name')).data('copilotProjectId', $("div.copilotsListButtonBox").data('copilotProjectId'));
@@ -1143,24 +1241,45 @@ function setupCopilotFeedbackCurrent(index) {
 
 
     if (container.find("input[name='copilotFeedbackStatus']").length == 0) {
+        // no copilot feedback for this copilot
+
+        // show leave feedback button
         $(".copilotsListButtonBox a[name='newCopilotFeedbackModal']").show();
+
+        // hide edit feedback and view feedback button
         $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").hide();
         $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").hide();
         $("div.copilotsListButtonBox").removeData('copilotFeedbackStatus');
         $("div.copilotsListButtonBox").removeData('copilotFeedbackAnswer');
         $("div.copilotsListButtonBox").removeData('copilotFeedbackText');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackTimelineRating');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackQualityRating');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackCommunicationRating');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackManagementRating');
+
     } else {
+        // has copilot feedback for this copilot
         $(".copilotsListButtonBox a[name='newCopilotFeedbackModal']").hide();
+
+
         if (container.find("input[name='copilotFeedbackStatus']").val().toLowerCase() != "pending") {
+            // if status is pending, show edit feedback button
             $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").show();
             $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").hide();
         } else {
+            // status is approved, show view feedback button
             $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").hide();
             $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").show();
         }
+
+        // put the feedback data into the jquery data of this copilot view
         $("div.copilotsListButtonBox").data('copilotFeedbackStatus', container.find("input[name='copilotFeedbackStatus']").val());
         $("div.copilotsListButtonBox").data('copilotFeedbackAnswer', container.find("input[name='copilotFeedbackAnswer']").val());
         $("div.copilotsListButtonBox").data('copilotFeedbackText', container.find("input[name='copilotFeedbackText']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackTimelineRating', container.find("input[name='copilotFeedbackTimelineRating']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackQualityRating', container.find("input[name='copilotFeedbackQualityRating']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackCommunicationRating', container.find("input[name='copilotFeedbackCommunicationRating']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackManagementRating', container.find("input[name='copilotFeedbackManagementRating']").val());
     }
 }
 
@@ -1168,6 +1287,7 @@ function validateFeedbackModal(modalId) {
     var modal = $("#" + modalId);
     var passValidation = true;
 
+    // validate feedback answer
     if(modal.find("input[name=workAgain]:checked").length == 0) {
         modal.find(".question span.errorMessage").text("Please choose an answer");
         passValidation = false;
@@ -1175,6 +1295,24 @@ function validateFeedbackModal(modalId) {
         modal.find(".question span.errorMessage").text('');
     }
 
+    // validate feedback ratings
+    var passRatingValidation = true;
+    modal.find(".rating .ratingEdit").each(function(){
+        var ratingValue = getFeedbackRating($(this));
+        if (ratingValue < 1) {
+            // at least one star is needed for each rating
+            passValidation = false;
+            passRatingValidation = false;
+        }
+    })
+
+    if(passRatingValidation) {
+        modal.find(".rating span.errorMessage").text('');
+    } else {
+        modal.find(".rating span.errorMessage").text('Please give your ratings on each rating category, at least 1 star needs to give');
+    }
+
+    // validate feedback comment
     if($.trim(modal.find(".comment textarea").val()).length == 0) {
         modal.find(".comment span.errorMessage").text("Please enter your feedback here");
         passValidation = false;
@@ -1191,5 +1329,9 @@ function validateFeedbackModal(modalId) {
     }
 
     return passValidation;
+}
+
+function getFeedbackRating(ratingControl) {
+    return ratingControl.find("span.active").length;
 }
 

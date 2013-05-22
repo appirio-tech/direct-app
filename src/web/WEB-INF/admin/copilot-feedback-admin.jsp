@@ -1,12 +1,15 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.1
+  - Author: Ghost_141, GreatKevin
+  - Version: 1.2
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 Module Assembly - TopCoder Copilot Feedback Integration
   - 
   - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - - Remove container2BottomLeft and container2BottomRight in pagination part.
+  -
+  - Version 1.2 Release Assembly - TopCoder Copilot Feedback Updates
+  - - Add 4 ratings to the copilot feedback
   - 
   - The admin page for the copilot feedback management
 --%>
@@ -32,7 +35,7 @@
 
 <jsp:include page="../includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="noRightBar">
 
 
 <div id="area1"><!-- the main area -->
@@ -55,7 +58,8 @@
             <colgroup>
                 <col width="19%" />
                 <col width="8%" />
-                <col />
+                <col width="28%"/>
+                <col width="9%"/>
                 <col width="8%" />
                 <col width="9%" />
                 <col width="9%" />
@@ -67,6 +71,7 @@
                     <th>Project Name</th>
                     <th>Copilot</th>
                     <th>Feedback Content</th>
+                    <th>Ratings</th>
                     <th>Submittor</th>
                     <th>Submit Time</th>
                     <th>Status</th>
@@ -92,6 +97,35 @@
                         <b>Would like to work with the copilot?:</b> <span class="feedbackAnswer">${feedback.answer == true ? "YES" : "NO"}</span>   <a class="adminFeedbackEdit" href="javascript:;">Admin Edit</a><br/><br/>
                         <b>Feedback:</b>
                         <span class="feedbackText"><s:property value="feedback.text"/></span>
+                    </td>
+                    <td class="copilotFeedback copilotRating">
+                        <input type="hidden" name="copilotFeedbackTimelineRating" value="<s:property value='feedback.timelineRating'/>">
+                        <input type="hidden" name="copilotFeedbackQualityRating" value="<s:property value='feedback.qualityRating'/>">
+                        <input type="hidden" name="copilotFeedbackCommunicationRating" value="<s:property value='feedback.communicationRating'/>">
+                        <input type="hidden" name="copilotFeedbackManagementRating" value="<s:property value='feedback.managementRating'/>">
+                        <span class="feedbackRating">
+                            <s:if test="feedback.timelineRating > 0">
+                                Timeline:<s:property value="feedback.timelineRating"/>
+                                <br/>
+                            </s:if>
+                        </span>
+                        <span class="feedbackRating">
+                            <s:if test="feedback.qualityRating > 0">
+                                Quality:<s:property value="feedback.qualityRating"/>
+                                <br/>
+                            </s:if>
+                        </span>
+                        <span class="feedbackRating">
+                            <s:if test="feedback.communicationRating > 0">
+                                Communication:<s:property value="feedback.communicationRating"/>
+                                <br/>
+                            </s:if>
+                        </span>
+                        <span class="feedbackRating">
+                            <s:if test="feedback.managementRating > 0">
+                                Management:<s:property value="feedback.managementRating"/>
+                            </s:if>
+                        </span>
                     </td>
                     <td>
                         <link:user userId="${feedback.authorId}"/>
@@ -163,6 +197,28 @@
                             <p>Would you like to work with this copilot <span></span> again?</p>
                             <input type="radio" name="workAgain" value="yes"><label>Yes</label>
                             <input type="radio" name="workAgain" value="no"><label>No</label>
+                            <span class="errorMessage"> </span>
+                        </div>
+                        <div class="rating">
+                            <dl class="pRatings">
+                                <dt>How would you rate <span class="copilotHandleSpan"></span> on:</dt>
+                                <dd>
+                                    <label title="Timelines, gameplans">Project timelines</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Quality of deliverables and final &quot;product&quot;">Quality</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Setting expectations correctly, proactively raising issues">Communication</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                            </dl>
                             <span class="errorMessage"> </span>
                         </div>
                         <div class="comment">

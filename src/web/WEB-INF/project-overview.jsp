@@ -1,7 +1,7 @@
 <%--
   - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin
   -
-  - Version: 1.8
+  - Version: 1.9
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -38,6 +38,8 @@
   - - Add email icon with mail to for TopCoder Platform Specialists
   - Version 1.8 - Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly
   - - Add email icon with mail to for Client Managers and TopCoder Account Managers
+  - Version 1.9 - Release Assembly - TopCoder Copilot Feedback Updates
+  - - Adds 4 ratings to the copilot feedback
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -643,6 +645,10 @@
                                                                     <input type="hidden" name="copilotFeedbackStatus" value="${feedback.status}">
                                                                     <input type="hidden" name="copilotFeedbackAnswer" value="${feedback.answer}">
                                                                     <input type="hidden" name="copilotFeedbackText" value="<s:property value='feedback.text'/>">
+                                                                    <input type="hidden" name="copilotFeedbackTimelineRating" value="<s:property value='feedback.timelineRating'/>">
+                                                                    <input type="hidden" name="copilotFeedbackQualityRating" value="<s:property value='feedback.qualityRating'/>">
+                                                                    <input type="hidden" name="copilotFeedbackCommunicationRating" value="<s:property value='feedback.communicationRating'/>">
+                                                                    <input type="hidden" name="copilotFeedbackManagementRating" value="<s:property value='feedback.managementRating'/>">
                                                                 </s:if>
                                                                 <div class="userInforInner">
                                                                     <dl>

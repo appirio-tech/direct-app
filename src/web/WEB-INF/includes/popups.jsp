@@ -1,6 +1,6 @@
 <%--
   - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin
-  - Version: 2.7
+  - Version: 2.8
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -64,6 +64,9 @@
   -
   - Version 2.8 - Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly
   - - Adds the copilot posting winner pickup confirmation dialogue
+  -
+  -  Version 2.9 Release Assembly - TopCoder Copilot Feedback Updates
+  - - Adds 4 ratings to the copilot feedback add, edit, view modal windows
   -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -879,9 +882,31 @@
                     <!-- content -->
                     <div class="modalBody">
                         <div class="question">
-                            <p>Would you like to work with this copilot <span></span> again?</p>
+                            <p>Would you like to work with this copilot <span class="copilotHandleSpan"></span> again?</p>
                             <input type="radio" name="workAgain" value="yes"><label>Yes</label>
                             <input type="radio" name="workAgain" value="no"><label>No</label>
+                            <span class="errorMessage"> </span>
+                        </div>
+                        <div class="rating">
+                            <dl class="pRatings">
+                                <dt>How would you rate <span class="copilotHandleSpan"></span> on:</dt>
+                                <dd>
+                                    <label title="Timelines, gameplans">Project timelines</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Quality of deliverables and final &quot;product&quot;">Quality</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Setting expectations correctly, proactively raising issues">Communication</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                            </dl>
                             <span class="errorMessage"> </span>
                         </div>
                         <div class="comment">
@@ -921,9 +946,31 @@
                     <div class="modalBody">
                         <div class="question">
                             <p class="warningMessage">Edit your feedback below</p>
-                            <p>Would you like to work with this copilot <span></span> again?</p>
+                            <p>Would you like to work with this copilot <span class="copilotHandleSpan"></span> again?</p>
                             <input type="radio" name="workAgain" value="yes"><label>Yes</label>
                             <input type="radio" name="workAgain" value="no"><label>No</label>
+                            <span class="errorMessage"> </span>
+                        </div>
+                        <div class="rating">
+                            <dl class="pRatings">
+                                <dt>How would you rate <span class="copilotHandleSpan"></span> on:</dt>
+                                <dd>
+                                    <label title="Timelines, gameplans">Project timelines</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Quality of deliverables and final &quot;product&quot;">Quality</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Setting expectations correctly, proactively raising issues">Communication</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <div class="ratingEdit"></div>
+                                </dd>
+                            </dl>
                             <span class="errorMessage"> </span>
                         </div>
                         <div class="comment">
@@ -962,8 +1009,30 @@
                     <!-- content -->
                     <div class="modalBody">
                         <div class="question">
-                            <b>Would you like to work with this copilot <span class="copilotHandle"></span> again?</b><br/>
+                            <b>Would you like to work with this copilot <span class="copilotHandleSpan"></span> again?</b><br/>
                             <span class="answer"></span>
+                        </div>
+                        <div class="rating">
+                            <dl class="pRatings">
+                                <dt><b>How would you rate <span class="copilotHandleSpan"></span> on:</b></dt>
+                                <dd>
+                                    <label title="Timelines, gameplans">Project timelines</label>
+                                    <div class="ratingView"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Quality of deliverables and final &quot;product&quot;">Quality</label>
+                                    <div class="ratingView"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Setting expectations correctly, proactively raising issues">Communication</label>
+                                    <div class="ratingView"></div>
+                                </dd>
+                                <dd>
+                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <div class="ratingView"></div>
+                                </dd>
+                            </dl>
+                            <span class="errorMessage"> </span>
                         </div>
                         <div class="comment">
                             <b>Your feedback</b><br/>

@@ -84,9 +84,12 @@
  *
  * Version 2.3 - (Release Assembly - TopCoder Cockpit - Billing Management)
  * - Add sort handling for the invoice date in client invoice page.
+ *
+ * Version 2.4 (Release Assembly - TopCoder Copilot Feedback Updates)
+ * - Adds a new column ratings to copilot feedback admin table
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, TCSASSEMBLER
- * @version 2.3
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
+ * @version 2.4
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -834,6 +837,7 @@ $(document).ready(function() {
         "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
+            { "sType": "html" },
             { "sType": "html" },
             { "sType": "html" },
             { "sType": "html" },

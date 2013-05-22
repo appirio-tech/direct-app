@@ -684,7 +684,7 @@ td.contestActivities .completed .rightLaunch p a {
     padding: 0 0 10px;
 }
 
-.managersBox .pRatings dd label {
+.managersBox .pRatings dd label, .rating .pRatings dd label {
     float: left;
     width: 134px;
 }
