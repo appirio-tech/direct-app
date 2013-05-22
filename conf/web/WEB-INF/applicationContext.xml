@@ -1307,6 +1307,54 @@
         <property name="defaultResultLimit" value="@paymemtStatsService.resultLimit@"/>
     </bean>
 
+    <bean id="assetService"
+          class="com.topcoder.asset.services.impl.AssetServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+        <property name="assetVersionService" ref="assetVersionService"/>
+    </bean>
+
+    <bean id="assetVersionService"
+          class="com.topcoder.asset.services.impl.AssetVersionServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+        <property name="basePath" value="@assetUploadBasePath@"/>
+        <property name="imageTypes">
+            <list>
+                <value>jpg</value>
+                <value>png</value>
+                <value>bmp</value>
+            </list>
+        </property>
+        <property name="previewImageWidth" value="10"/>
+        <property name="previewImageHeight" value="20"/>
+    </bean>
+
+    <bean id="assetPermissionService"
+          class="com.topcoder.asset.services.impl.AssetPermissionServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+        <property name="assetService" ref="assetService"/>
+    </bean>
+
+    <bean id="assetCategoryService"
+          class="com.topcoder.asset.services.impl.AssetCategoryServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+    </bean>
+
+    <bean id="assetFileTypeIconService"
+          class="com.topcoder.asset.services.impl.FileTypeIconServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+    </bean>
+
+    <bean id="assetManagerService"
+          class="com.topcoder.asset.services.impl.ManagerServiceImpl">
+        <property name="entityManager" ref="assetEntityManager"/>
+        <property name="log" ref="log"/>
+    </bean>
+
     <bean id="baseAbstractAssetAction" abstract="true"
           class="com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction"
           scope="prototype" parent="baseDirectStrutsAction">
