@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru
   - Version: 3.1
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
@@ -50,6 +50,7 @@
   - Version 3.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes:
   - - Added assets tab under project dashboard
   - Version 3.1 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task) change notes: add project Tasks tab
+  - Version 3.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes: rename "Assets"->"Files"
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -616,7 +617,7 @@
                         </li>
 
                          <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="on"</c:if>>
-                             <a href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Assets</span></a>
+                             <a href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Files</span></a>
                          </li>
                           
                           <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
