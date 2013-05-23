@@ -49,9 +49,16 @@ import com.topcoder.excel.output.WorkbookSaver;
  *    </li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 change log:
+ * <ol>
+ *   <li>Added New Column 'Total Contests'.</li>
+ * </ol>
+ * </p>
  * 
  * @author TCSASSEMBER
- * @version  1.2 (TC Cockpit - Member Participation Metrics Report Upgrade )
+ * @version  1.3
  */
 public class ParticipationReportDTO extends ReportAggregationBaseDTO<ParticipationAggregationReportDTO> {
 
@@ -191,6 +198,7 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
         row.getCell(index++).setStringValue("Total Winners");
         row.getCell(index++).setStringValue("Total Unique Winners");
         row.getCell(index++).setStringValue("Winner Countries");
+        row.getCell(index++).setStringValue("Total Contests");
         return ++rowIndex;
     }
 
@@ -225,6 +233,7 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
             row.getCell(index++).setNumberValue(dto.getTotalWinners());
             row.getCell(index++).setNumberValue(dto.getTotalUniqueWinners());
             row.getCell(index++).setNumberValue(dto.getWinnerCountries());
+            row.getCell(index++).setNumberValue(dto.getTotalContests());
         }
         return ++rowIndex;
     }

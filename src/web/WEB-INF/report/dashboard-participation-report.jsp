@@ -209,10 +209,31 @@
     </tbody>
 </table>
 
+<table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
+    <tr>
+        <th class="tableTitle" colspan="7">
+            <a href="javascript:void(0)" class="expand">&nbsp;</a>
+            <span>Aggregation Participation Metrics Report</span>
+        </th>
+        <th class="tableTitle">&nbsp;</th>
+        <th class="tableTitle viewType" colspan="6">
+
+            <label for="aggregationParticipationReportType">View By:</label>
+            <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
+                <option value="project" selected="selected">Project</option>
+                <option value="billing">Billing Account</option>
+                <option value="type">Contest Type</option>
+                <option value="status">Contest Status</option>
+                <option value="contest">Contest</option>
+            </select>
+
+        </th>
+    </tr>
+</table>
 <div class="resultTableContainer projectAggregationReport">
-<table id="participationMetricsReportAggregationArea" class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
-        <col width="14%" />
+        <col width="16%" />
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
@@ -225,29 +246,10 @@
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
-        <col width="10%" />
+        <col width="6%" />
+        <col width="6%" />
     </colgroup>
     <thead>
-        <tr>
-            <th class="tableTitle" colspan="7">
-                <a href="javascript:void(0)" class="expand">&nbsp;</a>
-                <span>Aggregation Participation Metrics Report</span>
-            </th>
-            <th class="tableTitle">&nbsp;</th>
-            <th class="tableTitle viewType" colspan="6">
-                
-                <label for="aggregationParticipationReportType">View By:</label>
-                <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
-                    <option value="project" selected="selected">Project</option>
-                    <option value="billing">Billing Account</option>
-                    <option value="type">Contest Type</option>
-                    <option value="status">Contest Status</option>
-                    <option value="contest">Contest</option>
-                </select>
-                
-            </th>
-        </tr>
-
         <tr class="projectAggregationCostReport scData subTheadRow">
             <th class="tableColumn first">Project</th>
             <th class="tableColumn">Total<br />Registrations</th>
@@ -262,7 +264,8 @@
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
-            <th class="tableColumn last">Winner<br />Countries</th>
+            <th class="tableColumn">Winner<br />Countries</th>
+            <th class="tableColumn last">Total<br />Contests</th>
         </tr>
     </thead>
     <tbody>
@@ -285,6 +288,7 @@
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
+            <td>${item.totalContests}</td>
         </tr>
         </c:forEach>
     </tbody>
@@ -315,7 +319,7 @@
 <div class="resultTableContainer billingAggregationReport hide">
 <table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
-        <col width="14%" />
+        <col width="16%" />
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
@@ -328,7 +332,8 @@
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
-        <col width="10%" />
+        <col width="6%" />
+        <col width="6%" />
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
@@ -345,7 +350,8 @@
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
-            <th class="tableColumn last">Winner<br />Countries</th>
+            <th class="tableColumn">Winner<br />Countries</th>
+            <th class="tableColumn last">Total<br />Contests</th>
         </tr>
     </thead>
     <tbody>
@@ -368,6 +374,7 @@
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
+            <td>${item.totalContests}</td>
         </tr>
         </c:forEach>
     </tbody>
@@ -396,7 +403,7 @@
 <div class="resultTableContainer typeAggregationReport hide">
 <table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
-        <col width="14%" />
+        <col width="16%" />
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
@@ -409,7 +416,8 @@
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
-        <col width="10%" />
+        <col width="6%" />
+        <col width="6%" />
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
@@ -427,6 +435,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn last">Winner<br />Countries</th>
+            <th class="tableColumn">Total<br />Contests</th>
         </tr>
     </thead>
     <tbody>
@@ -449,6 +458,7 @@
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
+            <td>${item.totalContests}</td>
         </tr>
         </c:forEach>
     </tbody>
@@ -478,7 +488,7 @@
 <div class="resultTableContainer statusAggregationReport hide">
 <table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
-        <col width="14%" />
+        <col width="16%" />
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
@@ -491,7 +501,8 @@
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
-        <col width="10%" />
+        <col width="6%" />
+        <col width="6%" />
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
@@ -508,7 +519,8 @@
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
-            <th class="tableColumn last">Winner<br />Countries</th>
+            <th class="tableColumn">Winner<br />Countries</th>
+            <th class="tableColumn last">Total<br />Contests</th>
         </tr>
     </thead>
     <tbody>
@@ -531,6 +543,7 @@
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
+            <td>${item.totalContests}</td>
         </tr>
         </c:forEach>
     </tbody>
@@ -562,7 +575,7 @@
 <div class="resultTableContainer contestAggregationReport hide">
 <table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <colgroup>
-        <col width="14%" />
+        <col width="16%" />
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
@@ -575,7 +588,8 @@
         <col width="6%" />
         <col width="6%" />
         <col width="6%" />
-        <col width="10%" />
+        <col width="6%" />
+        <col width="6%" />
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
@@ -593,6 +607,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
+            <th class="tableColumn">Total<br />Contests</th>
         </tr>
     </thead>
     <tbody>
@@ -615,6 +630,7 @@
             <td>${item.totalWinners}</td>
             <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
+            <td>&nbsp;</td>
         </tr>
         </c:forEach>
     </tbody>

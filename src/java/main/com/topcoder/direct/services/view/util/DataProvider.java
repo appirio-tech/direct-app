@@ -7207,6 +7207,9 @@ public class DataProvider {
             dto.setWinnerCountries(row.getIntItem("winners_country_count"));
             dto.setUniqueSubmitters(row.getIntItem("unique_submitters_count"));
             dto.setTotalUniqueWinners(row.getIntItem("unique_winners_count"));
+            if (row.isValidColumn("total_contests_count")) {
+                dto.setTotalContests(row.getIntItem("total_contests_count"));
+            }
 
             aggregator.add(dto);
         }

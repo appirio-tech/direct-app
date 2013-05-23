@@ -28,9 +28,16 @@ import java.io.Serializable;
  *   <li>Added {@link #finalSubmissions} field and getter/setter for it.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 change log:
+ * <ol>
+ *   <li>Added {@link #totalContests} field and getter/setter for it.</li>
+ * </ol>
+ * </p>
  * 
  * @author TCSASSEMBER
- * @version  1.2 (TC Cockpit - Member Participation Metrics Report Upgrade)
+ * @version  1.3
  */
 public class ParticipationAggregationReportDTO implements Serializable {
 
@@ -120,6 +127,13 @@ public class ParticipationAggregationReportDTO implements Serializable {
      * Represents the number of winner countries of the aggregation group.
      */
     private int winnerCountries;
+
+    /**
+     * Represents the number of total contests of the aggregation group.
+     *
+     * @since 1.3
+     */
+    private int totalContests;
     
     /**
      * Empty constructor.
@@ -384,10 +398,31 @@ public class ParticipationAggregationReportDTO implements Serializable {
     /**
      * Sets the unique winners of the aggregation group.
      *
-     * @param uniqueWinners the unique winners of the aggregation group.
+     * @param totalUniqueWinners the unique winners of the aggregation group.
      * @since 1.1
      */
     public void setTotalUniqueWinners(int totalUniqueWinners) {
         this.totalUniqueWinners = totalUniqueWinners;
+    }
+
+
+    /**
+     * Gets the total contests of the aggregation group.
+     *
+     * @return the total contests of the aggregation group.
+     * @since 1.3
+     */
+    public int getTotalContests() {
+        return totalContests;
+    }
+
+    /**
+     * Sets the total contests of the aggregation group.
+     *
+     * @param totalContests the total contests of the aggregation group.
+     * @since 1.3
+     */
+    public void setTotalContests(int totalContests) {
+        this.totalContests = totalContests;
     }
 }
