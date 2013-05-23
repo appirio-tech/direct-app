@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -22,6 +22,8 @@
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
   - Version 1.7 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
   - - Adds support for marathon contest details page.
+  - Version 1.8 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+  - - Add support for CCA specific on billing accounts
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -92,7 +94,15 @@
                             <div><div>
 
                             <div class="container2Content_det contestDetailsContainer">
-
+                            <script>
+                               var billingAccounts = [];
+                               <s:iterator value="billingAccountsForProject">
+                               billingAccounts.push({"id": "<s:property value="id" />",
+                            	    "name" : "<s:property value="name" />",
+                            	    "cca" : "<s:property value="cca" />"
+                               });
+                               </s:iterator>
+                            </script>
                             <s:if test="marathon">
                                <jsp:include page="includes/contest/editTabMarathon.jsp"/>
                             </s:if>

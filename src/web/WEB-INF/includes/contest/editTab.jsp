@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -23,6 +23,8 @@
   -   Added contestTypes select sub elements to avoid loading scripts error.
   - Version 1.7 (Release Assembly - TopCoder Studio CCA Integration) change notes:
   -   Added CCA support for studio contest. Disabled the submission visibility functionality.
+  - Version 1.8 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+  - - change on #billingProjects, will load by jquery
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -142,9 +144,6 @@
                      <div class="billingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                             <option value="-1">Please select an existing account</option>
-                           <s:iterator value="billingAccountsForProject">
-                           <option value='<s:property value="id" />'><s:property value="name" /></option>
-                           </s:iterator>
                         </select>
                      </div>
                  </div>

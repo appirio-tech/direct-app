@@ -65,8 +65,11 @@
  * Version 2.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * 1) Add supports for marathon contest details page - initialize the marathon contest details specification
  *
+ * Version 2.2 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+ * - Add billing account CCA specific 
+ * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve
- * @version 2.1
+ * @version 2.2
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -86,7 +89,10 @@ $(document).ready(function(){
       $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
 	  
-	  
+    $.each(billingAccounts, function(key, value) {
+    	var _cca = value["cca"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+    });	
 	  /* Optgroup 2 columns fix */
 	  if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
 	  	var optgroupMaxHeight = 0, num;
@@ -101,7 +107,7 @@ $(document).ready(function(){
 	  	$(window).resize(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
 	  	$(window).scroll(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
 	  }
-		
+	
     //contest type
 		$("#editTypeButton").click(function(){			
 			showTypeSectionEdit();
@@ -178,9 +184,16 @@ $(document).ready(function(){
 		});
        // billing projects
        $('#billingProjects').bind("change", function() {
+	    	if ($(this).find(":selected").data("cca")){
+	    		mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+	    		$("#chkboxCCA").attr('checked','true').attr('disabled','true');
+	    		$('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+	    	}else{
+	    		$("#chkboxCCA").removeAttr('disabled');
+	    	}
            updateContestFee();
        });
-    
+
     var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
     var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
     var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
@@ -979,12 +992,26 @@ function showTypeSectionDisplay() {
 function showTypeSectionEdit() {
 	 $(".contest_type").css("display","none");
 	 $(".contest_type_edit").css("display","block");
+	 if(!$("#billingProjects").data('customized')){
+		 $("#billingProjects").data('customized',true);
+	     $('#billingProjects').sSelect({ddMaxHeight: '220',yscroll: true});
+	 }
+	 $("#billingProjects").getSetSSValue(mainWidget.softwareCompetition.projectHeader.getBillingProject());
 	 if(!$(".selectDesing select").data('customized')){
 		$(".selectDesing select").data('customized',true);
       	$(".selectDesing select").sSelect();
 		$('.selectDesing div.selectedTxt').html('Select Contest Type');
     }
-
+	 
+     $.each(billingAccounts,function(k, v){
+    	 var _cca = v["cca"] == "true" ? true : false;
+  	   	if (v["id"] == mainWidget.softwareCompetition.projectHeader.getBillingProject()){
+  		   if (_cca) {
+  			   $("#chkboxCCA").attr('disabled','true');
+  		   }
+  	   }
+     });
+  
     if(!$('#projects').data('customized')) {
         $('#projects').sSelect({ddMaxHeight: '220',yscroll: true}).change(function() {
               handleProjectDropDownChange();
@@ -992,13 +1019,6 @@ function showTypeSectionEdit() {
         $('#projects').data('customized',true);
     }
     
-    if(!$('#billingProjects').data('customized')) {
-        $('#billingProjects').sSelect({ddMaxHeight: '220',yscroll: true}).change(function() {
-              handleProjectDropDownChange();
-          });
-        $('#billingProjects').data('customized',true);
-    }
-
     if(!$('#copilots').data('customized')) {
        $('#copilots').sSelect({ddMaxHeight: '220',yscroll: true});
        $('#copilots').data('customized',true);
@@ -1705,11 +1725,23 @@ function showPrizeSectionEdit() {
     
 	$(".contest_prize").css("display","none");
 	$(".contest_prize_edit").css("display","block");
-	if(!$(".prizeBillingSelect select").data('customized')){
+/*	if(!$(".prizeBillingSelect select").data('customized')){
 		$(".prizeBillingSelect select").data('customized',true);
-      	$(".prizeBillingSelect select").sSelect({ddMaxHeight: '220',yscroll: true});
+        $('.prizeBillingSelect select').sSelect({ddMaxHeight: '220',yscroll: true});
     }
-
+	$('.prizeBillingSelect select').resetSS();
+	$('#billingProjects').bind("change", function() {
+        if ($(this).find(":selected").data("cca")){
+                mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+                $("#chkboxCCA").attr('checked','true').attr('disabled','true');
+                $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+        }else{
+                $("#chkboxCCA").removeAttr('disabled');
+        }
+        updateContestFee();
+    });*/
+	$('.prizeBillingSelect select').resetSS();
+	$("#billingProjects").getSetSSValue(mainWidget.softwareCompetition.projectHeader.getBillingProject());
     fillPrizes();
 }
 
@@ -2383,5 +2415,36 @@ function handleProjectDropDownChange() {
 
     $('#copilots').resetSS();
     $('#copilots').getSetSSValue(selected);
+
+    billingAccounts = getBillingAccountsByDirectProjectId(value);
+    $("#billingProjects").empty();
+    $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
+
+    $.each(billingAccounts, function(key, value) {
+    	var _cca = value["cca"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+    });	
+    $("#chkboxCCA").removeAttr('checked');
+    $("#chkboxCCA").removeAttr('disabled');
+    mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+    $("#billingProjects").val(0);
+
+    $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+    //showPrizeSectionEdit();
+	if(!$("#billingProjects").data('customized')){
+		$("#billingProjects").data('customized',true);
+        $('#billingProjects').sSelect({ddMaxHeight: '220',yscroll: true});
+    }
+	$('#billingProjects').resetSS();
+	$('#billingProjects').bind("change", function() {
+        if ($(this).find(":selected").data("cca")){
+                mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+                $("#chkboxCCA").attr('checked','true').attr('disabled','true');
+                $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+        }else{
+                $("#chkboxCCA").removeAttr('disabled');
+        }
+        updateContestFee();
+    });
 }
 

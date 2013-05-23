@@ -206,13 +206,23 @@ public class CommonAction extends BaseContestFeeAction {
             // gets the billing accounts associated to the project
             List<Project> billingAccountsByProject = getProjectServiceFacade().getBillingAccountsByProject(getDirectProjectId());
 
-            Map<String, String> result = new HashMap<String, String>();
-
-            // filter out the billing accounts user has access to
-            for(Project p : billingAccountsByProject) {
-                    result.put(String.valueOf(p.getId()), p.getName());
+            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+            
+            long[] billingAccountIds = new long[billingAccountsByProject.size()];
+            
+            for (int i = 0; i < billingAccountIds.length; i++){
+                billingAccountIds[i] = billingAccountsByProject.get(i).getId();
             }
-
+            
+            boolean[] requireCCAs = getContestServiceFacade().requireBillingProjectsCCA(billingAccountIds);
+            
+            for (int i = 0; i < billingAccountIds.length; i++){
+                Map<String, String> billingAccount = new HashMap<String, String>();
+                billingAccount.put("id", String.valueOf(billingAccountsByProject.get(i).getId()));
+                billingAccount.put("name", billingAccountsByProject.get(i).getName());
+                billingAccount.put("cca", String.valueOf(requireCCAs[i]));
+                result.add(billingAccount);
+            }
             setResult(result);
         } catch (Throwable e) {
             if (getModel() != null) {

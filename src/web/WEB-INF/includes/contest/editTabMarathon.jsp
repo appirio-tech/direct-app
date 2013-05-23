@@ -1,6 +1,9 @@
 <%--
-  - Version: 1.0
+  - Version: 1.1
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+  - - change on #billingProjects, will load by jquery
   -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
@@ -123,9 +126,6 @@
                 <div class="billingSelect" style="float:left" >
                     <select id="billingProjects" name="billingProject">
                         <option value="-1">Please select an existing account</option>
-                        <s:iterator value="billingAccountsForProject">
-                            <option value='<s:property value="id" />'><s:property value="name" /></option>
-                        </s:iterator>
                     </select>
                 </div>
             </div>

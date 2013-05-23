@@ -43,8 +43,11 @@
  * Version 2.0 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
  * - Update to support launching mm contest.
  * 
+ * Version 2.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+ * - Add billing account CCA specific 
+ * 
  * @author GreatKevin, TCASSEMBLER, csy2012, bugbuka
- * @version 2.0
+ * @version 2.1
  */
 $(document).ready(function() {
 
@@ -514,22 +517,31 @@ var copilotDropdownFlag = false;
 function handleProjectDropDownChange() {
     var value = $('.projectSelect select').getSetSSValue();
 
-    var billingAccounts = getBillingAccountsByDirectProjectId(value);
+    billingAccounts = getBillingAccountsByDirectProjectId(value);
 
     $("#billingProjects").empty();
     $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
 
     $.each(billingAccounts, function(key, value) {
-        $("#billingProjects").append($('<option></option>').val(key).html(value));
-    });
+    	var _cca = value["cca"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+    });	
     $("#billingProjects").val(0);
     $("#billingProjects").resetSS();
     $('#billingProjects').bind("change", function() {
+    	if ($(this).find(":selected").data("cca")){
+    		$("#lccCheckBox").attr('checked','true').attr('disabled','true');
+    		mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+    	}else{
+    		$("#lccCheckBox").removeAttr('disabled');
+    	}
         updateContestFee();
     });
 
     $("#billingProjects").getSetSSValue(0);
-
+    $("#lccCheckBox").removeAttr('disabled');
+    $("#lccCheckBox").removeAttr('checked');
+    mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     if(value > 0) {
         $("a.addBilling").show();
         $("a.addBilling").attr("href", "../editProject?formData.projectId=" + value + "#addBillingAccount");

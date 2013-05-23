@@ -162,8 +162,15 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p> 
+ * Version 2.2 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+ * <ul>
+ *      <li> change on {@link #billingAccountsForProject} to suuport CCA related for billing account</li>
+ * </ul>
+ * </p>
+ * 
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve
- * @version 2.1
+ * @version 2.2
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -252,7 +259,7 @@ public class GetContestAction extends ContestAction {
      *
      * @since 2.0
      */
-    private List<Project> billingAccountsForProject;
+    private List<Map<String,String>> billingAccountsForProject = new ArrayList<Map<String,String>>();
     
     /**
      * <p>
@@ -380,8 +387,24 @@ public class GetContestAction extends ContestAction {
         }
 
         // set billing accounts for the direct project
-        billingAccountsForProject =
+        List<Project> billingProjects =
                 getProjectServiceFacade().getBillingAccountsByProject(softwareCompetition.getProjectHeader().getTcDirectProjectId());
+        
+        long[] billingAccountIds = new long[billingProjects.size()];
+        
+        for (int i = 0; i < billingAccountIds.length; i++){
+            billingAccountIds[i] = billingProjects.get(i).getId();
+        }
+        
+        boolean[] requireCCAs = getContestServiceFacade().requireBillingProjectsCCA(billingAccountIds);
+        
+        for (int i = 0; i < billingAccountIds.length; i++){
+            Map<String, String> billingAccount = new HashMap<String, String>();
+            billingAccount.put("id", String.valueOf(billingProjects.get(i).getId()));
+            billingAccount.put("name", billingProjects.get(i).getName());
+            billingAccount.put("cca", String.valueOf(requireCCAs[i]));
+            billingAccountsForProject.add(billingAccount);
+        }
 
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
@@ -459,7 +482,7 @@ public class GetContestAction extends ContestAction {
      * @return a list of billing accounts
      * @since 2.0
      */
-    public List<Project> getBillingAccountsForProject() {
+    public List<Map<String, String>> getBillingAccountsForProject() {
         return billingAccountsForProject;
     }
 

@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.8
+  - Version: 1.10
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -38,6 +38,8 @@
   -
   - Version 1.9 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
   - - Uses the billing accounts of the project only for the project prize edit.
+  - Version 1.10 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
+  - - change on #billingProjects, will load by jquery
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -146,11 +148,12 @@
 				 <div class="projectsSelect" style="float:left">
 					  <select id="projects" name="tcProject" class="bigin">
 							<option value="-1">Please select an existing project</option>
-							<s:iterator value="projects" var="proj">
-							<option value='<s:property value="projectId" />'  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
-							<s:property value="name" />
-							</option>
-							</s:iterator>
+                            <s:iterator value="projects" var="proj">
+                                                        <option value='<s:property value="projectId" />'  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
+                                                        <s:property value="name" />
+                                                        </option>
+                            </s:iterator>
+                            
 					  </select>
 				 </div>
                  </div>
@@ -386,9 +389,6 @@
                      <div class="prizeBillingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                          	<option value="-1">Please select an existing account</option>
-                           <s:iterator value="billingAccountsForProject">
-                                <option value='<s:property value="id" />'><s:property value="name" /></option>
-                           </s:iterator>
                         </select>
                      </div>
                    <br/><br/>  
