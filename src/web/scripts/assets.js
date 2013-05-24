@@ -939,8 +939,6 @@ $(document).ready(function(){
         var allChecked = $(this).parents('.group').find('input:checkbox.assetUserPermission').length
             == $(this).parents('.group').find('input:checkbox.assetUserPermission:checked').length;
 
-        console.log("allChecked:" + allChecked);
-
         if (allChecked) {
             $(this).parents('.group').find(".firstItem input:checkbox").attr('checked', 'checked');
         } else {

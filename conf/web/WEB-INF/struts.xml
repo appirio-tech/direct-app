@@ -328,7 +328,7 @@
         </action>
 
         <action name="uploadAssetFile" class="projectAssetManageAction" method="uploadAssetFile">
-            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>

@@ -90,8 +90,6 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                                 currentValue = "All";
                             }
 
-                            console.log(currentValue);
-
                             $("#projectStatusFilter").val(currentValue);
                             $("#projectStatusFilter").trigger('change');
                         }
