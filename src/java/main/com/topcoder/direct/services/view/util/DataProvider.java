@@ -877,11 +877,17 @@ import java.util.Set;
  *     <li>Updates {@link #getAllCopilotFeedback()} to fill added copilot feedback ratings data</li>
  * </ul>
  * </p>
+ * Version 6.12 (Release Assembly - TopCoder Security Groups Release 7)
+ * <ul>
+ *     <li>Updates {@link #getDashboardBillingCostReport(java.util.List, com.topcoder.security.TCSubject, long, long[], long[], long[], long, long, long, String, java.util.Date, java.util.Date, java.util.Map)}
+ *     to use the new commands. Each command has multiple splitted queries for the invoice report.</li>
+ * </ul>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.11
+ * @version 6.12
  * @since 1.0
  */
 public class DataProvider {
@@ -4919,14 +4925,13 @@ public class DataProvider {
         Request request = new Request();
 
         String queryName;
-    String commandName;
+        String commandName;
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
+
         if (!hasInvoice) {
-      commandName = "dashboard_billing_cost_invoice_report_v4";
-            queryName = "dashboard_billing_cost_invoice_report_v4";
+            commandName = "dashboard_billing_cost_invoice_report_aggregation";
         } else {
-      commandName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
-            queryName = "dashboard_billing_cost_invoice_report_invoice_number_v4";
+            commandName = "dashboard_billing_cost_invoice_report_invoice_number_aggregation";
         }
 
         if(contestId > 0) {
@@ -4958,7 +4963,7 @@ public class DataProvider {
         request.setProperty("pcids", projectCategoryIDsList);
         request.setProperty("scids", studioProjectCategoryIdsList);
 
-        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        Map<String, ResultSetContainer> allResults = dataAccessor.getData(request);
 
         // prepare payment type filter
         Set<Long> paymentTypeFilter = new HashSet<Long>();
@@ -4966,124 +4971,129 @@ public class DataProvider {
             paymentTypeFilter.add(paymentTypeId);
         }
 
-        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+        for (Entry<String, ResultSetContainer> entry : allResults.entrySet()) {
 
-            BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
+            ResultSetContainer resultSetContainer = entry.getValue();
 
-            // set status first
-            String status = row.getStringItem("contest_status");
-            costDTO.setStatus(status == null ? null : status.trim());
+            for (ResultSetRow row : resultSetContainer) {
 
-            // get payment type
-            String paymentType = row.getStringItem("line_item_category");
+                BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
 
-            IdNamePair client = new IdNamePair();
-            IdNamePair billing = new IdNamePair();
-            IdNamePair directProject = new IdNamePair();
-            IdNamePair contest = new IdNamePair();
-            IdNamePair contestCategory = new IdNamePair();
+                // set status first
+                String status = row.getStringItem("contest_status");
+                costDTO.setStatus(status == null ? null : status.trim());
 
-            if (row.getItem("contest_id").getResultData() != null) {
-                contest.setId(row.getLongItem("contest_id"));
-            }
-            if (row.getItem("contest_name").getResultData() != null) {
-                contest.setName(row.getStringItem("contest_name"));
-            }
-            if (row.getItem("payment_id").getResultData() != null) {
-                costDTO.setPaymentId(row.getLongItem("payment_id"));
-            }
+                // get payment type
+                String paymentType = row.getStringItem("line_item_category");
 
-            if (row.getItem("client_id").getResultData() != null) {
-                client.setId(row.getLongItem("client_id"));
-            }
-            if (row.getItem("client").getResultData() != null) {
-                client.setName(row.getStringItem("client"));
-            }
-            if (row.getItem("billing_project_id").getResultData() != null) {
-                billing.setId(row.getLongItem("billing_project_id"));
-            }
-            if (row.getItem("billing_project_name").getResultData() != null) {
-                billing.setName(row.getStringItem("billing_project_name"));
-            }
-            if (row.getItem("direct_project_id").getResultData() != null) {
-                directProject.setId(row.getLongItem("direct_project_id"));
-            }
-            if (row.getItem("direct_project_name").getResultData() != null) {
-                directProject.setName(row.getStringItem("direct_project_name"));
-            }
+                IdNamePair client = new IdNamePair();
+                IdNamePair billing = new IdNamePair();
+                IdNamePair directProject = new IdNamePair();
+                IdNamePair contest = new IdNamePair();
+                IdNamePair contestCategory = new IdNamePair();
 
-            if (row.getItem("project_category_id").getResultData() != null) {
-                contestCategory.setId(row.getLongItem("project_category_id"));
-            }
-            if (row.getItem("category").getResultData() != null) {
-                contestCategory.setName(row.getStringItem("category"));
-            }
-            if (row.getItem("actual_total_member_costs").getResultData() != null) {
-                costDTO.setActualTotalMemberCost(row.getDoubleItem("actual_total_member_costs"));
-            }
-            if (row.getItem("completion_date").getResultData() != null) {
-                costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
-            }
-            if (row.getItem("launch_date").getResultData() != null) {
-                costDTO.setLaunchDate(row.getTimestampItem("launch_date"));
-            }
-            if (row.getItem("payment_date").getResultData() != null) {
-                costDTO.setPaymentDate(row.getTimestampItem("payment_date"));
-            }
-            if (row.getItem("line_item_amount").getResultData() != null) {
-                costDTO.setPaymentAmount(row.getDoubleItem("line_item_amount"));
-            }
-            if (row.getItem("reference_id").getResultData() != null) {
-                costDTO.setReferenceId(row.getStringItem("reference_id"));
-            }
+                if (row.getItem("contest_id").getResultData() != null) {
+                    contest.setId(row.getLongItem("contest_id"));
+                }
+                if (row.getItem("contest_name").getResultData() != null) {
+                    contest.setName(row.getStringItem("contest_name"));
+                }
+                if (row.getItem("payment_id").getResultData() != null) {
+                    costDTO.setPaymentId(row.getLongItem("payment_id"));
+                }
 
-            if (row.getItem("invoice_amount").getResultData() != null) {
-                costDTO.setInvoiceAmount(row.getDoubleItem("invoice_amount"));
-            }
+                if (row.getItem("client_id").getResultData() != null) {
+                    client.setId(row.getLongItem("client_id"));
+                }
+                if (row.getItem("client").getResultData() != null) {
+                    client.setName(row.getStringItem("client"));
+                }
+                if (row.getItem("billing_project_id").getResultData() != null) {
+                    billing.setId(row.getLongItem("billing_project_id"));
+                }
+                if (row.getItem("billing_project_name").getResultData() != null) {
+                    billing.setName(row.getStringItem("billing_project_name"));
+                }
+                if (row.getItem("direct_project_id").getResultData() != null) {
+                    directProject.setId(row.getLongItem("direct_project_id"));
+                }
+                if (row.getItem("direct_project_name").getResultData() != null) {
+                    directProject.setName(row.getStringItem("direct_project_name"));
+                }
 
-            if (row.getItem("process_date").getResultData() != null) {
-                costDTO.setInvoiceDate(row.getTimestampItem("process_date"));
-            }
+                if (row.getItem("project_category_id").getResultData() != null) {
+                    contestCategory.setId(row.getLongItem("project_category_id"));
+                }
+                if (row.getItem("category").getResultData() != null) {
+                    contestCategory.setName(row.getStringItem("category"));
+                }
+                if (row.getItem("actual_total_member_costs").getResultData() != null) {
+                    costDTO.setActualTotalMemberCost(row.getDoubleItem("actual_total_member_costs"));
+                }
+                if (row.getItem("completion_date").getResultData() != null) {
+                    costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
+                }
+                if (row.getItem("launch_date").getResultData() != null) {
+                    costDTO.setLaunchDate(row.getTimestampItem("launch_date"));
+                }
+                if (row.getItem("payment_date").getResultData() != null) {
+                    costDTO.setPaymentDate(row.getTimestampItem("payment_date"));
+                }
+                if (row.getItem("line_item_amount").getResultData() != null) {
+                    costDTO.setPaymentAmount(row.getDoubleItem("line_item_amount"));
+                }
+                if (row.getItem("reference_id").getResultData() != null) {
+                    costDTO.setReferenceId(row.getStringItem("reference_id"));
+                }
 
-            if (row.getItem("invoice_number").getResultData() != null) {
-                costDTO.setInvoiceNumber(row.getStringItem("invoice_number"));
-            }
+                if (row.getItem("invoice_amount").getResultData() != null) {
+                    costDTO.setInvoiceAmount(row.getDoubleItem("invoice_amount"));
+                }
 
-            if (row.getItem("invoice_id").getResultData() != null) {
-                costDTO.setInvoiceId(row.getLongItem("invoice_id"));
-            }
+                if (row.getItem("process_date").getResultData() != null) {
+                    costDTO.setInvoiceDate(row.getTimestampItem("process_date"));
+                }
 
-            if (row.getItem("invoice_record_id").getResultData() != null) {
-                costDTO.setInvoiceRecordId(row.getLongItem("invoice_record_id"));
-            }
+                if (row.getItem("invoice_number").getResultData() != null) {
+                    costDTO.setInvoiceNumber(row.getStringItem("invoice_number"));
+                }
 
-            if (row.getItem("processed").getResultData() != null) {
-                costDTO.setProcessed(row.getBooleanItem("processed"));
-            }
+                if (row.getItem("invoice_id").getResultData() != null) {
+                    costDTO.setInvoiceId(row.getLongItem("invoice_id"));
+                }
 
-            if (row.getItem("payment_desc").getResultData() != null) {
-                costDTO.setPaymentDesc(row.getStringItem("payment_desc"));
-            }
+                if (row.getItem("invoice_record_id").getResultData() != null) {
+                    costDTO.setInvoiceRecordId(row.getLongItem("invoice_record_id"));
+                }
 
-            costDTO.setClient(client);
-            costDTO.setBilling(billing);
-            costDTO.setProject(directProject);
-            costDTO.setContest(contest);
-            costDTO.setContestType(contestCategory);
-            costDTO.setPaymentType(paymentType);
+                if (row.getItem("processed").getResultData() != null) {
+                    costDTO.setProcessed(row.getBooleanItem("processed"));
+                }
 
-            List<BillingCostReportEntryDTO> entries;
+                if (row.getItem("payment_desc").getResultData() != null) {
+                    costDTO.setPaymentDesc(row.getStringItem("payment_desc"));
+                }
 
-            if (!data.containsKey(costDTO.getContest().getId())) {
-                entries = new ArrayList<BillingCostReportEntryDTO>();
-                data.put(costDTO.getContest().getId(), entries);
-            } else {
-                entries = data.get(costDTO.getContest().getId());
-            }
+                costDTO.setClient(client);
+                costDTO.setBilling(billing);
+                costDTO.setProject(directProject);
+                costDTO.setContest(contest);
+                costDTO.setContestType(contestCategory);
+                costDTO.setPaymentType(paymentType);
 
-            // add the entry if payment type filter allows
-            if (paymentTypeFilter.contains(paymentTypesMapping.get(paymentType.trim().toLowerCase()))) {
-                entries.add(costDTO);
+                List<BillingCostReportEntryDTO> entries;
+
+                if (!data.containsKey(costDTO.getContest().getId())) {
+                    entries = new ArrayList<BillingCostReportEntryDTO>();
+                    data.put(costDTO.getContest().getId(), entries);
+                } else {
+                    entries = data.get(costDTO.getContest().getId());
+                }
+
+                // add the entry if payment type filter allows
+                if (paymentTypeFilter.contains(paymentTypesMapping.get(paymentType.trim().toLowerCase()))) {
+                    entries.add(costDTO);
+                }
             }
         }
 

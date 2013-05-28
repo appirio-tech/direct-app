@@ -21,6 +21,7 @@ import com.topcoder.excel.impl.ExcelWorkbook;
 import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.gameplan.GamePlanService;
 import com.topcoder.service.util.gameplan.SoftwareProjectData;
 import com.topcoder.service.util.gameplan.StudioProjectData;
@@ -80,8 +81,15 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * @author GreatKevin, Veve
- * @version 1.6
+ * <p>
+ * Version 1.7 (Release Assembly - TopCoder Security Groups Release 7)
+ * <ul>
+ *     <li>Fix the issue when group permission is used, the project name is missing the game plan header</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, Veve, TCSASSEMBLER
+ * @version 1.7
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -167,6 +175,13 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * The game plan service which is used to retrieve project game plan data.
      */
     private GamePlanService gamePlanService;
+
+    /**
+     * The project service facade service.
+     *
+     * @since 1.7
+     */
+    private ProjectServiceFacade projectServiceFacade;
 
     /**
      * The project milestone service.
@@ -262,6 +277,17 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
     }
 
     /**
+     * Sets the project service facade service.
+     *
+     * @param projectServiceFacade the project service facade service.
+     *
+     * @since 1.7
+     */
+    public void setProjectServiceFacade(ProjectServiceFacade projectServiceFacade) {
+        this.projectServiceFacade = projectServiceFacade;
+    }
+
+    /**
      * <p>
      * Sets the form data.
      * </p>
@@ -348,6 +374,14 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
             // Get project game plan data from Game Plan Service
             TCDirectProjectGamePlanData data = getGamePlanService().retrieveGamePlanData(user, projectId);
+
+            if (data.getTcDirectProjectId() <= 0) {
+                data.setTcDirectProjectId(projectId);
+            }
+
+            if (data.getTcDirectProjectName() == null) {
+                data.setTcDirectProjectName(projectServiceFacade.getProject(user, projectId).getName());
+            }
 
             /* System.out.println("******************************************");
 
