@@ -548,6 +548,7 @@
           class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
           scope="prototype">
         <property name="gamePlanService" ref="gamePlanService"/>
+        <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="milestoneService" ref="milestoneService"/>
     </bean>
 
