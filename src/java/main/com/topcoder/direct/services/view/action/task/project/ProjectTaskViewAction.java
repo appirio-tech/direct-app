@@ -253,6 +253,8 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
             setResult(result);
 
         } catch (Throwable e) {
+		
+			e.printStackTrace(System.out);
             if (getModel() != null) {
                 setResult(e);
             }
