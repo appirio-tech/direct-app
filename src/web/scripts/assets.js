@@ -495,7 +495,7 @@ $(document).ready(function(){
         }
         if($(this).val()){
             $(this).parents('.assetsWrapper').find('.resultSearch').show();
-            $(this).parents('.assetsWrapper').find('.resultSearch .result').empty().append('<strong class="num">'+ iLength +'</strong> Assets found for <strong>"'+ this.value +'"</strong>');
+            $(this).parents('.assetsWrapper').find('.resultSearch .result').empty().append('<strong class="num">'+ iLength +'</strong> Files found for <strong>"'+ this.value +'"</strong>');
         }else{
             $(this).parents('.assetsWrapper').find('.resultSearch').hide();
         }

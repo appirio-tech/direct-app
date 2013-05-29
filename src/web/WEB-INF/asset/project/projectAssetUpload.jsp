@@ -46,12 +46,12 @@
                             <a href="<s:url action="allProjects" namespace="/"/>">Projects</a> &gt;
                             <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'><s:property
                                     value="sessionData.currentProjectContext.name"/></a> &gt;
-                            <a href='<s:url action="projectAssets" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'>Assets</a> &gt;
-                            <strong>Upload Assets</strong>
+                            <a href='<s:url action="projectAssets" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'>Files</a> &gt;
+                            <strong>Upload Files</strong>
                         </div>
 
                             <div class="areaHeader">
-                                <h2 class="title asssetsTitle">Assets</h2>
+                                <h2 class="title asssetsTitle">Files</h2>
                             </div>
                             <!-- End .areaHeader -->
 

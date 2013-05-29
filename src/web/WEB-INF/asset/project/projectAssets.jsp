@@ -84,12 +84,12 @@
     <a href="<s:url action="allProjects" namespace="/"/>">Projects</a> &gt;
     <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'><s:property
             value="sessionData.currentProjectContext.name"/></a> &gt;
-    <strong>Assets</strong>
+    <strong>Files</strong>
 </div>
 <div class="areaHeader">
     <a class="button6 btnUpload" href="<s:url action="projectAssetUpload" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="left"><span class="right"><span class="icon">UPLOAD FILE(S)</span></span></span></a>
 
-    <h2 class="title asssetsTitle">Assets</h2>
+    <h2 class="title asssetsTitle">Files</h2>
 </div>
 <!-- End .areaHeader -->
 <form id="filterPanelForm" action="">
@@ -250,7 +250,7 @@
     <div class="optionAreaSide">
         <div class="allAssetsCheckbox" style="display:none !important">
             <input type="checkbox" id="checkVersionDate"/>
-            <label for="checkVersionDate">All Assets</label>
+            <label for="checkVersionDate">All Files</label>
         </div>
         <!-- End .allAssetsCheckbox -->
         <div class="batchOperation">
@@ -298,7 +298,7 @@
 
 <!-- Resule -->
 <div class="resultSearch">
-    <div class="allAssets"><a href="javascript:;">All Assets</a></div>
+    <div class="allAssets"><a href="javascript:;">All Files</a></div>
     <div class="result"></div>
 </div>
 <!-- End .resultSearch -->
@@ -571,7 +571,7 @@
     <div class="optionAreaSide">
         <div class="allAssetsCheckbox" style="display:none !important">
             <input type="checkbox" id="checkVersionCategory"/>
-            <label for="checkVersionCategory">All Assets</label>
+            <label for="checkVersionCategory">All Files</label>
         </div>
         <!-- End .allAssetsCheckbox -->
         <div class="batchOperation">
@@ -618,7 +618,7 @@
 
 <!-- Resule -->
 <div class="resultSearch">
-    <div class="allAssets"><a href="javascript:;">All Assets</a></div>
+    <div class="allAssets"><a href="javascript:;">All Files</a></div>
     <div class="result"></div>
 </div>
 <!-- End .resultSearch -->
@@ -845,7 +845,7 @@
     <div class="optionAreaSide">
         <div class="allAssetsCheckbox">
             <input type="checkbox" id="checkProfileDate"/>
-            <label for="checkProfileDate">All Assets</label>
+            <label for="checkProfileDate">All Files</label>
         </div>
         <!-- End .allAssetsCheckbox -->
         <div class="batchOperation">
@@ -893,7 +893,7 @@
 
 <!-- Resule -->
 <div class="resultSearch">
-    <div class="allAssets"><a href="javascript:;">All Assets</a></div>
+    <div class="allAssets"><a href="javascript:;">All Files</a></div>
     <div class="result"></div>
 </div>
 <!-- End .resultSearch -->
@@ -1885,7 +1885,7 @@
     <div class="optionAreaSide">
         <div class="allAssetsCheckbox">
             <input type="checkbox" id="checkProfileCategory"/>
-            <label for="checkProfileCategory">All Assets</label>
+            <label for="checkProfileCategory">All Files</label>
         </div>
         <!-- End .allAssetsCheckbox -->
         <div class="batchOperation">
@@ -1932,7 +1932,7 @@
 
 <!-- Resule -->
 <div class="resultSearch">
-    <div class="allAssets"><a href="javascript:;">All Assets</a></div>
+    <div class="allAssets"><a href="javascript:;">All Files</a></div>
     <div class="result"></div>
 </div>
 <!-- End .resultSearch -->
