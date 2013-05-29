@@ -418,7 +418,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'post',
             url: 'quickCreateNewTask',
-            data: {newTask: newTask, formData:{projectid:tcDirectProjectId}},
+            data: {newTask: newTask, formData:{projectId:tcDirectProjectId}},
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {
