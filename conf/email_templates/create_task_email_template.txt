@@ -2,20 +2,20 @@
 <body>
 
 <p>
-TopCoder Cockpit Alert: Task Created
+TopCoder Cockpit Alert\: Task Created
 </p>
 Hello,
 
-A task has been created in one of your TopCoder Projects. Here is the summary of the task:
+A task has been created in one of your TopCoder Projects. Here is the summary of the task\:
 
-Name: %TASK_NAME%
-Notes: 
+Name\: %TASK_NAME%
+Notes\: 
 <p>%TASK_NOTES%</p>
-Start Date: %TASK_START_DATE%
-Due Date: %TASK_DUE_DATE%
-Status: %TASK_STATUS%
-Priority: %TASK_PRIORITY%
-Assignees:
+Start Date\: %TASK_START_DATE%
+Due Date\: %TASK_DUE_DATE%
+Status\: %TASK_STATUS%
+Priority\: %TASK_PRIORITY%
+Assignees\:
 <p>
 <ul>
 %loop:TASK_ASSIGNEES%
