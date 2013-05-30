@@ -4,17 +4,19 @@
 <p>
 TopCoder Cockpit Alert\: Task Created
 </p>
+<p>
 Hello,
 
 A task has been created in one of your TopCoder Projects. Here is the summary of the task\:
+</p>
 
-Name\: %TASK_NAME%
-Notes\: 
+Name\: %TASK_NAME%<br/>
+Notes\: <br/>
 <p>%TASK_NOTES%</p>
-Start Date\: %TASK_START_DATE%
-Due Date\: %TASK_DUE_DATE%
-Status\: %TASK_STATUS%
-Priority\: %TASK_PRIORITY%
+Start Date\: %TASK_START_DATE%<br/>
+Due Date\: %TASK_DUE_DATE%<br/>
+Status\: %TASK_STATUS%<br/>
+Priority\: %TASK_PRIORITY%<br/>
 Assignees\:
 <p>
 <ul>
