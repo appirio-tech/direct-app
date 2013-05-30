@@ -113,6 +113,12 @@
     <strong>Tasks</strong>
 </div>
 
+<div class="currentPage emptyHint ">
+<p><font color="red" size="2">
+This is the beta version...
+</font></p>
+</div>
+
 <div class="addTaskPanel">
     <div class="panelHeader">
         <h3>ADD A TASK</h3>

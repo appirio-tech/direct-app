@@ -86,6 +86,13 @@
             value="sessionData.currentProjectContext.name"/></a> &gt;
     <strong>Files</strong>
 </div>
+
+<div class="currentPage emptyHint ">
+<p><font color="red" size="2">
+This is the beta version...
+</font></p>
+</div>
+
 <div class="areaHeader">
     <a class="button6 btnUpload" href="<s:url action="projectAssetUpload" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="left"><span class="right"><span class="icon">UPLOAD FILE(S)</span></span></span></a>
 
