@@ -1,46 +1,4 @@
-<html>
-<body>
-<p>
-Task has been created.
-</p>
-Task name is %TASK_NAME%
-
-<p>
-Task notes are\:
-</p>
-<p>
-%TASK_NOTES%
-</p>
-<p>
-Task start date is %TASK_START_DATE%
-</p>
-<p>
-Task due date is %TASK_DUE_DATE%
-</p>
-<p>
-Task status is %TASK_STATUS%
-</p>
-<p>
-Task priority is %TASK_PRIORITY%
-</p>
-<p>
-Task assignees are\:
-</p>
-<p>
-<ul>
-%loop:TASK_ASSIGNEES%
-<li>
-<a href\="http\://community.topcoder.com/tc?module\=MemberProfile&amp;cr\=%USER_ID%">%USER_HANDLE%</a>
-</li>
-%endloop%
-</ul>
-</p>
-</body>
-</html>
-
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <meta http-equiv="content-language" content="en-us">
