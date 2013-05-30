@@ -115,7 +115,9 @@
 
 <div class="currentPage emptyHint ">
 <p><font color="red" size="2">
-This is the beta version...
+BETA ANNOUNCEMENT:
+Welcome to the new Task Management area of Cockpit.  You will see this new section under each of your projects.  You are welcome to play around and begin using it, but please keep in
+mind that some features are not implemented yet.  For a full description of what is currently implemented, check out <a href="http://www.topcoder.com/university/platform-updates/task-management-beta/">Platform Announcements</a>.
 </font></p>
 </div>
 
