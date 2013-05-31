@@ -1690,7 +1690,7 @@ public class DataProvider {
      * @since 5.2
      */
     public static List<ProjectSummaryData> getPMProjectData(TCSubject tcSubject) throws Exception {
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+		CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_my_pm_projects_contests_v2");
 
