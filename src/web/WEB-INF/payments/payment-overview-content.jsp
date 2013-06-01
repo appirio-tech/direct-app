@@ -214,14 +214,9 @@
                     </div>
                     <div class="chartLegendWrapper">
                         <ul class="fLeft">
+                            <li class="chartLegend skyblueLegend">Created</li>
                             <li class="chartLegend greenLegend">Paid</li>
                         </ul>
-                        <ul class="payMethodLegend fRight">
-                            <li class="chartLegend blueLegend">Paypal</li>
-                            <li class="chartLegend redLegend">Payoneer</li>
-                            <li class="chartLegend yellowLegend lastLegend">Western Union</li>
-                        </ul>
-                        <label class="fRight paidByLabel">Paid By:</label>
                     </div>
                 </div>
                 <!-- End .containerSection -->

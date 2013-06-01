@@ -5,14 +5,13 @@ package com.topcoder.direct.services.view.action.payments;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.services.view.dto.payments.PaymentTrendItem;
-import com.topcoder.direct.services.payments.entities.PaymentMethod;
-import com.topcoder.direct.services.payments.entities.PaymentStatus;
-import com.topcoder.direct.services.payments.entities.PaymentTrend;
-import com.topcoder.direct.services.payments.entities.PaymentTrendSearchCriteria;
 import com.topcoder.direct.services.payments.ConfigurationException;
 import com.topcoder.direct.services.payments.PaymentStatsService;
 import com.topcoder.direct.services.payments.ServiceException;
+import com.topcoder.direct.services.payments.entities.PaymentStatus;
+import com.topcoder.direct.services.payments.entities.PaymentTrend;
+import com.topcoder.direct.services.payments.entities.PaymentTrendSearchCriteria;
+import com.topcoder.direct.services.view.dto.payments.PaymentTrendItem;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
@@ -24,9 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>This class is the action used to fetch member payment stats.</p>
@@ -74,16 +71,6 @@ public class MemberPaymentStatsAction extends BaseAction {
      * The default date range.
      */
     private static final int DEFAULT_DATE_RANGE = 6;
-
-    /**
-     * The payment methods.
-     */
-    private static final PaymentMethod[] PAYMENT_METHODS = {
-            PaymentMethod.PAYPAL,
-            PaymentMethod.PAYONEER,
-            PaymentMethod.WESTERN_UNION,
-            PaymentMethod.NOT_SET
-    };
 
     /**
      * The payment stats service, used to fetch member payment stats.
@@ -149,47 +136,32 @@ public class MemberPaymentStatsAction extends BaseAction {
             List<PaymentTrend> paidPaymentTrends = paymentStatsService.
                     getPaymentsTrends(paymentsTrendsCriteria);
 
-            Map<Integer, List<PaymentTrendItem>> map = new HashMap<Integer, List<PaymentTrendItem>>();
-
-            if (createPaymentTrends.size() == 0 && paidPaymentTrends.size() == 0) {
-                throw LoggingWrapperUtility.logException(getLogger(), signature,
-                        new PaymentActionException("There is no trend data."));
-            }
-
             // aggregate payment trends
-            for (PaymentMethod method : PAYMENT_METHODS) {
-                List<PaymentTrendItem> items = new ArrayList<PaymentTrendItem>();
-                for (int i = 0; i < dateRange; i++) {
-                    items.add(new PaymentTrendItem());
-                }
-                map.put(method.getPaymentMethodId(), items);
+            List<PaymentTrendItem> items = new ArrayList<PaymentTrendItem>();
+            for (int i = 0; i < dateRange; i++) {
+                items.add(new PaymentTrendItem());
             }
-            aggregatePaymentTrends(map, createPaymentTrends, false);
-            aggregatePaymentTrends(map, paidPaymentTrends, true);
+
+            aggregatePaymentTrends(items, createPaymentTrends, false);
+            aggregatePaymentTrends(items, paidPaymentTrends, true);
 
             // set timestamps
-            Map<String, Object> result = new HashMap<String, Object>();
-            for (PaymentMethod method : PAYMENT_METHODS) {
-                List<PaymentTrendItem> items = map.get(method.getPaymentMethodId());
-                Collections.reverse(items);
+            Collections.reverse(items);
 
-                startTime = new DateTime(startDate);
-                for (PaymentTrendItem item : items) {
-                    if (MONTH_TYPE.equals(dateType)) {
-                        item.setTimeStamp(MONTH_FORMAT.format(startTime.toDate()));
-                        startTime = startTime.plusMonths(1);
-                    } else if (WEEK_TYPE.equals(dateType)) {
-                        item.setTimeStamp(DAY_FORMAT.format(startTime.toDate()));
-                        startTime = startTime.plusWeeks(1);
-                    } else if (DAY_TYPE.equals(dateType)){
-                        item.setTimeStamp(DAY_FORMAT.format(startTime.toDate()));
-                        startTime = startTime.plusDays(1);
-                    }
+            startTime = new DateTime(startDate);
+            for (PaymentTrendItem item : items) {
+                if (MONTH_TYPE.equals(dateType)) {
+                    item.setTimeStamp(MONTH_FORMAT.format(startTime.toDate()));
+                    startTime = startTime.plusMonths(1);
+                } else if (WEEK_TYPE.equals(dateType)) {
+                    item.setTimeStamp(DAY_FORMAT.format(startTime.toDate()));
+                    startTime = startTime.plusWeeks(1);
+                } else if (DAY_TYPE.equals(dateType)){
+                    item.setTimeStamp(DAY_FORMAT.format(startTime.toDate()));
+                    startTime = startTime.plusDays(1);
                 }
-
-                result.put(method.toString(), map.get(method.getPaymentMethodId()));
             }
-            setResult(result);
+            setResult(items);
 
             LoggingWrapperUtility.logExit(getLogger(), signature, null);
         } catch (ServiceException e) {
@@ -201,20 +173,15 @@ public class MemberPaymentStatsAction extends BaseAction {
     /**
      * Aggregate the payment trends data.
      *
-     * @param map the map to store aggregated result.
+     * @param items the list to store aggregated result.
      * @param trends the source trend data
      * @param isPaid whether is paid payment
      * @throws PaymentActionException if data is incorrect.
      */
-    private void aggregatePaymentTrends(Map<Integer, List<PaymentTrendItem>> map,
+    private void aggregatePaymentTrends(List<PaymentTrendItem> items,
                                         List<PaymentTrend> trends,
                                         boolean isPaid) throws PaymentActionException {
         for (PaymentTrend trend : trends) {
-            if (!map.containsKey(trend.getPaymentMethodId())) {
-                // just ignore such case
-                continue;
-            }
-
             int diff;
             DateTime processDate = new DateTime(trend.getCreatedOrPaidDate());
             if (MONTH_TYPE.equals(dateType)) {
@@ -229,7 +196,6 @@ public class MemberPaymentStatsAction extends BaseAction {
                         DateTime.now()).getDays();
             }
 
-            List<PaymentTrendItem> items = map.get(trend.getPaymentMethodId());
             if (diff < 0 || diff > items.size()) {
                 throw new PaymentActionException("the date is out of range");
             }
@@ -308,4 +274,3 @@ public class MemberPaymentStatsAction extends BaseAction {
         this.dateRange = dateRange;
     }
 }
-

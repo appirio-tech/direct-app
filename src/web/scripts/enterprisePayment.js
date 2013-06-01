@@ -630,7 +630,7 @@ function loadMemberPaymentAverageTotalChart(zoomType, range){
         success: function(jsonResult) {
             handleJsonResult2(jsonResult,
                 function(result) {
-                    if (!result.hasOwnProperty("PAYPAL") || result['PAYPAL'].length == 0) {
+                    if (result.length == 0) {
                         $("#averageTotalPayment").empty().append('<div class="noData">No data available</div>');
                     } else {
                         renderChart(result);
@@ -647,43 +647,20 @@ function loadMemberPaymentAverageTotalChart(zoomType, range){
  * Render the member payment overage total chart.
  */
 function renderChart(data) {
-    var paypalData = data['PAYPAL'];
-    var payoneerData = data['PAYONEER'];
-    var wuData = data['WESTERN_UNION'];
-
     var catList = []
+    var catTotalCreated = [];
     var catTotalPaid = [];
-    var paypalPaid = [];
-    var paypalGap = [];
-    var paypalCreated = [];
-    var payoneerPaid = [];
-    var payoneerGap = [];
-    var payoneerCreated = [];
-    var wuPaid = [];
-    var wuGap = [];
-    var wuCreated = [];
+    
     var decoTop = [];
     var maxV = -1;
 
-    for (var i = 0; i < paypalData.length; i++) {
-        catList[i] = paypalData[i].timeStamp;
-        catTotalPaid[i] = parseInt(paypalData[i].paid) + parseInt(payoneerData[i].paid) + parseInt(wuData[i].paid);
-        paypalPaid[i] = parseInt(paypalData[i].paid);
-        paypalCreated[i] =  parseInt(paypalData[i].created);
-        paypalGap[i] = Math.max(0, (parseInt(paypalData[i].created) - parseInt(paypalData[i].paid)));
-        payoneerPaid[i] = parseInt(payoneerData[i].paid);
-        payoneerCreated[i] = parseInt(payoneerData[i].created);
-        payoneerGap[i] = Math.max(0, (parseInt(payoneerData[i].created) - parseInt(payoneerData[i].paid)));
-        wuPaid[i] = parseInt(wuData[i].paid);
-        wuCreated[i] = parseInt(wuData[i].created);
-        wuGap[i] = Math.max(0, (parseInt(wuData[i].created) - parseInt(wuData[i].paid)));
-
-        maxV = Math.max(maxV, paypalData[i].created);
-        maxV = Math.max(maxV, paypalData[i].paid);
-        maxV = Math.max(maxV, payoneerData[i].created);
-        maxV = Math.max(maxV, payoneerData[i].paid);
-        maxV = Math.max(maxV, wuData[i].created);
-        maxV = Math.max(maxV, wuData[i].paid);
+    for (var i = 0; i < data.length; i++) {
+        catList[i] = data[i].timeStamp;
+        catTotalPaid[i] = data[i].paid;
+        catTotalCreated[i] = data[i].created;
+        
+        maxV = Math.max(maxV, data[i].paid);
+        maxV = Math.max(maxV, data[i].created);
     }
     hInterval = ~~ (maxV / 4);
     var barTop;
@@ -700,19 +677,11 @@ function renderChart(data) {
         hInterval -= hInterval % 10;
         barTop = hInterval / 15;
     }
-    for (var i = 0; i < paypalData.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         decoTop[i] = barTop;
     }
 
-    var withBar = paypalData.length <= 12;
-
-    if (withBar) {
-        $('.memberPaymentAverageTotalBlock .chartLegendWrapper .payMethodLegend .chartLegend').removeClass('hide');
-        $('.memberPaymentAverageTotalBlock .chartLegendWrapper .paidByLabel').removeClass('hide');
-    } else {
-        $('.memberPaymentAverageTotalBlock .chartLegendWrapper .payMethodLegend .chartLegend').addClass('hide');
-        $('.memberPaymentAverageTotalBlock .chartLegendWrapper .paidByLabel').addClass('hide');
-    }
+    var showCategory = data.length <= 12;
 
     var xAxisOption = {
         labels:{
@@ -727,84 +696,24 @@ function renderChart(data) {
         lineColor: '#808080',
         tickColor: '#ffffff'
     };
-    if (withBar) {
+    if (showCategory) {
         xAxisOption['categories'] = catList;
     }
 
     var seriesOption = [];
-
-    if (withBar) {
-        seriesOption = seriesOption.concat([
-            {
-                type: 'column',
-                name: 'TopBorder',
-                data: decoTop,
-                stack: 'Paypal',
-                color:'#00aeff'
-            }
-
-            , {
-                type: 'column',
-                name: 'CreatedSub',
-                data: paypalCreated,
-                stack: 'Paypal',
-                color:'#ffffff'
-            }, {
-                type: 'column',
-                name: 'PaidSub',
-                data: paypalPaid,
-                stack: 'Paypal',
-                color:'#13487e'
-            }
-
-            , {
-                type: 'column',
-                name: 'TopBorder',
-                data: decoTop,
-                stack: 'Payoneer',
-                color:'#00aeff'
-            },
-
-            {
-                type: 'column',
-                name: 'CreatedSub',
-                data: payoneerCreated,
-                stack: 'Payoneer',
-                color:'#ffffff'
-            }, {
-                type: 'column',
-                name: 'PaidSub',
-                data: payoneerPaid,
-                stack: 'Payoneer',
-                color:'#d67002'
-            }
-
-            , {
-                type: 'column',
-                name: 'TopBorder',
-                data: decoTop,
-                stack: 'Western Union',
-                color:'#00aeff'
-            },
-
-            {
-                type: 'column',
-                name: 'CreatedSub',
-                data: wuCreated,
-                stack: 'Western Union',
-                color:'#ffffff'
-            }, {
-                type: 'column',
-
-                name: 'PaidSub',
-                data: wuPaid,
-                stack: 'Western Union',
-                color:'#edd400'
-            }
-        ]);
-    }
     seriesOption = seriesOption.concat([
         {
+            type: 'line',
+            name: 'Created',
+            data: catTotalCreated,
+            marker: {
+                lineWidth: 2,
+                lineColor: '#00b0ff',
+                fillColor: '#00b0ff',
+                symbol: 'circle'
+            },
+            color:'#00b0ff'
+        }, {
             type: 'line',
             name: 'Paid',
             data: catTotalPaid,
@@ -918,7 +827,7 @@ function renderChart(data) {
 
             series: {
                 marker: {
-                    enabled: withBar,
+                    enabled: showCategory,
                     states: {
                         hover: {
                             enabled: true
