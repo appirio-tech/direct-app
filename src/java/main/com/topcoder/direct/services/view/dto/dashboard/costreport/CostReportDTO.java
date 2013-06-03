@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.costreport;
 
@@ -68,9 +68,16 @@ import com.topcoder.excel.output.WorkbookSavingException;
  *     <li>Updates export excel to add launch date column</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Cockpit Project Total Cost Fixes)
+ * <ul>
+ *     <li>Adds checking on the export value to accommodate the project level cost </li>
+ * </ul>
+ * </p>
  * 
  * @author Blues, flexme, GreatKevin
- * @version 1.3 (Release Assembly - TC Direct Cockpit Release Seven)
+ * @version 1.4
  *
  */
 public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> {
@@ -253,22 +260,22 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
             row.getCell(index++).setStringValue(costDetail.getProjectFilterValue() == null ? "None" : costDetail.getProjectFilterValue());
 
             // set the contest name
-            row.getCell(index++).setStringValue(costDetail.getContest().getName());
+            row.getCell(index++).setStringValue(getStringValue(costDetail.getContest().getName()));
 			
-			            // set the contest id
+	    // set the contest id
             row.getCell(index++).setNumberValue(costDetail.getContest().getId());
 
             // set the contest type
-            row.getCell(index++).setStringValue(costDetail.getContestType().getName());
+            row.getCell(index++).setStringValue(getStringValue(costDetail.getContestType().getName()));
 
             // set the status
-            row.getCell(index++).setStringValue(costDetail.getStatus());
+            row.getCell(index++).setStringValue(getStringValue(costDetail.getStatus()));
 
             // set the launch date
-            row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
+            row.getCell(index++).setStringValue(costDetail.getLaunchDate() != null ? dateFormatter.format(costDetail.getLaunchDate()) : "N/A");
 
             // set the completion date
-            row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+            row.getCell(index++).setStringValue(costDetail.getCompletionDate() != null ? dateFormatter.format(costDetail.getCompletionDate()) : "N/A");
 
             // set the contest fee
             row.getCell(index++).setNumberValue(costDetail.getContestFee());
@@ -278,9 +285,14 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
 
 
             // set the actual member cost, the 'active' and 'scheduled' contest does not have actual member cost
-            if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
+            if (costDetail.getStatus() != null) {
+                if (costDetail.getStatus().trim().toLowerCase().equals("finished") || costDetail.getStatus().trim().toLowerCase().equals("completed")) {
+                    row.getCell(index).setNumberValue(costDetail.getActualCost());
+                }
+            } else {
                 row.getCell(index).setNumberValue(costDetail.getActualCost());
             }
+
             index++;
 
             if (isShowBreakdown()) {
@@ -334,4 +346,13 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
             return COST_REPORT_EXCEL_FILE_NAME;
         }
     }
+
+    private static String getStringValue(String value) {
+        if (value == null || value.trim().length() == 0) {
+            return "N/A";
+        }
+
+        return value;
+    }
+
 }

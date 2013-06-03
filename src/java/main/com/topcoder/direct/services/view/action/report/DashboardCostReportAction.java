@@ -69,9 +69,18 @@ import java.util.Set;
  *     <li>Updates the cost report contest status to divide finished status into 3 status: completed, failed, cancelled</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.5 (Release Assembly - TC Cockpit Project Total Cost Fixes)
+ * <ul>
+ *     <li>Updates methods {@link #aggregateCostDetails(java.util.List, com.topcoder.direct.services.view.dto.dashboard.costreport.CostAggregationType)}
+ *     and {@link #getAggregationKey(com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO, com.topcoder.direct.services.view.dto.dashboard.costreport.CostAggregationType)}
+ *     to handle the project level cost case.</li>
+ * </ul>
+ * </p>
  * 
  * @author Blues, flexme, GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public class DashboardCostReportAction extends DashboardReportBaseAction<DashboardCostReportForm, CostReportDTO> {
 
@@ -334,6 +343,11 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         for (CostDetailsDTO c : costDetails) {
             // get the key used for aggregation report
             IdNamePair pair = getAggregationKey(c, aggregationType);
+
+            if(pair.getName() == null) {
+                continue;
+            }
+
             CostAggregationDTO item = aggregationDTOMap.get(pair.getName()+"-"+pair.getId());
             if (item == null) {
                 // does not exist, create a new CostAggregationDTO
@@ -380,8 +394,10 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
             return costDetail.getProject();
         } else if (aggregationType == CostAggregationType.STATUS_AGGREGATION) {
             IdNamePair status = new IdNamePair();
-            status.setName(costDetail.getStatus());
-            status.setId(COST_REPORT_CONTEST_STATUS_IDS.get(status.getName().toLowerCase()));
+            if(costDetail.getStatus() != null) {
+                status.setName(costDetail.getStatus());
+                status.setId(COST_REPORT_CONTEST_STATUS_IDS.get(status.getName().toLowerCase()));
+            }
             return status;
         } else return costDetail.getContestType();
     }

@@ -33,6 +33,8 @@
   - Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
   - - Fixed the date, title layout issue for 'cost breakdown view' result table.   
   -
+  - Version 2.0 (Release Assembly - TC Cockpit Project Total Cost Fixes)
+  - - Handles the display of project level cost data
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -506,14 +508,18 @@
                 <c:out value="${item.projectFilterValue}" />
             </td>
             <td>
-                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
-                    <c:out value="${item.contest.name}"/>
-                </a>
+                <s:if test="%{#attr['item'].contest.id > 0}">
+                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
+                        <c:out value="${item.contest.name}"/>
+                    </a>
+                </s:if>
             </td>
 			<td>
-                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
-                    <c:out value="${item.contest.id}"/>
-                </a>
+                <s:if test="%{#attr['item'].contest.id > 0}">
+                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
+                        <c:out value="${item.contest.id}"/>
+                    </a>
+                </s:if>
             </td>
             <td>
                 <c:out value="${item.contestType.name}"/>
@@ -528,10 +534,14 @@
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${item.completionDate}"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.contestFee}" pattern="$###,##0.00"/>
+                <s:if test="%{#attr['item'].contest.id > 0}">
+                    <fmt:formatNumber value="${item.contestFee}" pattern="$###,##0.00"/>
+                </s:if>
             </td>
             <td>
-                <fmt:formatNumber value="${item.estimatedCost}" pattern="$###,##0.00"/>
+                <s:if test="%{#attr['item'].contest.id > 0}">
+                    <fmt:formatNumber value="${item.estimatedCost}" pattern="$###,##0.00"/>
+                </s:if>
             </td>
             <td>
 

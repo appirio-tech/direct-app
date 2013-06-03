@@ -883,11 +883,20 @@ import java.util.Set;
  *     to use the new commands. Each command has multiple splitted queries for the invoice report.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 6.13 (Release Assembly - TC Cockpit Project Total Cost Fixes)
+ * <ul>
+ *     <li>Updates {@link #getPMProjectData(com.topcoder.security.TCSubject)} to add project level cost</li>
+ *     <li>Updates {@link #getDashboardProjectMetricsReport(com.topcoder.security.TCSubject, long, long, long, long[], java.util.Date, java.util.Date, java.util.List)}</li>
+ *     <li>Updates {@link #getDashboardCostBreakDown(com.topcoder.security.TCSubject, long[], long[], java.util.Date, java.util.Date)}</li>
+ *     <li>UPdates {@link #getDashboardCostReportDetails(com.topcoder.security.TCSubject, long, long[], long[], long, long, long[], java.util.Date, java.util.Date, java.util.Map)}</li>
+ * </ul>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.12
+ * @version 6.13
  * @since 1.0
  */
 public class DataProvider {
@@ -1692,7 +1701,7 @@ public class DataProvider {
     public static List<ProjectSummaryData> getPMProjectData(TCSubject tcSubject) throws Exception {
 		CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_pm_projects_contests_v2");
+        request.setContentHandle("direct_my_pm_projects_contests_v3");
 
         if (DirectUtils.isCockpitAdmin(tcSubject)) {
             request.setProperty("uid", String.valueOf(0));
@@ -1702,45 +1711,87 @@ public class DataProvider {
 
         List<ProjectSummaryData> projectData = new ArrayList<ProjectSummaryData>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests_v2");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests_v3");
 
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
             ProjectSummaryData data = new ProjectSummaryData();
-            data.setProjectId(row.getLongItem("tc_direct_project_id"));
-            data.setProjectName(row.getStringItem("tc_direct_project_name"));
-            data.setCustomerId(row.getLongItem("customer_id"));
-            data.setCustomerName(row.getStringItem("customer_name"));
-            data.setDirectProjectStatusId(row.getLongItem("project_status_id"));
-            data.setProjectCreationDate(getDate(row, "start_date"));
-            data.setProjectCompletionDate(getDate(row,"end_date"));
+            if (row.getItem("tc_direct_project_id").getResultData() != null) {
+            	data.setProjectId(row.getLongItem("tc_direct_project_id"));
+            }
+            if (row.getItem("tc_direct_project_name").getResultData() != null) {
+            	data.setProjectName(row.getStringItem("tc_direct_project_name"));
+            }
+            if (row.getItem("customer_id").getResultData() != null) {
+            	data.setCustomerId(row.getLongItem("customer_id"));
+            }
+            if (row.getItem("customer_name").getResultData() != null) {
+            	data.setCustomerName(row.getStringItem("customer_name"));
+            }
+            if (row.getItem("project_status_id").getResultData() != null) {
+            	data.setDirectProjectStatusId(row.getLongItem("project_status_id"));
+            }
+            if (row.getItem("start_date").getResultData() != null) {
+            	data.setProjectCreationDate(getDate(row, "start_date"));
+            }
+            if (row.getItem("end_date").getResultData() != null) {
+            	data.setProjectCompletionDate(getDate(row,"end_date"));
+            }
             if (row.getItem("project_forum_id").getResultData() != null) {
                 data.setProjectForumCategoryId(Long.parseLong(row.getStringItem("project_forum_id")));
                 data.setLatestThreePosters(getLatestThreePosters(row.getStringItem("last_posters")));
             }
+            if (row.getItem("project_fulfillment").getResultData() != null) {
+            	data.setProjectFulfillment(row.getDoubleItem("project_fulfillment"));
+            }
+            if (row.getItem("total_budget").getResultData() != null) {
+            	data.setTotalBudget(row.getStringItem("total_budget"));
+            }
+            if (row.getItem("actual_cost").getResultData() != null) {
+            	data.setActualCost(row.getDoubleItem("actual_cost"));
+            }
+            if (row.getItem("cost_projected").getResultData() != null) {
+            	data.setProjectedCost(row.getDoubleItem("cost_projected"));
+            }
+            if (row.getItem("planned_duration").getResultData() != null) {
+            	data.setPlannedDuration(row.getStringItem("planned_duration"));
+            }
+            if (row.getItem("actual_duration").getResultData() != null) {
+            	data.setActualDuration(row.getStringItem("actual_duration"));
+            }
+            if (row.getItem("projected_duration").getResultData() != null) {
+            	data.setProjectedDuration(row.getStringItem("projected_duration"));
+            }
+            if (row.getItem("message_number").getResultData() != null) {
+            	data.setMessageNumber(row.getIntItem("message_number"));
+            }
+            if (row.getItem("name_of_project_manager").getResultData() != null) {
+            	data.setProjectManagerName(row.getStringItem("name_of_project_manager"));
+            }
 
-            data.setProjectFulfillment(row.getDoubleItem("project_fulfillment"));
-
-            data.setTotalBudget(row.getStringItem("total_budget"));
-            data.setActualCost(row.getDoubleItem("actual_cost"));
-            data.setProjectedCost(row.getDoubleItem("cost_projected"));
-
-            data.setPlannedDuration(row.getStringItem("planned_duration"));
-            data.setActualDuration(row.getStringItem("actual_duration"));
-            data.setProjectedDuration(row.getStringItem("projected_duration"));
-
-            data.setMessageNumber(row.getIntItem("message_number"));
-
-            data.setProjectManagerName(row.getStringItem("name_of_project_manager"));
-
-            data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
-            data.setHasLateContests(row.getBooleanItem("has_late_contests"));
-
-            data.setPhaseLateContestsNum(row.getIntItem("phase_late_contests_number"));
-            data.setLaunchLateContestsNum(row.getIntItem("launch_late_contests_number"));
-            data.setCheckpointLateContestsNum(row.getIntItem("milestone_late_contests_number"));
-            data.setStalledContestsNum(row.getIntItem("stalled_contests_number"));
-            data.setApOffContestsNum(row.getIntItem("ap_off_contests_number"));
-            data.setHistoricalProjectedCost(row.getDoubleItem("historical_projected_cost"));
+            if (row.getItem("stalled_contests_number").getResultData() != null) {
+            	data.setHasStalledContests(row.getIntItem("stalled_contests_number") > 0);
+            }
+            if (row.getItem("has_late_contests").getResultData() != null) {
+            	data.setHasLateContests(row.getBooleanItem("has_late_contests"));
+            }
+            if (row.getItem("phase_late_contests_number").getResultData() != null) {
+            	data.setPhaseLateContestsNum(row.getIntItem("phase_late_contests_number"));
+            }
+            if (row.getItem("launch_late_contests_number").getResultData() != null) {
+            	data.setLaunchLateContestsNum(row.getIntItem("launch_late_contests_number"));
+            }
+            if (row.getItem("milestone_late_contests_number").getResultData() != null) {
+            	data.setCheckpointLateContestsNum(row.getIntItem("milestone_late_contests_number"));
+            }
+            if (row.getItem("stalled_contests_number").getResultData() != null) {
+            	data.setStalledContestsNum(row.getIntItem("stalled_contests_number"));
+            }
+            if (row.getItem("ap_off_contests_number").getResultData() != null) {
+            	data.setApOffContestsNum(row.getIntItem("ap_off_contests_number"));
+            }
+            if (row.getItem("historical_projected_cost").getResultData() != null) {
+            	data.setHistoricalProjectedCost(row.getDoubleItem("historical_projected_cost"));
+            }
 
             projectData.add(data);
         }
@@ -2097,11 +2148,11 @@ public class DataProvider {
             request.setProperty("sdt", dateFormatter.format(startDate));
             request.setProperty("edt", dateFormatter.format(endDate));
             request.setProperty("directProjectStatusIds", projectStatusesList);
-            request.setContentHandle("dashboard_project_metrics_report");
+            request.setContentHandle("dashboard_project_metrics_report_v2");
             final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
 
             // Project metrics
-            final ResultSetContainer resultContainer = queryData.get("dashboard_project_metrics_report");
+            final ResultSetContainer resultContainer = queryData.get("dashboard_project_metrics_report_v2");
             for (ResultSetContainer.ResultSetRow row : resultContainer) {
 
                 ProjectMetricsReportEntryDTO stats = new ProjectMetricsReportEntryDTO();
@@ -2137,8 +2188,8 @@ public class DataProvider {
                 stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
 
                 stats.setProjectedCost(row.getDoubleItem("cost_draft") + row.getDoubleItem("cost_scheduled") +
-                    row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
-                    row.getDoubleItem("cost_cancelled"));
+                		row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
+                		row.getDoubleItem("cost_cancelled") + row.getDoubleItem("project_level_cost"));
 
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
@@ -3071,7 +3122,7 @@ public class DataProvider {
         String projectIds = getConcatenatedIdsString(tcDirectProjects);
         Set<Long> projectsWithStats = new HashSet<Long>();
 
-        final String queryName = "direct_project_stat";
+        final String queryName = "direct_project_stat_v2";
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
@@ -3265,7 +3316,9 @@ public class DataProvider {
             if (queryName.equals("dashboard_contest_cost_breakdown")) {
                 dto.setFullfillment(row.getIntItem("fullfillment"));
             }
-            data.add(dto);
+            if(dto.getId() > 0) {
+                data.add(dto);
+            }
         }
 
         return data;
@@ -4755,7 +4808,7 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
 
-        String queryName = "dashboard_cost_report";
+        String queryName = "dashboard_cost_report_v2";
 
         if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
             return data;
@@ -4780,10 +4833,12 @@ public class DataProvider {
             CostDetailsDTO costDTO = new CostDetailsDTO();
 
             // set status first
-            costDTO.setStatus(row.getStringItem("contest_status").trim());
+            if(row.getItem("contest_status").getResultData() != null) {
+                costDTO.setStatus(row.getStringItem("contest_status").trim());
+            }
 
             // filter by status
-            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().trim().toLowerCase()))) {
+            if (costDTO.getStatus() != null && !statusFilter.contains(statusMapping.get(costDTO.getStatus().trim().toLowerCase()))) {
                 continue;
             }
 
@@ -4847,12 +4902,16 @@ public class DataProvider {
             costDTO.setContest(contest);
             costDTO.setContestType(contestCategory);
 
-            if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) {
-                // for finished contest, total cost = actual cost + contest fee
-                costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
+            if (costDTO.getStatus() != null) {
+                if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) {
+                    // for finished contest, total cost = actual cost + contest fee
+                    costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
+                } else {
+                    // for unfinished contest, total cost = estimated cost + contest fee
+                    costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
+                }
             } else {
-                // for unfinished contest, total cost = estimated cost + contest fee
-                costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
+                costDTO.setTotal(costDTO.getActualCost());
             }
 
 
