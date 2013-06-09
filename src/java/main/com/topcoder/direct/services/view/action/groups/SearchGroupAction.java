@@ -218,14 +218,7 @@ public class SearchGroupAction extends BaseAction {
         final String signature = CLASS_NAME + ".executeAction()";
         LoggingWrapperUtility.logEntrance(getLogger(), signature, null, null);
         try {
-            // check permission
             long userId = getCurrentUserId();
-            if (!getAuthorizationService().checkApprovalPermission(userId)) {
-                ServletActionContext.getRequest().setAttribute("errorPageMessage",
-                    "Sorry, you don't have permission to access the view user groups page.");
-                throw new SecurityGroupsActionException(
-                    "Has no permission to access the view user groups page.");
-            }
             // validate the fields
             validateData();
             HelperUtility.checkFieldErrors(this);
