@@ -484,7 +484,6 @@ function updateContestFee( ) {
                    var amount = prize.prizeAmount;
                    contestPrizesTotal += amount;
                 });
-                
                 var isMultiRound = mainWidget.softwareCompetition.multiRound;
                 //checkpoint prizes
                 var  checkpointPrizesTotal = 0;
@@ -497,12 +496,12 @@ function updateContestFee( ) {
                 var specificationReviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost());
                 var reviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getReviewCost());
                 var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
-                var memberCost = contestPrizesTotal + checkpointPrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
-                mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
+
+		var memberCost = contestPrizesTotal + checkpointPrizesTotal + (isNaN(specificationReviewPayment) ? 0 : specificationReviewPayment) + (isNaN(reviewPayment) ? 0 : reviewPayment) + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
+		mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
                 mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
                 mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee.toString());
                 mainWidget.softwareCompetition.projectHeader.setContestFeePercentage(contestFeePercentage.toString());
-                
                 return;
             } else {
                 mainWidget.softwareCompetition.projectHeader.setContestFeePercentage("0");
@@ -1664,14 +1663,12 @@ function updateAlgorithmPrizes() {
        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
        prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
        projectHeader.prizes = prizes;
-       projectHeader.setDRPoints(0);
        // projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
    }
+   projectHeader.setDRPoints(0);
+   projectHeader.properties['Digital Run Flag'] = 'off';
    projectHeader.setReviewCost(0);
    projectHeader.setSpecReviewCost(0);
-
-   projectHeader.setAdminFee(0);
-   projectHeader.setContestFeePercentage(0);
 }
 
 /**
@@ -1888,6 +1885,9 @@ function calculateDRPoint(firstPlacePrize, secondPlacePrize, reliabilityPrize) {
 }
 
 function getContestTotal(feeObject, prizeType, useDomElem, noCheckpointCost, actualFee) {
+    if(feeObject == undefined) {
+        return;
+    }
     var contestCost = getContestCost(feeObject, prizeType);
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + ($('#DRCheckbox').is(":checked") ? contestCost.drCost : 0) + (actualFee == null ? feeObject.contestFee : actualFee)

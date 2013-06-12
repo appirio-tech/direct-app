@@ -66,7 +66,28 @@ function updateOrderReviewAlgorithm() {
    var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#alorCopilotFee').html(copilotCost.formatMoney(2));
 
-   var adminFee = 0;
+   var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();
+   var reviewPayment = mainWidget.softwareCompetition.projectHeader.getReviewCost();
+   var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
+   // Modify admin Fee if contest percentage is to be used
+   if (typeof billingFeesPercentage != 'undefined' && billingFeesPercentage[billingProjectId]!= null) {
+       var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+       if (contestFeePercentage!=null) {
+           var memberCost = contestPrizesTotal + copilotCost;
+           if(typeof specificationReviewPayment != 'undefined') {
+               memberCost += specificationReviewPayment;
+           }
+           if(typeof reviewPayment != 'undefined') {
+               memberCost += reviewPayment;
+           }
+           mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
+           mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
+           mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee);
+           mainWidget.softwareCompetition.projectHeader.setContestFeePercentage(contestFeePercentage);
+       }
+   }
+
+   var adminFee = mainWidget.softwareCompetition.adminFee;
    $('#alorAdminFee1').html('$'+adminFee.formatMoney(0));
    $('#alorAdminFee2').html('$'+(adminFee + copilotCost).formatMoney(0));
    

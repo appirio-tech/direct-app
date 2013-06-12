@@ -841,10 +841,11 @@ function populateTypeSection() {
       for (var i = 0; i < prizes.length; i++) {
           total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
       }
-      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getReviewCost());
-      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost());
-      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getDRPoints());
-      var contestFee = (total + mainWidget.softwareCompetition.copilotCost) * contestPercentage;
+	
+      total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getReviewCost()) ? 0 : mainWidget.softwareCompetition.projectHeader.getReviewCost()));
+      total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost()) ? 0 : mainWidget.softwareCompetition.projectHeader.getSpecReviewCost()));
+      total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getDRPoints())? 0 : mainWidget.softwareCompetition.projectHeader.getDRPoints()));
+      var contestFee = (total + (isNaN(mainWidget.softwareCompetition.copilotCost)?0:mainWidget.softwareCompetition.copilotCost)) * contestPercentage;
       $('#rAdminFee').html(parseFloat(contestFee).formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
   } else {
       $('#rAdminFee').html(parseFloat(adminFee).formatMoney(2));
@@ -1583,9 +1584,10 @@ function savePrizeSection() {
       dataType: 'json',
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
-         populatePrizeSection();  
+         populatePrizeSection();
+         //populateTypeSection();  
          showPrizeSectionDisplay();      
-         if (mainWidget.competitionType == "STUDIO") {
+         if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
             var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
             if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
                 populateTypeSection();
@@ -1962,7 +1964,7 @@ function saveSpecSection() {
       dataType: 'json',
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
-         populateSpecSection();  
+         populateSpecSection();
          showSpecSectionDisplay();         			
       },
       beforeSend: beforeAjax,
