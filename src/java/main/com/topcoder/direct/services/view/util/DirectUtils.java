@@ -29,6 +29,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.axis.encoding.Base64;
@@ -2606,6 +2607,16 @@ public final class DirectUtils {
             return ((MimeType) mimeTypes.toArray()[0]).toString();
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Comparator to compare the <code>IdNamePair</code> objects by comparing the name ignore case.
+     */
+    public static class IdNamePairNameCaseInsensitiveComparator implements Comparator<IdNamePair> {
+        @Override
+        public int compare(IdNamePair idNamePair, IdNamePair idNamePair2) {
+            return idNamePair.getName().compareToIgnoreCase(idNamePair2.getName());
         }
     }
 }

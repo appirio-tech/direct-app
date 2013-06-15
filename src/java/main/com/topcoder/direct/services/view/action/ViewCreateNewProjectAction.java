@@ -19,10 +19,7 @@ import com.topcoder.service.project.entities.ProjectQuestion;
 import com.topcoder.service.project.entities.ProjectQuestionOption;
 import org.apache.log4j.Logger;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -94,7 +91,7 @@ public class ViewCreateNewProjectAction extends AbstractAction {
      *
      * @since 1.1
      */
-    private Collection<IdNamePair> availableBillingAccounts;
+    private List<IdNamePair> availableBillingAccounts;
 
     /**
      * <p>
@@ -237,7 +234,7 @@ public class ViewCreateNewProjectAction extends AbstractAction {
      * @throws Exception if any error.
      * @since 1.1
      */
-    public Collection<IdNamePair> getAvailableBillingAccounts() throws Exception {
+    public List<IdNamePair> getAvailableBillingAccounts() throws Exception {
         if (availableBillingAccounts == null) {
             List<Project> billingAccountsOfUser = getProjectServiceFacade().getClientProjectsByUser(DirectStrutsActionsHelper
                                                                                                             .getTCSubjectFromSession());
@@ -269,7 +266,8 @@ public class ViewCreateNewProjectAction extends AbstractAction {
                 }
             }
 
-            availableBillingAccounts =  result.values();
+            availableBillingAccounts =  new ArrayList<IdNamePair>(result.values());
+            Collections.sort(availableBillingAccounts, new DirectUtils.IdNamePairNameCaseInsensitiveComparator());
         }
 
         return availableBillingAccounts;
