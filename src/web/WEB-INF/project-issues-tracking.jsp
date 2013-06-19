@@ -134,7 +134,7 @@
                                                         	        </s:if>
                                                         	        <s:else>
                                                         	          <s:url action='contestIssuesTracking' namespace='/contest'>
-                                                        	                <s:param name='contestId' value='key.id'/>
+                                                        	                <s:param name='projectId' value='key.id'/>
                                                         	             </s:url>
                                                         	        </s:else>
 
