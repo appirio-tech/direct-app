@@ -26,16 +26,18 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/introjs.css"/> 
+	<script type="text/javascript" src="/scripts/intro.js"></script> 
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
-    <script type="text/javascript"  src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
+    <script type="text/javascript"  src="/scripts/jsrender-min.svn225439.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
     <script id="contestPipelineDrillInTemplate" type="text/x-jsrender">
         <tr>
             <td class="first">
@@ -81,19 +83,19 @@
 
                             <!-- main section -->
                             <div id="mainSection">
-                                <h2>Pipeline</h2>
+                                <h2 data-intro="Welcome to your Pipeline. Use this page to help you understand and track the work you are putting through the platform." data-step="1">Pipeline</h2>
 
                                 <!-- filter panel -->
                                 <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
                                 <!-- End .filterPanel -->
 
-                                <div class="sectionContainer pipelineSection">
+                                <div class="sectionContainer pipelineSection" >
 
-                                    <div class="sectionInner projectsPipeline">
+                                    <div class="sectionInner projectsPipeline" data-intro="This section displays the projects you have started and completed." data-step="2" data-position="top">
 
                                         <div class="pipelineTitle">
-                                            <h3>Project Pipeline</h3>
-                                            <a href="javascript:;" class="icon"
+                                            <h3 >Project Pipeline</h3>
+                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
                                                rel="This chart depicts the projects in Pipeline">!</a>
                                         </div>
                                         <!-- title -->
@@ -102,7 +104,7 @@
 
                                             <!-- numberSection -->
                                             <div class="numberSection">
-                                                <div class="numberSectionInner">
+                                                <div class="numberSectionInner" data-intro="Completed projects are shown in green.  Finished projects are shown in blue." data-step="3">
                                                     <ul>
                                                         <li class="ajaxTableLoader"><img src="/images/rss_loading.gif"
                                                                                          alt="loading"/></li>
@@ -129,7 +131,7 @@
                                         <div class="corner tr"></div>
                                     </div>
 
-                                    <div class="sectionInner contestsPipeline">
+                                    <div class="sectionInner contestsPipeline" data-intro="This section displays the contests you have started and completed." data-step="4"  data-position="top">
 
                                         <div class="pipelineTitle">
                                             <h3>Contest Pipeline</h3>
