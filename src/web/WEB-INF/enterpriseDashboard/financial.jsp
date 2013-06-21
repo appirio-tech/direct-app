@@ -23,17 +23,17 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
-    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
-    <script type="text/javascript" src="/scripts/search.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/jsrender-min.svn225439.js"></script>
+    <script type="text/javascript" src="/scripts/search.svn228935.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
     <script id="financialDrillInTemplate" type="text/x-jsrender">
         <tr>
             <td class="first">
@@ -74,14 +74,14 @@
 
                                     <div class="sectionInner">
 
-                                        <div class="totalSpendTitle">
+                                        <div class="totalSpendTitle"  data-intro="Total spend is calculated by adding together all of your competitions costs as well as any fees. The blue bars represent your spend per month.  The red line is a 3 month moving average." data-step="1">
                                             <h3>Total Spend</h3>
-                                            <a href="javascript:;" class="icon"
+                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
                                                rel="Total Amount Spent for the Projects each month is shown here.">!</a>
                                         </div>
                                         <!-- title -->
                                         <div class="numberSection">
-                                            <div class="numberSectionInner">
+                                            <div class="numberSectionInner" data-intro="At a quick glance, see what you spent so far this month, last month, your average per month, and the total for the time range in your filter." data-step="2">
                                                 <ul>
                                                     <li class="last ajaxTableLoader"><img
                                                             src="/images/rss_loading.gif" alt="loading"/></li>
@@ -89,7 +89,7 @@
                                             </div>
                                         </div>
                                         <div class="chartSection">
-                                            <div id="chartTotalSpend">
+                                            <div id="chartTotalSpend" data-intro="Click a blue bar to drill into the data." data-step="3" data-position="top">
                                                 <div class="ajaxTableLoader"><img src="/images/rss_loading.gif"
                                                                                   alt="loading"/></div>
                                             </div>
@@ -107,9 +107,9 @@
 
                                     <div class="sectionInner">
 
-                                        <div class="financialTitle">
+                                        <div class="financialTitle"  data-intro="The financials table is a tabular summary of your monthly spend.  It's the same data that you see in the chart above." data-step="4" data-position="top">
                                             <h3>Financials</h3>
-                                            <a href="javascript:;" class="icon"
+                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
                                                rel="Shows your monthly projects cost and the total sum">!</a>
                                         </div>
                                         <!-- title -->
@@ -118,7 +118,7 @@
 
 
                                             <!-- table -->
-                                            <div class="tableData">
+                                            <div class="tableData" data-intro="Member costs include all competition and task costs that are paid to the community. Fees include your per-competition fee.  This is in addition to the community payments. Total cost currently does NOT include your platform license fees." data-step="5" data-position="top">
 
                                                 <table border="0" cellspacing="0" cellpadding="0" id="financials">
                                                     <colgroup>

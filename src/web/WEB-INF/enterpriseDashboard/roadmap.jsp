@@ -20,18 +20,18 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
-    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
+    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.svn219034.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectMilestone.svn219021.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=215476"></script>
+    <script type="text/javascript" src="/scripts/milestone-fullCalendar.svn215476.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
 </head>
 
 <body id="page" class="dashboardPage">
@@ -51,7 +51,7 @@
 
                             <!-- main section -->
                             <div id="mainSection">
-                                <h2>Road Map</h2>
+                                <h2 data-intro="Your Roadmap is a summary of all your project milestones.  Use these to track overall progress with your projects and be alerted to potential time delays. Green is complete.  Yellow is approaching.  Red is overdue.  Click on a milestone to view the details of it within that particular project." data-step="1">Road Map</h2>
 
                                 <!-- filter panel -->
                                 <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
 
-                            <span id="calendarToday" style="display:none"><s:date name="calendarToday"
+                            <span id="calendarToday" style="display:none" ><s:date name="calendarToday"
                                                                                   format="MM/dd/yyyy"/></span>
 
                                 <!-- start road map section -->
@@ -76,7 +76,7 @@
 
                                         <div class="projectsHealthTitle">
                                             <h3>Road Map</h3>
-                                            <a href="javascript:;" class="icon" rel="Showing the Overdue, Upcoming, and Completed Project Milestones.">!</a>
+                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon" rel="Showing the Overdue, Upcoming, and Completed Project Milestones.">!</a>
                                         </div>
                                         <!-- title -->
 
@@ -94,7 +94,7 @@
                                         <div id="tab">
 
                                             <!-- tabPanel -->
-                                            <div class="tabPanel">
+                                            <div class="tabPanel" data-intro="Quickly see overdue, upcoming, and completed project milestones." data-step="2">
                                                 <ul>
                                                     <li class="overDue"><a href="javascript:;"><span><span>Overdue <strong>(0)</strong></span></span></a></li>
                                                     <li class="upcoming"><a href="javascript:;"><span><span>Upcoming <strong>(0)</strong></span></span></a></li>

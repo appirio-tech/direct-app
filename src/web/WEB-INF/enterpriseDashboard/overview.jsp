@@ -27,14 +27,14 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
 
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
-    <script type="text/javascript"  src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript"  src="/scripts/enterpriseDashboard.svn227019.js"></script>
 </head>
 
 <body id="page" class="dashboardPage">
@@ -54,7 +54,7 @@
 
                     <!-- main section -->
                     <div id="mainSection">
-                    <h2>Overview</h2>
+                    <h2 data-intro="Welcome to your Enterprise Dashboard. This page is a synopsis of information relevant to your projects.  It's a great starting point to view financials, pipeline, roadmap, and participation metrics. Click Next for a tour of the widgets below." data-step="1">Overview</h2>
 
                     <!-- filter panel -->
                     <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
@@ -137,10 +137,10 @@
                         <div class="sectionContainer overTotalSpendSection">
                             <div class="sectionInner">
 
-                                <div class="totalSpendTitle">
+                                <div class="totalSpendTitle" data-intro="Total spend is calculated by adding together all of your competitions costs as well as any fees." data-step="2">
                                     <h3>Total Spend</h3>
-                                    <a href="javascript:;" class="icon" rel="Total Amount Spent for the Projects each month is shown here.">!</a>
-                                    <a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink viewAllSync">View All</a>
+                                    <a onclick="javascript:introJs().start();" href="javascript:;" class="icon" rel="Total Amount Spent for the Projects each month is shown here.">!</a>
+                                    <a href="<s:url action='financial' namespace='/enterpriseDashboard'/>" class="viewAllLink viewAllSync" data-intro="Click View All for a full screen view with drill down features." data-step="3">View All</a>
                                 </div>
                                 <!-- title -->
 
@@ -160,7 +160,7 @@
                         <!-- End .overTotalSpendSection -->
 
                         <!-- total Spend -->
-                        <div class="sectionContainer overRoadMapSection">
+                        <div class="sectionContainer overRoadMapSection" data-intro="Your Roadmap is a summary of all your project milestones.  Use these to track overall progress with your projects and be alerted to potential time delays." data-step="4" data-position="right">
                             <div class="sectionInner">
 
                                 <div class="roadMapTitle">
@@ -173,7 +173,7 @@
                                 <!-- container -->
                                 <div class="containerSection noBorderSection">
                                     <div id="tab">
-                                        <div class="tabPanel">
+                                        <div class="tabPanel" data-intro="Switch between overdue, upcoming, and completed project milestones." data-step="5">
                                             <ul>
                                                 <li class="overDue"><a href="javascript:;" class="current"><span><span>Overdue</span></span></a></li>
                                                 <li class="upcoming"><a href="javascript:;"><span><span>Upcoming</span></span></a></li>
@@ -286,7 +286,7 @@
                     <div class="middleColumn">
 					
 						 <!-- pipeline -->
-                        <div class="sectionContainer overpipelineSection">
+                        <div class="sectionContainer overpipelineSection" data-intro="Use the pipeline to help you understand and track the work you are putting through the platform. Click on the legend labels to show/hide various competition statuses." data-step="6">
                             <div class="sectionInner">
 
                                 <div class="pipelinehTitle">
@@ -345,7 +345,7 @@
                     <div class="rightColumn">
 
                         <!-- Projects -->
-                        <div class="sectionContainer overProjectsSection">
+                        <div class="sectionContainer overProjectsSection" data-intro="Your active projects and the next milestone scheduled for each" data-step="7">
                             <div class="sectionInner">
 
                                 <div class="projectTitle">

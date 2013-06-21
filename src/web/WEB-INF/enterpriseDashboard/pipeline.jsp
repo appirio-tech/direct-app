@@ -29,7 +29,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
-	<script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/introjs.css"/> 
+	<script type="text/javascript" src="/scripts/intro.js"></script> 
+    <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
     <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>

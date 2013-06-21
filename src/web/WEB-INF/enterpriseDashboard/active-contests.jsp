@@ -23,13 +23,13 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
     <jsp:include page="../includes/paginationSetup.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
 
     <jsp:include page="../includes/filterPanel.jsp"/>
 </head>
@@ -51,16 +51,16 @@
 							
 							<!-- main section -->
 							<div id="mainSection">
-								<h2>Active Contests</h2>
+								<h2 data-intro="Welcome to your Active Competitions. This page is a real-time view of all your active competitions.  This is the community in action on your project(s)." data-step="1">Active Contests</h2>
 								
 								<!-- active contest -->
 								<div id="activeContest">
 								
                                     <!-- filter panel -->
-                                    <div class="filter">
+                                    <div class="filter" data-intro="Use the filter area to narrow down your list of active competitions." data-step="2">
 										<div class="filterTitle">
 											<a href="javascript:;" class="folder">Filter</a>
-											<div class="searchInputArea">
+											<div class="searchInputArea" data-intro="This search box will narrow your results in real-time as you type. It searches all text fields in the results below." data-step="3">
 												<label>Search:</label>
 												<div class="inputLeft">
 													<div class="inputRight">
@@ -158,7 +158,7 @@
 															<col width="85" />
 														</colgroup>
 														<thead>
-															<tr>
+															<tr data-intro="Your active competitions are in this table. Click the column headers to sort on any column." data-step="4">
 																<th>Contest Type</th>
 																<th>Contest Name</th>
 																<th>Project Name</th>
