@@ -22,14 +22,14 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
     <jsp:include page="../includes/paginationSetup.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.js"></script>
-    <script type="text/javascript" src="/scripts/search.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/search.svn228935.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
 </head>
 
 <body id="page" class="dashboardPage">
@@ -56,7 +56,7 @@
 
 <div class="sectionInner">
 
-<div class="analyticsTitle">
+<div class="analyticsTitle" data-intro="Here you will find analytics that the TopCoder Platform tracks. These are specific to your projects, but you'll also see the market data for the entire platform. Metrics are based on completed competitions." data-step="1">
     <h3>Analytics</h3>
     <a href="javascript:;" class="icon"
        rel="Analyse the contest cost, time and fulfillment of your projects">!</a>
@@ -66,7 +66,7 @@
 <div class="analyticsContainer">
 
 <!-- filter -->
-<div class="filterForAnalytics">
+<div class="filterForAnalytics" data-intro="Use the filter to drill further into your data." data-step="2">
     <div class="filterTitle">
         <a href="javascript:;" class="folder">Filter</a>
     </div>
@@ -170,9 +170,9 @@
 <div class="analyticsView">
 
 <!-- title -->
-<div class="viewTitle">
+<div class="viewTitle" data-intro="Here's where the fun starts..." data-step="3">
     <a href="javascript:;" class="folder">Chart View</a>
-    <ul>
+    <ul data-intro="Toggle between this chart and a tabular view." data-step="9" data-position="left">
         <li class="active"><a rel="lineViewContainer" href="javascript:;" class="chartView">Chart</a></li>
         <li><a rel="tableViewContainer" href="javascript:;" class="tableView">Table</a></li>
     </ul>
@@ -185,7 +185,7 @@
 <!-- data -->
 <div class="viewDate">
 
-    <div class="tabHeader">
+    <div class="tabHeader" data-intro="This top section summarizes some platform metrics.  It includes your specific metrics, the full market, and a comparision." data-step="4">
 
         <ul class="tabs customer">
             <li><a href="javascript:;" rel="customerSummary"
@@ -488,7 +488,7 @@
 <!-- End .tableViewContainer -->
 
 <!-- line view -->
-<div class="lineViewContainer analyticsViewTabContainer">
+<div class="lineViewContainer analyticsViewTabContainer" data-intro="This line chart shows your the trend of the various metrics.  The data is refreshed at least every 24 hours." data-step="5">
 
     <div id="lineView">
         <div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading"/></div>
@@ -496,7 +496,7 @@
 
     <!-- button -->
     <div class="buttonArea">
-        <div class="displayButton">
+        <div class="displayButton" data-intro="Use these toggle buttons to add/remove data from the chart." data-step="6" data-position="top">
             <span class="label">Displaying</span>
             <ul>
                 <li class="firstSelectot"><a href="javascript:;"> <span><input type="checkbox" class="chkTimeframe hide"
@@ -513,7 +513,7 @@
                 </li>
             </ul>
         </div>
-        <div class="zoomButton">
+        <div class="zoomButton" data-intro="Here is a shortcut to zoom into specific time ranges." data-step="7" data-position="top">
             <span class="label">Zoom</span>
             <ul>
                 <li class="oneWeek firstSelectot"><a href="javascript:;"><span>1 Month</span></a></li>
@@ -545,7 +545,7 @@
     <!-- container -->
     <div class="volumeViewContainer">
 
-        <div class="sectionTop">
+        <div class="sectionTop" data-intro="This table summarizes the # of competitions, by type and status, that you have completed in the selected time range." data-step="8" data-position="top">
             <h3 class="customerReplacement">Customer Volume Summary</h3>
         </div>
 
