@@ -213,7 +213,7 @@
                 <li>
                     <a ><span>Support</span></a>
                     <div class="subNav">
-                        <a onclick="javascript:introJs().start();" >Tour This Page</a>
+                        <a href="#" onclick="javascript:introJs().start();" >Tour This Page</a>
                         <a href="/university/help-center" target="_blank">FAQ</a>
                     </div>
                 </li>
