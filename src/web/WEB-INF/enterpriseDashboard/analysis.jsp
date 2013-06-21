@@ -58,7 +58,7 @@
 
 <div class="analyticsTitle" data-intro="Here you will find analytics that the TopCoder Platform tracks. These are specific to your projects, but you'll also see the market data for the entire platform. Metrics are based on completed competitions." data-step="1">
     <h3>Analytics</h3>
-    <a href="javascript:;" class="icon"
+    <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
        rel="Analyse the contest cost, time and fulfillment of your projects">!</a>
 </div>
 <!-- title -->
