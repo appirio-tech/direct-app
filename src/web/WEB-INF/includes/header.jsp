@@ -554,8 +554,7 @@
             <li>
                 <strong>Hello</strong> <link:currentUser/>|
             </li>
-            <li class="helloUserLink"><a href="<s:url action="logout" namespace="/"/>">Logout</a>|</li>
-            <li class="helloUserLink"><link:help/></li>
+            <li class="helloUserLink"><a href="<s:url action="logout" namespace="/"/>">Logout</a></li>
         </ul>
     </div><!-- End .helloUSer -->
 
