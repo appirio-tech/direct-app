@@ -49,16 +49,16 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/filter-panel.svn225484.css" media="all" type="text/css"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.css?v=210396"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.svn219021.css"/>
     <![endif]-->
-    <script type="text/javascript" src="/scripts/tableSearchBar.js?v=210396"></script>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
-    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=214400"></script>
-    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/tableSearchBar.svn210396.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.svn224404.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.svn223873.js"></script>
+    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.svn225388.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.svn224473.css" media="all" type="text/css"/>
 
 </head>
 
@@ -84,7 +84,7 @@
 
 <%-- cost report form --%>
 
-<div class="pipelineFilter" id="billingCostReportsPage">
+<div class="pipelineFilter" id="billingCostReportsPage" data-intro="This report gives your all of the detailed data you could possibly want pertaining to your competition costs. Use the filter to narrow your results." data-step="1">
 
 	<!-- .filterTitle -->
 	<div class="filterTitle">
@@ -100,7 +100,7 @@
 	<!-- .filterContainer -->
     <s:form method="get" action="dashboardGetBillingCostReport" namespace="/"
                id="dashboardBillingCostReportForm">
-	<div class="filterContainer">
+	<div class="filterContainer" >
 
 		<!-- .leftFilterContent -->
 		<div class="leftFilterContent">
@@ -132,7 +132,7 @@
 
 			<div id="projectFilter">
 
-                <div class="filterRow firstFilterRow">
+                <div class="filterRow firstFilterRow" data-intro="This data aligns with your invoices, so selecting or typing an invoice # is possible." data-step="2">
                     <div class="filterRowLeft">
                         <label>Invoice:</label>
                         <img src="/images/dots-white.gif" class="indicator" alt/>
@@ -157,7 +157,7 @@
 
 
             <div class="clearFix"></div>
-            <div class="filterRow adjustFilterRow firstFilterRow">
+            <div class="filterRow adjustFilterRow firstFilterRow" data-intro="If you know a competition ID, enter it here to see only costs for that competition." data-step="3">
                 <div class="filterRowLeft">
                     <label for="formData.contestID">Contest ID:</label>
                 </div>
@@ -176,7 +176,7 @@
 
 			<div id="datefilter">
 
-				<div class="filterRow firstFilterRow">
+				<div class="filterRow firstFilterRow" data-intro="The dates apply to the time the costs are incurred. Usually, this is at the end of the competition." data-step="4">
 					<label for="startDate" class="fLeft">Start:</label>
                     <s:textfield name="formData.startDate" readonly="true"
                                  id="startDateCostReport"
@@ -228,7 +228,7 @@
                 </div>            
                 <!-- end InvoiceStatusFilter -->                
 
-                  <div id="groupFilter">
+                  <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5">
                       <div class="filterRow firstFilterRow">
                           <div class="filterRowLeft">
                               <label for="formDatagroup">Project Filters:</label>
@@ -274,7 +274,7 @@
                     </div>
                </div>
 
-            <div class="multiSelectArea">
+            <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
                 <div class="multiSelectAreaInner">
                     <label class="multiSelectAreaTitle">Contest Types:</label>
 
@@ -304,7 +304,7 @@
             </div>
 			<!-- end .multiSelectArea -->
 
-			<div class="multiSelectArea">
+			<div class="multiSelectArea" data-intro="These are the various types of community member payments and transaction fees you will see on your invoices." data-step="7">
 				<div class="multiSelectAreaInner">
 					<label class="multiSelectAreaTitle">Payment Type:</label>
 
@@ -335,7 +335,7 @@
 
 			<div class="clearFix"></div>
 
-			<div class="applyButtonBox">
+			<div class="applyButtonBox" data-intro="Click apply to run the report." data-step="8">
 				<a class="button6 applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
 			</div>
 			<!-- end .applyButtonBox -->
@@ -395,7 +395,7 @@
 <div id="billingCostReportSection" class="resultTableContainer">
 
     <%-- aggregation invoice report --%>
-<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport">
+<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport" data-intro="Here is a quick summary of # of contests and the total cost." data-step="9">
     <thead>
     <tr>
         <th colspan="3" class="tableTitle"><a class="expand" href="javascript:void(0)">&nbsp;</a> <span>Basic Invoice History Information</span></th>
@@ -418,7 +418,7 @@
 
     <%-- Cost report Details --%>
 <table id="billingCostDetails" class="billingCostReport resultTable paginatedDataTable" cellpadding="0"
-       cellspacing="0">
+       cellspacing="0" data-intro="This table contains all of the detail about each line item of costs. You will see multiple lines per competition." data-step="10">
     <thead>
     <tr>
         <th class="tableTitle" colspan="
@@ -594,7 +594,7 @@
                     <div>
                         <div>
 
-                            <div class="panel tableControlPanel">
+                            <div class="panel tableControlPanel" data-intro="Prefer Excel?  Click here." data-step="11">
                                 <div class="exportControl">
                                     <a href="javascript:getBillingCostReportAsExcel();" class="exportExcel">Export to
                                         <strong>Excel</strong></a>
