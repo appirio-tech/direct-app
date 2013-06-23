@@ -2614,7 +2614,6 @@ public final class DirectUtils {
      * Comparator to compare the <code>IdNamePair</code> objects by comparing the name ignore case.
      */
     public static class IdNamePairNameCaseInsensitiveComparator implements Comparator<IdNamePair> {
-        @Override
         public int compare(IdNamePair idNamePair, IdNamePair idNamePair2) {
             return idNamePair.getName().compareToIgnoreCase(idNamePair2.getName());
         }
