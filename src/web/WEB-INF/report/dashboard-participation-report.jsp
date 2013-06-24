@@ -58,7 +58,7 @@
 </jsp:include>
 
 <!-- .pipelineFilter -->
-<div class="pipelineFilter" id="participationMetricsReports">
+<div class="pipelineFilter" id="participationMetricsReports" data-intro="This report summarizes the participation metrics for your projects and competitions.  Essentially, it is a statistical view of YOUR community. Use the filter to narrow your results." data-step="1">
 
     <!-- .filterTitle -->
     <div class="filterTitle">
@@ -89,7 +89,7 @@
                 </div>
                 <!-- end .filterCustomerName -->
 
-                <div id="datefilter">
+                <div id="datefilter" data-intro="The date filter constrains based on the completion times of competitions." data-step="2">
 
                     <div class="filterRow firstFilterRow">
                         <label for="startDate">Start:</label>
@@ -110,7 +110,7 @@
                 <!-- end .datefilter -->
             </div>
 
-            <div class="filterColumnPart">
+            <div class="filterColumnPart" data-intro="If you have multiple billing accounts, you can select one here or leave it as is to view all." data-step="3"> 
                 <!-- .filterBillingAccount -->
                 <div class="filterBillingAccount">
                 	<div class="filterRowLeft">
@@ -123,7 +123,7 @@
 
                 </div>
                 <!-- end .filterBillingAccount -->
-                <div class="multiSelectArea">
+                <div class="multiSelectArea" data-intro="Narrow down based on competition statuses.  For this report, you probably want to include all." data-step="4">
                     <div class="multiSelectAreaInner statusFilter">
                         <label class="multiSelectAreaTitle">Status:</label>
                         <s:select list="viewData.contestStatus" multiple="true"
@@ -139,7 +139,7 @@
 
         <div class="filterColumnThird">
             <!-- .filterProject -->
-            <div class="filterProject2">
+            <div class="filterProject2" data-intro="Select a specific project, or view All." data-step="5">
             	<div class="filterRowLeft">
                 	<label for="formData.projectId">Project Name:</label>
                 	<img src="/images/dots-white.gif" class="indicator" alt/>
@@ -149,7 +149,7 @@
             </div>
             <!-- end .filterProject -->
 
-            <div class="multiSelectArea">
+            <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
                 <div class="multiSelectAreaInner contestTypeFilter">
                     <label class="multiSelectAreaTitle">Contest Type:</label>
                     <s:select list="viewData.projectCategories" multiple="true"
@@ -163,7 +163,7 @@
 
         </div>
 
-        <div class="applyButtonBox">
+        <div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="7">
             <a class="button6 applyButton" href="javascript:;" id="participationReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
             <div class="clearFix"></div>
         </div>
@@ -184,7 +184,7 @@
 <!-- participationMetricsReportsSection -->
 <div id="participationMetricsReportsSection">
 
-<table id="participationMetricsReportBasicMetrics" class="pipelineStats" cellpadding="0" cellspacing="0">
+<table id="participationMetricsReportBasicMetrics" class="pipelineStats" cellpadding="0" cellspacing="0" data-intro="Here are your # of projects, contests, and copilots." data-step="8">
     <thead>
         <tr>
             <th class="tableTitle" colspan="3">
@@ -209,11 +209,11 @@
     </tbody>
 </table>
 
-<table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
+<table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0" data-intro="Here are all the details. Use the View By control at the right to pivot on different groupings of your data." data-step="9">
     <tr>
         <th class="tableTitle" colspan="7">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
-            <span>Aggregation Participation Metrics Report</span>
+            <span>Participation Metrics Report</span>
         </th>
         <th class="tableTitle">&nbsp;</th>
         <th class="tableTitle viewType" colspan="6">
@@ -231,7 +231,7 @@
     </tr>
 </table>
 <div class="resultTableContainer projectAggregationReport">
-<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0" data-intro="Click on the column headers to sort." data-step="10">
     <colgroup>
         <col width="16%" />
         <col width="6%" />
