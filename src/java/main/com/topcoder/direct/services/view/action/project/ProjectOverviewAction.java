@@ -10,6 +10,7 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
@@ -24,6 +25,7 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
@@ -156,6 +158,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      * <p>A <code>Logger</code> to be used for logging the events encountered while processing the requests.</p>
      */
     private static final Logger log = Logger.getLogger(ProjectOverviewAction.class);
+
+    /*
+     * <p>The constant string for filtering out active bug races in JQL query</p>
+     */
+    private static final String FILTER_ACTIVE_BUG_RACES = "status = Open OR status = \"In Progress\" OR status = Reopened";
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
@@ -484,6 +491,10 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
                 totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
             }
+
+            // count project level issues
+            List<TcJiraIssue> activeProjectLevelBugRaces =  JiraRpcServiceWrapper.getBugRacesForDirectProject(formData.getProjectId(), FILTER_ACTIVE_BUG_RACES);
+            totalOngoingBugRaces += activeProjectLevelBugRaces.size();
 
             getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
             getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
