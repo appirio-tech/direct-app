@@ -47,7 +47,7 @@
 </jsp:include>
 
 <!-- .pipelineFilter -->
-<div class="pipelineFilter" id="jiraIssuesReports">
+<div class="pipelineFilter" id="jiraIssuesReports" data-intro="If you are looking for a one-stop-shop to view all of your Bug Races and issue tickets, then you have found it.  This report looks across all of your projects for Bug Races and Jira tickets that are tied to your projects." data-step="1">
 
     <!-- .filterTitle -->
     <div class="filterTitle">
@@ -75,7 +75,7 @@
                     </div>
                     <!-- end .filterCustomerName -->
 
-                    <div id="datefilter">
+                    <div id="datefilter" data-intro="The date range applies to the launch/creation date of the Jira tickets." data-step="2">
 
                         <div class="filterRow firstFilterRow">
                             <label for="startDate">Start:</label>
@@ -98,7 +98,7 @@
 
                 <div class="filterColumnPart">
                     <!-- .filterBillingAccount -->
-                    <div class="filterBillingAccount">
+                    <div class="filterBillingAccount" data-intro="If you have multiple billing accounts, you can select one here." data-step="3">
                         <label for="formData.billingAccountId">Billing Account:</label>
                         <s:select list="viewData.clientBillingProjects"
                                   id="formData.billingAccountId"
@@ -106,7 +106,7 @@
 
                     </div>
                     <!-- end .filterBillingAccount -->
-                    <div class="multiSelectArea">
+                    <div class="multiSelectArea" data-intro="If you want to limit the status of the issues shown, make your choices here." data-step="4">
                         <div class="multiSelectAreaInner">
                             <label class="multiSelectAreaTitle">Status:</label>
                             <s:select list="viewData.projectStatus" multiple="true"
@@ -122,7 +122,7 @@
 
             <div class="filterColumnThird">
                 <!-- .filterProject -->
-                <div class="filterProject2">
+                <div class="filterProject2" data-intro="Select a specific project, or All." data-step="5">
                     <label>Project Name:</label>
                     <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
@@ -132,7 +132,7 @@
 
             </div>
 
-            <div class="applyButtonBox">
+            <div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="6">
                 <a class="button6 applyButton" href="javascript:;" id="jiraIssuesReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
                 <div class="clearFix"></div>
             </div>
@@ -151,7 +151,7 @@
 
 <s:if test="not viewData.showJustForm and not hasActionErrors()">
     <div id="jiraIssuesReportsSection" style="width:100%;display: table">
-        <div class="resultTableContainer">
+        <div class="resultTableContainer" data-intro="Here are your details. Every Jira ticket that the filter above captures is displayed here. Click the title to drill into the specific ticket. Click the column headers to sort." data-step="7">
             <table id="jiraIssueDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
@@ -256,7 +256,7 @@
                             <div>
 
                                 <div class="panel tableControlPanel">
-                                    <div class="exportControl">
+                                    <div class="exportControl" data-intro="Like Excel? Export to Excel by clicking this icon." data-step="8">
                                         <a href="javascript:getJiraIssuesReportAsExcel();" class="exportExcel">Export to
                                             <strong>Excel</strong></a>
                                     </div>
