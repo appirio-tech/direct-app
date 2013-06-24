@@ -23,17 +23,17 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.svn219021.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css"/>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.svn228165.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
-    <script type="text/javascript" src="/scripts/jsrender-min.svn225439.js"></script>
-    <script type="text/javascript" src="/scripts/search.svn228935.js"></script>
-    <script type="text/javascript" src="/scripts/highcharts.svn218673.js"></script>
-    <script type="text/javascript" src="/scripts/exporting.svn218673.js"></script>
+    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript" src="/scripts/search.js"></script>
+    <script type="text/javascript" src="/scripts/highcharts.js"></script>
+    <script type="text/javascript" src="/scripts/exporting.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
-    <script type="text/javascript" src="/scripts/enterpriseDashboard.svn227019.js"></script>
+    <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
     <script id="financialDrillInTemplate" type="text/x-jsrender">
         <tr>
             <td class="first">

@@ -49,16 +49,16 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <link rel="stylesheet" href="/css/direct/filter-panel.svn225484.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/filter-panel.css" media="all" type="text/css"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.svn219021.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.css"/>
     <![endif]-->
-    <script type="text/javascript" src="/scripts/tableSearchBar.svn210396.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.svn224404.js"></script>
-    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.svn223873.js"></script>
-    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.svn225388.css" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.svn224473.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/tableSearchBar.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js"></script>
+    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css" media="all" type="text/css"/>
 
 </head>
 
