@@ -49,7 +49,7 @@
 </jsp:include>
 
 <!-- .pipelineFilter -->
-<div class="pipelineFilter" id="projectMetricsReports">
+<div class="pipelineFilter" id="projectMetricsReports" data-intro="This report summarizes your project metrics. It's helpful when you want to see all of your projects budgets, costs, # of contests, etc. in one view. Use the filter to narrow your results." data-step="1">
 
     <!-- .filterTitle -->
     <div class="filterTitle">
@@ -77,7 +77,7 @@
                 </div>
                 <!-- end .filterCustomerName -->
 
-                <div id="datefilter">
+                <div id="datefilter" data-intro="The dates represent the start and completion dates of your projects.  Set the date range wide enough to include all of your projects." data-step="2">
 
                     <div class="filterRow firstFilterRow">
                         <label for="startDate">Start:</label>
@@ -100,7 +100,7 @@
 
             <div class="filterColumnPart">
                 <!-- .filterBillingAccount -->
-                <div class="filterBillingAccount">
+                <div class="filterBillingAccount" data-intro="If you have multiple billing accounts, you can select one here." data-step="3">
                     <label for="formData.billingAccountId">Billing Account:</label>
                     <s:select list="viewData.clientBillingProjects"
                                       id="formData.billingAccountId"
@@ -108,7 +108,7 @@
 
                 </div>
                 <!-- end .filterBillingAccount -->
-                <div class="multiSelectArea">
+                <div class="multiSelectArea" data-intro="Include or exclude specific project statuses." data-step="4">
                      <div class="multiSelectAreaInner"> 
                         <label class="multiSelectAreaTitle1">Status:</label>
                         <s:select list="viewData.projectStatus" multiple="true"
@@ -124,7 +124,7 @@
 
         <div class="filterColumnThird">
             <!-- .filterProject -->
-            <div class="filterProject2">
+            <div class="filterProject2" data-intro="Select a specific project, or All." data-step="5">
                 <label>Project Name:</label>
                 <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
@@ -134,7 +134,7 @@
 
         </div>
 
-        <div class="applyButtonBox">
+        <div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="6">
             <a class="button6 applyButton" href="javascript:;" id="reportMetricsReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
             <div class="clearFix"></div>
         </div>
@@ -153,7 +153,7 @@
 
 <s:if test="not viewData.showJustForm and not hasActionErrors()">
 <!-- projectMetricsReportsSection -->
-<div id="projectMetricsReportsSection">
+<div id="projectMetricsReportsSection" data-intro="Here are your results. Click the column headers to sort. Click a project name to view the dashboard for that project." data-step="7">
 <div class="resultTableContainer">
 <table id="costDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <!-- <colgroup>
@@ -264,7 +264,7 @@
                         <div>
 
                             <div class="panel tableControlPanel">
-                                <div class="exportControl">
+                                <div class="exportControl" data-intro="Like Excel?  Export to Excel by clicking this icon." data-step="8">
                                     <a href="javascript:getMetricsReportAsExcel();" class="exportExcel">Export to
                                         <strong>Excel</strong></a>
                                 </div>
