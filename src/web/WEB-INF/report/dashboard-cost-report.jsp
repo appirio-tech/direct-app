@@ -97,7 +97,7 @@
         	</div>
         	<!-- End .filterTitle -->
 
-        <div class="filterContainer">
+        <div class="filterContainer" data-intro="This report summarizes the costs associated to your projects and competitions. Costs are aggregated at the competition level, so keep that in mind when looking at the dates. Use the filter to narrow your results." data-step="1">
 
         		<!-- .leftFilterContent -->
         		<div class="leftFilterContent">
@@ -115,7 +115,7 @@
         					<div class="clearFix"></div>
         				</div><!-- end .filterRow -->
 
-        				<div class="filterRow">
+        				<div class="filterRow" data-intro="Select a specific billing account, or view All." data-step="2">
         					<div class="filterRowLeft">
         						<label for="formData.billingAccountIds">Billing Account:</label>
                                 <img src="/images/dots-white.gif" class="indicator" alt/>
@@ -130,7 +130,7 @@
 
         			<div id="projectFilter">
 
-        				<div class="filterRow firstFilterRow">
+        				<div class="filterRow firstFilterRow" data-intro="Select a specific project, or view All." data-step="3">
         					<div class="filterRowLeft">
         						<label>Project Name:</label>
                                 <img src="/images/dots-white.gif" class="indicator" alt/>
@@ -142,7 +142,7 @@
 
         			</div><!-- end .projectfilter -->
 
-                    <div id="datefilter">
+                    <div id="datefilter" data-intro="The date filter applies to the end dates of competitions.  This is NOT correlated exactly to when costs are incurred.  Start/End sets the range of competition end dates to include in your report." data-step="4">
 
                         <div class="filterRow firstFilterRow">
                             <label for="startDate" class="fLeft">Start:</label>
@@ -170,7 +170,7 @@
         		<!-- .rightFilterContent -->
         		<div class="rightFilterContent">
 
-                    <div id="groupFilter">
+                    <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5">
                         <div class="filterRow firstFilterRow">
                             <div class="filterRowLeft">
                                 <label for="formDatagroup">Project Filters:</label>
@@ -215,7 +215,7 @@
                         <!-- end .multiSelectArea -->
                     </div>
 
-                    <div class="multiSelectArea">
+                    <div class="multiSelectArea" data-intro="Include or exclude different competition statuses." data-step="6">
         				<div class="multiSelectAreaInner">
         					<label class="multiSelectAreaTitle">Status:</label>
         					<div class="multiSelectBox">
@@ -243,7 +243,7 @@
         			</div>
         			<!-- end .multiSelectArea -->
 
-        			<div class="multiSelectArea">
+        			<div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="7">
         				<div class="multiSelectAreaInner">
         					<label class="multiSelectAreaTitle">Contest Type:</label>
         					<div class="multiSelectBox">
@@ -273,7 +273,7 @@
         			<!-- end .multiSelectArea -->
         			<div class="clearFix"></div>
 
-        			<div class="applyButtonBox">
+        			<div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="8">
         				<a class="button6 applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
         			</div>
         			<!-- end .applyButtonBox -->
@@ -299,7 +299,7 @@
 
     <%-- aggregation cost report --%>
 <table id="costReportAggregationArea" class="pipelineStats resultTable"
-       cellpadding="0" cellspacing="0">
+       cellpadding="0" cellspacing="0" data-intro="Aggegate view of your cost data.  Use the View By control on the right to pivot on different dimensions of your data." data-step="9">
     <thead>
     <tr>
         <th class="tableTitle" colspan="4">
@@ -459,7 +459,7 @@
 <div class="resultTableContainer">
     <%-- Cost report Details --%>
 <table id="costDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0"
-       cellspacing="0">
+       cellspacing="0" data-intro="This table contains the full details for every competition included within your filter. Click the column headers to sort.  Click a contest or project to drill into details." data-step="10">
     <thead>
     <tr>
         <th class="tableTitle" colspan="11">
