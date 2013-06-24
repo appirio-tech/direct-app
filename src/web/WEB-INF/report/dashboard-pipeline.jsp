@@ -76,7 +76,7 @@
                             </jsp:include>
 
 
-                          <div class="pipelineFilter" id="pipelineReportsPage">
+                          <div class="pipelineFilter" id="pipelineReportsPage" data-intro="This report gives you a past/present/future view of your competition volume in a report format. Use the filter to narrow your results." data-step="1">
 
                             <div class="filterTitle">
                                 <div class="filterTitleRight">
@@ -98,9 +98,9 @@
                                 <input type="hidden" name="ppp" value="1" id="pipelineDetailsPageNumber2"/>
                                 <input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
 
-                                <div id="datefilter">
+                                <div id="datefilter" data-intro="Use the date filters to constrain on the LAUNCH dates of your competitions." data-step="2">
 
-                                    <div class="filterRow firstFilterRow">
+                                    <div class="filterRow firstFilterRow" >
                                         <label for="startDate" class="fLeft">Start:</label>
                                         <s:textfield name="formData.startDate" readonly="true"
                                                      id="startDateCostReport"
@@ -125,7 +125,7 @@
                                 <div id="pipelineDataFilter">
 
                                     <div class="filterRow">
-                                        <div class="filterRowLeft">
+                                        <div class="filterRowLeft" data-intro="If you want to include reposted contests in your counts, check this box." data-step="3">
                                             <label for="showReposts">Include Repost:</label>
                                         </div>
                                         <s:checkbox id="showReposts" name="formData.showReposts" cssClass="checkbox"/>
@@ -135,7 +135,7 @@
                                     <!-- end .filterRow -->
                                     <div class="clearFix"></div>
 
-                                    <div class="filterRow adjustFilterRow firstFilterRow">
+                                    <div class="filterRow adjustFilterRow firstFilterRow" data-intro="Select the additional filter you want to apply and set the numerical range." data-step="4">
                                         <div class="filterRowLeft">
                                             <label for="numericalFilterMinValue">Numerical Filter:</label>
                                         </div>
@@ -167,7 +167,7 @@
                             <div class="rightFilterContent">
 
                                 <span class="showJustForm hide">${viewData.showJustForm}</span>
-                                <div id="groupFilter">
+                                <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5">
                                     <div class="filterRow firstFilterRow">
                                         <div class="filterRowLeft">
                                             <label for="formDatagroup">Project Filters:</label>
@@ -213,7 +213,7 @@
                                 </div>
 
                                     <div class="multiSelectArea selectHigher">
-                                    <div class="multiSelectAreaInner">
+                                    <div class="multiSelectAreaInner" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
                                         <label class="multiSelectAreaTitle">Contest Type:</label>
 
                                         <div class="multiSelectBox">
@@ -244,7 +244,7 @@
                                 <!-- end .multiSelectArea -->
 
                                 <div class="multiSelectArea selectHigher">
-                                    <div class="multiSelectAreaInner">
+                                    <div class="multiSelectAreaInner" data-intro="Narrow down based on competition statuses." data-step="7">
                                         <label class="multiSelectAreaTitle">Contest Status:</label>
 
                                         <div class="multiSelectBox">
@@ -306,7 +306,7 @@
                                 <!-- end .multiSelectArea -->
                                 <div class="clear"></div>
 
-                                <div class="applyButtonBox">
+                                <div class="applyButtonBox" data-intro="Click apply to run the report." data-step="8">
                                     <a class="button6 applyButton" href="javascript:" id="submitPipelineForm"><span
                                             class="left"><span class="right">APPLY</span></span></a>
                                 </div>
@@ -358,7 +358,7 @@
                             --%>
                             <div id="pipelineReportArea">
                                 <%-- Pipeline summary --%>
-                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0">
+                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0" data-intro="A weekly summary of your contest volume?" data-step="9">
                                 <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="5">
@@ -413,7 +413,7 @@
 
                                 <%-- Scheduled contests --%>
                                 <table id="pipelineScheduledContests" class="pipelineStats"
-                                       cellpadding="0" cellspacing="0">
+                                       cellpadding="0" cellspacing="0" data-intro="Group by different dimensions of data using the View By control on the right." data-step="10">
                                     <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="4">
@@ -562,7 +562,7 @@
                                     <div class='filterHead'>
                                         <div class='rightSide'>
                                             <div class='inner'>
-                                                <div class='searchContainer'>
+                                                <div class='searchContainer' data-intro="Type here to search your results." data-step="12">
                                                     <span class='title'>Search</span>
 
                                                     <div class='filterSearch'>
@@ -581,7 +581,7 @@
                                 </div>
 
                                 <%-- Pipeline Details --%>
-                                <div class="resultTableContainer">
+                                <div class="resultTableContainer" data-intro="Here are the specific details about all of the contests in your results." data-step="11">
                                 <table id="pipelineDetails" class="pipelineStats resultTable paginatedDataTable" cellpadding="0"
                                        cellspacing="0">
                                  <colgroup>
