@@ -90,7 +90,7 @@
                             <div class="spaceWhite"></div>
 
                             <!-- start project general information table -->
-                            <div class="projectInforDiv">
+                            <div class="projectInforDiv" data-intro="Welcome to your project dashboard. This is the central hub for managing your project. There is a lot of information on this page. Let's boil it down and start from the top." data-step="1" data-position="top">
                                 <div class="projectInforTitle"><a href="javascript:void(0)" class="expand">Project
                                     Information</a></div>
                                 <c:if test="${hasWritePermission}">
@@ -112,7 +112,7 @@
                                         <div class="columeFirst">
 
                                             <!-- Project Description -->
-                                            <div class="projectDescription">
+                                            <div class="projectDescription" data-intro="This is your project description. It is what you entered when you created the project. It is only visible to you and your project team members." data-step="2" data-position="right">
                                                 <h3>Project Description :</h3>
 
                                                 <div class="projectDescDetails">
@@ -138,7 +138,7 @@
                                         <div class="columeSecond">
 
                                             <!-- Project Status -->
-                                            <div class="projectStatus">
+                                            <div class="projectStatus" data-intro="The current status of your project. You control this setting manually." data-step="3" data-position="left">
                                                 <h3>Project Status :</h3>
 
                                                 <p class="completedStatus">
@@ -155,7 +155,7 @@
                                             </div>
                                             <!-- End .ProjectStatus -->
 
-                                            <div class="projectType">
+                                            <div class="projectType" data-intro="Project type is defined by you. By setting this, the TopCoder Platform will better understand how to help you." data-step="4" data-position="left">
                                                 <h3>Project Type :</h3>
                                                 <s:if test="viewData.projectGeneralInfo.project.projectType == null && viewData.projectGeneralInfo.project.projectCategory == null">
                                                     <c:if test="${hasWritePermission}">
@@ -173,7 +173,7 @@
                                             </div>
 
                                             <!-- Project permissions -->
-                                            <div class="projectTechnology">
+                                            <div class="projectTechnology" data-intro="Who has access to your project? Click here to see the full list." data-step="5" data-position="left">
                                                 <h3>Users with permission :</h3>
                                                 <p>${viewData.projectGeneralInfo.permissionInfo.totalPermissionNumber} Users (Report ${viewData.projectGeneralInfo.permissionInfo.reportPermissionNumber}/ Read ${viewData.projectGeneralInfo.permissionInfo.readPermissionNumber}/ Write ${viewData.projectGeneralInfo.permissionInfo.writePermissionNumber}/ Full ${viewData.projectGeneralInfo.permissionInfo.fullPermissionNumber})</p>
                                                 <c:if test="${hasWritePermission}">
@@ -183,7 +183,7 @@
                                             <!-- End Project Permissions -->
 
                                             <!-- Project Links -->
-                                            <div class="smallProjectLinks">
+                                            <div class="smallProjectLinks" data-intro="These are configurable by you to help manage the location of your version control and issue tracking." data-step="6" data-position="left">
                                                 <h3>Project Links :</h3>
                                                     <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
                                                         <c:if test="${hasWritePermission}">
@@ -214,7 +214,7 @@
                                         <div class="columeThird">
 
                                             <!-- Project Budget -->
-                                            <div class="projectBudget">
+                                            <div class="projectBudget" data-intro="Summary of your project's financials. You set the Total Budget. Actual Cost is calculated based on what you've spent using TopCoder. Projected Total is your Actual Cost so far plus any scheduled costs in your game plan." data-step="7" data-position="left">
                                                 <h3>Project Budget :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.totalBudget != null">
@@ -303,7 +303,7 @@
                                         <div class="columeForth">
 
                                             <!-- Project Duration -->
-                                            <div class="projectDuration">
+                                            <div class="projectDuration" data-intro="Summary of your project's timeline. You set the Planned Duration. Actual Duration is calculated based on the time your game plan started through today. Projected Duration is your Actual Duration so far plus any scheduled time in your game plan." data-step="8" data-position="left">
                                                 <h3>Project Duration :</h3>
                                                 <s:if test="viewData.projectGeneralInfo.plannedDuration != null">
                                                     <div class="plannedDuration">
@@ -360,7 +360,7 @@
 
                                     <!-- Managers -->
                                     <div class="managersBox">
-                                        <dl class="pRatings">
+                                        <dl class="pRatings" data-intro="These ratings are subjective and are set by you. They are optional, but consider using them to help view and manage the ROI of your project portfolio." data-step="9" data-position="right">
                                             <dt>Project Ratings :</dt>
                                             <s:if test="viewData.projectGeneralInfo.businessImpactRating == null && viewData.projectGeneralInfo.riskLevelRating == null && viewData.projectGeneralInfo.costRating == null
                                             && viewData.projectGeneralInfo.difficultyRating == null && viewData.projectGeneralInfo.roiRating == null ">
@@ -396,7 +396,7 @@
 
                                         <div class="managersMask">
                                             <!-- Client Managers -->
-                                            <div class="clientManagers">
+                                            <div class="clientManagers" data-intro="Client managers are likely you, assuming you are a customer of TopCoder. Add your managers here." data-step="10" data-position="left">
                                                 <h3>Client Managers : </h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.clientManagers == null || viewData.projectGeneralInfo.clientManagers.size == 0">
@@ -419,7 +419,7 @@
                                             <!-- End .clientManagers -->
 
                                             <!-- TopCoder Project Managers -->
-                                            <div class="projectManagers platformManagers">
+                                            <div class="projectManagers platformManagers" data-intro="Platform Specialists are TopCoder resources that are assigned to your projects. Reach out to them if you're having issues or have questions." data-step="11" data-position="left">
                                                 <h3>TopCoder Platform Specialists :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.topcoderManagers == null || viewData.projectGeneralInfo.topcoderManagers.size == 0">
@@ -440,7 +440,7 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="projectManagers">
+                                            <div class="projectManagers" data-intro="Account Managers are TopCoder resources that are responsible for your relationship with TopCoder." data-step="12" data-position="left">
                                                 <h3>TopCoder Account Managers :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.accountManagers == null || viewData.projectGeneralInfo.accountManagers.size == 0">
