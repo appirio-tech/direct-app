@@ -84,7 +84,7 @@
 
 <%-- cost report form --%>
 
-<div class="pipelineFilter" id="billingCostReportsPage" data-intro="This report gives your all of the detailed data you could possibly want pertaining to your competition costs. Use the filter to narrow your results." data-step="1">
+<div class="pipelineFilter" id="billingCostReportsPage" data-intro="This report gives your all of the detailed data you could possibly want pertaining to your competition costs. Use the filter to narrow your results." data-step="1" data-position="top">
 
 	<!-- .filterTitle -->
 	<div class="filterTitle">
@@ -228,7 +228,7 @@
                 </div>            
                 <!-- end InvoiceStatusFilter -->                
 
-                  <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5">
+                  <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5" data-position="left">
                       <div class="filterRow firstFilterRow">
                           <div class="filterRowLeft">
                               <label for="formDatagroup">Project Filters:</label>
@@ -274,7 +274,7 @@
                     </div>
                </div>
 
-            <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
+            <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6" data-position="left">
                 <div class="multiSelectAreaInner">
                     <label class="multiSelectAreaTitle">Contest Types:</label>
 
@@ -304,7 +304,7 @@
             </div>
 			<!-- end .multiSelectArea -->
 
-			<div class="multiSelectArea" data-intro="These are the various types of community member payments and transaction fees you will see on your invoices." data-step="7">
+			<div class="multiSelectArea" data-intro="These are the various types of community member payments and transaction fees you will see on your invoices." data-step="7" data-position="left">
 				<div class="multiSelectAreaInner">
 					<label class="multiSelectAreaTitle">Payment Type:</label>
 
@@ -395,7 +395,7 @@
 <div id="billingCostReportSection" class="resultTableContainer">
 
     <%-- aggregation invoice report --%>
-<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport" data-intro="Here is a quick summary of # of contests and the total cost." data-step="9">
+<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport" data-intro="Here is a quick summary of # of contests and the total cost." data-step="9" data-position="top">
     <thead>
     <tr>
         <th colspan="3" class="tableTitle"><a class="expand" href="javascript:void(0)">&nbsp;</a> <span>Basic Invoice History Information</span></th>
@@ -418,8 +418,8 @@
 
     <%-- Cost report Details --%>
 <table id="billingCostDetails" class="billingCostReport resultTable paginatedDataTable" cellpadding="0"
-       cellspacing="0" data-intro="This table contains all of the detail about each line item of costs. You will see multiple lines per competition." data-step="10">
-    <thead>
+       cellspacing="0" >
+    <thead data-intro="This table contains all of the detail about each line item of costs. You will see multiple lines per competition." data-step="10">
     <tr>
         <th class="tableTitle" colspan="
         <c:if test="${viewData.canProcessInvoices}">21</c:if>
