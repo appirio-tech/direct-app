@@ -37,6 +37,7 @@
                          class="authenticationInterceptor"/>
             <interceptor name="loggingInterceptor"
                          class="loggingInterceptor"/>
+            <interceptor name="oAuthGrantAccessInterceptor" class="oAuthGrantAccessInterceptor"/>
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
             <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
             <interceptor name="securityGroupsTcStaffOnlyInterceptor" class="securityGroupsTcStaffOnlyInterceptor"/>
@@ -1561,6 +1562,11 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+
+        <action name="mmRegistrants" class="marathonMatchViewAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result>/WEB-INF/marathonMatchRegistrantsAndSubmissions.jsp</result>
+        </action>
     </package>
 
     <package name="ajax" namespace="/ajax" extends="base">
@@ -2107,6 +2113,28 @@
             <result name="error" type="json" />
         </action>           
         
+    </package>
+
+    <package name="marathonMatchPackage" namespace="/marathonmatch" extends="base">
+        <action name="submission" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchDownloadSubmissionAction">
+            <interceptor-ref name="securedDefaultStack" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=${viewData.fileName}</param>
+                 <param name="contentType">application/txt</param>
+                 <param name="inputName">viewData.submission</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        
+        <action name="oAuth">
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="oAuthGrantAccessInterceptor" />
+            <result>/WEB-INF/oauth-result.jsp</result>
+        </action>
+        
+        <action name="callBack" class="com.topcoder.direct.services.view.action.analytics.common.OAuthCallBackAction">
+            <result>/WEB-INF/oauth-callback.jsp</result>
+        </action>
     </package>
 
 </struts>

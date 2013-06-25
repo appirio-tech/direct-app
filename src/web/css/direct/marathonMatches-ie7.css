@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+/* New Style */
+.resultDetails .backToList,
+.registrantsAndSubmissions .registrantsContaner .backToList{
+	top:6px;
+	}
+	
+.registrantsAndSubmissions .registrantsContaner .gridListView{
+	top:0;
+	}

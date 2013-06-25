@@ -87,9 +87,12 @@
  *
  * Version 2.4 (Release Assembly - TopCoder Copilot Feedback Updates)
  * - Adds a new column ratings to copilot feedback admin table
+ *
+ * Version 2.5 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
+ * - Add support for Marathon Match registrants table.
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.4
+ * @version 2.5
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -525,6 +528,27 @@ $(document).ready(function() {
             null
         ]
 
+    });
+
+    $.mmRegistrantsTable = $("#marathonMatchRegistrants .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [1,'desc']
+        ],
+        "aoColumns": [
+            { "sType": "html-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "date-direct" }
+        ]
     });
 
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({

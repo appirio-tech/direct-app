@@ -31,7 +31,7 @@
     <s:else>studioDashboard studioDetails</s:else>
     ">
     
-    <div class="dashboardModule">
+    <div class="dashboardModule" id="timelineModule">
         <h1 class="heading">
             <span class="tl"></span>
             <span class="tr"></span>
@@ -64,6 +64,16 @@
         <div class="content">
             <span class="bl"></span>
             <span class="br"></span>
+            <s:if test="hasRoundId">
+                <div class="timelineIntro">
+                    <dl>
+                        <dt>Currently Top Ranking Submissions:</dt>
+                        <dd><a href="" class="handlename">handlename</a></dd>
+                        <dt>Best Provisional Score:</dt>
+                        <dd class="last"><a href="">2000</a></dd>
+                    </dl>
+                </div>
+            </s:if>
             <div class="timelineContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
                 <c:if test="${viewData.dashboard.startTime != null}">
                     <div class="projectDate startDate">
@@ -126,14 +136,26 @@
                 </c:if>
                 <div class="clear"></div>
             </div>
+
+            <s:if test="hasRoundId">
+                <div id="timelineChartWrapper">
+                    <div id="timelineChart"></div>
+                </div>
+            </s:if>
+            <s:else>
+                <div>
+                    <span>There is no round id hooked with contest.</span>
+                </div>
+            </s:else>
             <!-- End .timelineContainer -->
         </div>
         <!-- End .content -->
     </div>
     <!-- End .dashboardModule -->
-    <div class="appositeContainer <s:if test="viewData.contestStats.isStudio || marathon">studio</s:if>">
+
+    <div <s:if test="marathon">id="appositeContainer"</s:if> class="appositeContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
+    <s:if test="hasRoundId">
         <div class="dashboardModule registrationModule">
-        
             <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
             <c:set var="statusWidth" value="${viewData.dashboard.regProgressPercent}"/>
             <c:choose>
@@ -158,8 +180,7 @@
                     <c:set var="regStatusTooltip" value="Registration is healthy."/>
                     <c:set var="statusWidth" value="100"/>
                 </c:otherwise>
-            </c:choose>                                    
-        
+            </c:choose>
             <h1 class="heading">
                 <span class="tl"></span>
                 <span class="tr"></span>
@@ -169,73 +190,144 @@
                 <span class="bl"></span>
                 <span class="br"></span>
                 <div class="listContent">
-                    <s:if test="viewData.contestStats.isStudio || marathon">
+                    <p>
+                        <label>Registrants: </label>${viewData.commonInfo.numRegistrants}
+                    </p>
+                    <p>
+                        <label>Competitors: </label>${viewData.commonInfo.numCompetitors}
+                    </p>
+                    <p>
+                        <label>Submissions: </label>${viewData.commonInfo.numSubmissions}
+                    </p>
+                    <p>
+                        <label>Avg. Submissions: </label><fmt:formatNumber value="${viewData.commonInfo.numSubmissions / viewData.commonInfo.numCompetitors}" pattern="##.##"/>
+                    </p>
+                    <p class="statusP ${regStatusColor}">
+                        <label>Healthy: </label>
+                        <span class="progressStatus">
+                            <span class="progress" style="width:${statusWidth}%">
+                                <span>
+                                    <span>${statusWidth}%</span>
+                                </span>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+                <!-- End .listContent -->
+            </div>
+            <!-- End .content -->
+        </div>
+    </s:if>
+    <s:else>
+        <div class="dashboardModule registrationModule">
+            <span>There is no round id hooked with the contest.</span>
+        </div>
+    </s:else>
+    <s:if test="!marathon">
+        <div class="dashboardModule registrationModule">
+
+            <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
+            <c:set var="statusWidth" value="${viewData.dashboard.regProgressPercent}"/>
+            <c:choose>
+                <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
+                    <c:set var="regStatusColor" value="lessThanIdeal"/>
+                    <c:set var="regStatusMessage" value="not ideal"/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                </c:when>
+                <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
+                    <c:set var="regStatusColor" value="lessThanIdeal"/>
+                    <c:set var="regStatusMessage" value="not ideal"/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                </c:when>
+                <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
+                    <c:set var="regStatusColor" value="poor"/>
+                    <c:set var="regStatusMessage" value="poor"/>
+                    <c:set var="regStatusTooltip" value="It is unlikely you will receive good submissions.<br/>Consider reposting. "/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="regStatusColor" value="healthy"/>
+                    <c:set var="regStatusMessage" value="healthy"/>
+                    <c:set var="regStatusTooltip" value="Registration is healthy."/>
+                    <c:set var="statusWidth" value="100"/>
+                </c:otherwise>
+            </c:choose>
+
+            <h1 class="heading">
+                <span class="tl"></span>
+                <span class="tr"></span>
+                Registration
+            </h1>
+            <div class="content">
+                <span class="bl"></span>
+                <span class="br"></span>
+                <div class="listContent">
+                    <s:if test="viewData.contestStats.isStudio">
                         <div class="wrap">
                         <div class="column first">
                     </s:if>
-                    <p>
-                        <label>Registrants</label>: ${viewData.dashboard.numberOfRegistrants}
-                    </p>
-                    <div class="statusP ${regStatusColor}">
-                        <span class="progressStatus">
-                            <span class="progress" style="width:${statusWidth}%"></span>
-                            <span class="cover"></span>
-                        </span>
-                        <span class="status">${regStatusMessage}</span>
-                        <a href="javascript:;" class="helpBtn">?</a>
-                        <div class="tooltipContainer">
-                            <span class="arrow"></span>
-                            <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
-                                <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
-                            
-                                    <div class="tooltipCaption">
-                                        <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
-                                            <div class="tooltipCaptionInner">
-                                                <h2>What should I do</h2>
-                                            </div><!-- End .tooltipCaptionInner -->
+                        <p>
+                            <label>Registrants</label>: ${viewData.dashboard.numberOfRegistrants}
+                        </p>
+                        <div class="statusP ${regStatusColor}">
+                            <span class="progressStatus">
+                                <span class="progress" style="width:${statusWidth}%"></span>
+                                <span class="cover"></span>
+                            </span>
+                            <span class="status">${regStatusMessage}</span>
+                                <a href="javascript:;" class="helpBtn">?</a>
+                                <div class="tooltipContainer">
+                                    <span class="arrow"></span>
+                                    <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+                                        <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+
+                                            <div class="tooltipCaption">
+                                                <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                                                    <div class="tooltipCaptionInner">
+                                                        <h2>What should I do</h2>
+                                                    </div><!-- End .tooltipCaptionInner -->
+                                                </div></div>
+                                            </div><!-- End .tooltipCaption -->
+
+                                            <div class="tooltipContent">
+                                                <p>${regStatusTooltip}</p>
+                                            </div><!-- End .tooltipContent -->
+
                                         </div></div>
-                                    </div><!-- End .tooltipCaption -->
-                                    
-                                    <div class="tooltipContent">
-                                        <p>${regStatusTooltip}</p>
-                                    </div><!-- End .tooltipContent -->
-                                    
-                                </div></div>
-                            </div></div></div>
-                        </div>
-                        <!-- End .tooltipContainer -->
-                    </div>
-                    <s:if test="viewData.contestStats.isStudio || marathon">
+                                    </div></div></div>
+                                </div>
+                                <!-- End .tooltipContainer -->
+                            </div>
+                            <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->
                         <div class="column">
-                    </s:if>
-                    <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">                        
-                        <s:if test="viewData.contestStats.multipleRound">
-                        	<label>Checkpoint submissions</label>: ${viewData.contestStats.checkpointSubmissionNumber}                          
-                          <label>Final submissions</label>: ${viewData.contestStats.finalSubmissionNumber}
-                        </s:if>
-                        <s:else>
-                        	  <label>Submissions</label>:
-                            ${viewData.dashboard.numberOfSubmissions}
-                        </s:else>
+                            </s:if>
+                            <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">
+                                <s:if test="viewData.contestStats.multipleRound">
+                                    <label>Checkpoint submissions</label>: ${viewData.contestStats.checkpointSubmissionNumber}
+                                    <label>Final submissions</label>: ${viewData.contestStats.finalSubmissionNumber}
+                                </s:if>
+                                <s:else>
+                                    <label>Submissions</label>:
+                                    ${viewData.dashboard.numberOfSubmissions}
+                                </s:else>
 
-                    </p>
-                    <p>
-                        <label class="prediction">Prediction</label>: 
-                        <s:if test="!viewData.contestStats.isStudio">
-                            ${viewData.dashboard.predictedNumberOfSubmissions}
-                        </s:if>
-                        <s:else>
-                            N/A
-                        </s:else>
-                    </p>
-                    <s:if test="viewData.contestStats.isStudio || marathon">
+                            </p>
+                            <p>
+                                <label class="prediction">Prediction</label>:
+                                <s:if test="!viewData.contestStats.isStudio">
+                                    ${viewData.dashboard.predictedNumberOfSubmissions}
+                                </s:if>
+                                <s:else>
+                                    N/A
+                                </s:else>
+                            </p>
+                            <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->
                         <div class="clear"></div>
-                        </div>
-                        <!-- End .wrap -->
+                    </div>
+                    <!-- End .wrap -->
                     </s:if>
                 </div>
                 <!-- End .listContent -->
@@ -243,9 +335,11 @@
             <!-- End .content -->
         </div>
         <!-- End .dashboardModule -->
+    </s:if>
+
         <div class="dashboardModule forumModule">
             <c:set var="latestForumPost" value="${viewData.dashboard.latestForumPost}"/>
-            <c:set var="author" value="${latestForumPost.author}"/>                                    
+            <c:set var="author" value="${latestForumPost.author}"/>
             <h1 class="heading">
                 <span class="tl"></span>
                 <span class="tr"></span>
@@ -270,7 +364,7 @@
                             <!--04/13/2011 12:84-->
                             <fmt:formatDate value="${latestForumPost.timestamp}" pattern="MM/dd/yyyy HH:mm"/>
                             </span>
-                        </p>                                                
+                        </p>
                     </c:if>
                 </div>
                 <!-- End .listContent -->
@@ -292,10 +386,10 @@
                     <p class="registered">
                         ${fn:length(viewData.dashboard.reviewers)}/${viewData.dashboard.requiredReviewersNumber} <label>Reviewers are registered</label>
                     </p>
-                    
+
                     <c:forEach items="${viewData.dashboard.reviewers}" var="reviewer" varStatus="loop">
                         <p><link:user userId="${reviewer.id}" handle="${reviewer.handle}"/></p>
-                    </c:forEach>                                                
+                    </c:forEach>
                 </div>
                 <!-- End .listContent -->
             </div>
@@ -330,7 +424,7 @@
                                 There are no dependencies.&nbsp;&nbsp;
                             </label>
                             </c:when>
-                        </c:choose>                                                    
+                        </c:choose>
                     </p>
                     <c:if test="${not empty viewData.dashboard.dependencies}">
                             <c:forEach items="${viewData.dashboard.dependencies}" var="dependency">
@@ -339,8 +433,8 @@
                                 <link:projectOverview project="${dependency.dependencyProject}"/>
                                 </p>
                             </c:forEach>
-                    </c:if>                                                    
-                    
+                    </c:if>
+
                 </div>
                 <!-- End .listContent -->
             </div>
@@ -348,7 +442,7 @@
         </div>
         <!-- End .dashboardModule -->
         </s:if>
-        <div class="dashboardModule issueModule">
+        <div class="dashboardModule <s:if test="marathon">issueTrackingModule</s:if><s:else>issueModule</s:else>">
             <h1 class="heading">
                 <span class="tl"></span>
                 <span class="tr"></span>
@@ -375,6 +469,62 @@
             </div>
             <!-- End .content -->
         </div>
+        <s:if test="hasRoundId">
+            <div class="dashboardModule currentStandingsModule">
+                <h1 class="heading">
+                    <span class="tl"></span>
+                    <span class="tr"></span>
+                    Current Standings - Top 3
+                </h1>
+                <div class="content">
+                    <span class="bl"></span>
+                    <span class="br"></span>
+                    <div class="listContent">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Handle</th>
+                                <th>Provisional Score</th>
+                                <th>Rating</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><a href="#">handlename</a></td>
+                                <td>0000.00</td>
+                                <td>00000</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><a href="#">handlename</a></td>
+                                <td>0000.00</td>
+                                <td>00000</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><a href="#">handlename</a></td>
+                                <td>0000.00</td>
+                                <td>00000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End .listContent -->
+                </div>
+                <!-- End .content -->
+            </div>
+        </s:if>
+        <s:else>
+            <span>There is no round id hooked with this contest.</span>
+        </s:else>
         <!-- End .dashboardModule -->
         <div class="clear"></div>
     </div>

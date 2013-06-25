@@ -478,11 +478,13 @@
     <bean id="contestDetailAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST" />
+          <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
     </bean>
 
     <bean id="contestDetailJSONAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST_JSON" />
+          <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
     </bean>
 
     <!-- we need this type to avoid to store session value  -->
@@ -1455,5 +1457,34 @@
           scope="prototype" parent="baseTaskAction">
     </bean>
 
+    <bean id="oAuthGrantAccessInterceptor" class="com.topcoder.direct.services.view.action.analytics.common.OAuthGrantAccessInterceptor">
+        <property name="authorizationURL" value="@oauth.authorizationURL@" />
+        <property name="callBackActionUrl" value="@oauth.callBackActionUrl@" />
+        <property name="consumerKey" value="@oauth.consumerKey@" />
+        <property name="consumerSecret" value="@oauth.consumerSecret@" />
+        <property name="providerClass" value="@oauth.providerClass@" />
+    </bean>
+
+    <bean id="marathonMatchViewAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction" scope="prototype">
+        <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+        <property name="contestServiceFacade" ref="contestServiceFacade"/>
+        <property name="timelineInterval" value="0"/>
+        <property name="submissionHistoryInterval" value="0"/>
+    </bean>
+
+    <bean id="marathonMatchAnalyticsService"
+          class="com.topcoder.direct.services.view.action.analytics.longcontest.services.impl.MarathonMatchAnalyticsServiceImpl"
+          init-method="checkInit">
+        <property name="remoteServiceBaseUrl" value="http://@api_server_domain@/rest"/>
+        <property name="getMMBasicInfoEndPointUrl" value="/analytics/{round_id}"/>
+        <property name="getMMRegistrantsEndPointUrl" value="/analytics/{round_id}/registrants"/>
+        <property name="getCompetitorDetailsEndPointUrl" value="/{round_id}/registrants/{handle}"/>
+        <property name="getMatchResultsEndPointUrl" value="/{round_id}/results"/>
+        <property name="getAllMMSubmissionsEndPointUrl" value="/{round_id}/registrants/{handle}/submissions"/>
+        <property name="getMarathonMatchListingsEndPointUrl" value="/"/>
+        <property name="clientId" value="@clientId@"/>
+        <property name="clientSecret" value="@clientSecret@"/>
+        <property name="apiKey" value="@apiKey@"/>
+    </bean>
 
 </beans>

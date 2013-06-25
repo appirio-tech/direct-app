@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
-  - Version: 1.8
+  - Version: 1.9
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -24,6 +24,8 @@
   - - Adds support for marathon contest details page.
   - Version 1.8 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - Add support for CCA specific on billing accounts
+  - Version 1.9 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) change notes: 
+  - - Add support for marathon match contest.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -35,8 +37,12 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/marathonMatches-ie7.css"/>
     <![endif]-->    
     <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css" />
+
+    <!-- New Style For Marathon Matches -->
+    <link rel="stylesheet" href="/css/direct/marathonMatches.css" media="all" type="text/css"/>
     
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="details"/>
@@ -52,6 +58,10 @@
     <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
+
+    <!-- New Script For Marathon Matches -->
+    <script type="text/javascript" src="/scripts/highcharts.js"></script>
+    <script type="text/javascript" src="/scripts/marathonMatches.js"></script>
 </head>
 
 <body id="page">
@@ -76,7 +86,7 @@
                     </div>
 
                     <div class="areaHeader">
-                        <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
+                        <h2 class="title contestTitle" style="background:url('/images/<s:if test="marathon">icon-marathon</s:if><s:else><s:property value="viewData.contest.contestType.letter"/></s:else>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>  <img id="contestLoading" style="display:none" src="/images/dots-white.gif"/>
                             <a href="javascript:activateContestEdit();" class="activateButton" style="float:right;display: none"></a>
                         </h2>

@@ -117,6 +117,7 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.project.ProjectStatus;
+import com.topcoder.marathonmatch.service.dto.MMDownloadSubmissionDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ForumPoster;
@@ -892,11 +893,18 @@ import java.util.Set;
  *     <li>UPdates {@link #getDashboardCostReportDetails(com.topcoder.security.TCSubject, long, long[], long[], long, long, long[], java.util.Date, java.util.Date, java.util.Map)}</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 6.14 (FAST! 72hr! Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress Part 1 v1.0)
+ * <ul>
+ *  <li>Add {@link #getMMSubmission} method. </li>
+ * </ul>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin
- * @version 6.13
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao
+ * @version 6.14
  * @since 1.0
  */
 public class DataProvider {
@@ -8340,6 +8348,42 @@ public class DataProvider {
         topMemberPayments.add(payment);
       }
       return topMemberPayments;
+    }
+    
+    /**
+     * This method queries Marathon Match download submission.
+     *
+     * @param roundId Round ID.
+     * @param problemId Problem ID.
+     * @param coderId Coder ID.
+     * @param submissionNum Submission Number.
+     * @return instance of MMDownloadSumissionDTO.
+     * @throws Exception
+     *         If there is any error.
+     * @since 6.14
+     */
+    public static MMDownloadSubmissionDTO getMMSubmission(long roundId, long problemId, long coderId, long submissionNum) throws Exception {
+        Request r = new Request();
+        r.setContentHandle("long_contest_submission");
+        r.setProperty("rd", String.valueOf(roundId));
+        r.setProperty("pm", String.valueOf(problemId));
+        r.setProperty("cr", String.valueOf(coderId));
+        r.setProperty("subnum", String.valueOf(submissionNum));
+        r.setProperty("ex", "0");
+
+        DataAccess dataAccess = new DataAccess(DBMS.OLTP_DATASOURCE_NAME);
+        ResultSetContainer rsc = dataAccess.getData(r).get("long_contest_submission");
+        if(!rsc.isEmpty()) {
+            ResultSetRow firstRow = rsc.get(0);
+            MMDownloadSubmissionDTO dto = new MMDownloadSubmissionDTO();
+            dto.setFileName(coderId + "_" + submissionNum + ".txt");
+            String submissionText = firstRow.getStringItem("submission_text");
+            dto.setSubmission(new ByteArrayInputStream(submissionText.getBytes()));
+            return dto;
+        } else {
+            throw new Exception("Not matching submission found");
+        }
+
     }
 
 }

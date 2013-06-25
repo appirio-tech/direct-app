@@ -1,0 +1,1202 @@
+@charset "utf-8";
+/* CSS Document */
+/* Timeline */	
+#timelineModule .content .timelineIntro{
+	padding:10px 12px 0 12px;
+	text-align:left;
+	}
+	
+	#timelineModule .content .timelineIntro dt{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 4px 0 0;
+		font-size:11px;
+		font-weight:bold;
+		line-height:12px;
+		color:#000000;
+		}
+		
+	#timelineModule .content .timelineIntro dd{
+		width:auto;
+		float:left;
+		display:inline;
+		margin:0 8px 0 0;
+		padding:0 8px 0 0;
+		font-size:11px;
+		font-weight:bold;
+		line-height:12px;
+		color:#ff0000;
+		background-image:url(../../images/line-timeline.png);
+		background-repeat:no-repeat;
+		background-position:right center;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+		}
+		
+	#timelineModule .content .timelineIntro dd.last{
+		background-image:none;
+		}
+		
+		#timelineModule .content .timelineIntro dd a{
+			color:#ddb6df;
+			}
+			
+		#timelineModule .content .timelineIntro dd a.finalScore{
+			color:#bdc800;
+			}
+			
+		#timelineModule .content .timelineIntro dd a.handlename{
+			color:#ff0000;
+			text-decoration:none;
+			}
+			
+		#timelineModule .content .timelineIntro dd a:hover{
+			text-decoration:none;
+			}
+			
+		#timelineModule .content .timelineIntro dd a.handlename:hover{
+			text-decoration:underline;
+			}
+	
+	/* Timeline container */	
+	#timelineModule .timelineContainer{
+		min-width:auto;
+		clear:both;
+		padding:41px 2px 12px 2px !important;
+		}
+		
+		#timelineModule .timelineContainer .startDate{
+			left:2px !important;
+			}
+			
+		#timelineModule .timelineContainer .endDate{
+			right:2px !important;
+			}
+			
+	/* Processbar */
+	#timelineModule .notCompleted{
+		padding:0 4px 0 0;
+		background-image:url(../../images/bg-progressStatus-right.png);
+		background-repeat:no-repeat;
+		background-position:right 0;
+		}
+		
+	/* Timeline Chart */
+	#timelineModule #timelineChartWrapper{
+		height:200px;
+		border-top:#cccccc solid 1px;
+		}
+		
+		#timelineModule #timelineChartWrapper #timelineChart,
+		#timelineModule #timelineChartWrapper #completedTimelineChart{
+			height:200px;
+			}
+		
+/* Apposite Container */
+#appositeContainer .registrationModule{
+	width:25%;
+	}
+	
+#appositeContainer .dashboardModule{
+	margin:0 1% 0 0;
+	}
+	
+#appositeContainer .forumModule{
+	width:21%;
+	}
+
+#appositeContainer .dashboardModule .content{
+	height:94px;
+	}
+	
+	#appositeContainer .dashboardModule .content p{
+		margin:0 0 2px 12px;
+		}
+		
+	#appositeContainer .forumModule .content p{
+		margin:0 0 6px 12px;
+		}
+		
+		#appositeContainer .dashboardModule .content p label{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 4px 0 0;
+			}
+	
+	/* Processbar */	
+	#appositeContainer .dashboardModule .listContent .statusP{
+		width:auto;
+		padding:2px 0;
+		}
+	
+	#appositeContainer .dashboardModule .listContent .statusP .progressStatus{
+		width:144px;
+		height:16px;
+		background-image:url(../../images/bg-progressStatus-large.png);
+		background-repeat:no-repeat;
+		background-position:0 0;
+		}
+		
+		#appositeContainer .dashboardModule .listContent .statusP .progressStatus .progress{
+			height:16px;
+			background-image:url(../../images/bg-progressBar-large.png);
+			background-repeat:no-repeat;
+			background-position:0 0;
+			}
+			
+			#appositeContainer .dashboardModule .listContent .statusP .progressStatus .progress span{
+				display:block;
+				height:16px;
+				margin:0 0 0 7px;
+				background-image:url(../../images/bg-progressBar-large.png);
+				background-repeat:no-repeat;
+				background-position:right -32px;
+				}
+				
+			#appositeContainer .dashboardModule .listContent .statusP .progressStatus .progress span span{
+				display:block;
+				height:16px;
+				margin:0 7px 0 0;
+				text-indent:-9999px;
+				background-image:url(../../images/bg-progressBar-large.png);
+				background-repeat:repeat-x;
+				background-position:0 -16px;
+				}
+				
+	/* forumModule */
+	#appositeContainer .forumModule .content{
+		padding:8px 0 0 0;
+		}
+		
+		#appositeContainer .forumModule .lastestPost{
+			width:100%;
+			display:block;
+			clear:both;
+			line-height:24px;
+			}
+			
+		#appositeContainer .forumModule .alert{
+			width:14px;
+			height:12px;
+			float:left;
+			display:inline;
+			margin:0 4px 0 0;
+			background-image:url(../../images/icon-alert.png);
+			background-repeat:no-repeat;
+			background-position:0 0;
+			}
+			
+		#appositeContainer .forumModule .unansweredThread{
+			font-weight:bold;
+			color:#ff0000;
+			}
+			
+	/* issueTrackingModule */
+	#appositeContainer .issueTrackingModule{
+		width:14%;
+		margin:0 1% 0 0;
+		}
+		
+		#appositeContainer .issueTrackingModule .content{
+			padding:8px 0 0 0;
+			}
+			
+	/* currentStandingsModule */
+	#appositeContainer .currentStandingsModule{
+		width:36.9%;
+		float:right;
+		display:inline;
+		margin:0;
+		}
+		
+		#appositeContainer .currentStandingsModule .content{
+			padding:8px 10px 0 10px;
+			}
+			
+			#appositeContainer .currentStandingsModule .content table{
+				width:100%;
+				}
+				
+				#appositeContainer .currentStandingsModule .content table th{
+					padding:0 0 6px 0;
+					border-bottom:#cccccc solid 1px;
+                    font-size: 11px;
+                    border-left: none;
+                    height: 19px;
+					}
+					
+				#appositeContainer .currentStandingsModule .content table td{
+					height:22px !important;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
+                    background-color: inherit;
+                    border-left: none;
+                    border-top: none;
+					}
+					
+					#appositeContainer .currentStandingsModule .content table td a{
+						color:#0000ff;
+						}
+						
+					#appositeContainer .currentStandingsModule .content table td a:hover{
+						text-decoration:none;
+						}
+					
+	/* tab */
+	#tabs3 ul li.details{
+		width:8%;
+		}
+		
+	#tabs3 ul li.specReview{
+		width:12%;
+		}
+		
+	#tabs3 ul li.datasetPreparation{
+		width:18%;
+		}
+		
+	#tabs3 ul li.registrantsSubmissions{
+		width:30%;
+		}
+		
+	#tabs3 ul li.results{
+		width:8%;
+		}
+		
+	#tabs3 ul li.issueTracking{
+		width:14%;
+		}
+		
+	#tabs3 ul li.off a{
+		background-image:none!important;
+		}
+	
+	/* registrantsAndSubmissions */
+	.registrantsAndSubmissions h4{
+		padding:0 20px 4px 20px;
+		font-size:18px;
+		font-weight:normal;
+		color:#d60507;
+		line-height:40px;
+		border-left:#cccccc solid 1px;
+		border-right:#cccccc solid 1px;
+		}
+		
+	.registrantsAndSubmissions .tabList{
+		height:25px;
+		padding:8px 20px 0 20px;
+		background-image:url(../../images/calendar_header.png);
+		background-repeat:repeat-x;
+		background-position:0 0;
+		}
+		
+		.registrantsAndSubmissions .tabList li{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 5px 0 0;
+			}
+			
+			.registrantsAndSubmissions .tabList li a{
+				width:104px;
+				display:block;
+				padding:0 0 0 4px;
+				text-decoration:none;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:no-repeat;
+				background-position:0 0;
+				}
+			
+			.registrantsAndSubmissions .tabList li span{
+				display:block;
+				padding:0 4px 0 0;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:no-repeat;
+				background-position:right -50px;
+				}
+				
+			.registrantsAndSubmissions .tabList li span span{
+				display:block;
+				font-size:12px;
+				color:#000000;
+				line-height:25px;
+				text-align:center;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:repeat-x;
+				background-position:right -25px;
+				}
+				
+			.registrantsAndSubmissions .tabList li a:hover,
+			.registrantsAndSubmissions .tabList li a:hover span,
+			.registrantsAndSubmissions .tabList li.active a,
+			.registrantsAndSubmissions .tabList li.active a span{
+				background-image:url(../../images/bg-tab-hover.png);
+				}
+				
+		/* table data */
+		.registrantsAndSubmissions .registrantsContaner{
+			position:relative;
+			}
+		
+		.registrantsAndSubmissions .registrantsContaner h5{
+			padding:2px 0 0 0;
+			border-left:#cccccc solid 1px;
+			border-right:#cccccc solid 1px;
+			font-size:18px;
+			font-weight:normal;
+			color:#000000;
+			line-height:42px;
+			text-align:center;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner table#registrantsTable{
+			width:100%;
+			border:#cccccc solid 1px;
+			border-collapse:collapse;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner table#registrantsTable th{
+				height:26px;
+				border:#cccccc solid 1px;
+				font-size:11px;
+				background-image:url(../../images/dashboard-table-bg.png);
+				background-repeat:repeat-x;
+				background-position:0 -34px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner table#registrantsTable td{
+				height:28px;
+				font-size:11px;
+				text-align:center;
+				border:#cccccc solid 1px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner table#registrantsTable .even td{
+				background-color:#f5f5f5;
+				}
+		
+		/* pagination */		
+		.paginations{
+			height:30px;
+			margin:0;
+			padding:0 20px;
+			border:#cccccc solid 1px;
+			border-top:0;
+			background-color:#bdbdbd;
+			}
+			
+			/* totalPage */
+            #marathonMatchRegistrants .dataTables_info{
+				width:auto;
+				float:left;
+				display:inline;
+				font-size:12px;
+				line-height:30px;
+                padding: 0 20px;
+				}
+				
+			/* pageTrun */
+			#marathonMatchRegistrants .bottom2 {
+				width:auto;
+				float:right;
+				display:inline;
+				font-size:12px;
+				line-height:30px;
+                padding-right: 20px;
+                left: 0;
+                position: inherit;
+                margin-top: 0px;
+                margin-left: 0px;
+				}
+
+                #marathonMatchRegistrants .bottom2 a{
+					padding:0 3px;
+					text-decoration:none;
+					}
+
+                #marathonMatchRegistrants .bottom2 a:hover{
+					text-decoration:underline;
+					}
+
+                #marathonMatchRegistrants .bottom2 a.prevBtn{
+					padding:0 3px 0 10px;
+					background-image:url(../../images/page_prev.png);
+					background-repeat:no-repeat;
+					background-position:0 4px;
+					}
+					
+				#marathonMatchRegistrants .bottom2 a.nextBtn{
+					padding:0 10px 0 3px;
+					background-image:url(../../images/page_next.png);
+					background-repeat:no-repeat;
+					background-position:right 4px;
+					}
+					
+				#marathonMatchRegistrants .bottom2 a.current,
+				#marathonMatchRegistrants .bottom2 a.current:hover{
+					font-weight:bold;
+					text-decoration:none;
+					}
+					
+				#marathonMatchRegistrants .bottom2 a.disable,
+				#marathonMatchRegistrants .bottom2 a.disable:hover{
+					text-decoration:none !important;
+					}
+					
+			/* showingPrePage */
+			#marathonMatchRegistrants .bottom1{
+				width:auto;
+				float:right;
+				display:inline;
+				font-size:12px;
+				line-height:30px;
+				margin:0 10px 0 0;
+                right: 0px;
+                position: inherit;
+				}
+					
+		/* chartWrapper */
+		.registrantsAndSubmissions .chartWrapper{
+			height:380px;
+			border:#cccccc solid 1px;
+			background-color:#f9f9f9;
+			}
+			
+			/* Chart Pie */
+			.registrantsAndSubmissions .chartWrapper .chartPie{
+				width:40%;
+				float:left;
+				display:inline;
+				}
+				
+				.registrantsAndSubmissions .chartWrapper .chartPie #ratingPieWrapper{
+					height:380px;
+					border-right:#cccccc solid 1px;
+					}
+					
+				.registrantsAndSubmissions .chartWrapper .chartPie #ratingPie{
+					height:380px;
+					}
+					
+			/* Chart Bar */
+			.registrantsAndSubmissions .chartWrapper .chartBar{
+				width:60%;
+				float:left;
+				display:inline;
+				}
+				
+				.registrantsAndSubmissions .chartWrapper .chartBar #ratingBarWrapper{
+					height:360px;
+					margin:10px 0;
+					overflow:auto;
+					position:relative;
+					}
+					
+				.registrantsAndSubmissions .chartWrapper .chartBar #ratingBar{
+					height:1000px;
+					}
+	
+	/* Grid & List View */
+	.registrantsAndSubmissions .registrantsContaner .gridListView{
+		width:auto;
+		position:absolute;
+		top:12px;
+		right:15px;
+		}		
+		
+		.registrantsAndSubmissions .registrantsContaner .gridListView ul{
+			width:42px;
+			height:21px;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner .gridListView li{
+			width:21px;
+			height:21px;
+			float:left;
+			display:inline;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner .gridListView li a{
+				width:100%;
+				height:21px;
+				display:block;
+				text-indent:-9999px;
+				background-repeat:no-repeat;
+				background-position:0 0;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner .gridListView li a#gridView{
+				background-image:url(../../images/btn-grid-view.png);
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner .gridListView li a#listView{
+				background-image:url(../../images/btn-list-view.png);
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner .gridListView li a:hover,
+			.registrantsAndSubmissions .registrantsContaner .gridListView li a.active{
+				background-position:0 -21px;
+				}
+				
+	/* Table For Grid */
+	.registrantsAndSubmissions .registrantsContaner #gridViewTable{
+		width:100%;
+		border:#cccccc solid 1px;
+		border-collapse:collapse;
+		}
+		
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable td{
+			border:#cccccc solid 1px;
+			background-color:#fffffe;
+			}
+		
+		/* Header */	
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader{
+			height:30px;
+			padding:4px 0 0 0;
+			border-bottom:#cccccc solid 1px;
+			text-align:center;
+			background-image:url(../../images/bg-paginations.png);
+			background-repeat:repeat-x;
+			background-position:0 0;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p{
+				font-size:11px;
+				font-weight:bold;
+				line-height:14px;
+				}
+				
+				.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p a{
+					color:#333333;
+					}
+				
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a{
+				display:block;
+				font-size:11px;
+				font-weight:bold;
+				color:#ff0000;
+				line-height:14px;
+				text-align:center;
+				text-decoration:none;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a:hover{
+				text-decoration:underline;
+				}
+		
+		/* Body */		
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridBody{
+			height:108px;
+			}
+		
+		/* Footer */	
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter{
+			padding:4px 0;
+			background-color:#f5f5f5;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dt{
+				width:auto;
+				float:left;
+				display:inline;
+				margin:0 4px 0 8px;
+				font-size:11px;
+				line-height:14px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd{
+				font-size:11px;
+				font-weight:bold;
+				line-height:14px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd.pink{
+				color:#d29ed4;
+				}
+				
+	/* Table For List */
+	.registrantsAndSubmissions .registrantsContaner #listViewTable{
+		width:100%;
+		border:#cccccc solid 1px;
+		border-collapse:collapse;
+		}
+		
+		.registrantsAndSubmissions .registrantsContaner #listViewTable th{
+			height:26px;
+			border:#cccccc solid 1px;
+			font-size:11px;
+			background-image:url(../../images/dashboard-table-bg.png);
+			background-repeat:repeat-x;
+			background-position:0 -34px;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable td{
+			height:28px;
+			font-size:11px;
+			text-align:center;
+			border:#cccccc solid 1px;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable .even td{
+			background-color:#f5f5f5;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable td .score{
+			color:#d29ed4;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable td a{
+			font-weight:bold;
+			color:#ff0000;
+			text-decoration:none;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable td a:hover{
+			text-decoration:underline;
+			}
+			
+		.registrantsAndSubmissions .registrantsContaner #listViewTable td .noLink{
+			color:#ff0000;
+			}
+			
+	/* History */
+	.registrantsAndSubmissions .registrantsContaner .backToList{
+		position:absolute;
+		top:16px;
+		right:15px;
+		font-size:11px;
+		font-weight:bold;
+		color:#ff0000;
+		text-decoration:none;
+		}
+		
+	.registrantsAndSubmissions .registrantsContaner .backToList:hover{
+		text-decoration:underline;
+		}
+		
+	.registrantsAndSubmissions .registrantsContaner .submissionHistory{
+		padding:25px 15px;
+		border:#cccccc solid 1px;
+		}
+		
+		/* handleIntro */
+		.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro{
+			width:44%;
+			float:left;
+			display:inline;
+			margin:0 1% 0 0;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro dt{
+				width:auto;
+				float:left;
+				display:inline;
+				margin:0 4px 0 0;
+				font-size:11px;
+				font-weight:bold;
+				line-height:24px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro dd{
+				font-size:11px;
+				line-height:24px;
+				}
+				
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro dd a{
+					font-weight:bold;
+					text-decoration:underline;
+					}
+				
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro dd a:hover{
+					text-decoration:none;
+					}
+					
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro dd .rating{
+					color:#66a5db;
+					}
+					
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro p{
+					padding:0 0 6px 0;
+					font-size:11px;
+					font-weight:bold;
+					line-height:24px;
+					}
+					
+				/* Table */
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table{
+					width:100%;
+					border:#cccccc solid 1px;
+					border-collapse:collapse;
+					}
+					
+					.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table td{
+						border:#cccccc solid 1px;
+						background-color:#fffffe;
+						}
+					
+					/* Header */	
+					.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridHeader{
+						height:30px;
+						padding:4px 0 0 0;
+						border-bottom:#cccccc solid 1px;
+						text-align:center;
+						background-image:url(../../images/bg-paginations.png);
+						background-repeat:repeat-x;
+						background-position:0 0;
+						}
+						
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridHeader p{
+							padding:0;
+							font-size:11px;
+							font-weight:bold;
+							line-height:14px;
+							}
+							
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridHeader a{
+							display:block;
+							font-size:11px;
+							font-weight:bold;
+							color:#ff0000;
+							line-height:14px;
+							text-align:center;
+							text-decoration:none;
+							}
+							
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridHeader a:hover{
+							text-decoration:underline;
+							}
+					
+					/* Body */		
+					.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridBody{
+						height:108px;
+						}
+					
+					/* Footer */	
+					.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridFooter{
+						padding:4px 0;
+						background-color:#f5f5f5;
+						}
+						
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridFooter dt{
+							width:auto;
+							float:left;
+							display:inline;
+							margin:0 4px 0 8px;
+							font-size:11px;
+							line-height:14px;
+							}
+							
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridFooter dd{
+							font-size:11px;
+							font-weight:bold;
+							line-height:14px;
+							}
+							
+						.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table .gridFooter dd.pink{
+							color:#d29ed4;
+							}
+				
+		/* scoreIntro */
+		.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro{
+			width:55%;
+			float:left;
+			display:inline;
+			}
+			
+			.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro dt{
+				width:auto;
+				float:left;
+				display:inline;
+				margin:0 4px 0 0;
+				font-size:11px;
+				font-weight:bold;
+				line-height:24px;
+				}
+				
+			.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro dd{
+				width:auto;
+				float:left;
+				display:inline;
+				margin:0 25% 0 0;
+				font-size:11px;
+				font-weight:bold;
+				line-height:24px;
+				}
+				
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro dd .score{
+					color:#d29ed4;
+					}
+					
+			.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro .personScoreChart{
+				height:270px;
+				margin:11px 0 0 0;
+				border:#cccccc solid 1px;
+				background-image:url(../../images/bg-chart.png);
+				background-repeat:repeat-x;
+				background-position:0 0;
+				background-color:#f6f6f6;
+				}
+				
+				.registrantsAndSubmissions .registrantsContaner .submissionHistory .scoreIntro #personScoreChart{
+					height:270px;
+					}
+				
+	/* Submissions Container */
+	.registrantsAndSubmissions .submissionsContainer{
+		width:100%;
+		}
+		
+		.registrantsAndSubmissions .submissionsContainer h5{
+			padding:6px 0 0 0;
+			border-left:#cccccc solid 1px;
+			border-right:#cccccc solid 1px;
+			font-size:18px;
+			font-weight:normal;
+			color:#000000;
+			line-height:38px;
+			text-align:center;
+			}
+		
+		/* View Top Submissions */	
+		.registrantsAndSubmissions .submissionsContainer .viewTopSubmissions{
+			height:30px;
+			border:#cccccc solid 1px;
+			background-image:url(../../images/bg-paginations.png);
+			background-repeat:repeat-x;
+			background-position:0 0;
+			}
+			
+			.registrantsAndSubmissions .submissionsContainer .viewTopSubmissions a{
+				width:36px;
+				height:24px;
+				float:right;
+				display:inline;
+				margin:3px 15px 0 8px;
+				text-indent:-9999px;
+				background-image:url(../../images/btn-go.png);
+				background-repeat:no-repeat;
+				background-position:0 0;
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .viewTopSubmissions a:hover{
+				background-position:0 -24px;
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .viewTopSubmissions span{
+				width:auto;
+				float:right;
+				display:inline;
+				font-size:12px;
+				line-height:30px;
+				}
+				
+				.registrantsAndSubmissions .submissionsContainer .viewTopSubmissions span select{
+					margin:0 4px;
+					}
+					
+		/* Chart For Top Submissions */
+		.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions{
+			height:450px;
+			border:#cccccc solid 1px;
+			border-top:0;
+			position:relative;
+			}
+			
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions #chartTopSubmissionsWrapper{
+				width:100%;
+				height:450px;
+				position:relative;
+				overflow:hidden;
+				}
+			
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions #chartTopSubmissions{
+				width:100%;
+				height:450px;
+				position:absolute;
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions a{
+				width:14px;
+				height:18px;
+				display:block;
+				position:absolute;
+				text-indent:-9999px;
+				background-repeat:no-repeat;
+				background-position:0 0;
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions a.prev{
+				top:406px;
+				left:80px;
+				background-image:url(../../images/slide-prev.png);
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions a.next{
+				top:406px;
+				right:200px;
+				background-image:url(../../images/slide-next.png);
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions a:hover{
+				background-position:0 -18px;
+				}
+				
+			.registrantsAndSubmissions .submissionsContainer .chartTopSubmissions a.disable{
+				background-position:0 -36px;
+				}
+			
+/* Result Details */
+.resultDetails{
+	position:relative;
+	}
+	
+	.resultDetails h4{
+		padding:0 20px;
+		font-size:18px;
+		font-weight:normal;
+		color:#d60507;
+		line-height:40px;
+		border-left:#cccccc solid 1px;
+		border-right:#cccccc solid 1px;
+		}
+		
+	.resultDetails .backToList{
+		position:absolute;
+		top:16px;
+		right:15px;
+		font-size:11px;
+		font-weight:bold;
+		color:#ff0000;
+		text-decoration:none;
+		}
+		
+	.resultDetails .backToList:hover{
+		text-decoration:underline;
+		}
+	
+	/* resultTable */	
+	.resultDetails .resultTable{
+		width:100%;
+		}
+		
+		.resultDetails .resultTable .handleTable{
+			width:15%;
+			float:left;
+			display:inline;
+			}
+			
+		.resultDetails .resultTable .resultDetailsTable{
+			width:85%;
+			float:left;
+			display:inline;
+			}
+			
+			.resultDetails .resultTable .resultDetailsTable .resultTableInner{
+				border-right:#cccccc solid 1px;
+				}
+				
+			.resultDetails .resultTable .resultDetailsTable .resultScrollBar{
+				overflow:auto;
+				}
+			
+			/* Table */
+			.resultDetails .resultTable table{
+				width:100%;
+				table-layout:fixed;
+				border-collapse:collapse;
+				}
+				
+				.resultDetails .resultTable table th{
+					height:28px;
+					border:#cccccc solid 1px;
+					font-size:11px;
+					line-height:12px;
+					background-image:url(../../images/dashboard-table-bg.png);
+					background-repeat:repeat-x;
+					background-position:0 -34px;
+					}
+					
+				.resultDetails .resultTable table td{
+					height:28px;
+					font-size:11px;
+					text-align:center;
+					border:#cccccc solid 1px;
+					}
+				
+				.resultDetails .resultTable table th.firstCol,	
+				.resultDetails .resultTable table td.firstCol{
+					border-left:0;
+					}
+				
+				.resultDetails .resultTable table th.lastCol,	
+				.resultDetails .resultTable table td.lastCol{
+					border-right:0;
+					}
+					
+				.resultDetails .resultTable table .even td{
+					background-color:#f5f5f5;
+					}
+					
+					.resultDetails .resultTable table td a:hover{
+						text-decoration:none;
+						}
+						
+	/* resultData */
+	.resultDetails .resultData table{
+		width:100%;
+		border:#cccccc solid 1px;
+		border-collapse:collapse;
+		}
+		
+		.resultDetails .resultData table th{
+			height:28px;
+			border:#cccccc solid 1px;
+			font-size:11px;
+			line-height:12px;
+			background-image:url(../../images/dashboard-table-bg.png);
+			background-repeat:repeat-x;
+			background-position:0 -34px;
+			}
+			
+		.resultDetails .resultData table td{
+			height:28px;
+			font-size:11px;
+			text-align:center;
+			border:#cccccc solid 1px;
+			}
+			
+		.resultDetails .resultData table .even td{
+			background-color:#f5f5f5;
+			}
+			
+			.resultDetails .resultData table td a.viewResultLink{
+				font-weight:bold;
+				color:#ff0000;
+				text-decoration:none;
+				}
+				
+			.resultDetails .resultData table td a.viewResultLink:hover{
+				text-decoration:underline;
+				}
+				
+			.resultDetails .resultData table td a.downloadLink{
+				width:22px;
+				height:15px;
+				display:block;
+				margin:0 auto;
+				text-indent:-9999px;
+				background-image:url(../../images/icon-zip.png);
+				background-repeat:no-repeat;
+				}
+				
+			.resultDetails .resultData table td a.downloadLink.silverStyleLink{
+				background-position:0 -15px;
+				}
+				
+			.resultDetails .resultData table td a.downloadLink.darkStyleLink{
+				background-position:0 -30px;
+				}
+	
+	/* TAB */		
+	.resultDetails .tabList{
+		height:25px;
+		padding:8px 20px 0 20px;
+		background-image:url(../../images/calendar_header.png);
+		background-repeat:repeat-x;
+		background-position:0 0;
+		}
+		
+		.resultDetails .tabList li{
+			width:auto;
+			float:left;
+			display:inline;
+			margin:0 5px 0 0;
+			}
+			
+			.resultDetails .tabList li a{
+				width:175px;
+				display:block;
+				padding:0 0 0 4px;
+				text-decoration:none;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:no-repeat;
+				background-position:0 0;
+				}
+			
+			.resultDetails .tabList li span{
+				display:block;
+				padding:0 4px 0 0;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:no-repeat;
+				background-position:right -50px;
+				}
+				
+			.resultDetails .tabList li span span{
+				display:block;
+				font-size:12px;
+				color:#000000;
+				line-height:25px;
+				text-align:center;
+				background-image:url(../../images/bg-tab.png);
+				background-repeat:repeat-x;
+				background-position:right -25px;
+				}
+				
+			.resultDetails .tabList li a:hover,
+			.resultDetails .tabList li a:hover span,
+			.resultDetails .tabList li.active a,
+			.resultDetails .tabList li.active a span{
+				background-image:url(../../images/bg-tab-hover.png);
+				}
+	
+	/* Tab Container */
+	.resultDetails .tabContainer{
+		height:539px;
+		border:#cccccc solid 1px;
+		border-top:0;
+		}
+		
+		.resultDetails .tabContainer h5{
+			padding:6px 0 0 0;
+			border-bottom:#cccccc solid 1px;
+			font-size:18px;
+			font-weight:normal;
+			color:#000000;
+			line-height:36px;
+			text-align:center;
+			}
+			
+		.resultDetails .tabContainer #rankingChart{
+			height:496px;
+			background-color:#f9f9f9;
+			}
+			
+		.resultDetails .tabContainer .scoreChartWrapper{
+			background-color:#f9f9f9;
+			}
+			
+			.resultDetails .tabContainer #scoreChart{
+				height:440px;
+				}
+				
+			.resultDetails .tabContainer .scoreChartWrapper p{
+				height:36px;
+				padding:6px 0 0 48px;
+				font-size:12px;
+				color:#000000;
+				line-height:16px;
+				}
+				
+/* Score Content */
+.scoreContent{
+	display:none;
+	}
+	
+/* Title */
+#area1 .areaHeader H2.marathonMatchNameTitle{
+	background-image:url(../../images/icon-marathon.png);
+	}

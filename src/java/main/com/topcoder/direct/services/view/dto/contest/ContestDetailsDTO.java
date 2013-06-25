@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 import com.topcoder.direct.services.view.form.ContestIdForm;
+import com.topcoder.marathonmatch.service.dto.MMCommonInfoDTO;
 
 /**
  * <p>A <code>DTO</code> class providing the data for displaying by <code>Contest Details</code> view.</p>
@@ -14,7 +15,7 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
  *     <li>Added {@link #dashboard} property with respective accessor/mutator methods.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.0.2 (TC Direct Release Assembly 7) Change notes:
  *   <ol>
@@ -28,9 +29,16 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
  *     <li>Made the class the descendant of {@link BaseContestCommonDTO} and removed contesStats property.</li>
  *   </ol>
  * </p>
- * 
- * @author isv, TCSASSEMBLER
- * @version 1.0.3
+ *
+ * <p>
+ * Version 1.1 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) Change notes:
+ * <ol>
+ *     <li>Add property {@link #commonInfo} to support the marathon match contest.</li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER, Ghost_141
+ * @version 1.1
  */
 public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
                                                             ContestIdForm.Aware {
@@ -51,7 +59,7 @@ public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestSt
      * @since 1.0.1
      */
     private ContestDashboardDTO dashboard;
-    
+
     /**
      * <p>
      * A boolean used to represent whether user has write permission to this
@@ -61,11 +69,18 @@ public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestSt
      * @since 1.0.2
      */
     private boolean hasContestWritePermission;
-    
+
     /**
      * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
      */
     private boolean showSpecReview;
+
+    /**
+     * Represent the common information for marathon match contest.
+     * 
+     * @since 1.1
+     */
+    private MMCommonInfoDTO commonInfo;
 
     /**
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
@@ -131,7 +146,7 @@ public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestSt
 
     /**
      * Get hasContestWritePermission field.
-     * 
+     *
      * @return the hasContestWritePermission
      * @since 1.0.2
      */
@@ -141,9 +156,8 @@ public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestSt
 
     /**
      * Set hasContestWritePermission field.
-     * 
-     * @param hasContestWritePermission
-     *            the hasContestWritePermission to set
+     *
+     * @param hasContestWritePermission             the hasContestWritePermission to set
      * @since 1.0.2
      */
     public void setHasContestWritePermission(boolean hasContestWritePermission) {
@@ -166,5 +180,25 @@ public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestSt
      */
     public void setShowSpecReview(boolean showSpecReview) {
         this.showSpecReview = showSpecReview;
+    }
+
+    /**
+     * Gets common info.
+     *
+     * @return the common info
+     * @since 1.1
+     */
+    public MMCommonInfoDTO getCommonInfo() {
+        return commonInfo;
+    }
+
+    /**
+     * Sets common info.
+     *
+     * @param commonInfo the common info
+     * @since 1.1
+     */
+    public void setCommonInfo(MMCommonInfoDTO commonInfo) {
+        this.commonInfo = commonInfo;
     }
 }

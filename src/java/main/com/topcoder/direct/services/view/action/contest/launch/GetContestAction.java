@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
@@ -20,11 +21,13 @@ import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
+import com.topcoder.marathonmatch.service.dto.MMCommonInfoDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchDetailsResource;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -168,9 +171,19 @@ import java.util.Map;
  *      <li> change on {@link #billingAccountsForProject} to suuport CCA related for billing account</li>
  * </ul>
  * </p>
- * 
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve
- * @version 2.2
+ *
+ * <p>
+ * Version 2.3 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) change notes:
+ * <ul>
+ *     <li>Add property {@link #marathonMatchAnalyticsService} to support marathon match contest.</li>
+ *     <li>Update method {@link #executeAction()} to support marathon match contest.</li>
+ *     <li>Add property {@link #hasRoundId} to support marathon match contest.</li>
+ *     <li>Add method {@link #isHasRoundId()}.</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141
+ * @version 2.3
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -185,7 +198,7 @@ public class GetContestAction extends ContestAction {
      * The action type.
      * </p>
      *
-     * @see TYPE
+     * @see com.topcoder.direct.services.view.action.contest.launch.GetContestAction.TYPE
      */
     private TYPE type;
 
@@ -247,7 +260,7 @@ public class GetContestAction extends ContestAction {
      * @since 1.5
      */
     private String subEndDate;
-    
+
     /**
      * The contest end date.
      * @since 1.5
@@ -260,7 +273,19 @@ public class GetContestAction extends ContestAction {
      * @since 2.0
      */
     private List<Map<String,String>> billingAccountsForProject = new ArrayList<Map<String,String>>();
-    
+
+    /**
+     * Represent the marathon match analytics service.
+     * @since 2.3
+     */
+    private MarathonMatchAnalyticsService marathonMatchAnalyticsService;
+
+    /**
+     * Represent the if the marathon match contest has round id.
+     * @since 2.3
+     */
+    private boolean hasRoundId = false;
+
     /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
@@ -279,7 +304,8 @@ public class GetContestAction extends ContestAction {
      *
      * @throws IllegalStateException if the contest service facade is not set.
      * @throws Exception if any other error occurs
-     * @see ContestServiceFacade#getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
+     * @see com.topcoder.service.facade.contest.ContestServiceFacade#
+     *                   getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
      */
     protected void executeAction() throws Exception {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
@@ -342,6 +368,23 @@ public class GetContestAction extends ContestAction {
             DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
         DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), !DirectUtils
             .isStudio(softwareCompetition));
+
+        // set the common info for marathon match contest only.
+        if(DirectUtils.isMM(softwareCompetition)) {
+            if(softwareCompetition.getProjectHeader().getProperty("Marathon Match Id") != null) {
+                hasRoundId = true;
+                MarathonMatchDetailsResource mmDetail = marathonMatchAnalyticsService.getMarathonMatchDetails(
+                        Long.valueOf(softwareCompetition.getProjectHeader().getProperty("Marathon Match Id")),
+                        "hour", "access_token");
+                MMCommonInfoDTO commonInfoDTO = new MMCommonInfoDTO();
+                viewData.setCommonInfo(commonInfoDTO);
+                viewData.getCommonInfo().setNumSubmissions(mmDetail.getNoOfSubmissions());
+                viewData.getCommonInfo().setNumRegistrants(mmDetail.getNoOfRegistrants());
+                viewData.getCommonInfo().setNumCompetitors(mmDetail.getNoOfCompetitors());
+            } else {
+                hasRoundId = false;
+            }
+        }
 
         if (softwareCompetition.getProjectData().getContestSales() != null
             && softwareCompetition.getProjectData().getContestSales().size() > 0) {
@@ -535,6 +578,18 @@ public class GetContestAction extends ContestAction {
 
     /**
      * <p>
+     * Determines if the marathon contest has round id.
+     * </p>
+     *
+     * @return true if the contest has round id.
+     * @since 2.3
+     */
+    public boolean isHasRoundId() {
+        return hasRoundId;
+    }
+
+    /**
+     * <p>
      * Gets the view data.
      * </p>
      *
@@ -708,7 +763,7 @@ public class GetContestAction extends ContestAction {
     public String getSubEndDate() {
         return subEndDate;
     }
-    
+
     /**
      * Gets the contest end date.
      * @since 1.5
@@ -716,7 +771,16 @@ public class GetContestAction extends ContestAction {
     public String getContestEndDate() {
         return contestEndDate;
     }
-    
+
+    /**
+     * Sets marathon match analytics service.
+     *
+     * @param marathonMatchAnalyticsService the marathon match analytics service
+     */
+    public void setMarathonMatchAnalyticsService(MarathonMatchAnalyticsService marathonMatchAnalyticsService) {
+        this.marathonMatchAnalyticsService = marathonMatchAnalyticsService;
+    }
+
     /**
      * <p>
      * The static type enum to indicate in which mode this action is being called.

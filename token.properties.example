@@ -388,3 +388,18 @@
 @taskCreationEmailBodyTemplatePath@=email_templates/create_task_email_template.txt
 @taskStatusChangeEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; status has been changed.
 @taskStatusChangeEmailBodyTemplatePath@=email_templates/update_task_status_email_template.txt
+
+#OAuth settings.
+@oauth.authorizationURL@=https://api.login.yahoo.com/oauth/v2/request_auth?oauth_token=%s
+@oauth.callBackActionUrl@=https://cockpit.cloud.topcoder.com/direct/marathonmatch/callBack.action
+@oauth.consumerKey@=dj0yJmk9TXZDWVpNVVdGaVFmJmQ9WVdrOWMweHZXbkZLTkhVbWNHbzlNVEl5TWprd05qUTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD0wMw--
+@oauth.consumerSecret@=262be559f92a2be20c4c039419018f2b48cdfce9
+@oauth.providerClass@=org.scribe.builder.api.YahooApi
+
+##################################################
+# Marathon Match Analytics Service Configuration #
+##################################################
+@api_server_domain@=api.topcoder.com
+@apiKey@=ec04b9017336e3402081183c7239311d
+@clientId@=test
+@clientSecret@=test
