@@ -98,9 +98,9 @@
                                 <input type="hidden" name="ppp" value="1" id="pipelineDetailsPageNumber2"/>
                                 <input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
 
-                                <div id="datefilter" data-intro="Use the date filters to constrain on the LAUNCH dates of your competitions." data-step="2">
+                                <div id="datefilter" >
 
-                                    <div class="filterRow firstFilterRow" >
+                                    <div class="filterRow firstFilterRow" data-intro="Use the date filters to constrain on the LAUNCH dates of your competitions." data-step="2">
                                         <label for="startDate" class="fLeft">Start:</label>
                                         <s:textfield name="formData.startDate" readonly="true"
                                                      id="startDateCostReport"
@@ -306,8 +306,8 @@
                                 <!-- end .multiSelectArea -->
                                 <div class="clear"></div>
 
-                                <div class="applyButtonBox" data-intro="Click apply to run the report." data-step="8">
-                                    <a class="button6 applyButton" href="javascript:" id="submitPipelineForm"><span
+                                <div class="applyButtonBox" >
+                                    <a class="button6 applyButton" href="javascript:" id="submitPipelineForm" data-intro="Click apply to run the report." data-step="8"><span
                                             class="left"><span class="right">APPLY</span></span></a>
                                 </div>
                                 <!-- end .applyButtonBox -->
@@ -358,7 +358,7 @@
                             --%>
                             <div id="pipelineReportArea">
                                 <%-- Pipeline summary --%>
-                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0" data-intro="A weekly summary of your contest volume?" data-step="9">
+                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0" data-intro="A weekly summary of your contest volume?" data-step="9"  data-position="top">
                                 <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="5">
@@ -413,7 +413,7 @@
 
                                 <%-- Scheduled contests --%>
                                 <table id="pipelineScheduledContests" class="pipelineStats"
-                                       cellpadding="0" cellspacing="0" data-intro="Group by different dimensions of data using the View By control on the right." data-step="10">
+                                       cellpadding="0" cellspacing="0" data-intro="Group by different dimensions of data using the View By control on the right." data-step="10"  data-position="top">
                                     <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="4">
@@ -581,7 +581,7 @@
                                 </div>
 
                                 <%-- Pipeline Details --%>
-                                <div class="resultTableContainer" data-intro="Here are the specific details about all of the contests in your results." data-step="11">
+                                <div class="resultTableContainer" data-intro="Here are the specific details about all of the contests in your results." data-step="11"  data-position="top">
                                 <table id="pipelineDetails" class="pipelineStats resultTable paginatedDataTable" cellpadding="0"
                                        cellspacing="0">
                                  <colgroup>
