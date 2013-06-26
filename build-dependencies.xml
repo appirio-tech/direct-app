@@ -576,6 +576,15 @@
   <property name="project_payment_calculator.path" value="project_payment_calculator/${project_payment_calculator.version}" />
   <property name="project_payment_calculator.jar" value="${tcs_libdir}/${project_payment_calculator.path}/${project_payment_calculator.jar.name}" />  
 
+  <property name="marathon_match_resources.version" value="1.0.0" />
+  <property name="marathon_match_resources.jar.name" value="marathon_match_resources.jar"/>
+  <property name="marathon_match_resources.path" value="marathon_match_resources/${marathon_match_resources.version}"/>
+  <property name="marathon_match_resources.jar" value="${tcs_libdir}/${marathon_match_resources.path}/${marathon_match_resources.jar.name}"/>
+
+  <property name="scribe.jar.name" value="scribe.jar" />
+  <property name="scribe.jar.path" value="${ext_libdir}/scribe" />
+  <property name="scribe.jar" value="${scribe.jar.path}/${scribe.jar.name}" />
+
   <property name="shared.jar.name" value="shared.jar" />
   <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
 
@@ -619,9 +628,17 @@
   <property name="ejb3-persistence.jar" value="${ext_libdir}/ejb-api/ejb3-persistence.jar" />
   <property name="javaee.jar" value="${ext_libdir}/j2ee/1.5/javaee.jar" />
   <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar" />
+  <property name="jsr311.jar" value="${ext_libdir}/j2ee/jsr311-api-1.1.1.jar"/>
 
   <property name="jai_codec-1.1.3.jar" value="${ext_libdir}/jai/jai_codec-1.1.3.jar" />
   <property name="jai_core-1.1.3.jar" value="${ext_libdir}/jai/jai_core-1.1.3.jar" />
+
+  <property name="cxf.jar" value="${ext_libdir}/cxf/cxf-2.6.4.jar"/>
+  <property name="aopalliance-1.0.jar" value="${ext_libdir}/cxf/aopalliance-1.0.jar"/>
+  <property name="geronimo-jaxws_2.2_spec-1.1.jar" value="${ext_libdir}/cxf/geronimo-jaxws_2.2_spec-1.1.jar"/>
+  <property name="geronimo-annotation_1.0_spec-1.1.1.jar" value="${ext_libdir}/cxf/geronimo-annotation_1.0_spec-1.1.1.jar"/>
+  <property name="neethi-3.0.1.jar" value="${ext_libdir}/cxf/neethi-3.0.1.jar"/>
+
   <!-- Struts 2 libs -->
   <property name="struts2_libdir" value="${ext_libdir}/struts" />
   <property name="commons-beanutils-1.7.0.jar" value="${struts2_libdir}/commons-beanutils-1.7.0.jar" />
@@ -835,6 +852,7 @@
     <pathelement location="${topcoder_commons_utility.jar}" />
     <pathelement location="${review_application_management.jar}" />
     <pathelement location="${project_payment_calculator.jar}" />
+    <pathelement location="${marathon_match_resources.jar}"/>
   </path>
 
   <path id="component.3rdParty-dependencies">
@@ -859,6 +877,9 @@
     <pathelement location="${yuicompressor.jar}" />
     <pathelement location="${jackson-core.jar}" />
     <pathelement location="${jackson-mapper.jar}" />
+    <pathelement location="${scribe.jar}"/>
+    <pathelement location="${jsr311.jar}"/>
+    <pathelement location="${cxf.jar}"/>
   </path>
 
 </project>

@@ -128,6 +128,14 @@
         </javac>
     </target>
 
+    <target name="marathonmatch_compile" description="compile the marathon match source code">
+        <mkdir dir="${build_classdir}"/>
+        <javac srcdir="${javamain}" destdir="${build_classdir}" includes="com/topcoder/marathonmatch/**" debug="true"
+            verbose="${verbose}" includeantruntime="no" encoding="${javac.encoding}">
+            <classpath refid="buildlibs" />
+        </javac>
+    </target>
+
     <target name="ppt_compile" description="compile the ppt source code">
         <mkdir dir="${build_classdir}"/>
         <javac srcdir="${javamain}" destdir="${build_classdir}" includes="com/topcoder/ppt/**" debug="true"
@@ -225,6 +233,7 @@
     	<copy file="${topcoder_security_groups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${review_application_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${project_payment_calculator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${marathon_match_resources.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- third-party libs -->
         <copy file="${asm.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -288,6 +297,13 @@
         <copy file="${mime-util.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${log4j.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${slf4j.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${scribe.jar}" todir="${ear_shared_libdir}" overwrite="true" />
+        <copy file="${jsr311.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${cxf.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${aopalliance-1.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${geronimo-jaxws_2.2_spec-1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${geronimo-annotation_1.0_spec-1.1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${neethi-3.0.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy todir="${ear_shared_libdir}" overwrite="true">
             <fileset dir="${httpclient_libdir}">
                 <include name="commons-codec-1.6.jar"/>
@@ -692,7 +708,8 @@
 
     <!-- Builds the WAR file for web application module -->
     <target name="war" depends="clean, init, compile" description="Builds the WAR file">
-    
+        <antcall target="marathonmatch_compile" />
+
         <war warfile="temp.war" webxml="${tokenized_conf}/web/WEB-INF/web.xml">
             <webinf dir="${tokenized_conf}/web/WEB-INF" includes="applicationContext.xml"/>
         	<webinf dir="${tokenized_conf}/web/WEB-INF" includes="securityGroupsApplicationContext.xml"/>
@@ -706,6 +723,7 @@
             <classes dir="${tokenized_conf}" includes="META-INF/**/*"/>
             <classes dir="${tokenized_conf}/web" includes="Messages.properties"/>
             <classes dir="${configdir}" includes="xwork-conversion.properties"/>
+            <classes dir="${build_classdir}" includes="com/topcoder/marathonmatch/**/*.class"/>
             <fileset dir="${webdir}">
                 <include name="viewWireframePage"/>
                 <include name="**/*.jsp"/>

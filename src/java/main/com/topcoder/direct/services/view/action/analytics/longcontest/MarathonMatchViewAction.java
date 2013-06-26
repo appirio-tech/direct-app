@@ -24,6 +24,8 @@ import com.topcoder.marathonmatch.service.dto.RegistrantInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.user.UserService;
+import com.topcoder.service.user.UserServiceException;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
@@ -67,7 +69,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private static final String ACCESS_TOKEN = "testAccessToken";
 
     /**
-     * Represent the dummy group type. This is just for test purpose. The group type itself means nothing.
+     * Represent the dummy group type. This is just for test purpose.
      */
     private static final String GROUP_TYPE = "hour";
 
@@ -102,6 +104,11 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      * Represent the contest service facade instance.
      */
     private ContestServiceFacade contestServiceFacade;
+
+    /**
+     * Represent the user service instance.
+     */
+    private UserService userService;
 
     /**
      * Represent the contest.
@@ -165,7 +172,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
             // Get the round id from the project info.
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
 
-            hasRoundId = (roundId != null);
+            hasRoundId = !(roundId == null);
 
             if(!isMarathon()) {
                 throw new DirectException("contest is not a marathon contest.");
@@ -333,11 +340,12 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     /**
      * Get the registrants of this marathon match.
      *
+     * @param roundId the round id
      * @return the result from service.
      * @throws MarathonMatchAnalyticsServiceException the marathon match analytics service exception
      */
     private SearchResult<CompetitorResource> getMMRegistrants(long roundId)
-            throws MarathonMatchAnalyticsServiceException {
+            throws MarathonMatchAnalyticsServiceException, UserServiceException {
         SearchResult<CompetitorResource> result = marathonMatchAnalyticsService.getRegistrants(roundId, ACCESS_TOKEN);
         List<RegistrantInfo> registrantInfos = new ArrayList<RegistrantInfo>();
         for(CompetitorResource competitorResource : result.getItems()) {
@@ -346,6 +354,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
             registrant.setHandle(competitorResource.getHandleName());
             registrant.setRating(competitorResource.getRating());
             registrant.setRegistrationTime(competitorResource.getRegistrationDate());
+            registrant.setUserId(userService.getUserId(registrant.getHandle()));
             registrantInfos.add(registrant);
         }
 
@@ -532,6 +541,15 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      */
     public int getRegistrantsCount() {
         return registrantsCount;
+    }
+
+    /**
+     * Sets user service.
+     *
+     * @param userService the user service
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }
 

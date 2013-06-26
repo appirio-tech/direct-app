@@ -10,9 +10,16 @@ import java.util.Date;
  * <p>
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
- * 
+ *
+ * <p>
+ *     Version 1.1 - PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress
+ *     <ol>
+ *         <li>Add property {@link userId }</li>
+ *     </ol>
+ * </p>
+ *
  * @author sampath01, zhu_tao
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 public class RegistrantInfo {
@@ -30,6 +37,13 @@ public class RegistrantInfo {
      * The registration time of the registrant
      */
     private Date registrationTime;
+
+    /**
+     * The registrant user id in topcoder.
+     *
+     * @since 1.1
+     */
+    private Long userId;
 
     /**
      * Default constructor.
@@ -95,4 +109,21 @@ public class RegistrantInfo {
         this.registrationTime = registrationTime;
     }
 
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

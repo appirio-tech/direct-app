@@ -97,8 +97,8 @@
                                                     <tbody>
                                                     <s:iterator value="viewData.registrants" status="status">
                                                         <tr>
-                                                            <td><strong>${handle}</strong></td>
-                                                            <td>${rating}</td>
+                                                            <td><strong><tc-webtag:handle coderId="${userId}"/></strong></td>
+                                                            <td><tc-webtag:ratingColor rating="${rating}">${rating}</tc-webtag:ratingColor></td>
                                                             <td><fmt:formatDate value="${registrationTime}" pattern="MM.dd.yyyy HH:mm:ss"/></td>
                                                         </tr>
                                                     </s:iterator>
