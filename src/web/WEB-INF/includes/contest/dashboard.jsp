@@ -29,10 +29,10 @@
 <div class="dashboardTable contestDashboard 
     <s:if test="!viewData.contestStats.isStudio && !marathon">softWareDashboard softwareDetail</s:if>
     <s:else>studioDashboard studioDetails</s:else>
-    ">
+    " data-intro="Welcome to your competition dashboard. This is where you control and monitor individual competitions within your project." data-step="1" data-position="top">
     
-    <div class="dashboardModule" id="timelineModule">
-        <h1 class="heading">
+     <div class="dashboardModule" data-intro="Here is the timeline for your competition.  The system defines this based on the type of competition. Your copilot might tweak it slightly, but generally they remain pretty consistent." data-step="2" data-position="top">
+       <h1 class="heading">
             <span class="tl"></span>
             <span class="tr"></span>
             Timeline
@@ -186,7 +186,7 @@
                 <span class="tr"></span>
                 Registration
             </h1>
-            <div class="content">
+            <div class="content" data-intro="The system monitors the health of your competition to try to determine whether or not you will get a good result. Check here to get an early gauge on success." data-step="3" data-position="top">
                 <span class="bl"></span>
                 <span class="br"></span>
                 <div class="listContent">
