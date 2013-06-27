@@ -94,7 +94,7 @@
                                 <div class="projectInforTitle"><a href="javascript:void(0)" class="expand">Project
                                     Information</a></div>
                                 <c:if test="${hasWritePermission}">
-                                <div class="editProject">
+                                <div class="editProject" data-intro="If you need to edit this project, manage permissions, set budget, etc. just click here." data-step="19" data-position="left">
                                     <a href="<s:url action='editProject'>
                                     <s:param name='formData.projectId'>${formData.projectId}</s:param></s:url>">
                                         Edit</a>
@@ -183,8 +183,8 @@
                                             <!-- End Project Permissions -->
 
                                             <!-- Project Links -->
-                                            <div class="smallProjectLinks" data-intro="These are configurable by you to help manage the location of your version control and issue tracking." data-step="6" data-position="left">
-                                                <h3>Project Links :</h3>
+                                            <div class="smallProjectLinks" >
+                                                <h3 >Project Links :</h3>
                                                     <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
                                                         <c:if test="${hasWritePermission}">
                                                         <a class="projectEditLink"
@@ -268,7 +268,7 @@
                                             <!-- End .projectBudget -->
 
                                             <!-- Project Links -->
-                                            <div class="bigProjectLinks">
+                                            <div class="bigProjectLinks" data-intro="These are configurable by you to help manage the location of your version control and issue tracking." data-step="6" data-position="left">
                                                 <h3>Project Links :</h3>
 
 
@@ -463,7 +463,7 @@
 
                                         </div>
 
-                                        <dl class="additionalInfo">
+                                        <dl class="additionalInfo" data-intro="You can define additional fields for your projects.  Define them once by editing this project, and then you'll see the same fields in all projects.  You can then slice your data by these fields in your reports." data-step="13" data-position="left">
                                             <dt>Additional Project Information :</dt>
 
                                             <s:if test="viewData.projectGeneralInfo.additionalProjectInfo.size > 0">
@@ -500,7 +500,7 @@
                             </div>
                             <!-- end project general information table -->
 
-                            <div class="dashboardTable">
+                            <div class="dashboardTable" data-intro="The active work in your project is shown here. Check the green/yellow/red indicators to quickly monitor the health of each competition or task." data-step="14" data-position="top">
                                 <dl>
                                     <dt>
                                         <a href="javascript:void(0)" class="expand">Active Contests Health</a>
@@ -568,7 +568,7 @@
 
 
                             <div class="leftColumn">
-                                <div class="areaHeader padding2 titleProjectCopilots">
+                                <div class="areaHeader padding2 titleProjectCopilots" data-intro="These are you project copilots. Be sure to provide feedback about them. Don't have a copilot? Click the green Get Copilot button." data-step="15" data-position="top">
 
                                         <h2 class="title">Project Copilots</h2>
                                 </div><!-- End .areaHeader -->
@@ -714,7 +714,7 @@
                                     <h2 class="title">Project Stats</h2>
                                 </div>
                                 <!-- End .areaHeader -->
-                                <table id="projectStatistics" class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0">
+                                <table id="projectStatistics" class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0"  data-intro="Summary of your project metrics. Compare these to the market date on your Enterprise Dashboard." data-step="16" data-position="top">
                                     <tbody>
                                         <tr>
                                             <td><div class="ajaxTableLoader"><img src="/images/loadingAnimation.gif" alt="loading" /></div></td>
@@ -726,7 +726,7 @@
 
                             <div class="rightColumn">
 
-                                <div class="areaHeader padding2 titleProjectForum">
+                                <div class="areaHeader padding2 titleProjectForum" data-intro="Every project has it's own private forum. Only you and your team members see this. It is not visible to the general community. Use your project forum to discuss the project with your team." data-step="17" data-position="bottom">
                                     <h2 class="title">Project Forum</h2>
                                     <s:if test='viewData.hasForumThreads'>
                                       <div id="watchForumOptions" class="watchForumOptions" style="display:none;"> 
@@ -801,8 +801,8 @@
                                     <h2 class="title">Project Activities</h2>
                                 </div><!-- End .areaHeader -->
 
-                                <div class="projectTableContainer">
-                                    <span class="leftCorner"></span>
+                                 <div class="projectTableContainer" data-intro="These are the recent competitions that have started and completed." data-step="18" data-position="top">
+                                   <span class="leftCorner"></span>
                                     <span class="rightCorner"></span>
                                     <table width="100%" cellspacing="0" cellpadding="0" id="projectActivities" class="project">
 
