@@ -253,7 +253,18 @@
                         </s:if>
                     </td>
                     <td class="hide metadataValTD"></td>
-                    <td class="hide"><span>${projectSummary.projectManagerName}</span></td>
+                    <td class="hide">
+						<span>
+							<c:choose>
+								<c:when test="${empty projectSummary.projectManagerName}">
+									none
+								</c:when>
+								<c:otherwise>
+									${projectSummary.projectManagerName}
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</td>
                     <!-- used for status sorting -->
                     <td class="hide">
                         ${projectSummary.phaseLateContestsNum + projectSummary.launchLateContestsNum + 

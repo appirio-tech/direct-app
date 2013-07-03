@@ -564,9 +564,8 @@
             <li class="helloUserLink"><a href="<s:url action="logout" namespace="/"/>">Logout</a></li>
         </ul>
     </div><!-- End .helloUSer -->
-
     <ui:isDashboardPage>
-        <c:if test="${requestScope.CURRENT_TAB eq 'enterprise'}">
+        <c:if test="${requestScope.CURRENT_TAB eq 'enterprise' and !requestScope.NO_ENTERPRISE_DASHBOARD_TOP}">
             <div class="topBtns" id="enterpriseDashboardTop">
                 <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
                 <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>

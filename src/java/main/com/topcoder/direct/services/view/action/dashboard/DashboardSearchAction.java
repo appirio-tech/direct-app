@@ -121,7 +121,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      * The customer names.
      * @since 2.3
      */
-    private Map<String, Long> customers = new TreeMap<String, Long>();
+    private Map<String, Long> customers = new TreeMap<String, Long>(String.CASE_INSENSITIVE_ORDER);
     /**
      * The project manager names.
      * @since 2.3
@@ -221,7 +221,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                     allProjectIds.add(item.getData().getProjectId());
                     helperMap.put(item.getData().getProjectId(), item);
                     if(!customers.containsKey(item.getData().getCustomerName()) && !item.getData().getCustomerName().toLowerCase().equals("none")) {
-                        customers.put(item.getData().getCustomerName(), item.getData().getCustomerId());
+						customers.put(item.getData().getCustomerName(), item.getData().getCustomerId());
                     }
                     if(item.getData().getProjectManagerName() != null && 0 != item.getData().getProjectManagerName().trim().length()) {
                         String pmNames = item.getData().getProjectManagerName();
@@ -233,7 +233,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                         }
                     }
                 }
-                Collections.sort(projectManagers);
+                Collections.sort(projectManagers, String.CASE_INSENSITIVE_ORDER);
 
                 if (this.getMetadataKeyService() == null) {
                     throw new IllegalStateException("The direct project metadata service is not initialized.");

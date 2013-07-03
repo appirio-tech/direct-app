@@ -101,10 +101,14 @@ function filterbyCustomer(id, filterStr) {
         } else {
             searchPattern = 'none';
         }
-        if (filterStr.indexOf('All') != -1) {
+        if (filterStr.indexOf('All Customers') != -1) {
             searchPattern = '';
         }
-        tableHandle.fnFilter(searchPattern, 12);
+		if(searchPattern!=''){
+			tableHandle.fnFilter("^"+searchPattern+"$", 12, true, false);
+		} else {
+			tableHandle.fnFilter(searchPattern, 12);
+		} 
     }
     else if (handleName == "activeContests") {
         tableHandle.fnFilter(searchPattern, 10);
@@ -169,7 +173,7 @@ var setupFilterPanel = function () {
     $('.customerSelectMask .contestsDropDown li a').each(function () {
         var value = $(this).html();
 
-        if (handleName != "projectsResult") {
+        if (handleName != "projectsResult" && handleName != "pmProjectsResult") {
             if (value != 'All Customers' && $('#customerFilter option[value=\'' + value + '\']').length == 0)
                 $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
         }
@@ -420,7 +424,7 @@ var setupFilterPanel = function () {
             }
             $("#groupBy").trigger("change");
         } else if ($("#activeContestsFilter").size() > 0 || $("#CopilotPosingFilter").size() > 0) {     // active contests page or copilot posting page
-            filterbyCustomer(customerId, str);
+			filterbyCustomer(customerId, str);
             updateBreadcrumb(str);
         }
 

@@ -39,6 +39,9 @@
     <s:if test="viewData.isAllProjectsPage == true">
         <ui:projectPageType tab="allProjects"/>
     </s:if>
+	<s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+		<c:set var="dataTablesPlugin" value="jquery.dataTables-1.9.1.min.js" scope="request"/>
+	</s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
     <script type="text/javascript" src="/scripts/directProjectManage.js?v=214865"></script>
@@ -49,7 +52,7 @@
     <div id="wrapperInner">
         <div id="container">
             <div id="allProjectsPageContent">
-
+				<c:set var="NO_ENTERPRISE_DASHBOARD_TOP" value="true" scope="request"/>
                 <jsp:include page="includes/header.jsp"/>
 
                 <div id="mainContent">
@@ -123,6 +126,7 @@
                                                             <s:iterator value="customers">
                                                                 <option value='<s:property value="key"/>'><s:property value="key"/></option>
                                                             </s:iterator>
+															<option value='No Customer'>No Customer</option>
                                                         </s:if>
                                                         <s:if test="viewData.resultType.name() == 'PROJECTS'">
                                                             <option value=''>All Customers</option>
@@ -141,7 +145,7 @@
                                                 </div>
                                                 <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
                                                     <div class='row'>
-                                                        <span class='title'>Project Managers</span>
+                                                        <span class='title'>Platform Specialists</span>
                                                         <select id='projectManagerFilter'>
                                                             <option value=''>All Managers</option>
                                                             <c:forEach var="managerName" items="${projectManagers}">
