@@ -4,8 +4,8 @@
 /**
  * Javascript for security group pages.
  *
- * @author xjtufreeman, TCSASSEMBER
- * @version 1.5
+ * @author xjtufreeman, TCSASSEMBLER, freegod
+ * @version 1.7
  * 
  * Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) change notes:
  *   Updated to support view invitation and pending approvals pages.
@@ -25,6 +25,9 @@
  *
  * Version 1.6 (Release Assembly - TopCoder Security Groups Release 4) changes:
  *   Updated to fixed the bugs in this assembly.
+ *
+ * Version 1.7 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+ *   Updated to remove resource restrictions and add Automatically grant permission.
  */
 $(document).ready(function(){
 
@@ -243,11 +246,15 @@ $(document).ready(function(){
         });
     });
 
-    if ($("#billingCheck").is(":checked")) {
-        uncheckAll("#billingAccounts");
-    }
-    if ($("#projectsCheck").is(":checked")) {
-        uncheckAll("#directProjects");
+    if ($("#autoGrantCheck").is(":checked")) {
+        $("#billingAccounts input").each(function(){
+            $(this).attr("checked", "checked");
+        });
+        $("#directProjects input").each(function(){
+            $(this).attr("checked", "checked");
+        });
+        $("#billingAccounts input").attr("disabled", $(this).is(":checked") ? "disabled" : "");
+        $("#directProjects input").attr("disabled", $(this).is(":checked") ? "disabled" : "");
     }
 
     $('input[name="projects"]').each(function() {
@@ -411,11 +418,16 @@ $(document).ready(function(){
                         updateMulti(this);
                     });
                 });
-                if ($("#billingCheck").is(":checked")) {
+                if($("#autoGrantCheck").is(":checked")) {
+                    $("#billingAccounts input").each(function(){
+                        $(this).attr("checked", "checked");
+                    });
+                    $("#directProjects input").each(function(){
+                        $(this).attr("checked", "checked");
+                    });
+
                     $("#billingAccounts input").attr("disabled", "disabled");
-                }
-                if ($("#projectsCheck").is(":checked")) {
-                    $("#directProjects input").attr("disabled", "disabled");
+                    $("#directProjects input").attr("disabled", "disabled");                    
                 }
               },
               function(errorMessage) {
@@ -424,26 +436,20 @@ $(document).ready(function(){
           }
        });
     });
-    $("#billingCheck").click(function() {
-        uncheckAll("#billingAccounts");
+
+    $("#billingAccounts input").attr("disabled", $("#autoGrantCheck").is(":checked") ? "disabled" : "");
+    $("#directProjects input").attr("disabled", $("#autoGrantCheck").is(":checked") ? "disabled" : "");
+
+    $("#autoGrantCheck").click(function(){
+        $("#billingAccounts input").each(function(){
+            $(this).attr("checked", "checked");
+        });
+        $("#directProjects input").each(function(){
+            $(this).attr("checked", "checked");
+        });
         $("#billingAccounts input").attr("disabled", $(this).is(":checked") ? "disabled" : "");
-    });
-    $("#projectsCheck").click(function() {
-        uncheckAll("#directProjects");
         $("#directProjects input").attr("disabled", $(this).is(":checked") ? "disabled" : "");
     });
-    $("#billingAccounts input").attr("disabled", $("#billingCheck").is(":checked") ? "disabled" : "");
-    $("#directProjects input").attr("disabled", $("#projectsCheck").is(":checked") ? "disabled" : "");
-
-
-    function uncheckAll(id) {
-        $(id + " input").each(function() {
-            if(this.checked) {
-                //uncheck the input
-                $(this).attr("checked", "");
-            }
-        });
-    }
 
     function getRadiosValue(rs) {
         var v = false;
@@ -543,25 +549,11 @@ $(document).ready(function(){
         var projectsCheck = $("#projectsCheck").is(":checked");
         var projects = [];
         var billings = [];
-        var resourceRes = [];
-        if (billingCheck) {
-            resourceRes.push("BILLING_ACCOUNT");
-        } else {
-            billings = getCheckboxesValue("accounts", "id");
-        }
-        if (projectsCheck) {
-            resourceRes.push("PROJECT");
-        } else {
-            projects = getCheckboxesValue("projects", "directProjectId");
-        }
-        if (!billingCheck && billings.length == 0) {
-            showErrors("At least one Billing Account must be selected");
-            return false;
-        }
-        if (!projectsCheck && projects.length == 0) {
-            showErrors("At least one Project must be selected");
-            return false;
-        }
+
+        billings = getCheckboxesValue("accounts", "id");
+        projects = getCheckboxesValue("projects", "directProjectId");
+
+        var autoGrant = $("#autoGrantCheck").is(":checked");
         var members = getGroupMembers();
         if (members === false) {
             return false;
@@ -575,7 +567,7 @@ $(document).ready(function(){
             directProjects: projects,
             defaultPermission: defaultPerm,
             groupMembers: members,
-            restrictions: resourceRes
+            autoGrant: autoGrant
         };
         return group;
     }
@@ -602,10 +594,7 @@ $(document).ready(function(){
             if (group1.groupMembers[i].handle != group2.groupMembers[i].handle) return false;
             if (group1.groupMembers[i].specificPermission != group2.groupMembers[i].specificPermission) return false;
         }
-        if (group1.restrictions.length != group2.restrictions.length) return false;
-        for (var i = 0; i < group1.restrictions.length; i++) {
-            if (group1.restrictions[i] != group2.restrictions[i]) return false;
-        }
+        if(group1.autoGrant != group2.autoGrant) return false;
         return true;
     }
     function newAddedMember(oriGroup, group) {
@@ -1183,12 +1172,12 @@ $(document).ready(function(){
                                         '<td>'+obj.customerName+'</td>'+
                                         '<td>'+tooltipOnMultiRows(obj.accounts)+'</td>'+
                                         '<td>'+tooltipOnMultiRows(obj.projects)+'</td>'+
+                                        '<td>'+(obj.autoGrant ? 'Yes' : 'No')+'</td>'+
                                         '<td>'+obj.fromTo.join('<br/>')+'</td>'+
                                         '<td>'+obj.accessRights+'</td>'+
                                     '</tr>';
                             } else if (isGroupPage) {
-                                for (var i = 0; i < obj.resources.length; i++) obj.resources[i] = obj.resources[i] + 's';
-                                content += 
+                                content +=
 					              '<tr ' + (idx==0?'class="firstRow"':'')+'>'+
                                         '<td><input type="radio" name="userGroupSelectRadio" class="userGroupSelectRadio"'
                                             + (idx==0?' checked="checked"':'')+'/></td>'+
@@ -1197,7 +1186,7 @@ $(document).ready(function(){
                                         '<td>'+obj.customerName+'</td>'+
                                         '<td>'+tooltipOnMultiRows(obj.accounts)+'</td>'+
                                         '<td>'+tooltipOnMultiRows(obj.projects)+'</td>'+
-                                        '<td>'+obj.resources.join('<br/>')+'</td>'+
+                                        '<td>'+(obj.autoGrant ? 'Yes' : 'No')+'</td>'+
                                         '<td>'+obj.members.join('<br/>')+'</td>'+
                                         '<td class="hide">'+obj.groupId+'</td>'+
                                     '</tr>';
@@ -1640,9 +1629,9 @@ $(document).ready(function(){
     	$('#projectsHelpMsg').hide();
     });
     
-    $('#resourceRestrictFieldRow .helpme').hover(function(){
-    	showPopup(this, 'resourceRestrictHelpMsg');
+    $('#autoGrantPermissionRow .helpme').hover(function(){
+    	showPopup(this, 'autoGrantPermissionHelpMsg');
     }, function(){
-    	$('#resourceRestrictHelpMsg').hide();
+    	$('#autoGrantPermissionHelpMsg').hide();
     });
 });

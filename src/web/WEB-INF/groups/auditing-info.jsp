@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
+  - Author: TCSASSEMBER, freegod
+  - Version: 1.2 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the auditing information page.
@@ -8,6 +8,8 @@
   - Version 1.1 updates (Release Assembly - TopCoder Security Groups - Release 4)
   - - Add support for rendering at most a configurable rows of an array contents.
   - - Change data picker input box editable.
+  - Version 1.2 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) changes:
+  - - Added Auto Grant Permissions column.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -145,12 +147,13 @@
 								<table cellpadding="0" cellspacing="0" class="normalTableList">
 									<colgroup>
 										<col width="12%" />
-										<col width="12%" />
+										<col width="8%" />
 										<col width="12%" />
 										<col width="12%" />
 										<col width="20%" />
-										<col width="20%" />
-										<col width="12%" />
+                                        <col width="12%"/>
+										<col width="16%" />
+										<col width="8%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -159,6 +162,7 @@
 											<th>Customer Name</th>
 											<th>Billing Accounts</th>
 											<th>Projects</th>
+                                            <th>Auto Grant Permissions</th>
 											<th>Access From / To</th>
 											<th>Access Rights</th>
 										</tr>
@@ -171,7 +175,11 @@
 											<td><s:property value="customerName"/></td>
 											<td class="multirowsCell"><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td class="multirowsCell"><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
-											<td><s:iterator value="fromTo" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td>
+                                                <s:if test="autoGrant">Yes</s:if>
+                                                <s:if test="%{null == autoGrant || !autoGrant}">No</s:if>
+                                            </td>
+                                            <td><s:iterator value="fromTo" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td><s:property value="accessRights"/></td>
 										</tr>
 										</s:iterator>

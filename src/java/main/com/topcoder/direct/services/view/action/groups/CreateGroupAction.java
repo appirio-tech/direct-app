@@ -3,12 +3,15 @@
  */
 package com.topcoder.direct.services.view.action.groups;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.model.DirectProject;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
@@ -82,9 +85,17 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  *     <li>Synchronize WIKI and JIRA users when a group is created and new members are added into the group</li>
  * </ol>
  * </p>
- * 
- * @author woodjhon, hanshuai, flexme, minhu, GreatKevin
- * @version 1.5
+ *
+ * <p>
+ * Version 1.6 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions) changes:
+ * <ol>
+ *     <li>Updated {@link #executeAction()} method to make sure group with auto granted permissions do not have
+ *     any billing accounts or projects in db.</li>
+ * </ol>
+ * </p>
+ *
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegod
+ * @version 1.6
  */
 @SuppressWarnings("serial")
 public class CreateGroupAction extends CreateUpdateGroupAction {
@@ -139,19 +150,25 @@ public class CreateGroupAction extends CreateUpdateGroupAction {
                     member.setActive(true);
                     member.setActivatedOn(now);
                 }
-            }            
+            }
+            if(getGroup().getAutoGrant()) {
+                getGroup().setBillingAccounts(new ArrayList<BillingAccount>());
+                getGroup().setDirectProjects(new ArrayList<DirectProject>());
+            }
             long groupId = getGroupService().add(getGroup());
-            HelperUtility.sendInvitations(this.getAuditService(), getGroupInvitationService(), getAcceptRejectUrlBase(),
-                getRegistrationUrl(), getGroup().getGroupMembers(), isSkipInvitationEmail());
+            if(getGroup().getGroupMembers != null) {
+                HelperUtility.sendInvitations(this.getAuditService(), getGroupInvitationService(), getAcceptRejectUrlBase(),
+                    getRegistrationUrl(), getGroup().getGroupMembers(), isSkipInvitationEmail());
 
-            for (GroupMember member : getGroup().getGroupMembers()) {
-                final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+                for (GroupMember member : getGroup().getGroupMembers()) {
+                    final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
-                try {
-                    getUserServiceFacade().syncJiraUser(currentUser, member.getHandle());
-                    getUserServiceFacade().getConfluenceUser(currentUser, member.getHandle());
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
+                    try {
+                        getUserServiceFacade().syncJiraUser(currentUser, member.getHandle());
+                        getUserServiceFacade().getConfluenceUser(currentUser, member.getHandle());
+                    } catch (Exception e) {
+                        e.printStackTrace(System.err);
+                    }
                 }
             }
             

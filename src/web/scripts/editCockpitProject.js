@@ -32,9 +32,12 @@
  * Version 2.6 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
  * - Activates the project if the project is of draft status and a new billing account is added
  * - Checks whether the project has billing account when activating the project
- * 
- * @author GreatKevin, Ghost_141, GreatKevin
- * @version 2.6
+ *
+ * Version 2.7 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions)
+ * - Remove useless column in group permission table.
+ *
+ * @author GreatKevin, Ghost_141, GreatKevin, freegod
+ * @version 2.7
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -335,21 +338,6 @@ $(document).ready(function (e) {
                 if (!directProjects) directProjects = [];
                 directProjects = $.map(directProjects, function(b) {return b.name});
 
-                var restrictions = group.restrictions;
-                var restrictionsText = '';
-                if (restrictions && restrictions.length > 0) {
-                    for (var j = 0; j < restrictions.length; j++) {
-                        if (j > 0) {
-                            restrictionsText += '<br/>';
-                        }
-                        if (restrictions[j].name == 'PROJECT') {
-                            restrictionsText += 'Projects';
-                        } else {
-                            restrictionsText += 'Billing Accounts';
-                        }
-                    }
-                }
-
                 var members = group.members;
                 var membersText = '';
                 if (members && members.length > 0) {
@@ -368,11 +356,8 @@ $(document).ready(function (e) {
                                     '<input type="hidden" value="' + group.id + '"/>' +
                                 '</td>' + 
                                 '<td class="alignCenter">' + group.defaultPermission + '</td>' +
-                                '<td class="alignCenter">' + tooltipOnMultiRows(billings) +  '</td>' +
-                                '<td class="alignCenter">' + tooltipOnMultiRows(directProjects) + '</td>' +
-                                '<td class="alignCenter">' + restrictionsText + '</td>' +
                                 '<td class="alignCenter">' + membersText + '</td>' +
-                                '<td class="alignCenter"><a name="preloaderModal" rel="' + group.id + '" class="triggerModal remove" href="javascript:;">Remove</a></td>' +
+                                '<td class="alignCenter"></td>' +
                             '</tr>');
             }
 

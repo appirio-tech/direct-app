@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.4
+  - Author: GreatKevin, freegod
+  - Version: 1.5
   - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
@@ -28,6 +28,9 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Security Groups - Release 6) changes
   - - Update group permissions.
+  -
+  - Version 1.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+  - - Remove Resource Restrictions and add automatically grant permissions.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -50,27 +53,7 @@
         group.id = ${group.id};
         group.name = '${group.name}';
         group.defaultPermission = '${group.defaultPermission}';
-        
-        group.billingAccounts = [];
-        <c:forEach items="${group.billingAccounts}" var="d">
-            data = {};
-            data.name = '${d.name}';
-            group.billingAccounts.push(data);    
-        </c:forEach>
-        
-        group.directProjects = [];
-        <c:forEach items="${group.directProjects}" var="d">
-            data = {};
-            data.name = '${tcdirect:resolveDirectProject(d.directProjectId).name}';
-            group.directProjects.push(data);    
-        </c:forEach>
-        
-        group.restrictions = [];
-        <c:forEach items="${group.restrictions}" var="d">
-            data = {};
-            data.name = '${d}';
-            group.restrictions.push(data);    
-        </c:forEach>
+        group.autoGrant = '${group.autoGrant}';
 
         group.members = [];
         <c:forEach items="${group.groupMembers}" var="d">
@@ -87,27 +70,7 @@
         group.id = ${group.id};
         group.name = '${group.name}';
         group.defaultPermission = '${group.defaultPermission}';
-
-        group.billingAccounts = [];
-        <c:forEach items="${group.billingAccounts}" var="d">
-        data = {};
-        data.name = '${d.name}';
-        group.billingAccounts.push(data);
-        </c:forEach>
-
-        group.directProjects = [];
-        <c:forEach items="${group.directProjects}" var="d">
-        data = {};
-        data.name = '${tcdirect:resolveDirectProject(d.directProjectId).name}';
-        group.directProjects.push(data);
-        </c:forEach>
-
-        group.restrictions = [];
-        <c:forEach items="${group.restrictions}" var="d">
-        data = {};
-        data.name = '${d}';
-        group.restrictions.push(data);
-        </c:forEach>
+        group.autoGrant = '${group.autoGrant}';
 
         group.members = [];
         <c:forEach items="${group.groupMembers}" var="d">
@@ -116,7 +79,7 @@
         group.members.push(data);
         </c:forEach>
 
-        availableGroups['${group.id}'] = group;
+        //availableGroups['${group.id}'] = group;
         </c:forEach>
     </script>
     <script type="text/javascript" src="/scripts/editCockpitProject.js?v=213353"></script>
@@ -630,8 +593,7 @@
                             <c:out value="${tcdirect:resolveUser(member.userId).handle}"/>
                         </s:iterator>
                     </td>
-                    <td class="alignCenter"><a name="preloaderModal" rel="<s:property value='id'/>" 
-                                               class="triggerModal remove" href="javascript:;">Remove</a></td>
+                    <td class="alignCenter"> </td>
                 </tr>
             </s:iterator>
             </tbody>

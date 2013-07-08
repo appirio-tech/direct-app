@@ -23,8 +23,10 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.model.Client;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.services.ClientService;
 import com.topcoder.security.groups.services.GroupService;
 import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.facade.contest.notification.ContestNotification;
@@ -90,8 +92,15 @@ import com.topcoder.service.project.ProjectType;
  * </ol>
  * </p>
  *
- * @version 2.4
- * @author GreatKevin
+ * <p>
+ * Version 2.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+ * <ol>
+ *     <li>Updated {@link #executeAction()} method to allow automatically grant permissions.</li>
+ * </ol>
+ * </p>
+ *
+ * @version 2.5
+ * @author GreatKevin, freegod
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -402,12 +411,23 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         // Get the list of security groups accessible to current user and split them into two lists - one
         // with groups already assigned to project and the rest
         GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
-        groupSearchCriteria.setUserId(currentUser.getUserId());
 
         Long clientIdForProject = viewData.getClientId();
+        groupSearchCriteria.setClientId(clientIdForProject);
+
         userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
         List<Group> assignedGroups = new ArrayList<Group>();
         List<Group> unassignedGroups = new ArrayList<Group>();
+
+        //billing accounts of this project
+        Set<Long> projectBillingAccountIds = new HashSet<Long>();
+        List<Project> accounts =  getProjectServiceFacade().getBillingAccountsByProject(currentProject.getId());
+        if(null != accounts && accounts.size() > 0) {
+            for(Project account : accounts) {
+                projectBillingAccountIds.add(account.getId());
+            }
+        }
+
         for (Group group : userGroups) {
             List<DirectProject> directProjects = group.getDirectProjects();
             boolean assigned = false;
@@ -419,11 +439,34 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
                     }
                 }
             }
-            
+
+            //check automatically granted permissions
+            if(group.getAutoGrant()) {
+                assigned = true;
+            }
+
+            //check groups with this billing account
+            if(!assigned) {
+                Set<Long> groupBillingAccountIds = new HashSet<Long>();
+                List<BillingAccount> groupBillingAccounts = group.getBillingAccounts();
+                if(null != groupBillingAccounts && groupBillingAccounts.size() > 0) {
+                    for(BillingAccount account : groupBillingAccounts) {
+                        groupBillingAccountIds.add(account.getId());
+                    }
+                }
+
+                for(Long accountId : projectBillingAccountIds) {
+                    if(groupBillingAccountIds.contains(accountId)) {
+                        assigned = true;
+                        break;
+                    }
+                }
+            }
+
             if (assigned) {
                 assignedGroups.add(group);
             } else {
-                if (clientIdForProject != null && group.getClient().getId() == clientIdForProject) {
+                if(null != clientIdForProject) {
                     unassignedGroups.add(group);
                 }
             }
@@ -654,4 +697,5 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
     public void setGroupService(GroupService groupService) {
         this.groupService = groupService;
     }
+
 }

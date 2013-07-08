@@ -1,9 +1,12 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, freegod
+  - Version: 1.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the tooltip div.
+  -
+  - Version 1.1 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+  - - Remove Resource Restrictions help message and add Automatically grant permissions help message.
 --%>
 <div id="namesRowsToolTip" class="tooltipContainer">
     <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
@@ -139,7 +142,7 @@
 </div>
 
 <div class="tooltipArea">
-    <div class="tooltipContainer" id="resourceRestrictHelpMsg">
+    <div class="tooltipContainer" id="autoGrantPermissionHelpMsg">
         <span class="arrow" style="top: 121px;"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
@@ -153,7 +156,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Check if you don't want the corresponding type of resource to be accessible by this group</p>
+                    <p>This group can access future billing accounts and projects of this client if this is checked.</p>
                 </div><!-- End .tooltipContent -->
             </div></div>
         </div></div></div>

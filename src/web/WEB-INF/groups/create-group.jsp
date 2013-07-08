@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.3
+  - Author: TCSASSEMBLER, freegod
+  - Version: 1.4
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the create/update security group page.
@@ -18,6 +18,9 @@
   - Version 1.3 updates (Release Assembly - TopCoder Security Groups - Release 4)
   - - Add "Status" column.
   - - Change the link of "Cancel" button.
+  -
+  - Version 1.4 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+  - - Remove Resource Restrictions and add Automatically Grant Permissions
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -183,26 +186,18 @@
 												</div>
 											</td>
 										</tr>
-										<tr id="resourceRestrictFieldRow">
-											<td class="firstColumn">Resource Restrictions:
+										<tr id="autoGrantPermissionRow">
+											<td class="firstColumn">Automatically Grant Permissions:
 												<a class="helpme" href="javascript:;"><img alt="help" src="/images/help_ico5.gif"></a>
-											</td>											
+											</td>
 											<td>
 												<div class="restrictionsWrapper">
-                                                    <c:set var="isB" value="${false}"/>
-                                                    <c:set var="isP" value="${false}"/>
-                                                    <c:forEach items="${group.restrictions}" var="res">
-                                                        <c:if test="${res eq 'BILLING_ACCOUNT'}">
-                                                            <c:set var="isB" value="${true}"/>
-                                                        </c:if>
-                                                        <c:if test="${res eq 'PROJECT'}">
-                                                            <c:set var="isP" value="${true}"/>
-                                                        </c:if>
-                                                    </c:forEach>
-													<input type="checkbox" id="billingCheck" autocomplete="off" <c:if test="${isB}">checked="checked"</c:if>/>
-													<label for="billingCheck">Billing Accounts</label>
-													<input type="checkbox" id="projectsCheck" autocomplete="off" <c:if test="${isP}">checked="checked"</c:if>/>
-													<label for="projectsCheck">Projects</label>
+                                                    <c:set var="isAuto" value="${false}"/>
+                                                    <c:if test="${group.autoGrant}">
+                                                        <c:set var="isAuto" value="${true}"/>
+                                                    </c:if>
+													<input type="checkbox" id="autoGrantCheck" autocomplete="off" <c:if test="${isAuto}">checked="checked"</c:if>/>
+													<label for="autoGrantCheck">All billings and projects for this customer</label>
 												</div>
 											</td>
 										</tr>
