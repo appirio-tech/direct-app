@@ -81,16 +81,8 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  *
- * <p>
- * Version 1.2 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions) changes:
- * <ol>
- *     <li>Updated {@link #executeAction()} method to support auto grant permissions.</li>
- * </ol>
- * </p>
- *
- * @author gevak, TCSDEVELOPER, minhu, freegod
- * @version 1.2
- * @since 1.0
+ * @author gevak, TCSDEVELOPER, minhu
+ * @version 1.1
  */
 @SuppressWarnings("serial")
 public class AccessAuditingInfoAction extends ClientsPrepopulatingBaseAction {
@@ -312,7 +304,6 @@ public class AccessAuditingInfoAction extends ClientsPrepopulatingBaseAction {
                 elements.add("to " + formatDate(data.getTo())); 
                 item.put("fromTo", elements);
                 
-                item.put("autoGrant", group.getAutoGrant());
                 ++idx;
             }
             setResult(result);

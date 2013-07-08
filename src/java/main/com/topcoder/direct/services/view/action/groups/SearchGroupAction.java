@@ -68,15 +68,8 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  *
- * <p>
- * Version 1.2 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
- * <ol>
- *     <li>Updated {@link #executeAction()} method to remove resource restrictions.</li>
- * </ol>
- * </p>
- *
- * @author woodjhon, hanshuai, freegod
- * @version 1.2
+ * @author woodjhon, hanshuai, TCSASSEMBLER
+ * @version 1.1
  */
 @SuppressWarnings("serial")
 public class SearchGroupAction extends BaseAction {    
@@ -281,8 +274,20 @@ public class SearchGroupAction extends BaseAction {
                     }
                 }
                 item.put("projects", elements);
-
-                item.put("autoGrant", group.getAutoGrant());
+                
+                // restrictions
+                elements = new ArrayList<String>();
+                List<ResourceType> resources = group.getRestrictions();
+                if (resources != null) {
+                    for (ResourceType resource : resources) {
+                        if (resource == ResourceType.BILLING_ACCOUNT) {
+                            elements.add("Billing Account");                            
+                        } else if (resource == ResourceType.PROJECT) {
+                            elements.add("Project");             
+                        }
+                    }
+                }
+                item.put("resources", elements);
                 
                 // members
                 elements = new ArrayList<String>();

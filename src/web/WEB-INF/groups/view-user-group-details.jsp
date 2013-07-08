@@ -1,6 +1,6 @@
 <%--
-  - Author: backstreetlili, freegod
-  - Version: 1.5
+  - Author: backstreetlili, TCSASSEMBLER
+  - Version: 1.3
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Release Assembly - TopCoder Security Groups Frontend - View Group Details) changes:
@@ -15,9 +15,6 @@
   - - updated to fixed the bugs in this assembly.
   - Version 1.4 (Release Assembly - TopCoder Security Groups Release 4) changes:
   - - Add "Status" column.
-  -
-  - Version 1.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
-  - - Remove Resource Restrictions part and add Automatically Grant Permissions
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -119,10 +116,18 @@
                                                 </s:if>
                                                 </s:iterator>
 											</td>
-											<td class="firstColumn">Automatically Grant Permissions:</td>
+											<td class="firstColumn">Resource Restrictions:</td>
 											<td>
-											    <s:if test="group.autoGrant">Yes</s:if>
-                                                <s:if test="%{null == group.autoGrant || !group.autoGrant}">No</s:if>
+											    <s:iterator value="group.restrictions" id="restriction" status="status">
+                                                <s:if test="#status.First">
+                                                    <s:if test="#restriction.toString() == 'PROJECT'">Projects</s:if>
+                                                    <s:if test="#restriction.toString() == 'BILLING_ACCOUNT'">Billing Accounts</s:if>
+                                                </s:if>
+                                                <s:if test="!#status.First">
+                                                    ,&nbsp;<s:if test="#restriction.toString() == 'PROJECT'">Projects</s:if>
+                                                    <s:if test="#restriction.toString() == 'BILLING_ACCOUNT'">Billing Accounts</s:if>
+                                                </s:if>
+                                                </s:iterator>
                                             </td>
 										</tr>
 									</tbody>

@@ -1,6 +1,6 @@
 /* 
   - Author: TCSASSEMBLER
-  - Version: 1.6
+  - Version: 1.5
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
 
   This file will contain css used in group pages.
@@ -19,9 +19,6 @@
   -   Updated to fixed the bugs in this assembly.
   - Version 1.5 (Release Assembly - TopCoder Security Groups Release 4) changes:
   -   Updated to fixed the bugs in this assembly.
-  -
-  - Version 1.6 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions) changes:
-  - - Updated to suit auto grant permissions to make sure the label is in one line.
 */
 /* tab width */
 /*#tabs1 ul li.firstTabs a span.dashboardSpan{	width:100px; }
@@ -240,7 +237,7 @@
 				width:56px;
 				}
 			.groupDetailsTableContainer table tbody td .restrictionsWrapper label{
-				width:234px;
+				width:134px;
 				}
 			.groupDetailsTableContainer table tbody td #groupName{
 				width:98%;

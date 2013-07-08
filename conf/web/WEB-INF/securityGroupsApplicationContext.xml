@@ -259,6 +259,5 @@
           class="com.topcoder.direct.services.view.action.project.edit.SaveSecurityGroupPermissionsAction"
           scope="prototype" parent="baseGroupAction">
         <property name="groupService" ref="groupService"/>
-        <property name="directProjectService" ref="groupProjectService"/>
     </bean>
 </beans>
