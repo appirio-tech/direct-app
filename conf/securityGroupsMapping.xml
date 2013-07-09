@@ -69,6 +69,7 @@
         <many-to-one name="client" column="client_id" class="Client" lazy="false" fetch="select"/>
         <property name="archived" column="archived" type="boolean"/>
         <property name="archivedOn" column="archived_on" type="timestamp"/>
+        <property name="autoGrant" column="auto_grant" type="boolean"/>
 
         <many-to-one name="effectiveGroup" column="effective_group_id" class="Group" lazy="false" fetch="select" not-found="ignore"/>
 
@@ -86,13 +87,6 @@
             <one-to-many class="DirectProject"/>
         </bag>
 
-        <bag name="restrictions" table="group_restriction_resources" lazy="false" fetch="select" cascade="all">
-            <key column="group_id"/>
-            <!--
-            <many-to-many column="resource_type" type="ResourceTypeUserType" />
-            -->
-            <element column="resource_type" type="com.topcoder.security.groups.model.ResourceTypeUserType"/>
-        </bag>
     </class>
 
     <class name="GroupMember" table="group_member">

@@ -1,12 +1,15 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Search Delete Groups)
+  - Author: TCSASSEMBLER, freegod
+  - Version: 1.2 (TopCoder Security Groups Release 8 - Automatically Grant Permissions)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the user groups page.
   -
   - Version 1.1 updates (Release Assembly - TopCoder Security Groups - Release 4)
   - - Add support for rendering at most a configurable rows of an array contents.
+  -
+  - Version 1.2 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+  - - Remove Resource Restrictions part and add Automatically Grant Permissions
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -161,7 +164,7 @@
 											<th>Customer</th>
 											<th>Account</th>
 											<th>Project</th>
-											<th>Resource Restrictions</th>
+											<th>Automatically Grant Permissions</th>
 											<th>Group Members</th>
 										</tr>
 									</thead>
@@ -176,7 +179,10 @@
 											<td><s:property value="customerName"/></td>
 											<td class="multirowsCell"><s:iterator value="accounts" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 											<td class="multirowsCell"><s:iterator value="projects" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
-											<td><s:iterator value="resources" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
+											<td>
+                                                <s:if test="autoGrant">Yes</s:if>
+                                                <s:if test="%{null == autoGrant || !autoGrant}">No</s:if>
+											</td>
 											<td><s:iterator value="members" var="ele" status="st2"><s:if test="not #st2.first"><br/></s:if>${ele}</s:iterator></td>
 										</tr>
 										</s:iterator>

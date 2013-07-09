@@ -88,8 +88,16 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  * </ol>
  * </p>
  *
- * @author woodjhon, hanshuai, flexme, minhu, GreatKevin
- * @version 1.4
+ * <p>
+ * Version 1.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
+ * <ol>
+ *     <li>Updated {@link #executeAction()} method to remove ResourceRestrictions.</li>
+ * </ol>
+ * </p>
+ *
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegod
+ * @version 1.5
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class UpdateGroupAction extends CreateUpdateGroupAction {
@@ -140,9 +148,8 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
             group.setName(newGroup.getName());
             group.setClient(newGroup.getClient());
             group.setDefaultPermission(newGroup.getDefaultPermission());
-            group.setRestrictions(newGroup.getRestrictions() != null ? 
-                newGroup.getRestrictions() : new ArrayList<ResourceType>());
-            
+            group.setAutoGrant(newGroup.getAutoGrant());
+
             // audit
             GroupAuditRecord record = new GroupAuditRecord();
             record.setHandle(HelperUtility.getUserName());
@@ -152,7 +159,13 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
             record.setIpAddress(ServletActionContext.getRequest().getRemoteAddr());
             getAuditService().add(record);
             
-            updateProjectsAndBillings(group, newGroup);
+            if(newGroup.getAutoGrant()) {
+                group.setBillingAccounts(new ArrayList<BillingAccount>());
+                group.setDirectProjects(new ArrayList<DirectProject>());
+            } else {
+                updateProjectsAndBillings(group, newGroup);
+            }
+            
             Set<Long> newMemberUserIds = new HashSet<Long>();
             updateGroupMembers(group, newGroup.getGroupMembers(), newMemberUserIds);
             HelperUtility.fillRelation(group);
