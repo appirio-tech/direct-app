@@ -12,7 +12,73 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <jsp:include page="../../includes/htmlhead.jsp"/>
+    <title>TopCoder Cockpit</title>
+
+    <!-- Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/jScrollPane.css?v=176771" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
+
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/homepage-ie6.css?v=176771"/>
+    <![endif]-->
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css?v=215325"/>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css?v=203310"/>
+    <![endif]-->
+
+    <!--[if IE 9]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
+    <![endif]-->
+
+    <!-- External javascript -->
+    <script type="text/javascript">
+        //<![CDATA[
+        window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
+
+    <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
+    <script type="text/javascript" src="/scripts/jquery.mousewheel.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery.em.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jScrollPane.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery.bgiframe.js?v=207894"></script>
+    <script type="text/javascript" src="/scripts/date.prev.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/date.js?v=185881"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=215290"></script>
+    <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=214829"></script>
+    <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=188719"></script>
+    <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
+    <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
+    <script type="text/javascript" src="/scripts/ckeditor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
+    <script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js?v=215325"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=215325"></script>
+
+    <script type="text/javascript" src="/scripts/dashboard.js?v=215352"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
+    <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
+    <script type="text/javascript" src="/scripts/modalWindows.js"></script>
+    <script type="text/javascript" src="/scripts/instantSearch.js"></script>
     <ui:projectPageType tab="assets"/>
     <link rel="stylesheet" href="/css/direct/filter-panel.css" media="all" type="text/css"/>
     <!--[if IE 7]>
@@ -21,8 +87,11 @@
     <link rel="stylesheet" href="/css/direct/assets.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/search.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
     <script type="text/javascript" src="/scripts/ajaxupload2.js"></script>
-    <script type="text/javascript" src="/scripts/filedrop-min.js"></script>
+
     <script type="text/javascript" src="/scripts/assets.js"></script>
 </head>
 
@@ -52,6 +121,7 @@
 
                             <div class="areaHeader">
                                 <h2 class="title asssetsTitle">Files</h2>
+                                <input type="hidden" id="assetProjectId" value="${formData.projectId}"/>
                             </div>
                             <!-- End .areaHeader -->
 
@@ -70,18 +140,70 @@
                                     </div>
                                 </div>
                                 <!-- End .sectionHeader -->
-                                <div class="sectionContainer">
+                                <div class="sectionContainer uploadContainer hide" id="multipleUploadArea">
 
-                                    <div id="dynamicUpload">
+                                    <div class="dragDropUpload">
+
+                                        <div class="dynamicUpload">
+                                            <form method="post" action="uploadAssetFile" enctype="multipart/form-data">
+                                                <input id="fileDropInput" class="hide" type="file" name="files" />
+                                                <a id="fileDropInputSubmit" class="hide" href="javascript:;"></a>
+                                            </form>
+                                            <div class="dragPre">
+                                                <p>You can select more than one file at a time. You can also <br />drag and drop files anywhere on this area to upload.</p>
+                                            </div>
+                                            <div class="dragSucess">
+                                                <p><span>0</span> Files added, Please click upload button to start uploading, you can also add more files</p>
+                                                <ul>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="corner tl"></div>
+                                        <div class="corner tr"></div>
+                                        <div class="corner bl"></div>
+                                        <div class="corner br"></div>
+
+                                    </div>
+                                    <!-- AJAX Upload -->
+
+                                    <div class="commonUpload">
+                                        <label>Having Problem? Try basic uploader</label>
+                                        <div class="uploadRow">
+                                            <input type="file" size="20" name="files" />
+                                        </div>
+                                        <div class="uploadRow">
+                                            <input type="file" size="20" name="files" />
+                                        </div>
+                                        <div class="uploadRow">
+                                            <input type="file" size="20" name="files" />
+                                        </div>
+                                        <div class="uploadRow">
+                                            <input type="file" size="20" name="files" />
+                                        </div>
+                                        <div class="uploadRow">
+                                            <input type="file" size="20" name="files" />
+                                        </div>
+                                        <div class="commonButton">
+                                            <a href="javascript:;" class="btnMoreFile"><span><span><span class="icon">More File</span></span></span></a>
+                                        </div>
+                                    </div>
+                                    <!-- End .commonUpload -->
+
+                                </div>
+
+                                <div class="sectionContainer uploadContainer hide" id="singleUploadArea">
+
+                                    <div class="dragDropUpload">
 
                                         <div class="dynamicUpload">
                                             <div class="dragPre">
                                                 <%--<p>You can select more than one file at a time. You can also <br/>drag--%>
-                                                    <%--and drop files anywhere on this area to upload.</p>--%>
-                                                <p>Drag & Drop is not supported right now</p>
+                                                <%--and drop files anywhere on this area to upload.</p>--%>
+                                                <p>Drag & Drop is not supported for Internet Explorer. We recommend to use Chrome or Firefox</p>
                                             </div>
                                             <div class="dragSucess">
-                                                <p><span>3</span> Files added, Please click upload button to start
+                                                <p><span>0</span> Files added, Please click upload button to start
                                                     uploading, you can also add more files</p>
                                                 <ul>
                                                     <li>
@@ -105,38 +227,20 @@
 
                                     <div class="commonUpload">
                                         <label>Having Problem? Try basic uploader</label>
-                                        <input type="hidden" id="assetProjectId" value="${formData.projectId}"/>
                                         <div class="uploadRow uploadInputsSection">
-                                            <input type="file" size="20" name="uploadFile"/>
+                                            <input type="file" size="20" name="files"/>
                                         </div>
-                                        <%--<div class="uploadRow">--%>
-                                            <%--<input type="file" size="20"/>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="uploadRow">--%>
-                                            <%--<input type="file" size="20"/>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="uploadRow">--%>
-                                            <%--<input type="file" size="20"/>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="uploadRow">--%>
-                                            <%--<input type="file" size="20"/>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="commonButton">--%>
-                                            <%--<a href="javascript:;" class="btnMoreFile"><span><span><span class="icon">More File</span></span></span></a>--%>
-                                        <%--</div>--%>
                                     </div>
                                     <!-- End .commonUpload -->
 
                                 </div>
                                 <!-- End .sectionContainer -->
-
                                 <div class="uploadButtonBox">
                                     <a class="button6 btnUpload singleUploadButton" href="javascript:;"><span class="left"><span
                                             class="right"><span class="icon">UPLOAD</span></span></span></a>
                                 </div>
-
                             </div>
-                            </form>
+                                <!-- End .sectionContainer -->
 
                             <div class="uploadSection hide" id="uploading">
                                 <div class="sectionHeader">
@@ -149,18 +253,18 @@
                                                     <p>All Files have been successfully uploaded</p>
                                                 </div>
                                                 <!-- End allFileProcessBar -->
-                                                <%--<div class="uploading">--%>
-                                                    <%--<a class="button6 btnCancelUploading" href="asset.html"><span class="left"><span class="right">CANCEL UPLOADING</span></span></a>--%>
-                                                    <%--<div class="allFileProcessBar">--%>
-                                                        <%--<div class="allFileInfor"><strong><em class="fileTotalNumber">3</em> Files</strong> <span>|</span> <em class="fileTotalSize">4.5 MB</em></div>--%>
-                                                        <%--<div class="processBar">--%>
-                                                            <%--<div class="processBarInner">--%>
-                                                                <%--<div class="processed"></div>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                        <%--<div class="remainTime"><span class="processTime">20</span> Seconds Left</div>--%>
-                                                    <%--</div>--%>
-                                                <%--</div>--%>
+                                                <div class="uploading">
+                                                    <a class="button6 btnCancelUploading" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="left"><span class="right">CANCEL UPLOADING</span></span></a>
+                                                    <div class="allFileProcessBar">
+                                                        <div class="allFileInfor"><strong><em class="fileTotalNumber">3</em> Files</strong> <span>|</span> <em class="fileTotalSize">4.5 MB</em></div>
+                                                        <div class="processBar">
+                                                            <div class="processBarInner">
+                                                                <div class="processed"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="remainTime"><span class="processTime">20</span> Seconds Left</div>
+                                                    </div>
+                                                </div>
                                                 <h2>Upload File(s)</h2>
                                             </div>
                                         </div>
@@ -225,10 +329,10 @@
                                                     <div class="selectAccess">
                                                         <strong class="label">Access Restriction</strong>
                                                         <div class="radioBox">
-                                                            <input type="radio" name="accseeRadio" checked="checked" id="accessRadio1" class="public" />
-                                                            <label for="accessRadio1" class="public">Public</label>
-                                                            <input type="radio" name="accseeRadio" id="accessRadio2" class="private noFlyout" />
-                                                            <label for="accessRadio2" class="private noFlyout">Private</label>
+                                                            <input type="radio" name="accessRadio" checked="checked" id="accessRadioPublic" class="public" />
+                                                            <label for="accessRadioPublic" class="public">Public</label>
+                                                            <input type="radio" name="accessRadio" id="accessRadioPrivate" class="private noFlyout" />
+                                                            <label for="accessRadioPrivate" class="private noFlyout">Private</label>
                                                             <span class="accessOperate">
                                                                 <a href="javascript:;" class="linkViewAccess">View Access</a>
                                                                 <span>|</span>

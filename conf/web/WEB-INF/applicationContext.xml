@@ -1329,8 +1329,8 @@
                 <value>bmp</value>
             </list>
         </property>
-        <property name="previewImageWidth" value="10"/>
-        <property name="previewImageHeight" value="20"/>
+        <property name="previewImageWidth" value="500"/>
+        <property name="previewImageHeight" value="400"/>
     </bean>
 
     <bean id="assetPermissionService"
@@ -1371,6 +1371,16 @@
 
     <bean id="projectAssetsAction"
           class="com.topcoder.direct.services.view.action.asset.project.ProjectAssetsAction"
+          scope="prototype" parent="baseAbstractAssetAction">
+    </bean>
+
+    <bean id="projectAssetVersionsAction"
+          class="com.topcoder.direct.services.view.action.asset.project.ProjectAssetVersionsAction"
+          scope="prototype" parent="baseAbstractAssetAction">
+    </bean>
+
+    <bean id="assetImageViewAction"
+          class="com.topcoder.direct.services.view.action.asset.project.AssetImageViewAction"
           scope="prototype" parent="baseAbstractAssetAction">
     </bean>
 

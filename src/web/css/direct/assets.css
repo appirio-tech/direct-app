@@ -4,6 +4,12 @@
  * Change logs:
  * Version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0):
  * - Added this file.
+ *
+ * 1.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * - Update table column with to fit the new dropdown file management menu
+ *
+ * 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 3)
+ * - Update styles for multiple drag and drop
  */
 
 @charset "utf-8";
@@ -606,7 +612,7 @@ a.button7 span.right{
 			}
 			
 			#filterPanelForm table td .fileDetailsSection{
-				width:428px;
+				width:518px;
 				}
 			
 			/* File Detsils */
@@ -619,7 +625,7 @@ a.button7 span.right{
 				}
 				
 			#filterPanelForm table td.fileDetailsCell .fileSection{
-				width:396px;
+				width:486px;
 				float:left;
 				display:inline;
 				}
@@ -683,7 +689,7 @@ a.button7 span.right{
 						}
 						
 				#filterPanelForm table td.fileDetailsCell .fileDetails p{
-					width:290px;
+					width:340px;
 					margin:6px 0 0 0;
 					font-size:11px;
 					color:#566666;
@@ -738,40 +744,6 @@ a.button7 span.right{
 				line-height:17px;
 				} 
 					
-			/* Management */
-			#filterPanelForm table td.managementCell a{
-				width:108px;
-				margin:0 0 10px 0;
-				padding:0 0 0 20px;
-				display:inline-block;
-				font-size:11px;
-				line-height:17px;
-				background-image:url(/images/icon-assets.png);
-				background-repeat:no-repeat;
-				}
-				
-			#filterPanelForm table td.managementCell a:hover{
-				text-decoration:none;
-				}
-				
-			#filterPanelForm table td.managementCell a.upload{
-				background-position:0 -150px;
-				}
-				
-			#filterPanelForm table td.managementCell a.download{
-				width:54px;
-				background-position:0 -178px;
-				}
-				
-			#filterPanelForm table td.managementCell a.edit{
-				background-position:2px -206px;
-				}
-				
-			#filterPanelForm table td.managementCell a.remove{
-				width:54px;
-				background-position:2px -238px;
-				}
-				
 			#filterPanelForm #dataTableLength{
 				margin:6px 0 0 0;
 				}
@@ -1008,14 +980,14 @@ a.button7 span.right{
 		}
 		
 		/* Dynamic Upload */
-		.uploadSection #dynamicUpload{
+		.uploadSection .dragDropUpload{
 			width:64%;
 			float:left;
 			display:inline;
 			position:relative;
 			}
 			
-			.uploadSection #dynamicUpload .corner{
+			.uploadSection .dragDropUpload .corner{
 				width:4px;
 				height:4px;
 				overflow:hidden;
@@ -1024,67 +996,72 @@ a.button7 span.right{
 				background-repeat:no-repeat;
 				}
 				
-			.uploadSection #dynamicUpload .tl{
+			.uploadSection .dragDropUpload .tl{
 				top:0;
 				left:0;
 				background-position:0 -96px;
 				}
 				
-			.uploadSection #dynamicUpload .tr{
+			.uploadSection .dragDropUpload .tr{
 				top:0;
 				right:0;
 				background-position:0 -104px;
 				}
 				
-			.uploadSection #dynamicUpload .bl{
+			.uploadSection .dragDropUpload .bl{
 				bottom:0;
 				left:0;
 				background-position:0 -100px;
 				}
 				
-			.uploadSection #dynamicUpload .br{
+			.uploadSection .dragDropUpload .br{
 				bottom:0;
 				right:0;
 				background-position:0 -108px;
 				}
 			
-			.uploadSection #dynamicUpload .dynamicUpload{
+			.uploadSection .dragDropUpload .dynamicUpload{
 				min-height:220px;
 				padding:0 0 20px 0;
 				background-color:#eeffcb;
 				border:#bee3b0 solid 1px;
 				}
 				
-				.uploadSection #dynamicUpload .dragPre{
+				.uploadSection .dragDropUpload .dragPre{
 					padding:80px 0 0 0;
 					text-align:center;
 					}
 					
-					.uploadSection #dynamicUpload .dragPre p{
+					.uploadSection .dragDropUpload .dragPre p{
 						font-size:16px;
 						line-height:30px;
 						}
+
+                    .uploadSection #singleUploadArea .dragDropUpload .dragPre p{
+                        font-size:13px;
+                        line-height:20px;
+                    }
 						
-				.uploadSection #dynamicUpload .dragSucess{
+				.uploadSection .dragDropUpload .dragSucess{
 					display:none;
 					padding:0 20px;
 					text-align:left;
 					}
 					
-					.uploadSection #dynamicUpload .dragSucess p{
+					.uploadSection .dragDropUpload .dragSucess p{
 						padding:4px 0 0 0;
 						border-bottom:#bee3b0 solid 1px;
 						font-size:14px;
 						line-height:34px;
 						}
 						
-					.uploadSection #dynamicUpload .dragSucess li{
+					.uploadSection .dragDropUpload .dragSucess li{
 						line-height:48px;
 						list-style:none;
 						border-bottom:#bee3b0 solid 1px;
 						}
 						
-						.uploadSection #dynamicUpload .dragSucess li span.icon-file-small{
+						.uploadSection .dragDropUpload .dragSucess li span.icon-file-small{
 							width:22px;
 							float:left;
 							display:inline;
@@ -1092,7 +1069,7 @@ a.button7 span.right{
 							cursor:default;
 							}
 							
-						.uploadSection #dynamicUpload .dragSucess li .removeFile{
+						.uploadSection .dragDropUpload .dragSucess li .removeFile{
 							width:10px;
 							height:11px;
 							float:right;
@@ -1104,16 +1081,16 @@ a.button7 span.right{
 							background-position:0 -510px;
 							}
 							
-						.uploadSection #dynamicUpload .dragSucess li .removeFile:hover{
+						.uploadSection .dragDropUpload .dragSucess li .removeFile:hover{
 							background-position:0 -540px;
 							}
 							
-						.uploadSection #dynamicUpload .dragSucess li .fileName{
+						.uploadSection .dragDropUpload .dragSucess li .fileName{
 							font-size:12px;
 							font-weight:bold;
 							}
 							
-							.uploadSection #dynamicUpload .dragSucess li .fileName span{
+							.uploadSection .dragDropUpload .dragSucess li .fileName span{
 								color:#999999;
 								}
 								
@@ -1274,6 +1251,9 @@ a.button7 span.right{
 					font-weight:bold;
 					color:#363636;
 					line-height:22px;
+                    word-wrap:break-word;
+                    padding:0px 3px;
+                    height: 44px;
 					}
 					
 					.uploadSection .fileUploadingSection .fileName a:hover{
@@ -1493,6 +1473,8 @@ a.button7 span.right{
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			.versionView .versionViewDetails .fileName:hover{
@@ -1657,7 +1639,7 @@ a.button7 span.right{
 					
 					.versionView .versionViewTable table th.sorting_asc div span{	
 						background-image:url(/images/icon-assets.png);		
-						background-position:0 -265px;
+						background-position:0 -325px;
 						}
 						
 					.versionView .versionViewTable table th.sorting_asc:hover div span{
@@ -1666,7 +1648,7 @@ a.button7 span.right{
 						
 					.versionView .versionViewTable table th.sorting_desc div span{	
 						background-image:url(/images/icon-assets.png);		
-						background-position:0 -325px;
+						background-position:0 -265px;
 						}
 						
 					.versionView .versionViewTable table th.sorting_desc:hover div span{
@@ -1772,42 +1754,7 @@ a.button7 span.right{
 					text-decoration:underline;
 					}
 						
-				/* Management */
-				.versionView .versionViewTable td.managementCell a{
-					width:120px;
-					margin:0 0 13px 0;
-					padding:0 0 0 22px;
-					display:inline-block;
-					font-size:11px;
-					line-height:17px;
-					background-image:url(/images/icon-assets.png);
-					background-repeat:no-repeat;
-					}
-					
-				.versionView .versionViewTable td.managementCell a:hover{
-					text-decoration:none;
-					}
-					
-				.versionView .versionViewTable td.managementCell a.upload{
-					background-position:0 -150px;
-					}
-					
-				.versionView .versionViewTable td.managementCell a.download{
-					width:54px;
-					background-position:0 -178px;
-					}
-					
-				.versionView .versionViewTable td.managementCell a.edit{
-					margin:0 0 0 0;
-					background-position:2px -206px;
-					}
-					
-				.versionView .versionViewTable td.managementCell a.remove{
-					width:54px;
-					margin:0 0 0 0;
-					background-position:2px -238px;
-					}
-		
+
 	/* Button Box */
 	.uploadSection .uploadButtonBox{
 		height:24px;
@@ -1963,6 +1910,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#removeFileFromCockpit .fileDetails .fileName:hover,
@@ -2119,6 +2068,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#editFileDetails .fileDetails .fileName:hover,
@@ -2342,7 +2293,7 @@ Start Modal
 		
 /* Batch Delete */
 #batchDelete{
-	width:665px;
+	width:765px;
 	}
 	
 	/* Modal Content */
@@ -2352,7 +2303,7 @@ Start Modal
 		
 		/* File List */
 		#batchDelete .fileList{
-			width:245px;
+			width:345px;
 			min-height:224px;
 			float:left;
 			display:inline;
@@ -2470,7 +2421,7 @@ Start Modal
 					
 /* Batch Deleted */
 #batchDeleted{
-	width:665px;
+	width:765px;
 	}
 	
 	/* Modal Content */
@@ -2480,7 +2431,7 @@ Start Modal
 		
 		/* File List */
 		#batchDeleted .fileList{
-			width:245px;
+			width:345px;
 			min-height:224px;
 			float:left;
 			display:inline;
@@ -2587,7 +2538,7 @@ Start Modal
 					
 /* Batch Download */
 #batchDownload{
-	width:665px;
+	width:765px;
 	}
 	
 	/* Modal Content */
@@ -2597,7 +2548,7 @@ Start Modal
 		
 		/* File List */
 		#batchDownload .fileList{
-			width:245px;
+			width:345px;
 			min-height:224px;
 			float:left;
 			display:inline;
@@ -2718,7 +2669,6 @@ Start Modal
 		#batchDownload .fileDondloaded{
 			width:327px;
 			float:left;
-			display:none;
 			padding:0 35px 0 28px;
 			}
 			
@@ -2757,10 +2707,6 @@ Start Modal
 					}
 		
 		/* Button */			
-		#batchDownload .downloadedButtons{
-			display:none;
-			}
-			
 			#batchDownload .btnDownload .icon{
 				padding:0 0 0 15px;
 				background-image:url(/images/icon-assets.png);
@@ -2770,7 +2716,7 @@ Start Modal
 				
 /* Batch Set Permission */
 #batchSetPermission{
-	width:665px;
+	width:765px;
 	}
 	
 	/* Modal Content */
@@ -2780,7 +2726,7 @@ Start Modal
 		
 		/* File List */
 		#batchSetPermission .fileList{
-			width:245px;
+			width:345px;
 			min-height:224px;
 			float:left;
 			display:inline;
@@ -2970,6 +2916,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#uploadFileVersion .fileDetails .fileName:hover,
@@ -3114,6 +3062,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#selectFileForVersion .fileDetails .fileName:hover,
@@ -3195,11 +3145,11 @@ Start Modal
 			background-position:left -169px;
 			}
 		
-			#selectFileForVersion .selectFileSection #dynamicUpload{
+			#selectFileForVersion .selectFileSection .dragDropUpload{
 				position:relative;
 				}
 				
-				#selectFileForVersion .selectFileSection #dynamicUpload .corner{
+				#selectFileForVersion .selectFileSection .dragDropUpload .corner{
 					width:4px;
 					height:4px;
 					overflow:hidden;
@@ -3208,31 +3158,31 @@ Start Modal
 					background-repeat:no-repeat;
 					}
 					
-				#selectFileForVersion .selectFileSection #dynamicUpload .tl{
+				#selectFileForVersion .selectFileSection .dragDropUpload .tl{
 					top:0;
 					left:0;
 					background-position:0 -96px;
 					}
 					
-				#selectFileForVersion .selectFileSection #dynamicUpload .tr{
+				#selectFileForVersion .selectFileSection .dragDropUpload .tr{
 					top:0;
 					right:0;
 					background-position:0 -104px;
 					}
 					
-				#selectFileForVersion .selectFileSection #dynamicUpload .bl{
+				#selectFileForVersion .selectFileSection .dragDropUpload .bl{
 					bottom:0;
 					left:0;
 					background-position:0 -100px;
 					}
 					
-				#selectFileForVersion .selectFileSection #dynamicUpload .br{
+				#selectFileForVersion .selectFileSection .dragDropUpload .br{
 					bottom:0;
 					right:0;
 					background-position:0 -108px;
 					}
 				
-				#selectFileForVersion .selectFileSection #dynamicUpload .dynamicUpload{
+				#selectFileForVersion .selectFileSection .dragDropUpload .dynamicUpload{
 					min-height:105px;
 					padding:0 0 10px 0;
 					background-color:#eeffcb;
@@ -3240,26 +3190,26 @@ Start Modal
 					border-bottom:0;
 					}
 					
-				#selectFileForVersion .selectFileSection #dynamicUpload .bottom{
+				#selectFileForVersion .selectFileSection .dragDropUpload .bottom{
 					height:5px;
 					overflow:hidden;
 					}
 					
-					#selectFileForVersion .selectFileSection #dynamicUpload .bottomL{
+					#selectFileForVersion .selectFileSection .dragDropUpload .bottomL{
 						padding:0 0 0 5px;
 						background-image:url(/images/bg-assets-table-header.png);
 						background-repeat:no-repeat;
 						background-position:0 -112px;
 						}
 						
-					#selectFileForVersion .selectFileSection #dynamicUpload .bottomR{
+					#selectFileForVersion .selectFileSection .dragDropUpload .bottomR{
 						padding:0 5px 0 0;
 						background-image:url(/images/bg-assets-table-header.png);
 						background-repeat:no-repeat;
 						background-position:right -117px;
 						}
 						
-					#selectFileForVersion .selectFileSection #dynamicUpload .bottomM{
+					#selectFileForVersion .selectFileSection .dragDropUpload .bottomM{
 						height:5px;
 						padding:0;
 						background-image:url(/images/bg-assets-table-header.png);
@@ -3267,12 +3217,12 @@ Start Modal
 						background-position:left -122px;
 						}
 					
-					#selectFileForVersion .selectFileSection #dynamicUpload .dragPre{
+					#selectFileForVersion .selectFileSection .dragDropUpload .dragPre{
 						padding:40px 0 0 0;
 						text-align:center;
 						}
 						
-						#selectFileForVersion .selectFileSection #dynamicUpload .dragPre p{
+						#selectFileForVersion .selectFileSection .dragDropUpload .dragPre p{
 							width:200px;
 							margin:0 auto;
 							font-size:13px;
@@ -3280,25 +3230,25 @@ Start Modal
 							text-align:center;
 							}
 							
-					#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess{
+					#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess{
 						display:none;
 						padding:0 12px;
 						}
 						
-						#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess p{
+						#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess p{
 							padding:10px 0 12px 0;
 							border-bottom:#bee3b0 solid 1px;
 							font-size:13px;
 							line-height:16px;
 							}
 							
-						#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li{
+						#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li{
 							line-height:14px;
 							list-style:none;
 							border-bottom:#bee3b0 solid 1px;
 							}
 							
-							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li span.icon-file-small{
+							#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li span.icon-file-small{
 								width:22px;
 								float:left;
 								display:inline;
@@ -3306,7 +3256,7 @@ Start Modal
 								cursor:default;
 								}
 								
-							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .removeFile{
+							#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li .removeFile{
 								width:10px;
 								height:11px;
 								float:right;
@@ -3318,11 +3268,11 @@ Start Modal
 								background-position:0 -510px;
 								}
 								
-							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .removeFile:hover{
+							#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li .removeFile:hover{
 								background-position:0 -540px;
 								}
 								
-							#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .fileName{
+							#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li .fileName{
 								width:150px;
 								padding:10px 0;
 								font-size:12px;
@@ -3330,7 +3280,7 @@ Start Modal
 								overflow:hidden;
 								}
 								
-								#selectFileForVersion .selectFileSection #dynamicUpload .dragSucess li .fileName span{
+								#selectFileForVersion .selectFileSection .dragDropUpload .dragSucess li .fileName span{
 									display:block;
 									color:#999999;
 									}
@@ -3402,6 +3352,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#uploadingFileVersion .fileDetails .fileName:hover,
@@ -3591,6 +3543,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#uploadCancel .fileDetails .fileName:hover,
@@ -3750,6 +3704,8 @@ Start Modal
 				font-weight:bold;
 				color:#363636;
 				line-height:18px;
+                word-wrap:break-word;
+                padding:0px 3px;
 				}
 				
 			#uploadFinish .fileDetails .fileName:hover,
@@ -3972,14 +3928,14 @@ Start Modal
 		
 /* View Image Modal */
 #imageViewModal{
-	width:1046px;
-	position:absolute;
+	width:600px;
+	position:relative;
 	display:none;
 	z-index:10001;
 	}
 	
 	#imageViewModal .imageViewModalInner{
-		height:762px;
+		height:500px;
 		position:relative;
 		background-color:#fffffe;
 		}
@@ -4003,9 +3959,9 @@ Start Modal
 			}
 			
 		#imageViewModal .imageViewModalInner .viewSection{
-			height:762px;
+			height:500px;
 			text-align:center;
-			line-height:762px;
+			line-height:500px;
 			}
 			
 			#imageViewModal .imageViewModalInner .viewSection img{
@@ -4516,4 +4472,8 @@ Start Modal
 #filterPanelForm table td.managementCell,
 #filterPanelForm table td.groupTitle{
 	border-right:0;
-	} 
+	}
+
+#filterPanelForm table td .actionMenu li {
+    text-align: left !important;
+}

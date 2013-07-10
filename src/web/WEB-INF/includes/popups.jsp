@@ -70,6 +70,9 @@
   -
   - Version 3.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
   - - Adds the modal window for the project tasks page
+  -
+  - Version 3.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+  - - Adds the modal window for the project assets page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -837,6 +840,9 @@
     <!-- end #lockinNoFeedbackModal -->
         <s:if test='%{#request.CURRENT_TAB  == "tasks" && #request.PAGE_TYPE  == "project"}'>
             <jsp:include page="./modal/projectTaskModals.jsp"/>
+        </s:if>
+        <s:if test='%{#request.CURRENT_TAB  == "assets" && #request.PAGE_TYPE  == "project"}'>
+            <jsp:include page="./modal/assetModals.jsp"/>
         </s:if>
         <s:if test='%{#request.CURRENT_TAB  == "overview" && #request.PAGE_TYPE  == "project"}'>
             <div id="projectDescModal" class="outLay">

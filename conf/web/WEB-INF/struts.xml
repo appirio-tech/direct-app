@@ -22,6 +22,8 @@
         <result-types>
             <result-type name="json" class="com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult">
             </result-type>
+            <result-type name="image" class="com.topcoder.direct.services.view.util.result.CustomImageBytesResult">
+            </result-type>
         </result-types>
         <interceptors>
             <interceptor name="preProcessor" class="actionPreProcessor"/>
@@ -308,16 +310,6 @@
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
         </action>
 
-        <action name="assetTest" class="asssetTestAction">
-            <interceptor-ref name="securedPreProcessorStack"/>
-            <result name="success">/WEB-INF/assetTest.jsp</result>
-        </action>
-
-        <action name="assetTest" class="asssetTestAction">
-            <interceptor-ref name="securedPreProcessorStack"/>
-            <result name="success">/WEB-INF/assetTest.jsp</result>
-        </action>
-
         <action name="projectAssets" class="projectAssetsAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/asset/project/projectAssets.jsp</result>
@@ -346,10 +338,85 @@
             </result>
         </action>
 
+        <action name="downloadAssets" method="downloadAssetsZip" class="projectAssetManageAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename="${uploadFileName}"</param>
+                <param name="contentType">${assetDownloadMIMEType}</param>
+                <param name="inputName">assetDownloadStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
         <action name="saveAssetFile" class="projectAssetManageAction" method="saveAssetFile">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+        </action>
+
+        <action name="getAssetVersion" class="projectAssetManageAction" method="getAssetVersion">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="editAssetVersion" class="projectAssetManageAction" method="editAssetVersion">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="updateAssetsPermission" class="projectAssetManageAction" method="updateAssetsPermission">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="saveNewAssetVersion" class="projectAssetManageAction" method="saveNewAssetVersion">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getAssetsZip" class="projectAssetManageAction" method="getAssetsZip">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="viewAssetVersions" class="projectAssetVersionsAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/asset/project/projectAssetVersions.jsp</result>
+        </action>
+
+        <action name="deleteAssetVersion" class="projectAssetManageAction" method="deleteAssetVersion">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="deleteAsset" class="projectAssetManageAction" method="deleteAsset">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="viewAssetImage" class="assetImageViewAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="image"/>
+        </action>
+
+        <action name="batchGetAssetsPermission" class="projectAssetManageAction" method="batchGetAssetsPermission">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="batchEditAssets" class="projectAssetManageAction" method="batchEditAssets">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/asset/project/batchEditAssets.jsp</result>
         </action>
 
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">

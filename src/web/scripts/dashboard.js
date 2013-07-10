@@ -101,13 +101,15 @@
  *  Version 3.2 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
  *  - Add padding for the project mask.
  *
- * <p>
  * Version 3.2.1 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) Change notes:
  * - Update function modalPosition to use jQuery to get the viewport size.
- * </p>
+ *
+ *
+ * Version 3.2.2 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * - Added scaffold for displaying drop menu to list operations
  *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
- * @version 3.2.1
+ * @version 3.2.2
  */
 
 var mouse_is_inside;
@@ -3086,4 +3088,40 @@ $(document).ready(function(){
         }
     });
     $(".fbMask .fbSubmit textarea").trigger("focusout");
+
+    $('td .action').live('click',function(e){
+        $('td .action.active').removeClass('active');
+        $(this).addClass('active')
+        var isCurrent = false;
+        var menu = $(this).parents("td").find(".actionMenu");
+        var lt = $(this).position().left - $(this).width() - 24;
+        var top = $(this).position().top + 20;
+        if(top === menu.position().top){
+            isCurrent = true;
+        }
+        menu.css({'left':lt+'px', 'top': top+'px'});
+        if(menu.is(':visible') && isCurrent){
+            menu.hide();
+        }else{
+            menu.show();
+        }
+        e.stopPropagation();
+    });
+    $('.actionMenu a').live('click',function(e){
+        $(this).parents("td").find('.actionMenu').hide();
+        // e.preventDefault();
+        e.stopPropagation();
+    })
+    $(window).click(function(){
+        $('.actionMenu:visible').hide();
+        $('td .action.active').removeClass('active');
+    });
+    $(window).resize(function(){
+        var activeMenu = $('.actionMenu:visible');
+        if(activeMenu.length>0){
+            var lt = $('td .action.active',activeMenu.parent()).position().left - $('td .action.active',activeMenu.parent()).width() - 24;
+            var top = $('td .action.active',activeMenu.parent()).position().top + 20;
+            activeMenu.css({'left':lt+'px', 'top': top+'px'});
+        }
+    });
 })

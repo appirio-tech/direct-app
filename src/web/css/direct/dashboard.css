@@ -110,6 +110,9 @@
  *
  * - (Release Assembly - TopCoder Copilot Feedback Updates)
  * - Add css for copilot feedback ratings
+ *
+ * (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * — Add CSS for the dropdown menu
  */
 
 
@@ -2750,7 +2753,7 @@ TABLE.notifications TH.permCol2{
 	width: 20%;
 }
 
-permissionPopupInner .buttons{
+.permissionPopupInner .buttons{
 	width: 100%;
 	overflow: hidden;
 }
@@ -6484,10 +6487,10 @@ table#copilotProjectTable td a.addCopilotUsers {
     padding: 0 2px 0 15px;
 }
 
-.myProjectContests table#ProjectContests td a.button1:hover, #activeContests table.projectStats  td a.button1:hover, , #projectsResult table.projectStats  td a.button1:hover{
+.myProjectContests table#ProjectContests td a.button1:hover, #activeContests table.projectStats  td a.button1:hover, #projectsResult table.projectStats  td a.button1:hover{
 		background-position:left -75px;
 	}
-		.myProjectContests table#ProjectContests td a.button1:hover .btnR, #activeContests table.projectStats  td a.button1:hover .btnR, , #projectsResult table.projectStats  td a.button1:hover .btnR{
+		.myProjectContests table#ProjectContests td a.button1:hover .btnR, #activeContests table.projectStats  td a.button1:hover .btnR, #projectsResult table.projectStats  td a.button1:hover .btnR{
 			background-position:right -125px;
 		}
 			.myProjectContests table#ProjectContests td a.button1:hover .btnR .btnC, #activeContests table.projectStats  td a.button1:hover .btnR .btnC, #projectsResult table.projectStats  td a.button1:hover .btnR .btnC{
@@ -10735,6 +10738,80 @@ div.clientInvoiceManageRow.last {
     padding-left: 2px;
 }
 
+.mainContentOverflowVisible{
+    overflow: visible;
+}
 
+#filterPanelForm table td.managementCell {
+    text-align: center;
+}
 
+td .action, #projectsResult table.resultTable td a.action,
+#filterPanelForm table td.managementCell a.action{
+    padding: 0 0 0 18px;
+    margin: 0;
+    display: inline-block;
+    height: 20px;
+    background: url(/images/ico-setting.png) 0 2px no-repeat;
+    width: auto;
+}
+td .action .ico, #projectsResult TABLE.resultTable TD SPAN.ico{
+    padding: 0 13px 0 0;
+    margin: 0;
+    color: #1c1c1c;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+    background: url(/images/ico-dnArrow.png) 100% 9px no-repeat;
+    font-weight: normal;
+    height: 20px;
+    line-height: 20px;
+    display: block;
+}
+.actnMenuWrap{
+    position: relative;
+}
+.actnMenuWrap .actionMenu{
+    list-style: none;
+    position: absolute;
+    width: 140px;
+    background: #ffffff;
+    z-index: 999;
+    padding: 4px 0 0;
+    background: url(/images/actionmenu-top.png) 0 0 no-repeat;
+}
+.actnMenuWrap .actionMenu .actionMenuBottom{
+    padding: 0 0 4px;
+    background: url(/images/actionmenu-bottom.png) 0 100% no-repeat;
+}
+.actnMenuWrap .actionMenu .actionMenuBody{
+    padding: 8px 5px;
+    background: url(/images/actionmenu-body.png) 0 0 repeat-y;
+    overflow: hidden;
+}
+.actnMenuWrap .actionMenu li{
+    display: block;
+    width: 100%;
+    float: left;
+}
+.actnMenuWrap .actionMenu li a{
+    font-size: 12px;
+    line-height: 24px;
+    height: 24px;
+    display: block;
+    color: #333333;
+    padding-left:9px;
+    text-decoration: none;
+}
+.actnMenuWrap .actionMenu li a:hover{
+    background: #f3f3f3;
+}
+.actnMenuWrap .actionMenu .seprator{
+    border-top: 1px solid #a8abad;
+    margin: 11px 0;
+    overflow: hidden;
+    height: 2px;
+    float: left;
+    width: 100%;
+}
 

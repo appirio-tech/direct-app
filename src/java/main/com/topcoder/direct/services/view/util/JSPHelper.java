@@ -106,8 +106,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Asset View Release 3)
+ * <ul>
+ *     Adds method {@link #isAssetFilePreviewable(String)}
+ * </ul>
+ * </p>
+ *
  * @author isv, pvmagacho, flexme, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class JSPHelper {
 
@@ -583,6 +590,17 @@ public class JSPHelper {
      */
     public static String getAssetFileTypeIcon(String fileType) {
         return AssetFileTypes.getFileTypeIconName(fileType);
+    }
+
+    /**
+     * Checks if the file type is a previewable image.
+     *
+     * @param type the file type
+     * @return whether the file type is a previewable image.
+     * @since 1.3
+     */
+    public static boolean isAssetFilePreviewable(String type) {
+        return type.equalsIgnoreCase("bmp") || type.equalsIgnoreCase("png") || type.equalsIgnoreCase("jpg");
     }
 
     /**

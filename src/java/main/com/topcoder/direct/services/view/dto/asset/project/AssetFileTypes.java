@@ -52,6 +52,7 @@ public class AssetFileTypes {
         fileTypeIcons.put("gif", "gif");
         fileTypeIcons.put("xml", "xml");
         fileTypeIcons.put("jpg", "jpg");
+        fileTypeIcons.put("bmp", "bmp");
     }
 
     /**

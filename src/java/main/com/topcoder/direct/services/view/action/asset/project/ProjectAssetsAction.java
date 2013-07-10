@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.asset.project;
 
 import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.AssetSearchCriteria;
+import com.topcoder.asset.entities.CategorySearchCriteria;
 import com.topcoder.asset.entities.PagedResult;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.asset.AssetContainerType;
@@ -22,15 +23,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * <p>
  * This action handles the view of project assets.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0)
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * <ul>
+ *     <li>Updates {@link #executeAction()} to prepare the data for the assets view filter panel</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
  */
 public class ProjectAssetsAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm> {
 
@@ -103,10 +113,40 @@ public class ProjectAssetsAction extends BaseAbstractAssetAction implements Form
         Map<Date, List<Asset>> dateGroupedAssets = new TreeMap<Date, List<Asset>>();
         Map<String, List<Asset>> categoryGroupedAssets = new TreeMap<String, List<Asset>>();
 
+        // my grouped assets result
+        Map<Date, List<Asset>> myDateGroupedAssets = new TreeMap<Date, List<Asset>>();
+        Map<String, List<Asset>> myCategoryGroupedAssets = new TreeMap<String, List<Asset>>();
+
+        // available categories and uploaders - used by filter panel
+        Set<String> availableCategories = new TreeSet<String>();
+        Set<String> availableUploaders = new TreeSet<String>();
+
+        Set<String> myAvailableCategories = new TreeSet<String>();
+
+        // current user id
+        long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();
+
         // group the assets by category and date
         for(Asset a : assets.getRecords()) {
-            String category = a.getCategories().get(0).getName();
+
+            if(a.getCurrentVersion() == null) {
+                // ignore empty asset without any version
+                continue;
+            }
+
+            String category = null;
+            if(a.getCategories() != null && a.getCategories().size() > 0) {
+                category  = a.getCategories().get(0).getName();
+            }
+
             Date uploadDate = DirectUtils.trim(a.getCurrentVersion().getUploadTime());
+            String uploader = a.getCurrentVersion().getUploader().getName();
+
+            if (category != null) {
+                availableCategories.add(category);
+            }
+
+            availableUploaders.add(uploader);
 
             if (!dateGroupedAssets.containsKey(uploadDate)) {
                 List<Asset> assetList = new ArrayList<Asset>();
@@ -123,12 +163,44 @@ public class ProjectAssetsAction extends BaseAbstractAssetAction implements Form
             } else {
                 categoryGroupedAssets.get(category).add(a);
             }
+
+            if(a.getCurrentVersion().getUploader().getId() == currentUserId) {
+                myAvailableCategories.add(category);
+
+                if (!myDateGroupedAssets.containsKey(uploadDate)) {
+                    List<Asset> assetList = new ArrayList<Asset>();
+                    assetList.add(a);
+                    myDateGroupedAssets.put(uploadDate, assetList);
+                } else {
+                    myDateGroupedAssets.get(uploadDate).add(a);
+                }
+
+                if (!myCategoryGroupedAssets.containsKey(category)) {
+                    List<Asset> assetList = new ArrayList<Asset>();
+                    assetList.add(a);
+                    myCategoryGroupedAssets.put(category, assetList);
+                } else {
+                    myCategoryGroupedAssets.get(category).add(a);
+                }
+            }
         }
+
+        // get asset categories - used by the edit modal
+        CategorySearchCriteria categorySearch = new CategorySearchCriteria();
+        categorySearch.setContainerType(AssetContainerType.GLOBAL.toString());
+        getViewData().setAssetCategories(getAssetCategoryService().search(categorySearch).getRecords());
 
         // set to view data
         getViewData().setDateGroupedAssets(dateGroupedAssets);
         getViewData().setCategoryGroupedAssets(categoryGroupedAssets);
-
+        getViewData().setAvailableCategories(availableCategories);
+        getViewData().setAvailableUploaders(availableUploaders);
+        getViewData().setMyCategoryGroupedAssets(myCategoryGroupedAssets);
+        getViewData().setMyDateGroupedAssets(myDateGroupedAssets);
+        getViewData().setMyAvailableCategories(myAvailableCategories);
+        getViewData().setClientManagers(getManagerService().getClientManagers(getFormData().getProjectId()));
+        getViewData().setTopcoderManagers(getManagerService().getTopCoderManagers(getFormData().getProjectId()));
+        getViewData().setProjectCopilots(getManagerService().getCopilots(getFormData().getProjectId()));
 
         // right sidebar data
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();

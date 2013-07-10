@@ -15,16 +15,19 @@ import com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.asset.project.AssetFileTypes;
 import com.topcoder.direct.services.view.dto.asset.project.ProjectAssetsViewDTO;
+import com.topcoder.direct.services.view.dto.asset.project.SaveAssetDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.JSPHelper;
 import com.topcoder.security.TCSubject;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -35,15 +38,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URLConnection;
+import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * <p>
@@ -51,11 +58,36 @@ import java.util.Map;
  * and download operations of the single asset file.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0)
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * <ul>
+ *     <li>Added method {@link #getAssetVersion()} to get the details of an asset version</li>
+ *     <li>Added method {@link #editAssetVersion()} to update the asset version</li>
+ *     <li>Added method {@link #saveNewAssetVersion()} to add a new version to an asset</li>
+ *     <li>Added method {@link #deleteAsset()} to delete an asset and all its versions</li>
+ *     <li>Added method {@link #deleteAssetVersion()} to delete a specific asset version</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 3)
+ * <ul>
+ *     <li>Adds method {@link #updateAssetsPermission()}</li>
+ *     <li>Adds method {@link #getAssetsZip()}</li>
+ *     <li>Adds method {@link #downloadAssetsZip()}</li>
+ *     <li>Adds method {@link #batchEditAssets()}</li>
+ *     <li>Adds method {@link #batchGetAssetsPermission()}</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 3)
  */
 public class ProjectAssetManageAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm> {
 
+    /**
+     * The view DTO for project assets view.
+     */
     private ProjectAssetsViewDTO viewData = new ProjectAssetsViewDTO();
 
     /**
@@ -103,6 +135,12 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      */
     public static final String UPLOAD_SESSION_KEY = "uploadSessionKey";
 
+    /**
+     * The name header of the batch download zip file.
+     *
+     * @since 1.2
+     */
+    private static final String BATCH_DOWNLOAD_FILE_NAME_HEADER = "CockpitFiles";
 
     /**
      * The temp file root for the asset upload.
@@ -121,8 +159,10 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
     /**
      * The uploaded file.
+     *
+     * @since 1.2
      */
-    private File uploadFile;
+    private File files;
 
     /**
      * The project id of the uploaded asset.
@@ -143,6 +183,13 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      * The date formatter to format the upload time.
      */
     private DateFormat uploadTimeFormatter = new SimpleDateFormat("MM/dd/yyyy | HH:mm:ss");
+
+    /**
+     * The display format for the asset upload time in the front end.
+     *
+     * @since 1.1
+     */
+    private DateFormat uploadTimeDisplayFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
     /**
      * The asset categories available to the user.
@@ -166,29 +213,18 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     private List<User> projectCopilots;
 
     /**
-     * The asset category id.
+     * The assets to batch edit.
+     *
+     * @since 1.2
      */
-    private long assetCategoryId;
+    private List<Asset> assetsToEdit;
 
     /**
-     * The asset description.
+     * The assets to save.
+     *
+     * @since 1.2
      */
-    private String assetDescription;
-
-    /**
-     * Flag for whether the asset is public.
-     */
-    private boolean isAssetPublic;
-
-    /**
-     * The user ids which are given the private permission on the asset.
-     */
-    private List<Long> privateUserIds;
-
-    /**
-     * The session key for the uploaded asset information.
-     */
-    private String sessionKey;
+    private List<SaveAssetDTO> assets;
 
     /**
      * The transaction manager
@@ -204,6 +240,125 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      * The asset version id.
      */
     private long assetVersionId;
+
+    /**
+     * The asset version ids to process.
+     *
+     * @since 1.2
+     */
+    private long[] assetVersionIds;
+
+    /**
+     * The asset ids to process.
+     *
+     * @since 1.2
+     */
+    private long[] assetIds;
+
+    /**
+     * Flag for whether the asset is public.
+     */
+    private boolean isAssetPublic;
+
+    /**
+     * The user ids which are given the private permission on the asset.
+     */
+    private List<Long> privateUserIds;
+
+    /**
+     * The session key.
+     *
+     * @since 1.2
+     */
+    private String sessionKey;
+
+    /**
+     * Gets the files.
+     *
+     * @return the files.
+     * @since 1.2
+     */
+    public File getFiles() {
+        return files;
+    }
+
+    /**
+     * Sets the files.
+     *
+     * @param files the files to upload
+     * @since 1.2
+     */
+    public void setFiles(File files) {
+        this.files = files;
+    }
+
+    /**
+     * Sets the file name of the files.
+     *
+     * @param filename the file name of the files.
+     * @since 1.2
+     */
+    public void setFilesFileName(String filename) {
+        this.uploadFileName = filename;
+    }
+
+    /**
+     * Gets the asset public flag.
+     *
+     * @return the asset public flag.
+     * @since 1.2
+     */
+    public boolean isAssetPublic() {
+        return isAssetPublic;
+    }
+
+    /**
+     * Sets the asset public flag.
+     *
+     * @param assetPublic the asset public flag.
+     * @since 1.2
+     */
+    public void setAssetPublic(boolean assetPublic) {
+        isAssetPublic = assetPublic;
+    }
+
+    /**
+     * Gets private user ids.
+     *
+     * @return the private user ids.
+     * @since 1.2
+     */
+    public List<Long> getPrivateUserIds() {
+        return privateUserIds;
+    }
+
+    /**
+     * Sets the private user ids.
+     *
+     * @param privateUserIds the private user ids.
+     * @since 1.2
+     */
+    public void setPrivateUserIds(List<Long> privateUserIds) {
+        this.privateUserIds = privateUserIds;
+    }
+
+    /**
+     * Gets the session key.
+     *
+     * @return the session key.
+     */
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    /**
+     * Sets the session key.
+     *
+     * @param sessionKey
+     */
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
 
     /**
      * Gets the project Id form data for the action.
@@ -241,23 +396,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         this.assetUploadTempFileRoot = assetUploadTempFileRoot;
     }
 
-    /**
-     * Gets the upload file.
-     *
-     * @return the upload file.
-     */
-    public File getUploadFile() {
-        return uploadFile;
-    }
-
-    /**
-     * Sets the upload file.
-     *
-     * @param uploadFile the upload file.
-     */
-    public void setUploadFile(File uploadFile) {
-        this.uploadFile = uploadFile;
-    }
 
     /**
      * Gets the asset download stream.
@@ -377,94 +515,23 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     }
 
     /**
-     * Gets the asset category id.
+     * Gets the save assets.
      *
-     * @return the asset category id.
+     * @return the save assets.
+     * @since 1.2
      */
-    public long getAssetCategoryId() {
-        return assetCategoryId;
+    public List<SaveAssetDTO> getAssets() {
+        return assets;
     }
 
     /**
-     * Sets the asset category id.
+     * Sets the save assets.
      *
-     * @param assetCategoryId the asset category id.
+     * @param assets the save assets.
+     * @since 1.2
      */
-    public void setAssetCategoryId(long assetCategoryId) {
-        this.assetCategoryId = assetCategoryId;
-    }
-
-    /**
-     * Gets the asset description.
-     *
-     * @return the asset description.
-     */
-    public String getAssetDescription() {
-        return assetDescription;
-    }
-
-    /**
-     * Sets the asset description.
-     *
-     * @param assetDescription the asset description.
-     */
-    public void setAssetDescription(String assetDescription) {
-        this.assetDescription = assetDescription;
-    }
-
-    /**
-     * Checks whether the asset is public.
-     *
-     * @return whether the asset is public.
-     */
-    public boolean isAssetPublic() {
-        return isAssetPublic;
-    }
-
-    /**
-     * Checks whether the asset is public
-     *
-     * @param assetPublic whether asset is public
-     */
-    public void setAssetPublic(boolean assetPublic) {
-        isAssetPublic = assetPublic;
-    }
-
-    /**
-     * Gets the private user ids for permission setting.
-     *
-     * @return the private user ids for permission setting.
-     */
-    public List<Long> getPrivateUserIds() {
-        return privateUserIds;
-    }
-
-    /**
-     * Sets the private user ids for permission setting.
-     *
-     * @param privateUserIds the private user ids for permission setting.
-     */
-    public void setPrivateUserIds(List<Long> privateUserIds) {
-        this.privateUserIds = privateUserIds;
-    }
-
-
-    /**
-     * Gets the session key.
-     *
-     * @return the session key.
-     */
-    public String getSessionKey() {
-        return sessionKey;
-    }
-
-    /**
-     * Sets the session key.
-     *
-     * @param sessionKey the session key.
-     */
-    public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey;
+    public void setAssets(List<SaveAssetDTO> assets) {
+        this.assets = assets;
     }
 
     /**
@@ -513,6 +580,66 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     }
 
     /**
+     * Gets the asset version ids.
+     *
+     * @return the asset version ids.
+     * @since 1.2
+     */
+    public long[] getAssetVersionIds() {
+        return assetVersionIds;
+    }
+
+    /**
+     * Sets the asset version ids.
+     *
+     * @param assetVersionIds the asset version ids.
+     * @since 1.2
+     */
+    public void setAssetVersionIds(long[] assetVersionIds) {
+        this.assetVersionIds = assetVersionIds;
+    }
+
+    /**
+     * Gets the asset version ids.
+     *
+     * @return the asset version ids.
+     * @since 1.2
+     */
+    public long[] getAssetIds() {
+        return assetIds;
+    }
+
+    /**
+     * Sets the asset version ids.
+     *
+     * @param assetIds the asset version ids.
+     * @since 1.2
+     */
+    public void setAssetIds(long[] assetIds) {
+        this.assetIds = assetIds;
+    }
+
+    /**
+     * Gets the assets to batch edit.
+     *
+     * @return the assets to batch edit.
+     * @since 1.2
+     */
+    public List<Asset> getAssetsToEdit() {
+        return assetsToEdit;
+    }
+
+    /**
+     * Sets the assets to batch edit.
+     *
+     * @param assetsToEdit the assets to batch edit.
+     * @since 1.2
+     */
+    public void setAssetsToEdit(List<Asset> assetsToEdit) {
+        this.assetsToEdit = assetsToEdit;
+    }
+
+    /**
      * Gets the download MIME type of the asset.
      *
      * @return the asset download MIME type of the asset.
@@ -521,6 +648,11 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         return assetDownloadMIMEType;
     }
 
+    /**
+     * Gets the asset view data.
+     *
+     * @return the asset view data.
+     */
     public ProjectAssetsViewDTO getViewData() {
         return viewData;
     }
@@ -544,7 +676,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         setTopcoderManagers(getManagerService().getTopCoderManagers(getFormData().getProjectId()));
         setProjectCopilots(getManagerService().getCopilots(getFormData().getProjectId()));
 
-        // right side bar data
         // right sidebar data
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), getFormData().getProjectId());
@@ -566,6 +697,97 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         getSessionData().setCurrentSelectDirectProjectID(currentDirectProject.getId());
     }
 
+
+    /**
+     * Handles the request to batch edit assets.
+     *
+     * @return the result code
+     * @throws Exception if any error.
+     * @since 1.2
+     */
+    public String batchEditAssets() throws Exception {
+
+        if(getAssetIds() == null || getAssetIds().length == 0) {
+            throw new IllegalArgumentException("The assets to batch edit are empty");
+        }
+
+        List<Asset> assets = getAssetService().getAssets(getAssetIds());
+
+        setAssetsToEdit(assets);
+
+        // prepare asset categories
+        CategorySearchCriteria categorySearch = new CategorySearchCriteria();
+        categorySearch.setContainerType(AssetContainerType.GLOBAL.toString());
+
+        PagedResult<Category> categories = getAssetCategoryService().search(categorySearch);
+        setAssetCategories(categories.getRecords());
+
+        // prepare asset permission users
+        setClientManagers(getManagerService().getClientManagers(getFormData().getProjectId()));
+        setTopcoderManagers(getManagerService().getTopCoderManagers(getFormData().getProjectId()));
+        setProjectCopilots(getManagerService().getCopilots(getFormData().getProjectId()));
+
+        // right sidebar data
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+        final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(),
+                                                                                       getFormData().getProjectId());
+
+        // populate the data needed for the right sidebar
+        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
+        viewData.setUserProjects(userProjectsDTO);
+
+        ProjectBriefDTO currentDirectProject;
+
+        if (projectContests.getContests().size() > 0) {
+            currentDirectProject = projectContests.getContests().get(0).getContest().getProject();
+        } else {
+            currentDirectProject = DirectUtils.getCurrentProjectBrief(getProjectServiceFacade(),
+                                                                      getFormData().getProjectId());
+        }
+
+        getSessionData().setCurrentProjectContext(currentDirectProject);
+        getSessionData().setCurrentSelectDirectProjectID(currentDirectProject.getId());
+
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the request to batch get asset permissions.
+     *
+     * @return the result code.
+     * @since 1.2
+     */
+    public String batchGetAssetsPermission() {
+
+        try {
+            if (getAssetIds() == null || getAssetIds().length == 0) {
+                throw new IllegalArgumentException("The assets to batch get permission are empty");
+            }
+
+            Map<String, List<Long>> result = new HashMap<String, List<Long>>();
+
+            for (long assetId : getAssetIds()) {
+                List<User> users = getAssetPermissionService().getAllowedUsersForAsset(assetId);
+                List<Long> userIds = new ArrayList<Long>();
+                for (User u : users) {
+                    userIds.add(u.getId());
+                }
+                result.put(String.valueOf(assetId), userIds);
+            }
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        return SUCCESS;
+    }
+
     /**
      * Handles the action operation to upload the asset file.
      *
@@ -585,14 +807,16 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
                 throw new IllegalArgumentException("Current user does not have permission to access the project:" + getUploadFileProjectId());
             }
 
-            String tempFilePath = getAssetUploadTempFilePath(getUploadFileName(), getUploadFileProjectId(), currentTimeMillis);
+            String tempFilePath = getAssetUploadTempFilePath(this.uploadFileName, getUploadFileProjectId(), currentTimeMillis);
             assetUploadTempFile = new File(tempFilePath);
 
-            if(getUploadFile() == null || !getUploadFile().exists() || getUploadFile().length() == 0L) {
+            if(getFiles() == null || !getFiles().exists() || getFiles().length() == 0L) {
                 throw new IllegalArgumentException("The uploaded file is of 0 bytes or does not exist, please check.");
             }
 
-            uploadFileStream = new FileInputStream(getUploadFile());
+            File uploadFile = getFiles();
+
+            uploadFileStream = new FileInputStream(uploadFile);
             saveFileStream = new FileOutputStream(assetUploadTempFile);
 
             // save the upload file after inserting the record
@@ -600,7 +824,7 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             // the session data for the following operation
             Map<String, String> uploadSession = new HashMap<String, String>();
-            uploadSession.put(FILE_NAME, getUploadFileName());
+            uploadSession.put(FILE_NAME, this.uploadFileName);
             uploadSession.put(TEMP_FILE_PATH, tempFilePath);
             long fileSize = assetUploadTempFile.length();
             uploadSession.put(FILE_SIZE, String.valueOf(fileSize));
@@ -610,7 +834,7 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             uploadSession.put(UPLOADER_USER_ID, String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
             uploadSession.put(PROJECT_ID, String.valueOf(getUploadFileProjectId()));
 
-            String sessionKey = getUploadFileName() + currentTimeMillis;
+            String sessionKey = this.uploadFileName + currentTimeMillis;
 
             getSessionData().getSession().setAttribute(sessionKey, uploadSession);
 
@@ -643,6 +867,177 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         return SUCCESS;
     }
 
+    /**
+     * Handles the ajax request to updates the assets permission in batch.
+     *
+     * @return the result code
+     * @since 1.2
+     */
+    public String updateAssetsPermission() {
+
+        if (getAssetIds() == null || getAssetIds().length == 0) {
+            throw new IllegalArgumentException("The asset ids to update are empty");
+        }
+
+        TransactionStatus status = null;
+
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName(this.getClass().getName() + ".updateAssetsPermission");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            status = transactionManager.getTransaction(def);
+
+            List<Asset> assets = getAssetService().getAssets(getAssetIds());
+
+            List<Long> assetIdsToUpdate = new ArrayList<Long>();
+
+            // remove the permission from non public assets first
+            for (Asset asset : assets) {
+                if (!asset.isPublic()) {
+                    // no public, remove the permission first
+                    List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(asset.getId
+                            ());
+                    for (User u : allowedUsersForAsset) {
+                        getAssetPermissionService().removePermission(asset.getId(), u.getId());
+                    }
+                }
+
+                if (isAssetPublic()) {
+                    asset.setPublic(true);
+                } else {
+                    asset.setPublic(false);
+                    // add permission
+                    if (getPrivateUserIds() == null || getPrivateUserIds().size() > 0) {
+                        if (getPrivateUserIds() == null) {
+                            setPrivateUserIds(new ArrayList<Long>());
+                        }
+
+                        // by default, give editor the permission if the restriction is private
+                        if (!getPrivateUserIds().contains(currentUser.getUserId())) {
+                            getPrivateUserIds().add(currentUser.getUserId());
+                        }
+                    }
+
+                    assetIdsToUpdate.add(asset.getId());
+                }
+            }
+
+            // update the assets
+            getAssetService().updateAssets(currentUser.getUserId(), assets);
+
+            if (!isAssetPublic()) {
+                // update assets to private, we need to update asset permissions
+                getAssetPermissionService().setPermissions(assetIdsToUpdate, getPrivateUserIds());
+            }
+
+            transactionManager.commit(status);
+
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+
+            if (status != null && !status.isCompleted()) {
+                transactionManager.rollback(status);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax request to get multiple assets file in a zip.
+     *
+     * @return the result code.
+     * @since 1.2
+     */
+    public String getAssetsZip() {
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            if (getAssetVersionIds() == null || getAssetVersionIds().length == 0) {
+                throw new IllegalArgumentException("The asset versions to download are not specified");
+            }
+
+            long currentTimeMillis = System.currentTimeMillis();
+            String assetsZipFileName = BATCH_DOWNLOAD_FILE_NAME_HEADER + currentTimeMillis + ".zip";
+            String assetsZipFilePath = getAssetUploadTempFilePath(assetsZipFileName, getUploadFileProjectId(),
+                    currentTimeMillis);
+
+            OutputStream zipStream = new FileOutputStream(new File(assetsZipFilePath));
+
+            List<Long> assetVersionIdsList = new ArrayList<Long>();
+            for (long l : getAssetVersionIds()) {
+                assetVersionIdsList.add(l);
+            }
+
+            getAssetVersionService().batchGetAssetVersionContents(assetVersionIdsList, zipStream);
+
+            // flush and close the string (writes to the zip file)
+            zipStream.close();
+            Map<String, String> sessionData = new HashMap<String, String>();
+            sessionData.put(TEMP_FILE_PATH, assetsZipFilePath);
+            sessionData.put(UPLOADER_USER_ID, String.valueOf(currentUser.getUserId()));
+
+            String sessionUUID = UUID.randomUUID().toString();
+            getSessionData().getSession().setAttribute(sessionUUID, sessionData);
+
+            Map<String, String> result = new HashMap<String, String>();
+            result.put(UPLOAD_SESSION_KEY, sessionUUID);
+            result.put(FILE_NAME, assetsZipFileName);
+            result.put(FILE_SIZE_DISPLAY, FileUtils.byteCountToDisplaySize((new File(assetsZipFilePath)).length()));
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the request to download the zipped assets file.
+     *
+     * @return the result code.
+     * @since 1.2
+     */
+    public String downloadAssetsZip() {
+        try {
+            // get session data with session key
+            Map<String, String> sessionData = (Map<String, String>) getSessionData().getSession().getAttribute(getSessionKey());
+
+            String assetFilePath = sessionData.get(TEMP_FILE_PATH);
+            File assetFile = new File(assetFilePath);
+
+            setUploadFileName(assetFile.getName());
+
+            this.assetDownloadStream = new BufferedInputStream(new FileInputStream(assetFilePath));
+
+            this.assetDownloadMIMEType = DirectUtils.getFileMIMEType(assetFile);
+
+            if (this.assetDownloadMIMEType == null) {
+                // cannot get the MIME type, use the default
+                this.assetDownloadMIMEType = "text/plain";
+            }
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return "download";
+    }
+
 
     /**
      * Handles the ajax operation to save the asset information.
@@ -653,83 +1048,97 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
-        if (getSessionKey() == null || getSessionKey().length() == 0) {
-            throw new IllegalArgumentException("The upload session does not exist");
+        if(getAssets() == null || getAssets().size() == 0) {
+            throw new IllegalArgumentException("The assets to save are empty");
         }
 
-        Object value = getSessionData().getSession().getAttribute(getSessionKey());
-
-        if (value == null) {
-            throw new IllegalArgumentException("The upload session does not exist or the session is time out");
-        }
-
-        Map<String, String> uploadSession = (Map<String, String>) value;
-        File uploadedFile = new File(uploadSession.get(TEMP_FILE_PATH));
-
-        boolean needToDelete = false;
 
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setName(this.getClass().getName() + ".saveAssetFile");
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         TransactionStatus status = transactionManager.getTransaction(def);
+        List<File> uploadedFiles = new ArrayList<File>();
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+        boolean needToDelete = false;
 
         try {
 
-            // create new asset
-            Asset asset = new Asset();
-            asset.setContainerType(AssetContainerType.PROJECT.toString());
-            asset.setContainerId(Long.parseLong(uploadSession.get(PROJECT_ID)));
-            asset.setName(uploadSession.get(FILE_NAME));
-            asset.setPublic(isAssetPublic);
-            List<Category> categories = new ArrayList<Category>();
-            categories.add(getAssetCategoryService().get(getAssetCategoryId()));
-            // set asset categories
-            asset.setCategories(categories);
+           for(SaveAssetDTO assetToSave : assets) {
+               if (assetToSave.getSessionKey() == null || assetToSave.getSessionKey().length() == 0) {
+                   throw new IllegalArgumentException("The upload session does not exist");
+               }
 
-            getAssetService().createAsset(currentUser.getUserId(), asset);
+               Object value = getSessionData().getSession().getAttribute(assetToSave.getSessionKey());
 
-            // create the asset version for the upload
-            AssetVersion version = new AssetVersion();
-            version.setDescription(getAssetDescription());
-            version.setFileName(uploadSession.get(FILE_NAME));
-            version.setFileSizeBytes(Long.parseLong(uploadSession.get(FILE_SIZE)));
-            version.setUploadTime(uploadTimeFormatter.parse(uploadSession.get(UPLOAD_TIME)));
-            User uploader = new User();
-            uploader.setId(Long.parseLong(uploadSession.get(UPLOADER_USER_ID)));
-            version.setUploader(uploader);
-            // always user 1.0 for now
-            version.setVersion("1.0");
+               if (value == null) {
+                   throw new IllegalArgumentException("The upload session does not exist or the session is time out");
+               }
 
-            // set asset id
-            version.setAssetId(asset.getId());
+               Map<String, String> uploadSession = (Map<String, String>) value;
+               File uploadedFile = new File(uploadSession.get(TEMP_FILE_PATH));
 
-            getAssetVersionService().createAssetVersion(currentUser.getUserId(), version, uploadedFile, true);
+               // create new asset
+               Asset asset = new Asset();
+               asset.setContainerType(AssetContainerType.PROJECT.toString());
+               asset.setContainerId(Long.parseLong(uploadSession.get(PROJECT_ID)));
+               asset.setName(uploadSession.get(FILE_NAME));
+               asset.setPublic(assetToSave.isAssetPublic());
+               List<Category> categories = new ArrayList<Category>();
+               categories.add(getAssetCategoryService().get(assetToSave.getAssetCategoryId()));
+               // set asset categories
+               asset.setCategories(categories);
 
-            // set permission
-            if (!isAssetPublic() && (getPrivateUserIds() == null || getPrivateUserIds().size() > 0)) {
+               getAssetService().createAsset(currentUser.getUserId(), asset);
 
-                if (getPrivateUserIds() == null) {
-                    privateUserIds = new ArrayList<Long>();
-                }
+               // create the asset version for the upload
+               AssetVersion version = new AssetVersion();
+               version.setDescription(assetToSave.getAssetDescription());
+               version.setFileName(uploadSession.get(FILE_NAME));
+               version.setFileSizeBytes(Long.parseLong(uploadSession.get(FILE_SIZE)));
+               version.setUploadTime(uploadTimeFormatter.parse(uploadSession.get(UPLOAD_TIME)));
+               User uploader = new User();
+               uploader.setId(Long.parseLong(uploadSession.get(UPLOADER_USER_ID)));
+               version.setUploader(uploader);
 
-                // by default, give uploader the permission if the restriction is private
-                if (!getPrivateUserIds().contains(currentUser.getUserId())) {
-                    getPrivateUserIds().add(currentUser.getUserId());
-                }
-                getAssetPermissionService().setPermissions(Arrays.asList(new Long[]{asset.getId()}), getPrivateUserIds());
-            }
+               // always use 1.0 for the new asset file for now
+               version.setVersion("1.0");
+
+               // set asset id
+               version.setAssetId(asset.getId());
+
+               getAssetVersionService().createAssetVersion(currentUser.getUserId(), version, uploadedFile, true);
+
+               // set permission
+               if (!assetToSave.isAssetPublic() && (assetToSave.getPrivateUserIds() == null || assetToSave.getPrivateUserIds().size() > 0)) {
+
+                   if (assetToSave.getPrivateUserIds() == null) {
+                       assetToSave.setPrivateUserIds(new ArrayList<Long>());
+                   }
+
+                   // by default, give uploader the permission if the restriction is private
+                   if (!assetToSave.getPrivateUserIds().contains(currentUser.getUserId())) {
+                       assetToSave.getPrivateUserIds().add(currentUser.getUserId());
+                   }
+                   getAssetPermissionService().setPermissions(Arrays.asList(new Long[]{asset.getId()}), assetToSave.getPrivateUserIds());
+               }
+
+               // build the result set
+               Map<String, String> singleResult = new HashMap<String, String>();
+               singleResult.put("assetId", String.valueOf(asset.getId()));
+               singleResult.put("assetVersionId", String.valueOf(version.getId()));
+               singleResult.put("directProjectId", uploadSession.get(PROJECT_ID));
+               result.add(singleResult);
+
+               // add this file to the uploaded file list
+               uploadedFiles.add(uploadedFile);
+           }
+
 
             transactionManager.commit(status);
 
-            // build the result set
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("assetId", String.valueOf(asset.getId()));
-            result.put("assetVersionId", String.valueOf(version.getId()));
-            result.put("directProjectId", uploadSession.get(PROJECT_ID));
-
             setResult(result);
 
-            // the whole operation succeeds - the temp file uploaded can be deleted
+            // the whole operation succeeds without any exception - the temp file uploaded can be deleted
             needToDelete = true;
 
         } catch (Throwable e) {
@@ -745,7 +1154,11 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         } finally {
             if (needToDelete) {
                 try {
-                    FileUtils.forceDelete(uploadedFile);
+                    if(uploadedFiles != null && uploadedFiles.size() > 0) {
+                        for(File fileToDelete : uploadedFiles) {
+                            FileUtils.forceDelete(fileToDelete);
+                        }
+                    }
                 } catch (Throwable th) {
                     // ignore
                 }
@@ -771,13 +1184,23 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             Asset asset = getAssetService().getAsset(getAssetId());
 
-            if (asset.getCurrentVersion().getId() != getAssetVersionId()) {
+            List<AssetVersion> assetVersions = getAssetVersionService().getAssetVersionsOfAsset(asset.getId());
+
+            AssetVersion assetVersion = null;
+
+            for(AssetVersion av : assetVersions) {
+                if (av.getId() == getAssetVersionId()) {
+                    assetVersion = av;
+                }
+            }
+
+            if (assetVersion == null) {
                 throw new IllegalArgumentException("The asset version id is incorrect");
             }
 
-            String assetFilePath = asset.getCurrentVersion().getFilePath();
+            String assetFilePath = assetVersion.getFilePath();
 
-            setUploadFileName(asset.getCurrentVersion().getFileName());
+            setUploadFileName(assetVersion.getFileName());
             this.assetDownloadStream = new BufferedInputStream(new FileInputStream(assetFilePath));
 
             this.assetDownloadMIMEType = DirectUtils.getFileMIMEType(new File(assetFilePath));
@@ -796,6 +1219,439 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         return "download";
     }
+
+    /**
+     * Handles the ajax operation to get the details of an asset version.
+     *
+     * @return the result code
+     * @since 1.1
+     */
+    public String getAssetVersion() {
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            // check asset version id
+            if(getAssetVersionId() <= 0) {
+                throw new IllegalArgumentException("The asset version id should be positive");
+            }
+
+            AssetVersion assetVersion = getAssetVersionService().getAssetVersion(getAssetVersionId());
+
+            // check if user has access to the asset the asset version belongs to
+            if (!getAssetPermissionService().isAllowed(assetVersion.getAssetId(), currentUser.getUserId())) {
+                throw new IllegalArgumentException("You don't have permission to access the file");
+            }
+
+            // serialize asset version to ajax
+            ObjectMapper m = new ObjectMapper();
+            m.setDateFormat(uploadTimeDisplayFormatter);
+            Map<String, Object> result = m.convertValue(assetVersion, Map.class);
+
+            // remove path information - reduce security issue
+            result.remove("filePath");
+            result.remove("previewImagePath");
+
+            // add file size readable format
+            result.put("fileSizeDisplay", JSPHelper.getFileSizeDisplay(assetVersion.getFileSizeBytes()));
+
+            Asset asset = getAssetService().getAsset(assetVersion.getAssetId());
+
+            // put the asset permission data - if the asset is private
+            if(!asset.isPublic()) {
+                List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(assetVersion.getAssetId());
+                Set<Long> allowedUserIds = new HashSet<Long>();
+                for (User u : allowedUsersForAsset) {
+                    allowedUserIds.add(u.getId());
+                }
+                result.put("users", allowedUserIds);
+                result.put("isPublic", false);
+            } else {
+                result.put("isPublic", true);
+            }
+
+            // put asset category
+            result.put("categoryId", asset.getCategories().get(0).getId());
+            result.put("categoryName", asset.getCategories().get(0).getName());
+
+            result.put("isLatest", asset.getCurrentVersion().getId() == assetVersion.getId());
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+
+    /**
+     * Handles the ajax operation to edit the details of an asset version.
+     *
+     * @return the result code
+     * @since 1.1
+     */
+    public String editAssetVersion() {
+
+
+        if(getAssets() == null || getAssets().size() == 0) {
+            throw new IllegalArgumentException("The asset to update is empty");
+        }
+
+        TransactionStatus status = null;
+
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+        try {
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName(this.getClass().getName() + ".editAssetVersion");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            status = transactionManager.getTransaction(def);
+
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            for(SaveAssetDTO assetToUpdate : getAssets()) {
+
+                Asset asset = null;
+                AssetVersion assetVersion = null;
+
+                // check asset version id
+                if(assetToUpdate.getAssetVersionId() <= 0 && assetToUpdate.getAssetId() <= 0) {
+                    throw new IllegalArgumentException("The asset id and asset version id should be positive");
+                }
+
+                if(assetToUpdate.getAssetVersionId() <= 0) {
+                    asset = getAssetService().getAsset(assetToUpdate.getAssetId());
+                    // use current asset version
+                    assetToUpdate.setAssetVersionId(asset.getCurrentVersion().getId());
+                    assetVersion = asset.getCurrentVersion();
+                } else if (assetToUpdate.getAssetId() <= 0) {
+                    assetVersion = getAssetVersionService().getAssetVersion(assetToUpdate.getAssetVersionId());
+                    asset = getAssetService().getAsset(assetVersion.getAssetId());
+                }
+
+                if(asset == null || assetVersion == null) {
+                    throw new IllegalArgumentException("The asset id and asset version does not exist");
+                }
+
+                // check if user has access to the asset the asset version belongs to
+                if (!getAssetPermissionService().isAllowed(asset.getId(), currentUser.getUserId())) {
+                    throw new IllegalArgumentException("You don't have permission to access the file");
+                }
+
+                // check description length
+                if(assetToUpdate.getAssetDescription() == null || assetToUpdate.getAssetDescription().trim().length() == 0) {
+                    throw new IllegalArgumentException("File description cannot be empty");
+                }
+
+                assetVersion.setDescription(assetToUpdate.getAssetDescription());
+
+                getAssetVersionService().updateAssetVersion(currentUser.getUserId(), assetVersion);
+
+                // if asset category is changed, update it
+                if(asset.getCategories() != null && asset.getCategories().size() > 0) {
+                    if(asset.getCategories().get(0).getId() != assetToUpdate.getAssetCategoryId()) {
+                        List<Category> newCategories = new ArrayList<Category>();
+                        newCategories.add(getAssetCategoryService().get(assetToUpdate.getAssetCategoryId()));
+                        asset.setCategories(newCategories);
+                    }
+                }
+
+                // if asset permission is changed update it
+                if(!asset.isPublic()) {
+                    // no public, remove the permission first
+                    List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(asset.getId());
+                    for(User u : allowedUsersForAsset) {
+                        getAssetPermissionService().removePermission(asset.getId(), u.getId());
+                    }
+                }
+
+                if(assetToUpdate.isAssetPublic()) {
+                    asset.setPublic(true);
+                } else {
+                    asset.setPublic(false);
+
+                    // add permission
+                    if(assetToUpdate.getPrivateUserIds() == null || assetToUpdate.getPrivateUserIds().size() > 0) {
+                        if (assetToUpdate.getPrivateUserIds() == null) {
+                            assetToUpdate.setPrivateUserIds(new ArrayList<Long>());
+                        }
+
+                        // by default, give editor the permission if the restriction is private
+                        if (!assetToUpdate.getPrivateUserIds().contains(currentUser.getUserId())) {
+                            assetToUpdate.getPrivateUserIds().add(currentUser.getUserId());
+                        }
+                        getAssetPermissionService().setPermissions(Arrays.asList(new Long[]{asset.getId()}), assetToUpdate.getPrivateUserIds());
+                    }
+                }
+
+                // update asset
+                getAssetService().updateAsset(currentUser.getUserId(), asset);
+
+                Map<String, Object> resultItem = new HashMap<String, Object>();
+
+                resultItem.put("assetId", String.valueOf(asset.getId()));
+                resultItem.put("assetVersionId", String.valueOf(assetVersion.getId()));
+                resultItem.put("directProjectId", asset.getContainerId());
+                result.add(resultItem);
+            }
+
+            transactionManager.commit(status);
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+
+            if (status != null && !status.isCompleted()) {
+                transactionManager.rollback(status);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax operation to add a new asset version.
+     *
+     * @return the result code
+     * @since 1.1
+     */
+    public String saveNewAssetVersion() {
+
+        if(getAssets() == null || getAssets().size() == 0) {
+            throw new IllegalArgumentException("The new asset version to add is empty");
+        }
+
+        File uploadedFile = null;
+        TransactionStatus status = null;
+        boolean needToDelete = false;
+
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            SaveAssetDTO newAssetVersion = getAssets().get(0);
+
+            // 1) Perform validations and permission checking
+
+            // check if user has access to the asset the asset version belongs to
+            if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
+                throw new IllegalArgumentException("You don't have permission to upload new version for this file");
+            }
+
+            // check if the upload new version session exists
+            if (newAssetVersion.getSessionKey() == null || newAssetVersion.getSessionKey().length() == 0) {
+                throw new IllegalArgumentException("The upload session does not exist");
+            }
+
+            Object value = getSessionData().getSession().getAttribute(newAssetVersion.getSessionKey());
+
+            if (value == null) {
+                throw new IllegalArgumentException("The upload session does not exist or the session is time out");
+            }
+
+            // check if file description is filled
+            if(newAssetVersion.getAssetDescription() == null || newAssetVersion.getAssetDescription().trim().length() == 0) {
+                throw new IllegalArgumentException("File description of the new version cannot be empty");
+            }
+
+            Map<String, String> uploadSession = (Map<String, String>) value;
+            uploadedFile = new File(uploadSession.get(TEMP_FILE_PATH));
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName(this.getClass().getName() + ".saveNewAssetVersion");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            status = transactionManager.getTransaction(def);
+
+            Asset asset = getAssetService().getAsset(getAssetId());
+
+            // get the current latest version
+            AssetVersion currentVersion = asset.getCurrentVersion();
+            double currentVersionNumber = Double.parseDouble(currentVersion.getVersion());
+            currentVersionNumber = currentVersionNumber + 0.1;
+            NumberFormat versionFormat = NumberFormat.getInstance();
+            versionFormat.setMaximumFractionDigits(1);
+            versionFormat.setMinimumFractionDigits(1);
+
+            // create the asset version for the upload
+            AssetVersion version = new AssetVersion();
+            version.setDescription(newAssetVersion.getAssetDescription());
+            version.setFileName(uploadSession.get(FILE_NAME));
+            version.setFileSizeBytes(Long.parseLong(uploadSession.get(FILE_SIZE)));
+            version.setUploadTime(uploadTimeFormatter.parse(uploadSession.get(UPLOAD_TIME)));
+            User uploader = new User();
+            uploader.setId(Long.parseLong(uploadSession.get(UPLOADER_USER_ID)));
+            version.setUploader(uploader);
+
+            // use the new version number
+            version.setVersion(versionFormat.format(currentVersionNumber));
+
+            // set asset id
+            version.setAssetId(asset.getId());
+
+            getAssetVersionService().createAssetVersion(currentUser.getUserId(), version, uploadedFile, true);
+
+            // commit the transaction
+            transactionManager.commit(status);
+
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            result.put("assetId", String.valueOf(asset.getId()));
+            result.put("assetVersionId", String.valueOf(version.getId()));
+            result.put("directProjectId", uploadSession.get(PROJECT_ID));
+
+            setResult(result);
+
+            // the whole operation succeeds - the temp file uploaded can be deleted
+            needToDelete = true;
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+
+            if (status != null && !status.isCompleted()) {
+                // not completed - roll back
+                transactionManager.rollback(status);
+                needToDelete = false;
+            }
+        } finally {
+            if (needToDelete && uploadedFile != null) {
+                try {
+                    FileUtils.forceDelete(uploadedFile);
+                } catch (Throwable th) {
+                    // ignore
+                }
+            }
+        }
+
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax operation to delete an specific asset version.
+     *
+     * @return the result code
+     * @since 1.1
+     */
+    public String deleteAssetVersion() {
+
+        TransactionStatus status = null;
+
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            if(getAssetVersionIds() == null || getAssetVersionIds().length == 0) {
+                throw new IllegalArgumentException("The id(s) of the asset version(s) to delete are not specified");
+            }
+
+            for(long value : getAssetVersionIds()) {
+                // check asset version id
+                if (value <= 0) {
+                    throw new IllegalArgumentException("The id of the asset version to delete is invalid");
+                }
+
+            }
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName(this.getClass().getName() + ".deleteAssetVersion");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            status = transactionManager.getTransaction(def);
+
+            for(long assetVersionId : getAssetVersionIds()) {
+                AssetVersion assetVersion = getAssetVersionService().getAssetVersion(assetVersionId);
+
+                // check if user has access to the asset the asset version belongs to
+                if (!getAssetPermissionService().isAllowed(assetVersion.getAssetId(), currentUser.getUserId())) {
+                    throw new IllegalArgumentException("You don't have permission to delete this asset version");
+                }
+
+                // delete the asset version
+                getAssetVersionService().deleteAssetVersion(currentUser.getUserId(), assetVersion.getId());
+            }
+
+            transactionManager.commit(status);
+
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+
+            if (status != null && !status.isCompleted()) {
+                // not completed - roll back
+                transactionManager.rollback(status);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax operation to delete the whole asset and its versions.
+     *
+     * @return the result code
+     * @since 1.1
+     */
+    public String deleteAsset() {
+
+        TransactionStatus status = null;
+
+        try {
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            // check asset version id
+            if (getAssetId() <= 0) {
+                throw new IllegalArgumentException("The id of the asset to delete is invalid");
+            }
+
+            // check if user has access to the asset
+            if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
+                throw new IllegalArgumentException("You don't have permission to delete this asset version");
+            }
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName(this.getClass().getName() + ".deleteAsset");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            status = transactionManager.getTransaction(def);
+
+            // delete the asset
+            getAssetService().deleteAsset(currentUser.getUserId(), getAssetId());
+
+            transactionManager.commit(status);
+
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+
+            if (status != null && !status.isCompleted()) {
+                // not completed - roll back
+                transactionManager.rollback(status);
+            }
+        }
+
+        return SUCCESS;
+    }
+
 
     /**
      * Helper method to get the asset upload file temp storage path by the given file name, direct project id
