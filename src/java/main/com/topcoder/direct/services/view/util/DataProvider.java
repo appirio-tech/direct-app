@@ -4901,6 +4901,11 @@ public class DataProvider {
             if (row.getItem("completion_date").getResultData() != null) {
                 costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
             }
+			
+			long actualActive = 0;
+			if (row.getItem("actual_active").getResultData() != null) {
+                actualActive = row.getLongItem("actual_active");
+            }
 
             costDTO.setStudio(row.getIntItem("is_studio") == 1);
 
@@ -4911,10 +4916,17 @@ public class DataProvider {
             costDTO.setContestType(contestCategory);
 
             if (costDTO.getStatus() != null) {
-                if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) {
+                if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) 
+				{
                     // for finished contest, total cost = actual cost + contest fee
                     costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
-                } else {
+                } 
+				else if (actualActive == 1 && costDTO.getStatus().equals("Active")) 
+				{
+					costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
+				}
+				 else 
+				 {
                     // for unfinished contest, total cost = estimated cost + contest fee
                     costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
                 }
