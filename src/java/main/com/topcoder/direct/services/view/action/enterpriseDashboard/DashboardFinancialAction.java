@@ -5,7 +5,6 @@ package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.TotalSpendDrillInDTO;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -60,8 +58,17 @@ import java.util.TreeMap;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+ * <ul>
+ *     <li>Adds projected cost to total spend chart</li>
+ *     <li>Adds projected cost to total spend drill in and export</li>
+ *     <li>Adds method {@link #getHealthExportAll()} to export the financial health data of projects</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class DashboardFinancialAction extends BaseDirectStrutsAction implements FormAction<EnterpriseDashboardFilterForm> {
 
@@ -172,6 +179,7 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
                 m.put("memberCost", String.valueOf(item.getMemberCost()));
                 m.put("contestFee", String.valueOf(item.getContestFee()));
                 m.put("spend", String.valueOf(item.getTotalSpend()));
+                m.put("projected", String.valueOf(item.getTotalProjected()));
                 m.put("average", String.valueOf(item.getAverageSpend()));
                 result.add(m);
             }
@@ -224,6 +232,8 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
                     m.put("memberCost", String.valueOf(item.getMemberCost()));
                     m.put("contestFee", String.valueOf(item.getContestFee()));
                     m.put("spend", String.valueOf(item.getTotalSpend()));
+                    m.put("projectedCost", String.valueOf(item.getTotalProjected()));
+                    m.put("projectedTotal", String.valueOf(item.getProjectedTotalSpend()));
                     result.add(m);
                 }
 
@@ -297,6 +307,62 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
         return SUCCESS;
     }
 
+    /**
+     * Exports the financial health data to the excel file.
+     *
+     * @return the result code.
+     * @since 1.4 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+     */
+    public String getHealthExportAll() {
+        try {
+            final List<EnterpriseDashboardProjectFinancialDTO> projects = DataProvider.getEnterpriseDashboardProjectsFinancialInfo(
+                    getFormData());
+
+            Workbook workbook = new ExcelWorkbook();
+
+            Sheet sheet = new ExcelSheet("Projects Health", (ExcelWorkbook) workbook);
+
+            // set up the sheet header first
+            Row row = sheet.getRow(1);
+            int index = 1;
+
+            row.getCell(index++).setStringValue("Project Name");
+            row.getCell(index++).setStringValue("Total Budget");
+            row.getCell(index++).setStringValue("Actual Cost");
+            row.getCell(index++).setStringValue("Projected Cost");
+
+            // insert sheet data from 2nd row
+            int rowIndex = 2;
+
+            for(EnterpriseDashboardProjectFinancialDTO data: projects) {
+                // get the next row, and increase index
+                row = sheet.getRow(rowIndex++);
+
+                // set column index, start from 1
+                index = 1;
+                row.getCell(index++).setStringValue(data.getProjectName());
+                row.getCell(index++).setNumberValue(data.getBudget());
+                row.getCell(index++).setNumberValue(data.getActualCost());
+                row.getCell(index++).setNumberValue(data.getProjectedCost());
+            }
+
+            workbook.addSheet(sheet);
+
+            // Create a new WorkBookSaver
+            WorkbookSaver saver = new Biff8WorkbookSaver();
+            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+            saver.save(workbook, saveTo);
+            this.financialExportStream = new ByteArrayInputStream(saveTo.toByteArray());
+            return "download";
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
 
 
     /**
@@ -354,9 +420,11 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
         int index = 1;
 
         row.getCell(index++).setStringValue("Project Name");
-        row.getCell(index++).setStringValue("Member Cost");
-        row.getCell(index++).setStringValue("Contest Fees");
-        row.getCell(index++).setStringValue("Total Cost");
+        row.getCell(index++).setStringValue("Actual Member Cost");
+        row.getCell(index++).setStringValue("Projected Cost");
+        row.getCell(index++).setStringValue("Actual Contest Fees");
+        row.getCell(index++).setStringValue("Actual Total Cost");
+        row.getCell(index++).setStringValue("Projected Total Cost");
 
         // insert sheet data from 2nd row
         int rowIndex = 2;
@@ -369,8 +437,10 @@ public class DashboardFinancialAction extends BaseDirectStrutsAction implements 
             index = 1;
             row.getCell(index++).setStringValue(data.getDirectProjectName());
             row.getCell(index++).setNumberValue(data.getMemberCost());
+            row.getCell(index++).setNumberValue(data.getTotalProjected());
             row.getCell(index++).setNumberValue(data.getContestFee());
             row.getCell(index++).setNumberValue(data.getTotalSpend());
+            row.getCell(index++).setNumberValue(data.getProjectedTotalSpend());
         }
 
         return sheet;

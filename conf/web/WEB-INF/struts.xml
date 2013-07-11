@@ -1912,6 +1912,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/financial.jsp</result>
         </action>
+        <action name="health" class="enterpriseDashboardEntryFuturePeekAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success">/WEB-INF/enterpriseDashboard/health.jsp</result>
+        </action>
         <action name="pipeline" class="enterpriseDashboardPipelineEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
@@ -1950,6 +1954,17 @@
             <result name="error" type="json" />
             <result name="download" type="stream">
                 <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_${formData.endMonth}_export.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">financialExportStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        <action name="getHealthExport" method="getHealthExportAll" class="enterpriseDashboardFinancialAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=projects_health_export.xls</param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">financialExportStream</param>
                 <param name="bufferSize">1024</param>

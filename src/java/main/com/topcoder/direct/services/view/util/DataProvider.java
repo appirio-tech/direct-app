@@ -901,10 +901,20 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.15 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+ * <ul>
+ *     <li>Updates method {@link #getEnterpriseDashboardTotalSpend(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)} to add
+ *     projected cost data</li>
+ *     <li>Updates method {@link #getEnterpriseDashboardTotalSpendDrillIn(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm, boolean)} to add
+ *     projected cost data</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao
- * @version 6.14
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
+ * @version 6.15
  * @since 1.0
  */
 public class DataProvider {
@@ -6648,8 +6658,8 @@ public class DataProvider {
             resultMap.put(m, item);
         }
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
-        final int recordNum = resultContainer.size();
+        ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long monthCount = resultContainer.getLongItem(i, "monthcount");
             double monthCost = resultContainer.getDoubleItem(i, "monthcost");
@@ -6657,6 +6667,18 @@ public class DataProvider {
             EnterpriseDashboardTotalSpendDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
             item.setMemberCostSum(item.getMemberCostSum() + monthCost);
             item.setContestFeeSum(item.getContestFeeSum() + monthContestFee);
+        }
+
+        query = "enterprise_dashboard_total_spend_projected";
+        resultContainer = dataAccessor.getData(request).get(query);
+        recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            double projectedMemberCost = resultContainer.getDoubleItem(i, "projected_member_cost");
+            double projectedContestFee = resultContainer.getDoubleItem(i, "projected_contest_fee");
+            EnterpriseDashboardTotalSpendDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+            item.setProjectedMemberCostSum(item.getProjectedMemberCostSum() + projectedMemberCost);
+            item.setProjectedContestFeeSum(item.getProjectedContestFeeSum() + projectedContestFee);
         }
 
         List<EnterpriseDashboardTotalSpendDTO> result = new ArrayList<EnterpriseDashboardTotalSpendDTO>(resultMap.values());
@@ -6702,12 +6724,25 @@ public class DataProvider {
         request.setProperty("edt", dateFormatter.format(sourceDateFormatter.parse(filterForm.getEndMonth())));
 
         List<TotalSpendDrillInDTO> result = new ArrayList<TotalSpendDrillInDTO>();
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
-        final int recordNum = resultContainer.size();
+        ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        int recordNum = resultContainer.size();
         Calendar calendar = Calendar.getInstance();
+
+        // the first level key is month count, the second key is direct project id
+        Map<Long, Map<Long, TotalSpendDrillInDTO>> cache = new HashMap<Long, Map<Long, TotalSpendDrillInDTO>>();
+
         for (int i = 0; i < recordNum; i++) {
             TotalSpendDrillInDTO item = new TotalSpendDrillInDTO();
             long monthCount = resultContainer.getLongItem(i, "monthcount");
+
+            Map<Long, TotalSpendDrillInDTO> projectsCache;
+
+            if(cache.get(monthCount) == null) {
+                cache.put(monthCount, new HashMap<Long, TotalSpendDrillInDTO>());
+            }
+
+            projectsCache = cache.get(monthCount);
+
             calendar.set(Calendar.YEAR, (int) monthCount/100);
             calendar.set(Calendar.MONTH, (int) (monthCount % 100) - 1);
             item.setYearMonthLabel(dateFormatter.format(calendar.getTime()));
@@ -6720,7 +6755,42 @@ public class DataProvider {
             item.setMemberCostSum(monthCost);
             item.setContestFeeSum(monthContestFee);
             result.add(item);
+
+            projectsCache.put(directProjectId, item);
         }
+
+
+        resultContainer = dataAccessor.getData(request).get("enterprise_dashboard_total_spend_projected");
+        recordNum = resultContainer.size();
+
+        for (int i = 0; i < recordNum; i++) {
+            TotalSpendDrillInDTO item = null;
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            long directProjectId = resultContainer.getLongItem(i, "direct_project_id");
+
+            if (cache.get(monthCount) != null && cache.get(monthCount).containsKey(directProjectId)) {
+                item = cache.get(monthCount).get(directProjectId);
+            }
+
+            if(item == null) {
+                // no existing record, create new one
+                item = new TotalSpendDrillInDTO();
+                calendar.set(Calendar.YEAR, (int) monthCount/100);
+                calendar.set(Calendar.MONTH, (int) (monthCount % 100) - 1);
+                item.setYearMonthLabel(dateFormatter.format(calendar.getTime()));
+                String directProjectName = resultContainer.getStringItem(i, "direct_project_name");
+                item.setDirectProjectId(directProjectId);
+                item.setDirectProjectName(directProjectName);
+                result.add(item);
+            }
+
+            double projectedMonthCost = resultContainer.getDoubleItem(i, "projected_member_cost");
+            double projectedMonthContestFee = resultContainer.getDoubleItem(i, "projected_contest_fee");
+
+            item.setProjectedContestFeeSum(projectedMonthContestFee);
+            item.setProjectedMemberCostSum(projectedMonthCost);
+        }
+
         return result;
     }
 

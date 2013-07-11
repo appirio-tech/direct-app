@@ -29,8 +29,11 @@
 * Version 1.8 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
 * - Add styles for payment slide bar.
 *
-* Author: GreatKevin, hanshuai, GreatKevin, tangzx
-* Version 1.8
+* Version 1.9 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+* - Add styles for project health page
+*
+* Author: GreatKevin, hanshuai, GreatKevin, tangzx, GreatKevin
+* Version 1.9
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -787,7 +790,7 @@ input{
             color:#7f0019;
         }
 
-        #mainSection .sectionContainer #financials .total {
+        #mainSection .sectionContainer #financials tr.total {
             background-color: #F4F7DF;
         }
 
@@ -1064,6 +1067,43 @@ input{
 		#mainSection .projectsHealthSection .projectsHealthTitle a.icon:hover{
 			background-position:0 -18px;
 			}
+
+#mainSection .financialsSection .projectsHealthTitle{
+    height:49px;
+    border:#bdbdbd solid;
+    border-width:1px 1px 0px 1px;
+    background:url(/images/bg_grey.png) repeat-x left top;
+}
+
+#mainSection .financialsSection .projectsHealthTitle h3{
+    width:auto;
+    float:left;
+    display:inline;
+    margin:0 12px 0 14px;
+    padding:0 0 0 43px;
+    font-size:16px;
+    font-weight:normal;
+    line-height:48px;
+    /* text shadow */
+    text-shadow:#ffffff 1px 1px 0;
+    background:url(/images/icon_projects_health_title.png) no-repeat left center;
+}
+
+#mainSection .financialsSection .projectsHealthTitle a.icon{
+    width:18px;
+    height:18px;
+    float:left;
+    display:inline;
+    margin:16px 0 0 0;
+    text-indent:-9999px;
+    background-image:url(/images/icon_i.png);
+    background-repeat:no-repeat;
+    background-position:0 0;
+}
+
+#mainSection .financialsSection .projectsHealthTitle a.icon:hover{
+    background-position:0 -18px;
+}
 			
 	#mainSection .projectsHealthSection .corner{
 		width:4px;
@@ -7813,4 +7853,17 @@ a#platformSpecialist {
     border-style: none solid solid;
     border-width: 0 1px;
     height: auto;
+}
+
+.healthTableData table tbody td {
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+
+.healthTableData table tbody td.total {
+    font-weight: bold !important;
+}
+
+.hide {
+    display:none !important;
 }

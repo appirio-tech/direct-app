@@ -1,6 +1,6 @@
 <%--
   - Author: Ghost_141, GreatKevin
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
@@ -8,6 +8,9 @@
   -
   - Version 1.2 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - - Add loading progress image for select filters.
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+  - - Hides the date range data if the page is project health
   - 
   - Description: The filter panel of the new enterprise dashboard
 --%>
@@ -68,7 +71,7 @@
                                 <select id="metaValueFilter"><option>None</option></select>
                             </div>
                         </div>
-                        <div class="column">
+                        <div class="column <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">hide</c:if>">
                             <div id="zoomSelect">
                                 <span class="label">Zoom</span><span class="validationMessage" style="padding-left: 10px; color: red; display: none">Please select date range</span>
 
@@ -82,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="selectDate">
+                <div class="selectDate <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">hide</c:if>">
                     <a href="javascript:;" class="prevYear">PREV YEAR</a>
                     <div class="monthList">
                         <div class="timeLine">

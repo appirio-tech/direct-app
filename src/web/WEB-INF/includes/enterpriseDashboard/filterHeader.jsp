@@ -1,10 +1,13 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.1
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - - Hide export icons, only show them when needed via JS
+  -
+  - Version 1.2 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+  - - Hides the date pickers if the page is project health
   -
   - Description: The filter header of the new enterprise dashboard
 --%>
@@ -34,8 +37,8 @@
             <dd id="headerFilter"> None </dd>
             <dt>Project Filter Values :</dt>
             <dd id="headerFilterValue"> None </dd>
-            <dt>Date Range :</dt>
-            <dd class="last" id="headerDate"></dd>
+            <dt <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">class="hide"</c:if>>Date Range :</dt>
+            <dd class="last <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">hide</c:if>" id="headerDate"></dd>
         </dl>
         <div class="filterPanelButton">
             <a href="javascript:;" class="greyButton triggerModal" name="filterModal"><span><span><span class="filterIcon">Filter</span></span></span></a>

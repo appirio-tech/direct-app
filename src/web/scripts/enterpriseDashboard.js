@@ -36,8 +36,12 @@
  * - Update filter synchronization logic
  * - Add push state and backward support for IE
  *
+ * Version 2.0 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+ * - Add projected cost to total spend chart and total spend chart drill in
+ * - Add project health page with financial health data
+ *
  * @author GreatKevin, hanshuai, GreatKevin
- * @version 1.9
+ * @version 2.0
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -269,17 +273,18 @@ function getActionNameFromURL(url) {
 
 function renderCurrentPrevMonthSpend() {
     if(currentMonthLoaded && $("#spendThisMonth").length > 0) {
-        $("#spendThisMonth").text("$" + currentMonthTotal ? formatNum(currentMonthTotal) : 0);
+        $("#spendThisMonth").text("$ " + (currentMonthTotal ? formatNum(currentMonthTotal) : 0));
     }
 
     if(prevMonthLoaded && $("#spendLastMonth").length > 0) {
-        $("#spendLastMonth").text("$" + prevMonthTotal ? formatNum(prevMonthTotal) : 0);
+        $("#spendLastMonth").text("$ " + (prevMonthTotal ? formatNum(prevMonthTotal) : 0));
     }
 }
 
 function renderTotalSpendWidget(resultJson) {
     var arrayMonth = new Array();
     var arrayTotalSpend = new Array();
+    var arrayProjected = new Array();
     var arrayTrend = new Array();
     var max = -1;
     var area = 'overviewTotalSpend';
@@ -287,9 +292,10 @@ function renderTotalSpendWidget(resultJson) {
         $.each(resultJson,function(idx,item){
             arrayMonth.push(item.label);
             arrayTotalSpend.push(item.spend/1);
+            arrayProjected.push(item.projected/1);
 
-            if(parseInt(item.spend) > max) {
-                max = parseInt(item.spend);
+            if((parseInt(item.spend) + parseInt(item.projected))  > max) {
+                max = (parseInt(item.spend) + parseInt(item.projected));
             }
 
             arrayTrend.push(item.average/1);
@@ -312,6 +318,7 @@ function renderTotalSpendWidget(resultJson) {
         chart = new Highcharts.Chart({
             chart: {
                 renderTo: area,
+                type:'column',
                 zoomType: 'xy',
                 marginTop: 25,
                 marginLeft: 40,
@@ -376,9 +383,24 @@ function renderTotalSpendWidget(resultJson) {
             tooltip: {
                 useHTML: true,
                 backgroundColor: null,
-                headerFormat: '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>{point.key}</strong>',
-                pointFormat: '<div>{series.name}: {point.y}</div>',
-                footerFormat: '</div></div>',
+                formatter:function () {
+                    var s = '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                        this.point.category
+                        + '</strong><div>' +
+                        this.series.name
+                        + ': $ ' +
+                        formatNum(this.point.y);
+
+                    if(this.point.stackTotal) {
+                        s += '<br/>Projected Total: $ ' + formatNum(this.point.stackTotal);
+                    }
+
+                    s += '</div></div></div>';
+                    return s;
+                },
+//                headerFormat: '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>{point.key}</strong>',
+//                pointFormat: '<div>{series.name}: {point.y}</div>',
+//                footerFormat: '</div></div>',
                 borderRadius: 0,
                 borderWidth: 0,
                 shadow: false,
@@ -397,7 +419,7 @@ function renderTotalSpendWidget(resultJson) {
                 backgroundColor: '#ffffff',
                 borderWidth: 0,
                 borderRadius: 0,
-                align: 'right',
+                align: 'left',
                 verticalAlign: 'top',
                 y: -10,
                 itemStyle: {
@@ -406,30 +428,39 @@ function renderTotalSpendWidget(resultJson) {
                     color: '#898989'
                 },
                 symbolPadding: 5,
-                symbolWidth: 12
+                symbolWidth: 12,
+                width: '100%'
             },
             plotOptions: {
+                column:{
+                    stacking:'normal',
+                    dataLabels:{
+                        enabled:false,
+                        color:'#ffffff',
+                        style:{
+                            fontFamily:'Arial',
+                            fontSize:'11px',
+                            fontWeight:'bold'
+                        },
+                        formatter:function () {
+                            return null;
+                        }
+                    },
+                    shadow:false,
+                    borderColor:Highcharts.getOptions().borderColor
+                },
                 series: {
                     pointWidth: 9
                 }
             },
             series: [{
                 name: 'Total Spend',
-                color: '#4f81bd',
-                type: 'column',
-                yAxis: 1,
-                data: arrayTotalSpend,
-                shadow: false,
-                borderColor: '#325f96',
-                states: {
-                    hover: {
-                        marker: {
-                            fillColor: '#325f96'
-                        }
-                    }
-                }
+                data: arrayTotalSpend
             }, {
-                name: 'Trend',
+                name: 'Projected Cost',
+                data: arrayProjected
+            }, {
+                name: 'Moving Average (3 Months)',
                 color: '#f30000',
                 type: 'line',
                 data: arrayTrend,
@@ -448,6 +479,7 @@ function renderTotalSpendWidget(resultJson) {
 function renderTotalSpendChart(resultJson) {
     var arrayMonth = new Array();
     var arrayTotalSpend = new Array();
+    var arrayProjected = new Array();
     var arrayTrend = new Array();
     var max = -1;
     var area = 'chartTotalSpend';
@@ -456,9 +488,10 @@ function renderTotalSpendChart(resultJson) {
         $.each(resultJson,function(idx,item){
             arrayMonth.push(item.label);
             arrayTotalSpend.push(item.spend/1);
+            arrayProjected.push(item.projected/1);
 
-            if(parseInt(item.spend) > max) {
-                max = parseInt(item.spend);
+            if((parseInt(item.spend) + parseInt(item.projected))  > max) {
+                max = (parseInt(item.spend) + parseInt(item.projected));
             }
 
             arrayTrend.push(item.average/1);
@@ -481,6 +514,7 @@ function renderTotalSpendChart(resultJson) {
         chart = new Highcharts.Chart({
             chart: {
                 renderTo: area,
+                type:'column',
                 zoomType: 'xy',
                 marginTop: 20,
                 marginLeft: 50,
@@ -522,6 +556,9 @@ function renderTotalSpendChart(resultJson) {
                 title: {
                     text: ''
                 },
+                stackLabels:{
+                    enabled:true
+                },
                 max: maxY,
                 min: 0,
                 tickInterval: interval,
@@ -545,9 +582,24 @@ function renderTotalSpendChart(resultJson) {
             tooltip: {
                 useHTML: true,
                 backgroundColor: null,
-                headerFormat: '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>{point.key}</strong>',
-                pointFormat: '<div>{series.name}: {point.y}</div>',
-                footerFormat: '</div></div>',
+                formatter:function () {
+                    var s = '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                        this.point.category
+                        + '</strong><div>' +
+                        this.series.name
+                        + ': $ ' +
+                        formatNum(this.point.y);
+
+                    if(this.point.stackTotal) {
+                        s += '<br/>Projected Total: $ ' + formatNum(this.point.stackTotal);
+                    }
+
+                    s += '</div></div></div>';
+                    return s;
+                },
+//                headerFormat: '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>{point.key}</strong>',
+//                pointFormat: '<div>{series.name}: {point.y}<br/>Projected Total: $ {point.stackTotal}</div>',
+//                footerFormat: '</div></div>',
                 borderRadius: 0,
                 borderWidth: 0,
                 shadow: false,
@@ -578,9 +630,29 @@ function renderTotalSpendChart(resultJson) {
                 symbolWidth: 12
             },
             plotOptions: {
+                column:{
+                    stacking:'normal',
+                    dataLabels:{
+                        enabled:true,
+                        color:'#ffffff',
+                        style:{
+                            fontFamily:'Arial',
+                            fontSize:'11px',
+                            fontWeight:'bold'
+                        },
+                        formatter:function () {
+                            return this.y == 0 ? null : '$ ' + formatNum(this.y);
+                        }
+                    },
+                    shadow:false,
+                    borderColor:Highcharts.getOptions().borderColor
+                },
                 series: {
                     events: {
                         click : function(event) {
+                            if(!event.point.stackTotal) {
+                                return;
+                            }
                             $('#financialViewPopupMonth').text(event.point.category);
                             var requestData = getEnterpriseDashboardRequest(100000, 0, true);
 
@@ -620,22 +692,13 @@ function renderTotalSpendChart(resultJson) {
                 }
             },
             series: [{
-                name: 'Total Spend',
-                color: '#4572A7',
-                type: 'column',
-                yAxis: 1,
-                data: arrayTotalSpend,
-                shadow: false,
-                borderColor: '#325f96',
-                states: {
-                    hover: {
-                        marker: {
-                            fillColor: '#325f96'
-                        }
-                    }
-                }
+                name: 'Actual Cost',
+                data: arrayTotalSpend
             }, {
-                name: 'Trend',
+                name: 'Projected Cost',
+                data: arrayProjected
+            }, {
+                name: 'Moving Average (3 Months)',
                 color: '#f30000',
                 type: 'line',
                 data: arrayTrend,
@@ -675,6 +738,7 @@ function renderTotalSpendChart(resultJson) {
     var totalMemberCost = 0;
     var totalContestFee = 0;
     var totalSpend = 0;
+    var totalProjected = 0;
     $.each(resultJson, function (idx, item) {
         strData += '<tr>';
         strData += '<td class="month">';
@@ -689,10 +753,14 @@ function renderTotalSpendChart(resultJson) {
         strData += '<td>$';
         strData += formatNum(item.spend);
         strData += '</td>';
+        strData += '<td>$';
+        strData += formatNum(parseFloat(item.spend) + parseFloat(item.projected));
+        strData += '</td>';
         strData += '</tr>';
         totalMemberCost += parseFloat(item.memberCost);
         totalContestFee += parseFloat(item.contestFee);
         totalSpend += parseFloat(item.spend);
+        totalProjected += (parseFloat(item.spend) + parseFloat(item.projected));
     });
 
     var totalData = '';
@@ -709,6 +777,9 @@ function renderTotalSpendChart(resultJson) {
     totalData += '</td>';
     totalData += '<td>$';
     totalData += formatNum(totalSpend);
+    totalData += '</td>';
+    totalData += '<td>$';
+    totalData += formatNum(totalProjected);
     totalData += '</td>';
     totalData += '</tr></tfoot>';
 
@@ -740,6 +811,7 @@ function renderTotalSpendChart(resultJson) {
             ],
             "aoColumns": [
                 { "sType": "financial-date" },
+                { "sType": "money" },
                 { "sType": "money" },
                 { "sType": "money" },
                 { "sType": "money" }
@@ -2156,6 +2228,11 @@ function renderFinancialTab() {
     $(".filterPanelButton .xls").attr('href', 'getTotalSpendExport?' + $.param({formData: getEnterpriseDashboardRequest(10000, 0, true)}));
 }
 
+function renderHealthTab() {
+    loadFinancial(renderFinancial);
+    $(".filterPanelButton .xls").attr('href', 'getHealthExport?' + $.param({formData: getEnterpriseDashboardRequest(10000, 0, true)}));
+}
+
 function getRequestForAnalysis() {
     var request = {};
     request.customerIds = [getFilterSelectorValue('customer')];
@@ -2976,9 +3053,24 @@ $(document).ready(function () {
                         { "sType": "html" },
                         { "sType": "money" },
                         { "sType": "money" },
+                        { "sType": "money" },
+                        { "sType": "money" },
                         { "sType": "money" }
                     ]
                 });
+            }
+        });
+    }
+
+    // project health page
+    if ($(".projectHealthIcon").parents("li").hasClass("active")) {
+        $(".filterPanelButton .xls").show();
+        renderHealthTab();
+
+        $("#filterButton").click(function(){
+            if(validateFilterPanel()) {
+                modalAllClose();
+                renderHealthTab();
             }
         });
     }

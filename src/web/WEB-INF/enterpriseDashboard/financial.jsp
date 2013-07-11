@@ -1,13 +1,16 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.2
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
   - - Add total spend chart drill-in popup
   -
   - Version 1.2 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - - Add history.js to support push state and back-compatible with IE with hash-fallback
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+  - - Add projected cost
   -
   - Description: The financial page the new enterprise dashboard
 --%>
@@ -23,7 +26,7 @@
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/enterpriseDashboard.css"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
@@ -40,8 +43,10 @@
                 <a href="../projectOverview?formData.projectId={{:directProjectId}}" target="_blank">{{:directProjectName}}</a>
             </td>
             <td>{{:~formatMoney(memberCost)}}</td>
+            <td>{{:~formatMoney(projectedCost)}}</td>
             <td>{{:~formatMoney(contestFee)}}</td>
             <td>{{:~formatMoney(spend)}}</td>
+            <td>{{:~formatMoney(projectedTotal)}}</td>
         </tr>
     </script>
 </head>
@@ -74,14 +79,14 @@
 
                                     <div class="sectionInner">
 
-                                        <div class="totalSpendTitle"  data-intro="Total spend is calculated by adding together all of your competitions costs as well as any fees. The blue bars represent your spend per month.  The red line is a 3 month moving average." data-step="1">
+                                        <div class="totalSpendTitle">
                                             <h3>Total Spend</h3>
-                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
+                                            <a href="javascript:;" class="icon"
                                                rel="Total Amount Spent for the Projects each month is shown here.">!</a>
                                         </div>
                                         <!-- title -->
                                         <div class="numberSection">
-                                            <div class="numberSectionInner" data-intro="At a quick glance, see what you spent so far this month, last month, your average per month, and the total for the time range in your filter." data-step="2">
+                                            <div class="numberSectionInner">
                                                 <ul>
                                                     <li class="last ajaxTableLoader"><img
                                                             src="/images/rss_loading.gif" alt="loading"/></li>
@@ -89,7 +94,7 @@
                                             </div>
                                         </div>
                                         <div class="chartSection">
-                                            <div id="chartTotalSpend" data-intro="Click a blue bar to drill into the data." data-step="3" data-position="top">
+                                            <div id="chartTotalSpend">
                                                 <div class="ajaxTableLoader"><img src="/images/rss_loading.gif"
                                                                                   alt="loading"/></div>
                                             </div>
@@ -107,9 +112,9 @@
 
                                     <div class="sectionInner">
 
-                                        <div class="financialTitle"  data-intro="The financials table is a tabular summary of your monthly spend.  It's the same data that you see in the chart above." data-step="4" data-position="top">
+                                        <div class="financialTitle">
                                             <h3>Financials</h3>
-                                            <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
+                                            <a href="javascript:;" class="icon"
                                                rel="Shows your monthly projects cost and the total sum">!</a>
                                         </div>
                                         <!-- title -->
@@ -118,26 +123,28 @@
 
 
                                             <!-- table -->
-                                            <div class="tableData" data-intro="Member costs include all competition and task costs that are paid to the community. Fees include your per-competition fee.  This is in addition to the community payments. Total cost currently does NOT include your platform license fees." data-step="5" data-position="top">
+                                            <div class="tableData">
 
                                                 <table border="0" cellspacing="0" cellpadding="0" id="financials">
                                                     <colgroup>
-                                                        <col width="25%"/>
-                                                        <col width="25%"/>
-                                                        <col width="25%"/>
-                                                        <col width="25%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
                                                     </colgroup>
                                                     <thead>
                                                     <tr>
                                                         <th>Month</th>
                                                         <th>Member Costs</th>
                                                         <th>Contest Fees</th>
-                                                        <th>Total</th>
+                                                        <th>Actual Total</th>
+                                                        <th>Projected Total</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td colspan="4">
+                                                        <td colspan="5">
                                                             <div class="ajaxTableLoader"><img
                                                                     src="/images/rss_loading.gif" alt="loading"/></div>
                                                         </td>
@@ -190,9 +197,11 @@
                         <thead>
                         <tr class="head">
                             <th class="first noBT">Project Name</th>
-                            <th class="noBT">Member Cost</th>
-                            <th class="noBT">Contest Fees</th>
-                            <th class="noBT">Total Cost</th>
+                            <th class="noBT">Actual Member Cost</th>
+                            <th class="noBT">Projected Cost</th>
+                            <th class="noBT">Actual Contest Fees</th>
+                            <th class="noBT">Actual Total Cost</th>
+                            <th class="noBT">Projected Total Cost</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -210,22 +219,24 @@
 <span class="hide" id="tableTemplate">
      <table border="0" cellspacing="0" cellpadding="0">
          <colgroup>
-             <col width="25%"/>
-             <col width="25%"/>
-             <col width="25%"/>
-             <col width="25%"/>
+             <col width="20%"/>
+             <col width="20%"/>
+             <col width="20%"/>
+             <col width="20%"/>
+             <col width="20%"/>
          </colgroup>
          <thead>
          <tr>
              <th>Month</th>
              <th>Member Costs</th>
              <th>Contest Fees</th>
-             <th>Total</th>
+             <th>Actual Total</th>
+             <th>Projected Total</th>
          </tr>
          </thead>
          <tbody>
          <tr>
-             <td colspan="4">
+             <td colspan="5">
                  <div class="ajaxTableLoader"><img
                          src="/images/rss_loading.gif" alt="loading"/></div>
              </td>

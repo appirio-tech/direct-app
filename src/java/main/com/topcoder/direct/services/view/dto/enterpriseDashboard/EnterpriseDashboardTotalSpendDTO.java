@@ -26,8 +26,16 @@ import java.util.Date;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
+ * <ul>
+ *     <li>Adds property {@link #projectedContestFeeSum} and its getter and setter</li>
+ *     <li>Adds property {@link #projectedMemberCostSum} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class EnterpriseDashboardTotalSpendDTO implements Serializable {
 
@@ -46,6 +54,21 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
     private double contestFeeSum;
 
     /**
+     * The projected member cost sum.
+     *
+     * @since 1.3
+     */
+    private double projectedMemberCostSum;
+
+
+    /**
+     * The projected contest fee sum.
+     *
+     * @since 1.3
+     */
+    private double projectedContestFeeSum;
+
+    /**
      * The average spend of the month.
      */
     private long averageSpend;
@@ -61,7 +84,28 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
      * @return the total spend.
      */
     public long getTotalSpend() {
-        return getMemberCost() + getContestFee();
+        return Math.round(this.contestFeeSum + this.memberCostSum);
+    }
+
+    /**
+     * Gets the projected total spend
+     *
+     * @return the projected total spend
+     * @since 1.3
+     */
+    public long getProjectedTotalSpend() {
+        return Math.round(
+                this.contestFeeSum + this.memberCostSum + this.projectedContestFeeSum + this.projectedMemberCostSum);
+    }
+
+    /**
+     * Gets the planned total cost (active + draft contests)
+     *
+     * @return the planned total cost
+     * @since 1.3
+     */
+    public long getTotalProjected() {
+        return Math.round(this.projectedContestFeeSum + this.projectedMemberCostSum);
     }
 
     /**
@@ -121,6 +165,26 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
     }
 
     /**
+     * Gets the projected member cost.
+     *
+     * @return the projected member cost.
+     * @since 1.3
+     */
+    public long getProjectedMemberCost() {
+        return Math.round(this.projectedMemberCostSum);
+    }
+
+    /**
+     * Gets the projected contest fee.
+     *
+     * @return the projected contest fee.
+     * @since 1.3
+     */
+    public long getProjectedContestFee() {
+        return Math.round(this.projectedContestFeeSum);
+    }
+
+    /**
      * Gets the member cost sum.
      *
      * @return the member cost sum.
@@ -158,5 +222,45 @@ public class EnterpriseDashboardTotalSpendDTO implements Serializable {
      */
     public void setContestFeeSum(double contestFeeSum) {
         this.contestFeeSum = contestFeeSum;
+    }
+
+    /**
+     * Gets the projected member cost sum
+     *
+     * @return the projected member cost sum.
+     * @since 1.3
+     */
+    public double getProjectedMemberCostSum() {
+        return projectedMemberCostSum;
+    }
+
+    /**
+     * Sets the projected member cost sum.
+     *
+     * @param projectedMemberCostSum the projected member cost sum.
+     * @since 1.3
+     */
+    public void setProjectedMemberCostSum(double projectedMemberCostSum) {
+        this.projectedMemberCostSum = projectedMemberCostSum;
+    }
+
+    /**
+     * Gets the projected contest fee sum.
+     *
+     * @return the projected contest fee sum.
+     * @since 1.3
+     */
+    public double getProjectedContestFeeSum() {
+        return projectedContestFeeSum;
+    }
+
+    /**
+     * Sets the projected contest fee sum.
+     *
+     * @param projectedContestFeeSum the projected contest fee sum.
+     * @since 1.3
+     */
+    public void setProjectedContestFeeSum(double projectedContestFeeSum) {
+        this.projectedContestFeeSum = projectedContestFeeSum;
     }
 }
