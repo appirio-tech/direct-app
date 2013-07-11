@@ -45,7 +45,7 @@
 
                             <!-- main section -->
                             <div id="mainSection">
-                                <h2>Projects Health</h2>
+                                <h2 data-intro="Welcome to your Projects Health Dashboard. Below you will find some information regarding your projects such as budgets and actual vs. projected costs." data-step="1">Projects Health</h2>
 
                                 <!-- filter panel -->
                                 <jsp:include page="../includes/enterpriseDashboard/filterHeader.jsp"/>
@@ -59,22 +59,22 @@
                                         <div class="projectsHealthTitle">
                                             <h3>Projects Health</h3>
                                             <a href="javascript:;" class="icon"
-                                               rel="Analysis budget health of projects">!</a>
+                                               rel="">!</a>
                                         </div>
                                         <!-- title -->
 
                                         <div class="dataSection">
 
                                             <!-- table -->
-                                            <div class="tableData healthTableData">
+                                            <div class="tableData healthTableData" data-intro="Use the filter above to select different projects. The colors below alert you to potential issues." data-step="2">
 
                                                 <table border="0" cellspacing="0" cellpadding="0" id="financials" class="paginatedDataTable">
                                                     <colgroup>
-                                                        <col width="25%"/>
-                                                        <col/>
-                                                        <col width="11%"/>
-                                                        <col width="11%"/>
-                                                        <col width="11%"/>
+                                                        <col width="25%" data-intro="The name of your projects." data-step="3" />
+                                                        <col data-intro="Budget meter. If it is red, your project is currently exceeding the planned budget." data-step="4" />
+                                                        <col width="11%" data-intro="The budget you set on your projects. Please set them if they are currently not set." data-step="5" />
+                                                        <col width="11%" data-intro="The actual cost of your project to date." data-step="6" />
+                                                        <col width="11%" data-intro="The projected cost based on your actuals plus the planned costs." data-step="7" />
                                                     </colgroup>
                                                     <thead>
                                                     <tr>
