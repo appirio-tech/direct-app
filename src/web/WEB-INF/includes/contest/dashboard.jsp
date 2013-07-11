@@ -142,11 +142,6 @@
                     <div id="timelineChart"></div>
                 </div>
             </s:if>
-            <s:else>
-                <div>
-                    <span>There is no round id hooked with contest.</span>
-                </div>
-            </s:else>
             <!-- End .timelineContainer -->
         </div>
         <!-- End .content -->
@@ -218,11 +213,22 @@
             <!-- End .content -->
         </div>
     </s:if>
-    <s:else>
+    <s:elseif test="marathon && !hasRoundId">
         <div class="dashboardModule registrationModule">
-            <span>There is no round id hooked with the contest.</span>
+            <h1 class="heading">
+                <span class="tl"></span>
+                <span class="tr"></span>
+                Registration
+            </h1>
+            <div class="content">
+                <span class="bl"></span>
+                <span class="br"></span>
+                    <div class="listContent">
+                        <span>There is no round id hooked with the contest.</span>
+                    </div>
+            </div>
         </div>
-    </s:else>
+    </s:elseif>
     <s:if test="!marathon">
         <div class="dashboardModule registrationModule">
 
@@ -522,9 +528,22 @@
                 <!-- End .content -->
             </div>
         </s:if>
-        <s:else>
-            <span>There is no round id hooked with this contest.</span>
-        </s:else>
+        <s:elseif test="marathon && !hasRoundId">
+            <div class="dashboardModule currentStandingsModule">
+                <h1 class="heading">
+                    <span class="tl"></span>
+                    <span class="tr"></span>
+                    Current Standings - Top 3
+                </h1>
+                <div class="content">
+                    <span class="bl"></span>
+                    <span class="br"></span>
+                    <div class="listContent">
+                        <span>There is no round id hooked with this contest.</span>
+                    </div>
+                 </div>
+            </div>
+        </s:elseif>
         <!-- End .dashboardModule -->
         <div class="clear"></div>
     </div>
