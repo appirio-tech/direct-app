@@ -1,0 +1,310 @@
+/* project planner */
+#mainContent.projectPlanner {
+    background: #ffffff;
+}
+
+.projectPlanner #area1 {
+    padding-right: 25px;
+}
+
+#area1 .projectPlanner {
+    font-size: 14px;
+}
+
+/* project planner header */
+#area1 .projectPlanner h2 {
+    font-size: 18px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #a9acae;
+}
+
+/* project planner note */
+#area1 .projectPlanner .note {
+    font-size: 11px;
+    background: url("../../images/note-icon.png") no-repeat;
+    padding-left: 20px;
+    height: 28px;
+    line-height: 14px;
+    display: block;
+    margin-top: 8px;
+}
+
+/* project settings pane layout */
+#area1 .projectPlanner .projectSettings {
+    padding: 8px 0 20px 20px;
+    border-bottom: 1px solid #a9acae;
+}
+    #area1 .projectPlanner .projectSettings label {
+        vertical-align: middle;
+        padding-right: 8px;
+        font-weight: bold;
+    }
+    #area1 .projectPlanner .projectSettings select {
+        padding: 2px;
+        height: 23px;
+        width: 200px;
+        line-height: 23px;
+        margin-top: 2px;
+        margin-right: 48px;
+    }
+
+    #area1 .projectPlanner .projectSettings .dateContainer {
+        display: inline;
+    }
+
+    #area1 .projectPlanner .projectSettings input[name=startDate] {
+        width: 76px;
+        height: 23px;
+        padding: 0 5px;
+        line-height: 23px;
+        border: 1px solid #a8abad;
+    }
+
+    #area1 .projectPlanner .projectSettings .dp-choose-date {
+        float: none;
+        display: inline-block;
+        vertical-align: top;
+    }
+/* project settings pane ends */
+
+
+#area1 .projectPlanner span.validation {
+    color: #C22F2F;
+    display: none;
+    float: left;
+    font-size: 11px;
+    line-height: 15px;
+    text-align: right;
+}
+
+
+/* project planner bottom controls */
+
+/* add more button */
+#area1 .projectPlanner .addMoreWrapper {
+    padding: 12px 0 12px 25px;
+    height: 25px;
+    border-bottom: 1px solid #a9acae;
+}
+
+    #area1 .projectPlanner .addMoreContests span {
+        padding: 0 10px 0 27px;
+    }
+
+    #area1 .projectPlanner .addMoreContests i {
+        background-image: url("../../images/icon-project-task.png");
+        width: 20px;
+        height: 25px;
+        display: block;
+        position: absolute;
+        background-position: 0 -115px;
+        left: 6px;
+        top: 0;
+    }
+/* add more button end */
+
+#area1 .projectPlanner .planBugRacesWrapper {
+    padding: 20px 0 20px 25px;
+    height: 20px;
+    line-height: 20px;
+    border-bottom: 1px solid #a9acae;
+}
+
+    #area1 .projectPlanner .planBugRacesWrapper input {
+        width: 35px;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 5px;
+        border: 1px solid #a8abad;
+    }
+
+#area1 .projectPlanner .buttonBar {
+    padding: 20px 0 0 25px;
+    line-height: 24px;
+}
+
+    #area1 .projectPlanner .buttonBar .newButton1 {
+        margin-left: 12px;
+        vertical-align: middle;
+    }
+
+#area1 .projectPlanner input[type="file"] {
+    min-height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+}
+
+/* project planner bottom controls end */
+
+/* project planner contest table */
+#area1 .projectPlanner #contestTable {
+    width: 100%;
+    margin: 10px 0;
+    border-collapse: collapse;
+}
+
+    #area1 .projectPlanner #contestTable .contestRowTemplate{
+        display: none;
+    }
+
+    #area1 .projectPlanner #contestTable th {
+        padding: 6px 0;
+        text-align: left;
+    }
+
+    #area1 .projectPlanner #contestTable td {
+        padding: 8px 10px 4px 0;
+        line-height: 23px;
+        vertical-align: top;
+    }
+
+    #area1 .projectPlanner #contestTable .contestNameWrapper {
+        padding-right: 20px;
+    }
+
+    #area1 .projectPlanner #contestTable input[type=text] {
+        width: 100%;
+        padding: 0 5px;
+        height: 22px;
+        line-height: 22px;
+        border: 1px solid #a8abad;
+        float: left;
+    }
+
+    #area1 .projectPlanner #contestTable select {
+        width: 100%;
+        padding: 2px;
+        height: 24px;
+        line-height: 24px;
+        float: left;
+    }
+
+    #area1 .projectPlanner #contestTable .contestType {
+        width: 160px;
+    }
+
+    #area1 .projectPlanner #contestTable .memberCost,
+    #area1 .projectPlanner #contestTable .contestFee {
+        display: block;
+        height: 22px;
+        line-height: 22px;
+        padding-right: 5px;
+        border: 1px solid #a8abad;
+        font-size: 13px;
+        text-align: right;
+        cursor: default;
+    }
+
+    #area1 .projectPlanner #contestTable .deleteContest {
+        background: url("../../images/remove-bascket.png") no-repeat;
+        padding-left: 17px;
+        margin-right: -10px;
+        color: #ec1c23;
+        font-size: 12px;
+    }
+
+    #area1 .projectPlanner .taskMultiSelector {
+        min-width: 120px;
+    }
+
+    #area1 .projectPlanner .taskMultiSelectorOpen {
+        z-index: 1;
+    }
+
+        #area1 .projectPlanner .taskMultiSelectorOpen .dropDown {
+            z-index: 5;
+        }
+/* project planner contest table end */
+
+/* gray button - copied from projectTasks.css */
+.buttonGray {
+    display: block;
+    background: transparent url(../../images/edit/grayBtn-left.png) left top no-repeat;
+    font-size: 11px;
+    color: #333333;
+    line-height: 25px;
+    font-weight: normal;
+    text-align: left;
+    padding-left: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+	.buttonGray span {
+		display: block;
+		background: transparent url(../../images/edit/grayBtn-right.png) right top no-repeat;
+		cursor: pointer;
+		height: 25px;
+		padding-right: 4px;
+		position: relative;
+	}
+
+    .buttonGray:hover {
+        background-position: left -25px;
+    }
+        .buttonGray:hover span {
+            background-position: right -25px;
+        }
+/* gray button end */
+
+/* modals */
+#modalBackground {
+    position: fixed;
+}
+
+/* gantt chart modal */
+#jsGanttChartDiv {
+    overflow: auto;
+    position: relative;
+}
+
+    #hideLeftPanel {
+        padding: 0;
+        float: left;
+        margin: 10px 0 0 30px;
+        height: 21px;
+        line-height: 21px;
+        text-align: center;
+    }
+
+    #leftside input{
+        vertical-align: middle;
+        margin-bottom: 2px;
+    }
+
+/* circular error modal  */
+#ganttChartCircular,
+#ganttChartCircularMultiple {
+    padding: 20px 25px;
+}
+
+#multipleCircularsList {
+    list-style: none;
+    padding-left: 20px;
+}
+
+/* empty plan modal */
+#projectPlanEmptyModal p {
+    padding: 20px 25px;
+}
+
+/* export json modal */
+#projectPlanExportJSONModal {
+    width: 600px;
+}
+
+    #projectPlanExportJSONModal .modalBody {
+        padding: 10px;
+    }
+
+    #projectPlanExportJSON {
+        width: 100%;
+        max-width: 572px;
+        max-height: 400px;
+
+        border: 0;
+        font-size: 12px;
+        background: transparent;
+    }

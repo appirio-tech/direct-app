@@ -3125,3 +3125,62 @@ $(document).ready(function(){
         }
     });
 })
+
+// Multiply selector elemen functionality
+// Moved from projectTasks.js
+$(document).ready(function(){
+
+    // binds on document click function which close currently opened selector
+    function selectorClose(selector) {
+        var hideFunction = function(event){
+            if (event.type != 'click' && $(event.target).closest(".taskMultiSelectorOpen").filter(selector).length) {
+                return;
+            }
+            $(document).unbind('mousedown', hideFunction);
+            $('.btnWrapper a', selector).unbind('click', hideFunction);
+            selector.removeClass("taskMultiSelectorOpen");
+            buildSelectorLabel(selector);
+        };
+        $(document).bind('mousedown', hideFunction);
+        $('.btnWrapper a', selector).click(hideFunction);
+    }
+
+    // builds selector caption and title
+    function buildSelectorLabel(selector) {
+        var label = [];
+        $('input:checked', selector).next('label').each(function(){
+            label.push(this.innerHTML);
+        });
+
+        var displayTxt = label.join(', ');
+        if (displayTxt == ""){
+            displayTxt = $(".trigger label", selector).text();
+        }
+        $(".trigger .msValue", selector).text(displayTxt).attr("title", displayTxt);
+    }
+
+    // handles selector label changes
+    $('.taskMultiSelector').live('changelabel', function(){
+        buildSelectorLabel(this);
+    });
+    $('.taskMultiSelector .trigger').live('click', function(){
+        var wrapper = $(this).parent();
+        if (wrapper.hasClass('disabled')) {
+            return;
+        }
+        var wrapperWidth = wrapper.width();
+        if (wrapper.not('.taskMultiSelectorOpen')) selectorClose(wrapper);
+        wrapper.addClass("taskMultiSelectorOpen");
+        $('.dropDown', wrapper).width(wrapperWidth - 2);
+    });
+    $('.taskMultiSelector li label').live('click', function(){
+        var li = $(this).parent();
+        $("input", li).trigger("click");
+    }).live('change', function(){
+
+            // handles selector item label changes
+            if ($(this).prev(':checked').length) {
+                buildSelectorLabel($(this).closest('.taskMultiSelector'));
+            }
+        });
+});

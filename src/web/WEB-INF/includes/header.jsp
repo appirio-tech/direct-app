@@ -613,6 +613,7 @@
                                 <div class="section">
                                     <h3>Create Contest</h3>
                                     <a href="<s:url action="home" namespace="/launch"></s:url>">Launch New Contest</a>
+                                    <a href="<s:url action="projectPlanner" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Project Planner</a>
                                   <!--  <a href="javascript:;">Quick Create Draft Contest</a>
                                     <a href="javascript:;">Bulk Creation</a>-->
                                 </div>

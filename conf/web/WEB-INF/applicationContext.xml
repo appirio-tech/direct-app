@@ -502,6 +502,13 @@
         <property name="groupService" ref="groupService"/>
     </bean>
 
+    <bean id="projectPlannerAction"
+          class="com.topcoder.direct.services.view.action.project.planner.ProjectPlannerAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
+    </bean>
+
     <bean id="saveCockpitProjectSettingAction" class="com.topcoder.direct.services.view.action.project.edit.SaveCockpitProjectSettingAction"
           parent="baseDirectStrutsAction" scope="prototype">
         <property name="groupService" ref="groupService"/>

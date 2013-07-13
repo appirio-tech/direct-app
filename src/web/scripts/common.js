@@ -89,45 +89,6 @@ $(document).ready(function() {
         };
     }
 
-    var invliadCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
-
-    /**
-     * Limits the allowed chars to alphanumeric, $, and !
-     * https://apps.topcoder.com/bugs/browse/TCCC-3091
-     */
-    function limitContestProjectNameChars(maxChars) {
-        var ori = "";
-        var timeId = -1;
-        return function(e) {
-            var textArea = $(this);
-            var content = textArea.val();
-            var invalid = false;
-            if (content.search(invliadCharsRegExp, '') > -1) {
-                invalid = true;
-            }
-            if (content.length <= maxChars && !invalid) {
-                ori = content;
-            }
-            if (timeId != -1) {
-                timeId = clearTimeout(timeId);
-            }
-            timeId = setTimeout(function() {
-                timeId = -1;
-                if (invalid) {
-                    showErrors("Only alphanumeric, $, -, ! and space characters are allowed.");
-                    textArea.val(ori);
-                    return;
-                }
-                if (textArea.val().length > maxChars) {
-                    showErrors("You can only input max " + maxChars
-                        + " characters.");
-                    textArea.val(ori);
-                }
-            }, 100);
-            return true;
-        };
-    }
-
 	  // limits the characters for text inputs and text editors
 	  $("#contestName, #projectName, #newProjectName").bind('keydown keyup paste', limitContestProjectNameChars(200));
 	  
@@ -136,10 +97,60 @@ $(document).ready(function() {
       $("#newProjectDescription").bind('keydown keyup paste', limitFileDescriptionChars(2000));
 });
 
+var invalidCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
+
+/**
+ * Limits the allowed chars to alphanumeric, $, and !
+ * https://apps.topcoder.com/bugs/browse/TCCC-3091
+ */
+function limitContestProjectNameChars(maxChars) {
+    var ori = "";
+    var timeId = -1;
+    return function(e) {
+        var textArea = $(this);
+        var content = textArea.val();
+        var invalid = false;
+        if (content.search(invalidCharsRegExp, '') > -1) {
+            invalid = true;
+        }
+        if (content.length <= maxChars && !invalid) {
+            ori = content;
+        }
+        if (timeId != -1) {
+            timeId = clearTimeout(timeId);
+        }
+        timeId = setTimeout(function() {
+            timeId = -1;
+            if (invalid) {
+                showErrors("Only alphanumeric, $, -, ! and space characters are allowed.");
+                textArea.val(ori);
+                return;
+            }
+            if (textArea.val().length > maxChars) {
+                showErrors("You can only input max " + maxChars
+                    + " characters.");
+                textArea.val(ori);
+            }
+        }, 100);
+        return true;
+    };
+}
+
 Number.prototype.formatMoney = function(c, d, t){
     var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
+
+function isIntegerInput(input) {
+    if(!input) return false;
+
+    var number = parseInt(input, 10);
+    if(input == "" || number != input) {
+        return false;
+    }
+
+    return true;
+}
 
 /**
  * Modifies the jQuery param function so that it matches struts2 conversion.

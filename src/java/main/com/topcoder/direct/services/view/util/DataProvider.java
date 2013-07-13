@@ -911,10 +911,17 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.16 (Module Assembly - TopCoder Cockpit Project Planner)
+ * <ul>
+ *     <li>Adds {@link #getProjectCopilotPostingContests(long)} to get copilot postings of a specific cockpit project</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
- * @version 6.15
+ * @version 6.16
  * @since 1.0
  */
 public class DataProvider {
@@ -4387,6 +4394,42 @@ public class DataProvider {
                     ContestType.COPILOT_POSTING, status, startDate, endDate,
                     forumPostsCount, registrantsCount, submissionsCount, forumId,
                     false);
+
+            result.add(contest);
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the copilot posting contest of the specific direct project.
+     *
+     * @param directProjectId the id of the direct project.
+     * @return the list of <code>ContestBriefDTO</code>
+     * @throws Exception if any error
+     * @since 6.16
+     */
+    public static List<ContestBriefDTO> getProjectCopilotPostingContests(long directProjectId) throws Exception {
+        List<ContestBriefDTO> result = new ArrayList<ContestBriefDTO>();
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+        request.setContentHandle("project_copilot_postings");
+        request.setProperty("tcdirectid", String.valueOf(directProjectId));
+
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+
+        final ResultSetContainer copilotPostings = results.get("project_copilot_postings");
+
+        for (ResultSetContainer.ResultSetRow cp : copilotPostings) {
+            long contestId = cp.getLongItem("contest_id");
+            long projectId = cp.getLongItem("tc_direct_project_id");
+            String billingAccount = cp.getStringItem("billing_project_id");
+
+            ContestBriefDTO contest = new ContestBriefDTO();
+            contest.setId(contestId);
+            contest.setBillingAccountId(Long.parseLong(billingAccount));
 
             result.add(contest);
         }

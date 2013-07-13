@@ -682,6 +682,39 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="projectPlanner" class="projectPlannerAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/projectPlanner.jsp</result>
+        </action>
+
+        <action name="getProjectPlannerConfiguration" class="projectPlannerAction" method="getProjectPlannerConfiguration">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="downloadProjectPlan" class="projectPlannerAction" method="downloadProjectPlan">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=projectPlan.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+        <action name="exportProjectPlan" class="projectPlannerAction" method="exportProjectPlan">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="importProjectPlan" class="projectPlannerAction" method="importProjectPlan">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="editProject" class="editCockpitProjectAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/editCockpitProject.jsp</result>

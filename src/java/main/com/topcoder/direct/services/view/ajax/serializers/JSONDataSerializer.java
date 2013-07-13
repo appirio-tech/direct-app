@@ -130,6 +130,7 @@ public class JSONDataSerializer implements AJAXDataSerializer {
         } else if (data instanceof Exception) {
             // if the data is an exception
             String error = ((Exception) data).getMessage();
+            ((Exception) data).printStackTrace(System.err);
             jsonReturnString = jsonErrorTemplate.replace(ERROR_TOKEN_REG, error == null ? EMPTY_STRING : error);
         } else {
             // other cases

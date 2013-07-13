@@ -4,7 +4,7 @@
  * Used for the project tasks pages.
  *
  * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
- * @author TCSASSEMBLER
+ * @author GreatKevin
  */
 .taskPage #content{
 	min-width: 1347px
@@ -189,95 +189,6 @@
 		top: 5px;
 		left: 8px;
 	}
-.taskMultiSelector {
-	position: relative;
-}
-	.taskMultiSelector .trigger{
-		margin-right: 24px;
-		cursor: pointer;
-	}
-		.taskMultiSelector .trigger .msValue, .taskMultiSelector .trigger .msValue:hover{
-			display: block;
-			height: 24px;
-			line-height: 24px;
-			font-size: 11px;
-			color: #333333;
-			overflow: hidden;
-			padding-left: 7px;
-			background: url(/images/task-multi-selector.png) 0 0 no-repeat;
-			text-decoration: none;
-		}
-		.taskMultiSelector .trigger .selectorArrow{
-			display: block;
-			height: 24px;
-			width: 24px;
-			background: url(/images/task-multi-selector.png) 100% -48px no-repeat;
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-		.taskMultiSelector .trigger .hidden{
-			display: none;
-		}
-	.taskMultiSelector .dropDown{
-		display: none;
-		position: absolute;
-		top: 23px;
-		left: 0;
-		border: 1px solid #bdbdbd;
-		background-color: #ffffff;
-	}
-		.taskMultiSelectorOpen .dropDown ul{
-			padding: 7px 0 6px 0;
-			overflow-y: auto;
-			overflow-x: hidden;
-			max-height: 120px;
-			border-bottom: 1px solid #dddddd;
-			position: relative;
-			list-style-type: none;
-		}
-			.taskMultiSelectorOpen .dropDown ul li{
-				padding: 5px 0 3px 32px;
-				font-size: 11px;
-				line-height: 16px!important;
-				position: relative;
-				list-style-type: none;
-				min-height: 16px!important;
-			}
-				.taskMultiSelectorOpen .dropDown ul li input{
-					position: absolute;
-					top: 6px;
-					left: 12px;
-					width: 13px;
-					height: 13px;
-				}
-				.taskMultiSelectorOpen .dropDown ul li label{
-					display: inline-block;
-					line-height: 16px!important;
-					font-size: 11px;
-					cursor: pointer;
-					padding: 0;
-				}
-		.taskMultiSelectorOpen .dropDown .btnWrapper{
-			height: 24px;
-			padding: 7px 0;
-			background-color: #f5f5f5;
-			text-align: center;
-		}
-				.taskMultiSelectorOpen .dropDown .btnWrapper a span{
-					padding: 0 26px 0 22px;
-				}
-	
-	.taskMultiSelectorOpen .dropDown{
-		display: block;	
-	}
-		
-		.taskMultiSelectorOpen .trigger span{
-			background-position: 0 -24px;
-		}
-		.taskMultiSelectorOpen .trigger .selectorArrow{
-			background-position: 100% -72px;
-		}
 .taskListContainer{
 	padding: 20px 0 0 243px;
 	min-height: 540px;

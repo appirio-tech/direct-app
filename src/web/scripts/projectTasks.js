@@ -3,8 +3,11 @@
  *
  * Javascript for for the project tasks pages.
  *
+ * - Version 1.1 (Module Assembly - TopCoder Cockpit Project Planner)
+ * Refactor the multiple selection drop down to dashboard.js
+ *
  * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
- * @author TCSASSEMBLER
+ * @author GreatKevin
  */
 var quickTaskNameHint = "Task Name";
 
@@ -101,34 +104,6 @@ $(document).ready(function(){
 		
 	})
 	
-	$('.taskMultiSelector .trigger').live('click', function(){
-		var wrapper = $(this).parent();
-		var wrapperWidth = wrapper.width();
-		wrapper.addClass("taskMultiSelectorOpen");
-		$('.dropDown', wrapper).width(wrapperWidth - 2);
-	})
-	$('.taskMultiSelector .btnWrapper a').live('click', function(){
-		var wrapper = $(this).parents(".taskMultiSelector").eq(0);
-		wrapper.removeClass("taskMultiSelectorOpen");
-		var displayTxt = ""
-		$("input", wrapper).each(function() {
-			if ($(this).attr("checked")){
-				if (displayTxt==""){
-					displayTxt = $(this).next("a").text();
-				}else{
-					displayTxt += ", " + $(this).next("a").text();
-				}
-			}
-		});
-		if (displayTxt == ""){
-			displayTxt = $(".trigger label", wrapper).text();
-		}
-		$(".trigger .msValue", wrapper).text(displayTxt).attr("title", displayTxt);
-	})
-	$('.taskMultiSelector li label, #filterByStatus li label, #filterByPriority li label, .checkBoxWrapper label, ').live('click', function(){
-		var li = $(this).parent();
-		$("input", li).trigger("click");
-	})
 	$('.radioRow label').click(function(){
 		$(this).prev().trigger("click");
 	})
@@ -418,7 +393,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'post',
             url: 'quickCreateNewTask',
-            data: {newTask: newTask, formData:{projectId:tcDirectProjectId}},
+            data: {newTask: newTask, formData:{projectid:tcDirectProjectId}},
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {

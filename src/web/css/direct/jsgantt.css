@@ -181,19 +181,28 @@ DIV.scroll2 {
     BACKGROUND-COLOR: #ffffff
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 12px !important;
-    color: #333;
+.completedHeader {
+    BACKGROUND-COLOR: #4ac485
 }
 
-.completedHeader{ BACKGROUND-COLOR: #4ac485}
-.completedHeader{ BACKGROUND-COLOR: None}
+.completedHeader {
+    BACKGROUND-COLOR: None
+}
 
-.upcomingHeader{ BACKGROUND-COLOR: #edc54e}
-.upcomingHeader{ BACKGROUND-COLOR: None}
+.upcomingHeader {
+    BACKGROUND-COLOR: #edc54e
+}
 
-.overdueHeader{ BACKGROUND-COLOR: #f2635e}
-.overdueHeader{ BACKGROUND-COLOR: None}
+.upcomingHeader {
+    BACKGROUND-COLOR: None
+}
+
+.overdueHeader {
+    BACKGROUND-COLOR: #f2635e
+}
+
+.overdueHeader {
+    BACKGROUND-COLOR: None
+}
 
 
