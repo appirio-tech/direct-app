@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve
-  - Version: 1.6
+  - Version: 1.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -21,6 +21,10 @@
   -
   - Version 1.6 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
   - - Add support for marathon contest dashboard
+  -
+  - Version 1.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
+  - - Remove some error message when there is no round id hooked with contest.
+  - - Update registrant, cureent top ranking tab when there is no round id hooked with contest.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -31,8 +35,8 @@
     <s:else>studioDashboard studioDetails</s:else>
     " data-intro="Welcome to your competition dashboard. This is where you control and monitor individual competitions within your project." data-step="1" data-position="top">
     
-     <div class="dashboardModule" data-intro="Here is the timeline for your competition.  The system defines this based on the type of competition. Your copilot might tweak it slightly, but generally they remain pretty consistent." data-step="2" data-position="top">
-       <h1 class="heading">
+    <div class="dashboardModule" id="timelineModule" data-intro="Here is the timeline for your competition.  The system defines this based on the type of competition. Your copilot might tweak it slightly, but generally they remain pretty consistent." data-step="2" data-position="top">
+        <h1 class="heading">
             <span class="tl"></span>
             <span class="tr"></span>
             Timeline

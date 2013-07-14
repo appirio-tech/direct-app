@@ -1485,9 +1485,8 @@
     <bean id="marathonMatchViewAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction" scope="prototype">
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
-        <property name="userService" ref="userService"/>
         <property name="timelineInterval" value="0"/>
-        <property name="submissionHistoryInterval" value="0"/>
+        <property name="submissionHistoryInterval" value="20"/>
     </bean>
 
     <bean id="marathonMatchAnalyticsService"
@@ -1496,10 +1495,10 @@
         <property name="remoteServiceBaseUrl" value="http://@api_server_domain@/rest"/>
         <property name="getMMBasicInfoEndPointUrl" value="/analytics/{round_id}"/>
         <property name="getMMRegistrantsEndPointUrl" value="/analytics/{round_id}/registrants"/>
-        <property name="getCompetitorDetailsEndPointUrl" value="/{round_id}/registrants/{handle}"/>
-        <property name="getMatchResultsEndPointUrl" value="/{round_id}/results"/>
-        <property name="getAllMMSubmissionsEndPointUrl" value="/{round_id}/registrants/{handle}/submissions"/>
-        <property name="getMarathonMatchListingsEndPointUrl" value="/"/>
+        <property name="getCompetitorDetailsEndPointUrl" value="/analytics/{round_id}/registrants/{handle}"/>
+        <property name="getMatchResultsEndPointUrl" value="/analytics/{round_id}/results"/>
+        <property name="getAllMMSubmissionsEndPointUrl" value="/analytics/{round_id}/registrants/{handle}/submissions"/>
+        <property name="getMarathonMatchListingsEndPointUrl" value="/analytics/"/>
         <property name="clientId" value="@clientId@"/>
         <property name="clientSecret" value="@clientSecret@"/>
         <property name="apiKey" value="@apiKey@"/>

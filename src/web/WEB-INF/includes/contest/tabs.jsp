@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, morehappiness, TCSASSEMBLER, Ghost_141
-  - Version: 1.6
+  - Version: 1.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
@@ -19,6 +19,8 @@
   - - Remove the round information in the submission tab link, the link will automatically detect the checkpoint/final sub tab.
   - Version 1.6 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) changes:
   - - Add tab for marathon match contest only.
+  - Version 1.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab) changes:
+  - - Add support for competition tab in marathon match contest.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -42,7 +44,9 @@
             </li>
             <s:if test="marathon">
                 <li class="registrantsSubmissions <c:if test="${requestScope.CURRENT_SUB_TAB eq 'mmRegistrants'}">on</c:if> ">
-                    <a href="<s:url action="mmRegistrants" namespace="/contest"><s:param name="projectId" value="contest.id"/></s:url> ">
+                    <a href="<s:url action="mmRegistrants" namespace="/contest">
+                        <s:param name="projectId" value="contest.id"/>
+                    </s:url> ">
                         <s:if test="hasRoundId">
                         <span class="left">
                             <span class="right">Registrants (${viewData.commonInfo.numRegistrants}) &amp; Submissions (${viewData.commonInfo.numSubmissions})</span>

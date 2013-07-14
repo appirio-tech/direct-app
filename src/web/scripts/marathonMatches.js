@@ -3,15 +3,15 @@
  *
  * The JavaScript code used by the Marathon Match contest views.
  *
+ * - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab
+ * - Update for competitors' rating bar, pie graph.
+ * - Update for submission history page.
+ *
  * @author Ghost_141
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 // JavaScript Document
-var ratingColorName = ["Orange", "Gray", "Green", "Blue", "Yellow", "Red", "Unrated"];
-var ratingColorStyle = ["#FF9900", "#999999", "#00A900", "#6666FF", "#DDCC00", "#EE0000", "#000000"];
-var ratingTextColor = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#666666"];
-
 $(document).ready(function(){
 	
 	$('.registrantsAndSubmissions .registrantsContaner table#registrantsTable tr:even').addClass('even');
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	//PIE for Registrants
 	if($('#ratingPie').length){
         var ratingPie = [];
-        $.each(registrantsRatingPieData.rating,function(idx,item){
+        $.each(pieData.rating,function(idx,item){
             ratingPie.push({
                 name: item.handle,
                 y: item.number/1,
@@ -113,15 +113,15 @@ $(document).ready(function(){
         var ratingData = [];
         var ratingLabel = [];
 
-        if(registrantsRatingBarData.rating.length != 0) {
-            $.each(registrantsRatingBarData.rating, function(index, value) {
+        if(barData.rating.length != 0) {
+            $.each(barData.rating, function(index, value) {
                 ratingLabel.push(value.handle);
                 ratingData.push({
                     y: value.number/1,
                     color: value.color
                 });
             })
-            var height = registrantsRatingBarData.rating.length * 20;
+            var height = barData.rating.length * 20;
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'ratingBar',
@@ -149,7 +149,7 @@ $(document).ready(function(){
                     lineColor: '#c8c8c8'
                 },
                 yAxis: {
-                    max:4800,
+                    max:4300,
                     title: {
                         text: null
                     },
@@ -1238,143 +1238,130 @@ $(document).ready(function(){
 	
 	//Person Score
 	if($('#personScoreChart').length){
-		$.ajax({
-			type: "GET",
-			url: "/data/personScore.json",
-			dataType: "json",
-			success: function(json){
-				var score = [];
-				$.each(json.personScore,function(idx,item){
-					score[idx] = [];
-					score[idx].push(Number(item.x));
-					score[idx].push(Number(item.score));
-				});
-				chart = new Highcharts.Chart({
-					chart: {
-						renderTo: 'personScoreChart',
-						type: 'scatter',
-						margin: [55, 30, 50, 50],
-						backgroundColor: null
-					},
-					title: {
-						text: null
-					},
-					 xAxis: {
-						min: 0,
-						max: 6,
-						startOnTick: true,
-						tickInterval: 1,
-						tickLength: 0,
-						lineColor: '#999999',
-						labels: {
-							style: {
-								fontFamily: 'Arial',
-								fontSize: '11px',
-								color: '#000000',
-								lineHeight: '16px'
-							},
-							enabled: true,
-							useHTML: true,
-							formatter: function(){
-								if(this.value == '0'){
-									return '<span style="text-align:left; display:block; margin:0 0 0 128px; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat left top;">Submission Phase<br />Start: 00/00/0000  00:00 EDT</span>';
-								}else if(this.value == '6'){
-									return '<span style="text-align:right; display:block; margin:0 128px 0 0; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat right top;">System Testing<br />Start: 00/00/0000  00:00 EDT</span>';
-								}else{
-									return null;	
-								}
-							},
-							y: 8
-						}
-					},
-					credits: {
-						enabled: false
-					},
-					yAxis: {
-						min: 1500,
-						tickInterval: 400,
-						plotBands: [{
-							color: '#e5e5e5',
-							width: 1,
-							value: 2000
-						},{
-							color: '#e5e5e5',
-							width: 1,
-							value: 2200
-						},{
-							color: '#e5e5e5',
-							width: 1,
-							value: 2600	
-						}],
-						title: {
-							text: 'Provisional<br />Score',
-							style: {
-								fontFamily: 'Arial',
-								fontSize: '11px',
-								color: '#333333',
-								fontWeight: 'normal'
-							},
-							rotation: 0,
-							y: -105,
-							x: 10
-						},
-						gridLineWidth: 0,
-						lineWidth: 1,
-						lineColor: '#999999',
-						showLastLabel: false,
-						labels: {
-							enabled: false
-						}
-					},
-					tooltip: {
-						enabled: false
-					},
-					legend: {
-						verticalAlign: 'top',
-						align: 'right',
-						borderColor: '#cccccc',
-						borderRadius: 0,
-						backgroundColor: '#f5f5f5',
-						padding: 8,
-						itemStyle: {
-							fontFamily: 'Arial',
-							fontSize: '11px',
-							color: '#333333'
-						},
-						symbolWidth: 10,
-						symbolPadding: 8,
-						x: 11,
-						y: -11,
-						layout: 'vertical'
-					},
-					plotOptions: {
-						scatter: {
-							marker: {
-								radius: 6,
-								symbol: 'diamond'
-							},
-							dataLabels: {
-								enabled: true,
-								y: 18,
-								x: 2,
-								style: {
-									fontFamily: 'Arial',
-									fontSize: '11px',
-									color: '#d29ed4',
-									fontWeight: 'bold'	
-								}	
-							}
-						}
-					},
-					series: [{
-						name: 'Full Submissions',
-						color: '#46403e',
-						data: score
-					
-					}]
-				});
-			}
-		});
+        var score = [];
+        var plotBands = [];
+        $.each(submissionHistory.personScore,function(idx,item){
+            score[idx] = [];
+            score[idx].push(Number(item.x));
+            score[idx].push(Number(item.score));
+            score[idx].push(item.date);
+            plotBands.push({
+                color: '#e5e5e5',
+                width: 1,
+                value: item.score
+            });
+        });
+        var X = submissionHistory.x;
+        var startDate = submissionHistory.submissionStartTime;
+        var endDate = submissionHistory.submissionEndTime;
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'personScoreChart',
+                type: 'scatter',
+                margin: [55, 30, 50, 50],
+                backgroundColor: null
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                min: 0,
+                max: X + 15,
+                startOnTick: true,
+                tickInterval: 1,
+                tickLength: 0,
+                lineColor: '#999999',
+                labels: {
+                    style: {
+                        fontFamily: 'Arial',
+                        fontSize: '11px',
+                        color: '#000000',
+                        lineHeight: '16px'
+                    },
+                    enabled: true,
+                    useHTML: true,
+                    formatter: function(){
+                        if(this.value == '0'){
+                            return '<span style="text-align:left; display:block; margin:0 0 0 102px; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat left top;">Submission Phase<br />' + startDate + '</span>';
+                        }else if(this.value == X){
+                            return '<span style="text-align:right; display:block; margin:0 90px 0 0; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat right top;">System Testing<br />' + endDate + '</span>';
+                        }else{
+                            return null;
+                        }
+                    },
+                    y: 8
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            yAxis: {
+                min: 1500,
+                tickInterval: 400,
+                plotBands: plotBands,
+                title: {
+                    text: 'Provisional<br />Score',
+                    style: {
+                        fontFamily: 'Arial',
+                        fontSize: '11px',
+                        color: '#333333',
+                        fontWeight: 'normal'
+                    },
+                    rotation: 0,
+                    y: -105,
+                    x: 10
+                },
+                gridLineWidth: 0,
+                lineWidth: 1,
+                lineColor: '#999999',
+                showLastLabel: false,
+                labels: {
+                    enabled: false
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return "Submission Date: " + this.point.config[2] + "<br>Score: " + this.y;
+                },
+                style: {
+                    fontFamily: 'Arial',
+                    fontSize: '11px',
+                    color: '#d29ed4',
+                    fontWeight: 'bold'
+                }
+            },
+            legend: {
+                verticalAlign: 'top',
+                align: 'right',
+                borderColor: '#cccccc',
+                borderRadius: 0,
+                backgroundColor: '#f5f5f5',
+                padding: 8,
+                itemStyle: {
+                    fontFamily: 'Arial',
+                    fontSize: '11px',
+                    color: '#333333'
+                },
+                symbolWidth: 10,
+                symbolPadding: 8,
+                x: 11,
+                y: -11,
+                layout: 'vertical'
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 6,
+                        symbol: 'diamond'
+                    }
+                }
+            },
+            series: [{
+                name: 'Full Submissions',
+                color: '#46403e',
+                data: score
+            }]
+        });
 	}
 	
 	$('.statusP .progress').css('width',$('.statusP .progress').text());

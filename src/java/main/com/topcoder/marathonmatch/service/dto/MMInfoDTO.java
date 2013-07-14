@@ -1,8 +1,9 @@
+/*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.marathonmatch.service.dto;
 
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,16 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab
+ * <ol>
+ *     <li>Add property {@link #competitors}.</li>
+ *     <li>Add property {@link #recentSubmissions}.</li>
+ * </ol>
+ * </p>
+ *
  * @author sampath01, zhu_tao, Ghost_141
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 public class MMInfoDTO extends BaseContestCommonDTO {
@@ -38,6 +47,24 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * The list of registrants in descending order of registration
      */
     private List<RegistrantInfo> registrants;
+
+    /**
+     * The list of competitors.
+     * @since 1.2
+     */
+    private List<CompetitorInfoDTO> competitors;
+
+    /**
+     * The list of submissions.
+     * @since 1.2
+     */
+    private List<SubmissionInfo> recentSubmissions;
+
+    /**
+     * The competitor in competitor submission history page.
+     * @since 1.2
+     */
+    private CompetitorInfoDTO competitorInfoDTO;
 
     /**
      * The submissions by coder. The coder's handle is the key and the coder's submissions are the values.
@@ -304,4 +331,59 @@ public class MMInfoDTO extends BaseContestCommonDTO {
         this.submissionHistoryData = submissionHistoryData;
     }
 
+    /**
+     * Gets competitors.
+     *
+     * @return the competitors
+     * @since 1.2
+     */
+    public List<CompetitorInfoDTO> getCompetitors() {
+        return competitors;
+    }
+
+    /**
+     * Sets competitors.
+     *
+     * @param competitors the competitors
+     * @since 1.2
+     */
+    public void setCompetitors(List<CompetitorInfoDTO> competitors) {
+        this.competitors = competitors;
+    }
+
+    /**
+     * Gets recent submissions.
+     *
+     * @return the recent submissions
+     */
+    public List<SubmissionInfo> getRecentSubmissions() {
+        return recentSubmissions;
+    }
+
+    /**
+     * Sets recent submissions.
+     *
+     * @param recentSubmissions the recent submissions
+     */
+    public void setRecentSubmissions(List<SubmissionInfo> recentSubmissions) {
+        this.recentSubmissions = recentSubmissions;
+    }
+
+    /**
+     * Gets competitor info dTO.
+     *
+     * @return the competitor info dTO
+     */
+    public CompetitorInfoDTO getCompetitorInfoDTO() {
+        return competitorInfoDTO;
+    }
+
+    /**
+     * Sets competitor info dTO.
+     *
+     * @param competitorInfoDTO the competitor info dTO
+     */
+    public void setCompetitorInfoDTO(CompetitorInfoDTO competitorInfoDTO) {
+        this.competitorInfoDTO = competitorInfoDTO;
+    }
 }

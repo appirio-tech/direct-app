@@ -12,6 +12,7 @@ import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchDetailsResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
+import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
@@ -31,15 +32,25 @@ import java.util.Map;
 
 /**
  * The implementation of MarathonMatchAnalyticsService interface, it will used to call the remote rest service.
+ * This class contains the method to get marathon match details, get registrants for a marathon match contest and
+ * get competitor submission history.
  *
  * <p>
  * <strong>Thread Safety: </strong> This class is mutable and thus is not thread
  * safe.
  * </p>
  *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab
+ *     <ol>
+ *         <li>Add method {@link #getCompetitorSubmissionsHistory(long, String, int, int, String, String, String)}.</li>
+ *         <li>Add static property {@link #HANDLE}</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.0
+ * @version 1.1
  */
 public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalyticsService {
 
@@ -52,25 +63,30 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * The default value of page number.
      * It will be used in rest api.
      */
-    private static final String PAGE_NUMBER = "1";
+    private static final String DEFAULT_PAGE_NUMBER = "1";
 
     /**
      * The default value of page size.
      * It will be used in rest api.
      */
-    private static final String PAGE_SIZE = String.valueOf(Integer.MAX_VALUE);
+    private static final String DEFAULT_PAGE_SIZE = String.valueOf(Integer.MAX_VALUE);
 
     /**
      * The default value of sorting order.
      * It will be used in rest api.
      */
-    private static final String SORTING_ORDER = "desc";
+    private static final String DEFAULT_SORTING_ORDER = "desc";
 
     /**
-     * The default value of sorting field.
-     * It will be used in rest api.
+     * The round id in rest path parameter.
      */
-    public static final String SORTING_FIELD = "8";
+    private static final String ROUND_ID = "{round_id}";
+
+    /**
+     * The handle in rest path parameter.
+     * @since 1.1
+     */
+    private static final String HANDLE = "{handle}";
 
     /**
      * Log instance.
@@ -149,14 +165,14 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
             ValidationUtility.checkNotNullNorEmptyAfterTrimming(clientId, "clientId", IllegalArgumentException.class);
             ValidationUtility.checkNotNullNorEmptyAfterTrimming(clientSecret,
                     "clientSecret", IllegalArgumentException.class);
+            ValidationUtility.checkNotNullNorEmptyAfterTrimming(apiKey, "apiKey", IllegalArgumentException.class);
         } catch (IllegalArgumentException iae) {
-            LoggingWrapperUtility.logException(logger, signature, iae);
-            throw iae;
+            throw LoggingWrapperUtility.logException(logger, signature, iae);
         }
     }
 
     /**
-     * Check the url whether start with '/' or end with '/'. If it's not fix it.
+     * Check the url whether start with '/'. If it's not fix it.
      * If the url is fine, just return them back.
      *
      * @param urlName the name of the url.
@@ -170,9 +186,6 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
         value = value.trim();
         if(!value.startsWith("/") && !value.startsWith("http")) {
             value = "/" + value.trim();
-        }
-        if(value.endsWith("/") && value.length() != 1) {
-            value = value.substring(0, value.length() - 1);
         }
         return value;
     }
@@ -200,8 +213,9 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
 
             String jsonResult = callRestService(getMMBasicInfoEndPointUrl,
                     createParameterMap(new String[] {"groupType"}, new String[] {groupType}),
-                    createParameterMap(new String[] {"{round_id}"}, new String[] {String.valueOf(roundId)}),
+                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
                     accessToken);
+
             ObjectMapper mapper = createObjectMapper();
 
             MarathonMatchDetailsResource result =
@@ -230,7 +244,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     public SearchResult<CompetitorResource> getRegistrants(long roundId,
             String accessToken) throws MarathonMatchAnalyticsServiceException {
         final String signature = CLASS_NAME
-                + "#getRegistrants(roundId, acessToken)";
+                + "#getRegistrants(roundId, accessToken)";
         try {
             LoggingWrapperUtility.logEntrance(logger, signature,
                     new String[] {"roundId", "accessToken"},
@@ -242,9 +256,10 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
 
             String jsonResult = callRestService(getMMRegistrantsEndPointUrl,
                     createParameterMap(new String[] {"pageSize", "pageNumber", "sortingOrder", "sortingField"},
-                            new String[] {PAGE_SIZE, PAGE_NUMBER, SORTING_ORDER, SORTING_FIELD}),
-                    createParameterMap(new String[] {"{round_id}"}, new String[] {String.valueOf(roundId)}),
+                            new String[] {DEFAULT_PAGE_SIZE, DEFAULT_PAGE_NUMBER, DEFAULT_SORTING_ORDER, "rating"}),
+                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
                     accessToken);
+
             ObjectMapper mapper = createObjectMapper();
 
             SearchResult<CompetitorResource> result =
@@ -263,6 +278,62 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     }
 
     /**
+     * Get the submission history of one competitor with given round id, handle name of competitor, page size, page
+     * number, sorting order, sorting field.
+     *
+     * @param sortingOrder the sorting order.
+     * @param handle the handle name.
+     * @param accessToken the access token.
+     * @param sortingField the sorting field.
+     * @param pageSize the page size.
+     * @param pageNumber the page number.
+     * @param roundId the round id.
+     * @return the search result.
+     * @throws MarathonMatchAnalyticsServiceException if any error occurred.
+     * @since 1.1
+     */
+    public SearchResult<SubmissionResource> getCompetitorSubmissionsHistory(long roundId, String handle, int pageSize,
+            int pageNumber, String sortingOrder, String sortingField, String accessToken)
+            throws MarathonMatchAnalyticsServiceException {
+        final String signature = CLASS_NAME +
+                "#getCompetitorSubmissionsHistory(long roundId, String handle, int pageSize, int pageNumber, " +
+                "String sortingOrder, String sortingField, String accessToken)";
+        try {
+            LoggingWrapperUtility.logEntrance(logger, signature,
+                    new String[] {"roundId", "handle", "pageSize", "pageNumber", "sortingOrder", "sortingField",
+                            "accessToken"},
+                    new Object[] {roundId, handle, pageSize, pageNumber, sortingOrder, sortingField, accessToken});
+            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
+            ValidationUtility.checkNotNullNorEmptyAfterTrimming(handle, "handle", IllegalArgumentException.class);
+            ValidationUtility.checkPositive(pageSize, "pageSize", IllegalArgumentException.class);
+            ValidationUtility.checkPositive(pageNumber, "pageNumber", IllegalArgumentException.class);
+            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
+                    IllegalArgumentException.class);
+
+            String jsonResult = callRestService(getAllMMSubmissionsEndPointUrl,
+                    createParameterMap(new String[] {"pageSize", "pageNumber", "sortingOrder", "sortingField"},
+                            new String[] {String.valueOf(pageSize), String.valueOf(pageNumber), sortingOrder,
+                                    sortingField}),
+                    createParameterMap(new String[] {ROUND_ID, HANDLE}, new String[] {String.valueOf(roundId), handle}),
+                    accessToken);
+
+            ObjectMapper mapper = createObjectMapper();
+
+            SearchResult<SubmissionResource> result =
+                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SearchResult<SubmissionResource>>() {});
+
+            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
+            return result;
+        } catch (IllegalArgumentException iae) {
+            throw LoggingWrapperUtility.logException(logger, signature,
+                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
+        } catch (IOException e) {
+            throw LoggingWrapperUtility.logException(logger, signature,
+                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
+        }
+    }
+
+    /**
      * Build a json node based on an existing response.
      *
      * @param url the url.
@@ -271,14 +342,16 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param accessToken the access token.
      * @return the json node of the response.
      * @throws IOException if any error occurs when reading data.
-     * @throws IOException if any error occurs when reading data.
+     * @throws MarathonMatchAnalyticsServiceException if the rest call is failed.
      */
     private String callRestService(String url, Map<String, String> queryParams, Map<String, String> pathParams,
             String accessToken) throws IOException, MarathonMatchAnalyticsServiceException {
         WebClient client = getWebClient();
 
         for(String key : queryParams.keySet()) {
-            client.query(key, queryParams.get(key));
+            if(queryParams.get(key) != null) {
+                client.query(key, queryParams.get(key));
+            }
         }
 
         // Set the api key for the rest call.

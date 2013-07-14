@@ -90,9 +90,12 @@
  *
  * Version 2.5 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
  * - Add support for Marathon Match registrants table.
+ *
+ * Version 2.6 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
+ * - Add support for Marathon Match registrants competitors tab.
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.5
+ * @version 2.6
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -550,6 +553,69 @@ $(document).ready(function() {
             { "sType": "date-direct" }
         ]
     });
+
+    $.mmRegistrantsCompetitorGridTable = $("#marathonMatchRegistrants #gridViewTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aoColumns": [
+            { "sType": "html-trimmed" }
+        ],
+        "fnDrawCallback" : function( oSettings ) {
+            $(".competitor-grid-body").html('');
+            var count = 0;
+            var rowNumber = 1;
+            $.each($("#gridViewTable tr.grid-item"), function(index, value) {
+                if($(".competitor-grid-body .row_" + rowNumber).length == 0) {
+                    $(".competitor-grid-body").append("<tr class='row_" + rowNumber + "'></tr>");
+                }
+                $(".row_" + rowNumber).append(this.innerHTML);
+                count++;
+                if(count == 5) {
+                    rowNumber++;
+                    count = 0;
+                }
+            });
+            if($("#gridViewTable tr.grid-item").length == 1) {
+                $(".competitor-grid-body .gridHeader").css("width", "193px").css("border-right", "#cccccc solid 1px");
+                $(".competitor-grid-body .gridBody").css("width", "193px").css("border-right", "#cccccc solid 1px");
+                $(".competitor-grid-body .gridFooter").css("width", "193px").css("border-right", "#cccccc solid 1px");
+            }
+        }
+    });
+
+    $.mmRegistrantsCompetitorGridTable = $("#marathonMatchRegistrants #listViewTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [2,'asc']
+        ],
+        "aoColumns": [
+            { "sType": "html-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "date-direct" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed" }
+        ]
+    });
+
 
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,

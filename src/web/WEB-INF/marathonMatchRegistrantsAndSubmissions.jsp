@@ -1,9 +1,13 @@
 <%--
-  - Author: Ghost_141
-  - Version: 1.0
   - Copyright (C) 2001-2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Marathon Match Registrants and Submission list.
+  -
+  - Version 1.1 - (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab) changes:
+  - - Update to add content for competitor list, grid, submission history page.
+  -
+  - Author: Ghost_141
+  - Version: 1.1
   - Since: PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,10 +32,23 @@
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/marathonMatches.js"></script>
 
-    <script>
-        var registrantsRatingBarData = ${viewData.registrantsRatingBarData};
-        var registrantsRatingPieData = ${viewData.registrantsRatingPieData};
-    </script>
+    <c:if test="${tab eq null}">
+        <script>
+            var barData = ${viewData.registrantsRatingBarData};
+            var pieData = ${viewData.registrantsRatingPieData};
+        </script>
+    </c:if>
+    <c:if test="${tab eq 'competitors'}">
+        <script>
+            var barData = ${viewData.submittersRatingBarData};
+            var pieData = ${viewData.submittersRatingPieData};
+        </script>
+    </c:if>
+    <c:if test="${handle ne null}">
+        <script>
+            var submissionHistory = ${viewData.submissionHistoryData};
+        </script>
+    </c:if>
 
 </head>
 
@@ -69,75 +86,42 @@
 
                                 <div>
 
-                                    <div class="registrantsAndSubmissions">
-                                        <h4>Registrants &amp; Submissions</h4>
-                                        <div class="tabList">
-                                            <ul>
-                                                <li class="active"><a href="javascript:;"><span><span>Registrants</span></span></a></li>
-                                                <li><a href=""><span><span>Competitors</span></span></a></li>
-                                                <li><a href=""><span><span>Submissions</span></span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="registrantsContaner">
-                                            <h5>Registrants</h5>
-                                            <s:if test="hasRoundId">
-                                                <table border="0" cellpadding="0" cellspacing="0" id="registrantsTable" class="paginatedDataTable">
-                                                    <colgroup>
-                                                        <col width="25%" />
-                                                        <col width="30%" />
-                                                        <col width="45%" />
-                                                    </colgroup>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Handle</th>
-                                                        <th>Rating</th>
-                                                        <th>Registration Time</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <s:iterator value="viewData.registrants" status="status">
-                                                        <tr>
-                                                            <td><strong><tc-webtag:handle coderId="${userId}" context="marathon_match"/></strong></td>
-                                                            <td><tc-webtag:ratingColor rating="${rating}">${rating}</tc-webtag:ratingColor></td>
-                                                            <td><fmt:formatDate value="${registrationTime}" pattern="MM.dd.yyyy HH:mm:ss"/></td>
-                                                        </tr>
-                                                    </s:iterator>
-                                                    </tbody>
-                                                </table>
-                                            </s:if>
-                                            <s:else>
-                                                <span>The data is not available as the round id is not set.</span>
-                                            </s:else>
-                                            <div class="container2Left">
-                                                <div class="container2Right">
-                                                    <div class="container2Bottom">
-                                                        <div>
-                                                            <div>
+                                    <div class="registrantsAndSubmissions"
+                                         <c:if test="${!hasRoundId}">style="border: #cccccc solid 1px;border-top: none" </c:if>>
+                                        <s:if test="hasRoundId">
+                                            <h4>Registrants &amp; Submissions</h4>
 
-                                                                <div class="panel tableControlPanel"></div>
+                                            <jsp:include page="includes/marathonMatch/mmTabs.jsp"/>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="registrantsContaner">
+                                                <!-- Registrant page -->
+                                                <c:if test="${tab eq null}">
+                                                    <jsp:include page="marathonMatch/registrants.jsp"/>
+                                                </c:if>
+                                                <!-- Competitor list and grid view page -->
+                                                <c:if test="${tab eq 'competitors' && handle eq null}">
+
+                                                    <jsp:include page="includes/marathonMatch/list-grid.jsp"/>
+
+                                                    <h5>Competitors</h5>
+                                                    <!-- Competitor grid view page -->
+                                                    <c:if test="${view eq null || view eq 'grid'}">
+                                                        <jsp:include page="marathonMatch/competitors-grid.jsp"/>
+                                                    </c:if>
+                                                    <!-- Competitor list view page -->
+                                                    <c:if test="${view eq 'list'}">
+                                                        <jsp:include page="marathonMatch/competitors-list.jsp"/>
+                                                    </c:if>
+                                                </c:if>
+                                                <!-- Competitor Submission History Page -->
+                                                <c:if test="${tab eq 'competitors' && handle ne null}">
+                                                    <jsp:include page="marathonMatch/competitors-submission-history.jsp"/>
+                                                </c:if>
                                             </div>
-
-                                            <!-- paginations -->
-                                            <h5>Registrant Rating Distribution</h5>
-                                            <div class="chartWrapper">
-                                                <div class="chartPie">
-                                                    <div id="ratingPieWrapper">
-                                                        <div id="ratingPie"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="chartBar">
-                                                    <div id="ratingBarWrapper">
-                                                        <div id="ratingBar"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="clearFix"></div>
-                                            </div>
-                                        </div>
+                                        </s:if>
+                                        <s:else>
+                                            <span>The data is not available as the round id is not set.</span>
+                                        </s:else>
                                     </div>
 
                                 </div>

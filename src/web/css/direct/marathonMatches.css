@@ -496,7 +496,6 @@
 					}
 					
 				.registrantsAndSubmissions .chartWrapper .chartBar #ratingBar{
-					height:1000px;
 					}
 	
 	/* Grid & List View */
@@ -542,19 +541,21 @@
 				}
 				
 	/* Table For Grid */
-	.registrantsAndSubmissions .registrantsContaner #gridViewTable{
-		width:100%;
+	.registrantsAndSubmissions .registrantsContaner #gridViewTable,
+    .registrantsAndSubmissions .registrantsContaner .competitor-grid{
 		border:#cccccc solid 1px;
 		border-collapse:collapse;
 		}
 		
-		.registrantsAndSubmissions .registrantsContaner #gridViewTable td{
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable td,
+        .registrantsAndSubmissions .registrantsContaner .competitor-grid td{
 			border:#cccccc solid 1px;
 			background-color:#fffffe;
 			}
 		
 		/* Header */	
-		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader{
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader,
+        .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridHeader{
 			height:30px;
 			padding:4px 0 0 0;
 			border-bottom:#cccccc solid 1px;
@@ -564,17 +565,20 @@
 			background-position:0 0;
 			}
 			
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridHeader p{
 				font-size:11px;
 				font-weight:bold;
 				line-height:14px;
 				}
 				
-				.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p a{
+				.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader p a,
+                .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridHeader p a{
 					color:#333333;
 					}
 				
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridHeader a{
 				display:block;
 				font-size:11px;
 				font-weight:bold;
@@ -584,22 +588,26 @@
 				text-decoration:none;
 				}
 				
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a:hover{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridHeader a:hover,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridHeader a:hover{
 				text-decoration:underline;
 				}
 		
 		/* Body */		
-		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridBody{
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridBody,
+        .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridBody{
 			height:108px;
 			}
 		
 		/* Footer */	
-		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter{
+		.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter,
+        .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridFooter{
 			padding:4px 0;
 			background-color:#f5f5f5;
 			}
 			
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dt{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dt,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridFooter dt{
 				width:auto;
 				float:left;
 				display:inline;
@@ -608,13 +616,15 @@
 				line-height:14px;
 				}
 				
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridFooter dd{
 				font-size:11px;
 				font-weight:bold;
 				line-height:14px;
 				}
 				
-			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd.pink{
+			.registrantsAndSubmissions .registrantsContaner #gridViewTable .gridFooter dd.pink,
+            .registrantsAndSubmissions .registrantsContaner .competitor-grid .gridFooter dd.pink{
 				color:#d29ed4;
 				}
 				
@@ -728,7 +738,6 @@
 					
 				/* Table */
 				.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table{
-					width:100%;
 					border:#cccccc solid 1px;
 					border-collapse:collapse;
 					}
@@ -736,6 +745,7 @@
 					.registrantsAndSubmissions .registrantsContaner .submissionHistory .handleIntro table td{
 						border:#cccccc solid 1px;
 						background-color:#fffffe;
+                        width: 204px;
 						}
 					
 					/* Header */	
@@ -821,7 +831,7 @@
 				width:auto;
 				float:left;
 				display:inline;
-				margin:0 25% 0 0;
+				margin:0 15% 0 0;
 				font-size:11px;
 				font-weight:bold;
 				line-height:24px;
