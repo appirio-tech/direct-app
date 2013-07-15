@@ -103,6 +103,7 @@
     <strong>Files</strong>
 </div>
 
+<!--
 <div class="currentPage emptyHint ">
 <p><font color="red" size="2">
 <b>BETA ANNOUNCEMENT:</b>
@@ -110,6 +111,7 @@ Welcome to the new File Management area of Cockpit.  You will see this new secti
 mind that some features are not implemented yet.  For a full description of what is currently implemented, check out <a href="http://www.topcoder.com/university/platform-updates/file-management-beta/">Platform Announcements</a>.
 </font></p>
 </div>
+-->
 
 <div class="areaHeader">
     <a class="button6 btnUpload" href="<s:url action="projectAssetUpload" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="left"><span class="right"><span class="icon">UPLOAD FILE(S)</span></span></span></a>
