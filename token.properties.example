@@ -400,6 +400,6 @@
 # Marathon Match Analytics Service Configuration #
 ##################################################
 @api_server_domain@=api.topcoder.com
-@apiKey@=b819b441d33a02bd544aa566852f7d8f
+@apiKey@=a47d06ceff527eddd5c9b51623a0eaad
 @clientId@=test
 @clientSecret@=test
