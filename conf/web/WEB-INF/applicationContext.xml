@@ -512,6 +512,8 @@
     <bean id="saveCockpitProjectSettingAction" class="com.topcoder.direct.services.view.action.project.edit.SaveCockpitProjectSettingAction"
           parent="baseDirectStrutsAction" scope="prototype">
         <property name="groupService" ref="groupService"/>
+        <property name="projectContestFeeService" ref="contestFeeService"/>
+        <property name="projectContestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean id="batchDraftContestsEditAction" class="com.topcoder.direct.services.view.action.project.ProjectDraftContestsBatchEditAction"
@@ -839,6 +841,8 @@
           <property name="pptJIRAIssueReporter" value="anonymus"/>
           <property name="copilotURLPrefix" value="http://community.topcoder.com/tc?module=ProjectDetail&amp;pj="/>
           <property name="groupService" ref="groupService"/>
+          <property name="projectContestFeeService" ref="contestFeeService"/>
+          <property name="projectContestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean id="viewCreateNewProjectAction"
@@ -1228,6 +1232,7 @@
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
         <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
+        <property name="directProjectService" ref="groupProjectService"/>
     </bean>
 
     <bean name="createContestFeesAction" parent="baseDirectStrutsAction"
@@ -1236,6 +1241,7 @@
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
         <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
+        <property name="directProjectService" ref="groupProjectService"/>
     </bean>
 
     <bean name="contestFeeAuthorizationProvider" class="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider" scope="prototype">
