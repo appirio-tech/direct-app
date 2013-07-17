@@ -917,11 +917,18 @@ import java.util.Set;
  *     <li>Adds {@link #getProjectCopilotPostingContests(long)} to get copilot postings of a specific cockpit project</li>
  * </ul>
  * </p>
+ * * <p>
+ * Version 6.17 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1)
+ * <ul>
+ *     <li>Updated {@link #getInvoiceRecordRelatedData(List, List, List, List)} to support
+ *     JIRA bug race contest fees.</li>
+ * </ul>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
- * @version 6.16
+ * @version 6.17
  * @since 1.0
  */
 public class DataProvider {
@@ -6083,21 +6090,33 @@ public class DataProvider {
     }
 
     /**
-     * <p>Gets the <code>InvoiceRecordBriefDTO</code> data for multi payment data. In <code>invoice_record</code> table, payment_id can unique
-     * determine contest_id, billing_account, invoice_type_id. contest_id can unique determine billing_account. So we should NOT get these data from
-     * request parameters because it may case data inconsistency in <code>invoice_record</code> table if user contruct URL manually.</p>
+     * <p>Gets the <code>InvoiceRecordBriefDTO</code> data for multi payment data. In <code>invoice_record</code> table,
+     * payment_id can unique determine contest_id, jira_issue_id, billing_account, invoice_type_id.
+     * contest_id can unique determine billing_account. jira_issue_id can unique determine contest_id, billing_account.
+     * So we should NOT get these data from request parameters because it may case data inconsistency
+     * in <code>invoice_record</code> table if user construct URL manually.</p>
      *
-     * <p>If payment_id is not 0, contest_id, billing_account_id, invoce_type will be returned from database using payment_id.</p>
-     * <p>If payment_id is 0, billing_account_id will be returned from database using contest_id.</p>
+     * <p>If payment_id is not 0, contest_id, jira_issue_id, billing_account_id, invoice_type will be returned from
+     * database using payment_id.</p>
+     * <p>If payment id is 0 and jira_issue_id is not empty, contest_id and billing_account_id will be returned from
+     * database using jira_issue_id.</p>
+     * <p>If payment_id is 0 and contest_id is not empty, billing_account_id will be returned from database
+     * using contest_id.</p>
      *
-     * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero.
+     * @param jiraIssueIds the jira issue id of the payment data. Only used when corresponding payment id is zero.
+     * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero and
+     *                   jira issue id is empty.
      * @param paymentIds the payment id of the payment data.
-     * @return a <code>List</code> providing the contest_id, billing_account_id, invoice_type data of the payment data.
+     * @param invoiceTypeNames the invoice type names of the payment data.
+     * @return a <code>List</code> providing the contest_id, jira_issue_id, billing_account_id,
+     *         invoice_type data of the payment data.
      * @throws Exception if any error occurs.
      * @since 2.9.1
      */
-    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds,
-            List<String> invoiceTypeNames) throws Exception {
+    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<String> jiraIssueIds,
+                                                                          List<Long> contestIds, List<Long> paymentIds,
+                                                                          List<String> invoiceTypeNames)
+            throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("tc_direct_contest_payment_invoice");
@@ -6106,26 +6125,36 @@ public class DataProvider {
         // get unique contest IDs
         Set<Long> contestIdsSet = new HashSet<Long>();
         contestIdsSet.add(0L);
+        // get unique JIRA issue IDs
+        Set<String> jiraIssueIdsSet = new HashSet<String>();
+        jiraIssueIdsSet.add("0");
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     paymentIdsList.add(paymentIds.get(i));
+                } else if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                    jiraIssueIdsSet.add(jiraIssueIds.get(i));
                 } else {
-                    // use contest_id if payment_id is zero
+                    // use contest_id if payment_id is zero and jira_issue_id is empty
                     contestIdsSet.add(contestIds.get(i));
                 }
             }
         }
         request.setProperty("pids", concatenate(contestIdsSet, ","));
         request.setProperty("payids", concatenate(paymentIdsList, ","));
+        request.setProperty("jiraids", concatenate(jiraIssueIdsSet.toArray(new String[jiraIssueIdsSet.size()]), ","));
         final Map<String, ResultSetContainer> results = dataAccessor.getData(request);
         // query result by contestIds
         final ResultSetContainer contestResultSetContainer = results.get("tc_direct_contest_invoice");
         // query result by paymentIds
         final ResultSetContainer paymentResultSetContainer = results.get("tc_direct_payment_invoice_v2");
+        // query result by jiraIssueIds
+        final ResultSetContainer jiraResultSetContainer = results.get("tc_direct_jira_invoice");
+
         Map<Long, InvoiceRecordBriefDTO> contestInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
         Map<Long, InvoiceRecordBriefDTO> paymentInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
+        Map<String, InvoiceRecordBriefDTO> jiraInvoiceMap = new HashMap<String, InvoiceRecordBriefDTO>();
         for (int i = 0; i < contestResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(contestResultSetContainer.getLongItem(i, "billing_account_id"));
@@ -6133,6 +6162,13 @@ public class DataProvider {
                 record.setContestId(contestResultSetContainer.getLongItem(i, "contest_id"));
                 contestInvoiceMap.put(record.getContestId(), record);
             }
+        }
+        for (int i = 0; i < jiraResultSetContainer.size(); i++) {
+            InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
+            record.setBillingAccountId(jiraResultSetContainer.getLongItem(i, "billing_account_id"));
+            String jiraIssueId = jiraResultSetContainer.getStringItem(i, "jira_issue_id");
+            record.setJiraIssueId(jiraIssueId);
+            jiraInvoiceMap.put(jiraIssueId, record);
         }
         for (int i = 0; i < paymentResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
@@ -6153,6 +6189,8 @@ public class DataProvider {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     result.add(paymentInvoiceMap.get(paymentIds.get(i)));
+                } else if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                    result.add(jiraInvoiceMap.get(jiraIssueIds.get(i)));
                 } else {
                     result.add(contestInvoiceMap.get(contestIds.get(i)));
                 }

@@ -30,6 +30,12 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.clients.dao.ProjectContestFeePercentageService;
+import com.topcoder.clients.dao.ProjectContestFeeService;
+import com.topcoder.clients.model.ProjectContestFeePercentage;
+import com.topcoder.security.groups.model.BillingAccount;
+import com.topcoder.security.groups.services.DirectProjectService;
+import com.topcoder.security.groups.services.dto.ProjectDTO;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.axis.encoding.Base64;
@@ -490,9 +496,24 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Adds method {@link #trim(java.util.Date)}</li>
  * </ul>
  * </p>
- * 
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.9.9
+ *
+ * <p>
+ * Version 1.10 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1)
+ * <ul>
+ *     <li>Added constant {@link #BUGR_CONTEST_TYPE_ID}.</li>
+ *     <li>Added method {@link #updateDirectProjectBugContestFee(TCSubject, long, ProjectServiceFacade,
+ *     ProjectContestFeeService, ProjectContestFeePercentageService)} to update the fixed bug race contest fee and
+ *     percentage bug race contest fee for TC direct project based on the contest fee settings of the corresponding
+ *     billing account.</li>
+ *     <li>Added method {@link #updateBillingAccountDirectProjectsBugContestFees(TCSubject, long, ProjectServiceFacade,
+ *     ProjectContestFeeService, ProjectContestFeePercentageService, DirectProjectService)} to update the fixed bug
+ *     race contest fee and percentage bug race contest fee for all TC direct projects associated with
+ *     the billing account.</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
+ * @version 1.10
  */
 public final class DirectUtils {
     /**
@@ -501,6 +522,13 @@ public final class DirectUtils {
     public static final String DATE_FORMAT = "MM/dd/yyyy";
 
     public static final String TIME_OLTP_DATABASE = "java:TimeDS";
+
+    /**
+     * The fake contest type id of bug race.
+     *
+     * @since 1.10
+     */
+    public static final long BUGR_CONTEST_TYPE_ID = 900001;
 
     /**
      * Draft status list.
@@ -2610,12 +2638,74 @@ public final class DirectUtils {
         }
     }
 
-    /**
+     /**
      * Comparator to compare the <code>IdNamePair</code> objects by comparing the name ignore case.
      */
     public static class IdNamePairNameCaseInsensitiveComparator implements Comparator<IdNamePair> {
         public int compare(IdNamePair idNamePair, IdNamePair idNamePair2) {
             return idNamePair.getName().compareToIgnoreCase(idNamePair2.getName());
+			}
+	}
+
+    /**
+     * Update the fixed bug race contest fee and percentage bug race contest fee for TC direct project based on the
+     * contest fee settings of the corresponding billing account.
+     *
+     * @param tcSubject a <code>TCSubject</code> representing the current user.
+     * @param projectId the id of the TC direct project.
+     * @param projectService the project service interface.
+     * @param projectContestFeeService the project contest fee service interface.
+     * @param projectContestFeePercentageService the project contest fee percentage service interface.
+     * @throws Exception if any error occurs.
+     * @since 1.10
+     */
+    public static void updateDirectProjectBugContestFee(TCSubject tcSubject, long projectId,
+                                                  ProjectServiceFacade projectService,
+                                                  ProjectContestFeeService projectContestFeeService,
+                                                  ProjectContestFeePercentageService projectContestFeePercentageService)
+            throws Exception {
+        ProjectData projectData = projectService.getProject(tcSubject, projectId);
+        List<com.topcoder.clients.model.Project> billings = projectService.getBillingAccountsByProject(projectId);
+        projectData.setFixedBugContestFee(null);
+        projectData.setPercentageBugContestFee(null);
+        if (billings.size() > 0) {
+            // Use the last billing account
+            long billingAccountId = billings.get(billings.size() - 1).getId();
+            ProjectContestFeePercentage percentage = projectContestFeePercentageService.getByProjectId(
+                    billingAccountId);
+            if (percentage != null && percentage.isActive()) {
+                projectData.setPercentageBugContestFee(percentage.getContestFeePercentage());
+            } else {
+                projectData.setFixedBugContestFee(projectContestFeeService.get(BUGR_CONTEST_TYPE_ID, billingAccountId));
+            }
+        }
+        projectService.updateProject(tcSubject, projectData);
+    }
+
+    /**
+     * Update the fixed bug race contest fee and percentage bug race contest fee for all TC direct projects associated
+     * with the billing account.
+     *
+     * @param tcSubject a <code>TCSubject</code> representing the current user.
+     * @param billingAccountId the id of the billing account.
+     * @param projectService the project service interface.
+     * @param projectContestFeeService the project contest fee service interface.
+     * @param projectContestFeePercentageService the project contest fee percentage service interface.
+     * @param directProjectService the direct project service interface.
+     * @throws Exception if any oerror occurs.
+     * @since 1.10
+     */
+    public static void updateBillingAccountDirectProjectsBugContestFees(TCSubject tcSubject, long billingAccountId,
+        ProjectServiceFacade projectService, ProjectContestFeeService projectContestFeeService,
+        ProjectContestFeePercentageService projectContestFeePercentageService,
+        DirectProjectService directProjectService) throws Exception {
+
+        BillingAccount account = new BillingAccount();
+        account.setId(billingAccountId);
+        List<ProjectDTO> projects = directProjectService.getProjectsByBillingAccounts(Arrays.asList(account));
+        for (ProjectDTO project : projects) {
+            updateDirectProjectBugContestFee(tcSubject, project.getProjectId(),
+                    projectService, projectContestFeeService, projectContestFeePercentageService);
         }
     }
 }

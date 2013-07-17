@@ -12,6 +12,8 @@ import java.util.Map;
 
 import javax.xml.datatype.DatatypeFactory;
 
+import com.topcoder.clients.dao.ProjectContestFeePercentageService;
+import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.model.Group;
@@ -109,8 +111,18 @@ import java.util.*;
  * </ol>
  * </p>
  *
- * @author Veve, isv, KennyAlive, Ghost_141, frozenfx, GreatKevin
- * @version 1.6
+ * <p>
+ *     Version 1.7 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) change notes:
+ *     <ol>
+ *         <li>Added field {@link #projectContestFeeService} and {@link #projectContestFeePercentageService}. Also
+ *         the setters/getters were added.</li>
+ *         <li>Updated {@link #executeAction()} to update the fixed bug race contest fee and percentage
+ *         bug race contest fee for the new created tc direct project.</li>
+ *     </ol>
+ * </p>
+ *
+ * @author Veve, isv, KennyAlive, Ghost_141, frozenfx, GreatKevin, TCSASSEMBLER
+ * @version 1.7
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -195,6 +207,20 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * @since 1.6
      */
     private GroupService groupService;
+
+    /**
+     * The project contest fee service.
+     *
+     * @since 1.7
+     */
+    private ProjectContestFeeService projectContestFeeService;
+
+    /**
+     * The project contest fee percentage service.
+     *
+     * @since 1.7
+     */
+    private ProjectContestFeePercentageService projectContestFeePercentageService;
 
     /**
      * Gets whether to create draft copilot posting.
@@ -423,6 +449,46 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     }
 
     /**
+     * Gets the project contest fee service.
+     *
+     * @return the contest fee service.
+     * @since 1.7
+     */
+    public ProjectContestFeeService getProjectContestFeeService() {
+        return projectContestFeeService;
+    }
+
+    /**
+     * Sets the project contest fee service.
+     *
+     * @param projectContestFeeService the project contest fee service.
+     * @since 1.7
+     */
+    public void setProjectContestFeeService(ProjectContestFeeService projectContestFeeService) {
+        this.projectContestFeeService = projectContestFeeService;
+    }
+
+    /**
+     * Gets the project contest fee percentage service.
+     *
+     * @return the contest fee percentage service.
+     * @since 1.7
+     */
+    public ProjectContestFeePercentageService getProjectContestFeePercentageService() {
+        return projectContestFeePercentageService;
+    }
+
+    /**
+     * Sets the project contest fee percentage service.
+     *
+     * @param projectContestFeePercentageService the project contest fee percentage service.
+     * @since 1.7
+     */
+    public void setProjectContestFeePercentageService(ProjectContestFeePercentageService projectContestFeePercentageService) {
+        this.projectContestFeePercentageService = projectContestFeePercentageService;
+    }
+
+    /**
      * The main logic to create the new project and assign permissions to the
      * new project.
      * 
@@ -485,6 +551,12 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         } else {
             // delegate to ProjectServiceFacade to create the project.
             projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions());
+        }
+
+        if (getProjectData().getProjectBillingAccountId() > 0) {
+            DirectUtils.updateDirectProjectBugContestFee(DirectUtils.getTCSubjectFromSession(),
+                    projectData.getProjectId(),
+                    getProjectServiceFacade(), getProjectContestFeeService(), getProjectContestFeePercentageService());
         }
 
         // put data into result

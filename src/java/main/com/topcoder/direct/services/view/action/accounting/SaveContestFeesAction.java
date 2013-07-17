@@ -1,18 +1,17 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
 import com.opensymphony.xwork2.Preparable;
-import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.util.log.Level;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>An action to be used for servicing the requests for updating the existing contest fees for selected billing
@@ -24,9 +23,17 @@ import java.util.Map;
  * <li>Moved method body of validate to super class BaseContestFeeAction#validateFormData.</li>
  * <ol>
  * </p>
- * 
- * @author isv, minhu
- * @version 1.1
+ *
+ * <p>
+ *     Version 1.2 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) change notes:
+ *     <ol>
+ *         <li>Updated {@link #executeAction()} to update the fixed bug race contest fee and percentage
+ *         bug race contest fee for tc direct project when updating contest fees for a billing account.</li>
+ *     </ol>
+ * </p>
+ *
+ * @author isv, minhu, TCSASSEMBLER
+ * @version 1.2
  */
 public class SaveContestFeesAction extends BaseContestFeeAction implements Preparable {
     /**
@@ -112,5 +119,9 @@ public class SaveContestFeesAction extends BaseContestFeeAction implements Prepa
             percentage.setCreateDate(date);
             getContestFeePercentageService().create(percentage);
         }
+
+        DirectUtils.updateBillingAccountDirectProjectsBugContestFees(tcSubject, getProjectId(),
+                getProjectServiceFacade(), getContestFeeService(), getContestFeePercentageService(),
+                getDirectProjectService());
     }
 }

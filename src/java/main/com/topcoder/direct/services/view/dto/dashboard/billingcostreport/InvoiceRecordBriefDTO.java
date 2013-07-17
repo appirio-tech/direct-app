@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
 
@@ -12,15 +12,30 @@ package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
  *   <li>Update {@link #contestId} field and its getter and setter to allow for null value.</li>
  *   <li>Added {@link #cockpitProjectId} field and its getter and setter.</li> 
  * </ol>
- * </p> 
- * @author flexme, notpad
- * @version 1.1
+ * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
+ * <ol>
+ *   <li>Added field {@link #jiraIssueId}. Also the getter/setter were added.</li>
+ * </ol>
+ * </p>
+ *
+ * @author flexme, notpad, TCSASSEMBLER
+ * @version 1.2
  */
 public class InvoiceRecordBriefDTO {
     /**
      * <p>The id of the contest.</p>
      */
     private Long contestId;
+
+    /**
+     * <p>The ID of JIRA issue. Can be any value. Has getter and setter.</p>
+     *
+     * @since 1.2
+     */
+    private String jiraIssueId;
     
     /**
      * <p>The id of the cockpict project.</p>
@@ -82,6 +97,26 @@ public class InvoiceRecordBriefDTO {
      */
     public void setContestId(Long contestId) {
         this.contestId = contestId;
+    }
+
+    /**
+     * <p>Gets the JIRA issue ID.</p>
+     *
+     * @return the JIRA issue ID.
+     * @since 1.2
+     */
+    public String getJiraIssueId() {
+        return jiraIssueId;
+    }
+
+    /**
+     * <p>Gets the JIRA issue ID.</p>
+     *
+     * @param jiraIssueId the JIRA issue ID.
+     * @since 1.2
+     */
+    public void setJiraIssueId(String jiraIssueId) {
+        this.jiraIssueId = jiraIssueId;
     }
 
     /**

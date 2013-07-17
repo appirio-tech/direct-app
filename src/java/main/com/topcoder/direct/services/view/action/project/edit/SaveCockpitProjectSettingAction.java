@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.topcoder.clients.dao.ProjectContestFeePercentageService;
+import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
@@ -79,8 +81,16 @@ import com.topcoder.shared.security.AuthorizationException;
  *     - Add checking for adding billing accounts against security groups
  * </p>
  *
- * @author GreatKevin
- * @version 2.3
+ * <p>
+ *     Version 2.4 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1)
+ *     - Added field {@link #projectContestFeeService} and {@link #projectContestFeePercentageService}. Also
+ *         the setters/getters were added.
+ *     - Updated methods {@link #associateProjectBillingAccount()} and {@link #removeProjectBillingAccount()} to update
+ *     the fixed and percentage bug race contest fee for the TC direct project.
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 2.4
  */
 @WriteProject
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
@@ -136,6 +146,20 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     private GroupService groupService;
 
     /**
+     * The project contest fee service.
+     *
+     * @since 2.4
+     */
+    private ProjectContestFeeService projectContestFeeService;
+
+    /**
+     * The project contest fee percentage service.
+     *
+     * @since 2.4
+     */
+    private ProjectContestFeePercentageService projectContestFeePercentageService;
+
+    /**
      * Gets form data.
      *
      * @return the form data.
@@ -171,6 +195,46 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      */
     public void setGroupService(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    /**
+     * Gets the project contest fee service.
+     *
+     * @return the contest fee service.
+     * @since 2.4
+     */
+    public ProjectContestFeeService getProjectContestFeeService() {
+        return projectContestFeeService;
+    }
+
+    /**
+     * Sets the project contest fee service.
+     *
+     * @param projectContestFeeService the project contest fee service.
+     * @since 2.4
+     */
+    public void setProjectContestFeeService(ProjectContestFeeService projectContestFeeService) {
+        this.projectContestFeeService = projectContestFeeService;
+    }
+
+    /**
+     * Gets the project contest fee percentage service.
+     *
+     * @return the contest fee percentage service.
+     * @since 2.4
+     */
+    public ProjectContestFeePercentageService getProjectContestFeePercentageService() {
+        return projectContestFeePercentageService;
+    }
+
+    /**
+     * Sets the project contest fee percentage service.
+     *
+     * @param projectContestFeePercentageService the project contest fee percentage service.
+     * @since 2.4
+     */
+    public void setProjectContestFeePercentageService(ProjectContestFeePercentageService projectContestFeePercentageService) {
+        this.projectContestFeePercentageService = projectContestFeePercentageService;
     }
 
     /**
@@ -512,6 +576,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
 
             getProjectServiceFacade().addBillingAccountToProject(getFormData().getProjectId(),
                     getFormData().getProjectBillingAccountId());
+            DirectUtils.updateDirectProjectBugContestFee(DirectUtils.getTCSubjectFromSession(),
+                    getFormData().getProjectId(),
+                    getProjectServiceFacade(), getProjectContestFeeService(), getProjectContestFeePercentageService());
 
             result.put("projectId", String.valueOf(getFormData().getProjectId()));
             result.put("billingId", String.valueOf(getFormData().getProjectBillingAccountId()));
@@ -550,6 +617,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
 
             getProjectServiceFacade().removeBillingAccountFromProject(getFormData().getProjectId(),
                     getFormData().getProjectBillingAccountId());
+            DirectUtils.updateDirectProjectBugContestFee(DirectUtils.getTCSubjectFromSession(),
+                    getFormData().getProjectId(),
+                    getProjectServiceFacade(), getProjectContestFeeService(), getProjectContestFeePercentageService());
 
             result.put("projectId", String.valueOf(getFormData().getProjectId()));
             result.put("billingId", String.valueOf(getFormData().getProjectBillingAccountId()));

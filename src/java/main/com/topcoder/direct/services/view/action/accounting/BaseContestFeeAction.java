@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -12,6 +12,7 @@ import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.util.log.Level;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
@@ -35,9 +36,17 @@ import java.util.Set;
  * <li>Added validateFormData to validate form data when creating/updating contest fees.</li>
  * <ol>
  * </p>
+ *
+ * <p>
+ *     Version 1.2 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) change notes:
+ *     <ol>
+ *         <li>Added {@link #directProjectService} field, also the getter/setter were added.</li>
+ *         <li>Updated {@link #getBillingAccount(long)} method to add the fake Bug Race to the contest types.</li>
+ *     </ol>
+ * </p>
  * 
- * @author isv, minhu
- * @version 1.1
+ * @author isv, minhu, TCSASSEMBLER
+ * @version 1.2
  */
 public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
     /**
@@ -80,6 +89,12 @@ public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
      * @since 1.1
      */
     private ProjectContestFeePercentageService contestFeePercentageService;
+    /**
+     * <p>The instance of direct project service interface. It will be injected by Spring framework.</p>
+     *
+     * @since 1.2
+     */
+    private DirectProjectService directProjectService;
 
     /**
      * <p>
@@ -106,6 +121,26 @@ public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
      */
     public void setContestFeeService(ProjectContestFeeService contestFeeService) {
         this.contestFeeService = contestFeeService;
+    }
+
+    /**
+     * <p>Gets the direct project service interface.</p>
+     *
+     * @return the direct project service interface.
+     * @since 1.2
+     */
+    public DirectProjectService getDirectProjectService() {
+        return directProjectService;
+    }
+
+    /**
+     * <p>Sets the direct project service interface.</p>
+     *
+     * @param directProjectService the direct project service interface.
+     * @since 1.2
+     */
+    public void setDirectProjectService(DirectProjectService directProjectService) {
+        this.directProjectService = directProjectService;
     }
 
     /**
@@ -210,6 +245,12 @@ public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
             billingAccount = new BillingAccount();
         }
         Map<String, ContestType> contestTypes = DirectUtils.getContesetTypes();
+        // add the fake bug race contest type
+        ContestType bugrContestType = new ContestType();
+        bugrContestType.setDescription("Bug Race");
+        bugrContestType.setTypeId((int) DirectUtils.BUGR_CONTEST_TYPE_ID);
+        contestTypes.put(String.valueOf(DirectUtils.BUGR_CONTEST_TYPE_ID), bugrContestType);
+
         Set<Integer> contestTypesWithFees = new HashSet<Integer>(); // Holds Ids for contest types which billing
         // account has contest fees set for
         List<ProjectContestFee> contestFees = billingAccount.getContestFees();

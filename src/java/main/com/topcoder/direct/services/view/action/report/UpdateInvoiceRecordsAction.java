@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
@@ -61,8 +61,17 @@ import com.topcoder.security.TCSubject;
  *   <li>Updated method {@link #executeAction()} to support records related to a second installment.
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.5: (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
+ * <ol>
+ *   <li>Added field {@link #jiraIssueIds}. Also the setter was added.</li>
+ *   <li>Updated method {@link #executeAction()} to support JIRA bug race contest fee.</li>
+ * </ol>
+ * </p>
+ *
  * @author flexme, minhu, TCSASSEMBLER, notpad
- * @version 1.4
+ * @version 1.5
  */
 public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
 
@@ -95,6 +104,13 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
      * <p>A <code>List</code> providing the contest IDs of the invoice records which needs to be updated.</p>
      */
     private List<Long> contestIds;
+
+    /**
+     * <p>A <code>String</code> providing the JIRA issue IDs of the invoice records which needs to be updated.</p>
+     *
+     * @since 1.5
+     */
+    private List<String> jiraIssueIds;
     
     /**
      * <p>A <code>List</code> providing the reference IDs of the credit invoice records which needs to be updated.</p>
@@ -159,13 +175,16 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
     @Override
     protected void executeAction() throws Exception {
         List<InvoiceType> invoiceTypes = lookupDAO.getAllInvoiceTypes();
-        // !!! For paymentId > 0, we should NOT get contest_id, billing_account_id, payment_type from request parameters because
-        // paymentId can unique determine contest_id, billing_account_id, payment_type. We need to get contest_id,
-        // billingaccount_id, payment_type from database by payment_id.
+        // !!! For paymentId > 0, we should NOT get contest_id, jira_issue_id, billing_account_id, payment_type from
+        // request parameters because paymentId can unique determine contest_id, jira_issue_id, billing_account_id,
+        // payment_type. We need to get contest_id, jira_issue_id, billingaccount_id, payment_type from
+        // database by payment_id.
+        // For paymentId = 0 and jiveIssueId is not empty, we need to get contest_id, billing_account_id
+        // from database by jiveIssueId.
         // For paymentId = 0 and contestId > 0, we need to get billing_account_id from database by contest_id.
         // For platform fee records, its contest_id = customer_platform_fee_id and its billing_account_id = 0.
         List<InvoiceRecordBriefDTO> recordDatas = DataProvider.getInvoiceRecordRelatedData(
-            contestIds, paymentIds, invoiceTypeNames);
+            jiraIssueIds, contestIds, paymentIds, invoiceTypeNames);
         Map<Long, BillingCostReportEntryDTO> secondInstallments = DataProvider.getRelatedSecondInstallment(
             paymentIds, invoiceTypeNames);
         
@@ -216,7 +235,13 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                 } else {
                     if (!PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
                         // payment_id = 0, get invoice record by contest_id and invoice_type_id
-                        record = invoiceRecordDAO.getByContestAndInvoiceType(contestIds.get(i), invoiceType.getId());
+                        if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                            record = invoiceRecordDAO.getByJiraIssueAndInvoiceType(jiraIssueIds.get(i),
+                                    invoiceType.getId());
+                        } else {
+                            record = invoiceRecordDAO.getByContestAndInvoiceType(contestIds.get(i),
+                                    invoiceType.getId());
+                        }
                         if (record != null && record.getPaymentId() != null) {
                             throw new DirectException("Payment Id should be zero.");
                         }
@@ -238,6 +263,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record = new InvoiceRecord();
                     record.setBillingAccountId(recordData.getBillingAccountId());
                     record.setContestId(recordData.getContestId());
+                    record.setJiraIssueId(jiraIssueIds.get(i));
                     record.setCockpitProjectId(recordData.getCockpitProjectId());
                     if (PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
                         record.setReferenceId(referenceIds.get(i));
@@ -424,5 +450,16 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
      */
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         this.transactionManager = transactionManager;
+    }
+
+    /**
+     * <p>Sets the JIRA issue ids of the invoice records which needs to be updated.</p>
+     *
+     * @param jiraIssueIds A <code>String</code> providing the JIRA issue IDs of the invoice records which
+     *                     needs to be updated.
+     * @since 1.5
+     */
+    public void setJiraIssueIds(List<String> jiraIssueIds) {
+        this.jiraIssueIds = jiraIssueIds;
     }
 }
