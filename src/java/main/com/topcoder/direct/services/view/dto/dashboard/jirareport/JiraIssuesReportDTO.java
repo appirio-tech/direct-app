@@ -108,55 +108,61 @@ public class JiraIssuesReportDTO extends ReportBaseDTO {
     private void insertSheetData(Sheet sheet) throws Exception {
         //the date format used for displaying 'launch date' and 'resolution date'
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
 
-        // set up the sheet header first
-        Row row = sheet.getRow(1);
-        int index = 1;
-        row.getCell(index++).setStringValue("Customer");
-        row.getCell(index++).setStringValue("Billing");
-        row.getCell(index++).setStringValue("Project");
-        row.getCell(index++).setStringValue("Contest Name");
-        row.getCell(index++).setStringValue("Contest ID");
-        row.getCell(index++).setStringValue("Bug ID");
-        row.getCell(index++).setStringValue("Launch Date");
-        row.getCell(index++).setStringValue("Title");
-        row.getCell(index++).setStringValue("Description");
-        row.getCell(index++).setStringValue("Prize");
-        row.getCell(index++).setStringValue("Status");
-        row.getCell(index++).setStringValue("Reporter");
-        row.getCell(index++).setStringValue("Assignee");
-        row.getCell(index++).setStringValue("TCO points");
-        row.getCell(index++).setStringValue("Resolution Date");
-        row.getCell(index++).setStringValue("Votes");
-        row.getCell(index++).setStringValue("winner");
+			// set up the sheet header first
+			Row row = sheet.getRow(1);
+			int index = 1;
+			row.getCell(index++).setStringValue("Customer");
+			row.getCell(index++).setStringValue("Billing");
+			row.getCell(index++).setStringValue("Project");
+			row.getCell(index++).setStringValue("Contest Name");
+			row.getCell(index++).setStringValue("Contest ID");
+			row.getCell(index++).setStringValue("Bug ID");
+			row.getCell(index++).setStringValue("Launch Date");
+			row.getCell(index++).setStringValue("Title");
+			row.getCell(index++).setStringValue("Description");
+			row.getCell(index++).setStringValue("Prize");
+			row.getCell(index++).setStringValue("Status");
+			row.getCell(index++).setStringValue("Reporter");
+			row.getCell(index++).setStringValue("Assignee");
+			row.getCell(index++).setStringValue("TCO points");
+			row.getCell(index++).setStringValue("Resolution Date");
+			row.getCell(index++).setStringValue("Votes");
+			row.getCell(index++).setStringValue("winner");
 
-        // insert sheet data from 2nd row
-        int rowIndex = 2;
+			// insert sheet data from 2nd row
+			int rowIndex = 2;
 
-        for (JiraIssuesReportEntryDTO dto : getEntries()) {
-            row = sheet.getRow(rowIndex++);
+			for (JiraIssuesReportEntryDTO dto : getEntries()) {
+				row = sheet.getRow(rowIndex++);
 
-            index = 1;
+				index = 1;
 
-            row.getCell(index++).setStringValue(dto.getCustomer());
-            row.getCell(index++).setStringValue(dto.getBillingAccount());
-            row.getCell(index++).setStringValue(dto.getProjectName());
-            row.getCell(index++).setStringValue(dto.getContestName());
-            row.getCell(index++).setNumberValue(dto.getContestId());
-            row.getCell(index++).setStringValue(dto.getTicketId());
-            row.getCell(index++).setStringValue(dateFormatter.format(dto.getLaunchDate()));
-            row.getCell(index++).setStringValue(dto.getTicketTitle());
-            row.getCell(index++).setStringValue(dto.getTicketDescription());
-            row.getCell(index++).setNumberValue(dto.getPrize());
-            row.getCell(index++).setStringValue(dto.getStatus());
-            row.getCell(index++).setStringValue(dto.getReporter());
-            row.getCell(index++).setStringValue(dto.getAssignee() == null ? "None" : dto.getAssignee());
-            row.getCell(index++).setNumberValue(dto.getTcoPoints());
-            row.getCell(index++).setStringValue(dto.getResolutionDate() == null ? "None" : dateFormatter.format(dto.getResolutionDate()));
-            row.getCell(index++).setNumberValue(dto.getVotesNumber());
-            row.getCell(index++).setStringValue(dto.getWinner());
+				row.getCell(index++).setStringValue(dto.getCustomer());
+				row.getCell(index++).setStringValue(dto.getBillingAccount());
+				row.getCell(index++).setStringValue(dto.getProjectName());
+				row.getCell(index++).setStringValue(dto.getContestName());
+				row.getCell(index++).setNumberValue(dto.getContestId());
+				row.getCell(index++).setStringValue(dto.getTicketId());
+				row.getCell(index++).setStringValue(dateFormatter.format(dto.getLaunchDate()));
+				row.getCell(index++).setStringValue(dto.getTicketTitle());
+				row.getCell(index++).setStringValue(dto.getTicketDescription() == null ? "None" : dto.getTicketDescription());
+				row.getCell(index++).setNumberValue(dto.getPrize());
+				row.getCell(index++).setStringValue(dto.getStatus());
+				row.getCell(index++).setStringValue(dto.getReporter());
+				row.getCell(index++).setStringValue(dto.getAssignee() == null ? "None" : dto.getAssignee());
+				row.getCell(index++).setNumberValue(dto.getTcoPoints());
+				row.getCell(index++).setStringValue(dto.getResolutionDate() == null ? "None" : dateFormatter.format(dto.getResolutionDate()));
+				row.getCell(index++).setNumberValue(dto.getVotesNumber());
+				row.getCell(index++).setStringValue(dto.getWinner());
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace(System.out);
+				throw e;
+			}
 
         }
-    }
-
-}
+ }
