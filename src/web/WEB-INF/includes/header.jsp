@@ -604,23 +604,23 @@
                             </a>
                             <div class="dropDwnLst">
                                 <div class="section">
-                                    <h3>View Contests</h3>
+                                    <h3>View</h3>
+									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>
                                     <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>">List View</a>
                                     <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Calendar View</a>
                                     <%--<a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>--%>
-									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>
                                 </div>
                                 <div class="section">
-                                    <h3>Create Contest</h3>
-                                    <a href="<s:url action="home" namespace="/launch"></s:url>">Launch New Contest</a>
+                                    <h3>Create</h3>
+                                    <a href="<s:url action="home" namespace="/launch"></s:url>">Create Contest</a>
                                     <a href="<s:url action="projectPlanner" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Project Planner</a>
                                   <!--  <a href="javascript:;">Quick Create Draft Contest</a>
                                     <a href="javascript:;">Bulk Creation</a>-->
                                 </div>
                                 <c:if test="${hasWritePermission}">
                                 <div class="section">
-                                    <h3>Edit Contest</h3>
-                                    <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Bulk Edit Draft Contests</a>
+                                    <h3>Edit</h3>
+                                    <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Bulk Edit</a>
                                 </div>
                                 </c:if>
                             </div>
