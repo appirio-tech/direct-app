@@ -605,15 +605,15 @@
                             <div class="dropDwnLst">
                                 <div class="section">
                                     <h3>View</h3>
-									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>
-                                    <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>">List View</a>
-                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Calendar View</a>
+   								    <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan Gantt</a>
+                                    <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>">List</a>
+                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Calendar</a>
                                     <%--<a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan View</a>--%>
                                 </div>
                                 <div class="section">
                                     <h3>Create</h3>
-                                    <a href="<s:url action="home" namespace="/launch"></s:url>">Create Contest</a>
-                                    <a href="<s:url action="projectPlanner" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Project Planner</a>
+                                    <a href="<s:url action="home" namespace="/launch"></s:url>">New Contest</a>
+                                    <a href="<s:url action="projectPlanner" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan</a>
                                   <!--  <a href="javascript:;">Quick Create Draft Contest</a>
                                     <a href="javascript:;">Bulk Creation</a>-->
                                 </div>
@@ -642,26 +642,6 @@
         </c:if>
     </ui:isProjectPage>
 
-    <ui:isDashboardPage>
-        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise' && requestScope.CURRENT_TAB ne 'searchAll' && requestScope.CURRENT_TAB ne 'platformSpecialistsReport'}">
-            <div id="tabs1">
-                 <ul>
-                     <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                         <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span class="dashboardSpan">Overview</span></a>
-                     </li>
-                    <li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
-                        <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
-                    </li>
-                    <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
-                        <a href="<s:url action="calendar" namespace="/"/>"><span class="dashboardSpan">Roadmap</span></a>
-                    </li>
-                    <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
-                        <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
-                    </li>
-                 </ul>
-            </div>
-        </c:if>
-     </ui:isDashboardPage>
      
      <ui:isCopilotPage>
         <div id="tabs1" class="copilotsTabs1">
