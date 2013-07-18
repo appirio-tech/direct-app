@@ -557,7 +557,10 @@ function renderTotalSpendChart(resultJson) {
                     text: ''
                 },
                 stackLabels:{
-                    enabled:true
+                    enabled:true,
+                    formatter: function() {
+                        return  this.total == 0 ? null : '$ ' + formatNum(this.total);
+                    }
                 },
                 max: maxY,
                 min: 0,
