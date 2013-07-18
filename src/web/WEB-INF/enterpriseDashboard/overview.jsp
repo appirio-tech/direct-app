@@ -325,6 +325,7 @@
                                 <div class="containerSection">
                                     <div id="overviewProjectHealth">
                                         <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
+                                        <div class="ajaxTableLoader" >Coming Soon!</div>
                                     </div>
                                 </div>
                                 <!-- End .containerSection -->
