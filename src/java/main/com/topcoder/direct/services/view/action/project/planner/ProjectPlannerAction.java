@@ -56,7 +56,7 @@ public class ProjectPlannerAction extends BaseDirectStrutsAction implements Form
     /**
      * The default contest member cost for the contest if no market average data exists for the contest type.
      */
-    private static final int DEFAULT_CONTEST_MEMBER_COST = 5000;
+    private static final int DEFAULT_CONTEST_MEMBER_COST = 3500;
 
     /**
      * The default contest duration for the contest if no market average data exists for the contest type.
