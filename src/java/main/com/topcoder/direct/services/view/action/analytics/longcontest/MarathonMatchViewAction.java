@@ -21,13 +21,13 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.marathonmatch.service.dto.CompetitorInfoDTO;
-import com.topcoder.marathonmatch.service.dto.MMCommonInfoDTO;
 import com.topcoder.marathonmatch.service.dto.MMInfoDTO;
 import com.topcoder.marathonmatch.service.dto.RegistrantInfo;
 import com.topcoder.marathonmatch.service.dto.SubmissionInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.user.UserService;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
@@ -40,6 +40,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Minutes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,9 +75,23 @@ import java.util.TimeZone;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress -
+ *          Dashboard and Submissions Tab
+ *     <ol>
+ *         <li>Add static property {@link #SUBMISSIONS} and {@link #HANDLE_COLOR}.</li>
+ *         <li>Add static property {@link #DEFAULT_SUBMISSION_SIZE} and {@link #DEFAULT_SUBMISSION_START}</li>
+ *         <li>Add property {@link #competitors} and {@link #registrants} to help store the data and save the time.</li>
+ *         <li>Add property {@link #active} to represent the contest is active or past contest.</li>
+ *         <li>Update method {@link #getMMRegistrants(String)} to use String as input parameter.</li>
+ *         <li>Remove method {@link #getMarathonMatchDetails(String)}.</li>
+ *         <li>Update to use <code>MarathonMatchHelper</code> to get the marathon match details for dashboard part.</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.1
+ * @version 1.2
  */
 public class MarathonMatchViewAction extends AbstractAction implements ViewAction<MMInfoDTO>, SessionAware {
 
@@ -86,20 +101,16 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private static final String CLASS_NAME = MarathonMatchViewAction.class.getName();
 
     /**
-     * Represent the dummy access token. This is just for test purpose. The access token itself means nothing.
-     */
-    private static final String ACCESS_TOKEN = "testAccessToken";
-
-    /**
-     * Represent the dummy group type. This is just for test purpose.
-     */
-    private static final String GROUP_TYPE = "hour";
-
-    /**
      * Represent the competitors tab.
      * @since 1.1
      */
     private static final String COMPETITORS = "competitors";
+
+    /**
+     * Represent the submissions tab.
+     * @since 1.2
+     */
+    private static final String SUBMISSIONS = "submissions";
 
     /**
      * Represent the bar data type in page.
@@ -124,6 +135,18 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      * @since 1.1
      */
     private static final String GRID_VIEW = "grid";
+
+    /**
+     * Represent the default submission start index.
+     * @since 1.2
+     */
+    private static final Integer DEFAULT_SUBMISSION_START = 1;
+
+    /**
+     * Represent the default submission size.
+     * @since 1.2
+     */
+    private static final Integer DEFAULT_SUBMISSION_SIZE = 5;
 
     /**
      * Log instance.
@@ -159,6 +182,18 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private long projectId;
 
     /**
+     * Represent the submission start index in submissions line graph.
+     * @since 1.2
+     */
+    private Integer submissionStart;
+
+    /**
+     * Represent the submission size in submissions line graph.
+     * @since 1.2
+     */
+    private Integer submissionSize;
+
+    /**
      * Represent the tab.
      * @since 1.1
      */
@@ -177,6 +212,18 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private String view;
 
     /**
+     * Represent a list of registrant member of this marathon match contest.
+     * @since 1.2
+     */
+    private SearchResult<CompetitorResource> registrants;
+
+    /**
+     * Represent a list of competitor member of this marathon match contest.
+     * @since 1.2
+     */
+    private SearchResult<CompetitorResource> competitors;
+
+    /**
      * Represent the contest service facade instance.
      */
     private ContestServiceFacade contestServiceFacade;
@@ -192,6 +239,12 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private boolean hasRoundId = false;
 
     /**
+     * Represent the contest is active or not. true if the contest is active otherwise false.
+     * @since 1.2
+     */
+    private boolean active = false;
+
+    /**
      * Represent the all available rating color in direct system.
      */
     private static final String[] RATING_COLORS =  {"Orange", "Gray", "Green", "Blue", "Yellow", "Red", "Unrated"};
@@ -201,6 +254,13 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      */
     private static final String[] RATING_COLOR_STYLE =
             {"#FF9900", "#999999", "#00A900", "#6666FF", "#DDCC00", "#EE0000", "#000000"};
+
+    /**
+     * Represent the handle color used in submissions line graph.
+     * @since 1.2
+     */
+    private static final String[] HANDLE_COLOR = {"#f6995c", "#0faff1", "#0ea4a2", "#373a97", "#824325", "#ff0000",
+            "#000000", "#ea00ff", "#50a432", "#626b8b"};
 
     /**
      * Create a new instance of <code>MarathonMatchViewAction</code>.
@@ -250,7 +310,8 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
 
             // call the service to get the detail information for the dashboard part.
             if(hasRoundId) {
-                getMarathonMatchDetails(Long.valueOf(roundId));
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, active,
+                        timelineInterval, viewData);
             }
 
             // Get the common data for contest page.
@@ -271,6 +332,12 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                 if(handle != null) {
                     viewCompetitorSubmissionHistory(roundId);
                 }
+            } else if (tab.equals(SUBMISSIONS)) {
+                // Submissions tab.
+                // Set the default value to submissionStart and submissionSize since this is not a ajax call.
+                submissionStart = DEFAULT_SUBMISSION_START;
+                submissionSize = DEFAULT_SUBMISSION_SIZE;
+                viewSubmissions();
             } else {
                 isFailed = true;
             }
@@ -287,6 +354,63 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     }
 
     /**
+     * This method will handle the request for submissions tab.
+     *
+     * @throws Exception if any error occurred.
+     * @since 1.2
+     */
+    public String viewSubmissions() throws Exception {
+        final String signature = CLASS_NAME + "#viewSubmissions()";
+        try {
+            LoggingWrapperUtility.logEntrance(logger, signature, new String[] {}, new Object[] {});
+
+            if(submissionStart <= 0) {
+                throw new IllegalArgumentException("The submissionStart should be large than 1");
+            }
+
+            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
+                    .getTCSubjectFromSession(), projectId);
+
+            // Get the round id from the project info.
+            String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
+
+            this.registrants = getMMRegistrants(roundId);
+
+            List<CompetitorResource> competitors = new ArrayList<CompetitorResource>();
+            for(CompetitorResource registrant : registrants.getItems()) {
+                if(registrant.getProvisionalScore() != null) {
+                    competitors.add(registrant);
+                }
+            }
+            Collections.sort(competitors, new Comparator<CompetitorResource>() {
+                public int compare(CompetitorResource competitorResource, CompetitorResource competitorResource2) {
+                    if (competitorResource.getProvisionalScore() > competitorResource2.getProvisionalScore()) {
+                        return 0;
+                    }
+                    if (competitorResource.getProvisionalScore().equals(competitorResource2.getProvisionalScore())) {
+                        return String.CASE_INSENSITIVE_ORDER
+                                .compare(competitorResource.getHandleName(), competitorResource2.getHandleName());
+                    }
+                    return 1;
+                }
+            });
+
+            int pageStart = submissionStart - 1 > competitors.size()
+                    ? competitors.size() - submissionSize : submissionStart - 1;
+            int pageSize = pageStart + submissionSize > competitors.size()
+                    ? competitors.size() : pageStart + submissionSize;
+
+            calculateSubmissionLineData(roundId, competitors.subList(pageStart, pageSize));
+            LoggingWrapperUtility.logExit(logger, signature, new String[] {"success"});
+            return SUCCESS;
+        } catch (Exception e) {
+            setResult(e);
+            LoggingWrapperUtility.logException(logger, signature, e);
+            throw e;
+        }
+    }
+
+    /**
      * This method will handle the request for competitor submission history.
      *
      * @param roundId the round id.
@@ -298,7 +422,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
             // Get submissions and sort it by submission date.
             SearchResult<SubmissionResource> submissionsHistory =
                     marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(Long.parseLong(roundId),
-                            handle, Integer.MAX_VALUE, 1, "desc", "submissionTime", ACCESS_TOKEN);
+                            handle, Integer.MAX_VALUE, 1, "desc", "submissionTime", MarathonMatchHelper.ACCESS_TOKEN);
             if(submissionsHistory.getItems().size() == 0) {
                 throw new MarathonMatchAnalyticsServiceException("The user " + handle +
                         " is not a competitor of this contest.");
@@ -332,10 +456,10 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
         if(hasRoundId) {
             // There is round id hooked with the contest.
             // call the service to get the registrants data.
-            SearchResult<CompetitorResource> result = getMMRegistrants(Long.valueOf(roundId));
+            this.registrants = getMMRegistrants(roundId);
 
             // calculate the json string by given data.
-            graphData = calculateGraphData(result);
+            graphData = calculateGraphData(this.registrants);
         } else {
             // There is no round id hooked with contest.
             // calculate the json string by null.
@@ -357,9 +481,9 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
         Map<String, String> graphData;
         if(hasRoundId) {
             // Get the registrant from rest api.
-            SearchResult<CompetitorResource> registrants = getMMRegistrants(Long.parseLong(roundId));
+            this.registrants = getMMRegistrants(roundId);
             // Get the competitors from the registrants.
-            SearchResult<CompetitorResource> competitors = getCompetitors(roundId, registrants);
+            this.competitors = getCompetitors(roundId, registrants);
 
             // Calculate graph data.
             graphData = calculateGraphData(competitors);
@@ -472,8 +596,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      * @since 1.1
      */
     private void calculateSubmissionHistoryData(List<SubmissionResource> recentSubmissions) {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm z");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+        DateFormat dateFormat = createDateFormat();
         DateTime startDate = new DateTime(viewData.getCommonInfo().getContestStart());
         DateTime endDate = new DateTime(viewData.getCommonInfo().getSystemTestingStart());
 
@@ -514,9 +637,83 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     }
 
     /**
+     * Calculate the submission line data for submission tab.
+     *
+     * @param roundId the round id.
+     * @param competitors the competitors
+     * @throws MarathonMatchAnalyticsServiceException if any error occurred.
+     * @since 1.2
+     */
+    private void calculateSubmissionLineData(String roundId, List<CompetitorResource> competitors)
+            throws MarathonMatchAnalyticsServiceException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode submissionsNode = objectMapper.createArrayNode();
+        DateTimeZone.setDefault(DateTimeZone.forID("US/Eastern"));
+        for(CompetitorResource competitor : competitors) {
+            SearchResult<SubmissionResource> submissionResources =
+                    marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(Long.valueOf(roundId),
+                            competitor.getHandleName(), Integer.MAX_VALUE, 1, "asc", "submissionTime",
+                            MarathonMatchHelper.ACCESS_TOKEN);
+            ObjectNode submissions = objectMapper.createObjectNode();
+            ArrayNode submissionHistory = objectMapper.createArrayNode();
+            for(SubmissionResource submissionResource : submissionResources.getItems()) {
+                ObjectNode node = objectMapper.createObjectNode();
+
+                DateTime submissionTime = new DateTime(submissionResource.getSubmissionTime());
+                DateFormat format = createDateFormat();
+                node.put("year", submissionTime.getYear());
+                node.put("month", submissionTime.getMonthOfYear() - 1);
+                node.put("day", submissionTime.getDayOfMonth());
+                node.put("hour", submissionTime.getHourOfDay());
+                node.put("minutes", submissionTime.getMinuteOfHour());
+                node.put("score", submissionResource.getScore());
+                node.put("language", submissionResource.getLanguage());
+                node.put("number", submissionResource.getSubmissionNumber());
+                node.put("time", format.format(submissionResource.getSubmissionTime()));
+                submissionHistory.add(node);
+            }
+            submissions.put("handle", competitor.getHandleName());
+            submissions.put("changeLog", submissionHistory);
+            submissions.put("color", HANDLE_COLOR[competitors.indexOf(competitor)]);
+            submissionsNode.add(submissions);
+        }
+        ObjectNode submissionLineData = objectMapper.createObjectNode();
+        submissionLineData.put("submissions", submissionsNode);
+
+        ObjectNode startDate = objectMapper.createObjectNode();
+        ObjectNode endDate = objectMapper.createObjectNode();
+        DateTime sdt, edt;
+        if(viewData.getCommonInfo() == null) {
+            // This is a ajax call. We need get the start date and end date first.
+            MarathonMatchDetailsResource result =
+                    marathonMatchAnalyticsService.getMarathonMatchDetails(Long.valueOf(roundId),
+                            MarathonMatchHelper.GROUP_TYPE_DAY, MarathonMatchHelper.ACCESS_TOKEN);
+            sdt = new DateTime(result.getStartDate());
+            edt = new DateTime(result.getEndDate());
+        } else {
+            sdt = new DateTime(viewData.getCommonInfo().getContestStart());
+            edt = new DateTime(viewData.getCommonInfo().getContestEnd());
+        }
+        startDate.put("year", sdt.getYear());
+        startDate.put("month", sdt.getMonthOfYear() - 1);
+        startDate.put("day", sdt.getDayOfMonth());
+        startDate.put("hour", sdt.getHourOfDay());
+        endDate.put("year", edt.getYear());
+        endDate.put("month", edt.getMonthOfYear() - 1);
+        endDate.put("day", edt.getDayOfMonth());
+        endDate.put("hour", edt.getHourOfDay());
+        submissionLineData.put("startDate", startDate);
+        submissionLineData.put("endDate", endDate);
+        viewData.setSubmissionsLineGraphData(submissionLineData.toString());
+        Map<String, String> jsonResult = new HashMap<String, String>();
+        jsonResult.put("submissionLineData", submissionLineData.toString());
+        setResult(jsonResult);
+    }
+
+    /**
      * <p>
      * Determines if the contest is marathon contest or not.
-     * For this class it should be always true otherwise there is error occured.
+     * For this class it should be always true otherwise there is error occurred.
      * </p>
      *
      * @return true if it's marathon contest, false otherwise.
@@ -537,27 +734,39 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     }
 
     /**
+     * Create a date format instance.
+     *
+     * @return the date format.
+     * @since 1.2
+     */
+    private DateFormat createDateFormat() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm z");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+        return dateFormat;
+    }
+
+    /**
      * Get the registrants of this marathon match.
+     *
+     * - Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress -
+     *   Dashboard and Submissions Tab
+     * - Change the round id to <code>String</code> type.
+     * - Update to return the registrants directly if it's not null which means this method has been called before in
+     *   this request.
+     * - Update to separate the logic of get registrants and set registrants.
      *
      * @param roundId the round id
      * @return the result from service.
      * @throws MarathonMatchAnalyticsServiceException the marathon match analytics service exception
      */
-    private SearchResult<CompetitorResource> getMMRegistrants(long roundId)
+    private SearchResult<CompetitorResource> getMMRegistrants(String roundId)
             throws MarathonMatchAnalyticsServiceException {
-        SearchResult<CompetitorResource> result = marathonMatchAnalyticsService.getRegistrants(roundId, ACCESS_TOKEN);
-        List<RegistrantInfo> registrantInfos = new ArrayList<RegistrantInfo>();
-        for(CompetitorResource competitorResource : result.getItems()) {
-            RegistrantInfo registrant = new RegistrantInfo();
-
-            registrant.setHandle(competitorResource.getHandleName());
-            registrant.setRating(competitorResource.getRating());
-            registrant.setRegistrationTime(competitorResource.getRegistrationDate());
-            registrant.setUserId(competitorResource.getHandleId());
-            registrantInfos.add(registrant);
+        if(this.registrants != null) {
+            return this.registrants;
         }
-
-        viewData.setRegistrants(registrantInfos);
+        SearchResult<CompetitorResource> result =
+                marathonMatchAnalyticsService.getRegistrants(Long.valueOf(roundId), MarathonMatchHelper.ACCESS_TOKEN);
+        setRegistrants(result);
         return result;
     }
 
@@ -584,7 +793,8 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                 // get the submissions and sort the result by submissionDate.
                 SearchResult<SubmissionResource> submissionResources =
                         marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(Long.valueOf(roundId),
-                                registrant.getHandleName(), 1, 1, "desc", "submissionTime", ACCESS_TOKEN);
+                                registrant.getHandleName(), 1, 1, "desc", "submissionTime",
+                                MarathonMatchHelper.ACCESS_TOKEN);
 
                 SubmissionResource latestSubmission = submissionResources.getItems().get(0);
 
@@ -619,22 +829,28 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     }
 
     /**
-     * Get the marathon match details information of this marathon match contest.
+     * This method will convert <code>CompetitorResource</code> instance to <code>RegistrantInfo</code> instance and
+     * store them in viewData.
      *
-     * @param roundId the round id of this contest.
-     * @throws MarathonMatchAnalyticsServiceException if any error occurred.
+     * @param registrants The registrants
+     * @since 1.2
      */
-    private void getMarathonMatchDetails(long roundId) throws MarathonMatchAnalyticsServiceException {
-        MarathonMatchDetailsResource result =
-                marathonMatchAnalyticsService.getMarathonMatchDetails(roundId, GROUP_TYPE, ACCESS_TOKEN);
-        MMCommonInfoDTO commonInfoDTO = new MMCommonInfoDTO();
-        viewData.setCommonInfo(commonInfoDTO);
-        viewData.getCommonInfo().setNumCompetitors(result.getNoOfCompetitors());
-        viewData.getCommonInfo().setNumRegistrants(result.getNoOfRegistrants());
-        viewData.getCommonInfo().setNumSubmissions(result.getNoOfSubmissions());
-        viewData.getCommonInfo().setSystemTestingStart(result.getSystemTestDate());
-        viewData.getCommonInfo().setContestStart(result.getStartDate());
-        viewData.getCommonInfo().setContestEnd(result.getEndDate());
+    private void setRegistrants(SearchResult<CompetitorResource> registrants) {
+        List<RegistrantInfo> registrantInfos = new ArrayList<RegistrantInfo>();
+        for(CompetitorResource competitorResource : registrants.getItems()) {
+            RegistrantInfo registrant = new RegistrantInfo();
+
+            registrant.setHandle(competitorResource.getHandleName());
+            registrant.setRating(competitorResource.getRating());
+            registrant.setRegistrationTime(competitorResource.getRegistrationDate());
+            registrant.setUserId(competitorResource.getHandleId());
+            registrantInfos.add(registrant);
+        }
+
+        if(viewData == null) {
+            viewData = new MMInfoDTO();
+        }
+        viewData.setRegistrants(registrantInfos);
     }
 
     /**
@@ -809,7 +1025,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
         this.marathonMatchAnalyticsService = marathonMatchAnalyticsService;
     }
 
-
     /**
      * Sets project id.
      *
@@ -895,6 +1110,56 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      */
     public void setView(String view) {
         this.view = view;
+    }
+
+    /**
+     * Is active.
+     *
+     * @return the boolean
+     * @since 1.2
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Gets submission start.
+     *
+     * @return the submission start
+     * @since 1.2
+     */
+    public int getSubmissionStart() {
+        return submissionStart;
+    }
+
+    /**
+     * Sets submission start.
+     *
+     * @param submissionStart the submission start
+     * @since 1.2
+     */
+    public void setSubmissionStart(int submissionStart) {
+        this.submissionStart = submissionStart;
+    }
+
+    /**
+     * Gets submission size.
+     *
+     * @return the submission size
+     * @since 1.2
+     */
+    public int getSubmissionSize() {
+        return submissionSize;
+    }
+
+    /**
+     * Sets submission size.
+     *
+     * @param submissionSize the submission size
+     * @since 1.2
+     */
+    public void setSubmissionSize(int submissionSize) {
+        this.submissionSize = submissionSize;
     }
 }
 

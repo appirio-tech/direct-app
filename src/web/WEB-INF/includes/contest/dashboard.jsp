@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -25,6 +25,9 @@
   - Version 1.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
   - - Remove some error message when there is no round id hooked with contest.
   - - Update registrant, cureent top ranking tab when there is no round id hooked with contest.
+  -
+  - Version 1.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab)
+  - - Update Current Standings tab and time line module for marathon match contest.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -71,10 +74,28 @@
             <s:if test="hasRoundId">
                 <div class="timelineIntro">
                     <dl>
-                        <dt>Currently Top Ranking Submissions:</dt>
-                        <dd><a href="" class="handlename">handlename</a></dd>
-                        <dt>Best Provisional Score:</dt>
-                        <dd class="last"><a href="">2000</a></dd>
+                        <s:if test="active">
+                            <dt>Currently Top Ranking Submissions:</dt>
+                        </s:if>
+                        <s:else>
+                            <dt>Winner:</dt>
+                        </s:else>
+                        <dd><tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId}" context="marathon_match" darkBG="false"/></dd>
+                        <s:if test="active">
+                            <dt>Best Provisional Score:</dt>
+                        </s:if>
+                        <s:else>
+                            <dt>Best Final Score:</dt>
+                        </s:else>
+                        <dd class="last">
+                            <a href="<s:url action="mmRegistrants" namespace="/contest">
+                                <s:param name="projectId" value="viewData.contestStats.contest.id"/>
+                                <s:param name="tab">competitors</s:param>
+                                <s:param name="handle" value="viewData.commonInfo.bestScoreHandle"/>
+                            </s:url> <s:if test="active">class="finalScore"</s:if> ">
+                            ${viewData.commonInfo.bestScore}
+                            </a>
+                        </dd>
                     </dl>
                 </div>
             </s:if>
@@ -155,7 +176,7 @@
     <div <s:if test="marathon">id="appositeContainer"</s:if> class="appositeContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
     <s:if test="hasRoundId">
         <div class="dashboardModule registrationModule">
-            <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
+            <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus"/>
             <c:set var="statusWidth" value="${viewData.dashboard.regProgressPercent}"/>
             <c:choose>
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
@@ -501,29 +522,37 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>Handle</th>
-                                <th>Provisional Score</th>
+                                <s:if test="active">
+                                    <th>Provisional Score</th>
+                                </s:if>
+                                <s:else>
+                                    <th>Final Score</th>
+                                </s:else>
                                 <th>Rating</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="#">handlename</a></td>
-                                <td>0000.00</td>
-                                <td>00000</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td><a href="#">handlename</a></td>
-                                <td>0000.00</td>
-                                <td>00000</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td><a href="#">handlename</a></td>
-                                <td>0000.00</td>
-                                <td>00000</td>
-                            </tr>
+                            <s:iterator value="viewData.topCompetitors">
+                                <tr>
+                                    <c:if test="${rank eq null}">
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </c:if>
+                                    <c:if test="${rank ne null}">
+                                        <td>${rank}</td>
+                                        <td><tc-webtag:handle coderId="${userId}" context="marathon_match" darkBG="false"/></td>
+                                        <s:if test="active">
+                                            <td>${provisionalScore}</td>
+                                        </s:if>
+                                        <s:else>
+                                            <td>${finalScore}</td>
+                                        </s:else>
+                                        <td><tc-webtag:ratingColor rating="${rating}" darkBG="false">${rating}</tc-webtag:ratingColor></td>
+                                    </c:if>
+                                </tr>
+                            </s:iterator>
                             </tbody>
                         </table>
                     </div>

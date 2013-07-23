@@ -478,12 +478,14 @@
     <bean id="contestDetailAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST" />
+          <property name="timelineInterval" value="1"/>
           <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
     </bean>
 
     <bean id="contestDetailJSONAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST_JSON" />
+          <property name="timelineInterval" value="1"/>
           <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
     </bean>
 
@@ -1491,7 +1493,7 @@
     <bean id="marathonMatchViewAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction" scope="prototype">
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
-        <property name="timelineInterval" value="0"/>
+        <property name="timelineInterval" value="1"/>
         <property name="submissionHistoryInterval" value="20"/>
     </bean>
 

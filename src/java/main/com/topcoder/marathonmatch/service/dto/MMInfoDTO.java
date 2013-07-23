@@ -3,7 +3,7 @@
  */
 package com.topcoder.marathonmatch.service.dto;
 
-import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
+import com.topcoder.direct.services.view.dto.contest.MarathonMatchCommonDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -32,16 +32,20 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress -
+ *                   Dashboard and Submissions Tab
+ *     <ol>
+ *         <li>Remove {@link #commonInfo} in this class.</li>
+ *         <li>Update to extend the <code>MarathonMatchCommonDTO</code>.</li>
+ *     </ol>
+ * </p>
+ *
  * @author sampath01, zhu_tao, Ghost_141
- * @version 1.2
+ * @version 1.3
  * @since 1.0
  */
-public class MMInfoDTO extends BaseContestCommonDTO {
-
-    /**
-     * The common info DTO
-     */
-    private MMCommonInfoDTO commonInfo;
+public class MMInfoDTO extends MarathonMatchCommonDTO {
 
     /**
      * The list of registrants in descending order of registration
@@ -106,11 +110,6 @@ public class MMInfoDTO extends BaseContestCommonDTO {
     private String submissionsLineGraphData;
 
     /**
-     * The JSON data used for showing the TimeLine Graph See the front-end assembly spec for expected format
-     */
-    private String timeLineGraphData;
-
-    /**
      * The JSON data used for showing the Submissions History Graph See the front-end assembly spec for expected format
      */
     private String submissionHistoryData;
@@ -120,25 +119,6 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      */
     public MMInfoDTO() {
         super();
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
-    public MMCommonInfoDTO getCommonInfo() {
-        return commonInfo;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param commonInfo
-     *            the name-sake field to set
-     */
-    public void setCommonInfo(MMCommonInfoDTO commonInfo) {
-        this.commonInfo = commonInfo;
     }
 
     /**
@@ -298,25 +278,6 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * 
      * @return the value of name-sake field.
      */
-    public String getTimeLineGraphData() {
-        return timeLineGraphData;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param timeLineGraphData
-     *            the name-sake field to set
-     */
-    public void setTimeLineGraphData(String timeLineGraphData) {
-        this.timeLineGraphData = timeLineGraphData;
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
     public String getSubmissionHistoryData() {
         return submissionHistoryData;
     }
@@ -355,6 +316,7 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * Gets recent submissions.
      *
      * @return the recent submissions
+     * @since 1.2
      */
     public List<SubmissionInfo> getRecentSubmissions() {
         return recentSubmissions;
@@ -364,6 +326,7 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * Sets recent submissions.
      *
      * @param recentSubmissions the recent submissions
+     * @since 1.2
      */
     public void setRecentSubmissions(List<SubmissionInfo> recentSubmissions) {
         this.recentSubmissions = recentSubmissions;
@@ -373,6 +336,7 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * Gets competitor info dTO.
      *
      * @return the competitor info dTO
+     * @since 1.2
      */
     public CompetitorInfoDTO getCompetitorInfoDTO() {
         return competitorInfoDTO;
@@ -382,6 +346,7 @@ public class MMInfoDTO extends BaseContestCommonDTO {
      * Sets competitor info dTO.
      *
      * @param competitorInfoDTO the competitor info dTO
+     * @since 1.2
      */
     public void setCompetitorInfoDTO(CompetitorInfoDTO competitorInfoDTO) {
         this.competitorInfoDTO = competitorInfoDTO;

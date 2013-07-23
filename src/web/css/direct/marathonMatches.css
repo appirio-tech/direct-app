@@ -15,6 +15,7 @@
 		font-weight:bold;
 		line-height:12px;
 		color:#000000;
+        padding-left: 0px;
 		}
 		
 	#timelineModule .content .timelineIntro dd{
@@ -62,7 +63,7 @@
 	
 	/* Timeline container */	
 	#timelineModule .timelineContainer{
-		min-width:auto;
+		min-width:772px;
 		clear:both;
 		padding:41px 2px 12px 2px !important;
 		}
@@ -545,6 +546,7 @@
     .registrantsAndSubmissions .registrantsContaner .competitor-grid{
 		border:#cccccc solid 1px;
 		border-collapse:collapse;
+        width: 100%;
 		}
 		
 		.registrantsAndSubmissions .registrantsContaner #gridViewTable td,

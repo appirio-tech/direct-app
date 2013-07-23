@@ -10,11 +10,19 @@ import java.util.Date;
  * This class extend from <code>RegistrantInfo</code> class because any competitor is a registrant first.
  *
  * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress -
+ *                   Dashboard and Submissions Tab
+ *     <ol>
+ *         <li>Add property {@link #finalScore} to store the final score of this competitor.</li>
+ *     </ol>
+ * </p>
+ *
+ * <p>
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * @author Ghost_141
+ * @version 1.1
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
  */
 public class CompetitorInfoDTO extends RegistrantInfo {
@@ -27,6 +35,12 @@ public class CompetitorInfoDTO extends RegistrantInfo {
      * The provisional score.
      */
     private Double provisionalScore;
+
+    /**
+     * The final score.
+     * @since 1.1
+     */
+    private Double finalScore;
 
     /**
      * The last submission time.
@@ -184,5 +198,25 @@ public class CompetitorInfoDTO extends RegistrantInfo {
      */
     public void setLastSubmissionNumber(Integer lastSubmissionNumber) {
         this.lastSubmissionNumber = lastSubmissionNumber;
+    }
+
+    /**
+     * Gets final score.
+     *
+     * @return the final score
+     * @since 1.1
+     */
+    public Double getFinalScore() {
+        return finalScore;
+    }
+
+    /**
+     * Sets final score.
+     *
+     * @param finalScore the final score
+     * @since 1.1
+     */
+    public void setFinalScore(Double finalScore) {
+        this.finalScore = finalScore;
     }
 }

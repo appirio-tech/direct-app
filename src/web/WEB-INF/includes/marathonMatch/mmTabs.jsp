@@ -1,8 +1,11 @@
 <%--
  - The registrants, competitors, submissions tabs for marathon match contest.
  -
+ - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab
+ - - Update the link of submission tab. Make it link to real submission page.
+ -
  - author: Ghost_141
- - Version: 1.0
+ - Version: 1.1
  - Since: 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,8 +27,11 @@
                 <span><span>Competitors</span></span>
             </a>
         </li>
-        <li>
-            <a href="">
+        <li <c:if test="${tab eq 'submissions'}"> class="active" </c:if>>
+            <a href="<s:url action="mmRegistrants" namespace="/contest">
+                        <s:param name="projectId" value="viewData.contestStats.contest.id"/>
+                        <s:param name="tab">submissions</s:param>
+                    </s:url> ">
                 <span><span>Submissions</span></span>
             </a>
         </li>

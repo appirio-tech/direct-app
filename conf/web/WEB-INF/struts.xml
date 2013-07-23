@@ -1667,6 +1667,12 @@
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/marathonMatchRegistrantsAndSubmissions.jsp</result>
         </action>
+        
+        <action name="mmSubmissions" class="marathonMatchViewAction" method="viewSubmissions">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
     </package>
 
     <package name="ajax" namespace="/ajax" extends="base">

@@ -569,12 +569,14 @@ $(document).ready(function() {
             { "sType": "html-trimmed" }
         ],
         "fnDrawCallback" : function( oSettings ) {
-            $(".competitor-grid-body").html('');
+            var $tbody = $(".competitor-grid-body");
+            $tbody.html('');
             var count = 0;
             var rowNumber = 1;
-            $.each($("#gridViewTable tr.grid-item"), function(index, value) {
-                if($(".competitor-grid-body .row_" + rowNumber).length == 0) {
-                    $(".competitor-grid-body").append("<tr class='row_" + rowNumber + "'></tr>");
+            var $gridItem = $("#gridViewTable tr.grid-item");
+            $.each($gridItem, function(index, value) {
+                if($tbody.find(".row_" + rowNumber).length == 0) {
+                    $tbody.append("<tr class='row_" + rowNumber + "'></tr>");
                 }
                 $(".row_" + rowNumber).append(this.innerHTML);
                 count++;
@@ -583,10 +585,8 @@ $(document).ready(function() {
                     count = 0;
                 }
             });
-            if($("#gridViewTable tr.grid-item").length == 1) {
-                $(".competitor-grid-body .gridHeader").css("width", "193px").css("border-right", "#cccccc solid 1px");
-                $(".competitor-grid-body .gridBody").css("width", "193px").css("border-right", "#cccccc solid 1px");
-                $(".competitor-grid-body .gridFooter").css("width", "193px").css("border-right", "#cccccc solid 1px");
+            if($gridItem.length == 1) {
+                $tbody.find(".gridHeader, .gridBody, .gridFooter").css("width", "193px").css("border-right", "#cccccc solid 1px");
             }
         }
     });

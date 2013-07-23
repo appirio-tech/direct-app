@@ -9,12 +9,20 @@ import java.util.Date;
  * <p>
  * This class contains common information about the MM.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab
+ *     <ol>
+ *         <li>Add property {@link #bestScoreUserId}.</li>
+ *     </ol>
+ * </p>
+ *
  * <p>
  * <strong>Thread Safety:</strong> This class is fully mutable and not thread-safe.
  * </p>
  * 
- * @author sampath01, zhu_tao
- * @version 1.0
+ * @author sampath01, zhu_tao, Ghost_141
+ * @version 1.1
  * @since 1.0
  */
 public class MMCommonInfoDTO {
@@ -22,6 +30,12 @@ public class MMCommonInfoDTO {
      * The handle of user currently having the best score
      */
     private String bestScoreHandle;
+
+    /**
+     * The user id of user currently having the best score.
+     * @since 1.1
+     */
+    private Long bestScoreUserId;
 
     /**
      * The current best score of the MM
@@ -239,5 +253,25 @@ public class MMCommonInfoDTO {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets best score user id.
+     *
+     * @return the best score user id
+     * @since 1.1
+     */
+    public Long getBestScoreUserId() {
+        return bestScoreUserId;
+    }
+
+    /**
+     * Sets best score user id.
+     *
+     * @param bestScoreUserId the best score user id
+     * @since 1.1
+     */
+    public void setBestScoreUserId(Long bestScoreUserId) {
+        this.bestScoreUserId = bestScoreUserId;
     }
 }

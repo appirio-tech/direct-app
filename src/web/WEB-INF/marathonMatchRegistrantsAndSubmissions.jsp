@@ -6,8 +6,12 @@
   - Version 1.1 - (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab) changes:
   - - Update to add content for competitor list, grid, submission history page.
   -
+  - Version 1.2 - (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab) changes:
+  - - Add script field to store the time line graph data.
+  - - Update to support submissions tab in the page.
+  -
   - Author: Ghost_141
-  - Version: 1.1
+  - Version: 1.2
   - Since: PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -32,6 +36,10 @@
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/marathonMatches.js"></script>
 
+    <script>
+        var timeLineData = ${viewData.timeLineGraphData};
+    </script>
+
     <c:if test="${tab eq null}">
         <script>
             var barData = ${viewData.registrantsRatingBarData};
@@ -47,6 +55,11 @@
     <c:if test="${handle ne null}">
         <script>
             var submissionHistory = ${viewData.submissionHistoryData};
+        </script>
+    </c:if>
+    <c:if test="${tab eq 'submissions'}">
+        <script>
+            var submissionLineData = ${viewData.submissionsLineGraphData};
         </script>
     </c:if>
 
@@ -93,31 +106,37 @@
 
                                             <jsp:include page="includes/marathonMatch/mmTabs.jsp"/>
 
-                                            <div class="registrantsContaner">
-                                                <!-- Registrant page -->
-                                                <c:if test="${tab eq null}">
-                                                    <jsp:include page="marathonMatch/registrants.jsp"/>
-                                                </c:if>
-                                                <!-- Competitor list and grid view page -->
-                                                <c:if test="${tab eq 'competitors' && handle eq null}">
-
-                                                    <jsp:include page="includes/marathonMatch/list-grid.jsp"/>
-
-                                                    <h5>Competitors</h5>
-                                                    <!-- Competitor grid view page -->
-                                                    <c:if test="${view eq null || view eq 'grid'}">
-                                                        <jsp:include page="marathonMatch/competitors-grid.jsp"/>
+                                            <c:if test="${tab ne 'submissions'}">
+                                                <div class="registrantsContaner">
+                                                    <!-- Registrant page -->
+                                                    <c:if test="${tab eq null}">
+                                                        <jsp:include page="marathonMatch/registrants.jsp"/>
                                                     </c:if>
-                                                    <!-- Competitor list view page -->
-                                                    <c:if test="${view eq 'list'}">
-                                                        <jsp:include page="marathonMatch/competitors-list.jsp"/>
+                                                    <!-- Competitor list and grid view page -->
+                                                    <c:if test="${tab eq 'competitors' && handle eq null}">
+
+                                                        <jsp:include page="includes/marathonMatch/list-grid.jsp"/>
+
+                                                        <h5>Competitors</h5>
+                                                        <!-- Competitor grid view page -->
+                                                        <c:if test="${view eq null || view eq 'grid'}">
+                                                            <jsp:include page="marathonMatch/competitors-grid.jsp"/>
+                                                        </c:if>
+                                                        <!-- Competitor list view page -->
+                                                        <c:if test="${view eq 'list'}">
+                                                            <jsp:include page="marathonMatch/competitors-list.jsp"/>
+                                                        </c:if>
                                                     </c:if>
-                                                </c:if>
-                                                <!-- Competitor Submission History Page -->
-                                                <c:if test="${tab eq 'competitors' && handle ne null}">
-                                                    <jsp:include page="marathonMatch/competitors-submission-history.jsp"/>
-                                                </c:if>
-                                            </div>
+                                                    <!-- Competitor Submission History Page -->
+                                                    <c:if test="${tab eq 'competitors' && handle ne null}">
+                                                        <jsp:include page="marathonMatch/competitors-submission-history.jsp"/>
+                                                    </c:if>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${tab eq 'submissions'}">
+                                                <!-- Submissions page -->
+                                                <jsp:include page="marathonMatch/submissions.jsp"/>
+                                            </c:if>
                                         </s:if>
                                         <s:else>
                                             <span>The data is not available as the round id is not set.</span>

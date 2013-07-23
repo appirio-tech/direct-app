@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -21,13 +22,11 @@ import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
-import com.topcoder.marathonmatch.service.dto.MMCommonInfoDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchDetailsResource;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -182,8 +181,16 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.4 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab) change notes:
+ * <ul>
+ *     <li>Add property {@link #active}.</li>
+ *     <li>Update method {@link #executeAction()} to support marathon match contest dashboard part.</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141
- * @version 2.3
+ * @version 2.4
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -198,7 +205,7 @@ public class GetContestAction extends ContestAction {
      * The action type.
      * </p>
      *
-     * @see com.topcoder.direct.services.view.action.contest.launch.GetContestAction.TYPE
+     * @see TYPE
      */
     private TYPE type;
 
@@ -287,6 +294,18 @@ public class GetContestAction extends ContestAction {
     private boolean hasRoundId = false;
 
     /**
+     * Represent the contest is active or not. true if the contest is active otherwise false.
+     * @since 2.4
+     */
+    private boolean active = false;
+
+    /**
+     * The time line interval.
+     * @since 2.4
+     */
+    private int timelineInterval;
+
+    /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
@@ -304,7 +323,7 @@ public class GetContestAction extends ContestAction {
      *
      * @throws IllegalStateException if the contest service facade is not set.
      * @throws Exception if any other error occurs
-     * @see com.topcoder.service.facade.contest.ContestServiceFacade#
+     * @see ContestServiceFacade#
      *                   getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
      */
     protected void executeAction() throws Exception {
@@ -371,16 +390,11 @@ public class GetContestAction extends ContestAction {
 
         // set the common info for marathon match contest only.
         if(DirectUtils.isMM(softwareCompetition)) {
-            if(softwareCompetition.getProjectHeader().getProperty("Marathon Match Id") != null) {
+            String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
+
+            if(roundId != null) {
                 hasRoundId = true;
-                MarathonMatchDetailsResource mmDetail = marathonMatchAnalyticsService.getMarathonMatchDetails(
-                        Long.valueOf(softwareCompetition.getProjectHeader().getProperty("Marathon Match Id")),
-                        "hour", "access_token");
-                MMCommonInfoDTO commonInfoDTO = new MMCommonInfoDTO();
-                viewData.setCommonInfo(commonInfoDTO);
-                viewData.getCommonInfo().setNumSubmissions(mmDetail.getNoOfSubmissions());
-                viewData.getCommonInfo().setNumRegistrants(mmDetail.getNoOfRegistrants());
-                viewData.getCommonInfo().setNumCompetitors(mmDetail.getNoOfCompetitors());
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, active, timelineInterval, viewData);
             } else {
                 hasRoundId = false;
             }
@@ -589,6 +603,16 @@ public class GetContestAction extends ContestAction {
     }
 
     /**
+     * Is active.
+     *
+     * @return the boolean
+     * @since 2.4
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
      * <p>
      * Gets the view data.
      * </p>
@@ -770,6 +794,26 @@ public class GetContestAction extends ContestAction {
      */
     public String getContestEndDate() {
         return contestEndDate;
+    }
+
+    /**
+     * Gets timeline interval.
+     *
+     * @return the timeline interval
+     * @since 2.4
+     */
+    public int getTimelineInterval() {
+        return timelineInterval;
+    }
+
+    /**
+     * Sets timeline interval.
+     *
+     * @param timelineInterval the timeline interval
+     * @since 2.4
+     */
+    public void setTimelineInterval(int timelineInterval) {
+        this.timelineInterval = timelineInterval;
     }
 
     /**

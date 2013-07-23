@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
-  - Version: 1.9
+  - Version: 1.10
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -26,6 +26,8 @@
   - - Add support for CCA specific on billing accounts
   - Version 1.9 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) change notes: 
   - - Add support for marathon match contest.
+  - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab) change notes:
+  - - Update dashboard part to show the real time line graph.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -62,6 +64,11 @@
     <!-- New Script For Marathon Matches -->
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/marathonMatches.js"></script>
+    <script>
+        <c:if test="${hasRoundId}">
+            var timeLineData = ${viewData.timeLineGraphData};
+        </c:if>
+    </script>
 </head>
 
 <body id="page">
