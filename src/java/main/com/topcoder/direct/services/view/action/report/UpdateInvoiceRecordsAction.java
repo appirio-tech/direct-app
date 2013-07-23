@@ -263,7 +263,10 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record = new InvoiceRecord();
                     record.setBillingAccountId(recordData.getBillingAccountId());
                     record.setContestId(recordData.getContestId());
-                    record.setJiraIssueId(jiraIssueIds.get(i));
+					if (jiraIssueIds.get(i) != null && !jiraIssueIds.get(i).equals(""))
+					{
+						record.setJiraIssueId(jiraIssueIds.get(i));
+					}
                     record.setCockpitProjectId(recordData.getCockpitProjectId());
                     if (PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
                         record.setReferenceId(referenceIds.get(i));
