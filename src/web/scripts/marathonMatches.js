@@ -995,10 +995,11 @@ $(document).ready(function(){
                 series: chartSeriesArray
             });
 		}
+        return chartTopSubmissions;
 	}
 
-    function fixTimeRange(dateOffset) {
-        chartTopSubmissions.xAxis[0].setExtremes(
+    function fixTimeRange(chart, dateOffset) {
+        chart.xAxis[0].setExtremes(
             Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7 * dateOffset, slStartDate.hour),
             Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7 * (dateOffset + 1), slStartDate.hour));
     }
@@ -1009,8 +1010,8 @@ $(document).ready(function(){
         var slStartDate = submissionLineData.startDate;
         var slEndDate = submissionLineData.endDate;
 
-        loadTopSubmissions(submissionLineData);
-        fixTimeRange(dateOffset);
+        var c = loadTopSubmissions(submissionLineData);
+        fixTimeRange(c, dateOffset);
 
         $('.chartTopSubmissions a.prev:not(.disable)').addClass('disable');
         if(Date.UTC(slEndDate.year, slEndDate.month, slEndDate.day, slEndDate.hour) < Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7, slStartDate.hour)) {
@@ -1022,7 +1023,7 @@ $(document).ready(function(){
 
 
 	$('.chartTopSubmissions a.prev:not(.disable)').live('click',function(){
-        fixTimeRange(dateOffset - 1);
+        fixTimeRange(chartTopSubmissions, dateOffset - 1);
         dateOffset--;
         if(Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7 * dateOffset, slStartDate.hour) >
             Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day, slStartDate.hour)) {
@@ -1034,7 +1035,7 @@ $(document).ready(function(){
     });
 	
 	$('.chartTopSubmissions a.next:not(.disable)').live('click',function(){
-        fixTimeRange(dateOffset + 1);
+        fixTimeRange(chartTopSubmissions, dateOffset + 1);
         dateOffset++;
         if(Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7 * dateOffset, slStartDate.hour) >
             Date.UTC(slEndDate.year, slEndDate.month, slEndDate.day, slEndDate.hour)) {
@@ -1083,9 +1084,9 @@ $(document).ready(function(){
             success: function(json){
                 handleJsonResult(json,
                 function(result) {
-                    loadTopSubmissions(JSON.parse(result.submissionLineData));
+                    var c = loadTopSubmissions(JSON.parse(result.submissionLineData));
                     dateOffset = 0;
-                    fixTimeRange(dateOffset);
+                    fixTimeRange(c, dateOffset);
                     $('.chartTopSubmissions a.prev:not(.disable)').addClass('disable');
                     if(Date.UTC(slEndDate.year, slEndDate.month, slEndDate.day, slEndDate.hour) < Date.UTC(slStartDate.year, slStartDate.month, slStartDate.day + 7, slStartDate.hour)) {
                         $('.chartTopSubmissions a.next:not(.disable)').addClass('disable');

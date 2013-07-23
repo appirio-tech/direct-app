@@ -27,7 +27,6 @@ import com.topcoder.marathonmatch.service.dto.SubmissionInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.user.UserService;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
@@ -81,7 +80,7 @@ import java.util.TimeZone;
  *     <ol>
  *         <li>Add static property {@link #SUBMISSIONS} and {@link #HANDLE_COLOR}.</li>
  *         <li>Add static property {@link #DEFAULT_SUBMISSION_SIZE} and {@link #DEFAULT_SUBMISSION_START}</li>
- *         <li>Add property {@link #competitors} and {@link #registrants} to help store the data and save the time.</li>
+ *         <li>Add property and {@link #registrants} to help store the data and save the time.</li>
  *         <li>Add property {@link #active} to represent the contest is active or past contest.</li>
  *         <li>Update method {@link #getMMRegistrants(String)} to use String as input parameter.</li>
  *         <li>Remove method {@link #getMarathonMatchDetails(String)}.</li>
@@ -216,12 +215,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      * @since 1.2
      */
     private SearchResult<CompetitorResource> registrants;
-
-    /**
-     * Represent a list of competitor member of this marathon match contest.
-     * @since 1.2
-     */
-    private SearchResult<CompetitorResource> competitors;
 
     /**
      * Represent the contest service facade instance.
@@ -401,7 +394,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                     ? competitors.size() : pageStart + submissionSize;
 
             calculateSubmissionLineData(roundId, competitors.subList(pageStart, pageSize));
-            LoggingWrapperUtility.logExit(logger, signature, new String[] {"success"});
+            LoggingWrapperUtility.logExit(logger, signature, new String[]{"success"});
             return SUCCESS;
         } catch (Exception e) {
             setResult(e);
@@ -483,7 +476,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
             // Get the registrant from rest api.
             this.registrants = getMMRegistrants(roundId);
             // Get the competitors from the registrants.
-            this.competitors = getCompetitors(roundId, registrants);
+            SearchResult<CompetitorResource> competitors = getCompetitors(roundId, registrants);
 
             // Calculate graph data.
             graphData = calculateGraphData(competitors);
@@ -766,7 +759,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
         }
         SearchResult<CompetitorResource> result =
                 marathonMatchAnalyticsService.getRegistrants(Long.valueOf(roundId), MarathonMatchHelper.ACCESS_TOKEN);
-        setRegistrants(result);
+        convertRegistrants(result);
         return result;
     }
 
@@ -835,7 +828,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      * @param registrants The registrants
      * @since 1.2
      */
-    private void setRegistrants(SearchResult<CompetitorResource> registrants) {
+    private void convertRegistrants(SearchResult<CompetitorResource> registrants) {
         List<RegistrantInfo> registrantInfos = new ArrayList<RegistrantInfo>();
         for(CompetitorResource competitorResource : registrants.getItems()) {
             RegistrantInfo registrant = new RegistrantInfo();
