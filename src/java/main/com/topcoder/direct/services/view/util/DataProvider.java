@@ -6127,13 +6127,13 @@ public class DataProvider {
         contestIdsSet.add(0L);
         // get unique JIRA issue IDs
         Set<String> jiraIssueIdsSet = new HashSet<String>();
-        jiraIssueIdsSet.add("0");
+        jiraIssueIdsSet.add("0"); System.out.println("---------------jiraIssueIds---------------------"+jiraIssueIds);
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     paymentIdsList.add(paymentIds.get(i));
-                } else if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                } else if (jiraIssueIds!= null && jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
                     jiraIssueIdsSet.add(jiraIssueIds.get(i));
                 } else {
                     // use contest_id if payment_id is zero and jira_issue_id is empty
@@ -6189,7 +6189,7 @@ public class DataProvider {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     result.add(paymentInvoiceMap.get(paymentIds.get(i)));
-                } else if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                } else if (jiraIssueIds != null && jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
                     result.add(jiraInvoiceMap.get(jiraIssueIds.get(i)));
                 } else {
                     result.add(contestInvoiceMap.get(contestIds.get(i)));

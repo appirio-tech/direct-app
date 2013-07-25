@@ -235,7 +235,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                 } else {
                     if (!PaymentType.CREDIT.getDescription().equalsIgnoreCase(invoiceTypeName)) {
                         // payment_id = 0, get invoice record by contest_id and invoice_type_id
-                        if (jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
+                        if (jiraIssueIds!= null && jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
                             record = invoiceRecordDAO.getByJiraIssueAndInvoiceType(jiraIssueIds.get(i),
                                     invoiceType.getId());
                         } else {
@@ -263,7 +263,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record = new InvoiceRecord();
                     record.setBillingAccountId(recordData.getBillingAccountId());
                     record.setContestId(recordData.getContestId());
-					if (jiraIssueIds.get(i) != null && !jiraIssueIds.get(i).equals(""))
+					if (jiraIssueIds != null && jiraIssueIds.get(i) != null && !jiraIssueIds.get(i).equals(""))
 					{
 						record.setJiraIssueId(jiraIssueIds.get(i));
 					}
