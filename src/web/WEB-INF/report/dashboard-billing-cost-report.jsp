@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin, notpad, Ghost_141
-  - Version: 2.2
+  - Author: Blues, GreatKevin, notpad, Ghost_141, TCSASSEMBLER
+  - Version: 2.3
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -37,7 +37,10 @@
   - - Update layout to fix a layout issue.
   - 
   - Version 2.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
-  - - Update layout to fix a layout issue.  
+  - - Update layout to fix a layout issue.
+  -
+  - Version 2.3 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
+  - - Support JIRA bug race contest fees. (Project level/contest level, fixed/percentage)
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -49,16 +52,16 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <link rel="stylesheet" href="/css/direct/filter-panel.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/filter-panel-ie7.css?v=210396"/>
     <![endif]-->
-    <script type="text/javascript" src="/scripts/tableSearchBar.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
-    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js"></script>
-    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/tableSearchBar.js?v=210396"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
+    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=214400"></script>
+    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
 
 </head>
 
@@ -572,7 +575,7 @@
                 <s:else><s:property value="paymentId"/></s:else>
             </td>            
             <td>
-                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
+                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" jiraissueid="<s:if test="paymentId==0 && paymentType=='Contest Fee' && referenceId != null && referenceId != ''"><s:property value="referenceId"/></s:if><s:else></s:else>" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
             </td>
             <td class="creditAmount">
                 <c:if test="${not empty invoiceNumber}">

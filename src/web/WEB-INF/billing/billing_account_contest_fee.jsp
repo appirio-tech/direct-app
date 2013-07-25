@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.2
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
   - Initialized the page functions.
@@ -9,6 +9,8 @@
   - for editing Studio and Software contest type fees.
   - Version 1.2 (Module Assembly - Contest Fee Based on % of Member Cost Admin Part)
   - Added contest fee base on percentage support.
+  - Version 1.3 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
+  - Added others section.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -151,7 +153,7 @@
 
                                             <s:iterator value="formData.contestFees" id="formData.contestFees"
                                                         status="status">
-                                                <s:if test="studio">
+                                                <s:if test="studio && contestTypeId < 900000">
                                                     <tr>
                                                         <td><s:property value="contestTypeDescription"/></td>
                                                         <td>
@@ -167,7 +169,24 @@
 
                                             <s:iterator value="formData.contestFees" id="formData.contestFees"
                                                         status="status">
-                                                <s:if test="!studio">
+                                                <s:if test="!studio && contestTypeId < 900000">
+                                                    <tr>
+                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td>
+                                                            <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
+                                                                         size="40"/>
+                                                        </td>
+                                                    </tr>
+                                                </s:if>
+                                            </s:iterator>
+
+                                            <tr>
+                                                <td colspan="2"><strong>Others</strong></td>
+                                            </tr>
+
+                                            <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                                        status="status">
+                                                <s:if test="contestTypeId >= 900000">
                                                     <tr>
                                                         <td><s:property value="contestTypeDescription"/></td>
                                                         <td>
