@@ -414,6 +414,8 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
 
         Long clientIdForProject = viewData.getClientId();
         groupSearchCriteria.setClientId(clientIdForProject);
+		groupSearchCriteria.setUserId(currentUser.getUserId());  
+		
 
         userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
         List<Group> assignedGroups = new ArrayList<Group>();
@@ -610,7 +612,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
                 IdNamePair billing = new IdNamePair();
                 billing.setId(bp.getProjectId());
                 billing.setName(bp.getName());
-                result.put(bp.getProjectId(), billing);
+                result.put(bp.getProjectId(), billing);  
             }
         }
 
@@ -623,7 +625,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
                     IdNamePair billing = new IdNamePair();
                     billing.setId(ba.getId());
                     billing.setName(ba.getName());
-                    result.put(ba.getId(), billing);
+                    result.put(ba.getId(), billing);   
                 }
             }
         }
