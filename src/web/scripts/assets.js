@@ -1186,12 +1186,35 @@ $(document).ready(function(){
     });
 
     $('.popUpNewCategory .linkAddCategory').live('click',function(){
-        var sText = $(this).parents('.selectCategory').find('input:text').val();
-        if(sText){
-            $(this).parents('.selectCategory').find('select').append('<option>'+ sText +'</option>');
+
+        var newCategoryName = $(".popUpNewCategory:visible input[type=text]").val();
+
+        if(!newCategoryName) {
+            alert('The file category name should not be empty');
+            return;
         }
-        $(this).parents('.selectCategory').find('input:text').val('');
-        $('.popUpNewCategory').hide();
+
+        var _this = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/addNewCategory",
+            data: {category:{name:newCategoryName},formData:{projectId:$("#assetProjectId").val()}},
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $('.selectCategory').find('select').append($("<option/>").text(result.name).val(result.id));
+                        _this.parents('.selectCategory').find('input:text').val('');
+                        _this.parents('.selectCategory').find('select').val(result.id)
+                        $('.popUpNewCategory').hide();
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
     });
 
     // Select Access
@@ -2287,7 +2310,7 @@ $(document).ready(function(){
 
     // batch edit page
     if ($(".batchEditSection").length) {
-        modalPreloader();
+
         var assetIdsPermission = [];
         $(".batchEditSection .itemSection").each(function () {
             if($(this).find("input[name=isPublic]").val() == 'false') {
@@ -2300,33 +2323,37 @@ $(document).ready(function(){
             $(this).find(".selectCategory select").val($(this).find("input[name=categoryId]").val());
         });
 
-        $.ajax({
-            type: 'POST',
-            url: ctx + "/batchGetAssetsPermission",
-            data: {assetIds:assetIdsPermission},
-            cache: false,
-            dataType: 'json',
-            success: function (jsonResult) {
-                handleJsonResult(jsonResult,
-                    function (result) {
-                        $(".batchEditSection .itemSection").each(function () {
-                            if($(this).find("input[name=isPublic]").val() == 'false') {
-                                $.each(result[$(this).find("input[name=assetId]").val()], function (index, value) {
-                                    $(this).find('.popUpPrivateAccess #' + value).attr('checked',
-                                        'checked');
-                                });
+        if (assetIdsPermission && assetIdsPermission.length > 0) {
+            modalPreloader();
+            $.ajax({
+                type: 'POST',
+                url: ctx + "/batchGetAssetsPermission",
+                data: {assetIds: assetIdsPermission},
+                cache: false,
+                dataType: 'json',
+                success: function (jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function (result) {
+                            $(".batchEditSection .itemSection").each(function () {
+                                var _item = $(this);
+                                if (_item.find("input[name=isPublic]").val() == 'false') {
+                                    $.each(result[_item.find("input[name=assetId]").val()], function (index, value) {
+                                        _item.find('.popUpPrivateAccess #' + value).attr('checked',
+                                            'checked');
+                                    });
 
-                                $(this).find('a.linkSubmit').trigger('click');
-                                $(this).find('input.private ').attr("checked",
-                                    "checked").trigger('change');
-                            }
+                                    _item.find('a.linkSubmit').trigger('click');
+                                    _item.find('input.private ').attr("checked",
+                                        "checked").trigger('change');
+                                }
+                            });
+                        },
+                        function (errorMessage) {
+                            showServerError(errorMessage);
                         });
-                    },
-                    function (errorMessage) {
-                        showServerError(errorMessage);
-                    });
-            }
-        });
+                }
+            });
+        }
 
         $(".btnBatchEditSave").click(function(){
             var editAssets = [];

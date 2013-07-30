@@ -273,6 +273,13 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     private String sessionKey;
 
     /**
+     * The asset category.
+     *
+     * @since 1.2
+     */
+    private Category category;
+
+    /**
      * Gets the files.
      *
      * @return the files.
@@ -658,6 +665,26 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     }
 
     /**
+     * Gets the asset category.
+     *
+     * @return the asset category.
+     * @since 1.2
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the asset category.
+     *
+     * @param category the asset category.
+     * @since 1.2
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    /**
      * Actions for entry for the asset upload page.
      *
      * @throws Exception if there is any error.
@@ -670,6 +697,11 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         PagedResult<Category> categories = getAssetCategoryService().search(categorySearch);
         setAssetCategories(categories.getRecords());
+
+        categorySearch.setContainerType(AssetContainerType.PROJECT.toString());
+        categorySearch.setContainerId(getFormData().getProjectId());
+
+        getAssetCategories().addAll(getAssetCategoryService().search(categorySearch).getRecords());
 
         // prepare asset permission users
         setClientManagers(getManagerService().getClientManagers(getFormData().getProjectId()));
@@ -697,6 +729,40 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         getSessionData().setCurrentSelectDirectProjectID(currentDirectProject.getId());
     }
 
+
+    /**
+     * Handles the ajax request to add new file category for the project.
+     *
+     * @return the result code.
+     * @since 1.2
+     */
+    public String addNewCategory() {
+        try {
+            if (getCategory() == null || getCategory().getName() == null
+                    || getCategory().getName().trim().length() == 0) {
+                throw new IllegalArgumentException("The file category to add is empty");
+            }
+
+            Category categoryToAdd = getCategory();
+            categoryToAdd.setContainerType(AssetContainerType.PROJECT.toString());
+            categoryToAdd.setContainerId(getFormData().getProjectId());
+
+            getAssetCategoryService().create(categoryToAdd);
+
+            ObjectMapper m = new ObjectMapper();
+            Map<String, Object> result = m.convertValue(categoryToAdd, Map.class);
+
+            setResult(result);
+
+
+        } catch (Throwable e) {
+            e.printStackTrace(System.err);
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        return SUCCESS;
+    }
 
     /**
      * Handles the request to batch edit assets.

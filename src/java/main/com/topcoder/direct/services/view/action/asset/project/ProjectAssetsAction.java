@@ -190,6 +190,11 @@ public class ProjectAssetsAction extends BaseAbstractAssetAction implements Form
         categorySearch.setContainerType(AssetContainerType.GLOBAL.toString());
         getViewData().setAssetCategories(getAssetCategoryService().search(categorySearch).getRecords());
 
+        categorySearch.setContainerType(AssetContainerType.PROJECT.toString());
+        categorySearch.setContainerId(getFormData().getProjectId());
+
+        getViewData().getAssetCategories().addAll(getAssetCategoryService().search(categorySearch).getRecords());
+
         // set to view data
         getViewData().setDateGroupedAssets(dateGroupedAssets);
         getViewData().setCategoryGroupedAssets(categoryGroupedAssets);

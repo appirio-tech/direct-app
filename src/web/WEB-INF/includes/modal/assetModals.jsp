@@ -194,7 +194,7 @@
                 <!-- AJAX Upload -->
                 <div class="commonUpload">
                     <label>Having Problem? Try basic uploader</label>
-                    <input type="file" />
+                    <input type="file" name="files"/>
                 </div>
             </div>
             <div class="clearFix"></div>

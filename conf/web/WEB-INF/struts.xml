@@ -326,6 +326,12 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="addNewCategory" class="projectAssetManageAction" method="addNewCategory">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="downloadAsset" method="downloadAssetVersion" class="projectAssetManageAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
