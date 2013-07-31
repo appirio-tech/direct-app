@@ -271,7 +271,7 @@ $(document).ready(function () {
 
         extendStyle();
 
-        if($(window).width() < 1280) {
+        if($(window).width() < 1440) {
             hideExtraColumns();
             $("#hideColumnsControl").attr('checked', 'checked');
         }
@@ -283,5 +283,7 @@ $(document).ready(function () {
         $("input[name=radFormat]").live('click', function(){
            calculateRightWidth();
         });
+
+        // $("#hideColumnsControl").trigger('click');
     }
 });

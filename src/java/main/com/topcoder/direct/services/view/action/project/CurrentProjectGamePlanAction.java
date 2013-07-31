@@ -522,10 +522,12 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 }
 
                 String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getStartDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
+                String finalReviewEndTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getFinalReviewEndDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getFinalReviewEndDate());
                 String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getEndDate());
                 String contestStatus = swc.getProjectStatus();
 
                 exportContest.setStartDate(swc.getStartDate());
+                exportContest.setFinalReviewEndDate(swc.getFinalReviewEndDate());
                 exportContest.setEndDate(swc.getEndDate());
 
                 // calculate the duration in hours
@@ -574,7 +576,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
 
                 if (isJSGantt) {
-                    jsGanttDataBuffer.add(new JsGanttDataBuffer(swc.getStartDate(), swc.getEndDate(), generateContestGamePlanDataJsGantt(id, directProjectId, name, type, startTime,
+                    jsGanttDataBuffer.add(new JsGanttDataBuffer(swc.getStartDate(), swc.getEndDate(), generateContestGamePlanDataJsGantt(id, directProjectId, name, type, startTime, finalReviewEndTime,
                             endTime, percentage, predecessorId, dependencyTypeId, contestStatus, null, false)));
                 } else {
                     result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
@@ -607,6 +609,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate());
 
                     exportBugRace.setStartDate(bugRace.getCreationDate());
+                    exportBugRace.setFinalReviewEndDate(bugRace.getEndDate());
                     exportBugRace.setEndDate(bugRace.getEndDate());
 
                     long duration = calculateDuration(bugRace.getCreationDate(), bugRace.getEndDate());
@@ -626,7 +629,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
                     if (isJSGantt) {
 
-                        jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime,
+                        jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime, endTime,
                                 endTime, percentage, -1, -1, contestLikeStatus, id, false) ));
                     } else {
                         result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
@@ -644,7 +647,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     Date milestoneDate = milestone.isCompleted() ? milestone.getCompletionDate() : milestone.getDueDate();
                     String MilestoneDateStr = JSGANTT_GAME_PLAN_DATE_FORMAT.format(milestoneDate);
                     jsGanttDataBuffer.add(new JsGanttDataBuffer(milestoneDate, milestoneDate, generateContestGamePlanDataJsGantt(String.valueOf(milestone.getId()), directProjectId, milestone.getName(), "Milestone", MilestoneDateStr,
-                            MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, -1, milestone.getStatus().name(), null, true) ));
+                            MilestoneDateStr, MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, -1, milestone.getStatus().name(), null, true) ));
 
                     ExportDataBuffer exportMilestone = new ExportDataBuffer();
                     exportMilestone.setMilestone(true);
@@ -654,6 +657,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     }
                     exportMilestone.setUniqueID(String.valueOf(milestone.getId()));
                     exportMilestone.setStartDate(milestoneDate);
+                    exportMilestone.setFinalReviewEndDate(milestoneDate);
                     exportMilestone.setEndDate(milestoneDate);
                     exportMilestone.setResourceName("Milestone");
                     exportedData.add(exportMilestone);
@@ -783,7 +787,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * @since 1.2
      */
     private static String generateContestGamePlanDataJsGantt(String id, long directProjectId, String name,
-                                                             String contestType, String startTime,
+                                                             String contestType, String startTime, String finalReviewEndDate,
                                                              String endTime, long percentage,
                                                              long predecessorId, long dependencyTypeId,
                                                              String status, String key, boolean isMilestone) {
@@ -809,6 +813,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         contestData.append("<pID>" + id + "</pID>");
         contestData.append("<pName><![CDATA[" + name + "]]></pName>");
         contestData.append("<pStart>" + startTime + "</pStart>");
+        contestData.append("<pReviewEnd>" + finalReviewEndDate + "</pReviewEnd>");
         contestData.append("<pEnd>" + endTime + "</pEnd>");
         contestData.append("<pColor>" + status + "</pColor>");
         contestData.append("<pLink><![CDATA[" + link + "]]></pLink>");
@@ -1015,7 +1020,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             row.getCell(index++).setStringValue("ID");
             row.getCell(index++).setStringValue("Name");
             row.getCell(index++).setStringValue("Start");
-            row.getCell(index++).setStringValue("Finish");
+            row.getCell(index++).setStringValue("Final Review End");
+            row.getCell(index++).setStringValue("Approval End");
             row.getCell(index++).setStringValue("Predecessors");
             row.getCell(index++).setStringValue("Resource Names");
             row.getCell(index++).setStringValue("Status");
@@ -1038,15 +1044,16 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 row.getCell(1).setStringValue(String.valueOf(count++));
                 row.getCell(2).setStringValue(data.getName());
                 row.getCell(3).setStringValue(dateFormatter.format(data.getStartDate()));
-                row.getCell(4).setStringValue(dateFormatter.format(data.getEndDate()));
+                row.getCell(4).setStringValue(dateFormatter.format(data.getFinalReviewEndDate()));
+                row.getCell(5).setStringValue(dateFormatter.format(data.getEndDate()));
                 if(data.getPredecessorId() > 0) {
-                    row.getCell(5).setStringValue(uniqueIDtoIndexIdMapping.get(String.valueOf(data.getPredecessorId())).toString());
+                    row.getCell(6).setStringValue(uniqueIDtoIndexIdMapping.get(String.valueOf(data.getPredecessorId())).toString());
                 }
-                row.getCell(6).setStringValue(data.getResourceName());
+                row.getCell(7).setStringValue(data.getResourceName());
                 if(data.getStatus() != null) {
-                    row.getCell(7).setStringValue(data.getStatus());
+                    row.getCell(8).setStringValue(data.getStatus());
                 }
-                row.getCell(8).setStringValue(data.isMilestone() ? "Yes" : "No");
+                row.getCell(9).setStringValue(data.isMilestone() ? "Yes" : "No");
             }
 
             workbook.addSheet(sheet);
@@ -1075,6 +1082,11 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
          * The start date.
          */
         private Date startDate;
+
+        /**
+         * The final review end date.
+         */
+        private Date finalReviewEndDate;
 
         /**
          * The end date.
@@ -1115,6 +1127,14 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
         public void setEndDate(Date endDate) {
             this.endDate = endDate;
+        }
+
+        private Date getFinalReviewEndDate() {
+            return finalReviewEndDate;
+        }
+
+        private void setFinalReviewEndDate(Date finalReviewEndDate) {
+            this.finalReviewEndDate = finalReviewEndDate;
         }
 
         public String getName() {
