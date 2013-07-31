@@ -443,9 +443,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             }
 
             //check automatically granted permissions
-            if(group.getAutoGrant()) {
+            /*if(group.getAutoGrant()) {
                 assigned = true;
-            }
+            }*/
 
             //check groups with this billing account
             if(!assigned) {
