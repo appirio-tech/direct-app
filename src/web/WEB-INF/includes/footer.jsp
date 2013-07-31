@@ -27,7 +27,7 @@
     </div>
     <!--End socialNetwork-->
     <div class="copyright">
-        <div class="logoFooterWrapper"><img src="/images/tc-logo.png" alt="TopCoder"></div>
+        <div class="logoFooterWrapper"><img src="/images/logo-topcoder.png" alt="TopCoder" width="180"></div>
     	<span>Copyright TopCoder, Inc. 2001-<script type="text/javascript">d=new Date();document.write(d.getFullYear());</script></span>
         <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=terms" target="_blank" title="Terms of Use">Terms of Use</a>
         <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
