@@ -74,7 +74,7 @@
 
 <div class="clear"></div>
 
-<div class="projectList" data-intro="If you select the custom option, you will be starting from scratch with a game plan. If you select a specific project type, you will be guided into a more specific game plan." data-step="1">
+<div class="projectList">
 
 <!-- item -->
 <div class="projectItem">
@@ -110,7 +110,7 @@
                     <!-- img -->
                     <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
                     <!-- End .comingSoon -->
-
+<!--
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
                             <col width="50%"/>
@@ -144,7 +144,7 @@
                         <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
                         <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
-
+-->
                 </div>
             </div>
         </div>
@@ -171,7 +171,7 @@
                     <!-- img -->
                     <div class="projectPic"><img src="/images/projectItem-1.png" alt=""/></div>
                     <!-- End .projectPic -->
-
+<!--
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
                             <col width="50%"/>
@@ -205,7 +205,7 @@
                         <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
                         <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
-
+-->
                 </div>
             </div>
         </div>
@@ -232,7 +232,7 @@
                     <!-- img -->
                     <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
                     <!-- End .comingSoon -->
-
+<!--
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
                             <col width="50%"/>
@@ -266,7 +266,7 @@
                         <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
                         <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
-
+-->
                 </div>
             </div>
         </div>
@@ -293,7 +293,7 @@
                     <!-- img -->
                     <div class="comingSoon"><img src="/images/coming_soon_img.png" alt=""/></div>
                     <!-- End .comingSoon -->
-
+<!--
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
                             <col width="50%"/>
@@ -327,7 +327,7 @@
                         <a href="javascript:;" class="blackButton detailButton">DETAILS</a>
                         <a href="javascript:;" class="blackButton gamePlanButton">GAME PLAN</a>
                     </div>
-
+-->
                 </div>
             </div>
         </div>
