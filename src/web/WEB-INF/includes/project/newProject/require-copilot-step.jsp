@@ -53,7 +53,7 @@
         <!-- form -->
         <div class="form">
 
-            <dl class="radioList">
+            <dl class="radioList" data-intro="Unless you are a Copilot, you will need to work with a Copilot on this project. Select the option to get a Copilot. Then, if you have already identified a Copilot to work with you can select him/her directly. If you do not have a Copilot, then choose the option to create a Copilot Posting. That will open this project up to all TopCoder Copilots and give you an opportunity to select one for your project." data-step="1">
                 <dt><a href="javascript:;" class="toolTip"
                        rel="A Copilot is a TopCoder Member who help you manage the TopCoder process for your project."></a><span class="question"></span>
                 </dt>

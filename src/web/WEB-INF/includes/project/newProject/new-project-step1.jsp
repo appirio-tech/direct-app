@@ -65,7 +65,7 @@ own project, and will not be shown to TopCoder members.
             <div class="form">
 
                 <!-- row -->
-                <div class="row projectName">
+                <div class="row projectName" data-intro="The name of your project will be private to you and your project team. Enter something that helps you identify the project. Competitions will later be added to this project." data-step="1">
 
                     <a href="javascript:;" class="toolTip" id="toolTip1"
                        rel='&lt;p&gt;&lt;b&gt;60 characters maximum&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "Acme Mobile App",&lt;/p&gt; &lt;p&gt;"2012 Biocomputing Symposium Keynote"&lt;/p&gt;'></a>
@@ -82,7 +82,7 @@ own project, and will not be shown to TopCoder members.
                 <!-- End .row -->
 
                 <!-- row -->
-                <div class="row descProject">
+                <div class="row descProject" data-intro="The desciption is also private to your project team. This will NOT be presented to the community." data-step="2">
 
                     <a href="javascript:;" class="toolTip" id="toolTip2"
                        rel="&lt;p&gt;&lt;b&gt;A brief description of the project for your own use.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;In subsequent steps, you will be able to provide detailed&lt;/p&gt; &lt;p&gt;instructions for use by our members when they participate on &lt;/p&gt;&lt;p&gt;your project.&lt;/p&gt;"></a>
@@ -96,7 +96,7 @@ own project, and will not be shown to TopCoder members.
                 <!-- End .row -->
 
                 <!-- row -->
-                <div class="row projectBilling">
+                <div class="row projectBilling" data-intro="Billing Accounts refer to your specific license agreement. Every project and competition will need a billing account. If you don't have one yet, you don't need to set it here. However, before you can run any competitions you will need to edit this project and set the billing account." data-step="3">
 
                     <a href="javascript:;" class="toolTip" id="toolTip3"
                        rel="&lt;p&gt;&lt;b&gt;The billing account used for your new project&lt;/b&gt;&lt;/p&gt;&lt;p&gt;

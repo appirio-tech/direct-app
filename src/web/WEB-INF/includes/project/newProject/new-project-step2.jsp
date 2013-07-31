@@ -74,7 +74,7 @@
 
 <div class="clear"></div>
 
-<div class="projectList">
+<div class="projectList" data-intro="If you select the custom option, you will be starting from scratch with a game plan. If you select a specific project type, you will be guided into a more specific game plan." data-step="1">
 
 <!-- item -->
 <div class="projectItem">

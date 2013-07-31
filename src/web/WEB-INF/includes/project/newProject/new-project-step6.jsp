@@ -49,7 +49,7 @@
             <div class="form"> 
 
                 <!-- table -->
-                <div class="tableOut" id="projects">
+                <div class="tableOut" id="projects" data-intro="Your project will have a private forum that you can use for discussion with your team and Copilot(s). The forum will have Topics to help organize conversations. In this step, you can customize the Topics. You can also do this later from your project dashboard." data-step="1">
 
                     <table class="projectStats forums" border="0" cellpadding="0" cellspacing="0">
                         <colgroup>

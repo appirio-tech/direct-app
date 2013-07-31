@@ -33,7 +33,7 @@
         <!-- End .noteMask -->
 
         <!-- form -->
-        <div class="form">
+        <div class="form" data-intro="This is where you can add users to your project. Most people add at least the core people on their team. If you forget someone, you can always come back later to add more users." data-step="1">
 
             <!-- table -->
             <div class="tableOut">
