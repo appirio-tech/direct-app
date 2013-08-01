@@ -93,9 +93,12 @@
  *
  * Version 2.6 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab)
  * - Add support for Marathon Match registrants competitors tab.
+ *
+ * Version 2.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
+ * - Add support for Marathon Match results tab.
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.6
+ * @version 2.7
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -540,7 +543,8 @@ $(document).ready(function() {
         "bSort": true,
         "bAutoWidth": false,
         "oLanguage": {
-            "sLengthMenu": sStdMenu + " per page"
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ registrants"
         },
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
@@ -561,7 +565,8 @@ $(document).ready(function() {
         "bSort": true,
         "bAutoWidth": false,
         "oLanguage": {
-            "sLengthMenu": sStdMenu + " per page"
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ competitors"
         },
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
@@ -591,14 +596,15 @@ $(document).ready(function() {
         }
     });
 
-    $.mmRegistrantsCompetitorGridTable = $("#marathonMatchRegistrants #listViewTable").dataTable({
+    $.mmRegistrantsCompetitorListTable = $("#marathonMatchRegistrants #listViewTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": false,
         "bFilter": true,
         "bSort": true,
         "bAutoWidth": false,
         "oLanguage": {
-            "sLengthMenu": sStdMenu + " per page"
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ competitors"
         },
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
@@ -616,6 +622,32 @@ $(document).ready(function() {
         ]
     });
 
+    $.mmResultsTable = $("#marathonMatchResults .mmResultsTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ competitors"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [0,'asc']
+        ],
+        "aoColumns": [
+            { "sType": "number-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "number-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed"}
+        ]
+    });
 
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,

@@ -10,16 +10,7 @@ import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsServiceException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DashboardHelper;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.marathonmatch.service.dto.CompetitorInfoDTO;
 import com.topcoder.marathonmatch.service.dto.MMInfoDTO;
 import com.topcoder.marathonmatch.service.dto.RegistrantInfo;
@@ -42,7 +33,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Minutes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,9 +78,17 @@ import java.util.TimeZone;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
+ *     <ol>
+ *         <li>Remove property active to fix a bug.</li>
+ *         <li>Remove method getCommonData, instead use <code>MarathonMatchHelper</code> method getCommonData.</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.2
+ * @version 1.3
  */
 public class MarathonMatchViewAction extends AbstractAction implements ViewAction<MMInfoDTO>, SessionAware {
 
@@ -232,12 +230,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private boolean hasRoundId = false;
 
     /**
-     * Represent the contest is active or not. true if the contest is active otherwise false.
-     * @since 1.2
-     */
-    private boolean active = false;
-
-    /**
      * Represent the all available rating color in direct system.
      */
     private static final String[] RATING_COLORS =  {"Orange", "Gray", "Green", "Blue", "Yellow", "Red", "Unrated"};
@@ -303,12 +295,13 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
 
             // call the service to get the detail information for the dashboard part.
             if(hasRoundId) {
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, active,
-                        timelineInterval, viewData);
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
+                        viewData);
             }
 
             // Get the common data for contest page.
-            getCommonData(currentUser);
+            MarathonMatchHelper.getCommonData(projectId, currentUser, softwareCompetition, viewData,
+                    contestServiceFacade, getSessionData());
 
             boolean isFailed = false;
             if(tab == null) {
@@ -361,8 +354,10 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                 throw new IllegalArgumentException("The submissionStart should be large than 1");
             }
 
-            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
-                    .getTCSubjectFromSession(), projectId);
+            if(softwareCompetition == null) {
+                softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
+                        .getTCSubjectFromSession(), projectId);
+            }
 
             // Get the round id from the project info.
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
@@ -847,106 +842,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     }
 
     /**
-     * Get the common data for contest page.
-     *
-     * @param currentUser the current user instance.
-     * @throws Exception if any error occurred.
-     */
-    private void getCommonData(TCSubject currentUser) throws Exception {
-        // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
-        viewData.setContestStats(contestStats);
-
-        viewData.setDashboard(
-                DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
-        DirectUtils.setDashboardData(currentUser, projectId, viewData, getContestServiceFacade(), !DirectUtils
-                .isStudio(softwareCompetition));
-
-        // calculate the contest issues tracking health
-        getViewData().getDashboard().setUnresolvedIssuesNumber(
-                getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
-        DashboardHelper.setContestStatusColor(getViewData().getDashboard());
-
-        getViewData().getDashboard().setAllPhases(sortContestPhases(getViewData().getDashboard().getAllPhases()));
-
-        // Get current session
-        HttpServletRequest request = DirectUtils.getServletRequest();
-        SessionData sessionData = new SessionData(request.getSession());
-        // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider
-                .getProjectTypedContests(currentUser.getUserId(),
-                        contestStats.getContest().getProject().getId());
-        sessionData.setCurrentProjectContests(contests);
-
-        // Set current project context based on selected contest
-        sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
-        sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
-        setSessionData(sessionData);
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
-    }
-
-    /**
-     * Sort contest phases.
-     *
-     * @param phases the phases
-     * @return the list
-     */
-    private static List<ProjectPhaseDTO> sortContestPhases(List<ProjectPhaseDTO> phases) {
-        List<ProjectPhaseDTO> specPart = new ArrayList<ProjectPhaseDTO>();
-        List<ProjectPhaseDTO> reviewPart = new ArrayList<ProjectPhaseDTO>();
-        List<ProjectPhaseDTO> finalPart = new ArrayList<ProjectPhaseDTO>();
-
-        for(ProjectPhaseDTO p : phases) {
-            if(p.getPhaseType().getOrder() <= ProjectPhaseType.SPECIFICATION_REVIEW.getOrder()) {
-                specPart.add(p);
-            } else if (p.getPhaseType().getOrder() >= ProjectPhaseType.FINAL_FIX.getOrder()) {
-                finalPart.add(p);
-            } else {
-                reviewPart.add(p);
-            }
-        }
-
-        StartDateComparator sc = new StartDateComparator();
-        PhaseOrderComparator pc = new PhaseOrderComparator();
-        Collections.sort(specPart, sc);
-        Collections.sort(finalPart, sc);
-        Collections.sort(reviewPart, pc);
-
-        specPart.addAll(reviewPart);
-        specPart.addAll(finalPart);
-
-        return specPart;
-
-    }
-
-    /**
-     * The type Start date comparator.
-     */
-    private static class StartDateComparator implements Comparator<ProjectPhaseDTO> {
-
-        public int compare(ProjectPhaseDTO o1, ProjectPhaseDTO o2) {
-            return o1.getStartTime().compareTo(o2.getStartTime());
-        }
-    }
-
-    /**
-     * The type Phase order comparator.
-     */
-    private static class PhaseOrderComparator implements Comparator<ProjectPhaseDTO>{
-
-        public int compare(ProjectPhaseDTO p1, ProjectPhaseDTO p2) {
-            int o1 = p1.getPhaseType().getOrder();
-            int o2 = p2.getPhaseType().getOrder();
-            return (o1>o2 ? 1 : (o1==o2 ? 0 : -1));
-        }
-    }
-
-    /**
      * Setter of the session.
      *
      * @param session the session.
@@ -1103,16 +998,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      */
     public void setView(String view) {
         this.view = view;
-    }
-
-    /**
-     * Is active.
-     *
-     * @return the boolean
-     * @since 1.2
-     */
-    public boolean isActive() {
-        return active;
     }
 
     /**

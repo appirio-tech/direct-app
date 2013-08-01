@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, morehappiness, TCSASSEMBLER, Ghost_141
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
@@ -21,6 +21,8 @@
   - - Add tab for marathon match contest only.
   - Version 1.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Competitors Tab) changes:
   - - Add support for competition tab in marathon match contest.
+  - Version 1.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab) changes:
+  - - Add 'Results' tab for marathon match past contest only.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -57,6 +59,11 @@
                             <span class="right">Registrants &amp; Submissions</span>
                         </span>
                         </s:else>
+                    </a>
+                </li>
+                <li class="results <c:if test="${requestScope.CURRENT_SUB_TAB eq 'mmResults'}">on</c:if> ">
+                    <a href="<c:if test="${viewData.active}">javascript:void(0)</c:if><c:if test="${!viewData.active}"><s:url action="mmResults" namespace="/contest"><s:param name="projectId" value="contest.id"/> </s:url></c:if> ">
+                        <span class="left"><span class="right">Results</span></span>
                     </a>
                 </li>
             </s:if>

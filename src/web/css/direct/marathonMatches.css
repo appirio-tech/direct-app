@@ -390,7 +390,8 @@
 			}
 			
 			/* totalPage */
-            #marathonMatchRegistrants .dataTables_info{
+            #marathonMatchRegistrants .dataTables_info,
+            #marathonMatchResults .dataTables_info {
 				width:auto;
 				float:left;
 				display:inline;
@@ -400,7 +401,8 @@
 				}
 				
 			/* pageTrun */
-			#marathonMatchRegistrants .bottom2 {
+			#marathonMatchRegistrants .bottom2,
+            #marathonMatchResults .bottom2{
 				width:auto;
 				float:right;
 				display:inline;
@@ -413,23 +415,27 @@
                 margin-left: 0px;
 				}
 
-                #marathonMatchRegistrants .bottom2 a{
+                #marathonMatchRegistrants .bottom2 a
+                #marathonMatchResults .bottom2 a{
 					padding:0 3px;
 					text-decoration:none;
 					}
 
-                #marathonMatchRegistrants .bottom2 a:hover{
+                #marathonMatchRegistrants .bottom2 a:hover,
+                #marathonMatchResults .bottom2 a:hover{
 					text-decoration:underline;
 					}
 
-                #marathonMatchRegistrants .bottom2 a.prevBtn{
+                #marathonMatchRegistrants .bottom2 a.prevBtn,
+                #marathonMatchResults .bottom2 a.prevBtn{
 					padding:0 3px 0 10px;
 					background-image:url(../../images/page_prev.png);
 					background-repeat:no-repeat;
 					background-position:0 4px;
 					}
 					
-				#marathonMatchRegistrants .bottom2 a.nextBtn{
+				#marathonMatchRegistrants .bottom2 a.nextBtn,
+                #marathonMatchResults .bottom2 a.nextBtn{
 					padding:0 10px 0 3px;
 					background-image:url(../../images/page_next.png);
 					background-repeat:no-repeat;
@@ -437,18 +443,23 @@
 					}
 					
 				#marathonMatchRegistrants .bottom2 a.current,
-				#marathonMatchRegistrants .bottom2 a.current:hover{
+                #marathonMatchResults .bottom2 a.current,
+				#marathonMatchRegistrants .bottom2 a.current:hover,
+                #marathonMatchResults .bottom2 a.current:hover{
 					font-weight:bold;
 					text-decoration:none;
 					}
 					
 				#marathonMatchRegistrants .bottom2 a.disable,
-				#marathonMatchRegistrants .bottom2 a.disable:hover{
+                #marathonMatchResults .bottom2 a.disable,
+				#marathonMatchRegistrants .bottom2 a.disable:hover,
+                #marathonMatchResults .bottom2 a.disable:hover{
 					text-decoration:none !important;
 					}
 					
 			/* showingPrePage */
-			#marathonMatchRegistrants .bottom1{
+			#marathonMatchRegistrants .bottom1,
+            #marathonMatchResults .bottom1{
 				width:auto;
 				float:right;
 				display:inline;
@@ -1101,7 +1112,7 @@
 				display:block;
 				margin:0 auto;
 				text-indent:-9999px;
-				background-image:url(../../images/icon-zip.png);
+				background-image:url(../../images/icon-mm-zip.png);
 				background-repeat:no-repeat;
 				}
 				

@@ -189,8 +189,18 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.5 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab) change notes:
+ * <ul>
+ *     <li>
+ *         Update method {@link #executeAction()} because the api of <code>MarathonMatchHelper</code> has been changed.
+ *     </li>
+ *     <li>Remove property active to fix a bug of it.</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141
- * @version 2.4
+ * @version 2.5
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -294,12 +304,6 @@ public class GetContestAction extends ContestAction {
     private boolean hasRoundId = false;
 
     /**
-     * Represent the contest is active or not. true if the contest is active otherwise false.
-     * @since 2.4
-     */
-    private boolean active = false;
-
-    /**
      * The time line interval.
      * @since 2.4
      */
@@ -394,7 +398,8 @@ public class GetContestAction extends ContestAction {
 
             if(roundId != null) {
                 hasRoundId = true;
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, active, timelineInterval, viewData);
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
+                        viewData);
             } else {
                 hasRoundId = false;
             }
@@ -600,16 +605,6 @@ public class GetContestAction extends ContestAction {
      */
     public boolean isHasRoundId() {
         return hasRoundId;
-    }
-
-    /**
-     * Is active.
-     *
-     * @return the boolean
-     * @since 2.4
-     */
-    public boolean isActive() {
-        return active;
     }
 
     /**

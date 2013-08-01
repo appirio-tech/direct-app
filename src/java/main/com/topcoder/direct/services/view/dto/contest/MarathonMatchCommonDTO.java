@@ -15,8 +15,15 @@ import java.util.List;
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
  *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
+ *     <ol>
+ *         <li>Add property {@link #active} to represent active/past contest. </li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
- * @version 1.0
+ * @version 1.1
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab)
  */
 public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
@@ -34,6 +41,12 @@ public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
      * The JSON data used for showing the TimeLine Graph See the front-end assembly spec for expected format
      */
     private String timeLineGraphData;
+
+    /**
+     * Represent the contest is active or not. true if the contest is active otherwise false.
+     * @since 1.1
+     */
+    private boolean active = false;
 
     /**
      * Create an instance of <code>MarathonMatchCommonDTO</code>.
@@ -94,5 +107,25 @@ public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
      */
     public void setTimeLineGraphData(String timeLineGraphData) {
         this.timeLineGraphData = timeLineGraphData;
+    }
+
+    /**
+     * Is active.
+     *
+     * @return the boolean
+     * @since 1.1
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets active.
+     *
+     * @param active the active
+     * @since 1.1
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

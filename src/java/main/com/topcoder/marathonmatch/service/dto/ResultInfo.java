@@ -8,9 +8,16 @@ package com.topcoder.marathonmatch.service.dto;
  * <p>
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
+ *     <ol>
+ *         <li>Add property {@link #userId} and {@link #submissionNumber}</li>
+ *     </ol>
+ * </p>
  * 
- * @author sampath01, zhu_tao
- * @version 1.0
+ * @author sampath01, zhu_tao, Ghost_141
+ * @version 1.1
  * @since 1.0
  */
 public class ResultInfo {
@@ -43,6 +50,18 @@ public class ResultInfo {
      * The final rank of the coder
      */
     private int finalRank;
+
+    /**
+     * Represent the user id
+     * @since 1.1
+     */
+    private Long userId;
+
+    /**
+     * Represent the number of last submission for the competitor.
+     * @since 1.1
+     */
+    private int submissionNumber;
 
     /**
      * Default constructor.
@@ -165,4 +184,43 @@ public class ResultInfo {
         this.finalRank = finalRank;
     }
 
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     * @since 1.1
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     * @since 1.1
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * Gets submission number.
+     *
+     * @return the submission number
+     * @since 1.1
+     */
+    public int getSubmissionNumber() {
+        return submissionNumber;
+    }
+
+    /**
+     * Sets submission number.
+     *
+     * @param submissionNumber the submission number
+     * @since 1.1
+     */
+    public void setSubmissionNumber(int submissionNumber) {
+        this.submissionNumber = submissionNumber;
+    }
 }

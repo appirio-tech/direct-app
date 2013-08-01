@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve
-  - Version: 1.8
+  - Version: 1.9
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -28,6 +28,9 @@
   -
   - Version 1.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab)
   - - Update Current Standings tab and time line module for marathon match contest.
+  -
+  - Version 1.9 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
+  - - Update the test condition to fix a bug in action tier.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -74,14 +77,14 @@
             <s:if test="hasRoundId">
                 <div class="timelineIntro">
                     <dl>
-                        <s:if test="active">
+                        <s:if test="viewData.active">
                             <dt>Currently Top Ranking Submissions:</dt>
                         </s:if>
                         <s:else>
                             <dt>Winner:</dt>
                         </s:else>
                         <dd><tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId}" context="marathon_match" darkBG="false"/></dd>
-                        <s:if test="active">
+                        <s:if test="viewData.active">
                             <dt>Best Provisional Score:</dt>
                         </s:if>
                         <s:else>
@@ -92,7 +95,7 @@
                                 <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                 <s:param name="tab">competitors</s:param>
                                 <s:param name="handle" value="viewData.commonInfo.bestScoreHandle"/>
-                            </s:url> <s:if test="active">class="finalScore"</s:if> ">
+                            </s:url> <s:if test="viewData.active">class='finalScore'</s:if> ">
                             ${viewData.commonInfo.bestScore}
                             </a>
                         </dd>
@@ -522,7 +525,7 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>Handle</th>
-                                <s:if test="active">
+                                <s:if test="viewData.active">
                                     <th>Provisional Score</th>
                                 </s:if>
                                 <s:else>
@@ -543,7 +546,7 @@
                                     <c:if test="${rank ne null}">
                                         <td>${rank}</td>
                                         <td><tc-webtag:handle coderId="${userId}" context="marathon_match" darkBG="false"/></td>
-                                        <s:if test="active">
+                                        <s:if test="viewData.active">
                                             <td>${provisionalScore}</td>
                                         </s:if>
                                         <s:else>

@@ -1679,6 +1679,11 @@
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
+
+        <action name="mmResults" class="marathonMatchResultsViewAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result>/WEB-INF/marathonMatchResults.jsp</result>
+        </action>
     </package>
 
     <package name="ajax" namespace="/ajax" extends="base">

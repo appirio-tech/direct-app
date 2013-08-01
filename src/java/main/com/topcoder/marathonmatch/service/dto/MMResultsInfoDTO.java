@@ -3,6 +3,8 @@
  */
 package com.topcoder.marathonmatch.service.dto;
 
+import com.topcoder.direct.services.view.dto.contest.MarathonMatchCommonDTO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +13,19 @@ import java.util.Map;
  * <p>
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
+ *     <ol>
+ *         <li>Update this class to extend the <code>MarathonMatchCommonDTO</code>.</li>
+ *     </ol>
+ * </p>
  * 
- * @author sampath01, zhu_tao
- * @version 1.0
+ * @author sampath01, zhu_tao, Ghost_141
+ * @version 1.1
  * @since 1.0
  */
-public class MMResultsInfoDTO {
-
-    /**
-     * The common info DTO
-     */
-    private MMCommonInfoDTO commonInfo;
+public class MMResultsInfoDTO extends MarathonMatchCommonDTO {
 
     /**
      * The list of registrants in descending order of registration
@@ -52,34 +56,10 @@ public class MMResultsInfoDTO {
     private String finalVsProvisionalScoreData;
 
     /**
-     * The JSON data used for showing the TimeLine Graph. See the front-end assembly spec for expected format.
-     */
-    private String timeLineGraphData;
-
-    /**
      * Default constructor.
      */
     public MMResultsInfoDTO() {
         super();
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
-    public MMCommonInfoDTO getCommonInfo() {
-        return commonInfo;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param commonInfo
-     *            the name-sake field to set
-     */
-    public void setCommonInfo(MMCommonInfoDTO commonInfo) {
-        this.commonInfo = commonInfo;
     }
 
     /**
@@ -175,25 +155,6 @@ public class MMResultsInfoDTO {
      */
     public void setFinalVsProvisionalScoreData(String finalVsProvisionalScoreData) {
         this.finalVsProvisionalScoreData = finalVsProvisionalScoreData;
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
-    public String getTimeLineGraphData() {
-        return timeLineGraphData;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param timeLineGraphData
-     *            the name-sake field to set
-     */
-    public void setTimeLineGraphData(String timeLineGraphData) {
-        this.timeLineGraphData = timeLineGraphData;
     }
 
 }
