@@ -60,7 +60,7 @@ var vBenchTime = new Date().getTime();
 * note : you should use setCaption("Caption") in order to display the caption
 * @return void
 */
-JSGantt.TaskItem = function(pID, pName, pStart, pReviewEnd, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption)
+JSGantt.TaskItem = function(pID, pName, pStart, pReviewEnd, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption, pDependType)
 {
 
     /**
