@@ -413,7 +413,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
 
         Long clientIdForProject = viewData.getClientId();
-        groupSearchCriteria.setClientId(clientIdForProject);
+        groupSearchCriteria.setClientId(clientIdForProject == null ? -1 : clientIdForProject);
 		groupSearchCriteria.setUserId(currentUser.getUserId());  
 		
 
