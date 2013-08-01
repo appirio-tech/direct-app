@@ -108,8 +108,11 @@
  * Version 3.2.2 (Release Assembly - TopCoder Cockpit Asset View And File Version)
  * - Added scaffold for displaying drop menu to list operations
  *
+ * Version 3.2.3 (Release Assembly - TC Cockpit Tasks Management Release 2)
+ * - Fix the multi-select dropdown to handle link inside label
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
- * @version 3.2.2
+ * @version 3.2.3
  */
 
 var mouse_is_inside;
@@ -3126,13 +3129,13 @@ $(document).ready(function(){
     });
 })
 
-// Multiply selector elemen functionality
+// Multiply selector element functionality
 // Moved from projectTasks.js
-$(document).ready(function(){
+$(document).ready(function () {
 
     // binds on document click function which close currently opened selector
     function selectorClose(selector) {
-        var hideFunction = function(event){
+        var hideFunction = function (event) {
             if (event.type != 'click' && $(event.target).closest(".taskMultiSelectorOpen").filter(selector).length) {
                 return;
             }
@@ -3148,22 +3151,28 @@ $(document).ready(function(){
     // builds selector caption and title
     function buildSelectorLabel(selector) {
         var label = [];
-        $('input:checked', selector).next('label').each(function(){
-            label.push(this.innerHTML);
+        $('input:checked', selector).next('label').each(function () {
+            var inner = this.innerHTML;
+            var text = this.innerHTML;
+            if($(inner).is("a")) {
+                text = $(inner).text();
+            }
+            label.push(text);
         });
 
         var displayTxt = label.join(', ');
-        if (displayTxt == ""){
+        if (displayTxt == "") {
             displayTxt = $(".trigger label", selector).text();
         }
         $(".trigger .msValue", selector).text(displayTxt).attr("title", displayTxt);
     }
 
     // handles selector label changes
-    $('.taskMultiSelector').live('changelabel', function(){
+    $('.taskMultiSelector').live('changelabel', function () {
         buildSelectorLabel(this);
     });
-    $('.taskMultiSelector .trigger').live('click', function(){
+
+    $('.taskMultiSelector .trigger').live('click', function () {
         var wrapper = $(this).parent();
         if (wrapper.hasClass('disabled')) {
             return;
@@ -3173,10 +3182,11 @@ $(document).ready(function(){
         wrapper.addClass("taskMultiSelectorOpen");
         $('.dropDown', wrapper).width(wrapperWidth - 2);
     });
-    $('.taskMultiSelector li label').live('click', function(){
+
+    $('.taskMultiSelector li label').live('click',function () {
         var li = $(this).parent();
         $("input", li).trigger("click");
-    }).live('change', function(){
+    }).live('change', function () {
 
             // handles selector item label changes
             if ($(this).prev(':checked').length) {

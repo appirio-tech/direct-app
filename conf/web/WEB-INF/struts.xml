@@ -478,7 +478,61 @@
             <result name="success">/WEB-INF/task/project/projectTasks.jsp</result>
         </action>
 
-        <action name="quickCreateNewTask" method="quickAddTask" class="projectTasksAction">
+        <action name="getTaskLists" method="getTaskLists" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="updateTaskList" method="updateTaskList" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="deleteTaskList" method="deleteTaskList" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="resolveTaskList" method="resolveTaskList" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="addTask" method="addNewTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="getTask" method="getTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="updateTask" method="updateTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="toggleTask" method="toggleTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="removeTask" method="removeTask" class="projectTasksAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="addTaskList" method="addTaskList" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />

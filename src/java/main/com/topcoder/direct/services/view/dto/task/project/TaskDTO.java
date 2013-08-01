@@ -11,15 +11,33 @@ import java.util.List;
  * The DTO to transfer the data for a task between front end and back end.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
+ * @author GreatKevin
+ * @version 1.1
  */
 public class TaskDTO implements Serializable {
+
+    /**
+     * The constant to indicate a long field not set.
+     * @since 1.1
+     */
+    public static final long NOT_SET_LONG = -1000;
+
+    /**
+     * The id of the task.
+     * @since 1.1
+     */
+    private long id;
 
     /**
      * The name of the task.
      */
     private String name;
+
+    /**
+     * The notes of the task.
+     * @since 1.1
+     */
+    private String notes;
 
     /**
      * The status id of the task.
@@ -42,9 +60,47 @@ public class TaskDTO implements Serializable {
     private String dueDate;
 
     /**
+     * The priority id of the task.
+     * @since 1.1
+     */
+    private long priorityId = NOT_SET_LONG;
+
+    /**
+     * The associated milestone id of the task.
+     * @since 1.1
+     */
+    private long associatedMilestoneId = NOT_SET_LONG;
+
+    /**
+     * The associated contest id of the task.
+     * @since 1.1
+     */
+    private long associatedContestId = NOT_SET_LONG;
+
+    /**
      * The user ids this task is assigned to.
      */
     private List<Long> assignUserIds;
+
+    /**
+     * Gets the id of the task.
+     *
+     * @return the id of the task.
+     * @since 1.1
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id of the task.
+     *
+     * @param id the id of the task.
+     * @since 1.1
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
 
     /**
      * Gets the name of the task.
@@ -152,5 +208,85 @@ public class TaskDTO implements Serializable {
      */
     public void setAssignUserIds(List<Long> assignUserIds) {
         this.assignUserIds = assignUserIds;
+    }
+
+    /**
+     * Gets the priority id.
+     *
+     * @return the priority id.
+     * @since 1.1
+     */
+    public long getPriorityId() {
+        return priorityId;
+    }
+
+    /**
+     * Sets the priority id.
+     *
+     * @param priorityId the priority id.
+     * @since 1.1
+     */
+    public void setPriorityId(long priorityId) {
+        this.priorityId = priorityId;
+    }
+
+    /**
+     * Gets the associated milestone id.
+     *
+     * @return the associated milestone id.
+     * @since 1.1
+     */
+    public long getAssociatedMilestoneId() {
+        return associatedMilestoneId;
+    }
+
+    /**
+     * Sets the associated milestone id.
+     *
+     * @param associatedMilestoneId the associated milestone id.
+     * @since 1.1
+     */
+    public void setAssociatedMilestoneId(long associatedMilestoneId) {
+        this.associatedMilestoneId = associatedMilestoneId;
+    }
+
+    /**
+     * Gets the associated contest id.
+     *
+     * @return the associated contest id.
+     * @since 1.1
+     */
+    public long getAssociatedContestId() {
+        return associatedContestId;
+    }
+
+    /**
+     * Sets the associated contest id.
+     *
+     * @param associatedContestId the associated contest id.
+     * @since 1.1
+     */
+    public void setAssociatedContestId(long associatedContestId) {
+        this.associatedContestId = associatedContestId;
+    }
+
+    /**
+     * Gets the notes.
+     *
+     * @return the notes.
+     * @since 1.1
+     */
+    public String getNotes() {
+        return notes;
+    }
+
+    /**
+     * Sets the notes.
+     *
+     * @param notes the notes.
+     * @since 1.1
+     */
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

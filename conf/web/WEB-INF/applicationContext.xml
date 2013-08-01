@@ -1480,6 +1480,7 @@
 
     <bean id="projectTasksAction" class="com.topcoder.direct.services.view.action.task.project.ProjectTaskViewAction"
           scope="prototype" parent="baseTaskAction">
+        <property name="transactionManager" ref="taskTransactionManager"/>
     </bean>
 
     <bean id="oAuthGrantAccessInterceptor" class="com.topcoder.direct.services.view.action.analytics.common.OAuthGrantAccessInterceptor">

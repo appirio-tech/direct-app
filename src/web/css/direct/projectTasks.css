@@ -4,6 +4,8 @@
  * Used for the project tasks pages.
  *
  * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
+ * @version 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
+ * - Update the error label css
  * @author GreatKevin
  */
 .taskPage #content{
@@ -1112,6 +1114,7 @@
 	text-align: right;
 	color: #999999;
 	line-height: 20px;
+        float: right;
 }
 .popups .taskForm div.right  .rightRow{
 	min-height: 25px;
@@ -1477,4 +1480,10 @@
 }
 .editTaskItem .newFileList .rightRow{
 	padding: 0 0 6px 0;	
+}
+
+label.error {
+    background-color: none;
+    background-image: none;
+    color:red;
 }

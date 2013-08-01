@@ -1,11 +1,16 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task）
+  - Author: GreatKevin
+  - Version: 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: modal windows used in the project tasks page
   -
+  - Version 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
+  - - Updates modal to suppor task creation / update, task list creation / update.
+  -
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div id="addProjectTaskModal" class="outLay">
     <div class="modalHeader">
         <div class="modalHeaderRight">
@@ -18,17 +23,18 @@
     </div>
     <!-- end .modalHeader -->
     <div class="modalBody">
+        <form novalidate="novalidate">
         <div class="fixedHeightTaskFormWrapper">
             <ul class="taskForm">
                 <li class="tasknameField">
                     <label class="fieldName">Task :</label>
 
                     <div class="right">
-                        <input type="text" class="text limitText" name="newTaskname"/>
+                        <input type="text" class="text limitText" name="name"/>
 
                         <p class="fieldNote">
                             <span class="errorMessage">Task name cannot be empty</span>
-                            <span class="num">120</span> characters remaining
+                            <span class="num">80</span> characters remaining
                         </p>
                     </div>
                 </li>
@@ -36,10 +42,10 @@
                     <label class="fieldName">Note :</label>
 
                     <div class="right">
-                        <textarea name="newTaskNote" rows="5" cols="10"></textarea>
+                        <textarea name="notes" rows="5" cols="10" maxlength="250"></textarea>
 
                         <p class="fieldNote">
-                            <span class="num">500</span> characters remaining
+                            <span class="num">250</span> characters remaining
                         </p>
                     </div>
                 </li>
@@ -47,22 +53,15 @@
                     <label class="fieldName">Status :</label>
 
                     <div class="right">
-                        <select name="newTaskStatus" id="newTaskStatus">
-                            <option value="s0">Not Started</option>
-                            <option value="s1">In Progress</option>
-                            <option value="s2">Waiting on Dependency</option>
-                            <option value="s3">Completed</option>
-                        </select>
+                        <s:select list="taskStatuses" name="statusId" id="newTaskStatus"/>
                     </div>
                 </li>
                 <li>
                     <label class="fieldName">Task List :</label>
 
                     <div class="right">
-                        <select name="newTaskSelectList" id="newTaskSelectList">
-                            <option value="pt0">Project Tasks</option>
-                            <option value="pt1">Tasks List1</option>
-                            <option value="pt2">Tasks List2</option>
+                        <select name="taskListId" id="newTaskSelectList">
+
                         </select>
                     </div>
                 </li>
@@ -70,7 +69,7 @@
                     <label class="fieldName">Start Date :</label>
 
                     <div class="right">
-                        <input type="text" name="filterStartDate" readonly="readonly" id="newStartDate"
+                        <input type="text" name="startDate" readonly="readonly" id="newStartDate"
                                class="fLeft text task-date-pick" value=""/>
                     </div>
                 </li>
@@ -78,7 +77,7 @@
                     <label class="fieldName">Due Date :</label>
 
                     <div class="right">
-                        <input type="text" name="filterStartDate" readonly="readonly" id="newDueDate"
+                        <input type="text" name="dueDate" readonly="readonly" id="newDueDate"
                                class="fLeft text task-date-pick" value=""/>
                     </div>
                 </li>
@@ -91,22 +90,9 @@
                                 Users</a><a class="selectorArrow"></a><label class="hidden">Select Users</label></div>
                             <div class="dropDown">
                                 <ul>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u1"/><label
-                                            class="coderTextRed">Username 1</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u2"/><label
-                                            class="coderTextRed">Username 2</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u3"/><label
-                                            class="coderTextGreen">Username 3</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u4"/><label
-                                            class="coderTextGreen">Username 4</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u5"/><label
-                                            class="coderTextOrange">Username 5</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u6"/><label
-                                            class="coderTextOrange">Username 6</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u7"/><label
-                                            class="coderTextRed">Username 7</label></li>
-                                    <li><input name="quickAssignUser" type="checkbox" value="u8"/><label
-                                            class="coderTextRed">Username 8</label></li>
+                                    <s:iterator value="taskUserIds" var="userId">
+                                        <li><input name="assignUserIds[]" type="checkbox" value="${userId}" /><label><link:user userId="${userId}"/></label></li>
+                                    </s:iterator>
                                 </ul>
                                 <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a>
                                 </div>
@@ -118,11 +104,7 @@
                     <label class="fieldName">Priority :</label>
 
                     <div class="right">
-                        <select name="newTaskPriority" id="newTaskPriority">
-                            <option value="p0">High</option>
-                            <option value="p1">Normal</option>
-                            <option value="p2">Low</option>
-                        </select>
+                        <s:select list="taskPriorities" name="priorityId" id="newTaskPriority"/>
                     </div>
                 </li>
                 <li class="associateField">
@@ -132,20 +114,12 @@
                         <div class="rightRow selectDisabled">
                             <input name="isNewTaskMileStone" type="checkbox" class="assoOption1"/>
                             <label class="chxLbl">Project Milestone</label>
-                            <select name="newTaskMileStone2" id="newTaskMileStone2" disabled="disabled">
-                                <option>Milestone</option>
-                                <option>Milestone</option>
-                                <option>Milestone</option>
-                            </select>
+                            <s:select name="associatedMilestoneId" list="projectMilestones" disabled="disabled"/>
                         </div>
                         <div class="rightRow selectDisabled">
                             <input name="isNewTaskContest2" type="checkbox" class="assoOption2"/>
                             <label class="chxLbl">Contest</label>
-                            <select name="newTaskContest" id="newTaskContest2" disabled="disabled">
-                                <option>Contest</option>
-                                <option>Contest</option>
-                                <option>Contest</option>
-                            </select>
+                            <s:select name="associatedContestId" list="projectContests" disabled="disabled"/>
                         </div>
                     </div>
                 </li>
@@ -169,6 +143,7 @@
                 </li>
             </ul>
         </div>
+        </form>
         <div class="buttonArea">
             <a class="button6 saveNewProjectTask fLeft" title="ADD" href="javascript:;"><span class="left"><span
                     class="right">ADD</span></span></a>
@@ -233,16 +208,17 @@
     </div>
     <!-- end .modalHeader -->
     <div class="modalBody">
-        <ul class="taskForm">
+        <form id="addProjectTaskListModalForm" novalidate="novalidate">
+            <ul class="taskForm">
             <li class="taskListNameRow">
                 <label class="fieldName">Task List Name :</label>
 
                 <div class="right">
-                    <input type="text" class="text limitText" name="newTaskname"/>
+                    <input type="text" class="text limitText" name="name" maxlength="120"/>
 
                     <p class="fieldNote">
                         <span class="errorMessage">Task list name cannot be empty</span>
-                        <span class="num">120</span> characters remaining
+                        <span class="num">80</span> characters remaining
                     </p>
                 </div>
             </li>
@@ -250,10 +226,10 @@
                 <label class="fieldName">Note :</label>
 
                 <div class="right">
-                    <textarea name="newTaskNote" rows="5" cols="10"></textarea>
+                    <textarea name="notes" rows="5" cols="10" maxlength="250"></textarea>
 
                     <p class="fieldNote">
-                        <span class="num">500</span> characters remaining
+                        <span class="num">250</span> characters remaining
                     </p>
                 </div>
             </li>
@@ -279,22 +255,9 @@
                             Users</a><a class="selectorArrow"></a><label class="hidden">Select Users</label></div>
                         <div class="dropDown">
                             <ul>
-                                <li><input name="quickAssignUser" type="checkbox" value="u1"/><label
-                                        class="coderTextRed">Username 1</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u2"/><label
-                                        class="coderTextRed">Username 2</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u3"/><label
-                                        class="coderTextGreen">Username 3</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u4"/><label
-                                        class="coderTextGreen">Username 4</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u5"/><label
-                                        class="coderTextOrange">Username 5</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u6"/><label
-                                        class="coderTextOrange">Username 6</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u7"/><label
-                                        class="coderTextRed">Username 7</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u8"/><label
-                                        class="coderTextRed">Username 8</label></li>
+                                <s:iterator value="taskPermissionUserIds" var="userId">
+                                    <li><input name="permittedUsers[][userId]" type="checkbox" value="${userId}" /><label><link:user userId="${userId}"/></label></li>
+                                </s:iterator>
                             </ul>
                             <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a></div>
                         </div>
@@ -308,25 +271,18 @@
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskMileStone" type="checkbox" class="assoOption1"/>
                         <label class="chxLbl">Project Milestone</label>
-                        <select name="newTaskListMileStone" id="newTaskListMileStone" disabled="disabled">
-                            <option>Milestone</option>
-                            <option>Milestone</option>
-                            <option>Milestone</option>
-                        </select>
+                        <s:select name="associatedToProjectMilestones[][milestoneId]" list="projectMilestones" disabled="disabled"/>
                     </div>
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskContest" type="checkbox" class="assoOption2"/>
                         <label class="chxLbl">Contest</label>
-                        <select name="newTaskListContest" id="newTaskListContest" disabled="disabled">
-                            <option>Contest</option>
-                            <option>Contest</option>
-                            <option>Contest</option>
-                        </select>
+                        <s:select name="associatedToContests[][contestId]" list="projectContests" disabled="disabled"/>
                     </div>
                 </div>
             </li>
 
         </ul>
+        </form>
         <div class="buttonArea">
             <a class="button6 saveNewProjectList fLeft" title="ADD" href="javascript:;"><span class="left"><span
                     class="right">ADD</span></span></a>
@@ -389,19 +345,19 @@
             </div>
         </div>
     </div>
+    <form novalidate="novalidate">
     <!-- end .modalHeader -->
-    <div class="modalBody">
+        <div class="modalBody">
         <ul class="taskForm">
             <li class="taskListNameRow">
                 <label class="fieldName">Task List Name :</label>
 
                 <div class="right">
-                    <input type="text" class="text limitText" name="newTaskname"
-                           value="Task name Lorem ipsum dolor sit aemt"/>
+                    <input type="text" class="text limitText" name="name"/>
 
                     <p class="fieldNote">
                         <span class="errorMessage">Task list name cannot be empty</span>
-                        <span class="num">120</span> characters remaining
+                        <span class="num">80</span> characters remaining
                     </p>
                 </div>
             </li>
@@ -409,11 +365,10 @@
                 <label class="fieldName">Note :</label>
 
                 <div class="right">
-                    <textarea name="newTaskNote" rows="5" cols="10">Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut</textarea>
+                    <textarea name="notes" rows="5" cols="10"></textarea>
 
                     <p class="fieldNote">
-                        <span class="num">500</span> characters remaining
+                        <span class="num">250</span> characters remaining
                     </p>
                 </div>
             </li>
@@ -439,22 +394,9 @@
                             Users</a><a class="selectorArrow"></a><label class="hidden">Select Users</label></div>
                         <div class="dropDown">
                             <ul>
-                                <li><input name="quickAssignUser" type="checkbox" value="u1"/><label
-                                        class="coderTextRed">Username 1</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u2"/><label
-                                        class="coderTextRed">Username 2</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u3"/><label
-                                        class="coderTextGreen">Username 3</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u4"/><label
-                                        class="coderTextGreen">Username 4</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u5"/><label
-                                        class="coderTextOrange">Username 5</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u6"/><label
-                                        class="coderTextOrange">Username 6</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u7"/><label
-                                        class="coderTextRed">Username 7</label></li>
-                                <li><input name="quickAssignUser" type="checkbox" value="u8"/><label
-                                        class="coderTextRed">Username 8</label></li>
+                                <s:iterator value="taskPermissionUserIds" var="userId">
+                                    <li><input name="permittedUsers[][userId]" type="checkbox" value="${userId}" /><label><link:user userId="${userId}"/></label></li>
+                                </s:iterator>
                             </ul>
                             <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a></div>
                         </div>
@@ -468,20 +410,12 @@
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskMileStone" type="checkbox" class="assoOption1"/>
                         <label class="chxLbl">Project Milestone</label>
-                        <select name="editTaskListMileStone" id="editTaskListMileStone" disabled="disabled">
-                            <option>Milestone</option>
-                            <option>Milestone</option>
-                            <option>Milestone</option>
-                        </select>
+                        <s:select name="associatedToProjectMilestones[][milestoneId]" list="projectMilestones" disabled="disabled" id="editTaskListMilestone"/>
                     </div>
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskContest" type="checkbox" class="assoOption2"/>
                         <label class="chxLbl">Contest</label>
-                        <select name="editTaskListContest" id="editTaskListContest" disabled="disabled">
-                            <option>Contest</option>
-                            <option>Contest</option>
-                            <option>Contest</option>
-                        </select>
+                        <s:select name="associatedToContests[][contestId]" list="projectContests" disabled="disabled" id="editTaskListContest"/>
                     </div>
                 </div>
             </li>
@@ -496,6 +430,7 @@
             <div class="clearFix"></div>
         </div>
     </div>
+    </form>
     <!-- end .modalBody -->
     <div class="modalFooter">
         <div class="modalFooterRight">
@@ -539,7 +474,7 @@
 </div>
 <!-- end #editProjectTaskListSuccessModal -->
 
-<div class="outLay newOutLay" id="resolveTaskListModal">
+<div id="resolveTaskListModal" class="outLay newOutLay" >
     <div class="inner">
         <div class="modalHeader">
             <div class="modalHeaderRight">
@@ -606,7 +541,7 @@
 </div>
 <!-- end #resolveTaskListSuccessModal -->
 
-<div class="outLay newOutLay" id="deleteTaskListModal">
+<div id="deleteTaskListModal" class="outLay newOutLay">
     <div class="inner">
         <div class="modalHeader">
             <div class="modalHeaderRight">
@@ -640,7 +575,7 @@
 </div>
 <!-- end #deleteTaskListModal -->
 
-<div class="outLay newOutLay" id="deleteTaskListSuccessModal">
+<div id="deleteTaskListSuccessModal" class="outLay newOutLay">
     <div class="inner">
         <div class="modalHeader">
             <div class="modalHeaderRight">
@@ -672,7 +607,7 @@
 </div>
 <!-- end #deleteTaskListSuccessModal -->
 
-<div class="outLay newOutLay" id="deleteTaskModal">
+<div  id="deleteTaskModal" class="outLay newOutLay">
     <div class="inner">
         <div class="modalHeader">
             <div class="modalHeaderRight">
@@ -706,7 +641,7 @@
 </div>
 <!-- end #deleteTaskModal -->
 
-<div class="outLay newOutLay" id="deleteTaskSuccessModal">
+<div  id="deleteTaskSuccessModal" class="outLay newOutLay">
     <div class="inner">
         <div class="modalHeader">
             <div class="modalHeaderRight">
