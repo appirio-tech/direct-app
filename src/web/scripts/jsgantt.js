@@ -2734,7 +2734,7 @@ JSGantt.ChromeXMLParse = function (pGanttVar){
             }
 
             // Finally add the task
-            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption, pDependType));
+            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pReviewEnd, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption, pDependType));
         };
     };
 };
