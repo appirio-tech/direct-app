@@ -11,8 +11,11 @@
  * - Update script for loading time line graph.
  * - Update script for loading submissions tab and handle the ajax call.
  *
+ * - Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
+ * - Update script for loading final score ranking graph and final score vs provisional score graph.
+ *
  * @author Ghost_141
- * @version 1.2
+ * @version 1.3
  * @since 1.0
  */
 // JavaScript Document
@@ -376,6 +379,33 @@ $(document).ready(function(){
                 }
             }
         });
+        var lastNumber = [];
+        lastNumber.push({
+            value: submissions[submissions.length - 1].y == undefined ? submissions[submissions.length - 1] : submissions[submissions.length - 1].y,
+            name: "submissions"
+        });
+        lastNumber.push({
+            value: competitiors[submissions.length - 1].y == undefined ? competitiors[submissions.length - 1] : competitiors[submissions.length - 1].y,
+            name: "competitors"
+        });
+        lastNumber.push({
+            value: score[submissions.length - 1].y == undefined ? score[submissions.length - 1] : score[submissions.length - 1].y,
+            name: "score"
+        });
+        lastNumber.sort(function(a, b) {
+            return a.value - b.value;
+        });
+        var scoreIndex, submissionsIndex, competitorsIndex;
+        $.each(lastNumber, function(index, item) {
+            if(item.name == "score") {
+                scoreIndex = index;
+            } else if(item.name == "competitors") {
+                competitorsIndex = index;
+            } else if(item.name == "submissions") {
+                submissionsIndex = index;
+            }
+        });
+
         var xLength = json.xLength;
         var currentInterval = json.currentInterval;
         var submissionPhase = json.submissionPhase;
@@ -488,17 +518,18 @@ $(document).ready(function(){
             series: [{
                 name: legendName,
                 data: score,
-                color: legendColor
+                color: legendColor,
+                zIndex: scoreIndex
             },{
                 name: 'Number of Competitors',
                 data: competitiors,
                 color: '#986a00',
-                zIndex: 2
+                zIndex: competitorsIndex
             },{
                 name: 'Number of Full Submissions',
                 data: submissions,
                 color: '#6dcff6',
-                zIndex: 1
+                zIndex: submissionsIndex
             }]
         });
 	}
@@ -1107,17 +1138,11 @@ $(document).ready(function(){
 	//Person Score
 	if($('#personScoreChart').length){
         var score = [];
-        var plotBands = [];
         $.each(submissionHistory.personScore,function(idx,item){
             score[idx] = [];
             score[idx].push(Number(item.x));
             score[idx].push(Number(item.score));
             score[idx].push(item.date);
-            plotBands.push({
-                color: '#e5e5e5',
-                width: 1,
-                value: item.score
-            });
         });
         var X = submissionHistory.x;
         var startDate = submissionHistory.submissionStartTime;
@@ -1164,9 +1189,6 @@ $(document).ready(function(){
                 enabled: false
             },
             yAxis: {
-                min: 1500,
-                tickInterval: 400,
-                plotBands: plotBands,
                 title: {
                     text: 'Provisional<br />Score',
                     style: {

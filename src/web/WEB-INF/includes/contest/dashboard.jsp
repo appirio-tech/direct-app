@@ -95,7 +95,7 @@
                                 <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                 <s:param name="tab">competitors</s:param>
                                 <s:param name="handle" value="viewData.commonInfo.bestScoreHandle"/>
-                            </s:url> <s:if test="viewData.active">class='finalScore'</s:if> ">
+                            </s:url>" <c:if test="${!viewData.active}">class="finalScore"</c:if>>
                             ${viewData.commonInfo.bestScore}
                             </a>
                         </dd>

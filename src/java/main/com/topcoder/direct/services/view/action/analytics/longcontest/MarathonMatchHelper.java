@@ -168,8 +168,7 @@ public final class MarathonMatchHelper {
             for(MatchResultResource matchResult : matchResults.getItems()) {
                 CompetitorInfoDTO competitor = new CompetitorInfoDTO();
                 competitor.setFinalScore(matchResult.getFinalScore());
-                // TODO: The rating is not supported right now.
-//                competitor.setRating(matchResult.ge);
+                competitor.setRating(matchResult.getCoderRating().intValue());
                 competitor.setHandle(matchResult.getHandleName());
                 competitor.setUserId(matchResult.getCoderId());
                 competitor.setRank(matchResult.getRank());
