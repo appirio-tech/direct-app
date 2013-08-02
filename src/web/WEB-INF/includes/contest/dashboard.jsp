@@ -83,7 +83,7 @@
                         <s:else>
                             <dt>Winner:</dt>
                         </s:else>
-                        <dd><tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId}" context="marathon_match" darkBG="false"/></dd>
+                        <dd><tc-webtag:handle coderId="${viewData.commonInfo.bestScoreHandle}" context="marathon_match" darkBG="false"/></dd>
                         <s:if test="viewData.active">
                             <dt>Best Provisional Score:</dt>
                         </s:if>
