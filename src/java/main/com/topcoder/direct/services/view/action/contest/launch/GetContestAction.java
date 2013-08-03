@@ -398,8 +398,8 @@ public class GetContestAction extends ContestAction {
 
             if(roundId != null) {
                 hasRoundId = true;
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
-                        viewData);
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, getUserService(),
+                        timelineInterval, viewData);
             } else {
                 hasRoundId = false;
             }
