@@ -30,21 +30,22 @@
 
   <!-- Contest Description -->
 	<div class="description">    
-        <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+        <h3><span class="icon">Detailed Requirements</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
         
         <div class="textarea">
             <textarea id="swDetailedRequirements" rows="15" cols="80"></textarea>
-            <!-- <p class="mceFooterNote">Describe your project and your project goals.</p> -->
+            <p class="mceFooterNote">Describe your competition requirements and goals. All TopCoder Community members will see this description. If you have information you want 
+                to keep confidential, please include it as an attachment below or in the competition forum.</p> 
         </div>        
   </div>
     
   <!-- guidelines -->
 	<div class="guidelines">    
-        <h3><span class="icon">Software Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+        <h3><span class="icon">Software Guidelines</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
         
         <div class="textarea">
             <textarea id="swGuidelines" rows="15" cols="80"></textarea>
-            <!-- p class="mceFooterNote">Size, Colors, Fonts, Target Audience? Reference Designs? </p -->
+            <p class="mceFooterNote">Describe any specific standards, environments, or other technical constraints here. All TopCoder Community members will see this description. If you have information you want to keep confidential, please include it as an attachment below or in the competition forum. </p>
         </div>        
   </div>
   <!-- end .guidelines -->
