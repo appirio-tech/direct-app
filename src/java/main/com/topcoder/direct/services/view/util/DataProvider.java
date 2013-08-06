@@ -158,6 +158,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -7674,6 +7677,17 @@ public class DataProvider {
                     DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
                     InputStream content = compositeReviewPage.getContent();
                     Document doc = builder.parse(content);
+                    NodeList head;
+                    head = doc.getElementsByTagName("head");
+		            if(head.getLength() == 0) {
+                        head = doc.getElementsByTagName("HEAD");
+                    }
+                    Element style = doc.createElement("style");
+                    style.setAttribute("type", "text/css");
+                    style.appendChild(doc.createTextNode("<!--@page { size:960px 300mm; }-->"));
+                    head.item(0).appendChild(style);
+
+
 
                     ITextRenderer renderer = new ITextRenderer();
                     renderer.setDocument(doc, baseURL);
