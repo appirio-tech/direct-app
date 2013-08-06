@@ -137,6 +137,12 @@
     </function>
 
     <function>
+        <name>isTCPlatformSpecialist</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isTCPlatformSpecialist()</function-signature>
+    </function>
+
+    <function>
         <name>isSecurityGroupsUIAvailable</name>
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean isSecurityGroupsUIAvailable()</function-signature>

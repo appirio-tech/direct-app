@@ -58,6 +58,9 @@ public class DashboardSearchProcessor implements RequestProcessor<DashboardSearc
      * <p>
      * Update for Direct Search Assembly: add search function for project/contest
      * </p>
+     * <p>
+     * Update for TC Direct Add New Role to the Operations Dashboard Bug Race: added permission check.
+     * </p>
      *
      * @param action an <code>Object</code> representing the current action mapped to incoming request.
      */
@@ -98,8 +101,9 @@ public class DashboardSearchProcessor implements RequestProcessor<DashboardSearc
             } else if (DashboardSearchCriteriaType.PM_PROJECTS == criteriaType
                 || action.getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise")
                 || action.getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise.action")) {
-                if(!DirectUtils.isTcStaff(DirectUtils.getTCSubjectFromSession())) {
-                    throw new PermissionServiceException("You don't have permission to manage copilot feedback.");
+                final TCSubject subject = DirectUtils.getTCSubjectFromSession();
+                if(!(DirectUtils.isTcStaff(subject) || DirectUtils.isTCPlatformSpecialist(subject))) {
+                    throw new PermissionServiceException("You don't have permission to view the Operations Dashboard.");
                 }
                 viewData.setProjects(DataProvider.searchPMUserProjects(tcSubject, ""));
                 viewData.setResultType(DashboardSearchCriteriaType.PM_PROJECTS);

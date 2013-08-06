@@ -112,9 +112,15 @@ import java.util.Map;
  *     Adds method {@link #isAssetFilePreviewable(String)}
  * </ul>
  * </p>
+ * <p>
+ * Version 1.3.1 (BUGR-9284 TC Direct Add New Role to the Operations Dashboard)
+ * <ul>
+ *     Adds method {@link #isTCPlatformSpecialist()}
+ * </ul>
+ * </p>
  *
- * @author isv, pvmagacho, flexme, GreatKevin
- * @version 1.3
+ * @author isv, pvmagacho, flexme, GreatKevin, FireIce
+ * @version 1.3.1
  */
 public class JSPHelper {
 
@@ -478,6 +484,18 @@ public class JSPHelper {
 
     public static boolean isTCStaff() {
         return DirectUtils.isTcStaff(DirectUtils.getTCSubjectFromSession());
+    }
+
+    /**
+     * <p>
+     * Checks if the user is a TC Platform Specialist.
+     * </p>
+     *
+     * @return true if the user is a TC Platform Specialist or false if otherwise.
+     * @since 1.3.1
+     */
+    public static boolean isTCPlatformSpecialist() {
+        return DirectUtils.isTCPlatformSpecialist(DirectUtils.getTCSubjectFromSession());
     }
 
     public static boolean isTCAccounting() {

@@ -512,8 +512,17 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin, TCSASSEMBLER
- * @version 1.10
+ * <p>
+ * Version 1.10.1  (BUGR-9284 TC Direct Add New Role to the Operations Dashboard)
+ )
+ * <ul>
+ *     <li>Added constant {@link #TC_PLATFORM_SPECIALIST}.</li>
+ *     <li>Added method {@link #isTCPlatformSpecialist(TCSubject)} to check if the user is a TC Platform Specialist..</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce
+ * @version 1.10.1
  */
 public final class DirectUtils {
     /**
@@ -662,7 +671,13 @@ public final class DirectUtils {
 
     private static final String IS_CLIENT_USER_SQL = "SELECT client_id FROM client_user_xref cux, user_account ua, common_oltp:user u"
      + " WHERE cux.user_id = ua.user_account_id AND UPPER(ua.user_name) = UPPER(u.handle) AND u.user_id = ?";
-    
+
+    /**
+     * Private constant specifying TC Platform Specialist role.
+     *
+     * @since 1.10.1
+     */
+    private static final String TC_PLATFORM_SPECIALIST = "Platform Specialist";
     /**
      * <p>
      * Default Constructor.
@@ -1544,7 +1559,18 @@ public final class DirectUtils {
     }
 
     /**
+     * Check if the user is a TC Platform Specialist.
+     *
+     * @param tcSubject the user.
+     * @return true if the user is a TC Platform Specialist or false if otherwise.
+     *
+     * @since 1.10.1
+     */
+    public static boolean isTCPlatformSpecialist(TCSubject tcSubject) {
+        return isRole(tcSubject, TC_PLATFORM_SPECIALIST);
+    }
 
+    /**
      * <p>
      * Checks if the user is scorecard administrator.
      * </p>
