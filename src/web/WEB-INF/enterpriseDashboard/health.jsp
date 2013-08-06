@@ -93,6 +93,9 @@
                                                         </td>
                                                     </tr>
                                                     </tbody>
+                                                    <tfoot class="reportTotal">
+                                                        <tr><td colspan="2" style="text-align: right">Total Sum:&nbsp;&nbsp;</td><td></td><td></td><td></td></tr>
+                                                    </tfoot>
                                                 </table>
 
                                             </div>
@@ -151,6 +154,9 @@
              </td>
          </tr>
          </tbody>
+         <tfoot>
+            <tr class="reportTotal"><td colspan="2" style="text-align: right">Total Sum:&nbsp;&nbsp;</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+         </tfoot>
      </table>
 </span>
 

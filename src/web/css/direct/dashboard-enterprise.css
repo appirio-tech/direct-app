@@ -563,7 +563,7 @@ td.fontGreen{
     margin-bottom:0px;
 } 
 .expandViewPopup .costTable .tableWrapper{
-    width:1540px;
+    /*width:1540px;*/
     overflow:visible !important;
     height:auto;
 }

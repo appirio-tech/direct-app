@@ -589,6 +589,9 @@
     </s:iterator>
 
     </tbody>
+    <tfoot>
+        <tr class="reportTotal"><td colspan="15" style="text-align: right">Total Sum:&nbsp;&nbsp;</td><td></td></tr>
+    </tfoot>
 </table>
 
         <div class="container2Left">

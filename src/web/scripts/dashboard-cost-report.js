@@ -319,7 +319,7 @@ $(document).ready(function() {
      * @param projectIds the id of the specified projects
      */
     function loadBreakdownData(projectIds) {
-        var data = {formData:{projectIds:projectIds}};
+        var data = {formData: {projectIds: projectIds}};
         modalPreloader();
         $.ajax({
             type: 'POST',
@@ -327,10 +327,10 @@ $(document).ready(function() {
             data: data,
             cache: false,
             dataType: 'json',
-            success: function(jsonResult) {
+            success: function (jsonResult) {
                 handleJsonResult(
                     jsonResult,
-                    function(result){
+                    function (result) {
                         modalClose();
                         contestDViewApi.load();
                         breakdownLoaded = true;
@@ -339,59 +339,92 @@ $(document).ready(function() {
                             breakDownMap[result[i].id] = result[i];
                         }
                         var totalCompleted = 0;
+                        var totalCompletedCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                         var totalCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        var reg1 = /\$/g,reg2 = /\,/g;
-                        $("#breakdownBody table tbody tr").each(function() {
-                            var projectId = parseInt($(this).attr("rel"));
+
+                        var reg1 = /[\$,]/g;
+
+                        $("#breakdownBody table tbody tr").each(function () {
+
+                            var _bodyRow = $(this);
+                            var projectId = parseInt(_bodyRow.attr("rel"));
                             var breakdown = breakDownMap[projectId];
                             var fullfillment = 0;
+
+
                             if (!breakdown) {
-                                breakdown = ["0.00","0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
+                                breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
                             } else {
                                 if (breakdown.fullfillment > 0) {
                                     fullfillment = 1;
                                 }
-                                breakdown = [breakdown.contestFee, breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
+                                breakdown = [breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
                                     breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc];
                             }
+
                             totalCompleted += fullfillment;
-                            $(this).children("td:not(:last)").each(function(i) {
-                                if (i >= 12) {
-                                    $(this).html("$" + breakdown[i - 12]);
+
+                            _bodyRow.children("td:not(:last)").each(function (i) {
+                                if (i >= 13) {
+                                    $(this).html("$" + breakdown[i - 13]);
                                 }
                             });
-                            if (fullfillment > 0) {
-                                $(this).children("td").each(function(i) {
-                                    if (i >= 9) {
-                                        totalCost[i - 9] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
+
+                            // only calculates the completed contest for average
+                            _bodyRow.children("td").each(function (i) {
+                                if (i >= 10) {
+                                    var costValue = parseFloat($(this).text().replace(reg1, ""));
+
+                                    if (isNaN(costValue)) {
+                                        costValue = 0;
                                     }
-                                });
+
+                                    totalCost[i - 10] += costValue;
+
+                                    if (fullfillment > 0) {
+                                        totalCompletedCost[i - 10] += costValue;
+                                    }
+
+                                }
+                            });
+
+                        });
+
+                        totalCompleted = (totalCompleted == 0 ? 1 : totalCompleted);
+
+                        // average row
+                        $("#breakdownBody table tfoot tr:eq(0) td").each(function (i) {
+                            if (i >= 1) {
+                                $(this).html("$ " + new Number(totalCompletedCost[i - 1] / totalCompleted).toFixed(2));
                             }
                         });
-                        totalCompleted = (totalCompleted == 0 ? 1 : totalCompleted);
-                        $("#breakdownBody table tfoot tr td").each(function(i) {
+
+                        // total row
+                        $("#breakdownBody table tfoot tr:eq(1) td").each(function (i) {
                             if (i >= 1) {
-                                $(this).html("$" + new Number(totalCost[i - 1] / totalCompleted).toFixed(2));
+                                $(this).html("$ " + new Number(totalCost[i - 1]).formatMoney(2));
                             }
                         });
 
                         // bind sort event
-                        var myTextExtraction = function(node) {
+                        var myTextExtraction = function (node) {
                             return $.trim($(node).text());
                         }
                         $("#breakdownBody table").tablesorter({
                             textExtraction: myTextExtraction,
-                            headers :{
-                                    6: {
-                                        sorter: 'shortDate'
-                                    }
+                            headers: {
+                                6: {
+                                    sorter: 'shortDate'
                                 }
-                            });
-                        $("#breakdownBody table th").each(function(i) {
+                            }
+                        });
+                        $("#breakdownBody table th").each(function (i) {
                             var sortType = 0;
                             $(this).unbind('click');
-                            $(this).click(function() {
-                                var sorting = [[i, (sortType++)%2]];
+                            $(this).click(function () {
+                                var sorting = [
+                                    [i, (sortType++) % 2]
+                                ];
                                 $("#breakdownBody table").trigger("sorton", [sorting]);
                                 var rows = $("#breakdownBody table tbody tr");
                                 rows.removeClass("alt");
@@ -399,7 +432,7 @@ $(document).ready(function() {
                             });
                         });
                     },
-                    function(errorMessage) {
+                    function (errorMessage) {
                         showServerError(errorMessage);
                     });
             }
@@ -456,8 +489,11 @@ $(document).ready(function() {
             $("#dataTableLength").trigger("change");
 
             if (projectIds.length > 0) {
-                $("#breakdownBody table").append("<tfoot><tr><td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr></tfoot>");
-                loadBreakdownData(projectIds);
+                $("#breakdownBody table").append("<tfoot><tr class='reportAverage'>" + "<td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Average (only completed contests are counted)</td>" +
+                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr>" +
+                    "<tr class='reportTotal'><td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Total</td>" +
+                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr></tfoot>");
+                    loadBreakdownData(projectIds);
             }
         } else {
             contestDViewApi.load();

@@ -249,12 +249,18 @@
                 </c:if>     
             </td>
             <td>${item.totalContests}</td>
-            <td>
+            <td class="lastCol">
                 <fmt:formatNumber value="${item.projectFulfillment}" pattern="##0.##"/>%
             </td>
         </tr>
         </c:forEach>
     </tbody>
+    <tfoot>
+        <tr class="reportTotal"><td colspan="3" style="text-align: right">Total Sum:&nbsp;&nbsp;</td><td></td><td></td>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td class="lastCol"></td>
+        </tr>
+    </tfoot>
 </table>
 
         <div class="container2Left">

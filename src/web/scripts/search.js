@@ -1001,6 +1001,22 @@ $(document).ready(function() {
                },
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            var iTotalContestFee = 0, iTotalEst = 0, iTotalActual = 0, iTotal = 0;
+            for (var i = 0; i < aaData.length; i++) {
+                iTotalContestFee += aaData[i][10].replace(removeMoneySymbolsReg, '') * 1;
+                iTotalEst += aaData[i][11].replace(removeMoneySymbolsReg, '') * 1;
+                iTotalActual += aaData[i][12].replace(removeMoneySymbolsReg, '') * 1;
+                iTotal += aaData[i][13].replace(removeMoneySymbolsReg, '') * 1;
+            }
+
+            /* Modify the footer row to match what we want */
+            var nCells = nRow.getElementsByTagName('td');
+            nCells[1].innerHTML = '$ ' + parseFloat(iTotalContestFee).formatMoney(2);
+            nCells[2].innerHTML = '$ ' + parseFloat(iTotalEst).formatMoney(2);
+            nCells[3].innerHTML = '$ ' + parseFloat(iTotalActual).formatMoney(2);
+            nCells[4].innerHTML = '$ ' + parseFloat(iTotal).formatMoney(2);
+        },
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -1063,6 +1079,60 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
+        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            var iDraftNumber = 0, iDraftTotal = 0;
+            var iScheduledNumber = 0, iScheduledTotal = 0;
+            var iActiveNumber = 0, iActiveTotal = 0;
+            var iFifnishedNumber = 0, iFinishedTotal = 0;
+            var iCancelledNumber = 0, iCancelledTotal = 0;
+            var iTotalBudget = 0, iTotalActual = 0, iTotalPlanned = 0, iTotalProjected = 0, iTotalContests = 0;
+            for (var i = 0; i < aaData.length; i++) {
+
+                var tmp = $.trim(aaData[i][3]).split('/');
+                iDraftNumber += tmp[0] * 1;
+                iDraftTotal += tmp[1].replace(removeMoneySymbolsReg, '') * 1;
+
+                tmp = $.trim(aaData[i][4]).split('/');
+                iScheduledNumber += tmp[0] * 1;
+                iScheduledTotal += tmp[1].replace(removeMoneySymbolsReg, '') * 1;
+
+                tmp = $.trim(aaData[i][5]).split('/');
+                iActiveNumber += tmp[0] * 1;
+                iActiveTotal += tmp[1].replace(removeMoneySymbolsReg, '') * 1;
+
+                tmp = $.trim(aaData[i][6]).split('/');
+                iFifnishedNumber += tmp[0] * 1;
+                iFinishedTotal += tmp[1].replace(removeMoneySymbolsReg, '') * 1;
+
+                tmp = $.trim(aaData[i][7]).split('/');
+                iCancelledNumber += tmp[0] * 1;
+                iCancelledTotal += tmp[1].replace(removeMoneySymbolsReg, '') * 1;
+
+                iTotalBudget += aaData[i][8].replace(removeMoneySymbolsReg, '') * 1;
+                iTotalActual += aaData[i][9].replace(removeMoneySymbolsReg, '') * 1;
+                iTotalPlanned += aaData[i][10].replace(removeMoneySymbolsReg, '') * 1;
+                iTotalProjected += aaData[i][11].replace(removeMoneySymbolsReg, '') * 1;
+
+                iTotalContests += aaData[i][14].replace(removeMoneySymbolsReg, '') * 1;
+            }
+
+            /* Modify the footer row to match what we want */
+            var nCells = nRow.getElementsByTagName('td');
+            nCells[1].innerHTML = parseInt(iDraftNumber) + ' / ' + '$' + parseFloat(iDraftTotal).formatMoney(2);
+            nCells[2].innerHTML = parseInt(iScheduledNumber) + ' / ' + '$' + parseFloat(iScheduledTotal).formatMoney(2);
+            nCells[3].innerHTML = parseInt(iActiveNumber) + ' / ' + '$' + parseFloat(iActiveTotal).formatMoney(2);
+            nCells[4].innerHTML = parseInt(iFifnishedNumber) + ' / ' + '$' + parseFloat(iFinishedTotal).formatMoney(2);
+            nCells[5].innerHTML = parseInt(iCancelledNumber) + ' / ' + '$' + parseFloat(iCancelledTotal).formatMoney(2);
+
+            nCells[6].innerHTML = '$ ' + parseFloat(iTotalBudget).formatMoney(2);
+            nCells[7].innerHTML = '$ ' + parseFloat(iTotalActual).formatMoney(2);
+            nCells[8].innerHTML = '$ ' + parseFloat(iTotalPlanned).formatMoney(2);
+            nCells[9].innerHTML = '$ ' + parseFloat(iTotalProjected).formatMoney(2);
+
+            nCells[12].innerHTML = parseInt(iTotalContests);
+
+
+        },
         "aoColumns": [
                 { "sType": "html-trimmed" },
                 { "sType": "html" },
@@ -1091,6 +1161,15 @@ $(document).ready(function() {
         "bAutoWidth": false,
         "oLanguage": {
             "sLengthMenu": sStdMenu + " per page"
+        },
+        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            var iCostTotal = 0;
+            for (var i = 0; i < aaData.length; i++) {
+                iCostTotal += aaData[i][7].replace(removeMoneySymbolsReg, '') * 1;
+            }
+
+            var nCells = nRow.getElementsByTagName('td');
+            nCells[1].innerHTML = '$ ' + parseFloat(iCostTotal).formatMoney(2);
         },
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
@@ -1192,7 +1271,22 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[4,'asc']],
-        "aoColumns": aoColumns
+        "aoColumns": aoColumns,
+        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            var iCostTotal = 0;
+            var row = $("#billingCostReportSection .paginatedDataTable tbody tr:eq(0)");
+            var cellNumber = row.find("td").length;
+            var costCellIndex = row.find("td.amount").index();
+            if (cellNumber > 2) {
+                for (var i = 0; i < aaData.length; i++) {
+                    iCostTotal += aaData[i][costCellIndex].replace(removeMoneySymbolsReg, '') * 1;
+                }
+            }
+            $("#billingCostReportSection .paginatedDataTable tfoot tr td:eq(0)").attr("colspan", cellNumber - 3);
+            $("#billingCostReportSection .paginatedDataTable tfoot tr td:eq(1)").attr("colspan", 3);
+            var nCells = nRow.getElementsByTagName('td');
+            nCells[1].innerHTML = '$ ' + parseFloat(iCostTotal).formatMoney(2);
+        }
 
     });
 

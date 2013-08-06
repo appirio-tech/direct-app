@@ -584,6 +584,8 @@ function caculateImageRatio(image,oldWidth, oldHeight) {
     }
 }
 
+var removeMoneySymbolsReg = /[\$,]/g;
+
 var allowedTags = [
 /<a\s*(href\s*=\s*[^=|^>|^<]*)?>/mg,
 /<(span|ul)\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,

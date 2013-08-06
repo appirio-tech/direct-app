@@ -1156,7 +1156,26 @@ function renderFinancial(json) {
                     }
                 },
                 "sPaginationType":"full_numbers",
-                "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>'
+                "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>',
+                "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+                    var iTotalBudget = 0, iTotalActual = 0, iTotalProjected = 0;
+                    for (var i = 0; i < aaData.length; i++) {
+                        if(!isNaN(aaData[i][2].replace(removeMoneySymbolsReg, '') * 1)) {
+                            iTotalBudget += aaData[i][2].replace(removeMoneySymbolsReg, '') * 1;
+                        }
+
+                        iTotalActual += aaData[i][3].replace(/(<([^>]+)>)/ig, "").replace(removeMoneySymbolsReg, '') * 1;
+                        iTotalProjected += aaData[i][4].replace(/(<([^>]+)>)/ig, "").replace(removeMoneySymbolsReg, '') * 1;
+                    }
+
+                    /* Modify the footer row to match what we want */
+                    var nCells = nRow.getElementsByTagName('td');
+                    nCells[1].innerHTML = '$ ' + parseFloat(iTotalBudget).formatMoney(2);
+                    nCells[2].innerHTML = '$ ' + parseFloat(iTotalActual).formatMoney(2);
+                    nCells[3].innerHTML = '$ ' + parseFloat(iTotalProjected).formatMoney(2);
+
+
+                }
             });
             $("#financials").width('auto');
     } else {

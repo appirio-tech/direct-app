@@ -10921,4 +10921,15 @@ td .action .ico, #projectsResult TABLE.resultTable TD SPAN.ico{
     background-position: 100% -72px;
 }
 
+tr.reportTotal {
+    background-color: #F4F7DF;
+    font-weight: bold;
+}
+
+tr.reportAverage {
+    background-color: #DEE7F7;
+    font-weight: bold;
+
+}
+
 
