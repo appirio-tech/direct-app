@@ -71,7 +71,7 @@
                                 <select id="metaValueFilter"><option>None</option></select>
                             </div>
                         </div>
-                        <div class="column <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">hide</c:if>">
+                        <div class="column" <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">style="display: none"</c:if>>
                             <div id="zoomSelect">
                                 <span class="label">Zoom</span><span class="validationMessage" style="padding-left: 10px; color: red; display: none">Please select date range</span>
 
