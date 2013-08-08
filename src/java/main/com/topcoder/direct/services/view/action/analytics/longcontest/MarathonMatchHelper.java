@@ -22,8 +22,6 @@ import com.topcoder.marathonmatch.service.dto.MMCommonInfoDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.user.UserService;
-import com.topcoder.service.user.UserServiceException;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchDetailsResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
@@ -55,15 +53,13 @@ import java.util.TimeZone;
  * <p>
  *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
  *     <ol>
- *         <li>Update method {@link #getMarathonMatchDetails(String, MarathonMatchAnalyticsService, UserService,
- *         int, MarathonMatchCommonDTO)} to fix a bug.</li>
+ *         <li>Update method {@link #getMarathonMatchDetails(String, MarathonMatchAnalyticsService, int,
+ *         MarathonMatchCommonDTO)} to fix a bug.</li>
  *         <li>Add method {@link #getCommonData(long, TCSubject, SoftwareCompetition, BaseContestCommonDTO,
  *         ContestServiceFacade, SessionData)}.</li>
  *         <li>Add method {@link #sortContestPhases(List)}.</li>
  *         <li>Add method {@link #isMarathonMatchActive(Long, MarathonMatchAnalyticsService)}.</li>
  *         <li>Add inner class {@link StartDateComparator} and {@link PhaseOrderComparator}.</li>
- *         <li>Update method {@link #getMarathonMatchDetails(String, MarathonMatchAnalyticsService,
- *         UserService, int, MarathonMatchCommonDTO)} to use user service to get the user id.</li>
  *     </ol>
  * </p>
  *
@@ -95,13 +91,11 @@ public final class MarathonMatchHelper {
      * @param roundId the round id of this contest.
      * @param timelineInterval represent the time line interval
      * @param viewData the view data dto.
-     * @param marathonMatchAnalyticsService the marathon match analytics service instance.
-     * @param userService the user service.
      * @throws MarathonMatchAnalyticsServiceException if any error occurred.
      */
     public static void getMarathonMatchDetails(String roundId,
-            MarathonMatchAnalyticsService marathonMatchAnalyticsService, UserService userService, int timelineInterval,
-            MarathonMatchCommonDTO viewData) throws MarathonMatchAnalyticsServiceException, UserServiceException {
+            MarathonMatchAnalyticsService marathonMatchAnalyticsService, int timelineInterval,
+            MarathonMatchCommonDTO viewData) throws MarathonMatchAnalyticsServiceException {
         MarathonMatchDetailsResource result =
                 marathonMatchAnalyticsService.getMarathonMatchDetails(Long.valueOf(roundId), GROUP_TYPE_DAY,
                         ACCESS_TOKEN);
@@ -124,11 +118,10 @@ public final class MarathonMatchHelper {
 
         if(viewData.isActive()) {
             viewData.getCommonInfo().setBestScoreHandle(latestProgress.getTopUserHandle());
-            viewData.getCommonInfo().setBestScoreUserId(userService.getUserId(latestProgress.getTopUserHandle()));
+            // TODO: The platform api didn't include user id for the user currently having best score.
             viewData.getCommonInfo().setBestScore(latestProgress.getCurrentTopProvisionalScore());
         } else {
             viewData.getCommonInfo().setBestScore(result.getWinnerScore());
-            viewData.getCommonInfo().setBestScoreUserId(userService.getUserId(result.getWinnerHandle()));
             viewData.getCommonInfo().setBestScoreHandle(result.getWinnerHandle());
         }
 

@@ -18,7 +18,6 @@ import com.topcoder.marathonmatch.service.dto.SubmissionInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.user.UserService;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
@@ -221,12 +220,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
     private ContestServiceFacade contestServiceFacade;
 
     /**
-     * Represent the user service instance.
-     * @since 1.3
-     */
-    private UserService userService;
-
-    /**
      * Represent the contest.
      */
     private SoftwareCompetition softwareCompetition;
@@ -302,8 +295,8 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
 
             // call the service to get the detail information for the dashboard part.
             if(hasRoundId) {
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, userService,
-                        timelineInterval, viewData);
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
+                        viewData);
             }
 
             // Get the common data for contest page.
@@ -1045,26 +1038,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
      */
     public void setSubmissionSize(int submissionSize) {
         this.submissionSize = submissionSize;
-    }
-
-    /**
-     * Gets user service.
-     *
-     * @return the user service
-     * @since 1.3
-     */
-    public UserService getUserService() {
-        return userService;
-    }
-
-    /**
-     * Sets user service.
-     *
-     * @param userService the user service
-     * @since 1.3
-     */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
 

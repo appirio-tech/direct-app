@@ -16,9 +16,9 @@ import com.topcoder.marathonmatch.service.dto.ResultInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.user.UserService;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
+import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
 import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
@@ -90,11 +90,6 @@ public class MarathonMatchResultsViewAction extends AbstractAction
     private ContestServiceFacade contestServiceFacade;
 
     /**
-     * Represent the user service instance.
-     */
-    private UserService userService;
-
-    /**
      * Represent the contest.
      */
     private SoftwareCompetition softwareCompetition;
@@ -150,7 +145,7 @@ public class MarathonMatchResultsViewAction extends AbstractAction
 
             viewData = new MMResultsInfoDTO();
 
-            MarathonMatchHelper.getMarathonMatchDetails(roundId.toString(), marathonMatchAnalyticsService, userService,
+            MarathonMatchHelper.getMarathonMatchDetails(roundId.toString(), marathonMatchAnalyticsService,
                     timelineInterval, viewData);
 
             // Get the common data for contest page.
@@ -429,23 +424,5 @@ public class MarathonMatchResultsViewAction extends AbstractAction
      */
     public Long getRoundId() {
         return roundId;
-    }
-
-    /**
-     * Gets user service.
-     *
-     * @return the user service
-     */
-    public UserService getUserService() {
-        return userService;
-    }
-
-    /**
-     * Sets user service.
-     *
-     * @param userService the user service
-     */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
