@@ -851,10 +851,12 @@ $(document).ready(function(){
     });
 
     var fileUploadExtraForm = {uploadFileProjectId: $("#assetProjectId").val()};
-
+    var totalNumberOfFiles = 0, totalNumberOfFilesSubmitted = 0;
+    var dataFiles = [];
     if ($('#multipleUploadArea').length) {
         var totalNum = 0;
         var totalSize = 0;
+        var processedFileCount = 0;
         var jqXHR = $('#fileDropInput').fileupload({
             url: 'uploadAssetFile',
             dataType: 'json',
@@ -951,43 +953,40 @@ $(document).ready(function(){
                             eFile = file.name;
                         }
                     }
+                    var newUploadFileRow;
                     if ($("#selectFileForVersion").is(":visible")) {
                         $('.dragSucess ul').empty();
-                        $('.dragSucess ul').append('<li><a href="javascript:;" class="removeFile">X</a><span class="icon-file-small"><img src="/images/icon-small-'
+                        newUploadFileRow = $('<li><a href="javascript:;" class="removeFile">X</a><span class="icon-file-small"><img src="/images/icon-small-'
                             + eFileStyle + '.png" alt="" /></span><div class="fileName">' + eFile + '<span> (' + iSize + ')</span></div></li>');
+                        $('.dragSucess ul').append(newUploadFileRow);
                         // add file info
                         data.context = $('#uploadingFileVersion .uploadingFileSection');
                         data.context.find('.fileName .name').text(eFile);
                         data.context.find('.fileName .size').text(iSize);
                         data.context.find('.fileSize .size').text(iSize);
                         data.context.find('.icon-file-small img').attr({'src': '/images/icon-small-' + eFileStyle + '.png', 'alt': eFileStyle});
+                        totalNumberOfFiles++;
                     } else {
-                        // add item to uploading area
-                        $('.dragSucess ul').append('<li><a href="javascript:;" class="removeFile">X</a><span class="icon-file-small"><img src="/images/icon-small-'
+                        newUploadFileRow = $('<li><a href="javascript:;" class="removeFile">X</a><span class="icon-file-small"><img src="/images/icon-small-'
                             + eFileStyle + '.png" alt="" /></span><div class="fileName">' + eFile + '<span> (' + iSize + ')</span></div></li>');
+                        // add item to uploading area
+                        $('.dragSucess ul').append(newUploadFileRow);
                         $('.dragSucess p span').text($('#beforeUpload .dragSucess li').length);
-                        // add file info
-                        var uploadingNew = $('.itemSection-temp').clone(true).removeClass('itemSection-temp');
-                        var count = $('#beforeUpload .dragSucess li').length;
-                        uploadingNew.find("input[type=radio]").attr('name', 'accessRadio' + count);
-                        uploadingNew.find("input[type=radio]:eq(0)").attr('id', 'accessRadioPublic' + count);
-                        uploadingNew.find(".radioBox label:eq(0)").attr('for', 'accessRadioPublic' + count);
-                        uploadingNew.find("input[type=radio]:eq(1)").attr('id', 'accessRadioPrivate' + count);
-                        uploadingNew.find(".radioBox label:eq(1)").attr('for', 'accessRadioPrivate' + count);
-                        uploadingNew.find('.fileName').text(eFile).attr('title', file.name);
-                        uploadingNew.find('.size').text(iSize);
-                        uploadingNew.find('.icon-file img').attr({'src': '/images/icon-' + eFileStyle + '.png', 'alt': eFileStyle});
-                        data.context = uploadingNew.appendTo($('.fileUploadingSection .sectionInner'));
                         fnSetHeight();
+                        totalNumberOfFiles++
                     }
+                    dataFiles.push(data.files);
                 });
                 // remove file
+                $('.removeFile').die('click');
                 $('.removeFile').live('click', function () {
                     var li = $(this).parent();
-                    var index = li.index(li.parent());
+                    var index = $(this).closest('ul').children('li').index(li);
                     li.remove();
-                    data.files.splice(index, 1);
+                    dataFiles[index].splice(0,1);
+                    //data.files.splice(index, 1);
                     $('.dragSucess p span').text($('#beforeUpload .dragSucess li').length);
+                    totalNumberOfFiles = $('#beforeUpload .dragSucess li').length;
                 });
                 // upload button
                 $('#fileDropInputSubmit').click(function () {
@@ -999,16 +998,119 @@ $(document).ready(function(){
                     modalPreloader();
                     $("#selectFileForVersion").data('upload', true);
                 } else {
-                    $('.itemSection-temp').remove();
                     // upldate total file info
                     totalNum = totalNum + data.files.length;
                     $.each(data.files, function (index, file) {
+                        totalNumberOfFilesSubmitted++;
                         totalSize = totalSize + file.size;
+                        var eFile;
+                        if ($("#selectFileForVersion").is(":visible")) {
+                            if (file.name.length > 20) {
+                                eFile = file.name.substr(0, 20) + '...';
+                            } else {
+                                eFile = file.name;
+                            }
+                        } else {
+                            if (file.name.length > 30) {
+                                eFile = file.name.substr(20, 20) + '...';
+                            } else {
+                                eFile = file.name;
+                            }
+                        }
+                        // add file info
+                        var uploadingNew = $('.itemSection-temp').clone(true).removeClass('itemSection-temp');
+                        var eFileStyle = (/\.[^\.]+$/.exec(file.name).toString().replace('.', ''));
+                        var iSize = fnFormatSize(file.size);
+                        switch (eFileStyle) {
+                            case 'zip' :
+                                eFileStyle = 'zip';
+                                break;
+                            case 'rar' :
+                                eFileStyle = 'rar';
+                                break;
+                            case '7z' :
+                                eFileStyle = 'zip';
+                                break;
+                            case 'pdf' :
+                                eFileStyle = 'pdf';
+                                break;
+                            case 'doc' :
+                                eFileStyle = 'doc';
+                                break;
+                            case 'xls' :
+                                eFileStyle = 'xls';
+                                break;
+                            case 'ppt' :
+                                eFileStyle = 'ppt';
+                                break;
+                            case 'txt' :
+                                eFileStyle = 'txt';
+                                break;
+                            case 'png' :
+                                eFileStyle = 'png';
+                                break;
+                            case 'gif' :
+                                eFileStyle = 'gif';
+                                break;
+                            case 'jpg' :
+                                eFileStyle = 'jpg';
+                                break;
+                            case 'bmp' :
+                                eFileStyle = 'bmp';
+                                break;
+                            case 'psd' :
+                                eFileStyle = 'psd';
+                                break;
+                            case 'ai' :
+                                eFileStyle = 'ai';
+                                break;
+                            case 'eps' :
+                                eFileStyle = 'eps';
+                                break;
+                            case 'fla' :
+                                eFileStyle = 'fla';
+                                break;
+                            case 'swf' :
+                                eFileStyle = 'swf';
+                                break;
+                            case 'html' :
+                                eFileStyle = 'html';
+                                break;
+                            case 'css' :
+                                eFileStyle = 'css';
+                                break;
+                            case 'js' :
+                                eFileStyle = 'js';
+                                break;
+                            case 'xml' :
+                                eFileStyle = 'xml';
+                                break;
+                            default:
+                                eFileStyle = 'other';
+                        }
+                        var count = $('#beforeUpload .dragSucess li').length;
+                        uploadingNew.find("input[type=radio]").attr('name', 'accessRadio' + processedFileCount);
+                        uploadingNew.find("input[type=radio]:eq(0)").attr('id', 'accessRadioPublic' + processedFileCount);
+                        uploadingNew.find(".radioBox label:eq(0)").attr('for', 'accessRadioPublic' + processedFileCount);
+                        uploadingNew.find("input[type=radio]:eq(1)").attr('id', 'accessRadioPrivate' + processedFileCount);
+                        uploadingNew.find(".radioBox label:eq(1)").attr('for', 'accessRadioPrivate' + processedFileCount);
+                        uploadingNew.find('.fileName').text(eFile).attr('title', file.name);
+                        uploadingNew.find('.size').text(iSize);
+                        uploadingNew.find('.icon-file img').attr({'src': '/images/icon-' + eFileStyle + '.png', 'alt': eFileStyle});
+                        data.context = uploadingNew.appendTo($('.fileUploadingSection .sectionInner'));
+                        processedFileCount++;
                     });
                     $('#uploading .fileTotalNumber').text(totalNum);
                     $('#uploading .fileTotalSize').text(fnFormatSize(totalSize));
                     $("#beforeUpload").hide();
                     $("#uploading").show();
+                    if (totalNumberOfFilesSubmitted == totalNumberOfFiles) {
+                        $('.itemSection-temp').remove();
+                        totalNumberOfFiles = totalNumberOfFilesSubmitted = 0;
+                    }
+                }
+                if (!data.files || !data.files.length) {
+                    return false;
                 }
             },
             start: function (e) {
@@ -1066,7 +1168,7 @@ $(document).ready(function(){
         });
         // upload button
         $('.btnUpload').click(function () {
-            
+
             // choose one to upload if it is version upload
             if (!$("#selectFileForVersion").is(":visible") || ($('.dragSucess').get(0).clientHeight == 0 && $('.dragSucess li').length == 0 )) {
                 // add files from common upload
@@ -2300,6 +2402,19 @@ $(document).ready(function(){
         if ($(".uploadInputsSection input[name=files]").length == 0) {
             $(".uploadInputsSection").append('<input type="file" name="files"/>');
         }
+    });
+
+    var sorting = 'asc';
+    $($('#assetsCurrentDateData th')[3]).click(function() {
+        if (sorting == 'asc') {
+            sorting = 'desc';
+        } else {
+            sorting = 'asc';
+        }
+        var table = $('#assetsCurrentDateData').dataTable();
+        table.fnSettings().aaSortingFixed[0][1] = sorting;
+        table.fnSort([[0, sorting], [4, sorting]]);
+        return false;
     });
 
     $("table.projectStats").each(function(){
