@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012
-  - Version: 1.9
+  - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012, TCSASSEMBLER
+  - Version: 2.1
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -35,6 +35,9 @@
   -
   - Version 2.0 (Release Assembly - TC Cockpit Project Total Cost Fixes)
   - - Handles the display of project level cost data
+  -
+  - Version 2.1 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 2)
+  - - Show contest fee for project level cost
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -534,9 +537,7 @@
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${item.completionDate}"/>
             </td>
             <td>
-                <s:if test="%{#attr['item'].contest.id > 0}">
-                    <fmt:formatNumber value="${item.contestFee}" pattern="$###,##0.00"/>
-                </s:if>
+                 <fmt:formatNumber value="${item.contestFee}" pattern="$###,##0.00"/>
             </td>
             <td>
                 <s:if test="%{#attr['item'].contest.id > 0}">

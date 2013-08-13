@@ -928,10 +928,20 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.18 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 2)
+ * <ul>
+ *     <li>
+ *         Updated method {@link #getDashboardCostReportDetails(com.topcoder.security.TCSubject, long, long[], long[], long, long, long[], java.util.Date, java.util.Date, java.util.Map)}
+ *         to include project level bug race contest fee in the project level cost details.
+ *     </li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
- * @version 6.17
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, TCSASSEMBLER
+ * @version 6.18
  * @since 1.0
  */
 public class DataProvider {
@@ -4994,7 +5004,7 @@ public class DataProvider {
                     costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
                 }
             } else {
-                costDTO.setTotal(costDTO.getActualCost());
+                costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
             }
 
 

@@ -111,8 +111,11 @@
  * - (Release Assembly - TopCoder Copilot Feedback Updates)
  * - Add css for copilot feedback ratings
  *
- * (Release Assembly - TopCoder Cockpit Asset View And File Version)
- * — Add CSS for the dropdown menu
+ * - (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * - Add CSS for the dropdown menu
+ *
+ * - (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 2)
+ * - Increase the dropdown width of selecting reports in reports page
  */
 
 
@@ -10921,6 +10924,10 @@ td .action .ico, #projectsResult TABLE.resultTable TD SPAN.ico{
     background-position: 100% -72px;
 }
 
+#selectReport {
+    width: 200px !important;
+}
+
 tr.reportTotal {
     background-color: #F4F7DF;
     font-weight: bold;
@@ -10931,5 +10938,3 @@ tr.reportAverage {
     font-weight: bold;
 
 }
-
-
