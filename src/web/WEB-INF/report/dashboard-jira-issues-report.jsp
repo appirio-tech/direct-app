@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141, csy2012
+  - Author: Ghost_141, csy2012, TCSASSEMBLER
   - Version: 1.0 (Module Assembly - JIRA issues loading update and report creation)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for jira issues report including form and report data.
   -
@@ -9,7 +9,10 @@
   - Update layout to fix a layout issue.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
-  - Update layout to fix a date layout issue.  
+  - Update layout to fix a date layout issue.
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit JIRA Report Update)
+  - - Update the jira report table body to allow empty contest id and name tds
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -213,14 +216,19 @@
                             <fmt:formatNumber value="${prize}" pattern="$###,##0.00"/>
                         </td>
 						 <td>
+                           <s:if test="contestId > 0">
                             <a class="longWordsBreak"
                                href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contestId"/></s:url>">
                                 <s:property value="contestName"/></a>
+                           </s:if>
                         </td>
                         <td>
+                            <s:if test="contestId > 0">
                             <a class="longWordsBreak"
                                href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contestId"/></s:url>">
                                 <s:property value="contestId"/></a>
+                            </s:if>
+
                         </td>
                         <td>
                             <s:property value="status"/>

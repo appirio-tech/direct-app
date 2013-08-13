@@ -920,7 +920,8 @@ import java.util.Set;
  *     <li>Adds {@link #getProjectCopilotPostingContests(long)} to get copilot postings of a specific cockpit project</li>
  * </ul>
  * </p>
- * * <p>
+ *
+ * <p>
  * Version 6.17 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1)
  * <ul>
  *     <li>Updated {@link #getInvoiceRecordRelatedData(List, List, List, List)} to support
@@ -935,6 +936,15 @@ import java.util.Set;
  *         Updated method {@link #getDashboardCostReportDetails(com.topcoder.security.TCSubject, long, long[], long[], long, long, long[], java.util.Date, java.util.Date, java.util.Map)}
  *         to include project level bug race contest fee in the project level cost details.
  *     </li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 6.19 (Release Assembly - TC Cockpit JIRA Report Update)
+ * <ul>
+ *     <li>Updated {@link #getDashboardJiraIssuesReport(com.topcoder.security.TCSubject,
+ *     long, long, long, long[], java.util.Date, java.util.Date)} to
+ *     accept project jira issues without contest id and contest name.</li>
  * </ul>
  * </p>
  *
@@ -2352,8 +2362,15 @@ public class DataProvider {
 
             jiraIssue.setCustomer(row.getStringItem("customer"));
             jiraIssue.setBillingAccount(row.getStringItem("billingaccount"));
-            jiraIssue.setContestName(row.getStringItem("contestname"));
-            jiraIssue.setContestId(row.getLongItem("contestid"));
+
+            if(row.getItem("contestname").getResultData() != null) {
+                jiraIssue.setContestName(row.getStringItem("contestname"));
+            }
+
+            if(row.getItem("contestid").getResultData() != null) {
+                jiraIssue.setContestId(row.getLongItem("contestid"));
+            }
+
             jiraIssue.setTicketId(row.getStringItem("ticketid"));
             jiraIssue.setTicketTitle(row.getStringItem("tickettitle"));
             jiraIssue.setTicketDescription(row.getStringItem("ticketdescription"));

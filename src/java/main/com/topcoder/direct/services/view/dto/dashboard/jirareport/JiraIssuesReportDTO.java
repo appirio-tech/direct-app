@@ -5,7 +5,6 @@ package com.topcoder.direct.services.view.dto.dashboard.jirareport;
 
 import com.topcoder.direct.services.view.dto.ReportBaseDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
-import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
@@ -13,12 +12,9 @@ import com.topcoder.excel.impl.ExcelSheet;
 import com.topcoder.excel.impl.ExcelWorkbook;
 import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
-import com.topcoder.excel.output.WorkbookSavingException;
-import com.topcoder.web.common.TCWebException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,8 +25,16 @@ import java.util.List;
  * The DTO for the jira issues report.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit JIRA Report Update)
+ * <ul>
+ *     <li>Updated {@link #insertSheetData(com.topcoder.excel.Sheet)}  to
+ *     accept project jira issues without contest id and contest name.</li>
+ * </ul>
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - JIRA issues loading update and report creation)
+ * @version 1.1
  */
 public class JiraIssuesReportDTO extends ReportBaseDTO {
 
@@ -142,8 +146,17 @@ public class JiraIssuesReportDTO extends ReportBaseDTO {
 				row.getCell(index++).setStringValue(dto.getCustomer());
 				row.getCell(index++).setStringValue(dto.getBillingAccount());
 				row.getCell(index++).setStringValue(dto.getProjectName());
-				row.getCell(index++).setStringValue(dto.getContestName());
-				row.getCell(index++).setNumberValue(dto.getContestId());
+
+                if(dto.getContestName() != null) {
+                    row.getCell(index).setStringValue(dto.getContestName());
+                }
+                index++;
+
+                if(dto.getContestId() > 0) {
+                    row.getCell(index).setNumberValue(dto.getContestId());
+                }
+                index++;
+
 				row.getCell(index++).setStringValue(dto.getTicketId());
 				row.getCell(index++).setStringValue(dateFormatter.format(dto.getLaunchDate()));
 				row.getCell(index++).setStringValue(dto.getTicketTitle());
