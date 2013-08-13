@@ -99,8 +99,16 @@ import com.topcoder.service.project.ProjectType;
  * </ol>
  * </p>
  *
- * @version 2.5
- * @author GreatKevin, freegod
+ *  <p>
+ * Version 2.5.1 (BUGR-9288 TopCoder Security Groups - Edit Project bug) change notes:
+ * <ol>
+ *     <li>Added {@link #clientGroups}</li> to hold a separate groups without filtering with current user.</li>
+ *     <li>Updated {@link #executeAction()} method to retrieve an extra groups list.</li>
+ * </ol>
+ * </p>
+ *
+ * @version 2.5.1
+ * @author GreatKevin, freegod, FireIce
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -170,6 +178,13 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
      * @since 2.0
      */
     private long userId;
+
+    /**
+     * The security groups for client.
+     *
+     * @since 2.5.1
+     */
+    private List<Group> clientGroups;
 
     /**
      * The security groups the user has access to
@@ -408,16 +423,23 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
 
         getSessionData().setCurrentSelectDirectProjectID(currentProject.getId());
 
-        // Get the list of security groups accessible to current user and split them into two lists - one
+        // Get the list of security groups of the client and split them into two lists - one with group already assigned to project and the rest.
         // with groups already assigned to project and the rest
         GroupSearchCriteria groupSearchCriteria = new GroupSearchCriteria();
 
         Long clientIdForProject = viewData.getClientId();
         groupSearchCriteria.setClientId(clientIdForProject == null ? -1 : clientIdForProject);
-		groupSearchCriteria.setUserId(currentUser.getUserId());  
-		
 
+        clientGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+
+        // Get the list of security groups accessible to current user for billing accounts permissions
+		groupSearchCriteria.setUserId(currentUser.getUserId());
         userGroups = getGroupService().search(groupSearchCriteria, 0, 0).getValues();
+
+        Set<Long> userGroupIds = new HashSet<Long>();
+        for(Group userGroup : userGroups) {
+            userGroupIds.add(userGroup.getId());
+        }
         List<Group> assignedGroups = new ArrayList<Group>();
         List<Group> unassignedGroups = new ArrayList<Group>();
 
@@ -430,7 +452,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             }
         }
 
-        for (Group group : userGroups) {
+        for (Group group : clientGroups) {
             List<DirectProject> directProjects = group.getDirectProjects();
             boolean assigned = false;
             if (directProjects != null) {
@@ -443,9 +465,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             }
 
             //check automatically granted permissions
-            /*if(group.getAutoGrant()) {
+            if(group.getAutoGrant()) {
                 assigned = true;
-            }*/
+            }
 
             //check groups with this billing account
             if(!assigned) {
@@ -468,7 +490,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             if (assigned) {
                 assignedGroups.add(group);
             } else {
-                if(null != clientIdForProject) {
+                if(null != clientIdForProject && userGroupIds.contains(group.getId())) {
                     unassignedGroups.add(group);
                 }
             }
