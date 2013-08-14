@@ -34,7 +34,7 @@ $(function(){
         $.ajax({
             type: 'POST',
             url: ctx + "/getProjectPlannerConfiguration",
-            data: {billingAccountId:billingAccountId},
+            data: {billingAccountId: billingAccountId, formData: {projectId: $("input[name=directProjectId]").val()}},
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {

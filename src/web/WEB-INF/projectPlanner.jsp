@@ -100,6 +100,7 @@
     <a href='<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID"/></s:url>'><s:property
             value="sessionData.currentProjectContext.name"/></a> &gt;
     <strong>Project Planner</strong>
+    <input type="hidden" name="directProjectId" value="<s:property value='formData.projectId'/>"/>
 </div>
 
 <!-- Project Planner content -->
