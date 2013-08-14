@@ -486,9 +486,16 @@ $(document).ready(function() {
     });
     $('#roundTypes').trigger("change");
 
-    /* init date-pack */
+    /* init date-picker and time picker */
     if ($('.date-pick').length > 0) {
-        $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
+        var dt = $.trim($("#currentServerDate").text());
+        var date = $.datepicker.parseDate('mm/dd/yy', dt);
+        date.setDate(date.getDate() + 1);
+        $(".date-pick").datePicker().val($.datepicker.formatDate('mm/dd/yy', date)).trigger('change');
+    }
+
+    if($("#startTime").length > 0) {
+        $(".startEtSelect ul li:eq(9) a, .endEtSelect ul li:eq(9) a").trigger('click');
     }
    
     CKEDITOR.replace( 'contestIntroduction' );
