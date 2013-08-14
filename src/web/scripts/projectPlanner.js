@@ -388,7 +388,7 @@ $(function(){
             $('input[name="contestFilter"]:checked', this).each(function(){
                 contest.dependsOn.push(this.getAttribute('value'));
             });
-            contest.timeLength = getContestTypeValue(contest.type, 'time') || 0;
+            contest.timeLength = parseFloat(getContestTypeValue(contest.type, 'time') || 0).toFixed();
             contests.push(contest);
         });
 
