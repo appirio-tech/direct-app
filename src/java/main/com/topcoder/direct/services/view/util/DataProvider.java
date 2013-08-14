@@ -5117,6 +5117,10 @@ public class DataProvider {
         }
         if (hasInvoice) {
             request.setProperty("invoicenumber", invoiceNumber);
+			request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+            request.setProperty("pj", "0");
         }
 
         request.setContentHandle(commandName);
