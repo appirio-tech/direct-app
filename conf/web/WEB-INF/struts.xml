@@ -231,7 +231,7 @@
         </action>
         <action name="dashboardEnterprise" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success">/WEB-INF/dashboard-enterprise.jsp</result>
+            <result type="redirectAction">/enterpriseDashboard/overview</result>
         </action>
         <action name="operationsDashboardEnterprise" class="dashboardSearchAction">
             <interceptor-ref name="securedPreProcessorStack"/>
