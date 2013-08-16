@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER, freegod
-  - Version: 1.4
+  - Author: TCSASSEMBLER, freegod, caru
+  - Version: 1.4.1
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the create/update security group page.
@@ -21,6 +21,9 @@
   -
   - Version 1.4 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
   - - Remove Resource Restrictions and add Automatically Grant Permissions
+  -
+  - Version 1.4.1
+  - - "Skip Invitation" checkbox checked by default
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -348,7 +351,7 @@
 						</div>
 						
 						<div class="commandOperationBox">
-						    <input type="checkbox" id="skipInvitationEmail" class="skipInvitationEmail" autocomplete="off"/>
+						    <input type="checkbox" id="skipInvitationEmail" class="skipInvitationEmail" autocomplete="off" checked="checked"/>
 						    <label for="skipInvitationEmail" class="skipInvitationEmail">Skip invitation process for newly added members</label>
                             <c:if test="${empty group}">
 							<a id="createGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">CREATE GROUP</span></span></a>
