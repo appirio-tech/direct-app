@@ -65,7 +65,7 @@
 	#timelineModule .timelineContainer{
 		min-width:772px;
 		clear:both;
-		padding:41px 2px 12px 2px !important;
+		/*padding:41px 2px 12px 2px !important;*/
 		}
 		
 		#timelineModule .timelineContainer .startDate{
