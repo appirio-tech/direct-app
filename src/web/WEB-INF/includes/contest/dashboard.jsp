@@ -33,7 +33,7 @@
   - - Update the test condition to fix a bug in action tier.
   -
   - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
-  - - Update the tc-web:handle tag.
+  - - Update the tc-web:handle tag to add handle property.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -87,7 +87,7 @@
                             <dt>Winner:</dt>
                         </s:else>
                         <dd>
-                            <tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId > 0 ? viewData.commonInfo.bestScoreUserId : 0}" context="marathon_match" />
+                            <tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId > 0 ? viewData.commonInfo.bestScoreUserId : 0}" context="marathon_match" handle="${viewData.commonInfo.bestScoreHandle}" darkBG="false"/>
                         </dd>
                         <s:if test="viewData.active">
                             <dt>Best Provisional Score:</dt>
@@ -551,7 +551,7 @@
                                     <c:if test="${rank ne null}">
                                         <td>${rank}</td>
                                         <td>
-                                            <tc-webtag:handle coderId="${userId > 0 ? userId : 0}" context="marathon_match" />
+                                            <tc-webtag:handle coderId="${userId > 0 ? userId : 0}" context="marathon_match" handle="${handle}" darkBG="false"/>
                                         </td>
                                         <s:if test="viewData.active">
                                             <td>${provisionalScore}</td>

@@ -3,7 +3,7 @@
  - contest in list view.
  -
  - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
- - Update usage of tc-webtag:handle tag.
+ - Update usage of tc-webtag:handle tag to add a new property in it.
  -
  - author: Ghost_141
  - Version: 1.1
@@ -36,7 +36,7 @@
     <tbody>
     <s:iterator value="viewData.competitors">
         <tr>
-            <td><strong><tc-webtag:handle coderId="${userId > 0 ? userId : 0}" context="marathon_match" /></strong></td>
+            <td><strong><tc-webtag:handle coderId="${userId > 0 ? userId : 0}" handle="${handle}" context="marathon_match" darkBG="false"/></strong></td>
             <td><tc-webtag:ratingColor rating="${rating}" darkBG="false">${rating}</tc-webtag:ratingColor></td>
             <td><c:if test="${rank eq null}">--</c:if> <c:if test="${rank ne null}">${rank}</c:if></td>
             <td><strong class="score">${provisionalScore}</strong></td>

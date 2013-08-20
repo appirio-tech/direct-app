@@ -2,7 +2,7 @@
  - The registrants page for marathon match contest. This page will show all registrants for this marathon match contest.
  -
  - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
- - Update tc-webtag:handle tag.
+ - Update tc-webtag:handle to add handle property.
  -
  - author: Ghost_141
  - Version: 1.1
@@ -27,7 +27,7 @@
     <tbody>
     <s:iterator value="viewData.registrants" status="status">
         <tr>
-            <td><strong><tc-webtag:handle coderId="${userId > 0 ? userId : 0}" context="marathon_match" /></strong></td>
+            <td><strong><tc-webtag:handle coderId="${userId > 0 ? userId : 0}" handle="${handle}" context="marathon_match" darkBG="false"/></strong></td>
             <td><tc-webtag:ratingColor rating="${rating}" darkBG="false">${rating}</tc-webtag:ratingColor></td>
             <td><fmt:formatDate value="${registrationTime}" pattern="MM.dd.yyyy HH:mm:ss" timeZone="US/Eastern"/></td>
         </tr>

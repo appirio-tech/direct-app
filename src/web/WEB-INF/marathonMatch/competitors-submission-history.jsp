@@ -2,7 +2,7 @@
  - The competitor submissions history page for marathon match contest. This page will show competitor's submission history
  -
  - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
- - - Update usage of tc-webtag:handle tag.
+ - - Update usage of tc-webtag:handle tag to add a new property in it.
  - - Remove the recent submissions part.
  -
  - author: Ghost_141
@@ -23,7 +23,7 @@
         <dl>
             <dt>Handle:</dt>
             <dd>
-                <tc-webtag:handle coderId="${viewData.competitorInfoDTO.userId > 0 ? viewData.competitorInfoDTO.userId : 0}" context="marathon_match" />
+                <tc-webtag:handle coderId="${viewData.competitorInfoDTO.userId > 0 ? viewData.competitorInfoDTO.userId : 0}" handle="${viewData.competitorInfoDTO.handle}" context="marathon_match" darkBG="false"/>
             </dd>
             <dt>Rating:</dt>
             <dd><strong class="rating"><tc-webtag:ratingColor rating="${viewData.competitorInfoDTO.rating}" darkBG="false">${viewData.competitorInfoDTO.rating}</tc-webtag:ratingColor></strong></dd>
