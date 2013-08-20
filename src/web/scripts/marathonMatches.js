@@ -14,8 +14,12 @@
  * - Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab
  * - Update script for loading final score ranking graph and final score vs provisional score graph.
  *
+ * - Version 1.4 - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ * - Fix a bug of sorting direction.
+ * - Add function to fix the height of pagination button and system tests table.
+ *
  * @author Ghost_141
- * @version 1.3
+ * @version 1.4
  * @since 1.0
  */
 // JavaScript Document
@@ -23,16 +27,24 @@ $(document).ready(function(){
 	
 	$('.registrantsAndSubmissions .registrantsContaner table#registrantsTable tr:even').addClass('even');
 	$('.registrantsAndSubmissions .registrantsContaner table#listViewTable tr:even').addClass('even');
-	$('.resultDetails .resultTable .handleTable table tr:even').addClass('even');
-	$('.resultDetails .resultTable .resultDetailsTable table tr:even').addClass('even');
-	$('.resultDetails .resultData table tr:even').addClass('even');
-	$('.resultDetails .resultTable .resultDetailsTable table tr').each(function(){
-		$(this).find('td:first').addClass('firstCol');
-		$(this).find('th:first').addClass('firstCol');
-		$(this).find('td:last').addClass('lastCol');
-		$(this).find('th:last').addClass('lastCol');
-	})
-	
+
+    var $systemTestEmptyBlock = $(".systemTestTable .emptyBlock");
+    var $systemTestTable = $(".systemTestTable .dataTables_wrapper");
+    // Fix the height of pagination button
+    if($(".systemTestTable").length > 0) {
+        var tableHeight = $systemTestTable.height();
+        $systemTestEmptyBlock.height(tableHeight/2 - 77);
+    }
+    // Fix the width of table
+    if($systemTestEmptyBlock.length == 0) {
+        // if there is none pagination button.
+        $systemTestTable.width("100%");
+    } else if ($systemTestEmptyBlock.length == 1) {
+        // if there is one pagination button.
+        $systemTestTable.width("98%");
+    }
+    // if there is two pagination buttons the default css style will be used.
+
 	//PIE for Registrants
 	if($('#ratingPie').length){
         var ratingPie = [];
@@ -43,10 +55,7 @@ $(document).ready(function(){
                 color: item.color,
                 dataLabels: {
                     color: item.textColor
-                },
-                visible: item.number != 0,
-                sliced: item.sliced/1,
-                selected: item.sliced/1
+                }
             });
         });
 
@@ -393,7 +402,7 @@ $(document).ready(function(){
             name: "score"
         });
         lastNumber.sort(function(a, b) {
-            return a.value - b.value;
+            return b.value - a.value;
         });
         var scoreIndex, submissionsIndex, competitorsIndex;
         $.each(lastNumber, function(index, item) {
@@ -439,6 +448,7 @@ $(document).ready(function(){
             },
             xAxis: {
                 min: 0,
+                max: xLength - 1,
                 plotBands: plotBands,
                 startOnTick: true,
                 tickInterval: 1,
@@ -457,10 +467,7 @@ $(document).ready(function(){
                         if(this.value == '0'){
                             return '<span style="text-align:left; display:block; margin:0 0 0 128px; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat left top;">Submission Phase<br />Start: ' + submissionPhase + '</span>';
                         }else if(this.value == xLength - 1){
-                            return '<span style="display:block; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat center top;">System Testing<br />Start: ' + systemTesting + '</span>';
-                            // TODO: The Results date is not supported by platform api now.
-//                        }else if(this.value == '23'){
-//                            return '<span style="text-align:right; display:block; margin:0 97px 0 0; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat right top;">Results<br />00/00/0000  00:00 EDT</span>';
+                            return '<span id="systemTestingPoint" style="text-align:right; display:block; margin:0 97px 0 0; padding:12px 0 0 0; background:url(/images/icon-dot.png) no-repeat right top;">System Testing<br />Start: ' + systemTesting + '</span>';
                         }else if(this.value == currentInterval){
                             return '<span style="display:block; position:absolute; z-index:10; *top:4px; left:-8px;"><img src="/images/icon-current.png" /></span>';
                         }else{
@@ -531,6 +538,13 @@ $(document).ready(function(){
                 color: '#6dcff6',
                 zIndex: submissionsIndex
             }]
+        });
+
+        // fix the system testing point position.
+        var left = $("#systemTestingPoint").parent().css({
+            left: function(index, value) {
+                return parseFloat(value) - 16;
+            }
         });
 	}
 	
@@ -693,8 +707,8 @@ $(document).ready(function(){
 
             chart = new Highcharts.Chart({
                 chart: {
+                    type: 'column',
                     renderTo: 'scoreChart',
-                    type: 'line',
                     backgroundColor: null,
                     margin: [60, 20, 30, 50]
                 },
@@ -761,22 +775,17 @@ $(document).ready(function(){
                     backgroundColor: "#FFFFFF",
                     borderRadius: 0,
                     borderWidth: 1,
-                    formatter: function() {
-                        return '<table style="margin:0 5px;">'
-                            +'<tr>'
-                            +'<td style="width:70px;"><b>Handle</b></td>'
-                            +'<td><b>: </b>'+ this.x +'</td>'
-                            +'</tr>'
-                            +'<tr>'
-                            +'<td><b>'+this.series.name+' </b></td>'
-                            +'<td><b>: </b>'+ this.y +'</td>'
-                            +'</tr>'
-                            +'</table>';
-                    },
+                    headerFormat: '<table style="margin:0 5px;">',
+                    pointFormat:
+                        '<tr>' +
+                        '<td style="color:{series.color}; padding-right: 10px;">{series.name}: </td>' +
+                        '<td><b style="color: {series.color};">{point.y}</b></td>' +
+                        '</tr>',
+                    footerFormat: '</table>',
+                    shared: true,
                     style: {
                         fontFamily: 'Arial',
                         fontSize: '11px',
-                        color: '#333333',
                         lineHeight: '16px',
                         padding: '8px'
                     }
@@ -1036,7 +1045,6 @@ $(document).ready(function(){
         }
     }
 
-
 	$('.chartTopSubmissions a.prev:not(.disable)').live('click',function(){
         fixTimeRange(chartTopSubmissions, dateOffset - 1);
         dateOffset--;
@@ -1264,7 +1272,8 @@ $(document).ready(function(){
 		window.onresize=function(){
 			$('.resultDetails .resultTable .resultDetailsTable').css('width',$('.resultDetails .resultTable').width()-$('.resultDetails .resultTable .handleTable').width());
 		};
+        $(".systemTestTable .dataTables_wrapper .bottom1").remove();
+        $(".systemTestTable .dataTables_wrapper .bottom2").remove();
 	}
-	$('.resultDetails .resultTable .resultDetailsTable .resultScrollBar').css('overflow-y','hidden');
-	
+
 });

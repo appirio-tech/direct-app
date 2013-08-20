@@ -1514,6 +1514,7 @@
         <property name="getMatchResultsEndPointUrl" value="/analytics/{round_id}/results"/>
         <property name="getAllMMSubmissionsEndPointUrl" value="/analytics/{round_id}/registrants/{handle}/submissions"/>
         <property name="getMarathonMatchListingsEndPointUrl" value="/analytics/"/>
+        <property name="getSystemTestsResultsEndPointUrl" value="/analytics/{round_id}/results/tests"/>
         <property name="clientId" value="@clientId@"/>
         <property name="clientSecret" value="@clientSecret@"/>
         <property name="apiKey" value="@apiKey@"/>

@@ -237,6 +237,16 @@
                     border-left: none;
                     border-top: none;
 					}
+                .coderTextYellow:hover,
+                .coderTextRed:hover,
+                .coderTextBlue:hover,
+                .coderTextGreen:hover,
+                .coderTextGray:hover,
+                .coderTextOrange:hover,
+                .coderTextWhite:hover,
+                .coderTextBlack:hover{
+                    text-decoration: none !important;
+                }
 					
 					#appositeContainer .currentStandingsModule .content table td a{
 						color:#0000ff;
@@ -1013,13 +1023,14 @@
 			}
 			
 		.resultDetails .resultTable .resultDetailsTable{
-			width:85%;
+			width:100%;
 			float:left;
 			display:inline;
 			}
 			
 			.resultDetails .resultTable .resultDetailsTable .resultTableInner{
 				border-right:#cccccc solid 1px;
+                border-left: #cccccc solid 1px;
 				}
 				
 			.resultDetails .resultTable .resultDetailsTable .resultScrollBar{
@@ -1223,3 +1234,28 @@
 #area1 .areaHeader H2.marathonMatchNameTitle{
 	background-image:url(../../images/icon-marathon.png);
 	}
+
+.systemTestTableContainer{
+    text-align: center;
+    border-bottom: #cccccc solid 1px;
+    border-top: #cccccc solid 1px;
+}
+.systemTestTable {
+    width: 100%;
+}
+.scrollLeftWrapper{
+    width: 2%;
+    float: left;
+}
+.scrollRightWrapper{
+    width: 2%;
+    float: left;
+    margin-left: -1px;
+}
+.systemTestTable .dataTables_wrapper{
+    width: 96%;
+    float: left;
+}
+.nextGroupUsers img{
+    padding-top: 1px;
+}

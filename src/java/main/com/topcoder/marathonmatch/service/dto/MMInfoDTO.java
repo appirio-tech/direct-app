@@ -41,8 +41,15 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.4 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Remove recentSubmissions property since it's useless now.</li>
+ *     </ol>
+ * </p>
+ *
  * @author sampath01, zhu_tao, Ghost_141
- * @version 1.3
+ * @version 1.4
  * @since 1.0
  */
 public class MMInfoDTO extends MarathonMatchCommonDTO {
@@ -57,12 +64,6 @@ public class MMInfoDTO extends MarathonMatchCommonDTO {
      * @since 1.2
      */
     private List<CompetitorInfoDTO> competitors;
-
-    /**
-     * The list of submissions.
-     * @since 1.2
-     */
-    private List<SubmissionInfo> recentSubmissions;
 
     /**
      * The competitor in competitor submission history page.
@@ -310,26 +311,6 @@ public class MMInfoDTO extends MarathonMatchCommonDTO {
      */
     public void setCompetitors(List<CompetitorInfoDTO> competitors) {
         this.competitors = competitors;
-    }
-
-    /**
-     * Gets recent submissions.
-     *
-     * @return the recent submissions
-     * @since 1.2
-     */
-    public List<SubmissionInfo> getRecentSubmissions() {
-        return recentSubmissions;
-    }
-
-    /**
-     * Sets recent submissions.
-     *
-     * @param recentSubmissions the recent submissions
-     * @since 1.2
-     */
-    public void setRecentSubmissions(List<SubmissionInfo> recentSubmissions) {
-        this.recentSubmissions = recentSubmissions;
     }
 
     /**

@@ -3,14 +3,24 @@
  */
 package com.topcoder.marathonmatch.service.dto;
 
+import java.util.List;
+
 /**
  * This DTO contains the information for a submission that has been tested.
  * <p>
  * <strong>Thread Safety:</strong> This class is mutable and not thread-safe.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add property {@link #testCases} to store the test cases info.</li>
+ *         <li>Add property {@link #userId} to store the user id.</li>
+ *     </ol>
+ * </p>
  * 
- * @author sampath01, zhu_tao
- * @version 1.0
+ * @author sampath01, zhu_tao, Ghost_141
+ * @version 1.1
  * @since 1.0
  */
 public class TestCaseSubmissionInfo {
@@ -21,9 +31,20 @@ public class TestCaseSubmissionInfo {
     private String handle;
 
     /**
+     * The coder id of this competitor.
+     * @since 1.1
+     */
+    private Long userId;
+
+    /**
      * The final score of the submission
      */
     private Double finalScore;
+
+    /**
+     * The test cases of this competitor.
+     */
+    private List<TestCaseInfo> testCases;
     
     /**
      * Default constructor.
@@ -109,5 +130,45 @@ public class TestCaseSubmissionInfo {
      */
     public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
+    }
+
+    /**
+     * Gets test cases.
+     *
+     * @return the test cases
+     * @since 1.1
+     */
+    public List<TestCaseInfo> getTestCases() {
+        return testCases;
+    }
+
+    /**
+     * Sets test cases.
+     *
+     * @param testCases the test cases
+     * @since 1.1
+     */
+    public void setTestCases(List<TestCaseInfo> testCases) {
+        this.testCases = testCases;
+    }
+
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     * @since 1.1
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     * @since 1.1
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

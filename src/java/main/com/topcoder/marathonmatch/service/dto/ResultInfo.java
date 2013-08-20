@@ -15,9 +15,16 @@ package com.topcoder.marathonmatch.service.dto;
  *         <li>Add property {@link #userId} and {@link #submissionNumber}</li>
  *     </ol>
  * </p>
+ *
+ * <p>
+ *     Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add property {@link #place}.</li>
+ *     </ol>
+ * </p>
  * 
  * @author sampath01, zhu_tao, Ghost_141
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 public class ResultInfo {
@@ -56,6 +63,13 @@ public class ResultInfo {
      * @since 1.1
      */
     private Long userId;
+
+    /**
+     * Represent the place that this user in. This property is different with rank. The rank can be duplicate. The place
+     * can't be duplicate. It will indicate the place of user in system tests list.
+     * @since 1.2
+     */
+    private int place;
 
     /**
      * Represent the number of last submission for the competitor.
@@ -222,5 +236,25 @@ public class ResultInfo {
      */
     public void setSubmissionNumber(int submissionNumber) {
         this.submissionNumber = submissionNumber;
+    }
+
+    /**
+     * Gets place.
+     *
+     * @return the place
+     * @since 1.2
+     */
+    public int getPlace() {
+        return place;
+    }
+
+    /**
+     * Sets place.
+     *
+     * @param place the place
+     * @since 1.2
+     */
+    public void setPlace(int place) {
+        this.place = place;
     }
 }

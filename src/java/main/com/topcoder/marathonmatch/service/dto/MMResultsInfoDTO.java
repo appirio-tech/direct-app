@@ -20,9 +20,21 @@ import java.util.Map;
  *         <li>Update this class to extend the <code>MarathonMatchCommonDTO</code>.</li>
  *     </ol>
  * </p>
+ *
+ * <p>
+ *     Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add property {@link #competitorsTestCases} to store the test cases info for competitors.</li>
+ *         <li>Add property {@link #testCasesStartNumber} and {@link #testCasesEndNumber} to store the index of test
+ *         cases.</li>
+ *         <li>Add property {@link #codersStartNumber} and {@link #codersEndNumber} to store the index of coders.</li>
+ *         <li>Add property {@link #codersCount} and {@link #testCasesCount} to store the number of coders and
+ *         test cases.</li>
+ *     </ol>
+ * </p>
  * 
  * @author sampath01, zhu_tao, Ghost_141
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 public class MMResultsInfoDTO extends MarathonMatchCommonDTO {
@@ -42,6 +54,48 @@ public class MMResultsInfoDTO extends MarathonMatchCommonDTO {
      * of test cases and their results.
      */
     private Map<TestCaseSubmissionInfo, List<TestCaseInfo>> testCasesBySubmission;
+
+    /**
+     * The test cases list for competitors.
+     * @since 1.2
+     */
+    private List<TestCaseSubmissionInfo> competitorsTestCases;
+
+    /**
+     * The test case start number.
+     * @since 1.2
+     */
+    private Integer testCasesStartNumber;
+
+    /**
+     * The test case end number.
+     * @since 1.2
+     */
+    private Integer testCasesEndNumber;
+
+    /**
+     * The number of test cases.
+     * @since 1.2
+     */
+    private Integer testCasesCount;
+
+    /**
+     * The coders start number.
+     * @since 1.2
+     */
+    private Integer codersStartNumber;
+
+    /**
+     * The coders end number.
+     * @since 1.2
+     */
+    private Integer codersEndNumber;
+
+    /**
+     * The number of coders.
+     * @since 1.2
+     */
+    private Integer codersCount;
 
     /**
      * The JSON data used for showing the Final Score vs Ranking Chart See the front-end assembly spec for expected
@@ -157,4 +211,143 @@ public class MMResultsInfoDTO extends MarathonMatchCommonDTO {
         this.finalVsProvisionalScoreData = finalVsProvisionalScoreData;
     }
 
+    /**
+     * Gets competitors test cases.
+     *
+     * @return the competitors test cases
+     * @since 1.2
+     */
+    public List<TestCaseSubmissionInfo> getCompetitorsTestCases() {
+        return competitorsTestCases;
+    }
+
+    /**
+     * Sets competitors test cases.
+     *
+     * @param competitorsTestCases the competitors test cases
+     * @since 1.2
+     */
+    public void setCompetitorsTestCases(List<TestCaseSubmissionInfo> competitorsTestCases) {
+        this.competitorsTestCases = competitorsTestCases;
+    }
+
+    /**
+     * Gets test case start number.
+     *
+     * @return the test case start number
+     * @since 1.2
+     */
+    public Integer getTestCasesStartNumber() {
+        return testCasesStartNumber;
+    }
+
+    /**
+     * Sets test case start number.
+     *
+     * @param testCasesStartNumber the test case start number
+     * @since 1.2
+     */
+    public void setTestCasesStartNumber(Integer testCasesStartNumber) {
+        this.testCasesStartNumber = testCasesStartNumber;
+    }
+
+    /**
+     * Gets test case end number.
+     *
+     * @return the test case end number
+     * @since 1.2
+     */
+    public Integer getTestCasesEndNumber() {
+        return testCasesEndNumber;
+    }
+
+    /**
+     * Sets test case end number.
+     *
+     * @param testCasesEndNumber the test case end number
+     * @since 1.2
+     */
+    public void setTestCasesEndNumber(Integer testCasesEndNumber) {
+        this.testCasesEndNumber = testCasesEndNumber;
+    }
+
+    /**
+     * Gets coders start number.
+     *
+     * @return the coders start number
+     * @since 1.2
+     */
+    public Integer getCodersStartNumber() {
+        return codersStartNumber;
+    }
+
+    /**
+     * Sets coders start number.
+     *
+     * @param codersStartNumber the coders start number
+     * @since 1.2
+     */
+    public void setCodersStartNumber(Integer codersStartNumber) {
+        this.codersStartNumber = codersStartNumber;
+    }
+
+    /**
+     * Gets coders end number.
+     *
+     * @return the coders end number
+     * @since 1.2
+     */
+    public Integer getCodersEndNumber() {
+        return codersEndNumber;
+    }
+
+    /**
+     * Sets coders end number.
+     *
+     * @param codersEndNumber the coders end number
+     * @since 1.2
+     */
+    public void setCodersEndNumber(Integer codersEndNumber) {
+        this.codersEndNumber = codersEndNumber;
+    }
+
+    /**
+     * Gets test cases count.
+     *
+     * @return the test cases count
+     * @since 1.2
+     */
+    public Integer getTestCasesCount() {
+        return testCasesCount;
+    }
+
+    /**
+     * Sets test cases count.
+     *
+     * @param testCasesCount the test cases count
+     * @since 1.2
+     */
+    public void setTestCasesCount(Integer testCasesCount) {
+        this.testCasesCount = testCasesCount;
+    }
+
+    /**
+     * Gets coders count.
+     *
+     * @return the coders count
+     * @since 1.2
+     */
+    public Integer getCodersCount() {
+        return codersCount;
+    }
+
+    /**
+     * Sets coders count.
+     *
+     * @param codersCount the coders count
+     * @since 1.2
+     */
+    public void setCodersCount(Integer codersCount) {
+        this.codersCount = codersCount;
+    }
 }

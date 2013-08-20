@@ -22,8 +22,15 @@ import java.util.List;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add property {@link #roundId} to store the round id of this marathon match contest.</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
- * @version 1.1
+ * @version 1.2
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab)
  */
 public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
@@ -47,6 +54,12 @@ public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
      * @since 1.1
      */
     private boolean active = false;
+
+    /**
+     * Represent the round id hooked with this marathon match contest.
+     * @since 1.2
+     */
+    private Long roundId;
 
     /**
      * Create an instance of <code>MarathonMatchCommonDTO</code>.
@@ -127,5 +140,25 @@ public class MarathonMatchCommonDTO extends BaseContestCommonDTO {
      */
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    /**
+     * Gets round id.
+     *
+     * @return the round id
+     * @since 1.2
+     */
+    public Long getRoundId() {
+        return roundId;
+    }
+
+    /**
+     * Sets round id.
+     *
+     * @param roundId the round id
+     * @since 1.2
+     */
+    public void setRoundId(Long roundId) {
+        this.roundId = roundId;
     }
 }

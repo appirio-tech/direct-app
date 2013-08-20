@@ -86,9 +86,16 @@ import java.util.TimeZone;
  *     </ol>
  * </p>
  *
+ * <p>
+ *    Version 1.4 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *    <ol>
+ *        <li>Update to use viewData.roundId.</li>
+ *    </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.3
+ * @version 1.4
  */
 public class MarathonMatchViewAction extends AbstractAction implements ViewAction<MMInfoDTO>, SessionAware {
 
@@ -297,6 +304,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
             if(hasRoundId) {
                 MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
                         viewData);
+                viewData.setRoundId(Long.valueOf(roundId));
             }
 
             // Get the common data for contest page.
@@ -419,16 +427,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
 
             viewData.getCompetitorInfoDTO().setNoOfFullSubmissions(recentSubmissions.size());
 
-            viewData.setRecentSubmissions(new ArrayList<SubmissionInfo>());
-            for(SubmissionResource submission :
-                    recentSubmissions.subList(0, recentSubmissions.size() >= 2 ? 2 : recentSubmissions.size())) {
-                SubmissionInfo submissionInfo = new SubmissionInfo();
-                submissionInfo.setProvisionalScore(submission.getScore());
-                submissionInfo.setLanguage(submission.getLanguage());
-                submissionInfo.setSubmissionNumber(submission.getSubmissionNumber());
-                viewData.getRecentSubmissions().add(submissionInfo);
-            }
-
             calculateSubmissionHistoryData(recentSubmissions);
         }
     }
@@ -510,8 +508,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
 
         if(competitors != null) {
             //The result is not null mean there is round id hooked with contest.
-            String maxNumberKey = RATING_COLORS[0];
-            int maxNumber = 0;
 
             for(CompetitorResource competitorResource : competitors.getItems()) {
                 ObjectNode node = objectMapper.createObjectNode();
@@ -522,16 +518,7 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                         .substring(7, competitorResource.getRatingColorStyle().length()));
                 ratingBarData.add(node);
 
-
                 pieMap.put(key, pieMap.get(key) + 1);
-
-                if(!maxNumberKey.equalsIgnoreCase(key)
-                        && maxNumber <= pieMap.get(key)) {
-                    maxNumberKey = key;
-                    maxNumber = pieMap.get(key);
-                } else if(maxNumberKey.equalsIgnoreCase(key)) {
-                    maxNumber++;
-                }
             }
 
             for(String key : pieMap.keySet()) {
@@ -544,11 +531,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                 } else {
                     node.put("textColor", "#ffffff");
                 }
-                if(key.equalsIgnoreCase(maxNumberKey)) {
-                    node.put("sliced", 1);
-                } else {
-                    node.put("sliced", 0);
-                }
                 ratingPieData.add(node);
             }
         } else {
@@ -559,7 +541,6 @@ public class MarathonMatchViewAction extends AbstractAction implements ViewActio
                 node.put("number", 0);
                 node.put("color", colorMap.get(key));
                 node.put("textColor", "#666666");
-                node.put("sliced", 0);
                 ratingPieData.add(node);
             }
         }

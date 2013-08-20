@@ -9,3 +9,13 @@
 .registrantsAndSubmissions .registrantsContaner .gridListView{
 	top:0;
 	}
+
+.registrationModule .content{
+    text-align: left;
+}
+#marathonMatchResults .bottom1{
+    top: -16px;
+}
+#marathonMatchResults .bottom2{
+    top: 2px;
+}

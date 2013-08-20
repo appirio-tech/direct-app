@@ -13,21 +13,27 @@ import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActio
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.marathonmatch.service.dto.MMResultsInfoDTO;
 import com.topcoder.marathonmatch.service.dto.ResultInfo;
+import com.topcoder.marathonmatch.service.dto.TestCaseInfo;
+import com.topcoder.marathonmatch.service.dto.TestCaseSubmissionInfo;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
-import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
 import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
+import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResource;
+import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResourceWrapper;
+import com.topcoder.web.tc.rest.longcontest.resources.TestCaseResource;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -41,9 +47,18 @@ import java.util.Map;
  * <strong>Thread Safety: </strong> This class is only used in thread-safe manner by Struts2 framework.
  * </p>
  *
+ * <p>
+ *     Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Remove property roundId instead use viewData.roundId.</li>
+ *         <li>Add property {@link #type}, {@link #sr} and {@link #stc}.</li>
+ *         <li>Add static property {@link #RESULT_DETAIL} and {@link #ALLOWABLE_SORT_ORDER}.</li>
+ *     </ol>
+ * </p>
+ *
  *
  * @author Ghost_141
- * @version 1.0
+ * @version 1.1
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
  */
 public class MarathonMatchResultsViewAction extends AbstractAction
@@ -53,6 +68,18 @@ public class MarathonMatchResultsViewAction extends AbstractAction
      * This field represents the qualified name of this class.
      */
     private static final String CLASS_NAME = MarathonMatchResultsViewAction.class.getName();
+
+    /**
+     * The static field to indicate the result detail page.
+     * @since 1.1
+     */
+    private static final String RESULT_DETAIL = "system";
+
+    /**
+     * The static filed to indicate allowable sort order.
+     * @since 1.1
+     */
+    private static final String[] ALLOWABLE_SORT_ORDER = {"asc", "desc"};
 
     /**
      * Log instance.
@@ -75,9 +102,24 @@ public class MarathonMatchResultsViewAction extends AbstractAction
     private long projectId;
 
     /**
-     * Represent the round id of this marathon match contest.
+     * Represent the results page type.
+     * @since 1.1
      */
-    private Long roundId;
+    private String type;
+
+    /**
+     * Represent the coder start number used in request parameter.
+     * Default value is 1(Start with first coder).
+     * @since 1.1
+     */
+    private Integer sr = 1;
+
+    /**
+     * Represent the test case start number used in request parameter.
+     * Default value is 1(Start with first test case).
+     * @since 1.1
+     */
+    private Integer stc = 1;
 
     /**
      * The Marathon match analytics service.
@@ -134,30 +176,84 @@ public class MarathonMatchResultsViewAction extends AbstractAction
 
             hasRoundId = !(roundIdStr == null);
 
+            viewData = new MMResultsInfoDTO();
+
             if(hasRoundId) {
-                roundId = Long.valueOf(roundIdStr);
+                viewData.setRoundId(Long.valueOf(roundIdStr));
             }
 
             // If the contest don't have the round id or the contest is a active contest then throw an exception.
-            if(!hasRoundId || MarathonMatchHelper.isMarathonMatchActive(roundId, marathonMatchAnalyticsService)) {
+            if(!hasRoundId ||
+                    MarathonMatchHelper.isMarathonMatchActive(viewData.getRoundId(), marathonMatchAnalyticsService)) {
                 throw new Exception("The contest is either don't have round id or is an active contest");
             }
 
-            viewData = new MMResultsInfoDTO();
-
-            MarathonMatchHelper.getMarathonMatchDetails(roundId.toString(), marathonMatchAnalyticsService,
+            MarathonMatchHelper.getMarathonMatchDetails(viewData.getRoundId().toString(), marathonMatchAnalyticsService,
                     timelineInterval, viewData);
 
             // Get the common data for contest page.
             MarathonMatchHelper.getCommonData(projectId, currentUser, softwareCompetition, viewData,
                     contestServiceFacade, getSessionData());
 
-            viewResults();
+            if(type == null) {
+                // results page.
+                viewResults();
+            } else if(type.equals(RESULT_DETAIL)) {
+                // result detail page.
+                viewSystemTestResults();
+            }
 
             return SUCCESS;
         } catch (Exception e) {
             LoggingWrapperUtility.logException(logger, signature, e);
             throw new Exception("Error when executing action : " + getAction() + " : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handle the view system test results request.
+     *
+     * @throws MarathonMatchAnalyticsServiceException if any error occurred.
+     * @since 1.1
+     */
+    private void viewSystemTestResults() throws Exception {
+        SystemTestResourceWrapper systemTestResourceWrapper =
+                marathonMatchAnalyticsService.getSystemTests(viewData.getRoundId(), null, sr, stc, "score",
+                        "desc", MarathonMatchHelper.ACCESS_TOKEN);
+        if(systemTestResourceWrapper.getItems() != null && systemTestResourceWrapper.getItems().size() != 0) {
+            viewData.setCompetitorsTestCases(new ArrayList<TestCaseSubmissionInfo>());
+            for(SystemTestResource systemTestResource : systemTestResourceWrapper.getItems()) {
+                TestCaseSubmissionInfo competitorTestCases = new TestCaseSubmissionInfo();
+                competitorTestCases.setTestCases(new ArrayList<TestCaseInfo>());
+
+                for(TestCaseResource testCase : systemTestResource.getTestCases()) {
+                    TestCaseInfo testCaseInfo = new TestCaseInfo();
+                    testCaseInfo.setTestCaseId(testCase.getTestCaseId());
+                    testCaseInfo.setTestCaseScore(testCase.getScore());
+                    competitorTestCases.getTestCases().add(testCaseInfo);
+                }
+                competitorTestCases.setHandle(systemTestResource.getHandleName());
+                competitorTestCases.setUserId(Long.valueOf(systemTestResource.getHandleId()));
+                competitorTestCases.setFinalScore(systemTestResource.getScore());
+                viewData.getCompetitorsTestCases().add(competitorTestCases);
+            }
+            viewData.setTestCasesStartNumber(systemTestResourceWrapper.getTestCasesStartNumber());
+            // TODO: Due to the API bug, this test statement have to be added.
+            viewData.setTestCasesEndNumber(systemTestResourceWrapper.getTestCasesEndNumber()
+                    - systemTestResourceWrapper.getTestCasesStartNumber() == 9
+                    ? systemTestResourceWrapper.getTestCasesEndNumber() - 1
+                    : systemTestResourceWrapper.getTestCasesEndNumber());
+            viewData.setTestCasesCount(systemTestResourceWrapper.getTestCasesCount());
+            viewData.setCodersStartNumber(systemTestResourceWrapper.getCodersStartNumber());
+            // TODO: Due to the API bug, this test statement have to be added.
+            viewData.setCodersEndNumber(systemTestResourceWrapper.getCodersEndNumber()
+                    - systemTestResourceWrapper.getCodersStartNumber() == 39
+                    ? systemTestResourceWrapper.getCodersEndNumber() - 1
+                    : systemTestResourceWrapper.getCodersEndNumber());
+            viewData.setCodersCount(systemTestResourceWrapper.getCodersCount());
+        } else {
+            ServletActionContext.getRequest().setAttribute("errorPageMessage", systemTestResourceWrapper.getMessage());
+            throw new Exception("The system test cases result is empty");
         }
     }
 
@@ -168,7 +264,7 @@ public class MarathonMatchResultsViewAction extends AbstractAction
      */
     private void viewResults() throws MarathonMatchAnalyticsServiceException {
         SearchResult<MatchResultResource> matchResults =
-                marathonMatchAnalyticsService.getMatchResults(roundId, Integer.MAX_VALUE, 1, "desc",
+                marathonMatchAnalyticsService.getMatchResults(viewData.getRoundId(), Integer.MAX_VALUE, 1, "desc",
                         "finalScore", MarathonMatchHelper.ACCESS_TOKEN);
 
         List<ResultInfo> resultInfos = convertResults(matchResults);
@@ -250,15 +346,17 @@ public class MarathonMatchResultsViewAction extends AbstractAction
     private List<ResultInfo> convertResults(SearchResult<MatchResultResource> matchResults)
             throws MarathonMatchAnalyticsServiceException {
         List<ResultInfo> resultInfos = new ArrayList<ResultInfo>();
+        int place = 1;
         for(MatchResultResource matchResultResource : matchResults.getItems()) {
             ResultInfo resultInfo = new ResultInfo();
+            resultInfo.setPlace(place++);
             resultInfo.setHandle(matchResultResource.getHandleName());
             // TODO: This is a temporary test because the api only return full submissions of a competitor. So there
             // will be a out of bound exception for user who just submit example test. This test statement should be
             // removed in future.
             if(matchResultResource.getProvisionalScore() != null) {
                 SearchResult<SubmissionResource> submissionHistory =
-                        marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(roundId,
+                        marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(viewData.getRoundId(),
                                 matchResultResource.getHandleName(), 1, 1, "desc", "submissionNumber",
                                 MarathonMatchHelper.ACCESS_TOKEN);
                 resultInfo.setSubmissionNumber(submissionHistory.getItems().get(0).getSubmissionNumber());
@@ -419,10 +517,62 @@ public class MarathonMatchResultsViewAction extends AbstractAction
     }
 
     /**
-     * Getter of the round id.
-     * @return the round id.
+     * Gets type.
+     *
+     * @return the type
+     * @since 1.1
      */
-    public Long getRoundId() {
-        return roundId;
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     * @since 1.1
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * Gets sr.
+     *
+     * @return the sr
+     * @since 1.1
+     */
+    public Integer getSr() {
+        return sr;
+    }
+
+    /**
+     * Sets sr.
+     *
+     * @param sr the sr
+     * @since 1.1
+     */
+    public void setSr(Integer sr) {
+        this.sr = sr;
+    }
+
+    /**
+     * Gets stc.
+     *
+     * @return the stc
+     * @since 1.1
+     */
+    public Integer getStc() {
+        return stc;
+    }
+
+    /**
+     * Sets stc.
+     *
+     * @param stc the stc
+     * @since 1.1
+     */
+    public void setStc(Integer stc) {
+        this.stc = stc;
     }
 }

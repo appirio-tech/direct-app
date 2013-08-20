@@ -9,6 +9,7 @@ import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
 import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
+import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResourceWrapper;
 
 /**
  * The marathon match analytics service interface. This interface will handle the call to rest service.
@@ -33,9 +34,16 @@ import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add method {@link #getSystemTests(long, Long, int, int, String, String, String)}.</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.2
+ * @version 1.3
  */
 public interface MarathonMatchAnalyticsService {
     /**
@@ -117,5 +125,22 @@ public interface MarathonMatchAnalyticsService {
      */
     public SearchResult<MatchResultResource> getMatchResults(long roundId, int pageSize, int pageNumber,
             String sortingOrder, String sortingField, String accessToken) throws MarathonMatchAnalyticsServiceException;
+
+    /**
+     * Get system tests results of specified marathon match.
+     *
+     * @param roundId the round id of this marathon match contest.
+     * @param coderId the coder id of a specified coder.
+     * @param coderStartNumber the coder start number.
+     * @param testCaseStartNumber the test case start number.
+     * @param sortingOrder the sort order. 'asc' or 'desc' only.
+     * @param sortingField the sort field.
+     * @param accessToken the access token.
+     * @return the search result of system test resource wrapper.
+     * @since 1.3
+     */
+    public SystemTestResourceWrapper getSystemTests(long roundId, Long coderId, int coderStartNumber,
+            int testCaseStartNumber, String sortingField, String sortingOrder, String accessToken)
+            throws MarathonMatchAnalyticsServiceException;
 }
 

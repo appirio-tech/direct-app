@@ -199,6 +199,13 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.6 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2) change notes:
+ * <ul>
+ *     <li>Update method {@link #executeAction()} to store the round id to viewData.</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141
  * @version 2.5
  */
@@ -398,6 +405,7 @@ public class GetContestAction extends ContestAction {
 
             if(roundId != null) {
                 hasRoundId = true;
+                viewData.setRoundId(Long.valueOf(roundId));
                 MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
                         viewData);
             } else {

@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER, TCSASSEMBER
-  - Version: 1.1 (For TCCC-2827)
+  - Author: TCSASSEMBER, TCSASSEMBER, Ghost_141
+  - Version: 1.2 (For TCCC-2827)
   - Copyright (C) 2011 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest links area for Contest Details page
@@ -8,6 +8,9 @@
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - 1. Change the  style for the links. 
   - 2. Add the 'View Contest', 'Repost Contest', 'New Version' links.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2) changes:
+  - 1. Update 'Preview Contest' and 'Registration Page' link when the contest is marathon match contest.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
@@ -31,26 +34,49 @@
         <s:if test="viewData.contestStats.isStudio">
            <s:set name="contestLink" value="'https://studio.topcoder.com/?module=ViewContestDetails&ct=' + viewData.contestStats.contest.id"/>
         </s:if>
+        <s:elseif test="marathon">
+            <s:if test="active">
+                <s:set name="contestLink" value="'http://community.topcoder.com/longcontest/?module=ViewOverview&rd=' + viewData.roundId"/>
+            </s:if>
+            <s:else>
+                <s:set name="contestLink" value="'http://community.topcoder.com/longcontest/stats/?module=ViewOverview&rd=' + viewData.roundId"/>
+            </s:else>
+        </s:elseif>
         <s:else>
            <s:set name="contestLink" value="'https://www.topcoder.com/tc?module=ProjectDetail&pj=' + viewData.contestStats.contest.id"/>
         </s:else>
 
-        <s:if test="viewData.contestStats.draft">
-
-            <li id="previewContestButton">
-                <a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconPreviewContest"
-                   style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
-            </li>
-
+        <s:if test="marathon">
+            <s:if test="viewData.active">
+                <li id="previewContestButton">
+                    <a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconPreviewContest"
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
+                </li>
+            </s:if>
+            <s:else>
+                <li id="viewContestButton">
+                    <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
+                </li>
+            </s:else>
         </s:if>
         <s:else>
+            <s:if test="viewData.contestStats.draft">
 
-            <li id="viewContestButton">
-                <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
-                   style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
-            </li>
+                <li id="previewContestButton">
+                    <a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconPreviewContest"
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
+                </li>
+
+            </s:if>
+            <s:else>
+
+                <li id="viewContestButton">
+                    <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
+                </li>
+            </s:else>
         </s:else>
-
 
         <li class="splitter"></li>
 

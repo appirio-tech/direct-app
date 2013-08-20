@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve
-  - Version: 1.9
+  - Version: 1.10
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -31,6 +31,9 @@
   -
   - Version 1.9 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
   - - Update the test condition to fix a bug in action tier.
+  -
+  - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
+  - - Update the tc-web:handle tag.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -84,12 +87,7 @@
                             <dt>Winner:</dt>
                         </s:else>
                         <dd>
-                            <s:if test="$(viewData.commonInfo.bestScoreUserId > 0}">
-                                <tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId}" context="marathon_match" darkBG="false"/>
-                            </s:if>
-                            <s:else>
-                                ${viewData.commonInfo.bestScoreHandle}
-                            </s:else>
+                            <tc-webtag:handle coderId="${viewData.commonInfo.bestScoreUserId > 0 ? viewData.commonInfo.bestScoreUserId : 0}" context="marathon_match" />
                         </dd>
                         <s:if test="viewData.active">
                             <dt>Best Provisional Score:</dt>
@@ -552,7 +550,9 @@
                                     </c:if>
                                     <c:if test="${rank ne null}">
                                         <td>${rank}</td>
-                                        <td><tc-webtag:handle coderId="${userId}" context="marathon_match" darkBG="false"/></td>
+                                        <td>
+                                            <tc-webtag:handle coderId="${userId > 0 ? userId : 0}" context="marathon_match" />
+                                        </td>
                                         <s:if test="viewData.active">
                                             <td>${provisionalScore}</td>
                                         </s:if>

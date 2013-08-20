@@ -15,6 +15,7 @@ import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
 import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
+import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResourceWrapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
@@ -67,9 +68,17 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.3 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Add method {@link #getSystemTests(long, Long, int, int, String, String, String)}.</li>
+ *         <li>Add method {@link #getSystemTestsResultsEndPointUrl}.</li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
- * @version 1.2
+ * @version 1.3
  */
 public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalyticsService {
 
@@ -148,6 +157,12 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     private String getCompetitorDetailsEndPointUrl;
 
     /**
+     * The url for getSystemTests api.
+     * @since 1.3
+     */
+    private String getSystemTestsResultsEndPointUrl;
+
+    /**
      * The data format used to format date string from rest response.
      */
     private DateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy HH:mm z");
@@ -179,6 +194,8 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
             getMatchResultsEndPointUrl = fixUrl("getMatchResultsEndPointUrl", getMatchResultsEndPointUrl);
             getCompetitorDetailsEndPointUrl =
                     fixUrl("getCompetitorDetailsEndPointUrl", getCompetitorDetailsEndPointUrl);
+            getSystemTestsResultsEndPointUrl =
+                    fixUrl("getSystemTestsResultsEndPointUrl", getSystemTestsResultsEndPointUrl);
             remoteServiceBaseUrl = fixUrl("remoteServiceBaseUrl", remoteServiceBaseUrl);
 
             ValidationUtility.checkNotNullNorEmptyAfterTrimming(clientId, "clientId", IllegalArgumentException.class);
@@ -477,6 +494,63 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     }
 
     /**
+     * Get system tests results of specified marathon match.
+     *
+     * @param roundId the round id of this marathon match contest.
+     * @param coderId the coder id of a specified coder.
+     * @param coderStartNumber the coder start number.
+     * @param testCaseStartNumber the test case start number.
+     * @param sortingOrder the sort order. 'asc', 'desc' or null only.
+     * @param sortingField the sort field. could be null.
+     * @param accessToken the access token.
+     * @return the search result of system test resource wrapper.
+     * @since 1.3
+     */
+    public SystemTestResourceWrapper getSystemTests(long roundId, Long coderId, int coderStartNumber,
+            int testCaseStartNumber, String sortingField, String sortingOrder, String accessToken)
+            throws MarathonMatchAnalyticsServiceException {
+        final String signature = CLASS_NAME + "#getSystemTests(long roundId, long coderId, int coderStartNumber, " +
+                "int testCaseStartNumber, String sortingOrder, String sortingField, String accessToken)";
+        try {
+            LoggingWrapperUtility.logEntrance(logger, signature,
+                    new String[] {"roundId", "coderId", "coderStartNumber", "testCaseStartNumber", "sortingOrder",
+                            "sortingField", "accessToken"},
+                    new Object[] {roundId, coderId, coderStartNumber, testCaseStartNumber, sortingOrder, sortingField,
+                            accessToken});
+            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
+            if(coderId != null) {
+                ValidationUtility.checkPositive(coderId, "coderId", IllegalArgumentException.class);
+            }
+            ValidationUtility.checkPositive(coderStartNumber, "coderStartNumber", IllegalArgumentException.class);
+            ValidationUtility.checkPositive(testCaseStartNumber, "testCaseStartNumber", IllegalArgumentException.class);
+            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
+                    IllegalArgumentException.class);
+
+            String jsonResult = callRestService(getSystemTestsResultsEndPointUrl,
+                    createParameterMap(new String[] {"coderId", "coderStartNumber", "testCaseStartNumber",
+                            "sortingOrder", "sortingField"},
+                            new String[] {coderId == null ? null : coderId.toString(), String.valueOf(coderStartNumber),
+                                    String.valueOf(testCaseStartNumber), sortingOrder, sortingField}),
+                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
+                    accessToken);
+            ObjectMapper mapper = createObjectMapper();
+
+            SystemTestResourceWrapper result =
+                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SystemTestResourceWrapper>() {});
+
+            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
+
+            return result;
+        } catch (IllegalArgumentException iae) {
+            throw LoggingWrapperUtility.logException(logger, signature,
+                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
+        } catch (IOException e) {
+            throw LoggingWrapperUtility.logException(logger, signature,
+                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
+        }
+    }
+
+    /**
      * Build a json node based on an existing response.
      *
      * @param url the url.
@@ -713,6 +787,26 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      */
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    /**
+     * Gets get system tests results end point url.
+     *
+     * @return the get system tests results end point url
+     * @since 1.3
+     */
+    public String getGetSystemTestsResultsEndPointUrl() {
+        return getSystemTestsResultsEndPointUrl;
+    }
+
+    /**
+     * Sets get system tests results end point url.
+     *
+     * @param getSystemTestsResultsEndPointUrl the get system tests results end point url
+     * @since 1.3
+     */
+    public void setGetSystemTestsResultsEndPointUrl(String getSystemTestsResultsEndPointUrl) {
+        this.getSystemTestsResultsEndPointUrl = getSystemTestsResultsEndPointUrl;
     }
 }
 

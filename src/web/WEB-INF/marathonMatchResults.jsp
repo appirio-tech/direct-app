@@ -3,8 +3,11 @@
   -
   - Description: This page renders the Marathon Match Results page.
   -
+  - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+  - - Update to inlcude resutls detail page.
+  -
   - Author: Ghost_141
-  - Version: 1.0
+  - Version: 1.1
   - Since: 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -33,8 +36,10 @@
 
     <script>
         var timeLineData = ${viewData.timeLineGraphData};
+        <c:if test="${type eq null}">
         var finalScoreRankingData = ${viewData.finalScoreRankingData};
         var finalVsProvisionalScoreData = ${viewData.finalVsProvisionalScoreData};
+        </c:if>
     </script>
 
 </head>
@@ -73,100 +78,12 @@
 
                                 <div>
 
-                                    <div class="resultDetails">
-                                        <h4>Results</h4>
-
-                                        <div class="resultData">
-                                            <table border="0" cellpadding="0" cellspacing="0" class="mmResultsTable">
-                                                <colgroup>
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                    <col />
-                                                </colgroup>
-                                                <thead>
-                                                <tr>
-                                                    <th>Rank</th>
-                                                    <th>Handle</th>
-                                                    <th>Final Score</th>
-                                                    <th>Provisional Rank</th>
-                                                    <th>Provisional Score</th>
-                                                    <th>Language</th>
-                                                    <th>Results</th>
-                                                    <th>Download</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <s:iterator value="viewData.results">
-                                                    <tr>
-                                                        <td>${finalRank}</td>
-                                                        <td><strong><tc-webtag:handle coderId="${userId}" context="marathon_match" darkBG="false"/> </strong></td>
-                                                        <td>${finalScore}</td>
-                                                        <td>${provisionalRank}</td>
-                                                        <td>${provisionalScore}</td>
-                                                        <td>${language}</td>
-                                                        <td><a href="" class="viewResultLink">View Result</a></td>
-                                                        <td>
-                                                            <a href="
-                                                                <s:url action="submission" namespace="/marathonmatch">
-                                                                    <s:param name="submissionNum" value="submissionNumber" />
-                                                                    <s:param name="coderId" value="userId"/>
-                                                                    <s:param name="problemId" value=""/>
-                                                                    <s:param name="roundId" value="roundId"/>
-                                                                </s:url> "
-                                                               class="downloadLink <c:if test="${finalRank eq '2'}">silverStyleLink</c:if> <c:if test="${finalRank > '2'}">darkStyleLink</c:if>">DOWNLOAD</a>
-                                                        </td>
-                                                    </tr>
-                                                </s:iterator>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- End .resultData -->
-
-                                        <div class="container2Left">
-                                            <div class="container2Right">
-                                                <div class="container2Bottom">
-                                                    <div>
-                                                        <div>
-
-                                                            <div class="panel tableControlPanel"></div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tabList" id="socreTab">
-                                            <ul>
-                                                <li class="active"><a href="javascript:;"><span><span>Final Scores &amp; Ranking</span></span></a></li>
-                                                <li><a href="javascript:;"><span><span>Final vs Provisional Scores</span></span></a></li>
-                                            </ul>
-                                        </div>
-                                        <!-- End .tabList -->
-
-                                        <div class="tabContainer" id="scoreTabContainer">
-                                            <div class="tabsContent rankingContent">
-                                                <h5>Final Scores and Ranking</h5>
-                                                <div id="rankingChart"></div>
-                                            </div>
-                                            <!-- End .rankingContent -->
-                                            <div class="tabsContent scoreContent">
-                                                <h5>Final vs Provisional Scores</h5>
-                                                <div class="scoreChartWrapper">
-                                                    <div id="scoreChart"></div>
-                                                    <p>Please note that direct comparison of provisional and final scores does not make sense for all types of problems. <br />In particular, provisional and final scores may have different scales for scoring.</p>
-                                                </div>
-                                            </div>
-                                            <!-- End .scoreContent -->
-                                        </div>
-                                        <!-- End .tabContainer -->
-
-                                    </div>
+                                    <c:if test="${type eq null}">
+                                        <jsp:include page="marathonMatch/results.jsp"/>
+                                    </c:if>
+                                    <c:if test="${type eq 'system'}">
+                                        <jsp:include page="marathonMatch/results-details.jsp"/>
+                                    </c:if>
 
                                 </div>
                             </div>

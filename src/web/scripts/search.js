@@ -96,9 +96,12 @@
  *
  * Version 2.7 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
  * - Add support for Marathon Match results tab.
+ *
+ * Version 2.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
+ * - Add support for Marathon Match System Tests table.
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.7
+ * @version 2.8
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -465,12 +468,35 @@ $(document).ready(function() {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['link-float-asc'] = function (a, b) {
+        var x = getFloatOfTheLink(a);
+        var y = getFloatOfTheLink(b);
+
+        //alert("status A:" + x + " status B:" + y);
+
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['link-float-desc'] = function (a, b) {
+        var x = getFloatOfTheLink(a);
+        var y = getFloatOfTheLink(b);
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
     function getNumberOfTheLink(text) {
         if(text.indexOf('href') == -1) {
             return -1;
         }
 
         return parseInt($.trim($(text).text()));
+    }
+
+    function getFloatOfTheLink(text) {
+        if(text.indexOf('href') == -1) {
+            return -1;
+        }
+
+        return parseFloat($.trim($(text).text()));
     }
 
     function getProjectStatus(text) {
@@ -647,6 +673,30 @@ $(document).ready(function() {
             { "sType": "html-trimmed" },
             { "sType": "html-trimmed"}
         ]
+    });
+    var columns = new Array();
+    if($("#marathonMatchResults .mmSystemTestsTable").length > 0) {
+        columns[0] = { "sType": "html-trimmed" };
+        columns[1] = { "sType": "link-float"};
+        var count = $("#marathonMatchResults .mmSystemTestsTable th.systemTestCase").length;
+        for(var i = 0; i < count; i++) {
+            columns[i+2] = { "sType": "number-trimmed"};
+        }
+    }
+
+    $.mmSystemTestsTable = $("#marathonMatchResults .mmSystemTestsTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "bPaginate": false,
+        "bInfo": false,
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [1, 'desc']
+        ],
+        "aoColumns": columns
     });
 
     $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({

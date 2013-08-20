@@ -63,8 +63,15 @@ import java.util.TimeZone;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.2 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
+ *     <ol>
+ *         <li>Remove some 'TODO' items since they're useless or can't be done. </li>
+ *     </ol>
+ * </p>
+ *
  * @author Ghost_141
- * @version 1.1
+ * @version 1.2
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - 
  *             Dashboard and Submissions Tab)
  */
@@ -118,7 +125,6 @@ public final class MarathonMatchHelper {
 
         if(viewData.isActive()) {
             viewData.getCommonInfo().setBestScoreHandle(latestProgress.getTopUserHandle());
-            // TODO: The platform api didn't include user id for the user currently having best score.
             viewData.getCommonInfo().setBestScore(latestProgress.getCurrentTopProvisionalScore());
         } else {
             viewData.getCommonInfo().setBestScore(result.getWinnerScore());
@@ -224,7 +230,6 @@ public final class MarathonMatchHelper {
 
         DateFormat dateFormat = createDateFormat();
 
-        // TODO: The result date is not supported now. So just use system Test date as the end date of contest.
         DateTime submissionPhase = new DateTime(viewData.getCommonInfo().getContestStart());
         DateTime systemTesting = new DateTime(viewData.getCommonInfo().getSystemTestingStart());
 
