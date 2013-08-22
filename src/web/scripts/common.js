@@ -41,6 +41,9 @@
  *
  * Version 2.2 - (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
  * - Add method getParameterFromLink to get the request parameter.
+ *
+ * Version 2.3 - 
+ * - make calling of adjustImageRatio only if the page has specific image.
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -555,19 +558,21 @@ function clearAddNewProjectForm() {
 
 /*BUGR-4512*/
 function adjustImageRatio() {
-    var oldWidth = $("a.thumbSingle img").width();
-    var oldHeight = $("a.thumbSingle img").height();
-    var image = new Image();
-    image.src = $("a.thumbSingle img").attr("src");
-    setTimeout(function() {
-        caculateImageRatio(image,oldWidth, oldHeight);
-    },1000);
-    //make sure the new width and new height is set
-    image.onload = function(){
-        if(parseInt($("a.thumbSingle img").width()) == 0 || parseInt($("a.thumbSingle img").height()) == 0) {
-            $("a.thumbSingle img").attr("width",oldWidth);
-            $("a.thumbSingle img").attr("height",oldHeight);
+    if ($("a.thumbSingle img").length > 0) {
+        var oldWidth = $("a.thumbSingle img").width();
+        var oldHeight = $("a.thumbSingle img").height();
+        var image = new Image();
+        image.src = $("a.thumbSingle img").attr("src");
+        setTimeout(function() {
             caculateImageRatio(image,oldWidth, oldHeight);
+        },1000);
+        //make sure the new width and new height is set
+        image.onload = function(){
+            if(parseInt($("a.thumbSingle img").width()) == 0 || parseInt($("a.thumbSingle img").height()) == 0) {
+                $("a.thumbSingle img").attr("width",oldWidth);
+                $("a.thumbSingle img").attr("height",oldHeight);
+                caculateImageRatio(image,oldWidth, oldHeight);
+            }
         }
     }
 }
