@@ -330,7 +330,9 @@ function handleProjectDropDownChange() {
     $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
 
     $.each(billingAccounts, function(key, value) {
-        $("#billingProjects").append($('<option></option>').val(key).html(value));
+		var _cca = value["cca"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+ 
     });
     $("#billingProjects").val(0);
 
