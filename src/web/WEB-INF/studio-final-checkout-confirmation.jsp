@@ -1,10 +1,14 @@
 <%--
-  - Author: FireIce
+  - Author: FireIce, isv
   -
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2011-2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest for checking out Confirmation.
+  
+  - Version 1.1 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes: 
+  -   Added studioFinalFixes class to #mainContent.
+  -   Updated Checkout Confirmation area as per latest prototype
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -24,7 +28,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="studioFinalFixes">
 
                     <jsp:include page="includes/right.jsp"/>
 
@@ -44,6 +48,8 @@
                             </div>
                             <!-- End .areaHeader -->
                             
+                            <jsp:include page="includes/contest/dashboard.jsp"/>
+
                             <div class="container2 tabs3Container">
 
                                 <jsp:include page="includes/contest/tabs.jsp"/>
@@ -57,12 +63,20 @@
                                                 </div> <!-- End .SubmissionSlotTitle -->
                                                 <div id="submissionList">
                                                     <table> 
+                                                        <colgroup>
+                                                            <col width="4">
+                                                            <col width="176">
+                                                            <col width="26">
+                                                            <col>
+                                                            <col width="6">
+                                                        </colgroup>
                                                         <thead> 
                                                             <tr> 
-                                                                <th class="first"></th> 
+                                                                <th class="first">&nbsp;</th>
                                                                 <th>Placement</th> 
+                                                                <th>&nbsp;</th>
                                                                 <th class="left">Submission Details</th> 
-                                                                <th class="last"></th> 
+                                                                <th class="last">&nbsp;</th>
                                                             </tr>
                                                         </thead> 
                                                         <tbody>

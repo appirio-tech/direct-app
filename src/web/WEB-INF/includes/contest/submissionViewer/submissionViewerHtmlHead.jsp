@@ -1,6 +1,8 @@
 <%--
-  - Author: isv, flexme, minhu, TCSASSEMBLER
+  - Author: isv, flexme, minhu
   -
+  - Version 1.7 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes: 
+  -   Added reference to studioFinalFix.css
   - Version 1.6 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
   -   Added wireframe-viewer.js if and only if the contest type is wireframe.
   - Version 1.5 (TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0) change notes:
@@ -11,7 +13,7 @@
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.6
+  - Version: 1.7
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
@@ -32,6 +34,7 @@
 <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/jquery.selectbox.css?v=185283"  type="text/css" />
 <link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/studioFinalfix.css" media="all" type="text/css" />
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
 <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355"  type="text/css" />
 </s:if>

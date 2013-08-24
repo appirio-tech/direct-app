@@ -199,8 +199,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.6.10 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #populateStudioCompetition(SoftwareCompetition)} method to set the 
+ *     <code>Approval Required</code> property of the contest to <code>false</code> by default.</li>
+ *   </ol>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka
- * @version 1.6.9
+ * @version 1.6.10
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -1888,6 +1896,8 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private void populateStudioCompetition(SoftwareCompetition studioCompetition) throws ContestServiceException {
         studioCompetition.getProjectHeader().setProjectFileTypes(getFileTypes(fileTypes));
+        studioCompetition.getProjectHeader().setProperty(ProjectPropertyType.APPROVAL_REQUIRED_PROJECT_PROPERTY_KEY, 
+                                                         "false");
     }
 
     /**

@@ -1483,22 +1483,27 @@
         <property name="transactionManager" ref="taskTransactionManager"/>
     </bean>
 
-    <bean id="oAuthGrantAccessInterceptor" class="com.topcoder.direct.services.view.action.analytics.common.OAuthGrantAccessInterceptor">
-        <property name="authorizationURL" value="@oauth.authorizationURL@" />
-        <property name="callBackActionUrl" value="@oauth.callBackActionUrl@" />
-        <property name="consumerKey" value="@oauth.consumerKey@" />
-        <property name="consumerSecret" value="@oauth.consumerSecret@" />
-        <property name="providerClass" value="@oauth.providerClass@" />
+    <bean id="oAuthGrantAccessInterceptor"
+          class="com.topcoder.direct.services.view.action.analytics.common.OAuthGrantAccessInterceptor">
+        <property name="authorizationURL" value="@oauth.authorizationURL@"/>
+        <property name="callBackActionUrl" value="@oauth.callBackActionUrl@"/>
+        <property name="consumerKey" value="@oauth.consumerKey@"/>
+        <property name="consumerSecret" value="@oauth.consumerSecret@"/>
+        <property name="providerClass" value="@oauth.providerClass@"/>
     </bean>
 
-    <bean id="marathonMatchViewAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction" scope="prototype">
+    <bean id="marathonMatchViewAction"
+          class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction"
+          scope="prototype">
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
         <property name="timelineInterval" value="1"/>
         <property name="submissionHistoryInterval" value="20"/>
     </bean>
 
-    <bean id="marathonMatchResultsViewAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchResultsViewAction" scope="prototype">
+    <bean id="marathonMatchResultsViewAction"
+          class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchResultsViewAction"
+          scope="prototype">
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
         <property name="timelineInterval" value="1"/>
@@ -1519,5 +1524,26 @@
         <property name="clientSecret" value="@clientSecret@"/>
         <property name="apiKey" value="@apiKey@"/>
     </bean>
+
+    <bean id="needFinalFixAction"
+          class="com.topcoder.direct.services.view.action.contest.studio.NeedFinalFixAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="saveFinalFixAction"
+          class="com.topcoder.direct.services.view.action.contest.studio.SaveFinalFixItemsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="reviewFinalFixAction"
+          class="com.topcoder.direct.services.view.action.contest.studio.ReviewFinalFixAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="viewFinalFixAction"
+          class="com.topcoder.direct.services.view.action.contest.studio.ViewFinalFixAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
 
 </beans>

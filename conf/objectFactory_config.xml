@@ -1174,6 +1174,9 @@
                     <Property name="resource_id">
                         <Value>upload.resource_id</Value>
                     </Property>
+                    <Property name="project_phase_id">
+                        <Value>upload.project_phase_id</Value>
+                    </Property>
                 </Property>
             </Property>
 
@@ -1557,6 +1560,9 @@
                     <Property name="project">
                         <Value>resource.project_id</Value>
                     </Property>
+                    <Property name="projectPhase">
+                        <Value>review.project_phase_id</Value>
+                </Property>
                 </Property>
 
                 <Property name="searchableFields">
@@ -1591,6 +1597,12 @@
                         </Property>
                     </Property>
                     <Property name="project">
+                        <Property name="validator">
+                            <Property name="class"><Value>validator</Value></Property>
+                            <Property name="identifier"><Value>default</Value></Property>
+                        </Property>
+                    </Property>
+                    <Property name="projectPhase">
                         <Property name="validator">
                             <Property name="class"><Value>validator</Value></Property>
                             <Property name="identifier"><Value>default</Value></Property>

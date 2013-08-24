@@ -1,10 +1,13 @@
 <%--
-  - Author: FireIce
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: FireIce, isv
+  - Version: 1.1
+  - Copyright (C) 2011-2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This tag renders the HTML markup for a single submission displayed on Studio Checkout confirmation
   - page for selected contest.
+  -
+  - Version 1.1 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes: 
+  -   Updated as per latest prototype
 --%>
 <%@ tag language="java" body-content="scriptless" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
@@ -17,7 +20,7 @@
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
 <tr id="submission-${submissionId}" style="display:none;">
-    <td></td>
+    <td>&nbsp;</td>
     <td>
         <div class="thumbCheckout">
             <span class="icoBankLocation posAbsolute <c:if test="${not empty styleClass}">${styleClass}</c:if>"></span>
@@ -28,12 +31,14 @@
                             </s:url>" class="thumbList"><span></span><ui:studioSubmissionImage submissionId="${submissionId}" imageType="small" dimension="136"/></a>
         </div>
     </td>
-    <td class="left">
+    <td>&nbsp;</td>
+    <td class="left alignTop">
         <div class="submissionDetails">
             <label>${submissionId}</label>
             <div class="submissionDetailsContent">${feedbackText}</div>
             <a href="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original" class="downloadSubmission"><span>DOWNLOAD</span></a>
+            <div class="clear"></div>
         </div>
     </td>
-    <td></td>
+    <td class="last">&nbsp;</td>
  </tr>

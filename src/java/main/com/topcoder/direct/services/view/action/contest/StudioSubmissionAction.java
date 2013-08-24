@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -98,9 +98,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.9 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to support new <code>Studio Final Fix</code> round type.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, flexme, minhu
  * @since Submission Viewer Release 1 assembly
- * @version 1.8
+ * @version 1.9
  */
 public class StudioSubmissionAction extends ContestAction {
 
@@ -211,6 +218,8 @@ public class StudioSubmissionAction extends ContestAction {
             PhaseType reviewPhaseType;
             if (roundType == ContestRoundType.FINAL) {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
+            } else if (roundType == ContestRoundType.STUDIO_FINAL_FIX_SUBMISSION) {
+                reviewPhaseType = PhaseType.APPROVAL_PHASE;
             } else {
                 reviewPhaseType = PhaseType.CHECKPOINT_REVIEW_PHASE;
                 viewData.setCheckpointReviewPhaseOpen(DirectUtils.isPhaseOpen(softwareCompetition,
@@ -275,7 +284,11 @@ public class StudioSubmissionAction extends ContestAction {
             }
             
             // set the feedback text
-            getViewData().setFeedbackText(contestServiceFacade.getStudioSubmissionFeedback(currentUser, projectId, submissionId, reviewPhaseType));
+            if (roundType != ContestRoundType.STUDIO_FINAL_FIX_SUBMISSION) {
+                getViewData().setFeedbackText(contestServiceFacade.getStudioSubmissionFeedback(currentUser, projectId, submissionId, reviewPhaseType));
+            } else {
+                getViewData().setFeedbackText("");
+            }
 
             // For normal request flow prepare various data to be displayed to user
 

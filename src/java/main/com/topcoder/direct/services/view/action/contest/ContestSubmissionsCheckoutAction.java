@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -49,9 +49,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author flexme, minhu
+ * <p>
+ * Version 1.3 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to set the dashboard details to view data.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author flexme, minhu, isv
  * @since Submission Viewer Release 3 assembly
- * @version 1.2
+ * @version 1.3
  */
 public class ContestSubmissionsCheckoutAction extends ContestAction {
     /**
@@ -276,6 +283,10 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+
+            DirectUtils.setDashboardData(currentUser, projectId, getViewData(),
+                    getContestServiceFacade(), !DirectUtils.isStudio(softwareCompetition));
+
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -18,6 +18,7 @@ import com.topcoder.service.user.UserServiceException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import com.topcoder.shared.util.ApplicationServer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -118,9 +119,17 @@ import java.util.Map;
  *     Adds method {@link #isTCPlatformSpecialist()}
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.3.2 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getSubmissionPreviewImageURL(long, String, int, HttpServletRequest)} method to use 
+ *     configurable base URL for <code>Studio</code> site.</li>
+ *   </ol>
+ * </p>
  *
  * @author isv, pvmagacho, flexme, GreatKevin, FireIce
- * @version 1.3.1
+ * @version 1.3.2
  */
 public class JSPHelper {
 
@@ -245,10 +254,10 @@ public class JSPHelper {
                                                       HttpServletRequest request) {
         String protocol = "https"; //request.isSecure() ? "https" : "http";
         if (artifactNum <= 0) {
-            return protocol + "://studio.topcoder.com/?module=DownloadSubmission&amp;sbmid="
+            return protocol + "://" + ApplicationServer.STUDIO_SERVER_NAME + "/?module=DownloadSubmission&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType;
         } else {
-            return protocol + "://studio.topcoder.com/?module=DownloadSubmission&amp;sbmid="
+            return protocol + "://" + ApplicationServer.STUDIO_SERVER_NAME + "/?module=DownloadSubmission&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType + "&amp;sfi=" + artifactNum;
         }
     }

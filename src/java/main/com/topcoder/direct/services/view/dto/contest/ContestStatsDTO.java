@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -29,8 +29,15 @@ import com.topcoder.service.project.CompetitionPrize;
  * - Add property {@link #inCheckpointSubmissionOrCheckpointReview}.
  * </p>
  *
- * @author isv, Veve, TCSASSEMBLER
- * @version 1.2
+ * <p>
+ * Version 1.3 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #showStudioFinalFixTab} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, Veve
+ * @version 1.3
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -162,6 +169,14 @@ public class ContestStatsDTO implements Serializable {
      * <p>Shows if it shows the spec review or not.</p>
      */
     private boolean showSpecReview;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the Final Fixes tab is to be displayed on the
+     * page or not.</p>
+     * 
+     * @since 1.3
+     */
+    private boolean showStudioFinalFixTab;
 
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
@@ -532,5 +547,27 @@ public class ContestStatsDTO implements Serializable {
      */
     public boolean isInCheckpointSubmissionOrCheckpointReview() {
         return inCheckpointSubmissionOrCheckpointReview;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the Final Fixes tab is to be displayed on the page or not.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether the Final Fixes tab is to be displayed on
+     *         the page or not.
+     * @since 1.3
+     */
+    public boolean getShowStudioFinalFixTab() {
+        return this.showStudioFinalFixTab;
+}
+
+    /**
+     * <p>Sets the flag indicating whether the Final Fixes tab is to be displayed on the page or not.</p>
+     *
+     * @param showStudioFinalFixTab a <code>boolean</code> providing the flag indicating whether the Final Fixes tab is
+     * to be displayed on the page or not.
+     * @since 1.3
+     */
+    public void setShowStudioFinalFixTab(boolean showStudioFinalFixTab) {
+        this.showStudioFinalFixTab = showStudioFinalFixTab;
     }
 }

@@ -33,11 +33,15 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
+import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.security.groups.services.dto.ProjectDTO;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
+
+import com.topcoder.management.review.data.Comment;
+import com.topcoder.management.review.data.CommentType;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
@@ -521,10 +525,31 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.10.2 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getReviewCommentByTypeId(long, Review)} method.</li>
+ *     <li>Added {@link #getProjectServices()} method.</li>
+ *     <li>Added {@link #STUDIO_FINAL_FIX_SUBMISSION_TYPE_ID} constant.</li>
+ *     <li>Added {@link #showStudioFinalFixTab(SoftwareCompetition)} method.</li>
+ *     <li>Added {@link #registerUserToContest(long, long, long, String)} (SoftwareCompetition)} method.</li>
+ *     <li>Updated {@link #getContestStats(TCSubject, long, SoftwareCompetition)} method to check if for Studio contest
+ *     the Final Fix tab is to be shown on the page or not.</li>
+ *     <li>Updated {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} and
+ *     {@link #getContestCheckout(SoftwareCompetition, ContestRoundType)} methods to support new <code>Studio Final Fix
+ *     </code> round type.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce
- * @version 1.10.1
+ * @version 1.10.2
  */
 public final class DirectUtils {
+
+    /**
+     * <p>A <code>String</code> providing the format for the date of resource's registration to project.</p>
+     */
+    private static final String REGISTRATION_DATE_FORMAT = "MM.dd.yyyy hh:mm a";
     /**
      * Constant for date format.
      */
@@ -548,7 +573,8 @@ public final class DirectUtils {
     /**
      * Scheduled status list.
      */
-    public final static List<String> SCHEDULED_STATUS = Arrays.asList("Scheduled", "Specification Submission", "Specification Review", "Passed Spec Review" );
+    public final static List<String> SCHEDULED_STATUS = Arrays.asList("Scheduled", "Specification Submission", 
+            "Specification Review", "Passed Spec Review" );
 
     /**
      * Active status list.
@@ -642,6 +668,13 @@ public final class DirectUtils {
     private static final int CHECKPOINT_SUBMISSION_TYPE_ID = 3;
 
     /**
+     * <p>An <code>int</code> referencing the <code>Studio Final Fix</code> submission type.</p>
+     *
+     * @since 1.10.2
+     */
+    private static final int STUDIO_FINAL_FIX_SUBMISSION_TYPE_ID = 4;
+
+    /**
      * Represents the prize type id for checkpoint submission.
      *
      * @since 1.7.1
@@ -671,7 +704,7 @@ public final class DirectUtils {
 
     private static final String IS_CLIENT_USER_SQL = "SELECT client_id FROM client_user_xref cux, user_account ua, common_oltp:user u"
      + " WHERE cux.user_id = ua.user_account_id AND UPPER(ua.user_name) = UPPER(u.handle) AND u.user_id = ?";
-
+    
     /**
      * Private constant specifying TC Platform Specialist role.
      *
@@ -881,6 +914,13 @@ public final class DirectUtils {
                 softwareCompetition, PhaseType.CHECKPOINT_SUBMISSION_PHASE) || isPhaseOpen(
                 softwareCompetition, PhaseType.CHECKPOINT_REVIEW_PHASE));            
         }
+
+        // For Studio contests check if Final Fix tab is to be shown
+        if (isStudio) {
+            boolean showFinalFixTab = showStudioFinalFixTab(softwareCompetition);
+            dto.setShowStudioFinalFixTab(showFinalFixTab);
+        }
+        
         return dto;
     }
 
@@ -1322,8 +1362,8 @@ public final class DirectUtils {
                                                                    TCSubject currentUser,
                                                                    ContestServiceFacade contestServiceFacade)
         throws UploadPersistenceException, SearchBuilderException {
-        return Arrays.asList(contestServiceFacade.getSoftwareActiveSubmissions(projectId,
-                roundType == ContestRoundType.CHECKPOINT ? CHECKPOINT_SUBMISSION_TYPE_ID : CONTEST_SUBMISSION_TYPE_ID));
+        return Arrays.asList(contestServiceFacade.getSoftwareActiveSubmissions(projectId, 
+                                                                               roundType.getSubmissionTypeId()));
     }
 
     /**
@@ -1401,6 +1441,8 @@ public final class DirectUtils {
                 if (phase.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                     return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
                 }
+            } else if (roundType == ContestRoundType.STUDIO_FINAL_FIX_SUBMISSION) {
+                return true;
             }
         }
         return false;
@@ -1778,7 +1820,7 @@ public final class DirectUtils {
         Collections.sort(list, new Comparator() {
             public int compare(Object o1, Object o2) {
                 return ((String) ((Map.Entry) (o1)).getValue())
-                        .compareToIgnoreCase((String)((Map.Entry) (o2)).getValue());
+                        .compareToIgnoreCase((String) ((Map.Entry) (o2)).getValue());
             }
         });
 
@@ -2664,14 +2706,14 @@ public final class DirectUtils {
         }
     }
 
-     /**
+    /**
      * Comparator to compare the <code>IdNamePair</code> objects by comparing the name ignore case.
      */
     public static class IdNamePairNameCaseInsensitiveComparator implements Comparator<IdNamePair> {
         public int compare(IdNamePair idNamePair, IdNamePair idNamePair2) {
             return idNamePair.getName().compareToIgnoreCase(idNamePair2.getName());
-			}
-	}
+        }
+    }
 
     /**
      * Update the fixed bug race contest fee and percentage bug race contest fee for TC direct project based on the
@@ -2686,9 +2728,9 @@ public final class DirectUtils {
      * @since 1.10
      */
     public static void updateDirectProjectBugContestFee(TCSubject tcSubject, long projectId,
-                                                  ProjectServiceFacade projectService,
-                                                  ProjectContestFeeService projectContestFeeService,
-                                                  ProjectContestFeePercentageService projectContestFeePercentageService)
+                                                        ProjectServiceFacade projectService,
+                                                        ProjectContestFeeService projectContestFeeService,
+                                                        ProjectContestFeePercentageService projectContestFeePercentageService)
             throws Exception {
         ProjectData projectData = projectService.getProject(tcSubject, projectId);
         List<com.topcoder.clients.model.Project> billings = projectService.getBillingAccountsByProject(projectId);
@@ -2722,9 +2764,11 @@ public final class DirectUtils {
      * @since 1.10
      */
     public static void updateBillingAccountDirectProjectsBugContestFees(TCSubject tcSubject, long billingAccountId,
-        ProjectServiceFacade projectService, ProjectContestFeeService projectContestFeeService,
-        ProjectContestFeePercentageService projectContestFeePercentageService,
-        DirectProjectService directProjectService) throws Exception {
+                                                                        ProjectServiceFacade projectService,
+                                                                        ProjectContestFeeService projectContestFeeService,
+                                                                        ProjectContestFeePercentageService projectContestFeePercentageService,
+                                                                        DirectProjectService directProjectService)
+            throws Exception {
 
         BillingAccount account = new BillingAccount();
         account.setId(billingAccountId);
@@ -2733,5 +2777,103 @@ public final class DirectUtils {
             updateDirectProjectBugContestFee(tcSubject, project.getProjectId(),
                     projectService, projectContestFeeService, projectContestFeePercentageService);
         }
+    }
+
+    /**
+     * <p>Gets the interface to project services.</p>
+     *
+     * @return a <code>ProjectServices</code> providing the interface to project services.
+     * @since 1.10.2
+     */
+    public static ProjectServices getProjectServices() {
+        HttpServletRequest servletRequest = getServletRequest();
+        ServletContext ctx = servletRequest.getSession().getServletContext();
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+        return (ProjectServices) applicationContext.getBean("projectServices");
+    }
+
+    /**
+     * <p>Checks whether the Final Fix tab must be shown on the page for the specified contest or not.</p>
+     *
+     * @param softwareCompetition a <code>SoftwareCompetition</code> providing the details for the contest.
+     * @return <code>true</code> if Final Fix tab must be shown on the page for the specified contest;
+     *         <code>false</code> otherwise.
+     * @since 1.10.2
+     */
+    public static boolean showStudioFinalFixTab(SoftwareCompetition softwareCompetition) {
+        // Get the project phases sorted based on start/end times
+        Phase[] phases = softwareCompetition.getProjectPhases().getAllPhases();
+        Phase lastPhase = phases[phases.length - 1];
+        Long contestId = softwareCompetition.getProjectPhases().getId();
+
+        boolean isApproval = false;
+        boolean isApprovalOpen = false;
+        boolean isApprovalRejected = false;
+        boolean isFinalReview = false;
+
+        // Analyze the last phase and determine if Final Fix tab is to be shown or not
+        if (lastPhase.getPhaseType().getId() == PhaseType.APPROVAL_PHASE.getId()) {
+            isApproval = true;
+            isApprovalOpen = (lastPhase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId());
+            Review[] approvalReviews = getProjectServices().getReviewsByPhase(contestId, lastPhase.getId());
+            if ((approvalReviews != null) && (approvalReviews.length > 0)) {
+                Review approvalReview = approvalReviews[0];
+                Comment approvalComment =
+                        getReviewCommentByTypeId(CommentType.COMMENT_TYPE_APPROVAL_REVIEW.getId(), approvalReview);
+                if (approvalComment != null) {
+                    isApprovalRejected = "Rejected".equalsIgnoreCase(String.valueOf(approvalComment.getExtraInfo()));
+                }
+            }
+        } else if (lastPhase.getPhaseType().getId() == PhaseType.FINAL_REVIEW_PHASE.getId()) {
+            isFinalReview = true;
+        }
+
+        return isApproval && isApprovalOpen && isApprovalRejected || isFinalReview;
+    }
+
+    /**
+     * <p>Gets the first comment of specified type from specified review.</p>
+     *
+     * @param commentTypeId a <code>long</code> providing the ID of comment type.
+     * @param review a <code>Review</code> providing the details for the review to lookup for comment in.
+     * @return a <code>Comment</code> of specified type from specified review or <code>null</code> if such a comment is
+     *         not found.
+     * @since 1.10.2
+     */
+    public static Comment getReviewCommentByTypeId(long commentTypeId, Review review) {
+        List<Comment> comments = review.getComments();
+        for (Comment comment : comments) {
+            if (comment.getCommentType().getId() == commentTypeId) {
+                return comment;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * <p>Registers specified user as resource of specified role to specified contest.</p>
+     *
+     * @param contestId a <code>long</code> providing the ID of a contest.
+     * @param resourceRoleId a <code>long</code> providing the ID of a role to be assigned to user.
+     * @param userId a <code>long</code> providing the ID of a user.
+     * @param userHandle a <code>long</code> providing the handle of a user.
+     * @return a <code>Resource</code> of specified role for current user.
+     * @since 1.10.2
+     */
+    public static Resource registerUserToContest(long contestId, long resourceRoleId, long userId, String userHandle) {
+        DateFormat registrationDateFormat = new SimpleDateFormat(REGISTRATION_DATE_FORMAT);
+
+        Resource resource = new Resource();
+        resource.setId(-1);
+        resource.setProject(contestId);
+        resource.setResourceRole(new ResourceRole(resourceRoleId));
+        resource.setProperty("Handle", userHandle);
+        resource.setProperty("External Reference ID", String.valueOf(userId));
+        resource.setProperty("Payment", "0");
+        resource.setProperty("Payment Status", "N/A");
+        resource.setProperty("Registration Date", registrationDateFormat.format(new Date()));
+        resource = getProjectServices().updateResource(resource, String.valueOf(userId));
+        return resource;
     }
 }

@@ -1,0 +1,690 @@
+.studioFinalFixes{
+    font-size:12px;
+}
+.studioFinalFixes li{
+    list-style:none;
+}
+.studioFinalFixes .containerNoPadding{
+    padding:0 1px 32px;    
+}
+.studioFinalFixes a:hover{
+    text-decoration:none;
+} 
+.studioFinalFixes a.button6 span.right{ 
+    padding:0 10px;
+    line-height:24px;
+    height:24px;
+}
+
+/*---------------- .checkout ------------*/
+.studioFinalFixes .SubmissionSlotTitle{
+    margin-top:12px;
+    padding-bottom:12px;
+}
+    .studioFinalFixes .SubmissionSlotTitle p{
+        line-height:18px;
+        color:#000;
+        padding:8px 0 3px;
+    }
+.studioFinalFixes #submissionList{
+    margin-top:8px;
+}
+    .studioFinalFixes #submissionList table .alignTop{
+        vertical-align:top;
+        padding-top:18px;
+    }
+    .studioFinalFixes #submissionList table .finalFixConfirm{
+        background-color:#FFFDCD;
+        border:1px solid #FBCF0F;
+        color:#000000;
+        padding:0 1px 0 8px;
+        height:30px;
+        overflow:hidden;
+        line-height:30px;
+        margin-top:12px;
+    }
+        .studioFinalFixes #submissionList table .finalFixConfirm p{
+            float:left;
+        }
+            .studioFinalFixes #submissionList table .finalFixConfirm p a{
+                color:#000000;
+            }
+            .studioFinalFixes #submissionList table .finalFixConfirm p a:hover{
+                text-decoration:none;
+            }
+            .studioFinalFixes .finalFixConfirm a.yesBtn,.studioFinalFixes .finalFixConfirm a.noBtn{ 
+                color:#FFFFFE;
+                font-size:11px;
+                font-weight:bold;
+                text-decoration:none;
+                display:block;
+                background:url(/images/small-btn-01.png) no-repeat;
+                height:18px;
+                width:60px;
+                float:right;
+                line-height:18px;
+                overflow:hidden;
+                margin:6px 5px 0px 0px;
+                text-align:center;
+            }
+            .studioFinalFixes .finalFixConfirm a.yesBtn:hover,.studioFinalFixes .finalFixConfirm a.noBtn:hover{
+                background-position:0 -19px;
+            }
+
+/* final fix tooltips*/
+#finalFixesTip{
+    width:242px;
+}
+	#finalFixesTip .tooltipContent{
+		color:#000000;
+		padding:10px 13px 13px;
+	}
+		#finalFixesTip .tooltipContent p{
+			font-size:12px;
+		}
+		#finalFixesTip .tooltipCaptionInner h2{
+			padding-left:14px;
+		}
+			#finalFixesTip span.arrow,#finalFixesTip span.arrow11{
+				top:35px;
+			}
+
+/* .receiptList */
+.studioFinalFixes .receiptList{
+    padding:32px 0 18px 0;
+    clear:both;
+    margin:10px;
+}
+    .studioFinalFixes .receiptList h3{
+        font-weight:normal;
+        font-size:18px;
+        color:#000;
+        line-height:20px;
+        padding:13px 10px;
+        border-top:1px solid #bdbdbd;
+        border-bottom:1px solid #bdbdbd;
+        margin-bottom:5px;
+    }
+    .studioFinalFixes .receiptList table{
+        width:100%;
+    }
+    .studioFinalFixes .receiptList td{
+        text-align:right;
+        padding:4px 15px 4px 12px;
+        vertical-align:middle;
+    }
+    .studioFinalFixes .receiptList td.left{
+        text-align:left; 
+    }
+    .studioFinalFixes .receiptList .last td{
+        padding-bottom:12px;
+    }
+    .studioFinalFixes .receiptList .total td{
+        border-top:3px solid #bdbdbd;
+        font-size:24px;
+        font-weight:bold;
+        padding-top:6px;
+    }
+
+/* .specityFF */
+.studioFinalFixes .specityFF{
+    border-top:1px solid #bdbdbd;
+    padding:20px 0 0;
+    min-height:735px;
+}
+    .studioFinalFixes .specityFF .winnerBox{
+        float:left;
+        width:246px;
+        overflow:hidden;
+        margin-left:18px;
+    }
+        .studioFinalFixes .specityFF .winnerBox .zip{
+            background: url("/images/ico_big_download_zip.png") no-repeat scroll left top transparent;
+            float: left;
+            height: 78px;
+            width: 64px;
+        }
+        .studioFinalFixes .specityFF .winnerBox .zip:hover{
+            background-image: url("/images/ico_big_download_zip_hover.png"); 
+        }
+        .studioFinalFixes .specityFF .winnerBox .meta{
+            color: #595959;
+            font-size:14px; 
+            margin:6px 0  0 72px;
+        }
+            .studioFinalFixes .specityFF .winnerBox .meta a{
+                color: #595959;
+            }
+            .studioFinalFixes .specityFF .winnerBox .meta h3{
+                font-size: 16px;
+                font-weight: bold;
+                margin: 0 0 2px;
+            }
+            .studioFinalFixes .specityFF .winnerBox .meta span{
+                color:#919191;
+                display:block;
+                padding-top:2px;
+            }
+    .studioFinalFixes .specityFF .alert{
+        margin-left:246px;
+        border:1px solid #fbcc00;
+        background:#fffdcd;
+        padding:11px 13px;
+        color:#000000;
+        line-height:16px;
+        margin-right:18px;
+    } 
+        .studioFinalFixes .specityFF .alert .red{
+            color:#d60507;
+            padding-bottom:12px;
+        }
+            .studioFinalFixes .specityFF .alert .red a{
+                 color:#d60507
+            } 
+    .studioFinalFixes .specityFF .addTasks {
+        font-size:12px;
+        color:#000000; 
+        padding:20px 20px 20px 18px;
+        margin-top:16px;
+        min-height:1px;
+        clear:both; 
+        border-bottom:1px solid #bdbdbd;
+    }
+        .studioFinalFixes .specityFF .addTasks .task{
+            padding-right:16px;
+        }
+    .studioFinalFixes .specityFF .addTasksEdit {
+        border:2px solid #ff0000;
+        padding-bottom:15px;
+    }
+        .studioFinalFixes .specityFF .addTasks label{
+            font-size:14px;
+            padding-right:18px;
+            padding-bottom:5px;
+            display:inline-block;
+        }
+        .studioFinalFixes .specityFF .addTasks textarea{
+            display:block;
+            width:100%;
+            height:78px;
+            border:1px solid #BDBDBD;
+            margin-bottom:10px;
+            overflow:auto;
+            color:#595959;
+            font-family:Arial,Helvetica,sans-serif;
+            font-size:12px;
+            padding:6px 8px;
+        }
+
+        .studioFinalFixes .specityFF .cloneit{
+            display:none;
+        }
+            .studioFinalFixes .specityFF.addTasks .task span{
+                vertical-align:middle;
+                padding:0 15px 0 2px;
+            }
+                .studioFinalFixes .specityFF .addTasks .addLink{
+                    text-align:right;
+                }
+                .studioFinalFixes .specityFF .addTasks .addLink a{
+                    display: inline-block;
+                    color:#3a3a3a;
+                    text-align:right;
+                    background:url("/images/add-link.png") no-repeat left top;
+                    padding-left:20px;
+                    height: 14px;
+                    line-height: 14px;
+                }
+                .studioFinalFixes .specityFF .addTasks .addLink a:hover{
+                    background-position: 0 -15px;
+                }
+
+     .studioFinalFixes .bottomBtns{
+        text-align:center; 
+         padding:10px 0;
+         overflow:hidden;
+    }
+         .studioFinalFixes .bottomBtns a{
+             display: inline-block;
+             float: none;
+        }
+         .studioFinalFixes .bottomBtns p{
+             text-align:right;
+             padding-right:20px;
+        }
+             .studioFinalFixes .bottomBtns p a{
+                 margin-left:6px; 
+            }
+
+ /* tabsPanel */
+.studioFinalFixes .tabsPanel{
+    background: url("/images/calendar_header.png") repeat-x scroll left center #37302E;
+    color: #CACACA;
+    font-size: 11px;
+    height: 29px;
+    position:relative;
+}
+    .studioFinalFixes .tabsPanel ul{
+        float: left;
+        margin: 0 0 0 20px;
+        overflow:hidden;
+        height:29px;
+        padding-right:60px;
+    }
+        .studioFinalFixes .tabsPanel li{
+            float: left;
+            list-style: none;
+            margin-right:5px;
+        }
+            .studioFinalFixes .tabsPanel li a{
+                background: url("/images/bank_selection_tab_left.png") no-repeat scroll left -25px transparent;
+                color: #000;
+                float: left;
+                font-size: 12px;
+                line-height: 22px;
+                margin: 7px 3px 0 0;
+                padding: 0 0 0 4px;
+                text-decoration: none;
+            }
+            .studioFinalFixes .tabsPanel li.on a{
+                background-position:left top;
+            }
+
+                .studioFinalFixes .tabsPanel li span{
+                    background: url("/images/bank_selection_tab_right.png") no-repeat scroll right -25px transparent;
+                    cursor: pointer;
+                    float: left;
+                    height: 22px;
+                    text-align: center;
+                    padding:0 20px 0 16px;
+                }
+                .studioFinalFixes .tabsPanel .fixed li span{
+                    width:100px;
+                    padding:0 10px 0 6px;
+                }
+                .studioFinalFixes .tabsPanel li.on span{
+                    background-position:right top;
+                }
+    .studioFinalFixes .tabsPanel .navi{
+        position:absolute;
+        right:12px;
+        top:7px;
+    }
+        .studioFinalFixes .tabsPanel .navi a{
+            float:left;
+            background:url(/images/navi-icons.png) no-repeat 0 0;
+            width:16px;
+            height:17px;
+        }
+        .studioFinalFixes .tabsPanel .navi a.prevLink.off{
+            background-position:0 -17px;
+            cursor:default;
+        }
+        .studioFinalFixes .tabsPanel .navi a.nextLink{
+            background-position:-16px 0;
+            width:17px;
+        }
+        .studioFinalFixes .tabsPanel .navi a.nextLink.off{
+            background-position:-16px -17px;
+            cursor:default;
+        }
+/* .confirmFF */
+.studioFinalFixes .confirmFF{
+    min-height:840px;
+}
+    .studioFinalFixes .confirmFF .SubmissionSlotTitle{
+        padding-right:100px;
+        padding-bottom:0;
+    }
+        .studioFinalFixes .confirmFF .SubmissionSlotTitle p{
+            padding-bottom:8px;
+        }
+    .studioFinalFixes .confirmFF .editBtn{
+        float:right;
+        background:url(/images/edit-white.png) no-repeat 0 0;
+        height:25px;
+        width:52px;
+        margin:8px 20px 0 0;
+    }
+    .studioFinalFixes .confirmFF .editBtn:hover{
+        background-position:0 -25px;
+    }
+
+
+.studioFinalFixes .reviewFF .editBtn {
+    float: right;
+    background: url(/images/edit-white.png) no-repeat 0 0;
+    height: 25px;
+    width: 52px;
+    margin: 8px 20px 0 0;
+}
+
+.studioFinalFixes .reviewFF .editBtn:hover {
+    background-position: 0 -25px;
+}
+
+.studioFinalFixes .ffItems{
+        padding:6px 0 18px;   
+    }
+    .studioFinalFixes .ffItems.lesspadding{
+        padding-bottom:4px;
+    }
+        .studioFinalFixes .comments{
+            line-height:18px;
+            color:#000;
+            padding:22px 20px 26px;
+            border-bottom:1px solid #bdbdbd;
+        }
+            .studioFinalFixes .comments dt{
+                font-size:14px;
+                padding-bottom:8px;
+            }
+            .studioFinalFixes .comments dd{
+                 
+            }
+        .studioFinalFixes .ffItems table{
+            width:100%;
+        }
+        .studioFinalFixes .ffItems th{
+            font-weight:normal;
+            font-size:14px;
+            color:#232323;
+            padding:15px 5px;
+            line-height:20px;
+        }
+        .studioFinalFixes .ffItems td{
+            padding:10px;
+            line-height:18px;
+            color:#000;
+            text-align:center;
+            vertical-align:middle;
+        }
+        .studioFinalFixes .ffItems td.first{
+            vertical-align:top;
+            padding-left:20px;
+        }
+        .studioFinalFixes .ffItems .odd td{
+            background:#ececec;
+        }
+        .studioFinalFixes .ffItems .left{
+            text-align:left;
+        }
+        .studioFinalFixes .ffItems th.left{
+            padding-left:20px;
+        }
+            .studioFinalFixes .ffItems td input{
+                vertical-align:middle;
+            }
+            .studioFinalFixes .ffItems td span.correct{
+                display:inline-block;
+                vertical-align:middle;
+                height:12px;
+                width:16px;
+                background:url(/images/ico_true.png) no-repeat 0 0;
+            }
+			.studioFinalFixes .ffItems td span.incorrect{
+                display:inline-block;
+                vertical-align:middle;
+                height:12px;
+                width:16px;
+                background:url(/images/ico-false.png) no-repeat 0 0;
+            }
+.studioFinalFixes .inProgressFF{
+    min-height:825px;
+}
+/* .ffAction */
+.studioFinalFixes .ffAction .comment{
+    padding:0 38px 20px 20px;
+}
+    .studioFinalFixes .ffAction .comment h4{
+        font-size:14px;
+        color:#232323;
+        font-weight:normal;
+        line-height:18px;
+        padding-bottom:5px;
+        padding-left:2px;
+    }
+    .studioFinalFixes .ffAction .comment textarea{
+        display:block;
+        width:100%;
+        height:78px;
+        border:1px solid #BDBDBD;
+        overflow:auto;
+        color:#000;
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        padding:6px 8px;
+    }
+.studioFinalFixes .ffAction ul{
+    border-top:1px solid #BDBDBD;
+    overflow:hidden;
+    background:url(/images/bg-gray.gif) #fff repeat-x left bottom;
+}
+    .studioFinalFixes .ffAction li{
+        float:left;
+        width:33%;
+        text-align:center;
+    }
+    .studioFinalFixes .ffAction li.first{
+        width:34%;
+    }
+        .studioFinalFixes .ffAction li div{
+            border-left:1px solid #bdbdbd;
+            padding:10px 10px 8px;
+        }
+        .studioFinalFixes .ffAction li.first div{
+            border-left:0;
+        }
+            .studioFinalFixes .ffAction li div a{
+                display:inline-block;
+                float:none;
+                width:68px;
+            }
+            .studioFinalFixes .ffAction li div p{
+                line-height:14px;
+                font-size:11px;
+                color:#606060;
+                padding-top:6px;
+            }
+.studioFinalFixes .ffAction .bottomBtns{
+    padding:12px 0 38px;
+}
+
+/* .ffSubmit */
+.studioFinalFixes .ffSubmit{
+    text-align:center;
+    border-bottom:1px solid #bdbdbd;
+    padding:20px 0 16px;
+}
+.studioFinalFixes .ffSubmit.noborder{
+    border-bottom:0; 
+}
+    .studioFinalFixes .ffSubmit .downloadSubmission{
+        float:none;
+        display:inline-block;
+    }
+    .studioFinalFixes  .ffSubmit .submission{
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        width: 206px;
+        text-align:left;
+        margin-bottom:15px;
+    }
+        .studioFinalFixes  .ffSubmit .submission label{
+            color: #333333;
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            padding:0 0 2px 3px;
+        }
+        .studioFinalFixes  .ffSubmit .submission .id{
+            font-weight: normal;
+        }
+    .studioFinalFixes  .ffSubmit .thumbGrid{
+        display: block;
+        height: 206px;
+        overflow: hidden;
+        padding: 3px;
+        text-decoration: none;
+        width: 206px;
+    }
+        .studioFinalFixes  .ffSubmit .thumbGrid span{
+            background: url("/images/thumb_big_slot_bg.png") repeat scroll left top transparent;
+            display: block;
+            height: 206px;
+            position: absolute;
+            width: 206px;
+            z-index: 5;
+        } 
+        .studioFinalFixes  .ffSubmit .thumbGrid img{
+            margin: 3px;
+            height:200px;
+            width:200px;
+        }
+    .studioFinalFixes  .ffSubmit .action{
+        background: url("/images/submission_grid_action_bg.png") no-repeat scroll left top transparent;
+        display: none;
+        height: 35px;
+        left: 13px;
+        position: absolute;
+        top: 188px;
+        width: 187px;
+        z-index: 20;
+    }
+    .studioFinalFixes  .ffSubmit .actionMask{
+        margin-left: 90px;
+        margin-top: 10px
+    }
+.studioFinalFixes .ffEditMaks{
+    border:2px solid #ff0000;
+}
+    .studioFinalFixes .ffEditMaks .ffItems{
+        padding-top:3px;
+    }
+
+ /* final fix gallery page */
+.studioFinalFixes .currentPageBox div.currentPage div.pageTurn A{
+    margin-top:10px;   
+}
+.studioFinalFixes .titleBarBox{
+    position:relative;
+    margin-top:12px;
+}
+    .studioFinalFixes .titleBarBox h1{
+        font-family:Arial,Helvetica,sans-serif;
+    }
+         .studioFinalFixes .titleBarBox h1 A{
+             margin-left:7px;
+         }
+       .studioFinalFixes .titleBarBox a.downloadBtn span{
+            width:auto;
+            padding:0 8px 0 5px;
+        }
+    .studioFinalFixes .submissionInfoFeedback{
+        width:170px;
+        position:absolute;
+        left:50%;
+        margin-left:-85px;
+    }
+.studioFinalFixes .mainArea .thumbnailsList{
+    padding-top:32px;
+    min-height:800px;
+}
+.studioFinalFixes .mainArea .thumbnailsList .thumbnailsItem img,
+.studioFinalFixes .mainArea .thumbnailsList .thumbnailsItem{
+    height:198px;
+    width:198px;
+}
+.studioFinalFixes .mainArea .thumbnailsList .thumbnailsItem{
+    margin:0 20px 40px 0;
+}
+
+/* .ffComplete */
+.studioFinalFixes  .ffComplete{
+    padding-bottom:124px;   
+}
+/* ffEditMask */
+.studioFinalFixes .nopixelpadding{
+    padding:0 0 32px;
+} 
+ 
+#saveConfirmModal .modalBody .noticeContent,
+#rejectConfirmModal .modalBody .noticeContent,
+#acceptConfirmModal .modalBody .noticeContent{
+    padding-top:40px;
+    height:70px;
+    font-size:14px;
+    padding-left: 0; 
+    text-align: center;
+    width: auto;
+}
+.outLay .modalBody .modalCommandBox a.newButton1{
+    margin:0 3px;  
+}
+
+/* checkbox style */ 
+.jqTransformHidden {display: none;}
+span.jqTransformCheckboxWrapper{
+	display:inline-block;
+	margin-right:8px;
+}
+a.jqTransformCheckbox {
+	background: transparent url(/images/checkbox.png) no-repeat 0 0;
+	vertical-align: middle;
+	height:13px;
+	margin-top:6px;
+	overflow:hidden;
+	width: 13px;
+	display:block;
+}
+a.jqTransformChecked{ background-position: 0 -13px;}
+
+.container2 {
+    background: url(/images/content_border.png) repeat-x top;
+}
+
+.container2Left {
+    background: url(/images/content_border.png) repeat-y left;
+}
+
+.container2Right {
+    background: url(/images/content_border.png) repeat-y right;
+}
+
+.container2Bottom {
+    background: url(/images/container2_bottom.png) repeat-x bottom;
+}
+
+.container2BottomClear {
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.container2LeftClear {
+    border-left: 1px solid #bdbdbd;
+}
+
+.container2RightClear {
+    border-right: 1px solid #bdbdbd;
+}
+
+.container2BottomLeft {
+    background: url(/images/container2_bottom_left.png) no-repeat bottom left;
+}
+
+.container2BottomRight {
+    background: url(/images/container2_bottom_left.png) no-repeat bottom right;
+}
+
+.container2Content {
+    padding: 10px 10px 0 10px;
+}
+
+.container2Content_det {
+    padding: 10px 1px 0 1px;
+}
+
+.studioFinalFixes .SubmissionSlotTitle p.red {
+    color: #cf0b0f;
+}
+

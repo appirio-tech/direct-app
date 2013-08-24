@@ -1,6 +1,6 @@
 <%--
   - Author: isv, flexme, minhu
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
   - 1.Remove "bank:" row.
@@ -30,6 +30,9 @@
   -
   - Version 1.8 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - - Update the single submission viewer hover to display font and stock art information
+  -
+  - Version 1.9 (TC Cockpit - Studio - Final Fixes Integration Part Two Assembly) changes:
+  - - The bread-crumb now refers to Final Fix page when appropriate
   -
   - Description: This page renders the single submission for Studio contest.
 --%>
@@ -90,10 +93,20 @@
                                         <s:param name="projectId" value="projectId"/>
                                     </s:url>"><s:property
                                             value="viewData.contestStats.contest.title"/></a> &gt;
+                                    <c:choose>
+                                        <c:when test="${viewData.submission.submissionType.id eq 4}">
+                                            <a href="<s:url action="viewFinalFix" namespace="/contest">
+                                        <s:param name="projectId" value="projectId"/>
+                                    </s:url>">Final Fix</a> &gt;
+
+                                        </c:when>
+                                        <c:otherwise>
                                     <a href="<s:url action="submissions" namespace="/contest">
                                         <s:param name="formData.viewType" value="'GRID'"/>
                                         <s:param name="projectId" value="projectId"/>
                                     </s:url>">Submissions</a> &gt;
+                                        </c:otherwise>
+                                    </c:choose>
                                     <strong>Submission ID: <s:property value="viewData.submission.id"/></strong>
                                 </div>
                                 <div class="pageTurn">

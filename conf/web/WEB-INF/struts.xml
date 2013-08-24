@@ -1727,7 +1727,7 @@
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/marathonMatchRegistrantsAndSubmissions.jsp</result>
         </action>
-        
+
         <action name="mmSubmissions" class="marathonMatchViewAction" method="viewSubmissions">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
@@ -1738,6 +1738,28 @@
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/marathonMatchResults.jsp</result>
         </action>
+
+        
+        <action name="needFinalFix" class="needFinalFixAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+        <action name="saveFinalFix" class="saveFinalFixAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+        <action name="reviewFinalFix" class="reviewFinalFixAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+        <action name="viewFinalFix" class="viewFinalFixAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success">/WEB-INF/studio-final-fixes.jsp</result>
+        </action>
+
     </package>
 
     <package name="ajax" namespace="/ajax" extends="base">

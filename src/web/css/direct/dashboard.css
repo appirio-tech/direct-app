@@ -530,8 +530,17 @@ BODY#page{
 		width: 16.66%;
 		overflow: hidden;
 	}
-	
-	#tabs3 UL LI.lastItem{
+
+#tabs3 UL.TabsCount7 LI {
+    float: left;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    width: 14.28%;
+    overflow: hidden;
+}
+
+#tabs3 UL LI.lastItem{
 		float: none; 
 		width: auto;
 	}

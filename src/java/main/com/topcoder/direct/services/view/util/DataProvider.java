@@ -120,9 +120,13 @@ import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.marathonmatch.service.dto.MMDownloadSubmissionDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ContestServiceException;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.contest.ForumPoster;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
+import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
@@ -163,6 +167,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.naming.NamingException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
@@ -948,10 +953,17 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.19 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #showStudioFinalFixTab(TCSubject, long)} method.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, TCSASSEMBLER
- * @version 6.18
+ * @version 6.19
  * @since 1.0
  */
 public class DataProvider {
@@ -8594,5 +8606,20 @@ public class DataProvider {
 
     }
 
+    /**
+     * <p>Checks whether the Final Fix tab must be shown on the page for the specified contest or not.</p>
+     *
+     * @param user a <code>TCSubject</code> representing the current user.
+     * @param contestId a <code>long</code> providing the ID of a contest.
+     * @return <code>true</code> if Final Fix tab must be shown on the page for the specified contest;
+     *         <code>false</code> otherwise.
+     * @since 6.19
+     */
+    public static boolean showStudioFinalFixTab(TCSubject user, long contestId)
+            throws PermissionServiceException, ContestServiceException, NamingException {
+        ContestServiceFacade contestServiceFacade = DirectUtils.getContestServiceFacade();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(user, contestId);
+        return DirectUtils.showStudioFinalFixTab(softwareCompetition);
+    }
 }
 

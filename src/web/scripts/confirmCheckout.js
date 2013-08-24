@@ -1,8 +1,11 @@
 /**
  * Studio Submission Checkout Confirmation Javascript
  *
- * @author FireIce
- * @version 1.0
+ * Version 1.1 Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly change note
+ * - Added dialog for requesting the final fixes for winning submission
+ *
+ * @author FireIce, isv
+ * @version 1.1
  */
 var arrPrize = ["firstPrize","secondPrize","thirdPrize","fourthPrize","fifthPrize"];
 var arrSlot = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots"];
@@ -71,6 +74,31 @@ function updateSummary() {
 	$("#summary").html(html);
 }
 
+function sendNeedFinalFixesRequest(contestId, submissionId, needFinalFixes) {
+    var request = {};
+    request['contestId'] = contestId;
+    request['submissionId'] = submissionId;
+    request['needFinalFix'] = needFinalFixes;
+
+    $.ajax({
+        type: 'POST',
+        url: ctx + "/contest/needFinalFix",
+        data: request,
+        cache: false,
+        dataType: 'json',
+        async: false,
+        success: function (jsonResult) {
+            modalClose();
+            if (needFinalFixes) {
+                window.location.href = ctx + "/contest/viewFinalFix?projectId=" + contestId;
+            } else {
+                $('.finalFixConfirm .p1').hide();
+                $('.finalFixConfirm .p2').show();
+            }
+        }
+    });
+}
+
 $(document).ready(function(){
     // contest id
     contestId = $("#contestId").val();
@@ -104,12 +132,35 @@ $(document).ready(function(){
         }
     }
 
+    $('.noBtn').live('click', function () {
+        sendNeedFinalFixesRequest(contestId, label, false);
+    });
+
+    $('.yesBtn').live('click', function () {
+        sendNeedFinalFixesRequest(contestId, label, true);
+    });
+
+
     // add placement icon to submissions and reorder the submissions
     var number = Math.min(submissionsNumber, prizeNumber);
     for (var i = 0; i < number; i++) {
         var label = bankData ? bankData[arrPrize[i]] : null;
         if (label) {
             $("#submission-" + label).find(".icoBankLocation").addClass(arrSlot[i]);
+            if (i == 0) { // Show Final Fix requesting form for winning submission
+                var html = '';
+                html += '<div class="finalFixConfirm">';
+                html += '    <div class="p1">';
+                html += '        <p>Would you like the winner to provide <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">final fixes</a>?</p>';
+                html += '        <a href="javascript:;" class="noBtn">NO</a>';
+                html += '        <a href="javascript:;" class="yesBtn">YES</a>';
+                html += '    </div>';
+                html += '    <div class="p2 hide">';
+                html += '        <p>You have chosen not to request Final Fixes from the winner and the contest has now closed.</p>';
+                html += '    </div>';
+                html += '</div>';
+                $("#submission-" + label + " .left").append(html);
+            }
             $("#submission-" + label).appendTo($("#submissionList tbody")).show();
         }
     }
