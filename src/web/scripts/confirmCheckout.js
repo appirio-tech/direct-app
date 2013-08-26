@@ -151,7 +151,7 @@ $(document).ready(function(){
                 var html = '';
                 html += '<div class="finalFixConfirm">';
                 html += '    <div class="p1">';
-                html += '        <p>Would you like the winner to provide <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">final fixes</a>?</p>';
+                html += '        <p>Would you like the winner to provide <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">final fixes</a>? After clicking Yes, you have five days to put the final fix items.</p>';
                 html += '        <a href="javascript:;" class="noBtn">NO</a>';
                 html += '        <a href="javascript:;" class="yesBtn">YES</a>';
                 html += '    </div>';
