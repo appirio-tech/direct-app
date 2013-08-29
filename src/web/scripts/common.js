@@ -39,8 +39,8 @@
  * Version 2.1 - (Release Assembly - TC Cockpit Tasks Management Release 2)
  * - Add method serializeObject to serialize a form into a json object
  *
- * Version 2.2 - (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
- * - Add method getParameterFromLink to get the request parameter.
+ * Version 2.2 - (Module Assembly - TC Direct Struts 2 Upgrade)
+ * - make calling of adjustImageRatio only if the page has specific image.
  *
  * Version 2.3 - 
  * - make calling of adjustImageRatio only if the page has specific image.
@@ -651,17 +651,6 @@ function sortDropDown(dropDownId) {
         $dd.val(selectedVal);
     }
 }
-
-/**
- * Get the request parameter from the link
- * @since 2.2
- */
-function getParameterFromLink(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    return r == null ? null : r[2];
-}
-
 
 window.multiRowsDivID = 1;
 /**

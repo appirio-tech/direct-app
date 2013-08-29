@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form.enterpriseDashboard;
 
@@ -10,8 +10,16 @@ import java.io.Serializable;
  * The form for all the enterprise dashboard requests.
  * </p>
  *
+ *
+ * <p>
+ * Version 1.1 (Module Assembly - TC Direct Struts 2 Upgrade)
+ * <ol>
+ *     <li>Added {@link #zoom} and corresponding getter and setter method, in order to bypass the struts 2 ONGL valiation</li>
+ * </ol>
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1
  */
 public class EnterpriseDashboardFilterForm implements Serializable {
 
@@ -59,6 +67,12 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      * The page number.
      */
     private int pageNumber;
+
+
+    /**
+     * the zoom option, not used in backend, but useful to maintain for struts 2 validation.
+     */
+    private String zoom;
 
     /**
      * Gets the id of the client.
@@ -220,5 +234,23 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      */
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    /**
+     * Gets the zoom.
+     *
+     * @return the zomm.
+     */
+    public String getZoom() {
+        return zoom;
+    }
+
+    /**
+     * Sets the zoom.
+     *
+     * @param zoom zoom.
+     */
+    public void setZoom(String zoom) {
+        this.zoom = zoom;
     }
 }

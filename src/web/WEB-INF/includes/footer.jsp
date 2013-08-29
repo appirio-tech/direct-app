@@ -1,10 +1,12 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.2
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin, TCASSEMBLER
+  - Version: 1.3
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Do not show feedback in the error page
+  - Version 1.3 (Module Assembly - TC Direct Struts 2 Upgrade)
+  - - Fixed the anchor for linkedin.
   -
   - Description: The footer of the topcoder cockpit.
   -
@@ -20,7 +22,7 @@
  	<div class="socialNetwork">
         <span>Follow us on :</span>
         <a href="https://www.twitter.com/TopCoder" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
-        <a href="https://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank"title="Follow us on LinkedIn"></a>
+        <a href="https://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank" title="Follow us on LinkedIn"></a>
         <a href="https://www.facebook.com/TopCoderInc" class="facebookIcon" target="_blank" title="Follow us on Facebook"></a>
 		<a href="https://plus.google.com/104268008777050019973" class="gPlusIcon" target="_blank" title="Follow us on Google+"></a>
 		<a href="https://youtube.com/topcoderinc" class="youtubeIcon" target="_blank" title="Follow us on YouTube"></a>

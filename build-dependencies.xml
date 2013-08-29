@@ -591,9 +591,9 @@
   <property name="tcwebcommon.jar.name" value="tcwebcommon.jar" />
   <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}" />
   <!-- 3rd party dependencies -->
-  <property name="asm.jar" value="${ext_libdir}/asm/asm-2.2.3.jar" />
-  <property name="asm-commons.jar" value="${ext_libdir}/asm/asm-commons-2.2.3.jar" />
-  <property name="asm-util.jar" value="${ext_libdir}/asm/asm-util-2.2.3.jar" />
+  <property name="asm-3.3.jar" value="${ext_libdir}/asm/asm-3.3.jar" />
+  <property name="asm-commons-3.3.jar" value="${ext_libdir}/asm/asm-commons-3.3.jar" />
+  <property name="asm-tree-3.3.jar" value="${ext_libdir}/asm/asm-tree-3.3.jar" />
   <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar" />
   <property name="jackson-core.jar" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
   <property name="jackson-mapper.jar" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
@@ -641,23 +641,24 @@
 
   <!-- Struts 2 libs -->
   <property name="struts2_libdir" value="${ext_libdir}/struts" />
-  <property name="commons-beanutils-1.7.0.jar" value="${struts2_libdir}/commons-beanutils-1.7.0.jar" />
+  <property name="commons-beanutils-1.8.0.jar" value="${struts2_libdir}/commons-beanutils-1.8.0.jar" />
   <property name="commons-collections-3.2.jar" value="${struts2_libdir}/commons-collections-3.2.jar" />
-  <property name="commons-fileupload-1.2.1.jar" value="${struts2_libdir}/commons-fileupload-1.2.1.jar" />
-  <property name="commons-io-1.3.2.jar" value="${struts2_libdir}/commons-io-1.3.2.jar" />
-  <property name="commons-lang-2.3.jar" value="${struts2_libdir}/commons-lang-2.3.jar" />
-  <property name="commons-logging-1.1.1.jar" value="${struts2_libdir}/commons-logging-1.1.1.jar" />
-  <property name="ezmorph-1.0.3.jar" value="${struts2_libdir}/ezmorph-1.0.3.jar" />
-  <property name="freemarker-2.3.15.jar" value="${struts2_libdir}/freemarker-2.3.15.jar" />
+  <property name="commons-fileupload-1.3.jar" value="${struts2_libdir}/commons-fileupload-1.3.jar" />
+  <property name="commons-io-2.0.1.jar" value="${struts2_libdir}/commons-io-2.0.1.jar" />
+  <property name="commons-lang-2.4.jar" value="${struts2_libdir}/commons-lang-2.4.jar" />
+  <property name="commons-lang3-3.1.jar" value="${struts2_libdir}/commons-lang3-3.1.jar" />
+  <property name="commons-logging-1.1.3.jar" value="${struts2_libdir}/commons-logging-1.1.3.jar" />
+  <property name="ezmorph-1.0.6.jar" value="${struts2_libdir}/ezmorph-1.0.6.jar" />
+  <property name="freemarker-2.3.19.jar" value="${struts2_libdir}/freemarker-2.3.19.jar" />
   <property name="json-lib-2.3-jdk15.jar" value="${struts2_libdir}/json-lib-2.3-jdk15.jar" />
-  <property name="ognl-2.7.3.jar" value="${struts2_libdir}/ognl-2.7.3.jar" />
-  <property name="struts2-convention-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-convention-plugin-2.1.8.jar" />
-  <property name="struts2-core-2.1.8.1.jar" value="${struts2_libdir}/struts2-core-2.1.8.1.jar" />
-  <property name="struts2-spring-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-spring-plugin-2.1.8.jar" />
-  <property name="struts2-json-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-json-plugin-2.1.8.jar" />
+  <property name="ognl-3.0.6.jar" value="${struts2_libdir}/ognl-3.0.6.jar" />
+  <property name="struts2-convention-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-convention-plugin-2.3.15.1.jar" />
+  <property name="struts2-core-2.3.15.1.jar" value="${struts2_libdir}/struts2-core-2.3.15.1.jar" />
+  <property name="struts2-spring-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-spring-plugin-2.3.15.1.jar" />
+  <property name="struts2-json-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-json-plugin-2.3.15.1.jar" />
   <property name="struts2-ssl-plugin-1.2.1.jar" value="${struts2_libdir}/struts2-ssl-plugin-1.2.1.jar" />
   <property name="xwork-1.2.3.jar" value="${struts2_libdir}/xwork-1.2.3.jar" />
-  <property name="xwork-core-2.1.6.jar" value="${struts2_libdir}/xwork-core-2.1.6.jar" />
+  <property name="xwork-core-2.3.15.1.jar" value="${struts2_libdir}/xwork-core-2.3.15.1.jar" />
 
   <!-- Spring libs -->
   <property name="spring_libdir" value="${ext_libdir}/spring" />
@@ -710,23 +711,24 @@
 
   <!-- Struts2 libraries -->
   <path id="struts.libs">
-    <pathelement location="${commons-beanutils-1.7.0.jar}" />
+    <pathelement location="${commons-beanutils-1.8.0.jar}" />
     <pathelement location="${commons-collections-3.2.jar}" />
-    <pathelement location="${commons-fileupload-1.2.1.jar}" />
-    <pathelement location="${commons-io-1.3.2.jar}" />
-    <pathelement location="${commons-lang-2.3.jar}" />
-    <pathelement location="${commons-logging-1.1.1.jar}" />
-    <pathelement location="${ezmorph-1.0.3.jar}" />
-    <pathelement location="${freemarker-2.3.15.jar}" />
+    <pathelement location="${commons-fileupload-1.3.jar}" />
+    <pathelement location="${commons-io-2.0.1.jar}" />
+    <pathelement location="${commons-lang-2.4.jar}" />
+      <pathelement location="${commons-lang3-3.1.jar}" />
+    <pathelement location="${commons-logging-1.1.3.jar}" />
+    <pathelement location="${ezmorph-1.0.6.jar}" />
+    <pathelement location="${freemarker-2.3.19.jar}" />
     <pathelement location="${json-lib-2.3-jdk15.jar}" />
-    <pathelement location="${ognl-2.7.3.jar}" />
-    <pathelement location="${struts2-convention-plugin-2.1.8.jar}" />
-    <pathelement location="${struts2-core-2.1.8.1.jar}" />
-    <pathelement location="${struts2-spring-plugin-2.1.8.jar}" />
-    <pathelement location="${struts2-json-plugin-2.1.8.jar}" />
+    <pathelement location="${ognl-3.0.6.jar}" />
+    <pathelement location="${struts2-convention-plugin-2.3.15.1.jar}" />
+    <pathelement location="${struts2-core-2.3.15.1.jar}" />
+    <pathelement location="${struts2-spring-plugin-2.3.15.1.jar}" />
+    <pathelement location="${struts2-json-plugin-2.3.15.1.jar}" />
 	<pathelement location="${struts2-ssl-plugin-1.2.1.jar}" />
     <pathelement location="${xwork-1.2.3.jar}" />
-    <pathelement location="${xwork-core-2.1.6.jar}" />
+    <pathelement location="${xwork-core-2.3.15.1.jar}" />
   </path>
 
   <!-- Spring libraries -->
@@ -767,9 +769,9 @@
 
   <!-- Asm libraries -->
   <path id="asm.libs">
-    <pathelement location="${asm-commons.jar}" />
-    <pathelement location="${asm-util.jar}" />
-    <pathelement location="${asm.jar}" />
+    <pathelement location="${asm-commons-3.3.jar}" />
+    <pathelement location="${asm-tree-3.3.jar}" />
+    <pathelement location="${asm-3.3.jar}" />
   </path>
 
   <path id="svnant.lib" >

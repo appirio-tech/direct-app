@@ -33,9 +33,16 @@ import org.apache.struts2.ServletActionContext;
  *     </li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.4 (Module Assembly - TC Direct Struts 2 Upgrade)
+ * <ol>
+ *     <li>Added {@link #setForwardUrl(String)} method by following struts2 guide.</li>
+ * </ol>
+ * </p>
  * 
  * @author isv, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
@@ -80,6 +87,16 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
      */
     public String getForwardUrl() {
         return forwardUrl;
+    }
+
+
+    /**
+     * Sets the link URL the user will be redirected to.
+     *
+     * @return the link URL the user will be redirected to.
+     */
+    public void setForwardUrl(String forwardUrl) {
+        this.forwardUrl = forwardUrl;
     }
     
     /**

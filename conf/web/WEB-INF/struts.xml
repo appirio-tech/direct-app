@@ -134,6 +134,7 @@
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
+                  <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
                   <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
@@ -906,14 +907,14 @@
             <result name="error" type="json"/>
         </action>
         
-        <!--<action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">-->
-            <!--&lt;!&ndash;<interceptor-ref name="securedPreProcessorStack"/>&ndash;&gt;-->
-            <!--<interceptor-ref name="baseStack"/>-->
-            <!--<interceptor-ref name="defaultStack"/>-->
-            <!--<interceptor-ref name="authnInterceptor"/>-->
-            <!--&lt;!&ndash;<interceptor-ref name="preProcessor"/>&ndash;&gt;-->
-            <!--<result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>-->
-        <!--</action>-->
+        <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <interceptor-ref name="preProcessor"/>
+            <result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>
+        </action>
 
         <action name="updateNotifications" class="com.topcoder.direct.services.view.action.setting.notification.UpdateNotificationsAction">
             <interceptor-ref name="authnInterceptor"/>
@@ -1421,6 +1422,7 @@
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
+                  <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
                   <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
@@ -2345,4 +2347,24 @@
         </action>
     </package>
 
+    <package name="test" namespace="/test" extends="base">
+        <action name="testWinners" class="testContestResultsExport2Action">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="stream">
+                <param name="contentDisposition">attachment;filename=project-contest-results.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">winnerSheet</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        <action name="testCompositeReview" class="testContestResultsExport2Action" method="testPDF">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="stream">
+                <param name="contentDisposition">attachment;filename=composite-review.pdf</param>
+                <param name="contentType">application/pdf</param>
+                <param name="inputName">compositeReview</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+    </package>
 </struts>

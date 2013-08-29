@@ -250,8 +250,7 @@
 
                               <div class="multiSelectBox">
                                   <div class="multiOptionRow multiOptionRowChecked hide">
-                                      <input type="checkbox" class="optionAll" name=""
-                                             id="groupValuesSelectAll" checked="checked">
+                                      <input type="checkbox" class="optionAll" id="groupValuesSelectAll" checked="checked">
                                       <label title="Select All" for="groupValuesSelectAll">Select
                                           All</label>
                                   </div>
@@ -283,8 +282,7 @@
 
                     <div class="multiSelectBox">
                         <div class="multiOptionRow multiOptionRowChecked">
-                            <input type="checkbox" checked="checked" id="ContestTypeSelectAll"
-                                   name="ContestTypeSelectAll" class="optionAll"/>
+                            <input type="checkbox" checked="checked" id="ContestTypeSelectAll" class="optionAll"/>
                             <label for="ContestTypeSelectAll" title="Select All">Select All</label>
                         </div>
 
@@ -313,8 +311,7 @@
 
                     <div class="multiSelectBox">
                         <div class="multiOptionRow multiOptionRowChecked">
-                            <input type="checkbox" checked="checked" id="PaymentTypeSelectAll"
-                                   name="PaymentTypeSelectAll" class="optionAll"/>
+                            <input type="checkbox" checked="checked" id="PaymentTypeSelectAll" class="optionAll"/>
                             <label for="PaymentTypeSelectAll" title="Select All">Select All</label>
                         </div>
 

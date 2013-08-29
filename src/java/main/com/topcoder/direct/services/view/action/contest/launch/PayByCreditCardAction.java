@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.contest.launch;
@@ -47,15 +47,24 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </p>
  *
  * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * -  Adjust the execute to throw <code>Exception</code>
+ * </p>
+ *
+ * <p>
+ * Version 1.2 - Module Assembly - TC Direct Struts 2 Upgrade Change Note:
+ * <ul>
+ *     <li>Attribute name <b>expression</b> for RegexFieldValidator is replaced with <b>regex</b>.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> The class is not thread safe because it's mutable by the setters and the values of this class
  * will change based on the request parameters. It's not required to be thread safe because in Struts 2 the actions
  * (different from Struts 1) are created for every request.
  * </p>
  *
- * <p>
- * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
- * -  Adjust the execute to throw <code>Exception</code>
- * </p>
+
  *
  * @author fabrizyo, TCSDEVELOPER
  * @version 1.1
@@ -354,7 +363,7 @@ public class PayByCreditCardAction extends PayContestAction {
      * @param zipCode the zip code of payer
      */
     @FieldExpressionValidator(key = KEY_PREFIX + "zipCodeNotNullOrEmpty", fieldName = "zipCode", expression = "zipCode != null && zipCode.trim().length() != 0", message = ActionHelper.CANNOT_BE_NULL_OR_EMPTY, shortCircuit = true)
-    @RegexFieldValidator(key = KEY_PREFIX + "zipCodeValid", fieldName = "zipCode", expression = "[0-9]{1,10}", message = "zipCode is required and must be between 1 and 10 digits")
+    @RegexFieldValidator(key = KEY_PREFIX + "zipCodeValid", fieldName = "zipCode", regex = "[0-9]{1,10}", message = "zipCode is required and must be between 1 and 10 digits")
     public void setZipCode(String zipCode) {
         creditCardPaymentData.setZipCode(zipCode);
     }
@@ -453,7 +462,7 @@ public class PayByCreditCardAction extends PayContestAction {
      * @param phone the phone of payer
      */
     @FieldExpressionValidator(key = KEY_PREFIX + "phoneNotNullOrEmpty", fieldName = "phone", expression = "phone != null && phone.trim().length() != 0", message = ActionHelper.CANNOT_BE_NULL_OR_EMPTY, shortCircuit = true)
-    @RegexFieldValidator(key = KEY_PREFIX + "phoneValid", fieldName = "phone", expression = "^\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}$", message = "phone must be in \"(xxx) xxx-xxxx\" format")
+    @RegexFieldValidator(key = KEY_PREFIX + "phoneValid", fieldName = "phone", regex = "^\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}$", message = "phone must be in \"(xxx) xxx-xxxx\" format")
     public void setPhone(String phone) {
         creditCardPaymentData.setPhone(phone);
     }

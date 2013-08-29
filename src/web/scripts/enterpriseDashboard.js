@@ -133,7 +133,7 @@ function getFilterSynParameters() {
         var startMonth = $(".timeLine .selectMonth:first span span").text();
         var endMonth = $(".timeLine .selectMonth:last span span").text();
 
-        return $.param({customer:customer, project:project,status:status,metaFilter:metaFilter,metaValueFilter:metaValueFilter,zoom:zoom,startMonth:startMonth,endMonth:endMonth});
+        return $.param({'formData.clientId':customer, 'formData.directProjectId':project,'formData.projectStatusId':status,'formData.projectFilterId':metaFilter,'formData.projectFilterValue':metaValueFilter,'formData.zoom':zoom,'formData.startMonth':startMonth,'formData.endMonth':endMonth});
     }
 }
 
@@ -2886,17 +2886,17 @@ $(document).ready(function () {
     }
 
     // filter sync
-    if ($("#silderBar .active a.filterSynEnabled").length > 0 && $("#silderBar .active a.analyticsIcon").length <= 0 && getUrlPara('customer')) {
-        var customer = getUrlPara('customer');
-        var status = getUrlPara('status');
+    if ($("#silderBar .active a.filterSynEnabled").length > 0 && $("#silderBar .active a.analyticsIcon").length <= 0 && getUrlPara('formData.clientId')) {
+        var customer = getUrlPara('formData.clientId');
+        var status = getUrlPara('formData.projectStatusId');
 
-        var zoom = getUrlPara('zoom');
-        var startMonth = getUrlPara('startMonth');
-        var endMonth = getUrlPara('endMonth');
+        var zoom = getUrlPara('formData.zoom');
+        var startMonth = getUrlPara('formData.startMonth');
+        var endMonth = getUrlPara('formData.endMonth');
 
-        projectToSync = getUrlPara('project');
-        projectFilterToSync = getUrlPara('metaFilter');
-        projectFilterValueToSync = getUrlPara('metaValueFilter');
+        projectToSync = getUrlPara('formData.directProjectId');
+        projectFilterToSync = getUrlPara('formData.projectFilterId');
+        projectFilterValueToSync = getUrlPara('formData.projectFilterValue');
 
         $("#projectStatusFilter").val(status);
         $("#clientFilter").val(customer);

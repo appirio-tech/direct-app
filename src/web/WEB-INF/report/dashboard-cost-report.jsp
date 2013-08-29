@@ -104,7 +104,7 @@
 
         		<!-- .leftFilterContent -->
         		<div class="leftFilterContent">
-        			<input type="hidden" name="ppp" value="1" id="pipelineDetailsPageNumber2"/>
+        			<input type="hidden" value="1" id="pipelineDetailsPageNumber2"/>
         			<input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
 
         			<div id="customerFilter">
@@ -192,8 +192,7 @@
 
                                 <div class="multiSelectBox">
                                     <div class="multiOptionRow multiOptionRowChecked hide">
-                                        <input type="checkbox" class="optionAll" name=""
-                                               id="groupValuesSelectAll" checked="checked">
+                                        <input type="checkbox" class="optionAll" id="groupValuesSelectAll" checked="checked">
                                         <label title="Select All" for="groupValuesSelectAll">Select
                                             All</label>
                                     </div>
@@ -223,8 +222,7 @@
         					<label class="multiSelectAreaTitle">Status:</label>
         					<div class="multiSelectBox">
                                 <div class="multiOptionRow multiOptionRowChecked">
-                                    <input type="checkbox" checked="checked" id="StatusSelectAll"
-                                           name="StatusSelectAll" class="optionAll"/>
+                                    <input type="checkbox" checked="checked" id="StatusSelectAll" class="optionAll"/>
                                     <label for="StatusSelectAll" title="Select All">Select All</label>
                                 </div>
 
@@ -251,8 +249,7 @@
         					<label class="multiSelectAreaTitle">Contest Type:</label>
         					<div class="multiSelectBox">
                                 <div class="multiOptionRow multiOptionRowChecked">
-                                    <input type="checkbox" checked="checked" id="ContestTypeSelectAll"
-                                           name="ContestTypeSelectAll" class="optionAll"/>
+                                    <input type="checkbox" checked="checked" id="ContestTypeSelectAll" class="optionAll"/>
                                     <label for="ContestTypeSelectAll" title="Select All">Select All</label>
                                 </div>
 

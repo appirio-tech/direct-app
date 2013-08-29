@@ -95,7 +95,7 @@
                             <div class="filterContainer">
                             <!-- .leftFilterContent -->
                             <div class="leftFilterContent">
-                                <input type="hidden" name="ppp" value="1" id="pipelineDetailsPageNumber2"/>
+                                <input type="hidden" value="1" id="pipelineDetailsPageNumber2"/>
                                 <input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
 
                                 <div id="datefilter" >
@@ -218,8 +218,7 @@
 
                                         <div class="multiSelectBox">
                                             <div class="multiOptionRow multiOptionRowChecked">
-                                                <input type="checkbox" checked="checked" id="ContestTypeSelectAll"
-                                                       name="ContestTypeSelectAll" class="optionAll"/>
+                                                <input type="checkbox" checked="checked" id="ContestTypeSelectAll" class="optionAll"/>
                                                 <label for="ContestTypeSelectAll" title="Select All">Select All</label>
                                             </div>
 
@@ -250,7 +249,7 @@
                                         <div class="multiSelectBox">
                                            <div class="multiOptionRow multiOptionRowChecked">
                                                 <input type="checkbox" checked="checked" id="ContestStatusSelectAll"
-                                                       name="ContestStatusSelectAll" class="optionAll"/>
+                                                       class="optionAll"/>
                                                 <label for="ContestStatusSelectAll" title="Select All">Select All</label>
                                             </div>
 
@@ -280,8 +279,7 @@
 
                                         <div class="multiSelectBox clientsSelection">
                                            <div class="multiOptionRow multiOptionRowChecked">
-                                                <input type="checkbox" checked="checked" id="ClientSelectAll"
-                                                       name="ClientSelectAll" class="optionAll"/>
+                                                <input type="checkbox" checked="checked" id="ClientSelectAll" class="optionAll"/>
                                                 <label for="ClientSelectAll" title="Select All">Select All</label>
                                             </div>
 

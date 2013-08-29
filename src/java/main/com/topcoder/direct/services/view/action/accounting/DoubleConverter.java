@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -12,9 +12,16 @@ import org.apache.struts2.util.StrutsTypeConverter;
  * 
  * Thread safety: The class is mutable and not thread safe. But it'll not caused thread safety issue if used under
  * Spring container.
+ *
+ * <p>
+ * Version 1.1 (Module Assembly - TC Direct Struts 2 Upgrade)
+ * <ol>
+ *     <li>Updated convertFromString() method making sure double value return.</li>
+ * </ol>
+ * </p>
  * 
  * @author winstips, TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  */
 public class DoubleConverter extends StrutsTypeConverter {
     /**
@@ -41,9 +48,9 @@ public class DoubleConverter extends StrutsTypeConverter {
                 Double d = Double.parseDouble(doubleStr);
                 return d;
             } catch (Exception e) {
-                e.printStackTrace();
+                // ignore the exception
+                return (double) 0;
             }
-            return 0;
         }
         return 0;
     }
