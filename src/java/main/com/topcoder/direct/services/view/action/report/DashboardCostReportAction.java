@@ -78,15 +78,9 @@ import java.util.Set;
  *     to handle the project level cost case.</li>
  * </ul>
  * </p>
- *
- * <p>
- * Version 1.6 (Cockpit - Incorrect Cost Report Result - BUGR-9455)
- * <ul>
- *     <li>Add method {@link filterBugRace(List<CostDetailsDTO> listToFilter)}</li>
- * </ul>
- * </p>
+ * 
  * @author Blues, flexme, GreatKevin
- * @version 1.6
+ * @version 1.5
  */
 public class DashboardCostReportAction extends DashboardReportBaseAction<DashboardCostReportForm, CostReportDTO> {
 
@@ -258,8 +252,6 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
 
             costDetails = filterByGroups(costDetails);
 
-            costDetails = filterBugRace(costDetails);
-            
             getViewData().setCostDetails(costDetails);
 
             if (!getFormData().isExcel()) {
@@ -271,24 +263,7 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
             }
         }
     }
-    /**
-     * Filters the result list of <code>CostDetailsDTO</code> for not showing the bug race cost.
-     *
-     * @param listToFilter the list of <code>CostDetailsDTO</code> to filter.
-     * @return the filtered list of <code>CostDetailsDTO</code>
-     * @throws Exception if there is error
-     * @since 1.6
-     */
-    private List<CostDetailsDTO> filterBugRace(List<CostDetailsDTO> listToFilter) throws Exception {
-    	List<CostDetailsDTO> result = new ArrayList<CostDetailsDTO>();
 
-        for (CostDetailsDTO dto : listToFilter) {
-        	if (!dto.getContestType().getName().equals("Bug Race")) {
-        		result.add(dto);
-        	}
-        }
-        return result;
-    }
     /**
      * Filters the result list of <code>CostDetailsDTO</code> with group by and group values.
      *
