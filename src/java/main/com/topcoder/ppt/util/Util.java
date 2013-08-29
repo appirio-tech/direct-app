@@ -6,6 +6,11 @@ package com.topcoder.ppt.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
@@ -18,7 +23,14 @@ import com.topcoder.shared.util.DBMS;
  * <p>Common utility class.</p>
  * 
  * @author flexme
- * @version 1.0
+ *
+ * <p>
+ * Changes in version 1.1 (Add User ID to JSON Result - BUGR-9450):
+ * <ol>
+ * 		<li>Add {@link #getTCSubjectFromSession()} method.</li>
+ * </ol>
+ * </p>
+ * @version 1.1
  */
 public final class Util {
     /**
@@ -54,5 +66,24 @@ public final class Util {
         }
 
         return new TCSubject(principals, userId);
+    }
+    /**
+     * <p>
+     * Gets the TCSubject instance from session.
+     * </p>
+     *
+     * @return the TCSubject instance from session.
+     * @since 1.1
+     */
+    public static TCSubject getTCSubjectFromSession() {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        if (request == null) {
+            return null;
+        }
+        HttpSession session = request.getSession();
+        if (session == null) {
+            return null;
+        }
+        return (TCSubject)session.getAttribute("user");
     }
 }

@@ -7,12 +7,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.topcoder.ppt.security.LoginProcessor;
+import com.topcoder.ppt.util.Util;
+import com.topcoder.security.TCSubject;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for user login.</p>
  *
+ * <p>
+ * Changes in version 1.1 (Add User ID to JSON Result - BUGR-9450):
+ * <ol>
+ * 		<li>Update {@link #executeAction()} method.</li>
+ * </ol>
+ * </p>
  * @author flexme
- * @version 1.0
+ * @version 1.1
  */
 public class LoginAction extends BaseAjaxAction {
     /**
@@ -88,8 +96,12 @@ public class LoginAction extends BaseAjaxAction {
      * Handles the incoming request. Perform authentication for the user.
      */
     public void executeAction() {
-        Map<String, Boolean> loginResult = new HashMap<String, Boolean>();
+        Map<String, Object> loginResult = new HashMap<String, Object>();
         loginResult.put("success", loginProcessor.login(username, password, rememberMe));
+        final TCSubject currentUser = Util.getTCSubjectFromSession();
+        if (currentUser != null) {
+        	loginResult.put("userId", currentUser.getUserId());
+        }
         setResult(loginResult);
     }
 }
