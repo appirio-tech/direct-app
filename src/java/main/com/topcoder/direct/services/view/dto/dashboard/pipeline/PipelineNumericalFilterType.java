@@ -31,5 +31,7 @@ public enum PipelineNumericalFilterType {
     /**
      * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest duration.</p>
      */
-    DURATION
+    DURATION,
+	
+	NONE
 }

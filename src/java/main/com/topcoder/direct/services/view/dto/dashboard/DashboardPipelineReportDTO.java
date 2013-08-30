@@ -111,6 +111,7 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
 
 
         NUMERICAL_FILTER_TYPES = new LinkedHashMap<PipelineNumericalFilterType, String>();
+		NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.NONE, "None");
         NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.PRIZE, "Member Costs");
         NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.CONTEST_FEE, "Contest Fee");
         NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.DURATION, "Duration");

@@ -214,14 +214,14 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
             // If numerical filter type was specified then add it to list of existing filters set so far
             PipelineNumericalFilterType numericalFilterType = form.getNumericalFilterType();
-            if (numericalFilterType != null) {
+            if (numericalFilterType != null && numericalFilterType != PipelineNumericalFilterType.NONE) {
                 Double minValue = form.getNumericalFilterMinValue();
                 Double maxValue = form.getNumericalFilterMaxValue();
                 if ((minValue != null) || (maxValue != null)) {
                     if (minValue == null) {
                         minValue = 0D;
                     }
-                    if (maxValue == null) {
+                    if (maxValue == null || maxValue == 0) {
                         maxValue = 1000000000D;
                     }
                     form.setNumericalFilter(numericalFilterType, minValue, maxValue);
