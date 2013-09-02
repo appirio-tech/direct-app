@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
@@ -11,6 +12,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.topcoder.direct.services.project.milestone.model.Milestone;
+import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
+import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import org.apache.struts2.ServletActionContext;
@@ -45,8 +49,15 @@ import com.topcoder.security.TCSubject;
  * </ol>
  * </p>
  *
- * @author BeBetter, TCSDEVELOPER, duxiaoyang
- * @version 1.2.2
+ * <p>
+ * Version 1.3 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * <ul>
+ *     <li>Adds method {@link #getCurrentProjectMilestones()} to get the milestones of current selected project if exists</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, duxiaoyang, GreatKevin
+ * @version 1.3
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -131,6 +142,36 @@ public class LaunchContestAction extends ContestAction {
         if (currentProjectId != null) {
             // get copilots of the project
             result = DataProvider.getCopilotsForDirectProject(currentProjectId.longValue());
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the milestones of the current selected project.
+     *
+     * @return a list of milestone instances.
+     * @throws Exception if any error.
+     * @since 1.3
+     */
+    public List<Milestone> getCurrentProjectMilestones() throws Exception {
+        // get current selected project from session first
+        Long currentProjectId = sessionData.getCurrentSelectDirectProjectID();
+
+        if (currentProjectId == null) {
+            // check project context again
+            if (sessionData.getCurrentProjectContext() != null) {
+                currentProjectId = Long.valueOf(sessionData.getCurrentProjectContext().getId());
+            }
+        }
+
+        List<Milestone> result = new ArrayList();
+
+        if (currentProjectId != null) {
+            // get copilots of the project
+            result = getMilestoneService().getAll(currentProjectId,
+                                                  Arrays.asList(MilestoneStatus.values()),
+                                                  SortOrder.ASCENDING);
         }
 
         return result;

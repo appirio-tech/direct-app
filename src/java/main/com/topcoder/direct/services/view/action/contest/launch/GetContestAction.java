@@ -5,6 +5,9 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.project.milestone.model.Milestone;
+import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
+import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
@@ -32,6 +35,7 @@ import org.apache.struts2.ServletActionContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -200,14 +204,15 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * Version 2.6 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2) change notes:
+ * Version 2.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
  * <ul>
- *     <li>Update method {@link #executeAction()} to store the round id to viewData.</li>
+ *     <li>Adds the property {@link #milestones} and its getter</li>
+ *     <li>Updates the method {@link #executeAction()} to set the milestone name for the software competition and pre-populate the project milestones</li>
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141
- * @version 2.5
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin
+ * @version 2.6
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -264,6 +269,13 @@ public class GetContestAction extends ContestAction {
      * </p>
      */
     private List<ContestCopilotDTO> copilots;
+
+    /**
+     * The milestones of the project.
+     *
+     * @since 1.6
+     */
+    private List<Milestone> milestones;
 
     /**
      * <p>
@@ -369,6 +381,11 @@ public class GetContestAction extends ContestAction {
         if (softwareCompetition == null) {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
                 .getTCSubjectFromSession(), projectId);
+
+            if(softwareCompetition.getDirectProjectMilestoneId() > 0) {
+                Milestone milestone = getMilestoneService().get(softwareCompetition.getDirectProjectMilestoneId());
+                softwareCompetition.setDirectProjectMilestoneName(milestone.getName());
+            }
         }
         if (DirectUtils.isStudio(softwareCompetition)) {
             softwareCompetition.setType(CompetionType.STUDIO);
@@ -442,6 +459,11 @@ public class GetContestAction extends ContestAction {
             // set whether to show spec review
             viewData.setShowSpecReview(contestStats.isShowSpecReview());
         }
+
+        // set the milestones
+        this.milestones = getMilestoneService().getAll(softwareCompetition.getProjectHeader().getTcDirectProjectId(),
+                                     Arrays.asList(MilestoneStatus.values()),
+                                     SortOrder.ASCENDING);
 
         // calculate the contest issues tracking health
         getViewData().getDashboard().setUnresolvedIssuesNumber(
@@ -567,6 +589,16 @@ public class GetContestAction extends ContestAction {
      */
     public List<ContestCopilotDTO> getCopilots() {
         return copilots;
+    }
+
+    /**
+     * Gets the milestones of the project.
+     *
+     * @return the milestones of the project.
+     * @since 1.6
+     */
+    public List<Milestone> getMilestones() {
+        return milestones;
     }
 
     /**

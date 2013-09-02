@@ -65,9 +65,12 @@
  *
  * Version 2.5 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
  * - Fix the error that when user changes billing account, the prize gets reset.
+ *
+ * Version 2.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * - Update to support association between contest and project milestone
  * 
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 2.5
+ * @version 2.6
  */
 
  /**
@@ -700,6 +703,31 @@ function getBillingAccountsByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
+function getMilestonesByDirectProjectId(directProjectId) {
+    var returnValue = {};
+    var request = {directProjectId:directProjectId};
+
+    $.ajax({
+        type: 'POST',
+        url:  ctx + "/launch/getDirectProjectMilestones",
+        data: request,
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    returnValue = result;
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
+    return returnValue;
+}
+
 function getActiveProblemSet() {
     var returnValue = {};
 
@@ -774,6 +802,8 @@ function saveAsDraftRequestSoftware() {
    request['competitionType'] = 'SOFTWARE';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
+   request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
+
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
         request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
@@ -845,7 +875,8 @@ function saveAsDraftRequestStudio() {
    request['competitionType'] = 'STUDIO';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
-    
+   request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
+
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
         request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
@@ -927,6 +958,8 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
         mainWidget.softwareCompetition.subEndDate = parseDate(result.subEndDate);
         mainWidget.softwareCompetition.paidFee = result.paidFee;
+        mainWidget.softwareCompetition.projectMilestoneId = result.projectMilestoneId;
+        mainWidget.softwareCompetition.projectMilestoneName = result.projectMilestoneName;
     },
     function(errorMessage) {
         showServerError(errorMessage);
@@ -947,6 +980,9 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         //update admin fee, to be fixed
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
+
+        mainWidget.softwareCompetition.projectMilestoneId = result.projectMilestoneId;
+        mainWidget.softwareCompetition.projectMilestoneName = result.projectMilestoneName;
 
     },
     function(errorMessage) {
@@ -2015,6 +2051,12 @@ function validateTcProject(tcProjectId, errors) {
    if(tcProjectId < 0) {
        errors.push('No project is selected.');
    }
+}
+
+function validateDirectProjectMilestone(milestoneId, errors) {
+    if(milestoneId <= 0) {
+        errors.push("Please choose a project milestone to associate with the contest");
+    }
 }
 
 function validatePrizes(errors) {

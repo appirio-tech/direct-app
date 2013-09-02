@@ -61,8 +61,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <li>Update {@link #getMapResult(SoftwareCompetition)} to support marathon match specification.</li>
  * </ul>
  * </p>
- * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka
- * @version 1.5
+ *
+ * <p>
+ * Version 1.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * <ul>
+ *     <li>Updated {@link #getMapResult(com.topcoder.service.project.SoftwareCompetition)} to add milestone id and name</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
+ * @version 1.6
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -135,6 +143,8 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("tcDirectProjectName", project.getTcDirectProjectName());
         result.put("billingProjectId", project.getProperties().get("Billing Project"));
         result.put("adminFee", project.getProperties().get("Admin Fee"));
+        result.put("directProjectMilestoneId", bean.getDirectProjectMilestoneId());
+        result.put("directProjectMilestoneName", bean.getDirectProjectMilestoneName());
 
         // get resources of project
         Resource[] resources = bean.getResources();

@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin, bugbuka
-  - Version: 1.6
+  - Author: GreatKevin, bugbuka, GreatKevin
+  - Version: 1.7
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -27,7 +27,10 @@
   - Fixed a drop down layout issue for a lenghthy project name.  
   -
   - Version 1.6 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
-  - Update to support launching mm contest. 
+  - Update to support launching mm contest.
+  -
+  - Version 1.7 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+  - - Add milestone display and choose in launch contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -120,6 +123,19 @@
              </select>
           </div>
           <a href="javascript:;" target="_blank" class="addBilling hide">Add Billing to project</a>
+      </div>
+
+      <div class="row">
+          <label>Milestone :</label>
+          <div class="milestoneSelect">
+              <select id="contestMilestone" name="contestMilestone">
+                  <option value="0">Please select a milestone to associate</option>
+                  <s:iterator value="currentProjectMilestones" var="milestone">
+                      <option value='<s:property value="id"/>'> <s:property value="name"/></option>
+                  </s:iterator>
+              </select>
+          </div>
+          <a href="javascript:;" target="_blank" class="addMilestone hide">Manage Project Milestones</a>
       </div>
 
       <!-- Copilot for Software Contest -->

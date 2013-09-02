@@ -44,10 +44,13 @@
  * - Update to support launching mm contest.
  * 
  * Version 2.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
- * - Add billing account CCA specific 
+ * - Add billing account CCA specific
+ *
+ * Version 2.2 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * - Updates to support choose associated milestone when creating a new contest
  * 
- * @author GreatKevin, TCASSEMBLER, csy2012, bugbuka
- * @version 2.1
+ * @author GreatKevin, csy2012, bugbuka, GreatKevin
+ * @version 2.2
  */
 $(document).ready(function() {
 
@@ -63,7 +66,10 @@ $(document).ready(function() {
     });	
     
     //truncate the billing account, copilot and round type
-    $(".addNewContest .row .billingSelect select option,.addNewContest .row .copilotSelect select option, .schedule #roundTypeDiv .roundelect select option, #overviewAlgorithmPage .problemDiv select option").each(function(){
+    $(".addNewContest .row .billingSelect select option," +
+        ".addNewContest .row .copilotSelect select option, .addNewContest .row .milestoneSelect select option," +
+        ".schedule #roundTypeDiv .roundelect select option, " +
+        "#overviewAlgorithmPage .problemDiv select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,50)+'...';
     		$(this).text(txt);    		
@@ -520,6 +526,9 @@ var capacityFullDates = {};
 // flag to indicate copilot dropdown initialization
 var copilotDropdownFlag = false;
 
+// flag to indicate milestone dropdown initialization
+var milestoneDropdownFlag = false;
+
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
     var value = $('.projectSelect select').getSetSSValue();
@@ -550,11 +559,12 @@ function handleProjectDropDownChange() {
     $("#lccCheckBox").removeAttr('checked');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     if(value > 0) {
-        $("a.addBilling").show();
+        $("a.addBilling, a.addMilestone").show();
         $("a.addBilling").attr("href", "../editProject?formData.projectId=" + value + "#addBillingAccount");
+        $("a.addMilestone").attr("href", "../projectMilestoneView?formData.projectId=" + value + "&formData.viewType=list");
     } else {
-        $("a.addBilling").hide();
-        $("a.addBilling").attr("href", "javascript:;");
+        $("a.addBilling, a.addMilestone").hide();
+        $("a.addBilling, a.addMilestone").attr("href", "javascript:;");
     }
 
     var result = getCopilotsByDirectProjectId(value);
@@ -577,6 +587,20 @@ function handleProjectDropDownChange() {
     // we only refresh stylish selection when it's not hidden
     $('.copilotSelect select').resetSS();
     $('.copilotSelect select').getSetSSValue(selected);
+
+
+    var milestones = getMilestonesByDirectProjectId(value);
+    var $contestMilestones = $("#contestMilestone");
+
+    $contestMilestones.html("");
+
+    $contestMilestones.append($('<option></option>').val(0).html("Please select a milestone to associate"));
+
+    $.each(milestones, function(id, value) {
+        $contestMilestones.append($('<option></option>').val(value.id).html(value.name).attr('title', value.description));
+    });
+
+    $('.milestoneSelect select').resetSS();
 }
 
 function handleProblemsDropDownChange() {
@@ -662,8 +686,11 @@ function onContestTypeChange() {
     if(typeId == ALGORITHM_CATEGORY_ID_MARATHON && contestType == 'ALGORITHM') {
         // show the end date for marathon match
         $("#endDateDiv").show();
+        $("div.milestoneSelect").parents("div.row").hide();
     } else {
         $("#endDateDiv").hide();
+        $("div.milestoneSelect").parents("div.row").show();
+
     }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
@@ -703,9 +730,18 @@ function onContestTypeChange() {
       } else {
         // initialized before, we only do the reset to update the data
         $('.copilotSelect select').resetSS();
-      }         
+      }
 
-      /// Studio Contest
+        if (!milestoneDropdownFlag) {
+            // milestone dropdown has never been initialized, do it
+            $('.milestoneSelect select').sSelect(SelectOptions);
+            milestoneDropdownFlag = true;
+        } else {
+            // initialized before, we only do the reset to update the data
+            $('.milestoneSelect select').resetSS();
+        }
+
+    /// Studio Contest
       if(mainWidget.isSoftwareContest()) {
          //Software Contest
          $('.software').show();

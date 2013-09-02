@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,9 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.project.milestone.model.Milestone;
+import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
+import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
@@ -19,6 +23,7 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * <p>
@@ -52,8 +57,15 @@ import com.topcoder.service.facade.project.DAOFault;
  * - New method {@link #getActiveProblemSet()} to return active problems as JSON.
  * </p>
  *
- * @author BeBetter, pvmagacho, GreatKevin, bugbuka
- * @version 1.5
+ * <p>
+ * Version 1.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * <ul>
+ *     <li>Adds method {@link #getDirectProjectMilestones()} to get milestones of the specified project by ajax</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin
+ * @version 1.6
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -121,6 +133,38 @@ public class CommonAction extends BaseContestFeeAction {
         setResult(result);
         return SUCCESS;
     }
+
+    /**
+     * Handles the ajax request to get the milestones of the specified project.
+     *
+     * @return the result code.
+     * @since 1.6
+     */
+    public String getDirectProjectMilestones() {
+
+        try {
+            List<Milestone> milestones = getMilestoneService().getAll(this.directProjectId,
+                                                               Arrays.asList(MilestoneStatus.values()),
+                                                               SortOrder.ASCENDING);
+            ObjectMapper m = new ObjectMapper();
+
+            List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+            for (Milestone mi : milestones) {
+                result.add(m.convertValue(mi, Map.class));
+            }
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
     
     /**
      * <p>

@@ -66,10 +66,13 @@
  * 1) Add supports for marathon contest details page - initialize the marathon contest details specification
  *
  * Version 2.2 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
- * - Add billing account CCA specific 
+ * - Add billing account CCA specific
+ *
+ * Version 2.3 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * - Add support for milestone association with contest in contest detail page.
  * 
- * @author isv, minhu, pvmagacho, GreatKevin, Veve
- * @version 2.2
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
+ * @version 2.3
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -543,6 +546,13 @@ function initContest(contestJson) {
 
     mainWidget.softwareCompetition.copilotCost = parseFloat(contestJson.copilotsFee);
 
+
+    // milestone
+    if(mainWidget.competitionType != 'ALGORITHM') {
+        mainWidget.softwareCompetition.projectMilestoneId = contestJson.directProjectMilestoneId;
+        mainWidget.softwareCompetition.projectMilestoneName = contestJson.directProjectMilestoneName;
+    }
+
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories = contestJson.categoryIds;
@@ -729,6 +739,7 @@ function initContest(contestJson) {
         $('#contestName').hide();
         $('#contestNameText').show();
         $('#copilots').attr("disabled", true);
+        $('#milestones').attr("disabled", true);
         $('.copilotsSelect').html('');
         if (mainWidget.softwareCompetition.copilotUserId <=0) {
              $(".copilotsSelect").html("Unassigned");
@@ -748,6 +759,7 @@ function initContest(contestJson) {
 //        $('#contestName').hide();
 //        $('#contestNameText').show();
         $('#copilots').attr("disabled", true);
+        $('#milestones').attr("disabled", true);
         $('.copilotsSelect').html('');
         if (mainWidget.softwareCompetition.copilotUserId <=0) {
              $(".copilotsSelect").html("Unassigned");
@@ -821,6 +833,11 @@ function populateTypeSection() {
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
+
+    if (mainWidget.softwareCompetition.projectMilestoneId > 0) {
+        $('#rProjectMilestone').html(mainWidget.softwareCompetition.projectMilestoneName);
+    }
+
 	//$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
   
   if (mainWidget.softwareCompetition.copilotUserId <=0) {
@@ -831,6 +848,9 @@ function populateTypeSection() {
 
     // set copilot selection value in edit mode
        $("#copilots").val(mainWidget.softwareCompetition.copilotUserId);
+
+    // set milestone id in edit mode
+       $("#milestones").val(mainWidget.softwareCompetition.projectMilestoneId);
 
   //billing account
   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
@@ -939,12 +959,14 @@ function validateFieldsTypeSection() {
    var tcProjectId = parseInt($('select#projects').val());
    var copilotUserId = parseInt($('select#copilots').val());
    var copilotName = $('select#copilots option:selected').text();
+   var milestoneId = parseInt($('select#milestones').val());
 
    //validation
    var errors = [];
 
    validateContestName(contestName, errors);
    validateTcProject(tcProjectId, errors);
+   validateDirectProjectMilestone(milestoneId, errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -969,7 +991,10 @@ function validateFieldsTypeSection() {
    // set the copilot user id and user name
    mainWidget.softwareCompetition.copilotUserId = copilotUserId;
    mainWidget.softwareCompetition.copilotUserName = copilotName;
-   
+
+   // set the milestone id
+   mainWidget.softwareCompetition.projectMilestoneId = milestoneId;
+
    mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $('select#projects option[value=' + tcProjectId + ']').html()
    
@@ -1024,6 +1049,13 @@ function showTypeSectionEdit() {
        $('#copilots').sSelect({ddMaxHeight: '220',yscroll: true});
        $('#copilots').data('customized',true);
     }
+
+
+    if(!$('#milestones').data('customized')) {
+        $('#milestones').sSelect({ddMaxHeight: '220',yscroll: true});
+        $('#milestones').data('customized',true);
+    }
+
 	 $('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
     
     var projectType = mainWidget.competitionType;
@@ -2417,6 +2449,21 @@ function handleProjectDropDownChange() {
 
     $('#copilots').resetSS();
     $('#copilots').getSetSSValue(selected);
+
+
+    var milestones = getMilestonesByDirectProjectId(value);
+    var $contestMilestones = $("#milestones");
+
+    $contestMilestones.html("");
+
+    $contestMilestones.append($('<option></option>').val(0).html("Please select a milestone to associate"));
+
+    $.each(milestones, function(id, value) {
+        $contestMilestones.append($('<option></option>').val(value.id).html(value.name).attr('title', value.description));
+    });
+
+    $("#milestones").resetSS();
+
 
     billingAccounts = getBillingAccountsByDirectProjectId(value);
     $("#billingProjects").empty();

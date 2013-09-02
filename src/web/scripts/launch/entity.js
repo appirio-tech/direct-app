@@ -44,9 +44,14 @@
  *  - Update entity com.topcoder.direct.Project to support mm specification
  *  - Update entity com.topcoder.direct.MainWidget to support ALGORITHM contest
  * </p>
+ *
+ * <p>
+ *  Version 1.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ *  - Add projectMilesoneId and projectMilestoneName to the SoftwareCompetition entity.
+ * </p>
  * 
- * @author duxiaoyang, bugbuka
- * @version 1.5
+ * @author duxiaoyang, bugbuka, GreatKevin
+ * @version 1.6
  */
 if(!com) {
    var com = {};
@@ -268,6 +273,12 @@ com.topcoder.direct.SoftwareCompetition = function() {
 	
 	// hold the copilot cost
     this.copilotCost = 0.0;
+
+    // hold the project milestone id  the contest associates with
+    this.projectMilestoneId = 0;
+
+    // hold the project milestone name  the contest associates with
+    this.projectMilestoneName = 0;
 } 
 
 /**

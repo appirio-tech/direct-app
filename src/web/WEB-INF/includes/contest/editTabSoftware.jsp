@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.10
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 2.0
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -38,8 +38,12 @@
   -
   - Version 1.9 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
   - - Uses the billing accounts of the project only for the project prize edit.
+  -
   - Version 1.10 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - change on #billingProjects, will load by jquery
+
+  - Version 2.0 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+  - - Add milestone display and edit
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -80,6 +84,11 @@
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Milestone</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -158,19 +167,35 @@
 				 </div>
                  </div>
                  <br /> <br />
-                 <div id="copilotEditDiv">
-                 <span class="name fixWidthName"><strong>Copilot</strong></span>
-                <div class="copilotsSelect" style="float:left">
-					  <select id="copilots" name="copilots" class="bigin">
-							<option value="0">Unassigned</option>
-							<s:iterator value="copilots" var="copilot">
-							    <option value='<s:property value="userId"/>'>
-                                    <s:property value="handle" />
-							    </option>
-							</s:iterator>
-					  </select>
-				 </div>
-                 </div>
+          <div id="milestoneEditDiv">
+              <span class="name fixWidthName"><strong>Milestone</strong></span>
+
+              <div class="milestoneSelect" style="float:left">
+                  <select id="milestones" name="milestones" class="bigin">
+                      <option value="0">Please select a milestone to associate</option>
+                      <s:iterator value="milestones" var="milestone">
+                          <option value='<s:property value="id"/>'>
+                              <s:property value="name"/>
+                          </option>
+                      </s:iterator>
+                  </select>
+              </div>
+          </div>
+          <br /> <br />
+          <div id="copilotEditDiv">
+              <span class="name fixWidthName"><strong>Copilot</strong></span>
+
+              <div class="copilotsSelect" style="float:left">
+                  <select id="copilots" name="copilots" class="bigin">
+                      <option value="0">Unassigned</option>
+                      <s:iterator value="copilots" var="copilot">
+                          <option value='<s:property value="userId"/>'>
+                              <s:property value="handle"/>
+                          </option>
+                      </s:iterator>
+                  </select>
+              </div>
+          </div>
                  </p>
                  <p class="save">                 	
                      <a href="javascript:;" class="cancel_text">cancel</a>

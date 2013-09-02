@@ -116,6 +116,9 @@
  *
  * - (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 2)
  * - Increase the dropdown width of selecting reports in reports page
+ *
+ * - Module Assembly - TC Cockpit Contest Milestone Association 1
+ * -- Add style of the manage milestones link in launch contest page
  */
 
 
@@ -10148,7 +10151,7 @@ TABLE.softwareStatsApproval {
                 font-size:12px;
             }
 
-a.addBilling, a.addBilling:visited{
+a.addBilling, a.addBilling:visited, a.addMilestone, a.addMilestone:visited{
     color: #e10000;
     font-size: 11px;
     -webkit-text-size-adjust: none;
@@ -10157,7 +10160,7 @@ a.addBilling, a.addBilling:visited{
     margin-left: 0px;
 
 }
-a.addBilling:hover{
+a.addBilling:hover, a.addMilestone:hover{
     text-decoration: none;
     cursor: pointer;
 }

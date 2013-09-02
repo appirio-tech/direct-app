@@ -6,8 +6,11 @@
 * Version 1.1 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
 * 1) Fix the contest type drop down background issue in contest details page.
 *
-* Author: TCSASSEMBLER
-* Version 1.1
+* Version 1.2 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+* 1) Add styles to support the new milestone dropdown in launch contest page
+*
+* Author: GreatKevin
+* Version 1.2
 */
 @charset "utf-8";
 
@@ -354,7 +357,7 @@
                 		border:1px solid #a8abad;
             }             
 				
-			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect{
+			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect, .milestoneSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -1866,7 +1869,7 @@
     }
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected {
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.milestoneSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected {
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1883,11 +1886,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt, .problemSelect .selectedTxt {
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .milestoneSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt, .problemSelect .selectedTxt {
 		width:281px;
 		}
 	
-	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList{
+	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .milestoneSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList{
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;

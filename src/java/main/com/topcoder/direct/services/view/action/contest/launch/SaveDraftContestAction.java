@@ -207,8 +207,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka
- * @version 1.6.10
+ * <p>
+ * Version 1.7 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * <ul>
+ *     <li>Added property {@link #directProjectMilestoneId} and its getter and setter</li>
+ *     <li>Updated method {@link #populateCompetition(com.topcoder.service.project.SoftwareCompetition)} ()} to set milestone id in the request</li>
+ *     <li>Updated method {@link #getSoftwareResult(com.topcoder.service.project.SoftwareCompetition)} to put milestone id and name into the response data of save contest</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin
+ * @version 1.7
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -437,6 +446,14 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private long contestCopilotId;
 
+
+    /**
+     * The direct project milestone id.
+     *
+     * @since 1.7
+     */
+    private long directProjectMilestoneId;
+
     /**
      * <p>
      * This is the copilot name for the software contest.
@@ -615,7 +632,8 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition = activateSoftwareCompetition(softwareCompetition);
             } else {
                 softwareCompetition = contestServiceFacade.updateSoftwareContest(tcSubject, softwareCompetition,
-                        tcDirectProjectId, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                                                                                 tcDirectProjectId, checkpointDate,
+                                                                                 endDate == null ? null : endDate.toGregorianCalendar().getTime());
             }
             setResult(getSoftwareResult(softwareCompetition));
         } else {
@@ -742,6 +760,11 @@ public class SaveDraftContestAction extends ContestAction {
                 }
             }
             softwareCompetition.getProjectHeader().setPrizes(newPrizes);
+        }
+
+        // set milestone association
+        if (getDirectProjectMilestoneId() > 0) {
+            softwareCompetition.setDirectProjectMilestoneId(getDirectProjectMilestoneId());
         }
         
         if (DirectUtils.isStudio(softwareCompetition)) {
@@ -1322,7 +1345,12 @@ public class SaveDraftContestAction extends ContestAction {
         result.put("hasSpecReview", DirectUtils.hasSpecReview(softwareCompetition));
         result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(softwareCompetition));
         result.put("contestId", softwareCompetition.getProjectHeader().getId());
-        
+        if(softwareCompetition.getDirectProjectMilestoneId() > 0) {
+            result.put("projectMilestoneId", softwareCompetition.getDirectProjectMilestoneId());
+            result.put("projectMilestoneName",
+                       getMilestoneService().get(softwareCompetition.getDirectProjectMilestoneId()).getName());
+        }
+
         String forumUrl = DataProvider.getContestDashboardData(
                 softwareCompetition.getProjectHeader().getId(), false, false)
                 .getForumURL();
@@ -1973,5 +2001,25 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setSpecReviewStartMode(String specReviewStartMode) {
         this.specReviewStartMode = specReviewStartMode;
+    }
+
+    /**
+     * Gets the direct project milestone id.
+     *
+     * @return the direct project milestone id.
+     * @since 1.7
+     */
+    public long getDirectProjectMilestoneId() {
+        return directProjectMilestoneId;
+    }
+
+    /**
+     * Sets the direct project milestone id.
+     *
+     * @param directProjectMilestoneId the direct project milestone id.
+     * @since 1.7
+     */
+    public void setDirectProjectMilestoneId(long directProjectMilestoneId) {
+        this.directProjectMilestoneId = directProjectMilestoneId;
     }
 }

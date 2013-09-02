@@ -28,8 +28,11 @@
  * 1) Remove fillPrizes() from validateFieldsContestSelectionAlgorithm(), it does not have the prize structure the same
  * as software contest.
  *
- * @version 1.6
- * @author bugbuka, Veve
+ * Version 1.7 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * - Updates to support setting milestone on contest creation
+ *
+ * @version 1.7
+ * @author bugbuka, Veve, GreatKevin
  */
 $(document).ready(function() {	 
 	 initContestNamesFromDesign();
@@ -176,6 +179,8 @@ function validateFieldsContestSelectionSoftware() {
    var copilotUserId = parseInt($('select#contestCopilot').val());
    var copilotName = $('select#contestCopilot option:selected').text();
 
+   var projectMilestoneId = parseInt($('select#contestMilestone').val());
+
    var startDate = getDateByIdPrefix('start');
    var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
    
@@ -193,7 +198,9 @@ function validateFieldsContestSelectionSoftware() {
    
    
    validateTcProject(tcProjectId, errors);
-   
+   validateDirectProjectMilestone(projectMilestoneId, errors);
+
+
    if(isMultiRound) {
       if(checkpointDateHours == 0) {
 	     errors.push('Checkpoint duration must be positive.');
@@ -210,6 +217,9 @@ function validateFieldsContestSelectionSoftware() {
    // set the copilot user id and user name
    mainWidget.softwareCompetition.copilotUserId = copilotUserId;
    mainWidget.softwareCompetition.copilotUserName = copilotName;
+
+    // set the project milestone id
+    mainWidget.softwareCompetition.projectMilestoneId = projectMilestoneId;
 
    if(needsDesignSelected()) {
    	  mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = true;
@@ -296,6 +306,8 @@ function validateFieldsContestSelectionStudio() {
    var copilotUserId = parseInt($('select#contestCopilot').val());
    var copilotName = $('select#contestCopilot option:selected').text();
 
+    var projectMilestoneId = parseInt($('select#contestMilestone').val());
+
    //dates
    var startDate = getDateByIdPrefix('start');
    var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
@@ -305,6 +317,7 @@ function validateFieldsContestSelectionStudio() {
    
    validateContestName(contestName, errors);
    validateTcProject(tcProjectId, errors);
+   validateDirectProjectMilestone(projectMilestoneId, errors);
 
    if(isMultiRound) {
       if (checkpointDateHours == 0) {
@@ -335,6 +348,9 @@ function validateFieldsContestSelectionStudio() {
    // set the copilot user id and user name
    mainWidget.softwareCompetition.copilotUserId = copilotUserId;
    mainWidget.softwareCompetition.copilotUserName = copilotName;
+
+    // set the project milestone id
+    mainWidget.softwareCompetition.projectMilestoneId = projectMilestoneId;
 
    if(copilotUserId == 0) {
        mainWidget.softwareCompetition.copilotCost = 0;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript
@@ -16,8 +16,11 @@
  * Version 1.0.3 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
  *
- * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.0.3
+ * Version 1.1 (Module Assembly - TC Cockpit Contest Milestone Association 1)
+ * - Add support for milestone association with contest in contest detail page.
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 $(document).ready(function(){
     /* init date-pack */
@@ -417,7 +420,7 @@ function validateFieldsTypeSection() {
    var contestTypeId = parseInt(getContestType()[1]);
    var contestName = $('input#contestName').val();
    var tcProjectId = parseInt($('select#projects').val());
-
+   var milestoneId =  parseInt($('select#contestMilestone').val());
 
    //validation
    var errors = [];
@@ -431,6 +434,9 @@ function validateFieldsTypeSection() {
    }
    
    validateTcProject(tcProjectId, errors);
+
+   validateDirectProjectMilestone(milestoneId, errors);
+
    if(errors.length > 0) {
        showErrors(errors);
        return false;
