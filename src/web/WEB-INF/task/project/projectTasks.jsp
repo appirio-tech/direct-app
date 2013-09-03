@@ -547,9 +547,9 @@ mind that some features are not implemented yet.  For a full description of what
             <p>You can also create new task list by clicking on “<strong>Add a Task List</strong>” button.</p>
             <h4>Have questions or need help?</h4>
             <div class="linkswrapper">
-                <a href="javascript:;" class="taskListHelpLink">Tasks FAQs</a>  &nbsp;|&nbsp;
-                <a href="javascript:;" class="taskListHelpLink">Tasks Video</a>  &nbsp;|&nbsp;
-                <a href="javascript:;" class="taskListHelpLink">Tasks Tutorials</a>
+                <a href="https://www.topcoder.com/university/platform-updates/cockpit-task-management-part-2/" target="_blank" class="taskListHelpLink">Tasks FAQs</a>  &nbsp;|&nbsp;
+                <a href="https://youtu.be/j19ZtGBflDc" target="_blank" class="taskListHelpLink">Tasks Video</a>  &nbsp;|&nbsp;
+                <a href="https://www.topcoder.com/university/platform-updates/cockpit-task-management-part-2/" target="_blank" class="taskListHelpLink">Tasks Tutorials</a>
             </div>
         </div>
     </div>
