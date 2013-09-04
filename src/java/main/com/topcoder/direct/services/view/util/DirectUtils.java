@@ -540,9 +540,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *     </code> round type.</li>
  *   </ol>
  * </p>
- * 
+ *
+ * <p>
+ * Version 1.10.3 (Cockpit - Incorrect Cost Report Result - BUGR-9455)
+ * <ul>
+ *     <li>Add field {@link #BUG_RACE_CONTEST_NAME}</li>
+ * </ul>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce
- * @version 1.10.2
+ * @version 1.10.3
  */
 public final class DirectUtils {
 
@@ -564,6 +570,11 @@ public final class DirectUtils {
      */
     public static final long BUGR_CONTEST_TYPE_ID = 900001;
 
+    /**
+     * <p>the bug race category name.</p>
+     * @since 1.10.3
+     */
+    public static final String BUG_RACE_CONTEST_NAME = "Bug Race";
     /**
      * Draft status list.
      */
