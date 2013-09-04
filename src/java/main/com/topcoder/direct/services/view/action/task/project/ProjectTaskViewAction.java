@@ -961,7 +961,7 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
         // set the name (escaped)
         task.setName(StringEscapeUtils.escapeHtml(taskDTO.getName()));
 
-        if(taskDTO.getNotes() != null & taskDTO.getNotes().trim().length() > 0) {
+        if(taskDTO.getNotes() != null && taskDTO.getNotes().trim().length() > 0) {
             // set the notes (escaped)
             task.setNotes(StringEscapeUtils.escapeHtml(taskDTO.getNotes()));
         } else {
