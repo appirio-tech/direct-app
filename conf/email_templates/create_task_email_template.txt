@@ -104,11 +104,7 @@
 
  
 
-                            <div style\="color\: #6D6C69; font-size\: 14px; font-weight\: bold; line-height\: 21px;"><div id\="intro_title">TopCoder Cockpit Alert\:</div></div>
-
- 
-
-                            <div style\="color\: #4F4E4C; font-size\: 23px; font-weight\: bold; line-height\: 26px;"><div  id\="main_title">Task Created</div></div>
+                            <div style\="color\: #6D6C69; font-size\: 14px; font-weight\: bold; line-height\: 21px;"><div id\="intro_title">TopCoder Cockpit Alert\:  Task Created</div></div>
 
                             <br />
 

@@ -384,9 +384,9 @@
 # Project Tasks  #
 ##################
 @taskEmailSender@=donotreply@topcoder.com
-@taskCreationEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; has been created.
+@taskCreationEmailSubjectTemplateText@=(%PROJECT_NAME%) Task created and assigned to you\\: %TASK_NAME%
 @taskCreationEmailBodyTemplatePath@=email_templates/create_task_email_template.txt
-@taskStatusChangeEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; status has been changed.
+@taskStatusChangeEmailSubjectTemplateText@=(%PROJECT_NAME%) Task status changed to %UPDATED_TASK_STATUS%\\: %TASK_NAME%
 @taskStatusChangeEmailBodyTemplatePath@=email_templates/update_task_status_email_template.txt
 
 #OAuth settings.
