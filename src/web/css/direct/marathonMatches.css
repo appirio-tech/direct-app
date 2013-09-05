@@ -247,10 +247,6 @@
                 .coderTextBlack:hover{
                     text-decoration: none !important;
                 }
-					
-					#appositeContainer .currentStandingsModule .content table td a{
-						color:#0000ff;
-						}
 						
 					#appositeContainer .currentStandingsModule .content table td a:hover{
 						text-decoration:none;
