@@ -23,7 +23,7 @@
 
     <script type="text/javascript" id ="js-ui" src="/scripts/ui.dialog.js?v=185283"></script>
     <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js?v=186145"></script>
-    <script type="text/javascript" id="jquery-dt"src="/scripts/jquery.dataTables.min.js?v=178111"></script>
+    <script type="text/javascript" id="jquery-dt" src="/scripts/jquery.dataTables.min.js?v=178111"></script>
     <script type="text/javascript" id="dt-extend" src="/scripts/dataTable.extend.js?v=186145"></script>
     <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=213622"></script>
     <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=210124"></script>

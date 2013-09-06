@@ -82,7 +82,7 @@ function requestPermissions() {
         method:"get",
         url:GET_PROJECT_PERMISSIONS_URL,
         responseType:"text",
-        sendingData:"",
+        sendingData:"nothing",
         onSuccess:function (processor) {
             handlePermissionJsonResult(JSON.parse(processor.getResponseText()));
             $("#permissions .applyForAll:gt(0)").remove();
