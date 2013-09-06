@@ -333,7 +333,7 @@
                                             <s:checkbox id="remember_me" cssClass="rememberMe"
                                                         name="formData.remember"/>
                                             <s:label for="remember_me" cssClass="rememberMe">Remember Me</s:label>
-                                            <a href="https://www.topcoder.com/tc?module=RecoverPassword"
+                                            <a href="https://community.topcoder.com/tc?module=FindUser"
                                                class="forgotPass" target="_blank">Forgot Password?</a>
                                             <s:submit cssStyle="display:none;"/>
                                         </p>
