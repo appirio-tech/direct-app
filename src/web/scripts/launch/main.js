@@ -2055,7 +2055,7 @@ function validateTcProject(tcProjectId, errors) {
 
 function validateDirectProjectMilestone(milestoneId, errors) {
     if(milestoneId <= 0) {
-        errors.push("Please choose a project milestone to associate with the contest");
+        errors.push("Please associate this competition to a project milestone. If you don’t have any milestones, please create some now.");
     }
 }
 
