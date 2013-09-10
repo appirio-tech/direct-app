@@ -144,7 +144,7 @@ public class CommonAction extends BaseContestFeeAction {
 
         try {
             List<Milestone> milestones = getMilestoneService().getAll(this.directProjectId,
-                                                               Arrays.asList(MilestoneStatus.values()),
+                                                               Arrays.asList(new MilestoneStatus[]{MilestoneStatus.OVERDUE, MilestoneStatus.UPCOMING}),
                                                                SortOrder.ASCENDING);
             ObjectMapper m = new ObjectMapper();
 
