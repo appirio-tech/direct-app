@@ -703,6 +703,7 @@ function updateInvoiceRecords(contestIds, jiraIssueIds, paymentIds, referenceIds
         data: data,
         dataType: "json",
         cache:false,
+		timeout:400000,
         success: function(jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
