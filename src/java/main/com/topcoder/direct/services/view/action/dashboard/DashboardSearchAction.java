@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
@@ -16,11 +16,9 @@ import com.topcoder.direct.services.view.form.DashboardSearchForm;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -72,8 +70,16 @@ import java.util.TreeMap;
  *   </ol>
  * </p>
  *
- * @author isv, BeBetter, bugbuka, TCSASSEMBLER
- * @version 2.3 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+ * <p>
+ * Version 2.4 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #copilots} property and updated {@link #executeAction()} method to initialize that property.
+ *     </li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, bugbuka, TCSDEVELOPER
+ * @version 2.4 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
  */
 public class DashboardSearchAction extends BaseDirectStrutsAction implements ViewAction<DashboardSearchResultsDTO>,
         FormAction<DashboardSearchForm> {
@@ -127,6 +133,15 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
      * @since 2.3
      */
     private List<String> projectManagers = new ArrayList<String>();
+
+    /**
+     * <p>A <code>List</code> providing the list of handles for copilots for contests associated with TC Direct
+     * project.</p>
+     * 
+     * @since 2.4
+     */
+    private List<String> copilots = new ArrayList<String>();
+
     /**
      * <p>
      * Constructs new <code>DashboardSearchAction</code> instance. This implementation does nothing.
@@ -179,6 +194,17 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
     }
 
     /**
+     * <p>Gets the list of handles for copilots for contests associated with TC Direct project.</p>
+     *
+     * @return a <code>List</code> providing the list of handles for copilots for contests associated with TC Direct
+     *         project.
+     * @since 2.4
+     */
+    public List<String> getCopilots() {
+        return this.copilots;
+    }
+
+    /**
      * <p>
      * Gets the form data.
      * </p>
@@ -217,6 +243,7 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
 
                 customers.clear();
                 projectManagers.clear();
+                copilots.clear();
                 for (DashboardProjectSearchResultDTO item : projects) {
                     allProjectIds.add(item.getData().getProjectId());
                     helperMap.put(item.getData().getProjectId(), item);
@@ -232,8 +259,19 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
                             }
                         }
                     }
+                    if ((item.getData().getCopilotNames() != null) &&
+                            (0 != item.getData().getCopilotNames().trim().length())) {
+                        String copilotNames = item.getData().getCopilotNames();
+                        String[] copilotNamesArray = copilotNames.split(",");
+                        for (String name : copilotNamesArray) {
+                            if (!copilots.contains(name.trim())) {
+                                copilots.add(name.trim());
+                            }
+                        }
+                    }
                 }
                 Collections.sort(projectManagers, String.CASE_INSENSITIVE_ORDER);
+                Collections.sort(copilots, String.CASE_INSENSITIVE_ORDER);
 
                 if (this.getMetadataKeyService() == null) {
                     throw new IllegalStateException("The direct project metadata service is not initialized.");

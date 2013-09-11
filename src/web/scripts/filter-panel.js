@@ -29,8 +29,11 @@
  * Version 1.8 (Release Assembly - TC Cockpit Operations Dashboard Improvements 3) changes:
  * - add duplication test before add value from contests dropdown.
  *
- * @author GreatKevin, tangzx, Fanazhe
- * @version 1.8
+ * Version 1.9 (Release Assembly - TC Cockpit Operations Dashboard Improvements 4) changes:
+ * - added support for Copilot filter
+ *
+ * @author GreatKevin, tangzx, Fanazhe, TCSDEVELOPER
+ * @version 1.9
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -683,18 +686,19 @@ var setupFilterPanel = function () {
             //$('#projectManagerFilter').append("<option value=" + key + ">" + key + "</option>");
         });
     
-        $("#projectManagerFilter").change(function() {
+        $("#copilotFilter").change(function () {
             var searchPattern = $(this).val();
-            if (searchPattern== '-1') {
-                searchPattern = 'none';
-            }
-            if (searchPattern.indexOf('All') != -1) {
-                searchPattern = '';
+            if (searchPattern == '-1') {
+                searchPattern = ',none,';
+            } else if (searchPattern != '') {
+                searchPattern = "," + searchPattern + ",";
             }
 
-            tableHandle.fnFilter(searchPattern, 15);
+            tableHandle.fnFilter(searchPattern, 19);
         }).val('').trigger('change');
         
+        $("#projectManagerFilter").val('').trigger('change');
+
     }        
 }
 
@@ -1055,4 +1059,33 @@ function parseNumberFromString(str) {
         return NaN;
     }
     return ret;
+}
+
+/**
+ * Filters the list of projects in Operations Dashboard on multiple selected platform specialists
+ */
+function selectPlatformSpecsCallback() {
+    var selectedValues = [];
+    $('.multiSelectOptions').find('INPUT:checkbox:checked').not('.optGroup, .selectAll').each(function () {
+        selectedValues.push($(this).attr('value'));
+    });
+
+    var searchPattern;
+    if (selectedValues.length == 0) {
+        searchPattern = '';
+        tableHandle.fnFilter(searchPattern, 15);
+    } else {
+        searchPattern = '';
+        for (var i = 0; i < selectedValues.length; i++) {
+            var value = selectedValues[i];
+            if (value == '-1') {
+                value = 'none';
+            }
+            if (i > 0) {
+                searchPattern += '|';
+            }
+            searchPattern += value;
+        }
+        tableHandle.fnFilter(searchPattern, 15, true, false);
+    }
 }

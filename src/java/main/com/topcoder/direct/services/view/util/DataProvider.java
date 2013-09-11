@@ -167,7 +167,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.naming.NamingException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
@@ -954,16 +953,17 @@ import java.util.Set;
  * </p>
  *
  * <p>
- * Version 6.19 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
+ * Version 6.20 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4 Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Added {@link #showStudioFinalFixTab(TCSubject, long)} method.</li>
+ *     <li>Updated {@link #getPMProjectData(TCSubject)} method to retrieve the list of copilots for the TC Direct 
+ *     projects, maximum delay for the project's contests launching and late phases.</li>
  *   </ol>
  * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, TCSASSEMBLER
- * @version 6.19
+ * @version 6.20
  * @since 1.0
  */
 public class DataProvider {
@@ -1778,12 +1778,15 @@ public class DataProvider {
 
         List<ProjectSummaryData> projectData = new ArrayList<ProjectSummaryData>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests_v3");
-
+        Map<String, ResultSetContainer> result = dataAccessor.getData(request);
+        ResultSetContainer resultContainer = result.get("direct_my_pm_projects_contests_v3");
+        Map<Long, ProjectSummaryData> projectDataLookup = new HashMap<Long, ProjectSummaryData>();
+        
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
             ProjectSummaryData data = new ProjectSummaryData();
             if (row.getItem("tc_direct_project_id").getResultData() != null) {
             	data.setProjectId(row.getLongItem("tc_direct_project_id"));
+                projectDataLookup.put(data.getProjectId(), data);
             }
             if (row.getItem("tc_direct_project_name").getResultData() != null) {
             	data.setProjectName(row.getStringItem("tc_direct_project_name"));
@@ -1859,8 +1862,43 @@ public class DataProvider {
             if (row.getItem("historical_projected_cost").getResultData() != null) {
             	data.setHistoricalProjectedCost(row.getDoubleItem("historical_projected_cost"));
             }
+            if (row.getItem("copilots").getResultData() != null) {
+                data.setCopilotNames(row.getStringItem("copilots"));
+            }
+            if (row.getItem("launch_delayed_time").getResultData() != null) {
+                Timestamp launchDelayedTime = row.getTimestampItem("launch_delayed_time");
+                Date now = new Date();
+                long diff = now.getTime() - launchDelayedTime.getTime();
+                diff /= 1000;
+                long hoursDelayed = diff / 3600;
+                if (hoursDelayed > 0) {
+                    data.setLaunchLateDelay(hoursDelayed); // There is at least 1 hour of delay
+                } else if (diff % 3600 > 0) {
+                    data.setLaunchLateDelay(0L);           // There is less than 1 hour of delay so 0 indicates that
+                                                           // and null (set by default) will indicate that there is 
+                                                           // no delay
+                }
+            }
+            if (row.getItem("late_phase_end_time").getResultData() != null) {
+                Timestamp latePhaseEndTime = row.getTimestampItem("late_phase_end_time");
+                Date now = new Date();
+                double diffInDays = (now.getTime() - latePhaseEndTime.getTime()) * 1D / 1000 / 3600 / 24;
+                data.setLatePhaseDelay(diffInDays);
+            }
+            data.setActiveContestsCount(new HashMap<String, Integer>());
 
             projectData.add(data);
+        }
+        
+        // Collect the data for the active contests
+        resultContainer = result.get("direct_project_active_contest_stats");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            long tcDirectProjectId = row.getLongItem("tc_direct_project_id");
+            if (projectDataLookup.containsKey(tcDirectProjectId)) {
+                String projectCategoryName = row.getStringItem("project_category_name");
+                int activeContestsCount = row.getIntItem("active_contests_count");
+                projectDataLookup.get(tcDirectProjectId).getActiveContestsCount().put(projectCategoryName, activeContestsCount);
+            }
         }
 
         return projectData;
@@ -8606,20 +8644,5 @@ public class DataProvider {
 
     }
 
-    /**
-     * <p>Checks whether the Final Fix tab must be shown on the page for the specified contest or not.</p>
-     *
-     * @param user a <code>TCSubject</code> representing the current user.
-     * @param contestId a <code>long</code> providing the ID of a contest.
-     * @return <code>true</code> if Final Fix tab must be shown on the page for the specified contest;
-     *         <code>false</code> otherwise.
-     * @since 6.19
-     */
-    public static boolean showStudioFinalFixTab(TCSubject user, long contestId)
-            throws PermissionServiceException, ContestServiceException, NamingException {
-        ContestServiceFacade contestServiceFacade = DirectUtils.getContestServiceFacade();
-        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(user, contestId);
-        return DirectUtils.showStudioFinalFixTab(softwareCompetition);
-    }
 }
 

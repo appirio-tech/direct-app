@@ -1,6 +1,6 @@
 <%--
-  - Author: bugbuka, GreatKevin, morehappiness, tangzx
-  - Version: 1.3
+  - Author: bugbuka, GreatKevin, morehappiness, tangzx, TCSDEVELOPER
+  - Version: 1.4
   - Since: Module Assembly - TC Cockpit Operations Dashboard 
   - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
@@ -13,6 +13,11 @@
   - Version: 1.3 (Release Assembly - TC Cockpit Operations Dashboard Improvements 2)
   - Change in version 1.3: Add column for 'Historical Cost Difference' and risk filter.
   -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4) changes:
+  -    Added hidden column listing the copilots for the TC Direct projects.
+  -    Updated Status column to show the amount for delay for late launches and phases
+  -    Added Active Contests column
+  -    Made Platform Specialists drop-down multi-selectable
   - Description: This page renders the search result for operations dashboard.  
   -
 --%>
@@ -27,20 +32,13 @@
                 <col width="15%">
                 <col width="12%">
                 <col width="7%">
-                <col width="16%">
+                <col width="12%">
                 <col width="9%">
                 <col width="14%">
                 <col width="7%">
                 <col width="9%">
                 <col width="7%">
-                
-                <col width="">
-                <col width="">
-                <col width="">
-                <col width="">
-                <col width="">
-                <col width="">
-                <col width="">
+                <col width="7%">
             </colgroup>
 
             <thead>
@@ -64,6 +62,8 @@
                 <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
+                <th class='hide'></th>
+                <th>Active Contests</th>
             </tr>
             </thead>
             <tbody>
@@ -222,10 +222,36 @@
                     </td>
                     <td class="last">
                         <c:if test="${projectSummary.phaseLateContestsNum > 0}">
-                            Phase Late (${projectSummary.phaseLateContestsNum}) <br/>
+                            Phase Late (${projectSummary.phaseLateContestsNum})
+                            <c:if test="${projectSummary.latePhaseDelay ne null and projectSummary.latePhaseDelay > 0}">
+                                <c:choose>
+                                    <c:when test="${projectSummary.latePhaseDelay < 1}">
+                                        - <fmt:formatNumber value="${projectSummary.latePhaseDelay}" pattern="###0.##"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        - <fmt:formatNumber value="${projectSummary.latePhaseDelay}" pattern="###0"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                day${projectSummary.latePhaseDelay >= 2 ? 's' : ''}
+                            </c:if>
+                            <br/>
                         </c:if>
                         <c:if test="${projectSummary.launchLateContestsNum > 0}">
-                            Launch Late (${projectSummary.launchLateContestsNum}) <br/>
+                            Launch Late (${projectSummary.launchLateContestsNum})
+                            <c:if test="${projectSummary.launchLateDelay ne null}">
+                                <c:choose>
+                                    <c:when test="${projectSummary.launchLateDelay eq 0}">
+                                        - less than 1 hour
+                                    </c:when>
+                                    <c:when test="${projectSummary.launchLateDelay < 24}">
+                                        - ${projectSummary.launchLateDelay} hour${projectSummary.launchLateDelay > 1 ? 's' : ''}
+                                    </c:when>
+                                    <c:otherwise>
+                                        - <fmt:formatNumber value="${projectSummary.launchLateDelay / 24}" pattern="###0"/> day${projectSummary.launchLateDelay / 24 > 1 ? 's' : ''}
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                            <br/>
                         </c:if>
                         <c:if test="${projectSummary.checkpointLateContestsNum > 0}">
                             Checkpoint Late (${projectSummary.checkpointLateContestsNum}) <br/>
@@ -314,7 +340,28 @@
                                 0
                             </c:otherwise>
                         </c:choose> 
-                    </td>                    
+                    </td>
+                    <%-- copilots --%>
+                    <td class="hide">
+                        <c:choose>
+                            <c:when test="${empty projectSummary.copilotNames}">
+                                ,none,
+                            </c:when>
+                            <c:otherwise>
+                                ,${projectSummary.copilotNames},
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <%-- active contests --%>
+                    <td>
+                        <c:set var="totalActiveContestsCount" value="0"/>
+                        <c:forEach items="${projectSummary.activeContestsCount}" var="stat">
+                            <c:out value="${stat.key}"/> (${stat.value})
+                            <br/>
+                            <c:set var="totalActiveContestsCount" value="${totalActiveContestsCount + stat.value}"/>
+                        </c:forEach>
+                        <input type="hidden" class="totalActiveContestsCount" value="${totalActiveContestsCount}"/>
+                    </td>
                 </tr>
             </s:iterator>
 

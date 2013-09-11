@@ -100,8 +100,11 @@
  * Version 2.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
  * - Add support for Marathon Match System Tests table.
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.8
+ * Version 2.9 (Release Assembly - TC Cockpit Operations Dashboard Improvements 4) changes:
+ * - added sorting for Active Contests column on Operations Dashboard page
+ * 
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin, TCSDEVELOPER
+ * @version 2.9
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -132,6 +135,17 @@ $(document).ready(function() {
             }
         }
         return str;
+    }
+
+    function getTotalActiveContestsCount(text) {
+        var p1 = text.indexOf('value="');
+        if (p1 >= 0) {
+            var p2 = text.indexOf('"', p1 + 7);
+            var s = text.substring(p1 + 7, p2);
+            return parseInt(s);
+        } else {
+            return 0;
+        }
     }
 
     function getPercentage(text) {
@@ -180,6 +194,19 @@ $(document).ready(function() {
         var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
         return z;
     };
+
+    jQuery.fn.dataTableExt.oSort['active-contests-asc'] = function (a, b) {
+        var vala = getTotalActiveContestsCount(a);
+        var valb = getTotalActiveContestsCount(b);
+        return vala - valb;
+    };
+
+    jQuery.fn.dataTableExt.oSort['active-contests-desc'] = function (a, b) {
+        var vala = getTotalActiveContestsCount(a);
+        var valb = getTotalActiveContestsCount(b);
+        return valb - vala;
+    };
+
     jQuery.fn.dataTableExt.oSort['direct-percentage-asc'] = function(a, b) {
         var num1 = getPercentage(a);
         var num2 = getPercentage(b);
@@ -736,7 +763,9 @@ $(document).ready(function() {
             null,
             { "sType": "numeric" },
             null,
-            { "sType": "numeric" }
+            { "sType": "numeric" },
+            { "sType": "html" },
+            { "sType": "active-contests" }
         ]
 
     });

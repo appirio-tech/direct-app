@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, GreatKevin, bugbuka, Ghost_141, TCSASSEMBLER
-  - Version: 1.7 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
-  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin, bugbuka, Ghost_141, TCSDEVELOPER
+  - Version: 1.8 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
   -
@@ -19,6 +19,8 @@
   - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Fix text inconsistency bug.
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4) changes:
+  - - Added Copilots filter
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -28,6 +30,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+
     <s:if test="viewData.isAllProjectsPage == false">
         <s:if test="viewData.resultType != null && viewData.resultType.name() == 'PM_PROJECTS'">
             <ui:dashboardPageType tab="enterprise"/>
@@ -44,7 +48,18 @@
 	</s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
     <script type="text/javascript" src="/scripts/directProjectManage.js?v=214865"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.multiselect').multiSelect({
+                selectAllText: "All Managers",
+                noneSelected: "All Managers",
+                oneOrMoreSelected: "% specialists selected"
+            }, selectPlatformSpecsCallback);
+            $('.selectAll').attr("checked", "checked").trigger('change');
+        });        
+    </script>
 </head>
 
 <body id="page">
@@ -116,7 +131,7 @@
                                 <!--end .filterHead-->
                                 <div class='filterContent'>
                                     <div class='rightSide'>
-                                        <div class='inner'>
+                                        <div class='inner selectFilter'>
                                             <div class='column1'>
                                                 <div class='row'>
                                                     <span class='title'>Customer </span>
@@ -146,12 +161,22 @@
                                                 <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
                                                     <div class='row'>
                                                         <span class='title'>Platform Specialists</span>
-                                                        <select id='projectManagerFilter'>
-                                                            <option value=''>All Managers</option>
+                                                        <select id='projectManagerFilter' class="multiselect">
+                                                            <option value='' selected="selected">All Managers</option>
                                                             <c:forEach var="managerName" items="${projectManagers}">
                                                                 <option value='${managerName}'>${managerName}</option>
                                                             </c:forEach>
                                                             <option value='-1'>No Manager</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class='row'>
+                                                        <span class='title'>Copilots</span>
+                                                        <select id="copilotFilter" name="copilotFilter">
+                                                            <option value="">All Copilots</option>
+                                                            <c:forEach var="copilotName" items="${copilots}">
+                                                                <option value='${copilotName}'>${copilotName}</option>
+                                                            </c:forEach>
+                                                            <option value='-1'>No Copilot</option>
                                                         </select>
                                                     </div>
                                                 </s:if>
