@@ -55,7 +55,7 @@
                                     <div class="container2Content">
 
                                         <div class="summary">
-                                            ${totalVMCount} VMs in total used for the contest (includes active and terminated). <c:if test="${activeVMCount > 0}">${activeVMCount} <c:if test="${activeVMCount > 1}">VMs are </c:if><c:if test="${activeVMCount == 1 }">VM is </c:if> still active.</c:if>
+                                            Total ${totalVMCount} (active ${activeVMCount}, terminated ${terminatedVMCount})
                                         </div>
 
                                         <div class='filterPanel' id='ContestVMFilter' style="margin-top:10px">
