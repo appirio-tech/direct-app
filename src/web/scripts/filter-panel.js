@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for data table filter panel.
  *
@@ -32,8 +32,11 @@
  * Version 1.9 (Release Assembly - TC Cockpit Operations Dashboard Improvements 4) changes:
  * - added support for Copilot filter
  *
- * @author GreatKevin, tangzx, Fanazhe, TCSDEVELOPER
- * @version 1.9
+ * Version 2.0 (TopCoder Direct Contest VM Instances Management) changes:
+ * - add filter handler for contest vm instances page.
+ *
+ * @author GreatKevin, tangzx, Fanazhe, gentva
+ * @version 2.0
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -162,6 +165,8 @@ var setupFilterPanel = function () {
         tableHandle = $.ProjectsContests;
     } else if (handleName == 'vmFilter') {
         tableHandle = vmTable;
+    } else if (handleName == 'contestVMFilter') {
+        tableHandle = contestVMTable;
     }
     //common part
     var customerFilter, len;
@@ -331,6 +336,102 @@ var setupFilterPanel = function () {
 
             $("#memberHandleFilter").empty().append(all_option).append(my_options);
             $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
+        }
+    }
+    if (handleName == 'contestVMFilter') {
+        var imageNameFilter = tableHandle.fnGetColumnData(0);
+        $('#imageNameFilter option:gt(0)').remove();
+        len = imageNameFilter.length;
+        for (var i = 0; i < len; i++) {
+            var name = imageNameFilter[i];
+            $('#imageNameFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        var memberHandleFilter = tableHandle.fnGetColumnData(3);
+        len = memberHandleFilter.length;
+        $('#memberHandleFilter option:gt(0)').remove();
+        for (var i = 0; i < len; i++) {
+            var name = memberHandleFilter[i];
+            $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        var vmStatusFilter = tableHandle.fnGetColumnData(7);
+        len = vmStatusFilter.length;
+        $('#vmStatusFilter option:gt(0)').remove();
+        for (var i = 0; i < len; i++) {
+            var name = vmStatusFilter[i];
+            $('#vmStatusFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        var createdByFilter = tableHandle.fnGetColumnData(8);
+        len = createdByFilter.length;
+        $('#createdByFilter option:gt(0)').remove();
+        for (var i = 0; i < len; i++) {
+            var name = createdByFilter[i];
+            $('#createdByFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+
+        var usageFilter = tableHandle.fnGetColumnData(6);
+        len = usageFilter.length;
+        $('#vmUsageFilter option:gt(0)').remove();
+        for (var i = 0; i < len; i++) {
+            var name = $.trim(usageFilter[i]);
+            if (name.length > 0)
+                $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        $('#imageNameFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+
+            tableHandle.fnFilter(str, 0);
+        });
+
+        $('#memberHandleFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 3);
+        });
+
+        $('#vmUsageFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 6);
+        });
+
+        $('#vmStatusFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 7);
+        });
+
+        $('#createdByFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 8);
+        });
+
+        if ($("#memberHandleFilter").length > 0) {
+            var all_option = $("#memberHandleFilter option:eq(0)")
+            var my_options = $("#memberHandleFilter option:gt(0)");
+
+            my_options.sort(function (a, b) {
+                a = a.text.toUpperCase();
+                b = b.text.toUpperCase();
+                if (a > b) return 1;
+                else if (a < b) return -1;
+                else return 0
+            })
+
+            $("#memberHandleFilter").empty().append(all_option).append(my_options);
+            $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
+        }
+
+        // by default filter by RUNNING.
+        if ($('#vmStatusFilter option[value="RUNNING"]').length > 0) {
+            $('#vmStatusFilter option[value="RUNNING"]').attr('selected', 'selected');
+            tableHandle.fnFilter("RUNNING", 7);
         }
     }
 
@@ -745,6 +846,11 @@ $(function() {
         handleName = "vmFilter";
     }
 
+    if ($("#ContestVMFilter").length > 0) {
+        handleName = "contestVMFilter";
+    }
+
+
     if ($("#ProjectsContestsFilter").length > 0) {
         handleName = "ProjectsContests";
     }
@@ -770,6 +876,8 @@ $(function() {
     } else if (handleName == 'vmFilter') {
         var additionalColumnNumber = $("#contest_vms thead th").length - 11;
         startDateCol = 7 + additionalColumnNumber;
+    } else if (handleName == 'contestVMFilter') {
+        startDateCol = 5;
     }
 
     if ($("#allProjectsFilter").size() > 0) {

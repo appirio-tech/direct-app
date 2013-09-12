@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Veve, GreatKevin, Ghost_141, Veve
-  - Version: 1.10
+  - Author: isv, Veve, GreatKevin, Ghost_141, Veve, gentva
+  - Version: 1.11
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -34,6 +34,9 @@
   -
   - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
   - - Update the tc-web:handle tag to add handle property.
+  -
+  - Version 1.11 (TopCoder Direct Contest VM Instances Management)
+  - - Fix the registration status expression.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -265,7 +268,7 @@
     <s:if test="!marathon">
         <div class="dashboardModule registrationModule">
 
-            <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
+            <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus"/>
             <c:set var="statusWidth" value="${viewData.dashboard.regProgressPercent}"/>
             <c:choose>
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">

@@ -1,11 +1,13 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 /**
  * The JS script for VM service.
  *
  *  Version 1.1 - TC Direct UI Improvement Assembly 1 (BHCUI-90) Change Note
  *  - Solve "all clear buttons in "VM Management" cannot work"
+ *  Version 1.2 - TopCoder Direct Contest VM Instances Management Change Note
+ *  - Solve the problem, sorting only on the filtered data
  *
  * @author winsty
  * @version 1.1 (TC Direct UI Improvement Assembly 1)
@@ -19,7 +21,7 @@ $(document).ready(function() {
     if (columnCount == 12) {
         vmTable = $("#contest_vms").dataTable({
             "bPaginate": false,
-            "bFilter": false,
+            "bFilter": true,
             "bStateSave": false,
             "bSort": true,
             "bAutoWidth": false,

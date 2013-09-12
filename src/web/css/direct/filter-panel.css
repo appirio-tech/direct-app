@@ -1,3 +1,11 @@
+/*
+ * CSS for filter panels.
+ *
+ * Change logs:
+ *
+ * - (TopCoder Direct Contest VM Instances Management )
+ * - Added new styles for Contest VM Instances Page.
+ */
 .title {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -155,10 +163,6 @@
     width: 150px;
 }
 #projectManagerFilter {
-    width: 129px;
-}
-
-#copilotFilter {
     width: 150px;
 }
 
@@ -285,28 +289,40 @@
     width: 450px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column1 .row .title {
+#VMFilter.filterPanel .filterContent .inner .column1 .row .title, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row .title  {
     width: 105px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
+#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel, #ContestVMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
     width:90px;
 }
 
 
-#VMFilter.filterPanel #contestNameFilter {
+#VMFilter.filterPanel #contestNameFilter, #ContestVMFilter.filterPanel #contestNameFilter {
     width: 350px;
 }
 
-#VMFilter.filterPanel #memberHandleFilter {
+#ContestVMFilter.filterPanel #imageNameFilter {
+    width: 350px;
+}
+
+#ContestVMFilter.filterPanel #vmStatusFilter {
     width: 200px;
 }
 
-#VMFilter.filterPanel #vmUsageFilter {
+#ContestVMFilter.filterPanel #createdByFilter {
+    width: 200px;
+}
+
+#VMFilter.filterPanel #memberHandleFilter, #ContestVMFilter.filterPanel #memberHandleFilter {
+    width: 200px;
+}
+
+#VMFilter.filterPanel #vmUsageFilter, #ContestVMFilter.filterPanel #vmUsageFilter {
     width: 250px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column1 {
+#VMFilter.filterPanel .filterContent .inner .column1 , #ContestVMFilter.filterPanel .filterContent .inner .column1{
     width: 500px;
 }
 
@@ -377,7 +393,7 @@ a.redBtn span.left {
     cursor: pointer;
 }
 a.redBtn:hover{
-	background-position:left -21px;
+    background-position:left -21px;
 }
 a.redBtn:hover span.left{
     background-position:right -21px;
@@ -473,7 +489,7 @@ a.redBtn:hover span.left{
 }
 
 #pmProjectsResult .budgetRow .allThreeCosts {
-    width:180px; 
+    width:180px;
     font-weight:normal;
 }
 
@@ -482,7 +498,7 @@ a.redBtn:hover span.left{
 }
 
 #pmProjectsResult .diffRow .allDiffInfo {
-    width:100px; 
+    width:100px;
     font-weight:normal;
 }
 
@@ -491,7 +507,7 @@ a.redBtn:hover span.left{
 }
 
 #pmProjectsResult .durationRow .allThreeDurations {
-    width:180px; 
+    width:180px;
     font-weight:normal;
 }
 
@@ -499,10 +515,10 @@ a.redBtn:hover span.left{
     width: 180px;
 }
 
-.selectFilter .column1 .row label,
-.selectFilter .column1 .row  span.label {
-    padding: 6px 0 0 0;
-    font-size: 11px;
-    font-weight: bold;
-    color: #010101;
-}        
+#VMFilter.filterPanel .filterContent .inner .column3, #ContestVMFilter.filterPanel .filterContent .inner .column3 {
+    width: 350px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column1 .row, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row {
+    margin-top: 8px;
+}

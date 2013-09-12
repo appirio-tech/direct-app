@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Veve, morehappiness
-  - Version: 1.6
+  - Author: isv, Veve, morehappiness, gentva
+  - Version: 1.10
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
@@ -23,9 +23,10 @@
   - - Add support for competition tab in marathon match contest.
   - Version 1.8 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab) changes:
   - - Add 'Results' tab for marathon match past contest only.
-
   - Version 1.9 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One) changes:
   - - Added Final Fixes tab.
+  - Version 1.10 (TopCoder Direct Contest VM Instances Management) changes:
+  - - Added VM Instances tab.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -130,6 +131,10 @@
         <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>
                 <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                 <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
+            </li>
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}">class="on"</c:if>>
+            <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+            <span class="left"><span class="right">VM Instances</span></span></a>
             </li>
             <li id="rReceiptTab" class="lastItem <c:choose>
                 <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>

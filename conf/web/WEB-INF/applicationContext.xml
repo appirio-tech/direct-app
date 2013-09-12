@@ -549,6 +549,11 @@
         <property name="cloudVMService" ref="cloudVMService"/>
     </bean>
 
+    <bean id="contestVMInstancesAction" class="com.topcoder.direct.services.view.action.contest.ContestVMInstancesAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="cloudVMService" ref="cloudVMService"/>
+    </bean>
+
     <bean id="clientInvoiceManageAction"
           class="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction"
           scope="prototype"  parent="baseDirectStrutsAction">

@@ -10950,3 +10950,20 @@ tr.reportAverage {
     font-weight: bold;
 
 }
+
+#contestVMInstances .container2Content {
+    border-bottom: 1px solid #A8ABAD;
+}
+
+#contestVMs {
+    margin-bottom: 0;
+}
+
+#contestVMInstances .resultTableContainer {
+    border-left: none;
+    border-right: none;
+}
+#contestVMInstances .resultTableContainer .bottom1 {
+    line-height: 28px;
+    height: 28px;
+}

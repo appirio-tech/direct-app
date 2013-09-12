@@ -634,6 +634,10 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
+        <action name="contestVMInstances" class="contestVMInstancesAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success">/WEB-INF/contest-vm-instances.jsp</result>
+        </action>
         <action name="updateBugRace" class="updateJIRAIssueAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
