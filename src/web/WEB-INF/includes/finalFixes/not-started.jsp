@@ -24,7 +24,7 @@
     <!-- End .SubmissionSlotTitle -->
     <div class="specityFF">
         <div class="winnerBox">
-            <link:studioSubmissionDownload submissionId="${viewData.finalFixes[0].submission.id}" styleClass="zip">
+            <link:studioSubmissionDownload submissionId="${viewData.finalFixes[0].submission.id}" original="true" styleClass="zip">
             </link:studioSubmissionDownload>
 
             <div class="meta">

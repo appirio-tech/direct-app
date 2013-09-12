@@ -128,7 +128,7 @@
                             <!-- End .submissionAction -->
                         </div>
 
-                        <link:studioSubmissionDownload submissionId="${finalFix.submission.id}" styleClass="downloadSubmission">
+                        <link:studioSubmissionDownload submissionId="${finalFix.submission.id}" original="true" styleClass="downloadSubmission">
                             <span>DOWNLOAD FIXED FILES</span>
                         </link:studioSubmissionDownload>
                         
