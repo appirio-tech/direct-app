@@ -163,6 +163,10 @@
     width: 150px;
 }
 #projectManagerFilter {
+    width: 129px;
+}
+
+#copilotFilter {
     width: 150px;
 }
 
@@ -514,6 +518,14 @@ a.redBtn:hover span.left{
 #pmProjectsResult .latestThreePostersDiv {
     width: 180px;
 }
+
+.selectFilter .column1 .row label,
+.selectFilter .column1 .row  span.label {
+    padding: 6px 0 0 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: #010101;
+}        
 
 #VMFilter.filterPanel .filterContent .inner .column3, #ContestVMFilter.filterPanel .filterContent .inner .column3 {
     width: 350px;
