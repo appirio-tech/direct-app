@@ -665,10 +665,7 @@ function updateProjectDate() {
 
 function updatePublicDesc() {
     var publicDescription = CKEDITOR.instances.publicCopilotPostingDescription2.getData();
-    if (publicDescription.length > 12000) {
-        showErrors('Public Description can haave at most 12000 characters.');
-        return;
-    }
+    
     $('#publicDescriptionText').html(publicDescription);
 
     sendSaveDraftRequestToServer();
@@ -676,10 +673,7 @@ function updatePublicDesc() {
 
 function updatePrivateDesc() {
     var privateDescription = CKEDITOR.instances.privateCopilotPostingDescription2.getData();
-	if (privateDescription.length > 4096) {
-        showErrors('Private Description can haave at most 4096 characters.');
-        return;
-    }
+	
     $('#privateDescriptionText').html(privateDescription);
     sendSaveDraftRequestToServer();
 }
