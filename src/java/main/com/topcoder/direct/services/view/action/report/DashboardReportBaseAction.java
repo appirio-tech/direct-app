@@ -287,16 +287,16 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             this.sessionData.setCurrentProjectContests(contests);
         }
 
+        // handle the group by and group values view data and form data
+        getViewData().setGroupKeys(new LinkedHashMap<Long, String>());
+        getViewData().getGroupKeys().put(-1L, "No Grouping");
+        getViewData().setGroupValues(new LinkedHashSet<String>());
+
         // Validate the dates range
         if (startDate.compareTo(endDate) > 0) {
             addActionError("Start date should be smaller than End date");
             return;
         }
-
-        // handle the group by and group values view data and form data
-        getViewData().setGroupKeys(new LinkedHashMap<Long, String>());
-        getViewData().getGroupKeys().put(-1L, "No Grouping");
-        getViewData().setGroupValues(new LinkedHashSet<String>());
 
         if (getFormData().getCustomerId() > 0) {
             // set Group By drop down view data

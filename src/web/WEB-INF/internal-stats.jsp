@@ -102,15 +102,20 @@
                                     </div>
                                 </div>
                                 <!--end .filterHead-->
-                                <div class='filterContent hide'>
-                                	<div class='rightSide'>
-                                        <div class='inner'>
-                                            <div class="row">
-                                                Upload excel file:<input type="file" name="file" /><input type="submit" name="Submit" value="Upload"/>
+              
+                                <div class='filterContent <c:if test="${empty errorMessage}">hide</c:if>'>                                	
+                                        <div class='inner' style="padding">  
+                                                                                   
+                                            <div>
+                                                <c:if test="${not empty errorMessage}">
+                                                    <p class="error">${errorMessage}</p>
+                                                </c:if>
                                             </div>
-                                            <div class="clear"></div>
-                                        </div>
-                                    </div>
+<br>                                            
+                                            <div>
+                                                Upload excel file:<input type="file" name="file" /><input type="submit" value="Upload"/>
+                                            </div>
+                                        </div>                                    
                                 </div>
                                 <!--end .filterHead-->
                                 <div class='filterBottom hide'><div class='rightSide'><div class='inner'></div></div></div>

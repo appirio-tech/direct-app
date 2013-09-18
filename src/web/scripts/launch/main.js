@@ -1322,8 +1322,7 @@ function swRemoveDocument(documentId) {
       type: 'POST',
       url:  ctx+"/launch/removeDocument",
       data: {
-        documentId: documentId,
-        studio: false
+        documentId: documentId
       },
       cache: false,
       dataType: 'json',

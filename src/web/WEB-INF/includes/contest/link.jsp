@@ -35,7 +35,7 @@
            <s:set name="contestLink" value="'https://studio.topcoder.com/?module=ViewContestDetails&ct=' + viewData.contestStats.contest.id"/>
         </s:if>
         <s:elseif test="marathon">
-            <s:if test="active">
+            <s:if test="viewData.active">
                 <s:set name="contestLink" value="'http://community.topcoder.com/longcontest/?module=ViewOverview&rd=' + viewData.roundId"/>
             </s:if>
             <s:else>

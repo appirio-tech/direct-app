@@ -943,8 +943,7 @@ var initNewProjectDocumentsUpload = function() {
             type: 'POST',
             url:  ctx+"/launch/removeDocument",
             data: {
-                documentId: documentId,
-                studio: false
+                documentId: documentId
             },
             cache: false,
             dataType: 'json',
@@ -2214,8 +2213,7 @@ $(document).ready(function() {
             type: 'POST',
             url:  ctx+"/launch/removeDocument",
             data: {
-                documentId: documentId,
-                studio: false
+                documentId: documentId
             },
             cache: false,
             dataType: 'json',

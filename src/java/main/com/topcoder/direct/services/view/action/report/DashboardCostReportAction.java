@@ -211,10 +211,6 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
     protected void executeAction() throws Exception {
         super.executeAction();
         
-        if (hasActionErrors()) {
-            return;
-        }
-        
         // Analyze form parameters
         DashboardCostReportForm form = getFormData();
 
@@ -264,8 +260,9 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         long[] softwareProjectCategories = DirectUtils.covertLongListToArray(softwareProjectCategoriesList);
         long[] studioProjectCategories = DirectUtils.covertLongListToArray(studioProjectCategoriesList);
 
+
         // If necessary get and process report data
-        if (!getViewData().isShowJustForm()) {
+        if (!getViewData().isShowJustForm() && !hasActionErrors()) {
             List<CostDetailsDTO> costDetails = DataProvider.getDashboardCostReportDetails(getCurrentUser(), projectId, softwareProjectCategories, studioProjectCategories,
                     customerId, billingAccountId, statusIds, startDate, endDate, COST_REPORT_CONTEST_STATUS_IDS);
 

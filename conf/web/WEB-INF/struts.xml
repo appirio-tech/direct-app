@@ -120,7 +120,7 @@
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
-                  <param name="acceptParamNames">contestId,projectId</param>
+                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
                   <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
@@ -1360,7 +1360,8 @@
         <action name="uploadSheet" class="com.topcoder.direct.services.view.action.stats.UploadSheetAction">
           <param name="excelFile">@excelFile@</param>
           <interceptor-ref name="securedInternalStatsStack"/>
-          <result type="redirectAction">
+          <result name="error">/WEB-INF/internal-stats.jsp</result>
+          <result type="redirectAction" name="success">
                 <param name="actionName">internalStats</param>
                 <param name="namespace">/</param>
             </result>
@@ -1412,7 +1413,7 @@
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
-                  <param name="acceptParamNames">contestId,projectId</param>
+                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
                   <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>

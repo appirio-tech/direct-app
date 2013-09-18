@@ -279,8 +279,35 @@ $(document).ready(function(){
     
 	/* remove  button */
 	$('.uploadContent .removeButton').live("click",function(){
+                var rowItem = $(this).parent().parent();
 		$(this).parent().prev().remove();
 		$(this).parent().remove();
+        
+ 
+        if (rowItem.children('p').length == 0) {
+            var inputLine = $(".uploadCopySource").html();
+        
+            rowItem .append(inputLine);
+         
+        var lastP = rowItem.find("p").last();
+		lastP.find(".customUploadWrap").hover(
+            function(){
+                $(this).children(".draft").css("background-position","left bottom");
+                $(this).children(".draft").children("span.left").css("background-position","left bottom");
+                $(this).children(".draft").children("span.left").children("span.right").css("background-position","right bottom");
+            },
+            function(){
+                $(this).children(".draft").css("background-position","left top");
+                $(this).children(".draft").children("span.left").css("background-position","left top");
+                $(this).children(".draft").children("span.left").children("span.right").css("background-position","right top");
+            }
+        );
+        
+        lastP.find(".customUploadWrap .uploadInput, .customUploadWrap .draft").click(function() {
+            currentUploadInput = $(this).parent();
+            currentUploadInput.find("input[type=file]").click();
+        });        
+        }
 	}); 
 	
     $(".postCopilotStep1 #contestName").val('');

@@ -279,10 +279,10 @@
                                                                     </td>
                                                                     <td class="last">
                                                                         <s:if test="contestType.name == 'Copilot Posting'">
-                                                                            <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="short" style="text-align: center"><img alt="" src="/images/edit-icon.png">View/Edit</a>
+                                                                            <a href="../copilot/copilotContestDetails?projectId=${contest.id}" class="short" style="text-align: center"><img alt="" src="/images/edit-icon.png">View/Edit</a>
                                                                         </s:if>
                                                                         <s:if test="contestType.name != 'Copilot Posting'">
-                                                                            <a href="contest/detail?projectId=${contest.id}" class="short" style="text-align: center;display: inline-block"><img alt="" src="/images/edit-icon.png">View/Edit</a>
+                                                                            <a href="../contest/detail?projectId=${contest.id}" class="short" style="text-align: center;display: inline-block"><img alt="" src="/images/edit-icon.png">View/Edit</a>
                                                                         </s:if>
                                                                     </td>
                                                                     <td class="hide"><span><s:property value="contest.customerId"/></span></td>
