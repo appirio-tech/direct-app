@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
+import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.AssetVersion;
 import com.topcoder.direct.services.view.action.ImageViewAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -18,8 +19,16 @@ import java.io.File;
  * This action handles the requests to view the asset image file and asset image preview file.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * <ul>
+ *     <li>Updated {@link #executeAction()} to check if user has download permission to access the asset image
+ *     or the preview thumbnail of the asset image</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.1
  */
 public class AssetImageViewAction extends ImageViewAction {
 
@@ -130,6 +139,10 @@ public class AssetImageViewAction extends ImageViewAction {
         if (assetVersion == null) {
             throw new IllegalArgumentException("The specific asset version does not exist");
         }
+
+        // now we need to check if user has access to the asset the asset version belong to
+        Asset assetToCheck = getAssetService().getAsset(assetVersion.getAssetId());
+        checkIfAssetDownloadAllowed(assetToCheck, DirectUtils.getTCSubjectFromSession());
 
         File imageFile = null;
 

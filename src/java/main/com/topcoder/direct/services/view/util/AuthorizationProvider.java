@@ -58,8 +58,16 @@ import javax.servlet.http.HttpServletRequest;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.5 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * <ul>
+ *     <li>Updated method {@link #isUserGrantedWriteAccessToProject(com.topcoder.security.TCSubject, long)} to fix the write permission checking</li>
+ *     <li>Updated method {@link #isUserGrantedAccessToProject(com.topcoder.security.TCSubject, long)} (com.topcoder.security.TCSubject, long)} to pass in permission type ids</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin, TCSASSEMBLER
- * @version 1.4
+ * @version 1.5
  */
 public class AuthorizationProvider {
 
@@ -94,6 +102,7 @@ public class AuthorizationProvider {
         request.setContentHandle("has_cockpit_project_permissions");
         request.setProperty("tcdirectid", String.valueOf(projectId));
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        request.setProperty("permTypeIds", "1,2,3");
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_project_permissions");
         if (resultContainer.isEmpty()) {
             HttpServletRequest servletRequest = DirectUtils.getServletRequest();
@@ -129,6 +138,7 @@ public class AuthorizationProvider {
         request.setContentHandle("has_cockpit_project_permissions");
         request.setProperty("tcdirectid", String.valueOf(projectId));
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        request.setProperty("permTypeIds", "2,3");
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_project_permissions");
         if (resultContainer.isEmpty()) {
             HttpServletRequest servletRequest = DirectUtils.getServletRequest();

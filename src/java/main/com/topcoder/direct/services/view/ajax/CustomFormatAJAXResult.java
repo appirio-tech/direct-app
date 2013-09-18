@@ -15,6 +15,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.opensymphony.xwork2.ValidationAware;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -200,8 +201,19 @@ public class CustomFormatAJAXResult implements Result {
      */
     public void execute(ActionInvocation invocation) throws AJAXDataPreProcessingException,
             AJAXDataSerializationException, AJAXDataPostProcessingException, IOException {
+
         Helper.checkNull(invocation, "invocation");
         Object action = invocation.getAction();
+
+        String errorMessage = null;
+
+        if(action instanceof ValidationAware) {
+            if(((ValidationAware) action).getActionErrors().size() > 0) {
+                errorMessage = ((ValidationAware) action).getActionErrors().toArray(new String[((ValidationAware) action).getActionErrors().size()])[0];
+            }
+        }
+
+
         if (action instanceof AbstractAction || action instanceof com.topcoder.direct.services.view.action.AbstractAction) {
             Object data = null;
             String actionName = null;
@@ -214,6 +226,10 @@ public class CustomFormatAJAXResult implements Result {
             if (dataModel != null) {
                 data = dataModel.getData(RESULT_DATA_KEY);
                 actionName = dataModel.getAction();
+
+                if(errorMessage != null) {
+                    data = new Exception(errorMessage);
+                }
             }
 
             if (dataPreProcessor != null) {

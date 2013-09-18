@@ -19,8 +19,14 @@
  *  - Adds drag and drop support
  *  - Adds multiple files upload support
  *
- * @author GreatKevin, GreatKevin, TCSASSEMBLER
- * @version 1.2
+ *  Version 1.3 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ *  - Comment out the codes to handle the private permission and private permission users
+ *
+ *  Version 1.4 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Bug Fixes)
+ *  - Fixes bugs listed in http://apps.topcoder.com/wiki/x/X4CaBg
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.4
  */
 $(document).ready(function(){
 
@@ -459,7 +465,10 @@ $(document).ready(function(){
         }
         if($(this).val()){
             $(this).parents('.assetsWrapper').find('.resultSearch').show();
-            $(this).parents('.assetsWrapper').find('.resultSearch .result').empty().append('<strong class="num">'+ iLength +'</strong> Files found for <strong>"'+ this.value +'"</strong>');
+            var searchResult = $(this).parents('.assetsWrapper').find('.resultSearch .result');
+            searchResult.empty().append('<strong class="num"></strong> Files found for <strong class="searchTextValue"></strong>');
+            searchResult.find(".num").text(iLength);
+            searchResult.find(".searchTextValue").text(this.value);
         }else{
             $(this).parents('.assetsWrapper').find('.resultSearch').hide();
         }
@@ -852,7 +861,11 @@ $(document).ready(function(){
 
     var fileUploadExtraForm = {uploadFileProjectId: $("#assetProjectId").val()};
     var totalNumberOfFiles = 0, totalNumberOfFilesSubmitted = 0;
-    var dataFiles = [];
+    var dataForSigleUpload = [];
+    // set to 10 minitues to upload large files
+    jQuery.ajaxSetup({
+        timeout: 10* 60 * 1000
+    });
     if ($('#multipleUploadArea').length) {
         var totalNum = 0;
         var totalSize = 0;
@@ -870,6 +883,7 @@ $(document).ready(function(){
                 $('.dragSucess p span').text(data.files.length);
                 // each file
                 $.each(data.files, function (index, file) {
+
                     var eFileStyle = (/\.[^\.]+$/.exec(file.name).toString().replace('.', ''));
                     var iSize = fnFormatSize(file.size);
                     switch (eFileStyle) {
@@ -894,6 +908,20 @@ $(document).ready(function(){
                         case 'ppt' :
                             eFileStyle = 'ppt';
                             break;
+
+                        case 'docx' :
+                            eFileStyle = 'doc';
+                            break;
+                        case 'xlsx' :
+                            eFileStyle = 'xls';
+                            break;
+                        case 'pptx' :
+                            eFileStyle = 'ppt';
+                            break;
+                        case 'pps' :
+                            eFileStyle = 'ppt';
+                            break;
+
                         case 'txt' :
                             eFileStyle = 'txt';
                             break;
@@ -966,6 +994,13 @@ $(document).ready(function(){
                         data.context.find('.fileSize .size').text(iSize);
                         data.context.find('.icon-file-small img').attr({'src': '/images/icon-small-' + eFileStyle + '.png', 'alt': eFileStyle});
                         totalNumberOfFiles++;
+
+                        $.each(dataForSigleUpload, function(index, oldData){
+                            oldData.needUpload = false;
+                        });
+
+                        dataForSigleUpload.push(data);
+
                     } else {
                         newUploadFileRow = $('<li><a href="javascript:;" class="removeFile">X</a><span class="icon-file-small"><img src="/images/icon-small-'
                             + eFileStyle + '.png" alt="" /></span><div class="fileName">' + eFile + '<span> (' + iSize + ')</span></div></li>');
@@ -975,22 +1010,46 @@ $(document).ready(function(){
                         fnSetHeight();
                         totalNumberOfFiles++
                     }
-                    dataFiles.push(data.files);
+
+                    data.needUpload = true;
+
                 });
                 // remove file
                 $('.removeFile').die('click');
+
                 $('.removeFile').live('click', function () {
                     var li = $(this).parent();
                     var index = $(this).closest('ul').children('li').index(li);
                     li.remove();
-                    dataFiles[index].splice(0,1);
-                    //data.files.splice(index, 1);
                     $('.dragSucess p span').text($('#beforeUpload .dragSucess li').length);
                     totalNumberOfFiles = $('#beforeUpload .dragSucess li').length;
+
+                    if($("#selectFileForVersion").is(":visible")) {
+                        // upload new version modal
+                        if($("#selectFileForVersion .dynamicUpload .dragSucess li").length == 0) {
+                            $("#selectFileForVersion .dynamicUpload .dragPre").show();
+                            $("#selectFileForVersion .dynamicUpload .dragSucess").hide();
+                        } else {
+                            $("#selectFileForVersion .dynamicUpload .dragPre").hide();
+                            $("#selectFileForVersion .dynamicUpload .dragSucess").show();
+                        }
+                    } else {
+                        // upload pages
+                        if($('#beforeUpload .dragSucess li').length == 0) {
+                            $("#beforeUpload .dragPre").show();
+                            $("#beforeUpload .dragSucess").hide();
+                        } else {
+                            $("#beforeUpload .dragPre").hide();
+                            $("##beforeUpload .dragSucess").show();
+                        }
+                    }
+
                 });
                 // upload button
                 $('#fileDropInputSubmit').click(function () {
-                    data.submit();
+                    if(data.needUpload) {
+                        data.submit();
+                    }
                 });
             },
             submit: function (e, data) {
@@ -1000,6 +1059,7 @@ $(document).ready(function(){
                 } else {
                     // upldate total file info
                     totalNum = totalNum + data.files.length;
+
                     $.each(data.files, function (index, file) {
                         totalNumberOfFilesSubmitted++;
                         totalSize = totalSize + file.size;
@@ -1043,6 +1103,20 @@ $(document).ready(function(){
                             case 'ppt' :
                                 eFileStyle = 'ppt';
                                 break;
+
+                            case 'docx' :
+                                eFileStyle = 'doc';
+                                break;
+                            case 'xlsx' :
+                                eFileStyle = 'xls';
+                                break;
+                            case 'pptx' :
+                                eFileStyle = 'ppt';
+                                break;
+                            case 'pps' :
+                                eFileStyle = 'ppt';
+                                break;
+
                             case 'txt' :
                                 eFileStyle = 'txt';
                                 break;
@@ -1145,6 +1219,13 @@ $(document).ready(function(){
             },
             done: function (e, data) {
                 if ($("#selectFileForVersion").data('upload') == true) {
+
+                    if(data.result.error) {
+                        modalAllClose();
+                        showServerError(data.result.error['errorMessage']);
+                        return;
+                    }
+
                     var responseData = data.result.result['return'];
                     populateUploadNewVersion($("#uploadFinish"), responseData);
                     modalLoad("#uploadFinish");
@@ -1153,6 +1234,12 @@ $(document).ready(function(){
                     data.context.find('.uploading').hide();
                     data.context.find('.uploadSucess').show();
                     data.context.find('.noFlyout').removeClass('noFlyout');
+
+                    if(data.result.error) {
+                        alert(data.result.error['errorMessage']);
+                        return;
+                    }
+
                     var responseData = data.result.result['return'];
                     populateUploadItem(data.context, responseData);
                 }
@@ -1163,14 +1250,17 @@ $(document).ready(function(){
                 } else {
                     $('.sectionHeader').find('.uploading').hide();
                     $('.sectionHeader').find('.uploadSucess').show();
+                    $(".uploadButtonBox .uploadSucess").show();
                 }
             }
         });
         // upload button
         $('.btnUpload').click(function () {
 
+            if($(this).attr('href').indexOf('projectAssetUpload') != -1) return;
+
             // choose one to upload if it is version upload
-            if (!$("#selectFileForVersion").is(":visible") || ($('.dragSucess').get(0).clientHeight == 0 && $('.dragSucess li').length == 0 )) {
+            if (!$("#selectFileForVersion").is(":visible") || ($('.dragSucess').get(0).clientHeight == 0 && $('.dragSucess:eq(0)').find("li").length == 0 )) {
                 // add files from common upload
                 $('.commonUpload input').each(function () {
                     if ($(this).val() != '') {
@@ -1180,6 +1270,27 @@ $(document).ready(function(){
                     }
                 });
             }
+
+            var commonInputLength = 0;
+            $('.commonUpload input').each(function () {
+                if ($(this).val() != '') {
+                    commonInputLength++;
+                }
+            });
+
+            var totalFileSelected = $('.dragSucess:eq(0) li').length + commonInputLength;
+
+            if(totalFileSelected == 0) {
+                showErrors("Please choose file(s) to upload");
+                return;
+            }
+
+            if($("#selectFileForVersion").is(":visible") && totalFileSelected > 1) {
+                // upload new version, only one file can be selected
+                showErrors("You can only choose one file to upload as new version");
+                return;
+            }
+
             // submit together
             $('#fileDropInputSubmit').click();
         });
@@ -1216,28 +1327,6 @@ $(document).ready(function(){
     $('.uploadSection .btnMoreFile').live('click',function(){
         $('.uploadSection .uploadRow:last').after($('.uploadSection .uploadRow:last').clone(true));
         fnSetHeight();
-    });
-
-    //Check Box For Pop Up Access
-    $('.popUpPrivateAccess .firstItem input:checkbox').live('click',function(){
-        if($(this).attr('checked')){
-            $(this).parents('.group').find('input:checkbox').attr('checked',true);
-        }else{
-            $(this).parents('.group').find('input:checkbox').attr('checked',false);
-        }
-    });
-
-    $('.popUpPrivateAccess input:checkbox.assetUserPermission').live('click', function () {
-
-        var allChecked = $(this).parents('.group').find('input:checkbox.assetUserPermission').length
-            == $(this).parents('.group').find('input:checkbox.assetUserPermission:checked').length;
-
-        if (allChecked) {
-            $(this).parents('.group').find(".firstItem input:checkbox").attr('checked', 'checked');
-        } else {
-            $(this).parents('.group').find(".firstItem input:checkbox").removeAttr('checked');
-        }
-
     });
 
     $('body').live('click',function(){
@@ -1298,6 +1387,9 @@ $(document).ready(function(){
 
         var _this = $(this);
 
+        $('.popUpNewCategory').hide();
+        modalPreloader();
+
         $.ajax({
             type: 'POST',
             url: ctx + "/addNewCategory",
@@ -1310,166 +1402,13 @@ $(document).ready(function(){
                         $('.selectCategory').find('select').append($("<option/>").text(result.name).val(result.id));
                         _this.parents('.selectCategory').find('input:text').val('');
                         _this.parents('.selectCategory').find('select').val(result.id)
-                        $('.popUpNewCategory').hide();
+                        modalAllClose();
                     },
                     function (errorMessage) {
                         showServerError(errorMessage);
                     });
             }
         });
-    });
-
-    // Select Access
-    $('input.private:not(".selected")').live('click',function(e){
-        if(!$(this).hasClass('noFlyout')){
-            $('.fileUploadItem').css({
-                zIndex: '1'
-            });
-            $(this).parents('.fileUploadItem').css({
-                zIndex: '10'
-            });
-            $(this).parents('.fileUploadItem').find('.selectCategory').css({
-                zIndex: '1'
-            });
-            $(this).parents('.fileUploadItem').find('.selectAccess').css({
-                zIndex: '10'
-            });
-            $(this).parents('.editFileSection').find('.selectCategory').css({
-                zIndex: '1'
-            });
-            $(this).parents('.editFileSection').find('.selectAccess').css({
-                zIndex: '10'
-            });
-            $('.popUpNewCategory').hide();
-            $('.popUpPrivateAccess').hide();
-            $('.popUpPrivateAccessView').hide();
-
-
-            $(this).parents('.selectAccess').find('.popUpPrivateAccess').show();
-
-            if($(this).parents('#uploadFinish').length || $(this).parents('#editFileDetails').length){
-                $(this).parents('.selectAccess').find('.popUpPrivateAccess .popUpPrivateAccessSArrow').css({
-                    bottom: '8px',
-                    left: '-9px'
-                });
-                $(this).parents('.selectAccess').find('.popUpPrivateAccess').css({
-                    bottom: '-10px',
-                    left: $(this).position().left + $(this).parents('.radioBox').find('label').width() + 35
-                });
-            }else{
-                $(this).parents('.selectAccess').find('.popUpPrivateAccess .popUpPrivateAccessSArrow').css({
-                    top: ($(this).parents('.selectAccess').find('.popUpPrivateAccess').height()-$(this).parents('.selectAccess').find('.popUpPrivateAccess .popUpPrivateAccessSArrow').height())/2-2,
-                    left: '-8px'
-                });
-                $(this).parents('.selectAccess').find('.popUpPrivateAccess').css({
-                    top: $(this).position().top - ($(this).parents('.selectAccess').find('.popUpPrivateAccess').height()-$(this).height())/2,
-                    left: $(this).position().left + $(this).parents('.radioBox').find('label').width() + 35
-                });
-            }
-        }
-        e.stopPropagation();
-    });
-
-    $('input.public').live('click',function(e){
-        $(this).parents('.radioBox').find('.accessOperate').css('visibility','hidden');
-        $(this).parents('.selectAccess').find('.popUpPrivateAccess').find('input:checkbox').each(function(){
-            $(this).attr('checked',false);
-        });
-        $(this).parents('.radioBox').find('.private').removeClass('selected');
-        $(".popUpPrivateAccess").hide();
-        e.stopPropagation();
-    });
-
-    $('.linkEditAccess').live('click',function(e){
-        $(this).parents('.selectAccess').find('.popUpPrivateAccess').show();
-        $('.popUpNewCategory').hide();
-        e.stopPropagation();
-    });
-
-    $('.popUpPrivateAccess').live('click',function(e){
-        e.stopPropagation();
-    });
-
-    // private access setting submit
-    $('.popUpPrivateAccess .linkSubmit').live('click',function(){
-        var flag = false;
-        $('.popUpPrivateAccess').hide();
-        $(this).parents('.popUpPrivateAccess').find('input:checkbox').each(function(){
-            if($(this).attr('checked')){
-                flag = true;
-            }
-        });
-        if(flag){
-            $(this).parents('.selectAccess').find('.accessOperate').css('visibility','visible');
-            $(this).parents('.selectAccess').find('.private').addClass('selected');
-        }else{
-            $(this).parents('.selectAccess').find('.accessOperate').css('visibility','hidden');
-            $(this).parents('.selectAccess').find('.private').removeClass('selected');
-        }
-    });
-
-    //View private Access setting flyout
-    $('.linkViewAccess').live('click',function(e){
-        $('.fileUploadItem').css({
-            zIndex: 1
-        });
-        $(this).parents('.fileUploadItem').css({
-            zIndex: 10
-        });
-        $(this).parents('.fileUploadItem').find('.selectCategory').css({
-            zIndex: 1
-        });
-        $(this).parents('.fileUploadItem').find('.selectAccess').css({
-            zIndex: 10
-        });
-        $('.popUpNewCategory').hide();
-        $('.popUpPrivateAccess').hide();
-        $('.popUpPrivateAccessView').hide();
-        var eAccess = $(this).parents('.selectAccess').find('.popUpPrivateAccess .accessUser').clone();
-        //Remove No Checked
-        eAccess.find('.group div:not(".firstItem") input:checkbox').each(function(){
-            if(!$(this).attr('checked')){
-                $(this).parent('div').remove();
-            }
-        });
-        eAccess.find('.group').each(function(){
-            if(!$(this).find('div:not(".firstItem")').length){
-                $(this).remove();
-            }
-        });
-        eAccess.find('input:checkbox').remove();
-        eAccess.find('label').attr('for','').css('cursor','default');
-        $(this).parents('.selectAccess').find('.popUpPrivateAccessView .accessUser').empty().append(eAccess);
-        $(this).parents('.selectAccess').find('.popUpPrivateAccessView').show();
-        if(!$(this).parents('.outLay').length){
-            $(this).parents('.selectAccess').find('.popUpPrivateAccessView').css({
-                top: $(this).position().top - ($(this).parents('.selectAccess').find('.popUpPrivateAccessView').height()-$(this).height())/2,
-                left: $(this).position().left + $(this).width() + 8
-            });
-            $(this).parents('.selectAccess').find('.popUpPrivateAccessView .popUpPrivateAccessSArrow').css({
-                top: ($(this).parents('.selectAccess').find('.popUpPrivateAccessView').height()-$(this).parents('.selectAccess').find('.popUpPrivateAccessView .popUpPrivateAccessSArrow').height())/2,
-                left: '-8px'
-            });
-        }else{
-            $(this).parents('.selectAccess').find('.popUpPrivateAccessView').css({
-                bottom: '-10px',
-                left: $(this).position().left + $(this).width() + 8
-            });
-            $(this).parents('.selectAccess').find('.popUpPrivateAccessView .popUpPrivateAccessSArrow').css({
-                bottom: '8px',
-                left: '-9px'
-            });
-        }
-        e.stopPropagation();
-    });
-
-    $('.popUpPrivateAccessView .linkClose').live('click',function(e){
-        $('.popUpPrivateAccessView').hide();
-        e.stopPropagation();
-    });
-
-    $('.popUpPrivateAccessView').live('click',function(e){
-        e.stopPropagation();
     });
 
     //Remove Uploading Item
@@ -1509,10 +1448,7 @@ $(document).ready(function(){
             saveAssets.push({
                 assetCategoryId: $(this).find(".selectCategory select").val(),
                 assetDescription: $(this).find(".addDescription textarea").val(),
-                assetPublic: $(this).find(".radioBox input[type=radio]:eq(0)").is(":checked"),
-                privateUserIds: $(this).find(".popUpPrivateAccessSection").find("input[type=checkbox].assetUserPermission:checked").map(function () {
-                    return $(this).attr('id');
-                }).get(),
+                assetPublic: $(this).find(".radioBox input[type=radio]:eq(1)").is(":checked"),
                 sessionKey: $(this).data("uploadSessionKey")
             });
         });
@@ -1592,7 +1528,7 @@ $(document).ready(function(){
         $('.versionViewDetails .versionSize').text($(this).find('.size').text());
 
         // update file description
-        $('.versionViewDetails .fileNameDes').text($(this).find('.fileNameDes').text());
+        $('.versionViewDetails .fileNameDes').text(handleLongFileName($(this).find('.fileNameDes').text(), 250));
 
         // update uploader
         $('.versionViewDetails .uploaderName').html($(this).find('.uploaderCell ').html());
@@ -1760,10 +1696,7 @@ $(document).ready(function(){
 
         var assetsPermissionUpdateRequest = {
             assetIds: $("#batchSetPermission").data("assetIdsToUpdate"),
-            assetPublic: $("#batchSetPermission input.public").is(":checked"),
-            privateUserIds: $("#batchSetPermission .popUpPrivateAccessSection").find("input[type=checkbox].assetUserPermission:checked").map(function () {
-                return $(this).attr('id');
-            }).get()
+            assetPublic: $("#batchSetPermission input.public").is(":checked")
         };
 
         $.ajax({
@@ -1842,7 +1775,7 @@ $(document).ready(function(){
                         $('#editFileDetails .fileDetails ul li:eq(1) span').text(result.fileSizeDisplay);
 
                         // set file description
-                        $('#editFileDetails .fileDetails .description').text(result.description);
+                        $('#editFileDetails .fileDetails .description').text(handleLongFileName(result.description, 250)).attr('title', result.description);
                         $('#editFileDetails .editFileSection textarea').val(result.description);
 
                         // set file category
@@ -1853,21 +1786,16 @@ $(document).ready(function(){
                         // set upload time
                         $("#editFileDetails .fileDetails .date").text(result.uploadTime + " EDT");
 
+
+
                         // set permission
+                        $('#editFileDetails .editFileSection .selectAccess input[type=radio]').removeAttr('checked');
                         if (result.isPublic) {
                             $('#editFileDetails .editFileSection .selectAccess input.public').attr("checked",
-                                "checked").trigger('click').trigger('change');
+                                "checked");
                         } else {
-
-                            $.each(result.users, function (index, value) {
-                                $('#editFileDetails .editFileSection .selectAccess .popUpPrivateAccess #' + value).attr('checked',
-                                    'checked');
-                            });
-
-                            $('#editFileDetails .editFileSection .selectAccess a.linkSubmit').trigger('click');
-                            $('#editFileDetails .editFileSection .selectAccess input.private ').attr("checked",
-                                "checked").trigger('change');
-
+                            $('#editFileDetails .editFileSection .selectAccess input.project ').attr("checked",
+                                "checked");
                         }
 
 
@@ -1947,10 +1875,7 @@ $(document).ready(function(){
             assetVersionId: $("#editFileDetails").data("assetVersionId"),
             assetCategoryId: $("#editFileDetails .selectCategory select").val(),
             assetDescription: $("#editFileDetails .addDescription textarea").val(),
-            assetPublic: $("#editFileDetails input.public").is(":checked"),
-            privateUserIds: $(".popUpPrivateAccessSection").find("input[type=checkbox].assetUserPermission:checked").map(function () {
-                return $(this).attr('id');
-            }).get()
+            assetPublic: $("#editFileDetails input.public").is(":checked")
         };
 
 
@@ -2032,7 +1957,7 @@ $(document).ready(function(){
 
             // set file description
             var description = editRow.find(".fileNameDes").text();
-            $('.uploadFileDetails .description').text(description);
+            $('.uploadFileDetails .description').text(handleLongFileName(description, 200)).attr('title', description);
             $("#uploadFinish").data("currentDescription", description);
 
             // set file category
@@ -2093,7 +2018,7 @@ $(document).ready(function(){
                 description = editRow.find("span.moreText").text();
             }
 
-            $('.uploadFileDetails .description').text(description);
+            $('.uploadFileDetails .description').text(handleLongFileName(description, 200)).attr('title', description);
             $("#uploadFinish").data("currentDescription", description);
 
             // set file category
@@ -2426,49 +2351,9 @@ $(document).ready(function(){
     // batch edit page
     if ($(".batchEditSection").length) {
 
-        var assetIdsPermission = [];
         $(".batchEditSection .itemSection").each(function () {
-            if($(this).find("input[name=isPublic]").val() == 'false') {
-                assetIdsPermission.push($(this).find("input[name=assetId]").val());
-            } else {
-                $(this).find(".radioBox input[type=radio]:eq(0)").attr('checked', 'checked');
-            }
-
-
             $(this).find(".selectCategory select").val($(this).find("input[name=categoryId]").val());
         });
-
-        if (assetIdsPermission && assetIdsPermission.length > 0) {
-            modalPreloader();
-            $.ajax({
-                type: 'POST',
-                url: ctx + "/batchGetAssetsPermission",
-                data: {assetIds: assetIdsPermission},
-                cache: false,
-                dataType: 'json',
-                success: function (jsonResult) {
-                    handleJsonResult(jsonResult,
-                        function (result) {
-                            $(".batchEditSection .itemSection").each(function () {
-                                var _item = $(this);
-                                if (_item.find("input[name=isPublic]").val() == 'false') {
-                                    $.each(result[_item.find("input[name=assetId]").val()], function (index, value) {
-                                        _item.find('.popUpPrivateAccess #' + value).attr('checked',
-                                            'checked');
-                                    });
-
-                                    _item.find('a.linkSubmit').trigger('click');
-                                    _item.find('input.private ').attr("checked",
-                                        "checked").trigger('change');
-                                }
-                            });
-                        },
-                        function (errorMessage) {
-                            showServerError(errorMessage);
-                        });
-                }
-            });
-        }
 
         $(".btnBatchEditSave").click(function(){
             var editAssets = [];
@@ -2478,11 +2363,7 @@ $(document).ready(function(){
                     assetId: $("input[name=assetId]", this).val(),
                     assetCategoryId: $(".selectCategory select", this).val(),
                     assetDescription: $("textarea", this).val(),
-                    assetPublic: $("input.public", this).is(":checked"),
-                    privateUserIds: $(".popUpPrivateAccessSection",
-                        this).find("input[type=checkbox].assetUserPermission:checked").map(function () {
-                        return $(this).attr('id');
-                    }).get()
+                    assetPublic: $("input.public", this).is(":checked")
                 };
 
                 editAssets.push(editAsset);

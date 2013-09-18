@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
+import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.CategorySearchCriteria;
 import com.topcoder.direct.services.view.action.asset.AssetContainerType;
 import com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction;
@@ -19,8 +20,15 @@ import com.topcoder.security.TCSubject;
  * This action handles the operation of viewing all the versions of an asset.
  * </p>
  *
- * @author GreatKevin
- * @version 1.0 (Release Assembly - TopCoder Cockpit Asset View And File Version)
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * <ul>
+ *     <li>Updated {@link #executeAction()} to check if user has read+ permission to access the asset</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.1
  */
 public class ProjectAssetVersionsAction extends BaseAbstractAssetAction {
 
@@ -79,13 +87,17 @@ public class ProjectAssetVersionsAction extends BaseAbstractAssetAction {
     protected void executeAction() throws Exception {
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
-        // check if user has permission to view the asset versions
-        if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
-            throw new IllegalArgumentException("You don't have permission to access this asset");
+        // check if asset id is valid and user has permission to the asset
+        if(getAssetId() <= 0) {
+            throw new IllegalArgumentException("The asset file ID is incorrect.");
         }
 
+        Asset asset = getAssetService().getAsset(getAssetId());
+
+        checkIfAssetAccessAllowed(asset, currentUser, false);
+
         // get and set the asset
-        viewData.setAsset(getAssetService().getAsset(getAssetId()));
+        viewData.setAsset(asset);
 
         // get and set the asset versions
         viewData.setAssetVersions(getAssetVersionService().getAssetVersionsOfAsset(viewData.getAsset().getId()));

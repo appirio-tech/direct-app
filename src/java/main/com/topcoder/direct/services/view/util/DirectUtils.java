@@ -547,8 +547,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Add field {@link #BUG_RACE_CONTEST_NAME}</li>
  * </ul>
  * </p>
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce
- * @version 1.10.3
+ *
+ * <p>
+ * Version 1.1.4 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * <ul>
+ *     <li>Added method {@link #setErrorMessageInErrorPage(String)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER
+ * @version 1.1.4
  */
 public final class DirectUtils {
 
@@ -816,6 +824,17 @@ public final class DirectUtils {
 
     public static Map<String, Object> getApplicationContext() {
         return ActionContext.getContext().getApplication();
+    }
+
+    /**
+     * Sets the errorPageMessage with the specified error message so it can be displayed on the error page.
+     *
+     * @param message the error message to display.
+     *
+     * @since 1.1.4
+     */
+    public static void setErrorMessageInErrorPage(String message) {
+        getServletRequest().setAttribute("errorPageMessage", message);
     }
 
     /**

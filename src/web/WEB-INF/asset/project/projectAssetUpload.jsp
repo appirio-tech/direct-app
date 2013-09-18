@@ -1,10 +1,16 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: GreatKevin, TCSASSEMBLER
   -
   - The jsp for the project asset upload and save.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes:
   - - Implements the single upload of assets and save asset details.
+  -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+  - - Update the permission setting to be Project / Public, remove private permission settings
+  -  
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Bug Fixes)
+  - - Hide the Upload save details button by default, only display it when the uploads are finished
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -304,7 +310,7 @@
                                                             </s:iterator>
                                                         </select>
                                                         <div class="linksBox">
-                                                            <a href="javascript:;" class="LinkNewCategory noFlyout">New Category</a>
+                                                            <a href="javascript:;" class="LinkNewCategory">New Category</a>
                                                         </div>
                                                         <div class="popUpNewCategory">
                                                             <div class="popUpNewCategoryInner">
@@ -329,78 +335,11 @@
                                                     <div class="selectAccess">
                                                         <strong class="label">Access Restriction</strong>
                                                         <div class="radioBox">
-                                                            <input type="radio" name="accessRadio" checked="checked" id="accessRadioPublic" class="public" />
-                                                            <label for="accessRadioPublic" class="public">Public</label>
-                                                            <input type="radio" name="accessRadio" id="accessRadioPrivate" class="private noFlyout" />
-                                                            <label for="accessRadioPrivate" class="private noFlyout">Private</label>
-                                                            <span class="accessOperate">
-                                                                <a href="javascript:;" class="linkViewAccess">View Access</a>
-                                                                <span>|</span>
-                                                                <a href="javascript:;" class="linkEditAccess">Edit</a>
-                                                            </span>
+                                                            <input type="radio" name="accessRadio" checked="checked" id="accessRadioProject" class="project" title="This file is only visible to users with permissions on this project"/>
+                                                            <label for="accessRadioProject" class="public" title="This file is only visible to users with permissions on this project">Project</label>
+                                                            <input type="radio" name="accessRadio" id="accessRadioPublic" class="public" title="This file is visible to all TopCoder Members"/>
+                                                            <label for="accessRadioPublic" class="public" title="This file is visible to all TopCoder Members">Public</label>
                                                         </div>
-                                                        <div class="popUpPrivateAccess">
-                                                            <div class="popUpPrivateAccseeInner">
-                                                                <div class="popUpPrivateAccessSection">
-                                                                    <div class="popUpPrivateAccessSArrow"></div>
-                                                                    <div class="accessUser">
-                                                                        <div class="group">
-                                                                            <div class="firstItem">
-                                                                                <input type="checkbox" id="group01check01" class="groupCheck"/>
-                                                                                <label for="group01check01">Client Managers</label>
-                                                                            </div>
-
-                                                                            <s:iterator value="clientManagers">
-                                                                                <div>
-                                                                                    <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                                                                    <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                                                                </div>
-                                                                            </s:iterator>
-                                                                        </div>
-                                                                        <div class="group">
-                                                                            <div class="firstItem">
-                                                                                <input type="checkbox" id="group02check01" class="groupCheck"/>
-                                                                                <label for="group02check01">TopCoder Managers</label>
-                                                                            </div>
-                                                                            <s:iterator value="topcoderManagers">
-                                                                                <div>
-                                                                                    <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                                                                    <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                                                                </div>
-                                                                            </s:iterator>
-                                                                        </div>
-                                                                        <div class="group">
-                                                                            <div class="firstItem">
-                                                                                <input type="checkbox" id="group03check01" class="groupCheck"/>
-                                                                                <label for="group03check01">Copilots</label>
-                                                                            </div>
-                                                                            <s:iterator value="projectCopilots">
-                                                                                <div>
-                                                                                    <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                                                                    <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                                                                </div>
-                                                                            </s:iterator>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="linksBox">
-                                                                        <a href="javascript:;" class="linkSubmit">Submit</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Private Access -->
-                                                        <div class="popUpPrivateAccessView">
-                                                            <div class="popUpPrivateAccseeInner">
-                                                                <div class="popUpPrivateAccessSection">
-                                                                    <div class="popUpPrivateAccessSArrow"></div>
-                                                                    <div class="accessUser"></div>
-                                                                    <div class="linksBox">
-                                                                        <a href="javascript:;" class="linkClose">Close</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Private Access View -->
                                                     </div>
                                                 </div>
                                                 <!-- End .fileUploadItem -->
@@ -415,7 +354,7 @@
                                 <!-- End .sectionContainer -->
 
                                 <div class="uploadButtonBox">
-                                    <div class="uploadSucess">
+                                    <div class="uploadSucess" style="display: none">
                                         <a class="button6 btnSaveDetails" href="javascript:"><span class="left"><span class="right">SAVE DETAILS</span></span></a>
                                         <a class="button7" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="left"><span class="right">DISCARD</span></span></a>
                                     </div>

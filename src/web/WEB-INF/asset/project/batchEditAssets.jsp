@@ -1,8 +1,10 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMBLER
   -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Asset View Release 3)
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+  - - Update the permission setting to be Project / Public, remove private permission settings
   -
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
@@ -178,77 +180,11 @@
             <div class="selectAccess">
                 <strong class="label">Access Restriction</strong>
                 <div class="radioBox">
-                    <input type="radio" name="accessRadio<s:property value="#stat.count" />"  id="accessRadioPublic<s:property value="#stat.count" />" class="public" value=""/>
-                    <label for="accessRadioPublic<s:property value="#stat.count" />" class="public">Public</label>
-                    <input type="radio" name="accessRadio<s:property value="#stat.count" />" id="accessRadioPrivate<s:property value="#stat.count" />" class="private" />
-                    <label for="accessRadioPrivate<s:property value="#stat.count" />" class="private">Private</label>
-                                                            <span class="accessOperate">
-                                                                <a href="javascript:;" class="linkViewAccess">View Access</a>
-                                                                <span>|</span>
-                                                                <a href="javascript:;" class="linkEditAccess">Edit</a>
-                                                            </span>
+                    <input type="radio" name="accessRadio<s:property value="#stat.count" />"  id="accessRadioPublic<s:property value="#stat.count" />" class="project" <s:if test="public == false">checked="checked"</s:if>    />
+                    <label for="accessRadioPublic<s:property value="#stat.count" />" class="public">Project</label>
+                    <input type="radio" name="accessRadio<s:property value="#stat.count" />" id="accessRadioPrivate<s:property value="#stat.count" />" class="public" <s:if test="public == true">checked="checked"</s:if> />
+                    <label for="accessRadioPrivate<s:property value="#stat.count" />" class="public">Public</label>
                 </div>
-                <div class="popUpPrivateAccess">
-                    <div class="popUpPrivateAccseeInner">
-                        <div class="popUpPrivateAccessSection">
-                            <div class="popUpPrivateAccessSArrow"></div>
-                            <div class="accessUser">
-                                <div class="group">
-                                    <div class="firstItem">
-                                        <input type="checkbox" id="group01check<s:property value="#stat.count" />" />
-                                        <label for="group01check<s:property value="#stat.count" />">Client Managers</label>
-                                    </div>
-                                    <s:iterator value="clientManagers">
-                                        <div>
-                                            <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                            <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                        </div>
-                                    </s:iterator>
-                                </div>
-                                <div class="group">
-                                    <div class="firstItem">
-                                        <input type="checkbox" id="group02check<s:property value="#stat.count" />" />
-                                        <label for="group02check<s:property value="#stat.count" />">TopCoder Managers</label>
-                                    </div>
-                                    <s:iterator value="topcoderManagers">
-                                        <div>
-                                            <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                            <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                        </div>
-                                    </s:iterator>
-                                </div>
-                                <div class="group">
-                                    <div class="firstItem">
-                                        <input type="checkbox" id="group03check<s:property value="#stat.count" />" />
-                                        <label for="group03check<s:property value="#stat.count" />">Copilots</label>
-                                    </div>
-                                    <s:iterator value="projectCopilots">
-                                        <div>
-                                            <input type="checkbox" id="<s:property value='id'/>" class="assetUserPermission"/>
-                                            <label for="<s:property value='id'/>"><link:user userId="${id}"/></label>
-                                        </div>
-                                    </s:iterator>
-                                </div>
-                            </div>
-                            <div class="linksBox">
-                                <a href="javascript:;" class="linkSubmit">Submit</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Priveate Access -->
-                <div class="popUpPrivateAccessView">
-                    <div class="popUpPrivateAccseeInner">
-                        <div class="popUpPrivateAccessSection">
-                            <div class="popUpPrivateAccessSArrow"></div>
-                            <div class="accessUser"></div>
-                            <div class="linksBox">
-                                <a href="javascript:;" class="linkClose">Close</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Priveate Access View -->
             </div>
         </div>
         <!-- End .fileUploadItem -->

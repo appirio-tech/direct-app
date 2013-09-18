@@ -3,13 +3,16 @@
  */
 package com.topcoder.direct.services.view.action.asset;
 
+import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.services.AssetCategoryService;
-import com.topcoder.asset.services.AssetPermissionService;
 import com.topcoder.asset.services.AssetService;
 import com.topcoder.asset.services.AssetVersionService;
 import com.topcoder.asset.services.FileTypeIconService;
 import com.topcoder.asset.services.ManagerService;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.util.AuthorizationProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 
 /**
  * <p>
@@ -17,10 +20,32 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
  * services in the action.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0)
+ * <p>
+ *  Version 1.1 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ *  <ul>
+ *      <li>Added method {@link #checkIfAssetDownloadAllowed(com.topcoder.asset.entities.Asset, com.topcoder.security.TCSubject)}</li>
+ *      <li>Added method {@link #checkIfAssetAccessAllowed(com.topcoder.asset.entities.Asset, com.topcoder.security.TCSubject, boolean)}</li>
+ *  </ul>
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.1
  */
 public abstract class BaseAbstractAssetAction extends BaseDirectStrutsAction {
+
+    /**
+     * The error message to display if user does not have write permission to the specified asset file/version
+     *
+     * @since 1.1
+     */
+    private static final String ASSET_ACCESS_WRITE_PERMISSION_ERROR_MSG = "You don't have permission to make changes to the file(s)";
+
+    /**
+     * The error message to display if user does not have download permission to the specified asset file/version
+     *
+     * @since 1.1
+     */
+    private static final String ASSET_ACCESS_DOWNLOAD_PERMISSION_ERROR_MSG = "You don't have permission to download the file(s)";
 
     /**
      * The action service.
@@ -36,11 +61,6 @@ public abstract class BaseAbstractAssetAction extends BaseDirectStrutsAction {
      * The asset category service.
      */
     private AssetCategoryService assetCategoryService;
-
-    /**
-     * The asset permission service.
-     */
-    private AssetPermissionService assetPermissionService;
 
     /**
      * The file type icon service.
@@ -107,24 +127,6 @@ public abstract class BaseAbstractAssetAction extends BaseDirectStrutsAction {
     }
 
     /**
-     * Gets the asset permission service.
-     *
-     * @return the asset permission service.
-     */
-    public AssetPermissionService getAssetPermissionService() {
-        return assetPermissionService;
-    }
-
-    /**
-     * Sets the asset permission service.
-     *
-     * @param assetPermissionService the asset permission service.
-     */
-    public void setAssetPermissionService(AssetPermissionService assetPermissionService) {
-        this.assetPermissionService = assetPermissionService;
-    }
-
-    /**
      * Gets the file type icon service.
      *
      * @return the file type icon service.
@@ -159,4 +161,45 @@ public abstract class BaseAbstractAssetAction extends BaseDirectStrutsAction {
     public void setManagerService(ManagerService managerService) {
         this.managerService = managerService;
     }
+
+    /**
+     * Checks if the specified user has permission to download the specified asset
+     *
+     * @param asset the asset instance
+     * @param user the TCSubject instance representing the user
+     * @throws Exception if any error
+     * @since 1.1
+     */
+    protected void checkIfAssetDownloadAllowed(Asset asset, TCSubject user) throws Exception {
+        if (!asset.isPublic()) {
+            // asset is not public, then it's 'project' permission, we check if
+            // current user has access to the project the asset is in
+            boolean accessAllowed = AuthorizationProvider.isUserGrantedAccessToProject(user, asset.getContainerId());
+            if (!accessAllowed) {
+                // user does not have permission on the project
+                DirectUtils.setErrorMessageInErrorPage(ASSET_ACCESS_DOWNLOAD_PERMISSION_ERROR_MSG);
+                throw new IllegalArgumentException(ASSET_ACCESS_DOWNLOAD_PERMISSION_ERROR_MSG);
+            }
+        }
+    }
+
+    /**
+     * Checks if the specific user has access permission to the specified asset. The needsWrite argument
+     * indicates it's a read access or write access.
+     *
+     * @param asset the asset instance
+     * @param user the TCSubject instance representing the user
+     * @param needsWrite true if the access is write, false if the access is read only
+     * @throws Exception if there is any error
+     * @since 1.1
+     */
+    protected void checkIfAssetAccessAllowed(Asset asset, TCSubject user, boolean needsWrite) throws Exception {
+            boolean accessAllowed = needsWrite ? AuthorizationProvider.isUserGrantedWriteAccessToProject(user, asset.getContainerId())
+                    : AuthorizationProvider.isUserGrantedAccessToProject(user, asset.getContainerId());
+            if (!accessAllowed) {
+                // user does not have permission on the project
+                DirectUtils.setErrorMessageInErrorPage(ASSET_ACCESS_WRITE_PERMISSION_ERROR_MSG);
+                throw new IllegalArgumentException(ASSET_ACCESS_WRITE_PERMISSION_ERROR_MSG);
+            }
+        }
 }

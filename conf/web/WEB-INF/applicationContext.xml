@@ -1353,13 +1353,6 @@
         <property name="previewImageHeight" value="400"/>
     </bean>
 
-    <bean id="assetPermissionService"
-          class="com.topcoder.asset.services.impl.AssetPermissionServiceImpl">
-        <property name="entityManager" ref="assetEntityManager"/>
-        <property name="log" ref="log"/>
-        <property name="assetService" ref="assetService"/>
-    </bean>
-
     <bean id="assetCategoryService"
           class="com.topcoder.asset.services.impl.AssetCategoryServiceImpl">
         <property name="entityManager" ref="assetEntityManager"/>
@@ -1383,7 +1376,6 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="assetService" ref="assetService"/>
         <property name="assetVersionService" ref="assetVersionService"/>
-        <property name="assetPermissionService" ref="assetPermissionService"/>
         <property name="assetCategoryService" ref="assetCategoryService"/>
         <property name="fileTypeIconService" ref="assetFileTypeIconService"/>
         <property name="managerService" ref="assetManagerService"/>

@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
+import com.opensymphony.xwork2.ValidationAware;
 import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.AssetVersion;
 import com.topcoder.asset.entities.Category;
@@ -43,7 +44,6 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,10 +80,43 @@ import java.util.UUID;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 3)
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * <ul>
+ *     <li>Remove Client Managers, TopCoder Manager, Project Copilots and their getters and setters
+ *     because private permission is removed.
+ *     </li>
+ *     <li>Updated {@link #executeAction()} to remove setting managers</li>
+ *     <li>Updated {@link #batchEditAssets()} to check if user has write+ permission on each asset</li>
+ *     <li>Made {@link #batchGetAssetsPermission()} deprecated because it's no longer used after the update</li>
+ *     <li>Updated {@link #uploadAssetFile()} to check if user has write+ permission on the project</li>
+ *     <li>Updated {@link #updateAssetsPermission()} to check if user has write+ permission on each asset</li>
+ *     <li>Updated {@link #getAssetsZip()} ()} to check if user has download permission on each asset</li>
+ *     <li>Removed codes to get private permission users in {@link #saveAssetFile()}</li>
+ *     <li>Updated {@link #downloadAssetVersion()} to check if user has download permission</li>
+ *     <li>Updated {@link #getAssetVersion()} to check if user has read+ permission to the project the asset is in</li>
+ *     <li>Updated {@link #editAssetVersion()} to check if user has write+ permission to edit the asset and removed
+ *     the code to update the private permission users</li>
+ *     <li>Updated {@link #saveNewAssetVersion()} to check if user has write+ permission</li>
+ *     <li>Updated {@link #deleteAssetVersion()} to check if user has write+ permission</li>
+ *     <li>Updated {@link #deleteAsset()} to check if user has write+ permission</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Bug Fixes)
+ * <ul>
+ *     <li>Integrate the bug fixes for checking the duplicated category name when adding new category</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.4
  */
-public class ProjectAssetManageAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm> {
+public class ProjectAssetManageAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm>, ValidationAware {
+
+
+    private static final long MAX_ASSET_UPLOAD_SIZE = 20971520;
 
     /**
      * The view DTO for project assets view.
@@ -195,22 +228,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      * The asset categories available to the user.
      */
     private List<Category> assetCategories;
-
-
-    /**
-     * The client managers for the asset permission chosen
-     */
-    private List<User> clientManagers;
-
-    /**
-     * The TopCoder manager for the asset permission chosen.
-     */
-    private List<User> topcoderManagers;
-
-    /**
-     * The project copilots for the asset permission chosen.
-     */
-    private List<User> projectCopilots;
 
     /**
      * The assets to batch edit.
@@ -467,59 +484,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         this.assetCategories = assetCategories;
     }
 
-    /**
-     * Gets client managers for permission setting.
-     *
-     * @return client managers for permission setting
-     */
-    public List<User> getClientManagers() {
-        return clientManagers;
-    }
-
-    /**
-     * Sets client managers for permission setting.
-     *
-     * @param clientManagers client managers for permission setting.
-     */
-    public void setClientManagers(List<User> clientManagers) {
-        this.clientManagers = clientManagers;
-    }
-
-    /**
-     * Gets TopCoder managers for permission setting.
-     *
-     * @return TopCoder managers for permission setting
-     */
-    public List<User> getTopcoderManagers() {
-        return topcoderManagers;
-    }
-
-    /**
-     * Sets TopCoder managers for permission setting.
-     *
-     * @param topcoderManagers TopCoder managers for permission setting
-     */
-    public void setTopcoderManagers(List<User> topcoderManagers) {
-        this.topcoderManagers = topcoderManagers;
-    }
-
-    /**
-     * Gets project copilots for permission setting.
-     *
-     * @return project copilots for permission setting
-     */
-    public List<User> getProjectCopilots() {
-        return projectCopilots;
-    }
-
-    /**
-     * Sets project copilots for permission setting.
-     *
-     * @param projectCopilots project copilots for permission setting.
-     */
-    public void setProjectCopilots(List<User> projectCopilots) {
-        this.projectCopilots = projectCopilots;
-    }
 
     /**
      * Gets the save assets.
@@ -691,6 +655,14 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      */
     @Override
     protected void executeAction() throws Exception {
+
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        if(!AuthorizationProvider.isUserGrantedWriteAccessToProject(currentUser, getFormData().getProjectId())) {
+            DirectUtils.setErrorMessageInErrorPage("You don't have write permission on this project to upload assets");
+            throw new IllegalArgumentException("You don't have write permission on this project to upload assets");
+        }
+
         // prepare asset categories
         CategorySearchCriteria categorySearch = new CategorySearchCriteria();
         categorySearch.setContainerType(AssetContainerType.GLOBAL.toString());
@@ -703,13 +675,7 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         getAssetCategories().addAll(getAssetCategoryService().search(categorySearch).getRecords());
 
-        // prepare asset permission users
-        setClientManagers(getManagerService().getClientManagers(getFormData().getProjectId()));
-        setTopcoderManagers(getManagerService().getTopCoderManagers(getFormData().getProjectId()));
-        setProjectCopilots(getManagerService().getCopilots(getFormData().getProjectId()));
-
         // right sidebar data
-        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), getFormData().getProjectId());
 
         // populate the data needed for the right sidebar
@@ -738,9 +704,29 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
      */
     public String addNewCategory() {
         try {
+
             if (getCategory() == null || getCategory().getName() == null
                     || getCategory().getName().trim().length() == 0) {
                 throw new IllegalArgumentException("The file category to add is empty");
+            }
+
+            // Get existing categories
+            CategorySearchCriteria categorySearch = new CategorySearchCriteria();
+            categorySearch.setContainerType(AssetContainerType.GLOBAL.toString());
+
+            PagedResult<Category> categories = getAssetCategoryService().search(categorySearch);
+            setAssetCategories(categories.getRecords());
+
+            categorySearch.setContainerType(AssetContainerType.PROJECT.toString());
+            categorySearch.setContainerId(getFormData().getProjectId());
+            getAssetCategories().addAll(getAssetCategoryService().search(categorySearch).getRecords());
+
+            // check the duplicated name
+            for(Category c : getAssetCategories()) {
+                if(c.getName().equalsIgnoreCase(getCategory().getName())) {
+                    throw new IllegalArgumentException(
+                            "The category name " + getCategory().getName() + " already exists");
+                }
             }
 
             Category categoryToAdd = getCategory();
@@ -779,6 +765,11 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         List<Asset> assets = getAssetService().getAssets(getAssetIds());
 
+        // check the permission of each asset
+        for(Asset assetToCheck : assets) {
+            checkIfAssetAccessAllowed(assetToCheck, DirectUtils.getTCSubjectFromSession(), true);
+        }
+
         setAssetsToEdit(assets);
 
         // prepare asset categories
@@ -787,11 +778,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
         PagedResult<Category> categories = getAssetCategoryService().search(categorySearch);
         setAssetCategories(categories.getRecords());
-
-        // prepare asset permission users
-        setClientManagers(getManagerService().getClientManagers(getFormData().getProjectId()));
-        setTopcoderManagers(getManagerService().getTopCoderManagers(getFormData().getProjectId()));
-        setProjectCopilots(getManagerService().getCopilots(getFormData().getProjectId()));
 
         // right sidebar data
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
@@ -820,41 +806,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
     }
 
     /**
-     * Handles the request to batch get asset permissions.
-     *
-     * @return the result code.
-     * @since 1.2
-     */
-    public String batchGetAssetsPermission() {
-
-        try {
-            if (getAssetIds() == null || getAssetIds().length == 0) {
-                throw new IllegalArgumentException("The assets to batch get permission are empty");
-            }
-
-            Map<String, List<Long>> result = new HashMap<String, List<Long>>();
-
-            for (long assetId : getAssetIds()) {
-                List<User> users = getAssetPermissionService().getAllowedUsersForAsset(assetId);
-                List<Long> userIds = new ArrayList<Long>();
-                for (User u : users) {
-                    userIds.add(u.getId());
-                }
-                result.put(String.valueOf(assetId), userIds);
-            }
-
-            setResult(result);
-
-        } catch (Throwable e) {
-            e.printStackTrace(System.err);
-            if (getModel() != null) {
-                setResult(e);
-            }
-        }
-        return SUCCESS;
-    }
-
-    /**
      * Handles the action operation to upload the asset file.
      *
      * @return the result code.
@@ -869,7 +820,8 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             Date currentTime = new Date();
             long currentTimeMillis = currentTime.getTime();
 
-            if (!AuthorizationProvider.isUserGrantedAccessToProject(currentUser, getUploadFileProjectId())) {
+            if (!AuthorizationProvider.isUserGrantedWriteAccessToProject(currentUser, getUploadFileProjectId())) {
+                DirectUtils.setErrorMessageInErrorPage("Current user does not have permission to upload file to this project");
                 throw new IllegalArgumentException("Current user does not have permission to access the project:" + getUploadFileProjectId());
             }
 
@@ -881,6 +833,10 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             }
 
             File uploadFile = getFiles();
+
+            if(uploadFile.length() > MAX_ASSET_UPLOAD_SIZE) {
+                throw new IllegalArgumentException("The uploaded file exceeds the max allowed size 20M");
+            }
 
             uploadFileStream = new FileInputStream(uploadFile);
             saveFileStream = new FileOutputStream(assetUploadTempFile);
@@ -957,46 +913,16 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             List<Asset> assets = getAssetService().getAssets(getAssetIds());
 
-            List<Long> assetIdsToUpdate = new ArrayList<Long>();
+            for(Asset assetToCheck : assets) {
+                checkIfAssetAccessAllowed(assetToCheck, currentUser, true);
+            }
 
-            // remove the permission from non public assets first
             for (Asset asset : assets) {
-                if (!asset.isPublic()) {
-                    // no public, remove the permission first
-                    List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(asset.getId
-                            ());
-                    for (User u : allowedUsersForAsset) {
-                        getAssetPermissionService().removePermission(asset.getId(), u.getId());
-                    }
-                }
-
-                if (isAssetPublic()) {
-                    asset.setPublic(true);
-                } else {
-                    asset.setPublic(false);
-                    // add permission
-                    if (getPrivateUserIds() == null || getPrivateUserIds().size() > 0) {
-                        if (getPrivateUserIds() == null) {
-                            setPrivateUserIds(new ArrayList<Long>());
-                        }
-
-                        // by default, give editor the permission if the restriction is private
-                        if (!getPrivateUserIds().contains(currentUser.getUserId())) {
-                            getPrivateUserIds().add(currentUser.getUserId());
-                        }
-                    }
-
-                    assetIdsToUpdate.add(asset.getId());
-                }
+                asset.setPublic(isAssetPublic());
             }
 
             // update the assets
             getAssetService().updateAssets(currentUser.getUserId(), assets);
-
-            if (!isAssetPublic()) {
-                // update assets to private, we need to update asset permissions
-                getAssetPermissionService().setPermissions(assetIdsToUpdate, getPrivateUserIds());
-            }
 
             transactionManager.commit(status);
 
@@ -1029,6 +955,13 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             if (getAssetVersionIds() == null || getAssetVersionIds().length == 0) {
                 throw new IllegalArgumentException("The asset versions to download are not specified");
+            }
+
+            // check permission first
+            for(long assetVersionId : getAssetVersionIds()) {
+                Asset assetToCheck = getAssetService().getAsset(getAssetVersionService().getAssetVersion(assetVersionId).getAssetId());
+                // check if has permission on each asset
+                checkIfAssetDownloadAllowed(assetToCheck, currentUser);
             }
 
             long currentTimeMillis = System.currentTimeMillis();
@@ -1174,20 +1107,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
                getAssetVersionService().createAssetVersion(currentUser.getUserId(), version, uploadedFile, true);
 
-               // set permission
-               if (!assetToSave.isAssetPublic() && (assetToSave.getPrivateUserIds() == null || assetToSave.getPrivateUserIds().size() > 0)) {
-
-                   if (assetToSave.getPrivateUserIds() == null) {
-                       assetToSave.setPrivateUserIds(new ArrayList<Long>());
-                   }
-
-                   // by default, give uploader the permission if the restriction is private
-                   if (!assetToSave.getPrivateUserIds().contains(currentUser.getUserId())) {
-                       assetToSave.getPrivateUserIds().add(currentUser.getUserId());
-                   }
-                   getAssetPermissionService().setPermissions(Arrays.asList(new Long[]{asset.getId()}), assetToSave.getPrivateUserIds());
-               }
-
                // build the result set
                Map<String, String> singleResult = new HashMap<String, String>();
                singleResult.put("assetId", String.valueOf(asset.getId()));
@@ -1243,12 +1162,11 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         try {
             TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
-            // check if user has access to the asset
-            if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
-                throw new IllegalArgumentException("You don't have permission to download the asset");
-            }
-
             Asset asset = getAssetService().getAsset(getAssetId());
+
+            // check if user has access to the asset - Update in (TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+            // do not check with asset permission service because we only check project permission now
+            checkIfAssetDownloadAllowed(asset, currentUser);
 
             List<AssetVersion> assetVersions = getAssetVersionService().getAssetVersionsOfAsset(asset.getId());
 
@@ -1303,10 +1221,9 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             AssetVersion assetVersion = getAssetVersionService().getAssetVersion(getAssetVersionId());
 
-            // check if user has access to the asset the asset version belongs to
-            if (!getAssetPermissionService().isAllowed(assetVersion.getAssetId(), currentUser.getUserId())) {
-                throw new IllegalArgumentException("You don't have permission to access the file");
-            }
+            // check if the user has access to the asset
+            Asset assetToCheck = getAssetService().getAsset(assetVersion.getAssetId());
+            checkIfAssetAccessAllowed(assetToCheck, currentUser, false);
 
             // serialize asset version to ajax
             ObjectMapper m = new ObjectMapper();
@@ -1324,11 +1241,7 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
 
             // put the asset permission data - if the asset is private
             if(!asset.isPublic()) {
-                List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(assetVersion.getAssetId());
                 Set<Long> allowedUserIds = new HashSet<Long>();
-                for (User u : allowedUsersForAsset) {
-                    allowedUserIds.add(u.getId());
-                }
                 result.put("users", allowedUserIds);
                 result.put("isPublic", false);
             } else {
@@ -1404,10 +1317,8 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
                     throw new IllegalArgumentException("The asset id and asset version does not exist");
                 }
 
-                // check if user has access to the asset the asset version belongs to
-                if (!getAssetPermissionService().isAllowed(asset.getId(), currentUser.getUserId())) {
-                    throw new IllegalArgumentException("You don't have permission to access the file");
-                }
+
+                checkIfAssetAccessAllowed(asset, currentUser, true);
 
                 // check description length
                 if(assetToUpdate.getAssetDescription() == null || assetToUpdate.getAssetDescription().trim().length() == 0) {
@@ -1427,32 +1338,10 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
                     }
                 }
 
-                // if asset permission is changed update it
-                if(!asset.isPublic()) {
-                    // no public, remove the permission first
-                    List<User> allowedUsersForAsset = getAssetPermissionService().getAllowedUsersForAsset(asset.getId());
-                    for(User u : allowedUsersForAsset) {
-                        getAssetPermissionService().removePermission(asset.getId(), u.getId());
-                    }
-                }
-
                 if(assetToUpdate.isAssetPublic()) {
                     asset.setPublic(true);
                 } else {
                     asset.setPublic(false);
-
-                    // add permission
-                    if(assetToUpdate.getPrivateUserIds() == null || assetToUpdate.getPrivateUserIds().size() > 0) {
-                        if (assetToUpdate.getPrivateUserIds() == null) {
-                            assetToUpdate.setPrivateUserIds(new ArrayList<Long>());
-                        }
-
-                        // by default, give editor the permission if the restriction is private
-                        if (!assetToUpdate.getPrivateUserIds().contains(currentUser.getUserId())) {
-                            assetToUpdate.getPrivateUserIds().add(currentUser.getUserId());
-                        }
-                        getAssetPermissionService().setPermissions(Arrays.asList(new Long[]{asset.getId()}), assetToUpdate.getPrivateUserIds());
-                    }
                 }
 
                 // update asset
@@ -1506,11 +1395,14 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             SaveAssetDTO newAssetVersion = getAssets().get(0);
 
             // 1) Perform validations and permission checking
-
-            // check if user has access to the asset the asset version belongs to
-            if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
-                throw new IllegalArgumentException("You don't have permission to upload new version for this file");
+            if(getAssetId() <= 0) {
+                throw new IllegalArgumentException("The ID of the asset the new version is added to should be positive");
             }
+
+            // get the asset
+            Asset asset = getAssetService().getAsset(getAssetId());
+
+            checkIfAssetAccessAllowed(asset, currentUser, true);
 
             // check if the upload new version session exists
             if (newAssetVersion.getSessionKey() == null || newAssetVersion.getSessionKey().length() == 0) {
@@ -1535,8 +1427,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             def.setName(this.getClass().getName() + ".saveNewAssetVersion");
             def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
             status = transactionManager.getTransaction(def);
-
-            Asset asset = getAssetService().getAsset(getAssetId());
 
             // get the current latest version
             AssetVersion currentVersion = asset.getCurrentVersion();
@@ -1636,10 +1526,9 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
             for(long assetVersionId : getAssetVersionIds()) {
                 AssetVersion assetVersion = getAssetVersionService().getAssetVersion(assetVersionId);
 
-                // check if user has access to the asset the asset version belongs to
-                if (!getAssetPermissionService().isAllowed(assetVersion.getAssetId(), currentUser.getUserId())) {
-                    throw new IllegalArgumentException("You don't have permission to delete this asset version");
-                }
+                Asset assetToCheck = getAssetService().getAsset(assetVersion.getAssetId());
+
+                checkIfAssetAccessAllowed(assetToCheck, currentUser, true);
 
                 // delete the asset version
                 getAssetVersionService().deleteAssetVersion(currentUser.getUserId(), assetVersion.getId());
@@ -1684,10 +1573,10 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
                 throw new IllegalArgumentException("The id of the asset to delete is invalid");
             }
 
-            // check if user has access to the asset
-            if (!getAssetPermissionService().isAllowed(getAssetId(), currentUser.getUserId())) {
-                throw new IllegalArgumentException("You don't have permission to delete this asset version");
-            }
+            // check permission
+            Asset asset = getAssetService().getAsset(getAssetId());
+
+            checkIfAssetAccessAllowed(asset, currentUser, true);
 
             DefaultTransactionDefinition def = new DefaultTransactionDefinition();
             def.setName(this.getClass().getName() + ".deleteAsset");
