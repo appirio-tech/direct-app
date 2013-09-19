@@ -1,13 +1,17 @@
 <%--
   - Author: GreatKevin
   -
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project tasks view.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
   - Updates to support task CRUD and task list CRUD
+  -
+  - Version 1.2 (TC - Cockpit Tasks Management Assembly 3)
+  - - Adds the task filtering
+  - - Adds the task grouping.
   -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -205,6 +209,28 @@
         {{for completedLists tmpl="#taskListTemplate"/}}
         {{/if}}
     </script>
+
+    <script id="dueDateGroupTemplate" type="text/x-jsrender">
+      <div class="taskListPanel">
+        <div class="taskListPanelHeader">
+            <div class="taskListPanelHeaderRight">
+                <div class="taskListPanelHeaderInner">
+                    <h3 class="dateList fLeft">Due Date: {{:dueDate}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="taskListContent">
+             {{for tasks tmpl="#newTaskTemplate"/}}
+        </div>
+        <div class="corner cornerBl"></div>
+        <div class="corner cornerBr"></div>
+    </div>
+    </script>
+
+    <script id="dueDateGroupsTemplate" type="text/x-jsrender">
+        {{for dueDateGroups tmpl="#dueDateGroupTemplate"/}}
+    </script>
+
 
     <script id="quickEditTemplate" type="text/x-jsrender">
         <div class="taskItem editTaskItem quickEditTaskItem">
@@ -431,12 +457,21 @@ mind that some features are not implemented yet.  For a full description of what
     <div class="searchTaskByName">
         <input type="text" class="searchBox" />
     </div>
-    <p class="fieldLabel">Assign to:</p>
+    <p class="fieldLabel">Show to-dos assigned to:</p>
     <select name="filterAssignedTo" id="filterAssignedTo">
-        <option value="fa0">Any</option>
-        <option value="fa1">Username 1</option>
-        <option value="fa2">Username 2</option>
-        <option value="fa3">Username 3</option>
+        <option>Anyone</option>
+        <s:iterator value="taskUserIds" var="userId">
+            <option value="${userId}" />${userId}</option>
+        </s:iterator>
+    </select>
+    <p class="fieldLabel">Show to-dos that are due</p>
+    <select name="filterDueType" id="filterDueType">
+        <option value="0">Anytime</option>
+        <option value="5">Today</option>
+        <option value="1">This Week</option>
+        <option value="2">Next Week</option>
+        <option value="3">Later</option>
+        <option value="4">In the past(overdue)</option>
     </select>
     <p class="fieldLabel">Due Date</p>
     <div class="dueDateFilter">
@@ -446,45 +481,43 @@ mind that some features are not implemented yet.  For a full description of what
     </div>
     <p class="fieldLabel">Priority:</p>
     <ul id="filterByPriority">
-        <li><input name="priorityFilter" type="checkbox" value="pf1" /><label class="priorityLabel priorityHigh">High</label></li>
-        <li><input name="priorityFilter" type="checkbox" value="pf2" /><label class="priorityLabel priorityNormal">Normal</label></li>
-        <li><input name="priorityFilter" type="checkbox" value="pf3" /><label class="priorityLabel priorityLow">Low</label></li>
+        <li><input name="priorityFilter" type="checkbox" value="0" checked="checked"/><label class="priorityLabel priorityHigh">High</label></li>
+        <li><input name="priorityFilter" type="checkbox" value="2" checked="checked"/><label class="priorityLabel priorityNormal">Normal</label></li>
+        <li><input name="priorityFilter" type="checkbox" value="1" checked="checked"/><label class="priorityLabel priorityLow">Low</label></li>
     </ul>
     <p class="fieldLabel">Status:</p>
     <ul id="filterByStatus">
-        <li><input name="statusFilter" type="checkbox" value="sf0" /><label>Not Started</label></li>
-        <li><input name="statusFilter" type="checkbox" value="sf1" /><label>In Progress</label></li>
-        <li><input name="statusFilter" type="checkbox" value="sf2" /><label>Waiting on Dependency</label></li>
-        <li><input name="statusFilter" type="checkbox" value="sf3" /><label>Completed</label></li>
+        <li><input name="statusFilter" type="checkbox" value="0" checked="checked"/><label>Not Started</label></li>
+        <li><input name="statusFilter" type="checkbox" value="1" checked="checked"/><label>In Progress</label></li>
+        <li><input name="statusFilter" type="checkbox" value="2" checked="checked"/><label>Waiting on Dependency</label></li>
+        <li><input name="statusFilter" type="checkbox" value="3" checked="checked"/><label>Completed</label></li>
     </ul>
     <p class="fieldLabel">Associated With Project Milestone</p>
     <div class="taskMultiSelector" id="filerByPM">
-        <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select</a><a class="selectorArrow"></a><label class="hidden">Select</label></div>
+        <div class="trigger"><a class="msValue" href="javascript:;" title="Choose milestones to filter">Any Milestone</a><a class="selectorArrow"></a><label class="hidden">Any Milestone</label></div>
         <div class="dropDown">
             <ul>
-                <li><input name="milestoneFilter" type="checkbox" value="mf1" /><label>Milestone Name</label></li>
-                <li><input name="milestoneFilter" type="checkbox" value="mf2" /><label>Milestone Name</label></li>
-                <li><input name="milestoneFilter" type="checkbox" value="mf3" /><label>Milestone Name</label></li>
-                <li><input name="milestoneFilter" type="checkbox" value="mf4" /><label>Milestone Name</label></li>
-                <li><input name="milestoneFilter" type="checkbox" value="mf5" /><label>Milestone Name</label></li>
+                <s:iterator value="projectMilestones">
+                    <li><input name="milestoneFilter" type="checkbox" value="<s:property value='key'/>" /><label><s:property value='value'/></label></li>
+                </s:iterator>
             </ul>
             <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a></div>
         </div>
     </div>
     <p class="fieldLabel">Associated With Contests</p>
     <div class="taskMultiSelector" id="filterByContests">
-        <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select</a><a class="selectorArrow"></a><label class="hidden">Select</label></div>
+        <div class="trigger"><a class="msValue" href="javascript:;" title="Choose contests to filter">Any Contest</a><a class="selectorArrow"></a><label class="hidden">Any Contest</label></div>
         <div class="dropDown">
             <ul>
-                <li><input name="contestFilter" type="checkbox" value="cf1" /><label>Contest Name</label></li>
-                <li><input name="contestFilter" type="checkbox" value="cf2" /><label>Contest Name</label></li>
-                <li><input name="contestFilter" type="checkbox" value="cf3" /><label>Contest Name</label></li>
-                <li><input name="contestFilter" type="checkbox" value="cf4" /><label>Contest Name</label></li>
-                <li><input name="contestFilter" type="checkbox" value="cmf5" /><label>Contest Name</label></li>
+                <s:iterator value="projectContests">
+                    <li><input name="contestFilter" type="checkbox" value="<s:property value='key'/>" /><label><s:property value='value'/></label></li>
+                </s:iterator>
             </ul>
             <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a></div>
         </div>
     </div>
+    <a href="javascript:;" id="clearFilterToggle" style="float:right;color:red;padding-top:8px;padding-left:5px">Clear</a>
+    <a href="javascript:;" id="applyFilterToggle" style="float:right;color:red;padding-top:8px">Apply Filters</a>
     <div class="corner cornerTl"></div>
     <div class="corner cornerTr"></div>
     <div class="corner cornerBl"></div>
@@ -519,8 +552,8 @@ mind that some features are not implemented yet.  For a full description of what
         </select>
         <label class="fLeft">Group by:</label>
         <select name="switchTaskGroupBy" id="switchTaskGroupBy" class="fLeft">
-            <option>Task List Name</option>
-            <option>Due Date</option>
+            <option value="0">Task List Name</option>
+            <option value="1">Due Date</option>
         </select>
         <a class="buttonRed1 fRight addTaskList jsAddTaskList" href="javascript:;"><span><i></i>ADD A TASK LIST</span></a>
     </div>
@@ -547,9 +580,9 @@ mind that some features are not implemented yet.  For a full description of what
             <p>You can also create new task list by clicking on “<strong>Add a Task List</strong>” button.</p>
             <h4>Have questions or need help?</h4>
             <div class="linkswrapper">
-                <a href="https://www.topcoder.com/university/platform-updates/cockpit-task-management-part-2/" target="_blank" class="taskListHelpLink">Tasks FAQs</a>  &nbsp;|&nbsp;
-                <a href="https://youtu.be/j19ZtGBflDc" target="_blank" class="taskListHelpLink">Tasks Video</a>  &nbsp;|&nbsp;
-                <a href="https://www.topcoder.com/university/platform-updates/cockpit-task-management-part-2/" target="_blank" class="taskListHelpLink">Tasks Tutorials</a>
+                <a href="javascript:;" class="taskListHelpLink">Tasks FAQs</a>  &nbsp;|&nbsp;
+                <a href="javascript:;" class="taskListHelpLink">Tasks Video</a>  &nbsp;|&nbsp;
+                <a href="javascript:;" class="taskListHelpLink">Tasks Tutorials</a>
             </div>
         </div>
     </div>
@@ -662,6 +695,11 @@ mind that some features are not implemented yet.  For a full description of what
 
 </div>
 <!-- End  .groupByTaskList -->
+
+
+<div class="groupByDueDate hide">
+
+</div>
 
 <div class="quickTaskEditTemplate hide">
     <div class="taskItem editTaskItem quickEditTaskItem">

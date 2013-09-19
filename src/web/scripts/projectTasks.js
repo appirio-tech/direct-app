@@ -9,7 +9,11 @@
  * - Version 1.2 (Release Assembly - TC Cockpit Tasks Management Release 2)
  * - Add methods to suppor task CRUD and task list CRUD.
  *
- * @version 1.2
+ * - Version 1.3 (TC - Cockpit Tasks Management Assembly 3)
+ * - Adds the task filtering feature
+ * - Adds the task group by due date feature
+ *
+ * @version 1.3
  * @author GreatKevin
  */
 var quickTaskNameHint = "Task Name";
@@ -75,6 +79,8 @@ var taskListValidationRules = {
 
 var localVM = {};
 
+var filterApplied = false;
+
 if($.views) {
     $.views.helpers({
         getUserLink: getUserLink,
@@ -104,6 +110,67 @@ function getPriorityName(enumName) {
     return priorityMap[enumName].name;
 }
 
+function buildFilterRequest() {
+    var filters = {};
+    var _filterPanel = $(".taskListFilter");
+
+    var name = $(".searchBox", _filterPanel).val();
+    var assignee = $("#filterAssignedTo").val();
+    var dueType = $("#filterDueType").val();
+    var dueDateFrom = $("#filterStartDate").val();
+    var dueDateTo = $("#filterDueDate").val();
+    var priorityIds = [];
+    $("input[name=priorityFilter]:checked").each(function(){
+        priorityIds.push($(this).val());
+    });
+    var statusIds = [];
+    $("input[name=statusFilter]:checked").each(function(){
+        statusIds.push($(this).val());
+    });
+    var milestoneIds = [];
+    $("input[name=milestoneFilter]:checked").each(function(){
+        milestoneIds.push($(this).val());
+    });
+    var contestIds = [];
+    $("input[name=contestFilter]:checked").each(function(){
+        contestIds.push($(this).val());
+    });
+
+    if(name.length > 0) {
+        filters.name = name;
+    }
+
+    if(assignee && assignee > 0) {
+        filters.assigneeId = assignee;
+    }
+
+    filters.dueType = dueType;
+
+    if(dueType == 0) {
+        if(dueDateFrom && dueDateFrom.length > 0) {
+            filters.dueDateFrom = dueDateFrom;
+        }
+        if(dueDateTo && dueDateTo.length > 0) {
+            filters.dueDateTo = dueDateTo;
+        }
+    }
+
+    filters.priorityIds = priorityIds;
+    filters.statusIds = statusIds;
+
+    if(milestoneIds.length > 0) {
+        filters.milestoneIds = milestoneIds;
+    }
+
+    if(contestIds.length > 0) {
+        filters.contestIds = contestIds;
+    }
+
+    filters.applyFilter = true;
+
+    return filters;
+}
+
 function resetAssociationInput(item, name) {
     var selector = item.find("select[name='" + name + "']");
     selector.find("option").removeAttr('selected');
@@ -116,10 +183,17 @@ function resetAssociationInput(item, name) {
 function loadTaskList(taskListId, callBackFunction) {
     var taskListPanel = $("#taskList" + taskListId);
 
+    var request;
+    if(filterApplied == true) {
+        request = {formData:{projectId:tcDirectProjectId}, taskListId:taskListId, filter: buildFilterRequest()};
+    } else {
+        request = {formData:{projectId:tcDirectProjectId}, taskListId:taskListId};
+    }
+
     $.ajax({
         type: 'POST',
         url: ctx + "/getTaskLists",
-        data: {formData:{projectId:tcDirectProjectId}, taskListId:taskListId},
+        data: request,
         cache: false,
         dataType: 'json',
         success: function (jsonResult) {
@@ -167,78 +241,134 @@ function updateCompletedStat() {
     displayProgress();
 }
 
-function loadAllTaskLists(callbackFunction) {
+function loadAllTaskLists(callbackFunction, applyFilters) {
 
     $('.groupByTaskList').children().not('#empty').remove();
 
     localVM = {};
+    var request = {formData:{projectId:tcDirectProjectId}};
+
+    if(applyFilters == true) {
+        request = {formData: {projectId: tcDirectProjectId}, filter: buildFilterRequest()};
+    }
+
+    if($("#switchTaskGroupBy").val() > 0) {
+        request.group = {groupTypeId: $("#switchTaskGroupBy").val()};
+
+        if($("#switchTaskList").val() != 'ptAll') {
+            // has a specific task list selected
+            request.group['groupListId'] = $("#switchTaskList").val().substr(8);
+        }
+
+    }
 
     $.ajax({
         type: 'POST',
         url: ctx + "/getTaskLists",
-        data: {formData:{projectId:tcDirectProjectId}},
+        data: request,
         cache: false,
+        async: false,
         dataType: 'json',
         success: function (jsonResult) {
             handleJsonResult(jsonResult,
                 function (result) {
 
-                    if(!result || result.length == 0) {
-                        $("#empty").show();
-                        return;
-                    } else {
-                        $("#empty").hide();
-                    }
+                    // handle default group by task list
+                    if($("#switchTaskGroupBy").val() <= 0) {
+                        _taskResult = result.tasks;
 
+                        if(!applyFilters && (!_taskResult || _taskResult.length == 0)) {
+                            $("#empty").show();
+                            return;
+                        } else {
+                            $("#empty").hide();
+                        }
 
-                    $("select[name=taskListId] option").remove();
-                    $("#switchTaskList option:gt(0)").remove();
-                    var completedTaskNumber = 0;
-                    var totalTaskNumber = 0;
-                    var activeLists = [];
-                    var completedLists = [];
-                    $.each(result, function(index, item){
-                        if(item['default']) {
-                            if(item.tasks.length == 0) {
-                                $("#empty").show();
-                            } else {
-                                $("#empty").hide();
+                        $("select[name=taskListId] option").remove();
+                        $("#switchTaskList option:gt(0)").remove();
+                        var activeLists = [];
+                        var completedLists = [];
+
+                        // iterate over each task list
+                        $.each(_taskResult, function(index, item){
+
+                            // if task list is default and there is no task, show the empty tasks hint
+                            if(item['default']) {
+                                if(item.tasks.length == 0) {
+                                    $("#empty").show();
+                                } else {
+                                    $("#empty").hide();
+                                }
+
                             }
 
+                            item['isDefault'] = item['default']; // fix ie8 default keyword issue in template
+
+
+                            // append each task list to "task list selector" of creating new task: 1) quick add task 2) add task modal window
+                            $("select[name=taskListId]").append($("<option/>").attr('value', item.id).text(item.name));
+
+                            if(item.active) {
+                                // task list is active, push to active list stack and append the list name with count to "Switch Task List" select
+                                activeLists.push(item);
+                                $("#switchTaskList").append($('<option/>').text(item.name + ' (' + item.completedTasks.length + "/" + item.tasks.length + ')').attr('value', 'taskList' + item.id));
+                            } else {
+                                // task list is resolved one, push to the completed task list stack
+                                completedLists.push(item);
+                            }
+
+                            // put into the local cache
+                            localVM[item.id] = item;
+                        });
+
+                        // update the task list completion stats
+                        updateCompletedStat();
+
+                        // append the main content of task lists with template rendering
+                        $('.groupByTaskList').children().not('#empty').remove();
+                        $(".groupByTaskList").append($("#taskListsTemplate").render({activeLists:activeLists,completedLists: completedLists})).show();
+                        $(".groupByDueDate").hide();
+
+                        // reset "Switch Task List" select
+                        $("#switchTaskList")[0].selectedIndex = 0;
+
+                        // reset "group by" select
+                        $("#switchTaskGroupBy")[0].selectedIndex = 0;
+
+                        // update the progress indicators of each task list and the total project indicator of all task lists
+                        displayProgress();
+
+
+                        $(".taskListContainer .completedItem").hide();
+                        $(".completedTaskList .completedItem").show();
+                        $(".taskListContainer .completedTaskList").hide();
+
+                        $('.taskAttachmentUl a.taskAttachment').each(function() {
+                            if ( $(this).text().length > 23) {
+                                turncatedTxt  = $(this).text().substring(0, 20) + " ...";
+                                $(this).text(turncatedTxt);
+                            }
+                        });
+
+                        // if applyFilter is true
+                        if(applyFilters == true && _taskResult.length == 0) {
+                            $('.groupByTaskList').append('<p style="font-size:13px; text-align: center; padding-top: 40px">There is no matched task</p>');
                         }
-                        item['isDefault'] = item['default']; // fix ie8 default keyword issue in template
-                        $("select[name=taskListId]").append($("<option/>").attr('value', item.id).text(item.name));
-                        if(item.active) {
-                            activeLists.push(item);
-                            $("#switchTaskList").append($('<option/>').text(item.name + ' (' + item.completedTasks.length + "/" + item.tasks.length + ')').attr('value', 'taskList' + item.id));
-                        } else {
-                            completedLists.push(item);
+
+                        if(callbackFunction) {
+                            callbackFunction();
                         }
+                    } else {
+                        // handle group by due date
+                        $(".groupByTaskList").hide();
+                        $(".groupByDueDate").html('').append($("#dueDateGroupsTemplate").render({dueDateGroups:result})).show();
+                        $(".groupByDueDate .taskListPanel").each(function(){
+                            if($(this).find(".isOverdue").length > 0) {
+                                $(this).addClass('overDueList');
+                            }
+                        });
 
-                        localVM[item.id] = item;
 
-                    });
-
-                    updateCompletedStat();
-
-                    $(".groupByTaskList").append($("#taskListsTemplate").render({activeLists:activeLists,completedLists: completedLists}));
-
-                    $("#switchTaskList")[0].selectedIndex = 0;
-                    $("#switchTaskGroupBy")[0].selectedIndex = 0;
-                    displayProgress();
-                    $(".taskListContainer .completedItem").hide();
-                    $(".completedTaskList .completedItem").show();
-                    $(".taskListContainer .completedTaskList").hide();
-
-                    $('.taskAttachmentUl a.taskAttachment').each(function() {
-                        if ( $(this).text().length > 23) {
-                            turncatedTxt  = $(this).text().substring(0, 20) + " ...";
-                            $(this).text(turncatedTxt);
-                        }
-                    });
-
-                    if(callbackFunction) {
-                        callbackFunction();
                     }
 
                 },
@@ -255,8 +385,6 @@ $(document).ready(function(){
         $(this).attr('autocomplete', 'off');
     });
 
-    // load all the task lists when page ready
-    loadAllTaskLists();
 
     // build user links cache
     $(".addTaskPanel input[name=quickAssignUser]").each(function () {
@@ -264,6 +392,16 @@ $(document).ready(function(){
         var userLink = $(this).next("label").html();
         userLinksCache[userId] = userLink;
     });
+
+    $("#filterAssignedTo option").each(function() {
+        var userId = $(this).attr('value');
+        if(userId > 0) {
+            $(this).text($(userLinksCache[userId] + '').text());
+        }
+    })
+
+    // load all the task lists when page ready
+    loadAllTaskLists();
 
     /*Focus / Blur Effect*/
     $('#quickTaskName').focus(function () {
@@ -371,22 +509,8 @@ $(document).ready(function(){
 				var targetPt = $("#" + ptName);
 				targetPt.show();
 			}
-		}else{
-			$(".groupByTaskList").hide();
-			$(".groupByDueDate").show();
-			if(ptName == "ptAll"){
-				$(".groupByDueDate .taskListPanel").show();
-				$(".groupByDueDate .taskItem").show();
-			}else{
-				$(".groupByDueDate .taskListPanel").show();
-				$(".groupByDueDate .taskItem").hide();
-				$(".groupByDueDate ." + ptName).show();
-				$('.groupByDueDate .taskListPanel').each(function() {
-					if ($(".taskItem:visible", $(this)).length < 1){
-						$(this).hide();
-					}
-				});
-			}
+		} else{
+            loadAllTaskLists();
 		}
 	})
 
@@ -428,6 +552,38 @@ $(document).ready(function(){
 			$(this).text("More Details");
 		}
 	})
+
+    // filter task
+    $("#applyFilterToggle").click(function(){
+        loadAllTaskLists(function () {
+            $("#empty").hide();
+        }, true);
+        filterApplied = true;
+    });
+
+    $("#clearFilterToggle").click(function(){
+        $(".taskListFilter input[type=text]").val('');
+        $(".taskListFilter select").each(function(){
+            $(this).find("option:eq(0)").attr('selected', 'selected');
+        });
+
+        $("#filterByPriority input[type=checkbox], #filterByStatus input[type=checkbox]").attr('checked', 'checked');
+
+        $("#filerByPM input[type=checkbox], #filterByContests input[type=checkbox]").removeAttr('checked');
+
+        $("#filerByPM .selectorArrow").click();
+        $("#filerByPM .buttonRed1").click();
+        $("#filterByContests .selectorArrow").click();
+        $("#filterByContests .buttonRed1").click();
+
+        loadAllTaskLists();
+        filterApplied = false;
+    })
+
+    // group
+    $("#switchTaskGroupBy").change(function(){
+        loadAllTaskLists();
+    })
 	
 	
 	// Edit task
@@ -609,11 +765,16 @@ $(document).ready(function(){
                         if(taskWrapper.hasClass('taskItemDetailed')) {
                             taskWrapper.find('a.taskMoreDetailsLink').text("Less Details");
                         }
-                        if(result.status == 'COMPLETED') {
-                            taskWrapper.addClass('completedItem');
-                            loadTaskList(result.taskListId);
-                        }
                         editForm.remove();
+                        if($("#switchTaskGroupBy").val() <= 0) {
+                            if(result.status == 'COMPLETED') {
+                                taskWrapper.addClass('completedItem');
+                                loadTaskList(result.taskListId);
+                            }
+                        } else {
+                            loadAllTaskLists();
+                        }
+
                     },
                     function (errorMessage) {
                         showServerError(errorMessage);
@@ -644,10 +805,15 @@ $(document).ready(function(){
             success: function (jsonResult) {
                 handleJsonResult(jsonResult,
                     function (result) {
-                        loadTaskList(result.taskListId);
 
-                        if (result.status != 'COMPLETED' && taskListPanel.hasClass("completedTaskList")) {
-                            // task reactived && task list is a completed, do a reload
+                        if ($("#switchTaskGroupBy").val() <= 0) {
+                            loadTaskList(result.taskListId);
+
+                            if (result.status != 'COMPLETED' && taskListPanel.hasClass("completedTaskList")) {
+                                // task reactived && task list is a completed, do a reload
+                                loadAllTaskLists();
+                            }
+                        } else {
                             loadAllTaskLists();
                         }
                     },
@@ -683,7 +849,11 @@ $(document).ready(function(){
             success: function (jsonResult) {
                 handleJsonResult(jsonResult,
                     function (result) {
-                        loadTaskList($("#deleteTaskModal").data("taskListToUpdate"), function() {modalLoad("#deleteTaskSuccessModal");});
+                        if($("#switchTaskGroupBy").val() <= 0) {
+                            loadTaskList($("#deleteTaskModal").data("taskListToUpdate"), function() {modalLoad("#deleteTaskSuccessModal");});
+                        } else {
+                            loadAllTaskLists();
+                        }
                     },
                     function (errorMessage) {
                         showServerError(errorMessage);
@@ -937,10 +1107,19 @@ $(document).ready(function(){
         var taskListPanel = $(this).parents(".taskListPanel");
         var taskListId = taskListPanel.find("input[name=taskListId]").val();
 
+        var request;
+        if(filterApplied == true) {
+            request = {formData:{projectId:tcDirectProjectId}, taskListId:taskListId, filter: buildFilterRequest()};
+        } else {
+            request = {formData:{projectId:tcDirectProjectId}, taskListId:taskListId};
+        }
+
+
+        // populate EDIT TASK LIST MODAL with task list data retrieved from the server
         $.ajax({
             type: 'POST',
             url: ctx + "/getTaskLists",
-            data: {formData: {projectId: tcDirectProjectId}, taskListId: taskListId},
+            data: request,
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {
@@ -1113,6 +1292,19 @@ $(document).ready(function(){
         modalClose();
         $('#' + modalID).hide();
         return false;
+    });
+
+
+    $("#filterDueType").change(function () {
+        if ($(this).val() > 0) {
+            // disable the date pickers
+            $('.taskListFilter .task-date-pick').dpSetDisabled(true);
+            $('.taskListFilter .task-date-pick').addClass('disable');
+        } else {
+            // enable the date pickers
+            $('.taskListFilter .task-date-pick').dpSetDisabled(false);
+            $('.taskListFilter .task-date-pick').removeClass('disable');
+        }
     });
 });
 

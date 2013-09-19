@@ -25,6 +25,8 @@ import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.dto.task.project.TaskDTO;
+import com.topcoder.direct.services.view.dto.task.project.TaskFilterDTO;
+import com.topcoder.direct.services.view.dto.task.project.TaskGroupDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -62,10 +64,26 @@ import java.util.*;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.2 (TC - Cockpit Tasks Management Assembly 3)
+ * <ul>
+ *     <li>Adds {@link #filter} and its getter and setter</li>
+ *     <li>Adds {@link #group} and its getter and setter</li>
+ *     <li>Updates {@link #getTaskLists()} to handle the task list filtering and grouping</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
+ * @version 1.2
  */
 public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<ProjectIdForm> {
+
+    /**
+     *  The MAX DAYS used by the date filtering to calculate a MIN or MAX date from now
+     *
+     *  @since 1.2
+     */
+    private static final int MAX_DAYS = 365 * 50;
 
     /**
      * All the task statuses.
@@ -85,7 +103,14 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
     /**
      * The simple format for the task start date and due date.
      */
-    private DateFormat taskDateSimpleFormat = new SimpleDateFormat("dd MMMMMMM");
+    private DateFormat taskDateSimpleFormat = new SimpleDateFormat("dd MMM");
+
+    /**
+     * The date format used to display the header of group by due date.
+     *
+     * @since 1.2
+     */
+    private DateFormat taskDueDateGroupFormat = new SimpleDateFormat("dd MMM yyyy");
 
     /**
      * The project ID form.
@@ -150,6 +175,20 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
      * @since 1.1
      */
     private TaskList newTaskList;
+
+    /**
+     * The Task Filter DTO used to store the task filters.
+     *
+     * @since 1.2
+     */
+    private TaskFilterDTO filter = new TaskFilterDTO();
+
+    /**
+     * The Task Group DTO used to store the task grouping type.
+     *
+     * @since 1.2
+     */
+    private TaskGroupDTO group = new TaskGroupDTO();
 
     /**
      * The transaction manager
@@ -331,6 +370,46 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
     }
 
     /**
+     * Gets the task filter DTO.
+     *
+     * @return the task filter DTO.
+     * @since 1.2
+     */
+    public TaskFilterDTO getFilter() {
+        return filter;
+    }
+
+    /**
+     * Sets the task filter DTO.
+     *
+     * @param filter the task filter DTO.
+     * @since 1.2
+     */
+    public void setFilter(TaskFilterDTO filter) {
+        this.filter = filter;
+    }
+
+    /**
+     * Gets the task group DTO.
+     *
+     * @return the task group DTO.
+     * @since 1.2
+     */
+    public TaskGroupDTO getGroup() {
+        return group;
+    }
+
+    /**
+     * Sets the task group DTO.
+     *
+     * @param group the task group DTO.
+     * @since 1.2
+     */
+    public void setGroup(TaskGroupDTO group) {
+        this.group = group;
+    }
+
+    /**
      * Gets the view data for right sidebar.
      *
      * @return the view data for right sidebar.
@@ -402,22 +481,75 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
 
             if(this.taskListId <= 0) {
                 // get all the task lists of the project
-                TaskFilter taskFilter = new TaskFilter();
-                taskFilter.setProjectIds(Arrays.asList(new Long[]{getFormData().getProjectId()}));
-
-                this.projectTaskLists = getTaskListService().getTaskLists(currentUser.getUserId(),
-                                                                          taskFilter);
-
-                List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-
-                for (TaskList tl : projectTaskLists) {
-                    result.add(m.convertValue(tl, Map.class));
+                TaskFilter taskFilter;
+                if(getFilter() != null && getFilter().isApplyFilter()) {
+                    taskFilter = getTaskFilterFromFilterDTO(getFilter());
+                } else {
+                    taskFilter = new TaskFilter();
                 }
 
-                setResult(result);
+                taskFilter.setProjectIds(Arrays.asList(new Long[]{getFormData().getProjectId()}));
+
+                // filter the task list out first
+                this.projectTaskLists = getTaskListService().getTaskLists(currentUser.getUserId(),
+                        taskFilter);
+
+                for(TaskList list : this.projectTaskLists) {
+                    // apply filter to task if applyFilter flag is true
+                    if(getFilter() != null && getFilter().isApplyFilter()) {
+                        filterTasksInTaskList(list, taskFilter);
+                    }
+                }
+
+                if(getGroup() != null && getGroup().getGroupTypeId() == TaskGroupDTO.GROUP_BY_DUE_DATE) {
+                    // group by due date
+                    SortedMap<Date, List<Task>> dateListSortedMap = getTaskService().groupTasksByDueDate(this.projectTaskLists);
+                    List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+                    for(Date dueDateKey : dateListSortedMap.keySet()) {
+                        Map<String, Object> resultEntry = new HashMap<String, Object>();
+                        resultEntry.put("dueDate", taskDueDateGroupFormat.format(dueDateKey));
+                        List<Map<String, Object>> tasksGrouped = new ArrayList<Map<String, Object>>();
+                        for(Task t : dateListSortedMap.get(dueDateKey)) {
+
+                            if(t.getStatus().equals(TaskStatus.COMPLETED)) {
+                                continue;
+                            }
+
+                            if(group.getGroupListId() > 0 && group.getGroupListId() != t.getTaskListId()) {
+                                continue;
+                            }
+
+                            tasksGrouped.add(m.convertValue(t, Map.class));
+                        }
+                        resultEntry.put("tasks", tasksGrouped);
+
+                        if(tasksGrouped.size() == 0) {
+                            // no include empty grouped task
+                            continue;
+                        }
+
+                        result.add(resultEntry);
+                    }
+                    setResult(result);
+
+                } else {
+                    Map<String, List<Map<String, Object>>> result = new HashMap<String, List<Map<String, Object>>>();
+                    List<Map<String, Object>> taskListResult = new ArrayList<Map<String, Object>>();
+                    result.put("tasks", taskListResult);
+                    for (TaskList tl : projectTaskLists) {
+                        taskListResult.add(m.convertValue(tl, Map.class));
+                    }
+                    setResult(result);
+                }
+
             } else {
                 // get a specific task list
                 TaskList taskList = getTaskListService().getTaskList(currentUser.getUserId(), this.taskListId);
+
+                if(getFilter().isApplyFilter()) {
+                    filterTasksInTaskList(taskList, getTaskFilterFromFilterDTO(getFilter()));
+                }
 
                 if(taskList == null) {
                     throw new IllegalArgumentException("The task list to retrieve does not exist");
@@ -1038,5 +1170,251 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
         public int compare(Task t1, Task t2) {
             return t2.getCreatedDate().compareTo(t1.getCreatedDate());
         }
+    }
+
+    /**
+     * Helper method to transfer a <code>TaskFilterDTO</code> to <code>TaskFilter intance</code>
+     *
+     * @param filterDTO the task filter DTO
+     * @return the TaskFilter instance
+     * @throws Exception if there is any error.
+     * @since 1.2
+     */
+    private TaskFilter getTaskFilterFromFilterDTO(TaskFilterDTO filterDTO) throws Exception {
+        TaskFilter filter = new TaskFilter();
+
+        // set task name filter
+        filter.setName(filterDTO.getName());
+
+        // set assignee id filter
+        filter.setAssigneeId(filterDTO.getAssigneeId());
+
+        // set date to filter
+        Date dueDateStart = null;
+        Date dueDateEnd = null;
+
+        if (filterDTO.getDueType() == TaskFilterDTO.DUE_TODAY) {
+            dueDateStart = new Date();
+            dueDateEnd = dueDateStart;
+        } else if (filterDTO.getDueType() == TaskFilterDTO.DUE_THIS_WEEK) {
+            Calendar currentDate = Calendar.getInstance(Locale.US);
+            int firstDayOfWeek = currentDate.getFirstDayOfWeek();
+
+            Calendar startDate = Calendar.getInstance(Locale.US);
+            startDate.setTime(currentDate.getTime());
+            int days = (startDate.get(Calendar.DAY_OF_WEEK) + 7 - firstDayOfWeek) % 7;
+            startDate.add(Calendar.DATE, -days);
+
+            Calendar endDate = Calendar.getInstance(Locale.US);
+            endDate.setTime(startDate.getTime());
+            endDate.add(Calendar.DATE, 6);
+            dueDateStart = startDate.getTime();
+            dueDateEnd = endDate.getTime();
+        } else if (filterDTO.getDueType() == TaskFilterDTO.DUE_NEXT_WEEK || filterDTO.getDueType() == TaskFilterDTO.DUE_LATER) {
+            Calendar currentDate = Calendar.getInstance(Locale.US);
+            int firstDayOfWeek = currentDate.getFirstDayOfWeek();
+
+            Calendar startDate = Calendar.getInstance(Locale.US);
+            startDate.setTime(currentDate.getTime());
+            startDate.add(Calendar.DATE, 7);
+            startDate.set(Calendar.DAY_OF_WEEK, firstDayOfWeek);
+
+            Calendar endDate = Calendar.getInstance(Locale.US);
+            endDate.setTime(currentDate.getTime());
+            endDate.add(Calendar.DATE, 7);
+            endDate.set(Calendar.DAY_OF_WEEK, (firstDayOfWeek + 6));
+            dueDateStart = startDate.getTime();
+            dueDateEnd = endDate.getTime();
+
+            if (filterDTO.getDueType() == TaskFilterDTO.DUE_LATER) {
+                endDate.add(Calendar.DATE, 1);
+                dueDateStart = endDate.getTime();
+                // set end to to 50 years from current time
+                currentDate.add(Calendar.DATE, MAX_DAYS);
+                dueDateEnd = currentDate.getTime();
+            }
+
+        } else if (filterDTO.getDueType() == TaskFilterDTO.DUE_PAST) {
+            Calendar startDate = Calendar.getInstance(Locale.US);
+            Calendar endDate = Calendar.getInstance(Locale.US);
+            endDate.setTime(startDate.getTime());
+            startDate.add(Calendar.DATE, -MAX_DAYS);
+            endDate.add(Calendar.DATE, -1);
+            dueDateStart = startDate.getTime();
+            dueDateEnd = endDate.getTime();
+        }
+
+        if((dueDateStart == null && dueDateEnd == null) &&
+                (filterDTO.getDueDateFrom() != null && filterDTO.getDueDateFrom().trim().length() > 0
+                        || filterDTO.getDueDateTo() != null && filterDTO.getDueDateTo().trim().length() > 0)) {
+            // check date range only if there is no date due type chosen or date due type is ANYTIME
+            Calendar startDate = Calendar.getInstance(Locale.US);
+            Calendar endDate = Calendar.getInstance(Locale.US);
+            startDate.add(Calendar.DATE, -MAX_DAYS);
+            endDate.add(Calendar.DATE, MAX_DAYS);
+            dueDateStart = startDate.getTime();
+            dueDateEnd = endDate.getTime();
+            DateFormat dueDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            if(filterDTO.getDueDateFrom() != null && filterDTO.getDueDateFrom().trim().length() > 0) {
+                dueDateStart = dueDateFormat.parse(filterDTO.getDueDateFrom());
+            }
+            if(filterDTO.getDueDateTo() != null && filterDTO.getDueDateTo().trim().length() > 0) {
+                dueDateEnd = dueDateFormat.parse(filterDTO.getDueDateTo());
+            }
+
+        }
+        Calendar cal = Calendar.getInstance(Locale.US);
+
+        // change the time part
+        if(dueDateStart != null) {
+            cal.setTime(dueDateStart);
+            cal.set(Calendar.HOUR_OF_DAY, 0);            // set hour to midnight
+            cal.set(Calendar.MINUTE, 0);                 // set minute in hour
+            cal.set(Calendar.SECOND, 0);                 // set second in minute
+            cal.set(Calendar.MILLISECOND, 0);            // set millis in second
+            dueDateStart = cal.getTime();
+        }
+
+        if(dueDateEnd != null) {
+            cal.setTime(dueDateEnd);
+            cal.set(Calendar.HOUR_OF_DAY, 23);            // set hour to max
+            cal.set(Calendar.MINUTE, 59);                 // set minute to max
+            cal.set(Calendar.SECOND, 59);                 // set second to max
+            dueDateEnd = cal.getTime();
+        }
+
+        filter.setDueDateFrom(dueDateStart);
+        filter.setDueDateTo(dueDateEnd);
+
+        // set priority
+        if(filterDTO.getPriorityIds() != null) {
+            List<TaskPriority> priorities = new ArrayList<TaskPriority>();
+            for(long pid : filterDTO.getPriorityIds()) {
+                priorities.add(TaskPriority.forId(pid));
+            }
+            filter.setPriorities(priorities);
+        }
+
+        // set status
+        if(filterDTO.getStatusIds() != null) {
+            List<TaskStatus> statuses = new ArrayList<TaskStatus>();
+            for(long sid: filterDTO.getStatusIds()) {
+                statuses.add(TaskStatus.forId(sid));
+            }
+            filter.setStatuses(statuses);
+        }
+
+        // set contest ids
+        filter.setAssociatedToContestIds(filterDTO.getContestIds());
+
+        // set milestone ids
+        filter.setAssociatedToProjectMilestoneIds(filterDTO.getMilestoneIds());
+
+        return filter;
+    }
+
+
+    /**
+     * Helper method to filter the tasks in the task list with the specified TaskFilter.
+     *
+     * @param list the task list
+     * @param filter the task filter
+     * @since 1.2
+     */
+    private void filterTasksInTaskList(TaskList list, TaskFilter filter) {
+        List<Task> filteredTasks = new ArrayList<Task>();
+        List<Task> tasks = list.getTasks();
+
+        for(Task t : tasks) {
+
+            // 1) NAME
+            if (filter.getName() != null && filter.getName().trim().length() > 0) {
+                if (t.getName().toLowerCase().indexOf(filter.getName().toLowerCase()) == -1) {
+                    // do not contain the name, bypass
+                    continue;
+                }
+            }
+
+
+            // 2) ASSIGNEE
+            if (filter.getAssigneeId() != null && filter.getAssigneeId() > 0) {
+                List<UserDTO> assignees = t.getAssignees();
+                boolean matched = false;
+                for (UserDTO ud : assignees) {
+                    if (ud.getUserId() == filter.getAssigneeId()) {
+                        matched = true;
+                        break;
+                    }
+                }
+                if (!matched) {
+                    // no match, bypass
+                    continue;
+                }
+            }
+
+
+            // 3) DUE
+            if (filter.getDueDateFrom() != null && filter.getDueDateTo() != null) {
+                if (t.getDueDate() == null) {
+                    continue;
+                }
+
+                if (t.getDueDate().before(filter.getDueDateFrom()) || t.getDueDate().after(filter.getDueDateTo())) {
+                    continue;
+                }
+            }
+
+
+            // 4) PRIORITIES
+            if (filter.getPriorities() == null || filter.getPriorities().size() == 0) {
+                continue;
+            } else if (!filter.getPriorities().contains(t.getPriority())) {
+                continue;
+            }
+
+            // 5) STATUS
+            if (filter.getStatuses() == null || filter.getStatuses().size() == 0) {
+                continue;
+            } else if (!filter.getStatuses().contains(t.getStatus())) {
+                continue;
+            }
+
+            // 6) MILESTONE ASSOCIATION
+            if (filter.getAssociatedToProjectMilestoneIds() != null && filter.getAssociatedToProjectMilestoneIds().size() > 0) {
+                // do the filters
+                boolean matched = false;
+                for (MilestoneDTO md : t.getAssociatedToProjectMilestones()) {
+                    if (filter.getAssociatedToProjectMilestoneIds().contains(md.getMilestoneId())) {
+                        matched = true;
+                        break;
+                    }
+                }
+
+                if (!matched) {
+                    continue;
+                }
+            }
+
+            // 7) CONTEST ASSOCIATION
+            if (filter.getAssociatedToContestIds() != null && filter.getAssociatedToContestIds().size() > 0) {
+                // do the filters
+                boolean matched = false;
+                for (ContestDTO cd : t.getAssociatedToContests()) {
+                    if (filter.getAssociatedToContestIds().contains(cd.getContestId())) {
+                        matched = true;
+                        break;
+                    }
+                }
+
+                if (!matched) {
+                    continue;
+                }
+            }
+
+            // all matched
+            filteredTasks.add(t);
+        }
+
+        list.setTasks(filteredTasks);
     }
 }
