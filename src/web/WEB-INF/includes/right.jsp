@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, GreatKevin, duxiaoyang
-  - Version: 1.5
-  - Copyright (C) 2010-2013 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin, duxiaoyang, TCSASSEMBLER
+  - Version: 1.6
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: The footer of the topcoder cockpit.
   -
@@ -23,6 +23,9 @@
   - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
   - Matched font size title for sub dropdown on "Select Customer" and "Select Project". 
   - Made both read only.
+  -
+  - Version 1.6 (Release Assembly - TC Cockpit Misc Bug Fixes)
+  - - Add context tip for contest status and type icons in the right sidebar
   -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -140,14 +143,14 @@
                                     
                                     this.style.cursor='pointer';">
                                         <td>
-                                            <span class="<s:property value="status.shortName"/>"></span>
+                                            <span class="<s:property value="status.shortName"/>" title="<s:property value="status.name"/>"></span>
                                         </td>
                                         <td class="leftAlign">
                                             <c:out value="${contest.title}" />
                                         </td>
                                         <td>
                                             <img src="/images/<s:property value="contestType.letter"/>_small.png"
-                                                     alt="<s:property value="contestType.letter"/>"/>
+                                                     alt="<s:property value="contestType.letter"/>" title="<s:property value="contestType.name"/>"/>
                                         </td>
                                     </tr>
                                 </s:iterator>                                

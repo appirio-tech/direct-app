@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve, gentva
-  - Version: 1.11
+  - Version: 1.12
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -36,7 +36,9 @@
   - - Update the tc-web:handle tag to add handle property.
   -
   - Version 1.11 (TopCoder Direct Contest VM Instances Management)
-  - - Fix the registration status expression.
+  - - Fix the registration status expression.  -
+  - Version 1.12 (Release Assembly - TC Cockpit Misc Bug Fixes)
+  - - Fix TCCC-3857: Make the forum link in the contest dashboard openned in a new window/tab
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -392,10 +394,10 @@
                 <span class="br"></span>
                 <div class="listContent">
                     <p>
-                        <label>Posts</label>: <a href="${viewData.dashboard.forumURL}">${viewData.dashboard.totalForumPostsCount}</a>
+                        <label>Posts</label>: <a target="_blank" href="${viewData.dashboard.forumURL}">${viewData.dashboard.totalForumPostsCount}</a>
                     </p>
                     <p>
-                        <label>Unanswered Thread</label>: <a href="${viewData.dashboard.forumURL}">${viewData.dashboard.unansweredForumPostsNumber}</a>
+                        <label>Unanswered Thread</label>: <a target="_blank" href="${viewData.dashboard.forumURL}">${viewData.dashboard.unansweredForumPostsNumber}</a>
                     </p>
                     <c:if test="${not empty latestForumPost}">
                         <p>

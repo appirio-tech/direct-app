@@ -1,22 +1,43 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import java.io.InputStream;
-
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
  * This struts action is used to download software submission.
  * </p>
+ *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * <ul>
+ *     <li>Updated {@link #getInputStream()} to implement TCCC-5110 to prefix copilot handle each file in the
+ *     copilot posting submission. So reviewer can open multiple spreadsheets with different names.
+ *     </li>
+ *     <li>Updated {@link #getContentDisposition()} to prefix copilot handle to the copilot posting submission name</li>
+ * </ul>
+ * </p>
  * 
- * @author TCSASSEMBER
- * @version 1.0
+ * @author TCSASSEMBLER
+ * @version 1.1 (Release Assembly - TC Cockpit Misc Bug Fixes)
  * @since TCCC-2802
  */
 public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
@@ -52,6 +73,13 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
     private FileUpload fileUpload;
 
     /**
+     * The SoftwareCompetition instance representing the contest the submission is downloaded from.
+     *
+     * @since 1.1
+     */
+    private SoftwareCompetition contest;
+
+    /**
      * <p>
      * Executes the action. It will get the uploaded file the user want to download.
      * </p>
@@ -76,7 +104,10 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
             throw new Exception("Cannot find submission " + submissionId + " in project " + projectId);
         }
 
+        contest = getContestServiceFacade().getSoftwareContestByProjectId(getCurrentUser(), projectId);
+
         uploadedFile = fileUpload.getUploadedFile(submission.getUpload().getParameter());
+
     }
 
     /**
@@ -87,7 +118,22 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
      *             if any error occurs when getting the input stream of the uploaded file.
      */
     public InputStream getInputStream() throws Exception {
-        return uploadedFile.getInputStream();
+
+        if(contest.getProjectHeader().getProjectCategory().getId() == ContestType.COPILOT_POSTING.getId()) {
+            // it's copilot posting, append user handle to each file in the copilot posting submission
+            Resource[] resources = contest.getResources();
+            long userId = 0;
+            for(Resource r : resources) {
+                if(r.getId() == submission.getUpload().getOwner()) {
+                    userId = Long.parseLong(r.getProperty("External Reference ID"));
+                    break;
+                }
+            }
+
+            return prefixHandleToSubmissionFile(uploadedFile, userId);
+        } else {
+            return uploadedFile.getInputStream();
+        }
     }
 
     /**
@@ -98,8 +144,25 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
      *             if any error occurs when getting the file name of the uploaded file.
      */
     public String getContentDisposition() throws Exception {
-        return "attachment; filename=\"submission-" + submission.getId() + "-" + uploadedFile.getRemoteFileName()
-                + "\"";
+
+        if (contest.getProjectHeader().getProjectCategory().getId() == ContestType.COPILOT_POSTING.getId()) {
+            // it's copilot posting, append user handle to each file in the copilot posting submission
+            Resource[] resources = contest.getResources();
+            long userId = 0;
+            for (Resource r : resources) {
+                if (r.getId() == submission.getUpload().getOwner()) {
+                    userId = Long.parseLong(r.getProperty("External Reference ID"));
+                    break;
+                }
+            }
+
+            return "attachment; filename=\"submission-" + getUserService().getUserHandle(userId) + "-" +
+                    uploadedFile.getRemoteFileName()
+                    + "\"";
+        } else {
+            return "attachment; filename=\"submission-" + submission.getId() + "-" + uploadedFile.getRemoteFileName()
+                    + "\"";
+        }
     }
 
     /**
@@ -114,15 +177,14 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
     /**
      * Sets the submission id the user want to download.
      * 
-     * @param uploadId
+     * @param submissionId
      *            the submission id the user want to download.
      */
     public void setSubmissionId(long submissionId) {
         this.submissionId = submissionId;
     }
 
-    /**
-     * Gets the project id of the upload.
+    /** Gets the project id of the upload.
      * 
      * @return the project id of the upload.
      */
@@ -157,5 +219,19 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
      */
     public void setFileUpload(FileUpload fileUpload) {
         this.fileUpload = fileUpload;
+    }
+
+    /**
+     * Helper method to prefix the user handle to each file in a submission archive for copilot posting submission.
+     * It assumes all copilot posting submissions in a zip archive.
+     *
+     * @param submissionFile the submission file representing by a <code>UploadedFile</code> instance
+     * @param userId the user id
+     * @return the input stream of the new zip
+     * @throws Exception if any error
+     * @since 1.1
+     */
+    private InputStream prefixHandleToSubmissionFile(UploadedFile submissionFile, long userId) throws Exception {
+        return DirectUtils.appendStringToFilesInZip(submissionFile, getUserService().getUserHandle(userId));
     }
 }

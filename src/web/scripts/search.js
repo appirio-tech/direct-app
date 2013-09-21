@@ -101,10 +101,13 @@
  * - Add support for Marathon Match System Tests table.
  * 
  * Version 2.9 (Release Assembly - TC Cockpit Operations Dashboard Improvements 4) changes:
- * - added sorting for Active Contests column on Operations Dashboard page
- * 
+ * - added sorting for Active Contests column on Operations Dashboard page 
+ *
+ * Version 2.10 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * - Fixed the sorting routines used by my copilot postings table
+ *
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin, TCSDEVELOPER
- * @version 2.9
+ * @version 2.10
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -366,14 +369,15 @@ $(document).ready(function() {
 
     /***TCCC-2516*/
     jQuery.fn.dataTableExt.oSort['html-trimmed-asc'] = function (a, b) {
-        var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
-        var y = trim(b.replace(/<.*?>/g, "").toLowerCase());
+        var x = trim(a.replace(/<[^>]+>/g, "").toLowerCase());
+        var y = trim(b.replace(/<[^>]+>/g, "").toLowerCase());
+        console.log(x + '--->' + y);
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     };
 
     jQuery.fn.dataTableExt.oSort['html-trimmed-desc'] = function (a, b) {
-        var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
-        var y = trim(b.replace(/<.*?>/g, "").toLowerCase());
+        var x = trim(a.replace(/<[^>]+>/g, "").toLowerCase());
+        var y = trim(b.replace(/<[^>]+>/g, "").toLowerCase());
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
@@ -1012,14 +1016,14 @@ $(document).ready(function() {
         "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },                
+                { "sType": "html-trimmed" },
+                { "sType": "html-trimmed" },
+                { "sType": "date-direct" },
+                { "sType": "date-direct" },
+                { "sType": "link-number" },
+                { "sType": "link-number" },
+                { "sType": "link-number" },
+                { "sType": "project-status" },
                 null,
                 null
             ]

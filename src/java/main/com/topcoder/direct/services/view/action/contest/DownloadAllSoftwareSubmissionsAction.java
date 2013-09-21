@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -14,12 +14,16 @@ import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
 import org.apache.commons.io.FilenameUtils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -36,9 +40,19 @@ import java.util.zip.ZipOutputStream;
  *  <li>Add special handle for the copilot posting contest</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * <ul>
+ *     <li>Updated {@link #getInputStream()} to implement TCCC-5110 to prefix copilot handle to each copilot posting
+ *     submissions and each file in the copilot posting submission. So reviewer can open multiple spreadsheets with
+ *     different names.
+ *     </li>
+ * </ul>
+ * </p>
  * 
  * @author TCSASSEMBLER
- * @version 1.1
+ * @version 1.2
  */
 public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
 
@@ -267,6 +281,8 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
                             }
                             submissionFileZipName = copilotHandle + COPILOT_POSTING_SUBMISSION
                                     + ext;
+
+                            is = DirectUtils.appendStringToFilesInZip(file, copilotHandle);
                         } else {
                             submissionFileZipName = "Submission-" + sub.getId() + "-" + file.getRemoteFileName();
                         }

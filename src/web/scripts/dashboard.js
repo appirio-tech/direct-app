@@ -111,8 +111,12 @@
  * Version 3.2.3 (Release Assembly - TC Cockpit Tasks Management Release 2)
  * - Fix the multi-select dropdown to handle link inside label
  *
+ * Version 3.2.4 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * - Fix the issue in TCCC-5622: Make gameplan dropdown displayed on hover and make game plan tab clickable
+ * to go the game plan page.
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
- * @version 3.2.3
+ * @version 3.2.4
  */
 
 var mouse_is_inside;
@@ -2984,34 +2988,19 @@ $(document).ready(function(){
         $(this).parent().removeClass("hover");
     })
 
-    $(document).click(function(event){
-
-        if($(event.target).parents(".dropList").length == 0){
-            //$(".dropdownWidget .dropList").hide(); 
-        }
-
-        // click other area of the page closes the dropdown menu
-        if($("li#contest div.dropDwnLst").is(':visible') && !mouse_is_inside){
-            $("li#contest div.dropDwnLst").hide();
-        }
-         
-    });
-
-    $("li#contest a span.arrow, li#contest a:eq(0)").click(function(){
-        if($("li#contest div.dropDwnLst").is(':visible')){
-            $("li#contest div.dropDwnLst").hide();
-        }else{
-            setTimeout(function(){
+    $("li#contest").hover(function(){
+        if ($("li#contest div.dropDwnLst").is(':visible')) {
+            // nothing
+        } else {
+            setTimeout(function () {
                 $("li#contest div.dropDwnLst").show();
-            },100);
+            }, 100);
         }
         return false;
-    });
-
-    $("li#contest div.dropDwnLst").hover(function(){
-        mouse_is_inside=true;
     }, function(){
-        mouse_is_inside=false;
+        if($("li#contest div.dropDwnLst").is(':visible')){
+            $("li#contest div.dropDwnLst").hide();
+        }
     });
     
     /* Add js code for BUGR-6759 */

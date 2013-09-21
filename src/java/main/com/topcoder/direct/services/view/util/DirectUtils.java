@@ -3,6 +3,9 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -37,12 +41,14 @@ import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.security.groups.services.dto.ProjectDTO;
+import com.topcoder.servlet.request.UploadedFile;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 
 import com.topcoder.management.review.data.Comment;
 import com.topcoder.management.review.data.CommentType;
 import org.apache.axis.encoding.Base64;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.web.context.WebApplicationContext;
@@ -549,14 +555,20 @@ import com.topcoder.web.common.cache.MaxAge;
  * </p>
  *
  * <p>
- * Version 1.1.4 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
+ * Version 1.10.4 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Resource restriction update)
  * <ul>
  *     <li>Added method {@link #setErrorMessageInErrorPage(String)}</li>
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.10.5 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * <ul>
+ *     <li>Added method {@link #appendStringToFilesInZip(com.topcoder.servlet.request.UploadedFile, String)}</li>
+ * </ul>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER
- * @version 1.1.4
+ * @version 1.10.4
  */
 public final class DirectUtils {
 
@@ -2905,5 +2917,57 @@ public final class DirectUtils {
         resource.setProperty("Registration Date", registrationDateFormat.format(new Date()));
         resource = getProjectServices().updateResource(resource, String.valueOf(userId));
         return resource;
+    }
+
+    /**
+     * Utility method to append the specified string to the zip submission.
+     *
+     * @param file the file to append the specified string
+     * @param toAppend the string to append to each submission file
+     * @return the input stream to read the processed submission file.
+     * @throws Exception if there is any error.
+     */
+    public static InputStream appendStringToFilesInZip(UploadedFile file, String toAppend) throws Exception {
+
+        ZipInputStream zin = null;
+        ZipOutputStream zos = null;
+
+        byte[] buffer = new byte[8192];
+
+        try {
+            ByteArrayOutputStream byteOut;
+            BufferedInputStream bin = new BufferedInputStream(file.getInputStream());
+            zin = new ZipInputStream(bin);
+
+            byteOut = new ByteArrayOutputStream();
+            zos = new ZipOutputStream(byteOut);
+
+            ZipEntry ze;
+            while ((ze = zin.getNextEntry()) != null) {
+                String fileName = FilenameUtils.getName(ze.getName());
+                String filePath = FilenameUtils.getPath(ze.getName());
+
+                if (ze.isDirectory()) {
+                    continue;
+                }
+
+                ZipEntry newEntry = new ZipEntry(filePath + toAppend + "_" + fileName);
+                zos.putNextEntry(newEntry);
+                int len;
+                while ((len = zin.read(buffer)) != -1) {
+                    zos.write(buffer, 0, len);
+                }
+                zos.closeEntry();
+            }
+            zos.finish();
+            zos.close();
+
+            byte[] contentBytes = byteOut.toByteArray();
+
+            return new ByteArrayInputStream(contentBytes);
+        } finally {
+            IOUtils.closeQuietly(zin);
+            IOUtils.closeQuietly(zos);
+        }
     }
 }

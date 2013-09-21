@@ -1,7 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
   - Version: 1.0 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.11 (Release Assembly - TC Cockpit Misc Bug Fixes)
+  - - Fix TCCC-3857: Make the forum link in the copilot posting dashboard openned in a new window/tab
+  -
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Copilot Posting Dashboard area for Copilot Posting page.
   -
@@ -296,10 +300,10 @@
         <span class="br"></span>
         <div class="listContent">
             <p>
-                <label>Posts</label>: <a href="${viewData.dashboard.forumURL}">${viewData.dashboard.totalForumPostsCount}</a>
+                <label>Posts</label>: <a target="_blank" href="${viewData.dashboard.forumURL}">${viewData.dashboard.totalForumPostsCount}</a>
             </p>
             <p>
-                <label>Unanswered Thread</label>: <a href="${viewData.dashboard.forumURL}">${viewData.dashboard.unansweredForumPostsNumber}</a>
+                <label>Unanswered Thread</label>: <a target="_blank" href="${viewData.dashboard.forumURL}">${viewData.dashboard.unansweredForumPostsNumber}</a>
             </p>
             <c:if test="${not empty latestForumPost}">
                 <p>

@@ -36,8 +36,12 @@
  * Version 2.7 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions)
  * - Remove useless column in group permission table.
  *
- * @author GreatKevin, Ghost_141, GreatKevin, freegod
- * @version 2.7
+ * Version 2.8 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * - Fix the issue TCCC-5633 to prevent edit project page cover the game plan dropdown
+ * by reducing the zindex of edit page
+ *
+ * @author GreatKevin, Ghost_141, GreatKevin, freegod, TCSASSEMBLER
+ * @version 2.8
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -1847,20 +1851,20 @@ $(document).ready(function (e) {
             $('.projectMetaArea .projectMetaAreaField').each(function (index) {
                 $(this).css({
                     position:'relative',
-                    zIndex:1000 - index
+                    zIndex:100 - index
                 });
             });
         }
 
         $('.projectMetaArea').each(function (index) {
             $(this).css({
-                zIndex:1000 - index
+                zIndex:100 - index
             });
             if ($(this).css('position') != 'absolute') {
                 $(this).css('position', 'relative');
             }
             $('.projectMetaAreaLabel', $(this)).css({
-                zIndex:1000
+                zIndex:100
             });
             if ($('.projectMetaAreaLabel', $(this)).css('position') != 'absolute') {
                 $('.projectMetaAreaLabel', $(this)).css('position', 'relative');

@@ -1721,7 +1721,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                 } else {
 
                     // Build date string for Title
-                    vDateRowStr = JSGantt.formatDateStr(vTaskStart,vDateDisplayFormat) + ' - ' + JSGantt.formatDateStr(vTaskEnd,vDateDisplayFormat);
+                    vDateRowStr = JSGantt.formatDateStr(vTaskStart,vDateDisplayFormat) + ' - ' + JSGantt.formatDateStr(vTaskEnd,vDateDisplayFormat) + "&#013;Durations: " + ((vTaskEnd - vTaskStart) / (1000*60*60*24) + 1) + " days";
 
                 if (vFormat=='minute')
                 {
@@ -1755,7 +1755,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                             '<TR id=childrow_' + vID + ' class=yesdisplay style="HEIGHT: 20px" bgColor=#f3f3f3 onMouseover=g.mouseOver(this,' + vID + ',"right","group") onMouseout=g.mouseOut(this,' + vID + ',"right","group")>' + vItemRowStr + '</TR></TABLE></DIV>';
                         vRightTable +=
                             '<div id=bardiv_' + vID + ' style="position:absolute; top:5px; left:' + Math.ceil(vTaskLeft * (vDayWidth) + 1) + 'px; height: 7px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px">' +
-                                '<div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr + '" class=gtask style="background-color:#000000; height: 7px; width:' + Math.ceil((vTaskRight) * (vDayWidth) -1) + 'px;  cursor: pointer;opacity:0.9;">' +
+                                '<div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + '&#013;' + vDateRowStr + '" class=gtask style="background-color:#000000; height: 7px; width:' + Math.ceil((vTaskRight) * (vDayWidth) -1) + 'px;  cursor: pointer;opacity:0.9;">' +
                                 '<div style="Z-INDEX: -4; float:left; background-color:#666666; height:3px; overflow: hidden; margin-top:1px; ' +
                                 'margin-left:1px; margin-right:1px; filter: alpha(opacity=80); opacity:0.8; width:' + vTaskList[i].getCompStr() + '; ' +
                                 'cursor: pointer;" onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",1024,768);>' +
@@ -1794,9 +1794,9 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                   // Draw Task Bar  which has outer DIV with enclosed colored bar div, and opaque completion div
 	            vRightTable +=
                      '<div id=bardiv_' + vID + ' style="position:absolute; top:4px; left:' + Math.ceil(vTaskLeft * (vDayWidth) + 1) + 'px; height:18px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px">' +
-                        '<div id=taskbar_' + vID + ' title=" ' + vTaskList[i].getName() + ': ' + vDateRowStr + '" class=gtask style="background-color:#' + vTaskList[i].getColor() +'; height: 13px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px; cursor: pointer;opacity:0.9;" ' +
+                        '<div id=taskbar_' + vID + ' title=" ' + vTaskList[i].getName() + '&#013; ' + vDateRowStr + '" class=gtask style="background-color:#' + vTaskList[i].getColor() +'; height: 13px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px; cursor: pointer;opacity:0.9;" ' +
                            'onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",1024,768); >' +
-                           '<div id=taskbar_' + vID + '_m title=" ' + vTaskList[i].getName() + ': ' + vDateRowStr + '" class="gtask approvalPhaseBar" style="float:right; height: 13px; width:' + Math.ceil((vTaskRight - vTaskMiddle) * (vDayWidth) - 1) + 'px; cursor: pointer;" ' +
+                           '<div id=taskbar_' + vID + '_m title=" ' + vTaskList[i].getName() + '&#013; ' + vDateRowStr + '" class="gtask approvalPhaseBar" style="float:right; height: 13px; width:' + Math.ceil((vTaskRight - vTaskMiddle) * (vDayWidth) - 1) + 'px; cursor: pointer;" ' +
                              'onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",1024,768); >' +
                            '</div>' +
                           '<div class=gcomplete style="position:absolute; Z-INDEX: 4; float:left; background-color:black; left:0px; height:5px; overflow: auto; margin-top:4px; filter: alpha(opacity=40); opacity:0.4; width:' + vTaskList[i].getCompStr() + '; overflow:hidden">' +

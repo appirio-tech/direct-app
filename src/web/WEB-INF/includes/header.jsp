@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru
-  - Version: 3.1
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru, TCSASSEMBLER
+  - Version: 3.3
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -51,6 +51,7 @@
   - - Added assets tab under project dashboard
   - Version 3.1 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task) change notes: add project Tasks tab
   - Version 3.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes: rename "Assets"->"Files"
+  - Version 3.3 (Release Assembly - TC Cockpit Misc Bug Fixes) change notes: Make Game Plan tab clickable and link to game plan page
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -602,7 +603,7 @@
 
 
                         <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                            <a href="javascript:;">
+                            <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">
                                 <span>Game Plan<span class="arrow"></span></span>
                             </a>
                             <div class="dropDwnLst">

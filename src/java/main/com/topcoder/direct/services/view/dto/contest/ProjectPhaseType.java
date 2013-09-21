@@ -1,13 +1,18 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
 /**
  * <p>A <code>Enum</code> providing all project phase types.</p>
+ *
+ * <p>
+ * Version 1.0.1 (Release Assembly - TC Cockpit Misc Bug Fixes)
+ * <ul>Fix the typo in documentation from "Post Motem" to "Post-Mortem"</ul>
+ * </p>
  * 
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.0.1
  * @since TC Direct Contest Dashboard Update Assembly
  */
 public enum ProjectPhaseType {
@@ -77,7 +82,7 @@ public enum ProjectPhaseType {
     APPROVAL(11, "approval", "Approval", 20),
     
     /**
-     * The post moterm type.
+     * The post-mortem type.
      */
     POST_MOTERM(12, "postMortem", "Post Mortem", 21),
     
