@@ -80,7 +80,7 @@
                             <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>
                         </td>
                         <td>
-                            <link:studioSubmissionDownload submissionId="${latestFinalFix.submissionId}"
+                            <link:studioSubmissionDownload submissionId="${submissionId}"
                                                            styleClass="icoZip ${iconStyle}"
                                                            original="true"/>
                         </td>
