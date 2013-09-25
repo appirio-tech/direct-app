@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -105,10 +106,18 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Update the executeAction() to set default round type to FULL if it's null.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.7.2 Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to check if client has made a decision to confirm/reject requesting
+ *     the final fixes from winner and set the list of final fixes for contest.</li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, flexme, minhu, GreatKevin
  * @since Submission Viewer Release 1 assembly
- * @version 1.7.1
+ * @version 1.7.2
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -246,6 +255,12 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             PhaseType reviewPhaseType;
             if (roundType == ContestRoundType.FINAL) {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
+                boolean hasApprovalPhase = DirectUtils.hasPhase(softwareCompetition, PhaseType.APPROVAL_PHASE);
+                if (hasApprovalPhase) {
+                    boolean isApprovalScheduled 
+                        = DirectUtils.isPhaseScheduled(softwareCompetition, PhaseType.APPROVAL_PHASE);
+                    viewData.setFinalFixesDecisionMade(!isApprovalScheduled);
+                }
             } else {
                 reviewPhaseType = PhaseType.CHECKPOINT_REVIEW_PHASE;
             }
@@ -265,7 +280,10 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             } else {
                 getViewData().setContestSubmissions(submissions);
             }
-            
+
+            List<ContestFinalFixDTO> finalFixes = DataProvider.getContestFinalFixes(projectId);
+            getViewData().setFinalFixes(finalFixes);
+
             // If contest submissions are confirmed then set the request cookie for contest with the details on
             // prized submissions
             if (hasCheckout && viewData.isPhaseOpen()) {

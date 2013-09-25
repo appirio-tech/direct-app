@@ -267,5 +267,5 @@
         <!-- End .confirmFF -->
     </div>
     <input type="hidden" id="finalFixesCount" value="${fn:length(viewData.finalFixes)}"/>
-    <input type="hidden" id="studioSiteBaseURL" value="${STUDIO_SERVER_NAME}"/>
 </s:if>
+<input type="hidden" id="studioSiteBaseURL" value="${STUDIO_SERVER_NAME}"/>

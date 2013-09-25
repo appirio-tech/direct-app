@@ -1,11 +1,22 @@
+/*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.direct.services.view.dto.contest;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author TCSDEVELOPER
- * @version 1.0
+ *
+ * <p>
+ * Version 1.1 Change notes:
+ *   <ol>
+ *     <li>Added {@link #submissionId} property.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author isv
+ * @version 1.1
  */
 public class ContestFinalFixDTO implements Serializable {
 
@@ -28,6 +39,13 @@ public class ContestFinalFixDTO implements Serializable {
     private String finalFixSub;
 
     private long uploadId;
+
+    /**
+     * <p>A <code>Long</code> providing the ID of submission for final fix.</p>
+     * 
+     * @since 1.1
+     */
+    private Long submissionId;
 
     public long getUploadId() {
         return uploadId;
@@ -107,5 +125,25 @@ public class ContestFinalFixDTO implements Serializable {
 
     public void setReviewed(boolean reviewed) {
         this.reviewed = reviewed;
+    }
+
+    /**
+     * <p>Gets the ID of submission for final fix.</p>
+     *
+     * @return a <code>Long</code> providing the ID of submission for final fix.
+     * @since 1.1
+     */
+    public Long getSubmissionId() {
+        return this.submissionId;
+    }
+
+    /**
+     * <p>Sets the ID of submission for final fix.</p>
+     *
+     * @param submissionId a <code>Long</code> providing the ID of submission for final fix.
+     * @since 1.1
+     */
+    public void setSubmissionId(Long submissionId) {
+        this.submissionId = submissionId;
     }
 }

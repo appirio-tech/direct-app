@@ -33,7 +33,7 @@
         vertical-align:top;
         padding-top:18px;
     }
-    .studioFinalFixes #submissionList table .finalFixConfirm{
+    .finalFixConfirm{
         background-color:#FFFDCD;
         border:1px solid #FBCF0F;
         color:#000000;
@@ -43,16 +43,16 @@
         line-height:30px;
         margin-top:12px;
     }
-        .studioFinalFixes #submissionList table .finalFixConfirm p{
+        .finalFixConfirm p{
             float:left;
         }
-            .studioFinalFixes #submissionList table .finalFixConfirm p a{
+            .finalFixConfirm p a{
                 color:#000000;
             }
-            .studioFinalFixes #submissionList table .finalFixConfirm p a:hover{
+            .finalFixConfirm p a:hover{
                 text-decoration:none;
             }
-            .studioFinalFixes .finalFixConfirm a.yesBtn,.studioFinalFixes .finalFixConfirm a.noBtn{ 
+            .finalFixConfirm a.yesBtn, .finalFixConfirm a.noBtn{ 
                 color:#FFFFFE;
                 font-size:11px;
                 font-weight:bold;
@@ -67,7 +67,7 @@
                 margin:6px 5px 0px 0px;
                 text-align:center;
             }
-            .studioFinalFixes .finalFixConfirm a.yesBtn:hover,.studioFinalFixes .finalFixConfirm a.noBtn:hover{
+            .finalFixConfirm a.yesBtn:hover, .finalFixConfirm a.noBtn:hover{
                 background-position:0 -19px;
             }
 

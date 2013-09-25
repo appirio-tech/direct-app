@@ -960,10 +960,17 @@ import java.util.Set;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 6.21 ( Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getContestFinalFixes(long)} method to set the submisison ID for final fix.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, TCSASSEMBLER
- * @version 6.20
+ * @version 6.21
  * @since 1.0
  */
 public class DataProvider {
@@ -3121,6 +3128,9 @@ public class DataProvider {
             finalFix.setFinalFixerHandle(finalFixRow.getStringItem("final_fixer_handle"));
             finalFix.setFinalFixerUserId(Long.valueOf(finalFixRow.getStringItem("final_fixer_user_id")));
             finalFix.setUploadId(finalFixRow.getLongItem("upload_id"));
+            if (finalFixRow.getItem("submission_id").getResultData() != null) {
+                finalFix.setSubmissionId(finalFixRow.getLongItem("submission_id"));
+            }
             count++;
 
             // set old ones reviewed to true, approved to false because they are rejected

@@ -132,4 +132,5 @@
 <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
 
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
+<script type="text/javascript" src="/scripts/finalFixDecision.js"></script>
 

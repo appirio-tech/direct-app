@@ -567,6 +567,12 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added method {@link #appendStringToFilesInZip(com.topcoder.servlet.request.UploadedFile, String)}</li>
  * </ul>
  * </p>
+* <p>
+ * Version 1.10.6 Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasPhase(SoftwareCompetition, PhaseType)} method.</li>
+ *   </ol>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER
  * @version 1.10.4
  */
@@ -1263,6 +1269,27 @@ public final class DirectUtils {
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == phaseType.getId() && phase.getPhaseStatus().getId() == PhaseStatus.SCHEDULED.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * <p>Checks if specified contest has a phase of specified type.</p>
+     *
+     * @param softwareCompetition the specified contest.
+     * @param phaseType the phase tyhpe.
+     * @return true if the phase of the specified contest is in scheduled status, false otherwise.
+     * @since 1.10.4
+     */
+    public static boolean hasPhase(SoftwareCompetition softwareCompetition, PhaseType phaseType) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == phaseType.getId()) {
                 return true;
             }
         }

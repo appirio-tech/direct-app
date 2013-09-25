@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="alert">
-            <p class="red">Remember - Final Fixes must mee the <a
+            <p class="red">Remember - Final Fixes must meet the <a
                     href="http://community.topcoder.com/studio/the-process/final-fixes/">definition
                 stated here</a>. Don't ask to combine submissions and don't
                 add new tasks that were not originally defined in the

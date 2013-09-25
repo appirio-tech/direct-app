@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -75,9 +75,17 @@ import com.topcoder.management.resource.Resource;
  *   </ul>
  * </p>
  *
- * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
+ * <p>
+ * Version 1.8 Change notes:
+ *   <ol>
+ *     <li>Added {@link #finalFixesDecisionMade} property.</li>
+ *     <li>Added {@link #finalFixes} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, flexme
  * @since Submission Viewer Release 1 assembly
- * @version 1.7
+ * @version 1.8
  */
 public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -194,7 +202,25 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * </p>
      */
     private int checkpointAwardNumber;
-    
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether client confirmed/rejected to request final fixes
+     * from winner or not.</p>
+     * 
+     * <p><code>null</code> value means that contest has no Approval phase and thus final fixes can not be requested
+     * from winner.</p>
+     * 
+     * @since 1.8
+     */
+    private Boolean finalFixesDecisionMade;
+
+    /**
+     * <p>A <code>List</code> providing the final fixes for contest winning submission.</p>
+     * 
+     * @since 1.8
+     */
+    private List<ContestFinalFixDTO> finalFixes;
+
     /**
      * <p>
      * Constructs new <code>StudioContestSubmissionsDTO</code> instance. This implementation does nothing.
@@ -544,4 +570,45 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
         this.checkpointAwardNumber = checkpointAwardNumber;
     }
 
+    /**
+     * <p>Gets the flag indicating whether client confirmed/rejected to request final fixes from winner or not.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether client confirmed/rejected to request final
+     *         fixes from winner or not.
+     * @since 1.8
+     */
+    public Boolean getFinalFixesDecisionMade() {
+        return this.finalFixesDecisionMade;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether client confirmed/rejected to request final fixes from winner or not.</p>
+     *
+     * @param finalFixesDecisionMade a <code>boolean</code> providing the flag indicating whether client
+     *         confirmed/rejected to request final fixes from winner or not.
+     * @since 1.8
+     */
+    public void setFinalFixesDecisionMade(Boolean finalFixesDecisionMade) {
+        this.finalFixesDecisionMade = finalFixesDecisionMade;
+    }
+
+    /**
+     * <p>Gets the final fixes for contest winning submission.</p>
+     *
+     * @return a <code>List</code> providing the final fixes for contest winning submission.
+     * @since 1.8
+     */
+    public List<ContestFinalFixDTO> getFinalFixes() {
+        return this.finalFixes;
+    }
+
+    /**
+     * <p>Sets the final fixes for contest winning submission.</p>
+     *
+     * @param finalFixes a <code>List</code> providing the final fixes for contest winning submission.
+     * @since 1.8
+     */
+    public void setFinalFixes(List<ContestFinalFixDTO> finalFixes) {
+        this.finalFixes = finalFixes;
+    }
 }

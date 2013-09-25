@@ -4,8 +4,12 @@
  * Version 1.1 Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly change note
  * - Added dialog for requesting the final fixes for winning submission
  *
+ * Version 1.2 change note:
+ * - Updated text for dialog for requesting final fixes from winner
+ * - Moved the logic for requesting final fixes from winner to finalFixDecision.js
+ * 
  * @author FireIce, isv
- * @version 1.1
+ * @version 1.2
  */
 var arrPrize = ["firstPrize","secondPrize","thirdPrize","fourthPrize","fifthPrize"];
 var arrSlot = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots"];
@@ -74,30 +78,6 @@ function updateSummary() {
 	$("#summary").html(html);
 }
 
-function sendNeedFinalFixesRequest(contestId, submissionId, needFinalFixes) {
-    var request = {};
-    request['contestId'] = contestId;
-    request['submissionId'] = submissionId;
-    request['needFinalFix'] = needFinalFixes;
-
-    $.ajax({
-        type: 'POST',
-        url: ctx + "/contest/needFinalFix",
-        data: request,
-        cache: false,
-        dataType: 'json',
-        async: false,
-        success: function (jsonResult) {
-            modalClose();
-            if (needFinalFixes) {
-                window.location.href = ctx + "/contest/viewFinalFix?projectId=" + contestId;
-            } else {
-                $('.finalFixConfirm .p1').hide();
-                $('.finalFixConfirm .p2').show();
-            }
-        }
-    });
-}
 
 $(document).ready(function(){
     // contest id
@@ -132,11 +112,11 @@ $(document).ready(function(){
         }
     }
 
-    $('.noBtn').live('click', function () {
+    $('.finalFixConfirm .noBtn').live('click', function () {
         sendNeedFinalFixesRequest(contestId, label, false);
     });
 
-    $('.yesBtn').live('click', function () {
+    $('.finalFixConfirm .yesBtn').live('click', function () {
         sendNeedFinalFixesRequest(contestId, label, true);
     });
 
@@ -151,7 +131,7 @@ $(document).ready(function(){
                 var html = '';
                 html += '<div class="finalFixConfirm">';
                 html += '    <div class="p1">';
-                html += '        <p>Would you like the winner to provide <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">final fixes</a>? Fix items must be entered within 5 days of clicking "yes".</p>';
+                html += '        <p>Would you like the winner to provide Final Fixes? <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">Final Fixes are explained here</a>. If you aren\'t sure, please ask your copilot before clicking "no".</p>';
                 html += '        <a href="javascript:;" class="noBtn">NO</a>';
                 html += '        <a href="javascript:;" class="yesBtn">YES</a>';
                 html += '    </div>';
