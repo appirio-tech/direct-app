@@ -545,3 +545,11 @@ a.redBtn:hover span.left{
 #uploadPanelForm .filterPanel .filterContent .inner {
     padding: 10px 50px;
 }
+
+TABLE.contests TD.avoidWrapping {
+    font-size: 9px;
+}
+
+TABLE.contests TD.avoidWrapping SPAN {
+    font-weight: normal;
+}

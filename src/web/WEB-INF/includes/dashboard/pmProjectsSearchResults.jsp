@@ -32,13 +32,13 @@
                 <col width="15%">
                 <col width="12%">
                 <col width="7%">
-                <col width="12%">
+                <col width="11%">
                 <col width="9%">
-                <col width="14%">
+                <col width="11%">
                 <col width="7%">
                 <col width="9%">
-                <col width="7%">
-                <col width="7%">
+                <col width="9%">
+                <col width="9%">
             </colgroup>
 
             <thead>
@@ -220,9 +220,9 @@
                             </div>
                         </c:forEach>
                     </td>
-                    <td class="last">
+                    <td class="last avoidWrapping">
                         <c:if test="${projectSummary.phaseLateContestsNum > 0}">
-                            Phase Late (${projectSummary.phaseLateContestsNum})
+                            <span title="Phase Late">Stuck (${projectSummary.phaseLateContestsNum})
                             <c:if test="${projectSummary.latePhaseDelay ne null and projectSummary.latePhaseDelay > 0}">
                                 <c:choose>
                                     <c:when test="${projectSummary.latePhaseDelay < 1}">
@@ -234,10 +234,11 @@
                                 </c:choose>
                                 day${projectSummary.latePhaseDelay >= 2 ? 's' : ''}
                             </c:if>
+                            </span>    
                             <br/>
                         </c:if>
                         <c:if test="${projectSummary.launchLateContestsNum > 0}">
-                            Launch Late (${projectSummary.launchLateContestsNum})
+                            <span title="Launch Late">Late (${projectSummary.launchLateContestsNum})
                             <c:if test="${projectSummary.launchLateDelay ne null}">
                                 <c:choose>
                                     <c:when test="${projectSummary.launchLateDelay eq 0}">
@@ -251,6 +252,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>
+                            </span>    
                             <br/>
                         </c:if>
                         <c:if test="${projectSummary.checkpointLateContestsNum > 0}">
@@ -353,7 +355,7 @@
                         </c:choose>
                     </td>
                     <%-- active contests --%>
-                    <td>
+                    <td class="avoidWrapping">
                         <c:set var="totalActiveContestsCount" value="0"/>
                         <c:forEach items="${projectSummary.activeContestsCount}" var="stat">
                             <c:out value="${stat.key}"/> (${stat.value})
