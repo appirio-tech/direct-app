@@ -908,7 +908,8 @@
     <bean name="milestoneService" class="com.topcoder.direct.services.project.milestone.hibernate.HibernateMilestoneService">
             <property name="logger" ref="milestoneLogger"/>
             <property name="sessionFactory" ref="sessionFactory"/>
-        </bean>
+            <property name="responsiblePersonService" ref="milestoneResponsiblePersonService"/>
+     </bean>
 
     <bean name="invoiceBaseDAO" abstract="true">
         <property name="loggerName" value="invoiceBaseDAO"/>

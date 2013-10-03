@@ -705,6 +705,13 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="getProjectMilestoneListData" method="getProjectMilestoneListData"
+                class="projectMilestoneViewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getProjectResponsiblePerson" method="getProjectResponsiblePerson"
                         class="projectMilestoneViewAction">
                     <interceptor-ref name="securedProjectPreProcessorStack"/>
@@ -727,6 +734,20 @@
         </action>
 
         <action name="removeMilestone" method="removeMilestone"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="deleteContestFromMilestone" method="deleteContestFromMilestone"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="moveContestToMilestone" method="moveContestToMilestone"
                 class="projectMilestoneOperationAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>

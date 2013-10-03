@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
 
-import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.ResponsiblePerson;
+import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,24 +14,34 @@ import java.util.List;
  * The DTO for different views of the project milestone management.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * <ul>
+ *     <li>
+ *         Change all the usage of <code>Milestone</code> to <code>ProjectMilestoneDTO</code>
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
+ * @since 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
  */
 public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
     /**
      * The list of overdue milestones.
      */
-    private List<Milestone> overdueMilestones;
+    private List<ProjectMilestoneDTO> overdueMilestones;
 
     /**
      * The list of upcoming milestones.
      */
-    private List<Milestone> upcomingMilestones;
+    private List<ProjectMilestoneDTO> upcomingMilestones;
 
     /**
      * The list of completed milestones.
      */
-    private List<Milestone> completedMilestones;
+    private List<ProjectMilestoneDTO> completedMilestones;
 
     /**
      * The list of responsible person of the project.
@@ -43,7 +53,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @return the list of overdue milestones.
      */
-    public List<Milestone> getOverdueMilestones() {
+    public List<ProjectMilestoneDTO> getOverdueMilestones() {
         return overdueMilestones;
     }
 
@@ -52,7 +62,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @param overdueMilestones the list of overdue milestones.
      */
-    public void setOverdueMilestones(List<Milestone> overdueMilestones) {
+    public void setOverdueMilestones(List<ProjectMilestoneDTO> overdueMilestones) {
         this.overdueMilestones = overdueMilestones;
     }
 
@@ -61,7 +71,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @return the list of upcoming milestones.
      */
-    public List<Milestone> getUpcomingMilestones() {
+    public List<ProjectMilestoneDTO> getUpcomingMilestones() {
         return upcomingMilestones;
     }
 
@@ -70,7 +80,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @param upcomingMilestones the list of upcoming milestones.
      */
-    public void setUpcomingMilestones(List<Milestone> upcomingMilestones) {
+    public void setUpcomingMilestones(List<ProjectMilestoneDTO> upcomingMilestones) {
         this.upcomingMilestones = upcomingMilestones;
     }
 
@@ -79,7 +89,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @return the list of upcoming milestones.
      */
-    public List<Milestone> getCompletedMilestones() {
+    public List<ProjectMilestoneDTO> getCompletedMilestones() {
         return completedMilestones;
     }
 
@@ -88,7 +98,7 @@ public class ProjectMilestoneViewDTO extends CommonDTO implements Serializable {
      *
      * @param completedMilestones the list of completed milestones.
      */
-    public void setCompletedMilestones(List<Milestone> completedMilestones) {
+    public void setCompletedMilestones(List<ProjectMilestoneDTO> completedMilestones) {
         this.completedMilestones = completedMilestones;
     }
 

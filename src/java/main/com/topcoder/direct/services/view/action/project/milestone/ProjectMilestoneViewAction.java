@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.milestone;
 
@@ -13,8 +13,12 @@ import com.topcoder.direct.services.view.dto.ProjectMilestoneViewDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestDTO;
+import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneDTO;
 import com.topcoder.direct.services.view.form.ProjectMilestoneViewForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,8 +30,16 @@ import java.util.*;
  * calendar view and multiple project milestones batch creation view.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * <ul>
+ *     <li>Updated {@link #executeAction()} to remove the codes to get milestone list view data, it's changed to get through ajax request</li>
+ *     <li>Added method {@link #getProjectMilestoneListData()} to get the project milestone list data</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implements FormAction<ProjectMilestoneViewForm> {
 
@@ -49,7 +61,7 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
     /**
      * The date string format of milestone due date and completion date.
      */
-    private static final DateFormat CALENDAR_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final DateFormat CALENDAR_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * The form data.
@@ -92,16 +104,6 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
      */
     @Override
     protected void executeAction() throws Exception {
-
-        // prepare data for list view
-        if (formData.getViewType().equals(ProjectMilestoneViewForm.LIST_VIEW)) {
-            viewData.setOverdueMilestones(getMilestoneService().getAll(formData.getProjectId(),
-                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.OVERDUE}), SortOrder.ASCENDING));
-            viewData.setUpcomingMilestones(getMilestoneService().getAll(formData.getProjectId(),
-                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.UPCOMING}), SortOrder.ASCENDING));
-            viewData.setCompletedMilestones(getMilestoneService().getAll(formData.getProjectId(),
-                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.COMPLETED}), SortOrder.DESCENDING));
-        }
 
         // set responsible person data
         final List<ResponsiblePerson> allResponsiblePeople = getMilestoneResponsiblePersonService().getAllResponsiblePeople(getFormData().getProjectId());
@@ -209,6 +211,82 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
                 result.add(data);
             }
             setResult(result);
+
+        } catch (Throwable e) {
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e);
+            }
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the project milestone list view data with ajax.
+     *
+     * @return the result code.
+     * @throws Exception if there is any error.
+     * @since 1.1
+     */
+    public String getProjectMilestoneListData() throws Exception {
+        try {
+
+            List<Milestone> overdueMilestones = getMilestoneService().getAll(formData.getProjectId(),
+                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.OVERDUE}), SortOrder.ASCENDING);
+            List<Milestone> upcomingMilestones = getMilestoneService().getAll(formData.getProjectId(),
+                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.UPCOMING}), SortOrder.ASCENDING);
+            List<Milestone> completedMilestones = getMilestoneService().getAll(formData.getProjectId(),
+                    Arrays.asList(new MilestoneStatus[]{MilestoneStatus.COMPLETED}), SortOrder.DESCENDING);
+
+
+            List<MilestoneContestDTO> milestoneContestAssociations = DataProvider.getMilestoneContestAssociations(
+                    formData.getProjectId(), 0,
+                    DirectUtils.getTCSubjectFromSession().getUserId());
+
+            Map<Long, List<MilestoneContestDTO>> tempMapping = new HashMap<Long, List<MilestoneContestDTO>>();
+
+            for(MilestoneContestDTO mcd : milestoneContestAssociations) {
+                if(tempMapping.get(mcd.getMilestoneId()) == null) {
+                    tempMapping.put(mcd.getMilestoneId(), new ArrayList<MilestoneContestDTO>());
+                }
+
+                tempMapping.get(mcd.getMilestoneId()).add(mcd);
+            }
+
+            Map<String, List<ProjectMilestoneDTO>> result = new HashMap<String, List<ProjectMilestoneDTO>>();
+
+            result.put("overdue", new ArrayList<ProjectMilestoneDTO>());
+            result.put("upcoming", new ArrayList<ProjectMilestoneDTO>());
+            result.put("completed", new ArrayList<ProjectMilestoneDTO>());
+
+            for(Milestone m : overdueMilestones) {
+                ProjectMilestoneDTO pmd = new ProjectMilestoneDTO();
+                pmd.setMilestone(m);
+                pmd.setContests(tempMapping.get(m.getId()));
+                result.get("overdue").add(pmd);
+            }
+
+            for(Milestone m : upcomingMilestones) {
+                ProjectMilestoneDTO pmd = new ProjectMilestoneDTO();
+                pmd.setMilestone(m);
+                pmd.setContests(tempMapping.get(m.getId()));
+                result.get("upcoming").add(pmd);
+
+            }
+
+            for(Milestone m : completedMilestones) {
+                ProjectMilestoneDTO pmd = new ProjectMilestoneDTO();
+                pmd.setMilestone(m);
+                pmd.setContests(tempMapping.get(m.getId()));
+                result.get("completed").add(pmd);
+
+            }
+
+            ObjectMapper m = new ObjectMapper();
+
+            setResult(m.convertValue(result, Map.class));
+
 
         } catch (Throwable e) {
             // set the error message into the ajax response

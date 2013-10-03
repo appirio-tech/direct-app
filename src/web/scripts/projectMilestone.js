@@ -6,7 +6,10 @@
  * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
  * 
  * @version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
- * - Update the CSS to fix layout issue for milestone long description. 
+ * - Update the CSS to fix layout issue for milestone long description.
+ *
+ * Version 1.2 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * - Update to support the contest associations.
  */
 var calendarData;
 var userHandleColorMap = {};
@@ -16,107 +19,80 @@ var loadUserHandleColorMap = function () {
     if ($("#responsiblePersonList").length > 0) {
         // empty first
         userHandleColorMap = {};
+
+        // the key is user handle, the value is a two values map {color, url}
         $("#responsiblePersonList a").each(function () {
             var entry = {};
             entry.color = $(this).attr('class');
             entry.url = $(this).attr('href');
+            entry.code = $(this).outerHTML();
             var key = $(this).text();
             userHandleColorMap[key] = entry;
         });
     }
 }
 
-var cleanUpEmptyMilestoneGroup = function() {
-    if($(".milestoneListView").length > 0) {
-        $(".milestoneListView .milestoneList").each(function () {
-            if($(this).find("dd").length == 0) {
-                // there is no milestone in the group, hide current group
-                $(this).hide();
-            } else {
-                $(this).show();
-            }
-        });
-    }
+
+function formatDate(dateString, sourceFormat, destFormat) {
+    return $.datepicker.formatDate(destFormat, $.datepicker.parseDate(sourceFormat, dateString));
 }
 
-var transformDate = function(dateStr) {
-    var date = $.datepicker.parseDate('mm/dd/yy', dateStr);
-    return $.datepicker.formatDate('DD, dd MM yy', date);
+function getUserLink(userName) {
+    return userHandleColorMap[userName].code;
 }
 
-var insertMilestoneIntoList = function (result) {
-    var template = unescape($('#milestoneListItemTemplate').html());
+if($.views) {
+    $.views.helpers({
+        formatDate: formatDate,
+        getUserLink: getUserLink
+    });
+}
 
-    var dateToSet = result.status == 'completed' ? result.completionDate : result.dueDate;
+function reloadMilestones() {
 
-    var item = $($.validator.format(template, transformDate(dateToSet), result.status,
-        result.dueDate, result.name, result.description.substring(0, 100), result.description, result.id, result.notification));
+    var viewCache = {};
+    $("dd.expand").each(function(){
+        viewCache[$(this).attr('id')] = true;
+    })
+    modalPreloader();
+    $.ajax({
+        type: "POST",
+        url: "getProjectMilestoneListData",
+        data: {formData: {projectId: tcDirectProjectId}},
+        dataType: 'json',
+        async: false,
+        success: function (jsonResult) {
+            handleJsonResult(jsonResult,
+                function (result) {
+                    $(".milestoneListView .milestoneList").remove();
+                    $(".milestoneListView").append($("#milestoneList").render(result));
+                    $("#moveMilestonePopup select option:gt(0)").remove();
+                    $.each(result, function (key, value) {
+                        // do not include the completed milestones in the move dropdown
+                        if (key == 'completed') return;
+                        $.each(value, function (key1, value1) {
+                            var displayName = value1.milestone.name;
+                            if(displayName.length > 47) {
+                                displayName = displayName.substr(0, 47) + '...';
+                            }
+                            $("#moveMilestonePopup select").append($("<option/>").attr("value", value1.milestone.id).text(displayName).attr('title', value1.milestone.name));
+                        })
+                    });
 
-    if (result['ownerName']) {
-        var url = "javascript:;";
-        var css = "coderTextOrange";
+                    sortDropDown("#moveMilestonePopup select");
 
-        if (userHandleColorMap[result.ownerName]) {
-            url = userHandleColorMap[result.ownerName].url;
-            css = userHandleColorMap[result.ownerName].color;
+                    $.each(viewCache, function(key, value){
+                        $("#" + key).find("a.showHideDetails").trigger('click');
+                    });
+                },
+
+                function (errorMessage) {
+                    showErrors(errorMessage);
+                }
+
+            );
         }
-
-        var ownerDom = $("<a></a>");
-        ownerDom.addClass(css).attr('href', url).text(result.ownerName);
-        var ownerId = $("<input type='hidden' name='ownerId'/>").val(result.ownerId);
-        item.find(".projectT").append(ownerDom.outerHTML());
-        item.find(".projectT").append(ownerId);
-    }
-
-    if (result.description.length <= 100) {
-        var des = $("<span></span>").addClass('short');
-        des.text(result.description);
-        item.find(".projectD").empty().append(des.outerHTML());
-    }
-
-    // insert into list
-    var date = $.datepicker.parseDate('mm/dd/yy', result.dueDate);
-    var completed = false;
-
-    var dl = $(".milestoneManage .milestoneList.overdue");
-    if (result.status == "upcoming") {
-        dl = $(".milestoneManage .milestoneList.upcoming");
-    } else if (result.status == 'completed') {
-        dl = $(".milestoneManage .milestoneList.completed ");
-        completed = true;
-        date = $.datepicker.parseDate('mm/dd/yy', result.completionDate);
-    }
-
-    if(completed) {
-        // set checked
-        item.find("input[name='projectName']").attr('checked', 'checked');
-        // add completion date
-        var completionInput = $("<input type='hidden' name='completionDate'/>").val(result.completionDate);
-        item.find("input[name='dueDate']").after(completionInput);
-    }
-
-    if (dl.find("dd").length > 0) {
-        var dds = dl.find("dd");
-        for (var i = 0; i < dds.length; i++) {
-            var dd = dds[i];
-            var _date = result.status == 'completed' ?
-                $.datepicker.parseDate('mm/dd/yy', $(dd).find(".date input[name='completionDate']").val()) :
-                $.datepicker.parseDate('mm/dd/yy', $(dd).find(".date input[name='dueDate']").val());
-            if ((!completed && _date.getTime() > date.getTime()) || (completed && _date.getTime() < date.getTime())) {
-                $(dd).before(item);
-                break;
-            }
-            if (i == dds.length - 1) {
-                $(dd).after(item);
-            }
-        }
-
-    } else {
-        dl.find("dt").after(item);
-    }
-
-    // cleanup the list
-    cleanUpEmptyMilestoneGroup();
+    });
 }
 
 $(document).ready(function () {
@@ -129,8 +105,39 @@ $(document).ready(function () {
     		$(this).find(".project .projectD span").addClass('longdesc');    		
     	}    	
     });
-    
-    
+
+    $.ajax({
+        type: "POST",
+        url: "getProjectMilestoneListData",
+        data: {formData: {projectId: tcDirectProjectId}},
+        dataType: 'json',
+        async: false,
+        success: function (jsonResult) {
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    $(".milestoneListView .milestoneList").remove();
+                    $(".milestoneListView").append($("#milestoneList").render(result));
+                    $("#moveMilestonePopup select option:gt(0)").remove();
+                    $.each(result, function(key, value){
+                        if (key == 'completed') return;
+                        $.each(value, function(key1, value1){
+                            var displayName = value1.milestone.name;
+                            if(displayName.length > 47) {
+                                displayName = displayName.substr(0, 47) + '...';
+                            }
+                            $("#moveMilestonePopup select").append($("<option/>").attr("value", value1.milestone.id).text(displayName).attr('title', value1.milestone.name));
+                        })
+                    });
+                    sortDropDown("#moveMilestonePopup select");
+                },
+
+                function (errorMessage) {
+                    showErrors(errorMessage);
+                }
+
+            );
+        }
+    });
 
 
     // initialize all the date pickers used in project milestone pages
@@ -160,12 +167,17 @@ $(document).ready(function () {
         });
     }
 
-    // setup the description show/hide feature
-    $(".milestoneManage .milestoneList .projectD a").live("click", function () {
-        var projectD = $(this).parent().parent();
-        projectD.find("span.short,span.long").toggle();
+    $(".milestoneManage .milestoneList .projectS a").live("click", function () {
+        var dd = $(this).closest("dd");
+        if(dd.hasClass('expand')){
+            dd.removeClass("expand");
+            $(this).text("Show Details");
+        }else{
+            dd.addClass("expand");
+            $(this).text("Hide Details");
+        }
         return false;
-    })
+    });
 
     // setup all the cancel button
     $("#new-modal .cancelButton").live('click', function () {
@@ -240,8 +252,7 @@ $(document).ready(function () {
 
                 handleJsonResult2(jsonResult,
                     function (result) {
-                        ms.remove();
-                        insertMilestoneIntoList(result);
+                        reloadMilestones();
                     },
 
                     function (errorMessage) {
@@ -335,8 +346,7 @@ $(document).ready(function () {
 
                 handleJsonResult2(jsonResult,
                     function (result) {
-                        ms.remove();
-                        insertMilestoneIntoList(result);
+                        reloadMilestones();
                     },
 
                     function (errorMessage) {
@@ -352,19 +362,13 @@ $(document).ready(function () {
 
     var modalTrigger;
 
+    // edit project milestone
     $('.milestoneManage .milestoneList .actions a.edit').live('click', function () {
         var ms = $(this).parents("dd:eq(0)");
 
         $("#editMilestoneModal").find("input[name='projectName']").val($.trim(ms.find(".projectT label").text())).trigger('keyup');
 
-        var description = '';
-
-        if (ms.find(".projectD span.longdesc").length > 0) {
-            description = ms.find(".projectD span.longdesc").html();
-        } else {
-            description = ms.find(".projectD span").html();
-        }
-
+        var description = ms.find(".projectD").text();
 
         $("#editMilestoneModal").find("textarea[name='projectDesc']").val($.trim(description)).trigger('keyup');
 
@@ -437,8 +441,7 @@ $(document).ready(function () {
                         function (result) {
                             if ($(".milestoneListView").length > 0) {
                                 // list view, insert the created one
-                                ms.remove();
-                                insertMilestoneIntoList(result);
+                                reloadMilestones();
                             }
                         },
 
@@ -562,9 +565,7 @@ $(document).ready(function () {
                                 modalAllClose();
                             } else if ($(".milestoneListView").length > 0) {
                                 // list view, insert the created one
-                                insertMilestoneIntoList(result);
-
-                                modalAllClose();
+                                reloadMilestones();
                             }
                         },
 
@@ -593,7 +594,7 @@ $(document).ready(function () {
 
     $("#removeMilestoneModal .saveButton").click(function () {
 
-        var ms = modalTrigger.parents(".actions").parent();
+        var ms = modalTrigger.parents(".actions").parent().parent();
 
         ms.find(".projectD span a").hide();
         ms.find(".projectD img").remove();
@@ -619,8 +620,7 @@ $(document).ready(function () {
 
                 handleJsonResult2(jsonResult,
                     function (result) {
-                        ms.remove();
-                        cleanUpEmptyMilestoneGroup();
+                        reloadMilestones();
                     },
 
                     function (errorMessage) {
@@ -849,6 +849,93 @@ $(document).ready(function () {
     }
 
 
+    // remove contest
+    $(".contestRow a.delete").live('click', function(){
+        var contestRow = $(this).parents(".contestRow");
+        var milestoneItem = contestRow.parents("dd:eq(0)");
+        modalPreloader();
+        $.ajax({
+            type:"POST",
+            url:"deleteContestFromMilestone",
+            data:{formData:{contestId:contestRow.find("input[name=contestId]").val(),
+                milestoneId:milestoneItem.find("input[name=milestoneId]").val()}},
+            dataType:'json',
+            async:true,
+            success:function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        reloadMilestones();
+                    },
+
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    }
+
+                );
+            }
+        });
+    })
+
+
+    // move contest
+    $(".contestRow .js-move").live('click', function(){
+        $("#moveMilestonePopup").data('contestId', $(this).parents(".contestRow").find("input[name=contestId]").val());
+        var contestRow = $('#contest' + $("#moveMilestonePopup").data('contestId'));
+        var milestoneId = contestRow.parents("dd:eq(0)").find("input[name=milestoneId]").val();
+        $("#moveMilestonePopup select option").show();
+        $("#moveMilestonePopup select option").each(function () {
+            if ($(this).attr('value') == milestoneId) {
+                $(this).hide();
+            }
+        });
+        $("#moveMilestonePopup select").val("0");
+        $("#moveMilestonePopup").show().css({
+            "left":$(this).offset().left - 240 + "px",
+            "top":$(this).offset().top + 22 + "px"
+        });
+    });
+
+    $("#moveMilestonePopup .grayButton").click(function () {
+        var contestRow = $('#contest' + $("#moveMilestonePopup").data('contestId'));
+        var milestoneId = $("#moveMilestonePopup select").val();
+        var contestId = $("#moveMilestonePopup").data('contestId');
+
+        if (milestoneId <= 0) {
+            alert('Please choose a milestone to move to');
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "moveContestToMilestone",
+            data: {formData: {contestId: contestId,
+                milestoneId: milestoneId}},
+            dataType: 'json',
+            async: true,
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $("#moveMilestonePopup").hide();
+                        reloadMilestones();
+                    },
+
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    }
+
+                );
+            }
+        });
+    });
+
+    $('html').click(function () {
+        $("#moveMilestonePopup").hide();
+    });
+
+    $('#moveMilestonePopup').click(function (event) {
+        event.stopPropagation();
+    });
+
     // batch creation
     if($(".multiMilestones").length > 0) {
 
@@ -903,10 +990,6 @@ $(document).ready(function () {
 
     }
 });
-
-jQuery.fn.outerHTML = function () {
-    return jQuery('<div />').append(this.eq(0).clone()).html();
-};
 
 (function ($) {
 

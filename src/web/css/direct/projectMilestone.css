@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  *
  * Used for the project management pages.
  *
@@ -7,6 +7,9 @@
  *
  * Version 1.1 (Release Assembly - TC Cockpit Enterprise Calendar Revamp)
  * - Add css for the title of the milestone tip
+ *
+ * Version 1.2 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * - Update the milestone list view page to display contest associations with the milestones
  */
 .projectMilestoneListViewPage {
     min-width: 1024px !important;
@@ -204,27 +207,51 @@ a.grayButton:hover .text {
 
 .milestoneManage .milestoneList dd {
     position: relative;
-    padding: 13px 0 17px;
+    padding: 13px 0;
     border-bottom: 1px solid #a9acae;
     height: 100%;
 }
 
 .milestoneManage .milestoneList dd .date {
     position: absolute;
-    left: 0;
-    top: 13px;
-    width: 182px;
-    padding-right: 10px;
+    right: 0;
+    top: 0; 
 }
 
 .milestoneManage .milestoneList dd .project {
-    margin: 0 70px 0 192px;
-    padding-right: 20px;
+    padding: 0 112px 0 0; 
+    position:relative;
 }
 
+.milestoneManage .milestoneList dd .projectS {
+    overflow: hidden;
+    font-size:11px;
+    color:#666; 
+}
+.milestoneManage .milestoneList dd .projectS p{
+    float:left;
+    padding-right:30px;
+}
+.milestoneManage .milestoneList dd .projectS .bar{
+    height:12px;
+    overflow:hidden;
+    background:#cc0000;
+    width:108px;
+    display:inline-block;
+    margin-right:8px; 
+}
+    .milestoneManage .milestoneList dd .projectS .bar i{
+        display:block;
+        height:12px;    
+        background:#009900;  
+    }
+.milestoneManage .milestoneList dd .projectS a{
+    float:left;
+    color:#666;
+}
 .milestoneManage .milestoneList dd .project .projectT {
     overflow: hidden;
-    padding-bottom: 6px;
+    padding-bottom: 8px;
 }
 
 .milestoneManage .milestoneList dd .project .projectT input {
@@ -249,6 +276,12 @@ a.grayButton:hover .text {
 .milestoneManage .milestoneList dd .project .projectD {
     font-size: 11px;
     color: #666;
+    margin:10px 0 0;
+    overflow:hidden;
+    height:14px;
+}
+.milestoneManage .milestoneList dd.expand .project .projectD{
+    height:auto;   
 }
 
 .milestoneManage .milestoneList dd .project .projectD a {
@@ -256,15 +289,15 @@ a.grayButton:hover .text {
     text-decoration: underline;
 }
 
-.milestoneManage .milestoneList dd .project .projectD a:hover {
+.milestoneManage .milestoneList dd a:hover {
     text-decoration: none;
 }
 
 .milestoneManage .milestoneList dd .actions {
     position: absolute;
     right: 0;
-    top: 13px;
-    width: 68px;
+    top: 28px;
+    width: 65px;
 }
 
 .milestoneManage .milestoneList dd .actions a {
@@ -287,6 +320,49 @@ a.grayButton:hover .text {
 
 .milestoneManage .milestoneList dd .actions a.remove {
     background: url(/images/remove-milestone-icon.png) no-repeat 0 0;
+} 
+     
+.milestoneManage .milestoneList dd table {
+    width:100%;
+    font-size:11px;
+    display:none;
+    margin-top:10px;
+}
+.milestoneManage .milestoneList dd.expand table{
+    display:table; 
+}
+.milestoneManage .milestoneList dd table td{
+   padding:6px 0;
+}
+.milestoneManage .milestoneList dd table .Completed{
+    color:#009900;
+    font-weight:bold;
+}
+.milestoneManage .milestoneList dd table .Active {
+    color:#2585d9;
+    font-weight:bold;
+}
+.milestoneManage .milestoneList dd table .Cancelled {
+    color:#DB4848;
+    font-weight:bold;
+}
+.milestoneManage .milestoneList dd table .Draft {
+    color:#6F6F71;
+    font-weight:bold;
+}
+
+.milestoneManage .milestoneList dd table .line{
+    padding:0 3px;
+}
+.milestoneManage .milestoneList dd table .links{
+   text-align:right;
+}
+.milestoneManage .milestoneList dd table .links a{
+   color:#d80000;
+    text-decoration:none;
+}
+.milestoneManage .milestoneList dd table .links a:hover{
+    text-decoration:underline;
 }
 
 .milestoneManage .bottomLine {
@@ -463,6 +539,52 @@ a.grayButton:hover .text {
     right: 48px;
     left: auto;
 }
+
+
+/* .moveMilestonePopup */
+.moveMilestonePopup {
+    position: absolute;
+    width: 304px;
+    font-size: 11px;
+    color: #666; 
+    display: none;
+    z-index: 1000;
+}
+
+.moveMilestonePopup .popupMask {
+    border: 1px solid #bdbdbd;
+    background: url(/images/milestone-add-panel-bg.gif) #fffffe repeat-x 0 bottom;
+    overflow: hidden;
+    padding: 15px;
+    text-align:right;
+}
+ 
+.moveMilestonePopup .popupMask p {
+    padding-bottom:12px;
+    text-align:left;
+}
+.moveMilestonePopup .popupMask select {
+    width:272px;
+} 
+.moveMilestonePopup .popupMask a.grayButton{
+    margin-top:15px;
+}
+.moveMilestonePopup .popupMask a.grayButton span.text {
+    width: 76px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #d90303;
+}
+
+.moveMilestonePopup .arrow {
+    height: 7px;
+    width: 13px;
+    background: url(/images/up-arrow.gif) no-repeat 0 0;
+    position: absolute;
+    top: -6px;
+    right: 52px;
+}
+ 
 
 /* modal */
 .newOutLay input.text {

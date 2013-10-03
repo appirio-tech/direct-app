@@ -44,6 +44,9 @@
  *
  * Version 2.3 - 
  * - make calling of adjustImageRatio only if the page has specific image.
+ *
+ * Version 2.4 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * - Refactor jQuery.fn.outerHTML from projectMilestone.js to the common lib
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -627,7 +630,7 @@ function sortDropDown(dropDownId) {
             if (a.val == 0 || a.val == 'All') {
                 return -1;
             }
-            if (b.val == 0 || a.val == 'All') {
+            if (b.val == 0 || b.val == 'All') {
                 return 1;
             }
 
@@ -778,3 +781,7 @@ function updateMultiRowsCell() {
         return json;
     };
 })(jQuery);
+
+jQuery.fn.outerHTML = function () {
+    return jQuery('<div />').append(this.eq(0).clone()).html();
+};

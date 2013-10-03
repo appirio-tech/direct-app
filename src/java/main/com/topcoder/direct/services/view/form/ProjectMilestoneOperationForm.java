@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -13,8 +13,16 @@ import java.util.List;
  * The request form for all the project milestone operations.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * <ul>
+ *     <li>Added property {@link #contestId} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
+ * @Since 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
  */
 public class ProjectMilestoneOperationForm extends ProjectIdForm {
 
@@ -37,6 +45,13 @@ public class ProjectMilestoneOperationForm extends ProjectIdForm {
      * The completion  date of the milestone.
      */
 	private Date completionDate;
+
+    /**
+     * The contest id.
+     *
+     * @since 1.1
+     */
+    private long contestId;
 
     /**
      * Gets the milestone id.
@@ -108,5 +123,25 @@ public class ProjectMilestoneOperationForm extends ProjectIdForm {
      */
     public void setCompletionDate(Date completionDate) {
         this.completionDate = completionDate;
+    }
+
+    /**
+     * Gets the contest id.
+     *
+     * @return the contest id.
+     * @since 1.1
+     */
+    public long getContestId() {
+        return contestId;
+    }
+
+    /**
+     * Sets the contest id.
+     *
+     * @param contestId the contest id.
+     * @since 1.1
+     */
+    public void setContestId(long contestId) {
+        this.contestId = contestId;
     }
 }

@@ -1,15 +1,18 @@
 <%--
   - Author: TCSASSEMBLER
   -
-  - Version: 1.0
+  - Version: 1.3
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
   -
-  - (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0)
-  - - Fixed long description of milestones. 
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0)
+  - - Fixed long description of milestones.
+  -
+  - Version 1.3 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+  - - Update to support displaying contest associations
   -
   - Description: This page renders the project milestones batch creation view.
   -
@@ -30,9 +33,124 @@
     <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
     <script type="text/javascript" src="/scripts/projectMilestone.js?v=214829"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
+    </script>
+    <script id="milestoneTemplate" type="text/x-jsrender">
+            <dd id="milestone{{:milestone.id}}">
+                <input type="hidden" name="milestoneId" value="{{:milestone.id}}">
+                <input type="hidden" name="notification" value="{{:milestone.sendNotifications}}">
+                <div class="project">
+                    <div class="projectT">
+                    <input type="checkbox" name="projectName" {{if milestone.mapRepresentation.completionDate != null}}checked="checked"{{/if}} {{if completedContestNumber != totalContestNumber}}disabled="disabled" title="There are uncompleted contests, cannot mark as completed. If you wan to, please either move the contest(s) to future milestone or delete/cancel the contests first"{{/if}}/>
+                    <label>{{>milestone.name}}</label>
+                    {{if milestone.owners.length > 0}}
+                        {{:~getUserLink(milestone.owners[0].name)}}
+                        <input type="hidden" name="ownerId" value="{{:milestone.owners[0].userId}}"/>
+                    {{/if}}
+                    </div>
+                    <div class="projectS">
+                        <p>
+                           {{if contests != null && contests.length > 0}}
+                                <span class="bar"><i style="width:{{:completedContestNumber * 100 /totalContestNumber}}%"></i></span>
+                                <span class="completedNumber">{{:completedContestNumber}}</span>/<span class="totalNumber">{{:totalContestNumber}}</span> Contests have been completed
+                           {{else}}
+                                 No contests associated to this milestone
+                           {{/if}}
+                        </p>
+                        <a href="javascript:;" class="showHideDetails">Show Details</a>
+                    </div>
+                    <div class="projectD">
+                        {{>milestone.description}}
+                    </div>
+                    {{if milestone.mapRepresentation.completionDate != null}}
+                        <span class="date">{{:~formatDate(milestone.mapRepresentation.completionDate, "mm/dd/yy", "DD, dd MM yy")}}
+                    {{else}}
+                        <span class="date">{{:~formatDate(milestone.mapRepresentation.dueDate, "mm/dd/yy", "DD, dd MM yy")}}
+                    {{/if}}
+                    <input type="hidden" name="dueDate" value="{{:milestone.mapRepresentation.dueDate}}"/>
+                    {{if milestone.mapRepresentation.completionDate != null}}
+                        <input type="hidden" name="type" value="completed"/>
+                        <input type="hidden" name="completionDate" value="{{:milestone.mapRepresentation.completionDate}}"/>
+                    {{/if}}
+                    </span>
+                    <div class="actions">
+                        <a href="javascript:;" class="edit">Edit</a>
+                        <a href="javascript:;" class="remove">Remove</a>
+                    </div>
+                </div>
+                {{if contests != null && contests.length > 0}}
+                    <table cellspacing="0" cellpadding="0" class="hide">
+                        <colgroup>
+                            <col width="9%"/>
+                            <col width="17%"/>
+                            <col width="44%"/>
+                            <col width="20%"/>
+                            <col width="10%"/>
+                        </colgroup>
+                        <tbody>
+                            {{for contests}}
+                                <tr class="contestRow" id="contest{{:contestId}}">
+                                    <input type="hidden" name="contestId" value="{{:contestId}}"/>
+                                    <td class="{{:contestShortStatus}}" title="{{:contestStatus}}">{{:contestShortStatus}}</td>
+                                    <td><strong>{{:contestType}}</strong></td>
+                                    <td><a target="_blank" href="/direct/contest/detail.action?projectId={{:contestId}}">{{:contestName}}</a></td>
+                                    <td>{{:startDate}}  - {{:endDate}}</td>
+                                    <td class="links">
+                                        <a href="javascript:;" class="js-move">Move</a>
+                                        <span class="line">|</span>
+                                        <a href="javascript:;" class="delete" style="font-size:11px">Delete</a>
+                                    </td>
+                                </tr>
+                            {{/for}}
+                        </tbody>
+                    </table>
+                {{/if}}
+            </dd>
+    </script>
+    <script id="milestoneList" type="text/x-jsrender">
+        {{if overdue.length > 0}}
+          <dl class="milestoneList overdue">
+            <dt>
+                    <span class="tabL">
+                        <span class="tabR">
+                            <span>Overdue Milestones</span>
+                        </span>
+                    </span>
+            </dt>
+            {{for overdue tmpl="#milestoneTemplate"/}}
+          </dl>
+        {{/if}}
+
+        {{if upcoming.length > 0}}
+          <dl class="milestoneList upcoming">
+            <dt>
+                    <span class="tabL">
+                        <span class="tabR">
+                            <span>Upcoming Milestones</span>
+                        </span>
+                    </span>
+            </dt>
+            {{for upcoming tmpl="#milestoneTemplate"/}}
+
+          </dl>
+        {{/if}}
+
+        {{if completed.length > 0}}
+          <dl class="milestoneList completed">
+            <dt>
+                    <span class="tabL">
+                        <span class="tabR">
+                            <span>Completed Milestones</span>
+                        </span>
+                    </span>
+            </dt>
+            {{for completed tmpl="#milestoneTemplate"/}}
+
+          </dl>
+        {{/if}}
     </script>
 </head>
 
@@ -88,140 +206,6 @@
                                     </p>
                                     <!-- End .notes -->
 
-
-
-                                    <dl class="milestoneList overdue <s:if test="viewData.overdueMilestones.size == 0">hide</s:if>">
-                                        <dt>
-                                            <span class="tabL">
-                                                <span class="tabR">
-                                                    <span>Overdue Milestones</span>
-                                                </span>
-                                            </span>
-                                        </dt>
-
-                                        <s:iterator  value="viewData.overdueMilestones">
-
-                                            <dd>
-                                                <input type="hidden" name="milestoneId" value="${id}">
-                                                <input type="hidden" name="notification" value="${sendNotifications}">
-                                                <div class="date">
-                                                    <span><fmt:formatDate pattern="EEEE, dd MMMM yyyy" value="${dueDate}"/></span>
-                                                    <input type="hidden" name="type" value="overdue"/>
-                                                    <input type="hidden" name="dueDate" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${dueDate}" />'/>
-                                                </div>
-                                                <div class="project">
-                                                    <div class="projectT">
-                                                        <input type="checkbox" name="projectName"/>
-                                                        <label><s:property value="name"/></label>
-                                                        <s:if test="owners.size > 0">
-                                                            <link:user userId="${owners[0].userId}"/>
-                                                            <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
-                                                        </s:if>
-                                                    </div>
-                                                    <div class="projectD">
-                                                               <span>
-                                                                   <s:property value="description"/>
-                                                               </span>
-                                                    </div>
-                                                </div>
-                                                <div class="actions">
-                                                    <a href="javascript:;" class="edit">Edit</a>
-                                                    <a href="javascript:;" class="remove">Remove</a>
-                                                </div>
-                                            </dd>
-
-                                        </s:iterator >
-                                    </dl>
-
-
-                                    <dl class="milestoneList upcoming <s:if test="viewData.upcomingMilestones.size == 0">hide</s:if>">
-                                        <dt>
-                                            <span class="tabL">
-                                                <span class="tabR">
-                                                    <span>Upcoming Milestones</span>
-                                                </span>
-                                            </span>
-                                        </dt>
-
-                                        <s:iterator  value="viewData.upcomingMilestones">
-
-                                            <dd>
-                                                <input type="hidden" name="milestoneId" value="${id}">
-                                                <input type="hidden" name="notification" value="${sendNotifications}">
-                                                <div class="date">
-                                                    <span><fmt:formatDate pattern="EEEE, dd MMMM yyyy" value="${dueDate}"/></span>
-                                                    <input type="hidden" name="type" value="upcoming"/>
-                                                    <input type="hidden" name="dueDate" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${dueDate}" />'/>
-                                                </div>
-                                                <div class="project">
-                                                    <div class="projectT">
-                                                        <input type="checkbox" name="projectName"/>
-                                                        <label><s:property value="name"/></label>
-                                                        <s:if test="owners.size > 0">
-                                                            <link:user userId="${owners[0].userId}"/>
-                                                            <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
-                                                        </s:if>
-                                                    </div>
-                                                    <div class="projectD">                                                        
-                                                               <span>
-                                                                   <s:property value="description"/>
-                                                               </span>
-                                                    </div>
-                                                </div>
-                                                <div class="actions">
-                                                    <a href="javascript:;" class="edit">Edit</a>
-                                                    <a href="javascript:;" class="remove">Remove</a>
-                                                </div>
-                                            </dd>
-
-                                        </s:iterator >
-                                    </dl>
-                                    <!-- end upcoming .milestoneList -->
-
-                                    <!-- start completed .milestoneList -->
-                                    <dl class="milestoneList completed <s:if test="viewData.completedMilestones.size == 0">hide</s:if>">
-                                        <dt>
-                                            <span class="tabL">
-                                                <span class="tabR">
-                                                    <span>Completed Milestones</span>
-                                                </span>
-                                            </span>
-                                        </dt>
-
-                                        <s:iterator  value="viewData.completedMilestones">
-
-                                            <dd>
-                                                <input type="hidden" name="milestoneId" value="${id}">
-                                                <input type="hidden" name="notification" value="${sendNotifications}">
-                                                <div class="date">
-                                                    <span><fmt:formatDate pattern="EEEE, dd MMMM yyyy" value="${completionDate}"/></span>
-                                                    <input type="hidden" name="type" value="completed"/>
-                                                    <input type="hidden" name="dueDate" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${dueDate}" />'/>
-                                                    <input type="hidden" name="completionDate" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${completionDate}" />'/>
-                                                </div>
-                                                <div class="project">
-                                                    <div class="projectT">
-                                                        <input type="checkbox" name="projectName" checked="checked"/>
-                                                        <label><s:property value="name"/></label>
-                                                        <s:if test="owners.size > 0">
-                                                            <link:user userId="${owners[0].userId}"/>
-                                                            <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
-                                                        </s:if>
-                                                    </div>
-                                                    <div class="projectD">                                                        
-                                                               <span>
-                                                                   <s:property value="description"/>
-                                                               </span>                                                    
-                                                    </div>
-                                                </div>
-                                                <div class="actions">
-                                                    <a href="javascript:;" class="edit">Edit</a>
-                                                    <a href="javascript:;" class="remove">Remove</a>
-                                                </div>
-                                            </dd>
-
-                                        </s:iterator >
-                                    </dl>
                                 </div>
                                 <!-- End completed .milestoneList -->
 
@@ -293,6 +277,21 @@
 <!-- End #wrapper -->
 
 <jsp:include page="../includes/popups.jsp"/>
+
+<div class="moveMilestonePopup" id="moveMilestonePopup">
+    <div class="popupMask">
+        <p>
+            Select Milestone you want this contest to be moved to
+        </p>
+        <select>
+            <option value="0">- Select a milestone to move to -</option>
+        </select>
+        <a href="javascript:;" class="grayButton">
+            <span class="buttonMask"><span class="text">Move</span></span>
+        </a>
+    </div>
+    <div class="arrow"></div>
+</div>
 
 </body>
 <!-- End #page -->

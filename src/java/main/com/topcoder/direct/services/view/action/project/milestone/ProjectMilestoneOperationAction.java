@@ -1,15 +1,20 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.milestone;
 
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestDTO;
+import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneDTO;
 import com.topcoder.direct.services.view.form.ProjectMilestoneOperationForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,8 +30,19 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.1 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ * <p>
+ * Version 1.2 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * <ul>
+ *     <li>Updated method {@link #changeMilestoneStatus()} to check if the milestone has uncompleted contests before marking it as completed</li>
+ *     <li>Updated method {@link #removeMilestone()} to remove all the contest milestone associations first before removing the milestone</li>
+ *     <li>Updated method {@link #updateMilestone()} to return the contest associations data along with milestone data</li>
+ *     <li>Added method {@link #deleteContestFromMilestone()}</li>
+ *     <li>Added method {@link #moveContestToMilestone()}</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.2
  */
 public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
 
@@ -136,8 +152,26 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
             // reverse the current completion status
             m.setCompleted(!m.isCompleted());
 
-            if(getFormData().getCompletionDate() != null && m.isCompleted() == true) {
-                m.setCompletionDate(getFormData().getCompletionDate());
+            if(m.isCompleted()) {
+                if(getFormData().getCompletionDate() != null) {
+                    m.setCompletionDate(getFormData().getCompletionDate());
+                }
+
+                // check if the milestone has all the associated contests completed.
+                List<MilestoneContestDTO> contests = DataProvider.getMilestoneContestAssociations(
+                        m.getProjectId(), m.getId(),
+                        DirectUtils.getTCSubjectFromSession().getUserId());
+
+                if (contests != null) {
+                    for (MilestoneContestDTO contest : contests) {
+                        if (contest.getContestStatus().toLowerCase().equals("active")
+                                || contest.getContestStatus().toLowerCase().equals("draft")) {
+                            throw new IllegalArgumentException(
+                                    "There are uncompleted contests associated with your milestone," +
+                                            " please either move the contest(s) to future milestone or delete/cancel the contests first");
+                        }
+                    }
+                }
             }
 
             // update
@@ -182,6 +216,8 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
                 throw new IllegalArgumentException("You don't have permission to remove this milestone");
             }
 
+            getProjectServices().deleteMilestoneProjectRelations(getFormData().getMilestoneId(),
+                    String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
             getMilestoneService().delete(getFormData().getMilestoneId());
 
             result.put("operation", "remove");
@@ -219,13 +255,16 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
 
             getMilestoneService().update(getFormData().getMilestone());
 
+            ProjectMilestoneDTO milestoneDTO = new ProjectMilestoneDTO();
             Milestone m = getMilestoneService().get(getFormData().getMilestone().getId());
+            milestoneDTO.setMilestone(m);
+            milestoneDTO.setContests(
+                    DataProvider.getMilestoneContestAssociations(getFormData().getMilestone().getProjectId(),
+                            getFormData().getMilestone().getId(), DirectUtils.getTCSubjectFromSession().getUserId()));
 
-            Map result = m.getMapRepresentation();
+            ObjectMapper mapper = new ObjectMapper();
 
-            result.put("operation", "update");
-
-            setResult(result);
+            setResult(mapper.convertValue(milestoneDTO, Map.class));
 
         } catch (Throwable e) {
             // set the error message into the ajax response
@@ -266,6 +305,93 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
             getMilestoneService().add(getFormData().getMilestones());
 
             result.put("operation", "addAll");
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e);
+            }
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the request to delete a contest from associating to a milestone.
+     *
+     * @return result code.
+     * @since 1.2
+     */
+    public String deleteContestFromMilestone() {
+        Map<String, String> result = new HashMap<String, String>();
+
+        try {
+
+            if (getFormData().getMilestoneId() <= 0) {
+                throw new IllegalArgumentException("Request does not contain any milestone data");
+            }
+
+            if (getFormData().getContestId() <= 0) {
+                throw new IllegalArgumentException("Request does not contain any contest data");
+            }
+
+            // check whether the user has access to the milestone
+            if (!AuthorizationProvider.isUserGrantedToModifyMilestone(DirectUtils.getTCSubjectFromSession(), getFormData().getMilestoneId())) {
+                throw new IllegalArgumentException("You don't have permission to modify this milestone");
+            }
+
+            getProjectServices().deleteProjectMilestoneRelation(getFormData().getContestId(),
+                    String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
+
+            result.put("operation", "removeContest");
+            result.put("milestoneId", String.valueOf(getFormData().getMilestoneId()));
+            result.put("contestId", String.valueOf(getFormData().getContestId()));
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e);
+            }
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the request to move a contest to associate with another milestone.
+     *
+     * @return result code.
+     * @since 1.2
+     */
+    public String moveContestToMilestone() {
+        Map<String, String> result = new HashMap<String, String>();
+
+        try {
+
+            if (getFormData().getMilestoneId() <= 0) {
+                throw new IllegalArgumentException("Request does not contain any milestone data");
+            }
+
+            if (getFormData().getContestId() <= 0) {
+                throw new IllegalArgumentException("Request does not contain any contest data");
+            }
+
+            // check whether the user has access to the milestone
+            if (!AuthorizationProvider.isUserGrantedToModifyMilestone(DirectUtils.getTCSubjectFromSession(), getFormData().getMilestoneId())) {
+                throw new IllegalArgumentException("You don't have permission to modify this milestone");
+            }
+
+            getProjectServices().updateProjectMilestoneRelation(getFormData().getContestId(),
+                    getFormData().getMilestoneId(),
+                    String.valueOf(DirectUtils.getTCSubjectFromSession().getUserId()));
+
+            result.put("operation", "moveContest");
+            result.put("milestoneId", String.valueOf(getFormData().getMilestoneId()));
+            result.put("contestId", String.valueOf(getFormData().getContestId()));
 
             setResult(result);
 

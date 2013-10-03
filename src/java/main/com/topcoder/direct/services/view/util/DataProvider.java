@@ -3,6 +3,12 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
+import com.topcoder.clients.invoices.model.InvoiceType;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
+import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
+import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.payments.entities.CashOutflowPotential;
 import com.topcoder.direct.services.payments.entities.CashOutflowPotentialResult;
 import com.topcoder.direct.services.payments.entities.DateRange;
@@ -18,12 +24,6 @@ import com.topcoder.direct.services.payments.entities.PaymentsByStatusResult;
 import com.topcoder.direct.services.payments.entities.PullablePayments;
 import com.topcoder.direct.services.payments.entities.TopMemberPayment;
 import com.topcoder.direct.services.payments.entities.TopMemberPaymentCriteria;
-import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
-import com.topcoder.clients.invoices.model.InvoiceType;
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
-import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
-import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.ActivityDTO;
 import com.topcoder.direct.services.view.dto.ActivityType;
 import com.topcoder.direct.services.view.dto.ClientBillingDirectProjectMappingDTO;
@@ -110,6 +110,7 @@ import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectStatusType;
+import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestDTO;
 import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
 import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
@@ -120,13 +121,9 @@ import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.marathonmatch.service.dto.MMDownloadSubmissionDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
-import com.topcoder.service.facade.contest.ContestServiceException;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.contest.ForumPoster;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
-import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.ProjectData;
-import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
@@ -162,9 +159,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -967,10 +963,17 @@ import java.util.Set;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 6.22 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
+ * <ul>
+ *     <li>Added method {@link #getMilestoneContestAssociations(long, long, long)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, TCSASSEMBLER
- * @version 6.21
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
+ * @version 6.22
  * @since 1.0
  */
 public class DataProvider {
@@ -8652,6 +8655,53 @@ public class DataProvider {
             throw new Exception("Not matching submission found");
         }
 
+    }
+
+
+    /**
+     * Gets the contest milestone associations from the given direct project and milestone.
+     *
+     * @param directProjectId the direct project id.
+     * @param milestoneId the milestone id.
+     * @param userId the user id.
+     * @return a list of <code>MilestoneContestDTO</code>
+     * @throws Exception if any error occurs.
+     * @since 6.22
+     */
+    public static List<MilestoneContestDTO> getMilestoneContestAssociations(long directProjectId, long milestoneId, long userId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_project_milestones_contests_associations");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(directProjectId));
+        request.setProperty("mid", String.valueOf(milestoneId));
+
+        final List<MilestoneContestDTO> result = new ArrayList<MilestoneContestDTO>();
+
+        DateFormat contestDateFormater = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(
+                "direct_project_milestones_contests_associations");
+        for(ResultSetRow row : resultContainer) {
+            MilestoneContestDTO item = new MilestoneContestDTO();
+            item.setContestId(row.getLongItem("contest_id"));
+            item.setContestName(row.getStringItem("contest_name"));
+            String contestStatus = row.getStringItem("contest_status_name");
+            if(contestStatus.toLowerCase().indexOf("cancelled") != -1) {
+                item.setContestShortStatus("Cancelled");
+            } else {
+                item.setContestShortStatus(contestStatus);
+            }
+            item.setContestStatus(contestStatus);
+            item.setContestType(row.getStringItem("contest_type"));
+            item.setStartDate(contestDateFormater.format(row.getTimestampItem("start_date")));
+            item.setEndDate(contestDateFormater.format(row.getTimestampItem("end_date")));
+            item.setMilestoneId(row.getLongItem("project_milestone_id"));
+
+            result.add(item);
+        }
+
+        return result;
     }
 
 }
