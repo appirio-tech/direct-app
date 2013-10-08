@@ -36,10 +36,10 @@
         </s:if>
         <s:elseif test="marathon">
             <s:if test="viewData.active">
-                <s:set name="contestLink" value="'http://community.topcoder.com/longcontest/?module=ViewOverview&rd=' + viewData.roundId"/>
+                <s:set name="contestLink" value="'http://community.topcoder.com/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:if>
             <s:else>
-                <s:set name="contestLink" value="'http://community.topcoder.com/longcontest/stats/?module=ViewOverview&rd=' + viewData.roundId"/>
+                <s:set name="contestLink" value="'http://community.topcoder.com/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:else>
         </s:elseif>
         <s:else>
@@ -93,6 +93,9 @@
         <s:if test="!viewData.contestStats.isStudio">
         <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
         </s:if>
+        <s:elseif test="marathon">
+            <a href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.roundId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+        </s:elseif>
         <s:else>
         <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
         </s:else>

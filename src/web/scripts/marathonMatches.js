@@ -207,6 +207,9 @@ $(document).ready(function(){
                             enabled: false
                         },
                         shadow: false
+                    },
+                    series: {
+                        turboThreshold: 100000
                     }
                 },
                 credits: {
@@ -560,42 +563,38 @@ $(document).ready(function(){
                 rank.push(item.rank/1);
             });
 
-            var chartRanking = new Highcharts.Chart({
+            var height = ratingLabel.length * 40;
+
+            chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'rankingChart',
+                    type: 'bar',
                     backgroundColor: null,
-                    margin: [30, 20, 30, 50]
-                },
-                credits: {
-                    text : ''
-                },
-                navigation: {
-                    buttonOptions: {
-                        enabled: false
-                    }
+                    margin: [0, 10, 20, 100],
+                    height: height
                 },
                 title: {
-                    text: ''
+                    text: null
                 },
                 scrollbar: {
-                    enabled: true
+                    enabled: false
                 },
                 xAxis: {
                     categories: ratingLabel,
-                    min : 0,
-                    max:9,
-                    tickLength: 0,
-                    labels: {
+                    title: {
+                        text: null
+                    },
+                    labels:{
                         style: {
                             fontFamily: 'Arial',
                             fontSize: '11px',
-                            color: '#000000'
+                            color: '#333333'
                         }
                     },
-                    lineColor: '#999999'
+                    tickLength: 0,
+                    lineColor: '#c8c8c8'
                 },
                 yAxis: {
-                    min: 0,
                     title: {
                         text: 'Score',
                         style: {
@@ -607,14 +606,10 @@ $(document).ready(function(){
                         y: -210,
                         x: 45
                     },
-                    gridLineWidth: 0,
                     lineWidth: 1,
-                    tickLength: 5,
-                    tickWidth: 1,
                     lineColor: '#999999',
-                    tickColor: '#999999',
-                    showLastLabel: false,
-                    labels: {
+                    gridLineColor: '#e4e4e4',
+                    labels:{
                         style: {
                             fontFamily: 'Arial',
                             fontSize: '11px',
@@ -623,13 +618,15 @@ $(document).ready(function(){
                         formatter: function() {
                             return this.value;
                         }
-                    }
+                    },
+                    showFirstLabel: false,
+                    endOnTick: false
+                },
+                legend: {
+                    enabled: false
                 },
                 tooltip: {
-                    useHTML: true,
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: 0,
-                    borderColor: "#666666",
+                    borderRadius: 1,
                     borderWidth: 1,
                     formatter: function() {
                         return '<table style="width:150px; margin:0 5px;">'
@@ -638,11 +635,11 @@ $(document).ready(function(){
                             +'<td><b>: </b>'+ this.x +'</td>'
                             +'</tr>'
                             +'<tr>'
-                            +'<td><b>Final Score</b></td>'
+                            +'<td><b>Final Score:</b></td>'
                             +'<td><b>: </b>'+ this.y +'</td>'
                             +'</tr>'
                             +'<tr>'
-                            +'<td><b>Ranking</b></td>'
+                            +'<td><b>Ranking:</b></td>'
                             +'<td><b>: </b>'+ rank[this.point.x] +'</td>'
                             +'</tr>'
                             +'</table>';
@@ -653,16 +650,18 @@ $(document).ready(function(){
                         color: '#333333',
                         lineHeight: '18px',
                         padding: '8px'
-                    }
+                    },
+                    useHTML: true
                 },
                 plotOptions: {
-                    series: {
-                        pointWidth: 25,
-                        pointPadding: 0.25,
+                    bar: {
                         dataLabels: {
                             enabled: true,
                             formatter: function(){
-                                return rank[this.point.x];
+                                return this.point.x;
+                                if(this.y != 0) {
+                                    return rank[this.point.x];
+                                }
                             },
                             verticalAlign: 'top',
                             align: 'center',
@@ -671,11 +670,14 @@ $(document).ready(function(){
                                 fontSize: '12px',
                                 color: '#ffffff',
                                 fontWeight: "bold"
-                            }
-                        }
+                            },
+                            x: -20,
+                            y: -1
+                        },
+                        shadow: false
                     }
                 },
-                legend: {
+                credits: {
                     enabled: false
                 },
                 series: [{
@@ -705,15 +707,21 @@ $(document).ready(function(){
                 provisionalScoreData.push(item.provisionalScore/1);
             });
 
+            var height = finalScoreData.length * 60;
+
             chart = new Highcharts.Chart({
                 chart: {
-                    type: 'column',
+                    type: 'bar',
                     renderTo: 'scoreChart',
                     backgroundColor: null,
-                    margin: [60, 20, 30, 50]
+                    margin: [30, 20, 30, 100],
+                    height: height
                 },
                 credits: {
                     text : ''
+                },
+                scrollbar: {
+                    enabled: false
                 },
                 navigation: {
                     buttonOptions: {
@@ -723,13 +731,9 @@ $(document).ready(function(){
                 title: {
                     text: ''
                 },
-                scrollbar: {
-                    enabled: true
-                },
                 xAxis: {
                     categories: ratingLabel,
                     min: 0,
-                    max: 9,
                     tickLength: 0,
                     labels: {
                         style: {
@@ -778,9 +782,9 @@ $(document).ready(function(){
                     headerFormat: '<table style="margin:0 5px;">',
                     pointFormat:
                         '<tr>' +
-                        '<td style="color:{series.color}; padding-right: 10px;">{series.name}: </td>' +
-                        '<td><b style="color: {series.color};">{point.y}</b></td>' +
-                        '</tr>',
+                            '<td style="color:{series.color}; padding-right: 10px;">{series.name}: </td>' +
+                            '<td><b style="color: {series.color};">{point.y}</b></td>' +
+                            '</tr>',
                     footerFormat: '</table>',
                     shared: true,
                     style: {

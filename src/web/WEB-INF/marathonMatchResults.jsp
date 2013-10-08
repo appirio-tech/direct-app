@@ -31,7 +31,6 @@
 
     <!-- New Script For Marathon Matches -->
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
-    <script type="text/javascript" src="/scripts/highstock.js"></script>
     <script type="text/javascript" src="/scripts/marathonMatches.js"></script>
 
     <script>

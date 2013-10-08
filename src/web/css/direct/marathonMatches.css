@@ -1203,6 +1203,8 @@
 		.resultDetails .tabContainer #rankingChart{
 			height:496px;
 			background-color:#f9f9f9;
+                        overflow-y: auto;
+                        overflow-x: hidden;
 			}
 			
 		.resultDetails .tabContainer .scoreChartWrapper{
@@ -1211,6 +1213,9 @@
 			
 			.resultDetails .tabContainer #scoreChart{
 				height:440px;
+                                overflow-y: auto;
+                                overflow-x: hidden;
+                                border-bottom: 1px solid #CCCCCC;
 				}
 				
 			.resultDetails .tabContainer .scoreChartWrapper p{
