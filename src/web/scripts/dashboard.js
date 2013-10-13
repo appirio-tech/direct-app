@@ -115,6 +115,9 @@
  * - Fix the issue in TCCC-5622: Make gameplan dropdown displayed on hover and make game plan tab clickable
  * to go the game plan page.
  *
+ * Version 3.2.5 (BUGR - 9796)
+ * - Add code to bind click event in set/update round id modal.
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
  * @version 3.2.4
  */
@@ -2917,6 +2920,102 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		}
 		return false;
 	});
+
+    /**
+     * Code for BUGR - 9796
+     * These code will bind click event to button in set/update round modal.
+     * @since 3.2.5
+     */
+
+    roundIdModalLoad = function(status) {
+        if (status == 'set') {
+            clearRoundIdForm();
+            modalLoad("#setRoundIdModal");
+            $('#setRoundIdModal').find('#newRoundId').focus();
+        } else if (status == 'update') {
+            clearRoundIdForm();
+            modalLoad("#updateRoundIdModal");
+            var currentRoundId = $('#mmRoundId').val();
+            $('#updateRoundIdModal').find('#updatedRoundId').val(currentRoundId);
+            $('#updateRoundIdModal').find('#updatedRoundId').focus();
+        }
+    }
+
+    clearRoundIdForm = function() {
+        $('#new-modal #setRoundIdModal').find('#newRoundId').val('');
+        $('#new-modal #updateRoundIdModal').find('#updatedRoundId').val('');
+    }
+
+    modalRoundIdClose = function() {
+        $('#modalBackground').hide();
+        $('#new-modal #setRoundIdModal').hide();
+        $('#new-modal #updateRoundIdModal').hide();
+    }
+
+    setRoundId = function() {
+        var roundId = $('#new-modal #setRoundIdModal').find('#newRoundId').val();
+        var projectId = $('#mmProjectId').val();
+        var url = 'mmSetRoundId';
+        if (!validateRoundId(roundId)) {
+            return;
+        }
+        sentRoundIdAJAXCall(roundId, projectId, url);
+    }
+
+    updateRoundId = function() {
+        var roundId = $('#new-modal #updateRoundIdModal').find('#updatedRoundId').val();
+        var projectId = $('#mmProjectId').val();
+        var url = 'mmUpdateRoundId';
+        if (!validateRoundId(roundId)) {
+            return;
+        }
+
+        sentRoundIdAJAXCall(roundId, projectId, url);
+    }
+
+    validateRoundId = function(roundId) {
+        var errors = [];
+
+        if (isNaN(parseInt(roundId))) {
+            errors.push('Round ID is invalid.');
+        }
+        if (parseInt(roundId) <= 0) {
+            errors.push('Round ID should be positive.');
+        }
+
+        var currentRoundId = $('#mmRoundId').val();
+        if (currentRoundId > 0 && roundId == currentRoundId) {
+            errors.push('Round ID is same as the current one.');
+        }
+
+        if (errors.length > 0) {
+            showErrors(errors);
+            return false;
+        }
+        return true;
+    }
+
+    sentRoundIdAJAXCall = function(roundId, projectId, url) {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: {
+                roundId: roundId,
+                projectId: projectId
+            },
+            dataType: "json",
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        modalRoundIdClose();
+                        window.location.reload();
+                    },
+                    function(errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
+    }
 
 })(jQuery);
 

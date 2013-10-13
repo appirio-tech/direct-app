@@ -29,6 +29,9 @@
  *
  * TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  * - Add CSS styles for Wireframe Viewer Modal Window.
+ *
+ * BUGR - 9796
+ * - Add CSS styles for update/set round id modal window.
  */
 
 html,body{
@@ -3099,4 +3102,43 @@ ul.errorMessage {
     height: 100%;
     padding-right:5px;
     color:#333;
+}
+
+#updateRoundIdModal .modalBody,
+#setRoundIdModal .modalBody {
+    height: 150px;
+}
+
+#updateRoundIdModal .modalBody .noticeContent,
+#setRoundIdModal .modalBody .noticeContent {
+    padding-top: 35px;
+    height: 50px;
+    width: auto;
+    padding-left: 26px;
+}
+
+#updateRoundIdModal .modalBody .noticeContent .modalRow,
+#setRoundIdModal .modalBody .noticeContent .modalRow {
+    padding-bottom: 8px;
+    min-height: 10px;
+}
+
+#updateRoundIdModal .modalBody .noticeContent .modalRow label,
+#setRoundIdModal .modalBody .noticeContent .modalRow label {
+    float: left;
+    width: 80px;
+    line-height: 22px;
+    font-weight: bold;
+    display: inline;
+}
+
+#updateRoundIdModal .modalBody .noticeContent .modalRow input.text,
+#setRoundIdModal .modalBody .noticeContent .modalRow input.text {
+    float: left;
+    width: 280px;
+    display: inline;
+}
+#updateRoundIdModal.outLay,
+#setRoundIdModal.outLay {
+    width: 450px;
 }

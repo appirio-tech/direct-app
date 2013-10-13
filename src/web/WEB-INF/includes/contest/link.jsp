@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBER, TCSASSEMBER, Ghost_141
-  - Version: 1.2 (For TCCC-2827)
+  - Version: 1.3 (For TCCC-2827)
   - Copyright (C) 2011 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest links area for Contest Details page
@@ -11,6 +11,9 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2) changes:
   - 1. Update 'Preview Contest' and 'Registration Page' link when the contest is marathon match contest.
+  -
+  - Version 1.3 (BUGR - 9796) changes:
+  - 1. Add link for update/set round id.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
@@ -109,6 +112,19 @@
 		<li class="splitter"></li>
         <li><a href="${viewData.contestStats.svn}" target="_blank"  class="contestLinkIcon linkIconSVN">SVN</a></li>
         </c:if>
+
+        <s:if test="marathon">
+            <input id="mmProjectId" type="hidden" value="${viewData.contestStats.contest.id}"/>
+            <input id="mmRoundId" type="hidden" value="${viewData.roundId}"/>
+            <s:if test="hasRoundId">
+                <li class="splitter"></li>
+                <li><a href="javascript: roundIdModalLoad('update');">Update Round ID</a></li>
+            </s:if>
+            <s:else>
+                <li class="splitter"></li>
+                <li><a href="javascript: roundIdModalLoad('set');">Set Round ID</a> </li>
+            </s:else>
+        </s:if>
     </ul>
     <div class="clear"></div>
 </div>

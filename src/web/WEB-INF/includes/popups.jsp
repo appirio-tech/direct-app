@@ -1,6 +1,6 @@
 <%--
   - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin
-  - Version: 2.8
+  - Version: 3.2
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -73,6 +73,9 @@
   -
   - Version 3.1 (Release Assembly - TopCoder Cockpit Asset View And File Version)
   - - Adds the modal window for the project assets page
+  -
+  - Version 3.2 (BUGR - 9796)
+  - - Add modal for update/set round id.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -838,6 +841,87 @@
     <!-- end .modalFooter -->
 </div>
     <!-- end #lockinNoFeedbackModal -->
+
+        <!-- #setRoundIdModal -->
+        <div id="setRoundIdModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        Set Round ID
+                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalRoundIdClose();">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <div class="modalBody">
+                <div class="noticeContent">
+                    <div class="modalRow">
+                        <label>Round ID:</label>
+                        <input type="text" class="text" id="newRoundId" name="newRoundId"/>
+
+                        <div class="clearFix"></div>
+                    </div>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC" onclick="setRoundId();">SET</span></span></a>
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
+                       onclick="modalRoundIdClose();"><span class="btnR"><span
+                            class="btnC">CANCEL</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #setRoundIdModal -->
+
+        <!-- #updateRoundIdModal -->
+        <div id="updateRoundIdModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        Update Round ID
+                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalRoundIdClose();">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <div class="modalBody">
+                <div class="noticeContent">
+                    <div class="modalRow">
+                        <label>Round ID:</label>
+                        <input type="text" class="text" id="updatedRoundId" name="updatedRoundId"/>
+
+                        <div class="clearFix"></div>
+                    </div>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC" onclick="updateRoundId();">UPDATE</span></span></a>
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
+                       onclick="modalRoundIdClose();"><span class="btnR"><span
+                            class="btnC">CANCEL</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #updateRoundIdModal -->
+
         <s:if test='%{#request.CURRENT_TAB  == "tasks" && #request.PAGE_TYPE  == "project"}'>
             <jsp:include page="./modal/projectTaskModals.jsp"/>
         </s:if>
@@ -2390,7 +2474,7 @@
             <div class="modalBody">
                 <div class="leaveNotes">
                     <div class="iconNotice"><img alt="notice" src="/images/modal-notice.png" /></div>
-                    <h3>Your updates haven¡¯t been saved</h3>
+                    <h3>Your updates haven't been saved</h3>
                     <p>Would you like to save it?</p>
                 </div>
 

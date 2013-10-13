@@ -1774,6 +1774,18 @@
             <result>/WEB-INF/marathonMatchResults.jsp</result>
         </action>
 
+        <action name="mmSetRoundId" class="marathonMatchRoundIdAction" method="mmSetRoundId">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="mmUpdateRoundId" class="marathonMatchRoundIdAction" method="mmUpdateRoundId">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         
         <action name="needFinalFix" class="needFinalFixAction">
             <interceptor-ref name="securedContestStack"/>

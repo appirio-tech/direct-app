@@ -1507,6 +1507,8 @@
         <property name="timelineInterval" value="1"/>
     </bean>
 
+    <bean id="marathonMatchRoundIdAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchRoundIdAction" scope="prototype"/>
+
     <bean id="marathonMatchAnalyticsService"
           class="com.topcoder.direct.services.view.action.analytics.longcontest.services.impl.MarathonMatchAnalyticsServiceImpl"
           init-method="checkInit">

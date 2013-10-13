@@ -573,8 +573,17 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #hasPhase(SoftwareCompetition, PhaseType)} method.</li>
  *   </ol>
  * </p>
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER
- * @version 1.10.4
+ *
+ * <p>
+ * Version 1.10.7 BUGR - 9796:
+ * <ol>
+ *     <li>Add method {@link #setRoundId(Long, Long, Long)} and {@link #updateRoundId(Long, Long, Long)}.
+ *     They are used to set/update round id for contest.</li>
+ * </ol>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER, Ghost_141
+ * @version 1.10.7
  */
 public final class DirectUtils {
 
@@ -748,6 +757,23 @@ public final class DirectUtils {
      * @since 1.10.1
      */
     private static final String TC_PLATFORM_SPECIALIST = "Platform Specialist";
+
+    /**
+     * The sql used to insert round id for a contest.
+     * @since 1.10.7
+     */
+    private static final String SET_ROUND_ID_SQL =
+            "INSERT INTO 'informix'.project_info(project_id, project_info_type_id, value, create_user, create_date, " +
+                    "modify_user, modify_date) VALUES(?, 56, ?, ?, CURRENT, ?, CURRENT)";
+
+    /**
+     * The sql used to update round id for a contest.
+     * @since 1.10.7
+     */
+    private static final String UPDATE_ROUND_ID_SQL =
+            "UPDATE project_info SET value = ?, modify_user = ?, modify_date = CURRENT WHERE project_id = ? AND " +
+                    "project_info_type_id = 56";
+
     /**
      * <p>
      * Default Constructor.
@@ -2995,6 +3021,70 @@ public final class DirectUtils {
         } finally {
             IOUtils.closeQuietly(zin);
             IOUtils.closeQuietly(zos);
+        }
+    }
+
+    /**
+     * This method will set round id for a contest.
+     *
+     * @param roundId the round id of a marathon match contest.
+     * @param contestId the contest id of a contest.
+     * @param userId the user id of modifier.
+     * @throws Exception if any error occurred.
+     * @since 1.10.7
+     */
+    public static void setRoundId(Long roundId, Long contestId, Long userId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+            statement = connection.prepareStatement(SET_ROUND_ID_SQL);
+
+            statement.setLong(1, contestId);
+            statement.setString(2, String.valueOf(roundId));
+            statement.setLong(3, userId);
+            statement.setLong(4, userId);
+
+            statement.executeUpdate();
+        } finally {
+            DatabaseUtils.close(resultSet);
+            DatabaseUtils.close(statement);
+            DatabaseUtils.close(connection);
+        }
+    }
+
+    /**
+     * This method will update round id for a contest.
+     *
+     * @param roundId the round id of a marathon match contest.
+     * @param contestId the contest id of a contest.
+     * @param userId the user id of modifier.
+     * @throws Exception if any error occurred.
+     * @since 1.10.7
+     */
+    public static void updateRoundId(Long roundId, Long contestId, Long userId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+            statement = connection.prepareStatement(UPDATE_ROUND_ID_SQL);
+
+            statement.setString(1, String.valueOf(roundId));
+            statement.setLong(2, userId);
+            statement.setLong(3, contestId);
+
+            statement.executeUpdate();
+
+        } finally {
+            DatabaseUtils.close(resultSet);
+            DatabaseUtils.close(statement);
+            DatabaseUtils.close(connection);
         }
     }
 }
