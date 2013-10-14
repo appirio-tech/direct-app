@@ -3,8 +3,11 @@
  - 
  - The results page for marathon match contest. This page will show all results for this marathon match contest.
  -
+ - Version 1.1 - BUGR - 9794
+ - - Remove the submission number parameter in dwonload submission link.
+ -
  - author: Ghost_141
- - Version: 1.0
+ - Version: 1.1
  - Since: 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -55,9 +58,7 @@
                     </td>
                     <td>
                         <a href="<s:url action="submission" namespace="/marathonmatch">
-                        <s:param name="submissionNum" value="submissionNumber" />
                         <s:param name="coderId" value="userId"/>
-                        <s:param name="problemId" value=""/>
                         <s:param name="roundId" value="viewData.roundId"/>
                         </s:url> "
                         class="downloadLink <c:if test="${finalRank eq '2'}">silverStyleLink</c:if> <c:if test="${finalRank > '2'}">darkStyleLink</c:if>">DOWNLOAD</a>

@@ -16,9 +16,17 @@ import com.topcoder.util.log.LogManager;
  * <p>
  * <strong>Thread Safety:</strong> This class is only used in thread-safe manner by Struts2 framework.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 - BUGR - 9794
+ *     <ol>
+ *         <li>Remove property submissionNum</li>
+ *         <li>Update method {@link #execute()}.</li>
+ *     </ol>
+ * </p>
  * 
- * @author sampath01, zhu_tao
- * @version 1.0
+ * @author sampath01, zhu_tao, Ghost_141
+ * @version 1.1
  * @since 1.0
  */
 public class MarathonMatchDownloadSubmissionAction extends AbstractAction implements
@@ -61,21 +69,11 @@ public class MarathonMatchDownloadSubmissionAction extends AbstractAction implem
     /**
      * Used to store user input.
      */
-    private long problemId;
-
-    /**
-     * Used to store user input.
-     */
     private long coderId;
 
     /**
-     * Used to store user input.
-     */
-    private long submissionNum;
-
-    /**
      * This method collects user input data and then invoke the
-     * {@link com.topcoder.direct.services.view.util.DataProvider#getMMSubmission(long, long, long, long)} to retrieve data from DB.
+     * {@link DataProvider#getMMSubmission(long, long)} to retrieve data from DB.
      * 
      * @return The execution result.
      * @throws Exception
@@ -86,7 +84,7 @@ public class MarathonMatchDownloadSubmissionAction extends AbstractAction implem
         final String signature = CLASS_NAME + "#execute()";
         LoggingWrapperUtility.logEntrance(logger, signature, null, null);
         try {
-            viewData = DataProvider.getMMSubmission(roundId, problemId, coderId, submissionNum);
+            viewData = DataProvider.getMMSubmission(roundId, coderId);
             LoggingWrapperUtility.logExit(logger, signature, new String[] { "download" });
             return "download";
         } catch (Exception e) {
@@ -119,25 +117,6 @@ public class MarathonMatchDownloadSubmissionAction extends AbstractAction implem
      * 
      * @return the value of name-sake field.
      */
-    public long getProblemId() {
-        return problemId;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param problemId
-     *            the name-sake field to set
-     */
-    public void setProblemId(long problemId) {
-        this.problemId = problemId;
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
     public long getCoderId() {
         return coderId;
     }
@@ -150,25 +129,6 @@ public class MarathonMatchDownloadSubmissionAction extends AbstractAction implem
      */
     public void setCoderId(long coderId) {
         this.coderId = coderId;
-    }
-
-    /**
-     * Getter of the name-sake field.
-     * 
-     * @return the value of name-sake field.
-     */
-    public long getSubmissionNum() {
-        return submissionNum;
-    }
-
-    /**
-     * Setter of the name-sake field.
-     * 
-     * @param submissionNum
-     *            the name-sake field to set
-     */
-    public void setSubmissionNum(long submissionNum) {
-        this.submissionNum = submissionNum;
     }
 
 }

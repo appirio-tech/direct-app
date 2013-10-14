@@ -969,11 +969,18 @@ import java.util.Set;
  *     <li>Added method {@link #getMilestoneContestAssociations(long, long, long)}</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 6.23 (BUGR - 9794) Change notes:
+ * <ol>
+ *     <li>Update method {@link #getMMSubmission(long, long)} to get the latest submission by default.</li>
+ * </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin
- * @version 6.22
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141
+ * @version 6.23
  * @since 1.0
  */
 public class DataProvider {
@@ -8625,29 +8632,25 @@ public class DataProvider {
      * This method queries Marathon Match download submission.
      *
      * @param roundId Round ID.
-     * @param problemId Problem ID.
      * @param coderId Coder ID.
-     * @param submissionNum Submission Number.
      * @return instance of MMDownloadSumissionDTO.
      * @throws Exception
      *         If there is any error.
      * @since 6.14
      */
-    public static MMDownloadSubmissionDTO getMMSubmission(long roundId, long problemId, long coderId, long submissionNum) throws Exception {
+    public static MMDownloadSubmissionDTO getMMSubmission(long roundId, long coderId) throws Exception {
         Request r = new Request();
-        r.setContentHandle("long_contest_submission");
+        r.setContentHandle("long_contest_latest_submission");
         r.setProperty("rd", String.valueOf(roundId));
-        r.setProperty("pm", String.valueOf(problemId));
         r.setProperty("cr", String.valueOf(coderId));
-        r.setProperty("subnum", String.valueOf(submissionNum));
         r.setProperty("ex", "0");
 
         DataAccess dataAccess = new DataAccess(DBMS.OLTP_DATASOURCE_NAME);
-        ResultSetContainer rsc = dataAccess.getData(r).get("long_contest_submission");
+        ResultSetContainer rsc = dataAccess.getData(r).get("long_contest_latest_submission");
         if(!rsc.isEmpty()) {
             ResultSetRow firstRow = rsc.get(0);
             MMDownloadSubmissionDTO dto = new MMDownloadSubmissionDTO();
-            dto.setFileName(coderId + "_" + submissionNum + ".txt");
+            dto.setFileName(coderId + "_" + firstRow.getStringItem("submission_number") + ".txt");
             String submissionText = firstRow.getStringItem("submission_text");
             dto.setSubmission(new ByteArrayInputStream(submissionText.getBytes()));
             return dto;

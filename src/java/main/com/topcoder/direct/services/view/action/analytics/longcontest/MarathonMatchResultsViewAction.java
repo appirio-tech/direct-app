@@ -22,7 +22,6 @@ import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
-import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResourceWrapper;
 import com.topcoder.web.tc.rest.longcontest.resources.TestCaseResource;
@@ -33,7 +32,6 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -56,6 +54,15 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.2 - BUGR -9794
+ *     <ol>
+ *         <li>Remove ALLOWABLE_SORT_ORDER</li>
+ *         <li>Update method {@link #convertResults(SearchResult)} to remove the api call to competitorSubmissionHistory
+ *         method. So the performance will be improved.</li>
+ *     </ol>
+ * </p>
+ *
  *
  * @author Ghost_141
  * @version 1.1
@@ -74,12 +81,6 @@ public class MarathonMatchResultsViewAction extends AbstractAction
      * @since 1.1
      */
     private static final String RESULT_DETAIL = "system";
-
-    /**
-     * The static filed to indicate allowable sort order.
-     * @since 1.1
-     */
-    private static final String[] ALLOWABLE_SORT_ORDER = {"asc", "desc"};
 
     /**
      * Log instance.
@@ -351,16 +352,6 @@ public class MarathonMatchResultsViewAction extends AbstractAction
             ResultInfo resultInfo = new ResultInfo();
             resultInfo.setPlace(place++);
             resultInfo.setHandle(matchResultResource.getHandleName());
-            // TODO: This is a temporary test because the api only return full submissions of a competitor. So there
-            // will be a out of bound exception for user who just submit example test. This test statement should be
-            // removed in future.
-            if(matchResultResource.getProvisionalScore() != null) {
-                SearchResult<SubmissionResource> submissionHistory =
-                        marathonMatchAnalyticsService.getCompetitorSubmissionsHistory(viewData.getRoundId(),
-                                matchResultResource.getHandleName(), 1, 1, "desc", "submissionNumber",
-                                MarathonMatchHelper.ACCESS_TOKEN);
-                resultInfo.setSubmissionNumber(submissionHistory.getItems().get(0).getSubmissionNumber());
-            }
             resultInfo.setUserId(matchResultResource.getCoderId());
             resultInfo.setLanguage(matchResultResource.getLanguage());
             resultInfo.setFinalScore(matchResultResource.getFinalScore());
