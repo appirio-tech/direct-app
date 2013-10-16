@@ -54,17 +54,7 @@ function hasError(response) {
 var g;
 
 var calculateLeftWidth = function () {
-    // setup the width
-    var leftPanelWidth = 675;
-
-    if ($("#leftside tbody tr").length > 4) {
-        leftPanelWidth = 10;
-        $("#leftside tbody tr:eq(3) td").each(function () {
-            leftPanelWidth += $(this).width();
-        });
-    }
-
-    $("#leftside").css('width', leftPanelWidth + 'px');
+$("#leftside").css("width",$("#leftside tbody tr:eq(3)").width());
 };
 
 var calculateRightWidth = function() {
