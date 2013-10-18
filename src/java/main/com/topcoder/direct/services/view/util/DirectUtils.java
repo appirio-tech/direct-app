@@ -33,10 +33,13 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
+import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
+import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.services.DirectProjectService;
@@ -50,6 +53,7 @@ import com.topcoder.management.review.data.CommentType;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -567,7 +571,7 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added method {@link #appendStringToFilesInZip(com.topcoder.servlet.request.UploadedFile, String)}</li>
  * </ul>
  * </p>
-* <p>
+ * <p>
  * Version 1.10.6 Change notes:
  *   <ol>
  *     <li>Added {@link #hasPhase(SoftwareCompetition, PhaseType)} method.</li>
@@ -581,11 +585,25 @@ import com.topcoder.web.common.cache.MaxAge;
  *     They are used to set/update round id for contest.</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 1.10.8 (Release Assembly - TopCoder Direct VM Instances Management)
+ * <ul>
+ *     <li>Updated {@link #getContestStats} to return the active VM numbers of the contest</li>
+ *     <li>Added {@link #isVMManager(com.topcoder.security.TCSubject)} to return if the given user is in VMManager role</li>
+ *     <li>Added {@link #getCloudVMService()} to get CloudVMService</li>
+ * </ul>
+ * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER, Ghost_141
- * @version 1.10.7
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER, Ghost_141, jiajizhou86
+ * @version 1.10.8
  */
 public final class DirectUtils {
+
+    /**
+     * Logger for this class.
+     * @since 1.10.8
+     */
+    private static final Logger logger = Logger.getLogger(DirectUtils.class);
 
     /**
      * <p>A <code>String</code> providing the format for the date of resource's registration to project.</p>
@@ -683,6 +701,13 @@ public final class DirectUtils {
      * The super Admin role.
      */
     private static final String SUPER_ADMIN_ROLE = "Admin Super Role";
+
+    /**
+     * The VM Manager role.
+     *
+     * @since 1.10.8
+     */
+    private static final String VM_MANAGER_ROLE = "VMManager";
 
     /**
 
@@ -897,6 +922,11 @@ public final class DirectUtils {
      * - add parameter softwareCompetition.
      * </p>
      *
+     * <p>
+     * Version 1.10.8 changes:
+     * - add stats for VM Instances of the contest
+     * </p>
+     *
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestId a <code>long</code> providing the ID of a contest.
      * @param softwareCompetition the contest providing additional information, might be null
@@ -993,6 +1023,21 @@ public final class DirectUtils {
         if (isStudio) {
             boolean showFinalFixTab = showStudioFinalFixTab(softwareCompetition);
             dto.setShowStudioFinalFixTab(showFinalFixTab);
+        }
+
+        try {
+            // Get active VM instance number
+            List<VMInstanceData> vmInstances = getCloudVMService().getVMInstancesForContest(currentUser, contestId);
+            int activeVMs = 0;
+            for (VMInstanceData instance : vmInstances) {
+                if (instance.getStatus() == VMInstanceStatus.RUNNING) {
+                    activeVMs++;
+                }
+            }
+            dto.setTotalActiveVMNumber(activeVMs);
+        } catch (Exception ex) {
+            logger.error("Exception caught when accessing CloudVMService: " + ex);
+            dto.setTotalActiveVMNumber(0);
         }
         
         return dto;
@@ -1669,6 +1714,20 @@ public final class DirectUtils {
      */
     public static boolean isCockpitAdmin(TCSubject tcSubject) {
         return isRole(tcSubject, ADMIN_ROLE);
+    }
+
+    /**
+     * <p>
+     * Checks if the user is VMManager.
+     * </p>
+     *
+     * @param tcSubject  TCSubject instance for login user
+     * @return true if the user is VMManager and false otherwise.
+     *
+     * @since 1.10.8
+     */
+    public static boolean isVMManager(TCSubject tcSubject) {
+        return isRole(tcSubject, VM_MANAGER_ROLE);
     }
 
     /**
@@ -2885,6 +2944,19 @@ public final class DirectUtils {
         ServletContext ctx = servletRequest.getSession().getServletContext();
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
         return (ProjectServices) applicationContext.getBean("projectServices");
+    }
+
+    /**
+     * <p>Gets the interface to cloud vm services.</p>
+     *
+     * @return a <code>CloudVMService</code> providing the interface to cloud vm services.
+     * @since 1.10.8
+     */
+    public static CloudVMService getCloudVMService() {
+        HttpServletRequest servletRequest = getServletRequest();
+        ServletContext ctx = servletRequest.getSession().getServletContext();
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+        return (CloudVMService) applicationContext.getBean("cloudVMService");
     }
 
     /**

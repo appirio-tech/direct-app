@@ -36,8 +36,13 @@ import com.topcoder.service.project.CompetitionPrize;
  *   </ol>
  * </p>
  *
- * @author isv, Veve
- * @version 1.3
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+ * - Add property {@link #totalActiveVMNumber}.
+ * </p>
+ *
+ * @author isv, Veve, jiajizhou86
+ * @version 1.4
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -177,6 +182,13 @@ public class ContestStatsDTO implements Serializable {
      * @since 1.3
      */
     private boolean showStudioFinalFixTab;
+
+    /**
+     * <p>An <code>int</code> providing the number of active VM's associated to the contest.</p>
+     *
+     * @since 1.4
+     */
+    private int totalActiveVMNumber;
 
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
@@ -428,6 +440,26 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setTotalJiraIssuesNumber(int totalJiraIssuesNumber) {
         this.totalJiraIssuesNumber = totalJiraIssuesNumber;
+    }
+
+    /**
+     * <p>Gets the number of the active VM instances associated to the contest.</p>
+     *
+     * @return tht total number of active VM instances associated to the contest.
+     * @since 1.4
+     */
+    public int getTotalActiveVMNumber() {
+        return totalActiveVMNumber;
+    }
+
+    /**
+     * <p>Sets the total number of active VM instances associated to the contest.</p>
+     *
+     * @param totalActiveVMNumber the number of active VM instances.
+     * @since 1.4
+     */
+    public void setTotalActiveVMNumber(int totalActiveVMNumber) {
+        this.totalActiveVMNumber = totalActiveVMNumber;
     }
 
     /**

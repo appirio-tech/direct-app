@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.action.contest;
 
 import com.topcoder.direct.cloudvm.service.CloudVMService;
+import com.topcoder.direct.cloudvm.service.CloudVMServiceException;
+import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
@@ -20,18 +22,31 @@ import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * <p>Action class which handles retrieving all VM instances for the contest.</p>
  *
- * @author gentva
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Direct VM Instances Management)
+ * - added error message handling when there is error accessing VM services.
+ * </p>
+ *
+ * @author gentva, jiajizhou86
+ * @version 1.1
  */
 public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
+
+    /**
+     * Logger for this class
+     * @since 1.1
+     */
+    private Logger logger = Logger.getLogger(ContestVMInstancesAction.class);
 
     /**
      * <p>A <code>BaseContestCommonDTO</code> providing the view data for displaying by
@@ -82,6 +97,20 @@ public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
      * Represents the number of total VMs created for this contest.
      */
     private int totalVMCount;
+
+    /**
+     * Represents if there is some error when accessing VM services.
+     *
+     * @since 1.1
+     */
+    private boolean errorLoadingVM;
+
+    /**
+     * Represents the error message should shown to user if there is error accessing VM services.
+     *
+     * @since 1.1
+     */
+    private String vmErrorMessage;
 
     /**
      * Initialize the action. The constructor will initialize an empty view data.
@@ -140,20 +169,34 @@ public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
          DirectUtils.setDashboardData(currentUser, contestId, viewData,
                 getContestServiceFacade(), !isStudio);
 
-        vmUsages = getCloudVMService().getVMUsages(currentUser);
+        // initialize empty data for vm instances
+        vmUsages = new ArrayList<VMUsage>();
+        vmInstances = new ArrayList<VMInstanceData>();
+        totalVMCount = 0;
+        activeVMCount = 0;
+        terminatedVMCount = 0;
+        errorLoadingVM = false;
 
-        // get all VM instances including all statuses.
-        vmInstances = getCloudVMService().getVMInstancesForContest(currentUser, contestId);
+        try {
+            vmUsages = getCloudVMService().getVMUsages(currentUser);
 
-        totalVMCount = vmInstances.size();
-        for(VMInstanceData vmInstance : vmInstances) {
-            if (vmInstance.getStatus().equals(VMInstanceStatus.RUNNING)) {
-                activeVMCount++;
+            // get all VM instances including all statuses.
+            vmInstances = getCloudVMService().getVMInstancesForContest(currentUser, contestId);
+
+            totalVMCount = vmInstances.size();
+            for(VMInstanceData vmInstance : vmInstances) {
+                if (vmInstance.getStatus().equals(VMInstanceStatus.RUNNING)) {
+                    activeVMCount++;
+                }
+
+                if (vmInstance.getStatus().equals(VMInstanceStatus.TERMINATED)) {
+                    terminatedVMCount++;
+                }
             }
-            
-            if (vmInstance.getStatus().equals(VMInstanceStatus.TERMINATED)) {
-                terminatedVMCount++;
-            }
+        } catch (CloudVMServiceException ex) {
+            logger.error("Exception caught when accessing CloudVMService: " + ex);
+            errorLoadingVM = true;
+            vmErrorMessage = ConfigUtils.getCloudVMServiceAccessErrorConfig().getGeneralErrorMessage();
         }
     }
 
@@ -238,6 +281,35 @@ public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
     public List<VMUsage> getVmUsages() {
         return vmUsages;
     }
+
+    /**
+     * Returns if there is any error accessing VM services.
+     *
+     * @return if there is any error accessing VM services.
+     * @since 1.1
+     */
+    public boolean isErrorLoadingVM() {
+        return errorLoadingVM;
+    }
+
+    /**
+     * Returns the error message should be shown to user if there is error accessing VM services.
+     * @return the error message
+     * @since 1.1
+     */
+    public String getVmErrorMessage() {
+        return vmErrorMessage;
+    }
+
+    /**
+     * Set the error message should be shown to user if there is error accessing VM services.
+     * @param vmErrorMessage the error message
+     * @since 1.1
+     */
+    public void setVmErrorMessage(String vmErrorMessage) {
+        this.vmErrorMessage = vmErrorMessage;
+    }
+
     /**
      * <p>Gets the current session associated with the incoming request from client.</p>
      *

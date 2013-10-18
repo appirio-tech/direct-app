@@ -587,6 +587,7 @@
                 <include name="contestFees.xml" />
                 <include name="copilotFees.xml" />
                 <include name="IssueTrackingConfig.xml" />
+                <include name="CloudVMAccessErrorConfig.xml" />
                 <include name="contestTypes.xml" />
                 <include name="CockpitUserPersistence.xml" />
                 <include name="fileTypes.xml" />
@@ -623,6 +624,7 @@
                 <include name="project_fee_hibernate.cfg.xml" />
                 <include name="ReviewApplicationManagement.xml" />
                 <include name="SearchBundleManager.xml" />
+                <include name="cloud_vm_service_access_error_message.txt"/>
             </fileset>
             <fileset dir="${tokenized_conf}/components">
                 <include name="com/topcoder/security/Util.properties" />

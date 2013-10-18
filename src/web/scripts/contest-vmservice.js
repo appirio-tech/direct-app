@@ -4,10 +4,40 @@
 /**
  * The JS script for Contest VM service.
  *
- * @author gentva
- * @version 1.0
+ * Version 1.1
+ * - added error message popup box handling
+ * - updated the terminate button to an action list
+ *
+ * @author gentva, jiajizhou86
+ * @version 1.1
  */
 var contestVMTable;
+var currentVMActionDropDownList = undefined;
+
+function setupVMActionDropDownList() {
+    // action drop down list
+    $(".actionList").hide();
+    $(".actionDropDownList").hover(function(){
+        var list = $(this).find(".actionList");
+        if (list.is(':visible')) {
+            // nothing
+        } else {
+            setTimeout(function () {
+                if (currentVMActionDropDownList) {
+                    currentVMActionDropDownList.hide();
+                }
+                currentVMActionDropDownList = list;
+                list.show();
+            }, 100);
+        }
+    }, function() {
+        var list = $(this).find(".actionList");
+        if (list.is(':visible')) {
+            list.hide();
+            currentVMActionDropDownList = undefined;
+        }
+    });
+}
 
 $(document).ready(function() {
     var sLongStdMenu =
@@ -51,6 +81,12 @@ $(document).ready(function() {
     $(".previous").html("&nbsp;Prev&nbsp;");
     $(".next").html("&nbsp;Next&nbsp;");
     $(".dataTables_length").addClass("showPages");
+
+    setupVMActionDropDownList();
+
+    if (isErrorLoadingVM) {
+        showErrors(vmErrorMessage);
+    }
 });
 
 if (!window.contestVMService) var contestVMService = {

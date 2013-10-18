@@ -35,9 +35,14 @@ import javax.xml.bind.JAXBContext;
  * Version 1.3 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * - Add static configuration field algorithmSubtypeContestFees
  * </p>
- * 
- * @author BeBetter, Veve
- * @version 1.3
+ *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+ * - Add static configuration field {@link #cloudVMServiceAccessErrorConfig}
+ * </p>
+ *
+ * @author BeBetter, Veve, jiajizhou86
+ * @version 1.4
  */
 public final class ConfigUtils {
     /**
@@ -109,6 +114,15 @@ public final class ConfigUtils {
      * @since 1.2
      */
     private static IssueTrackingConfig issueTrackingConfig;
+
+    /**
+     * <p>
+     * Cloud VM Service Access Error configuration.
+     * </p>
+     *
+     * @since 1.4
+     */
+    private static CloudVMServiceAccessErrorConfig cloudVMServiceAccessErrorConfig;
 
 
     static {
@@ -189,6 +203,12 @@ public final class ConfigUtils {
         JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
         issueTrackingConfig = (IssueTrackingConfig) issueTrackingJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/IssueTrackingConfig.xml"));
+
+        // load cloud vm access error configuration
+        JAXBContext vmServiceErrorMessageJaxbContext = JAXBContext.newInstance(CloudVMServiceAccessErrorConfig.class);
+        cloudVMServiceAccessErrorConfig = (CloudVMServiceAccessErrorConfig) vmServiceErrorMessageJaxbContext
+                .createUnmarshaller()
+                .unmarshal(ConfigUtils.class.getResourceAsStream("/CloudVMAccessErrorConfig.xml"));
     }
 
     /**
@@ -308,5 +328,17 @@ public final class ConfigUtils {
      */
     public static IssueTrackingConfig getIssueTrackingConfig() {
         return issueTrackingConfig;
+    }
+
+    /**
+     * <p>
+     * Gets the configuration for cloud vm service access error messages.
+     * </p>
+     *
+     * @retrn the configuration for cloud vm service access error messages.
+     * @since 1.4
+     */
+    public static CloudVMServiceAccessErrorConfig getCloudVMServiceAccessErrorConfig() {
+        return cloudVMServiceAccessErrorConfig;
     }
 }

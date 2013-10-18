@@ -286,6 +286,17 @@
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
     </bean>
 
+    <bean id="projectVMManagementAction"
+          class="com.topcoder.direct.services.view.action.project.ProjectVMManagementAction" scope="prototype">
+        <property name="cloudVMService" ref="cloudVMService"/>
+        <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
+    </bean>
+
+    <bean id="getProjectVMInstancesAction"
+          class="com.topcoder.direct.services.view.action.project.GetProjectVMInstancesAction" scope="prototype">
+        <property name="cloudVMService" ref="cloudVMService"/>
+    </bean>
+
     <bean id="projectCopilotFeedbackAction" class="com.topcoder.direct.services.view.action.project.ProjectCopilotFeedbackAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>

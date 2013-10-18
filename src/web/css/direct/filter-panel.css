@@ -1,10 +1,17 @@
 /*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+
  * CSS for filter panels.
  *
  * Change logs:
  *
- * - (TopCoder Direct Contest VM Instances Management )
+ * Version 1.0 (TopCoder Direct Contest VM Instances Management )
  * - Added new styles for Contest VM Instances Page.
+ *
+ * Version 1.1 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+ * - Added new styles for Project VM Management Page.
+ *
+ * @version 1.1
  */
 .title {
     font-family: Arial, Helvetica, sans-serif;
@@ -293,41 +300,55 @@
     width: 450px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column1 .row .title, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row .title  {
-    width: 105px;
+#VMFilter.filterPanel .filterContent .inner .column1 .row .title, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row .title,
+#ProjectVMFilter.filterPanel .filterContent .inner .column1 .row .title  {
+    width: 115px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel, #ContestVMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
+#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel, #ContestVMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel,
+#ProjectVMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
     width:90px;
 }
 
 
-#VMFilter.filterPanel #contestNameFilter, #ContestVMFilter.filterPanel #contestNameFilter {
+#VMFilter.filterPanel #contestNameFilter, #ContestVMFilter.filterPanel #contestNameFilter,
+#ProjectVMFilter.filterPanel #contestNameFilter {
     width: 350px;
 }
 
 #ContestVMFilter.filterPanel #imageNameFilter {
-    width: 350px;
-}
-
-#ContestVMFilter.filterPanel #vmStatusFilter {
     width: 200px;
 }
 
-#ContestVMFilter.filterPanel #createdByFilter {
+#ProjectVMFilter.filterPanel #imageNameFilter {
+      width: 200px;
+}
+
+#ContestVMFilter.filterPanel #vmStatusFilter, #ProjectVMFilter.filterPanel #vmStatusFilter {
     width: 200px;
 }
 
-#VMFilter.filterPanel #memberHandleFilter, #ContestVMFilter.filterPanel #memberHandleFilter {
+#ContestVMFilter.filterPanel #createdByFilter, #ProjectVMFilter.filterPanel #createdByFilter {
     width: 200px;
 }
 
-#VMFilter.filterPanel #vmUsageFilter, #ContestVMFilter.filterPanel #vmUsageFilter {
+#VMFilter.filterPanel #memberHandleFilter, #ContestVMFilter.filterPanel #memberHandleFilter,
+#ProjectVMFilter.filterPanel #memberHandleFilter {
+    width: 200px;
+}
+
+#VMFilter.filterPanel #vmUsageFilter, #ContestVMFilter.filterPanel #vmUsageFilter,
+#ProjectVMFilter.filterPanel #vmUsageFilter {
     width: 250px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column1 , #ContestVMFilter.filterPanel .filterContent .inner .column1{
+#VMFilter.filterPanel .filterContent .inner .column1 {
     width: 500px;
+}
+
+#ProjectVMFilter.filterPanel .filterContent .inner .column1,
+#ContestVMFilter.filterPanel .filterContent .inner .column1 {
+    width: 360px;
 }
 
 #enterpriseCalendarFilter {
@@ -527,11 +548,13 @@ a.redBtn:hover span.left{
     color: #010101;
 }        
 
-#VMFilter.filterPanel .filterContent .inner .column3, #ContestVMFilter.filterPanel .filterContent .inner .column3 {
+#VMFilter.filterPanel .filterContent .inner .column3, #ContestVMFilter.filterPanel .filterContent .inner .column3,
+#ProjectVMFilter.filterPanel .filterContent .inner .column3{
     width: 350px;
 }
 
-#VMFilter.filterPanel .filterContent .inner .column1 .row, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row {
+#VMFilter.filterPanel .filterContent .inner .column1 .row, #ContestVMFilter.filterPanel .filterContent .inner .column1 .row,
+#ProjectVMFilter.filterPanel .filterContent .inner .column1 .row{
     margin-top: 8px;
 }
 .selectFilter .column1 .row label,

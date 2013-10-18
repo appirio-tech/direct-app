@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Veve, morehappiness, gentva
-  - Version: 1.10
+  - Author: isv, Veve, morehappiness, gentva, jiajizhou86
+  - Version: 1.11
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
@@ -27,6 +27,8 @@
   - - Added Final Fixes tab.
   - Version 1.10 (TopCoder Direct Contest VM Instances Management) changes:
   - - Added VM Instances tab.
+  - Version 1.11 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+  - - Added active VM count to the VM Instances tab
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -78,7 +80,7 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
 
             </li>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:190px">
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:130px">
                 <if:isStudioContest contestStats="${contestStats}">
                     <s:if test="viewData.contestStats.multipleRound">
                         <span class="submissionTabSpan">
@@ -132,9 +134,9 @@
                 <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                 <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
             </li>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}">class="on"</c:if>>
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
             <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-            <span class="left"><span class="right">VM Instances</span></span></a>
+                <span class="left"><span class="right">VM Instances (<s:property value="totalActiveVMNumber"/>)</span></span></a>
             </li>
             <li id="rReceiptTab" class="lastItem <c:choose>
                 <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>

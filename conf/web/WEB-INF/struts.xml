@@ -656,6 +656,17 @@
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
 
+        <action name="projectVMManagement" class="projectVMManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-vm-management.jsp</result>
+        </action>
+
+        <action name="getProjectVMInstances" class="getProjectVMInstancesAction">
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getProjectStatsAjax" method="getProjectStatsAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
             <result name="success">/WEB-INF/project-overview-project-stats.jsp</result>

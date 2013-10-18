@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, kanakarajank, Ghost_141
-  - Version: 1.3
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, kanakarajank, Ghost_141, jiajizhou86
+  - Version: 1.4
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of VM management in dashboard.
   -
@@ -10,6 +10,8 @@
   -             Added span for showing Successful creation of VM/ Successful Deletion of VM
   - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   -             Update button text to uppercase.
+  - Version 1.4 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+                Add pre-populated contest id.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -67,7 +69,8 @@
 											</div>	
 											<div class="line">
 												<label for="contest_id" >Contest id</label>
-												<input type="text" id="contest_id" name="contestId" /> 
+												<input type="text" id="contest_id" name="contestId"
+                                                       value="<c:if test="${contestId != 0}"><s:property value="contestId"/></c:if>" />
 												<span id="contestIdError" style="color:red" class="error hide"></span>
 											</div>
 											<div class="line">

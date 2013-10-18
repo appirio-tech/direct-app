@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru, TCSASSEMBLER
-  - Version: 3.3
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru, TCSASSEMBLER, jiajizhou86
+  - Version: 3.4
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -52,6 +52,7 @@
   - Version 3.1 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task) change notes: add project Tasks tab
   - Version 3.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes: rename "Assets"->"Files"
   - Version 3.3 (Release Assembly - TC Cockpit Misc Bug Fixes) change notes: Make Game Plan tab clickable and link to game plan page
+  - Version 3.4 (Release Assembly - TopCoder Direct VM Instances Management) changes: Added VM Management tab.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -640,6 +641,10 @@
                           
                           <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
                              <a href="<s:url action="projectTasks" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Tasks</span></a>
+                         </li>
+
+                         <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="on"</c:if>>
+                             <a href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>VM Management</span></a>
                          </li>
                     </ul>
                 </div>

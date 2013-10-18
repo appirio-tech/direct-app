@@ -1,0 +1,59 @@
+/*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the project vm management pages.
+ *
+ * @version 1.0 (Release Assembly - TopCoder Direct VM Instances Management)
+ */
+.actionDropDownList {
+    padding: 5px 10px 5px 18px;
+    margin-left: 10px;
+    background: url(/images/ico-setting.png) no-repeat 0 center;
+    display: inline-block;
+}
+
+.actionDropDownList .actionList {
+    text-align: left;
+    display: none;
+    width: 140px;
+    border: 1px solid #bdbdbd;
+    position: absolute;
+    top: 20px;
+    left: -80px;
+    z-index: 1000;
+    line-height: 18px;
+    background: url(/images/contest--box-bg.gif) repeat-x #E7E7E7;
+}
+
+.actionDropDownList .actionList ul {
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.actionDropDownList .actionList ul li {
+    padding: 10px 15px;
+}
+
+.actionDropDownList .actionList ul li a:hover {
+    text-decoration: none;
+}
+
+.enabled {
+    color: #333;
+    text-decoration: underline;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.disabled {
+    color: grey;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 5px;
+    cursor: default;
+}
+
+.actionDropDownList .arrow {
+    background: url(/images/arrow-down.png) no-repeat 5px center;
+}

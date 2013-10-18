@@ -1,0 +1,128 @@
+/*
+ * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the project vm management pages.
+ *
+ * @version 1.0 (Release Assembly - TopCoder Direct VM Instances Management)
+ */
+a.grayButton {
+    background: url(/images/gray-button.png) no-repeat left top;
+    display: inline-block;
+    padding-left: 5px;
+    text-decoration: none;
+}
+
+a.grayButton .buttonMask {
+    background: url(/images/gray-button.png) no-repeat right -108px;
+    padding-right: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+a.grayButton .text {
+    background: url(/images/gray-button.png) repeat-x left -54px;
+    display: inline-block;
+    height: 27px;
+    line-height: 25px;
+    color: #333;
+    font-size: 12px;
+    text-align: center;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+a.grayButton:hover {
+    background-position: 0 -27px;
+    text-decoration: none;
+}
+
+a.grayButton:hover .buttonMask {
+    background-position: right -135px;
+}
+
+a.grayButton:hover .text {
+    background-position: 0 -81px;
+}
+
+.spaceWhite{
+    height:30px;
+}
+
+/* .projectVMManagement */
+.projectVMManagement {
+    color: #333;
+    font-size: 12px;
+    padding-bottom: 20px;
+}
+
+.projectVMManagement h2 {
+    background: url(/images/area_title.png) no-repeat left center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 34px;
+    padding-left: 43px;
+}
+
+.enabled {
+    color: #333;
+    text-decoration: underline;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.disabled {
+    color: grey;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 5px;
+    cursor: default;
+}
+
+.vmTableContainer {
+    border: none;
+}
+
+.vmTableContainer #contest_vms {
+    margin-bottom: 0;
+}
+
+.actionDropDownList {
+    padding: 5px 10px 5px 18px;
+    margin-left: 10px;
+    background: url(/images/ico-setting.png) no-repeat left center;
+}
+
+.actionDropDownList .actionList {
+    text-align: left;
+    display: none;
+    width: 140px;
+    border: 1px solid #bdbdbd;
+    position: absolute;
+    top: 20px;
+    left: -80px;
+    z-index: 1000;
+    line-height: 18px;
+    background: url(/images/contest--box-bg.gif) repeat-x #E7E7E7;
+}
+
+.actionDropDownList .actionList ul {
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.actionDropDownList .actionList ul li {
+    padding: 10px 15px;
+}
+
+.actionDropDownList .actionList ul li a:hover {
+    text-decoration: none;
+}
+
+.actionDropDownList .arrow {
+    background: url(/images/arrow-down.png) no-repeat 5px center;
+}
+
+.vm_instance_action {
+    width: 100px;
+}

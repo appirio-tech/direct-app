@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.cloudvm;
 
@@ -29,8 +29,13 @@ import java.util.Set;
 /**
  * Action supporting vm management page.
  *
- * @author Standlove, TCSDEVELOPER
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Direct VM Instances Management) changes:
+ * - added contestId so that the action can receive a pre-populated contestId
+ * </p>
+ *
+ * @author Standlove, jiajizhou86
+ * @version 1.1
  */
 public class DashboardVMAction extends AbstractAction {
 
@@ -70,6 +75,12 @@ public class DashboardVMAction extends AbstractAction {
     private boolean admin;
 
     /**
+     * The pre-populated contest id.
+     * @since 1.1
+     */
+    private long contestId;
+
+    /**
      * <p> This is the template method where the action logic will be performed by children classes. </p>
      *
      * @throws Exception if any error occurs
@@ -93,6 +104,17 @@ public class DashboardVMAction extends AbstractAction {
         HttpServletRequest request = DirectUtils.getServletRequest();
         request.setAttribute("messages", messages);
         HttpSession session = request.getSession(false);
+
+        if (request.getParameterMap().containsKey("contestId")) {
+            try {
+                contestId = Long.valueOf(request.getParameter("contestId"));
+            } catch (Exception ex) {
+                // ignore such number conversion exception
+                contestId = 0;
+            }
+        } else {
+            contestId = 0;
+        }
 
         if (session != null) {
             sessionData = new SessionData(session);
@@ -201,5 +223,23 @@ public class DashboardVMAction extends AbstractAction {
 
     public SessionData getSessionData() {
         return sessionData;
+    }
+
+    /**
+     * Gets the pre-populated contest id.
+     * @return the contest id.
+     * @since 1.1
+     */
+    public long getContestId() {
+        return contestId;
+    }
+
+    /**
+     * Sets the pre-populated contest id.
+     * @param contestId the contest id.
+     * @since 1.1
+     */
+    public void setContestId(long contestId) {
+        this.contestId = contestId;
     }
 }
