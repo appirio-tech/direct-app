@@ -69,7 +69,9 @@ var shortNameMap = {
     "35" :  ["Content Creation", "Content"],
     "36" :  ["Reporting" , "Reporting"],
     "37" :  ["Marathon Match" , "Marathon Match"],
-    "9" :  ["Bug Hunt" , "Bug Hunt"]
+    "9" :  ["Bug Hunt" , "Bug Hunt"],
+	"38" :  ["First2Finish" , "First2Finish"],
+	"39" :  ["Code" , "Code"]
 };
 var volumeTableLoaded;
 var tableViewTable;
@@ -4448,7 +4450,7 @@ function renderVolumeSummaryTable(volumeSummaryData) {
     var totalFailed = 0;
     var totalCompleted = 0;
 
-    $.each(volumeSummaryData, function(key, value){
+    $.each(volumeSummaryData, function(key, value){ 
         volumeSummaryTable.find("colgroup").append($("<col>").attr("width", "100"));
         var header = $("<th/>").text(shortNameMap[key][1]);
         if(first) {
