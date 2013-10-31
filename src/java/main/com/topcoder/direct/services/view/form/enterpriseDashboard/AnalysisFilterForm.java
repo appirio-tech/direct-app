@@ -51,6 +51,16 @@ public class AnalysisFilterForm implements Serializable {
      * The end date used to filter.
      */
     private Date endDate;
+	
+	/**
+     * The project status id.
+     */
+    private long projectStatusId;
+	
+	/**
+     * the zoom option, not used in backend, but useful to maintain for struts 2 validation.
+     */
+    private String zoom;
 
     /**
      * Gets the customer id.
@@ -177,4 +187,42 @@ public class AnalysisFilterForm implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+	
+	 /**
+     * Gets the zoom.
+     *
+     * @return the zomm.
+     */
+    public String getZoom() {
+        return zoom;
+    }
+
+    /**
+     * Sets the zoom.
+     *
+     * @param zoom zoom.
+     */
+    public void setZoom(String zoom) {
+        this.zoom = zoom;
+    }
+	
+	/**
+     * Gets the project status id.
+     *
+     * @return the project status id.
+     */
+    public long getProjectStatusId() {
+        return projectStatusId;
+    }
+
+    /**
+     * Sets the project status id.
+     *
+     * @param projectStatusId the project status id.
+     */
+    public void setProjectStatusId(long projectStatusId) {
+        this.projectStatusId = projectStatusId;
+    }
+	
+	
 }
