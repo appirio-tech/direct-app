@@ -3,13 +3,106 @@
  *
  * Javascript for for the project planner page.
  *
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
+ * -version 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
+ *
+ * -version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+ * - Add preview and estimates calculation for the project planner and copilot submissions page
+ *
  * @author GreatKevin
  */
 $(function(){
 
     var contestInterval = 72;
     var contestDescription;
+
+    var getBugRaceFee = function(bugRaceCost) {
+        if (bugRaceCost == '' || bugRaceCost <= 0) {
+            return 0;
+        } else {
+            if($("input[name=fixedBugRaceFee]").val() > 0) {
+                return $("input[name=fixedBugRaceFee]").val();
+            } else if($("input[name=percentageBugRaceFee]").val() > 0) {
+                return parseFloat($("input[name=percentageBugRaceFee]").val()) * bugRaceCost;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    var updateBugRacePlan = function(bugRaceNumberData, bugRacePrizeData) {
+        var bugRaceNumber;
+
+        if(bugRaceNumberData) {
+            bugRaceNumber = bugRaceNumberData;
+        } else {
+            bugRaceNumber = $("input[name=bugRaces]").val();
+        }
+
+        var bugRacePrize;
+
+        if(bugRacePrizeData) {
+            bugRacePrize = bugRacePrizeData;
+        } else {
+            bugRacePrize = $("input[name=bugRacesPrize]").val();
+        }
+
+
+        var totalFee = bugRaceNumber * getBugRaceFee(bugRacePrize);
+        var totalMemberCost = bugRaceNumber * bugRacePrize;
+        var totalCost = totalFee + totalMemberCost;
+
+        if(!isNaN(totalFee)) {
+            $("#bugRaceFeeTotal").text("$" + totalFee.formatMoney(0));
+        } else {
+            $("#bugRaceFeeTotal").text("$0");
+        }
+
+        if(!isNaN(totalCost)) {
+            $("#bugRaceCostTotal").text("$" + totalCost.formatMoney(0));
+        } else {
+            $("#bugRaceFeeTotal").text("$0");
+        }
+
+        return [isNaN(totalFee) ? 0 : totalFee, isNaN(totalMemberCost) ? 0 : totalMemberCost];
+    }
+
+    var updateVMCost = function (result) {
+
+        if (!result && ($("select[name=billingAccount]").val() <= 0 || !$('input[name=useVM]').is(":checked"))) {
+            $("#vmCost").text("$0.00");
+            return 0;
+        }
+
+        var contests;
+
+        if (result) {
+            contests = result.contests;
+
+            if (result.useVM == false) {
+                return 0;
+            }
+
+        } else {
+            contests = buildProjectTree(true);
+
+            if(contests.circular) {
+                contests = contests.contests;
+            }
+
+        }
+
+
+        var vmCost = 0;
+        $.each(contests, function (index, c) {
+            if (c.type == '2' || c.type == '9' || c.type == '13' || c.type == '14') {
+                vmCost += getContestTypeValue(c.type, 'cost') * 0.15;
+            }
+        })
+
+        $("#vmCost").text('$' + vmCost.formatMoney(2));
+
+        return vmCost;
+    };
 
     $(':input').live('focus',function(){
         $(this).attr('autocomplete', 'off');
@@ -19,7 +112,7 @@ $(function(){
     $("select[name=contestType]").val(0);
 
     $("input[name=contestName]").live('keydown keyup paste', limitContestProjectNameChars(200));
-
+    $("input[name=contestName]").live('keydown keyup paste', updateVMCost);
 
     $("select[name=billingAccount]").change(function(){
         var billingAccountId = $(this).val();
@@ -290,6 +383,8 @@ $(function(){
 
         $(this).closest('tr').find('.memberCost').text('$' + parseFloat(cost).toFixed(1));
         $(this).closest('tr').find('.contestFee').text('$' + parseFloat(getContestTypeContestFee(this.value)).toFixed(1));
+
+        updateVMCost();
     });
 
     // delete contest row
@@ -303,6 +398,8 @@ $(function(){
         if ($('tr', contestTable).length <= 1) {
             $('.deleteContest', contestTable).addClass('hide');
         }
+
+        updateVMCost();
     });
 
     // returns project tree for gantt chart if no circulars presents
@@ -320,7 +417,7 @@ $(function(){
 
             // time start already known - so return end
             if (contest.timeStart) {
-                return contest.timeStart + contest.timeLength;
+                return parseInt(contest.timeStart) + parseInt(contest.timeLength);
             }
 
             // independent contest, so it can start at project start
@@ -369,7 +466,8 @@ $(function(){
 
             // find the last contest on which depends this ends
             contest.timeStart = Math.max.apply(null, dependTimes) + contestInterval;
-            return contest.timeStart + contest.timeLength;
+
+            return parseInt(contest.timeStart) + parseInt(contest.timeLength);
         }
 
         var contests = [];
@@ -386,9 +484,9 @@ $(function(){
                 timeStart: null
             };
             $('input[name="contestFilter"]:checked', this).each(function(){
-                contest.dependsOn.push(this.getAttribute('value'));
+                contest.dependsOn.push(parseInt(this.getAttribute('value')));
             });
-            contest.timeLength = parseFloat(getContestTypeValue(contest.type, 'time') || 0).toFixed();
+            contest.timeLength = parseInt(parseFloat(getContestTypeValue(contest.type, 'time') || 0).toFixed());
             contests.push(contest);
         });
 
@@ -404,10 +502,13 @@ $(function(){
                 circulars.push(contests[i].timeEnd);
                 }
             }
+
+
             contests[i].startStr = formatDateTime(new Date(projectStart + contests[i].timeStart * 3600*1000));
 
             // subtract 24 hours from end time, because jsgantt includes whole last day to task timing
             contests[i].endStr = formatDateTime(new Date(projectStart + (contests[i].timeEnd - 24) * 3600*1000));
+
         }
 
         // sort contests on it's start time
@@ -426,8 +527,10 @@ $(function(){
 
         if (circulars.length) return ({
             circular: true,
-            circulars: circulars
+            circulars: circulars,
+            contests: contests
         });
+
         return contests;
     }
 
@@ -581,6 +684,17 @@ $(function(){
 
         $("input[name=bugRaces]").val(data.bugRaceNumber);
         $("input[name=bugRacesPrize]").val(data.bugRacePrize);
+
+
+        if (data.useVM == true) {
+            $("input[name=useVM]").attr('checked', 'checked');
+        }
+        else {
+            $("input[name=useVM]").removeAttr('checked');
+        }
+
+        updateBugRacePlan();
+        updateVMCost();
     }
 
     var projectPlanUploader =
@@ -643,6 +757,7 @@ $(function(){
 
         // show possible send-to-server json for generate export excel file
         var exportJson = {
+            useVM : $("input[name=useVM]").is(":checked"),
             bugRaceNumber : $("input[name=bugRaces]").val() ? $("input[name=bugRaces]").val():0,
             bugRacePrize : $("input[name=bugRacesPrize]").val() ? $("input[name=bugRacesPrize]").val():0,
             contests:contests
@@ -658,6 +773,8 @@ $(function(){
     $('.previewPlan').click(function(){
         // returns if field fills validation failed
         if (!validateTableValues()) return;
+
+
 
         var contests = buildProjectTree(true);
 
@@ -702,19 +819,19 @@ $(function(){
         calculateWidth();
         modalPosition();
 
-        var totalCost = totalContestFee + totalMemberCost;
+        var bugRacePlanCost = updateBugRacePlan();
 
-        if($("input[name=bugRacesPrize]").val() && $("input[name=bugRacesPrize]").val()) {
-            if(isIntegerInput($("input[name=bugRacesPrize]").val())
-                && isIntegerInput($("input[name=bugRaces]").val())) {
-                totalCost += (1* $("input[name=bugRacesPrize]").val() * $("input[name=bugRaces]").val());
-            }
-        }
+        totalContestFee += bugRacePlanCost[0];
+        totalMemberCost += bugRacePlanCost[1];
+
+        var vmCost = updateVMCost();
+
+        var totalCost = totalContestFee + totalMemberCost + vmCost;
 
         $("#durationStat").text(((maxHours - minHours) / 24) + " Days");
-        $("#costStat").text(("$" + totalMemberCost.formatMoney(0)));
-        $("#feeStat").text(("$" + totalContestFee.formatMoney(0)));
-        $("#totalStat").text(("$" + totalCost.formatMoney(0)));
+        $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
+        $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0]));
+        $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
 
 
     });
@@ -785,11 +902,12 @@ $(function(){
         }
         leftside.css('width', leftPanelWidth + 'px');
 
-        var rightWidth = $('#jsGanttChartDiv').attr('clientWidth');
+        var rightWidth = $(window).width() - 50;
         if (!leftside.is(":hidden")) {
             rightWidth -= leftside.outerWidth();
         }
         $("#rightside").css('width', rightWidth + 'px');
+        $("#rightside table").css('width', (rightWidth - 10) + 'px');
     }
 
     // assign global variable for use from jsgantt.js module
@@ -824,5 +942,209 @@ $(function(){
         calculateWidth();
         modalPosition();
     });
+
+    // add event handler for input bug race plan
+    updateBugRacePlan(); // update on load
+
+    $("input[name=bugRaces], input[name=bugRacesPrize]").keyup(function(){
+        updateBugRacePlan();
+    })
+
+
+    $("input[name=useVM]").click(function() {
+        if($(this).is(":checked")) {
+            updateVMCost();
+        } else {
+            $("#vmCost").text("$0.00");
+        }
+    })
+
+    if ($("#CopilotPostingSubmissions").length > 0) {
+
+        var submissionsResultCache = {};
+
+        function handleCopilotSubmissionResult(result, viewType, submissionId) {
+
+            var totalMemberCost = 0;
+            var totalContestFee = 0;
+
+            $.each(result.contests, function (index, value) {
+                totalMemberCost += parseFloat(getContestTypeValue(value.type, 'cost'));
+                totalContestFee += getContestTypeContestFee(value.type);
+            });
+
+
+            var minHours = 10000000;
+            var maxHours = -1;
+
+            for(var i = 0; i < result.contests.length; ++i) {
+                var value = result.contests[i];
+                minHours = value.timeStart < minHours ? value.timeStart : minHours;
+                maxHours = value.timeEnd > maxHours ? value.timeEnd : maxHours;
+            }
+
+
+            var bugRacePlanCost = updateBugRacePlan(result.bugRaceNumber, result.bugRacePrize);
+
+            totalContestFee += bugRacePlanCost[0];
+            totalMemberCost += bugRacePlanCost[1];
+
+            var vmCost = updateVMCost(result);
+
+            var totalCost = totalContestFee + totalMemberCost + vmCost;
+            var totalDuration = (maxHours - minHours) / 24;
+
+            if(!viewType) {
+                displayGanttChart(result.contests);
+                extendStyle();
+                calculateWidth();
+                modalPosition();
+                $("#durationStat").text(totalDuration + " Days");
+                $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
+                $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0]));
+                $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
+            } else {
+                var estHolder;
+                if(viewType == 'list') {
+                    $(".listview-table tbody tr").each(function() {
+                        var sid = $(this).find('input[name=submissionId]').val();
+                        if(sid == submissionId) {
+                            estHolder = $(this).find('.estimates');
+                        } else {
+                            return;
+                        }
+                    })
+                } else if (viewType == 'grid') {
+                    $(".gridview-table tbody td").each(function() {
+                        var sid = $(this).find('input[name=submissionId]').val();
+                        if(sid == submissionId) {
+                            estHolder = $(this).find('.estimates');
+                        } else {
+                            return;
+                        }
+                    })
+                } else if (viewType == 'comparison') {
+                    $("#compareItems .colCopilot").each(function() {
+                        var sid = $(this).find('input[name=submissionId]').val();
+                        if(sid == submissionId) {
+                            estHolder = $(this).find('div.colEstimates');
+                        } else {
+                            return;
+                        }
+                    })
+                }
+
+
+
+                estHolder.append("<p>Duration: " + totalDuration + " days </p>");
+                estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1])));
+                estHolder.append($("<p>Total Contest Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0])));
+                estHolder.append($("<p>Total Cost: $" + totalCost.formatMoney(0) + "</p>").attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost));
+                estHolder.append("<p>Planned Contest Number: " + result.contests.length + " </p>");
+                estHolder.append("<p>Planned Bug Race Number: " + result.bugRaceNumber + " </p>");
+            }
+        }
+
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/getProjectPlannerConfiguration",
+            data: {billingAccountId:$("input[name=copilotPostingBillingAccountId]").val()},
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        contestDescription = result;
+                        $(".previewCopilotGamePlan").trigger('click');
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
+
+        var totalRequests = $(".previewCopilotGamePlan").length;
+        var loadEstimatesErrors = {};
+        modalPreloader();
+
+        // preview game plan
+        $(".previewCopilotGamePlan").click(function(){
+            var _parent = $(this).parent();
+            var submissionId = _parent.find('input[name=submissionId]').val();
+            var projectId = _parent.find('input[name=submissionProjectId]').val();
+
+            if(submissionsResultCache[submissionId]) {
+                handleCopilotSubmissionResult(submissionsResultCache[submissionId]);
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: ctx + "/copilot/previewGamePlan",
+                data: {submissionId:submissionId, projectId:projectId},
+                cache: false,
+                dataType: 'json',
+                success: function (jsonResult) {
+                    handleJsonResult2(jsonResult,
+                        function (result) {
+                            submissionsResultCache[submissionId] = result;
+                            handleCopilotSubmissionResult(result, $("input[name=viewType]").val(), submissionId);
+                            totalRequests--;
+                            if(totalRequests == 0) {
+                                modalAllClose();
+                            }
+                        },
+                        function (errorMessage) {
+                            // showServerError(errorMessage);
+                            loadEstimatesErrors[submissionId] = errorMessage;
+
+                            totalRequests--;
+                            if(totalRequests == 0) {
+                                modalAllClose();
+                                $.each(loadEstimatesErrors, function(key, value) {
+                                    var estHolder;
+                                    var viewType = $("input[name=viewType]").val();
+                                    if(viewType == 'list') {
+                                        $(".listview-table tbody tr").each(function() {
+                                            var sid = $(this).find('input[name=submissionId]').val();
+                                            if(sid == key) {
+                                                estHolder = $(this).find('.estimates');
+                                            } else {
+                                                return;
+                                            }
+                                        })
+                                    } else if (viewType == 'grid') {
+                                        $(".gridview-table tbody td").each(function() {
+                                            var sid = $(this).find('input[name=submissionId]').val();
+                                            if(sid == key) {
+                                                estHolder = $(this).find('.estimates');
+                                            } else {
+                                                return;
+                                            }
+                                        })
+                                    } else if (viewType == 'comparison') {
+                                        $("#compareItems .colCopilot").each(function() {
+                                            var sid = $(this).find('input[name=submissionId]').val();
+                                            if(sid == key) {
+                                                estHolder = $(this).find('div.colEstimates');
+                                            } else {
+                                                return;
+                                            }
+                                        })
+                                    }
+                                    estHolder.html('<p style="color:red">Failed to load game plan estimates:' + value + '</p>');
+                                });
+                            } else if(totalRequests < 0) {
+                                showServerError(errorMessage);
+                            }
+
+                        });
+                }
+            });
+        });
+    }
 
 });

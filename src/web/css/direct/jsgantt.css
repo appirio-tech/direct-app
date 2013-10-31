@@ -91,17 +91,17 @@
     HEIGHT: 18px
 }
 
-.btn {
-    BORDER-RIGHT: #ffffff;
-    BORDER-TOP: #ffffff;
-    FONT-WEIGHT: bold;
-    FONT-SIZE: 10px;
-    BORDER-LEFT: #ffffff;
-    WIDTH: 12px;
-    COLOR: #cccccc;
-    BORDER-BOTTOM: #ffffff;
-    BACKGROUND-COLOR: #ffffff
-}
+/*.btn {*/
+    /*BORDER-RIGHT: #ffffff;*/
+    /*BORDER-TOP: #ffffff;*/
+    /*FONT-WEIGHT: bold;*/
+    /*FONT-SIZE: 10px;*/
+    /*BORDER-LEFT: #ffffff;*/
+    /*WIDTH: 12px;*/
+    /*COLOR: #cccccc;*/
+    /*BORDER-BOTTOM: #ffffff;*/
+    /*BACKGROUND-COLOR: #ffffff*/
+/*}*/
 
 .hrcomplete {
     BORDER-RIGHT: #000000 2px solid;

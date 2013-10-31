@@ -20,6 +20,7 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.user.Registrant;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -43,8 +44,16 @@ import java.util.TreeSet;
  * This action handles all the requests in the project planner page.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+ * <ul>
+ *     <li>Updated {@link #executeAction()} to set the bug race fee into view data.</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Planner version 1.0)
+ * @version 1.1
+ * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner version 1.0)
  */
 public class ProjectPlannerAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm> {
 
@@ -271,9 +280,15 @@ public class ProjectPlannerAction extends BaseDirectStrutsAction implements Form
         getViewData().setBillingAccounts(
                 getProjectServiceFacade().getBillingAccountsByProject(getFormData().getProjectId()));
 
+        final ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(),
+                getFormData().getProjectId());
+
+        // bug race fee
+        getViewData().setFixedBugRaceFee(project.getFixedBugContestFee());
+        getViewData().setPercentageBugRaceFee(project.getPercentageBugContestFee());
+
         // project context data
-        ProjectBriefDTO currentDirectProject = DirectUtils.getCurrentProjectBrief(getProjectServiceFacade(),
-                                                                                  getFormData().getProjectId());
+        ProjectBriefDTO currentDirectProject = DirectUtils.createProjectBriefDTOFromProjectData(project);
         getSessionData().setCurrentProjectContext(currentDirectProject);
         getSessionData().setCurrentSelectDirectProjectID(currentDirectProject.getId());
     }

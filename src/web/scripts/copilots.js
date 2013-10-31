@@ -777,6 +777,7 @@ function saveAsDraftRequest() {
     request["projectHeader.properties['First Place Cost']"] = parseFloat($('input[name=firstPlacePrize]').val());
     request["projectHeader.properties['Second Place Cost']"] = (request["projectHeader.properties['First Place Cost']"] / 2).toFixed(1);
     request["projectHeader.properties['Payments']"] = parseFloat($('input[name=firstPlacePrize]').val());
+    request["projectHeader.properties['Confidentiality Type']"] = 'public';
     request['projectHeader.projectSpec.detailedRequirements'] = CKEDITOR.instances.publicCopilotPostingDescription2.getData();
     request['projectHeader.projectSpec.privateDescription'] = CKEDITOR.instances.privateCopilotPostingDescription2.getData();
 

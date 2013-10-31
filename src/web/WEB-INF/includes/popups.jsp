@@ -76,6 +76,9 @@
   -
   - Version 3.2 (BUGR - 9796)
   - - Add modal for update/set round id.
+  -
+  - Version 3.3 (TopCoder Cockpit Copilot Posting Submission Game Plan Preview and Stats)
+  - - Adds the modal window for the copilot posting submission preview
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -281,6 +284,127 @@
                 </div>
             </div>
         </div>
+
+        <div id="projectPlanEmptyModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span>Project Plan Empty</span>
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBody">
+                <div class="modalBodyContent">
+                    <p>Project plan is empty. Please fill contests table to view plan chart.</p>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+
+        </div>
+
+        <!-- #jsGanttChartPopup -->
+        <div id="jsGanttChartModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span class="fLeft">Project Plan Gantt Chart</span>
+                        <a class="button5" id="hideLeftPanel" href="javascript:;">Hide Left Panel</a>
+
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBody">
+                <div class="modalBodyContent">
+                    <table class="projectStats" cellpadding="0" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Estimated Duration</th>
+                            <th>Estimated Member Cost</th>
+                            <th>Estimated Contest Fee</th>
+                            <th>Estimated Total Cost</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td id="durationStat" class="date fees">xxx days</td>
+                            <td id="costStat" class="date fees">$xxx,xxx</td>
+                            <td id="feeStat" class="date fees">$xxx,xxx</td>
+                            <td id="totalStat" class="date fees">$xxx,xxx</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- gantt chart container-->
+                    <div id="jsGanttChartDiv" class="gantt"></div>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #jsGanttChartPopup -->
+
+        <!-- #projectPlanCircular -->
+        <div id="projectPlanCircularModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span>Project Plan Circular</span>
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBody">
+                <div class="modalBodyContent">
+                    <div id="ganttChartCircular">
+                        <span id="circularContestNumbers"></span> have circular dependencies.
+                    </div>
+                    <div id="ganttChartCircularMultiple">
+                        The following contests have circular dependencies:
+                        <ul id="multipleCircularsList"></ul>
+                    </div>
+                    <!-- end gantt chart circular -->
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+
+        </div>
+        <!-- end #projectPlanCircular -->
 
                 <!-- #addNewProjectModal -->
         <div id="addNewProjectModal" class="outLay">

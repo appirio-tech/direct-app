@@ -1,10 +1,16 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.1
+  - Version: 1.3
   - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
   - - Adds new buttons for the new copilot posting winners pickup flow
+  -
+  - Version 1.2 (TopCoder Cockpit Copilot Posting Submission Game Plan Preview and Stats)
+  - - Adds the preview link for copilot posting submission
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+  - - Add esitmates data for the copilot submissions
   -
   - Description: This page renders the copilot posting submissions comparison mode.
 --%>
@@ -20,11 +26,74 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <jsp:include page="includes/htmlhead.jsp"/>
+    <title>TopCoder Cockpit</title>
+    <!-- Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/jScrollPane.css?v=176771" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/instantSearch.css" media="all" type="text/css" />
+
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/homepage-ie6.css?v=176771"/>
+    <![endif]-->
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css?v=215325"/>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css?v=203310"/>
+    <![endif]-->
+
+    <!--[if IE 9]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
+    <![endif]-->
+
+    <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
+
+    <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
+    <script type="text/javascript" src="/scripts/jquery.mousewheel.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery.em.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jScrollPane.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery.bgiframe.js?v=207894"></script>
+    <script type="text/javascript" src="/scripts/date.prev.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=215290"></script>
+    <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=214829"></script>
+    <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=188719"></script>
+    <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
+    <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
+    <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
+    <script type="text/javascript" src="/scripts/ckeditor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
+    <script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js?v=215325"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=215325"></script>
+
+    <script type="text/javascript" src="/scripts/dashboard.js?v=215352"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
+    <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
+    <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
+    <script type="text/javascript" src="/scripts/instantSearch.js"></script>
+
     <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/permissions.js?v=210124"></script>
     <script type="text/javascript" src="/scripts/copilot/copilotStats.js"></script>
+    <link rel="stylesheet" href="/css/direct/jsgantt.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jsganttPlanner.js"></script>
+    <link rel="stylesheet" href="/css/direct/projectPlanner.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/projectPlanner.js"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
 </head>
 
@@ -73,6 +142,11 @@
 
 <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
+<input type="hidden" name="copilotPostingBillingAccountId" value="${viewData.contestStats.contest.billingAccountId}"/>
+<input type="hidden" name="fixedBugRaceFee" value="<s:property value='fixedBugRaceFee'/>"/>
+<input type="hidden" name="percentageBugRaceFee" value="<s:property value='percentageBugRaceFee'/>"/>
+<input type="hidden" name="viewType" value="<s:property value='viewType'/>"/>
+
 <div class="container2 tabs3Container tabs3Special"
      id="CopilotPostingSubmissions">
 
@@ -102,6 +176,7 @@
         <li class="rMatchedXp"><p>Matched Experience</p></li>
         <li class="rExperience"><p>Other Experience</p></li>
         <li class="rSkills"><p>Copilot Skills</p></li>
+        <li class="rEstimates"><p>Estimations</p></li>
         <li class="rSbumission"><p>Submission</p></li>
         <li class="rPickUp doubleLine"><p>
             Pick Up<br />Your Copilot
@@ -200,14 +275,21 @@
                 <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
             </s:iterator>
         </div>
+        <div class="colEstimates rEstimates cell estimates">
+
+        </div>
         <div class="colPickup pickupCell rSbumission cell">
             <p class="row highlighted">
+                <input name="submissionProjectId" type="hidden" value="${projectId}"/>
+                <input name="submissionId" type="hidden" value="${submissionId}"/>
                 <link:onlineReviewDownloadSubmission
                         projectId="${projectId}"
                         submissionId="${submissionId}"
                         styleClass="submitedFile">
                     #${submissionId}
                 </link:onlineReviewDownloadSubmission>
+                <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
+                <a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a>
                 <br />
                 <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
             </p>
@@ -409,6 +491,8 @@
 <!-- End #mainContent -->
 
 <jsp:include page="includes/footer.jsp"/>
+
+
 
 </div>
 <!-- End #content -->

@@ -5,7 +5,7 @@ input[type="checkbox"] {
     width: 13px;
 }
 #content.liquid{
-    min-width: 1339px;
+    min-width: 1539px;
 }
 /* button */
 .btn, .btn .bRt, .btn .bMid{
@@ -1017,11 +1017,25 @@ table .submitedFile,
     right: 0;
     background-position: bottom right;
 }
-.gridview-table .skills .title{
+.gridview-table .skills .title , .gridview-table .estimatesWrapper .title {
     font-weight: bold;
     font-size: 12px;
     padding: 15px 0 6px 0;
 }
+
+.gridview-table .skills {
+    float: left;
+    width: 50%;
+}
+
+.gridview-table .estimatesWrapper {
+    float: left;
+    width: 45%;
+    padding-left: 11px;
+    font-size: 12px;
+    height: 190px;
+}
+
 table.gridview-table .colSkills ul {
     padding-left: 0;
 }
@@ -1033,9 +1047,9 @@ table.gridview-table .colSkills ul li{
 		padding-top: 20px;
 		height: 90px;
 		float: left;
-		min-width: 175px;
-		width: 34.2%;
-		padding-left: 3.3%;
+		min-width: 165px;
+		width: 31.2%;
+		padding-left: 7%;
 		text-align: left;
 	}
 /*Start Col4 Styles*/
@@ -1059,7 +1073,7 @@ table.gridview-table .colSkills ul li{
 	.submission-table .col4	.pickupCell  {
 		position: absolute;
 		bottom: 15px;
-		left: 50%;
+		left: 54%;
 	}
 	/*End Col4 Styles*/
 .gridview-table .time{
@@ -1342,6 +1356,11 @@ table.gridview-table .colSkills ul li{
 			.compareList .rSkills .achiv{
 				margin: 0 0 0 12px;
 			}
+.compareList .rEstimates {
+    height: 160px;
+    padding: 20px 0 11px 0;
+    text-align: center;
+}
 .compareList .rSbumission{
     height: 70px;
 }
@@ -1808,3 +1827,33 @@ ul.feedbacks{
 #cofirmChooseCopilotConfirmModal strong.red{
     color:#b60000;
 }
+
+.previewCopilotGamePlan {
+    padding-left: 15px;
+}
+
+td.estimates {
+    padding-left: 9px;
+}
+
+.estimates p {
+    padding-bottom: 9px;
+    font-size: 12px;
+}
+
+.btnDownload{
+    display:inline-block;
+    margin: 2px 5px 0 5px;
+    width:11px;
+    height:12px;
+    background: url('/images/copilot_posting_dowload.png') no-repeat;
+}
+
+.btnPreview{
+    display:inline-block;
+    margin: 2px 5px 0 0;
+    width:13px;
+    height:14px;
+    background: url('/images/copilot_posting_preview.png') no-repeat;
+}
+

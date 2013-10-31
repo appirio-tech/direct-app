@@ -105,8 +105,8 @@
 /* add more button end */
 
 #area1 .projectPlanner .planBugRacesWrapper {
-    padding: 20px 0 20px 25px;
-    height: 20px;
+    padding: 15px 0 20px 25px;
+    height: 95px;
     line-height: 20px;
     border-bottom: 1px solid #a9acae;
 }
@@ -118,6 +118,59 @@
         padding: 0 5px;
         border: 1px solid #a8abad;
     }
+
+    #area1 .projectPlanner .planBugRacesWrapper p {
+        padding-bottom: 7px;
+    }
+
+
+    #area1 .projectPlanner .planBugRacesWrapper label {
+        vertical-align: middle;
+        padding-right: 8px;
+        font-weight: bold;
+    }
+
+    #area1 .projectPlanner .planBugRacesWrapper span.total {
+        vertical-align: middle;
+        padding-right: 8px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+#area1 .projectPlanner .planVMWrapper {
+    padding: 15px 0 20px 25px;
+    height: 76px;
+    line-height: 20px;
+    border-bottom: 1px solid #a9acae;
+}
+
+#area1 .projectPlanner .planVMWrapper input {
+    width: 35px;
+    line-height: 20px;
+    padding: 0 5px;
+}
+
+#area1 .projectPlanner .planVMWrapper p {
+    padding-bottom: 7px;
+}
+
+
+#area1 .projectPlanner .planVMWrapper label {
+    vertical-align: middle;
+    padding-right: 8px;
+    font-weight: bold;
+}
+
+#area1 .projectPlanner .planBugRacesWrapper span.total {
+    vertical-align: middle;
+    padding-right: 8px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#vmCost {
+    font-weight: bold;
+}
 
 #area1 .projectPlanner .buttonBar {
     padding: 20px 0 0 25px;

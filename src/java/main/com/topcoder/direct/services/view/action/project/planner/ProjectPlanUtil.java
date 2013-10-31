@@ -21,8 +21,17 @@ import java.util.Set;
  * The utilities for the import and export for the project plan in project planner page.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+ * <ul>
+ *  <li>Updated {@link #exportProjectPlanToExcel(com.topcoder.direct.services.view.dto.project.planner.ProjectPlannerTransferDTO)} to add VM cost data</li>
+ *  <li>Updated {@link #importProjectPlanFromExcel(org.apache.poi.hssf.usermodel.HSSFWorkbook)} to import VM cost data</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
+ * @version 1.1
+ * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlanUtil {
 
@@ -35,6 +44,13 @@ public class ProjectPlanUtil {
      * The sheet name to store the bug races data.
      */
     private static final String BUG_RACES_SHEET = "bug races";
+
+    /**
+     * The sheet name to store the VM cost data.
+     *
+     * @since 1.1
+     */
+    private static final String VM_COST_SHEET = "vm cost";
 
     /**
      * Exports the <code>ProjectPlannerTransferDTO</code> to excel workbook
@@ -76,6 +92,19 @@ public class ProjectPlanUtil {
                 new Object[]{data.getBugRaceNumber(), data.getBugRacePrize()});
 
         insertDataToSheet(sheetData, bugRacesSheet);
+
+        // 3) sheets - vm cost
+        HSSFSheet vmCostSheet = workbook.createSheet(VM_COST_SHEET);
+
+        sheetData = new LinkedHashMap<String, Object[]>();
+
+        // put the header
+        sheetData.put("0",
+                new Object[]{"use vm ?"});
+        sheetData.put("1",
+                new Object[]{data.isUseVM() ? "yes" : "no"});
+
+        insertDataToSheet(sheetData, vmCostSheet);
 
         return workbook;
     }
@@ -154,6 +183,23 @@ public class ProjectPlanUtil {
 
         if (rowNumber <= 1) {
             throw new IllegalArgumentException("The import project plan excel file does not have bug races data");
+        }
+
+        // 3) parse VM cost sheets
+        HSSFSheet vmCostSheet = excel.getSheet(VM_COST_SHEET);
+
+        iterator = vmCostSheet.iterator();
+        rowNumber = 0;
+        while (iterator.hasNext()) {
+            rowNumber++;
+            Row row = iterator.next();
+            if (rowNumber > 1) {
+                result.setUseVM(row.getCell(0).getStringCellValue().toLowerCase().equals("yes"));
+            }
+        }
+
+        if (rowNumber <= 1) {
+            throw new IllegalArgumentException("The import project plan excel file does not have vm cost data");
         }
 
         return result;

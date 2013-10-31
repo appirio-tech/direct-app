@@ -12,8 +12,17 @@ import java.util.List;
  * The DTO for transferring the project planner data. Used by project planner import / export.
  * </p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+ * <ul>
+ *     <li>Added property {@link #useVM} to indicate whether to use VM for dev in the project plan
+ *     and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
+ * @version 1.1
+ * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlannerTransferDTO implements Serializable {
 
@@ -26,6 +35,13 @@ public class ProjectPlannerTransferDTO implements Serializable {
      * The bug race prize
      */
     private double bugRacePrize;
+
+    /**
+     * The flag to indicate whether to use VM for the development in the project.
+     *
+     * @since 1.1
+     */
+    private boolean useVM;
 
     /**
      * The contests in the project plan.
@@ -84,6 +100,26 @@ public class ProjectPlannerTransferDTO implements Serializable {
      */
     public void setContests(List<ProjectPlannerContestRow> contests) {
         this.contests = contests;
+    }
+
+    /**
+     * Gets the useVM flag.
+     *
+     * @return the useVM flag.
+     * @since 1.1
+     */
+    public boolean isUseVM() {
+        return useVM;
+    }
+
+    /**
+     * Sets the useVM flag.
+     *
+     * @param useVM the useVM flag.
+     * @since 1.1
+     */
+    public void setUseVM(boolean useVM) {
+        this.useVM = useVM;
     }
 
     /**

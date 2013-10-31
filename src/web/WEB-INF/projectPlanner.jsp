@@ -2,6 +2,11 @@
   - Author: GreatKevin
   -
   - Version: 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
+  -
+  - Version: 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
+  - - Add bug race fee and bug race cost calculation to the project planner
+  - - Add VM cost plan for the project planner
+  -
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project planner page.
@@ -47,7 +52,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
     <![endif]-->
 
-    <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>
+    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
 
     <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
@@ -101,6 +106,8 @@
             value="sessionData.currentProjectContext.name"/></a> &gt;
     <strong>Project Planner</strong>
     <input type="hidden" name="directProjectId" value="<s:property value='formData.projectId'/>"/>
+    <input type="hidden" name="fixedBugRaceFee" value="<s:property value='viewData.fixedBugRaceFee'/>"/>
+    <input type="hidden" name="percentageBugRaceFee" value="<s:property value='viewData.percentageBugRaceFee'/>"/>
 </div>
 
 <!-- Project Planner content -->
@@ -424,8 +431,21 @@
 
 <!-- bugRacesWrapper -->
 <div class="planBugRacesWrapper">
-    <span class="text">Plan</span> <input type="text" name="bugRaces" class="bugRaces" value="15"/> <span class="text">Bug Races for this project with prize $ </span><input
-        type="text" name="bugRacesPrize" class="bugRaces" value="80"/><span class="text"> Per Bug Race</span>
+    <p><label>Bug Race Estimation</label></p>
+    <p><span class="text">Plan</span> <input type="text" name="bugRaces" class="bugRaces" value="0"/> <span class="text">Bug Races for this project with prize $ </span><input
+        type="text" name="bugRacesPrize" class="bugRaces" value="150"/><span class="text"> Per Bug Race</span>(<i>It's recommended to make bug race number 1.5 times of planned contests number.</i>)</p>
+    <p><span class="total">Bug Race Fee:</span><span id="bugRaceFeeTotal"></span></p>
+    <p><span class="total">Total Bug Race Cost:</span><span id="bugRaceCostTotal"></span></p>
+</div>
+<!-- End .bugRacesWrapper -->
+
+<!-- bugRacesWrapper -->
+<div class="planVMWrapper">
+    <p><label>VM Environment Cost</label></p>
+    <p><input type="checkbox" name="useVM" title="Check if the project is planned to use VM for dev"/> Do you plan to use VM (Virtual Machine environments)
+
+    </p>
+    <p><span>Based on our calculations, you should expect to spend about <span id="vmCost">$0.00</span> on VM's during the course of this project</span></p>
 </div>
 <!-- End .bugRacesWrapper -->
 
@@ -539,7 +559,7 @@
             <div class="modalBody">
                 <div class="modalBodyContent">
                     <div id="ganttChartCircular">
-                        <span id="circularContestNumbers"></span> have circular dependencies!
+                        <span id="circularContestNumbers"></span> have circular dependencies
                     </div>
                     <div id="ganttChartCircularMultiple">
                         The following contests have circular dependencies:
