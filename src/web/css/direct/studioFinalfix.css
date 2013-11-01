@@ -38,10 +38,10 @@
         border:1px solid #FBCF0F;
         color:#000000;
         padding:0 1px 0 8px;
-        height:30px;
         overflow:hidden;
         line-height:30px;
         margin-top:12px;
+        font-size:12px;
     }
         .finalFixConfirm p{
             float:left;

@@ -147,13 +147,13 @@
                     <span>DOWNLOAD ALL WINNERS</span></a>
             </div>
         </div>
-        <c:if test="${viewData.hasCheckout and viewData.finalFixesDecisionMade ne null and not viewData.finalFixesDecisionMade}">
+    <c:if test="${viewData.hasCheckout and viewData.finalFixesDecisionMade ne null and not viewData.finalFixesDecisionMade}">
             <div class="finalFixConfirm">
                 <div class="p1">
-                    <p>Would you like the winner to provide Final Fixes?
+                    <p>Would you like the winner to provide Final Fixes?  <br/>
                         <a target="_blank" href="http://community.topcoder.com/studio/help/final-fixes/faqs/">
                             Final Fixes are explained here</a>.
-                        If you aren't sure, please ask your copilot before clicking "no".</p>
+                        If you aren't sure, please ask your copilot before clicking "no".</p> <br/>
                     <a href="javascript:;" class="noBtn">NO</a>
                     <a href="javascript:;" class="yesBtn">YES</a>
                 </div>
@@ -164,7 +164,7 @@
 
                 </div>
             </div>
-        </c:if>
+    </c:if>
 
         <!-- End #winnerPanel -->
     </c:if>
