@@ -1045,13 +1045,13 @@ $(function(){
             }
         }
 
-
+        var loadConfigurationSuccess = true;
 
 
         $.ajax({
             type: 'POST',
             url: ctx + "/getProjectPlannerConfiguration",
-            data: {billingAccountId:$("input[name=copilotPostingBillingAccountId]").val()},
+            data: {billingAccountId:$("input[name=copilotPostingBillingAccountId]").val(), formData: {projectId: $("input[name=directProjectId]").val()}},
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {
@@ -1061,6 +1061,7 @@ $(function(){
                         $(".previewCopilotGamePlan").trigger('click');
                     },
                     function (errorMessage) {
+                        loadConfigurationSuccess = false;
                         showServerError(errorMessage);
                     });
             }
@@ -1068,7 +1069,10 @@ $(function(){
 
         var totalRequests = $(".previewCopilotGamePlan").length;
         var loadEstimatesErrors = {};
-        modalPreloader();
+
+        if(loadConfigurationSuccess) {
+            modalPreloader();
+        }
 
         // preview game plan
         $(".previewCopilotGamePlan").click(function(){
