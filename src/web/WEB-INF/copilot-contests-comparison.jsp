@@ -137,6 +137,7 @@
 <c:set value="${viewData.contestStats.contest.id}" var="projectId"/>
 <input type="hidden" name="contestId" value="${viewData.contestStats.contest.id}"/>
 <input type="hidden" name="directProjectId" value="${viewData.contestStats.contest.project.id}"/>
+<input type="hidden" name="enablePreview" value="${enableCopilotPostingSubmissionPreview}"/>
 
 <div class="myCopilotsContestsList">
 
@@ -176,7 +177,9 @@
         <li class="rMatchedXp"><p>Matched Experience</p></li>
         <li class="rExperience"><p>Other Experience</p></li>
         <li class="rSkills"><p>Copilot Skills</p></li>
+     <s:if test="enableCopilotPostingSubmissionPreview">
         <li class="rEstimates"><p>Estimations</p></li>
+     </s:if>
         <li class="rSbumission"><p>Submission</p></li>
         <li class="rPickUp doubleLine"><p>
             Pick Up<br />Your Copilot
@@ -275,9 +278,11 @@
                 <input type="hidden" name="skill-rule-<s:property/>" value="y"/>
             </s:iterator>
         </div>
-        <div class="colEstimates rEstimates cell estimates">
+        <s:if test="enableCopilotPostingSubmissionPreview">
+            <div class="colEstimates rEstimates cell estimates">
 
-        </div>
+            </div>
+        </s:if>
         <div class="colPickup pickupCell rSbumission cell">
             <p class="row highlighted">
                 <input name="submissionProjectId" type="hidden" value="${projectId}"/>
@@ -289,7 +294,7 @@
                     #${submissionId}
                 </link:onlineReviewDownloadSubmission>
                 <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
-                <a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a>
+                <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
                 <br />
                 <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
             </p>

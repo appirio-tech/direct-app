@@ -1047,32 +1047,31 @@ $(function(){
 
         var loadConfigurationSuccess = true;
 
+        if($("input[name=enablePreview]").val() == 'true') {
+            $.ajax({
+                type: 'POST',
+                url: ctx + "/getProjectPlannerConfiguration",
+                data: {billingAccountId:$("input[name=copilotPostingBillingAccountId]").val(), formData: {projectId: $("input[name=directProjectId]").val()}},
+                cache: false,
+                dataType: 'json',
+                success: function (jsonResult) {
+                    handleJsonResult2(jsonResult,
+                        function (result) {
+                            contestDescription = result;
+                            $(".previewCopilotGamePlan").trigger('click');
+                            modalPreloader();
+                        },
+                        function (errorMessage) {
+                            loadConfigurationSuccess = false;
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+        }
 
-        $.ajax({
-            type: 'POST',
-            url: ctx + "/getProjectPlannerConfiguration",
-            data: {billingAccountId:$("input[name=copilotPostingBillingAccountId]").val(), formData: {projectId: $("input[name=directProjectId]").val()}},
-            cache: false,
-            dataType: 'json',
-            success: function (jsonResult) {
-                handleJsonResult2(jsonResult,
-                    function (result) {
-                        contestDescription = result;
-                        $(".previewCopilotGamePlan").trigger('click');
-                    },
-                    function (errorMessage) {
-                        loadConfigurationSuccess = false;
-                        showServerError(errorMessage);
-                    });
-            }
-        });
 
         var totalRequests = $(".previewCopilotGamePlan").length;
         var loadEstimatesErrors = {};
-
-        if(loadConfigurationSuccess) {
-            modalPreloader();
-        }
 
         // preview game plan
         $(".previewCopilotGamePlan").click(function(){

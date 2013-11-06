@@ -171,6 +171,7 @@
                                     <input type="hidden" id="currentCopilotPostingId" value="${viewData.contestStats.contest.id}" />
                                     <input type="hidden" name="contestId" value="${viewData.contestStats.contest.id}"/>
                                     <input type="hidden" name="directProjectId" value="${viewData.contestStats.contest.project.id}"/>
+                                    <input type="hidden" name="enablePreview" value="${enableCopilotPostingSubmissionPreview}"/>
                                     <div class="myCopilotsContestsList">
 
                                         <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
@@ -218,6 +219,7 @@
 
                                             <s:if test='viewType == "list"'>
                                                 <table class="listview-table">
+                                                <s:if test="enableCopilotPostingSubmissionPreview">
                                                     <colgroup>
                                                         <col width="20.7%"/>
                                                         <col width="5%"/>
@@ -238,6 +240,27 @@
                                                         <th>Choose your copilot</th>
                                                     </tr>
                                                     </thead>
+                                                </s:if>
+                                                <s:else>
+                                                    <colgroup>
+                                                        <col width="22.7%"/>
+                                                        <col width=""/>
+                                                        <col width="11%"/>
+                                                        <col width="22.3%"/>
+                                                        <col width="21.3%"/>
+                                                        <col width="16.6%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Copilot</th>
+                                                        <th>Fulfillment</th>
+                                                        <th>Current Workload</th>
+                                                        <th>Matched Experience</th>
+                                                        <th>Copilot Skills</th>
+                                                        <th>Choose your copilot</th>
+                                                    </tr>
+                                                    </thead>
+                                                </s:else>
                                                     <tbody>
 
                                                     <s:iterator value="copilotSubmissions">
@@ -346,7 +369,9 @@
                                                                 </s:iterator>
 
                                                             </td>
-                                                            <td class="estimates"></td>
+                                                            <s:if test="enableCopilotPostingSubmissionPreview">
+                                                                <td class="estimates"></td>
+                                                            </s:if>
                                                             <td class="colPickup pickupCell <c:if test="${userId eq firstPlaceWinner.id}">cpPicked</c:if> <c:if test="${userId eq secondPlaceWinner.id}">rupPicked</c:if>">
                                                                 <p class="row highlighted">
                                                                     <input name="submissionProjectId" type="hidden" value="${projectId}"/>
@@ -358,7 +383,7 @@
                                                                         #${submissionId}
                                                                     </link:onlineReviewDownloadSubmission>
                                                                     <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
-                                                                    <a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a>
+                                                                    <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
                                                                     <br>
                                                                     <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
                                                                 </p>
@@ -554,11 +579,13 @@
                                                                             </s:iterator>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="estimatesWrapper">
-                                                                        <p class="title">Estimates</p>
-                                                                        <div class="estimates">
+                                                                    <s:if test="enableCopilotPostingSubmissionPreview">
+                                                                        <div class="estimatesWrapper">
+                                                                            <p class="title">Estimates</p>
+                                                                            <div class="estimates">
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </s:if>
                                                                     <div class="highlightedCell corAlt">
                                                                         <input name="submissionProjectId" type="hidden" value="${projectId}"/>
                                                                         <input name="submissionId" type="hidden" value="${submissionId}"/>
@@ -569,7 +596,7 @@
                                                                             #${submissionId}
                                                                         </link:onlineReviewDownloadSubmission>
                                                                         <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
-                                                                        <a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a>
+                                                                        <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
                                                                         <br> <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
                                                                         <span class="tl corner"></span> <span class="tr corner"></span>
                                                                         <span class="bl corner"></span> <span class="br corner"></span>

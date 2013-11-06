@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -151,6 +152,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     private static final int PASS_APPROVAL_SCORE = 100;
 
+    private static final Date NEW_COPILOT_POSTING_REVIEW_START_DATE = new Date(113, 11, 5);
+
     /**
      * <p>Logger for this class.</p>
      */
@@ -284,6 +287,10 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      */
     private Double percentageBugRaceFee;
 
+    /**
+     * Whether enable copilot posting submission preview for this contest.
+     */
+    private boolean enableCopilotPostingSubmissionPreview;
 
     public List<ContestFinalFixDTO> getFinalFixes() {
         return finalFixes;
@@ -391,6 +398,10 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
     public List<CopilotSkillDTO> getCopilotSkills() {
         return copilotSkills;
+    }
+
+    public boolean isEnableCopilotPostingSubmissionPreview() {
+        return enableCopilotPostingSubmissionPreview;
     }
 
     /**
@@ -661,6 +672,16 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
                     softwareCompetition.getProjectHeader().getTcDirectProjectId());
             setFixedBugRaceFee(directProjectData.getFixedBugContestFee());
             setPercentageBugRaceFee(directProjectData.getPercentageBugContestFee());
+
+            enableCopilotPostingSubmissionPreview = true;
+
+            // check if to enable copilot posting submission preview
+            for(CopilotSubmissionStatDTO cs : getCopilotSubmissions()) {
+                if (cs.getSubmitTime().before(NEW_COPILOT_POSTING_REVIEW_START_DATE)) {
+                    enableCopilotPostingSubmissionPreview = false;
+                    break;
+                }
+            }
         }
     }
 
