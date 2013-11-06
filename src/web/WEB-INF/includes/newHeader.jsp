@@ -442,6 +442,9 @@
         <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="active"</c:if>>
             <a class="tas" href="<s:url action="projectTasks" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Tasks</a>
         </li>
+	    <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="active"</c:if>>
+           <a class="tas" href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>VM Management</span></a>
+        </li>
     </ul>
 </div><!-- End .mainMenu -->
 </div>
