@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Blues, Ghost_141, csy2012
-  - Version: 1.7
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Blues, Ghost_141, csy2012, TCSASSEMBLER
+  - Version: 1.8
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
   -
@@ -25,7 +25,10 @@
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
   - 
   - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0) changes:
-  - - Changed the font to bold for "FROM" and "TO".   
+  - - Changed the font to bold for "FROM" and "TO".
+  -
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,7 +37,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
@@ -63,7 +66,7 @@
 
                 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

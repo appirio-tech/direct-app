@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, KennyAlive, duxiaoyang, Ghost_141
-  - Version: 1.5
-  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+  - Author: KennyAlive, duxiaoyang, Ghost_141, TCSASSEMBLER
+  - Version: 1.6
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the create new project process.
   -
@@ -20,6 +20,9 @@
   -
   - Version 1.5 (Release Assembly - TopCoder Cockpit Start New Project Data Persistence)
   -             change notes: Added global js variable projectQuestions.
+  -
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -30,7 +33,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="createNewProject"/>
+    <ui:projectPageType tab="createNewProject"/>
     <link rel="stylesheet" href="/css/direct/newCockpitProject.css?v=210469" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/projectCreateFlows.css?v=215566" media="all" type="text/css"/>
     <!--[if IE 7]>
@@ -63,7 +66,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <div class="hide"><jsp:include page="includes/right.jsp"/></div>
 

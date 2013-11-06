@@ -70,7 +70,7 @@
 				<c:set var="NO_ENTERPRISE_DASHBOARD_TOP" value="true" scope="request"/>
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

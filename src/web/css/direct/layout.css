@@ -1,12 +1,15 @@
 /* 
-  - Author: TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.2
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
 
   This file will contain css used in both the index and the other pages.
 
   - Version 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) :
   -   updated to support new group pages of Pending Approvals and Received Invitations
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Updated to support the new cockpit navigation header for group pages
 */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -125,7 +128,7 @@ body#page{
 	position: relative;
 }
 
-#header .logo{
+#newHeader .logo{
 	height:28px;
 	margin-left:4px;
 	padding-top:6px;
@@ -142,7 +145,7 @@ body#page{
 	background:url(/images/group_logo.png) no-repeat left center;
 }
 
-#header .projectLogo{
+#newHeader .projectLogo{
 	padding-left: 40px;
 	padding-top: 7px;
 	padding-bottom: 3px;

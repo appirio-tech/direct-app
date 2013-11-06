@@ -1,11 +1,15 @@
 <%--
-  - Author: minhu, Ghost_141
+  - Author: minhu, Ghost_141, TCSASSEMBLER
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  -
   - Version: 1.0 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - - Fix text inconsistency bug.
   - - Remove container2BottomLeft and container2BottomRight class in pagination part.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
   - 
   - The page to display the customer platform fee list.
 --%>
@@ -18,16 +22,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="project_fee"/>
+    <ui:adminPageType tab="contestFee"/>
 	<jsp:include page="../includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
     <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></scrif
     <script type="text/javascript" src="/scripts/ie6.js?v=205148"></script>
 <![endif]-->
 </head>
 
-<c:set var="CURRENT_TAB" scope="request" value="settings"/>
 <body id="page">
 <!-- ie6 notification module -->
 <div id="ie6-notification">
@@ -94,7 +97,7 @@
 
                 <jsp:include page="../includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="../includes/right.jsp"/>
 

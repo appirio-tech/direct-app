@@ -28,7 +28,7 @@
         <interceptors>
             <interceptor name="preProcessor" class="actionPreProcessor"/>
             <interceptor name="projectAccessGuard"
-                         class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
+                         class="projectAccessInterceptor"/>
             <interceptor name="contestAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ContestAccessInterceptor"/>
             <interceptor name="tcStaffAccessGuard"
@@ -592,6 +592,12 @@
            </result>
         </action>
 
+        <action name="getDirectProjectContests" method="getDirectProjectContests" class="commonAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="projectGamePlanExport" method="getGamePlanDataExcelExport" class="projectGamePlanDataAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="export" type="stream">
@@ -728,6 +734,12 @@
                     <interceptor-ref name="securedProjectPreProcessorStack"/>
                     <result name="success" type="json"/>
                     <result name="error" type="json"/>
+        </action>
+
+	<action name="getCurrentUserRecentProjects" method="getCurrentUserRecentProjects" class="commonAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="addProjectMilestone" method="addProjectMilestone"

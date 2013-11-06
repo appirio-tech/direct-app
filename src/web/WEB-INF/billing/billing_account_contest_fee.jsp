@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.3
+  - Version: 1.4
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
@@ -11,6 +11,8 @@
   - Added contest fee base on percentage support.
   - Version 1.3 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
   - Added others section.
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="project_fee"/>
+    <ui:adminPageType tab="contestFee"/>
 	<jsp:include page="../includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
     <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
@@ -30,7 +32,6 @@
 <![endif]-->
 </head>
 
-<c:set var="CURRENT_TAB" scope="request" value="settings"/>
 <body id="page">
 <!-- ie6 notification module -->
 <div id="ie6-notification">
@@ -97,7 +98,7 @@
 
                 <jsp:include page="../includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="../includes/right.jsp"/>
 

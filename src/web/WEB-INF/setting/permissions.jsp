@@ -3,6 +3,9 @@
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
+  -
   - Description: This page renders the permissions setting page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,7 +17,7 @@
 <head>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <ui:dashboardPageType tab="dashboard"/>
+    <ui:adminPageType tab="permissions"/>
     <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/ui.dialog.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/ui.theme.css?v=185283" media="all" type="text/css"/>
@@ -70,7 +73,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 <div id="area1"><!-- the main area -->

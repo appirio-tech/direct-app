@@ -14,7 +14,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <ui:projectPageType tab="contests"/>
+    <ui:projectPageType tab="gameplan"/>
     <link rel="stylesheet" href="/css/direct/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
 </head>
@@ -27,7 +27,7 @@
 
 <jsp:include page="includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="includes/right.jsp"/>
 

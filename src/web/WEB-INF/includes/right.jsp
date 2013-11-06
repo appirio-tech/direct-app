@@ -41,9 +41,9 @@
     
     <div class="newSidebar">
         <div class="topBtns">
-            <a href="${ctx}/copilot/launchCopilotContest" class="copilot">Get a Copilot</a>
-            <a href="<s:url action="createNewProject" namespace="/"/>" class="start">Start a Project</a>
-            <a href="${ctx}/launch/home" class="launch">Launch Contest</a>
+            <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
+            <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>
+            <a href="${ctx}/launch/home" class="launch" title="Launch a new contest for your project">Launch Contest</a>
         </div>
         
         
@@ -71,11 +71,11 @@
                                 </s:if>
                                 <s:else>
                                     <li class="">
-                                        <a id="0" class="longWordsBreak" href="#">All Customers</a>
+                                        <a id="0" class="longWordsBreak" href="javascript:;">All Customers</a>
                                     </li>
                                     <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
                                         <li <s:if test="#status.odd">class="even"</s:if>>
-                                            <a class="longWordsBreak" href="#" id="<s:property value='key'/>"><s:property
+                                            <a class="longWordsBreak" href="javascript:;" id="<s:property value='key'/>"><s:property
                                                     value="value"/></a>
                                         </li>
                                     </s:iterator>
@@ -108,6 +108,12 @@
                                 </s:iterator>                            
                             </ul>
                         </div>
+                    </div>
+                    <input type='button' value='Go' class='selectProjectBtn' />
+
+                    <label>Search</label>
+                    <div class="dropdownWidget searchMask">
+                        <input type='text' />
                     </div>
                 </div>
                 
@@ -168,7 +174,8 @@
         
         <div class="archiveLink">
             <a href="<s:url action='allProjects'/>">All Projects</a>
-        </div>           
+        </div>
+        <a class="switchBtn" href="javascript:;"></a>
     </div>
 
     <span id="contextPath" value="${ctx}"/>

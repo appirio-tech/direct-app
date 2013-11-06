@@ -1,6 +1,6 @@
 <%--
   - Author: Blues, GreatKevin, notpad, Ghost_141, TCSASSEMBLER
-  - Version: 2.3
+  - Version: 2.4
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -41,6 +41,9 @@
   -
   - Version 2.3 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1) changes:
   - - Support JIRA bug race contest fees. (Project level/contest level, fixed/percentage)
+  -
+  - Version 2.4 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -49,7 +52,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
@@ -73,7 +76,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

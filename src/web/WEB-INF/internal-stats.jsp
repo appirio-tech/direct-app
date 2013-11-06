@@ -1,7 +1,10 @@
 <%--
-  - Author: FireIce
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: FireIce, TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to dashboard
   -
   - Description: This page renders the internal stats info.
 --%>
@@ -14,7 +17,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
-    <c:set var="PAGE_TYPE" value="internal" scope="request"/>
+    <c:set var="PAGE_TYPE" value="dashboard" scope="request"/>
     <script type="text/javascript">
         $('.collapse').live('click', function() {
             $(this).removeClass('collapse').addClass('expand');
@@ -54,7 +57,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

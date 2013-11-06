@@ -1,6 +1,6 @@
 <%--
   - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 2.1
+  - Version: 2.2
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -38,6 +38,9 @@
   -
   - Version 2.1 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 2)
   - - Show contest fee for project level cost
+  -
+  - Version 2.2 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -46,7 +49,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <link rel="stylesheet" href="/css/direct/filter-panel.css?v=215476" media="all" type="text/css"/>
@@ -71,7 +74,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

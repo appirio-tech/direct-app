@@ -3,6 +3,9 @@
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
+  -
   - Description: This page renders the contest fee admin setting page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,10 +18,8 @@
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
 
-    <ui:dashboardPageType tab="dashboard"/>
+    <ui:adminPageType tab="contestFee"/>
 </head>
-
-<c:set var="CURRENT_TAB" scope="request" value="settings"/>
 
 <body id="page">
 
@@ -29,7 +30,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 <div id="area1"><!-- the main area -->

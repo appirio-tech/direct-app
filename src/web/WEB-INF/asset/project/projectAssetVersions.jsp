@@ -84,7 +84,7 @@
 <div id="container">
 <div id="content" class="asset">
 <jsp:include page="../../includes/header.jsp"/>
-<div id="mainContent" class="mainContentOverflowVisible">
+<div id="mainContent" class="mainContentOverflowVisible newSidebarCollapse">
 <jsp:include page="../../includes/right.jsp"/>
 
 <div id="area1"><!-- the main area -->

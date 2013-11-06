@@ -118,11 +118,20 @@
  * Version 3.2.5 (BUGR - 9796)
  * - Add code to bind click event in set/update round id modal.
  *
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, TCSASSEMBLER
- * @version 3.2.4
+ * Version 3.2.6 (Release Assembly - TopCoder Cockpit Navigation Update)
+ * - Added codes for the new cockpit navigation
+ *
+ * Version 3.2.7 (Release Assembly - TopCoder Cockpit Right Sidebar Update)
+ * - Updated to collapsible right sidebar for all the pages
+ * - Added search contests feature to the right sidebar
+ * - Added feature to display contests of selected project by AJAX
+ *
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin
+ * @version 3.2.7
  */
 
 var mouse_is_inside;
+var selectProjectRightSidebar;
 
 $(document).ready(function(){
 						   
@@ -197,7 +206,16 @@ $(document).ready(function(){
     /* init date-pack */
     if($('.date-pick').length > 0){
         $(".date-pick").datePicker({startDate:'01/01/2001'});
-    }   
+    }
+
+    currentSorting = [[0, 1]];
+    sortCurrentContestsTable = function() {
+        if ($("#contestsTable tbody tr").size() > 0) {
+            $("#contestsTable").trigger("sorton", [currentSorting]);
+            $("#contestsTable tr").removeClass("even");
+            $("#contestsTable tr:even").addClass("even");
+        }
+    }
 	
 	/* sort contest by title */
 	sortTitle = function(){
@@ -301,16 +319,16 @@ $(document).ready(function(){
 	
 	/*-------------------------- Show/hide the dropdown list --*/
 
-    var updateCustomerDropDown  = function(dropDownWrapper,items, customerName){
+    var updateCustomerDropDown = function (dropDownWrapper, items, customerName) {
         var dropDown = dropDownWrapper.find(".contestsDropDown ul");
         var input = dropDownWrapper.find(".inputSelect input");
         dropDown.find("li").remove();
         input.val("");
-        $.each(items,function(index,item){
+        $.each(items, function (index, item) {
             var li = $("<li><a class='longWordsBreak' href='#'></a></li>");
-            li.data("id",item.id);
+            li.data("id", item.id);
             li.find("a").text(item.value);
-            if(customerName == undefined && index == 0){
+            if (customerName == undefined && index == 0) {
                 input.val(item.value);
             } else {
                 input.val(customerName);
@@ -320,35 +338,147 @@ $(document).ready(function(){
         dropDown.find("li:odd").addClass("even");
     }
 
-    var updateProjectDropDown  = function(dropDownWrapper,items){
+    var updateContestsTable = function (contestsData, emptyMessage) {
+        var contests = $(".contestList .contestListMask .tableBody table tbody");
+
+        if(!contests) {
+            // there is no right sidebar or there is no contests panel, return
+            return;
+        }
+
+        contests.empty();
+
+        $.each(contestsData, function (i, item) {
+            var urlPart = "/contest/detail?projectId=";
+            if(item.typeName == 'Copilot Posting') {
+                urlPart = "copilot/copilotContestDetails?projectId=";
+            }
+
+
+            var newRow = $("<tr onclick=\"document.location.href ='" + ctx + "/contest/detail?projectId="
+                + item.id + "';this.style.cursor='pointer';\"><td><span class='"
+                + item.statusShortName.toLowerCase() + "' title='" + item.statusName
+                + "'></span></td><td class='leftAlign'></td><td><img/></td></tr>");
+            $("td.leftAlign", newRow).text(item.name);
+            switch (item.statusShortName) {
+                case "Running":
+                    $("td:eq(0) span", newRow).attr("class", "running");
+                    break;
+
+                case "Draft":
+                    $("td:eq(0) span", newRow).attr("class", "draft");
+                    break;
+
+                case "Completed":
+                    $("td:eq(0) span", newRow).attr("class", "completed");
+                    break;
+
+                case "Cancelled":
+                    $("td:eq(0) span", newRow).attr("class", "cancelled");
+                    break;
+            }
+            $("td:eq(2) img", newRow).attr("alt", item.typeShortName.toLowerCase()).attr("src", "/images/"
+                + item.typeShortName.toLowerCase() + "_small.png").attr('title',  item.typeName);
+
+            if (i % 2 == 0) {
+                newRow.removeClass("even");
+            } else {
+                newRow.addClass("even");
+            }
+            newRow.appendTo(contests);
+        });
+
+        if (contestsData.length == 0) {
+            $("<tr><td class='hide'></td><td class='hide'></td><td colspan='3'>" + emptyMessage + "</td></tr>").appendTo(contests);
+        }
+        $("#contestsTable").trigger("update");
+        sortCurrentContestsTable();
+    }
+
+    var currentContestsData = [];
+    var currentProjectId;
+
+    selectProjectRightSidebar = function (projectId) {
+
+        var list = $("#dropDown1 .dropList");
+        if (!list.is(":hidden")) {
+            list.hide();
+            if ($(".projectSelectMask .contestsDropDown UL").height() > 200) {
+                $(".projectSelectMask .contestsDropDown UL").css('width', 233);
+            }
+        }
+
+        currentProjectId = projectId;
+        var projectName = "Select a project here";
+        $(".projectSelectMask .dropList li").each(function () {
+            if ($(this).data("id") == projectId) {
+                projectName = $.trim($("a", this).text());
+            }
+        });
+        $(".projectSelectMask .inputSelect input").val(projectName);
+
+        if(!projectId || projectId <= 0) {
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/getDirectProjectContests",
+            data: {directProjectId: projectId},
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (contestsData) {
+                        currentContestsData = contestsData;
+                        updateContestsTable(contestsData, "No Contests this project");
+                        $(".contestList .searchMask input").val('').trigger("keyup");
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
+    }
+
+    /**
+     *
+     * @param dropDownWrapper the wrapper for the project dropdown
+     * @param items the direct projects items in json
+     */
+    var updateProjectDropDown = function (dropDownWrapper, items) {
         var dropDown = dropDownWrapper.find(".contestsDropDown ul");
         var input = dropDownWrapper.find(".inputSelect input");
         dropDown.find("li").remove();
         input.val("");
         var hasCurrentProject = false;
-        $.each(items,function(index,item){
-            var li = $("<li><a class='longWordsBreak' href='/direct/projectOverview?formData.projectId=" + item.id + "'></a></li>");
-            li.data("id",item.id);
+        var selectedProjectId = -1;
+        $.each(items, function (index, item) {
+            var li = $("<li><a class='longWordsBreak' href='javascript:selectProjectRightSidebar(" + item.id + ")'></a></li>");
+            li.data("id", item.id);
             li.find("a").text(item.value);
-            if(item.value == currentProjectName){
+            if (item.value == currentProjectName) {
+                selectedProjectId = item.id;
                 input.val(item.value);
                 hasCurrentProject = true;
             }
             li.appendTo(dropDown);
-        })
+        });
 
-        if (!hasCurrentProject){
-        	$(".contestList .filter .projectSelectMask .inputSelect input").addClass("paddingleft");
-        	input.val("Select a project here");
+        selectProjectRightSidebar(selectedProjectId);
+
+        if (!hasCurrentProject) {
+            $(".contestList .filter .projectSelectMask .inputSelect input").addClass("paddingleft");
+            input.val("Select a project here");
         }
-        
+
 
         if (typeof isInProjectScope != 'undefined' && !isInProjectScope) {
 
             if (hasCurrentProject) {
                 if ((undefined != currentProjectContests) && $("#contestsTable tbody tr").length <= 0) {
                     $("#contestsTable tbody").html(currentProjectContests);
-                    var newHeight =  adjustContestListHeight();
+                    var newHeight = adjustContestListHeight();
                     if (newHeight > 0) {
                         $(".jScrollPaneContainer").height(newHeight);
                     }
@@ -356,14 +486,14 @@ $(document).ready(function(){
                         scrollbarWidth: 17,
                         showArrows: true
                     });
-                    
+
                     $("#contestsTable").tablesorter();
                 }
-                
+
                 $("#rightTableHeader").show();
             } else {
                 $("#rightTableHeader").hide();
-            
+
                 // clear the contests if needed
                 if ($("#contestsTable tbody tr").length > 0) {
                     currentProjectContests = $("#contestsTable tbody").html();
@@ -379,8 +509,8 @@ $(document).ready(function(){
 
         dropDown.find("li:odd").addClass("even");
     }
-    
-    
+
+
     function compareProject(projectA, ProjectB) {
         if (projectA.value.toLowerCase() < ProjectB.value.toLowerCase())
             return -1;
@@ -388,11 +518,11 @@ $(document).ready(function(){
             return 1;
         return 0;
     }
-    
+
     function compareCustomer(customerA, customerB) {
         if (customerA.value.toLowerCase() == 'all customers') return -1;
         if (customerB.value.toLowerCase() == 'all customers') return 1;
-        
+
         if (customerA.value.toLowerCase() < customerB.value.toLowerCase())
             return -1;
         if (customerA.value.toLowerCase() > customerB.value.toLowerCase())
@@ -400,47 +530,51 @@ $(document).ready(function(){
         return 0;
     }
 
-    var getCustomers = function(){
-        var arr = [{"id":"","value":"All Customers"}];
+    var getCustomers = function () {
+        var arr = [
+            {"id": "", "value": "All Customers"}
+        ];
         var count = 0;
         var noCustomer;
         if (typeof rightSidebarData != 'undefined' && rightSidebarData) {
-            for(var p in rightSidebarData){
-                 if(typeof(rightSidebarData[p])!="function"){
-                    count ++;
+            for (var p in rightSidebarData) {
+                if (typeof(rightSidebarData[p]) != "function") {
+                    count++;
                     var obj = new Object();
-                     obj.value = p;
-                     obj.id = rightSidebarData[p]["id"];
-                     obj.projects = rightSidebarData[p]["projects"];
+                    obj.value = p;
+                    obj.id = rightSidebarData[p]["id"];
+                    obj.projects = rightSidebarData[p]["projects"];
 
-                     if (!(obj.id == "none")) {
+                    if (!(obj.id == "none")) {
                         arr.push(obj);
-                     } else {
+                    } else {
                         noCustomer = obj;
-                     }
-                 }
+                    }
+                }
             }
         }
 
         arr.sort(compareCustomer);
-        
+
         if (undefined != noCustomer) {
             arr.push(noCustomer);
         }
 
-        if (count == 1) { arr.shift(); }
+        if (count == 1) {
+            arr.shift();
+        }
 
         return arr;
     }
     var customerList = getCustomers();
 
-    var getCustomerWithProject = function(projectName) {
+    var getCustomerWithProject = function (projectName) {
         var result = {};
 
         result.id = '';
         result.name = 'All Customers';
 
-        $.each(customerList, function(index, item) {
+        $.each(customerList, function (index, item) {
             var projects = item.projects;
             if (!(item.id == '' || item.id == 'none')) {
                 for (var p in projects) {
@@ -459,29 +593,29 @@ $(document).ready(function(){
     }
 
 
+    var getProjects = function (id) {
 
-    var getProjects = function(id){
         var arr = [];
-        $.each(customerList,function(index,item){
+        $.each(customerList, function (index, item) {
             var projects = item.projects;
-            if(id == "" || id == "0"){
-                for(var p in projects){
-                     if(typeof(projects[p])!="function"){
+            if (id == "" || id == "0") {
+                for (var p in projects) {
+                    if (typeof(projects[p]) != "function") {
                         var obj = new Object();
-                         obj.id = p;
-                         obj.value = projects[p];
-                         arr.push(obj);
-                     }
+                        obj.id = p;
+                        obj.value = projects[p];
+                        arr.push(obj);
+                    }
                 }
-            }else{
-                if(item.id == id){
-                    for(var p in projects){
-                         if(typeof(projects[p])!="function"){
+            } else {
+                if (item.id == id) {
+                    for (var p in projects) {
+                        if (typeof(projects[p]) != "function") {
                             var obj = new Object();
-                             obj.id = p;
-                             obj.value = projects[p];
-                             arr.push(obj);
-                         }
+                            obj.id = p;
+                            obj.value = projects[p];
+                            arr.push(obj);
+                        }
                     }
                 }
             }
@@ -492,48 +626,71 @@ $(document).ready(function(){
         return arr;
     }
 
-    updateProjectDropDown($(".projectSelectMask"),getProjects(""));
-
     if (typeof (currentProjectName) != "undefined" && currentProjectName != '') {
         var result = getCustomerWithProject(currentProjectName);
         updateCustomerDropDown($(".customerSelectMask"), customerList, result.name);
         updateProjectDropDown($(".projectSelectMask"), getProjects(result.id));
     } else {
         updateCustomerDropDown($(".customerSelectMask"), customerList);
+        updateProjectDropDown($(".projectSelectMask"), getProjects(""));
     }
 
-	showHideProjectList = function(){
-		var list = $("#dropDown1 .dropList");
-        if(list.is(":hidden")){
-            list.show();
-        }else{
-            list.hide();    
-        }        
+    $(".contestList input.selectProjectBtn").click(function () {
+        if (typeof (currentProjectId) != "undefined" && currentProjectId > 0) {
+            document.location.href = 'projectOverview?formData.projectId=' + currentProjectId;
+        } else {
+            alert('Select a project first');
+        }
+    });
 
-        if($(".projectSelectMask .contestsDropDown UL").height() > 200) {
+    $(".contestList .searchMask input").keyup(function () {
+        var keyword = $.trim($(this).val()).toLowerCase();
+        var count = 0;
+        var filtered = [];
+        $.each(currentContestsData, function (i, item) {
+            var found = keyword.length == 0 ||
+                item.statusName.toLowerCase().indexOf(keyword) >= 0 ||
+                item.name.toLowerCase().indexOf(keyword) >= 0 ||
+                item.typeName.toLowerCase().indexOf(keyword) >= 0;
+            if (found) {
+                filtered.push(item);
+            }
+        });
+        updateContestsTable(filtered, "No Matched Contest");
+    });
+
+    showHideProjectList = function () {
+        var list = $("#dropDown1 .dropList");
+        if (list.is(":hidden")) {
+            list.show();
+        } else {
+            list.hide();
+        }
+
+        if ($(".projectSelectMask .contestsDropDown UL").height() > 200) {
             $(".projectSelectMask .contestsDropDown UL").css('width', 233);
         }
         var input = $(".projectSelectMask .inputSelect>input")[0];
         input.originalValue = input.value;
-	}
+    }
 
-    showHideCustomerList = function(){
-		var  contestsDropDown = $(".customerSelectMask .contestsDropDown");
+    showHideCustomerList = function () {
+        var contestsDropDown = $(".customerSelectMask .contestsDropDown");
         if (contestsDropDown.is(":hidden")) {
             $(".customerSelectMask .contestsDropDown").hide();
         }
-        
+
         var list = contestsDropDown.find("ul");
-        if(list.is(":hidden")){
+        if (list.is(":hidden")) {
             $(".dropdownWidget .dropList").hide();
             list.show();
-        }else{
-            list.hide();    
-        }        
+        } else {
+            list.hide();
+        }
         //contestsDropDown.slideToggle(100);
         var input = $(".customerSelectMask .inputSelect>input")[0];
         input.originalValue = input.value;
-	}
+    }
 	
 	/*TCCC-2398*/
 	/*-------------------------- filter the project --*/
@@ -3075,9 +3232,8 @@ $(document).ready(function(){
         }
         
 		var sorting = [[oo, o]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tr").removeClass("even");
-		$("#contestsTable tr:even").addClass("even");
+        currentSorting = sorting;
+        sortCurrentContestsTable();
     })
 
     $(".newSidebar .contestList .tableBody td").live("mouseenter",function(){
@@ -3282,3 +3438,114 @@ $(document).ready(function () {
             }
         });
 });
+
+var userRecentProjects;
+
+$(document).ready(function () {
+
+
+    function populateRecentProjects(data) {
+
+        if (data && data.length > 0) {
+
+            $("#recentProjectsTopNav").show();
+
+            $("#recentProjectsTopNav .recentProjectsFlyout li").remove();
+
+            var currentProjectId = $("input[name=topNavCurrentProjectId]").val();
+            var hasNotCurrentContests = false;
+
+            $.each(data, function (index, pItem) {
+
+                if (pItem.accessItemId == currentProjectId) {
+                    return;
+                }
+                var a = $('<li class="trigger"></li>').html($("#recentProjectItemTemplate").html());
+
+                // set project name
+                a.find("a.recentProjectName").html('<span class="ellipsis">' + pItem.itemName + '</span><span class="arrow"></span>').attr('title', pItem.itemName).addClass("ellipsis");
+                a.find("a.recentProjectOverview").attr('href',
+                    '/direct/projectOverview.action?formData.projectId=' + pItem.accessItemId);
+                a.find("a.recentProjectPlan").attr('href',
+                    '/direct/ProjectJsGanttGamePlanView.action?formData.projectId=' + pItem.accessItemId);
+                a.find("a.recentProjectSetting").attr('href',
+                    '/direct/editProject.action?formData.projectId=' + pItem.accessItemId);
+                $("#recentProjectsTopNav .recentProjectsFlyout").append(a);
+                hasNotCurrentContests = true;
+            });
+
+            if(!hasNotCurrentContests) {
+                $("#recentProjectsTopNav").hide();
+            }
+
+        } else {
+            // no data, hide recent projects
+            $("#recentProjectsTopNav").hide();
+        }
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: 'getCurrentUserRecentProjects',
+        dataType: "json",
+        cache: false,
+        async: false,
+        success: function (jsonResult) {
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    userRecentProjects = result;
+                    populateRecentProjects(result);
+                    $(this).find(".flyout:eq(0)").show();
+                    $(this).addClass("on");
+                    $(this).next().addClass("noBg");
+                },
+                function (errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
+    // function for newHeader
+    (function (newHeader) {
+        newHeader.find(".topMenu .menus li").hover(function(){
+            $(this).find(".flyout:eq(0)").show();
+            $(this).addClass("on");
+            $(this).next().addClass("noBg");
+            $(this).find(".flyout:eq(0)").find(".ellipsis").ellipsis().parent().append('<span class="arrow"></span>');
+        },function(){
+            $(this).find(".flyout:eq(0)").hide();
+            $(this).removeClass("on");
+            $(this).next().removeClass("noBg");
+        });
+        newHeader.find(".mainMenu .menus li").hover(function () {
+            $(this).find(".flyout").show();
+            $(this).addClass("on");
+        }, function () {
+            $(this).find(".flyout").hide();
+            $(this).removeClass("on");
+        });
+
+        newHeader.find(".flyout a").click(function () {
+            $(this).closest(".flyout").hide();
+            return true;
+        });
+
+
+    })($("#newHeader"));
+
+    // functions for newSidebar
+    (function(sidebar){
+        sidebar.find(".switchBtn").click(function(){
+            $("#mainContent").toggleClass("newSidebarCollapse");
+            $(window).trigger("resize");
+            return false;
+        });
+        sidebar.find(".sideBox dt").click(function(){
+            $(this).closest(".sideBox").toggleClass("collapse");
+            return false;
+        })
+
+    })($(".newSidebar"));
+
+});
+

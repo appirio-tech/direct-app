@@ -1,7 +1,7 @@
 <%--
-  - Author: Ghost_141, GreatKevin
-  - Version: 1.2
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin, TCSASSEMBLER
+  - Version: 1.3
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 Module Assembly - TopCoder Copilot Feedback Integration
   - 
@@ -10,6 +10,9 @@
   -
   - Version 1.2 Release Assembly - TopCoder Copilot Feedback Updates
   - - Add 4 ratings to the copilot feedback
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
   - 
   - The admin page for the copilot feedback management
 --%>
@@ -21,7 +24,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="copilotFeedbackAdmin"/>
+    <ui:adminPageType tab="copilotFeedbackAdmin"/>
     <jsp:include page="../includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/copilotFeedbackAdmin.js"></script>
 </head>

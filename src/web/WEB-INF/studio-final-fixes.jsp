@@ -26,7 +26,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent" class="studioFinalFixes">
+                <div id="mainContent" class="studioFinalFixes newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

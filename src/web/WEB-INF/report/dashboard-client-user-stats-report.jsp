@@ -1,13 +1,16 @@
 <%--
-  - Author: leo_lol, Ghost_141
-  - Version: 1.0 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: leo_lol, Ghost_141, TCSASSEMBLER
+  - Version: 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination)
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version: 1.0 Module Assembly - TC Client Users Stats Report Generation v1.0
   - 
   - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - - Remove container2BottomLeft and container2BottomRight in pagination part.
-  - 
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
+  -
   - Description: This page renders the view for client user stats report including form and report data.
   -
 --%>
@@ -19,7 +22,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/dashboard-client-user-stats-report.js"></script>
@@ -35,7 +38,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

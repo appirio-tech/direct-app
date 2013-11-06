@@ -13,13 +13,17 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
@@ -64,8 +68,23 @@ import org.codehaus.jackson.map.ObjectMapper;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Navigation Update)
+ * <ul>
+ *     <li>Added method {@link #getCurrentUserRecentProjects()}</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.8 (Release Assembly - TopCoder Cockpit Right Sidebar Update)
+ * <ul>
+ *     <li>Added method {@link #getDirectProjectContests()} to process the AJAX request to
+ *     get all the contests of a direct project</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 1.6
+ * @version 1.8
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -152,6 +171,54 @@ public class CommonAction extends BaseContestFeeAction {
 
             for (Milestone mi : milestones) {
                 result.add(m.convertValue(mi, Map.class));
+            }
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+
+    /**
+     * Handles the ajax request to get all the contests of the direct project specified by the form input
+     * <code>directProjectId</code>.
+     *
+     * @return the result code.
+     * @since 1.8
+     */
+    public String getDirectProjectContests() {
+
+        try {
+
+            // check if the current login user has permission to access
+            if(!AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), this.directProjectId)) {
+                throw new IllegalArgumentException(
+                        "Current user does not have access to the direct project:" + this.directProjectId);
+            }
+
+            // get all the contests of the direct project through query
+            List<TypedContestBriefDTO> contests = DataProvider
+                    .getProjectTypedContests(DirectUtils.getTCSubjectFromSession().getUserId(),
+                            this.directProjectId);
+
+            // the result list which will be serialized to json and returned by the AJAX response
+            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+            for (TypedContestBriefDTO c : contests) {
+                Map<String, String> contestResult = new HashMap<String, String>();
+                contestResult.put("id", String.valueOf(c.getId()));
+                contestResult.put("name", c.getTitle());
+                contestResult.put("statusName", c.getStatus().getName());
+                contestResult.put("statusShortName", c.getStatus().getShortName());
+                contestResult.put("typeName", c.getContestType().getName());
+                contestResult.put("typeShortName", c.getContestType().getLetter());
+                result.add(contestResult);
             }
 
             setResult(result);
@@ -276,6 +343,30 @@ public class CommonAction extends BaseContestFeeAction {
 
         return SUCCESS;
     }
+
+    /**
+     * Gets the projects the current user recently accessed.
+     *
+     * @return the result code.
+     * @since 1.7
+     */
+    public String getCurrentUserRecentProjects() {
+        try {
+            List<DirectProjectAccess> userRecentDirectProjects = DataProvider.getUserRecentDirectProjects(
+                    DirectUtils.getTCSubjectFromSession().getUserId());
+
+            ObjectMapper m = new ObjectMapper();
+
+            setResult(m.convertValue(userRecentDirectProjects, List.class));
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
     
     /**
      * <p>

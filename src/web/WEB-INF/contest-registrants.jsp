@@ -22,7 +22,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
-    <ui:projectPageType tab="contests"/>
+    <ui:projectPageType tab="gameplan"/>
     <ui:contestPageType tab="registrants"/>
 </head>
 
@@ -34,7 +34,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

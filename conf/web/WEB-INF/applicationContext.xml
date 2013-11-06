@@ -1399,6 +1399,12 @@
         <property name="managerService" ref="assetManagerService"/>
     </bean>
 
+    <bean id="projectAccessInterceptor"
+          class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"
+          scope="prototype">
+        <property name="metadataService" ref="directProjectMetadataServices"/>
+    </bean>
+
     <bean id="projectAssetsAction"
           class="com.topcoder.direct.services.view.action.asset.project.ProjectAssetsAction"
           scope="prototype" parent="baseAbstractAssetAction">

@@ -46,7 +46,7 @@
     <!-- New Style For Marathon Matches -->
     <link rel="stylesheet" href="/css/direct/marathonMatches.css" media="all" type="text/css"/>
     
-    <ui:projectPageType tab="contests"/>
+    <ui:projectPageType tab="gameplan"/>
     <ui:contestPageType tab="details"/>
 
     <script type="text/javascript">
@@ -80,7 +80,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

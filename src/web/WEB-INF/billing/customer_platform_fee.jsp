@@ -1,7 +1,10 @@
 <%--
-  - Author: minhu
+  - Author: minhu, TCSASSEMBLER
+  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   - Version: 1.0 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
   -
   - The page used to create/udpate the customer platform fee.
 --%>
@@ -14,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="project_fee"/>
+    <ui:adminPageType tab="contestFee"/>
 	<jsp:include page="../includes/paginationSetup.jsp"/>
     <link rel="stylesheet" href="/css/direct/platform-fee.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/platform-fee.js"></script>
@@ -25,7 +28,6 @@
 <![endif]-->
 </head>
 
-<c:set var="CURRENT_TAB" scope="request" value="settings"/>
 <body id="page">
 <!-- ie6 notification module -->
 <div id="ie6-notification">
@@ -92,7 +94,7 @@
 
                 <jsp:include page="../includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="../includes/right.jsp"/>
 

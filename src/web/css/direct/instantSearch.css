@@ -4,17 +4,20 @@
  * This css used to render edit project page.
  *
  * Version 1.0 (Module Assembly - TopCoder Cockpit Instant Search)
-
- * Author: TCSASSEMBLER
+ *
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
+ * - Adds new styles for the new cockpit navigation
+ *
+ * Author: GreatKevin
  */
-#page #header {
+#page #newHeader {
     z-index: 105;
 }
-#page #header .helloUser {
+#page #newHeader .helloUser {
     top: 5px;
     z-index: 100;
 }
-#header .helloUser .instantSearch{
+#newHeader .helloUser .instantSearch{
     display: block;
     float: left;
     height: 23px;
@@ -23,7 +26,7 @@
     background: url('/images/instantSearch.png') 0 0 no-repeat;
     position: relative;
 }
-#header .helloUser .instantSearch .instantSearchBg{
+#newHeader .helloUser .instantSearch .instantSearchBg{
     display: block;
     width: 278px;
     height: 20px;
@@ -31,7 +34,7 @@
     background: url('/images/instantSearch.png') 0 -23px repeat-x;
     position: relative;
 }
-#header .helloUser .instantSearch span.searchIcon{
+#newHeader .helloUser .instantSearch span.searchIcon{
     display: block;
     width: 23px;
     height: 23px;
@@ -41,7 +44,7 @@
     top: 0;
     right: 0;
 }
-#header .helloUser .instantSearch input{
+#newHeader .helloUser .instantSearch input{
     display: block;
     float: left;
     height: 18px;
@@ -55,10 +58,10 @@
     font-size: 11px;
     color: #999999;
 }
-#header .helloUser .instantSearch input.focused{
+#newHeader .helloUser .instantSearch input.focused{
     color: #333333;
 }
-#page #header .helloUser UL {
+#page #newHeader .helloUser UL {
     display:block;
     height: 15px;
     float: left;
@@ -103,7 +106,7 @@
     border-bottom-width: 0;
     text-indent: 9px;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList ul{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList ul{
     float: none;
     display: block;
     height: auto;
@@ -112,38 +115,38 @@
     border-bottom-width: 0;
     padding: 7px 10px 1px 10px;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li{
     float: none;
     display: block;
     padding: 0 0 7px 9px;
     background: url('/images/instantSearchResultArrow.png') 0 0 no-repeat;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li.noMatch{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li.noMatch{
     background-image: none;
     color: #666666;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte{
     line-height: 16px;
     display: block;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte a{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte a{
     color: #333333;
     font-size: 12px;
     font-weight: bold;
     line-height: 16px;
     text-decoration: none;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte a:hover{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li .resultTilte a:hover{
     color: #333333;
     text-decoration: underline;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList li .resultBrief{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList li .resultBrief{
     line-height: 14px;
     font-size: 11px;
     color: #666666;
     display: block;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea{
     display: block;
     overflow: hidden;
     text-align: center;
@@ -152,17 +155,17 @@
     background: url('/images/moreInfoBg.png') 0 0 repeat-x;
     border: 1px solid #392f2e;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea a{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea a{
     line-height: 18px;
     font-size: 12px;
     font-weight: bold;
     text-decoration: underline;
     color: #ffffff;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea a:hover{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea a:hover{
     text-decoration: none;
 }
-#page #header .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea p{
+#page #newHeader .helloUser .instantSearch .resultDropDown .quickResultList .moreInfoArea p{
     line-height: 16px;
     font-size: 11px;
     font-weight: bold;
@@ -170,7 +173,7 @@
 }
 
 /*Search Results Page*/
-#header .resultsPageLogo {
+#newHeader .resultsPageLogo {
     background: url("/images/resultsPageIcon.png") no-repeat scroll left center transparent;
     padding-bottom: 5px;
     padding-left: 40px;
@@ -340,4 +343,8 @@ a.searchAllSmallLink:hover {
 
 div.searchAllResults {
    min-width: 1024px !important;
+}
+
+#newHeader .instantSearch {
+    text-shadow: none !important;
 }

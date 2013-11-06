@@ -1,13 +1,9 @@
 <%--
-  - Author: gentva, jiajizhou86
-  - Version: 1.1
+  - Author: gentva
+  - Version: 1.0
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the contest vm instances page.
-  -
-  - Version: 1.1 (Release Assembly - TopCoder Direct VM Instances Management)
-  -    added LAUNCH VIRTUAL MACHINE button
-  -    change the terminate button to an Action list
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,15 +13,10 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
-    <script type="text/javascript">
-        var vmErrorMessage = "<s:property value="vmErrorMessage"/>";
-        var isErrorLoadingVM = <s:property value="errorLoadingVM"/>;
-    </script>
     <script type="text/javascript" src="/scripts/contest-vmservice.js"></script>
     <jsp:include page="includes/filterPanel.jsp"/>
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="vmInstances"/>
-    <link rel="stylesheet" href="/css/direct/contestVMManagement.css?v=234604" media="all" type="text/css"/>
 </head>
 
 <body id="page">
@@ -36,7 +27,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 
@@ -64,14 +55,7 @@
                                     <div class="container2Content">
 
                                         <div class="summary">
-                                            <span class="vmCount">
-                                                Total ${totalVMCount} (active ${activeVMCount}, terminated ${terminatedVMCount})
-                                            </span>
-                                            <a class="lanchVMInstanceBtn button6 btnAddNew" href="<s:url action="dashboardVMAction" namespace="/"><s:param name="contestId" value="viewData.contestStats.contest.id"/></s:url>">
-                                                <span class="left">
-                                                    <span class="right">LAUNCH VIRTUAL MACHINE</span>
-                                                </span>
-                                            </a>
+                                            Total ${totalVMCount} (active ${activeVMCount}, terminated ${terminatedVMCount})
                                         </div>
 
                                         <div class='filterPanel' id='ContestVMFilter' style="margin-top:10px">
@@ -192,28 +176,12 @@
                                                         </td>
                                                         <td class="vm_instance_status">${vmInstance.status}</td>
                                                         <td>${vmInstance.managerHandle}</td>
-                                                        <td class="vm_instance_action" align="center">
-                                                            <div class="actionDropDownList" style="position: relative;">
-                                                                <a href="javascript:void(0)" class="actionLink">Action<span class="arrow"></span></a>
-                                                                <div class="actionList">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <c:if test="${vmInstance.status eq 'RUNNING' && (hasWriteOrFullPermission || vmInstance.managerHandle eq sessionData.currentUserHandle)}">
-                                                                                <a href="javascript:void(0)" class="enabled"
-                                                                                   onclick="javascript:contestVMService.terminate(${vmInstance.instance.id}, this);">
-                                                                                    Terminate
-                                                                                </a>
-                                                                            </c:if>
-                                                                            <c:if test="${vmInstance.status ne 'RUNNING' || not (hasWriteOrFullPermission || vmInstance.managerHandle eq sessionData.currentUserHandle)}">
-                                                                                <a href="javascript:void(0)" class="disabled">
-                                                                                    Terminate
-                                                                                </a>
-                                                                            </c:if>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                        <td class="vm_instance_action" align="center"><c:if test="${vmInstance.status eq 'RUNNING' && (hasWriteOrFullPermission || vmInstance.managerHandle eq sessionData.currentUserHandle)}">
+                                                            <div class="term1"><div>
+                                                                <a href="javascript:void(0)" onclick="javascript:contestVMService.terminate(${vmInstance.instance.id}, ${projectId}, ${studio}, this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>&nbsp;
+                                                            </div></div>
+
+                                                        </c:if></td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>

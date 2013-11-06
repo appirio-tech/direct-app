@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, kanakarajank, Ghost_141, jiajizhou86
-  - Version: 1.4
+  - Author: winsty, kanakarajank, Ghost_141, jiajizhou86, GreatKevin
+  - Version: 1.5
   - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of VM management in dashboard.
@@ -12,6 +12,8 @@
   -             Update button text to uppercase.
   - Version 1.4 (Release Assembly - TopCoder Direct VM Instances Management) changes:
                 Add pre-populated contest id.
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to admin
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -22,15 +24,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="dashboard"/>
+    <ui:adminPageType tab="VM Management"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/vmservice.js?v=215290"></script>
     <link href="/css/direct/screen.css?v=214495" rel="stylesheet" type="text/css" />
     <link href="../../css/direct/dashboard.css?v=215352" rel="stylesheet" type="text/css" />
     <jsp:include page="/WEB-INF/includes/filterPanel.jsp"/>
 </head>
-
-<c:set var="CURRENT_TAB" scope="request" value="VM Management"/>
 
 <body id="page">
 <div id="wrapper">
@@ -40,7 +40,7 @@
 
                 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

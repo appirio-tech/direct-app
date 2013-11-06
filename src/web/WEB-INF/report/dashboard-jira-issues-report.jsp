@@ -1,6 +1,6 @@
 <%--
   - Author: Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 1.0 (Module Assembly - JIRA issues loading update and report creation)
+  - Version: 1.4
   - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for jira issues report including form and report data.
@@ -13,6 +13,9 @@
   -
   - Version 1.3 (Release Assembly - TC Cockpit JIRA Report Update)
   - - Update the jira report table body to allow empty contest id and name tds
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,7 +24,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/dashboard-jira-issues-report.js"></script>
@@ -37,7 +40,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

@@ -169,7 +169,7 @@
 
                 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="/WEB-INF/includes/right.jsp"/>
                     <div id="area1"><!-- the main area -->

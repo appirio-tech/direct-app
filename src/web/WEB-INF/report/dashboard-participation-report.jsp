@@ -1,6 +1,6 @@
 <%--
-  - Author: bugbuka, Ghost_141, csy2012
-  - Version: 1.4 (Release Assembly - TopCoder Cockpit Direct UI layout Part 2 Bugs Termination)
+  - Author: bugbuka, Ghost_141, csy2012, TCSASSEMBLER
+  - Version: 1.5
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
@@ -18,6 +18,9 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) 
   - - Fixed the "Aggregation Participation Metrics Report" Table header issue.
+  -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the page type to report
   - 
   - Description: This page renders the view for participation metrics report including form and report data.
   -
@@ -29,7 +32,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <ui:dashboardPageType tab="reports"/>
+    <ui:reportPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/dashboard-participation-report.js?v=208327"></script>
@@ -45,7 +48,7 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="/WEB-INF/includes/right.jsp"/>
 

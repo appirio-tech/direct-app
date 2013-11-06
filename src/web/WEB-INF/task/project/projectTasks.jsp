@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMLBER
   -
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project tasks view.
@@ -12,6 +12,9 @@
   - Version 1.2 (TC - Cockpit Tasks Management Assembly 3)
   - - Adds the task filtering
   - - Adds the task grouping.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Move the beta notification out of the bread crumb area
   -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -374,7 +377,7 @@
 
 <jsp:include page="../../includes/header.jsp"/>
 
-<div id="mainContent">
+<div id="mainContent" class="newSidebarCollapse">
 
 <jsp:include page="../../includes/right.jsp"/>
 
@@ -391,13 +394,14 @@
     <strong>Tasks</strong>
 </div>
 
-<div class="currentPage emptyHint ">
-<p><font color="red" size="2">
-<b>BETA ANNOUNCEMENT:</b>
-Welcome to the new Task Management area of Cockpit.  You will see this new section under each of your projects.  You are welcome to play around and begin using it, but please keep in
-mind that some features are not implemented yet.  For a full description of what is currently implemented, check out <a href="http://www.topcoder.com/university/platform-updates/task-management-beta/">Platform Announcements</a>.
-</font></p>
+<div class="emptyHint ">
+    <p><font color="red" size="2">
+        <b>BETA ANNOUNCEMENT:</b>
+        Welcome to the new Task Management area of Cockpit.  You will see this new section under each of your projects.  You are welcome to play around and begin using it, but please keep in
+        mind that some features are not implemented yet.  For a full description of what is currently implemented, check out <a href="http://www.topcoder.com/university/platform-updates/task-management-beta/">Platform Announcements</a>.
+    </font></p>
 </div>
+
 
 <div class="addTaskPanel">
     <div class="panelHeader">

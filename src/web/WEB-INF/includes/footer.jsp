@@ -1,12 +1,14 @@
 <%--
   - Author: Blues, GreatKevin, TCASSEMBLER
-  - Version: 1.3
+  - Version: 1.4
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Do not show feedback in the error page
   - Version 1.3 (Module Assembly - TC Direct Struts 2 Upgrade)
   - - Fixed the anchor for linkedin.
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Navigation Update)
+  - - Update the feedback widget style
   -
   - Description: The footer of the topcoder cockpit.
   -
@@ -40,7 +42,12 @@
         <div class="fbMask">
             <div class="fbBox">
                 <a class="fbBtn" href="javascript:;">
-                    <span><i>Feedback</i></span>
+                    <span class="r">
+                        <span class="m">
+                            <i></i>
+                            Feedback
+                        </span>
+                    </span>
                 </a>
                 <div class="fbSubmit">
                     <div class="boxTop"></div>

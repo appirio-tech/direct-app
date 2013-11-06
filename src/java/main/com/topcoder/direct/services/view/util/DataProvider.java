@@ -24,6 +24,7 @@ import com.topcoder.direct.services.payments.entities.PaymentsByStatusResult;
 import com.topcoder.direct.services.payments.entities.PullablePayments;
 import com.topcoder.direct.services.payments.entities.TopMemberPayment;
 import com.topcoder.direct.services.payments.entities.TopMemberPaymentCriteria;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
 import com.topcoder.direct.services.view.dto.ActivityDTO;
 import com.topcoder.direct.services.view.dto.ActivityType;
 import com.topcoder.direct.services.view.dto.ClientBillingDirectProjectMappingDTO;
@@ -957,7 +958,7 @@ import java.util.Set;
  * </p>
  *
  * <p>
- * Version 6.21 ( Assembly 1.0) Change notes:
+ * Version 6.21 Change notes:
  *   <ol>
  *     <li>Updated {@link #getContestFinalFixes(long)} method to set the submisison ID for final fix.</li>
  *   </ol>
@@ -977,10 +978,18 @@ import java.util.Set;
  * </ol>
  * </p>
  *
+ *
+ * Version 6.25 (Release Assembly - TopCoder Cockpit Navigation Update)
+ * <ul>
+ *     <li>Added method {@link #getRecentItemsMaxNumber(long)}</li>
+ *     <li>Added method {@link #getUserRecentDirectProjects(long)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141
- * @version 6.23
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin
+ * @version 6.25
  * @since 1.0
  */
 public class DataProvider {
@@ -8702,6 +8711,64 @@ public class DataProvider {
             item.setMilestoneId(row.getLongItem("project_milestone_id"));
 
             result.add(item);
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the max records number to retrieve for user recent items.
+     *
+     * @param recentItemTypeId the user recent item type id.
+     * @return the max records number
+     * @throws Exception if any error.
+     * @since 6.25
+     */
+    public static int getRecentItemsMaxNumber(long recentItemTypeId) throws Exception {
+        Request r = new Request();
+        r.setContentHandle("max_recent_items_number");
+        r.setProperty("itemTypeId", String.valueOf(recentItemTypeId));
+
+        DataAccess cachedDataAccess = new CachedDataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        ResultSetContainer resultSet = cachedDataAccess.getData(r).get("max_recent_items_number");
+
+        if(!resultSet.isEmpty()) {
+            ResultSetRow firstRow = resultSet.get(0);
+
+            return firstRow.getIntItem("max_records_number");
+        } else {
+            throw new Exception("No record for recent item type:" + recentItemTypeId + " in user_recent_item_type");
+        }
+    }
+
+    /**
+     * Gets the recent direct projects the specified user has accessed.
+     *
+     * @param userId the user id
+     * @return a list of <code>DirectProjectAccess</code>, each one represents an access of a unique project
+     * @throws Exception if any error
+     * @since 6.25
+     */
+    public static List<DirectProjectAccess> getUserRecentDirectProjects(long userId) throws Exception {
+        int maxRecentProjectsNumber = getRecentItemsMaxNumber(1L);
+
+        Request r = new Request();
+        r.setContentHandle("user_recent_direct_projects");
+        r.setProperty("ps", String.valueOf(maxRecentProjectsNumber));
+        r.setProperty("uid", String.valueOf(userId));
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        ResultSetContainer resultSet = dataAccess.getData(r).get("user_recent_direct_projects");
+
+        List<DirectProjectAccess> result = new ArrayList<DirectProjectAccess>();
+
+        for(ResultSetRow row : resultSet) {
+            DirectProjectAccess access = new DirectProjectAccess();
+            access.setAccessItemId(row.getLongItem("project_id"));
+            access.setItemName(row.getStringItem("project_name"));
+            access.setAccessTime(row.getTimestampItem("project_access_time"));
+            access.setUserId(userId);
+            result.add(access);
         }
 
         return result;

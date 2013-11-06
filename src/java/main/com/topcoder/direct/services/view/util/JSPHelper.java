@@ -128,8 +128,15 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author isv, pvmagacho, flexme, GreatKevin, FireIce
- * @version 1.3.2
+ * <p>
+ * Version 1.3.3 (Release Assembly - TopCoder Cockpit Navigation Update)
+ * <ul>
+ *     <li>Added method {@link #getCurrentUserIdFromSession()}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, pvmagacho, flexme, GreatKevin, FireIce, GreatKevin
+ * @version 1.3.3
  */
 public class JSPHelper {
 
@@ -640,6 +647,16 @@ public class JSPHelper {
      */
     public static boolean hasWriteProjectPermission(long projectId) throws Exception {
         return AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+    }
+
+    /**
+     * Gets the current login user id.
+     *
+     * @return the current login user id.
+     * @since 1.3.3
+     */
+    public static long getCurrentUserIdFromSession() {
+        return DirectUtils.getTCSubjectFromSession().getUserId();
     }
 
     /**

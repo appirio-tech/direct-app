@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <ui:projectPageType tab="contests"/>
+    <ui:projectPageType tab="gameplan"/>
     <ui:contestPageType tab="details"/>
 </head>
 
@@ -18,7 +18,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 
