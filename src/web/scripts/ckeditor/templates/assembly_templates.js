@@ -1,7 +1,7 @@
 var assembly_template_requirements_content = '' + 
 '<h3>1. Submission Deliverables</h3>' +
 '<p>&nbsp;</p>' +
-'<p>A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial</a>&nbsp;</p>' +
+'<p>A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorials">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorials</a>&nbsp;</p>' +
 '<p><span style="color: #3366ff;" data-mce-mark="1"><em>[Document any specific deliverables associated with this competition]</em></span></p>' +
 '<p><span style="background-color: #ffff00;" data-mce-mark="1">EXAMPLE:</span><br /><span style="background-color: #ffff00;" data-mce-mark="1"> Below is an overview of the deliverables:</span></p>' +
 '<ul>' +

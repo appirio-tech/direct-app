@@ -18,7 +18,7 @@
 
 <h2><strong><span style="color:#FF0000;"><span style="line-height: 1.6em;">Submission Deliverables</span></span></strong></h2>
 
-<p><span style="font-size:12px;">A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorial&nbsp;</a></span></p>
+<p><span style="font-size:12px;">A complete list of deliverables can be viewed in the TopCoder Assembly competition Tutorial at: <a href="http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorials">http://apps.topcoder.com/wiki/display/tc/Assembly+Competition+Tutorials&nbsp;</a></span></p>
 
 <p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Document any specific deliverables associated with this competition]</strong></span></span></p>
 
