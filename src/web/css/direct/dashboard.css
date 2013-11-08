@@ -11456,6 +11456,9 @@ tr.reportAverage {
 #newHeader .mainMenu .menus .tas .icon{
     background-position:-100px -155px;
 }
+#newHeader .mainMenu .menus .vm .icon{
+    background-position:-100px -186px;
+}
 #newHeader .mainMenu .flyout {
     position:absolute;
     left:-1px;
