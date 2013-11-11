@@ -257,7 +257,7 @@
                 <div class="flyout lv2">
                     <ul class="liIcons">
                         <li>
-                            <a class="first" href="http://tc.cloud.topcoder.com/tc?module=MemberProfile&amp;cr=<c:out value="${tcdirect:getCurrentUserIdFromSession()}"/>">My Profile <span class="icon profileI"></span></a>
+                            <a class="first" href="http://community.topcoder.com/tc?module=MyHome" target="_blank">My Profile <span class="icon profileI"></span></a>
                         </li>
                         <li>
                             <a href="<s:url action="notifications" namespace="/settings"/>">Notifications <span class="icon notifyI"></span></a>
