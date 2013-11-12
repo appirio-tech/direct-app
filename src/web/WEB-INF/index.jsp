@@ -17,7 +17,9 @@
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Fix multiple bugs.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" 
+ import="com.topcoder.shared.util.ApplicationServer,
+         com.topcoder.direct.services.view.util.DirectProperties" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -85,8 +87,30 @@
             return false;
         }
     </script>
-    
-    
+
+    <script src="/scripts/auth0-widget.min.js"></script>
+    <link rel="stylesheet" href="http://example.com/cleanslate.css" type="text/css" />
+    <script>
+      $(function () {
+            var widget = new Auth0Widget({
+                domain:      '<%=DirectProperties.DOMAIN_AUTH0%>',
+                clientID:    '<%=DirectProperties.CLIENT_ID_AUTH0%>', 
+                callbackURL: 'https://<%=DirectProperties.REG_SERVER_NAME%><%=DirectProperties.REDIRECT_URL_AUTH0%>'
+            });
+
+            $('#social-login').click( function () {
+                widget.show({  
+                    icon: 'http://www.topcoder.com/i/24x24_brackets.png',
+                    showIcon: true,
+                    state: "https://<%=ApplicationServer.SERVER_NAME%>/direct/",
+                    resources: {
+                        title: "TopCoder/CloudSpokes"
+                    }
+                });
+            });
+        });
+    </script>
+
 </head>
 
 <body class="homePage" id="page">
@@ -350,6 +374,11 @@
                                         <c:if test="${not empty sessionScope.redirectBackUrl}">
                                             <s:hidden name="forwardUrl" value="%{#session.redirectBackUrl}" />
                                         </c:if>
+                                        <div class="register">
+                                            <a  style="width:100%;text-align:center"class="button8" id="social-login">
+                                                <span class="left"><span class="right">SOCIAL LOGIN</span></span>
+                                            </a>
+                                        </div>
                                     </s:form>
 								</div><!-- End .login -->
 								

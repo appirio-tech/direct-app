@@ -15,8 +15,18 @@ import com.topcoder.shared.util.logging.Logger;
  * A collection of properties for Direct application.
  * </p>
  *
- * @author BeBetter
- * @version 1.0 (Direct Search Assembly)
+ *
+ * <p>
+ *   Version 1.1 (Release Assembly - TopCoder Website Social Login) change log:
+ *   <ol>
+*     <li>Add DOMAIN_AUTH0 constant</li>
+ *     <li>Add CLIENT_ID_AUTH0 constant</li>
+ *     <li>Add REDIRECT_URL_AUTH0 constant</li>
+ *     <li>Add REG_SERVER_NAME constant.</li>
+ *   </ol>
+ * </p>
+ * @author BeBetter, ecnu_haozi
+ * @version 1.1
  */
 public final class DirectProperties {
     /**
@@ -53,6 +63,36 @@ public final class DirectProperties {
      * </p>
      */
     public static String CONTEST_SERVICE_FACADE_PROVIDER_URL = "jnp://localhost:1399";
+
+     /**
+     * <p>A <code>String</code> providing the auth0 domain.</p>
+     *
+     * @since 1.1
+     */
+    public static String DOMAIN_AUTH0;
+    
+   /**
+     * <p>A <code>String</code> providing the client id in auth0.com to enable login with 
+     * social accounts like Google, Facebook.</p>
+     *
+     * @since 1.1
+     */
+    public static String CLIENT_ID_AUTH0;
+    
+
+    /**
+     * <p>The callback url of the Auth0 account.</p>
+     * 
+     * @since 1.1
+     */
+    public static String REDIRECT_URL_AUTH0;
+
+    /**
+     * <p>The server name of tc_reg_revamp host.</p>
+     * 
+     *  @since 1.1
+     */
+    public static String REG_SERVER_NAME;
 
     /**
      * <p>
