@@ -86,9 +86,9 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
                     new SessionPersistor(ServletActionContext.getRequest().getSession()),
                     new SimpleRequest(ServletActionContext.getRequest()),
                     new SimpleResponse(ServletActionContext.getResponse()),
-		    BasicAuthentication.MAIN_SITE,
+					BasicAuthentication.MAIN_SITE,
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
-            auth.setBigCookieTime(MAIN_COOKIE_TIME);
+					//auth.setBigCookieTime(MAIN_COOKIE_TIME);
             auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
 
 	    // added by System Assembly - Direct Topcoder Scorecard Tool Integration
