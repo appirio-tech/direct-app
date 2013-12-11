@@ -87,29 +87,38 @@
             return false;
         }
     </script>
-
-    <script src="/scripts/auth0-widget.min.js"></script>
-    <link rel="stylesheet" href="http://example.com/cleanslate.css" type="text/css" />
-    <script>
-      $(function () {
+	 <script src="/scripts/auth0-widget-2.3.6.min.js"></script>
+    <script src="https://d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.3.6.min.js"></script>
+        <script type="text/javascript">
             var widget = new Auth0Widget({
-                domain:      '<%=DirectProperties.DOMAIN_AUTH0%>',
-                clientID:    '<%=DirectProperties.CLIENT_ID_AUTH0%>', 
+                domain: '<%=DirectProperties.DOMAIN_AUTH0%>',
+                clientID: '<%=DirectProperties.CLIENT_ID_AUTH0%>',
                 callbackURL: 'https://<%=DirectProperties.REG_SERVER_NAME%><%=DirectProperties.REDIRECT_URL_AUTH0%>'
             });
 
-            $('#social-login').click( function () {
-                widget.show({  
-                    icon: 'http://www.topcoder.com/i/24x24_brackets.png',
-                    showIcon: true,
-                    state: "https://<%=ApplicationServer.SERVER_NAME%>/direct/",
-                    resources: {
-                        title: "TopCoder/CloudSpokes"
-                    }
+            function showAuth0Widget(){
+                widget.signin({
+                    state : 'https://<%=ApplicationServer.SERVER_NAME%>/direct/',
+                    icon: 'http://www.topcoder.com/i/24x24_brackets.png', 
+                    showIcon: true}).on('signin_ready', function() {
+                    $('.a0-email input').each(function() {
+                        $(this)
+                        .clone()
+                        .attr('type','text')
+                        .attr('placeholder', 'Username')
+                        .attr('title', 'Username')
+                        .insertAfter($(this)).prev().remove();
+                    });
+                });  
+            }            
+            
+            $(function () {
+                $('#social-login').click(function () {
+                    showAuth0Widget();
                 });
             });
-        });
-    </script>
+            
+        </script> 
 
 </head>
 
