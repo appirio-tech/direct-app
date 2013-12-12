@@ -3,9 +3,6 @@
  * 
  * Version 1.1 TC Direct Replatforming Release 1 change note
  * - Many changes were made to work for the new studio contest type and multiround type.
- * 
- * @author TCSASSEMBER
- * @version 1.1
  *
  * Version 1.1 TC Direct- Software Creation Update Assembly changes notes
  * - Update method validateFieldsContestSelectionSoftware to get copilotUserId and name from copilot dropdown
@@ -31,7 +28,17 @@
  * Version 1.7 (Module Assembly - TC Cockpit Contest Milestone Association 1)
  * - Updates to support setting milestone on contest creation
  *
- * @version 1.7
+ * Version 1.8 (Module Assembly - TC Cockpit Launch Code contest)
+ * - Disable checking on milestone for Code contest
+ * - Hide 2nd place prize, DR, reliability, spec review payment in the next overview page. Display multiple Prizes.
+ * - Check custom prize type for Code contest by default
+ *
+ * Version 1.9 (Module Assembly - TC Cockpit Launch F2F contest)
+ * - Disable checking on milestone for F2F contest
+ * - Hide 2nd place prize, DR, reliability, spec review payment in the next overview page.
+ * - Check custom prize type for F2F contest by default
+ *
+ * @version 1.9
  * @author bugbuka, Veve, GreatKevin
  */
 $(document).ready(function() {	 
@@ -198,7 +205,11 @@ function validateFieldsContestSelectionSoftware() {
    
    
    validateTcProject(tcProjectId, errors);
-   validateDirectProjectMilestone(projectMilestoneId, errors);
+
+   // do not check First2Finish or CODE contest for milestone
+    if(categoryId != SOFTWARE_CATEGORY_ID_F2F && categoryId != SOFTWARE_CATEGORY_ID_CODE) {
+       validateDirectProjectMilestone(projectMilestoneId, errors);
+   }
 
 
    if(isMultiRound) {
@@ -317,7 +328,10 @@ function validateFieldsContestSelectionStudio() {
    
    validateContestName(contestName, errors);
    validateTcProject(tcProjectId, errors);
-   validateDirectProjectMilestone(projectMilestoneId, errors);
+
+   if(contestTypeId != SOFTWARE_CATEGORY_ID_F2F && contestTypeId != SOFTWARE_CATEGORY_ID_CODE) {
+       validateDirectProjectMilestone(projectMilestoneId, errors);
+   }
 
    if(isMultiRound) {
       if (checkpointDateHours == 0) {
@@ -396,6 +410,42 @@ function continueContestSelection() {
 
    if(mainWidget.isSoftwareContest()) {
    	  showPage('overviewSoftwarePage');
+  
+
+       // use a different prize layout for Code/F2F contest, hide unused prize settings
+       if (isCode() || isF2F()) {
+           // hide unused prize settings
+           $(".topcoderPrize").hide();
+           $(".codePrize").show();
+
+           // always use custom prize settings for Code contest
+           $("input[name=prizeRadio]:last").attr('checked', 'checked').trigger('click');
+       } else {
+           // show the prize settings for TopCoder contests
+           $(".topcoderPrize").show();
+
+           // if use custom settings, trigger the click to update the prizes
+           if ($("input[name=prizeRadio]:last").is(":checked")) {
+               $("input[name=prizeRadio]:last").trigger('click');
+           }
+       }
+
+       if(isCode()) {
+           $(".codePrize").show();
+       } else if(isF2F()) {
+           $(".codePrize").hide();
+       }
+
+       if(isCode()) {
+           // hide the multiple prize input
+           $(".prizesInner_software #prize2").show();
+           $(".prizesInner_software .swAdd").show();
+       } else {
+           // hide the multiple prize input
+           $(".prizesInner_software #prize2").hide();
+           $(".prizesInner_software .swAdd").hide();
+       }
+
    }else if(mainWidget.isAlgorithmContest()){
    	  showPage('overviewAlgorithmPage');
    } else {// studio contest

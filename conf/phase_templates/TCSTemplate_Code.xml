@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- A template which defines a set of project phases for the Code contest category -->
+<Template name="Code">
+    <!--     An enumeration of project phase types defined in this template -->
+    <PhaseTypes>
+        <PhaseType id="registration" typeId="1" typeName="Registration"/>
+        <PhaseType id="submission" typeId="2" typeName="Submission"/>
+        <PhaseType id="review" typeId="4" typeName="Review"/>
+    </PhaseTypes>
+    <!--     A set of project phases defined in this template. -->
+    <Phases>
+        <Phase id="registrationPhase" length="172800000" type="registration" phaseId="1">
+        </Phase>
+
+        <Phase id="submissionPhase" length="432000000" type="submission" phaseId="2">
+            <Dependency id="registrationPhase" isDependencyStart="true" isDependentStart="true" lagTime="300000"/>
+        </Phase>
+
+        <Phase id="reviewPhase" length="172800000" type="review" phaseId="4">
+            <Dependency id="submissionPhase" isDependentStart="true" lagTime="0"/>
+        </Phase>
+    </Phases>
+</Template>

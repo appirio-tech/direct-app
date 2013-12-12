@@ -1,10 +1,15 @@
+/*
+ * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.direct.services.configs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.topcoder.management.project.ProjectPlatform;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -12,6 +17,19 @@ import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 
+/**
+ * This class provides all the lookup data used in the Cockpit.
+ *
+ * <p>
+ *  Version 1.1 (Module Assembly - TC Cockpit Launch F2F contest)
+ *  <ul>
+ *      <li>Added project platforms data</li>
+ *  </ul>
+ * </p>
+ *
+ * @version 1.1
+ * @author GreatKevin
+ */
 public class ReferenceDataBean implements InitializingBean {
     /**
      * <p>
@@ -33,6 +51,20 @@ public class ReferenceDataBean implements InitializingBean {
      * </p>
      */
     private Map<Long, Technology> technologyMap;
+
+    /**
+     * The platforms.
+     *
+     * @since 1.1
+     */
+    private List<ProjectPlatform> platforms;
+
+    /**
+     * The platforms map.
+     *
+     * @since 1.1
+     */
+    private Map<Long, ProjectPlatform> platformMap;
 
     /**
      * <p>
@@ -147,6 +179,27 @@ public class ReferenceDataBean implements InitializingBean {
      */
     public Map<Long, Technology> getTechnologyMap() {
         return technologyMap;
+    }
+
+    /**
+     * Gets the platforms map.
+     *
+     * @return the platforms map.
+     *
+     * @since 1,1
+     */
+    public List<ProjectPlatform> getPlatforms() {
+        return platforms;
+    }
+
+    /**
+     * Sets the platforms map.
+     *
+     * @return the platforms map.
+     * @since 1.1
+     */
+    public Map<Long, ProjectPlatform> getPlatformMap() {
+        return platformMap;
     }
 
     /**
@@ -278,6 +331,13 @@ public class ReferenceDataBean implements InitializingBean {
         technologyMap = new HashMap<Long, Technology>();
         for (Technology technology : technologies) {
             technologyMap.put(technology.getId(), technology);
+        }
+
+        // platforms
+        platforms = Arrays.asList(getContestServiceFacade().getAllProjectPlatforms());
+        platformMap = new HashMap<Long, ProjectPlatform>();
+        for(ProjectPlatform platform : platforms) {
+            platformMap.put(platform.getId(), platform);
         }
 
         // categories

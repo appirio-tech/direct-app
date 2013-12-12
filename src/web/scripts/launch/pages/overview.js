@@ -28,13 +28,32 @@
  * - add method validateFieldsOverviewAlgorithm
  * - update continueOverview method to support algorithm contest.
  *
- * @author bugbuka
- * @version 1.5
+ * Version 1.6 (Module Assembly - TC Cockpit Launch Code contest)
+ * - Add support for multiple prizes for Code Contest type
+ *
+ * Version 1.7 (Module Assembly - TC Cockpit Launch F2F contest)
+ * - Add support for "Choose Project Platforms" control
+ *
+ * @author bugbuka, GreatKevin
+ * @version 1.7
  */
 $(document).ready(function() {
-   //technologies
+
+   // technologies
    sortTechnologySelects();
+
+   // categories
    sortCategorySelects();
+
+    $('#addPlatforms').click(function(){
+        $('#masterPlatformsSelect option:selected').appendTo('#masterPlatformsChoosenSelect');
+        sortPlatformSelects();
+    });
+
+    $('#removePlatforms').click(function(){
+        $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
+        sortPlatformSelects();
+    });
 
    $('#addTechnologies').click(function(){
        $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
@@ -70,11 +89,23 @@ $(document).ready(function() {
    $('#swFirstPlace').bind('keyup',function() {
        onFirstPlaceChangeKeyUp();
     });
+
+    $(".prizesInner_software input[type=text].prizesInput").bind('keyup', function(){
+        if($(this).attr('id') == 'swFirstPlace') return;
+        var prizeIndex = $(".prizesInner_software input[type=text].prizesInput").index(this) + 1;
+        var prizeName;
+        switch (prizeIndex) {
+            case 2 : prizeName = "2nd"; break;
+            case 3 : prizeName = "3rd"; break;
+            default: prizeName = prizeIndex + "th"; break;
+        }
+        onSoftwarePrizeInputChange($(this), prizeName + " Place Prize", false);
+    })
     
     $('#swDigitalRun').bind('keyup',function() {
        onDigitalRunChangeKeyUp();
     });
-    
+
     $('#swCheckpointPrize').bind('keyup', onCheckpointPrizeChangeKeyUp);
     $('#swCheckpointSubmissionNumber').bind('change', onCheckpointPrizeChangeKeyUp);
 }); // end of initiation
@@ -118,6 +149,12 @@ function validateFieldsOverviewSoftware() {
       }
    }
 
+   if(isPlatformContest()) {
+       if($('#masterPlatformsChoosenSelect option').length == 0) {
+           errors.push('No Platform is selected.');
+       }
+   }
+
    if(isDevOrDesign()) {
       if( rootCategoryId <= 0 ) {
            errors.push('No catalog is selected.');
@@ -139,6 +176,11 @@ function validateFieldsOverviewSoftware() {
      if(!checkRequired(value) || !checkNumber(value)) {
         errors.push('digital run value is invalid.');
      }
+   }
+
+   if(isCode()) {
+       // validate multiple prizes settings
+       var codePrizes = validateCodePrizes(errors);
    }
 
    if(mainWidget.softwareCompetition.multiRound) {
@@ -170,6 +212,13 @@ function validateFieldsOverviewSoftware() {
           return option.value;
      });
    }
+
+   if(isPlatformContest()) {
+        mainWidget.softwareCompetition.platforms =
+            $.map($('#masterPlatformsChoosenSelect option'), function (option, i) {
+                return option.value;
+            });
+    }
 
    updateSoftwarePrizes();
 

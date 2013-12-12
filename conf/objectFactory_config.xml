@@ -1851,6 +1851,8 @@
             <Value>phase_templates/TCSTemplate_Copilot_Posting.xml</Value>
             <Value>phase_templates/TCSTemplate_Marathon_Match.xml</Value>
             <Value>phase_templates/TCSTemplate_Bug_Hunt.xml</Value>
+            <Value>phase_templates/TCSTemplate_F2F.xml</Value>
+            <Value>phase_templates/TCSTemplate_Code.xml</Value>
         </Property>
     </Config>
 

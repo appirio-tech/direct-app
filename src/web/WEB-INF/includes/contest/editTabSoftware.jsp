@@ -1,10 +1,11 @@
 <%--
-  - Version: 2.0
+  - Version: 2.2
   - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
   - Version 1.0.1 (TC Direct Release Assembly 7) changes: added digital run input field.
+  -
   - Version 1.0.2 (TC Direct Software Creation Update) changes: add display of copilots.
   -
   - Version 1.0.3 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
@@ -44,6 +45,12 @@
 
   - Version 2.0 (Module Assembly - TC Cockpit Contest Milestone Association 1)
   - - Add milestone display and edit
+  -
+  - Version 2.1 (Module Assembly - TC Cockpit Launch Code contest)
+  - - Add multiple prize display for Code contest type
+  -
+  - Version 2.2 (Module Assembly - TC Cockpit Launch F2F contest)
+  - - Add choose your platform control
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -86,6 +93,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="cmcTask">
+                <td class="first_tab_type"><strong>CMC Task ID</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
+            </tr>
+            <tr class="cmcTask"></tr>
             <tr>
                 <td class="first_tab_type"><strong>Milestone</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
@@ -143,14 +155,20 @@
               <input type="text" class="bigin"  id="contestName" />
               <span id="contestNameText"></span>
           </span>
-          <br /><br />
+          <br /><br  class="cmcTask" /><p class="cmcTask">
+          <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
+                    <span class="value">
+                        <input type="text" disabled="disabled" value="" id="CMCTaskID" class="bigin">
+                    </span>
+
+          </p><br/>
             
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
               <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
           </span>
           <br /><br />
-				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
+				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>CCA required</strong></span>
 				 <br /> <br />
 				 <div id="projectEditDiv">
 				 <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -380,14 +398,18 @@
               </p>	     	
 							<table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
-                     	<td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
+                      <td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
+                      <td class="sec_tab_prize extraPrize hide"><strong>2nd Place:</strong> $<span></span></td>
+                      <td class="sec_tab_prize extraPrize hide"><strong>3rd Place</strong> $<span></span></td>
+                      <td class="sec_tab_prize extraPrize hide"><strong>4th Place</strong> $<span></span></td>
+                      <td class="sec_tab_prize extraPrize hide"><strong>5th Place</strong> $<span></span></td>
                       <td class="sec_tab_prize"><strong>Review Cost:</strong> $<span id="rswReviewCost"></span></td>
-                      <td class="sec_tab_prize"><strong>Reliability Bonus:</strong> $<span id="rswReliabilityBonus"></span></td>
-                      <td class="sec_tab_prize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
+                      <td class="sec_tab_prize topcoderPrize"><strong>Reliability Bonus:</strong> $<span id="rswReliabilityBonus"></span></td>
+                      <td class="sec_tab_prize topcoderPrize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                    </tr>
                    <tr class="rightbor">
-                       <td class="first_tab"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
-                       <td class="sec_tab_prize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
+                       <td class="first_tab topcoderPrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
+                       <td class="sec_tab_prize topcoderPrize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
                        
                    </tr>
@@ -421,12 +443,12 @@
                 
                <div class="prizes">  
                      <div class="prizesInner_software">
-                     	<span class="head"><p>Please Select the prize structure for your contest by choosing one of the options 
+                     	<span class="head topcoderPrize"><p>Please Select the prize structure for your contest by choosing one of the options
                          below:</p></span> 
-                         <p>
+                         <p class="topcoderPrize">
                          <br />
                          <span class="radio_font">
-                     	   <input type="radio" name="prizeRadio" value="low" />&nbsp;&nbsp;&nbsp;Low&nbsp;&nbsp;($<span id="swPrize_low"></span>)
+                     	 <input type="radio" name="prizeRadio" value="low" />&nbsp;&nbsp;&nbsp;Low&nbsp;&nbsp;($<span id="swPrize_low"></span>)
                          <input type="radio" name="prizeRadio" value="medium" class="space_radio" />&nbsp;&nbsp;&nbsp;Medium&nbsp;&nbsp;($<span id="swPrize_medium"></span>)
                          <input type="radio" name="prizeRadio" value="high" class="space_radio" />&nbsp;&nbsp;&nbsp;High&nbsp;&nbsp;($<span id="swPrize_high"></span>)
                          <input type="radio" name="prizeRadio" value="custom" class="space_radio customRadio" /> <span class="customRadio"> &nbsp;&nbsp;&nbsp; Custom </span>
@@ -435,23 +457,48 @@
                          </p>
                          <br />
                          <div class="prizesInner">
-                       	<label class="first">1st Place</label>
-                         <span class="dw">$</span>
-                         <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
-                         <label class="second">2nd Place</label>
-                         <span class="dw">$</span>
-                         <span id="swSecondPlace" class="prizeInfo" style="line-height: 33px;font-size: 12px;font-weight: bold"></span>
-                     	</div>
+                             <label class="first">1st Place</label>
+                             <span class="dw">$</span>
+                             <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
+                             <span class="codePrize topcoderPrize">
+                               <label class="second">2nd Place</label>
+                               <span class="dw">$</span>
+                             </span>
+                             <span class="topcoderPrize">
+                               <span id="swSecondPlace" class="prizeInfo" style="line-height: 33px;font-size: 12px;font-weight: bold"></span>
+                             </span>
+                             <input type="text" id="prize2"  class="prizesInput" value="" />
+                             <a href="javascript:;" class="addButton swAdd"><span class="hide">ADD</span></a>
+                     	 </div>
+                         <div id="swExtraPrizes" class="prizesInner hide">
+                             <label class="third" style="margin-left: 12px">3rd Place</label>
+                             <span class="dw">$</span>
+                             <input type="text" id="prize3" class="prizesInput" value="" />
+                             <label class="first">4th Place</label>
+                             <span class="dw">$</span>
+                             <input type="text" id="prize4" class="prizesInput" value="" />
+                             <label class="first">5th Place</label>
+                             <span class="dw">$</span>
+                             <input type="text" id="prize5" class="prizesInput" value="" />
+                             <label class="third">&nbsp;</label>
+                             <span class="dw">&nbsp;</span>
+                             <a href="javascript:;" class="removeButton swRemove"><span class="hide">REMOVE</span></a>
+                         </div>
                          <br />
                          <span class="head">
-                         <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
-                         <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-                         <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
-                         <span class="mid_info">Digital Points:&nbsp;&nbsp;$</span>
-                         <span><input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/></span>
+                             <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
+                             <span class="topcoderPrize">
+                                 <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span
+                                         id="swReliabilityBonus"></span></span>
+                                 <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
+                                 <span class="mid_info">Digital Points:&nbsp;&nbsp;$</span>
+                                 <input type="text" class="prizesInput" value="" id="swDigitalRun"
+                                        readonly="true" size="7"/>
+                             </span>
+
                          <br />
                          <span class="first_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
-                         <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+                         <span class="mid_inf topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
                          <br />
                          <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
@@ -540,7 +587,20 @@
                    </p>
                    
                    <div class="bottom_spec">
-                   </div>     
+                   </div>
+
+                    <div class="platform">
+                        <p class="det_font">
+                            <span class="name"><strong>Current Project Platforms</strong></span>
+
+                            <br /><br />
+                       <span class="small_info_spec" id="rswPlatforms">
+                       </span>
+                        </p>
+
+                        <div class="bottom_spec">
+                        </div>
+                    </div> <!-- End of .platform -->
                    
                    <div class="technology">                         
                        <p class="det_font">
@@ -639,6 +699,32 @@
                 <!-- end .guidelines -->
                             
                 <s:if test='result.projectHeader.projectCategory.id != 29'>
+
+                    <div class="prizes platform" id="swPlatformDiv">
+                        <h3>Choose Your Platform:</h3>
+
+                        <div class="prizesInner_tech">
+                            <span class="head_font">Master Platforms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span class="head_font_space">Your Project Platforms</span>
+                            <br />
+                            <select multiple id="masterPlatformsSelect">
+                                <s:iterator value="referenceDataBean.platforms">
+                                    <option value='<s:property value="id" />'><s:property value="name" /></option>
+                                </s:iterator>
+                            </select>
+
+                            <div id="button_platform">
+                                <img src="/images/add_tech.png" alt="add" id="addPlatforms" />
+                                <br /><br />
+                                <img src="/images/remove_tech.png" alt="remove" id="removePlatforms" />
+                            </div>
+
+                            <select multiple id="masterPlatformsChoosenSelect">
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div class="prizes technology" id="swTechnologyDiv">    
                         <h3>Choose Your Technology:</h3>
                           

@@ -122,6 +122,9 @@
  *
  * - Release Assembly - TopCoder Cockpit Navigation Update
  * -- Add styles for the new cockpit navigation
+ *
+ * -- Module Assembly - TC Cockpit Launch Code Contest
+ * -- Add styles the extra prize section in software contest to store multiple prizes for software
  */
 
 
@@ -10604,7 +10607,7 @@ div.clientInvoiceManageRow.last {
     padding: 5px 10px 0px;
 }
 
-#alExtraPrizes, #extraPrizes {
+#alExtraPrizes, #extraPrizes, #swExtraPrizes {
     border-top: none;
 }
 
@@ -11804,4 +11807,8 @@ tr.reportAverage {
 
 .ellipsis.multiline {
     white-space: normal;
+}
+
+.cmcTask {
+    display: none;
 }

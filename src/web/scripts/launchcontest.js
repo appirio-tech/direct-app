@@ -636,8 +636,17 @@ function updateRoundDurationLabels() {
  * event handler function when contest type is changed.
  */
 function onContestTypeChange() {
+
+    var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
+    if(isContestSaved()) {
+        currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+        if(currentTypeId == typeId) {
+            return false;
+        }
+    }
+
     var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
     var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
     var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
@@ -669,9 +678,23 @@ function onContestTypeChange() {
         });
     }
     
-    var currentTypeId = -1;
-    if(isContestSaved()) {
-       currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    if(isContestSaved() && typeId != currentTypeId) {
+        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved contest to First2Finish contest type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved First2Finish contest to other contest type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
     }
 
     if(typeId == 14 && contestType == 'SOFTWARE') {
@@ -705,6 +728,7 @@ function onContestTypeChange() {
         // it is a revert, nothing to do here
         return;
     }
+
 
        
        if (mainWidget.softwareCompetition.projectHeader.projectCategory && mainWidget.softwareCompetition.projectHeader.projectCategory.id > 0) {

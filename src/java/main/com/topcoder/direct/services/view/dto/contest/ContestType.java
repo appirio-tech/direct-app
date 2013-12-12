@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -19,9 +19,23 @@ package com.topcoder.direct.services.view.dto.contest;
   *     <li>Add {@link #BUG_HUNT} contest type</li>
   *   </ol>
   * </p>
-
- * @author isv, TCSASSEMBLER
- * @version 1.2
+ *
+ * <p>
+ * Version 1.3 (Module Assembly - TC Cockpit Launch Code contest)
+ * <ul>
+ *     <li>Added {@link #CODE contest type}</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.4 (Module Assembly - TC Cockpit Launch F2F contest)
+ * <ul>
+ *     <li>Added {@link #FIRST2FINISH contest type}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.4
  */
 public enum ContestType {
 
@@ -185,7 +199,21 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Bug Hunt</code> contest type.</p>
      */
-    BUG_HUNT("Bug Hunt","bh", 9);
+    BUG_HUNT("Bug Hunt","bh", 9),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>First2Finish</code> contest type.</p>
+     *
+     *  @since 1.4
+     */
+    FIRST2FINISH("First2Finish", "f2f", 38),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Code</code> contest type.</p>
+     *
+     *  @since 1.3
+     */
+    CODE("Code", "code", 39);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the

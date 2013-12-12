@@ -30,6 +30,9 @@
   -
   - Version 1.9 (Module Assembly - TC Cockpit Contest Milestone Association 1)
   - - Add milestone display and edit
+  -
+  - Version 2.0 (Module Assembly - TC Cockpit Launch Code Contest)
+  - - Add a specific CSS class for studio contest prize add and remove
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -72,6 +75,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="cmcTask">
+                <td class="first_tab_type"><strong>CMC Task ID</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
+            </tr>
+            <tr class="cmcTask"></tr>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></td>
@@ -106,7 +114,7 @@
           </div><!-- End .caption -->                                               
           
       <div class="detailsContent_det_type_edit">
-                    <div class="det_font" style="border:1px solid #BDBDBD; height:395px;padding-left:10px;">
+                    <div class="det_font" style="height:395px; padding-left:10px;">
             <div id="launchContestOut" class="contestTypeEditSection">                                                         
                          <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -146,7 +154,7 @@
                             <input type="text" class="bigin"  id="reviewStyle" value="User Selection" disabled="disabled"/>
                         </span>
                  <br /><br />
-                 <span class="name"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
+                 <span class="name"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;<strong>CCA required</strong></span>
                  <!-- Billing Account -->
                  <div id="billingAccountDivEdit">
                  <br />
@@ -159,6 +167,13 @@
                  </div>
                  
                  <br /><br />
+                <span class="cmcTask"><br />
+                    <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
+                    <span class="value">
+                        <input type="text" class="bigin"  id="CMCTaskID" value="" disabled="disabled"/>
+                    </span>
+
+                 </span>
                  <div id="projectEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -506,7 +521,7 @@
                         <label class="third">3rd Place</label>
                         <span class="dw">$</span>
                         <input type="text" id="prize3" class="prizesInput" value="" />
-                        <a href="javascript:;" class="addButton"><span class="hide">ADD</span></a>
+                        <a href="javascript:;" class="addButton studioAdd"><span class="hide">ADD</span></a>
                     </div>
                     
                     <div id="extraPrizes" class="prizesInner hide">
@@ -518,7 +533,7 @@
                         <input type="text" id="prize5" class="prizesInput" value="" />
                         <label class="third">&nbsp;</label>
                         <span class="dw">&nbsp;</span>
-                        <a href="javascript:;" class="removeButton"><span class="hide">REMOVE</span></a>
+                        <a href="javascript:;" class="removeButton studioRemove"><span class="hide">REMOVE</span></a>
                     </div>        
                 </div> <!-- End .prizes -->
                    

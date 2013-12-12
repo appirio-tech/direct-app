@@ -6,6 +6,8 @@ package com.topcoder.direct.services.view.ajax;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.topcoder.clients.model.ContestType;
+import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import net.sf.json.JSONObject;
@@ -69,8 +71,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (Module Assembly - TC Cockpit Launch F2F contest)
+ * <ul>
+ *     <li>Updated {@link #getMapResult(com.topcoder.service.project.SoftwareCompetition)} to add platforms</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 1.6
+ * @version 1.7
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -206,6 +215,14 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }));
         }
 
+        if(isPlatformContest(bean)) {
+            result.put("platformIds", CollectionUtils.collect(bean.getProjectHeader().getPlatforms(), new Transformer() {
+                public Object transform(Object object) {
+                    return ((ProjectPlatform) object).getId() + "";
+                }
+            }));
+        }
+
         // documentation
         result.put("documentation", CollectionUtils.collect(assetDTO.getDocumentation(), new Transformer() {
             public Object transform(Object object) {
@@ -274,5 +291,17 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
     private boolean isTechnologyContest(SoftwareCompetition bean) {
         long categoryId = bean.getProjectHeader().getProjectCategory().getId();
         return !(CATEGORY_CONCEPT == categoryId || CATEGORY_SPEC == categoryId);
+    }
+
+    /**
+     * <p>
+     * Determines if it needs platform.
+     * </p>
+     *
+     * @param bean the software competition
+     * @return true if it needs platform.
+     */
+    private boolean isPlatformContest(SoftwareCompetition bean) {
+        return isTechnologyContest(bean);
     }
 }

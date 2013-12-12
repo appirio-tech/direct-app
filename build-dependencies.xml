@@ -571,7 +571,7 @@
   <property name="review_application_management.path" value="review_application_management/${review_application_management.version}" />
   <property name="review_application_management.jar" value="${tcs_libdir}/${review_application_management.path}/${review_application_management.jar.name}" />  
 
-  <property name="project_payment_calculator.version" value="1.0.0" />
+  <property name="project_payment_calculator.version" value="1.1.0" />
   <property name="project_payment_calculator.jar.name" value="project_payment_calculator.jar" />
   <property name="project_payment_calculator.path" value="project_payment_calculator/${project_payment_calculator.version}" />
   <property name="project_payment_calculator.jar" value="${tcs_libdir}/${project_payment_calculator.path}/${project_payment_calculator.jar.name}" />  

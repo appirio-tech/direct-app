@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.3
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.5
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for software contest.
   -
@@ -12,6 +12,12 @@
   - - Added checkpoint prizes section.
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
+  -
+  - Version 1.4 (Module Assembly - TC Cockpit Launch Code contest)
+  - - Hide the uneeded prize for Code contest, add multiple prizes
+  -
+  - Version 1.5 (Module Assembly - TC Cockpit Launch F2F contest)
+  - - Hide the uneeded prize for F2F contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -91,9 +97,11 @@
         <label class="first">1st Place</label>
         <span class="dw">$</span>
         <span class="numberDor"><span id="rswFirstPlaceCost"></span></span>
-        <label class="second">2nd Place</label>
-        <span class="dw">$</span>
-        <span class="numberDor"><span id="rswSecondPlaceCost"></span></span>
+        <span class="topcoderPrize"/>
+            <label class="second">2nd Place</label>
+            <span class="dw">$</span>
+            <span class="numberDor"><span id="rswSecondPlaceCost"></span></span>
+        </span>
         <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
     </div>    
 </div>

@@ -6,16 +6,22 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * <p>An action for handling the requests for getting the review cost for desired contest.</p>
+ *
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Launch F2F contest)
+ * <ul>
+ *     <li>Updated {@link #executeAction()} to calculate the iterative review payment</li>
+ * </ul>
+ * </p>
  * 
  * @author notpad
- * @version 1.0 (BUGR-8206 - TopCoder Direct Default Payment Update)
+ * @version 1.1 (Module Assembly - TC Cockpit Launch F2F contest)
+ * @since 1.0 (BUGR-8206 - TopCoder Direct Default Payment Update)
  */
 public class GetReviewCostAction extends BaseDirectStrutsAction {
     /**
@@ -64,12 +70,17 @@ public class GetReviewCostAction extends BaseDirectStrutsAction {
                 DefaultProjectPaymentCalculator.FINAL_REVIEWER_RESOURCE_ROLE_ID, prize, DEFAULT_SUBMISSION_COUNT);
         BigDecimal specReviewCost = projectPaymentCalculator.getDefaultPayment(projectCategoryId,
                 DefaultProjectPaymentCalculator.SPECIFICATION_REVIEWER_RESOURCE_ROLE_ID, prize, DEFAULT_SUBMISSION_COUNT);
-        
+
+        BigDecimal iterativeReviewCost = projectPaymentCalculator.getDefaultPayment(projectCategoryId,
+                DefaultProjectPaymentCalculator.ITERATIVE_REVIEWER_RESOURCE_ROLE_ID, prize, DEFAULT_SUBMISSION_COUNT);
+
+
         result.put("screeningCost", screeningCost);
         result.put("reviewCost", reviewCost);
         result.put("aggregationCost", aggregationCost);
         result.put("finalReviewCost", finalReviewCost);
         result.put("specReviewCost", specReviewCost);
+        result.put("iterativeReviewCost", iterativeReviewCost);
         
         setResult(result);
     }
@@ -86,7 +97,7 @@ public class GetReviewCostAction extends BaseDirectStrutsAction {
     /**
      * Sets the project payment calculator.
      * 
-     * @param projectId the project payment calculator.
+     * @param projectPaymentCalculator the project payment calculator.
      */
     public void setProjectPaymentCalculator(DefaultProjectPaymentCalculator projectPaymentCalculator) {
         this.projectPaymentCalculator = projectPaymentCalculator;

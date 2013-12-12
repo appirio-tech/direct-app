@@ -104,8 +104,11 @@
     <contestType contestTypeId="18"><!-- Banners/Icons -->
         <copilotFee>600</copilotFee>
     </contestType>
+    <contestType contestTypeId="38"><!-- First2Finish -->
+        <copilotFee>600</copilotFee>
+    </contestType>
 
-    <contestType contestTypeId="18"><!-- Banners/Icons -->
+    <contestType contestTypeId="39"><!-- Code -->
         <copilotFee>600</copilotFee>
     </contestType>
 </contestTypes>

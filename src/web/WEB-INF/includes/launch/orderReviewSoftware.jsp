@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBER, Ghost_141
-  - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: order review page for software contest page.
   -
@@ -10,6 +10,12 @@
   - 
   - Version 1.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
   - - Fix multiple bugs.
+  -
+  - Version 1.3 - Module Assembly - TC Cockpit Launch Code contest
+  - - Mark the prizes not needed for the Code contest, they can be hidden. Add support for multiple prizes (up to 5)
+  -
+  - Version 1.4 - Module Assembly - TC Cockpit Launch F2F contest
+  - - Mark the prizes not needed for the First2Finish contest, they can be hidden in F2F mode
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -34,10 +40,6 @@
 					<tr>
 						<th>Competition Title :</th>
 						<td><span id="sworContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-					</tr>
-					<tr>
-						<th>Review Style :</th>
-						<td>TopCoder Community Review Board</td>
 					</tr>
 					<tr>
 						<th>Project :</th>
@@ -65,9 +67,9 @@
   <table class="prizesTable">
   		<tbody><tr>
   			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td class="topcoderPrize">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td class="last"><span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
@@ -81,7 +83,7 @@
 	<table class="prizesTable">
 		<tr>
   			<td>Contest Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td class="topcoderPrize">Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
             <td>Copilot Fee : $<span id="sworCopilotFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 			<td>&nbsp;</td>

@@ -49,9 +49,20 @@
  *  Version 1.6 (Module Assembly - TC Cockpit Contest Milestone Association 1)
  *  - Add projectMilesoneId and projectMilestoneName to the SoftwareCompetition entity.
  * </p>
+ *
+ * <p>
+ *   Version 1.7 (Module Assembly - TC Cockpit Launch F2F contest)
+ *   - Add First2Finish contest type to software group
+ * </p>
+ * 
+ *
+ * <p>
+ *   Version 1.8 (Module Assembly - TC Cockpit Launch Code contest)
+ *   - Add Code contest type to software group
+ * </p>
  * 
  * @author duxiaoyang, bugbuka, GreatKevin
- * @version 1.6
+ * @version 1.8
  */
 if(!com) {
    var com = {};
@@ -170,38 +181,42 @@ var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
 var SOFTWARE_CATEGORY_ID_ASSEMBLY = 14;
+var SOFTWARE_CATEGORY_ID_F2F = 38;
+var SOFTWARE_CATEGORY_ID_CODE = 39;
 
 var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 
 var DRAFT_STATUS = "Draft";
  
 var projectCategoryArray = [
-{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application', hasMulti:true},
-{id:7,                                 name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component', hasMulti:false},
-{id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component', hasMulti:false},
-{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:true},
-{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:true},
-{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'SOFTWARE ASSEMBLY', label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
-{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:true},
-{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:true},
-{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},
-{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application', hasMulti:true},
-{id:17,                                name:'Web Design',        label:'Web Design',                 typeId:3, typeName:'Studio', hasMulti:true},
-{id:20,                                name:'Logo Design',       label:'Logo Design',                typeId:3, typeName:'Studio', hasMulti:true},
-{id:16,                                name:'Banners/Icons',     label:'Banners/Icons',              typeId:3, typeName:'Studio', hasMulti:true},
-{id:32,                                name:'Application Front-End Design', label:'Application Front-End Design', typeId:3, typeName:'Studio', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',                    label:'Software Specification',             typeId:2, typeName:'Application', hasMulti:true},
+{id:7,                                 name:'ARCHITECTURE',                     label:'Architecture',                       typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',                           label:'Component Design',                   typeId:1, typeName:'Component', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',                      label:'Component Development',              typeId:1, typeName:'Component', hasMulti:false},
+{id:25,                                name:'RIACOMPONENT',                     label:'RIA Component',                      typeId:2, typeName:'Application', hasMulti:true},
+{id:24,                                name:'RIABUILD',                         label:'RIA Build',                          typeId:2, typeName:'Application', hasMulti:true},
+{id:19,                                name:'UIPROTOTYPE',                      label:'UI Prototype',                       typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'SOFTWARE ASSEMBLY',                label:'Software Assembly',                  typeId:2, typeName:'Application', hasMulti:true},
+{id:13,                                name:'TESTSUITES',                       label:'Test Suites',                        typeId:2, typeName:'Application', hasMulti:true},
+{id:26,                                name:'TESTSCENARIOS',                    label:'Test Scenarios',                     typeId:2, typeName:'Application', hasMulti:true},
+{id:29,                                name:'Copilot Posting',                  label:'Copilot Posting',                    typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',                 label:'Content Creation',                   typeId:2, typeName:'Application', hasMulti:true},
+{id:17,                                name:'Web Design',                       label:'Web Design',                         typeId:3, typeName:'Studio', hasMulti:true},
+{id:20,                                name:'Logo Design',                      label:'Logo Design',                        typeId:3, typeName:'Studio', hasMulti:true},
+{id:16,                                name:'Banners/Icons',                    label:'Banners/Icons',                      typeId:3, typeName:'Studio', hasMulti:true},
+{id:32,                                name:'Application Front-End Design',     label:'Application Front-End Design',       typeId:3, typeName:'Studio', hasMulti:true},
 {id:30,                                name:'Widget or Mobile Screen Design',   label:'Widget or Mobile Screen Design',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:31,                                name:'Front-End Flash',   label:'Front-End Flash',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:21,                                name:'Print/Presentation',label:'Print/Presentation',         typeId:3, typeName:'Studio', hasMulti:true},
-{id:34,                                name:'Studio Other',             label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
-{id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
-{id:ALGORITHM_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
-{id:9,                                 name:'Bug Hunt',   label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false}
+{id:31,                                name:'Front-End Flash',                  label:'Front-End Flash',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:21,                                name:'Print/Presentation',               label:'Print/Presentation',         typeId:3, typeName:'Studio', hasMulti:true},
+{id:34,                                name:'Studio Other',                     label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
+{id:18,                                name:'Wireframes',                       label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:22,                                name:'Idea Generation',                  label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:36,                                name:'REPORTING',                        label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
+{id:ALGORITHM_CATEGORY_ID_MARATHON,    name:'Marathon Match',                   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
+{id:9,                                 name:'Bug Hunt',                         label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_F2F,          name:'First2Finish',                     label:'First2Finish',            typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_CODE,         name:'Code',                             label:'Code',            typeId:2, typeName:'Application', hasMulti:false}
 ];
 
 /**

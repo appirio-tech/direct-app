@@ -26,8 +26,16 @@
  * - add updateOrderReviewAlgorithm method to update order review page of algorithm contest
  * - update backOrderReview method to support algorithm contest
  *
- * @author pvmagacho, GreatKevin, bugbuka
- * @version 1.6
+ * Version 1.7 - Module Assembly - TC Cockpit Launch Code contest
+ * - hide 2nd place prize, DR, reliability, spec review for the Code contest
+ * - Add multiple prize support for Code contest type
+ * - Do not show spec review start modal for Code contest type as it does not have spec review phase
+ *
+ *
+ * Version 1.8 - Module Assembly - TC Cockpit Launch F2F contest
+ * - hide 2nd place prize, DR, reliability, spec review for the F2F contest
+ * @author pvmagacho, GreatKevin, bugbuka, GreatKevin
+ * @version 1.8
  */
 
 /**
@@ -143,9 +151,30 @@ function updateOrderReviewSoftware() {
    } else {
        $('#sworDRPoints').parents("td").show()
    }
+    var contestPrizesPart = 0;
+
+    if(isCode()) {
+        var contestPrizesHTML = "";
+        var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+        $.each(prizes, function(i, prize) {
+            if (prize.prizeType.id != CONTEST_PRIZE_TYPE_ID || prize.prizeAmount <= 0) {
+                return;
+            }
+            var place = prize.place;
+            var amount = prize.prizeAmount;
+            contestPrizesPart += amount;
+            contestPrizesHTML +=
+                '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+        });
+        contestPrizesHTML += '<td class="last">$'+ contestPrizesPart.formatMoney(0) +'</td>';
+        $('#orderReviewSoftwarePage .prizesTable tbody tr:eq(0)').html(contestPrizesHTML);
+    } else {
+        contestPrizesPart = firstPrize + secondPrize;
+    }
+
    var reliabilityBonusCost = mainWidget.softwareCompetition.projectHeader.getReliabilityBonusCost();
    $('#sworReliabilityBonusCost').html(reliabilityBonusCost.formatMoney(2));
-   var contestPrizeCost = firstPrize + secondPrize + reliabilityBonusCost;
+   var contestPrizeCost = contestPrizesPart + reliabilityBonusCost;
 
     if($("#DRCheckbox").is(":checked")) {
         contestPrizeCost += drPoints;
@@ -163,6 +192,19 @@ function updateOrderReviewSoftware() {
    var additionalFee = specificationReviewPayment + reviewPayment + contestFee + parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
    $('#sworTotal').html((contestPrizeCost + checkpointPrizesTotal + additionalFee).formatMoney(2));
+
+    if (isF2F() || isCode()) {
+        // hide unused prize settings
+        $(".topcoderPrize").hide();
+
+        if(isCode()) {
+            $(".codePrize").show();
+        }
+
+    } else {
+        // show the prize settings for TopCoder contests
+        $(".topcoderPrize").show();
+    }
 }
 
 /**
@@ -316,7 +358,11 @@ function activateContest() {
         "YES",
         function() {
             closeModal();
-            showActivateSpecReviewModal();
+            if(isF2F() || isCode()) {
+                activateContestSoftware('now');
+            } else {
+                showActivateSpecReviewModal();
+            }
         }
     );
 

@@ -53,7 +53,7 @@
                             </div> <!-- End .currentPage -->
 
                             <div id="launchContestOut">
-
+                                <input type="hidden" name="CMCTaskID" value='<s:property value="%{#parameters.cmcTaskId}" />'/>
                              <div id="contestSelectionPage" class="launchpage">
                                <jsp:include page="includes/launch/contestSelection.jsp"/>
                              </div>

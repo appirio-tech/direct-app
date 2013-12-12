@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141
-  - Version: 1.6
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin
+  - Version: 1.8
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -23,6 +23,12 @@
   - 
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Fix multiple bugs.
+  -
+  - Version 1.7 (Module Assembly - TC Cockpit Launch Code contest)
+  - - Add multiple prize support
+  -
+  - Version 1.8 (Module Assembly - TC Cockpit Launch F2F contest)
+  - - Add platform control
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -49,6 +55,30 @@
         </div>        
   </div>
   <!-- end .guidelines -->
+
+  <div class="prizes" id="swPlatformDiv">
+      <h3>Choose Your Platform:</h3>
+
+      <div class="prizesInner_tech">
+          <span class="head_font">Master Platforms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="head_font_space">Your Project Platforms</span>
+          <br />
+          <select multiple id="masterPlatformsSelect">
+              <s:iterator value="referenceDataBean.platforms">
+                  <option value='<s:property value="id" />'><s:property value="name" /></option>
+              </s:iterator>
+          </select>
+
+          <div id="button_platform">
+              <img src="/images/add_tech.png" alt="add" id="addPlatforms" />
+              <br /><br />
+              <img src="/images/remove_tech.png" alt="remove" id="removePlatforms" />
+          </div>
+
+          <select multiple id="masterPlatformsChoosenSelect">
+          </select>
+      </div>
+  </div>
         
   <div class="prizes" id="swTechnologyDiv">    
         <h3>Choose Your Technology:</h3>
@@ -100,8 +130,6 @@
 				</select>
 			</div> <!-- end of prizesInner_tech -->
 		</div>
-										                                        
-</div>
 <!-- Contest Detail -->
  
   <!-- upload -->
@@ -132,73 +160,108 @@
  <!-- end #uploadSection -->
                                     
 <!-- prizes -->
-<div class="prizes">  
-      <h3>Contest Prizes:</h3>      
-      <div class="prizesInner_software">
-      	<span class="head"><p>Please Select the prize structure for your contest by choosing one of the options 
-          below:</p></span> 
-          <p>
-          <br />
-          <span class="radio_font">
-      	  <input type="radio" name="prizeRadio" value="low" />&nbsp;&nbsp;&nbsp;Low&nbsp;&nbsp;($<span id="swPrize_low"></span>)
-          <input type="radio" name="prizeRadio" value="medium" class="space_radio" />&nbsp;&nbsp;&nbsp;Medium&nbsp;&nbsp;($<span id="swPrize_medium"></span>)
-          <input type="radio" name="prizeRadio" value="high" class="space_radio" />&nbsp;&nbsp;&nbsp;High&nbsp;&nbsp;($<span id="swPrize_high"></span>)
-          <input type="radio" name="prizeRadio" value="custom" class="space_radio customRadio" /> <span class="customRadio"> &nbsp;&nbsp;&nbsp; Custom </span>
+<div class="prizes" id="swPrizesSection">
+    <h3>Contest Prizes:</h3>
+
+    <div class="prizesInner_software">
+      	<span class="head topcoderPrize"><p>Please Select the prize structure for your contest by choosing one of the options
+            below:</p></span>
+
+        <p>
+            <br/>
+          <span class="radio_font topcoderPrize">
+              <input type="radio" name="prizeRadio" value="low"/>&nbsp;&nbsp;&nbsp;Low&nbsp;&nbsp;($<span
+                      id="swPrize_low"></span>)
+              <input type="radio" name="prizeRadio" value="medium" class="space_radio"/>&nbsp;&nbsp;&nbsp;Medium&nbsp;&nbsp;($<span
+                      id="swPrize_medium"></span>)
+              <input type="radio" name="prizeRadio" value="high"
+                     class="space_radio"/>&nbsp;&nbsp;&nbsp;High&nbsp;&nbsp;($<span id="swPrize_high"></span>)
+              <input type="radio" name="prizeRadio" value="custom" class="space_radio customRadio"/> <span
+                      class="customRadio"> &nbsp;&nbsp;&nbsp; Custom </span>
           </span>
-          
-          </p>
-          <br />
-          <div class="prizesInner">
-        	<label class="first">1st Place</label>
-          <span class="dw">$</span>
-          <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
-          <label class="second">2nd Place</label>
-          <span class="dw">$</span>
-          <span id="swSecondPlace" class="prizeInfo"></span>
-          
-      	</div>
-      	
-      	<!-- Checkpoint Prizes -->
-	<div class="mPrizes hide" id="swCheckpointPrizeDiv">
-    
-        <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
-        
-        <div class="mPrizesInner">
-        	<label class="first">Pay</label>
+
+        </p>
+        <br/>
+
+        <div class="prizesInner">
+            <label class="first">1st Place</label>
             <span class="dw">$</span>
-            <input type="text" id="swCheckpointPrize" class="prizesInput" value="" />
-            <strong>for each submission up to</strong>
-            <div class="numSelect">
-            	<select id="swCheckpointSubmissionNumber" >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                </select>
-            </div>
+            <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true"/>
+            <span class="codePrize topcoderPrize">
+                <label class="second">2nd Place</label>
+                <span class="dw">$</span>
+            </span>
+            <span class="topcoderPrize">
+                <span id="swSecondPlace" class="prizeInfo"></span>
+            </span>
+            <input type="text" id="prize2"  class="prizesInput" value="" />
+            <a href="javascript:;" class="addButton swAdd"><span class="hide">ADD</span></a>
         </div>
-        
-    </div>
-    <!-- end .mPrizes -->
-    
-          <br />
+
+        <div id="swExtraPrizes" class="prizesInner hide">
+            <label class="third" style="margin-left: 12px">3rd Place</label>
+            <span class="dw">$</span>
+            <input type="text" id="prize3" class="prizesInput" value="" />
+            <label class="first">4th Place</label>
+            <span class="dw">$</span>
+            <input type="text" id="prize4" class="prizesInput" value="" />
+            <label class="first">5th Place</label>
+            <span class="dw">$</span>
+            <input type="text" id="prize5" class="prizesInput" value="" />
+            <label class="third">&nbsp;</label>
+            <span class="dw">&nbsp;</span>
+            <a href="javascript:;" class="removeButton swRemove"><span class="hide">REMOVE</span></a>
+        </div>
+
+        <!-- Checkpoint Prizes -->
+        <div class="mPrizes hide" id="swCheckpointPrizeDiv">
+
+            <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>
+            </h3>
+
+            <div class="mPrizesInner">
+                <label class="first">Pay</label>
+                <span class="dw">$</span>
+                <input type="text" id="swCheckpointPrize" class="prizesInput" value=""/>
+                <strong>for each submission up to</strong>
+
+                <div class="numSelect">
+                    <select id="swCheckpointSubmissionNumber">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <!-- end .mPrizes -->
+
+        <br/>
           <span class="head">
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
-			  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-               <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" checked="checked" autocomplete="off"/>
-			  <span class="mid_info">
-				Digital Points:&nbsp;&nbsp;$
-			  </span>
-			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7" style="padding: 0 5px; font-size: 11px;"/>
-              <br/>
-              <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+              <span class="topcoderPrize">
+                  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
+                   <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"
+                                                                                checked="checked" autocomplete="off"/>
+                  <span class="mid_info">
+                    Digital Points:&nbsp;&nbsp;$
+                  </span>
+                  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"
+                         style="padding: 0 5px; font-size: 11px;"/>
+                  <br/>
+                  <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+              </span>
 			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
               <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
-			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
-		  </span>                                                                
-      </div>
-  </div>
+			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong></span>
+		  </span>
+    </div>
+</div>
+
+
   <!-- end .prizes -->
   <div class="clear"></div>
     <div class="buttonBox">
@@ -208,5 +271,6 @@
         <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
         <a href="javascript:backOverview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>
     </div>
-                                    
-                       
+
+
+</div>

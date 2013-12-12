@@ -510,5 +510,61 @@
             </billingLevel>
         </contestCost>
     </contestType>
+    <contestType contestTypeId="38">
+        <!-- First2Finish -->
+        <contestFee>0</contestFee>
+        <specReviewCost>0</specReviewCost>
+        <contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+        </contestCost>
+    </contestType>
+    <contestType contestTypeId="39">
+        <!-- Code -->
+        <contestFee>0</contestFee>
+        <specReviewCost>0</specReviewCost>
+        <contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>270</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+        </contestCost>
+    </contestType>
 </contestTypes>
 	

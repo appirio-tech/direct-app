@@ -15,8 +15,11 @@
  * - Update method backReview to support algorithm contest.
  * - Update method continueReview to support algorithm contest.
  *
- * @author bugbuka
- * @version 1.4
+ * Version 1.5 (Module Assembly - TC Cockpit Launch Code Contest)
+ * - Add multiple prize support for Code contest type
+ *
+ * @author bugbuka, GreatKevin
+ * @version 1.5
  */
 /**
  * Rerender the review page.
@@ -79,8 +82,25 @@ function updateReviewSoftware() {
    
    $('#rswFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));
    $('#rswSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));
-   
-   var isMultiRound = mainWidget.softwareCompetition.multiRound;
+
+    // prize for Code contest type
+    var prizeHTML = "";
+    var placeMap = {1: "1st Place", 2: "2nd Place", 3: "3rd Place", 4: "4th Place", 5: "5th Place"};
+    $.each(mainWidget.softwareCompetition.projectHeader.prizes, function (i, prize) {
+        if (prize.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID || prize.prizeAmount <= 0) {
+            return;
+        }
+        var place = prize.place;
+        var amount = prize.prizeAmount;
+        prizeHTML = prizeHTML +
+            '<label class="first">' + placeMap[place] + '</label>' +
+            '<span class="dw">$</span>' +
+            '<span class="numberDor">' + amount + '</span>';
+    });
+
+    $('#reviewSoftwarePage .prizesInner').html(prizeHTML);
+
+    var isMultiRound = mainWidget.softwareCompetition.multiRound;
    $('#rswRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
    if (!isMultiRound) {
 	   $('#rswCheckpointTR').hide();
@@ -97,13 +117,13 @@ function updateReviewSoftware() {
    }
    
    // uploads
-   html = "";
+   var uploadsHTML = "";
    $.each(swDocuments, function(i, doc) {
-       html = html + 
+       uploadsHTML = uploadsHTML +
 			 "<dt>" + doc.fileName + "</dt>" +
 			 "<dd>" + doc.description + "</dd>";
    });
-   $('#swDocUploadList').html(html);   
+   $('#swDocUploadList').html(uploadsHTML);
 }
  
 function updateReviewStudio() {

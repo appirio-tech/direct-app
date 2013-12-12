@@ -1,7 +1,10 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.0
+  - Author: bugbuka, GreatKevin
+  - Version: 1.1
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.2 (Module Assembly - TC Cockpit Launch Code Contest)
+  - - Add a specific CSS class for algorithm contest prize add and remove
   -
   - Description: This page fragment renders edit algorithm contest page.
 --%>
@@ -70,7 +73,7 @@
             <label class="third">3rd Place</label>
             <span class="dw">$</span>
             <input type="text" id="alPrize3" class="prizesInput" value="" />
-            <a href="javascript:;" class="alAddButton"><span class="hide">ADD</span></a>
+            <a href="javascript:;" class="addButton alAdd"><span class="hide">ADD</span></a>
         </div>
         
         <div id="alExtraPrizes" class="prizesInner hide">
@@ -82,7 +85,7 @@
             <input type="text" id="prize5" class="prizesInput" value="" />
             <label class="third">&nbsp;</label>
             <span class="dw">&nbsp;</span>
-            <a href="javascript:;" class="alRemoveButton"><span class="hide">REMOVE</span></a>
+            <a href="javascript:;" class="removeButton alRemove"><span class="hide">REMOVE</span></a>
         </div>        
     </div>
     <!-- end .prizes -->

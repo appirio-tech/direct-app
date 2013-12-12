@@ -10,9 +10,16 @@ package com.topcoder.direct.services.view.dto.contest;
  * Version 1.0.1 (Release Assembly - TC Cockpit Misc Bug Fixes)
  * <ul>Fix the typo in documentation from "Post Motem" to "Post-Mortem"</ul>
  * </p>
+ *
+ * <p>
+ * Version 1.1 (Module Assembly - TC Cockpit Launch F2F contest)
+ * <ul>
+ *     <li>Added {@link #ITERATIVE_REVIEW} phase type.</li>
+ * </ul>
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.0.1
+ * @author GreatKevin
+ * @version 1.1
  * @since TC Direct Contest Dashboard Update Assembly
  */
 public enum ProjectPhaseType {
@@ -102,9 +109,10 @@ public enum ProjectPhaseType {
     CHECKPOINT_REVIEW(17, "checkpointReview", "Checkpoint Review", 6),
 
     /**
-     * The secondary Reviewer Review phase.
+     * The Iterative Review phase.
+     * @since 1.1
      */
-    SECONDARY_REVIEW(18, "secondaryReview", "Secondary Review", 12),
+    ITERATIVE_REVIEW(18, "iterativeReview", "Iterative Review", 12),
 
     /**
      * The primary review evaluation phase.

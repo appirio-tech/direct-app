@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, TCSASSEMBER, Ghost_141
-  - Version: 1.6
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin
+  - Version: 1.7
+  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
   -
@@ -16,6 +16,8 @@
   -   Disabled the submission visibility functionality.
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   -   Fix multiple bugs.
+  - Version 1.7 (Module Assembly - TC Cockpit Launch Code Contest)
+  - - Add a specific CSS class for studio contest prize add and remove
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -90,7 +92,7 @@
             <label class="third">3rd Place</label>
             <span class="dw">$</span>
             <input type="text" id="prize3" class="prizesInput" value="" />
-            <a href="javascript:;" class="addButton"><span class="hide">ADD</span></a>
+            <a href="javascript:;" class="addButton studioAdd"><span class="hide">ADD</span></a>
         </div>
         
         <div id="extraPrizes" class="prizesInner hide">
@@ -102,7 +104,7 @@
             <input type="text" id="prize5" class="prizesInput" value="" />
             <label class="third">&nbsp;</label>
             <span class="dw">&nbsp;</span>
-            <a href="javascript:;" class="removeButton"><span class="hide">REMOVE</span></a>
+            <a href="javascript:;" class="removeButton studioRemove"><span class="hide">REMOVE</span></a>
         </div>        
     </div>
     <!-- end .prizes -->

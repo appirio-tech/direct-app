@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.management.project.ProjectPlatform;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -216,8 +217,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.8 (Module Assembly - TC Cockpit Launch F2F contest)
+ * <ul>
+ *     <li>Added property {@link #platforms} and its getter and setter</li>
+ *     <li>Updated method {@link #populateSoftwareCompetition(com.topcoder.service.project.SoftwareCompetition)} to populate the platforms</li>
+ *     <li>Added method {@link #isPlatformContest(com.topcoder.management.project.Project)} to check if the contest supports platforms</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin
- * @version 1.7
+ * @version 1.8
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -522,6 +532,12 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private List<String> technologies;
+
+    /**
+     * Id list for platforms.
+     * @since 1.8
+     */
+    private List<String> platforms;
 
     /**
      * <p>
@@ -1134,6 +1150,17 @@ public class SaveDraftContestAction extends ContestAction {
     private boolean isTechnologyContest(com.topcoder.management.project.Project projectHeader) {
         long projectCategoryId = projectHeader.getProjectCategory().getId();
         return !(PROJECT_CATEGORY_CONCEPT == projectCategoryId || PROJECT_CATEGORY_SPEC == projectCategoryId);
+    }
+
+    /**
+     * Checks if it needs platforms.
+     *
+     * @param projectHeader the software competition project
+     * @return true if it needs platforms.
+     * @since 1.8
+     */
+    private boolean isPlatformContest(com.topcoder.management.project.Project projectHeader) {
+        return isTechnologyContest(projectHeader);
     }
 
     /**
@@ -1799,6 +1826,26 @@ public class SaveDraftContestAction extends ContestAction {
     }
 
     /**
+     * Gets the platforms.
+     *
+     * @return the platforms.
+     * @since 1.9
+     */
+    public List<String> getPlatforms() {
+        return platforms;
+    }
+
+    /**
+     * Sets the platforms.
+     *
+     * @param platforms the platforms.
+     * @since 1.8
+     */
+    public void setPlatforms(List<String> platforms) {
+        this.platforms = platforms;
+    }
+
+    /**
      * Gets the root category id.
      * 
      * @return the root category id.
@@ -1966,6 +2013,16 @@ public class SaveDraftContestAction extends ContestAction {
                     dtoTechs.add(getReferenceDataBean().getTechnologyMap().get(Long.parseLong(techId)));
                 }
                 assetDTO.setTechnologies(dtoTechs);
+            }
+        }
+
+        if (isPlatformContest(projectHeader)) {
+            if(platforms != null && platforms.size() > 0) {
+                List<ProjectPlatform> platformsList = new ArrayList<ProjectPlatform>();
+                for(String platformId : platforms) {
+                    platformsList.add(getReferenceDataBean().getPlatformMap().get(Long.parseLong(platformId)));
+                }
+                projectHeader.setPlatforms(platformsList);
             }
         }
     }
