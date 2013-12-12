@@ -73,7 +73,7 @@ public class EJBLoginProcessor implements LoginProcessor {
                     new SimpleResponse(ServletActionContext.getResponse()),
                     BasicAuthentication.MAIN_SITE,
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
-            auth.setBigCookieTime(MAIN_COOKIE_TIME);
+            //auth.setBigCookieTime(MAIN_COOKIE_TIME);
             auth.login(new SimpleUser(tcSubject.getUserId(), username, password), rememberMe);
 
             auth = new BasicAuthentication(
