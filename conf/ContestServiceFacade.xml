@@ -49,5 +49,16 @@
         <Property name="mockSubmissionFilePath">
         	<Value>@mockSubmissionFilePath@</Value>
         </Property>
+        <Property name="contestCreationSNS">
+            <Property name="contestCreationArn">
+                <Value>@contestCreationArn@</Value>
+            </Property>
+            <Property name="contestCreationSubject">
+                <Value>@contestCreationSubject@</Value>
+            </Property>
+            <Property name="contestCreationMessageTemplatePath">
+                <Value>@contestCreationMessageTemplatePath@</Value>
+            </Property>
+        </Property>        
     </Config>
 </CMConfig>

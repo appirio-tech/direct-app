@@ -1,0 +1,6 @@
+{
+    "Contest Creation": {
+        "challengeId": "%CHALLENGE_ID%",
+        "cmcTaskId": "%CMC_TASK_ID%"
+    }
+}
