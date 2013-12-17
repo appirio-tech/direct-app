@@ -387,6 +387,8 @@
                  <include name="contest_creation_notification.txt" />
                  <include name="phase_templates/**/*.xml" />
                  <include name="xml_phase_template.xsd" />
+                 <include name="AwsCredentials.properties" />
+                 <include name="contest_creation_sns_message.txt" />
              </fileset>
         </copy>
 
