@@ -199,8 +199,9 @@
                         ra.review_auction_type_id,
                         ra.project_id,
                         nvl(pp2.actual_end_time,pp2.scheduled_end_time) - 24 units hour as assignment_date,
-                        (case when p.project_status_id = 1 and pp2.phase_status_id in (2,3) and pp4.phase_status_id in
-                        (1,2) then 't' else 'f' end)::boolean as open,
+                        (case when p.project_status_id = 1 and pp2.phase_status_id in (2,3) and pp4.phase_status_id in (1,2)
+                         and not exists (select 1 from project_phase pp12 where pp12.project_id=p.project_id and pp12.phase_type_id=12)
+                         then 't' else 'f' end)::boolean as open,
                         pc.parameter::int - (select count(r.resource_id) from resource r where r.project_id=p.project_id
                         and r.resource_role_id in (4,5,6,7)) as reviewers_required
 
@@ -212,6 +213,82 @@
                         INNER JOIN project_phase pp4 ON pp4.project_id=p.project_id and pp4.phase_type_id=4
                         INNER JOIN phase_criteria pc ON pc.project_phase_id=pp4.project_phase_id and
                         pc.phase_criteria_type_id=6
+                        WHERE
+                    </Value>
+                </Property>
+                <Property name="searchableFields">
+                    <Property name="id">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                    <Property name="projectCategoryId">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                    <Property name="projectStatusId">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                </Property>
+                <Property name="alias">
+                    <Property name="id">
+                        <Value>ra.review_auction_id</Value>
+                    </Property>
+                    <Property name="projectCategoryId">
+                        <Value>p.project_category_id</Value>
+                    </Property>
+                    <Property name="projectStatusId">
+                        <Value>p.project_status_id</Value>
+                    </Property>
+                </Property>
+            </Property>
+			<Property name="Iterative Review Auction Search Bundle">
+                <Property name="searchStrategy">
+                    <Property name="class">
+                        <Value>dbStrategy</Value>
+                    </Property>
+                </Property>
+                <Property name="context">
+                    <Value>
+                        SELECT
+                        ra.review_auction_id,
+                        ra.review_auction_type_id,
+                        ra.project_id,
+                        nvl(pp2.actual_start_time,pp2.scheduled_start_time) + 24 units hour as assignment_date,
+                        (case when p.project_status_id = 1 and pp2.phase_status_id in (2,3) and pp18.phase_status_id in (1,2)
+                         and not exists (select 1 from project_phase pp12 where pp12.project_id=p.project_id and pp12.phase_type_id=12)
+                         then 't' else 'f' end)::boolean as open,
+                        pc.parameter::int - (select count(r.resource_id) from resource r where r.project_id=p.project_id
+                        and r.resource_role_id = 21) as reviewers_required
+
+                        FROM review_auction ra
+                        INNER JOIN review_auction_type_lu ratl ON ratl.review_auction_type_id=ra.review_auction_type_id
+                        and ratl.review_auction_category_id=3
+                        INNER JOIN project p ON p.project_id=ra.project_id
+                        INNER JOIN project_phase pp2 ON pp2.project_id=p.project_id and pp2.phase_type_id=2
+                        INNER JOIN project_phase pp18 ON pp18.project_id=p.project_id and pp18.phase_type_id=18
+                        INNER JOIN phase_dependency pd ON pd.dependent_phase_id=pp18.project_phase_id and pd.dependent_start=1
+                        and pd.dependency_phase_id=pp2.project_phase_id and pd.dependency_start=1
+                        INNER JOIN phase_criteria pc ON pc.project_phase_id=pp18.project_phase_id
+                        and pc.phase_criteria_type_id=6
                         WHERE
                     </Value>
                 </Property>
