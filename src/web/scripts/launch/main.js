@@ -836,13 +836,25 @@ function saveAsDraftRequest() {
        mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
    }
 
+    if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+        mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
+    }
+
+   var request;
+
    if(mainWidget.isSoftwareContest()) {
-       return saveAsDraftRequestSoftware();
+       request =  saveAsDraftRequestSoftware();
    } else if(mainWidget.isStudioContest()){
-       return saveAsDraftRequestStudio();
+       request = saveAsDraftRequestStudio();
    } else {
-       return saveAsDraftRequestAlgorithm();
+       request = saveAsDraftRequestAlgorithm();
    }
+
+    if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+        request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
+    }
+
+    return request;
 }
 
 function saveAsDraftRequestSoftware() {

@@ -226,8 +226,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin
- * @version 1.8
+ * <p>
+ * Version 1.9 (BUGR-10221 TopCoder Cockpit CMC Account ID for launching new contest)
+ * <ul>
+ *     <li>Added property {@link #cmcBillingId} and its getter and setter</li>
+ *     <li>Added method {@link #handleCMCBillingId(com.topcoder.service.project.SoftwareCompetition)}</li>
+ *     <li>Updated method {@link #executeAction()} to handle CMC Account ID</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
+ * @version 1.9
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -602,6 +611,13 @@ public class SaveDraftContestAction extends ContestAction {
     private String specReviewStartMode;
 
     /**
+     * The billing account ID set the CMC Account id.
+     *
+     * @since 1.9
+     */
+    private long cmcBillingId;
+
+    /**
      * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
@@ -637,9 +653,14 @@ public class SaveDraftContestAction extends ContestAction {
         if (!hasMulti) {
             checkpointDate = null;
         }
+
+
         if (projectId > 0) {
             softwareCompetition.setProjectHeaderReason("user update");
             populateCompetition(softwareCompetition);
+
+            // handle CMC billing first
+            handleCMCBillingId(softwareCompetition);
 
             // update the software competition copilot resource first
             updateSoftwareCompetitionCopilotResource();
@@ -660,6 +681,9 @@ public class SaveDraftContestAction extends ContestAction {
             initializeCompetition(softwareCompetition);
             populateCompetition(softwareCompetition);
 
+            // handle CMC billing first
+            handleCMCBillingId(softwareCompetition);
+
             if ( competitionType == CompetitionType.STUDIO || competitionType == CompetitionType.SOFTWARE || competitionType == CompetitionType.ALGORITHM) {
                 if (isActivation(softwareCompetition)) {
                     softwareCompetition = activateSoftwareCompetition(softwareCompetition);
@@ -675,6 +699,52 @@ public class SaveDraftContestAction extends ContestAction {
                 addFieldError("competitionType", "The competition type is unknown");
             }
         }
+    }
+
+    /**
+     * Handles the case when there is billing account ID retrieved by CMC Account ID assigned to the contest.
+     *
+     * @param contest the contest
+     * @throws Exception if there is any error.
+     * @since 1.9
+     */
+    private void handleCMCBillingId(SoftwareCompetition contest) throws Exception {
+
+        if (getCmcBillingId() <= 0) {
+            // there is no CMC billing id
+            return;
+        }
+
+        long billingAccountId = 0;
+
+        if (contest.getProjectHeader().getProperties().get(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY) !=
+                null) {
+            // get the chosen billing account id
+            billingAccountId = Long.parseLong(contest.getProjectHeader().getProperties().get(
+                    ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY));
+        }
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!! Billing Account ID:" + billingAccountId);
+
+        if (billingAccountId != getCmcBillingId()) {
+            // the CMC billing id is not chosen
+            return;
+        }
+
+        // get the direct project id
+        long directProjectId = contest.getProjectHeader().getTcDirectProjectId();
+
+        List<Project> billingAccounts = getProjectServiceFacade().getBillingAccountsByProject(directProjectId);
+
+        // check if the billing account id exists for the project
+        for (Project billing : billingAccounts) {
+            if (billing.getId() == billingAccountId) {
+                return;
+            }
+        }
+
+        // no exist, add the billing account to direct project
+        getProjectServiceFacade().addBillingAccountToProject(directProjectId, billingAccountId);
     }
 
     /**
@@ -2078,5 +2148,13 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setDirectProjectMilestoneId(long directProjectMilestoneId) {
         this.directProjectMilestoneId = directProjectMilestoneId;
+    }
+
+    public long getCmcBillingId() {
+        return cmcBillingId;
+    }
+
+    public void setCmcBillingId(long cmcBillingId) {
+        this.cmcBillingId = cmcBillingId;
     }
 }

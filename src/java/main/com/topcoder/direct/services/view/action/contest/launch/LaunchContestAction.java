@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010  -2013 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import org.apache.struts2.ServletActionContext;
@@ -56,8 +57,16 @@ import com.topcoder.security.TCSubject;
  * </ul>
  * </p>
  *
- * @author BeBetter, duxiaoyang, GreatKevin
- * @version 1.3
+ * <p>
+ * Version 1.4 (BUGR-10221 TopCoder Cockpit CMC Account ID for launching new contest)
+ * <ul>
+ *     <li>Added {@link #cmcAccountId} and {@link #cmcBillingAccount}</li>
+ *     <li>Updated {@link #executeAction()} to get billing account id by cmc account id</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, duxiaoyang, GreatKevin, Veve
+ * @version 1.4
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -68,6 +77,20 @@ public class LaunchContestAction extends ContestAction {
     * <p> Whether user is admin</p>
     */
     private boolean admin = false;
+
+    /**
+     * The CMC Account ID.
+     *
+     * @since 1.4
+     */
+    private String cmcAccountId;
+
+    /**
+     * The Billing Account got from CMC Account ID.
+     *
+     * @since 1.4
+     */
+    private IdNamePair cmcBillingAccount;
 
     /**
      * <p>
@@ -92,6 +115,11 @@ public class LaunchContestAction extends ContestAction {
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         viewData.setUserProjects(userProjectsDTO);
+
+        // get cmc billing account with cmc account id
+        if(getCmcAccountId() != null && getCmcAccountId().trim().length() > 0) {
+            setCmcBillingAccount(DataProvider.getBillingAccountFromCMCAccountID(getCmcAccountId()));
+        }
     }
 
     public CommonDTO getViewData() {
@@ -188,5 +216,45 @@ public class LaunchContestAction extends ContestAction {
      */
     public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
         return DataProvider.getAllProjectCopilotTypes();
+    }
+
+    /**
+     * Gets the CMC Account id.
+     *
+     * @return the CMC Account Id.
+     * @since 1.4
+     */
+    public String getCmcAccountId() {
+        return cmcAccountId;
+    }
+
+    /**
+     * Sets the CMC Account Id.
+     *
+     * @param cmcAccountId the CMC Account id.
+     * @since 1.4
+     */
+    public void setCmcAccountId(String cmcAccountId) {
+        this.cmcAccountId = cmcAccountId;
+    }
+
+    /**
+     * Gets the CMC Billing Account.
+     *
+     * @return the CMC Billing Account.
+     * @since 1.4
+     */
+    public IdNamePair getCmcBillingAccount() {
+        return cmcBillingAccount;
+    }
+
+    /**
+     * Sets the CMC Billing Account.
+     *
+     * @param cmcBillingAccount the CMC Billing account.
+     * @since 1.4
+     */
+    public void setCmcBillingAccount(IdNamePair cmcBillingAccount) {
+        this.cmcBillingAccount = cmcBillingAccount;
     }
 }

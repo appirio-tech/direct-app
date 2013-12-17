@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.util;
 
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
+import com.topcoder.commons.utils.ValidationUtility;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
@@ -986,10 +987,18 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.26 (BUGR-10221 TopCoder Cockpit CMC Account ID for launching new contest)
+ * <ul>
+ *     <li>Added method {@link #getBillingAccountFromCMCAccountID(String)} to get billing account id
+ *     by CMC Account ID</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin
- * @version 6.25
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin, Veve
+ * @version 6.26
  * @since 1.0
  */
 public class DataProvider {
@@ -8772,6 +8781,34 @@ public class DataProvider {
         }
 
         return result;
+    }
+
+    /**
+     * Gets the billing account <code>IdNamePair</code> from the CMC Account ID.
+     *
+     * @param cmcAccountId the CMC Account ID.
+     * @return the billing account.
+     * @throws Exception if there is any error.
+     * @since 1.9
+     */
+    public static IdNamePair getBillingAccountFromCMCAccountID(String cmcAccountId) throws Exception {
+        ValidationUtility.checkNotEmpty(cmcAccountId, "cmcAccountId", IllegalArgumentException.class);
+
+        Request r = new Request();
+        r.setContentHandle("get_billing_with_cmc_account_id");
+        r.setProperty("cmcaccountid", cmcAccountId);
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        ResultSetContainer resultSet = dataAccess.getData(r).get("get_billing_with_cmc_account_id");
+
+        if(!resultSet.isEmpty()) {
+            IdNamePair billing = new IdNamePair();
+            billing.setId(resultSet.get(0).getLongItem("project_id"));
+            billing.setName(resultSet.get(0).getStringItem("name"));
+            return  billing;
+        }
+
+        return null;
     }
 
 }

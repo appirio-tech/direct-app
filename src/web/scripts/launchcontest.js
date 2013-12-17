@@ -538,11 +538,30 @@ function handleProjectDropDownChange() {
     $("#billingProjects").empty();
     $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
 
+    var hasCMCBilling = false;
+    var CMCBillingExisting = false;
+
+    if($("input[name=CMCBillingID]").val() && $("input[name=CMCBillingID]").val() > 0 && value > 0) {
+        hasCMCBilling = true;
+    }
+
+
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
-    });	
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", cca));
+
+        if(value["id"] == $("input[name=CMCBillingID]").val()) {
+            CMCBillingExisting = true;
+        }
+
+    });
+
     $("#billingProjects").val(0);
+
+    if(hasCMCBilling && !CMCBillingExisting) {
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false));
+    }
+
     $("#billingProjects").resetSS();
     $('#billingProjects').bind("change", function() {
     	if ($(this).find(":selected").data("cca")){
@@ -554,7 +573,14 @@ function handleProjectDropDownChange() {
         updateContestFee();
     });
 
-    $("#billingProjects").getSetSSValue(0);
+    if(hasCMCBilling) {
+        $("#billingProjects").val($("input[name=CMCBillingID]").val());
+        $("#billingProjects").getSetSSValue($("input[name=CMCBillingID]").val());
+    } else {
+        $("#billingProjects").getSetSSValue(0);
+    }
+
+
     $("#lccCheckBox").removeAttr('disabled');
     $("#lccCheckBox").removeAttr('checked');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
