@@ -860,6 +860,25 @@ function saveAsDraftRequest() {
 function saveAsDraftRequestSoftware() {
    var request = {};
 
+   var thurgoodData = technologyAndPlatformSelectsChanged();
+
+   if($("#swThurgoodDiv input").is(":checked")) {
+       // thurgood checked
+       if(thurgoodData['hasJavaTech'] == true) {
+           mainWidget.softwareCompetition.projectHeader.properties['Thurgood Language'] = 'Java';
+       } else {
+           mainWidget.softwareCompetition.projectHeader.properties['Thurgood Language'] = '';
+       }
+       if(thurgoodData['hasSalesforcePlatform'] == true) {
+           mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = 'Salesforce';
+       } else {
+           mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = '';
+       }
+   } else {
+       mainWidget.softwareCompetition.projectHeader.properties['Thurgood Language'] = '';
+       mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = '';
+   }
+
    request['projectId'] = mainWidget.softwareCompetition.projectHeader.id;
    request['tcDirectProjectId'] = mainWidget.softwareCompetition.projectHeader.tcDirectProjectId;
    request['competitionType'] = 'SOFTWARE';
@@ -2251,10 +2270,39 @@ function sortTechnologySelects() {
    sortSelectOptions('masterTechnologiesChoosenSelect');
 }
 
+function technologyAndPlatformSelectsChanged() {
+    var hasJavaTech = false;
+    $("#masterTechnologiesChoosenSelect option").each(function() {
+        var value = $(this).text();
+        if(value == 'Java') {
+            hasJavaTech = true;
+        }
+    });
+
+    var hasSalesforcePlatform = false;
+    $("#masterPlatformsChoosenSelect option").each(function() {
+        var value = $(this).text();
+        if(value == 'Salesforce.com') {
+            hasSalesforcePlatform = true;
+        }
+    });
+
+    if(hasJavaTech || hasSalesforcePlatform) {
+        $("#swThurgoodDiv").show();
+    } else {
+        $("#swThurgoodDiv").hide();
+    }
+
+    return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
+}
+
+
+
 function sortPlatformSelects() {
     sortSelectOptions('masterPlatformsSelect');
     sortSelectOptions('masterPlatformsChoosenSelect');
 }
+
 
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');

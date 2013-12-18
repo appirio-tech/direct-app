@@ -344,6 +344,16 @@ public class SaveDraftContestAction extends ContestAction {
     private static final String NOT_PAID_PAYMENT_STATUS_VALUE = "No";
 
     /**
+     * Thurgood platform property key for project info.
+     */
+    private static final String THURGOOD_PLATFORM_KEY = "Thurgood Platform";
+
+    /**
+     * Thurgood language property key for project info.
+     */
+    private static final String THURGOOD_LAUGUAGE_KEY = "Thurgood Language";
+
+    /**
      * <p>
      * Constant for design project category.
      * </p>
@@ -724,8 +734,6 @@ public class SaveDraftContestAction extends ContestAction {
                     ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY));
         }
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!! Billing Account ID:" + billingAccountId);
-
         if (billingAccountId != getCmcBillingId()) {
             // the CMC billing id is not chosen
             return;
@@ -857,6 +865,21 @@ public class SaveDraftContestAction extends ContestAction {
             populateStudioCompetition(softwareCompetition);
         } else {
             populateSoftwareCompetition(softwareCompetition);
+        }
+
+        // remove the thurgood information if needed
+        if(softwareCompetition.getProjectHeader().getProperties().containsKey(THURGOOD_PLATFORM_KEY)) {
+            if(softwareCompetition.getProjectHeader().getProperties().get(THURGOOD_PLATFORM_KEY) == null
+                    || softwareCompetition.getProjectHeader().getProperties().get(THURGOOD_PLATFORM_KEY).trim().length() == 0) {
+                softwareCompetition.getProjectHeader().getProperties().remove(THURGOOD_PLATFORM_KEY);
+            }
+        }
+
+        if(softwareCompetition.getProjectHeader().getProperties().containsKey(THURGOOD_LAUGUAGE_KEY)) {
+            if(softwareCompetition.getProjectHeader().getProperties().get(THURGOOD_LAUGUAGE_KEY) == null
+                    || softwareCompetition.getProjectHeader().getProperties().get(THURGOOD_LAUGUAGE_KEY).trim().length() == 0) {
+                softwareCompetition.getProjectHeader().getProperties().remove(THURGOOD_LAUGUAGE_KEY);
+            }
         }
     }
 

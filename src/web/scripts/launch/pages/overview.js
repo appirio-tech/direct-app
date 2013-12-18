@@ -48,21 +48,25 @@ $(document).ready(function() {
     $('#addPlatforms').click(function(){
         $('#masterPlatformsSelect option:selected').appendTo('#masterPlatformsChoosenSelect');
         sortPlatformSelects();
+        technologyAndPlatformSelectsChanged();
     });
 
     $('#removePlatforms').click(function(){
         $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
         sortPlatformSelects();
+        technologyAndPlatformSelectsChanged();
     });
 
    $('#addTechnologies').click(function(){
        $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
        sortTechnologySelects();
+       technologyAndPlatformSelectsChanged();
    });
 
    $('#removeTechnologies').click(function(){
        $('#masterTechnologiesChoosenSelect option:selected').appendTo('#masterTechnologiesSelect');
        sortTechnologySelects();
+       technologyAndPlatformSelectsChanged();
    });
 
    $('#catalogSelect').bind("change", function() {

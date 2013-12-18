@@ -305,23 +305,27 @@ $(document).ready(function(){
     $('#addPlatforms').click(function(){
         $('#masterPlatformsSelect option:selected').appendTo('#masterPlatformsChoosenSelect');
         sortPlatformSelects();
+        technologyAndPlatformSelectsChanged();
     });
 
     $('#removePlatforms').click(function(){
         $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
         sortPlatformSelects();
+        technologyAndPlatformSelectsChanged();
     });
 
 
     //technologies/categories
    $('#addTechnologies').click(function(){
        $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
-       sortTechnologySelects();   	 
+       sortTechnologySelects();
+       technologyAndPlatformSelectsChanged();
    });
    
    $('#removeTechnologies').click(function(){
        $('#masterTechnologiesChoosenSelect option:selected').appendTo('#masterTechnologiesSelect');   	 
        sortTechnologySelects();
+       technologyAndPlatformSelectsChanged();
    });
    
    $('#catalogSelect').bind("change", function() {
@@ -1997,7 +2001,8 @@ function populateSpecSection(initFlag) {
   	   //technlogies
   	   $('#masterTechnologiesSelect').val(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
        $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
-       sortTechnologySelects();                	
+       sortTechnologySelects();
+       technologyAndPlatformSelectsChanged();
   }
 
     if(isPlatformContest()) {
@@ -2005,7 +2010,16 @@ function populateSpecSection(initFlag) {
         $('#masterPlatformsSelect').val(mainWidget.softwareCompetition.platforms);
         $('#masterPlatformsSelect option:selected').appendTo('#masterPlatformsChoosenSelect');
         sortPlatformSelects();
+        technologyAndPlatformSelectsChanged();
     }
+
+    if(mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] == 'Salesforce'
+        || mainWidget.softwareCompetition.projectHeader.properties['Thurgood Language'] == 'Java') {
+        $("#swThurgoodDiv input").attr("checked", "checked");
+    } else {
+        $("#swThurgoodDiv input").removeAttr("checked");
+    }
+
   
   // for studio
   if (mainWidget.competitionType == "STUDIO") {

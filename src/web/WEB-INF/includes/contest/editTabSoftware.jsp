@@ -748,6 +748,10 @@
                             </select>   
                         </div>
                     </div>
+
+                    <div id="swThurgoodDiv" style="display: none">
+                        <h3>Use Thurgood to check contest submissions?</h3><br/>
+                        <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of contest submissions</span><br/><br/></div>
                  
                     <div class="prizes component" id="swCatalogDiv">
                         <div class="catalogSelect">
