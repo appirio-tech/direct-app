@@ -56,7 +56,7 @@
 
                   <div id="cca" class="lcc_chk" >
                     <input id="lccCheckBox" type="checkbox" />
-                    <span class="lcc">Enforce CCA</span>
+                    <span class="lcc">Enforce NDA</span>
                     <a href="javascript:;" class="helpme" ><img src="/images/help_ico5.gif" alt="help" /></a>
                   </div>
 

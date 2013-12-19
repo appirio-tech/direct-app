@@ -395,7 +395,7 @@
                                                     <label>&nbsp;</label>
                                                     <div class="row" id="ccaRow">
                                                         <input type="checkbox" class="ccaRequired" id="cca" name="issue.cca" value="true"/>
-                                                        <label for="cca" id="ccaRequiredLabel">CCA required</label>
+                                                        <label for="cca" id="ccaRequiredLabel">NDA required</label>
                                                     </div>
                                                     <label>Environment:</label>
                                                     <div class="row">

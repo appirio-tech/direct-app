@@ -168,7 +168,7 @@
               <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
           </span>
           <br /><br />
-				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>CCA required</strong></span>
+				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
 				 <br /> <br />
 				 <div id="projectEditDiv">
 				 <span class="name fixWidthName"><strong>Project Name</strong></span>

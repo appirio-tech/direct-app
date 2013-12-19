@@ -126,7 +126,7 @@
                             <input type="text" class="bigin"  id="reviewStyle" value="System Test" disabled="disabled"/>
                         </span>
             <br /><br />
-            <span class="name"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>CCA required</strong></span>
+            <span class="name"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
             <!-- Billing Account -->
             <div id="billingAccountDivEdit">
                 <br />
