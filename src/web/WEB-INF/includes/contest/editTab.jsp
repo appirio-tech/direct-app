@@ -66,7 +66,7 @@
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>CCA is</strong></td>
+                <td class="first_tab_type"><strong>NDA is</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCCA"></span></strong></td>
             </tr>
             <tr></tr>
