@@ -171,11 +171,18 @@ import java.util.Set;
  * </p>
  *
  * <p>
+ * Version 2.3 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Check SSO cookie and update auth related object in session each time.</li>
+ *  </ul>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe.
  * </p>
  *
- * @author woodjhon, TCSDEVELOPER, pvmagacho
- * @version 2.2
+ * @author woodjhon, TCSDEVELOPER, pvmagacho, ecnu_haozi
+ * @version 2.3
  */
 public class AuthenticationInterceptor extends AbstractInterceptor {
 
@@ -259,42 +266,42 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         HttpServletRequest request = ServletActionContext.getRequest();
 
-        if (sessionData.isAnonymousUser()) {
-            HttpServletResponse response = ServletActionContext.getResponse();
-            BasicAuthentication auth = new BasicAuthentication(
-                new SessionPersistor(request.getSession()), new SimpleRequest(request),
-                new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
-            User user = auth.getActiveUser();
-            if (user != null  && !user.isAnonymous()) {
-                 // get user roles for the user id
-                Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
-                TCSubject tcSubject = new TCSubject(roles, user.getId());
+        // Support Single-Sign-On login, Because the user may log out from another
+        // app without notification to current app. Thus the auth related object in session may invalidate at any time.
+        // In this case we need to check SSO cookie and update auth related object in session every time.
 
-                sessionData.setCurrentUser(tcSubject);
-                sessionData.setCurrentUserHandle(user.getUserName());
-            } else {
-                if ("GET".equalsIgnoreCase(request.getMethod())) {
-                    StringBuffer redirectBackUrl = new StringBuffer();
+        HttpServletResponse response = ServletActionContext.getResponse();
+        BasicAuthentication auth = new BasicAuthentication(
+            new SessionPersistor(request.getSession()), new SimpleRequest(request),
+            new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
+        User user = auth.getActiveUser();
+        if (user != null  && !user.isAnonymous()) {
+            // get user roles for the user id
+            Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
+            TCSubject tcSubject = new TCSubject(roles, user.getId());
 
-                    redirectBackUrl.append("https://");
-                    redirectBackUrl.append(request.getServerName());
-                    redirectBackUrl.append(request.getRequestURI());
-                    if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
-                        redirectBackUrl.append('?');
-                        redirectBackUrl.append(request.getQueryString());
-                    }
-
-                    request.getSession().setAttribute(redirectBackUrlIdentityKey, redirectBackUrl.toString());
-                } else {
-                    // Get the referer URL if the request method is POST
-                    final String referer = request.getHeader("Referer");
-                    if (referer != null && referer.trim().length() != 0) {
-                        request.getSession().setAttribute(redirectBackUrlIdentityKey, referer);
-                    }
+            sessionData.setCurrentUser(tcSubject);
+            sessionData.setCurrentUserHandle(user.getUserName());
+         } else {
+            if ("GET".equalsIgnoreCase(request.getMethod())) {
+                StringBuffer redirectBackUrl = new StringBuffer();
+                redirectBackUrl.append("https://");
+                redirectBackUrl.append(request.getServerName());
+                redirectBackUrl.append(request.getRequestURI());
+                if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
+                    redirectBackUrl.append('?');
+                    redirectBackUrl.append(request.getQueryString());
                 }
-                return loginPageName;
+                request.getSession().setAttribute(redirectBackUrlIdentityKey, redirectBackUrl.toString());
+            } else {
+                // Get the referer URL if the request method is POST
+                final String referer = request.getHeader("Referer");
+                if (referer != null && referer.trim().length() != 0) {
+                    request.getSession().setAttribute(redirectBackUrlIdentityKey, referer);
+                }
             }
-        }
+            return loginPageName;
+        }        
 
         String servletPath = request.getContextPath() + request.getServletPath();
         String query = request.getQueryString();

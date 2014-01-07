@@ -36,23 +36,17 @@ import org.apache.struts2.ServletActionContext;
  *    </ul> 
  * </p>
  *
- * @author isv, pvmagacho
- * @version 1.1
+ * <p>
+ * Version 1.2 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Remove direct_sso cookie and its related logic.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author isv, pvmagacho, ecnu_haozi
+ * @version 1.2
  */
 public class LoginProcessor implements RequestProcessor<LoginAction> {
-
-    /**
-     * The expire time for main site when 'remember me' flag is not set. Is set to 1 day.
-     *
-     * @since 1.1
-     */
-    private static final int MAIN_COOKIE_TIME = 60 * 60 * 24;
-    
-    /**
-     * The SSO cookie to be for use by the Scorecard Tool.
-     */
-    private static final String SSO_COOKIE = "direct_sso";
-
     /**
      * <p>A <code>Logger</code> to be used for logging the events encountered while processing the requests.</p>
      */
@@ -90,15 +84,6 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
 					//auth.setBigCookieTime(MAIN_COOKIE_TIME);
             auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
-
-	    // added by System Assembly - Direct Topcoder Scorecard Tool Integration
-	    auth = new BasicAuthentication(
-                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
-                    new SimpleRequest(ServletActionContext.getRequest()),
-                    new SimpleResponse(ServletActionContext.getResponse()),
-		    new SimpleResource(SSO_COOKIE),
-                    DBMS.JTS_OLTP_DATASOURCE_NAME);
-	    auth.login(new SimpleUser(tcSubject.getUserId(), username, password), true);
         } catch (AuthenticationException e) {
             log.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);
             action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);

@@ -34,15 +34,17 @@ import com.topcoder.web.common.security.SessionPersistor;
  * <p>A mock implementation to be used for user authentication. It gets the submitted user
  * credentials from action's form and uses them to authenticate user using config file.</p>
  *
- * @author flexme
- * @version 1.0
+ * <p>
+ * Version 1.1 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Remove direct_sso cookie and its related logic.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author flexme, ecnu_haozi
+ * @version 1.1
  */
 public class MockLoginProcessor implements LoginProcessor {
-    /**
-     * The Direct SSO cookie.
-     */
-    private static final String SSO_COOKIE = "direct_sso";
-
     /**
      * The users x ID map.
      */
@@ -133,7 +135,7 @@ public class MockLoginProcessor implements LoginProcessor {
                 LightAuthentication auth = new LightAuthentication(
                             new SessionPersistor(ServletActionContext.getRequest().getSession()),
                             new SimpleRequest(ServletActionContext.getRequest()),
-                            new SimpleResponse(ServletActionContext.getResponse()), new SimpleResource(SSO_COOKIE));
+                            new SimpleResponse(ServletActionContext.getResponse()));
                 auth.login(new SimpleUser(tcSubject.getUserId(), username, password), rememberMe);
                 
                 HttpSession session = ServletActionContext.getRequest().getSession();

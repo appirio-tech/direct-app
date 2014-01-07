@@ -22,22 +22,18 @@ import com.topcoder.web.common.security.SessionPersistor;
 
 /**
  * <p>The processor the perform user authentication. It uses security EJB to perform authentication.</p>
+ * 
+ * <p>
+ * Version 1.1 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Remove direct_sso cookie and its related logic.</li>
+ *  </ul>
+ * </p>
  *
- * @author flexme
- * @version 1.0
+ * @author flexme, ecnu_haozi
+ * @version 1.1
  */
 public class EJBLoginProcessor implements LoginProcessor {
-
-    /**
-     * The expire time for main site when 'remember me' flag is not set. Is set to 1 day.
-     */
-    private static final int MAIN_COOKIE_TIME = 60 * 60 * 24;
-
-    /**
-     * The Direct SSO cookie.
-     */
-    private static final String SSO_COOKIE = "direct_sso";
-
     /**
      * A <code>Logger</code> to be used for logging the events encountered while processing the requests.
      */
@@ -73,16 +69,8 @@ public class EJBLoginProcessor implements LoginProcessor {
                     new SimpleResponse(ServletActionContext.getResponse()),
                     BasicAuthentication.MAIN_SITE,
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
-            //auth.setBigCookieTime(MAIN_COOKIE_TIME);
             auth.login(new SimpleUser(tcSubject.getUserId(), username, password), rememberMe);
 
-            auth = new BasicAuthentication(
-                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
-                    new SimpleRequest(ServletActionContext.getRequest()),
-                    new SimpleResponse(ServletActionContext.getResponse()),
-                    new SimpleResource(SSO_COOKIE),
-                    DBMS.JTS_OLTP_DATASOURCE_NAME);
-            auth.login(new SimpleUser(tcSubject.getUserId(), username, password), true);
             return true;
         } catch (AuthenticationException e) {
             LOGGER.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);

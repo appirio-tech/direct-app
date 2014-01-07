@@ -28,9 +28,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * <p>An interceptor for requests to secured area. Verifies that current user is authenticated to application. If not
  * then redirects user to landing page.</p>
+ * 
+ * <p>
+ * Version 1.1 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Check SSO cookie and update auth related object in session each time.</li>
+ *  </ul>
+ * </p>
  *
- * @author isv
- * @version 1.0
+ * @author isv, ecnu_haozi
+ * @version 1.1
  */
 public class AuthenticationInterceptor implements Interceptor {
 
@@ -69,25 +76,28 @@ public class AuthenticationInterceptor implements Interceptor {
         HttpServletRequest request = ServletActionContext.getRequest();
 
         SessionData sessionData = action.getSessionData();
-        if ((sessionData == null) || sessionData.isAnonymousUser()) {
+
+        // Support Single-Sign-On login, Because the user may log out from another
+        // app without notification to current app. Thus the auth related object in session may invalidate at any time.
+        // In this case we need to check SSO cookie and update auth related object in session every time.
+
             
-            HttpServletResponse response = ServletActionContext.getResponse();
-            BasicAuthentication auth = new BasicAuthentication(
-                new SessionPersistor(request.getSession()), new SimpleRequest(request),
-                new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
-            User user = auth.getActiveUser();
-            if (user != null  && !user.isAnonymous()) {
-                TCSubject tcSubject = new TCSubject(user.getId());
-                if (sessionData == null) {
-                    sessionData = new SessionData(request.getSession());
-                    action.setSessionData(sessionData);
-                }
-                sessionData.setCurrentUser(tcSubject);
-                sessionData.setCurrentUserHandle(user.getUserName());
-            } else {
-                return "anonymous";
+        HttpServletResponse response = ServletActionContext.getResponse();
+        BasicAuthentication auth = new BasicAuthentication(
+            new SessionPersistor(request.getSession()), new SimpleRequest(request),
+            new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
+        User user = auth.getActiveUser();
+        if (user != null  && !user.isAnonymous()) {
+            TCSubject tcSubject = new TCSubject(user.getId());
+            if (sessionData == null) {
+                sessionData = new SessionData(request.getSession());
+                action.setSessionData(sessionData);
             }
-        }
+            sessionData.setCurrentUser(tcSubject);
+            sessionData.setCurrentUserHandle(user.getUserName());
+        } else {
+            return "anonymous";
+        }        
 
         String servletPath = request.getContextPath() + request.getServletPath();
         String query = request.getQueryString();

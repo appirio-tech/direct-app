@@ -52,15 +52,17 @@ import java.util.Set;
  *    </ul> 
  * </p>
  *
- * @author TCSASSEMBLER, pvmagacho
- * @version 1.1
+ * <p>
+ * Version 1.2 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Remove direct_sso cookie and its related logic.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author TCSASSEMBLER, pvmagacho, ecnu_haozi
+ * @version 1.2
  */
 public class MockLoginProcessor implements RequestProcessor<LoginAction> {
-
-    /**
-     * The SSO cookie to be for use by the Scorecard Tool.
-     */
-    private static final String SSO_COOKIE = "direct_sso";
 
     /**
      * The users x ID map.

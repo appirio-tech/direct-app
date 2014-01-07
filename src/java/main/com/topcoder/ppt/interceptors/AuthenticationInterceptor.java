@@ -27,8 +27,15 @@ import com.topcoder.web.common.security.SessionPersistor;
  * whether the TC SSO cookie is presented, if yes, it will use the TC SSO Cookie to perform login.
  * </p>
  * 
- * @author flexme
- * @version 1.0
+ * <p>
+ * Version 1.1 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Check SSO cookie and update auth related object in session each time.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author flexme, ecnu_haozi
+ * @version 1.1
  */
 public class AuthenticationInterceptor extends AbstractInterceptor {
     /**
@@ -65,20 +72,24 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         HttpSession session = ServletActionContext.getRequest().getSession();
         HttpServletRequest request = ServletActionContext.getRequest();
 
-        if (session.getAttribute(userSessionIdentityKey) == null) {
-            HttpServletResponse response = ServletActionContext.getResponse();
-            BasicAuthentication auth = new BasicAuthentication(
-                new SessionPersistor(request.getSession()), new SimpleRequest(request),
-                new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
-            User user = auth.getActiveUser();
-            if (user != null  && !user.isAnonymous()) {
-                // get user roles for the user id
-                TCSubject tcSubject = Util.getTCSubject(user.getId());
+        // Support Single-Sign-On login, Because the user may log out from another
+        // app without notification to current app. Thus the auth related object in session may invalidate at any time.
+        // In this case we need to check SSO cookie and update auth related object in session every time.
 
-                session.setAttribute(userSessionIdentityKey, tcSubject);
-                session.setAttribute("userHandle", user.getUserName());
-            }
+        
+        HttpServletResponse response = ServletActionContext.getResponse();
+        BasicAuthentication auth = new BasicAuthentication(
+            new SessionPersistor(request.getSession()), new SimpleRequest(request),
+            new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
+        User user = auth.getActiveUser();
+        if (user != null  && !user.isAnonymous()) {
+            // get user roles for the user id
+            TCSubject tcSubject = Util.getTCSubject(user.getId());
+
+            session.setAttribute(userSessionIdentityKey, tcSubject);
+            session.setAttribute("userHandle", user.getUserName());
         }
+
 
         // process the action and return its result
         return invocation.invoke();

@@ -23,16 +23,17 @@ import javax.servlet.http.HttpSession;
  *    </ul> 
  * </p>
  *
- * @author isv, pvmagacho
- * @version 1.1
+ * <p>
+ * Version 1.2 (BUG TCCC-5802) Change notes:
+ *  <ul>
+ *   <li>Remove direct_sso cookie and its related logic.</li>
+ *  </ul>
+ * </p>
+ *
+ * @author isv, pvmagacho, ecnu_haozi
+ * @version 1.2
  */
 public class LogoutAction extends AbstractAction {
-
-    /**
-     * The SSO cookie to be for use by the Scorecard Tool.
-     */
-    private static final String SSO_COOKIE = "direct_sso";
-
     /**
      * <p>Constructs new <code>LogoutAction</code> instance. This implementation does nothing.</p>
      */
