@@ -282,7 +282,7 @@ $(document).ready(function() {
         var errors = [];
 
         if(request.indexOf("formData.contestStatus") == -1) {
-            errors.push("The contest status is not chosen");
+            errors.push("The challenge status is not chosen");
         } else if(request.indexOf("formData.billingAccountIds") == -1) {
             errors.push("The billing account is not chosen");
         } else if(request.indexOf("formData.customerIds") == -1) {

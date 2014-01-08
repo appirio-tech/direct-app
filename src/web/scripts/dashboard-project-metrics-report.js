@@ -279,8 +279,8 @@ $(document).ready(function() {
         var aggreType = $(this).val();
         var typeNamesMap = {"project" : "Project",
                             "billing" : "Billing Account",
-                            "contestType" : "Contest Type",
-                            "status" : "Contest Status"};
+                            "contestType" : "Challenge Type",
+                            "status" : "Challenge Status"};
         $("tr.projectAggregationCostReport th:first").html(typeNamesMap[aggreType]);
 
         $("#participationMetricsReportAggregationArea tbody tr").hide();

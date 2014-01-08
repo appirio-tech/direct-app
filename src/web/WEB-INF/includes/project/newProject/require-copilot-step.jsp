@@ -37,10 +37,10 @@
                     deliver
                     the website back to you.
                 </dd>
-                <dd>A Copilot will be paid per contest. Please see <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview">here</a> for Copilot payment details.
+                <dd>A Copilot will be paid per challenge. Please see <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview">here</a> for Copilot payment details.
                 </dd>
                 <dd>If you do not have a clear choice for a Copilot, you can engage a Copilot by running a Copilot
-                    selection contest.
+                    selection challenge.
                 </dd>
                 <dd>You can skip this step. if you do not require a Copilot. If you already have a choice for the
                     Copilot then please mention it here.

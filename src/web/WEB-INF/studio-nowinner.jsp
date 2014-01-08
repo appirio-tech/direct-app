@@ -74,14 +74,14 @@
                                                             competition and chose no winner. This may discourage members
                                                             from competing in your future contests.</p>
 
-                                                        <p>3. The contest administration fee you paid to launch this
+                                                        <p>3. The challenge administration fee you paid to launch this
                                                             competition is non-refundable.</p>
 
                                                         <h4>Make a choice, but do something.</h4>
 
                                                         <p>Taking no action at all would be an ‘abandonment’ of the
                                                             competition, which also would be indicated in your public
-                                                            profile. Multiple contest abandonments will result in a
+                                                            profile. Multiple challenge abandonments will result in a
                                                             cancellation of your account.</p>
 
                                                         <p></p>

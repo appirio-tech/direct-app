@@ -157,7 +157,7 @@
                                     <div class="buttonBottom">
                                         <ul>
                                             <li>
-                                                <a href="javascript:;" class="viewContest" id="previewButton"><span>View Contest</span></a>
+                                                <a href="javascript:;" class="viewContest" id="previewButton"><span>View Challenge</span></a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;" class="viewProjectOverview" id="projectOverviewButton"><span>Project Overview</span></a>
@@ -212,7 +212,7 @@
                 <div class="modal-content">
                   <div class="modalContainer">
                         <div class="errorIcon"><img src="/images/errorIcon.png" alt="" /></div>
-                        <p>Please select your budget options for this contest.</p>
+                        <p>Please select your budget options for this challenge.</p>
                         <dl>
                             <dd>Project name could not be empty.</dd>
                             <dd>Copilot Opportunity Title could not be empty.</dd>

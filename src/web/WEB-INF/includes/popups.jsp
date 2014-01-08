@@ -109,7 +109,7 @@
     <div id="repostDialog" title="Repost" class="dialog-box hide">
       <div id="repostForm">
           <p>
-              Are you sure to repost the failed contest?
+              Are you sure to repost the failed challenge?
           </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>CANCEL</span></a>
@@ -119,7 +119,7 @@
 
       <div id="repostResult">
         <p>
-            Contest has been reposted successfully! <br/>
+            Challenge has been reposted successfully! <br/>
             Click edit button if you want to edit it.
         </p>
         <div class="popupButtons">
@@ -143,7 +143,7 @@
 
       <div id="newVersionDev">
           <p>
-               Do you want to create corresponding development contest?
+               Do you want to create corresponding development challenge?
           </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="newVersionDevYes();" class="button1"><span>YES</span></a>
@@ -182,7 +182,7 @@
         <a class="review-now" href="../contest/startSpecReview.action?startMode=now"></a>
         <p class="or">or</p>
         <a class="review-later" href="../contest/startSpecReview.action?startMode=later"></a>
-        <p class="note">*48 hours prior to the scheduled contest start time.</p>
+        <p class="note">*48 hours prior to the scheduled challenge start time.</p>
     </div>
 
  <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
@@ -297,7 +297,7 @@
             <!-- end .modalHeader -->
             <div class="modalBody">
                 <div class="modalBodyContent">
-                    <p>Project plan is empty. Please fill contests table to view plan chart.</p>
+                    <p>Project plan is empty. Please fill challenges table to view plan chart.</p>
                 </div>
 
                 <div class="modalCommandBox">
@@ -335,7 +335,7 @@
                         <tr>
                             <th>Estimated Duration</th>
                             <th>Estimated Member Cost</th>
-                            <th>Estimated Contest Fee</th>
+                            <th>Estimated Challenge Fee</th>
                             <th>Estimated Total Cost</th>
                         </tr>
                         </thead>
@@ -384,7 +384,7 @@
                         <span id="circularContestNumbers"></span> have circular dependencies.
                     </div>
                     <div id="ganttChartCircularMultiple">
-                        The following contests have circular dependencies:
+                        The following challenges have circular dependencies:
                         <ul id="multipleCircularsList"></ul>
                     </div>
                     <!-- end gantt chart circular -->
@@ -916,7 +916,7 @@
 
         <div class="modalBody">
             <div class="modalBodyContent">
-                <p><strong>No Checkpoint Winners are selected.</strong>Are you sure you don't want to select any milestone winners for this contest?<span>You cannot undo or provide feedback after lock in.</span></p>
+                <p><strong>No Checkpoint Winners are selected.</strong>Are you sure you don't want to select any milestone winners for this challenge?<span>You cannot undo or provide feedback after lock in.</span></p>
             </div>
             <div class="modalCommandBox">
                 <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">GO BACK TO SELECT MILESTONE WINNERS</span></span></a>
@@ -1121,7 +1121,7 @@
                                     <div class="ratingEdit"></div>
                                 </dd>
                                 <dd>
-                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <label title="Manages other copilots, manages challenges, manages inter-contest work">Challenge management</label>
                                     <div class="ratingEdit"></div>
                                 </dd>
                             </dl>
@@ -1185,7 +1185,7 @@
                                     <div class="ratingEdit"></div>
                                 </dd>
                                 <dd>
-                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <label title="Manages other copilots, manages challenges, manages inter-contest work">Challenge management</label>
                                     <div class="ratingEdit"></div>
                                 </dd>
                             </dl>
@@ -1246,7 +1246,7 @@
                                     <div class="ratingView"></div>
                                 </dd>
                                 <dd>
-                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <label title="Manages other copilots, manages challenges, manages inter-contest work">Challenge management</label>
                                     <div class="ratingView"></div>
                                 </dd>
                             </dl>
@@ -1403,7 +1403,7 @@
                                             <td class="dataDur">000 - 000 days</td>
                                         </tr>
                                         <tr>
-                                            <td rowspan="6" class="firstTd">Contest</td>
+                                            <td rowspan="6" class="firstTd">Challenge</td>
                                             <td><span>Conceptualization</span><span class="dataContest">1</span>
                                             </td>
                                         </tr>
@@ -1496,7 +1496,7 @@
                             <div class="modalContainer">
                                 <dl>
                                     <dd>
-                                        You have chosen to setup your game plan and contests manually.  After you complete the basic project setup, you can proceed to your project dashboard to add contests.
+                                        You have chosen to setup your game plan and challenges manually.  After you complete the basic project setup, you can proceed to your project dashboard to add challenges.
                                     </dd>
                                     <dd>
                                         Next, you will name and describe the project before skipping to step 4.
@@ -2865,7 +2865,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            <span><span class="userTitle">Username</span> - Contest Notifications Setting</span>
+                            <span><span class="userTitle">Username</span> - Challenge Notifications Setting</span>
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
@@ -2884,7 +2884,7 @@
                                 </colgroup>
                                 <thead>
                                 <tr>
-                                    <th>Contest</th>
+                                    <th>Challenge</th>
                                     <th><input type="checkbox" />
                                         <label>Timeline Notification</label></th>
                                     <th><input type="checkbox" />

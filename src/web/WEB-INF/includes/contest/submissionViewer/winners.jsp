@@ -159,7 +159,7 @@
                 </div>
 
                 <div class="p2 hide">
-                    <p>You have chosen not to request Final Fixes from the winner and the contest has now
+                    <p>You have chosen not to request Final Fixes from the winner and the challenge has now
                         closed.</p>
 
                 </div>

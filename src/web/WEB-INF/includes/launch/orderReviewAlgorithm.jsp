@@ -50,8 +50,8 @@
 								
 <div class="contestDetails">
 
-	<h2 class="sectionHead">Contest Details</h2>
-	<h3>Contest Prizes</h3>
+	<h2 class="sectionHead">Challenge Details</h2>
+	<h3>Challenge Prizes</h3>
 	<table class="prizesTable">
 		<tr id='alorPrizesTR'>
 		</tr>

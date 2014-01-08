@@ -182,7 +182,7 @@ $(document).ready(function() {
             errors.push('Project is not selected');
         }
         if (!checkRequired($('#contestNameInput2').val())) {
-            errors.push('Contest name is empty');
+            errors.push('Challenge name is empty');
         }
         if ($('#billingProjects2').val() == '0') {
             errors.push('Billing account is not selected');
@@ -706,7 +706,7 @@ function validateContestInput() {
         errors.push('Project is not selected');
     }
     if (!checkRequired(contestName)) {
-        errors.push('Contest name is empty');
+        errors.push('Challenge name is empty');
     }
     if (accountId == '0') {
         errors.push('Billing account is not selected');

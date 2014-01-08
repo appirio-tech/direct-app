@@ -118,7 +118,7 @@
                         </div>
                         <div class="rightRow selectDisabled">
                             <input name="isNewTaskContest2" type="checkbox" class="assoOption2"/>
-                            <label class="chxLbl">Contest</label>
+                            <label class="chxLbl">Challenge</label>
                             <s:select name="associatedContestId" list="projectContests" disabled="disabled"/>
                         </div>
                     </div>
@@ -275,7 +275,7 @@
                     </div>
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskContest" type="checkbox" class="assoOption2"/>
-                        <label class="chxLbl">Contest</label>
+                        <label class="chxLbl">Challenge</label>
                         <s:select name="associatedToContests[][contestId]" list="projectContests" disabled="disabled"/>
                     </div>
                 </div>
@@ -414,7 +414,7 @@
                     </div>
                     <div class="rightRow selectDisabled">
                         <input name="isNewTaskContest" type="checkbox" class="assoOption2"/>
-                        <label class="chxLbl">Contest</label>
+                        <label class="chxLbl">Challenge</label>
                         <s:select name="associatedToContests[][contestId]" list="projectContests" disabled="disabled" id="editTaskListContest"/>
                     </div>
                 </div>

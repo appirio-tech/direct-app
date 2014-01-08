@@ -38,11 +38,11 @@
         <div class="currentPage">
             <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
             <strong>Settings</strong> &gt;
-            <strong>Contest Fee Management</strong>
+            <strong>Challenge Fee Management</strong>
         </div>
 
         <div class="areaHeader">
-            <h2 class="title contestTitle">Contest Fee Management</h2>
+            <h2 class="title contestTitle">Challenge Fee Management</h2>
             <div class="select">
                 <div class="selectInnerBox">
                     <div class="selectInner">
@@ -55,7 +55,7 @@
                             Permissions</option>
                         <s:if test="ContestFeeSettingAccessible">
                             <option selected="selected" value="fee">
-                                Contest Fee</option>
+                                Challenge Fee</option>
                         </s:if>
                         <s:if test="jiraSynAccessible">
                             <option value="sync">
@@ -75,11 +75,11 @@
         <!-- End .areaHeader -->
         <div>
             <p class="billingAccountArchive"><a
-                    href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Contest
+                    href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Challenge
                 Fees Management for Billing Accounts</a></p>
 
             <p class="billingAccountArchive"><a
-                    href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Contest
+                    href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Challenge
                 Fees Creation for Billing Accounts</a></p>
 
             <p class="billingAccountArchive"><a

@@ -265,7 +265,7 @@
 											</tr>
 											<tr>
 												<td class="first">
-                                                    <strong>Active Contests</strong>
+                                                    <strong>Active Challenges</strong>
                                                     <link:helpIcon/>
                                                 </td>
 												<td class="last highLight">
@@ -274,7 +274,7 @@
 											</tr>
 											<tr class="even">
 												<td class="first">
-                                                    <strong>Prizes Purse</strong> in Running Contest
+                                                    <strong>Prizes Purse</strong> in Running Challenge
                                                     <link:helpIcon/>
                                                 </td>
 												<td class="last highLight2">
@@ -283,7 +283,7 @@
 											</tr>
                                             <tr>
                                                 <td class="first">
-                                                    <strong>Bug Races</strong>
+                                                    <strong>Races</strong>
                                                     <link:helpIcon/>
                                                 </td>
                                                 <td class="last highLight">
@@ -292,7 +292,7 @@
                                             </tr>
                                             <tr class="even">
                                                 <td class="first">
-                                                    <strong>Prizes Purse</strong> in Running Bug Races
+                                                    <strong>Prizes Purse</strong> in Running Races
                                                     <link:helpIcon/>
                                                 </td>
                                                 <td class="last highLight2">

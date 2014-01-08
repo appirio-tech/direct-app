@@ -75,7 +75,7 @@
 
                           <div class="contestViews">
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Contests</h2>
+                                <h2 class="title contestTitle">Challenges</h2>
 
                                 <div class="viewBtns">
                                     <a href="javascript:;" class="listViewBtn active">
@@ -115,15 +115,15 @@
                                         <div class='inner'>
                                             <div class='column1'>
                                                 <div class='row'>
-                                                    <span class='title'>Contest Status</span>
+                                                    <span class='title'>Challenge Status</span>
                                                     <select id='contestStatusFilter'>
-                                                        <option value='All'>All Contest Status</option>
+                                                        <option value='All'>All Challenge Status</option>
                                                     </select>
                                                 </div>
                                                 <div class='row'>
-                                                    <span class='title'>Contest Type</span>
+                                                    <span class='title'>Challenge Type</span>
                                                     <select id='contestTypeFilter'>
-                                                        <option value='All'>All Contest Types</option>
+                                                        <option value='All'>All Challenge Types</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -182,8 +182,8 @@
                                     <thead>
                                         <tr>
 
-                                            <th>Contest Type</th>
-                                            <th>Contest Name</th>
+                                            <th>Challenge Type</th>
+                                            <th>Challenge Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th class="truncateRegs">Registrants</th>
@@ -274,7 +274,7 @@
                                                     status="status">
                                             <tr>
 
-                                                <td class="first">Bug Race</td>
+                                                <td class="first">Race</td>
                                                 <td>
                                                     <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
                                                         <img src="/images/br_small.png"
@@ -344,7 +344,7 @@
                                             <div class='exportText'>
                                                 <a href='javascript:;' class='exportCollapse' id='ExportContestsExpand'><img
                                                         src='/images/filter-panel/expand_icon.png' alt=''/></a>
-                                                <span class='title'>Contest Results Export</span>
+                                                <span class='title'>Challenge Results Export</span>
                                             </div>
                                         </div>
                                     </div>
@@ -357,7 +357,7 @@
                                         <div class='inner'>
                                             <div class='column1'>
                                                 <div class='row'>
-                                                    <span class='title'>Contest Completion Date:</span>
+                                                    <span class='title'>Challenge Completion Date:</span>
                                                 </div>
                                             </div>
                                             <!--end .column1-->

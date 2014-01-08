@@ -60,7 +60,7 @@
                                                 <div id="tabs3">
                                                     <ul>
                                                         <li class="firstItem on"><a href="javascript:;" id="projectViewLink" class="first"><span class="left"><span class="right">Project View</span></span></a></li>
-                                                        <li class="lastItem"><a href="javascript:;" id="contestViewLink" class="last"><span class="left"><span class="right">Contest View</span></span></a></li>
+                                                        <li class="lastItem"><a href="javascript:;" id="contestViewLink" class="last"><span class="left"><span class="right">Challenge View</span></span></a></li>
                                                     </ul>
                                                 </div><!-- End #tabs3 -->
                                             
@@ -108,8 +108,8 @@
                                                         <table id="copilotContestTable" class="projectStats newManageStatus newManageContestsStatus hide" cellpadding="0" cellspacing="0">
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="thOne">Project / Contest name</th>
-                                                                    <th class="thTwo">Contest Number</th>
+                                                                    <th class="thOne">Project / Challenge name</th>
+                                                                    <th class="thTwo">Challenge Number</th>
                                                                     <th class="thThree">Copilot</th>
                                                                 </tr>
                                                             </thead>

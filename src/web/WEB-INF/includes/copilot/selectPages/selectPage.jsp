@@ -53,7 +53,7 @@
             
             <div class="grayTextArea">
                 <p>
-                    Copilot has its own payment rates are adjusted to the type of contest and may change depending on the needs of the contest.
+                    Copilot has its own payment rates are adjusted to the type of challenge and may change depending on the needs of the challenge.
                     <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">view rate</a>
                 </p>
                 
@@ -108,7 +108,7 @@
                                     <strong class="greenText">2</strong>
                                 </li>
                                 <li>
-                                    <span>Number of Contest: </span>
+                                    <span>Number of Challenge: </span>
                                     <strong class="greenText">3</strong>
                                 </li>
                             </ul>

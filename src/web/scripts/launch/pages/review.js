@@ -101,7 +101,7 @@ function updateReviewSoftware() {
     $('#reviewSoftwarePage .prizesInner').html(prizeHTML);
 
     var isMultiRound = mainWidget.softwareCompetition.multiRound;
-   $('#rswRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
+   $('#rswRoundType').html((!isMultiRound)?"Challenge will be run in single-round":"Challenge will be run in multi-rounds");
    if (!isMultiRound) {
 	   $('#rswCheckpointTR').hide();
 	   $('#rswMPrizesDiv').hide();
@@ -135,7 +135,7 @@ function updateReviewStudio() {
    $('#rBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
    var isMultiRound = mainWidget.softwareCompetition.multiRound;
-   $('#rRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
+   $('#rRoundType').html((!isMultiRound)?"Challenge will be run in single-round":"Challenge will be run in multi-rounds");
 
    if(!isMultiRound) {
        $('#rCheckpointTR').hide();

@@ -1164,7 +1164,7 @@ JSGantt.GanttChart = function (pGanttVar, pDiv, pFormat) {
                     '  <TD style="BORDER-TOP: #efefef 1px solid; WIDTH: 15px; HEIGHT: 20px"></TD>' +
                     '  <TD style="BORDER-TOP: #efefef 1px solid; WIDTH: ' + vNameWidth + 'px; HEIGHT: 20px"><NOBR></NOBR></TD>';
 
-            if (vShowRes == 1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 100px; HEIGHT: 20px" align=center nowrap>Contest Type</TD>';
+            if (vShowRes == 1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 100px; HEIGHT: 20px" align=center nowrap>Challenge Type</TD>';
             if (vShowCost == 1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 45px; HEIGHT: 20px" align=center nowrap>Cost</TD>';
             if (vShowDur == 1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 45px; HEIGHT: 20px" align=center nowrap>Duration</TD>';
             if (vShowComp == 1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 45px; HEIGHT: 20px" align=center nowrap>% Comp.</TD>';

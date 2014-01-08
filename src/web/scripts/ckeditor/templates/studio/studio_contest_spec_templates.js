@@ -31,7 +31,7 @@ CKEDITOR.addTemplates("app_frontend_contest_spec_templates", {
         {
             title: "Application Front-End Design",
             image: "template.gif",
-            description: "Application Front-End Design Contest Specification.",
+            description: "Application Front-End Design Challenge Specification.",
             html: '',
             path: '/scripts/ckeditor/templates/studio/app_frontend_design_contest_spec_templateJW110411.txt'
         }

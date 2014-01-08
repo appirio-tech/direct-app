@@ -245,11 +245,11 @@ function validateFieldsOverviewStudio() {
    var errors = [];
 
    if(!checkRequired(contestIntroduction)) {
-       errors.push('Contest introduction is empty.');
+       errors.push('Challenge introduction is empty.');
    }
 
    if(!checkRequired(contestDescription)) {
-       errors.push('Contest description is empty.');
+       errors.push('Challenge description is empty.');
    }
 
    var prizes = validatePrizes(errors);

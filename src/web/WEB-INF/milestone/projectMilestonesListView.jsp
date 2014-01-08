@@ -44,7 +44,7 @@
                 <input type="hidden" name="notification" value="{{:milestone.sendNotifications}}">
                 <div class="project">
                     <div class="projectT">
-                    <input type="checkbox" name="projectName" {{if milestone.mapRepresentation.completionDate != null}}checked="checked"{{/if}} {{if completedContestNumber != totalContestNumber}}disabled="disabled" title="There are uncompleted contests, cannot mark as completed. If you wan to, please either move the contest(s) to future milestone or delete/cancel the contests first"{{/if}}/>
+                    <input type="checkbox" name="projectName" {{if milestone.mapRepresentation.completionDate != null}}checked="checked"{{/if}} {{if completedContestNumber != totalContestNumber}}disabled="disabled" title="There are uncompleted challenges, cannot mark as completed. If you wan to, please either move the challenge(s) to future milestone or delete/cancel the challenges first"{{/if}}/>
                     <label>{{>milestone.name}}</label>
                     {{if milestone.owners.length > 0}}
                         {{:~getUserLink(milestone.owners[0].name)}}
@@ -55,9 +55,9 @@
                         <p>
                            {{if contests != null && contests.length > 0}}
                                 <span class="bar"><i style="width:{{:completedContestNumber * 100 /totalContestNumber}}%"></i></span>
-                                <span class="completedNumber">{{:completedContestNumber}}</span>/<span class="totalNumber">{{:totalContestNumber}}</span> Contests have been completed
+                                <span class="completedNumber">{{:completedContestNumber}}</span>/<span class="totalNumber">{{:totalContestNumber}}</span> Challenges have been completed
                            {{else}}
-                                 No contests associated to this milestone
+                                 No challenges associated to this milestone
                            {{/if}}
                         </p>
                         <a href="javascript:;" class="showHideDetails">Show Details</a>
@@ -281,7 +281,7 @@
 <div class="moveMilestonePopup" id="moveMilestonePopup">
     <div class="popupMask">
         <p>
-            Select Milestone you want this contest to be moved to
+            Select Milestone you want this challenge to be moved to
         </p>
         <select>
             <option value="0">- Select a milestone to move to -</option>

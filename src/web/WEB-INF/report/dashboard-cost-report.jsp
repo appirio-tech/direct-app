@@ -249,7 +249,7 @@
 
         			<div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="7">
         				<div class="multiSelectAreaInner">
-        					<label class="multiSelectAreaTitle">Contest Type:</label>
+        					<label class="multiSelectAreaTitle">Challenge Type:</label>
         					<div class="multiSelectBox">
                                 <div class="multiOptionRow multiOptionRowChecked">
                                     <input type="checkbox" checked="checked" id="ContestTypeSelectAll" class="optionAll"/>
@@ -314,35 +314,35 @@
             <select id="aggregationCostReportType">
                 <option value="project">Project</option>
                 <option value="billing">Billing Account</option>
-                <option value="contestType">Contest Type</option>
-                <option value="status">Contest Status</option>
+                <option value="contestType">Challenge Type</option>
+                <option value="status">Challenge Status</option>
             </select>
         </th>
     </tr>
     <tr class="projectAggregationCostReport scData">
         <th class="tableColumn">Project</th>
-        <th class="tableColumn">Contest Fees</th>
+        <th class="tableColumn">Challenge Fees</th>
         <th class="tableColumn">Estimated Member Cost</th>
         <th class="tableColumn">Actual Member Cost</th>
         <th class="tableColumn">Total</th>
     </tr>
     <tr class="billingAggregationCostReport scData hide">
         <th class="tableColumn">Billing Account</th>
-        <th class="tableColumn">Contest Fees</th>
+        <th class="tableColumn">Challenge Fees</th>
         <th class="tableColumn">Estimated Member Cost</th>
         <th class="tableColumn">Actual Member Cost</th>
         <th class="tableColumn">Total</th>
     </tr>
     <tr class="contestTypeAggregationCostReport scData hide">
-        <th class="tableColumn">Contest Type</th>
-        <th class="tableColumn">Contest Fees</th>
+        <th class="tableColumn">Challenge Type</th>
+        <th class="tableColumn">Challenge Fees</th>
         <th class="tableColumn">Estimated Member Cost</th>
         <th class="tableColumn">Actual Member Cost</th>
         <th class="tableColumn">Total</th>
     </tr>
     <tr class="statusAggregationCostReport scData hide">
-        <th class="tableColumn">Contest Status</th>
-        <th class="tableColumn">Contest Fees</th>
+        <th class="tableColumn">Challenge Status</th>
+        <th class="tableColumn">Challenge Fees</th>
         <th class="tableColumn">Estimated Member Cost</th>
         <th class="tableColumn">Actual Member Cost</th>
         <th class="tableColumn">Total</th>
@@ -462,7 +462,7 @@
 <div class="resultTableContainer">
     <%-- Cost report Details --%>
 <table id="costDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0"
-       cellspacing="0" data-intro="This table contains the full details for every competition included within your filter. Click the column headers to sort.  Click a contest or project to drill into details." data-step="10">
+       cellspacing="0" data-intro="This table contains the full details for every competition included within your filter. Click the column headers to sort.  Click a challenge or project to drill into details." data-step="10">
     <thead>
     <tr>
         <th class="tableTitle" colspan="11">
@@ -479,13 +479,13 @@
         <th class="tableColumn">&nbsp;Billing&nbsp;</th>
         <th class="tableColumn">&nbsp;Project&nbsp;</th>
         <th class="tableColumn">&nbsp;Filter Value&nbsp;</th>
-        <th class="tableColumn">&nbsp;Contest&nbsp;</th>
-		<th class="tableColumn">&nbsp;Contest Id&nbsp;</th>
-        <th class="tableColumn">&nbsp;Contest Type&nbsp;</th>
+        <th class="tableColumn">&nbsp;Challenge&nbsp;</th>
+		<th class="tableColumn">&nbsp;Challenge Id&nbsp;</th>
+        <th class="tableColumn">&nbsp;Challenge Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
         <th class="tableColumn">&nbsp;Launch Date&nbsp;</th>
         <th class="tableColumn">&nbsp;Completion Date&nbsp;</th>
-        <th class="tableColumn">&nbsp;Contest Fee&nbsp;</th>
+        <th class="tableColumn">&nbsp;Challenge Fee&nbsp;</th>
         <th class="tableColumn">&nbsp;Estimated Member Cost&nbsp;</th>
         <th class="tableColumn">&nbsp;Actual Member Cost&nbsp;</th>
         <th class="tableColumn">&nbsp;&nbsp;&nbsp;Total&nbsp;&nbsp;&nbsp;</th>
@@ -547,7 +547,7 @@
             <td>
 
                  <c:set var="status" value="${fn:trim(item.status)}"/>
-                <%-- only display the actual cost when the contest is finished --%>
+                <%-- only display the actual cost when the challenge is finished --%>
                 <%--<c:if test="${status == 'Finished'}"> --%>
                     <fmt:formatNumber value="${item.actualCost}" pattern="$###,##0.00"/>
                 <%--</c:if>--%>
@@ -624,13 +624,13 @@
                                 <th class="tableColumn sorting_desc">Billing</th>
                                 <th class="tableColumn sorting">Project</th>
                                 <th class="tableColumn sorting">Filter Value</th>
-                                <th class="tableColumn sorting">Contest</th>
-								<th class="tableColumn sorting">Contest Id</th>
-                                <th class="tableColumn sorting">Contest Type</th>
+                                <th class="tableColumn sorting">Challenge</th>
+								<th class="tableColumn sorting">Challenge Id</th>
+                                <th class="tableColumn sorting">Challenge Type</th>
                                 <th class="tableColumn sorting">Status</th>
                                 <th class="tableColumn sorting">Launch Date</th>
                                 <th class="tableColumn sorting">Completion Date</th>
-                                <th class="tableColumn sorting">Contest Fee</th>
+                                <th class="tableColumn sorting">Challenge Fee</th>
                                 <th class="tableColumn sorting">Estimated Member Cost</th>
                                 <th class="tableColumn sorting">Actual Member Cost</th>
                                 <th class="tableColumn sorting">Prizes</th>

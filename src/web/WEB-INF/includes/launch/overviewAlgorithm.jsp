@@ -61,7 +61,7 @@
     <!-- prizes -->
     <div class="alPrizes">
     
-        <h3>Contest Prizes:</h3>
+        <h3>Challenge Prizes:</h3>
         
         <div class="prizesInner">
               <label class="first">1st Place</label>

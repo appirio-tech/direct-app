@@ -175,8 +175,8 @@
                             <table border="1px" class="projectStats contests" id="contest_vms">
                                 <thead>
                                 <tr>
-                                    <th>Contest Id</th>
-                                    <th>Contest Name</th>
+                                    <th>Challenge Id</th>
+                                    <th>Challenge Name</th>
                                     <th>TC Image Name</th>
                                     <th>Account Name</th>
                                     <th>SVN Branch</th>

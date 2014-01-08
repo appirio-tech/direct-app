@@ -162,11 +162,11 @@
 <thead>
 <tr>
     <th></th>
-    <th>Contest Name</th>
-    <th>Contest Type</th>
+    <th>Challenge Name</th>
+    <th>Challenge Type</th>
     <th>Member Cost</th>
-    <th>Contest Fee</th>
-    <th>Follow Contest</th>
+    <th>Challenge Fee</th>
+    <th>Follow Challenge</th>
     <th>Dependencies</th>
     <th></th>
 </tr>
@@ -181,7 +181,7 @@
     <td>
         <!-- contestType select -->
         <select name="contestType" class="contestType">
-            <option value="0" selected="selected">Select Contest Type</option>
+            <option value="0" selected="selected">Select Challenge Type</option>
             <optgroup label="Software">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
@@ -205,15 +205,15 @@
     <td>
         <!-- followContest select -->
         <select name="followContest" class="followContest">
-            <option value="0">Select Contest to follow</option>
+            <option value="0">Select Challenge to follow</option>
         </select>
         <!-- End followContest select -->
     </td>
     <td>
         <!-- contestDependencies -->
         <div class="taskMultiSelector contestDependencies">
-            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select contests this contest
-                depends on</a><a class="selectorArrow"></a><label class="hidden">Select contests this contest depends
+            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select challenges this challenge
+                depends on</a><a class="selectorArrow"></a><label class="hidden">Select challenges this challenge depends
                 on</label></div>
             <div class="dropDown">
                 <ul>
@@ -242,7 +242,7 @@
     <td>
         <!-- contestType select -->
         <select name="contestType" class="contestType">
-            <option value="0" selected="selected">Select Contest Type</option>
+            <option value="0" selected="selected">Select Challenge Type</option>
             <optgroup label="Software">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
@@ -266,7 +266,7 @@
     <td>
         <!-- followContest select -->
         <select name="followContest" class="followContest">
-            <option value="0">Select Contest to follow</option>
+            <option value="0">Select Challenge to follow</option>
             <option value="2" class="hide"></option>
             <option value="3" class="hide"></option>
         </select>
@@ -275,8 +275,8 @@
     <td>
         <!-- contestDependencies -->
         <div class="taskMultiSelector contestDependencies">
-            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select contests this contest
-                depends on</a><a class="selectorArrow"></a><label class="hidden">Select contests this contest depends
+            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select challenges this challenge
+                depends on</a><a class="selectorArrow"></a><label class="hidden">Select challenges this challenge depends
                 on</label></div>
             <div class="dropDown">
                 <ul>
@@ -304,7 +304,7 @@
     <td>
         <!-- contestType select -->
         <select name="contestType" class="contestType">
-            <option value="0" selected="selected">Select Contest Type</option>
+            <option value="0" selected="selected">Select Challenge Type</option>
             <optgroup label="Software">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
@@ -328,7 +328,7 @@
     <td>
         <!-- followContest select -->
         <select name="followContest" class="followContest">
-            <option value="0" selected="selected">Select Contest to follow</option>
+            <option value="0" selected="selected">Select Challenge to follow</option>
             <option value="1" class="hide"></option>
             <option value="3" class="hide"></option>
         </select>
@@ -337,8 +337,8 @@
     <td>
         <!-- contestDependencies -->
         <div class="taskMultiSelector contestDependencies">
-            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select contests this contest
-                depends on</a><a class="selectorArrow"></a><label class="hidden">Select contests this contest depends
+            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select challenges this challenge
+                depends on</a><a class="selectorArrow"></a><label class="hidden">Select challenges this challenge depends
                 on</label></div>
             <div class="dropDown">
                 <ul>
@@ -366,7 +366,7 @@
     <td>
         <!-- contestType select -->
         <select name="contestType" class="contestType">
-            <option value="0" selected="selected">Select Contest Type</option>
+            <option value="0" selected="selected">Select Challenge Type</option>
             <optgroup label="Software">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
@@ -390,7 +390,7 @@
     <td>
         <!-- followContest select -->
         <select name="followContest" class="followContest">
-            <option value="0" selected="selected">Select Contest to follow</option>
+            <option value="0" selected="selected">Select Challenge to follow</option>
             <option value="1" class="hide"></option>
             <option value="2" class="hide"></option>
         </select>
@@ -399,8 +399,8 @@
     <td>
         <!-- contestDependencies -->
         <div class="taskMultiSelector contestDependencies">
-            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select contests this contest
-                depends on</a><a class="selectorArrow"></a><label class="hidden">Select contests this contest depends
+            <div class="trigger"><a class="msValue" href="javascript:;" title="Select">Select challenges this challenge
+                depends on</a><a class="selectorArrow"></a><label class="hidden">Select challenges this challenge depends
                 on</label></div>
             <div class="dropDown">
                 <ul>
@@ -431,11 +431,11 @@
 
 <!-- bugRacesWrapper -->
 <div class="planBugRacesWrapper">
-    <p><label>Bug Race Estimation</label></p>
-    <p><span class="text">Plan</span> <input type="text" name="bugRaces" class="bugRaces" value="0"/> <span class="text">Bug Races for this project with prize $ </span><input
-        type="text" name="bugRacesPrize" class="bugRaces" value="150"/><span class="text"> Per Bug Race</span>(<i>It's recommended to make bug race number 1.5 times of planned contests number.</i>)</p>
-    <p><span class="total">Bug Race Fee:</span><span id="bugRaceFeeTotal"></span></p>
-    <p><span class="total">Total Bug Race Cost:</span><span id="bugRaceCostTotal"></span></p>
+    <p><label>Race Estimation</label></p>
+    <p><span class="text">Plan</span> <input type="text" name="bugRaces" class="bugRaces" value="0"/> <span class="text">Races for this project with prize $ </span><input
+        type="text" name="bugRacesPrize" class="bugRaces" value="150"/><span class="text"> Per Race</span>(<i>It's recommended to make race number 1.5 times of planned challenges number.</i>)</p>
+    <p><span class="total">Race Fee:</span><span id="bugRaceFeeTotal"></span></p>
+    <p><span class="total">Total Race Cost:</span><span id="bugRaceCostTotal"></span></p>
 </div>
 <!-- End .bugRacesWrapper -->
 
@@ -513,7 +513,7 @@
                         <tr>
                             <th>Estimated Duration</th>
                             <th>Estimated Member Cost</th>
-                            <th>Estimated Contest Fee</th>
+                            <th>Estimated Challenge Fee</th>
                             <th>Estimated Total Cost</th>
                         </tr>
                         </thead>
@@ -562,7 +562,7 @@
                         <span id="circularContestNumbers"></span> have circular dependencies
                     </div>
                     <div id="ganttChartCircularMultiple">
-                        The following contests have circular dependencies:
+                        The following challenges have circular dependencies:
                         <ul id="multipleCircularsList"></ul>
                     </div>
                     <!-- end gantt chart circular -->
@@ -633,7 +633,7 @@
             <!-- end .modalHeader -->
             <div class="modalBody">
                 <div class="modalBodyContent">
-                    <p>Project plan is empty. Please fill contests table to view plan chart.</p>
+                    <p>Project plan is empty. Please fill challenges table to view plan chart.</p>
                 </div>
 
                 <div class="modalCommandBox">

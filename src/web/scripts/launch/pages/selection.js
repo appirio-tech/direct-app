@@ -69,7 +69,7 @@ function onBillingProjectChange() {
 function validateFieldsContestSelection() {
    var competitionType = getContestType()[0];
    if(!checkRequired(competitionType)) {
-       showErrors("No contest type is selected.");
+       showErrors("No challenge type is selected.");
        return false;
    }
    	
@@ -386,7 +386,7 @@ function validateFieldsContestSelectionStudio() {
        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
             var obj = CKEDITOR.instances[this];
             if (obj.getData() == "") {
-                obj.setData("Only members that register for this contest will see this description.");
+                obj.setData("Only members that register for this challenge will see this description.");
             }
        });
    } else {

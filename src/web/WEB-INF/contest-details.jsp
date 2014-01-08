@@ -48,7 +48,7 @@
                                             <div class="caption">
                                                 <div class="captionLeft"><div class="captionRight">
                                                     <div class="captionInner">
-                                                        <h2>Contest Type</h2>
+                                                        <h2>Challenge Type</h2>
                                                     </div>
                                                 </div></div>
                                             </div><!-- End .caption -->
@@ -59,7 +59,7 @@
                                                         <div class="messageTopLeft"><div class="messageTopRight"><div class="messageBottomLeft"><div class="messageBottomRight">
                                                             <div class="messageInner">
                                                                 <p>You can start this project with a various type of
-                                                                    contests, and you could add more later from your
+                                                                    challenges, and you could add more later from your
                                                                     Projects tab. Start with something with easier
                                                                     thing</p>
                                                             </div><!-- .messageInner -->
@@ -70,7 +70,7 @@
                                                 <div class="tabs4">
                                                     <ul>
                                                         <li class="on">
-                                                            <a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Studio Contest</span></a>
+                                                            <a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Studio Challenge</span></a>
                                                         </li>
                                                     </ul>
                                                 </div><!-- End .tabs4 -->
@@ -119,7 +119,7 @@
                                                     <div class="messageTop"><div class="messageBottom"><div class="messageLeft"><div class="messageRight">
                                                         <div class="messageTopLeft"><div class="messageTopRight"><div class="messageBottomLeft"><div class="messageBottomRight">
                                                             <div class="messageInner">
-                                                                <p>A contest can be run in single round or multiple rounds. Both has the same treatment, except that in multiple rounds you encourage (and reward) competitors to submit at a specified checkpoint date and you give them prizes and feedbacks, for some (usually top 5) or all submissions. Multiple round always useful for some complex projects.</p>
+                                                                <p>A challenge can be run in single round or multiple rounds. Both has the same treatment, except that in multiple rounds you encourage (and reward) competitors to submit at a specified checkpoint date and you give them prizes and feedbacks, for some (usually top 5) or all submissions. Multiple round always useful for some complex projects.</p>
                                                             </div><!-- .messageInner -->
                                                         </div></div></div></div>
                                                     </div></div></div></div>
@@ -138,7 +138,7 @@
                                                             <div class="messageTop"><div class="messageBottom"><div class="messageLeft"><div class="messageRight">
                                                                 <div class="messageTopLeft"><div class="messageTopRight"><div class="messageBottomLeft"><div class="messageBottomRight">
                                                                     <div class="messageInner">
-                                                                        <p>Contest will be run in multi-rounds. There are several configurations that allows you to tailor your contests for specific need and proper target. You can set each round timeline as well as prizes.</p>
+                                                                        <p>Challenge will be run in multi-rounds. There are several configurations that allows you to tailor your challenges for specific need and proper target. You can set each round timeline as well as prizes.</p>
                                                                     </div><!-- .messageInner -->
                                                                 </div></div></div></div>
                                                             </div></div></div></div>
@@ -250,7 +250,7 @@
                                                     <div><!-- The content of the first tab -->
                                                         <div class="questions">
                                                             <p><strong>What are the primary goal of this
-                                                                contest?</strong></p>
+                                                                challenge?</strong></p>
 
                                                             <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit.
                                                                 Pellentesque mangna felis, tincidunt sed facilisis sit
@@ -289,7 +289,7 @@
                                                         </div>
 
                                                         <div class="questions">
-                                                            <p><strong>Other Instructions for Your Contest</strong></p>
+                                                            <p><strong>Other Instructions for Your Challenge</strong></p>
 
                                                             <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit.
                                                                 Pellentesque mangna felis, tincidunt sed facilisis sit
@@ -300,7 +300,7 @@
 
                                                         <div class="questions">
                                                             <p><strong>What Criteria Must the Designers Meet to Win This
-                                                                Contest?</strong></p>
+                                                                Challenge?</strong></p>
 
                                                             <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit.
                                                                 Pellentesque mangna felis, tincidunt sed facilisis sit

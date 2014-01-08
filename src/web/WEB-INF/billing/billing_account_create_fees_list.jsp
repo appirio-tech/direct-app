@@ -112,10 +112,10 @@
                                 &gt;
                                 <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
                                 </s:url>
-                                <strong><a href="<s:property value="#feeMainPage"/>">Contest Fee Management</a></strong>
+                                <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Default Contest Fees</h2>
+                                <h2 class="title contestTitle">Default Challenge Fees</h2>
                             </div>
                             <!-- End .areaHeader -->
 
@@ -126,7 +126,7 @@
                                     <br/>
 
                                     <p style="width: 100%;text-align: center;">
-                                        Create Contest Fees for
+                                        Create Challenge Fees for
                                         <s:select name="projectId" list="billingAccountsWithNoFees"/>
                                     </p>
 
@@ -135,7 +135,7 @@
                                     </div>
  
                                     <div id="contest_fee_type">
-                                        <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Contest Fee', 'false':'Member Cost Percentage Based Contest Fee'}"/>
+                                        <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Challenge Fee', 'false':'Member Cost Percentage Based Challenge Fee'}"/>
                                         <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20" cssClass="contestFeePercentage"/>
                                     </div>
                                     <table id="contestFeeEditDetail"

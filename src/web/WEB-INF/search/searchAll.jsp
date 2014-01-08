@@ -28,7 +28,7 @@
                     <div class="filterArea firstOn">
                         <ul class="resultsFilter">
                             <li class="first on"><a href="javascript:;">All Results</a></li>
-                            <li><a href="javascript:;">Contests</a></li>
+                            <li><a href="javascript:;">Challenges</a></li>
                             <li><a href="javascript:;">Projects</a></li>
                             <li class="last"><a href="javascript:;">Features</a></li>
                         </ul>
@@ -36,7 +36,7 @@
 
                     <div class="resultsList">
                         <h2>All Results</h2>
-                        <h3 class="typeContests">Contests</h3>
+                        <h3 class="typeContests">Challenges</h3>
                         <ul class="typeContests horizontalLayout">
                             <s:iterator value="contestsSearchResult">
                                 <li>

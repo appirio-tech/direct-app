@@ -551,7 +551,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span><span class="userTitle">Username</span> - Contest Notifications Setting</span>
+                    <span><span class="userTitle">Username</span> - Challenge Notifications Setting</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
@@ -570,7 +570,7 @@
                         </colgroup>
                         <thead>
                         <tr>
-                            <th>Contest</th>
+                            <th>Challenge</th>
                             <th><input type="checkbox" />
                                 <label>Timeline Notification</label></th>
                             <th><input type="checkbox" />

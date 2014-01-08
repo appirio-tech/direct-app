@@ -1080,9 +1080,9 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                     '  <TD style="BORDER-TOP: #efefef 1px solid; WIDTH: 15px; HEIGHT: 20px"></TD>' +
                     '  <TD style="BORDER-TOP: #efefef 1px solid; WIDTH: ' + vNameWidth + 'px; HEIGHT: 20px"><NOBR></NOBR></TD>' ;
 
-         if(vShowRes ==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 100px; HEIGHT: 20px" align=center nowrap>Contest Type</TD>' ;
+         if(vShowRes ==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 100px; HEIGHT: 20px" align=center nowrap>Challenge Type</TD>' ;
          if(vShowDur ==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" align=center nowrap title="The total duration">Duration</TD>' ;
-         if(vShowComp==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" align=center nowrap title="How many percantage the contest / task is finished">% Comp.</TD>' ;
+         if(vShowComp==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" align=center nowrap title="How many percantage the challenge / task is finished">% Comp.</TD>' ;
          if(vShowStartDate==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" align=center nowrap title="Start Date">Start</TD>' ;
          if(vShowReviewEndDate==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" title="Final Review End" align=center nowrap>FR End</TD>' ;
          if(vShowEndDate==1) vLeftTable += '  <TD style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid; WIDTH: 80px; HEIGHT: 20px" title="Approval End" align=center nowrap>APR End</TD>' ;
@@ -2592,6 +2592,9 @@ JSGantt.AddXMLTask = function(pGanttVar){
             } catch (error) { pCaption ="";}
 
             // Finally add the task
+            if (pRes == 'Bug Race') {
+                pRes = "Race";
+            }
             pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pReviewEnd, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption,pDependType));
         }
     }
@@ -2734,6 +2737,9 @@ JSGantt.ChromeXMLParse = function (pGanttVar){
             }
 
             // Finally add the task
+            if (pRes == 'Bug Race') {
+                pRes = "Race";
+            }
             pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID , pName, pStart, pReviewEnd, pEnd, pColor,  pLink, pMile, pRes,  pComp, pGroup, pParent, pOpen, pDepend,pCaption, pDependType));
         };
     };

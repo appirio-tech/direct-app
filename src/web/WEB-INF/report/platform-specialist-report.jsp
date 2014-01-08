@@ -220,7 +220,7 @@
          <tr>
              <th>Month</th>
              <th>Member Costs</th>
-             <th>Contest Fees</th>
+             <th>Challenge Fees</th>
              <th>Total</th>
          </tr>
          </thead>

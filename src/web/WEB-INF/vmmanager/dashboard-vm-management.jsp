@@ -68,7 +68,7 @@
 												</select>
 											</div>	
 											<div class="line">
-												<label for="contest_id" >Contest id</label>
+												<label for="contest_id" >Challenge id</label>
 												<input type="text" id="contest_id" name="contestId"
                                                        value="<c:if test="${contestId != 0}"><s:property value="contestId"/></c:if>" />
 												<span id="contestIdError" style="color:red" class="error hide"></span>
@@ -84,7 +84,7 @@
 												<span id="tcHandleError" style="color:red" class="error hide"></span>
 											</div>	
 											<div class="line">
-												<label for="vm_contest_type_id" >Contest type</label>
+												<label for="vm_contest_type_id" >Challenge type</label>
 												 <select id="vm_contest_type_id" name="vmContestTypeId">
 													<c:forEach items="${vmContestTypes}" var="vmContestType">
 														<option value="${vmContestType.id}">${vmContestType.name}</option>
@@ -166,9 +166,9 @@
                                             <div class='inner'>
                                                 <div class='column1'>
                                                     <div class='row'>
-                                                        <span class='title'>Contest Name</span>
+                                                        <span class='title'>Challenge Name</span>
                                                         <select id='contestNameFilter'>
-                                                            <option value='All'>All Contest Names</option>
+                                                            <option value='All'>All Challenge Names</option>
                                                         </select>
                                                     </div>
                                                     <div class='row'>
@@ -213,8 +213,8 @@
                                 <table border="1px" class="projectStats contests" id="contest_vms">
                                     <thead>
                                         <tr>
-                                            <th>Contest Id</th>
-                                            <th>Contest Name</th>
+                                            <th>Challenge Id</th>
+                                            <th>Challenge Name</th>
                                             <th>TC Image Name</th>
                                             <th>Account Name</th>
                                             <th>SVN Branch</th>

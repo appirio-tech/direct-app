@@ -205,7 +205,7 @@ $(document).ready(function(){
 
 		$("#single-multi").change(function(){
 			var value=$(this).val();
-			if(value == "Contest will be run in single-rounds")
+			if(value == "Challenge will be run in single-rounds")
 			{
 				$("#checkpoint").css("display","none");
 				$(".schedule").css("height","150px");
@@ -362,7 +362,7 @@ $(document).ready(function(){
 		
 		$('.billingSelect select').sSelect({ddMaxHeight: '200px'});
 		
-		$('.selectDesign div.selectedTxt').html('Select Contest Type');
+		$('.selectDesign div.selectedTxt').html('Select Challenge Type');
 		
 		$('.startEtSelect select').focus();
 	}

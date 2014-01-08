@@ -59,7 +59,7 @@
  *  Version 2.8 - Release Assembly - TC Cockpit Enterprise Calendar Revamp
  *  - Add the js codes to load enterprise calendar data for the enterprise calendar page
  *
- *  Version 2.9 - TopCoder Cockpit - Bug Race Project Contests View update:
+ *  Version 2.9 - TopCoder Cockpit - Race Project Contests View update:
  *  - Hide the filter panel in project contests calendar view
  *
  *  Version 2.10 - Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
@@ -656,7 +656,7 @@ $(document).ready(function(){
                 filtered.push(item);
             }
         });
-        updateContestsTable(filtered, "No Matched Contest");
+        updateContestsTable(filtered, "No Matched Challenge");
     });
 
     showHideProjectList = function () {
@@ -1337,7 +1337,7 @@ $(document).ready(function(){
         });
     }
     
-// when click "Add New" button in contest tracking page under Bug Race tab
+// when click "Add New" button in contest tracking page under Race tab
     $('#issue .btnAddNew, #bugRace .btnAddNew').click(function() {
         $("li.bugRaceTab a").click();
         $('#bugRace .issueSelectionContent .inputContainer').show();
@@ -1361,7 +1361,7 @@ $(document).ready(function(){
         return false;
     });
 
-    // when click "Cancel" button in "Add Bug Race" form panel in contest tracking page
+    // when click "Cancel" button in "Add Race" form panel in contest tracking page
     $('#bugRace .btnCancel').click(function() {
         $('.issueSelectionContent .content').show();
         $('.issueSelectionContent .inputContainer').hide();
@@ -1384,7 +1384,7 @@ $(document).ready(function(){
         $("#existingAtt .row").html(atts.length > 0 ? atts.join("<br/>") : "None");
     }
     
-	// when click "Edit" button in contest tracking page under Bug Race tab
+	// when click "Edit" button in contest tracking page under Race tab
     $('#bugRace .issueSelectionContent .button11').live("click", function() {
         if($(this).hasClass("contestEdit")){
             var tr = $(this).parents("tr");
@@ -1452,7 +1452,7 @@ $(document).ready(function(){
         row.find("div.longDetails dd.issueDueDate").html(bugRace.dueDateString);
     }
     
-    // validate the Add Bug Race form in contest issue tracking page
+    // validate the Add Race form in contest issue tracking page
     function validateBugForm(obj) {
         var flag = 1;
         if ($(obj).parents('.inputContainer').find('.firstPayment').val() != '0') {
@@ -1489,7 +1489,7 @@ $(document).ready(function(){
         return true;
     }
     
-    // add a new JIRA issue (Bug Race)
+    // add a new JIRA issue (Race)
     $('#bugRace .btnCreate').click(function() {
         var bugRaceUrl = 'addBugRace';
         if($("#bugForm #projectBug").val() == 'true') {
@@ -1528,9 +1528,9 @@ $(document).ready(function(){
                             $($("#bugRace .total dl dd")[0]).text(total1);
                             $($("#bugRace .total dl dd")[1]).text(total2);
                             var options = $("#bugRace .viewSort select option");
-                            options[0].text="All Bug Races(" + total1 + ")";
-                            options[1].text="Ongoing Bug Races(" + total2 + ")";
-                            $("li.bugRaceTab a span").text("Bug Race (" + total1 + ")");
+                            options[0].text="All Races(" + total1 + ")";
+                            options[1].text="Ongoing Races(" + total2 + ")";
+                            $("li.bugRaceTab a span").text("Race (" + total1 + ")");
                             bugSortFunction();
                             
                             if ($("#bugRace .viewAll input").is(":checked")) {
@@ -1562,7 +1562,7 @@ $(document).ready(function(){
         return false;
     });
     
-    // update a JIRA issue (Bug Race)
+    // update a JIRA issue (Race)
     $('#bugRace .btnUpdate').live('click', function() {
         if (validateBugForm(this)) {
             // final fix
@@ -1664,11 +1664,11 @@ $(document).ready(function(){
     }
 
     $('#bugRace .select2').change(function() {
-        if ($(this).val().match('All Bug Races') != null) {
+        if ($(this).val().match('All Races') != null) {
             $('#bugRace .rowItem').show();
             hideBugRacesEmptyContest();
             bugSortFunction();
-        } else if ($(this).val().match('Ongoing Bug Races') != null) {
+        } else if ($(this).val().match('Ongoing Races') != null) {
             $('#bugRace .rowItem').show();
             $('#bugRace .rowItem').each(function() {
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();

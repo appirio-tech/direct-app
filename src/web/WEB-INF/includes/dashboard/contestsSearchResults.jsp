@@ -31,8 +31,8 @@
         <thead>
         <tr>
         	<th>Project</th>
-            <th>Contest Type</th>
-            <th>Contest Name</th>
+            <th>Challenge Type</th>
+            <th>Challenge Name</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th class="truncateRegs">Registrants</th>

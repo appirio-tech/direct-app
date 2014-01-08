@@ -42,7 +42,7 @@
                     href="http://community.topcoder.com/studio/the-process/final-fixes/">definition
                 stated here</a>. Don't ask to combine submissions and don't
                 add new tasks that were not originally defined in the
-                contest.</p>
+                challenge.</p>
 
             <p>Final Fixes must be submitted to the winner within 5 days of
                 announcing winners. Your winner has 72 hours to complete the

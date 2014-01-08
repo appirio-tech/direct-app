@@ -105,8 +105,8 @@
    </div>
 
   <div id="swThurgoodDiv" style="display: none">
-      <h3>Use Thurgood to check contest submissions?</h3><br/>
-      <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of contest submissions</span><br/><br/></div>
+      <h3>Use Thurgood to check challenge submissions?</h3><br/>
+      <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of challenge submissions</span><br/><br/></div>
          
    <div class="prizes" id="swCatalogDiv">
      <div class="catalogSelect">
@@ -165,10 +165,10 @@
                                     
 <!-- prizes -->
 <div class="prizes" id="swPrizesSection">
-    <h3>Contest Prizes:</h3>
+    <h3>Challenge Prizes:</h3>
 
     <div class="prizesInner_software">
-      	<span class="head topcoderPrize"><p>Please Select the prize structure for your contest by choosing one of the options
+      	<span class="head topcoderPrize"><p>Please Select the prize structure for your challenge by choosing one of the options
             below:</p></span>
 
         <p>
@@ -258,9 +258,9 @@
                   <br/>
                   <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
               </span>
-			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+			  <span class="mid_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
               <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
-			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong></span>
+			  <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong></span>
 		  </span>
     </div>
 </div>

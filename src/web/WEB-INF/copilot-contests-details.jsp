@@ -367,13 +367,13 @@
                 <td style="width:120px" align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"> <c:out value="${projectHeader.properties['First Place Cost']}"/></span></td>
                 </td>
                 <td style="width:120px" align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"> <c:out value="${projectHeader.properties['Second Place Cost']}"/></span></td>
-                <td style=""><strong>Contest Fee:</strong> $<span id="rswContestFee"><c:out value="${projectHeader.properties['Admin Fee']}"/></span> <span class="percentageInfo"></span>
+                <td style=""><strong>Challenge Fee:</strong> $<span id="rswContestFee"><c:out value="${projectHeader.properties['Admin Fee']}"/></span> <span class="percentageInfo"></span>
                     <c:if test="${projectHeader.properties['Contest Fee Percentage'] != null}">
                         <input type="hidden" id="contestFeePercentageValue" value="${projectHeader.properties['Contest Fee Percentage']}" />
                     </c:if>
                 </td>
 
-                <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal">
+                <td class="sec_tab_prize"><strong>Challenge Total:</strong> $<span id="rswTotal">
                  <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/>
 
                 </span></td>
@@ -411,11 +411,11 @@
                     <label class="second">2nd Place</label>
                     <span class="dw">$</span>
                     <span id="swSecondPlace" class="prizeInfo" style="line-height:30px;"><c:out value="${projectHeader.properties['Second Place Cost']}"/></span>
-                    <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"><c:out
+                    <span class="mid_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"><c:out
                             value="${projectHeader.properties['Admin Fee']}"/></span><span class="percentageInfo"></span></span>
                 </div>
                 <br/>
-                <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"> <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/></span></strong></span>
+                <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"> <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/></span></strong></span>
             </div>
         </div>
         <!-- end .prizes -->
@@ -685,7 +685,7 @@
         <div class="popupWrap">
             <div class="popupContent">
                 <dl>
-                    <dt>Your Copilot Selection Contest has been saved as draft</dt>
+                    <dt>Your Copilot Selection Challenge has been saved as draft</dt>
 
                     <dd class="yesno">
                          <a href="#" class="button6" id="saveAsDraftOK"><span class="left"><span class="right">OK</span></span></a>
@@ -700,7 +700,7 @@
         <div class="popupWrap">
             <div class="popupContent">
                 <dl>
-                    <dt>Your Copilot Selection Contest has been activated successfully</dt>
+                    <dt>Your Copilot Selection Challenge has been activated successfully</dt>
 
                     <dd class="yesno">
                          <a href="#" class="button6" id="saveAsDraftOK2"><span class="left"><span class="right">OK</span></span></a>

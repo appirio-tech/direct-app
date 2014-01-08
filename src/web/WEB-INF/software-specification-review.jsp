@@ -137,7 +137,7 @@
                                                         </c:if>
 
                                                         <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
-                                                            <p class="specForumInfo">Please review the scorecard results below. If your spec reviewer has asked for fixes, you will need to edit your contest before clicking "Resbmit for Review" below. If you have 
+                                                            <p class="specForumInfo">Please review the scorecard results below. If your spec reviewer has asked for fixes, you will need to edit your challenge before clicking "Resbmit for Review" below. If you have 
                                                             any questions regarding your spec review, please use the forum (linked at the bottom) to discuss it with your spec reviewer.</p>
                                                         </c:if>
 

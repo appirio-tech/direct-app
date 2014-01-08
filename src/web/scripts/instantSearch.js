@@ -50,7 +50,12 @@ function loadInstantSearch() {
                                     if (label == 'isAdmin') continue;
 
                                     var item = result[label];
-                                    html += '<h3>' + label + '</h3><ul>';
+                                    var display = label;
+                                    if (label.toLowerCase() == 'contests') {
+                                        display = "Challenges";
+                                    }
+                                    
+                                    html += '<h3>' + display + '</h3><ul>';
                                     var resultSize = 0;
                                     if (item) {
                                         for (var i = 0; i < item.length; i++) {
@@ -94,9 +99,9 @@ function loadInstantSearch() {
 
                                             html += '<li><p class="resultTilte"><a target="_blank" title="' + titleText + '" href="' + titleLink + '">' + showTitle + '</a></p><p class="resultBrief">' + showBrief + '</p></li>';
                                         }
-
+                                        
                                         if (resultSize == 0) {
-                                            html += '<li class="noMatch"><p class="resultBrief">No Matched ' + label + '</p></li>';
+                                            html += '<li class="noMatch"><p class="resultBrief">No Matched ' + display + '</p></li>';
                                         }
                                     }
                                     html += '</ul>';
@@ -155,7 +160,7 @@ function loadInstantSearch() {
     }
 };
 
-var instantSearchHint = "Search for contests, projects and features";
+var instantSearchHint = "Search for challenges, projects and features";
 
 $(document).ready(function() {
     loadInstantSearch();
@@ -328,7 +333,7 @@ var instantSearchFeaturesList = {
         {
             "title":    "Enterprise Dashboard - Analytics",
             "link":     "/direct/enterpriseDashboard/analysis",
-            "brief":    "Provides analysis of average contest duration, average contest cost, project fulfillment and contest volume of your cockpit projects, the data are showing in line charts.",
+            "brief":    "Provides analysis of average challenge duration, average challenge cost, project fulfillment and challenge volume of your cockpit projects, the data are showing in line charts.",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
@@ -438,9 +443,9 @@ var instantSearchFeaturesList = {
             "reqAdmin": "no"
         },
         {
-            "title":    "Contest Fee Management",
+            "title":    "Challenge Fee Management",
             "link":     "/direct/settings/contestFee",
-            "brief":    "Manage the contest fee for all clients on TopCoder Platform",
+            "brief":    "Manage the challenge fee for all clients on TopCoder Platform",
             "group":    "Admin",
             "reqAdmin": "yes"
         },
@@ -468,14 +473,14 @@ var instantSearchFeaturesList = {
         {
             "title":    "Virutal Machine Management",
             "link":     "/direct/dashboardVMAction",
-            "brief":    "Create, assign or destory the virtual machines used for contest, bug races etc",
+            "brief":    "Create, assign or destory the virtual machines used for challenge, bug races etc",
             "group":    "Admin",
             "reqAdmin": "yes"
         },
         {
             "title":    "Scorecard Management",
             "link":     "/direct/scorecard/",
-            "brief":    "Manage the contest scorecard - your can create new scorecard templates here",
+            "brief":    "Manage the challenge scorecard - your can create new scorecard templates here",
             "group":    "Admin",
             "reqAdmin": "yes"
         },
@@ -501,9 +506,9 @@ var instantSearchFeaturesList = {
             "reqAdmin": "no"
         },
         {
-            "title":    "Create New Contest",
+            "title":    "Create New Challenge",
             "link":     "/direct/launch/home",
-            "brief":    "Create new contest for your project",
+            "brief":    "Create new challenge for your project",
             "group":    "Project",
             "reqAdmin": "no"
         },

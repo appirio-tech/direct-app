@@ -45,13 +45,13 @@
             <strong>Note:</strong>
             <a href="javascript:void(0)">Hide</a>
         </dt>
-        <dd>Our project templates contain sample contest schedules for standard project types. Experienced users
-            of the TopCoder platform may opt for a custom project and draft their own contests.
+        <dd>Our project templates contain sample challenge schedules for standard project types. Experienced users
+            of the TopCoder platform may opt for a custom project and draft their own challenges.
         </dd>
-        <dd>Within your chosen template, select the size of your project in order to determine the contest schedule.
+        <dd>Within your chosen template, select the size of your project in order to determine the challenge schedule.
         </dd>
-        <dd>Click on "Details" for an explanation of the contest type and size, or on "Game plan" for a chronological
-            view of the contest schedule.
+        <dd>Click on "Details" for an explanation of the challenge type and size, or on "Game plan" for a chronological
+            view of the challenge schedule.
         </dd>
     </dl>
 </div>
@@ -135,7 +135,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contests</td>
+                            <td class="firstTd">No of Challenges</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
@@ -196,7 +196,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contests</td>
+                            <td class="firstTd">No of Challenges</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
@@ -257,7 +257,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contests</td>
+                            <td class="firstTd">No of Challenges</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
@@ -318,7 +318,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contests</td>
+                            <td class="firstTd">No of Challenges</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>

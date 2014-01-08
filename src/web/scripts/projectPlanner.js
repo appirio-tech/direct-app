@@ -829,8 +829,8 @@ $(function(){
         var totalCost = totalContestFee + totalMemberCost + vmCost;
 
         $("#durationStat").text(((maxHours - minHours) / 24) + " Days");
-        $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
-        $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0]));
+        $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
+        $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0]));
         $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
 
 
@@ -1000,8 +1000,8 @@ $(function(){
                 calculateWidth();
                 modalPosition();
                 $("#durationStat").text(totalDuration + " Days");
-                $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
-                $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0]));
+                $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
+                $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0]));
                 $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
             } else {
                 var estHolder;
@@ -1037,11 +1037,11 @@ $(function(){
 
 
                 estHolder.append("<p>Duration: " + totalDuration + " days </p>");
-                estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Contests Cost: $' + (totalMemberCost - bugRacePlanCost[1])));
-                estHolder.append($("<p>Total Contest Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Contests Fee: $' + (totalContestFee - bugRacePlanCost[0])));
+                estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1])));
+                estHolder.append($("<p>Total Challenge Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0])));
                 estHolder.append($("<p>Total Cost: $" + totalCost.formatMoney(0) + "</p>").attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost));
-                estHolder.append("<p>Planned Contest Number: " + result.contests.length + " </p>");
-                estHolder.append("<p>Planned Bug Race Number: " + result.bugRaceNumber + " </p>");
+                estHolder.append("<p>Planned Challenge Number: " + result.contests.length + " </p>");
+                estHolder.append("<p>Planned Race Number: " + result.bugRaceNumber + " </p>");
             }
         }
 

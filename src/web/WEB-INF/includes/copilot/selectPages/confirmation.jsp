@@ -53,7 +53,7 @@
             <ul>
                 <!--
                 <li>
-                    <a href="javascript:;" class="viewContest"><span>View Contest</span></a>
+                    <a href="javascript:;" class="viewContest"><span>View Challenge</span></a>
                 </li>
                 <li>
                     <a href="javascript:;" class="forumIcon"><span>Forum</span></a>

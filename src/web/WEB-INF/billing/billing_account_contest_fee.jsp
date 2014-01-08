@@ -108,10 +108,10 @@
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
 								</s:url>
-                                <strong><a href="<s:property value="#feeMainPage"/>">Contest Fee Management</a></strong>
+                                <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Default Contest Fees</h2>
+                                <h2 class="title contestTitle">Default Challenge Fees</h2>
                             </div>
                             <!-- End .areaHeader -->
 
@@ -119,7 +119,7 @@
                             <div class="container2" id="contestFeeEditDetail">
                                 <div>
                                 <br/>
-                                <p><s:if test="%{formData.contestFees==null}">Empty </s:if>Contest Fee details for <s:property value="formData.clientName"/></p>
+                                <p><s:if test="%{formData.contestFees==null}">Empty </s:if>Challenge Fee details for <s:property value="formData.clientName"/></p>
                                 <br/>
                                 <p style="display:none;">
                                     <s:textfield name="projectId" value="%{projectId}" size="40"/>
@@ -129,7 +129,7 @@
                                 </div>
 
                                     <div id="contest_fee_type">
-                                        <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Contest Fee', 'false':'Member Cost Percentage Based Contest Fee'}"/>
+                                        <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Challenge Fee', 'false':'Member Cost Percentage Based Challenge Fee'}"/>
                                         <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20"/>
                                     </div>
                                     <s:if test="%{formData.contestFees!=null}">

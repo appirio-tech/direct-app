@@ -191,7 +191,7 @@
                                                 <option value="noti">Notifications</option>
                                                 <option value="perm">Permissions</option>
 												<s:if test="viewContestFeeOption">
-													<option value="fee">Contest Fee</option>
+													<option value="fee">Challenge Fee</option>
 												</s:if>
                                                 <s:if test="syncUser">
                                                 <option value="sync">Synchronize User in JIRA and WIKI</option>
@@ -326,13 +326,13 @@
                       </div>-->
 
 
-                      <h5 style="margin-bottom:6px">Contest Timeline/Forum Notifications</h5>
+                      <h5 style="margin-bottom:6px">Challenge Timeline/Forum Notifications</h5>
                                         <form id="dashboard-notifications-form">
 
                                             <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="permCol">Contest Settings</th>
+                                                        <th class="permCol">Challenge Settings</th>
                                                         <th class="permCol2" colspan="2">Notifications</th>
                                                     </tr>
                                                 </thead>
@@ -467,7 +467,7 @@
 												<option value="noti">Notifications</option>
                                                 <option value="perm" selected>Permissions</option>
 												<s:if test="viewContestFeeOption">
-													<option value="fee">Contest Fee</option>
+													<option value="fee">Challenge Fee</option>
 												</s:if>
                                                 <s:if test="syncUser">
                                                 <option value="sync">Sync User</option>
@@ -584,14 +584,14 @@
                             </div>
                              
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Contest Fee Management</h2>
+                                <h2 class="title contestTitle">Challenge Fee Management</h2>
                                 <div class="select">
                                         Select a Setting Panel:
                                         <span name="settingPanel">
                                         <select name="select" onchange="changepn(this.value)">
 												<option value="noti">Notifications</option>
                                                 <option value="perm">Permissions</option>												
-												<option value="fee">Contest Fee</option>												
+												<option value="fee">Challenge Fee</option>												
                                                 <s:if test="syncUser">
                                                 <option value="sync">Sync User</option>
                                                 </s:if>
@@ -602,11 +602,11 @@
                             <!-- End .areaHeader -->
                             <div>
                                 <p class="billingAccountArchive"><a
-                                        href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Contest
+                                        href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Challenge
                                     Fees Management for Billing Accounts</a></p>
 
                                 <p class="billingAccountArchive"><a
-                                        href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Contest
+                                        href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Challenge
                                     Fees Creation for Billing Accounts</a></p>
                                     
                                 <p class="billingAccountArchive"><a
@@ -636,7 +636,7 @@
 												<option value="noti">Notifications</option>
                                                 <option value="perm">Permissions</option>
                                                 <s:if test="viewContestFeeOption">
-                                                <option value="fee">Contest Fee</option>
+                                                <option value="fee">Challenge Fee</option>
                                                 </s:if>
                                                 <option value="sync">Sync User</option>
                                         </select>

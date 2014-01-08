@@ -59,23 +59,23 @@
                 <c:when test="${projectStatus eq 'Active'}">
                     <c:choose>
                         <c:when test="${viewData.dashboard.stalled}">
-                            <div class="status stalled">Contest Status: <span>Stalled</span></div>
+                            <div class="status stalled">Challenge Status: <span>Stalled</span></div>
                         </c:when>
                         <c:otherwise>
-                            <div class="status active">Contest Status: <span>Active</span></div>
+                            <div class="status active">Challenge Status: <span>Active</span></div>
                         </c:otherwise>
                     </c:choose>
                 </c:when>
                 <c:when test="${projectStatus eq 'Draft'}">
-                    <div class="status draft">Contest Status: <span>Draft</span></div>
+                    <div class="status draft">Challenge Status: <span>Draft</span></div>
                 </c:when>
                 <c:when test="${projectStatus eq 'Deleted'}">
                 </c:when>
                 <c:when test="${projectStatus == 'Completed'}">
-                    <div class="status completed">Contest Status: <span>Completed</span></div>
+                    <div class="status completed">Challenge Status: <span>Completed</span></div>
                 </c:when>
                 <c:otherwise>
-                    <div class="status deleted">Contest Status: <span>Cancelled</span></div>
+                    <div class="status deleted">Challenge Status: <span>Cancelled</span></div>
                 </c:otherwise>
             </c:choose>
         </h1>
@@ -116,14 +116,14 @@
                 <c:if test="${viewData.dashboard.startTime != null}">
                     <div class="projectDate startDate">
                         <span class="arrow"></span>
-                        <label>Contest Start :</label>
+                        <label>Challenge Start :</label>
                         <fmt:formatDate value="${viewData.dashboard.startTime}" pattern="MM/dd/yyyy HH:mm"/> 
                     </div>                                            
                 </c:if>
                 <c:if test="${viewData.dashboard.endTime != null}">
                     <div class="projectDate endDate">
                         <span class="arrow"></span>
-                        <label>Contest End :</label>
+                        <label>Challenge End :</label>
                         <fmt:formatDate value="${viewData.dashboard.endTime}" pattern="MM/dd/yyyy HH:mm"/>
                     </div>                                        
                 </c:if>
@@ -195,12 +195,12 @@
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
                     <c:set var="regStatusColor" value="lessThanIdeal"/>
                     <c:set var="regStatusMessage" value="not ideal"/>
-                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
                 </c:when>
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
                     <c:set var="regStatusColor" value="lessThanIdeal"/>
                     <c:set var="regStatusMessage" value="not ideal"/>
-                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
                 </c:when>
                 <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
                     <c:set var="regStatusColor" value="poor"/>
@@ -262,7 +262,7 @@
                 <span class="bl"></span>
                 <span class="br"></span>
                     <div class="listContent">
-                        <span>There is no round id hooked with the contest.</span>
+                        <span>There is no round id hooked with the challenge.</span>
                     </div>
             </div>
         </div>
@@ -276,12 +276,12 @@
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
                     <c:set var="regStatusColor" value="lessThanIdeal"/>
                     <c:set var="regStatusMessage" value="not ideal"/>
-                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
                 </c:when>
                 <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
                     <c:set var="regStatusColor" value="lessThanIdeal"/>
                     <c:set var="regStatusMessage" value="not ideal"/>
-                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+                    <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
                 </c:when>
                 <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
                     <c:set var="regStatusColor" value="poor"/>
@@ -587,7 +587,7 @@
                     <span class="bl"></span>
                     <span class="br"></span>
                     <div class="listContent">
-                        <span>There is no round id hooked with this contest.</span>
+                        <span>There is no round id hooked with this challenge.</span>
                     </div>
                  </div>
             </div>

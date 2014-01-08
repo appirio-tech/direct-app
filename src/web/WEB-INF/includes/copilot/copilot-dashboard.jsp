@@ -190,12 +190,12 @@
         <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
             <c:set var="regStatusColor" value="lessThanIdeal"/>
             <c:set var="regStatusMessage" value="not ideal"/>
-            <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+            <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
         </c:when>
         <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
             <c:set var="regStatusColor" value="lessThanIdeal"/>
             <c:set var="regStatusMessage" value="not ideal"/>
-            <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your contest."/>
+            <c:set var="regStatusTooltip" value="Consider Increasing prize money and double-check the clarity and scope of your challenge."/>
         </c:when>
         <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
             <c:set var="regStatusColor" value="poor"/>

@@ -49,7 +49,7 @@
 
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
-                                <strong>Launch New Contest</strong>
+                                <strong>Launch New Challenge</strong>
                             </div> <!-- End .currentPage -->
 
                             <div id="launchContestOut">
@@ -132,7 +132,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent" id="contestDescriptionTooltip">
-                    <p>Contest Description</p>
+                    <p>Challenge Description</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -208,7 +208,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>If you have selected a software contest, then simply set the date and time you would like the registration and submission phase to begin.  If you have selected a Studio contest, then please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Contest+Holders</p>
+                    <p>If you have selected a software challenge, then simply set the date and time you would like the registration and submission phase to begin.  If you have selected a Studio challenge, then please visit the Challenge Holder Guide where you will find more information about multi-round challenges. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Challenge+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -232,7 +232,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Need help writing a great Studio contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Contest+Holders</p>
+                    <p>Need help writing a great Studio challenge description? Please visit the Challenge Holder Guide where you will find challenge samples and templates. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Challenge+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

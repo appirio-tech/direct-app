@@ -81,7 +81,7 @@
                                         <strong class="greenText field_${profile.member.copilotProfile.userId}_currentProjects">loading</strong>
                                     </li>
                                     <li>
-                                        <span>Number of Contest: </span>
+                                        <span>Number of Challenge: </span>
                                         <strong class="greenText field_${profile.member.copilotProfile.userId}_currentContests">loading</strong>
                                     </li>
                                 </ul>

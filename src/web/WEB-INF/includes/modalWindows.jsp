@@ -13,7 +13,7 @@
 
         <div class="modalBody">
             <ul class="modalContent">
-                <li>No contest type is selected.</li>
+                <li>No Challenge type is selected.</li>
             </ul>
             <div class="modalCommandBox">
                 <a href="javascript:;" class="newButton1 defaultBtn"><span class="btnR"><span

@@ -172,7 +172,7 @@
                 <td class="colFulFill"><span class="txt${fulfillmentColor}">${roundedFulfillment}%</span></td>
                 <td class="colWorkload">
                     <p>
-                        <strong>${currentContests} </strong>Contests
+                        <strong>${currentContests} </strong>Challenges
                     </p>
 
                     <p>
@@ -291,7 +291,7 @@
                         <p class="title">Current Workload</p>
 
                         <p class="value">
-                            <span class="v1"><strong>${currentContests}</strong><br/>Contests</span> <span
+                            <span class="v1"><strong>${currentContests}</strong><br/>Challenges</span> <span
                                 class="v2"><strong>${currentProjects}</strong><br/>Projects</span> <span
                                 class="tl corner"></span> <span class="tr corner"></span> <span
                                 class="bl corner"></span> <span class="br corner"></span>

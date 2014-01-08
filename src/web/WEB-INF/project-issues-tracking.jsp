@@ -77,7 +77,7 @@
 
                                             <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
                                                 <span class="left">
-                                                    <span class="right">LAUNCH PROJECT BUG RACE</span>
+                                                    <span class="right">LAUNCH PROJECT RACE</span>
                                                 </span>
                                             </a>
 
@@ -102,7 +102,7 @@
                                                 </div>
                                                 <ul class="bankSelectionTab">
                                                 	<li class="issueTab"><a href="javascript:;"> <span>Issue (<s:property value="viewData.issuesNumber"/>)</span></a></li>
-                                                    <li class="off bugRaceTab"><a href="javascript:;"> <span>Bug Race (<s:property value="viewData.bugRacesNumber"/>)</span> </a></li>
+                                                    <li class="off bugRaceTab"><a href="javascript:;"> <span>Race (<s:property value="viewData.bugRacesNumber"/>)</span> </a></li>
                                                 </ul><!-- End #bankSelectionTab -->
                                             </div><!-- End #bankSelectionHead -->
 
@@ -274,9 +274,9 @@
                                         	<!-- total -->
                                             <div class="total">
                                             	<dl>
-                                                	<dt>All Bug Races :</dt>
+                                                	<dt>All Races :</dt>
                                                     <dd><s:property value="viewData.bugRacesNumber"/></dd>
-                                                    <dt class="lastOngoing">Ongoing Bug Races :</dt>
+                                                    <dt class="lastOngoing">Ongoing Races :</dt>
                                                     <dd class="lastOngoingNum"><s:property value="viewData.unresolvedBugRacesNumber"/></dd>
                                                 </dl>
                                             </div>
@@ -288,7 +288,7 @@
 
                                             <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
                                                 <span class="left">
-                                                    <span class="right">LAUNCH PROJECT BUG RACE</span>
+                                                    <span class="right">LAUNCH PROJECT RACE</span>
                                                 </span>
                                             </a>
 
@@ -307,13 +307,13 @@
                                             	<div class="viewSort">
                                                 	<label>View :</label>
                                                     <select class="select2">
-                                                        <option>All Bug Races(<s:property value="viewData.bugRacesNumber"/>)</option>
-                                                        <option>Ongoing Bug Races(<s:property value="viewData.unresolvedBugRacesNumber"/>)</option>
-                                                        <option>Resolved Bug Races(<s:property value="viewData.resolvedBugRacesNumber"/>)</option></select>
+                                                        <option>All Races(<s:property value="viewData.bugRacesNumber"/>)</option>
+                                                        <option>Ongoing Races(<s:property value="viewData.unresolvedBugRacesNumber"/>)</option>
+                                                        <option>Resolved Races(<s:property value="viewData.resolvedBugRacesNumber"/>)</option></select>
                                                 </div>
                                                 <ul class="bankSelectionTab">
                                                 	<li class="off issueTab"><a href="javascript:;"> <span>Issue (<s:property value="viewData.issuesNumber"/>)</span></a></li>
-                                                    <li class="bugRaceTab"><a href="javascript:;"> <span>Bug Race (<s:property value="viewData.bugRacesNumber"/>)</span> </a></li>
+                                                    <li class="bugRaceTab"><a href="javascript:;"> <span>Race (<s:property value="viewData.bugRacesNumber"/>)</span> </a></li>
                                                 </ul><!-- End #bankSelectionTab -->
                                             </div><!-- End #bankSelectionHead -->
 
@@ -753,9 +753,9 @@
                                                         <input type="hidden" id="projectBug" name="issue.projectBug" value="true"/>
                                                         <input type="hidden" id="attachmentIds" name="attachmentIds" value=""/>
                                                         <div class="row">
-                                                            <p class="projectText">Fill in the details about the Bug Race you want to launch below. When you click the Activate button, it will publish your Bug Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Bug Races</a> page.</p>
+                                                            <p class="projectText">Fill in the details about the Race you want to launch below. When you click the Activate button, it will publish your Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Races</a> page.</p>
                                                         </div>
-                                                        <label><em>*Contest Name:</em></label>
+                                                        <label><em>*Challenge Name:</em></label>
                                                         <div class="row">
                                                             <input type="text" class="text largeText summary" id="issueName" name="issue.name"/>
                                                         </div>
@@ -786,7 +786,7 @@
                                                                 <option value="20">20</option>
                                                                 <option value="30">30</option>
                                                             </select>
-                                                            <p>Select the amount of TCO Mod Dash points that this Bug Race is worth. Bug Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Bug Race in the TCO tournament.</p>
+                                                            <p>Select the amount of TCO Mod Dash points that this Race is worth. Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Race in the TCO tournament.</p>
                                                         </div>
                                                         <label>Issue Type:</label>
                                                         <div class="row">
@@ -794,7 +794,7 @@
                                                                 <option value="Bug Fix">Bug Fix</option>
                                                                 <option value="Studio Bug">Studio Bug</option>
                                                             </select>
-                                                            <p class="projectText">Bug Races in Studio Bug type will show up in <a href="https://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Bug Race Competitions</a> list.</p>
+                                                            <p class="projectText">Races in Studio Bug type will show up in <a href="https://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Race Competitions</a> list.</p>
                                                         </div>
                                                         <div id="existingAtt">
                                                         <label>Existing Attachments:</label>

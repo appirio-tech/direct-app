@@ -245,7 +245,7 @@
         </div>
         <div class="cellWorkload rWorkLoad cell">
             <p>
-                <strong>${currentContests}  </strong>Contests
+                <strong>${currentContests}  </strong>Challenges
             </p>
             <p>
                 <strong>${currentProjects} </strong>Projects

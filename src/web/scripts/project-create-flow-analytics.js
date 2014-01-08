@@ -686,7 +686,7 @@ function createCopilotContestDescription_AnalyticsProject() {
     content += '<p><strong>The programming languages allowed:</strong><br/>' + $('#reviewLanguages').html() + '</p>';
     content += '<p><strong>Integration of winning solution:</strong><br/>' + 
             ($('#reviewIntegrate').html().substring(0, 1) =="I" ? "Done by client." : 
-            "Done by TopCoder through a separate contest or a series of contests.") + '</p>';
+            "Done by TopCoder through a separate challenge or a series of challenges.") + '</p>';
     content += '<p><strong>Current solution information:</strong><br/>' + 
             ($('#reviewCurrentYesNo').html() == "Yes" ? $('#reviewCurrentInfo').html() : "Not available") + '</p>';    
     content += '<br/>';    

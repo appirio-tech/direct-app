@@ -175,7 +175,7 @@ var assembly_template_guidelines_content = '' +
 '<p>&nbsp;</p>' +
 '<h4>6.1 Base Payment</h4>' +
 '<p>TopCoder will compensate members with first and second place submissions. Initial payment for the winning member will be distributed in two installments. The first payment will be made at the close of the approval phase. The second payment will be made at the completion of the support period.</p>' +
-'<p>Winning Submission and Second Place payments are shown at the top of the contest details page.</p>' +
+'<p>Winning Submission and Second Place payments are shown at the top of the challenge details page.</p>' +
 '<h4>6.2 Milestones</h4>' +
 '<p><span style="color: #3366ff;" data-mce-mark="1"><em>[Adjust this section for your milestone details.]</em></span></p>' +
 '<p>For the milestone, the top two (2) submissions will be chosen and ranked by the client.&nbsp;&nbsp; <span style="color: #ff0000;" data-mce-mark="1">Read below carefully......</span></p>' +
@@ -185,7 +185,7 @@ var assembly_template_guidelines_content = '' +
 '<li>If you are selected to win a milestone Payment, <span style="color: #ff0000;" data-mce-mark="1">YOUR FINAL SUBMISSION MUST PASS REVIEW TO EARN YOUR MILESTONE PAYMNENT</span>.&nbsp;&nbsp;&nbsp; If you do not pass review,&nbsp;you will not be awarded the payment.</li>' +
 '</ul>' +
 '<p><span style="color: #3366ff;" data-mce-mark="1"><em>[General Guidance: Total milestone is usually 50% of the first place payment.]</em></span></p>' +
-'<p>Milestone payments are shown at the top of the contest details page.</p>' +
+'<p>Milestone payments are shown at the top of the challenge details page.</p>' +
 '<p>&nbsp;</p>' +
 '<h3>7. Competitor Restrictions</h3>' +
 '<p>&nbsp;</p>' +

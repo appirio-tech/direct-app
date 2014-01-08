@@ -53,7 +53,7 @@
 </jsp:include>
 
 <!-- .pipelineFilter -->
-<div class="pipelineFilter" id="jiraIssuesReports" data-intro="If you are looking for a one-stop-shop to view all of your Bug Races and issue tickets, then you have found it.  This report looks across all of your projects for Bug Races and Jira tickets that are tied to your projects." data-step="1">
+<div class="pipelineFilter" id="jiraIssuesReports" data-intro="If you are looking for a one-stop-shop to view all of your Races and issue tickets, then you have found it.  This report looks across all of your projects for Races and Jira tickets that are tied to your projects." data-step="1">
 
     <!-- .filterTitle -->
     <div class="filterTitle">
@@ -176,8 +176,8 @@
                     <th class="tableColumn">Launch<br/>Date</th>
                     <th class="tableColumn">Description</th>
                     <th class="tableColumn">Amount</th>
-					<th class="tableColumn">Contest<br />Name</th>
-                    <th class="tableColumn">Contest<br/>ID</th>
+					<th class="tableColumn">Challenge<br />Name</th>
+                    <th class="tableColumn">Challenge<br/>ID</th>
                     <th class="tableColumn">Status</th>
                     <th class="tableColumn">Reporter</th>
                     <th class="tableColumn">Assignee</th>

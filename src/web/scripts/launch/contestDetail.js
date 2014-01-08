@@ -388,7 +388,7 @@ function isBillingEditable() {
 function saveTypeSection() {
    // only handle studio type
    if("SOFTWARE" == getContestType()[0]) {
-        showErrors("it is studio contest and you can not switch to software contest.");
+        showErrors("it is studio challenge and you can not switch to software challenge.");
         return;
    }
 	
@@ -426,11 +426,11 @@ function validateFieldsTypeSection() {
    var errors = [];
 
    if(!checkRequired(competitionType)) {
-       errors.push('No contest type is selected.');
+       errors.push('No challenge type is selected.');
    }
 
    if(!checkRequired(contestName)) {
-       errors.push('Contest name is empty.');
+       errors.push('Challenge name is empty.');
    }
    
    validateTcProject(tcProjectId, errors);
@@ -466,7 +466,7 @@ function showTypeSectionEdit() {
 	 if(!$(".selectDesing select").data('customized')){
 		$(".selectDesing select").data('customized',true);
       	$(".selectDesing select").sSelect();
-		$('.selectDesing div.selectedTxt').html('Select Contest Type');
+		$('.selectDesing div.selectedTxt').html('Select Challenge Type');
      }
 	 if(!$(".billingSelect select").data('customized')){
 		$(".billingSelect select").data('customized',true);
@@ -534,7 +534,7 @@ function populateRoundSection() {
 function saveRoundSection() {
    // only handle studio type
    if("SOFTWARE" == getContestType()[0]) {
-        showErrors("it is studio contest and you can not switch to software contest.");
+        showErrors("it is studio challenge and you can not switch to software challenge.");
         return;
    }
 	
@@ -796,11 +796,11 @@ function validateFieldsSpecSection() {
    var errors = [];
 
    if(!checkRequired(contestIntroduction)) {
-       errors.push('Contest introduction is empty.');
+       errors.push('Challenge introduction is empty.');
    }
 
    if(!checkRequired(contestDescription)) {
-       errors.push('Contest description is empty.');
+       errors.push('Challenge description is empty.');
    }
 
    var fileTypesResult = validateFileTypes(errors);
@@ -891,7 +891,7 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         var contestName = mainWidget.competition.contestData.name;
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
+        showSuccessfulMessage("Challenge <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
         $('#resubmit').hide();
     },
     function(errorMessage) {

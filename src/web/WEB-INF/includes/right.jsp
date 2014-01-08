@@ -43,7 +43,7 @@
         <div class="topBtns">
             <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
             <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>
-            <a href="${ctx}/launch/home" class="launch" title="Launch a new contest for your project">Launch Contest</a>
+            <a href="${ctx}/launch/home" class="launch" title="Launch a new challenge for your project">Launch Challenge</a>
         </div>
         
         
@@ -120,7 +120,7 @@
                 <ui:isProjectContextSet>
                     <div class="tableHeader" id="rightTableHeader">
                         <span class="statusTh down">Status</span>
-                        <span class="titleTh">Contest Title</span>
+                        <span class="titleTh">Challenge Title</span>
                         <span class="typeTh">Type</span>
                     </div>
                     <div class="tableBody">                        

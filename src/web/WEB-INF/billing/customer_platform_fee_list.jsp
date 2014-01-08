@@ -108,7 +108,7 @@
 
                                 <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
                                 </s:url>
-                                <strong><a href="<s:property value="#feeMainPage"/>">Contest Fee Management</a></strong>
+                                <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Platform fees</h2>

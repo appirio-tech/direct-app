@@ -421,7 +421,7 @@ $(document).ready(function() {
              handleProjectDropDownChange();
         });
         //$('#catalogSelect').sSelect();
-        $('.selectDesing div.selectedTxt').html('Select Contest Type');
+        $('.selectDesing div.selectedTxt').html('Select Challenge Type');
         $("#checkpointDiv").hide();
     }
 

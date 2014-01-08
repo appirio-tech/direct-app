@@ -112,11 +112,11 @@
     </c:when>
     <c:when test="${requestScope.PAGE_TYPE eq 'launch'}">
         <a href="javascript:;" class="logo">
-            <img src="/images/launghContent_logo.png" alt="Launch Contest" /></a>
+            <img src="/images/launghContent_logo.png" alt="Launch Challenge" /></a>
     </c:when>
     <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
         <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo">
-            <img src="/images/copilot_logo.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
+            <img src="/images/copilot_logo.png" alt="Laungh Copilot Challenge" class="copilotTitle"/>
             <span>TopCoder Copilots</span>
         </a>
     </c:when>
@@ -205,7 +205,7 @@
                 <div class="subNav">
                     <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
-                        <a href="javascript:">Manage Contest Fee</a>
+                        <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
                     <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
@@ -279,7 +279,7 @@
                 <div class="subNav">
                     <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
-                        <a href="javascript:">Manage Contest Fee</a>
+                        <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
                     <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
@@ -353,7 +353,7 @@
                 <div class="subNav">
                     <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
-                        <a href="javascript:">Manage Contest Fee</a>
+                        <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
                     <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
@@ -479,7 +479,7 @@
                 <div class="subNav">
                     <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
-                        <a href="javascript:">Manage Contest Fee</a>
+                        <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
                     <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
@@ -539,7 +539,7 @@
                 <div class="subNav">
                     <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
-                        <a href="javascript:">Manage Contest Fee</a>
+                        <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
                     <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
@@ -553,7 +553,7 @@
 <div class="helloUser">
     <div class="instantSearch">
         <div class="instantSearchBg">
-            <input name="instantSearchInput" value="Search for contests, projects and features" />
+            <input name="instantSearchInput" value="Search for challenges, projects and features" />
             <span class="searchIcon"></span>
         </div>
         <div class="resultDropDown">
@@ -573,7 +573,7 @@
         <div class="topBtns" id="enterpriseDashboardTop">
             <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
             <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>
-            <a href="${ctx}/launch/home" class="launch" title="Launch a new contest for your project">Launch Contest</a>
+            <a href="${ctx}/launch/home" class="launch" title="Launch a new challenge for your project">Launch Challenge</a>
         </div>
     </c:if>
 </ui:isDashboardPage>
@@ -616,9 +616,9 @@
                     </div>
                     <div class="section">
                         <h3>Create</h3>
-                        <a href="<s:url action="home" namespace="/launch"></s:url>">New Contest</a>
+                        <a href="<s:url action="home" namespace="/launch"></s:url>">New Challenge</a>
                         <a href="<s:url action="projectPlanner" namespace="/"><s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>">Game Plan</a>
-                        <!--  <a href="javascript:;">Quick Create Draft Contest</a>
+                        <!--  <a href="javascript:;">Quick Create Draft Challenge</a>
                           <a href="javascript:;">Bulk Creation</a>-->
                     </div>
                     <c:if test="${hasWritePermission}">

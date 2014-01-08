@@ -17,7 +17,7 @@
 <div class="no_details contest_type">
     <div class="caption_det_type">
         <div class="captionInner">
-            <h2>Contest Type</h2>
+            <h2>Challenge Type</h2>
             <c:if test="${viewData.hasContestWritePermission}">
                 <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
             </c:if>
@@ -28,12 +28,12 @@
     <div class="detailsContent_det_type">
         <table cellspacing="10" class="det_font">
             <tr>
-                <td class="first_tab_type"><strong>Contest Type</strong></td>
+                <td class="first_tab_type"><strong>Challenge Type</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Contest Name</strong></td>
+                <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
             <tr></tr>
@@ -68,7 +68,7 @@
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Contest Fee</strong></td>
+                <td class="first_tab_type"><strong>Challenge Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
             <tr></tr>
@@ -81,7 +81,7 @@
 <div class="no_details contest_type_edit hide">
     <div class="caption_det_type_edit">
         <div class="captionInner">
-            <h2>Contest Type </h2>
+            <h2>Challenge Type </h2>
         </div>
     </div><!-- End .caption -->
 
@@ -94,7 +94,7 @@
                         <!-- selectDesing -->
                         <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">
                             <div class="selectX">
-                                <span class="name fixWidthName"><strong>Contest Type</strong></span>
+                                <span class="name fixWidthName"><strong>Challenge Type</strong></span>
                                 <div class="selectOut">
                                     <select id="contestTypes">
                                     </select>
@@ -108,14 +108,14 @@
 
                 </div></div>
 
-            <span class="hide contestTypeRO name fixWidthName"><strong>Contest Type</strong></span>
+            <span class="hide contestTypeRO name fixWidthName"><strong>Challenge Type</strong></span>
                         <span class="value contestTypeRO hide">
                             <span id="contestTypeNameText"></span>
                             <br />
                         </span>
 
             <br />
-            <span class="name fixWidthName"><strong>Contest Name</strong></span>
+            <span class="name fixWidthName"><strong>Challenge Name</strong></span>
                         <span class="value">
                             <input type="text" class="bigin"  id="contestName" />
                             <span id="contestNameText"></span>
@@ -574,7 +574,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Need help writing a great contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>Need help writing a great challenge description? Please visit the challenge Holder Guide where you will find challenge samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

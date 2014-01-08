@@ -26,7 +26,7 @@ var FAQ = { links: [
             { text: "How to monitor Forum Activity?", link: "https://www.topcoder.com/help/?p=622"},
             { text: "What is TopCoder forum?", link: "https://www.topcoder.com/help/?p=620"},
             { text: "How to increase Prize?", link: "https://www.topcoder.com/help/?p=616"},
-            { text: "What can I do once a contest is running?", link: "https://www.topcoder.com/help/?p=614"},
+            { text: "What can I do once a challenge is running?", link: "https://www.topcoder.com/help/?p=614"},
             { text: "What types of forums does TopCoder provide?", link: "https://www.topcoder.com/help/?p=606"},
             { text: "How do I know a member has posted in forum?", link: "https://www.topcoder.com/help/?p=604"}
             ],
@@ -37,11 +37,11 @@ var FAQ = { links: [
 var VIDEO = { links: [
             { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
-            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
+            { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
             { text: "Cockpit - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
             { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
             { text: "Cockpit: Setting Permissions", link: "httpss://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Contest Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "http://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18"
 };
@@ -50,11 +50,11 @@ var VIDEO = { links: [
 var TUTORIAL = { links: [
             { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
-            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
+            { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
             { text: "Cockpit - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
             { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
             { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Contest Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=86"
 };
@@ -63,11 +63,11 @@ var TUTORIAL = { links: [
 var EXAMPLE = { links: [
             { text: "Sample Project", link: "https://www.topcoder.com/how-it-works/"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
-            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
+            { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
             { text: "Cockpit - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
             { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
             { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Contest Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=95"
 };

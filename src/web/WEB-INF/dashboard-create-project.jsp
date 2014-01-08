@@ -51,10 +51,10 @@
                                                             <div class="messageBottomRight">
                                                                 <div class="messageInner">
                                                                     <p>A project is a container that could have many
-                                                                        contests from various type of works (Studio,
+                                                                        challenges from various type of works (Studio,
                                                                         software architecture, etc.).<br/>
                                                                         You usually use project to group and manage all
-                                                                        of your contests in easy ways.</p>
+                                                                        of your challenges in easy ways.</p>
                                                                 </div>
                                                                 <!-- .messageInner -->
                                                             </div>
@@ -84,7 +84,7 @@
                                     <link:cancelDashboardOperation/>
                                     <a id="addExistContest"
                                        class="button6 middleButton">
-                                        <span class="left"><span class="right">ADD A CONTEST TO THIS PROJECT</span></span></a>
+                                        <span class="left"><span class="right">ADD A CHALLENGE TO THIS PROJECT</span></span></a>
                                     <a
                                        class="button6 rightButton" id="createProjectViewSave"><span class="left"><span class="right">SAVE</span></span></a>
                                 </div>

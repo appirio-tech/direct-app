@@ -88,7 +88,7 @@
                                             
                                             <div class="grayTextArea">
                                                 <p>
-                                                    Copilots are paid per contest based on outcomes, not hours.
+                                                    Copilots are paid per challenge based on outcomes, not hours.
                                                     <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">View More</a>
                                                 </p>
                                                 
@@ -103,7 +103,7 @@
                                             
                                             <div class="grayTextAreaCustom">
                                                 <p>
-                                                    <strong>It is important to note</strong> that the Copilot is responsible for running contests, but more importantly they are responsible for delivering the "product" to the customer. Many customers will not want to know the details of what contests you are running. In fact, the concept of a contest will not be important to them. They just want their product completed. So, it is the Copilot's responsibility to work with the customer at an appropriate level of detail.
+                                                    <strong>It is important to note</strong> that the Copilot is responsible for running challenges, but more importantly they are responsible for delivering the "product" to the customer. Many customers will not want to know the details of what challenges you are running. In fact, the concept of a challenge will not be important to them. They just want their product completed. So, it is the Copilot's responsibility to work with the customer at an appropriate level of detail.
                                                 </p>
                                                 
                                                 <span class="corner tl"></span>
@@ -134,7 +134,7 @@
                                                                         <label>Projects:</label><span class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</span>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <label>Contests:</label><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>
+                                                                        <label>Challenges:</label><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>
                                                                     </div>
                                                                     <div class="row">
                                                                         <label>Reposts:</label><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>
@@ -143,7 +143,7 @@
                                                                         <label>Failures:</label><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <label>Bug Races:</label><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>
+                                                                        <label>Races:</label><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.colLeft -->
@@ -153,7 +153,7 @@
                                                                         <label>Current Projects:</label><span class="field_${profile.member.copilotProfile.userId}_currentProjects">loading</span>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <label>Current Contests:</label><span class="field_${profile.member.copilotProfile.userId}_currentContests">loading</span>
+                                                                        <label>Current Challenges:</label><span class="field_${profile.member.copilotProfile.userId}_currentContests">loading</span>
                                                                     </div>
 
 
@@ -335,7 +335,7 @@
             <div class="popupWrap">
                 <div class="popupContent">
                     <dl>
-                        <dt>Your Copilot Selection Contest has been saved as draft</dt>
+                        <dt>Your Copilot Selection Challenge has been saved as draft</dt>
                          
                         <dd class="yesno">
                              <a href="#" class="button6" id="saveAsDraftOK"><span class="left"><span class="right">OK</span></span></a>

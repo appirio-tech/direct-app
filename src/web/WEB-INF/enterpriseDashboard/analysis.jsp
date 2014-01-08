@@ -59,7 +59,7 @@
 <div class="analyticsTitle" data-intro="Here you will find analytics that the TopCoder Platform tracks. These are specific to your projects, but you'll also see the market data for the entire platform. Metrics are based on completed competitions." data-step="1">
     <h3>Analytics</h3>
     <a onclick="javascript:introJs().start();" href="javascript:;" class="icon"
-       rel="Analyse the contest cost, time and fulfillment of your projects">!</a>
+       rel="Analyse the challenge cost, time and fulfillment of your projects">!</a>
 </div>
 <!-- title -->
 
@@ -117,7 +117,7 @@
         <div class="column thirdColumn">
             <div class="row">
                 <div>
-                    <label>Contest Type</label>
+                    <label>Challenge Type</label>
 
                     <div class="selectWrapper">
                         <ul>
@@ -204,26 +204,26 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    <div class="fieldName tipToggle" title="The average contest cost of the customer">
+                                    <div class="fieldName tipToggle" title="The average challenge cost of the customer">
                                         Avg. Cost:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerAverageCost">$3,169.50</td>
                                 <td>
-                                    <div class="fieldName tipToggle" title="Average Contest Duration of the customer">
+                                    <div class="fieldName tipToggle" title="Average Challenge Duration of the customer">
                                         Avg. Duration:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerAverageDuration">10 days</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Average Contest Volume in 30 days for the customer">Avg. Vol:
+                                         title="Average challenge Volume in 30 days for the customer">Avg. Vol:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerAverageVol">13.5</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Average contests fulfillment of the customer">Avg. Fulfillment:
+                                         title="Average challenges fulfillment of the customer">Avg. Fulfillment:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerAverageFulfillment">90.26%</td>
@@ -234,28 +234,28 @@
                             <tr>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The cost range of contests for the customer, from min to max">Cost
+                                         title="The cost range of challenges for the customer, from min to max">Cost
                                         Range:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerMinMaxCost">$975.00 - $8,319.00</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The contest duration range of contests for the customer, from min to max in days">
+                                         title="The challenge duration range of challenges for the customer, from min to max in days">
                                         Duration Range:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerMinMaxDuration">2.3 - 20.5 days</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Total number of contests completed in the date range for customer">Total
+                                         title="Total number of challenges completed in the date range for customer">Total
                                         Vol:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="customerTotalVol">82</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The total memeber cost of the contests for the customer">Total Member
+                                         title="The total memeber cost of the challenges for the customer">Total Member
                                         Cost:
                                     </div>
                                 </td>
@@ -278,26 +278,26 @@
                             <tr>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The average contest cost of the whole market in the date range">Avg.
+                                         title="The average challenge cost of the whole market in the date range">Avg.
                                         Cost:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketAverageCost">$3,290.06</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Average Contest Duration of the whole market">Avg. Duration:
+                                         title="Average Challenge Duration of the whole market">Avg. Duration:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketAverageDuration">9.9 days</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Average Contest Volume in 30 days for the whole market">Avg. Vol:
+                                         title="Average challenge Volume in 30 days for the whole market">Avg. Vol:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketAverageVol">83.9</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Average contests fulfillment of the whole market">Avg. Fulfillment:
+                                         title="Average challenges fulfillment of the whole market">Avg. Fulfillment:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketAverageFulfillment">89.03%</td>
@@ -305,28 +305,28 @@
                             <tr>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The cost range of contests for the whole market, from min to max">Cost
+                                         title="The cost range of challenges for the whole market, from min to max">Cost
                                         Range:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketMinMaxCost">$225.00 - $21,874.00</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The contest duration range of contests for the whole market, from min to max in days">
+                                         title="The challenge duration range of challenges for the whole market, from min to max in days">
                                         Duration Range:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketMinMaxDuration">1 - 44.1 days</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="Total number of contests completed in the date range for whole market">
+                                         title="Total number of challenges completed in the date range for whole market">
                                         Total Vol:
                                     </div>
                                 </td>
                                 <td class="fieldNumber" id="marketTotalVol">998</td>
                                 <td>
                                     <div class="fieldName tipToggle"
-                                         title="The total memeber cost of the contests for the whole market">Total
+                                         title="The total memeber cost of the challenges for the whole market">Total
                                         Member Cost:
                                     </div>
                                 </td>
@@ -355,13 +355,13 @@
                                 </th>
                                 <th>
                                     <div class="fieldName tipToggle"
-                                         title="Comparison of customer average contest cost with market average contset cost">
+                                         title="Comparison of customer average challenge cost with market average challenge cost">
                                         Avg. Cost
                                     </div>
                                 </th>
                                 <th>
                                     <div class="fieldName tipToggle"
-                                         title="Comparison of customer average contest duration with market average contest duration">
+                                         title="Comparison of customer average challenge duration with market average challenge duration">
                                         Avg. Duration
                                     </div>
                                 </th>
@@ -373,7 +373,7 @@
                                 </th>
                                 <th>
                                     <div class="fieldName tipToggle"
-                                         title="Comparison of customer total contests volume with market total contests volume">
+                                         title="Comparison of customer total challenges volume with market total challenges volume">
                                         Total Vol
                                     </div>
                                 </th>
@@ -385,13 +385,13 @@
                                 </th>
                                 <th>
                                     <div class="fieldName tipToggle"
-                                         title="Comparison of customer contest cost range with market contest cost range">
+                                         title="Comparison of customer challenge cost range with market challenge cost range">
                                         Cost Range
                                     </div>
                                 </th>
                                 <th>
                                     <div class="fieldName tipToggle"
-                                         title="Comparison of customer contest duration range with market contest duration range">
+                                         title="Comparison of customer challenge duration range with market challenge duration range">
                                         Duration Range
                                     </div>
                                 </th>
@@ -461,18 +461,18 @@
             <th rowspan="2">Date</th>
             <th rowspan="2">Customer</th>
             <th rowspan="2">Projects</th>
-            <th rowspan="2">Contest Name</th>
-            <th rowspan="2">Contest Type</th>
+            <th rowspan="2">Challenge Name</th>
+            <th rowspan="2">Challenge Type</th>
             <th colspan="2">Fulfillment</th>
             <th colspan="2">Member Cost</th>
             <th colspan="2">Duration (days)</th>
         </tr>
         <tr>
-            <th>Contest</th>
+            <th>Challenge</th>
             <th>Market Avg</th>
-            <th>Contest</th>
+            <th>Challenge</th>
             <th>Market Avg</th>
-            <th>Contest</th>
+            <th>Challenge</th>
             <th>Market Avg</th>
         </tr>
         </thead>
@@ -500,7 +500,7 @@
             <span class="label">Displaying</span>
             <ul>
                 <li class="firstSelectot"><a href="javascript:;"> <span><input type="checkbox" class="chkTimeframe hide"
-                                                                               id="idDuration"/>Contest Duration</span></a>
+                                                                               id="idDuration"/>Challenge Duration</span></a>
                 </li>
                 <li><a href="javascript:;" class="current"> <span><input type="checkbox" class="chkTimeframe hide"
                                                          id="idCost" checked="checked"/>Cost</span></a></li>
@@ -562,7 +562,7 @@
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The average completed contest volume in 30 days in the chosen date range">Avg.
+                                 title="The average completed challenge volume in 30 days in the chosen date range">Avg.
                                 Completed
                             </div>
                         </td>
@@ -570,7 +570,7 @@
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The average failed contest volume in 30 days in the chosen date range">Avg.
+                                 title="The average failed challenge volume in 30 days in the chosen date range">Avg.
                                 Failed
                             </div>
                         </td>
@@ -578,7 +578,7 @@
                     <tr>
                         <td>
                             <div class="fieldName tipToggle"
-                                 title="The total completed contest volume in the chosen date range.">Total
+                                 title="The total completed challenge volume in the chosen date range.">Total
                                 Completed
                             </div>
                         </td>
@@ -586,7 +586,7 @@
                     <tr>
                         <td class="lastRow">
                             <div class="fieldName tipToggle"
-                                 title="The total failed contest volume in the chosen date range.">Total
+                                 title="The total failed challenge volume in the chosen date range.">Total
                                 Failed
                             </div>
                         </td>

@@ -34,7 +34,7 @@
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=616')">How to increase
                 Prize?</a></li>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=614')">What can I do once
-                a contest is running?</a></li>
+                a challenge is running?</a></li>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=606')">What types of
                 forums does TopCoder provide?</a></li>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=604')">How do I know a

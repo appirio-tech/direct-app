@@ -104,7 +104,7 @@
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
                                 </s:url>
-                                <strong><a href="<s:property value="#feeMainPage"/>">Contest Fee Management</a></strong>
+                                <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
                             <div class="areaHeader">
                                 <h2 class="title contestTitle"><s:if test="fee.id==0">Create</s:if><s:else>Update</s:else> Platform Fee</h2>

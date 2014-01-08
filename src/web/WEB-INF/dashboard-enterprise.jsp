@@ -54,7 +54,7 @@
         var chartData =
         {
             contest:{
-                column:["date", "Customer Avg Contest Duration", "Market Avg Contest Duration"],
+                column:["date", "Customer Avg Challenge Duration", "Market Avg Challenge Duration"],
                 week:[
                 <c:forEach items="${viewData.durationStats['WEEK']}" var="stat" varStatus="loop">
                     <c:if test="${loop.index > 0}">,</c:if>
@@ -206,8 +206,8 @@
                                                 </colgroup>
                                                 <tr>
                                                     <th class="first">Project</th>
-                                                    <th>Average Contest Duration (Hours)</th>
-                                                    <th>Average Cost per Contest</th>
+                                                    <th>Average Challenge Duration (Hours)</th>
+                                                    <th>Average Cost per Challenge</th>
                                                     <th>Total Project Cost</th>
                                                     <th>Average Fulfillment</th>
                                                 </tr>
@@ -267,7 +267,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The average contest cost of the customer</p>
+																		<p>The average challenge cost of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -295,7 +295,7 @@
                                                                                                                         </div>
                                                                                                                         <!-- End .tooltipHeader -->
                                                                                                                         <div class="tooltipContent">
-                                                                                                                            <p>Average Contest Duration of the customer</p>
+                                                                                                                            <p>Average Challenge Duration of the customer</p>
                                                                                                                         </div>
                                                                                                                         <!-- End .tooltipContent -->
                                                                                                                         <div class="tooltipFooter">
@@ -323,7 +323,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Volume in 30 days for the customer</p>
+																		<p>Average Challenge Volume in 30 days for the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -354,7 +354,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the customer</p>
+																		<p>Average challenges fulfillment of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -388,7 +388,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The cost range of contests for the customer, from min to max</p>
+																		<p>The cost range of challenges for the customer, from min to max</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -415,7 +415,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the customer, from min to max in days</p>
+																		<p>The challenge duration range of challenges for the customer, from min to max in days</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -447,7 +447,7 @@
                                                                     </div>
                                                                     <!-- End .tooltipHeader -->
                                                                     <div class="tooltipContent">
-                                                                        <p>Total number of contests completed in the date range for customer</p>
+                                                                        <p>Total number of challenges completed in the date range for customer</p>
                                                                     </div>
                                                                     <!-- End .tooltipContent -->
                                                                     <div class="tooltipFooter">
@@ -476,7 +476,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total member cost of the contests for the customer</p>
+																		<p>The total member cost of the challenges for the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -513,7 +513,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The average contest cost of the customer</p>
+																		<p>The average challenge cost of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -541,7 +541,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the customer</p>
+																		<p>Average Challenge Duration of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -569,7 +569,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Volume in 30 days for the customer</p>
+																		<p>Average Challenge Volume in 30 days for the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -596,7 +596,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the customer</p>
+																		<p>Average challenges fulfillment of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -633,7 +633,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The cost range of contests for the customer, from min to max</p>
+																		<p>The cost range of challenges for the customer, from min to max</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -660,7 +660,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the customer, from min to max in days</p>
+																		<p>The challenge duration range of challenges for the customer, from min to max in days</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -688,7 +688,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for customer</p>
+																		<p>Total number of challenges completed in the date range for customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -716,7 +716,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total member cost of the contests for the customer</p>
+																		<p>The total member cost of the challenges for the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -753,7 +753,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The average contest cost of the whole market in the date range</p>
+																		<p>The average challenge cost of the whole market in the date range</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -780,7 +780,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the whole market</p>
+																		<p>Average Challenge Duration of the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -807,7 +807,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Volume in 30 days for the whole market</p>
+																		<p>Average Challenge Volume in 30 days for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -834,7 +834,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the whole market</p>
+																		<p>Average challenges fulfillment of the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -868,7 +868,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The cost range of contests for the whole market, from min to max</p>
+																		<p>The cost range of challenges for the whole market, from min to max</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -896,7 +896,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
+																		<p>The challenge duration range of challenges for the whole market, from min to max in days</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -924,7 +924,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for whole market</p>
+																		<p>Total number of challenges completed in the date range for whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -953,7 +953,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total member cost of the contests for the whole market</p>
+																		<p>The total member cost of the challenges for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -989,7 +989,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The average contest cost of the whole market in the date range</p>
+																		<p>The average challenge cost of the whole market in the date range</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1016,7 +1016,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the whole market</p>
+																		<p>Average Challenge Duration of the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1043,7 +1043,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average Contest Volume in 30 days for the whole market</p>
+																		<p>Average Challenge Volume in 30 days for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1070,7 +1070,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the whole market</p>
+																		<p>Average challenges fulfillment of the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1103,7 +1103,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The cost range of contests for the whole market, from min to max</p>
+																		<p>The cost range of challenges for the whole market, from min to max</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1130,7 +1130,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
+																		<p>The challenge duration range of challenges for the whole market, from min to max in days</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1157,7 +1157,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for whole market</p>
+																		<p>Total number of challenges completed in the date range for whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1184,7 +1184,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total member cost of the contests for the whole market</p>
+																		<p>The total member cost of the challenges for the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1246,7 +1246,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer average contest cost with market average contest cost</p>
+																		<p>Comparison of customer average challenge cost with market average challenge cost</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1271,7 +1271,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer average contest duration with market average contest duration</p>
+																		<p>Comparison of customer average challenge duration with market average challenge duration</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1321,7 +1321,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer total contests volume with market total contests volume</p>
+																		<p>Comparison of customer total challenges volume with market total challenges volume</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1371,7 +1371,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer contest cost range with market contest cost range</p>
+																		<p>Comparison of customer challenge cost range with market challenge cost range</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1396,7 +1396,7 @@
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>Comparison of customer contest duration range with market contest duration range</p>
+																		<p>Comparison of customer challenge duration range with market challenge duration range</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1518,18 +1518,18 @@
                                                                 <td class="first noBT" rowspan="2"><strong>Date</strong></td>
                                                                 <td class="noBT" rowspan="2"><strong>Customer</strong></td>
                                                                 <td class="noBT" rowspan="2"><strong>Project</strong></td>
-                                                                <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
-                                                                <td class="noBT" rowspan="2">Contest Type</td>
+                                                                <td class="noBT" rowspan="2"><strong>Challenge Name</strong></td>
+                                                                <td class="noBT" rowspan="2">Challenge Type</td>
                                                                 <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
                                                                 <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
                                                                 <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
                                                             </tr>
                                                             <tr class="head">
-                                                                <td>Contest</td>
+                                                                <td>Challenge</td>
                                                                 <td>Market Avg</td>
-                                                                <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                                <td>Challenge<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
                                                                 <td>Market Avg<br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
-                                                                <td>Contest</td>
+                                                                <td>Challenge</td>
                                                                 <td>Market Avg</td>
                                                             </tr>
                                                         </tbody>
@@ -1623,7 +1623,7 @@
                                             <div class="displaying">
                                                 <span>Displaying :</span>
                                                 <input type="radio" name="displaying" value="contest"/>
-                                                <span>Contest Duration&nbsp;</span>
+                                                <span>Challenge Duration&nbsp;</span>
                                                 <input type="radio" name="displaying" checked="checked" value="cost"/>
                                                 <span>Cost&nbsp;</span>
                                                 <input type="radio" name="displaying" value="fulfill"/>
@@ -1681,7 +1681,7 @@
                                                 <div class="secondRow">
                                                     <div class="filterContest">
                                                         <div class="columns contestType">
-                                                            <strong>Contest Type</strong><br/>
+                                                            <strong>Challenge Type</strong><br/>
                                                             <s:select list="viewData.projectCategories" multiple="true"
                                                                       cssClass="multiselect"
                                                                       id="formData.projectCategoryIds"
@@ -1746,18 +1746,18 @@
                                                                         <td class="first noBT" rowspan="2"><strong>Date</strong></td>
                                                                         <td class="noBT" rowspan="2"><strong>Customer</strong></td>
                                                                         <td class="noBT" rowspan="2"><strong>Project</strong></td>
-                                                                        <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
-                                                                        <td class="noBT" rowspan="2">Contest Type</td>
+                                                                        <td class="noBT" rowspan="2"><strong>Challenge Name</strong></td>
+                                                                        <td class="noBT" rowspan="2">Challenge Type</td>
                                                                         <td class="noBT" colspan="2"><strong>Fulfillment</strong></td>
                                                                         <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
                                                                         <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
                                                                     </tr>
                                                                     <tr class="head">
-                                                                        <td>Contest</td>
+                                                                        <td>Challenge</td>
                                                                         <td>Market Avg</td>
-                                                                        <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                                        <td>Challenge<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
                                                                         <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</a></td>
-                                                                        <td>Contest</td>
+                                                                        <td>Challenge</td>
                                                                         <td>Market Avg</td>
                                                                     </tr>
                                                                 </tbody>
@@ -1843,7 +1843,7 @@
 									<span class="date">Date :
                                         <span id="volumeStartDateLabel"><fmt:formatDate value="${startDate}" pattern="MMM dd,yyyy"/></span> - <span id="volumeEndDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span></span>
 										<ul class="tabs">
-											<li><a href="javascript:;">Contest Volume Summary</a></li>
+											<li><a href="javascript:;">Challenge Volume Summary</a></li>
                                             <span class="zoomMessage" id="volumeZoomMessage"></span>
 										</ul>
                                         <div class="tabsContent">
@@ -1862,7 +1862,7 @@
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT"> Avg. Completed</span>
-                                                                  <span class="tipC hide">Average number of completed contest per month in the specified period</span>
+                                                                  <span class="tipC hide">Average number of completed challenge per month in the specified period</span>
                                                               </span>
 
                                                         </td>
@@ -1873,7 +1873,7 @@
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT"> Avg. Failed</span>
-                                                                  <span class="tipC hide">Average number of failed contest per month in the specified period</span>
+                                                                  <span class="tipC hide">Average number of failed challenge per month in the specified period</span>
                                                               </span>
 
                                                         </td>
@@ -1884,7 +1884,7 @@
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT">Total Completed</span>
-                                                                  <span class="tipC hide">Total number of completed contest in the specified period</span>
+                                                                  <span class="tipC hide">Total number of completed challenge in the specified period</span>
                                                               </span>
 
                                                         </td>
@@ -1894,7 +1894,7 @@
                                                         <td class="fieldName">
                                                               <span class="newTooltips">
                                                                   <span class="tipT">Total Failed</span>
-                                                                  <span class="tipC hide">Total number of failed contest in the specified period</span>
+                                                                  <span class="tipC hide">Total number of failed challenge in the specified period</span>
                                                               </span>
 
                                                         </td>
@@ -1950,7 +1950,7 @@
 												<s:select list="viewData.clientAccounts" id="volumeFormData.customerIds"
                                                                       name="formData.customerIds" size="1"/>
 
-												<span class="label">Contest Result</span>
+												<span class="label">Challenge Result</span>
 												<select class="contestResult multiselect" multiple="multiple" name="formData.contestStatus" id="formData.contestStatus">
 													<option value="1" selected="selected">Completed</option>
 													<option value="0" selected="selected">Failed</option>
@@ -1980,7 +1980,7 @@
 											<!-- End .firstRow -->
 											<div class="secondRow">
 												<div class="filterContest"> <a class="button6 applyButton" href="javascript:;"> <span class="left"> <span class="right">APPLY</span> </span> </a>
-													<div class="columns contestType"> <strong>Contest Type</strong>
+													<div class="columns contestType"> <strong>Challenge Type</strong>
 														<s:select list="viewData.projectCategories" multiple="true"
                                                                       cssClass="multiselect"
                                                                       id="volumeFormData.projectCategoryIds"
@@ -2066,17 +2066,17 @@
                                 <th class="first noBT" rowspan="2"><strong>Date</strong></th>
                                 <th class="noBT" rowspan="2"><strong>Customer</strong></th>
                                 <th class="noBT" rowspan="2"><strong>Project</strong></th>
-                                <th class="noBT" rowspan="2"><strong>Contest Name</strong></th>
-                                <th class="noBT" rowspan="2">Contest Type</th>
+                                <th class="noBT" rowspan="2"><strong>Challenge Name</strong></th>
+                                <th class="noBT" rowspan="2">Challenge Type</th>
                                 <th class="noBT" colspan="2"><strong>FullFilment</strong></th>
                                 <th class="noBT" colspan="2"><strong>Member Cost</strong></th>
                                 <th class="noBT" colspan="9"><strong>Member Cost Breakdown</strong></th>
                                 <th class="noBT" colspan="2"><strong>Duration</strong> (Days)</th>
                             </tr>
                             <tr class="head costHead">
-                                <th>Contest</th>
+                                <th>Challenge</th>
                                 <th>Market Avg</th>
-                                <th>Contest</th>
+                                <th>Challenge</th>
                                 <th>Market Avg</th>
                                 <th>Prizes</th>
                                 <th>Spec Review</th>
@@ -2087,7 +2087,7 @@
                                 <th>Build</th>
                                 <th>Bugs</th>
                                 <th>Misc</th>
-                                <th>Contest</th>
+                                <th>Challenge</th>
                                 <th>Market Avg</th>
                             </tr>
                         </thead>
@@ -2124,7 +2124,7 @@
                     </colgroup>
                     <thead>
                         <tr class="head">
-                            <th  class="first noBT">Contest Type</th>
+                            <th  class="first noBT">Challenge Type</th>
                             <th  class="noBT">Average Member Cost</th>
 
                             <th  class="noBT">Prizes</th>
@@ -2167,7 +2167,7 @@
         </div>
         <!-- End .tooltipHeader -->
         <div class="tooltipContent">
-            <p>count of contests of the customer in the chosen start /end date</p>
+            <p>count of challenges of the customer in the chosen start /end date</p>
         </div>
         <!-- End .tooltipContent -->
         <div class="tooltipFooter">

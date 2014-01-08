@@ -62,8 +62,8 @@
 								
 <div class="contestDetails">
 
-	<h2 class="sectionHead">Contest Details</h2>
-	<h3>Contest Prizes</h3>
+	<h2 class="sectionHead">Challenge Details</h2>
+	<h3>Challenge Prizes</h3>
   <table class="prizesTable">
   		<tbody><tr>
   			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
@@ -82,7 +82,7 @@
 	<h3>Additional Costs:</h3>
 	<table class="prizesTable">
 		<tr>
-  			<td>Contest Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Challenge Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
             <td>Copilot Fee : $<span id="sworCopilotFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
@@ -101,7 +101,7 @@
 <hr class="dualDivider" />
 
 <div class="buttonBox" id="swOrderReview_buttonBox">
-	<a href="javascript:activateContest();" class="button6 contiune" id="swOrderReview_activateButton"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CONTEST</span></span></a>
+	<a href="javascript:activateContest();" class="button6 contiune" id="swOrderReview_activateButton"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CHALLENGE</span></span></a>
 	<a href="javascript:saveAsDraftOrderReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
 	<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>
 	<a href="javascript:backOrderReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>		

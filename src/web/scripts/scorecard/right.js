@@ -547,7 +547,7 @@ $(document).ready(function(){
         dayNamesShort: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
         events: [
             {
-                title: '<a href=# class=launch onmouseover=showPopup(this,\'contestLaunch1\')>Contest Launch</a>',
+                title: '<a href=# class=launch onmouseover=showPopup(this,\'contestLaunch1\')>Challenge Launch</a>',
                 start: new Date(y, m, 8)
             },
             {

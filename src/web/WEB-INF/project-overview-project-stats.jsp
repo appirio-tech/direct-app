@@ -32,13 +32,13 @@
         </td>
     </tr>
     <tr>
-        <td class="statusName">Total Contest Fee</td>
+        <td class="statusName">Total Challenge Fee</td>
         <td>
             <fmt:formatNumber value="${viewData.dashboardProjectStat.totalContestFee}" pattern="$#,##0.00"/>
         </td>
     </tr>
     <tr>
-        <td class="statusName">Average Contest Fee</td>
+        <td class="statusName">Average Challenge Fee</td>
         <td>
             <fmt:formatNumber value="${viewData.dashboardProjectStat.averageContestFeePerContest}" pattern="$#,##0.00"/>
         </td>
@@ -50,7 +50,7 @@
         </td>
     </tr>
     <tr>
-        <td class="statusName">Average Contest Duration</td>
+        <td class="statusName">Average Challenge Duration</td>
         <td>
             <c:out value="${tcdirect:getDurationTextInDays(viewData.dashboardProjectStat.averageContestDuration)}"/>
         </td>
@@ -72,7 +72,7 @@
         </td>
     </tr>
     <tr>
-        <td class="statusName">Ongoing Bug Races</td>
+        <td class="statusName">Ongoing Races</td>
         <td>
             <a href="<s:url action='projectIssueTracking' namespace='/'>
                                                     <s:param name='formData.projectId' value='formData.projectId'/>

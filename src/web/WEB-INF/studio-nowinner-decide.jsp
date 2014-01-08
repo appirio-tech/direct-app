@@ -62,15 +62,15 @@
 
                                                     <div class="content">
                                                         <p>As a valued customer, you have the opportunity to post this
-                                                            contest one more time at no additional cost to you. This is
+                                                            challenge one more time at no additional cost to you. This is
                                                             great chance to analyze what worked (and didn't work) in
-                                                            your last contest.</p>
+                                                            your last challenge.</p>
 
                                                         <p>By simply making some minor modifications to your
                                                             descriptions, prize amounts, etc., you may increase your
                                                             chances of getting more successful submissions.</p>
 
-                                                        <p>You can learn more about reposting contests by
+                                                        <p>You can learn more about reposting challenges by
                                                             <a href="#">visiting our help section</a>.</p>
 
                                                         <p>So what would you like to do?</p>
@@ -88,7 +88,7 @@
                                                     <link:studioSubmissionsGrid contestId="${viewData.contestId}"
                                                                                 checkpointRound="${formData.isCheckpointRound}"
                                                                                 styleClass="button6 btnRunAgian">
-                                                        <span class="left"><span class="right">RUN THIS CONTEST AGAIN</span></span>
+                                                        <span class="left"><span class="right">RUN THIS CHALLENGE AGAIN</span></span>
                                                     </link:studioSubmissionsGrid>
                                                 </div>
 

@@ -121,7 +121,7 @@
                     <c:choose>
                         <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
                             <h3><c:out value="Registration is less than ideal."/></h3>
-                            <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your contest."/></p>
+                            <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your challenge."/></p>
                         </c:when>
                         <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
                             <h3><c:out value="Registration is less than ideal."/></h3>
@@ -243,7 +243,7 @@
                                  All dependencies are satisfied.
                              </c:when>
                              <c:when test="${dependenciesStatus eq 'NO_DEPENDENCIES'}">
-                                 This contest has no dependencies.
+                                 This challenge has no dependencies.
                              </c:when>
                          </c:choose>
                      </div><!-- End .tooltipContent -->
@@ -323,7 +323,7 @@
     </s:else>
 </td>
 <td class="alignTop">
-    <div class="unitContent">Bug Race</div>
+    <div class="unitContent">Race</div>
 </td>
 <td class="alignTop">
     <div class="unitContent">Submission</div>
@@ -350,7 +350,7 @@
 
         <div class="tooltipContent">
             <p>
-                Timeline data not available. Bug Race competition ends upon successful submission review.
+                Timeline data not available. Race competition ends upon successful submission review.
             </p>
         </div><!-- End .tooltipContent -->
 
@@ -391,11 +391,11 @@
             </s:if>
             <s:elseif test="votesNumber == 1" >
                 <h3><c:out value="Registration is less than ideal."/></h3>
-                <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your bug race."/></p>
+                <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your race."/></p>
             </s:elseif>
             <s:else>
                 <h3><c:out value="Registration is poor."/></h3>
-                <p><c:out value="It is unlikely you will receive good bug race submissions. Consider increasing the prize or reduce the scope."/></p>
+                <p><c:out value="It is unlikely you will receive good race submissions. Consider increasing the prize or reduce the scope."/></p>
             </s:else>
             <p><strong># of registrants</strong> : <s:property value="votesNumber"/></p>
         </div><!-- End .tooltipContent -->
@@ -451,7 +451,7 @@
         </div><!-- End .tooltipHeader -->
 
         <div class="tooltipContent">
-            <p>Please see comments in Bug Race ticket.</p>
+            <p>Please see comments in Race ticket.</p>
             <p><a href="<s:property value='issueLink'/>">View Ticket</a></p>
         </div><!-- End .tooltipContent -->
 

@@ -513,7 +513,7 @@
                 </ul>
             </th>
             <th>Project Forum Notification</th>
-            <th>Contest Notifications</th>
+            <th>Challenge Notifications</th>
             <th><a name="addUserModal" class="buttonRed1 triggerModal" href="javascript:;" id="addUser"><span>ADD USER</span></a></th>
         </tr>
         </thead>

@@ -193,7 +193,7 @@
             <th class="tableColumn">Total<br />Projected Cost</th>
             <th class="tableColumn">Start<br />Date</th>
             <th class="tableColumn">Completion<br />Date</th>
-            <th class="tableColumn">Total<br /><nobr> # of Contests</nobr></th>
+            <th class="tableColumn">Total<br /><nobr> # of Challenges</nobr></th>
             <th class="tableColumn">Project<br />Fulfillment</th>
         </tr>
     </thead>

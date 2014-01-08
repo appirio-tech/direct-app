@@ -21,7 +21,7 @@
 <div class="overviewBox">
 	<table class="overviewData" cellpadding="0" cellspacing="0">
 		<tr>
-			<th>Contest Name :</th>
+			<th>Challenge Name :</th>
 			<td><span id="ralContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
@@ -76,7 +76,7 @@
 
 <!-- prizes -->
 <div class="prizes">
-    <h3>Contest Prizes:</h3>
+    <h3>Challenge Prizes:</h3>
     
     <div class="prizesInner">
         <div  id="ralPrizes">

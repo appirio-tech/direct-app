@@ -136,7 +136,7 @@ $(document).ready(function(){
                 html += '        <a href="javascript:;" class="yesBtn">YES</a>';
                 html += '    </div>';
                 html += '    <div class="p2 hide">';
-                html += '        <p>You have chosen not to request Final Fixes from the winner and the contest has now closed.</p>';
+                html += '        <p>You have chosen not to request Final Fixes from the winner and the challenge has now closed.</p>';
                 html += '    </div>';
                 html += '</div>';
                 $("#submission-" + label + " .left").append(html);

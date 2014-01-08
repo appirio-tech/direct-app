@@ -89,13 +89,13 @@
 																	<option value="userHandleInput">Copilot's Name</option>
                                                                     
                                                                     <option value="totalProjectsInput">No. of Total Projects #</option>
-																	<option value="totalContestsInput">No. of Total Contests #</option>
+																	<option value="totalContestsInput">No. of Total Challenges #</option>
 																	<option value="currentProjectsInput">No. of Current Projects #</option>
-																	<option value="currentContestsInput">No. of Current Contests #</option>
+																	<option value="currentContestsInput">No. of Current Challenges #</option>
                                                                     
-                                                                    <option value="repostContestsInput">No. of Repost Contests #</option>
-                                                                    <option value="failureContestsInput">No. of Failure Contests #</option>
-                                                                    <option value="bugraceInput">No. of Bug Races #</option>
+                                                                    <option value="repostContestsInput">No. of Repost Challenges #</option>
+                                                                    <option value="failureContestsInput">No. of Failure Challenges #</option>
+                                                                    <option value="bugraceInput">No. of Races #</option>
 																</select>
 															</li>
 														</ul>
@@ -173,7 +173,7 @@
                 <div class="modal-content">
                 	<div class="modalContainer">
                         <div class="errorIcon"><img src="/images/errorIcon.png" alt="" /></div>
-                        <p>Please select your budget options for this contest.</p>
+                        <p>Please select your budget options for this challenge.</p>
                         <dl>
                             <dd>Project name could not be empty.</dd>
                             <dd>Copilot Opportunity Title could not be empty.</dd>

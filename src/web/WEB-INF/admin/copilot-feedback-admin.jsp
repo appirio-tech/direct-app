@@ -218,7 +218,7 @@
                                     <div class="ratingEdit"></div>
                                 </dd>
                                 <dd>
-                                    <label title="Manages other copilots, manages contests, manages inter-contest work">Contest management</label>
+                                    <label title="Manages other copilots, manages challenges, manages inter-contest work">Challenge management</label>
                                     <div class="ratingEdit"></div>
                                 </dd>
                             </dl>

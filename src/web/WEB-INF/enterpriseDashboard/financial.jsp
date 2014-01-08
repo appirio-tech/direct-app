@@ -137,7 +137,7 @@
                                                     <tr>
                                                         <th>Month</th>
                                                         <th>Member Costs</th>
-                                                        <th>Contest Fees</th>
+                                                        <th>Challenge Fees</th>
                                                         <th>Actual Total</th>
                                                         <th>Projected Total</th>
                                                     </tr>
@@ -199,7 +199,7 @@
                             <th class="first noBT">Project Name</th>
                             <th class="noBT">Actual Member Cost</th>
                             <th class="noBT">Projected Cost</th>
-                            <th class="noBT">Actual Contest Fees</th>
+                            <th class="noBT">Actual Challenge Fees</th>
                             <th class="noBT">Actual Total Cost</th>
                             <th class="noBT">Projected Total Cost</th>
                         </tr>
@@ -229,7 +229,7 @@
          <tr>
              <th>Month</th>
              <th>Member Costs</th>
-             <th>Contest Fees</th>
+             <th>Challenge Fees</th>
              <th>Actual Total</th>
              <th>Projected Total</th>
          </tr>

@@ -217,7 +217,7 @@
 
                                     <div class="multiSelectArea selectHigher">
                                     <div class="multiSelectAreaInner" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
-                                        <label class="multiSelectAreaTitle">Contest Type:</label>
+                                        <label class="multiSelectAreaTitle">Challenge Type:</label>
 
                                         <div class="multiSelectBox">
                                             <div class="multiOptionRow multiOptionRowChecked">
@@ -247,7 +247,7 @@
 
                                 <div class="multiSelectArea selectHigher">
                                     <div class="multiSelectAreaInner" data-intro="Narrow down based on competition statuses." data-step="7">
-                                        <label class="multiSelectAreaTitle">Contest Status:</label>
+                                        <label class="multiSelectAreaTitle">Challenge Status:</label>
 
                                         <div class="multiSelectBox">
                                            <div class="multiOptionRow multiOptionRowChecked">
@@ -359,7 +359,7 @@
                             --%>
                             <div id="pipelineReportArea">
                                 <%-- Pipeline summary --%>
-                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0" data-intro="A weekly summary of your contest volume?" data-step="9"  data-position="top">
+                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0" data-intro="A weekly summary of your challenge volume?" data-step="9"  data-position="top">
                                 <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="5">
@@ -370,7 +370,7 @@
                                     <tr>
                                         <th class="tableColumn">Week</th>
                                         <th class="tableColumn">Member Costs</th>
-                                        <th class="tableColumn">Contest Fee</th>
+                                        <th class="tableColumn">Challenge Fee</th>
                                         <th class="tableColumn">All</th>
                                         <th class="tableColumn">Launched</th>
                                     </tr>
@@ -428,7 +428,7 @@
                                                 <option>Manager</option>
                                                 <option>Copilot</option>
                                                 <option>Project</option>
-                                                <option value="ContestType">Contest Type</option>
+                                                <option value="ContestType">Challenge Type</option>
                                                 <option>Billing</option>
                                             </select>
                                         </th>
@@ -462,7 +462,7 @@
                                         <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="ContestTypeScheduledContests scData hide">
-                                        <th class="tableColumn">Contest Type</th>
+                                        <th class="tableColumn">Challenge Type</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
@@ -614,8 +614,8 @@
                                     <tr>
                                         <th class="tableColumn">&nbsp;Date&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Member Costs&nbsp;</th>
-                                        <th class="tableColumn">&nbsp;Contest Fee&nbsp;</th>
-                                        <th class="tableColumn">&nbsp;Contest Type&nbsp;</th>
+                                        <th class="tableColumn">&nbsp;Challenge Fee&nbsp;</th>
+                                        <th class="tableColumn">&nbsp;Challenge Type&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Client&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Copilot&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Billing&nbsp;</th>

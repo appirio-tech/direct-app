@@ -630,7 +630,7 @@ $(document).ready(function (e) {
                     handleJsonResult(
                         jsonResult,
                         function (result) {
-                            showSuccessfulMessage("The contest notifications setting have been saved.");
+                            showSuccessfulMessage("The challenge notifications setting have been saved.");
                         },
                         function (errorMessage) {
                             modalAllClose();

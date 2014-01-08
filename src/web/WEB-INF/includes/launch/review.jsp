@@ -27,7 +27,7 @@
 <div class="overviewBox">
     <table class="overviewData" cellpadding="0" cellspacing="0">
         <tr>
-            <th>Contest Name :</th>
+            <th>Challenge Name :</th>
             <td><span id="rContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
         </tr>
         <tr>
@@ -61,10 +61,10 @@
 <!-- contentList -->
 <div class="contentList previewMask">
     <dl>
-        <dt>Contest Introduction :</dt>
+        <dt>Challenge Introduction :</dt>
         <dd><span id="rContestIntroduction"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>        
 
-        <dt>Contest Description :</dt>
+        <dt>Challenge Description :</dt>
         <dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>     
 
         <dt class="rMultiInfo">Round One Information :</dt>
@@ -93,7 +93,7 @@
 
 <!-- prizes -->
 <div class="prizes">
-    <h3>Contest Prizes:</h3>
+    <h3>Challenge Prizes:</h3>
     
     <div class="prizesInner">
         <div  id="rPrizes">

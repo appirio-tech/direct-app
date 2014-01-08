@@ -503,7 +503,7 @@
                             <div class="dashboardTable" data-intro="The active work in your project is shown here. Check the green/yellow/red indicators to quickly monitor the health of each competition or task." data-step="14" data-position="top">
                                 <dl>
                                     <dt>
-                                        <a href="javascript:void(0)" class="expand">Active Contests Health</a>
+                                        <a href="javascript:void(0)" class="expand">Active Challenges Health</a>
                                     </dt>
                                     <dd>
                                         <div class="projectHealthHeader">
@@ -522,7 +522,7 @@
                                                 </colgroup>
                                                 <thead>
                                                     <tr>
-                                                        <th class="first">Contest</th>
+                                                        <th class="first">Challenge</th>
                                                         <th>Type</th>
                                                         <th>Current Phase</th>
                                                         <th>Next Phase</th>
@@ -658,12 +658,12 @@
                                                                                 value="draftContestsNumber"/></span>
                                                                         </dd>
                                                                         <dd>
-                                                                            <span class="dt"># Active Contests :</span>
+                                                                            <span class="dt"># Active Challenges :</span>
                                                                             <span class="dd"><s:property
                                                                                 value="activeContestsNumber"/></span>
                                                                         </dd>
                                                                         <dd>
-                                                                            <span class="dt"># Finished Contests :</span>
+                                                                            <span class="dt"># Finished Challenges :</span>
                                                                             <span class="dd"><s:property
                                                                                 value="finishedContestsNumber"/></span>
                                                                         </dd>

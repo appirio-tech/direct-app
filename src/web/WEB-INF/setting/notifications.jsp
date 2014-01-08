@@ -79,7 +79,7 @@
                             Permissions</option>
                         <s:if test="ContestFeeSettingAccessible">
                             <option value="fee">
-                                Contest Fee</option>
+                                Challenge Fee</option>
                         </s:if>
                         <s:if test="jiraSynAccessible">
                             <option value="sync">
@@ -102,7 +102,7 @@
                                                 <%--<option value="noti">Notifications</option>--%>
                                                 <%--<option value="perm">Permissions</option>--%>
                                                 <%--<s:if test="viewContestFeeOption">--%>
-                                                    <%--<option value="fee">Contest Fee</option>--%>
+                                                    <%--<option value="fee">Challenge Fee</option>--%>
                                                 <%--</s:if>--%>
                                                 <%--<s:if test="syncUser">--%>
                                                     <%--<option value="sync">Synchronize User in JIRA and WIKI</option>--%>
@@ -239,14 +239,14 @@
                       </div>-->
 
 
-<h5 style="margin-bottom:6px">Contest Timeline/Forum Notifications</h5>
+<h5 style="margin-bottom:6px">Challenge Timeline/Forum Notifications</h5>
 
 <form id="dashboard-notifications-form">
 
     <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
-            <th class="permCol">Contest Settings</th>
+            <th class="permCol">Challenge Settings</th>
             <th class="permCol2" colspan="2">Notifications</th>
         </tr>
         </thead>

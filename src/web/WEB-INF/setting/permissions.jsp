@@ -99,7 +99,7 @@
                             Permissions</option>
                         <s:if test="ContestFeeSettingAccessible">
                             <option value="fee">
-                                Contest Fee</option>
+                                Challenge Fee</option>
                         </s:if>
                         <s:if test="jiraSynAccessible">
                             <option value="sync">

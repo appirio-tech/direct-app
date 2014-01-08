@@ -63,7 +63,7 @@
                 <th class='hide'></th>
                 <th class='hide'></th>
                 <th class='hide'></th>
-                <th>Active Contests</th>
+                <th>Active Challenges</th>
             </tr>
             </thead>
             <tbody>

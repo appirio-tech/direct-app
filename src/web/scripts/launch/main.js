@@ -804,7 +804,7 @@ function getActiveProblemSet() {
 function previewContest() {
   //http://studio.topcoder.com/?module=ViewContestDetails&ct=1001503
   if(!isContestSaved()) {
-     showErrors("You must 'Save as Draft' before you can preview your contest.");
+     showErrors("You must 'Save as Draft' before you can preview your challenge.");
   } else {
     if(mainWidget.isSoftwareContest()) {
         window.open('https://www.topcoder.com/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
@@ -1038,10 +1038,10 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
           modalClose();
-          showSuccessfulMessageWithOperation("Software Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+          showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
           modalClose();
-            showSuccessfulMessageWithOperation("Software Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
 
         //update endDate
@@ -1062,9 +1062,9 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showSuccessfulMessageWithOperation("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+          showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
-            showSuccessfulMessageWithOperation("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
 
         //update admin fee, to be fixed
@@ -1086,9 +1086,9 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showSuccessfulMessageWithOperation("Algorithm Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+          showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
-            showSuccessfulMessageWithOperation("Algorithm Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CONTEST", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
         
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
@@ -1355,7 +1355,7 @@ function parseDate(dateObj) {
  *         selected
  */
 function getContestType(ignoreTextCheck) {
-   if(!ignoreTextCheck && $('.selectDesing div.selectedTxt').html() == 'Select Contest Type') {
+   if(!ignoreTextCheck && $('.selectDesing div.selectedTxt').html() == 'Select Challenge Type') {
        return [null,null];
    }
    var typeValues = $('#contestTypes').val().match(/^(STUDIO|SOFTWARE|ALGORITHM)(\d+)$/);
@@ -2360,7 +2360,7 @@ function fillCategories() {
  */
 function validateContestName(contestName, errors) {
    if(!checkRequired(contestName)) {
-       errors.push('Contest name is empty.');
+       errors.push('Challenge name is empty.');
    }
 }
 

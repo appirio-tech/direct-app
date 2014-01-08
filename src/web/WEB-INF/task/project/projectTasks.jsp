@@ -328,7 +328,7 @@
                             </div>
                             <div class="editCol1-r selectDisabled">
                                 <input name="isNewTaskContest" type="checkbox" class="assoOption2" />
-                                <label class="chxLbl">Contest</label><br/>
+                                <label class="chxLbl">Challenge</label><br/>
                                 <s:select name="associatedContestId" list="projectContests" disabled="disabled"/>
                             </div>
                         </div>
@@ -508,9 +508,9 @@
             <div class="btnWrapper"><a class="buttonRed1" href="javascript:;"><span>OK</span></a></div>
         </div>
     </div>
-    <p class="fieldLabel">Associated With Contests</p>
+    <p class="fieldLabel">Associated With Challenges</p>
     <div class="taskMultiSelector" id="filterByContests">
-        <div class="trigger"><a class="msValue" href="javascript:;" title="Choose contests to filter">Any Contest</a><a class="selectorArrow"></a><label class="hidden">Any Contest</label></div>
+        <div class="trigger"><a class="msValue" href="javascript:;" title="Choose challenges to filter">Any Challenge</a><a class="selectorArrow"></a><label class="hidden">Any Challenge</label></div>
         <div class="dropDown">
             <ul>
                 <s:iterator value="projectContests">
@@ -608,7 +608,7 @@
 <%--</div>--%>
 <%--<div class="taskListContent">--%>
 <%--<div class="taskListInfo">--%>
-    <%--&lt;%&ndash;<p class="associatedInfo"><strong>Associated with :</strong> <a href="javascript:;">Contest Name 1</a>, <a href="javascript:;">Project Milestone 1</a></p>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;<p class="associatedInfo"><strong>Associated with :</strong> <a href="javascript:;">Challenge Name 1</a>, <a href="javascript:;">Project Milestone 1</a></p>&ndash;%&gt;--%>
     <%--<div class="taskListProgress">--%>
         <%--<div class="smallProgressBarBg fRight jsProgress">--%>
             <%--<div class="smallProgressBar">--%>
@@ -818,11 +818,11 @@
                         </div>
                         <div class="editCol1-r">
                             <input name="isNewTaskContest" type="checkbox" checked="checked" class="assoOption2" />
-                            <label class="chxLbl">Contest</label><br/>
+                            <label class="chxLbl">Challenge</label><br/>
                             <select name="newTaskContest" id="newTaskContest">
-                                <option>Contest</option>
-                                <option>Contest</option>
-                                <option>Contest</option>
+                                <option>Challenge</option>
+                                <option>Challenge</option>
+                                <option>Challenge</option>
                             </select>
                         </div>
                     </div>

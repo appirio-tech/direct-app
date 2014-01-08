@@ -36,7 +36,7 @@
                 </th>
                 <th>
                     <input type="hidden" value="totalContestsInput"></input>
-                    # of Contest
+                    # of Challenge
                 </th>
                 <th>
                     <input type="hidden" value="repostContestsInput"></input>
@@ -48,7 +48,7 @@
                 </th>
                 <th>
                     <input type="hidden" value="bugraceInput"></input>
-                    # of Bug Races
+                    # of Races
                 </th>
                 <th>
                     <input type="hidden" value="currentProjectsInput"></input>
@@ -56,7 +56,7 @@
                 </th>
                 <th>
                     <input type="hidden" value="currentContestsInput"></input>
-                    # of Current Contest
+                    # of Current Challenge
                 </th>
                 <th class="last">Action</th>
             </tr>

@@ -53,13 +53,13 @@
             <s:if test="viewData.active">
                 <li id="previewContestButton">
                     <a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconPreviewContest"
-                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Challenge</a>
                 </li>
             </s:if>
             <s:else>
                 <li id="viewContestButton">
                     <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
-                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Challenge</a>
                 </li>
             </s:else>
         </s:if>
@@ -68,7 +68,7 @@
 
                 <li id="previewContestButton">
                     <a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconPreviewContest"
-                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Challenge</a>
                 </li>
 
             </s:if>
@@ -76,7 +76,7 @@
 
                 <li id="viewContestButton">
                     <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
-                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
+                       style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Challenge</a>
                 </li>
             </s:else>
         </s:else>

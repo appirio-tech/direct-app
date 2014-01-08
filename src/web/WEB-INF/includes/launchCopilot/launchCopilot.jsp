@@ -206,7 +206,7 @@
             <h3><span class="icon">Costs</span><a href="javascript:;" ><img class="edit_type" alt="edit" src="/images/edit_red.png" /></a></h3>
         </div>
         <div class="prizesInner_software editPanelMask" style="height:auto;">
-            <span class="head"><p>Please Select the prize structure for your contest by choosing one of the options below:</p></span> 
+            <span class="head"><p>Please Select the prize structure for your challenge by choosing one of the options below:</p></span> 
             <p>
                 <br/>
                   <span class="radio_font">
@@ -235,7 +235,7 @@
     </div>
 
     <div class="infoPanel descriptionInfo hide">
-        <h3><span class="icon">Contest Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+        <h3><span class="icon">Challenge Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
         <div class="infoPanelMask">
             <table class="prizesTable">
             <tbody><tr>
@@ -299,11 +299,11 @@
 <div class="bottomButton"> 
         <a class="conditions thickbox" href="/direct/conditions.jsp?height=400&amp;width=800&amp;inlineId=helpPopup">Terms and Conditions</a>
         <a id="continue" href="javascript:;" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
-        <a id="submitButton" href="javascript:;" class="button6 contiune hide"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CONTEST</span></span></a>
+        <a id="submitButton" href="javascript:;" class="button6 contiune hide"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CHALLENGE</span></span></a>
         <a id="saveDraftButton" href="javascript:;" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a> 
 		<a id="previewButton" href="javascript:;" class="button6 preview hide"><span class="left"><span class="right">PREVIEW</span></span></a>
 </div>
 
-<div id="activateContestConfirmation" title="Do you really want to activate the contest?" class='hide'>
+<div id="activateContestConfirmation" title="Do you really want to activate the challenge?" class='hide'>
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will create a new copilot posting and activate it. Please confirm to continue?</p>
 </div>

@@ -131,12 +131,12 @@
                                         <div class="corner tr"></div>
                                     </div>
 
-                                    <div class="sectionInner contestsPipeline" data-intro="This section displays the contests you have started and completed." data-step="4"  data-position="top">
+                                    <div class="sectionInner contestsPipeline" data-intro="This section displays the challenges you have started and completed." data-step="4"  data-position="top">
 
                                         <div class="pipelineTitle">
-                                            <h3>Contest Pipeline</h3>
+                                            <h3>Challenge Pipeline</h3>
                                             <a href="javascript:;" class="icon"
-                                               rel="This chart depicts the contests of projects in Pipeline">!</a>
+                                               rel="This chart depicts the challenges of projects in Pipeline">!</a>
                                         </div>
                                         <!-- title -->
 
@@ -204,7 +204,7 @@
                         <thead>
                         <tr class="head">
                             <th class="first noBT">Project Name</th>
-                            <th class="noBT">Contest Name</th>
+                            <th class="noBT">Challenge Name</th>
                             <th class="noBT">Status</th>
                             <th class="noBT">Start Date</th>
                             <th class="noBT">End Date</th>

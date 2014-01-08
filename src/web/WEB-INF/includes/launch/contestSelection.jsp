@@ -34,7 +34,7 @@
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-<h2>Please Select your Contest Type</h2>
+<h2>Please Select your Challenge Type</h2>
 
 <div class="tabOut">
       <!-- tab contest -->
@@ -62,11 +62,11 @@
 
                   <div id="assembly_bug_hunt" class="bug_hunt_chk hide">
                       <input id="bug_hunt_CheckBox" type="checkbox"/>
-                      <span class="bug_hunt">Create Bug Hunt Contest</span>
+                      <span class="bug_hunt">Create Bug Hunt Challenge</span>
                       <a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a>
                   </div>
 
-                  <div class="help"><span class="new_style">Contest Type Information</span></div>
+                  <div class="help"><span class="new_style">Challenge Type Information</span></div>
               </div>
           </div>
           <!-- end .selectDesing -->
@@ -88,7 +88,7 @@
 
       <!-- Contest Name -->
       <div class="row">
-          <label>Contest Name :</label>
+          <label>Challenge Name :</label>
           <input id="contestName" name="contestName" type="text" class="text" maxlength="254"/>
           <input id="contestNameFromDesign" name="contestNameFromDesign" type="text" class="text hide" maxlength="300" />          
           <input id="contestIdFromDesign" name="contestIdFromDesign" type="hidden" />
@@ -155,7 +155,7 @@
   <!-- end .addNewContest -->
  </form>
 
-  <h3><span class="icon">Contest Schedule:</span><div id="ContestScheduleHelpIcon"><a class="helpIcon" href="javascript:;"><span class="hide">Help</span></a></div></h3>
+  <h3><span class="icon">Challenge Schedule:</span><div id="ContestScheduleHelpIcon"><a class="helpIcon" href="javascript:;"><span class="hide">Help</span></a></div></h3>
 
   <!-- Contest Schedule -->
   <div class="schedule">
@@ -165,8 +165,8 @@
         <label>Round Type:</label>
           <div class="roundelect">
               <select id="roundTypes">
-                <option value="single">Contest will be run in single-rounds</option>
-                <option value="multi">Contest will be run in multi-rounds</option>
+                <option value="single">Challenge will be run in single-rounds</option>
+                <option value="multi">Challenge will be run in multi-rounds</option>
               </select>
           </div>
       </div>
@@ -231,9 +231,9 @@
     <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
 </div>
 
-<div id="activateContestConfirmation" title="Do you really want to activate the contest?" style="display:none;">
+<div id="activateContestConfirmation" title="Do you really want to activate the challenge?" style="display:none;">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-    This will create a new contest for you and then activate the created contest. 
-    Please confirm you want to create the contest and activate it. 
-    After activation, you will start the contest specification review.</p>
+    This will create a new challenge for you and then activate the created challenge. 
+    Please confirm you want to create the challenge and activate it. 
+    After activation, you will start the challenge specification review.</p>
 </div>

@@ -582,9 +582,9 @@ var setupFilterPanel = function () {
         var lastText = breadcrumb.find("strong");
         breadcrumb.find(".customer").remove();
         if (customer == "") {
-            lastText.text("All Active Contests");
+            lastText.text("All Active Challenges");
         } else {
-            lastText.text("Active Contests");
+            lastText.text("Active Challenges");
             lastText.before($("<a/>", {
                 "text":customer,
                 "class":"customer",

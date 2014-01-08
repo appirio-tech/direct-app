@@ -54,10 +54,10 @@
                                             <div class="containerNoPadding">
 
                                                 <div class="noWinnerSuggestion">
-                                                    <h3 class="red">Since this contest was abandoned...</h3>
+                                                    <h3 class="red">Since this challenge was abandoned...</h3>
                                                     <div class="content">
-                                                        <p>The submissions for this contest are no longer available to
-                                                            you because you took no action on this contest after it had
+                                                        <p>The submissions for this challenge are no longer available to
+                                                            you because you took no action on this challenge after it had
                                                             ended.</p>
                                                     </div>
                                                 </div>

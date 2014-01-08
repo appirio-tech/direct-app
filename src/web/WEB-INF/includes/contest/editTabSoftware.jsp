@@ -58,7 +58,7 @@
 <div class="no_details contest_type">																						
   <div class="caption_det_type">													
 	  <div class="captionInner">
-           <h2>Contest Type</h2>
+           <h2>Challenge Type</h2>
            <c:if test="${viewData.hasContestWritePermission}">
 		   <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
            </c:if>
@@ -69,12 +69,12 @@
 	 <div class="detailsContent_det_type">
         <table cellspacing="10" class="det_font">
             <tr>
-                <td class="first_tab_type" style="line-height: 28px;"><strong>Contest Type</strong></td>
+                <td class="first_tab_type" style="line-height: 28px;"><strong>Challenge Type</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Contest Name</strong></td>
+                <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
             <tr></tr>
@@ -116,7 +116,7 @@
 <div class="no_details contest_type_edit hide">											
 			<div class="caption_det_type_edit">													
 					<div class="captionInner">
-							<h2>Contest Type</h2>                                                                                                                          
+							<h2>Challenge Type</h2>                                                                                                                          
           </div>													
 		  </div><!-- End .caption -->												
 		  
@@ -128,7 +128,7 @@
                    <!-- selectDesing -->
                    <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                      	
                           <div class="selectX">
-                          		<span class="name fixWidthName"><strong>Contest Type</strong></span>
+                          		<span class="name fixWidthName"><strong>Challenge Type</strong></span>
                                 <div class="selectOut">                                	
                                     <select id="contestTypes">
                                      </select>
@@ -142,7 +142,7 @@
                                     
                  <br/></div> <!-- end #launchContestOut -->
 
-          <span class="contestTypeRO name fixWidthName hide"><strong>Contest Type</strong></span>
+          <span class="contestTypeRO name fixWidthName hide"><strong>Challenge Type</strong></span>
           <span class="value contestTypeRO hide">
               <span id="contestTypeNameText"></span>
               <br />
@@ -150,7 +150,7 @@
           <br />
           
           
-                 <span class="name fixWidthName"><strong>Contest Name</strong></span>
+                 <span class="name fixWidthName"><strong>Challenge Name</strong></span>
           <span class="value">
               <input type="text" class="bigin"  id="contestName" />
               <span id="contestNameText"></span>
@@ -314,8 +314,8 @@
                 <span class="name_label"><strong>Round Type:</strong></span>
               <div class="roundelect">
                   <select id="roundTypes">
-                    <option value="single">Contest will be run in single-rounds</option>
-                    <option value="multi">Contest will be run in multi-rounds</option>                                              
+                    <option value="single">Challenge will be run in single-rounds</option>
+                    <option value="multi">Challenge will be run in multi-rounds</option>                                              
                   </select>
               </div>
              </div>
@@ -414,8 +414,8 @@
                        
                    </tr>
                    <tr class="rightbor">
-                       <td class="first_tab"  align="left"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
-					   <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal"></span></td>
+                       <td class="first_tab"  align="left"><strong>Challenge Fee:</strong> $<span id="rswContestFee"></span></td>
+					   <td class="sec_tab_prize"><strong>Challenge Total:</strong> $<span id="rswTotal"></span></td>
                    </tr>
               </table>
 				</div><!-- End .detailsContent -->												
@@ -443,7 +443,7 @@
                 
                <div class="prizes">  
                      <div class="prizesInner_software">
-                     	<span class="head topcoderPrize"><p>Please Select the prize structure for your contest by choosing one of the options
+                     	<span class="head topcoderPrize"><p>Please Select the prize structure for your challenge by choosing one of the options
                          below:</p></span> 
                          <p class="topcoderPrize">
                          <br />
@@ -497,11 +497,11 @@
                              </span>
 
                          <br />
-                         <span class="first_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+                         <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
                          <span class="mid_inf topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
                          <br />
-                         <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
+                         <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
                          </span>                                                                
                      </div>
                  </div>
@@ -750,8 +750,8 @@
                     </div>
 
                     <div id="swThurgoodDiv" style="display: none">
-                        <h3>Use Thurgood to check contest submissions?</h3><br/>
-                        <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of contest submissions</span><br/><br/></div>
+                        <h3>Use Thurgood to check challenge submissions?</h3><br/>
+                        <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of challenge submissions</span><br/><br/></div>
                  
                     <div class="prizes component" id="swCatalogDiv">
                         <div class="catalogSelect">

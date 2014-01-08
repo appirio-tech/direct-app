@@ -222,7 +222,7 @@ function updateOrderReviewStudio() {
    $('#orDate').html(formatDateForReview(new Date()));   
    $('#orContestName').html(mainWidget.softwareCompetition.assetDTO.name);
    var isMultiRound = mainWidget.softwareCompetition.multiRound;
-   $('#orRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
+   $('#orRoundType').html((!isMultiRound)?"Challenge will be run in single-round":"Challenge will be run in multi-rounds");
 
    $('#orBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
@@ -350,11 +350,11 @@ function backOrderReview() {
  */
 function activateContest() {
 
-    showConfirmation("Do you really want to activate the contest ?",
-        "This will create the new contest <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
+    showConfirmation("Do you really want to activate the challenge ?",
+        "This will create the new challenge <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
             + "</span> for you and then activate it. " +
-            "Please confirm you want to create the contest and activate it. After activation, "
-            + "you will start the contest specification review.",
+            "Please confirm you want to create the challenge and activate it. After activation, "
+            + "you will start the challenge specification review.",
         "YES",
         function() {
             closeModal();

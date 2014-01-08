@@ -39,14 +39,14 @@
                                 <span id="currentDirectProjectID" class="hide"><s:property value="formData.projectId"/></span>
                             </div>
 
-                            <h2 class="batchTitle">Batch Edit Draft Contests</h2>
+                            <h2 class="batchTitle">Batch Edit Draft Challenges</h2>
 
                             <div class="buttonBar">
                                 <a class="newButton1 defaultBtn cancel" href="<s:url action="projectDetails" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
                                 <a class="newButton1 defaultBtn saveAll" href="javascript:;"><span class="btnR"><span class="btnC">SAVE ALL</span></span></a>
                                 <a class="remove" href="javascript:;"><span class="btnR"><span class="btnC">Remove</span></span></a>
                             </div>
-                            <span class="note">You can assign same value for Contest Type, Billing Account, Start Date or remove multiple draft contests by using check boxes.</span>
+                            <span class="note">You can assign same value for Challenge Type, Billing Account, Start Date or remove multiple draft challenges by using check boxes.</span>
 
                             <table id="contestTable" cellpadding="0" cellspacing="0" class="editTable">
                             <colgroup>
@@ -60,8 +60,8 @@
                             <thead>
                             <tr>
                                 <td><input type="checkbox" class="all"/></td>
-                                <td>Contest Name</td>
-                                <td>Contest Type</td>
+                                <td>Challenge Name</td>
+                                <td>Challenge Type</td>
                                 <td>Billing Account</td>
                                 <td>Start Date</td>
                                 <td>End Date</td>
@@ -121,9 +121,9 @@
 
                             <div class="buttonBar bottom">
                                 <div class="postpone">
-                                    <span class="text">Postpone the checked contests by</span><input type="text" name="days" class="days"/> <span class="text">Days</span>
+                                    <span class="text">Postpone the checked challenges by</span><input type="text" name="days" class="days"/> <span class="text">Days</span>
                                     <a class="postponeBtn" href="javascript:;"><span class="btnR"><span class="btnC">Postpone</span></span></a>
-                                    <br/><span class="warning rowsEmpty">Please select one or more contests</span>
+                                    <br/><span class="warning rowsEmpty">Please select one or more challenges</span>
                                     <span class="warning daysEmpty">This field cannot be empty</span>
                                 </div>
                                 <a class="newButton1 defaultBtn cancel" href="<s:url action="projectDetails" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="btnR"><span class="btnC">CANCEL</span></span></a>

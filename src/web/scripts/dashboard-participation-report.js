@@ -148,7 +148,7 @@ $(document).ready(function() {
         })
 
         if(!checked) {
-            showErrors("Please choose at least one contest type");
+            showErrors("Please choose at least one challenge type");
             return;
         }
         

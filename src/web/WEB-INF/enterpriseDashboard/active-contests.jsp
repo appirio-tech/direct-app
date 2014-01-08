@@ -51,7 +51,7 @@
 							
 							<!-- main section -->
 							<div id="mainSection">
-								<h2 data-intro="Welcome to your Active Competitions. This page is a real-time view of all your active competitions.  This is the community in action on your project(s)." data-step="1">Active Contests</h2>
+								<h2 data-intro="Welcome to your Active Competitions. This page is a real-time view of all your active competitions.  This is the community in action on your project(s)." data-step="1">Active Challenges</h2>
 								
 								<!-- active contest -->
 								<div id="activeContest">
@@ -90,9 +90,9 @@
 												</div>
 												<div class="column secondColumn">
 													<div>
-														<label>Contest Type:</label>
+														<label>Challenge Type:</label>
 														<select id='contestTypeFilter'>
-															<option selected="selected" value="All">All Contest Types</option>
+															<option selected="selected" value="All">All Challenge Types</option>
 														</select>
 													</div>	
 												</div>
@@ -116,9 +116,9 @@
 												</div>
 												<div class="column secondColumn">
 													<div>
-														<label>Contest Status:</label>
+														<label>Challenge Status:</label>
 														<select id='contestStatusFilter'>
-															<option selected="selected" value="All">All Contest Status</option>
+															<option selected="selected" value="All">All Challenge Status</option>
 														</select>
 													</div>	
 												</div>
@@ -159,8 +159,8 @@
 														</colgroup>
 														<thead>
 															<tr data-intro="Your active competitions are in this table. Click the column headers to sort on any column." data-step="4">
-																<th>Contest Type</th>
-																<th>Contest Name</th>
+																<th>Challenge Type</th>
+																<th>Challenge Name</th>
 																<th>Project Name</th>
 																<th>Start Date</th>
 																<th>End Date</th>
@@ -293,7 +293,7 @@
                                                                         status="status">
                                                                 <tr>
 
-                                                                    <td class="first">Bug Race</td>
+                                                                    <td class="first">Race</td>
                                                                     <td>
                                                                         <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
                                                                             <img class="contestTypeIcon" src="/images/br_small.png"

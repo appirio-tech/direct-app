@@ -40,7 +40,7 @@
 <div class="no_details contest_type">                                                                                       
   <div class="caption_det_type">                                                    
         <div class="captionInner">
-           <h2>Contest Type</h2>
+           <h2>Challenge Type</h2>
            <c:if test="${viewData.hasContestWritePermission}">
            <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
            </c:if>
@@ -51,12 +51,12 @@
      <div class="detailsContent_det_type">
         <table cellspacing="10" class="det_font">
             <tr>
-                <td class="first_tab_type"><strong>Contest Type</strong></td>
+                <td class="first_tab_type"><strong>Challenge Type</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Contest Name</strong></td>
+                <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
             <tr></tr>
@@ -96,7 +96,7 @@
             </tr>
             <tr></tr>            
             <tr>
-                <td class="first_tab_type"><strong>Contest Fee</strong></td>
+                <td class="first_tab_type"><strong>Challenge Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
             <tr></tr>
@@ -109,7 +109,7 @@
 <div class="no_details contest_type_edit hide">                                         
             <div class="caption_det_type_edit">                                                 
                     <div class="captionInner">
-                            <h2>Contest Type </h2>                                                                                                                   
+                            <h2>Challenge Type </h2>                                                                                                                   
           </div>                                                    
           </div><!-- End .caption -->                                               
           
@@ -122,7 +122,7 @@
                    <!-- selectDesing -->
                    <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                         
                           <div class="selectX">
-                                <span class="name fixWidthName"><strong>Contest Type</strong></span>
+                                <span class="name fixWidthName"><strong>Challenge Type</strong></span>
                                 <div class="selectOut">                                 
                                     <select id="contestTypes">
                                      </select>
@@ -136,14 +136,14 @@
                                     
                  </div></div>
 
-                        <span class="hide contestTypeRO name fixWidthName"><strong>Contest Type</strong></span>
+                        <span class="hide contestTypeRO name fixWidthName"><strong>Challenge Type</strong></span>
                         <span class="value contestTypeRO hide">
                             <span id="contestTypeNameText"></span>
                             <br />
                         </span>
                                                                                                 
                  <br />
-                 <span class="name fixWidthName"><strong>Contest Name</strong></span>
+                 <span class="name fixWidthName"><strong>Challenge Name</strong></span>
                         <span class="value">
                             <input type="text" class="bigin"  id="contestName" />
                             <span id="contestNameText"></span>
@@ -356,8 +356,8 @@
                 <span class="name_label"><strong>Round Type:</strong></span>
               <div class="roundelect">
                   <select id="roundTypes">
-                    <option value="single">Contest will be run in single-rounds</option>
-                    <option value="multi">Contest will be run in multi-rounds</option>                                              
+                    <option value="single">Challenge will be run in single-rounds</option>
+                    <option value="multi">Challenge will be run in multi-rounds</option>                                              
                   </select>
               </div>
              </div>
@@ -561,7 +561,7 @@
                                                 
             <div class="detailsContent_det_spec">
                             <p class="det_font">
-               <span class="name"><strong>Contest Introduction</strong></span>
+               <span class="name"><strong>Challenge Introduction</strong></span>
                <br />
                <span class="gray_name"><strong>Describe your project and your project goals.</strong>
                </span>               
@@ -577,7 +577,7 @@
               </div>     
               
                <p class="det_font">
-               <span class="name"><strong>Contest Description</strong></span>
+               <span class="name"><strong>Challenge Description</strong></span>
                <br />
                <span class="gray_name"><strong>Size, Colors, Fonts? Target Audience? Reference Designs?</strong>
                </span>
@@ -638,7 +638,7 @@
             <div class="contestDetail">             
                 <!-- Contest introduction -->
                   <div class="description">                
-                      <h3><span class="icon">Contest Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+                      <h3><span class="icon">Challenge Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="contestIntroduction" rows="" cols=""></textarea>
                           <p class="mceFooterNote">Describe your project and your project goals. All TopCoder Community members will be able to see this description. It should be a general overview of our project. Try to capture your basic goals and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</p>
@@ -649,7 +649,7 @@
                 
                 <!-- Contest Description -->
                   <div class="guidelines">                  
-                      <h3><span class="icon">Contest Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
+                      <h3><span class="icon">Challenge Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
                       
                       <div class="textarea1">
                           <textarea id="contestDescription" rows="" cols=""></textarea>
@@ -683,7 +683,7 @@
                <div class="deliverablesInnerSa">
                    <div id="viewableSubmCheckbox" class="checkInput">
                        <input type="checkbox" id="viewableSubmFlag" value="true" disabled="disabled">
-                       <label>Submissions are viewable after contest ends. NOTE: all submissions are hidden during the submission phase.</label>
+                       <label>Submissions are viewable after challenge ends. NOTE: all submissions are hidden during the submission phase.</label>
                    </div>
                    <div class="clear"></div>
                </div>
@@ -809,7 +809,7 @@
                 </div><!-- End .tooltipCaption -->
                 
                 <div class="tooltipContent">
-                    <p>Need help writing a great contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>Need help writing a great challenge description? Please visit the Challenge Holder Guide where you will find challenge samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
                 
             </div></div>

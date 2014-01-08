@@ -190,7 +190,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Contest Fee:</label></td>
+                        <td><label>Challenge Fee:</label></td>
                         <td>
                             <span id="contestFeeTotal"></span>
                         </td>

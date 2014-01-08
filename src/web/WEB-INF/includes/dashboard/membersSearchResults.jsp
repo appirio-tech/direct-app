@@ -6,7 +6,7 @@
         <tr>
             <th>#</th>
             <th>Project</th>
-            <th>Contest</th>
+            <th>Challenge</th>
             <th>Handle</th>
             <th>Permission</th>
         </tr>

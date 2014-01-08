@@ -1332,31 +1332,31 @@ function renderPipelineWidget(resultJson) {
             },
             series:[
                 {
-                    name:'Failed Contests',
+                    name:'Failed Challenges',
                     data:failedData,
                     color:'#e83308',
                     borderColor:'#a80b00'
                 },
                 {
-                    name:'Draft Contests',
+                    name:'Draft Challenges',
                     data:draftData,
                     color:'#939393',
                     borderColor:'#777777'
                 },
                 {
-                    name:'Active Contests',
+                    name:'Active Challenges',
                     data:activeData,
                     color:'#2fcafa',
                     borderColor:'#0096c7'
                 },
                 {
-                    name:'Scheduled Contests',
+                    name:'Scheduled Challenges',
                     data:scheduledData,
                     color:'#FF850B',
                     borderColor:'#FF850B'
                 },
                 {
-                    name:'Finished Contests',
+                    name:'Finished Challenges',
                     data:finishedData,
                     color:'#2f9c0d',
                     borderColor:'#187000'
@@ -1395,7 +1395,7 @@ function renderPipelinePage(resultJson) {
         });
     }
 
-    $('.pipelineSection .contestsPipeline ul').empty().append('<li class="finished">Total Finished Contests<strong>' + finishedDataTotal + '</strong></li><li class="active">Total Active Contests<strong>' + activeDataTotal + '</strong></li><li class="scheduled">Total Scheduled Contests<strong>' + scheduledDataTotal + '</strong></li><li class="draft">Total Draft Contests<strong>' + draftDataTotal + '</strong></li><li class="last failed">Total Failed Contests<strong>' + failedDataTotal + '</strong></li>');
+    $('.pipelineSection .contestsPipeline ul').empty().append('<li class="finished">Total Finished Challenges<strong>' + finishedDataTotal + '</strong></li><li class="active">Total Active Challenges<strong>' + activeDataTotal + '</strong></li><li class="scheduled">Total Scheduled Challenges<strong>' + scheduledDataTotal + '</strong></li><li class="draft">Total Draft Challenges<strong>' + draftDataTotal + '</strong></li><li class="last failed">Total Failed Challenges<strong>' + failedDataTotal + '</strong></li>');
     if (resultJson.length) {
         chart = new Highcharts.Chart({
             chart:{
@@ -1558,32 +1558,32 @@ function renderPipelinePage(resultJson) {
             },
             series:[
                 {
-                    name:'Failed Contests',
+                    name:'Failed Challenges',
                     data:failedData,
                     color:'#e83308',
                     borderColor:'#a80b00'
                 },
                 {
-                    name:'Draft Contests',
+                    name:'Draft Challenges',
                     data:draftData,
                     color:'#939393',
                     borderColor:'#777777'
 
                 },
                 {
-                    name:'Active Contests',
+                    name:'Active Challenges',
                     data:activeData,
                     color:'#2fcafa',
                     borderColor:'#0096c7'
                 },
                 {
-                    name:'Scheduled Contests',
+                    name:'Scheduled Challenges',
                     data:scheduledData,
                     color:'#FF850B',
                     borderColor:'#FF850B'
                 },
                 {
-                    name:'Finished Contests',
+                    name:'Finished Challenges',
                     data:finishedData,
                     color:'#2f9c0d',
                     borderColor:'#187000'
@@ -2308,7 +2308,7 @@ function getRequestForAnalysis() {
         if(errorMessage.length > 0) {
             errorMessage += " <br/> ";
         }
-        errorMessage += "- Please select at least one contest type";
+        errorMessage += "- Please select at least one challenge type";
     }
 
     $(".button .errorMessage").html(errorMessage);
@@ -4197,7 +4197,7 @@ function displayChartView(contestData, contestDurationView, costView, fulfillVie
         };
         var axisNumber = 0;
         var costViewLegend = 'Average ' + customerName + ' Cost';
-        var durationViewLegend = 'Average ' + customerName + ' Contest Duration';
+        var durationViewLegend = 'Average ' + customerName + ' Challenge Duration';
         var fulfillViewLegend = 'Average ' + customerName + ' Fulfillment';
         var volumeViewLegend = customerName + ' Volume';
 
@@ -4312,7 +4312,7 @@ function displayChartView(contestData, contestDurationView, costView, fulfillVie
             option.yAxis.push( { //For Contest Duration
                 min: 0,
                 title: {
-                    text: 'Contest Duration',
+                    text: 'Challenge Duration',
                     style: {
                         fontFamily: 'Arial',
                         fontWeight: 'normal',
@@ -4331,7 +4331,7 @@ function displayChartView(contestData, contestDurationView, costView, fulfillVie
 
             if(marketView) {
                 option.series.push({
-                    name: "Average Market Contest Duration",
+                    name: "Average Market Challenge Duration",
                     color: '#07b5fa',
                     yAxis: axisNumber,
                     type: 'line',

@@ -24,7 +24,7 @@
 <div class="contestDetail">	
   <!-- Contest Description -->
 	<div class="description">    
-        <h3>Contest Introduction</h3>
+        <h3>Challenge Introduction</h3>
         <div class="textarea">
             <textarea id="contestIntroduction" rows="10" cols="80"></textarea>
             <p class="mceFooterNote">All TopCoder Community members will be able to see this description. It should be a general overview of our project. Try to capture your basic goals and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</p>
@@ -35,7 +35,7 @@
 
   <!-- Contest Introduction -->
 	<div class="goals">    
-        <h3><span class="icon">Contest Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>        
+        <h3><span class="icon">Challenge Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>        
         <div class="textarea">
             <textarea id="contestDescription" rows="10" cols="80"></textarea>
         </div>        
@@ -80,7 +80,7 @@
     <!-- prizes -->
 	<div class="prizes">
     
-        <h3>Contest Prizes:</h3>
+        <h3>Challenge Prizes:</h3>
         
         <div class="prizesInner">
         	  <label class="first">1st Place</label>
@@ -169,7 +169,7 @@
                <div class="deliverablesInnerSa">
                    <div id="viewableSubmCheckbox" class="checkInput">
                        <input type="checkbox" id="viewableSubmFlag" value="true" disabled="disabled">
-                       <label>Submissions are viewable after contest ends. NOTE: all submissions are hidden during the submission phase.</label>
+                       <label>Submissions are viewable after challenge ends. NOTE: all submissions are hidden during the submission phase.</label>
                    </div>
                    <div class="clear"></div>
                </div>
@@ -180,7 +180,7 @@
        <div class="deliverablesInnerSa">
            <div id="maxSubmissionsInput">
                <input type="text" id="maxSubmissions" class="text" value="5">
-               <label>Please enter the max number of submissions a competitor can upload to each round in the contest. The standard number is 5. Leave blank if you want unlimited submissions.</label>
+               <label>Please enter the max number of submissions a competitor can upload to each round in the challenge. The standard number is 5. Leave blank if you want unlimited submissions.</label>
            </div>
            <div class="clear"></div>
        </div>

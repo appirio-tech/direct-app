@@ -73,7 +73,7 @@
                                             <!-- end .orderReview -->
                                                 <div class="contestDetails" id="participationMetricsReportsSection">
                                                 
-                                                    <h2 class="sectionHead">Contest Details</h2>
+                                                    <h2 class="sectionHead">Challenge Details</h2>
 
                                                     <table class="pipelineStats">
                                                         <thead>
@@ -166,7 +166,7 @@
                                                 <div class="contestDetails" id="participationMetricsReportsSection" cellspacing="0" cellpadding="0">
 
 
-                                                    <h2 class="sectionHead">Contest Details</h2>
+                                                    <h2 class="sectionHead">Challenge Details</h2>
                                                     <table class="pipelineStats">
                                                         <thead>
                                                         <tr class="subTheadRow">
@@ -204,7 +204,7 @@
 
                                                         </tbody>
                                                     </table>
-                                                    <%--<h3>Contest Prizes:</h3>--%>
+                                                    <%--<h3>Challenge Prizes:</h3>--%>
                                                     <%--<table class="prizesTable">--%>
                                                         <%--<tbody><tr>--%>
                                                             <%--<td>First Place Cost : $${firstPrize}</td>--%>
@@ -273,7 +273,7 @@
     <s:else>
         <div class="noReceipt">
             <div>
-                The receipt will be available after the contest is finished
+                The receipt will be available after the challenge is finished
             </div>
         </div>
     </div>

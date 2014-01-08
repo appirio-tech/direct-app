@@ -1009,7 +1009,7 @@ function updateMCEPlaceHolderCtl() {
         $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
             var obj = CKEDITOR.instances[this];
             if (obj.getData() == "") {
-                obj.setData("Only members that register for this contest will see this description.");
+                obj.setData("Only members that register for this challenge will see this description.");
             }
        });
      } else {
@@ -1146,7 +1146,7 @@ function showTypeSectionEdit() {
 	 if(!$(".selectDesing select").data('customized')){
 		$(".selectDesing select").data('customized',true);
       	$(".selectDesing select").sSelect();
-		$('.selectDesing div.selectedTxt').html('Select Contest Type');
+		$('.selectDesing div.selectedTxt').html('Select Challenge Type');
     }
 	 
      $.each(billingAccounts,function(k, v){
@@ -1446,7 +1446,7 @@ function validateFieldsRoundSection() {
         if (mainWidget.isAlgorithmContest()) {
            var algoEndDat = getDateByIdPrefix('end');
            if (algoEndDat <= startDate) {
-               errors.push("Contest end date must be later than the contest start date.");
+               errors.push("Challenge end date must be later than the challenge start date.");
            }
         }
 
@@ -1839,7 +1839,7 @@ function validateFieldsPrizeSection() {
     if (isActiveContest) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
-            errors.push('The cost of active contest should not be decreased.');
+            errors.push('The cost of active challenge should not be decreased.');
         }
     }
    
@@ -2208,11 +2208,11 @@ function validateFieldsSpecSection() {
 
     if (mainWidget.isStudioContest()) {
         if (!checkRequired(contestIntroduction)) {
-            errors.push('Contest introduction is empty.');
+            errors.push('Challenge introduction is empty.');
         }
 
         if (!checkRequired(contestDescription)) {
-            errors.push('Contest description is empty.');
+            errors.push('Challenge description is empty.');
         }
 
         var fileTypesResult = validateFileTypes(errors);
@@ -2522,7 +2522,7 @@ function handleActivationResultEdit(jsonResult) {
         if(!contestHasSpecReview) {
             specResponse = ".";
         }
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse);
+        showSuccessfulMessage("Challenge <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse);
     },
     function(errorMessage) {
         showServerError(errorMessage);

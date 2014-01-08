@@ -94,7 +94,7 @@
                         <tr>
                             <th class="first">Estimated Total Duration</th>
                             <th>Estimated Total Cost</th>
-                            <th class="last">Estimated No of Contests</th>
+                            <th class="last">Estimated No of Challenges</th>
                         </tr>
                         <tr>
                             <td class="dataDur">00 Days</td>
@@ -115,7 +115,7 @@
                             <p>Complete gameplan</p></dd>
                         <dd class="step3 completeStep hide"><span class="icon">3</span>
 
-                            <p>Complete contest specifications and schedule contests</p></dd>
+                            <p>Complete challenge specifications and schedule challenges</p></dd>
                         <dd class="step3 launchStep hide"><span class="icon">3</span>
 
                             <p>Complete and launch copilot posting</p></dd>
@@ -124,10 +124,10 @@
                             <p>Project Manger review your project</p></dd>
                         <dd class="step4 completeStep hide"><span class="icon">4</span>
 
-                            <p>Complete contest specifications and schedule contests</p></dd>
+                            <p>Complete challenge specifications and schedule challenges</p></dd>
                         <dd class="step4 launchFirstStep hide"><span class="icon">4</span>
 
-                            <p>Launch first contest</p></dd>
+                            <p>Launch first challenge</p></dd>
                         <dd class="step4 launchStep hide"><span class="icon">4</span>
 
                             <p>Complete and launch copilot posting</p></dd>
@@ -141,7 +141,7 @@
                             <p>Launch Copilot Opportunity and Pick Copilot</p></dd>
                         <dd class="step5 launchFirstStep hide"><span class="icon">5</span>
 
-                            <p>Launch first contest</p></dd>
+                            <p>Launch first challenge</p></dd>
                         <dd class="step5 selectStep hide"><span class="icon">5</span>
 
                             <p class="twoLine">Select copilot from copilot posting submitters<br/><span
@@ -149,7 +149,7 @@
                         </dd>
                         <dd class="step5 pptStep hide"><span class="icon">5</span>
 
-                            <p>Launch first contest</p></dd>
+                            <p>Launch first challenge</p></dd>
                     </dl>
                     <!-- End .list -->
 

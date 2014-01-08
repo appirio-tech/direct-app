@@ -165,7 +165,7 @@
             <div class="clearFix"></div>
             <div class="filterRow adjustFilterRow firstFilterRow" data-intro="If you know a competition ID, enter it here to see only costs for that competition." data-step="3">
                 <div class="filterRowLeft">
-                    <label for="formData.contestID">Contest ID:</label>
+                    <label for="formData.contestID">Challenge ID:</label>
                 </div>
                 <s:textfield id="formData.contestId" name="formData.contestId"  cssClass="text"/>
                 <div class="clearFix"></div>
@@ -281,7 +281,7 @@
 
             <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6" data-position="left">
                 <div class="multiSelectAreaInner">
-                    <label class="multiSelectAreaTitle">Contest Types:</label>
+                    <label class="multiSelectAreaTitle">Challenge Types:</label>
 
                     <div class="multiSelectBox">
                         <div class="multiOptionRow multiOptionRowChecked">
@@ -398,15 +398,15 @@
 <div id="billingCostReportSection" class="resultTableContainer">
 
     <%-- aggregation invoice report --%>
-<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport" data-intro="Here is a quick summary of # of contests and the total cost." data-step="9" data-position="top">
+<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport" data-intro="Here is a quick summary of # of challenges and the total cost." data-step="9" data-position="top">
     <thead>
     <tr>
         <th colspan="3" class="tableTitle"><a class="expand" href="javascript:void(0)">&nbsp;</a> <span>Basic Invoice History Information</span></th>
     </tr>
 
     <tr class="tableTitleWhite">
-        <th class="tableColumn">Total Contests:</th>
-        <th class="tableColumn">Total Bug Races:</th>
+        <th class="tableColumn">Total Challenges:</th>
+        <th class="tableColumn">Total Races:</th>
         <th class="tableColumn">Total Amount:</th>
     </tr>
     </thead>
@@ -443,8 +443,8 @@
         <th class="tableColumn">&nbsp;Billing&nbsp;</th>
         <th class="tableColumn">&nbsp;Project&nbsp;</th>
         <th class="tableColumn">Filter Value</th>
-        <th class="tableColumn">&nbsp;Contest&nbsp;</th>
-        <th class="tableColumn">&nbsp;Contest ID&nbsp;</th>
+        <th class="tableColumn">&nbsp;Challenge&nbsp;</th>
+        <th class="tableColumn">&nbsp;Challenge ID&nbsp;</th>
         <th class="tableColumn">&nbsp;Reference ID&nbsp;</th>
         <th class="tableColumn">&nbsp;Category&nbsp;</th>
         <th class="tableColumn">&nbsp;Status&nbsp;</th>

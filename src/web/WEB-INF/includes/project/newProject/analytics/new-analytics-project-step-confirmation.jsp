@@ -49,7 +49,7 @@
                     <span class="num">3</span>
                     <p>
                     <strong>Create Gameplan</strong>
-                    <span>Gameplan is the project plan where the contest schedules, budget is decided</span></p>
+                    <span>Gameplan is the project plan where the challenge schedules, budget is decided</span></p>
                 </dd>
                 <dd class="multiLine">
                     <span class="num">4</span>
@@ -66,11 +66,11 @@
                 <dd class="step6">
                     <span class="num">6</span>
                     <p>
-                    <strong>Launch First Contest</strong>
+                    <strong>Launch First Challenge</strong>
                     </p>
                 </dd>
                 <dd class="para">
-                    Go to your project. Once you're in your project you can do things like monitor status, manage your copilot, run contests...
+                    Go to your project. Once you're in your project you can do things like monitor status, manage your copilot, run challenges...
                 </dd>
             </dl>
     

@@ -154,7 +154,7 @@
 
             <div class="multiSelectArea" data-intro="We have many competition types.  If you don't want to see all of them, only select the ones you're interested in here." data-step="6">
                 <div class="multiSelectAreaInner contestTypeFilter">
-                    <label class="multiSelectAreaTitle">Contest Type:</label>
+                    <label class="multiSelectAreaTitle">Challenge Type:</label>
                     <s:select list="viewData.projectCategories" multiple="true"
                                       cssClass="multiselect"
                                       id="formData.projectCategoryIds"
@@ -187,7 +187,7 @@
 <!-- participationMetricsReportsSection -->
 <div id="participationMetricsReportsSection">
 
-<table id="participationMetricsReportBasicMetrics" class="pipelineStats" cellpadding="0" cellspacing="0" data-intro="Here are your # of projects, contests, and copilots." data-step="8">
+<table id="participationMetricsReportBasicMetrics" class="pipelineStats" cellpadding="0" cellspacing="0" data-intro="Here are your # of projects, challenges, and copilots." data-step="8">
     <thead>
         <tr>
             <th class="tableTitle" colspan="3">
@@ -198,7 +198,7 @@
 
         <tr class="subTheadRow">
             <th class="tableColumn">Projects</th>
-            <th class="tableColumn">Contests</th>
+            <th class="tableColumn">Challenges</th>
             <th class="tableColumn">Copilots</th>
 
         </tr>
@@ -225,9 +225,9 @@
             <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
                 <option value="project" selected="selected">Project</option>
                 <option value="billing">Billing Account</option>
-                <option value="type">Contest Type</option>
-                <option value="status">Contest Status</option>
-                <option value="contest">Contest</option>
+                <option value="type">Challenge Type</option>
+                <option value="status">Challenge Status</option>
+                <option value="contest">Challenge</option>
             </select>
 
         </th>
@@ -268,7 +268,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
-            <th class="tableColumn last">Total<br />Contests</th>
+            <th class="tableColumn last">Total<br />Challenges</th>
         </tr>
     </thead>
     <tbody>
@@ -354,7 +354,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
-            <th class="tableColumn last">Total<br />Contests</th>
+            <th class="tableColumn last">Total<br />Challenges</th>
         </tr>
     </thead>
     <tbody>
@@ -424,7 +424,7 @@
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
-            <th class="tableColumn first">Contest Type</th>
+            <th class="tableColumn first">Challenge Type</th>
             <th class="tableColumn">Total<br />Registrations</th>
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
@@ -438,7 +438,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn last">Winner<br />Countries</th>
-            <th class="tableColumn">Total<br />Contests</th>
+            <th class="tableColumn">Total<br />Challenges</th>
         </tr>
     </thead>
     <tbody>
@@ -509,7 +509,7 @@
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
-            <th class="tableColumn first">Contest Status</th>
+            <th class="tableColumn first">Challenge Status</th>
             <th class="tableColumn">Total<br />Registrations</th>
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
@@ -523,7 +523,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
-            <th class="tableColumn last">Total<br />Contests</th>
+            <th class="tableColumn last">Total<br />Challenges</th>
         </tr>
     </thead>
     <tbody>
@@ -596,7 +596,7 @@
     </colgroup>
     <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
-            <th class="tableColumn first">Contest Name</th>
+            <th class="tableColumn first">Challenge Name</th>
             <th class="tableColumn">Total<br />Registrations</th>
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
@@ -610,7 +610,7 @@
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
-            <th class="tableColumn">Total<br />Contests</th>
+            <th class="tableColumn">Total<br />Challenges</th>
         </tr>
     </thead>
     <tbody>

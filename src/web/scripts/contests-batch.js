@@ -161,11 +161,11 @@ $(document).ready(function () {
      */
     $("#area1 .buttonBar a.remove").click(function () {
         if ($("#contestTable.editTable tbody input[type=checkbox]:checked").length > 0) {
-            showConfirmation("REMOVE DRAFT CONTESTS",
-                "Are you sure you want to remove selected Draft contests? <br/> You cannot undo after removal."
+            showConfirmation("REMOVE DRAFT CHALLENGES",
+                "Are you sure you want to remove selected Draft challenges? <br/> You cannot undo after removal."
                 , "DELETE", handleDraftContestsRemoval);
         } else {
-            showErrors("Please select the draft contests to remove first");
+            showErrors("Please select the draft challenges to remove first");
         }
     });
 
@@ -208,7 +208,7 @@ $(document).ready(function () {
 
 
         if(contestsToUpdate.length <= 0) {
-            showErrors("Contents of the draft contests are not changed.");
+            showErrors("Contents of the draft challenges are not changed.");
             return;
         }
 

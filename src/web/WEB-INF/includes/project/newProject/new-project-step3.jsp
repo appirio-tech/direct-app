@@ -41,15 +41,15 @@
                     </dt>
 
                     <dd class="first">
-                        <div>Your project will consist of various contests. Each contest will address a specific project
+                        <div>Your project will consist of various challenges. Each challenge will address a specific project
                             task.
                         </div>
-                        <div>For example, the Web Design contests will address the graphic design aspect of your
-                            application, the Development contests will address the coding aspect of your application.
+                        <div>For example, the Web Design challenges will address the graphic design aspect of your
+                            application, the Development challenges will address the coding aspect of your application.
                         </div>
                     </dd>
-                    <dd>Each contest will have its own timeline and budget. Some of the contests depend on other
-                        contests, where the output of one contest is used as input for another contest. Some contests
+                    <dd>Each challenge will have its own timeline and budget. Some of the challenges depend on other
+                        challenges, where the output of one challenge is used as input for another challenge. Some challenges
                         can be run parallely.
                     </dd>
 
