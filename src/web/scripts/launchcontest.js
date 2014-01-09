@@ -547,8 +547,8 @@ function handleProjectDropDownChange() {
 
 
     $.each(billingAccounts, function(key, value) {
-    	var _cca = value["cca"] == "true" ? true : false;
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", cca));
+
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)));
 
         if(value["id"] == $("input[name=CMCBillingID]").val()) {
             CMCBillingExisting = true;
