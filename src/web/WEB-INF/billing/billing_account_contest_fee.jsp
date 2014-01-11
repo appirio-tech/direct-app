@@ -13,6 +13,8 @@
   - Added others section.
   - Version 1.4 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to admin
+  - Version 1.5 (BUGR-10395 Cockpit Fixed Contest Fee Not Saved)
+  - - Update the contest fee to populate the contestTypeId
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -156,7 +158,10 @@
                                                         status="status">
                                                 <s:if test="studio && contestTypeId < 900000">
                                                     <tr>
-                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td><s:hidden name="formData.contestFees[%{#status.index}].contestTypeId"
+                                                            value="%{contestTypeId}"/>
+                                                            <s:property value="contestTypeDescription"/>
+                                                        </td>
                                                         <td>
                                                             <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
                                                                          size="40"/>
@@ -172,7 +177,10 @@
                                                         status="status">
                                                 <s:if test="!studio && contestTypeId < 900000">
                                                     <tr>
-                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td><s:hidden name="formData.contestFees[%{#status.index}].contestTypeId"
+                                                            value="%{contestTypeId}"/>
+                                                            <s:property value="contestTypeDescription"/>
+                                                        </td>
                                                         <td>
                                                             <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
                                                                          size="40"/>
@@ -189,7 +197,10 @@
                                                         status="status">
                                                 <s:if test="contestTypeId >= 900000">
                                                     <tr>
-                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td><s:hidden name="formData.contestFees[%{#status.index}].contestTypeId"
+                                                            value="%{contestTypeId}"/>
+                                                            <s:property value="contestTypeDescription"/>
+                                                        </td>
                                                         <td>
                                                             <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
                                                                          size="40"/>

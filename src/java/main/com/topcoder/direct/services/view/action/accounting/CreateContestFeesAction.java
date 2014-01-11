@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -38,8 +38,14 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
+ * <p>
+ * Changes in version 1.3 (BUGR-10395 Cockpit Fixed Contest Fee Not Saved):
+ * <ol>
+ * 		<li>Update {@link #executeAction()} method to populate contest fee with project id.</li>
+ * </ol>
+ * </p>
  * @author isv, minhu, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public class CreateContestFeesAction extends CreateFeesHomeAction implements Preparable {
     /**
@@ -107,6 +113,7 @@ public class CreateContestFeesAction extends CreateFeesHomeAction implements Pre
     protected void executeAction() throws Exception {
         // create new contest fees
         List<ProjectContestFee> fees = getFormData().getContestFees();
+        populateContestFeeData(fees, getProjectId());
         getContestFeeService().save(fees);
 
         // create the percentage

@@ -3,15 +3,16 @@
  */
 package com.topcoder.direct.services.view.action.accounting;
 
+import java.util.Date;
+import java.util.List;
+
 import com.opensymphony.xwork2.Preparable;
+import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
-import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.util.log.Level;
-
-import java.util.Date;
 
 /**
  * <p>An action to be used for servicing the requests for updating the existing contest fees for selected billing
@@ -32,8 +33,14 @@ import java.util.Date;
  *     </ol>
  * </p>
  *
+ * <p>
+ * Changes in version 1.3 (BUGR-10395 Cockpit Fixed Contest Fee Not Saved):
+ * <ol>
+ * 		<li>Update {@link #executeAction()} method to populate contest fee with project id.</li>
+ * </ol>
+ * </p>
  * @author isv, minhu, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public class SaveContestFeesAction extends BaseContestFeeAction implements Preparable {
     /**
@@ -86,8 +93,11 @@ public class SaveContestFeesAction extends BaseContestFeeAction implements Prepa
     protected void executeAction() throws Exception {
         // clean up the old contest fees first
         getContestFeeService().cleanUpContestFees(getProjectId());
+        //populate with projectId
+        List<ProjectContestFee> fees = getFormData().getContestFees();
+        populateContestFeeData(fees, getProjectId());
         // create new contest fees
-        getContestFeeService().save(getFormData().getContestFees());
+        getContestFeeService().save(fees);
         
         // get the old percentage
         ProjectContestFeePercentage percentage = getContestFeePercentageService().getByProjectId(getProjectId());        

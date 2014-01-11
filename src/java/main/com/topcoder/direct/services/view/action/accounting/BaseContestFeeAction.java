@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -44,9 +44,15 @@ import java.util.Set;
  *         <li>Updated {@link #getBillingAccount(long)} method to add the fake Bug Race to the contest types.</li>
  *     </ol>
  * </p>
- * 
+ *
+ * <p>
+ * Changes in version 1.3 (BUGR-10395 Cockpit Fixed Contest Fee Not Saved):
+ * <ol>
+ * 		<li>Add {@link #populateContestFeeData(List<ProjectContestFee> contestFees, long projectId)} method.</li>
+ * </ol>
+ * </p>
  * @author isv, minhu, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
     /**
@@ -361,5 +367,26 @@ public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
             map.remove(FORMDATA_CONTEST_FEE_PERCENTAGE);
             setFieldErrors(map);
         }
+    }
+    /**
+     * <p>
+     * populate the contest fee with project and is_studio data.
+     * </p>
+     * @param contestFees the contest fee list.
+     * @param projectId the project id.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.3
+     */
+    protected void populateContestFeeData(List<ProjectContestFee> contestFees, long projectId) throws Exception {
+    	if (contestFees != null) {
+    		Map<String, ContestType> contestTypes = DirectUtils.getContesetTypes();
+    		for(ProjectContestFee fee : contestFees) {
+    			ContestType contestType = contestTypes.get(String.valueOf(fee.getContestTypeId()));
+    			if (contestType != null) {
+    				fee.setStudio(contestType.isStudio());
+    			}
+    			fee.setProjectId(projectId);
+    		}
+    	}
     }
 }
