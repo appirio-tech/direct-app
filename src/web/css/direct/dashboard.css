@@ -10147,8 +10147,12 @@ a.addBilling, a.addBilling:visited, a.addMilestone, a.addMilestone:visited{
     line-height: 30px;
     text-decoration: underline;
     margin-left: 0px;
-
 }
+
+a.addMilestone {
+    padding-left: 10px;
+}
+
 a.addBilling:hover, a.addMilestone:hover{
     text-decoration: none;
     cursor: pointer;

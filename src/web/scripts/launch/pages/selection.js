@@ -41,22 +41,27 @@
  * @version 1.9
  * @author bugbuka, Veve, GreatKevin
  */
-$(document).ready(function() {	 
-	 initContestNamesFromDesign();
-	 
-   $('#devOnlyCheckBox').bind('click',function() {
-   	    if($('#devOnlyCheckBox').is(':checked')) {
-         	  $('#contestName').show();
-         	  $('#contestNameFromDesign').hide();
-         } else {
-         	  $('#contestName').hide();
-         	  $('#contestNameFromDesign').show();
-         }
-   });	 
-	 
-   $('#billingProjects').bind('change',function() {
-   	   onBillingProjectChange();
-   });
+$(document).ready(function () {
+    initContestNamesFromDesign();
+
+    $('#devOnlyCheckBox').bind('click', function () {
+        if ($('#devOnlyCheckBox').is(':checked')) {
+            $('#contestName').show();
+            $('#contestNameFromDesign').hide();
+        } else {
+            $('#contestName').hide();
+            $('#contestNameFromDesign').show();
+        }
+    });
+
+    $('#billingProjects').bind('change', function () {
+        onBillingProjectChange();
+    });
+
+    $('.addNewMilestone a').live('click', function () {
+        loadAddProjectMilestoneModal();
+    });
+
 }); // end of initiation
  
 function onBillingProjectChange() {

@@ -95,6 +95,128 @@ function reloadMilestones() {
     });
 }
 
+var clearMilestoneModalInput = function (modalId) {
+    var modal = $("#" + modalId);
+    modal.find("input[name='projectName']").val('').trigger('keyup').removeClass('invalid').parent().find(".errorMessage").text('');
+    modal.find("textarea[name='projectDesc']").val('').trigger('keyup').removeClass('invalid').parent().find(".errorMessage").text('');
+    modal.find("input[name='projectDuedate']").val('mm/dd/yyyy').addClass('tip').removeClass('invalid').parent().find(".errorMessage").text('');
+    modal.find("input[name='emailNotify']").attr('checked', '');
+    modal.find("input.text").dpClearSelected();
+}
+
+var validateMilestoneModalInput = function (modalId) {
+    var modal = $("#" + modalId);
+    var passValidation = true;
+    // name, description and due date are required
+    if ($.trim(modal.find("input[name='projectName']").val()) == '') {
+        passValidation = false;
+        modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot be empty');
+    }
+    else if (containTags($.trim(modal.find("input[name='projectName']").val()))) {
+        passValidation = false;
+        modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot contain HTML tags');
+    }
+    else {
+        modal.find("input[name='projectName']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    if ($.trim(modal.find("textarea[name='projectDesc']").val()) == '') {
+        passValidation = false;
+        modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot be empty');
+    } else if (containTags($.trim(modal.find("textarea[name='projectDesc']").val()))) {
+        passValidation = false;
+        modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot contain HTML tags');
+    }
+    else {
+        modal.find("textarea[name='projectDesc']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    if ($.trim(modal.find("input[name='projectDuedate']").val()) == '' || modal.find("input[name='projectDuedate']").val() == 'mm/dd/yyyy') {
+        passValidation = false;
+        modal.find("input[name='projectDuedate']").addClass('invalid').parent().find(".errorMessage").text('Due Date should be set');
+    } else {
+        modal.find("input[name='projectDuedate']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    return passValidation;
+}
+
+var loadResponsiblePersonForProject = function (projectId, selector, selectionValue) {
+    var formData = {};
+    formData['projectId'] = projectId;
+    var select = $("<select></select>").attr('name', 'projectRes');
+    select.append($("<option></option>").attr("value", "-1").text("Unassigned"));
+
+    $.ajax({
+        type:"POST",
+        url:"getProjectResponsiblePerson",
+        data:{formData:formData},
+        dataType:'json',
+        async:false,
+        success:function (jsonResult) {
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    $.each(result, function (index, value) {
+                        select.append($("<option></option>").attr("value", value.userId).text(value.name));
+                    });
+
+                    var parent = selector.parent();
+                    selector.remove();
+                    parent.append(select.outerHTML());
+
+                    if (selectionValue != null) {
+                        parent.find("select").val(selectionValue);
+                    }
+                },
+
+                function (errorMessage) {
+                    showErrors(errorMessage);
+                }
+
+            );
+        }
+    });
+
+    return select;
+}
+
+var buildMilestoneModalRequest = function(modalId, milestoneId) {
+    var formData = {};
+    var milestone = {};
+    var modal = $("#" + modalId);
+
+    milestone.name = modal.find("input[name='projectName']").val();
+    milestone.description = modal.find("textarea[name='projectDesc']").val();
+    milestone.dueDate = modal.find("input[name='projectDuedate']").val();
+    milestone.sendNotifications = modal.find("input[name='emailNotify']").is(':checked');
+    milestone.projectId = tcDirectProjectId;
+    milestone.owners = [];
+
+    if(modal.find("select").val() > 0) {
+        var owner = {};
+        owner.userId = modal.find("select").val();
+        owner.name = modal.find("select option:selected").text();
+        milestone.owners.push(owner);
+    }
+
+    milestone.id = milestoneId;
+
+    if(milestone.id == 0) {
+        milestone.completed = false;
+    }
+
+    formData.milestone = milestone;
+
+    return {formData:formData};
+}
+
+function loadAddProjectMilestoneModal() {
+    modalLoad("#addMilestoneModal");
+    clearMilestoneModalInput('addMilestoneModal');
+    loadResponsiblePersonForProject(tcDirectProjectId, $("#addMilestoneModal select[name='projectRes']"), -1);
+    return false;
+}
+
 $(document).ready(function () {
 
     loadUserHandleColorMap();    
@@ -106,39 +228,41 @@ $(document).ready(function () {
     	}    	
     });
 
-    $.ajax({
-        type: "POST",
-        url: "getProjectMilestoneListData",
-        data: {formData: {projectId: tcDirectProjectId}},
-        dataType: 'json',
-        async: false,
-        success: function (jsonResult) {
-            handleJsonResult2(jsonResult,
-                function (result) {
-                    $(".milestoneListView .milestoneList").remove();
-                    $(".milestoneListView").append($("#milestoneList").render(result));
-                    $("#moveMilestonePopup select option:gt(0)").remove();
-                    $.each(result, function(key, value){
-                        if (key == 'completed') return;
-                        $.each(value, function(key1, value1){
-                            var displayName = value1.milestone.name;
-                            if(displayName.length > 47) {
-                                displayName = displayName.substr(0, 47) + '...';
-                            }
-                            $("#moveMilestonePopup select").append($("<option/>").attr("value", value1.milestone.id).text(displayName).attr('title', value1.milestone.name));
-                        })
-                    });
-                    sortDropDown("#moveMilestonePopup select");
-                },
+    if ($(".milestoneListView").length > 0) {
+        $.ajax({
+            type: "POST",
+            url: "getProjectMilestoneListData",
+            data: {formData: {projectId: tcDirectProjectId}},
+            dataType: 'json',
+            async: false,
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $(".milestoneListView .milestoneList").remove();
+                        $(".milestoneListView").append($("#milestoneList").render(result));
+                        $("#moveMilestonePopup select option:gt(0)").remove();
+                        $.each(result, function(key, value){
+                            if (key == 'completed') return;
+                            $.each(value, function(key1, value1){
+                                var displayName = value1.milestone.name;
+                                if(displayName.length > 47) {
+                                    displayName = displayName.substr(0, 47) + '...';
+                                }
+                                $("#moveMilestonePopup select").append($("<option/>").attr("value", value1.milestone.id).text(displayName).attr('title', value1.milestone.name));
+                            })
+                        });
+                        sortDropDown("#moveMilestonePopup select");
+                    },
 
-                function (errorMessage) {
-                    showErrors(errorMessage);
-                }
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    }
 
-            );
-        }
-    });
+                );
+            }
+        });
 
+    }
 
     // initialize all the date pickers used in project milestone pages
     $(" .multiMilestones .dueDate input,.newOutLay .dateLine input.text").datePicker({
@@ -276,44 +400,6 @@ $(document).ready(function () {
         $("#setDatePopup input.text").dpDisplay();
     })
 
-    var loadResponsiblePersonForProject = function (projectId, selector, selectionValue) {
-        var formData = {};
-        formData['projectId'] = tcDirectProjectId;
-        var select = $("<select></select>").attr('name', 'projectRes');
-        select.append($("<option></option>").attr("value", "-1").text("Unassigned"));
-
-        $.ajax({
-            type:"POST",
-            url:"getProjectResponsiblePerson",
-            data:{formData:formData},
-            dataType:'json',
-            async:false,
-            success:function (jsonResult) {
-                handleJsonResult2(jsonResult,
-                    function (result) {
-                        $.each(result, function (index, value) {
-                            select.append($("<option></option>").attr("value", value.userId).text(value.name));
-                        });
-
-                        var parent = selector.parent();
-                        selector.remove();
-                        parent.append(select.outerHTML());
-
-                        if (selectionValue != null) {
-                            parent.find("select").val(selectionValue);
-                        }
-                    },
-
-                    function (errorMessage) {
-                        showErrors(errorMessage);
-                    }
-
-                );
-            }
-        });
-
-        return select;
-    }
 
     $(".milestoneManage .milestoneList.completed .projectT input").live("click", function () {
         if ($(this).is(":checked")) {
@@ -458,88 +544,11 @@ $(document).ready(function () {
 
     })
 
-    var clearMilestoneModalInput = function (modalId) {
-        var modal = $("#" + modalId);
-        modal.find("input[name='projectName']").val('').trigger('keyup').removeClass('invalid').parent().find(".errorMessage").text('');
-        modal.find("textarea[name='projectDesc']").val('').trigger('keyup').removeClass('invalid').parent().find(".errorMessage").text('');
-        modal.find("input[name='projectDuedate']").val('mm/dd/yyyy').addClass('tip').removeClass('invalid').parent().find(".errorMessage").text('');
-        modal.find("input[name='emailNotify']").attr('checked', '');
-        modal.find("input.text").dpClearSelected();
-    }
 
-    var validateMilestoneModalInput = function (modalId) {
-        var modal = $("#" + modalId);
-        var passValidation = true;
-        // name, description and due date are required
-        if ($.trim(modal.find("input[name='projectName']").val()) == '') {
-            passValidation = false;
-            modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot be empty');
-        }
-        else if (containTags($.trim(modal.find("input[name='projectName']").val()))) {
-            passValidation = false;
-            modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot contain HTML tags');
-        }
-        else {
-            modal.find("input[name='projectName']").removeClass('invalid').parent().find(".errorMessage").text('');
-        }
-
-        if ($.trim(modal.find("textarea[name='projectDesc']").val()) == '') {
-            passValidation = false;
-            modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot be empty');
-        } else if (containTags($.trim(modal.find("textarea[name='projectDesc']").val()))) {
-            passValidation = false;
-            modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot contain HTML tags');
-        }
-        else {
-            modal.find("textarea[name='projectDesc']").removeClass('invalid').parent().find(".errorMessage").text('');
-        }
-
-        if ($.trim(modal.find("input[name='projectDuedate']").val()) == '' || modal.find("input[name='projectDuedate']").val() == 'mm/dd/yyyy') {
-            passValidation = false;
-            modal.find("input[name='projectDuedate']").addClass('invalid').parent().find(".errorMessage").text('Due Date should be set');
-        } else {
-            modal.find("input[name='projectDuedate']").removeClass('invalid').parent().find(".errorMessage").text('');
-        }
-
-        return passValidation;
-    }
-
-    var buildMilestoneModalRequest = function(modalId, milestoneId) {
-        var formData = {};
-        var milestone = {};
-        var modal = $("#" + modalId);
-
-        milestone.name = modal.find("input[name='projectName']").val();
-        milestone.description = modal.find("textarea[name='projectDesc']").val();
-        milestone.dueDate = modal.find("input[name='projectDuedate']").val();
-        milestone.sendNotifications = modal.find("input[name='emailNotify']").is(':checked');
-        milestone.projectId = tcDirectProjectId;
-        milestone.owners = [];
-
-        if(modal.find("select").val() > 0) {
-            var owner = {};
-            owner.userId = modal.find("select").val();
-            owner.name = modal.find("select option:selected").text();
-            milestone.owners.push(owner);
-        }
-
-        milestone.id = milestoneId;
-
-        if(milestone.id == 0) {
-            milestone.completed = false;
-        }
-
-        formData.milestone = milestone;
-
-        return {formData:formData};
-    }
 
     // ADD MILESTONE related
     $('.addMilestonePopup .popupMask .single a.grayButton').live('click', function () {
-        modalLoad("#addMilestoneModal");
-        clearMilestoneModalInput('addMilestoneModal');
-        loadResponsiblePersonForProject(tcDirectProjectId, $("#addMilestoneModal select[name='projectRes']"), -1);
-        return false;
+        loadAddProjectMilestoneModal();
     });
 
     $("#addMilestoneModal .saveButton").live('click', function () {
@@ -566,6 +575,13 @@ $(document).ready(function () {
                             } else if ($(".milestoneListView").length > 0) {
                                 // list view, insert the created one
                                 reloadMilestones();
+                            } else if ($("#launchContestOut").length > 0) {
+                                // quick milestone creation in launch new contest
+                                var milestoneData = result;
+                                $("<option/>").val(milestoneData.id).text(milestoneData.name).appendTo("#contestMilestone");
+                                $('#contestMilestone').resetSS();
+                                $('#contestMilestone').getSetSSValue(milestoneData.id);
+                                modalAllClose();
                             }
                         },
 

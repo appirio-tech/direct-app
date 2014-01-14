@@ -585,11 +585,12 @@ function handleProjectDropDownChange() {
     $("#lccCheckBox").removeAttr('checked');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     if(value > 0) {
-        $("a.addBilling, a.addMilestone").show();
+        $("a.addBilling, a.addMilestone, div.addNewMilestone").show();
         $("a.addBilling").attr("href", "../editProject?formData.projectId=" + value + "#addBillingAccount");
         $("a.addMilestone").attr("href", "../projectMilestoneView?formData.projectId=" + value + "&formData.viewType=list");
+        tcDirectProjectId = value; // put the current selected direct project ID into a global variable
     } else {
-        $("a.addBilling, a.addMilestone").hide();
+        $("a.addBilling, a.addMilestone, div.addNewMilestone").hide();
         $("a.addBilling, a.addMilestone").attr("href", "javascript:;");
     }
 

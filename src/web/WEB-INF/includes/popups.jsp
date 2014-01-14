@@ -1923,74 +1923,8 @@
                                 <!-- end .modalFooter -->
                             </div>
                         </div>
-                        <div id="addMilestoneModal" class="outLay newOutLay">
-                            <div class="inner">
-                                <div class="modalHeader">
-                                    <div class="modalHeaderRight">
-                                        <div class="modalHeaderCenter">
-                                            Add A Project Milestone
-                                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end .modalHeader -->
 
-                                <!-- content -->
-                                <div class="modalBody">
-                                    <ul>
-                                        <li>
-                                            <label>Name :</label>
-                                            <div class="right">
-                                                <input type="text"  name="projectName" class="text limitText" />
-                                                <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <label>Description :</label>
-                                            <div class="right">
-                                                <textarea cols="10" rows="5" name="projectDesc"></textarea>
-                                                <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
-                                            </div>
-                                        </li>
-                                        <li class="dateLine">
-                                            <label>Due Date :</label>
-                                            <div class="right">
-                                                 <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
-                                                <span class="errorMessage" style="float:none"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <label>Person Responsible :</label>
-                                            <div class="right">
-                                                <select name="projectRes">
-                                                    <option value=""  selected="selected">Unassigned</option>
-                                                    <option value="TonyJ">TonyJ</option>
-                                                    <option value="hohosky">hohosky</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <p class="notify hide">
-                                        <input type="checkbox" name="emailNotify" id="emailNotifyAdd"/>
-                                        <label for="emailNotifyAdd">Notification email reminder now  &amp; 48 hours before the milestone due.</label>
-                                    </p>
-                                    <div class="buttonArea">
-                                        <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
-                                        <div class="clearFix"></div>
-                                    </div>
-                                </div>
-                                <!-- End .content -->
-
-                                <div class="modalFooter">
-                                    <div class="modalFooterRight">
-                                        <div class="modalFooterCenter"></div>
-                                    </div>
-                                </div>
-                                <!-- end .modalFooter -->
-                            </div>
-                        </div>
-                        <div id="removeMilestoneModal" class="outLay newOutLay">
+                    <div id="removeMilestoneModal" class="outLay newOutLay">
                             <div class="inner">
                                 <div class="modalHeader">
                                     <div class="modalHeaderRight">
@@ -2027,6 +1961,74 @@
                             </div>
                         </div>
         </s:if>
+
+        <div id="addMilestoneModal" class="outLay newOutLay">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            Add A Project Milestone
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <ul>
+                        <li>
+                            <label>Name :</label>
+                            <div class="right">
+                                <input type="text"  name="projectName" class="text limitText" />
+                                <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Description :</label>
+                            <div class="right">
+                                <textarea cols="10" rows="5" name="projectDesc"></textarea>
+                                <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
+                            </div>
+                        </li>
+                        <li class="dateLine">
+                            <label>Due Date :</label>
+                            <div class="right">
+                                <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
+                                <span class="errorMessage" style="float:none"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Person Responsible :</label>
+                            <div class="right">
+                                <select name="projectRes">
+                                    <option value=""  selected="selected">Unassigned</option>
+                                    <option value="TonyJ">TonyJ</option>
+                                    <option value="hohosky">hohosky</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="notify hide">
+                        <input type="checkbox" name="emailNotify" id="emailNotifyAdd"/>
+                        <label for="emailNotifyAdd">Notification email reminder now  &amp; 48 hours before the milestone due.</label>
+                    </p>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <div class="clearFix"></div>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
 
         <div id="createForumConfirmModal" class="outLay newModal">
             <div class="barTop">

@@ -109,7 +109,7 @@
                 </s:iterator>
               </select>
           </div>
-          <div class="addNew">
+          <div class="addNew addNewBilling">
               <a href="javascript:;" class="button6" id="addNewProject"><span class="left"><span class="right">ADD NEW</span></span></a>
           </div>
       </div>
@@ -134,6 +134,9 @@
                       <option value='<s:property value="id"/>'> <s:property value="name"/></option>
                   </s:iterator>
               </select>
+          </div>
+          <div class="addNew addNewMilestone">
+              <a href="javascript:;" class="button6" id="addNewMilestone"><span class="left"><span class="right">ADD</span></span></a>
           </div>
           <a href="javascript:;" target="_blank" class="addMilestone hide">Manage Project Milestones</a>
       </div>
