@@ -108,6 +108,8 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
         CONTEST_TYPES.put(ContestType.REPORTING, "Reporting");
 		CONTEST_TYPES.put(ContestType.MARATHON_MATCH, "Marathon Match");
 		CONTEST_TYPES.put(ContestType.BUG_HUNT, "Bug Hunt");
+		CONTEST_TYPES.put(ContestType.FIRST2FINISH, "First2Finish");
+		CONTEST_TYPES.put(ContestType.CODE, "Code");
 
 
         NUMERICAL_FILTER_TYPES = new LinkedHashMap<PipelineNumericalFilterType, String>();

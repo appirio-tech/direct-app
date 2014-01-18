@@ -37,7 +37,8 @@ public class DashboardPipelineReportForm implements Serializable {
                              ContestType.RIA_COMPONENT, ContestType.RIA_BUILD, ContestType.UI_PROTOTYPE,
                              ContestType.ASSEMBLY, ContestType.TEST_SUITES, ContestType.TEST_SCENARIOS,
                              ContestType.COPILOT_POSTING, ContestType.CONTENT_CREATION,
-                             ContestType.REPORTING, ContestType.MARATHON_MATCH, ContestType.BUG_HUNT};
+                             ContestType.REPORTING, ContestType.MARATHON_MATCH,
+                             ContestType.BUG_HUNT, ContestType.FIRST2FINISH, ContestType.CODE};
 
     /**
      * <p>A <code>ContestStatus</code> array listing the statuses types to be selected by default.</p>
