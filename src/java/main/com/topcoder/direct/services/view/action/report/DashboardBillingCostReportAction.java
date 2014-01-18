@@ -293,34 +293,32 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             }
         }
 
-        // parse out studio categories ids
-        List<Long> softwareProjectCategoriesList = new ArrayList<Long>();
-        List<Long> studioProjectCategoriesList = new ArrayList<Long>();
-
-        if (form.getProjectCategoryIds() != null) {
-            for (Long categoriesId : form.getProjectCategoryIds()) {
-                if (categoriesId > 100) {
-                    studioProjectCategoriesList.add(categoriesId - 100);
-                } else softwareProjectCategoriesList.add(categoriesId);
+        Set<Long> contestCategoriesSet = new HashSet<Long>();
+        if(form.getProjectCategoryIds() != null && form.getProjectCategoryIds().length > 0) {
+            for(Long categoryId : form.getProjectCategoryIds()) {
+                contestCategoriesSet.add(categoryId);
             }
         }
-
-        long[] softwareProjectCategories = DirectUtils.covertLongListToArray(softwareProjectCategoriesList);
-        long[] studioProjectCategories = DirectUtils.covertLongListToArray(studioProjectCategoriesList);
 
         // If necessary get and process report data
         if (!getViewData().isShowJustForm()) {
 
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
                     (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
-                            softwareProjectCategories, studioProjectCategories, paymentTypeIds,
+                            paymentTypeIds,
                             customerId, billingAccountId, contestId, invoiceNumber, startDate, endDate,
                             BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();
 
             for (List<BillingCostReportEntryDTO> contestEntries : billingCosts.values()) {
-                viewData.addAll(contestEntries);
+                if(contestEntries != null && contestEntries.size() > 0) {
+                    // filter by project category id - the contestEntries contains records for the same contest
+                    // so we only need to check any record in the list first - we check the 1st record
+                    if(contestCategoriesSet.contains(contestEntries.get(0).getContestType().getId())) {
+                        viewData.addAll(contestEntries);
+                    }
+                }
             }
 
             if((form.getInvoiceNumber() == null || form.getInvoiceNumber().trim().length() <= 0) && contestId <= 0) {

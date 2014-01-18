@@ -5144,8 +5144,6 @@ public class DataProvider {
      */
     public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(List<InvoiceType> invoiceTypes,
                                                                                            TCSubject currentUser, long projectId,
-                                                                                           long[] projectCategoryIds,
-                                                                                           long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
                                                                                            long clientId, long billingAccountId,
                                                                                            long contestId, String invoiceNumber, Date startDate, Date endDate,
@@ -5165,16 +5163,6 @@ public class DataProvider {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         endDate = calendar.getTime();
-
-        // concatenate the filters
-        String projectCategoryIDsList = "-1";
-        if (projectCategoryIds != null && projectCategoryIds.length > 0) {
-            projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
-        }
-        String studioProjectCategoryIdsList = "-1";
-        if (studioProjectCategoryIds != null && studioProjectCategoryIds.length > 0) {
-            studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
-        }
 
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -5220,9 +5208,6 @@ public class DataProvider {
             request.setProperty("sdt", dateFormatter.format(startDate));
             request.setProperty("edt", dateFormatter.format(endDate));
         }
-
-        request.setProperty("pcids", projectCategoryIDsList);
-        request.setProperty("scids", studioProjectCategoryIdsList);
 
         Map<String, ResultSetContainer> allResults = dataAccessor.getData(request);
 
