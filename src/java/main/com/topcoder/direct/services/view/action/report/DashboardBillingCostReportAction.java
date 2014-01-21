@@ -315,6 +315,10 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
                 if(contestEntries != null && contestEntries.size() > 0) {
                     // filter by project category id - the contestEntries contains records for the same contest
                     // so we only need to check any record in the list first - we check the 1st record
+					if (contestEntries.get(0).getContestType() == null || contestEntries.get(0).getContestType().getId() == 0)
+					{
+						 viewData.addAll(contestEntries);
+					}
                     if(contestCategoriesSet.contains(contestEntries.get(0).getContestType().getId())) {
                         viewData.addAll(contestEntries);
                     }
