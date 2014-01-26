@@ -1,8 +1,10 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.groups;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.topcoder.commons.utils.LoggingWrapperUtility;
@@ -41,9 +43,16 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  *   <li>This class was updated to support ajax calls. Also permission checking was added.</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 1.2 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
+ * <ol>
+ *   <li>Added {@link #handles} property and its getter/setter.</li>
+ *   <li>Added {@link #getUsersByHandles()} new get users by handles json API.</li>
+ * </ol>
+ * </p>
  *
- * @author woodjhon, hanshuai, flexme
- * @version 1.1
+ * @author woodjhon, hanshuai, flexme, suno1234
+ * @version 1.2
  */
 @SuppressWarnings("serial")
 public class SearchUserAction extends BaseAction {
@@ -60,6 +69,13 @@ public class SearchUserAction extends BaseAction {
      */
     private String handle;
 
+    /**
+     * Purpose: handles is used to represents the handles. Usage: It's passed as the http input parameter for this
+     * action. Legal Values: Not null and not empty after set.
+     * @since 1.2
+     */
+    private String[] handles;
+    
     /**
      * Purpose: users is used to represents the users. Usage: It's set by the action methods, and consumed by the
      * front end page. Legal Values: Not null and not empty after set. The list should not contain null value.
@@ -119,6 +135,32 @@ public class SearchUserAction extends BaseAction {
         }
     }
 
+    /**
+     * <p>
+     * Handles the ajax request to get users' info by handles
+     * </p>
+     *
+     * @return the result code.
+     * @since 1.2
+     */
+    public String getUsersByHandles() {
+        final String signature = CLASS_NAME + ".getUsersByHandles()";
+        LoggingWrapperUtility.logEntrance(getLogger(), signature, null, null);
+        try {
+            if (handles != null && handles.length > 0) {
+                users = groupUserService.getUsersByHandles(handles);
+                setResult(users);
+            }
+        } catch (Throwable e) {
+            LoggingWrapperUtility.logException(getLogger(), signature, e);
+            if (getModel() != null) {
+                setResult(new RuntimeException("An error has occurred when attempting to process your request."));
+            }
+        }
+        LoggingWrapperUtility.logExit(getLogger(), signature, new Object[] {SUCCESS});
+        return SUCCESS;
+    }
+    
     /**
      * <p>
      * Get handle.
@@ -186,5 +228,30 @@ public class SearchUserAction extends BaseAction {
      */
     public void setGroupUserService(UserService groupUserService) {
         this.groupUserService = groupUserService;
+    }
+    
+    /**
+     * <p>
+     * Get handles.
+     * </p>
+     *
+     * @return the handles
+     * @since 1.2
+     */
+    public String[] getHandles() {
+        return handles;
+    }
+
+    /**
+     * <p>
+     * Set handles.
+     * </p>
+     *
+     * @param handles
+     *            the handle to set.
+     * @since 1.2
+     */
+    public void setHandles(String[] handles) {
+        this.handles = handles;
     }
 }

@@ -1,9 +1,10 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.groups;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,15 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  *
- * @author woodjhon, hanshuai, freegod
- * @version 1.2
+ * <p>
+ * Version 1.3 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
+ * <ol>
+ *     <li>Updated {@link #executeAction()} method to sort the users' handles.</li>
+ * </ol>
+ * </p>
+ *
+ * @author woodjhon, hanshuai, freegod, suno1234
+ * @version 1.3
  */
 @SuppressWarnings("serial")
 public class SearchGroupAction extends BaseAction {    
@@ -306,6 +314,7 @@ public class SearchGroupAction extends BaseAction {
                         elements.add(handle);
                     }
                 }
+                Collections.sort(elements, String.CASE_INSENSITIVE_ORDER);
                 item.put("members", elements);
                 String permission = group.getDefaultPermission() + "";
                 item.put("accessRights", permission.substring(0, 1) + permission.substring(1).toLowerCase());     

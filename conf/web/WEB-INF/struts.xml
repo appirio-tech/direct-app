@@ -2254,7 +2254,12 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-
+        
+        <action name="getUsers" class="groupSearchUserAction" method="getUsersByHandles">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        
         <action name="saveProjectGroupPermissions" class="saveSecurityGroupPermissionsAction">
             <result name="success" type="json"/>
             <result name="error" type="json"/>

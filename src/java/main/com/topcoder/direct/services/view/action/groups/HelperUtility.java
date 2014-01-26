@@ -1,9 +1,11 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.groups;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,8 +82,15 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  * 
- * @author woodjhon, hanshuai, flexme, TCSDEVELOPER, TCSASSEMBLER
- * @version 1.4
+ * <p>
+ * Version 1.5 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
+ * <ol>
+ *   <li>Refactored {@link #fillHandle(UserService, Group)} to sort the handles.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author woodjhon, hanshuai, flexme, suno1234, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.5
  */
 final class HelperUtility {
     /**
@@ -438,6 +447,12 @@ final class HelperUtility {
                 }
             }
         }
+        
+        Collections.sort( group.getGroupMembers(), new Comparator<GroupMember>() {
+            public int compare(GroupMember o1, GroupMember o2) {
+                return o1.getHandle().compareToIgnoreCase(o2.getHandle());
+            }
+        });
     }
     
     /**

@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Javascript for security group pages.
  *
  * @author xjtufreeman, TCSASSEMBLER, freegod
- * @version 1.7
+ * @version 1.8
  * 
  * Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) change notes:
  *   Updated to support view invitation and pending approvals pages.
@@ -28,6 +28,11 @@
  *
  * Version 1.7 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
  *   Updated to remove resource restrictions and add Automatically grant permission.
+ *   
+ * Version 1.8 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
+ *   Add new method checkHandlesExist, send array of handles to check whether these users exist in async method.
+ *   Updated method validateMember, changed to single get handles Ajax call.
+ *   Improve group management page, disable added handles input box, only allow for remove.
  */
 $(document).ready(function(){
 
@@ -293,6 +298,7 @@ $(document).ready(function(){
 	var items = 5;
     var addedStatus = $("#groupMemberTable thead tr th").length == 5;
 	$('#addGroupMemberButton').live('click',function(){
+	    items = $("#groupMemberTable tbody tr").length;
 		for(i=0;i<5;i++){
 			items++;
 			$('#groupMemberTable').append('<tr><td class="firstColumn"><input type="text" class="text" /><a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a></td><td class="secondColumn"><div class="leftPart"><input type="radio" name="radioGroupMembers'+items+'" checked="checked" value="Group Default" id="gruopRadio'+items+'" /><label for="gruopRadio'+items+'">Group Default</label></div><div class="rightPart"><input type="radio" name="radioGroupMembers'+items+'" value="User Specific" id="userRadio'+items+'" /><label for="userRadio'+items+'">User Specific</label></div></td><td class="thirdColumn"><div class="optionWrapper"><div class="unit"><input type="radio" disabled="disabled" id="reportRadio'+items+'" value="REPORT" name="accesslevel'+items+'"/><label for="reportRadio'+items+'">Report</label></div><div class="unit"><input type="radio" disabled="disabled" checked="checked" id="readRadio'+items+'" value="READ"  name="accesslevel'+items+'"/><label for="readRadio'+items+'">Read</label></div><div class="unit"><input type="radio" disabled="disabled" id="writeRadio'+items+'" value="WRITE" name="accesslevel'+items+'"/><label for="writeRadio'+items+'">Write</label></div><div class="unit"><input type="radio"  disabled="disabled" id="fullRadio'+items+'" value="FULL" name="accesslevel'+items+'"/><label for="fullRadio'+items+'">Full</label></div><div style="clear:both;"></div></div></td>' + (addedStatus ? '<td class="forthColumn"></td>' : '') + '<td class="forthColumn"><a href="javascript:;" class="newButton2 removeButton"><span class="btnR"><span class="btnC"><span class="btnIcon">Remove</span></span></span></a></td></tr>');
@@ -352,6 +358,12 @@ $(document).ready(function(){
 	$('#groupMemberTable input:checkbox').css('top','-1px');
 	$('.tableControlPage select').css('position','relative');
 	$('.tableControlPage select').css('top','3px');
+	
+	// disable edit existing users's handle.
+	$("#groupMemberTable input[type='text'][value]").each(function(){
+	    $(this).attr('disabled','disabled');
+	    $(this).next().remove();
+	});
 	
 	$(window).load(function(){
 		$('.topFilterBox .text').css('width',($('.topFilterBox .leftSide').width()-$('.topFilterBox .leftSide .label').width()-18));
@@ -605,46 +617,44 @@ $(document).ready(function(){
         return tot;
     }
     
-    function checkHandleExist(handle) {
-        var exist = false;
+    function checkHandlesExist(handles, callback) {
+        var handlesFound = new Array(handles.length);
         $.ajax({
             type: 'GET',
-            url:  ctx+"/group/searchUser",
-            data: {handle: handle},
+            url:  ctx+"/group/getUsers",
+            data: {handles: handles},
             cache: false,
             dataType: 'json',
-            beforeSend: modalPreloader, 
-            async : false,
+            beforeSend: modalPreloader,
+            timeout:3600000,
             success: function (jsonResult) {
                 handleJsonResult(jsonResult,
                 function(result) {
-                    for(var i=0;i<result.length;i++) {
-                        if(handle == result[i].handle) {
-                            exist = true;
-                            break;
+                    for(var i=0;i<handles.length;i++) {
+                        for(var j=0;j<result.length;j++) {
+                            if (handles[i] === result[j].handle) {
+                                handlesFound[i] = true;
+                                break;
+                            }
                         }
                     }
+                    callback(handlesFound);
                 },
                 function(errorMessage) {
                     modalClose();
                     showServerError(errorMessage);
+                    callback(handlesFound);
                 });
             }
         });
-        return exist;
     }
-    
-    $('#hahaButton').click(function(){
-        var x = validateMember();
-    });
 
     //make sure every user exists.
-    function validateMember() {
+    function validateMember(callback) {
         var handles = new Array();
         //retrieve user handles and search if not empty.
-        $("#groupMemberTable tbody tr").each(function() {
-            var inp = $(this).find(".firstColumn input[type='text']");
-            var handle = inp.val().trim();
+        $("#groupMemberTable input[type='text']:not(:disabled)").each(function() {
+            var handle = $(this).val().trim();
             if(handle.length > 0) {
                 if (!checkStrLen(handle)) {
                     showErrors("Handle can't exceed 45 characters");
@@ -660,122 +670,170 @@ $(document).ready(function(){
             }
         });
 
-        for(var i=0;i<handles.length;i++) {
-            var exist = checkHandleExist(handles[i]);
-            if(!exist) {
-                showErrors('User with handle: ' + handles[i] + ' doesn\'t exist.');
-                return false;
+        checkHandlesExist(handles, function(handlesFound) {
+            var errorHandles = new Array();
+            for(var i=0;i<handles.length;i++) {
+                if(!handlesFound[i]) {
+                    errorHandles.push(handles[i]);
+                }
             }
-        }
+            
+            if (errorHandles.length == 1) {
+                showErrors('User with handle: ' + errorHandles[0] + ' doesn\'t exist.');
+                callback(false);
+                return;
+            } else if (errorHandles.length > 1) {
+                showErrors('Users with handles: ' + errorHandles.join(", ") + ' don\'t exist.');
+                callback(false);
+                return;
+            }
 
-        return true;
+            callback(true);
+        });
     }
     
     // create group
     $("#createGroup").click(function() {
-        var group = validateGroup();
-        if (group === false) {
+        if ($("#createGroup").hasClass("disabled")) {
             return;
         }
-        var userExist = validateMember();
-        if(userExist == false) {
-            return ;
+        $("#createGroup").addClass("disabled");
+        $("#createGroup .btnC").text("CREATING...");
+        var group = validateGroup();
+        if (group === false) {
+            $("#createGroup .btnC").text("CREATE GROUP");
+            $("#createGroup").removeClass("disabled");
+            return;
         }
-        var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
-        $("#sendInvitationModal .modalBody .preloaderTips").text("Sending invitation email(s)... please wait, this may take a while.");
-        $.ajax({
-          type: 'POST',
-          url:  ctx+"/group/createGroup",
-          data: {group: group, skipInvitationEmail: skipInvitationEmail},
-          cache: false,
-          dataType: 'json',
-          //async : false,
-          beforeSend: (skipInvitationEmail || group.groupMembers.length == 0) ? modalPreloader : modalSendInvitation,
-          timeout:3600000,
-          success: function (jsonResult) {
-              handleJsonResult(jsonResult,
-              function(result) {
-                $(".gotoGroupDetail").attr("rel", result.groupId);
-                $(".confirmGroupName").text(group.name);
-                $("#confirmCustomName").text($($("#selectCreateCustomerName")[0].options[$("#selectCreateCustomerName")[0].selectedIndex]).text());
-                if (skipInvitationEmail) {
-                    if (group.groupMembers.length == 0) {
-                        $(".emailMessage").text("");
+        validateMember(function (userExist) {
+            if(userExist == false) {
+                $("#createGroup .btnC").text("CREATE GROUP");
+                $("#createGroup").removeClass("disabled");
+                return ;
+            }
+            var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
+            $("#sendInvitationModal .modalBody .preloaderTips").text("Sending invitation email(s)... please wait, this may take a while.");
+            $.ajax({
+              type: 'POST',
+              url:  ctx+"/group/createGroup",
+              data: {group: group, skipInvitationEmail: skipInvitationEmail},
+              cache: false,
+              dataType: 'json',
+              //async : false,
+              beforeSend: (skipInvitationEmail || group.groupMembers.length == 0) ? modalPreloader : modalSendInvitation,
+              timeout:3600000,
+              success: function (jsonResult) {
+                  handleJsonResult(jsonResult,
+                  function(result) {
+                    $(".gotoGroupDetail").attr("rel", result.groupId);
+                    $(".confirmGroupName").text(group.name);
+                    $("#confirmCustomName").text($($("#selectCreateCustomerName")[0].options[$("#selectCreateCustomerName")[0].selectedIndex]).text());
+                    if (skipInvitationEmail) {
+                        if (group.groupMembers.length == 0) {
+                            $(".emailMessage").text("");
+                        } else {
+                            $(".emailMessage").text("The group " + (group.groupMembers.length > 1 ? "members have" : "member has") + " been granted access.");
+                        }
                     } else {
-                        $(".emailMessage").text("The group " + (group.groupMembers.length > 1 ? "members have" : "member has") + " been granted access.");
+                        if (group.groupMembers.length == 1) {
+                            $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
+                        } else if (group.groupMembers.length > 1) {
+                            $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
+                        } else $(".emailMessage").text("");
                     }
-                } else {
-                    if (group.groupMembers.length == 1) {
-                        $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
-                    } else if (group.groupMembers.length > 1) {
-                        $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
-                    } else $(".emailMessage").text("");
-                }
-                modalLoad("#createGroupConfirmModal");
-              },
-              function(errorMessage) {
-                  modalClose();
-                  showServerError(errorMessage);
-              });
-          }
+                    modalLoad("#createGroupConfirmModal");
+                    $("#createGroup .btnC").text("CREATE GROUP");
+                    $("#createGroup").removeClass("disabled");
+                  },
+                  function(errorMessage) {
+                      modalClose();
+                      showServerError(errorMessage);
+                      $("#createGroup .btnC").text("CREATE GROUP");
+                      $("#createGroup").removeClass("disabled");
+                  });
+              }
+            }); 
         });
     });
 
     // update group
     $("#updateGroup").click(function() {
+        if ($("#updateGroup").hasClass("disabled")) {
+            return;
+        }
+        $("#updateGroup").addClass("disabled");
+        $("#updateGroup .btnC").text("SAVING...");
         var group = validateGroup();
         if (group === false) {
+            $("#updateGroup .btnC").text("SAVE GROUP");
+            $("#updateGroup").removeClass("disabled");
             return;
         }
         if (compareGroup(oriGroup, group)) {
             $("#noChangeGroupName").text(group.name);
             modalLoad("#noChangeConfirmModal");
+            $("#updateGroup .btnC").text("SAVE GROUP");
+            $("#updateGroup").removeClass("disabled");
             return;
         }
-        var userExist = validateMember();
-        if(userExist == false) {
-            return ;
-        }        
-        var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
-        var hasNew = hasNewMembers(oldGroupMemberHandles, getGroupMemberHandles());
-        $.ajax({
-          type: 'POST',
-          url:  ctx+"/group/updateGroup",
-          data: {group: group, groupId: parseInt($("#groupId").val()), skipInvitationEmail: skipInvitationEmail},
-          cache: false,
-          dataType: 'json',
-          timeout:3600000,
-          //async : false,
-          beforeSend: (skipInvitationEmail || group.groupMembers.length == 0 || !hasNew) ? modalPreloader : modalSendInvitation,
-          success: function (jsonResult) {
-              handleJsonResult(jsonResult,
-              function(result) {
-                $(".gotoGroupDetail").attr("rel", result.groupId);
-                $(".confirmGroupName").text(group.name);
-                
-                var totAdd = newAddedMember(oriGroup, group);
-                if (skipInvitationEmail) {
-                    if (totAdd == 0) {
-                        $(".emailMessage").text("");
+        validateMember(function (userExist) {
+            if(userExist == false) {
+                $("#updateGroup .btnC").text("SAVE GROUP");
+                $("#updateGroup").removeClass("disabled");
+                return ;
+            }        
+            var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
+            var hasNew = hasNewMembers(oldGroupMemberHandles, getGroupMemberHandles());
+            $.ajax({
+              type: 'POST',
+              url:  ctx+"/group/updateGroup",
+              data: {group: group, groupId: parseInt($("#groupId").val()), skipInvitationEmail: skipInvitationEmail},
+              cache: false,
+              dataType: 'json',
+              timeout:3600000,
+              //async : false,
+              beforeSend: (skipInvitationEmail || group.groupMembers.length == 0 || !hasNew) ? modalPreloader : modalSendInvitation,
+              success: function (jsonResult) {
+                  handleJsonResult(jsonResult,
+                  function(result) {
+                    $(".gotoGroupDetail").attr("rel", result.groupId);
+                    $(".confirmGroupName").text(group.name);
+                    
+                    var totAdd = newAddedMember(oriGroup, group);
+                    if (skipInvitationEmail) {
+                        if (totAdd == 0) {
+                            $(".emailMessage").text("");
+                        } else {
+                            $(".emailMessage").text("The new group " + (totAdd > 1 ? "members have" : "member has") + " been granted access.");
+                        }
                     } else {
-                        $(".emailMessage").text("The new group " + (totAdd > 1 ? "members have" : "member has") + " been granted access.");
+                        if (totAdd == 1) {
+                            $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
+                        } else if (totAdd > 1) {
+                            $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
+                        } else $(".emailMessage").text("");
                     }
-                } else {
-                    if (totAdd == 1) {
-                        $(".emailMessage").text("Invitation emails have been sent to the member added to the group.");
-                    } else if (totAdd > 1) {
-                        $(".emailMessage").text("Invitation emails have been sent to the members added to the group.");
-                    } else $(".emailMessage").text("");
-                }
-                
-                modalLoad("#updateGroupConfirmModal");
-              },
-              function(errorMessage) {
-                  modalClose();
-                  showServerError(errorMessage);
-              });
-          }
+                    
+                    modalLoad("#updateGroupConfirmModal");
+                    $("#updateGroup .btnC").text("SAVE GROUP");
+                    $("#updateGroup").removeClass("disabled");
+                  },
+                  function(errorMessage) {
+                      modalClose();
+                      showServerError(errorMessage);
+                      $("#updateGroup .btnC").text("SAVE GROUP");
+                      $("#updateGroup").removeClass("disabled");
+                  });
+              }
+            });
         });
+    });
+
+    //bind the enter keyboard button to filter input
+    $("dl.filterUserGroup input").keypress(function(e) {
+        if (e.which == 13) {
+            filterItems(false, 1); //Call the filter method
+        }
     });
 
     //update group page.
