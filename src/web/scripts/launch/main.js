@@ -1990,7 +1990,10 @@ function getPrizesForSoftware() {
     $(".prizesInner_software input[type=text].prizesInput:visible").each(function(){
 
         // skip DR
-        if($(this).attr('id').indexOf("DigitalRun") != -1) return true;
+        if($(this).attr('id').indexOf("DigitalRun") != -1) return true
+
+        // skip checkpoint prize
+        if($(this).attr('id').indexOf("swCheckpointPrize") != -1) return true;
 
         if($.trim($(this).val()).length > 0) {
             prizesFound.push(parseFloat($(this).val()));
@@ -2072,6 +2075,7 @@ function calcPrizes(prizes) {
    var contestCost = getContestCost(feeObject, 'custom');
    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
    contestCost.firstPlaceCost = firstPlace;
+    console.log(prizes);
    if(prizes.length > 1) {
        // has second prize input
        contestCost.secondPlaceCost = parseFloat(prizes[1]);
@@ -2087,6 +2091,7 @@ function calcPrizes(prizes) {
 
    } else {
        contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
+       console.log(contestCost.secondPlaceCost);
    }
    if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F)
    {
