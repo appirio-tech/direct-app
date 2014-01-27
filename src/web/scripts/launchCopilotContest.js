@@ -356,11 +356,26 @@ function handleProjectDropDownChange() {
     $("#billingProjects").empty();
     $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
 
+    var hasCMCBilling = false;
+    var CMCBillingExisting = false;
+
+    if($("input[name=CMCBillingID]").val() && $("input[name=CMCBillingID]").val() > 0 && value > 0) {
+        hasCMCBilling = true;
+    }
+
     $.each(billingAccounts, function(key, value) {
 		var _cca = value["cca"] == "true" ? true : false;
         $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
- 
+
+        if(value["id"] == $("input[name=CMCBillingID]").val()) {
+            CMCBillingExisting = true;
+        }
     });
+
+    if(hasCMCBilling && !CMCBillingExisting) {
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false));
+    }
+
     $("#billingProjects").val(0);
 
     if(value > 0) {
@@ -369,6 +384,12 @@ function handleProjectDropDownChange() {
     } else {
         $("a.addBilling").hide();
         $("a.addBilling").attr("href", "javascript:;");
+    }
+
+    if(hasCMCBilling) {
+        $("#billingProjects").val($("input[name=CMCBillingID]").val());
+    } else {
+        $("#billingProjects").val(0);
     }
 
     var result = getCopilotsByDirectProjectId(value);
@@ -943,6 +964,14 @@ function saveAsDraft() {
 
     request['projectHeader'].properties['Contest Fee Percentage'] = mainWidget.softwareCompetition.projectHeader.properties['Contest Fee Percentage'];
     request['projectHeader'].properties['Admin Fee'] = mainWidget.softwareCompetition.projectHeader.getAdminFee();
+
+    if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+        request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
+    }
+
+    if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
+        mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
+    }
     
     $.ajax({
         type: 'POST',
