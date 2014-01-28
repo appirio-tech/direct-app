@@ -210,6 +210,14 @@
                         </c:forEach>
                     </strong>
                 </li>
+                <c:if test='${projectHeader.properties["CloudSpokes CMC Task"] != null}'>
+                    <li>
+                        <label>CMC Task ID :</label>
+                        <strong id="cmcTaskID">
+                                    <c:out value='${projectHeader.properties["CloudSpokes CMC Task"]}'/>
+                        </strong>
+                    </li>
+                </c:if>
                 <li>
                     <label>Experience :</label>
                     
@@ -272,6 +280,12 @@
             <div class="row <s:if test="#contestStatus == 'Completed'">hide</s:if>">
                 <label for="contestNameInput2">Create a name for your Copilot Posting :</label>
                 <input type="text" class="text" id="contestNameInput2" value="${fn:escapeXml(assetDTO.name)}"/>
+            </div>
+
+            <!-- CMC Task ID -->
+            <div class="row">
+                <label for="contestNameInput2">CMC Task ID</label>
+                <input type="text" class="text" value="${projectHeader.properties["CloudSpokes CMC Task"]}" disabled="disabled"/>
             </div>
 
             <!-- Billing Account -->
