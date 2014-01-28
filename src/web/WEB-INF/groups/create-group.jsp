@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, freegod, caru
-  - Version: 1.4.1
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: TCSASSEMBLER, freegod, caru, suno1234
+  - Version: 1.5
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the create/update security group page.
   -
@@ -24,6 +24,9 @@
   -
   - Version 1.4.1
   - - "Skip Invitation" checkbox checked by default
+  -
+  - Version 1.5 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
+  - - Add userId attribute to the member data row.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -250,7 +253,7 @@
                                             <c:if test="${empty member.unassignedOn}">
                                             <tr>
                                                 <td class="firstColumn">
-                                                    <input type="text" class="text" value="<s:property value="#attr.member.handle"/>"/>
+                                                    <input type="text" class="text" value="<s:property value="#attr.member.handle"/>" userId="<s:property value="#attr.member.userId"/>"/>
                                                     <a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a>
                                                 </td>
                                                 <td class="secondColumn">

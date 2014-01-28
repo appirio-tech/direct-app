@@ -33,6 +33,11 @@
  *   Add new method checkHandlesExist, send array of handles to check whether these users exist in async method.
  *   Updated method validateMember, changed to single get handles Ajax call.
  *   Improve group management page, disable added handles input box, only allow for remove.
+ *   
+ * Version 1.8.1 change notes:
+ *   Update the group members after validate member handles with user id. So there will be only one Search(Handles[])
+ *   during the whole create/update group call. 
+ *   
  */
 $(document).ready(function(){
 
@@ -618,7 +623,7 @@ $(document).ready(function(){
     }
     
     function checkHandlesExist(handles, callback) {
-        var handlesFound = new Array(handles.length);
+        var userIds = new Array(handles.length);
         $.ajax({
             type: 'GET',
             url:  ctx+"/group/getUsers",
@@ -633,17 +638,17 @@ $(document).ready(function(){
                     for(var i=0;i<handles.length;i++) {
                         for(var j=0;j<result.length;j++) {
                             if (handles[i] === result[j].handle) {
-                                handlesFound[i] = true;
+                                userIds[i] = result[j].userId;
                                 break;
                             }
                         }
                     }
-                    callback(handlesFound);
+                    callback(userIds);
                 },
                 function(errorMessage) {
                     modalClose();
                     showServerError(errorMessage);
-                    callback(handlesFound);
+                    callback(userIds);
                 });
             }
         });
@@ -670,10 +675,10 @@ $(document).ready(function(){
             }
         });
 
-        checkHandlesExist(handles, function(handlesFound) {
+        checkHandlesExist(handles, function(userIds) {
             var errorHandles = new Array();
             for(var i=0;i<handles.length;i++) {
-                if(!handlesFound[i]) {
+                if(!userIds[i]) {
                     errorHandles.push(handles[i]);
                 }
             }
@@ -688,6 +693,9 @@ $(document).ready(function(){
                 return;
             }
 
+            $("#groupMemberTable input[type='text']:not(:disabled)").each(function(index) {
+                $(this).attr("userId", userIds[index]);
+            });
             callback(true);
         });
     }
@@ -711,6 +719,8 @@ $(document).ready(function(){
                 $("#createGroup").removeClass("disabled");
                 return ;
             }
+            // update the group members with userid.
+            group.groupMembers = getGroupMembers();
             var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
             $("#sendInvitationModal .modalBody .preloaderTips").text("Sending invitation email(s)... please wait, this may take a while.");
             $.ajax({
@@ -781,7 +791,9 @@ $(document).ready(function(){
                 $("#updateGroup .btnC").text("SAVE GROUP");
                 $("#updateGroup").removeClass("disabled");
                 return ;
-            }        
+            }
+            // update the group members with userid.
+            group.groupMembers = getGroupMembers();
             var skipInvitationEmail = $('#skipInvitationEmail').is(":checked");
             var hasNew = hasNewMembers(oldGroupMemberHandles, getGroupMemberHandles());
             $.ajax({

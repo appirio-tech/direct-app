@@ -89,6 +89,14 @@ import com.topcoder.security.groups.services.dto.UserDTO;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.5.1 change notes:
+ * <ol>
+ *   <li>Refactored {@link #validate(CreateUpdateGroupAction, UserService, GroupMember)} only look up the
+ *   user id when user id is 0.</li>
+ * </ol>
+ * </p>
+ * 
  * @author woodjhon, hanshuai, flexme, suno1234, TCSDEVELOPER, TCSASSEMBLER
  * @version 1.5
  */
@@ -620,7 +628,7 @@ final class HelperUtility {
         if (!member.isUseGroupDefault()) {
             checkNull(instance, member.getSpecificPermission(), "member.specificPermission");
         }
-        if (member.getId() == 0) {
+        if (member.getUserId() == 0) {
             member.setUserId(checkHandle(member.getHandle(), userService).getUserId());
         }
     }
