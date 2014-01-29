@@ -55,7 +55,7 @@ $(document).ready(function() {
 
     // setup the global AJAX timeout to 50 seconds
     jQuery.ajaxSetup({
-        timeout: 50 * 1000
+        timeout: 50 * 60 * 1000
     });
 
     $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
