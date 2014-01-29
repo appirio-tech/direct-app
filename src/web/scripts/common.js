@@ -53,9 +53,9 @@
 $(document).ready(function() {
     adjustImageRatio();
 
-    // setup the global AJAX timeout to 50 seconds
+    // setup the global AJAX timeout to 5 min
     jQuery.ajaxSetup({
-        timeout: 50 * 60 * 1000
+        timeout: 5 * 60 * 1000
     });
 
     $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
