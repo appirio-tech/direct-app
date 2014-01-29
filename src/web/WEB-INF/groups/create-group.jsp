@@ -26,7 +26,7 @@
   - - "Skip Invitation" checkbox checked by default
   -
   - Version 1.5 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
-  - - Add userId attribute to the member data row.
+  - - Add a hide input to the member data row to store the userId.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -253,7 +253,8 @@
                                             <c:if test="${empty member.unassignedOn}">
                                             <tr>
                                                 <td class="firstColumn">
-                                                    <input type="text" class="text" value="<s:property value="#attr.member.handle"/>" userId="<s:property value="#attr.member.userId"/>"/>
+                                                    <input type="hidden" class="userId" value="<s:property value="#attr.member.userId"/>"/>
+                                                    <input type="text" class="text" value="<s:property value="#attr.member.handle"/>"/>
                                                     <a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a>
                                                 </td>
                                                 <td class="secondColumn">
@@ -300,6 +301,7 @@
                                         <c:forEach begin="${1}" end="${emptyRows}" var="ind">
                                             <tr>
                                                 <td class="firstColumn">
+                                                    <input type="hidden" class="userId" value="0"/>
                                                     <input type="text" class="text" />
                                                     <a href="javascript:;" class="searchDetails searchUser triggerModal" rel="#searchModal">Search</a>
                                                 </td>
