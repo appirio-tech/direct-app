@@ -46,7 +46,7 @@
             </s:else>
         </s:elseif>
         <s:else>
-           <s:set name="contestLink" value="'https://www.topcoder.com/tc?module=ProjectDetail&pj=' + viewData.contestStats.contest.id"/>
+           <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id"/>
         </s:else>
 
         <s:if test="marathon">
