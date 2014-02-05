@@ -6,6 +6,8 @@
         <PhaseType id="registration" typeId="1" typeName="Registration"/>
         <PhaseType id="submission" typeId="2" typeName="Submission"/>
         <PhaseType id="review" typeId="4" typeName="Review"/>
+		<PhaseType id="appeals" typeId="5" typeName="Appeals"/>
+        <PhaseType id="appeals_response" typeId="6" typeName="Appeals Response"/>
     </PhaseTypes>
     <!--     A set of project phases defined in this template. -->
     <Phases>
@@ -19,5 +21,15 @@
         <Phase id="reviewPhase" length="172800000" type="review" phaseId="4">
             <Dependency id="submissionPhase" isDependentStart="true" lagTime="0"/>
         </Phase>
+		 <Phase id="appealsPhase" length="86400000" type="appeals" phaseId="5">
+            <!-- "isDependentStart" is optional attribute(default to "true"), here it is omitted -->
+            <Dependency id="reviewPhase" isDependencyStart="false" lagTime="0"/>
+        </Phase>
+
+        <Phase id="appealsReponsePhase" length="43200000" type="appeals_response"  phaseId="6">
+            <!-- "lagTime" is optional attribute(default to "0"), here it is omitted -->
+            <Dependency id="appealsPhase" isDependencyStart="false" isDependentStart="true"/>
+        </Phase>
+
     </Phases>
 </Template>
