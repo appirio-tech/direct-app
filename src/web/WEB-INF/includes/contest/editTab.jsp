@@ -170,7 +170,7 @@
                 <span class="cmcTask"><br />
                     <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">
-                        <input type="text" class="bigin"  id="CMCTaskID" value="" disabled="disabled"/>
+                        <input type="text" class="bigin"  name="CMCTaskID" value=""/>
                     </span>
 
                  </span>

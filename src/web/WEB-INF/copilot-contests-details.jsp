@@ -213,7 +213,7 @@
                 <c:if test='${projectHeader.properties["CloudSpokes CMC Task"] != null}'>
                     <li>
                         <label>CMC Task ID :</label>
-                        <strong id="cmcTaskID">
+                        <strong id="rCMCTaskID">
                                     <c:out value='${projectHeader.properties["CloudSpokes CMC Task"]}'/>
                         </strong>
                     </li>
@@ -285,7 +285,7 @@
             <!-- CMC Task ID -->
             <div class="row">
                 <label for="contestNameInput2">CMC Task ID</label>
-                <input type="text" class="text" value="${projectHeader.properties["CloudSpokes CMC Task"]}" disabled="disabled"/>
+                <input type="text" class="text" value="${projectHeader.properties["CloudSpokes CMC Task"]}" name="CMCTaskID"/>
             </div>
 
             <!-- Billing Account -->

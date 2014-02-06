@@ -994,7 +994,7 @@ function populateTypeSection() {
 
     if(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
         $('#rCMCTaskID').text(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
-        $('#CMCTaskID').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
+        $('input[name=CMCTaskID]').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $(".cmcTask").show();
     }
 }
