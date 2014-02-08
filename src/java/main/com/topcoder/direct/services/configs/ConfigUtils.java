@@ -3,6 +3,9 @@
  */
 package com.topcoder.direct.services.configs;
 
+import com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator;
+
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +44,13 @@ import javax.xml.bind.JAXBContext;
  * - Add static configuration field {@link #cloudVMServiceAccessErrorConfig}
  * </p>
  *
- * @author BeBetter, Veve, jiajizhou86
- * @version 1.4
+ * <p>
+ * Version 1.5 (BUGR-10708 Update Cockpit Copilot Fee Calculation)
+ * - Update {@link #init()} to get copilot fee value from DefaultProjectPaymentCalculator
+ * </p>
+ *
+ * @author BeBetter, Veve, jiajizhou86, Veve
+ * @version 1.5
  */
 public final class ConfigUtils {
     /**
@@ -190,14 +198,27 @@ public final class ConfigUtils {
                 ConfigUtils.class.getResourceAsStream("/fileTypes.xml"));
 
         // load the copilot fees from the configuration copilotFees.xml
+        DefaultProjectPaymentCalculator calculator = new DefaultProjectPaymentCalculator();
+
         JAXBContext copilotFeesJaxbContext = JAXBContext.newInstance(CopilotFees.class);
         CopilotFees parsedFees = (CopilotFees) copilotFeesJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/copilotFees.xml"));
         copilotFees = new HashMap<String, CopilotFee>();
+        BigDecimal zeroValue = new BigDecimal("0");
         // put copilot fee into the map
         for(CopilotFee copilotFee : parsedFees.getCopilotFees()) {
             copilotFees.put(String.valueOf(copilotFee.getContestTypeId()), copilotFee);
+
+            // gets the copilot fee from default project payment calculator to overrides if exists
+
+            BigDecimal copilotPayment = calculator.getDefaultPayment(copilotFee.getContestTypeId(),
+                    DefaultProjectPaymentCalculator.COPILOT_RESOURCE_ROLE_ID, zeroValue, 1);
+            if(copilotPayment != null) {
+                copilotFee.setCopilotFee(copilotPayment.doubleValue());
+            }
         }
+
+
 
         // load Jira issue tracking configuration
         JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
