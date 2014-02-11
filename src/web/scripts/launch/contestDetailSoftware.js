@@ -84,6 +84,15 @@
 var canEditMultiRound = true;
 var contestHasSpecReview = true;
 
+function getContestPrize(prizesData, place) {
+    if(prizesData && prizesData.length >= place
+        && mainWidget.softwareCompetition.projectHeader.prizes[place - 1].place == place) {
+        return mainWidget.softwareCompetition.projectHeader.prizes[place - 1].prizeAmount;
+    }
+
+    return -1;
+}
+
 $(document).ready(function(){	
 
 	  /* init select */
@@ -659,7 +668,19 @@ function initContest(contestJson) {
    if(projectHeader.getCostLevel() == COST_LEVEL_CUSTOM) {
    	    customCosts = {};
         customCosts.firstPlaceCost = parseFloat(projectHeader.getFirstPlaceCost());
+
+       if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1) > 0) {
+           customCosts.firstPlaceCost = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1);
+       }
+
+
         customCosts.secondPlaceCost = parseFloat(projectHeader.getSecondPlaceCost());
+
+       if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2) > 0) {
+           customCosts.secondPlaceCost = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2);
+       }
+
+
         customCosts.reviewBoardCost = parseFloat(projectHeader.getReviewCost());
         customCosts.reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
         customCosts.specReviewCost = parseFloat(projectHeader.getSpecReviewCost());
@@ -693,7 +714,18 @@ function initContest(contestJson) {
     var customPrizesUsed = false;
     if (projectHeader.getCostLevel() != COST_LEVEL_CUSTOM) {
         var prize1 = parseFloat(projectHeader.getFirstPlaceCost());
+
+        if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1) > 0) {
+            prize1 = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1);
+        }
+
         var prize2 = parseFloat(projectHeader.getSecondPlaceCost());
+
+        if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2) > 0) {
+            prize2 = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2);
+        }
+
+
         var reviewCost = parseFloat(projectHeader.getReviewCost());
         var reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
         var drPointsCost = parseFloat(digitalRunPoints);
@@ -1590,8 +1622,22 @@ function updateContestCostData() {
 
     // gets all cost data from contest data
     var p = mainWidget.softwareCompetition.projectHeader.properties;
+
+    // use the prize data
     var firstPlacePrize = parseFloat(p['First Place Cost']);
+
+    if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1) > 0) {
+        firstPlacePrize = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1);
+    }
+
+
     var secondPlacePrize = parseFloat(p['Second Place Cost']);
+
+    if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2) > 0) {
+        secondPlacePrize = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2);
+    }
+
+
     var reviewCost = parseFloat(p['Review Cost']);
     var reliability = parseFloat(p['Reliability Bonus Cost']);
     var specReview = parseFloat(p['Spec Review Cost']);
@@ -1879,7 +1925,14 @@ function showPrizeSectionDisplay() {
 function showPrizeSectionEdit() {
     if (mainWidget.competitionType == "SOFTWARE") {
         var p = mainWidget.softwareCompetition.projectHeader.properties;
+
         var firstPlacePrize = parseFloat(p['First Place Cost']);
+
+        if(getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1) > 0) {
+            firstPlacePrize = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 1);
+        }
+
+
         var digitalRunFlag = p['Digital Run Flag'];
         var digitalRun = parseFloat(p['DR points']);
 
