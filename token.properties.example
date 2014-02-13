@@ -201,14 +201,9 @@
 ##########################
 # typical windows configuration
 @loginProcessor@=com.topcoder.direct.services.view.processor.security.EJBLoginProcessor
-@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
-@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
 
 # typical VM configuration
 #@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor
-#@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
-#@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
-
 
 #####################################
 # applicationContext.xml direct.war #
@@ -312,16 +307,7 @@
 @ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
 
 @excelFile@=/Users/macbookpro/Downloads/Revenue_sample.xlsx
-@analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
 
-################################
-# ppt, mobile and analytics activation #
-################################
-@ppt_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/ppt.war/WEB-INF/classes/email_template/register_activation.txt
-@mobile_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/mobile.war/WEB-INF/classes/email_template/register_activation.txt
-@analytics_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/analytics.war/WEB-INF/classes/email_template/register_activation.txt
-@activation_email_from_address@=service@topcoder.com
-@activation_email_subject@=TopCoder Activation
 
 #######################################
 # securityGroupApplicationContext.xml #
