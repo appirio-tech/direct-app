@@ -218,24 +218,6 @@
     </module>
     <module>
         <web>
-            <web-uri>analytics.war</web-uri>
-            <context-root>/analytics</context-root>
-        </web>
-    </module>
-    <module>
-        <web>
-            <web-uri>mobile.war</web-uri>
-            <context-root>/mobile</context-root>
-        </web>
-    </module>
-    <module>
-        <web>
-            <web-uri>ppt.war</web-uri>
-            <context-root>/present</context-root>
-        </web>
-    </module>
-    <module>
-        <web>
             <web-uri>direct.war</web-uri>
             <context-root>/direct</context-root>
         </web>
