@@ -219,18 +219,6 @@
 @onlinereview.compsitereview.url.prefix@=http://tcs.cloud.topcoder.com/review/actions/ViewCompositeScorecard.do?method=viewCompositeScorecard&amp;pdf=true&amp;sid=
 @onlinereview.url.base@=http://tcs.cloud.topcoder.com
 
-###########################
-# liquidPortalService.xml #
-###########################
-@notusObserverTermsId@=20794
-@notusSubmitterTermsId@=20623
-@jiraEmailAddress@=somemail@domain.com
-@liquidStudioContestsEmailFrom@=somemail@domain.com
-@liquidStudioContestsEmailTo@=somemail@domain.com
-@liquidStudioContestsEmailCC@=somemail@domain.com
-@liquidStudioContestsEmailBilling@=1
-@liquidCcnEmailFrom@=somemail@domain.com
-@liquidCcnEmailTo@=somemail@domain.com
 
 ##############################
 # CockpitUserPersistence.xml #

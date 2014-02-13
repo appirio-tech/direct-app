@@ -365,7 +365,6 @@
         <copy file="${admin_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${liquid_portal_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -382,8 +381,6 @@
             <fileset dir="${tokenized_conf}">
                  <include name="tc_login_bean.properties" />
                  <include name="email_templates/**/*.txt" />
-                 <include name="liquid_template.txt" />
-                 <include name="liquid_studio_contests_email.txt" />
                  <include name="contest_creation_notification.txt" />
                  <include name="phase_templates/**/*.xml" />
                  <include name="xml_phase_template.xsd" />
@@ -616,8 +613,6 @@
                 <include name="ContestEligibilityValidationManagerBean.xml" />
                 <include name="DocumentManager.xml" />
                 <include name="emailTemplateConfig.xml" />
-                <include name="liquidPortalService.properties" />
-                <include name="liquidPortalService.xml" />
                 <include name="JBossLoginModule.xml" />
                 <include name="JBossLoginModuleConfig.properties" />
                 <include name="LDAP.properties" />

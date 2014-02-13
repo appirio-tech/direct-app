@@ -465,17 +465,6 @@
         </versions>
     </project>
 
-     <project
-        name="liquid_portal_service"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/liquid_portal_service"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-    
-    
     <project
         name="topcoder_cockpit_project_metadata_entities"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/topcoder_cockpit_project_metadata_entities"

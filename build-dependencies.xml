@@ -250,11 +250,6 @@
   <property name="ldap_sdk_interface.path" value="ldap_sdk_interface/${ldap_sdk_interface.version}" />
   <property name="ldap_sdk_interface.jar" value="${tcs_libdir}/${ldap_sdk_interface.path}/${ldap_sdk_interface.jar.name}" />
 
-  <property name="liquid_portal_service.version" value="1.0.0" />
-  <property name="liquid_portal_service.jar.name" value="liquid_portal_service.jar" />
-  <property name="liquid_portal_service.path" value="liquid_portal_service/${liquid_portal_service.version}" />
-  <property name="liquid_portal_service.jar" value="${tcs_libdir}/${liquid_portal_service.path}/${liquid_portal_service.jar.name}" />
-
   <property name="logging_wrapper.version" value="2.0.0" />
   <property name="logging_wrapper.jar.name" value="logging_wrapper.jar" />
   <property name="logging_wrapper.path" value="logging_wrapper/${logging_wrapper.version}" />
