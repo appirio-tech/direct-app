@@ -350,12 +350,12 @@ $(document).ready(function(){
 
         $.each(contestsData, function (i, item) {
             var urlPart = "/contest/detail?projectId=";
+
             if(item.typeName == 'Copilot Posting') {
-                urlPart = "copilot/copilotContestDetails?projectId=";
+                urlPart = "/copilot/copilotContestDetails?projectId=";
             }
 
-
-            var newRow = $("<tr onclick=\"document.location.href ='" + ctx + "/contest/detail?projectId="
+            var newRow = $("<tr onclick=\"document.location.href ='" + ctx + urlPart
                 + item.id + "';this.style.cursor='pointer';\"><td><span class='"
                 + item.statusShortName.toLowerCase() + "' title='" + item.statusName
                 + "'></span></td><td class='leftAlign'></td><td><img/></td></tr>");
