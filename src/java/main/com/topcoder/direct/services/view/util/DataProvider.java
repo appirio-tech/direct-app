@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -995,10 +995,18 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.27 (Release Assembly - TC Cockpit Private Challenge Update)
+ * <ul>
+ *     <li>Added method {@link #getSecurityGroupsForBillingAccount(long)} to get the group id & name
+ *     of a billing account</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin, Veve
- * @version 6.26
+ * @version 6.27
  * @since 1.0
  */
 public class DataProvider {
@@ -8794,6 +8802,36 @@ public class DataProvider {
         }
 
         return null;
+    }
+
+    /**
+     * Gets the security groups from the billing account.
+     *
+     * @param billingAccountId the id of the billing account.
+     * @return a list of groups consisting of id and name.
+     * @throws Exception if any error.
+     * @since 6.27
+     */
+    public static List<IdNamePair> getSecurityGroupsForBillingAccount(long billingAccountId) throws Exception {
+        ValidationUtility.checkPositive(billingAccountId, "billingAccountId", IllegalAccessException.class);
+
+        Request r = new Request();
+        r.setContentHandle("get_client_groups_from_billing");
+        r.setProperty("billingaccountid", String.valueOf(billingAccountId));
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        ResultSetContainer resultSet = dataAccess.getData(r).get("get_client_groups_from_billing");
+
+        List<IdNamePair> result = new ArrayList<IdNamePair>();
+
+        for(ResultSetRow row : resultSet) {
+            IdNamePair group = new IdNamePair();
+            group.setId(row.getLongItem("group_id"));
+            group.setName(row.getStringItem("group_name"));
+            result.add(group);
+        }
+
+        return result;
     }
 
 }

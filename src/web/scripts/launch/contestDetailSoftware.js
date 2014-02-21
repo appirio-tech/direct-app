@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript
@@ -76,9 +76,12 @@
  *
  * Version 2.5 (Module Assembly - TC Cockpit Launch F2F contest)
  * - Add support for F2F contest
+ *
+ * Version 2.6 (Release Assembly - TC Cockpit Private Challenge Update)
+ * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
  * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 2.5
+ * @version 2.6
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -397,6 +400,21 @@ $(document).ready(function(){
 	   $('#contestRound2ToolTip').hide();
    });
 
+    $("#billingGroupCheckBox input[type=checkbox]").change(function () {
+        if ($(this).is(":checked")) {
+            $("#billingGroupCheckBox select").show();
+            $("#billingGroupCheckBox select option").remove();
+            var selectedBillingID = $("#billingProjects").val();
+            if(selectedBillingID > 0 && billingGroups[selectedBillingID] && billingGroups[selectedBillingID].length > 0) {
+                $.each(billingGroups[selectedBillingID], function(i, v){
+                    $("#billingGroupCheckBox select").append($("<option/>").attr('value', v.id).text(v.name));
+                })
+            }
+        } else {
+            $("#billingGroupCheckBox select").hide();
+        }
+    });
+
     // billing projects
     $('#billingProjects').bind("change", function() {
 
@@ -408,6 +426,7 @@ $(document).ready(function(){
             $("#chkboxCCA").removeAttr('disabled');
         }
         updateContestFee();
+        updateBillingGroups();
     });
 });
 
@@ -592,6 +611,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.projectHeader.id = contestJson.contestId;
    mainWidget.softwareCompetition.projectHeader.projectCategory= contestJson.projectCategory;
    mainWidget.softwareCompetition.projectHeader.projectStatus = contestJson.projectStatus;
+   mainWidget.softwareCompetition.projectHeader.securityGroupId = contestJson.securityGroupId;
    mainWidget.softwareCompetition.assetDTO.name = contestJson.contestName;
    mainWidget.softwareCompetition.endDate = parseDate(contestJson.endDate);
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
@@ -994,6 +1014,7 @@ function populateTypeSection() {
   //billing account
   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
   $('#billingProjects').getSetSSValue(billingProjectId);
+
   if (contestPercentage!= null && contestPercentage > 0) {
       var total = 0;
       var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
@@ -1983,6 +2004,7 @@ function showPrizeSectionEdit() {
             $("#chkboxCCA").removeAttr('disabled');
         }
         updateContestFee();
+        updateBillingGroups();
     });
 	$("#billingProjects").getSetSSValue(mainWidget.softwareCompetition.projectHeader.getBillingProject());
     fillPrizes();
@@ -2741,6 +2763,7 @@ function handleProjectDropDownChange() {
                 $("#chkboxCCA").removeAttr('disabled');
         }
         updateContestFee();
+        updateBillingGroups();
     });
 }
 

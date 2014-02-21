@@ -31,8 +31,11 @@
  * Version 1.5.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
  *
- *  @author GreatKevin, isv, GreatKevin, TCASSEMBLER
- * @version 1.5.4
+ * Version 1.5.5 (Release Assembly - TC Cockpit Private Challenge Update)
+ * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+ *
+ *  @author GreatKevin, isv, GreatKevin
+ * @version 1.5.5
  */
 
 var currentDocument = {};
@@ -204,6 +207,21 @@ $(document).ready(function() {
         return false;
     });
 
+    $("#billingGroupCheckBox input[type=checkbox]").change(function () {
+        if ($(this).is(":checked")) {
+            $("#billingGroupCheckBox select").show();
+            $("#billingGroupCheckBox select option").remove();
+            var selectedBillingID = $("#billingProjects2").val();
+            if(selectedBillingID > 0 && billingGroups[selectedBillingID] && billingGroups[selectedBillingID].length > 0) {
+                $.each(billingGroups[selectedBillingID], function(i, v){
+                    $("#billingGroupCheckBox select").append($("<option/>").attr('value', v.id).text(v.name));
+                })
+            }
+        } else {
+            $("#billingGroupCheckBox select").hide();
+        }
+    });
+
 
     $('#cancelPrize').click(function() {
         hideEdit($(this));
@@ -316,6 +334,7 @@ $(document).ready(function() {
             getContestFeesForBillingProject(billingAccountId);
         }
         setupContestFee(billingAccountId, false);
+        updateBillingGroups();
     });
 
     $('#addNewProject2').click(function() {
@@ -653,6 +672,14 @@ function updateProjectGeneralInfo(notSendToServer) {
     if (typeof notSendToServer == "undefined" || !notSendToServer) {
         sendSaveDraftRequestToServer();
     }
+
+    if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+        $("#securityGroupName").text($("#billingGroupCheckBox select option:selected").text());
+        $("#securityGroupName").parents("li").show();
+    } else {
+        $("#securityGroupName").text('');
+        $("#securityGroupName").parents("li").hide();
+    }
 }
 
 function updateProjectDate() {
@@ -810,6 +837,12 @@ function saveAsDraftRequest() {
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         request["projectHeader.properties['CloudSpokes CMC Task']"] = $("input[name=CMCTaskID]").val();
     }
+
+    if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+        request['projectHeader.securityGroupId'] = $("#billingGroupCheckBox select").val();
+    } else {
+        request['projectHeader.securityGroupId'] = 0;
+    }
     
     return request;
 }
@@ -939,13 +972,15 @@ function removeCopilotExtraInfo(infoType) {
 }
 
 function getContestFeesForBillingProject(billingProjectId) {
-    if(billingFees[billingProjectId] != null) {
+    if(billingFees[billingProjectId] != null && billingGroups[billingProjectId]) {
         return billingFees[billingProjectId];
     }
 
     var fees = [];
 
     var percentage = {};
+
+    var groups = [];
 
     var request = {billingProjectId:billingProjectId};
 
@@ -966,6 +1001,9 @@ function getContestFeesForBillingProject(billingProjectId) {
                     if(result.fees) {
                         fees = result.fees;
                     }
+                    if(result.groups) {
+                        groups = result.groups;
+                    }
                 },
                 function(errorMessage) {
                     showServerError(errorMessage);
@@ -975,6 +1013,7 @@ function getContestFeesForBillingProject(billingProjectId) {
 
     billingFees[billingProjectId] = fees;
     billingFeesPercentage[billingProjectId] = percentage;
+    billingGroups[billingProjectId] = groups;
     return fees;
 }
 
@@ -1026,3 +1065,41 @@ function setupContestFee(billingProjectId, updatePrize) {
     $("#rswTotal").text(total.toFixed(1));
     $("#swTotal").text(total.toFixed(1));
 }
+
+function updateBillingGroups() {
+
+    var selectedBillingID = $("#billingProjects2").val();
+
+    if(selectedBillingID > 0 && billingGroups[selectedBillingID]) {
+        if(billingGroups[selectedBillingID].length > 0) {
+            $("#billingGroupCheckBox").show();
+
+            var securityGroupId = $("#securityGroupId").val();
+
+            if(securityGroupId > 0) {
+                $("#billingGroupCheckBox input[type=checkbox]").attr('checked', 'checked');
+                $("#billingGroupCheckBox select").val(securityGroupId);
+
+            }
+
+            $("#billingGroupCheckBox input[type=checkbox]").trigger('change');
+
+            if (securityGroupId > 0) {
+                $("#billingGroupCheckBox select").val(securityGroupId);
+
+                $("#securityGroupName").text($("#billingGroupCheckBox select option:selected").text());
+                $("#securityGroupName").parents("li").show();
+            } else {
+                $("#securityGroupName").text('');
+                $("#securityGroupName").parents("li").hide();
+            }
+        } else {
+            $("#billingGroupCheckBox").hide();
+            $("#billingGroupCheckBox select option").remove();
+        }
+    } else {
+        $("#billingGroupCheckBox").hide();
+        $("#billingGroupCheckBox select option").remove();
+    }
+}
+

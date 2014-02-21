@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.2
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 2.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -51,6 +51,9 @@
   -
   - Version 2.2 (Module Assembly - TC Cockpit Launch F2F contest)
   - - Add choose your platform control
+  -
+  - Version 2.3 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -86,6 +89,11 @@
             <tr>
                 <td class="first_tab_type"><strong>NDA is</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCCA"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Private Group</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -440,7 +448,9 @@
                      </div>
                    <br/><br/>  
                   </div>
-                
+                <span id="billingGroupCheckBox">
+                             <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select><br/><br/>
+                 </span>
                <div class="prizes">  
                      <div class="prizesInner_software">
                      	<span class="head topcoderPrize"><p>Please Select the prize structure for your challenge by choosing one of the options

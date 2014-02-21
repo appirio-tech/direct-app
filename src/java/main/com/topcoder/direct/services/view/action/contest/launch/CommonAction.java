@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -18,6 +18,7 @@ import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -83,8 +84,16 @@ import org.codehaus.jackson.map.ObjectMapper;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.9 (Release Assembly - TC Cockpit Private Challenge Update)
+ * <ul>
+ *     <li>Updated method {@link #getBillingProjectContestFees()} to include the billing account
+ *     groups data</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -301,7 +310,13 @@ public class CommonAction extends BaseContestFeeAction {
                 billingProjectId);
             result.put("fees", contestFees);
         }
-        
+
+        // set the security group info
+        List<IdNamePair> groups = DataProvider.getSecurityGroupsForBillingAccount(
+                billingProjectId);
+
+        result.put("groups", groups);
+
         setResult(result);
         return SUCCESS;
     }

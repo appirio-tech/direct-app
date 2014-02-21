@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * This javascript file is used to render elements to launch copilot contest page, and handle
  * events.
@@ -28,9 +28,12 @@
  * 
  * Version 1.6.2 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
+ *
+ * Version 1.6.3 (Release Assembly - TC Cockpit Private Challenge Update)
+ * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
  * 
- * @author duxiaoyang, GreatKevin, TCSASSEMBLER
- * @version 1.6.2
+ * @author duxiaoyang, GreatKevin
+ * @version 1.6.3
  */
 
 var roundMinutes = function(date) {
@@ -330,7 +333,23 @@ $(document).ready(function(){
 		}
     });
 
+    $("#billingGroupCheckBox input[type=checkbox]").change(function () {
+        if ($(this).is(":checked")) {
+            $("#billingGroupCheckBox select").show();
+            $("#billingGroupCheckBox select option").remove();
+            var selectedBillingID = $("#billingProjects").val();
+            if(selectedBillingID > 0 && billingGroups[selectedBillingID] && billingGroups[selectedBillingID].length > 0) {
+                $.each(billingGroups[selectedBillingID], function(i, v){
+                    $("#billingGroupCheckBox select").append($("<option/>").attr('value', v.id).text(v.name));
+                })
+            }
+        } else {
+            $("#billingGroupCheckBox select").hide();
+        }
+    });
+
     setupContestFee($("#billingProjects").val());
+    updateBillingGroups();
 
     $("#billingProjects").change(function(){
         var billingAccountId = $(this).val();
@@ -338,6 +357,7 @@ $(document).ready(function(){
             getContestFeesForBillingProject(billingAccountId);
         }
         setupContestFee(billingAccountId);
+        updateBillingGroups();
     });
     
     $('#projects').change(function() {
@@ -972,6 +992,13 @@ function saveAsDraft() {
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
+
+
+    if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
+    } else {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = 0;
+    }
     
     $.ajax({
         type: 'POST',
@@ -1020,6 +1047,24 @@ function submitCompetition() {
     var request = saveAsDraftRequestSoftware();
     request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
     request['activationFlag'] = true;
+
+    request['projectHeader'].properties['Contest Fee Percentage'] = mainWidget.softwareCompetition.projectHeader.properties['Contest Fee Percentage'];
+    request['projectHeader'].properties['Admin Fee'] = mainWidget.softwareCompetition.projectHeader.getAdminFee();
+
+    if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+        request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
+    }
+
+    if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
+        mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
+    }
+
+
+    if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
+    } else {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = 0;
+    }
     
     $.ajax({
         type: 'POST',

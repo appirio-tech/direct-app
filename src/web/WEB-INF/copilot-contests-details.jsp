@@ -1,7 +1,7 @@
 <%--
   - Author: isv, GreatKevin, Ghost_141
-  - Version: 1.7
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.8
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
   - - Change time zone from GMT-04 to UTC-05.
@@ -24,6 +24,9 @@
   - 
   - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix text inconsistency bug.
+  -
+  - Version 1.8 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -210,6 +213,12 @@
                         </c:forEach>
                     </strong>
                 </li>
+                <li style="display:none">
+                    <label>Private Group :</label>
+                    <strong id="securityGroupName">
+
+                    </strong>
+                </li>
                 <c:if test='${projectHeader.properties["CloudSpokes CMC Task"] != null}'>
                     <li>
                         <label>CMC Task ID :</label>
@@ -302,6 +311,12 @@
                         </c:forEach>
                     </select>
                 </div>
+            </div>
+
+            <div class="row" id="billingGroupCheckBox">
+                <label for="contestNameInput2">Private Group</label>
+                <input type="checkbox" style=""><span>Run this copilot posting in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
+                <input type="hidden" id="securityGroupId" value="${projectHeader.securityGroupId}" />
             </div>
             
             <!-- Experience -->

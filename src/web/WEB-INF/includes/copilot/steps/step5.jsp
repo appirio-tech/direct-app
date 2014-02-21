@@ -1,10 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.2
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Update in version 1.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
   - - Update the top note of step 5.
+
+ - Version 1,2 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
   -
   - Description: The step 5 of post a copilot.
   - Since: TC Cockpit Post a Copilot Assembly 1
@@ -39,6 +42,11 @@
                     <option value="0">Please select an existing account</option>
                 </select>
                 <a href="javascript:;" target="_blank" class="addBilling hide">Add Billing to project</a>                
+            </div>
+
+            <div class="rowItem" id="billingGroupCheckBox" style="font-size: 12px !important">
+                <label>Private Group<span class="red">*</span></label>
+                <input type="checkbox" style=""><span style="font-size: 12px !important">Run this copilot posting in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select><br/><br/>
             </div>
             <!--End .rowItem-->
         </div>

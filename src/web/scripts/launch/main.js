@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
@@ -74,9 +74,12 @@
  *
  * Version 2.8 (Module Assembly - TC Cockpit Launch F2F contest)
  * - Add support for the new contest type First2Finish
- * 
+ *
+ * Version 2.9 (Release Assembly - TC Cockpit Private Challenge Update)
+ * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 2.8
+ * @version 2.9
  */
 
  /**
@@ -119,6 +122,11 @@ var billingFees = {};
  * Local cache for billingFeesPercentage;
  */
 var billingFeesPercentage = {};
+
+/**
+ * Local cache for billingGroups
+ */
+var billingGroups = {};
 
 /**
  * Local cache for copilots for direct project.
@@ -602,6 +610,41 @@ function updateContestFee( ) {
     }
 }
 
+function updateBillingGroups() {
+
+    var selectedBillingID = $("#billingProjects").val();
+
+    if(selectedBillingID > 0 && billingGroups[selectedBillingID]) {
+        if(billingGroups[selectedBillingID].length > 0) {
+            $("#billingGroupCheckBox").show();
+
+            var securityGroupId = mainWidget.softwareCompetition.projectHeader.securityGroupId;
+
+            if(securityGroupId > 0) {
+                $("#billingGroupCheckBox input[type=checkbox]").attr('checked', 'checked');
+                $("#billingGroupCheckBox select").val(securityGroupId);
+            }
+
+            $("#billingGroupCheckBox input[type=checkbox]").trigger('change');
+
+            if(securityGroupId > 0) {
+                $("#billingGroupCheckBox select").val(securityGroupId);
+                $("#securityGroupName").text($("#billingGroupCheckBox select option:selected").text());
+                $("#securityGroupName").parents("tr").show();
+            } else {
+                $("#securityGroupName").text('');
+                $("#securityGroupName").parents("tr").hide();
+            }
+        } else {
+            $("#billingGroupCheckBox").hide();
+            $("#billingGroupCheckBox select option").remove();
+        }
+    } else {
+        $("#billingGroupCheckBox").hide();
+        $("#billingGroupCheckBox select option").remove();
+    }
+}
+
 /**
  * initiate contest fee in edit page
  */
@@ -648,13 +691,15 @@ function getBillingContestFee(billingProjectId, contestTypeId) {
  * @param billingProjectId billing project id
  */
 function getContestFeesForBillingProject(billingProjectId) {
-      if(billingFees[billingProjectId] != null) {
+      if(billingFees[billingProjectId] != null && billingGroups[billingProjectId]) {
          return billingFees[billingProjectId];
       }
       
       var fees = [];
       
       var percentage = {};
+
+      var groups = [];
       
       var request = {billingProjectId:billingProjectId};
       
@@ -675,6 +720,9 @@ function getContestFeesForBillingProject(billingProjectId) {
                if(result.fees) {
                   fees = result.fees;
                }
+               if(result.groups) {
+                  groups = result.groups;
+               }
            },
            function(errorMessage) {
                showServerError(errorMessage);
@@ -684,6 +732,7 @@ function getContestFeesForBillingProject(billingProjectId) {
     
     billingFees[billingProjectId] = fees;
     billingFeesPercentage[billingProjectId] = percentage;
+    billingGroups[billingProjectId] = groups;
     return fees;
 }
 
@@ -839,6 +888,12 @@ function saveAsDraftRequest() {
     if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
+
+   if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+       mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
+   } else {
+       mainWidget.softwareCompetition.projectHeader.securityGroupId = 0;
+   }
 
    var request;
 
@@ -2075,7 +2130,6 @@ function calcPrizes(prizes) {
    var contestCost = getContestCost(feeObject, 'custom');
    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
    contestCost.firstPlaceCost = firstPlace;
-    console.log(prizes);
    if(prizes.length > 1) {
        // has second prize input
        contestCost.secondPlaceCost = parseFloat(prizes[1]);
@@ -2091,8 +2145,8 @@ function calcPrizes(prizes) {
 
    } else {
        contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
-       console.log(contestCost.secondPlaceCost);
    }
+
    if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F)
    {
        contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);

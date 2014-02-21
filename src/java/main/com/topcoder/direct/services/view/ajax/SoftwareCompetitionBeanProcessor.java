@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
@@ -78,8 +78,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.8 (Release Assembly - TC Cockpit Private Challenge Update)
+ * <ul>
+ *     <li>Updated {@link #getMapResult(com.topcoder.service.project.SoftwareCompetition)} to include security group id</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 1.7
+ * @version 1.8
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -154,6 +161,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("adminFee", project.getProperties().get("Admin Fee"));
         result.put("directProjectMilestoneId", bean.getDirectProjectMilestoneId());
         result.put("directProjectMilestoneName", bean.getDirectProjectMilestoneName());
+        result.put("securityGroupId", project.getSecurityGroupId());
 
         // get resources of project
         Resource[] resources = bean.getResources();

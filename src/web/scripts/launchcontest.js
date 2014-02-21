@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -48,9 +48,12 @@
  *
  * Version 2.2 (Module Assembly - TC Cockpit Contest Milestone Association 1)
  * - Updates to support choose associated milestone when creating a new contest
+ *
+ * Version 2.3 (Release Assembly - TC Cockpit Private Challenge Update)
+ * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
  * 
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.2
+ * @version 2.3
  */
 $(document).ready(function() {
 
@@ -74,7 +77,24 @@ $(document).ready(function() {
     		var txt=$(this).text().substr(0,50)+'...';
     		$(this).text(txt);    		
     	}
-    });	
+    });
+
+    $("#billingGroupCheckBox input[type=checkbox]").change(function () {
+
+        if ($(this).is(":checked")) {
+            $("#billingGroupCheckBox select").show();
+            $("#billingGroupCheckBox select option").remove();
+            var selectedBillingID = $("#billingProjects").val();
+            if(selectedBillingID > 0 && billingGroups[selectedBillingID] && billingGroups[selectedBillingID].length > 0) {
+                $.each(billingGroups[selectedBillingID], function(i, v){
+                    $("#billingGroupCheckBox select").append($("<option/>").attr('value', v.id).text(v.name));
+                })
+            }
+        } else {
+            $("#billingGroupCheckBox select").hide();
+        }
+    });
+
     // Drop Down Select Project
     $(".dropdown dt a").click(function() {
         $(".dropdown dd ul").toggle();
@@ -464,6 +484,7 @@ $(document).ready(function() {
 
     $('#billingProjects').bind("change", function() {
         updateContestFee();
+        updateBillingGroups();
     });
 
     $('#addNewProject').click(function() {
@@ -517,7 +538,6 @@ $(document).ready(function() {
     handleProblemsDropDownChange();
     
     $('#overviewAlgorithmPage').hide();
-    
 }); // end of jQuery onload
 
 //capacity dates
@@ -571,13 +591,14 @@ function handleProjectDropDownChange() {
     		$("#lccCheckBox").removeAttr('disabled');
     	}
         updateContestFee();
+        updateBillingGroups();
     });
 
     if(hasCMCBilling) {
         $("#billingProjects").val($("input[name=CMCBillingID]").val());
         $("#billingProjects").getSetSSValue($("input[name=CMCBillingID]").val());
     } else {
-        $("#billingProjects").getSetSSValue(0);
+        $("#billingProjects").getSetSSValue("0");
     }
 
 
@@ -859,7 +880,8 @@ function onContestTypeChange() {
               }
           });
       }
-      updateContestFee();      
+      updateContestFee();
+      updateBillingGroups();
 }
 
 /**
@@ -975,3 +997,4 @@ function closeTBBox() {
     $('#TB_window').hide();
     $('#TB_window div').remove();
 }
+

@@ -1,7 +1,7 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 1.7
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.8
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
 
@@ -31,6 +31,9 @@
   -
   - Version 1.7 (Module Assembly - TC Cockpit Contest Milestone Association 1)
   - - Add milestone display and choose in launch contest
+  -
+  - Version 1.8 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -123,6 +126,10 @@
              </select>
           </div>
           <a href="javascript:;" target="_blank" class="addBilling hide">Add Billing to project</a>
+      </div>
+
+      <div class="row" id="billingGroupCheckBox">
+          &nbsp;&nbsp;&nbsp;<input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
       </div>
 
       <div class="row">

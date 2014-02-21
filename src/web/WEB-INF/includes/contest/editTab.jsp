@@ -33,6 +33,9 @@
   -
   - Version 2.0 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for studio contest prize add and remove
+  -
+  - Version 2.1 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -73,6 +76,10 @@
             <tr>
                 <td class="first_tab_type"><strong>Billing Account</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
+            </tr>
+            <tr>
+                <td class="first_tab_type"><strong>Private Group</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr class="cmcTask">
@@ -167,6 +174,9 @@
                  </div>
                  
                  <br /><br />
+                <span id="billingGroupCheckBox"><br />
+                             <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
+                 </span>
                 <span class="cmcTask"><br />
                     <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">

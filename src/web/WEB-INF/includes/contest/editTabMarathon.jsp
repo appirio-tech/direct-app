@@ -1,12 +1,15 @@
 <%--
   - Version: 1.2
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - change on #billingProjects, will load by jquery
   -
   - Version 1.2 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for studio contest prize add and remove
+  -
+  - Version 1.3 (Release Assembly - TC Cockpit Private Challenge Update)
+  -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
   -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
@@ -50,6 +53,11 @@
             <tr>
                 <td class="first_tab_type"><strong>Billing Account</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Private Group</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
             <tr class="cmcTask">
@@ -139,6 +147,9 @@
             </div>
 
             <br /><br />
+            <span id="billingGroupCheckBox"><br />
+                             <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
+            </span>
              <span class="cmcTask"><br />
                     <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">
