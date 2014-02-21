@@ -182,14 +182,14 @@
         <!-- contestType select -->
         <select name="contestType" class="contestType">
             <option value="0" selected="selected">Select Challenge Type</option>
-            <optgroup label="Software">
+            <optgroup label="Development">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
                         <option value="${value.typeId}">${value.description}</option>
                     </s:if>
                 </s:iterator>
             </optgroup>
-            <optgroup label="Studio">
+            <optgroup label="Design">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="value.studio">
                         <option value="${value.typeId}">${value.description}</option>
@@ -243,14 +243,14 @@
         <!-- contestType select -->
         <select name="contestType" class="contestType">
             <option value="0" selected="selected">Select Challenge Type</option>
-            <optgroup label="Software">
+            <optgroup label="Development">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
                         <option value="${value.typeId}">${value.description}</option>
                     </s:if>
                 </s:iterator>
             </optgroup>
-            <optgroup label="Studio">
+            <optgroup label="Design">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="value.studio">
                         <option value="${value.typeId}">${value.description}</option>
@@ -305,14 +305,14 @@
         <!-- contestType select -->
         <select name="contestType" class="contestType">
             <option value="0" selected="selected">Select Challenge Type</option>
-            <optgroup label="Software">
+            <optgroup label="Development">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
                         <option value="${value.typeId}">${value.description}</option>
                     </s:if>
                 </s:iterator>
             </optgroup>
-            <optgroup label="Studio">
+            <optgroup label="Design">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="value.studio">
                         <option value="${value.typeId}">${value.description}</option>
@@ -367,14 +367,14 @@
         <!-- contestType select -->
         <select name="contestType" class="contestType">
             <option value="0" selected="selected">Select Challenge Type</option>
-            <optgroup label="Software">
+            <optgroup label="Development">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="!value.studio">
                         <option value="${value.typeId}">${value.description}</option>
                     </s:if>
                 </s:iterator>
             </optgroup>
-            <optgroup label="Studio">
+            <optgroup label="Design">
                 <s:iterator value="viewData.contestTypes">
                     <s:if test="value.studio">
                         <option value="${value.typeId}">${value.description}</option>

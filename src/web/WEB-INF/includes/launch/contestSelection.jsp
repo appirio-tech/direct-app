@@ -48,11 +48,11 @@
               <div class="selectX">
                   <div class="selectOut">
                       <select id="contestTypes">
-                           <optgroup label="Studio">
+                           <optgroup label="Design">
                            </optgroup>
-                           <optgroup label="Software">
+                           <optgroup label="Development">
                            </optgroup>
-                           <optgroup label="Algorithm">
+                           <optgroup label="Data">
                            </optgroup>
                        </select>
                   </div>

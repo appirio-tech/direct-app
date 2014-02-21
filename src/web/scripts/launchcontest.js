@@ -419,13 +419,13 @@ $(document).ready(function() {
     $.each(projectCategoryArray, function(i, projectCategory) {
         // not show copilot contest type
         if (projectCategory.id != 29 && projectCategory.id != ALGORITHM_CATEGORY_ID_MARATHON && projectCategory.typeId != 3) {
-            $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
+            $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Development']");
         }
         if (projectCategory.typeId == 3) {
-        	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Studio']");
+        	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Design']");
         }
         if (projectCategory.id == ALGORITHM_CATEGORY_ID_MARATHON) {
-            $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Algorithm']");
+            $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Data']");
         }
     });
     

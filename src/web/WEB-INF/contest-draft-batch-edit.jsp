@@ -81,13 +81,13 @@
                                         <td>
                                             <s:if test="isStudio">
                                                 <s:select list="%{#{}}" name="contestType" value="contestType.id">
-                                                    <s:optgroup label="studio"
+                                                    <s:optgroup label="Design"
                                                                 list="viewData.studioContestTypes" />
                                                 </s:select>
                                             </s:if>
                                             <s:else>
                                                 <s:select list="%{#{}}" name="contestType" value="contestType.id">
-                                                    <s:optgroup label="software"
+                                                    <s:optgroup label="Development"
                                                                 list="viewData.softwareContestTypes" />
                                                 </s:select>
                                             </s:else>
