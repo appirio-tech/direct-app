@@ -57,6 +57,8 @@ var billingFees = {};
 
 var billingFeesPercentage = {};
 
+var billingGroups = {};
+
 var contestBillingFee = 0;
 
 var contestFeePercentage = 0;
