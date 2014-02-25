@@ -51,9 +51,12 @@
  *
  * Version 2.3 (Release Assembly - TC Cockpit Private Challenge Update)
  * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+ *
+ * Version 2.4 (TC Cockpit Auto Assign Reviewer for First2Finish challenge)
+ * - Add "Add Copilot as Iterative Reviewer" checkbox for First2Finish challenge
  * 
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.3
+ * @version 2.4
  */
 $(document).ready(function() {
 
@@ -94,6 +97,9 @@ $(document).ready(function() {
             $("#billingGroupCheckBox select").hide();
         }
     });
+
+    // copilot select dropdown change
+    $('.copilotSelect select').change(copilotDropDownChange);
 
     // Drop Down Select Project
     $(".dropdown dt a").click(function() {
@@ -464,7 +470,6 @@ $(document).ready(function() {
         });
     }
 
-
     /*****************************
      *   Select Contest Type
      ****************************/
@@ -634,6 +639,7 @@ function handleProjectDropDownChange() {
 
     // we only refresh stylish selection when it's not hidden
     $('.copilotSelect select').resetSS();
+    $('.copilotSelect select').change(copilotDropDownChange);
     $('.copilotSelect select').getSetSSValue(selected);
 
 
@@ -802,6 +808,7 @@ function onContestTypeChange() {
       } else {
         // initialized before, we only do the reset to update the data
         $('.copilotSelect select').resetSS();
+        $('.copilotSelect select').change(copilotDropDownChange);
       }
 
         if (!milestoneDropdownFlag) {
@@ -882,6 +889,7 @@ function onContestTypeChange() {
       }
       updateContestFee();
       updateBillingGroups();
+      copilotDropDownChange();
 }
 
 /**
@@ -951,6 +959,7 @@ function addNewProject() {
                                 $("#contestCopilot").html("");
                                 $("<option/>").val(0).text("Unassigned").appendTo("#contestCopilot");
                                 $("#contestCopilot").resetSS();
+                                $('.copilotSelect select').change(copilotDropDownChange);
                                 $("#contestCopilot").getSetSSValue(0);
                                 copilotDropdownFlag = true;
                             },
@@ -996,5 +1005,28 @@ function closeTBBox() {
     $('#TB_overlay').hide();
     $('#TB_window').hide();
     $('#TB_window div').remove();
+}
+
+/**
+ * The change event handler of copilot dropdown in launch new challenge page.
+ *
+ * @since 2.4
+ */
+function copilotDropDownChange() {
+
+    var copilotSelectDiv =  $(".copilotSelect").parent("div");
+
+    if($("#contestTypes").val() == 'SOFTWARE38' && $("#addCopilotAsReviewerCheck").length == 0 && $("#contestCopilot").val() > 0) {
+
+        // first2finish contest - display add iterative reviewer checkbox
+        copilotSelectDiv.append($('<div style="padding-top:5px"><input id="addCopilotAsReviewerCheck" type="checkbox"/><span class="lcc">&nbsp;&nbsp;Add Copilot as Iterative Reviewer</span></div>'));
+
+        // check the "Add Copilot as Iterative Reviewer" by default
+        $("#addCopilotAsReviewerCheck").attr('checked', 'checked');
+
+    } else if ($("#contestTypes").val() != 'SOFTWARE38' || $("#contestCopilot").val() == 0) {
+        // non - first2finish contest, remove the checkbox and div
+        $("#addCopilotAsReviewerCheck").parent("div").remove();
+    }
 }
 

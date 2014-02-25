@@ -78,8 +78,11 @@
  * Version 2.9 (Release Assembly - TC Cockpit Private Challenge Update)
  * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
  *
+ * Version 3.0 (TC Cockpit Auto Assign Reviewer for First2Finish challenge)
+ * - Add flag 'autoAssignReviewer' to the Save Contest ajax request for First2Finish challenge
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 2.9
+ * @version 3.0
  */
 
  /**
@@ -968,6 +971,12 @@ function saveAsDraftRequestSoftware() {
                 request['autoCreateBugHunt'] = false;
             }
         }
+    }
+
+
+    if(isF2F()) {
+        // get the auto assign reviewer flag to F2F challenge
+        request['autoAssignReviewer'] = $("#addCopilotAsReviewerCheck").is(":checked");
     }
 
    // update technologies

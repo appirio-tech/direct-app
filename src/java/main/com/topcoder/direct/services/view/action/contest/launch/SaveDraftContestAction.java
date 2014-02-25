@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.management.project.ProjectCategory;
 import com.topcoder.management.project.ProjectPlatform;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -235,8 +236,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.0 (TC Cockpit Auto Assign Reviewer for First2Finish challenge)
+ * <ul>
+ *     <li>Updated {@link #initializeCompetition(com.topcoder.service.project.SoftwareCompetition)} to
+ *     add Iterative Reviewer resource when isAutoAssignReviewer is true and contest is of type F2F</li>
+ *     <li>Added {@link #getIterativeReviewerResource()} to build an Iterative Reviewer Resource object</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
- * @version 1.9
+ * @version 2.0
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -293,6 +303,15 @@ public class SaveDraftContestAction extends ContestAction {
      * @since Direct Launch Software Contests Assembly
      */
     private static final long RESOURCE_ROLE_MANAGER = 13L;
+
+    /**
+     * <p>
+     * Constant for resource role of Iterative Reviewer.
+     *
+     * @since 2.0
+     * </p>
+     */
+    private static final long RESOURCE_ROLE_ITERATIVE_REVIEWER = 21L;
 
     /**
      * <p>
@@ -431,6 +450,14 @@ public class SaveDraftContestAction extends ContestAction {
      * @since TC Direct Replatforming Release 1
      */
     private boolean hasMulti = false;
+
+    /**
+     * Flag to indicate whether to assign the reviewer automatically to copilot. In the first release,
+     * it only adds the copilot as the only iterative reviewer of First2Finish contest.
+     *
+     * @since 2.0
+     */
+    private boolean autoAssignReviewer = false;
 
     /**
      * <p>
@@ -985,7 +1012,14 @@ public class SaveDraftContestAction extends ContestAction {
         // if has a valid copilot id and copilot name is not empty
         if (getContestCopilotId() > 0 && getContestCopilotName() != null && getContestCopilotName().trim().length() != 0) {
             // add copilot resource to project resources
-            softwareCompetition.setProjectResources(new Resource[] {getUserResource(), getCopilotResource()});
+            if(softwareCompetition.getProjectHeader().getProjectCategory().getId() == ProjectCategory.FIRST2FINISH.getId()
+                    && isAutoAssignReviewer()) {
+                // 1) the challenge is F2F 2) Copilot is set 3) auto add reviewer flag is on
+                softwareCompetition.setProjectResources(
+                        new Resource[]{getUserResource(), getCopilotResource(), getIterativeReviewerResource()});
+            } else {
+                softwareCompetition.setProjectResources(new Resource[] {getUserResource(), getCopilotResource()});
+            }
         } else {
             softwareCompetition.setProjectResources(new Resource[] {getUserResource()});
         };
@@ -1303,6 +1337,29 @@ public class SaveDraftContestAction extends ContestAction {
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT), String.valueOf(feeValue));
         // set payment status to "not paid"
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
+        // set registration date to now
+        resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
+
+        return resource;
+    }
+
+    /**
+     * Builds an Iterative Reviewer Resource.
+     *
+     * @return the Resource instance represents an Iterative Reviewer.
+     *
+     * @since 2.0
+     */
+    private Resource getIterativeReviewerResource() {
+        Resource resource = new Resource();
+        // unset id
+        resource.setId(UNSET_RESOURCE_ID);
+
+        // add copilot as the iterative reviewer
+        resource.setResourceRole(new ResourceRole(RESOURCE_ROLE_ITERATIVE_REVIEWER));
+        resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), getContestCopilotName());
+        resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(getContestCopilotId()));
+
         // set registration date to now
         resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
 
@@ -2179,5 +2236,13 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setCmcBillingId(long cmcBillingId) {
         this.cmcBillingId = cmcBillingId;
+    }
+
+    public boolean isAutoAssignReviewer() {
+        return autoAssignReviewer;
+    }
+
+    public void setAutoAssignReviewer(boolean autoAssignReviewer) {
+        this.autoAssignReviewer = autoAssignReviewer;
     }
 }
