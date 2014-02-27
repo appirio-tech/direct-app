@@ -81,8 +81,11 @@
  * Version 3.0 (TC Cockpit Auto Assign Reviewer for First2Finish challenge)
  * - Add flag 'autoAssignReviewer' to the Save Contest ajax request for First2Finish challenge
  *
+ * Version 3.1 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+ * - Add support for setting checkpoint end date and submission end date for software challenge
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.0
+ * @version 3.1
  */
 
  /**
@@ -943,6 +946,15 @@ function saveAsDraftRequestSoftware() {
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
+   request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
+
+
+    //checkpoint
+    if(mainWidget.softwareCompetition.multiRound) {
+        request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
+    }
+
+
 
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
@@ -995,12 +1007,7 @@ function saveAsDraftRequestSoftware() {
    if(mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded) {
       request['selectedDesignId'] = mainWidget.softwareCompetition.assetDTO.directjsDesignId;
    }
-   
-   //checkpoint
-   if(mainWidget.softwareCompetition.multiRound) {
-      request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
-   }
-   
+
    // the first page also gets some data
 
    updateSoftwarePrizes();

@@ -54,6 +54,9 @@
   -
   - Version 2.3 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 2.4 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+  - - Add checkpoint end date / submission end date / time picker for software contest. Remove old duration picker.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -337,21 +340,25 @@
                </div>
                <span>EST (UTC-05)</span>
              </div>
-             
-             <!-- Checkpoint -->
-             <div id="checkpointEditDiv" class="row">
-                <span class="name_label"><strong>Checkpoint Duration:</strong></span>
-                 <div class="checkpointEtSelect">
-                   <select id="checkpointDateDay" name="checkpointDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
-                 </div>
-                 <div class="selectSpan"><span>days</span></div>
-                 <div class="checkpointEtSelect">
-                   <select id="checkpointDateHour" name="checkpointDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
-                  </div>
-                  <div class="selectSpan"><span>hours</span></div>
-                  <div class="clear"></div>
-             </div>
-			 <!-- End -->
+
+                <div id="checkPointEndDateEditDiv" class="row">
+                    <span class="name_label"><strong>Checkpoint End:</strong></span>
+                    <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                    <div class="endEtSelect">
+                        <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                    </div>
+                    <span>ET (UTC-05)</span>
+                </div>
+
+                <div id="endDateEditDiv" class="row software">
+                    <span class="name_label"><strong>Submission End:</strong></span>
+                    <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                    <div class="endEtSelect">
+                        <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                    </div>
+                    <span>ET (UTC-05)</span>
+                </div>
+
              </div><!-- end .schedule -->
              
              <!-- Checkpoint prizes -->

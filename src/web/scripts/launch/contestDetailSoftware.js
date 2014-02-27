@@ -79,9 +79,12 @@
  *
  * Version 2.6 (Release Assembly - TC Cockpit Private Challenge Update)
  * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+ *
+ * Version 2.7 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+ * - Add support for setting checkpoint end date and submission end date for software challenge
  * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 2.6
+ * @version 2.7
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -151,11 +154,11 @@ $(document).ready(function(){
 		$(".save_btn_round").click(function(){			
 			saveRoundSection();
 		});
-		
-		$(".cancel_text_round").click(function(){
-			 populateRoundSection();
-       showRoundSectionDisplay();												
-		});
+
+        $(".cancel_text_round").click(function () {
+            populateRoundSection();
+            showRoundSectionDisplay();
+        });
 		
 		//prize
 		$(".edit_prize").click(function(){			
@@ -282,28 +285,34 @@ $(document).ready(function(){
    $('#roundTypes').bind("change", function() {
         var roundType = $('#roundTypes').val();
         if(roundType == 'single') {
+            // single round
 		   $('#endEditDiv .name_label').html('<strong>Round 1 Duration:</strong>');
            $('#checkpointEditDiv').hide();
-           $('#checkpointPrizeDiv').hide();  	
+           $('#checkPointEndDateEditDiv').hide();
+           $('#checkpointPrizeDiv').hide();
            $('#roundInfoDiv').hide();	     
            $('[id=rCheckpointTR]').hide();
            $('#rMultiRoundInfoDiv').hide();                 
         } else {
+            // multiple round
 		   $('#endEditDiv .name_label').html('<strong>Round 2 Duration:</strong>');
            $('#checkpointEditDiv').show();
-           $('#checkpointPrizeDiv').show();  	
+           $('#checkPointEndDateEditDiv').show();
+           $('#checkpointPrizeDiv').show();
            $('#roundInfoDiv').show();	     
            $('[id=rCheckpointTR]').show();
            $('#rMultiRoundInfoDiv').show();                 
-		   $(".checkpointEtSelect select,.numSelect select").each(function(index){
+		   $(".checkpointEtSelect select,.numSelect select, #checkPointEndTime").each(function(index){
 				if(!$(this).is(":hidden") && !$(this).data('customized')){
 					$(this).data('customized',true);
 					$(this).sSelect({ddMaxHeight: '220',yscroll: true});
 				}
 			}); 	
-		   if (!mainWidget.softwareCompetition.multiRound) {
+		   if (!mainWidget.softwareCompetition.multiRound && mainWidget.softwareCompetition.assetDTO.directjsProductionDate) {
 			   var startDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
-			   $('#checkpointDate').datePicker().val(getDatePart(new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000))).trigger('change');
+			   // $('#checkpointDate').datePicker().val(getDatePart(new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000))).trigger('change');
+			   $('#checkPointEndDate').datePicker().val(getDatePart(new Date(startDate.getTime()+ 3 * 24 * 60 * 60 * 1000))).trigger('change');
+               $("#checkPointEndTime").val('09:00').trigger('change');
 		   }
         }
    });
@@ -1272,16 +1281,27 @@ function populateRoundSection() {
 	}
 	
 	//edit
-	$('#roundTypes').val(isMultiRound?'multi':'single');
-	$('#roundTypes').trigger("change");    
-	$('#startDate').datePicker().val(getDatePart(startDate)).trigger('change');
-	$('#startTime').val(getRoundedTime(startDate));
-	$('#endDateDay').val(subDuration[0]).trigger('change');
-	$('#endDateHour').val(subDuration[1]).trigger('change');
-        if(mainWidget.isAlgorithmContest()) {
-          $('#endDate').datePicker().val(getDatePart(endDate)).trigger('change');
-          $('#endTime').val(getRoundedTime(endDate));
+    $('#roundTypes').val(isMultiRound ? 'multi' : 'single');
+    $('#roundTypes').trigger("change");
+    $('#startDate').datePicker().val(getDatePart(startDate)).trigger('change');
+    $('#startTime').val(getRoundedTime(startDate));
+    $('#endDateDay').val(subDuration[0]).trigger('change');
+    $('#endDateHour').val(subDuration[1]).trigger('change');
+    if (mainWidget.isAlgorithmContest()) {
+        $('#endDate').datePicker().val(getDatePart(endDate)).trigger('change');
+        $('#endTime').val(getRoundedTime(endDate));
+    }
+    if (mainWidget.isSoftwareContest()) {
+        // set end date to submission end date
+        $('#endDate').datePicker().val(getDatePart(subEndDate)).trigger('change');
+        $('#endTime').val(getRoundedTime(subEndDate));
+        if (isMultiRound) {
+            // for multiple round software contest, set checkpoint date / time
+            var checkpointDate = mainWidget.softwareCompetition.checkpointDate;
+            $('#checkPointEndDate').datePicker().val(getDatePart(checkpointDate)).trigger('change');
+            $('#checkPointEndTime').val(getRoundedTime(checkpointDate));
         }
+    }
 	if (!hasMultiRound(mainWidget.softwareCompetition.projectHeader.projectCategory.id) || !canEditMultiRound) {
 		$('#type').hide();
    	} else {
@@ -1403,7 +1423,14 @@ function getCKEditorContent(id) {
 
 function validateFieldsRoundSection() {
 	var isMultiRound = ('multi' == $('#roundTypes').val());
+
 	var startDate = getDateByIdPrefix('start');
+    var subEndDate = getDateByIdPrefix('end');
+
+    // check point date/time for software
+    var checkPointDate = getDateByIdPrefix('checkPointEnd');
+
+    // check point hours duration for studio
 	var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($('#checkpointDateHour').val());
 
 	var round1Info = getCKEditorContent('round1Info'); 
@@ -1417,13 +1444,31 @@ function validateFieldsRoundSection() {
     if (startDate < getServerTime()) {
         // errors.push('Start Date must be in future.');
     }
-    if (isMultiRound && checkpointDateHours == 0) {
-		if (mainWidget.competitionType == "STUDIO") {
+
+    // validate the dates
+    if (isMultiRound) {
+        // multiple round
+		if (mainWidget.isStudioContest() && checkpointDateHours == 0) {
+            // check if studio has positive round 1 duration set
 			errors.push('Round 1 duration should be positive.');
-		} else {
-			errors.push('Checkpoint duration must be positive.');
-		}
+		} else if (mainWidget.isSoftwareContest()) {
+            // software contest - check if start date > checkpoint date > sub end date
+            if (checkPointDate.getTime() <= startDate.getTime()) {
+                errors.push('Checkpoint end date/time should be larger than Start date/time.');
+            }
+            if (subEndDate.getTime() <= checkPointDate) {
+                errors.push('End date/time should be larger than Checkpoint date/time.');
+            }
+        }
+    } else {
+        // single round - check for software and algorithm contest
+        if (mainWidget.isSoftwareContest() || mainWidget.isAlgorithmContest()) {
+            if (subEndDate.getTime() <= startDate.getTime()) {
+                errors.push('End date/time should be larger than Start date/time.');
+            }
+        }
     }
+
 	if (mainWidget.competitionType == "STUDIO") {
 		var subEndDateHours = $('#endDateDay').val() * 24 + parseInt($('#endDateHour').val());
 		if (subEndDateHours == 0) {
@@ -1436,6 +1481,8 @@ function validateFieldsRoundSection() {
 	}
 
 	var checkpointPrize;
+
+    // validate the prizes
 	if(isMultiRound) {
 		if (mainWidget.competitionType == "STUDIO") {
 			checkpointPrizeInput = $('#checkpointPrize').val();
@@ -1492,16 +1539,10 @@ function validateFieldsRoundSection() {
 			}
 		}
 		prizes = newPrizes;
-		checkpointDateHours = 0;
 
+        // set check point date hours for studio to 0 for single round contest
+		checkpointDateHours = 0;
 	}
-  
-        if (mainWidget.isAlgorithmContest()) {
-           var algoEndDat = getDateByIdPrefix('end');
-           if (algoEndDat <= startDate) {
-               errors.push("Challenge end date must be later than the challenge start date.");
-           }
-        }
 
 	// check total payment
 	/**if(getCurrentContestTotal(true) < mainWidget.softwareCompetition.paidFee) {
@@ -1517,10 +1558,16 @@ function validateFieldsRoundSection() {
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    mainWidget.softwareCompetition.startDate = startDate;
-   mainWidget.softwareCompetition.checkpointDate = new Date();
-   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
 
-   if (mainWidget.competitionType == "STUDIO") {
+   if(mainWidget.isStudioContest() && isMultiRound) {
+       mainWidget.softwareCompetition.checkpointDate = new Date();
+       mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
+   } else if(mainWidget.isSoftwareContest() && isMultiRound) {
+       mainWidget.softwareCompetition.checkpointDate = checkPointDate;
+   }
+
+
+   if (mainWidget.isStudioContest()) {
 	   mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
@@ -1528,7 +1575,7 @@ function validateFieldsRoundSection() {
 	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
  
-    if (mainWidget.isAlgorithmContest()) {
+    if (mainWidget.isAlgorithmContest() || mainWidget.isSoftwareContest()) {
         mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
     }
 

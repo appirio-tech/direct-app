@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 1.8
+  - Version: 1.9
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -34,6 +34,9 @@
   -
   - Version 1.8 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 1.9 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+  - - Add checkpoint end date / submission end date / time picker for software contest. Remove old duration picker.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -194,9 +197,18 @@
           </div>
           <span>ET (UTC-05)</span>
       </div>
+
+      <div id="checkPointEndDateDiv" class="row">
+          <label>Checkpoint End:</label>
+          <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+          <div class="endEtSelect">
+              <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+          </div>
+          <span>ET (UTC-05)</span>
+      </div>
       
-      <div id="endDateDiv" class="row">
-        <label>End:</label>
+      <div id="endDateDiv" class="row software">
+        <label>Submission End:</label>
           <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
           <div class="endEtSelect">
             <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
@@ -205,7 +217,7 @@
       </div>
 
       <!-- Checkpoint -->
-      <div class="row" id="checkpointDiv">
+      <div class="row studio" id="checkpointDiv">
         <label>Round 1 Duration:</label>
         <div class="checkpointEtSelect">
           <select id="checkpointDateDay" name="checkpointDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>

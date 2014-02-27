@@ -54,9 +54,12 @@
  *
  * Version 2.4 (TC Cockpit Auto Assign Reviewer for First2Finish challenge)
  * - Add "Add Copilot as Iterative Reviewer" checkbox for First2Finish challenge
+ *
+ * Version 2.5 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+ * - Add support for setting checkpoint end date and submission end date for software challenge
  * 
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.4
+ * @version 2.5
  */
 $(document).ready(function() {
 
@@ -484,6 +487,7 @@ $(document).ready(function() {
     $('#contestTypes').bind("change", function() {
         onContestTypeChange();
     });
+
     onContestTypeChange();
 
 
@@ -499,23 +503,33 @@ $(document).ready(function() {
     });
 
     // round types
-    $('#roundTypes').bind("change", function() {
+    $('#roundTypes').bind("change", function () {
+        var contestType = getContestType(true)[0];
         var roundType = $('#roundTypes').val();
-	updateRoundDurationLabels();
-        if(roundType == 'single') {
-           $('#checkpointDiv').hide();
-           $('#checkpointPrizeDiv').hide();
-           $('#swCheckpointPrizeDiv').hide();
-           $('#round1InfoDiv').hide();
-           $('#round2InfoDiv').hide();
+        updateRoundDurationLabels();
+        if (roundType == 'single') {
+            $('#checkpointDiv').hide();
+            $('#checkpointPrizeDiv').hide();
+            $('#swCheckpointPrizeDiv').hide();
+            $('#round1InfoDiv').hide();
+            $('#round2InfoDiv').hide();
+            $("#checkPointEndDateDiv").hide();
         } else {
-           $('#checkpointDiv').show();
-           $('#checkpointPrizeDiv').show();           
-           $('#swCheckpointPrizeDiv').show();
-           $('#round1InfoDiv').show();
-           $('#round2InfoDiv').show();
+            if(contestType == 'SOFTWARE') {
+                $('#checkpointDiv').hide();
+                $("#checkPointEndDateDiv").show();
+            } else {
+                $('#checkpointDiv').show();
+                $("#checkPointEndDateDiv").hide();
+            }
+
+            $('#checkpointPrizeDiv').show();
+            $('#swCheckpointPrizeDiv').show();
+            $('#round1InfoDiv').show();
+            $('#round2InfoDiv').show();
         }
     });
+
     $('#roundTypes').trigger("change");
 
     /* init date-picker and time picker */
@@ -694,9 +708,9 @@ function onContestTypeChange() {
     var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
-    if(isContestSaved()) {
+    if (isContestSaved()) {
         currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-        if(currentTypeId == typeId) {
+        if (currentTypeId == typeId) {
             return false;
         }
     }
@@ -713,27 +727,27 @@ function onContestTypeChange() {
         if (swDetailedRequirements) {
             swDetailedRequirements.destroy(true);
         }
-        CKEDITOR.replace('swGuidelines', { 
+        CKEDITOR.replace('swGuidelines', {
             templates: getSGTemplatesName(typeId),
             templates_files: SGTemplatesList
-        });    
-        CKEDITOR.replace('swDetailedRequirements', { 
+        });
+        CKEDITOR.replace('swDetailedRequirements', {
             templates: getDRTemplatesName(typeId),
-            templates_files: DRTemplatesList 
+            templates_files: DRTemplatesList
         });
     } else {
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {
             contestDescription.destroy(true);
         }
-        CKEDITOR.replace('contestDescription', { 
+        CKEDITOR.replace('contestDescription', {
             templates: getStudioTemplatesName(typeId),
-            templates_files: StudioContestSpecTemplates 
+            templates_files: StudioContestSpecTemplates
         });
     }
-    
-    if(isContestSaved() && typeId != currentTypeId) {
-        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+
+    if (isContestSaved() && typeId != currentTypeId) {
+        if (typeId == SOFTWARE_CATEGORY_ID_F2F) {
             showErrors("You cannot change saved contest to First2Finish contest type");
             // switch back to First2Finish
             setTimeout(function () {
@@ -742,7 +756,7 @@ function onContestTypeChange() {
 
             return;
         }
-        if(currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+        if (currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
             showErrors("You cannot change saved First2Finish contest to other contest type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
@@ -751,7 +765,7 @@ function onContestTypeChange() {
         }
     }
 
-    if(typeId == 14 && contestType == 'SOFTWARE') {
+    if (typeId == 14 && contestType == 'SOFTWARE') {
         // show the bug hunt check box and default set to checked
         $("#assembly_bug_hunt").show();
         $("#bug_hunt_CheckBox").attr('checked', 'checked');
@@ -759,15 +773,17 @@ function onContestTypeChange() {
         $("#assembly_bug_hunt").hide();
         $("#bug_hunt_CheckBox").removeAttr('checked');
     }
-    
-    if(typeId == ALGORITHM_CATEGORY_ID_MARATHON && contestType == 'ALGORITHM') {
+
+    if (typeId == ALGORITHM_CATEGORY_ID_MARATHON && contestType == 'ALGORITHM') {
         // show the end date for marathon match
         $("#endDateDiv").show();
         $("div.milestoneSelect").parents("div.row").hide();
+    } else if(contestType == 'SOFTWARE') {
+        $("#endDateDiv").show();
+        $("div.milestoneSelect").parents("div.row").show();
     } else {
         $("#endDateDiv").hide();
         $("div.milestoneSelect").parents("div.row").show();
-
     }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
@@ -784,47 +800,48 @@ function onContestTypeChange() {
     }
 
 
-       
-       if (mainWidget.softwareCompetition.projectHeader.projectCategory && mainWidget.softwareCompetition.projectHeader.projectCategory.id > 0) {
-    	   mainWidget.softwareCompetition.projectHeader.projectCategory.id = typeId;
-       }
-       
-      $('.software').hide();
-      $('.studio').hide();
-      $(".schedule").css("margin-bottom","0px");
+    if (mainWidget.softwareCompetition.projectHeader.projectCategory && mainWidget.softwareCompetition.projectHeader.projectCategory.id > 0) {
+        mainWidget.softwareCompetition.projectHeader.projectCategory.id = typeId;
+    }
 
-      if (hasMultiRound(typeId)) {
-    	  $("#roundTypeDiv").show();
-      } else {
-    	  $("#roundTypeDiv").hide();
-    	  $("#checkpointDiv").hide();
-    	  mainWidget.softwareCompetition.multiRound = false;
-      }
+    $('.software').hide();
+    $('.studio').hide();
+    $(".schedule").css("margin-bottom", "0px");
 
-      if (!copilotDropdownFlag) {
+    if (hasMultiRound(typeId)) {
+        $("#roundTypeDiv").show();
+        $('#roundTypes').trigger("change");
+    } else {
+        $("#roundTypeDiv").hide();
+        $("#checkpointDiv").hide();
+        $("#checkPointEndDateDiv").hide();
+        mainWidget.softwareCompetition.multiRound = false;
+    }
+
+    if (!copilotDropdownFlag) {
         // copilot dropdown has never been initialized, do it
         $('.copilotSelect select').sSelect(SelectOptions);
         copilotDropdownFlag = true;
-      } else {
+    } else {
         // initialized before, we only do the reset to update the data
         $('.copilotSelect select').resetSS();
         $('.copilotSelect select').change(copilotDropDownChange);
-      }
+    }
 
-        if (!milestoneDropdownFlag) {
-            // milestone dropdown has never been initialized, do it
-            $('.milestoneSelect select').sSelect(SelectOptions);
-            milestoneDropdownFlag = true;
-        } else {
-            // initialized before, we only do the reset to update the data
-            $('.milestoneSelect select').resetSS();
-        }
+    if (!milestoneDropdownFlag) {
+        // milestone dropdown has never been initialized, do it
+        $('.milestoneSelect select').sSelect(SelectOptions);
+        milestoneDropdownFlag = true;
+    } else {
+        // initialized before, we only do the reset to update the data
+        $('.milestoneSelect select').resetSS();
+    }
 
-    /// Studio Contest
-      if(mainWidget.isSoftwareContest()) {
-         //Software Contest
-         $('.software').show();
-         $('.studio').hide();
+
+    if (mainWidget.isSoftwareContest()) {
+        //Software Contest
+        $('.software').show();
+        $('.studio').hide();
 
         // the copilot dropdown options
         var SelectOptions = {
@@ -832,64 +849,67 @@ function onContestTypeChange() {
             yscroll: true
         };
 
-         if(typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
-         	  $('#contestName').hide();
-         	  $('#contestNameFromDesign').show();
-         	  $('#contestNameFromDesign').val("");
-         	  $('#contestIdFromDesign').val("");
-         	  $('#devOnlyDiv').show();
-         	  $('#devOnlyDiv').css("display","inline");
-         	  $('#devOnlyCheckBox').attr('checked', false);         	           	  
-         } else {
-         	  $('#contestName').show();
-         	  $('#contestNameFromDesign').hide();
-         	  $('#devOnlyDiv').hide();
-         	  $('#devOnlyCheckBox').attr('checked', false);         	  
-         }
-      }
+        if (typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
+            $('#contestName').hide();
+            $('#contestNameFromDesign').show();
+            $('#contestNameFromDesign').val("");
+            $('#contestIdFromDesign').val("");
+            $('#devOnlyDiv').show();
+            $('#devOnlyDiv').css("display", "inline");
+            $('#devOnlyCheckBox').attr('checked', false);
+        } else {
+            $('#contestName').show();
+            $('#contestNameFromDesign').hide();
+            $('#devOnlyDiv').hide();
+            $('#devOnlyCheckBox').attr('checked', false);
+        }
+    }
 
-      if(mainWidget.isStudioContest()) {
-          $('.software').hide();
-          $('.studio').show();
-          $('#roundTypes').trigger('change');
+    /// Studio Contest
+    if (mainWidget.isStudioContest()) {
+        $('.software').hide();
+        $('.studio').show();
+        $('#roundTypes').trigger('change');
 
-          $.each(studioSubtypeOverviews, function(i, overview) {
-              if(overview.id == typeId) {
-                 // update overview description
-                 $('#contestDescriptionTooltip').html(overview.description);
-              }
-          });
+        $.each(studioSubtypeOverviews, function (i, overview) {
+            if (overview.id == typeId) {
+                // update overview description
+                $('#contestDescriptionTooltip').html(overview.description);
+            }
+        });
 
-          $.each(studioSubtypeFees, function(i, fee) {
-               if(fee.id == typeId) {
-                 // not set yet, auto fill
-                 if(isEmpty($('#prize3').val())) {
-                     $('#prize1').val(fee.firstPlaceCost)
-                     $('#prize2').val(fee.secondPlaceCost)
-                 }
-              }
-          });
+        $.each(studioSubtypeFees, function (i, fee) {
+            if (fee.id == typeId) {
+                // not set yet, auto fill
+                if (isEmpty($('#prize3').val())) {
+                    $('#prize1').val(fee.firstPlaceCost)
+                    $('#prize2').val(fee.secondPlaceCost)
+                }
+            }
+        });
 
-          resetFileTypes(typeId);
-          $(".schedule").css("margin-bottom","0px");
+        resetFileTypes(typeId);
+        $(".schedule").css("margin-bottom", "0px");
 
-          getCapacityDatesForStudioSubType(getContestType(true)[1]);
-      }
-      
-      if(mainWidget.isAlgorithmContest()) {
-          $.each(algorithmSubtypeFees, function(i, fee) {
-               if(fee.id == typeId) {
-                 // not set yet, auto fill
-                 if(isEmpty($('#prize3').val())) {
-                     $('#alPrize1').val(fee.firstPlaceCost)
-                     $('#alPrize2').val(fee.secondPlaceCost)
-                 }
-              }
-          });
-      }
-      updateContestFee();
-      updateBillingGroups();
-      copilotDropDownChange();
+        getCapacityDatesForStudioSubType(getContestType(true)[1]);
+    }
+
+    if (mainWidget.isAlgorithmContest()) {
+        $.each(algorithmSubtypeFees, function (i, fee) {
+            if (fee.id == typeId) {
+                // not set yet, auto fill
+                if (isEmpty($('#prize3').val())) {
+                    $('#alPrize1').val(fee.firstPlaceCost)
+                    $('#alPrize2').val(fee.secondPlaceCost)
+                }
+            }
+        });
+
+        $("#endDateDiv").show();
+    }
+    updateContestFee();
+    updateBillingGroups();
+    copilotDropDownChange();
 }
 
 /**

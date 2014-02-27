@@ -38,7 +38,10 @@
  * - Hide 2nd place prize, DR, reliability, spec review payment in the next overview page.
  * - Check custom prize type for F2F contest by default
  *
- * @version 1.9
+ * Version 2.0 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
+ * - Add support for setting checkpoint end date and submission end date for software challenge
+ *
+ * @version 2.0
  * @author bugbuka, Veve, GreatKevin
  */
 $(document).ready(function () {
@@ -181,94 +184,104 @@ function validateFieldsContestSelectionAlgorithm() {
 }
 
 function validateFieldsContestSelectionSoftware() {
-   var categoryId = getContestType()[1];
-   var contestName = $('input#contestName').val();
-   var designContestId = $('input#contestIdFromDesign').val();
-   var tcProjectId = parseInt($('select#projects').val());
-   var billingProjectId = parseInt($('select#billingProjects').val());
-   var isMultiRound = ('multi' == $('#roundTypes').val());
+    var categoryId = getContestType()[1];
+    var contestName = $('input#contestName').val();
+    var designContestId = $('input#contestIdFromDesign').val();
+    var tcProjectId = parseInt($('select#projects').val());
+    var billingProjectId = parseInt($('select#billingProjects').val());
+    var isMultiRound = ('multi' == $('#roundTypes').val());
 
-   var copilotUserId = parseInt($('select#contestCopilot').val());
-   var copilotName = $('select#contestCopilot option:selected').text();
+    var copilotUserId = parseInt($('select#contestCopilot').val());
+    var copilotName = $('select#contestCopilot option:selected').text();
 
-   var projectMilestoneId = parseInt($('select#contestMilestone').val());
+    var projectMilestoneId = parseInt($('select#contestMilestone').val());
 
-   var startDate = getDateByIdPrefix('start');
-   var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
-   
-   //validation
-   var errors = [];
+    var startDate = getDateByIdPrefix('start');
+    var endDate = getDateByIdPrefix('end');
+    var checkPointDate = getDateByIdPrefix('checkPointEnd');
 
-   //validate contest
-	 if(needsDesignSelected()) {
-      if(!checkRequired(designContestId)) {
-          errors.push('Please type to select a design component.');
-      }	 	  
-	 } else {
-	 	  validateContestName(contestName, errors);
-   }
-   
-   
-   validateTcProject(tcProjectId, errors);
+    //validation
+    var errors = [];
 
-   // do not check First2Finish or CODE contest for milestone
-    if(categoryId != SOFTWARE_CATEGORY_ID_F2F && categoryId != SOFTWARE_CATEGORY_ID_CODE) {
-       validateDirectProjectMilestone(projectMilestoneId, errors);
-   }
+    //validate contest
+    if (needsDesignSelected()) {
+        if (!checkRequired(designContestId)) {
+            errors.push('Please type to select a design component.');
+        }
+    } else {
+        validateContestName(contestName, errors);
+    }
 
 
-   if(isMultiRound) {
-      if(checkpointDateHours == 0) {
-	     errors.push('Checkpoint duration must be positive.');
-      }
-   }
-      
-   if(errors.length > 0) {
-       showErrors(errors);
-       return false;
-   }
-      
-	  
-   initCompetitionSelectionCommonData();
-   // set the copilot user id and user name
-   mainWidget.softwareCompetition.copilotUserId = copilotUserId;
-   mainWidget.softwareCompetition.copilotUserName = copilotName;
+    validateTcProject(tcProjectId, errors);
+
+    // do not check First2Finish or CODE contest for milestone
+    if (categoryId != SOFTWARE_CATEGORY_ID_F2F && categoryId != SOFTWARE_CATEGORY_ID_CODE) {
+        validateDirectProjectMilestone(projectMilestoneId, errors);
+    }
+
+
+    if (isMultiRound) {
+        if (checkPointDate.getTime() <= startDate.getTime()) {
+            errors.push('Checkpoint end date/time should be larger than Start date/time.');
+        }
+        if (endDate.getTime() <= checkPointDate) {
+            errors.push('End date/time should be larger than Checkpoint date/time.');
+        }
+    } else {
+        if (endDate.getTime() <= startDate.getTime()) {
+            errors.push('End date/time should be larger than Start date/time.');
+        }
+    }
+
+    if (errors.length > 0) {
+        showErrors(errors);
+        return false;
+    }
+
+
+    initCompetitionSelectionCommonData();
+    // set the copilot user id and user name
+    mainWidget.softwareCompetition.copilotUserId = copilotUserId;
+    mainWidget.softwareCompetition.copilotUserName = copilotName;
 
     // set the project milestone id
     mainWidget.softwareCompetition.projectMilestoneId = projectMilestoneId;
 
-   if(needsDesignSelected()) {
-   	  mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = true;
-   	  //we need to grab some of values for category/technology etc to prepopulate
-   	  if(designContestId != mainWidget.softwareCompetition.assetDTO.directjsDesignId) {
-   	      mainWidget.softwareCompetition.assetDTO.directjsDesignId = designContestId;
-   	      fillDevFromSelectedDesign(designContestId);
-   	  }
-   	  contestName = mainWidget.softwareCompetition.assetDTO.name;
-   }
-   
-   delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
+    if (needsDesignSelected()) {
+        mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = true;
+        //we need to grab some of values for category/technology etc to prepopulate
+        if (designContestId != mainWidget.softwareCompetition.assetDTO.directjsDesignId) {
+            mainWidget.softwareCompetition.assetDTO.directjsDesignId = designContestId;
+            fillDevFromSelectedDesign(designContestId);
+        }
+        contestName = mainWidget.softwareCompetition.assetDTO.name;
+    }
 
-   if(copilotUserId == 0) {
-       mainWidget.softwareCompetition.copilotCost = 0;
-   } else {
-       mainWidget.softwareCompetition.copilotCost = copilotFees[categoryId].copilotFee;
-   }
+    delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification;
 
-   if($('#lccCheckBox').is(':checked')) {
-   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
-   } else {
-   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
-   }
-   if (mainWidget.softwareCompetition.multiRound) {
-	   mainWidget.softwareCompetition.checkpointDate = new Date();
-	   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
-   }
-   
-   //prizes is on category id
-   fillPrizes();
-   
-   return true;
+    if (copilotUserId == 0) {
+        mainWidget.softwareCompetition.copilotCost = 0;
+    } else {
+        mainWidget.softwareCompetition.copilotCost = copilotFees[categoryId].copilotFee;
+    }
+
+    if ($('#lccCheckBox').is(':checked')) {
+        mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+    } else {
+        mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+    }
+    if (mainWidget.softwareCompetition.multiRound) {
+        mainWidget.softwareCompetition.checkpointDate = new Date();
+        mainWidget.softwareCompetition.checkpointDate.setTime(checkPointDate.getTime());
+    }
+
+    mainWidget.softwareCompetition.subEndDate = endDate;
+
+    //prizes is on category id
+    fillPrizes();
+
+    return true;
 }
 
 function fillDevFromSelectedDesign(designContestId) {
