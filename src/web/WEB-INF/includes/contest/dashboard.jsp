@@ -136,7 +136,15 @@
                         
                         <c:forEach items="${viewData.dashboard.allPhases}" var="phase" varStatus="loop">
                             <li class="${phase.phaseType.htmlClass} ${phase.phaseStatus.htmlClass}">
-                                <span class="phaseName">${phase.phaseType.shortName} <c:if test="${phase.num > 1}">(${phase.num})&nbsp;</c:if></span>
+                                <c:choose>
+                                    <c:when test="${phase.phaseType.phaseTypeId != 18}">
+                                        <span class="phaseName">${phase.phaseType.shortName} <c:if test="${phase.num > 1}">(${phase.num})&nbsp;</c:if></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="phaseName">${phase.phaseName}</span>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 
                                 <c:choose>
                                     <c:when test="${loop.first}">

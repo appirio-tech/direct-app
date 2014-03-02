@@ -541,7 +541,7 @@ $(document).ready(function() {
     }
 
     if($("#startTime").length > 0) {
-        $(".startEtSelect ul li:eq(9) a, .endEtSelect ul li:eq(9) a").trigger('click');
+        $(".startEtSelect ul li:eq(9) a, #endDateDiv .endEtSelect ul li:eq(9) a, #checkPointEndDateDiv .endEtSelect ul li:eq(9) a").trigger('click');
     }
    
     CKEDITOR.replace( 'contestIntroduction' );
@@ -745,10 +745,10 @@ function onContestTypeChange() {
             templates_files: StudioContestSpecTemplates
         });
     }
-
-    if (isContestSaved() && typeId != currentTypeId) {
-        if (typeId == SOFTWARE_CATEGORY_ID_F2F) {
-            showErrors("You cannot change saved contest to First2Finish contest type");
+    
+    if(isContestSaved() && typeId != currentTypeId) {
+        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved non-First2Finish challenge to First2Finish challenge type");
             // switch back to First2Finish
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
@@ -756,8 +756,24 @@ function onContestTypeChange() {
 
             return;
         }
-        if (currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
-            showErrors("You cannot change saved First2Finish contest to other contest type");
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved First2Finish challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
+        if(typeId == SOFTWARE_CATEGORY_ID_CODE) {
+            showErrors("You cannot change saved non-Code challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_CODE) {
+            showErrors("You cannot change saved Code challenge to other challenge type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
             }, 1000);

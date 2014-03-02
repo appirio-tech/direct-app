@@ -256,13 +256,22 @@
 --%>
                                                 <table class="softwareStats" cellpadding="0" cellspacing="0">
                                                     <colgroup>
-                                                        <col width="5%"/>
-                                                        <col width="16%"/>
-                                                        <col width="10%"/>
-                                                        <col width="10%"/>
-                                                        <col width="10%"/>
-                                                        <col width="8%"/>
-                                                        <col width="8%"/>
+                                                        <s:if test="viewData.contestStats.contest.typeId == 38">
+                                                            <col width="5%"/>
+                                                            <col width="16%"/>
+                                                            <col width="10%"/>
+                                                            <col width="18%"/>
+                                                            <col width="18%"/>
+                                                        </s:if>
+                                                        <s:else>
+                                                            <col width="5%"/>
+                                                            <col width="16%"/>
+                                                            <col width="10%"/>
+                                                            <col width="10%"/>
+                                                            <col width="10%"/>
+                                                            <col width="8%"/>
+                                                            <col width="8%"/>
+                                                        </s:else>
                                                         <c:forEach begin="1" end="${viewData.reviewersCount}" step="1">
                                                             <col width="${viewData.reviewScoreColumnsWidth}%"/>
                                                         </c:forEach>
@@ -273,8 +282,10 @@
                                                         <th rowspan="2" class="left">Handle</th>
                                                         <th rowspan="2">ID</th>
                                                         <th rowspan="2">Date Submitted</th>
-                                                        <th rowspan="2">Screening Score</th>
-                                                        <th rowspan="2">Initial Score</th>
+                                                        <s:if test="viewData.contestStats.contset.typeId != 38">
+                                                            <th rowspan="2">Screening Score</th>
+                                                            <th rowspan="2">Initial Score</th>
+                                                        </s:if>
                                                         <th rowspan="2">Final Score</th>
                                                         <th colspan="${viewData.reviewersCount}"
                                                             class="reviewerScoreBg title">
@@ -305,10 +316,10 @@
                                                         <c:set var="passedScreening" value="${submission.passedScreening}"/>
                                                         <c:set var="passedReview" value="${submission.passedReview}"/>
                                                         <c:choose>
-                                                            <c:when test="${isWinner1}">
+                                                            <c:when test="${isWinner1 && passedReview && submission.finalScore ne null}">
                                                                 <c:set var="icoStyle" value="gold"/>
                                                             </c:when>
-                                                            <c:when test="${isWinner2}">
+                                                            <c:when test="${isWinner2 && passedReview && submission.finalScore ne null}">
                                                                 <c:set var="icoStyle" value="silver"/>
                                                             </c:when>
                                                             <c:otherwise>
@@ -332,37 +343,39 @@
                                                             </td>
                                                             <td>
                                                                 <fmt:formatDate value="${submission.submissionDate}"
-                                                                                pattern="MM.dd.yyyy"/>
+                                                                                pattern="MM.dd.yyyy HH:mm:ss"/>
                                                             </td>
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test="${submission.screeningScore ne null}">
-                                                                        <link:onlineReviewScreeningScorecard
-                                                                                reviewId="${submission.screeningReview.reviewId}"
-                                                                                styleClass="${passedScreening ? 'icoTrue' : 'icoFalse'}">
+                                                            <s:if test="viewData.contestStats.contset.typeId != 38">
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${submission.screeningScore ne null}">
+                                                                            <link:onlineReviewScreeningScorecard
+                                                                                    reviewId="${submission.screeningReview.reviewId}"
+                                                                                    styleClass="${passedScreening ? 'icoTrue' : 'icoFalse'}">
                                                                                 <fmt:formatNumber
                                                                                         value="${submission.screeningScore}"
-                                                                                              pattern="##0.00"/>
-                                                                        </link:onlineReviewScreeningScorecard>
-                                                                    </c:when>
-                                                                    <c:otherwise>n/a</c:otherwise>
-                                                                </c:choose>
-                                                            </td>
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test="${passedScreening}">
-                                                                        <c:choose>
-                                                                            <c:when test="${submission.initialScore ne null}">
+                                                                                        pattern="##0.00"/>
+                                                                            </link:onlineReviewScreeningScorecard>
+                                                                        </c:when>
+                                                                        <c:otherwise>n/a</c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${passedScreening}">
+                                                                            <c:choose>
+                                                                                <c:when test="${submission.initialScore ne null}">
                                                                                     <fmt:formatNumber
                                                                                             value="${submission.initialScore}"
-                                                                                                  pattern="##0.00"/>
-                                                                            </c:when>
-                                                                            <c:otherwise>n/a</c:otherwise>
-                                                                        </c:choose>
-                                                                    </c:when>
-                                                                    <c:otherwise>&nbsp;</c:otherwise>
-                                                                </c:choose>
-                                                            </td>
+                                                                                            pattern="##0.00"/>
+                                                                                </c:when>
+                                                                                <c:otherwise>n/a</c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:when>
+                                                                        <c:otherwise>&nbsp;</c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                            </s:if>
                                                             <td>
                                                                 <strong>
                                                                     <c:choose>

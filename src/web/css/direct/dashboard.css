@@ -793,7 +793,7 @@ BODY#page{
 #area1 .area1Content .batchButtons{
      position: absolute;
      top: 7px;
-     right: 0;
+     right: 15px;
      float: right;
      font-size: 11px;
  }
@@ -7458,7 +7458,8 @@ div.rightColumn .activity TABLE {
 .contestViews .areaHeader .viewBtns{
     position:absolute;
     right:0;
-    top:40px;
+    top:20px;
+    right:10px;
 }
     .contestViews .areaHeader .viewBtns a.listViewBtn{
          font-size:11px;
@@ -7530,7 +7531,7 @@ div.rightColumn .activity TABLE {
     position:absolute;
     font-size:14px;
     left:0;
-    top:25px;
+    top:10px;
     height:100%;
     width:100%;
     background-color:transparent;
@@ -11528,7 +11529,7 @@ tr.reportAverage {
     padding-right:80px;
 }
 #area1 .areaHeader{
-    padding-top:10px;
+    padding: 10px 10px 4px 0;
 }
 #mainContent{
     background:url("../../images/sidebar-bg.gif") #fff repeat-y right center;

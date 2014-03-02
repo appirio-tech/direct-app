@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -60,8 +60,15 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.6 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Added method {@link #isSpecReviewNeeded()}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, morehappiness, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public class ContestDashboardDTO extends ContestHealthDTO implements Serializable {
 
@@ -415,6 +422,24 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     public void setAllPhases(List<ProjectPhaseDTO> allPhases) {
         this.allPhases = allPhases;
     }
+
+
+    /**
+     * Gets whether if the contest has spec review phase.
+     *
+     * @return true if there is spec review phase, false otherwise
+     * @since 1.6
+     */
+    public boolean isSpecReviewNeeded() {
+        for(ProjectPhaseDTO p : allPhases) {
+            if(p.getPhaseType() == ProjectPhaseType.SPECIFICATION_REVIEW) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      * Gets the startTime field.

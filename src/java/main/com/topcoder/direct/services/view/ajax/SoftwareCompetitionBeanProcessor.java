@@ -85,8 +85,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.9 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Updated {@link #getMapResult(com.topcoder.service.project.SoftwareCompetition)} to add isReviewPhaseClosed</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 1.8
+ * @version 1.9
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -256,6 +263,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("phaseOpen", DirectUtils.isPhaseOpen(bean));
         result.put("hasSpecReview", DirectUtils.hasSpecReview(bean));
         result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(bean));
+        result.put("isReviewPhaseClosed", DirectUtils.isReviewPhaseClosed(bean));
         result.put("prizes", bean.getProjectHeader().getPrizes());
 
         boolean hasMulti = DirectUtils.isMultiRound(bean);

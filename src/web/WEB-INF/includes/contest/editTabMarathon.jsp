@@ -351,7 +351,7 @@
                 <a href="javascript:;" class="addButton alAdd"><span class="hide">ADD</span></a>
             </div>
 
-            <div id="extraPrizes" class="prizesInner hide">
+            <div id="alExtraPrizes" class="prizesInner hide">
                 <label class="first">4th Place</label>
                 <span class="dw">$</span>
                 <input type="text" id="prize4" class="prizesInput" value="" />

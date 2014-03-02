@@ -245,8 +245,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.1 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Updated to set milestone id to 0 if there is no milestone associated to the contest</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
- * @version 2.0
+ * @version 2.1
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -886,6 +893,8 @@ public class SaveDraftContestAction extends ContestAction {
         // set milestone association
         if (getDirectProjectMilestoneId() > 0) {
             softwareCompetition.setDirectProjectMilestoneId(getDirectProjectMilestoneId());
+        } else {
+            softwareCompetition.setDirectProjectMilestoneId(0);
         }
         
         if (DirectUtils.isStudio(softwareCompetition)) {

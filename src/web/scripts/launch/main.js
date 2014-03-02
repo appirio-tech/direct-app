@@ -1112,8 +1112,11 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
           showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         } else {
           modalClose();
-            showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+          showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
+
+        // update contest title display
+        $(".areaHeader .contestTitle").text(contestName);
 
         //update endDate
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
@@ -1131,12 +1134,19 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
+        if (mainWidget.softwareCompetition.projectHeader.id < 0) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+            });
         } else {
-            showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been updated successfully.", "VIEW CHALLENGE", function () {
+                window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+            });
         }
+
+        // update contest title display
+        $(".areaHeader .contestTitle").text(contestName);
 
         //update admin fee, to be fixed
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
@@ -1161,6 +1171,9 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
         } else {
             showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
         }
+
+        // update contest title display
+        $(".areaHeader .contestTitle").text(contestName);
         
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
@@ -1599,7 +1612,7 @@ function fillPrizes(billingProjectId) {
     $('#rswFirstPlace').html(firstPlaceAmount);
 
     $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
-    $(".prizesInner_software #prize2").val(contestCost.secondPlaceCost);
+    $(".prizesInner_software #prize2").val(contestCost.secondPlaceCost <= 0 ? '' : contestCost.secondPlaceCost);
 
 
 
@@ -1682,15 +1695,18 @@ function fillPrizes(billingProjectId) {
     }
 
     if(contestBillingFee >= 0) {
-        if (contestFeePercentage!= null && contestFeePercentage > 0) {
+        if (contestFeePercentage != null && contestFeePercentage > 0) {
             $('#rswContestFee').html(contestBillingFee.formatMoney(2) + ' (' + contestFeePercentage * 100 + '% markup)');
             $('#swContestFee').html(contestBillingFee.formatMoney(2));
+            $("#swContestFeePercentage").text(' (' + (contestFeePercentage * 100).toFixed(2) + '% markup)');
         } else {
             $('#swContestFee,#rswContestFee').html(contestBillingFee.formatMoney(2));
+            $("#swContestFeePercentage").text('');
         }
     } else {
         // no billing is loaded, use the default fee loaded from configuration
         $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
+        $("#swContestFeePercentage").text('');
     }
 
    $('#swCopilotFee,#rswCopilotFee').html(copilotCost.formatMoney(2));
@@ -2106,7 +2122,7 @@ function onSoftwarePrizeInputChange(_input, _name, required) {
 
     var value = _input.val();
 
-    if(required == true) {
+    if(required == true && $.trim(value).length > 0) {
         if(!checkRequired(value)) {
             showErrors('The <b>' + _name + '</b> should be set');
         }
@@ -2115,7 +2131,7 @@ function onSoftwarePrizeInputChange(_input, _name, required) {
     if(checkRequired(value) && !checkNumber(value)) {
         var floatValue = parseFloat(value);
         if(isNaN(floatValue)) {
-            showErrors('The ' + _name + ' is a invalid prize.');
+            showErrors('The ' + _name + ' is an invalid prize.');
         }
         return;
     }
@@ -2162,7 +2178,6 @@ function calcPrizes(prizes) {
    } else {
        contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
    }
-
    if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F)
    {
        contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
@@ -2525,7 +2540,8 @@ function validateCodePrizes(errors) {
             prevPrize = value.prizeAmount;
         });
 
-        if (prizes[1].prizeAmount > 0 && (prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount)) {
+        // add prizes.length > 1 to handle the case that there is only one first place prize
+        if (prizes.length > 1 && prizes[1].prizeAmount > 0 && (prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount)) {
             errors.push('Second place prize should at least be 20% of First place prize');
             errorsAdded = true;
         }
@@ -2739,6 +2755,16 @@ function isAssembly() {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
        return (categoryId == SOFTWARE_CATEGORY_ID_ASSEMBLY);
    }
+}
+
+
+function isBugHunt() {
+    if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+        return false;
+    } else {
+        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+        return (categoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT);
+    }
 }
 
 function isCode() {

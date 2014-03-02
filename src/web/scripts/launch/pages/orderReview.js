@@ -353,8 +353,8 @@ function activateContest() {
     showConfirmation("Do you really want to activate the challenge ?",
         "This will create the new challenge <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
             + "</span> for you and then activate it. " +
-            "Please confirm you want to create the challenge and activate it. After activation, "
-            + "you will start the challenge specification review.",
+            "Please confirm you want to create the challenge and activate it." +
+            (isF2F() || isCode() ? "" : "After activation, you will start the challenge specification review."),
         "YES",
         function() {
             closeModal();

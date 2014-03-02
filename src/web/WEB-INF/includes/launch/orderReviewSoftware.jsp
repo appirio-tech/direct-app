@@ -70,7 +70,7 @@
   			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td class="topcoderPrize">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td class="last"><span id="sworContestPrizeCost"></span></td>
+  			<td class="last">$<span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
   <div id="orswCheckpointPrizesDiv">
@@ -87,7 +87,7 @@
   			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
             <td>Copilot Fee : $<span id="sworCopilotFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 			<td>&nbsp;</td>
-  			<td class="last"><span id="sworAdditionalCosts"></span></td>
+  			<td class="last">$<span id="sworAdditionalCosts"></span></td>
 		</tr>
 	</table>
 	<table class="total">

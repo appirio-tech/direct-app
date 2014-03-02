@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -14,8 +14,6 @@ import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -211,8 +209,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.7 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Updated to refactor phases sorting logic to helper class DirectUtils</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin
- * @version 2.6
+ * @version 2.7
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -469,8 +474,6 @@ public class GetContestAction extends ContestAction {
         getViewData().getDashboard().setUnresolvedIssuesNumber(
         getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
-
-        getViewData().getDashboard().setAllPhases(sortContestPhases(getViewData().getDashboard().getAllPhases()));
 
         if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
             DirectUtils.setCopilotDashboardSpecificData(getProjectServices(), getProjectServiceFacade(),
@@ -871,51 +874,4 @@ public class GetContestAction extends ContestAction {
         COPILOT_CONTEST, CONTEST, CONTEST_JSON
     }
 
-    private static List<ProjectPhaseDTO> sortContestPhases(List<ProjectPhaseDTO> phases) {
-        List<ProjectPhaseDTO> specPart = new ArrayList<ProjectPhaseDTO>();
-        List<ProjectPhaseDTO> reviewPart = new ArrayList<ProjectPhaseDTO>();
-        List<ProjectPhaseDTO> finalPart = new ArrayList<ProjectPhaseDTO>();
-        
-        for(ProjectPhaseDTO p : phases) {
-            if(p.getPhaseType().getOrder() <= ProjectPhaseType.SPECIFICATION_REVIEW.getOrder()) {
-                specPart.add(p);
-            } else if (p.getPhaseType().getOrder() >= ProjectPhaseType.FINAL_FIX.getOrder()) {
-                finalPart.add(p);
-            } else {
-                reviewPart.add(p);
-            }
-        }
-
-        StartDateComparator sc = new StartDateComparator();
-        PhaseOrderComparator pc = new PhaseOrderComparator();
-        Collections.sort(specPart, sc);
-        Collections.sort(finalPart, sc);
-        Collections.sort(reviewPart, pc);
-
-        specPart.addAll(reviewPart);
-        specPart.addAll(finalPart);
-        
-//        for(ProjectPhaseDTO p : specPart) {
-//            System.out.println("start date:" + p.getStartTime() + " phase name:" + p.getPhaseType().getShortName() + " phase order:" + p.getPhaseType().getOrder());
-//        }
-
-        return specPart;
-
-    }
-
-    private static class StartDateComparator implements Comparator<ProjectPhaseDTO>{
-
-        public int compare(ProjectPhaseDTO o1, ProjectPhaseDTO o2) {
-            return o1.getStartTime().compareTo(o2.getStartTime());
-        }
-    }
-
-    private static class PhaseOrderComparator implements Comparator<ProjectPhaseDTO>{
-
-            public int compare(ProjectPhaseDTO p1, ProjectPhaseDTO p2) {
-                int o1 = p1.getPhaseType().getOrder();
-                int o2 = p2.getPhaseType().getOrder();
-                return (o1>o2 ? 1 : (o1==o2 ? 0 : -1));
-            }
-        }
 }

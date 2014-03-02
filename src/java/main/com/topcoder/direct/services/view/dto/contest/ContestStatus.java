@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -27,8 +27,15 @@ package com.topcoder.direct.services.view.dto.contest;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Added {@link #ITERATIVE_REVIEW}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public enum ContestStatus {
 
@@ -69,6 +76,13 @@ public enum ContestStatus {
      * <p>A <code>ContestStatus</code> corresponding to <code>Review</code> contest status.</p>
      */
     REVIEW("Review", "running", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Iterative Review</code> contest status.</p>
+     *
+     * @since 1.4
+     */
+    ITERATIVE_REVIEW("Iterative Review", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Active</code> contest status.</p>

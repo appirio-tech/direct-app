@@ -42,14 +42,20 @@
                     <span class="left"><span class="right">Details</span></span></a>
             </li>
 
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
-                <a href="<s:url action="contest/viewSpecReview" namespace="/">
+            <c:if test="${viewData.dashboard.specReviewNeeded}">
+
+                <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
+                    <a href="<s:url action="contest/viewSpecReview" namespace="/">
                     <s:param name="projectId" value="contest.id"/>
                     <s:param name="studio" value="viewData.contestStats.isStudio"/>
                 </s:url>" >
-            
-                <span class="left"><span class="right">Spec Review</span></span></a>
-            </li>
+
+                        <span class="left"><span class="right">Spec Review</span></span></a>
+                </li>
+
+            </c:if>
+
+
             <s:if test="marathon">
                 <li class="registrantsSubmissions <c:if test="${requestScope.CURRENT_SUB_TAB eq 'mmRegistrants'}">on</c:if> ">
                     <a href="<s:url action="mmRegistrants" namespace="/contest">
@@ -80,7 +86,7 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
 
             </li>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:130px">
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:130px; <c:if test="${!viewData.dashboard.specReviewNeeded}">min-width: 250px !important </c:if>">
                 <if:isStudioContest contestStats="${contestStats}">
                     <s:if test="viewData.contestStats.multipleRound">
                         <span class="submissionTabSpan">

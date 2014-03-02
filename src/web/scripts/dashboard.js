@@ -139,6 +139,40 @@ $(document).ready(function(){
 	var ua = navigator.userAgent.toLowerCase();
     var filterToSynchronized = ['customerId', 'billingAccountId', 'projectId', 'startDate', 'endDate', 'statusIds', 'projectCategoryIds'];
 
+    /* new added for contest dashboard */
+    // BUGR-4901 - Resize timeline relative the amount of phases.
+    var progressContainerWidth = $('.progressContainer').width();
+
+    // 771 = max size of the progressContainer to no break in min-width
+    // phaseNamePadding = space free / amount phases / 2 (2 sides)
+    var minWidth = parseInt($('.timelineContainer').css('min-width')) - 1;
+    var phaseNamePadding = Math.floor((minWidth - progressContainerWidth) / $('.progressContainer li').size() / 2);
+
+    // set paddings
+    $('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', phaseNamePadding + 'px');
+    $('.dashboardModule .content .progressContainer li .phaseName').css('padding-right', phaseNamePadding + 'px');
+
+    var firstPhaseWidth = $(".dashboardModule .content .progressContainer li:first").width();
+    if(firstPhaseWidth < 120)
+        $(".dashboardModule .content .progressContainer li:first .phaseDate p").css({"position":"relative","left":Math.floor((120-firstPhaseWidth)/2)+"px"});
+
+    var lastPhaseWidth = $(".dashboardModule .content .progressContainer li:last").width();
+    if(lastPhaseWidth < 120)
+        $(".dashboardModule .content .progressContainer li:last .phaseDate p").css({"position":"relative","right":Math.floor((120-lastPhaseWidth)/2)+"px"});
+
+    // IE progressStatus fix
+    if(!!navigator.userAgent.match(/Trident\/7\./)) {
+//        $('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
+//            $(this).width($(this).parent().width());
+//        });
+        // $('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
+        // $('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
+
+        // $('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', (phaseNamePadding - 10) + 'px');
+        // $('.dashboardModule .content .progressContainer li .phaseName').css('padding-right', (phaseNamePadding - 10) + 'px');
+    }
+
+
     var synchronizeFilters = function() {
 
         if($("#pipelineReportsPage").length != 0) {
@@ -1996,36 +2030,6 @@ $(document).ready(function(){
 
     $(".selectProject option:even").css("background", "#f3f3f3");
     
-	/* new added for contest dashboard */
-    // BUGR-4901 - Resize timeline relative the amount of phases.
-	var progressContainerWidth = $('.progressContainer').width();
-
-	// 771 = max size of the progressContainer to no break in min-width
-	// phaseNamePadding = space free / amount phases / 2 (2 sides)
-    var minWidth = parseInt($('.timelineContainer').css('min-width')) - 1;
-	var phaseNamePadding = Math.floor((minWidth - progressContainerWidth) / $('.progressContainer li').size() / 2);
-	
-	// set paddings
-	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', phaseNamePadding + 'px');
-	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-right', phaseNamePadding + 'px');
-	
-	var firstPhaseWidth = $(".dashboardModule .content .progressContainer li:first").width();
-	if(firstPhaseWidth < 120)
-		$(".dashboardModule .content .progressContainer li:first .phaseDate p").css({"position":"relative","left":Math.floor((120-firstPhaseWidth)/2)+"px"});
-
-	var lastPhaseWidth = $(".dashboardModule .content .progressContainer li:last").width();
-	if(lastPhaseWidth < 120)
-		$(".dashboardModule .content .progressContainer li:last .phaseDate p").css({"position":"relative","right":Math.floor((120-lastPhaseWidth)/2)+"px"});
-
-
-	// IE progressStatus fix
-	if($.browser.msie) {
-		$('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
-			$(this).width($(this).parent().width());
-		});
-		$('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
-		$('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
-	}
 
 	$(".statusP .helpBtn").hover(
 		function(){
@@ -2150,13 +2154,13 @@ $(document).ready(function(){
 	            $(this).width(wid);
 	            index++;
 	        });
-	        if($.browser.msie) {
-	            $('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
-	                $(this).width($(this).parent().width());
-	            });
-	            $('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
-	            $('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
-	        }
+//	        if(!!navigator.userAgent.match(/Trident\/7\./)) {
+//	            $('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
+//	                $(this).width($(this).parent().width());
+//	            });
+//	            $('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
+//	            $('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
+//	        }
 	    }
 	    updateTimeline();
 	    $(window).resize(function() {

@@ -1003,10 +1003,17 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.28 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Updated {@link #getContestDashboardData(long, boolean, boolean)} to sort contest phases</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin, Veve
- * @version 6.27
+ * @version 6.28
  * @since 1.0
  */
 public class DataProvider {
@@ -4244,6 +4251,8 @@ public class DataProvider {
                 dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
             }
         }
+
+        dto.setAllPhases(DirectUtils.sortContestPhases(dto.getAllPhases()));
 
         return dto;
     }

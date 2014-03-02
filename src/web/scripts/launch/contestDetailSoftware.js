@@ -493,8 +493,8 @@ function onContestTypeChange() {
     }
 
     if(isContestSaved() && typeId != currentTypeId) {
-        if(typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
-            showErrors("You cannot change saved contest to " + (typeId == SOFTWARE_CATEGORY_ID_F2F ? "First2Finish" : "Code") + " contest type");
+        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved non-First2Finish challenge to First2Finish challenge type");
             // switch back to First2Finish
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
@@ -502,8 +502,24 @@ function onContestTypeChange() {
 
             return;
         }
-        if(currentTypeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
-            showErrors("You cannot change saved " + (typeId == SOFTWARE_CATEGORY_ID_F2F ? "First2Finish" : "Code") + " contest to other contest type");
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+            showErrors("You cannot change saved First2Finish challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
+        if(typeId == SOFTWARE_CATEGORY_ID_CODE) {
+            showErrors("You cannot change saved non-Code challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_CODE) {
+            showErrors("You cannot change saved Code challenge to other challenge type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
             }, 1000);
@@ -957,6 +973,13 @@ function initContest(contestJson) {
         $('.contestTypeEditSection').show();
     }    
 
+    // if review / iterative review (can have multiple) phases are all closed - do not allow prize edit
+    if(contestJson.isReviewPhaseClosed) {
+        $(".edit_prize").hide();
+        $(".edit_round").hide();
+    }
+
+
     showSpecReview(contestJson);
     
     // can't change the multi round type if conetst is not draft 
@@ -1004,6 +1027,8 @@ function populateTypeSection() {
 
     if (mainWidget.softwareCompetition.projectMilestoneId > 0) {
         $('#rProjectMilestone').html(mainWidget.softwareCompetition.projectMilestoneName);
+    } else {
+        $('#rProjectMilestone').html('');
     }
 
 	//$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
@@ -1776,7 +1801,7 @@ function updateContestCostData() {
         var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestPercentage;
        $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        $('#swContestFee').html(actualFee.formatMoney(2));
-
+       $("#swContestFeePercentage").text(' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        if(actualFee != contestFee) {
            // this can be commented out for debug the contest fee consistency
            //alert('DEBUG:not matched');
@@ -1785,6 +1810,7 @@ function updateContestCostData() {
 
     } else {
        $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
+        $("#swContestFeePercentage").text('');
     }
 
     // (7) set the copilot cost
@@ -2561,7 +2587,11 @@ function saveDocumentSection() {
  */
 function activateContestEdit() {	
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
-   
+
+    if(!validateFieldsSpecSection()) {
+        return;
+    }
+
    if(billingProjectId <= 0) {
    	  showErrors("no billing project is selected.");
    	  return;
@@ -2581,6 +2611,7 @@ function activateContestEdit() {
  * @since 1.6
  */
 function showActivateSpecReviewModal() {
+
     // show spec review popup
     $('#TB_overlay').show();
     $('#TB_window_custom').show();
@@ -2607,6 +2638,7 @@ function hideActivateSpecReviewModal() {
 }
 
 function activateAndStartSpecReview(mode) {
+
     //construct request data
     fixFileTypeIds();
     var request = saveAsDraftRequest();

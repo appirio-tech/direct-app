@@ -1193,7 +1193,7 @@
 			
 			/**prize input **/	
 			.prizesInner .prizesInput{
-				width:63px;
+				width:56px;
 				height:16px;
 				float:left;
 				display:inline;
@@ -1953,6 +1953,7 @@
 		background:#fff;
 		position:absolute;
 		margin-top:-3px;
+                height: 120px;
 		}
 
 /** num select **/		

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -594,8 +594,16 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, TCSASSEMBLER, Ghost_141, jiajizhou86
- * @version 1.10.8
+ * <p>
+ * Version 1.11 (Release Assembly - TC Cockpit New Challenge types Integration Bug Fixes)
+ * <ul>
+ *     <li>Added method {@link #isReviewPhaseClosed(com.topcoder.service.project.SoftwareCompetition)}</li>
+ *     <li>Added method {@link #sortContestPhases(java.util.List)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86
+ * @version 1.11
  */
 public final class DirectUtils {
 
@@ -1414,6 +1422,94 @@ public final class DirectUtils {
         }
 
         return false;
+    }
+
+    /**
+     * Checks whether a contest has review (including iterative review) phases all closed.
+     *
+     * @param softwareCompetition the contest to check
+     * @return true if review phase(s) closed, false otherwise
+     * @since 1.11
+     */
+    public static boolean isReviewPhaseClosed(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        List<Phase> reviewPhases = new ArrayList<Phase>();
+
+        Set<Phase> allPhases = softwareCompetition.getProjectPhases().getPhases();
+        for (Phase phase : allPhases) {
+            PhaseType phaseType = phase.getPhaseType();
+            if(phaseType.getId() == ProjectPhaseType.ITERATIVE_REVIEW.getPhaseTypeId()
+                    || phaseType.getId() == ProjectPhaseType.REVIEW.getPhaseTypeId()) {
+                reviewPhases.add(phase);
+            }
+        }
+
+        for(Phase reviewPhase : reviewPhases) {
+            if(reviewPhase.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Sorts the contest phases by the phase order to display in timeline.
+     *
+     * @param phases a list of phases to sort.
+     * @return the sorted phases.
+     * @since 1.11
+     */
+    public static List<ProjectPhaseDTO> sortContestPhases(List<ProjectPhaseDTO> phases) {
+        List<ProjectPhaseDTO> specPart = new ArrayList<ProjectPhaseDTO>();
+        List<ProjectPhaseDTO> reviewPart = new ArrayList<ProjectPhaseDTO>();
+        List<ProjectPhaseDTO> finalPart = new ArrayList<ProjectPhaseDTO>();
+
+        for(ProjectPhaseDTO p : phases) {
+            if(p.getPhaseType().getOrder() <= ProjectPhaseType.SPECIFICATION_REVIEW.getOrder()) {
+                specPart.add(p);
+            } else if (p.getPhaseType().getOrder() >= ProjectPhaseType.FINAL_FIX.getOrder()) {
+                finalPart.add(p);
+            } else {
+                reviewPart.add(p);
+            }
+        }
+
+        StartDateComparator sc = new StartDateComparator();
+        PhaseOrderComparator pc = new PhaseOrderComparator();
+        Collections.sort(specPart, sc);
+        Collections.sort(finalPart, sc);
+        Collections.sort(reviewPart, pc);
+
+        specPart.addAll(reviewPart);
+        specPart.addAll(finalPart);
+
+        for(ProjectPhaseDTO p : specPart) {
+            System.out.println("start date:" + p.getStartTime() + " phase name:" + p.getPhaseType().getShortName() + " phase order:" + p.getPhaseType().getOrder());
+        }
+
+        return specPart;
+
+    }
+
+
+    public static class StartDateComparator implements Comparator<ProjectPhaseDTO>{
+
+        public int compare(ProjectPhaseDTO o1, ProjectPhaseDTO o2) {
+            return o1.getStartTime().compareTo(o2.getStartTime());
+        }
+    }
+
+    public static class PhaseOrderComparator implements Comparator<ProjectPhaseDTO>{
+
+        public int compare(ProjectPhaseDTO p1, ProjectPhaseDTO p2) {
+            int o1 = p1.getPhaseType().getOrder();
+            int o2 = p2.getPhaseType().getOrder();
+            return (o1>o2 ? 1 : (o1==o2 ? 0 : -1));
+        }
     }
 
 
@@ -2301,7 +2397,18 @@ public final class DirectUtils {
         List<ProjectPhaseDTO> adjustedPhases = new ArrayList<ProjectPhaseDTO>();
         Map<ProjectPhaseType, Integer> phaseIndex = new HashMap<ProjectPhaseType, Integer>();
 
+        int iterativeReviewCount = 0;
+
         for (ProjectPhaseDTO phase : phases) {
+
+            // special handling for the iterative review phase, do not combine them together
+            if(phase.getPhaseType().getPhaseTypeId() == ProjectPhaseType.ITERATIVE_REVIEW.getPhaseTypeId()) {
+                iterativeReviewCount++;
+                phase.setPhaseName(phase.getPhaseName() + " #" + iterativeReviewCount);
+                adjustedPhases.add(phase);
+                continue;
+            }
+
             if (!phaseIndex.containsKey(phase.getPhaseType())) {
                 adjustedPhases.add(phase);
                 phaseIndex.put(phase.getPhaseType(), adjustedPhases.size() - 1);

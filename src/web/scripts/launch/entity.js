@@ -183,6 +183,7 @@ var SOFTWARE_CATEGORY_ID_CONTENT = 35;
 var SOFTWARE_CATEGORY_ID_ASSEMBLY = 14;
 var SOFTWARE_CATEGORY_ID_F2F = 38;
 var SOFTWARE_CATEGORY_ID_CODE = 39;
+var SOFTWARE_CATEGORY_ID_BUG_HUNT = 9;
 
 var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 
@@ -214,7 +215,7 @@ var projectCategoryArray = [
 {id:22,                                name:'Idea Generation',                  label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:36,                                name:'REPORTING',                        label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
 {id:ALGORITHM_CATEGORY_ID_MARATHON,    name:'Marathon Match',                   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
-{id:9,                                 name:'Bug Hunt',                         label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_BUG_HUNT,     name:'Bug Hunt',                         label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false},
 {id:SOFTWARE_CATEGORY_ID_F2F,          name:'First2Finish',                     label:'First2Finish',            typeId:2, typeName:'Application', hasMulti:false},
 {id:SOFTWARE_CATEGORY_ID_CODE,         name:'Code',                             label:'Code',            typeId:2, typeName:'Application', hasMulti:false}
 ];

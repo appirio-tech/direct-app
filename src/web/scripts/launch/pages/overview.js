@@ -42,6 +42,9 @@ $(document).ready(function() {
    // technologies
    sortTechnologySelects();
 
+   // platforms
+   sortPlatformSelects();
+
    // categories
    sortCategorySelects();
 

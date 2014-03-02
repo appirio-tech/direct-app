@@ -514,7 +514,7 @@
                              </span>
 
                          <br />
-                         <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+                         <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span><span id="swContestFeePercentage"></span></span>
                          <span class="mid_inf topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
                          <br />

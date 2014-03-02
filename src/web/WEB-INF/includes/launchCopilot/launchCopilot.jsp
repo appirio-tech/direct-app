@@ -304,6 +304,6 @@
 		<a id="previewButton" href="javascript:;" class="button6 preview hide"><span class="left"><span class="right">PREVIEW</span></span></a>
 </div>
 
-<div id="activateContestConfirmation" title="Do you really want to activate the challenge?" class='hide'>
+<div id="activateContestConfirmation" title="Do you want to activate the challenge?" class='hide'>
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will create a new copilot posting and activate it. Please confirm to continue?</p>
 </div>

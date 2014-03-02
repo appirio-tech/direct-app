@@ -73,13 +73,14 @@
 
 <body id="page">
 <a name="top" style="width:0px;height:0px;"></a>
-<div id="wrapper">
+<div id="wrapper" style="min-width: 1100px;">
     <div id="wrapperInner">
         <div id="container">
             <div id="content">
 
                 <jsp:include page="includes/header.jsp"/>
 
+                <!-- set min-width to 1000px to make sure the timeline displayed correctly -->
                 <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
