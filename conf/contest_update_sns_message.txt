@@ -1,0 +1,1 @@
+{"challengeId": "%CHALLENGE_ID%", "cmcTaskId": "%CMC_TASK_ID%", "oldCMCTaskId": "%OLD_CMC_TASK_ID%", "apiUrl": "%API_URL%"}

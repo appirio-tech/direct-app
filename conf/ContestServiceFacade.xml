@@ -56,8 +56,14 @@
             <Property name="contestCreationSubject">
                 <Value>@contestCreationSubject@</Value>
             </Property>
+            <Property name="contestUpdateSubject">
+                <Value>@contestUpdateSubject@</Value>
+            </Property>
             <Property name="contestCreationMessageTemplatePath">
                 <Value>@contestCreationMessageTemplatePath@</Value>
+            </Property>
+            <Property name="contestUpdateMessageTemplatePath">
+                <Value>@contestUpdateMessageTemplatePath@</Value>
             </Property>
         </Property>        
     </Config>

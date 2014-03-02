@@ -364,6 +364,7 @@
                  <include name="xml_phase_template.xsd" />
                  <include name="AwsCredentials.properties" />
                  <include name="contest_creation_sns_message.txt" />
+                 <include name="contest_update_sns_message.txt" />
              </fileset>
         </copy>
 

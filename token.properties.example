@@ -386,3 +386,14 @@
 @apiKey@=a47d06ceff527eddd5c9b51623a0eaad
 @clientId@=test
 @clientSecret@=test
+
+#######################################
+# Contest Creation SNS Configuration #
+#######################################
+@amazonSNSAccessKey@=AKIAIGN4KRVNTBGLQDJA
+@amazonSNSSecretKey@=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
+@contestCreationArn@=arn:aws:sns:us-west-2:170569073448:tc-test
+@contestCreationSubject@=cmc challenge contest creation
+@contestUpdateSubject@=cmc challenge contest update
+@contestCreationMessageTemplatePath@=contest_creation_sns_message.txt
+@contestUpdateMessageTemplatePath@=contest_update_sns_message.txt
