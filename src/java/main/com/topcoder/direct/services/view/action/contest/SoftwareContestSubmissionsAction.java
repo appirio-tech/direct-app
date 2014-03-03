@@ -567,6 +567,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+        getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
+
 
         // set whether to show spec review
         viewData.setShowSpecReview(getSpecificationReviewService()
