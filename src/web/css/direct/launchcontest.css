@@ -1942,6 +1942,14 @@
 	z-index:100;
 	background:url(/images/timeSelect.gif) no-repeat;
 	}
+
+    #checkPointEndDateDiv .newListSelected {
+        z-index: 101;
+    }
+
+    .startEtSelect .newListSelected {
+        z-index: 102;
+    }
 	
 	.startEtSelect .selectedTxt,.checkpointEtSelect .selectedTxt,.endEtSelect .selectedTxt{
 		width:49px;
