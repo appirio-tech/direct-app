@@ -11,7 +11,7 @@
     </PhaseTypes>
     <!--     A set of project phases defined in this template. -->
     <Phases>
-        <Phase id="registrationPhase" length="172800000" type="registration" phaseId="1">
+        <Phase id="registrationPhase" length="432000000" type="registration" phaseId="1">
         </Phase>
 
         <Phase id="submissionPhase" length="432000000" type="submission" phaseId="2">
