@@ -360,7 +360,7 @@
                 		border:1px solid #a8abad;
             }             
 				
-			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect, .milestoneSelect{
+			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect, .milestoneSelect, .reviewerSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -1872,7 +1872,7 @@
     }
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.milestoneSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected {
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.milestoneSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected, .problemSelect .newListSelected, .reviewerSelect .newListSelected  {
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1889,11 +1889,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .milestoneSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt, .problemSelect .selectedTxt {
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .milestoneSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt, .problemSelect .selectedTxt, .reviewerSelect .selectedTxt {
 		width:281px;
 		}
 	
-	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .milestoneSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList{
+	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .milestoneSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList, .reviewerSelect .newList {
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;

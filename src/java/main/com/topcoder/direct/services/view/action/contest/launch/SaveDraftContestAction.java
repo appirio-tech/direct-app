@@ -313,15 +313,6 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Constant for resource role of Iterative Reviewer.
-     *
-     * @since 2.0
-     * </p>
-     */
-    private static final long RESOURCE_ROLE_ITERATIVE_REVIEWER = 21L;
-
-    /**
-     * <p>
      * Constant for key of resource info: handle.
      * </p>
      * 
@@ -459,14 +450,6 @@ public class SaveDraftContestAction extends ContestAction {
     private boolean hasMulti = false;
 
     /**
-     * Flag to indicate whether to assign the reviewer automatically to copilot. In the first release,
-     * it only adds the copilot as the only iterative reviewer of First2Finish contest.
-     *
-     * @since 2.0
-     */
-    private boolean autoAssignReviewer = false;
-
-    /**
      * <p>
      * Checkpoint date of the contest if any.
      * </p>
@@ -508,7 +491,6 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.4
      */
     private long contestCopilotId;
-
 
     /**
      * The direct project milestone id.
@@ -1019,19 +1001,14 @@ public class SaveDraftContestAction extends ContestAction {
         // process project resources
 
         // if has a valid copilot id and copilot name is not empty
-        if (getContestCopilotId() > 0 && getContestCopilotName() != null && getContestCopilotName().trim().length() != 0) {
+        if (getContestCopilotId() > 0 && getContestCopilotName() != null &&
+                getContestCopilotName().trim().length() != 0) {
             // add copilot resource to project resources
-            if(softwareCompetition.getProjectHeader().getProjectCategory().getId() == ProjectCategory.FIRST2FINISH.getId()
-                    && isAutoAssignReviewer()) {
-                // 1) the challenge is F2F 2) Copilot is set 3) auto add reviewer flag is on
-                softwareCompetition.setProjectResources(
-                        new Resource[]{getUserResource(), getCopilotResource(), getIterativeReviewerResource()});
-            } else {
-                softwareCompetition.setProjectResources(new Resource[] {getUserResource(), getCopilotResource()});
-            }
+            softwareCompetition.setProjectResources(new Resource[]{getUserResource(), getCopilotResource()});
         } else {
-            softwareCompetition.setProjectResources(new Resource[] {getUserResource()});
-        };
+            softwareCompetition.setProjectResources(new Resource[]{getUserResource()});
+        }
+        ;
 
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
@@ -1346,29 +1323,6 @@ public class SaveDraftContestAction extends ContestAction {
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT), String.valueOf(feeValue));
         // set payment status to "not paid"
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
-        // set registration date to now
-        resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
-
-        return resource;
-    }
-
-    /**
-     * Builds an Iterative Reviewer Resource.
-     *
-     * @return the Resource instance represents an Iterative Reviewer.
-     *
-     * @since 2.0
-     */
-    private Resource getIterativeReviewerResource() {
-        Resource resource = new Resource();
-        // unset id
-        resource.setId(UNSET_RESOURCE_ID);
-
-        // add copilot as the iterative reviewer
-        resource.setResourceRole(new ResourceRole(RESOURCE_ROLE_ITERATIVE_REVIEWER));
-        resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), getContestCopilotName());
-        resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(getContestCopilotId()));
-
         // set registration date to now
         resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
 
@@ -2247,11 +2201,4 @@ public class SaveDraftContestAction extends ContestAction {
         this.cmcBillingId = cmcBillingId;
     }
 
-    public boolean isAutoAssignReviewer() {
-        return autoAssignReviewer;
-    }
-
-    public void setAutoAssignReviewer(boolean autoAssignReviewer) {
-        this.autoAssignReviewer = autoAssignReviewer;
-    }
 }

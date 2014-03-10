@@ -92,8 +92,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ *
+ * <p>
+ * Version 2.0 (First2Finish - TC Cockpit Auto Assign Reviewer Update)
+ * <ul>
+ *     <li>Updated {@link #getMapResult(com.topcoder.service.project.SoftwareCompetition)} to add reviewers data</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 1.9
+ * @version 2.0
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -176,10 +184,14 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // uses a map to store the copilots, key is the user id, value is the handle
         Map<String, String> copilots = new HashMap<String, String>();
 
+        // use a map to store the reviewers, key is the user id, value is the handle
+        Map<String, String> reviewers = new HashMap<String, String>();
+
         double totalCopilots = 0;
 
-        // Gets copilots from the resources of the contest
+        // Gets copilots and reviewers from the resources of the contest
         for (Resource r : resources) {
+            // get copilots
             if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
                 // resource is of role Copilot, add the resource into the copilot map
                 copilots.put(String.valueOf(r.getProperty("External Reference ID")), r.getProperty("Handle"));
@@ -195,10 +207,18 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
                 totalCopilots += copilotFee;
             }
+            // get reviewers
+            if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID ||
+                    r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_REVIEWER_ID) {
+                reviewers.put(String.valueOf(r.getProperty("External Reference ID")), r.getProperty("Handle"));
+            }
         }
 
         // put the copilots into the result
         result.put("copilots", copilots);
+
+        // put the reviewers into the result
+        result.put("reviewers", reviewers);
 
         result.put("copilotsFee", String.valueOf(totalCopilots));
 

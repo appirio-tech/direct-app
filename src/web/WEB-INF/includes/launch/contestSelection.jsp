@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 1.9
+  - Version: 2.0
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -37,6 +37,9 @@
   -
   - Version 1.9 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
   - - Add checkpoint end date / submission end date / time picker for software contest. Remove old duration picker.
+  -
+  - Version 2.0 (First2Finish - TC Cockpit Auto Assign Reviewer Update）
+  - - Add Reviewer dropdown in launch new challenge step 1
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -161,6 +164,14 @@
                     <option value='<s:property value="userId"/>'  <s:if test="%{#copilot.userId==#session.user.userId}">selected='selected'</s:if> > <s:property value="handle" /></option>
                 </s:iterator>
              </select>
+          </div>
+      </div>
+
+      <div class="row reviewerRow">
+          <label>Reviewer :</label>
+          <div class="reviewerSelect">
+              <select id="reviewer" name="reviewer">
+              </select>
           </div>
       </div>
 

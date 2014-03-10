@@ -140,6 +140,13 @@ var billingGroups = {};
 var directProjectCopilots = {};
 
 /**
+ * Local cache for project resources for direct project
+ *
+ * @type {{}}
+ */
+var directProjectResources = {};
+
+/**
  * software documents
  */
 // current document for uploading
@@ -779,6 +786,38 @@ function getCopilotsByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
+function getProjectResourcesByDirectProjectId(directProjectId) {
+    if(directProjectResources[directProjectId] != null) {
+        return directProjectResources[directProjectId];
+    }
+
+    var returnValue = [];
+
+    var request = {formData: {projectId: directProjectId}};
+
+    $.ajax({
+        type: 'POST',
+        url:  ctx + "/getProjectResponsiblePerson",
+        data: request,
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    returnValue = result;
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
+    directProjectResources[directProjectId] = returnValue;
+
+    return returnValue;
+}
+
 function getBillingAccountsByDirectProjectId(directProjectId) {
     var returnValue = {};
     var request = {directProjectId:directProjectId};
@@ -940,6 +979,18 @@ function saveAsDraftRequestSoftware() {
        mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = '';
    }
 
+    if(isF2F() || isCode()) {
+        // get the auto assign reviewer ID to F2F / CODE challenge
+        mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId = $("#reviewer").val() ? $("#reviewer").val(): 0;
+
+        if(mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId > 0) {
+            var reviewerId = $("#reviewer").val();
+            var reviewHandle = $("#reviewer option:selected").text();
+            mainWidget.softwareCompetition.reviewers = {};
+            mainWidget.softwareCompetition.reviewers[reviewerId] = reviewHandle;
+        }
+    }
+
    request['projectId'] = mainWidget.softwareCompetition.projectHeader.id;
    request['tcDirectProjectId'] = mainWidget.softwareCompetition.projectHeader.tcDirectProjectId;
    request['competitionType'] = 'SOFTWARE';
@@ -985,11 +1036,6 @@ function saveAsDraftRequestSoftware() {
         }
     }
 
-
-    if(isF2F()) {
-        // get the auto assign reviewer flag to F2F challenge
-        request['autoAssignReviewer'] = $("#addCopilotAsReviewerCheck").is(":checked");
-    }
 
    // update technologies
    if(isTechnologyContest()) {

@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.3
+  - Version: 2.5
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -57,6 +57,9 @@
   -
   - Version 2.4 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
   - - Add checkpoint end date / submission end date / time picker for software contest. Remove old duration picker.
+  -
+  - Version 2.5 (First2Finish - TC Cockpit Auto Assign Reviewer Update)
+  - - Add reviewer dropdown in the challenge type section of edit software challenge
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -180,23 +183,26 @@
           </span>
           <br /><br />
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
-				 <br /> <br />
-				 <div id="projectEditDiv">
-				 <span class="name fixWidthName"><strong>Project Name</strong></span>
-				 <div class="projectsSelect" style="float:left">
-					  <select id="projects" name="tcProject" class="bigin">
-							<option value="-1">Please select an existing project</option>
-                            <s:iterator value="projects" var="proj">
-                                                        <option value='<s:property value="projectId" />'  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
-                                                        <s:property value="name" />
-                                                        </option>
-                            </s:iterator>
-                            
-					  </select>
-				 </div>
-                 </div>
-                 <br /> <br />
-          <div id="milestoneEditDiv">
+
+          <div id="projectEditDiv" class="editDropDown">
+              <span class="name fixWidthName"><strong>Project Name</strong></span>
+
+              <div class="projectsSelect" style="float:left">
+                  <select id="projects" name="tcProject" class="bigin">
+                      <option value="-1">Please select an existing project</option>
+                      <s:iterator value="projects" var="proj">
+                          <option value='<s:property value="projectId" />'
+                                  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
+                              <s:property value="name"/>
+                          </option>
+                      </s:iterator>
+
+                  </select>
+              </div>
+              <div class="clearFix"></div>
+          </div>
+
+          <div id="milestoneEditDiv" class="editDropDown">
               <span class="name fixWidthName"><strong>Milestone</strong></span>
 
               <div class="milestoneSelect" style="float:left">
@@ -209,9 +215,10 @@
                       </s:iterator>
                   </select>
               </div>
+              <div class="clearFix"></div>
           </div>
-          <br /> <br />
-          <div id="copilotEditDiv">
+
+          <div id="copilotEditDiv" class="editDropDown">
               <span class="name fixWidthName"><strong>Copilot</strong></span>
 
               <div class="copilotsSelect" style="float:left">
@@ -224,6 +231,18 @@
                       </s:iterator>
                   </select>
               </div>
+              <div class="clearFix"></div>
+          </div>
+
+          <div id="reviewerEditDiv" class="editDropDown">
+              <span class="name fixWidthName"><strong>Reviewer</strong></span>
+
+              <div class="reviewerSelect" style="float:left">
+                  <select id="reviewer" name="reviewer" class="bigin">
+
+                  </select>
+              </div>
+              <div class="clearFix"></div>
           </div>
                  </p>
                  <p class="save">                 	

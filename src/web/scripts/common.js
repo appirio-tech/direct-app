@@ -824,3 +824,13 @@ jQuery.fn.outerHTML = function () {
         });
     };
 })(jQuery);
+
+function getObjectSize(object) {
+    var key, count = 0;
+    for(key in object) {
+        if(object.hasOwnProperty(key)) {
+            count++;
+        }
+    }
+    return count;
+}

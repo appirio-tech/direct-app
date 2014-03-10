@@ -839,7 +839,7 @@ function initContest(contestJson) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
         $(".codePrize").show();
-
+        mainWidget.softwareCompetition.reviewers = contestJson.reviewers;
     } else {
         // show the prize settings for TopCoder contests
         $(".topcoderPrize").show();
@@ -1223,6 +1223,7 @@ function showTypeSectionDisplay() {
 }
 
 function showTypeSectionEdit() {
+     $("#reviewerEditDiv").hide();
 	 $(".contest_type").css("display","none");
 	 $(".contest_type_edit").css("display","block");
 	 if(!$("#billingProjects").data('customized')){
@@ -1263,10 +1264,16 @@ function showTypeSectionEdit() {
         $('#milestones').data('customized',true);
     }
 
-	 $('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
+    if(!$('#reviewer').data('customized')) {
+        $('#reviewer').sSelect({ddMaxHeight: '220',yscroll: true});
+        $('#reviewer').data('customized',true);
+    }
+
+	 $('#contestTypes').getSetSSValue(mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id);
     
     var projectType = mainWidget.competitionType;
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    setupReviewerDropdown(projectCategoryId, mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
 }
 
 /**
@@ -2844,5 +2851,32 @@ function handleProjectDropDownChange() {
         updateContestFee();
         updateBillingGroups();
     });
+
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+
+    setupReviewerDropdown(projectCategoryId, value);
+}
+
+function setupReviewerDropdown(challengeTypeId, directProjectId) {
+    if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+        // show reviewer dropdown if the contest is Code or First2Finish and there is no reviewer for the contest
+        if(getObjectSize(mainWidget.softwareCompetition.reviewers) == 0) {
+            var resources = getProjectResourcesByDirectProjectId(directProjectId);
+
+            var $projectResources = $("#reviewer");
+
+            $projectResources.html("");
+
+            $projectResources.append($('<option></option>').val(0).html("Unassigned"));
+
+            $.each(resources, function(id, value) {
+                $projectResources.append($('<option></option>').val(value.userId).html(value.name));
+            });
+
+            $("#reviewerEditDiv").show();
+            $("#reviewer").resetSS();
+            $("#reviewer").getSetSSValue(0);
+        }
+    }
 }
 

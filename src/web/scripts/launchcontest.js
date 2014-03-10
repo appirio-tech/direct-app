@@ -669,6 +669,29 @@ function handleProjectDropDownChange() {
     });
 
     $('.milestoneSelect select').resetSS();
+
+
+    // update the reviewer dropdown
+    var resources = getProjectResourcesByDirectProjectId(value);
+
+    var $projectResources = $("#reviewer");
+
+    $projectResources.html("");
+
+    $projectResources.append($('<option></option>').val(0).html("Unassigned"));
+
+    $.each(resources, function(id, value) {
+        $projectResources.append($('<option></option>').val(value.userId).html(value.name));
+    });
+
+    // we only refresh stylish selection when it's not hidden
+    if($("#reviewer").parent().is(":visible")) {
+        $('#reviewer').resetSS();
+        $('#reviewer').getSetSSValue(selected);
+    } else {
+        // set the selection drop down value
+        $projectResources.val(selected);
+    }
 }
 
 function handleProblemsDropDownChange() {
@@ -879,11 +902,24 @@ function onContestTypeChange() {
             $('#devOnlyDiv').hide();
             $('#devOnlyCheckBox').attr('checked', false);
         }
+
+        if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
+            if(!$("#reviewer").parent().is(":visible")) {
+                // not display, display it
+                $("#reviewer").parent().parent().show();
+                var selectedValue = $("#reviewer").val();
+                $("#reviewer").resetSS();
+                $("#reviewer").getSetSSValue(selectedValue);
+            }
+        } else {
+            $("#reviewer").parent().parent().hide();
+        }
     }
 
     /// Studio Contest
     if (mainWidget.isStudioContest()) {
         $('.software').hide();
+        $("#reviewer").parent().parent().hide();
         $('.studio').show();
         $('#roundTypes').trigger('change');
 
@@ -911,6 +947,7 @@ function onContestTypeChange() {
     }
 
     if (mainWidget.isAlgorithmContest()) {
+        $("#reviewer").parent().parent().hide();
         $.each(algorithmSubtypeFees, function (i, fee) {
             if (fee.id == typeId) {
                 // not set yet, auto fill
@@ -923,6 +960,7 @@ function onContestTypeChange() {
 
         $("#endDateDiv").show();
     }
+
     updateContestFee();
     updateBillingGroups();
     copilotDropDownChange();
@@ -1049,20 +1087,6 @@ function closeTBBox() {
  * @since 2.4
  */
 function copilotDropDownChange() {
-
-    var copilotSelectDiv =  $(".copilotSelect").parent("div");
-
-    if($("#contestTypes").val() == 'SOFTWARE38' && $("#addCopilotAsReviewerCheck").length == 0 && $("#contestCopilot").val() > 0) {
-
-        // first2finish contest - display add iterative reviewer checkbox
-        copilotSelectDiv.append($('<div style="padding-top:5px"><input id="addCopilotAsReviewerCheck" type="checkbox"/><span class="lcc">&nbsp;&nbsp;Add Copilot as Iterative Reviewer</span></div>'));
-
-        // check the "Add Copilot as Iterative Reviewer" by default
-        $("#addCopilotAsReviewerCheck").attr('checked', 'checked');
-
-    } else if ($("#contestTypes").val() != 'SOFTWARE38' || $("#contestCopilot").val() == 0) {
-        // non - first2finish contest, remove the checkbox and div
-        $("#addCopilotAsReviewerCheck").parent("div").remove();
-    }
+    // place holder
 }
 
