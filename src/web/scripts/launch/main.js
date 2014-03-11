@@ -997,8 +997,10 @@ function saveAsDraftRequestSoftware() {
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
-   request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
 
+   if(mainWidget.softwareCompetition.subEndDate && formatDateForRequest(mainWidget.softwareCompetition.subEndDate)) {
+       request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
+   }
 
     //checkpoint
     if(mainWidget.softwareCompetition.multiRound) {
