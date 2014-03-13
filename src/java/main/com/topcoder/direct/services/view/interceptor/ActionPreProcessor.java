@@ -183,9 +183,6 @@ public class ActionPreProcessor implements Interceptor {
             return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor(),
                                                                new UserProjectsProcessor()
                                                               });
-        } else if (action instanceof LandingPage) {
-            return new ProcessorsGroup(new RequestProcessor[] {new TopCoderDirectFactsProcessor(),
-                                                               new CoPilotStatsProcessor()});
         } else if (action instanceof CreateProjectAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor(),
                                                                new CreateProjectProcessor()});
