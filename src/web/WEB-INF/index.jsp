@@ -133,7 +133,7 @@
                     </c:if>
 
                     <p class="additonalAction jqtransform">
-                        <span class="signForget"><a href="https://www.topcoder.com/reg2" target="_blank">Sign Up</a> | <a href="https://community.topcoder.com/tc?module=FindUser" target="_blank">Forgot Password
+                        <span class="signForget"><a href="http://www.topcoder.com/?action=callback" target="_blank">Sign Up</a> | <a href="https://community.topcoder.com/tc?module=FindUser" target="_blank">Forgot Password
                             ?</a></span>
                         <input type="checkbox" name="formData.remember" id="remember_me"><label>Remember me</label>
                     </p>
@@ -145,7 +145,7 @@
                 <a href="javascript:;" class="twitterIcon socialLogin" title="Sign up with Twitter"></a>
                 <a href="javascript:;" class="gPlusIcon socialLogin"  title="Sign up with Google+"></a>
                 <a href="javascript:;" class="facebookIcon socialLogin" title="Sign up with Facebook"></a>
-                <span>Sign up with :</span>
+                <span>Login with :</span>
             </div>
 
         </div>
