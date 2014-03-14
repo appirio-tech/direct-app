@@ -162,9 +162,9 @@
             <div class="copyright">
         <span>&#0169; Copyright TopCoder, Inc. 2001-<script type="text/javascript">d = new Date();
         document.write(d.getFullYear());</script></span>
-                <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=privacy" target="_blank" title="Privacy Policy">Privacy
+                <a href="http://www.topcoder.com/community/how-it-works/privacy-policy/" target="_blank" title="Privacy Policy">Privacy
                     Policy</a>
-                <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=terms" target="_blank" title="Terms of Use">Terms
+                <a href="http://www.topcoder.com/community/how-it-works/terms/" target="_blank" title="Terms of Use">Terms
                     of Use</a>
             </div>
             <!--End copyright-->
