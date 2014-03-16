@@ -380,7 +380,7 @@ function clearDialog(dialogId) {
 }
 
 function checkRequired(value) {
-    return $.trim(value).length > 0;
+    return $.trim(value + '').length > 0;
 }
 
 function checkNumber(value) {
