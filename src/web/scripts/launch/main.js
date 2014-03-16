@@ -84,8 +84,11 @@
  * Version 3.1 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
  * - Add support for setting checkpoint end date and submission end date for software challenge
  *
+ * Version 3.2 (F2F - TC Cockpit Update Bug Hunt type)
+ * - Update to allow only setting 1st place prize for Bug Hunt challenge
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.1
+ * @version 3.2
  */
 
  /**
@@ -1623,8 +1626,10 @@ function fillPrizes(billingProjectId) {
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
 
-    if(projectCategoryId == SOFTWARE_CATEGORY_ID_F2F || projectCategoryId == SOFTWARE_CATEGORY_ID_CODE) {
-        // always use custom prize type for First2Finish or CODE contest
+    if(projectCategoryId == SOFTWARE_CATEGORY_ID_F2F
+        || projectCategoryId == SOFTWARE_CATEGORY_ID_CODE
+        || projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT) {
+        // always use custom prize type for First2Finish or CODE or BUG HUNT contest
         prizeType = 'custom';
     }
 
@@ -1881,7 +1886,9 @@ function updateSoftwarePrizes() {
     // input (3) - billing project ID
     var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
 
-    if(projectCategoryId == SOFTWARE_CATEGORY_ID_F2F || projectCategoryId == SOFTWARE_CATEGORY_ID_CODE) {
+    if (projectCategoryId == SOFTWARE_CATEGORY_ID_F2F ||
+        projectCategoryId == SOFTWARE_CATEGORY_ID_CODE ||
+        projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT) {
         prizeType = 'custom';
     }
 
@@ -1956,7 +1963,10 @@ function updateSoftwarePrizes() {
     projectHeader.setDRPoints(contestCost.drCost);
 
 
-    if ($("#DRCheckbox").is(":checked") && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F) {
+    if ($("#DRCheckbox").is(":checked")
+        && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
+        && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F
+        && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT) {
         projectHeader.properties['Digital Run Flag'] = 'On';
     } else {
         projectHeader.properties['Digital Run Flag'] = 'Off';
@@ -2226,7 +2236,8 @@ function calcPrizes(prizes) {
    } else {
        contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
    }
-   if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F)
+   if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
+       && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT)
    {
        contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
        contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);
@@ -2236,12 +2247,19 @@ function calcPrizes(prizes) {
    }
 
     if(projectCategoryId == SOFTWARE_CATEGORY_ID_CODE) {
+        // Code contest does not have spec review
         contestCost.specReviewCost = 0;
     }
   
     if(projectCategoryId == SOFTWARE_CATEGORY_ID_F2F) {
+        // First2Finish contest does not have spec review and second place, only has 1st place prize
         contestCost.secondPlaceCost = 0;
         contestCost.specReviewCost = 0;
+    }
+
+    if(projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT) {
+        // Bug hunt contest will only have 1st place prize
+        contestCost.secondPlaceCost = 0;
     }
    
     $.ajax({
@@ -2270,6 +2288,10 @@ function calcPrizes(prizes) {
                     }                    
                     if (result.specReviewCost) {
                         contestCost.specReviewCost = result.specReviewCost;
+
+                        if(typeof(contestHasSpecReview) !== 'undefined' && contestHasSpecReview == false) {
+                            contestCost.specReviewCost = 0;
+                        }
                     }
                     if (result.iterativeReviewCost) {
                         // only has one reviewer

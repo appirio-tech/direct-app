@@ -41,7 +41,10 @@
  * Version 2.0 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
  * - Add support for setting checkpoint end date and submission end date for software challenge
  *
- * @version 2.0
+ * Version 2.1 (F2F - TC Cockpit Update Bug Hunt type)
+ * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
+ *
+ * @version 2.1
  * @author bugbuka, Veve, GreatKevin
  */
 $(document).ready(function () {
@@ -430,13 +433,18 @@ function continueContestSelection() {
    	  showPage('overviewSoftwarePage');
   
 
-       // use a different prize layout for Code/F2F contest, hide unused prize settings
-       if (isCode() || isF2F()) {
+       // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
+       if (isCode() || isF2F() || isBugHunt()) {
            // hide unused prize settings
            $(".topcoderPrize").hide();
            $(".codePrize").show();
 
-           // always use custom prize settings for Code contest
+           if(isBugHunt()) {
+               // show spec review cost for bug hunt
+               $("#swSpecCost").parent().show();
+           }
+
+           // always use custom prize settings for Code/F2F/Bug Hunt contest
            $("input[name=prizeRadio]:last").attr('checked', 'checked').trigger('click');
        } else {
            // show the prize settings for TopCoder contests
@@ -450,7 +458,7 @@ function continueContestSelection() {
 
        if(isCode()) {
            $(".codePrize").show();
-       } else if(isF2F()) {
+       } else if(isF2F() || isBugHunt()) {
            $(".codePrize").hide();
        }
 

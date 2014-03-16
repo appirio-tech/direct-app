@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Rerender the order review page.
@@ -31,11 +31,14 @@
  * - Add multiple prize support for Code contest type
  * - Do not show spec review start modal for Code contest type as it does not have spec review phase
  *
- *
  * Version 1.8 - Module Assembly - TC Cockpit Launch F2F contest
  * - hide 2nd place prize, DR, reliability, spec review for the F2F contest
+ *
+ * Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
+ * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
+ *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 
 /**
@@ -193,12 +196,17 @@ function updateOrderReviewSoftware() {
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
    $('#sworTotal').html((contestPrizeCost + checkpointPrizesTotal + additionalFee).formatMoney(2));
 
-    if (isF2F() || isCode()) {
+    if (isF2F() || isCode() || isBugHunt()) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
 
         if(isCode()) {
             $(".codePrize").show();
+        }
+
+        if(isBugHunt()) {
+            // show specification review cost for bug hunt
+            $("#sworSpecificationReviewPayment").parent().show();
         }
 
     } else {

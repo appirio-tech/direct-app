@@ -1,7 +1,7 @@
 <%--
   - Author: isv, Ghost_141, GreatKevin
-  - Version: 1.8
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.9
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -29,6 +29,9 @@
   -
   - Version 1.8 (Module Assembly - TC Cockpit Launch F2F contest)
   - - Add platform control
+  -
+  - Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
+  - - Make the spec review alone, so it can be displayed for bug hunt challenge
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -256,8 +259,8 @@
                   <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"
                          style="padding: 0 5px; font-size: 11px;"/>
                   <br/>
-                  <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
               </span>
+              <span class="first_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
               <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
 			  <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong></span>

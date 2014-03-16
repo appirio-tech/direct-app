@@ -82,9 +82,12 @@
  *
  * Version 2.7 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
  * - Add support for setting checkpoint end date and submission end date for software challenge
+ *
+ * Version 2.8 (F2F - TC Cockpit Update Bug Hunt type)
+ * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
  * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 2.7
+ * @version 2.8
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -834,11 +837,17 @@ function initContest(contestJson) {
    	 $('.component').hide();
    }
 
-    // use a different prize layout for Code/F2F contest, hide unused prize settings
-    if (isCode() || isF2F()) {
+    // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
+    if (isCode() || isF2F() || isBugHunt()) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
         $(".codePrize").show();
+
+        if(isBugHunt()) {
+            $("#swSpecCost").parent().show();
+            $("#rswSpecCost").parent().show();
+        }
+
         mainWidget.softwareCompetition.reviewers = contestJson.reviewers;
     } else {
         // show the prize settings for TopCoder contests
@@ -847,7 +856,7 @@ function initContest(contestJson) {
 
     if(isCode()) {
         $(".codePrize").show();
-    } else if(isF2F()) {
+    } else if(isF2F() || isBugHunt()) {
         $(".codePrize").hide();
     }
 
@@ -2014,8 +2023,8 @@ function validateFieldsPrizeSection() {
 	} else {
 		mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 	}
-	
-	return true;	
+
+    return true;
 }
 
 function showPrizeSectionDisplay() {
