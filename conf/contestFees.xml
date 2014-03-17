@@ -489,22 +489,22 @@
         <contestCost>
             <billingLevel id="low">
                 <firstPlaceCost>300</firstPlaceCost>
-                <secondPlaceCost>150</secondPlaceCost>
-                <reviewBoardCost>112.5</reviewBoardCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>500</firstPlaceCost>
-                <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>187.5</reviewBoardCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>700</firstPlaceCost>
-                <secondPlaceCost>350</secondPlaceCost>
-                <reviewBoardCost>262.50</reviewBoardCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
