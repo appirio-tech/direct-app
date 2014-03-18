@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.5
+  - Version: 2.6
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -60,6 +60,9 @@
   -
   - Version 2.5 (First2Finish - TC Cockpit Auto Assign Reviewer Update)
   - - Add reviewer dropdown in the challenge type section of edit software challenge
+  -
+  - Version 2.6 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
+  - - Add review type radios to choose 'community' or 'internal' review
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -231,6 +234,15 @@
                       </s:iterator>
                   </select>
               </div>
+              <div class="clearFix"></div>
+          </div>
+
+          <div id="reviewTypeEditDiv" class="editDropDown">
+              <span class="name fixWidthName"><strong>Review Type</strong></span>
+
+              <input type="radio" name="reviewType" value="community" title="The Community applies the review position and do the review"/><span class="textValue">Community</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" name="reviewType" value="internal" title="The project internal resource reviews the challenge, please choose reviewer below"/><span class="textValue">Internal</span>
+
               <div class="clearFix"></div>
           </div>
 

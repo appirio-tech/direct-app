@@ -87,8 +87,11 @@
  * Version 3.2 (F2F - TC Cockpit Update Bug Hunt type)
  * - Update to allow only setting 1st place prize for Bug Hunt challenge
  *
+ * Version 3.3 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
+ * - Add review type radios to choose 'community' or 'internal' review
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.2
+ * @version 3.3
  */
 
  /**
@@ -266,7 +269,6 @@ $(document).ready(function() {
         // if it's software contest launch flow, we make the DR flag default checked
 
     }
-
 
    //file types
    $('.fileType').click(function(){
@@ -984,7 +986,8 @@ function saveAsDraftRequestSoftware() {
 
     if(isF2F() || isCode()) {
         // get the auto assign reviewer ID to F2F / CODE challenge
-        mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId = $("#reviewer").val() ? $("#reviewer").val(): 0;
+        mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId =
+            ('internal' == $("input[name=reviewType]:checked").val()) ? ($("#reviewer").val() ? $("#reviewer").val(): 0) : 0;
 
         if(mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId > 0) {
             var reviewerId = $("#reviewer").val();

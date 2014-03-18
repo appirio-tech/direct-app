@@ -125,6 +125,9 @@
  *
  * -- Module Assembly - TC Cockpit Launch Code Contest
  * -- Add styles the extra prize section in software contest to store multiple prizes for software
+ *
+ * -- F2F - TC Cockpit Update Auto Assign Reviewer Flow
+ * -- Add radio for choosing review type
  */
 
 
@@ -11819,4 +11822,10 @@ tr.reportAverage {
 
 .editDropDown {
     padding-top: 20px;
+}
+
+.reviewRow span, #reviewTypeEditDiv span.textValue {
+    font-size: 12px;
+    padding-left: 5px;
+    line-height: 30px;
 }

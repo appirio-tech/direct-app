@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 2.0
+  - Version: 2.1
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -40,6 +40,9 @@
   -
   - Version 2.0 (First2Finish - TC Cockpit Auto Assign Reviewer Update）
   - - Add Reviewer dropdown in launch new challenge step 1
+  -
+  - Version 2.1 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
+  - - Add review type radios to choose 'community' or 'internal' review
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -167,7 +170,13 @@
           </div>
       </div>
 
-      <div class="row reviewerRow">
+      <div class="row reviewRow">
+          <label>Review :</label>
+          <input type="radio" name="reviewType" value="community" title="The Community applies the review position and do the review"/><span>Community</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="reviewType" value="internal" title="The project internal resource reviews the challenge, please choose reviewer below"/><span>Internal</span>
+      </div>
+
+      <div class="row reviewerRow reviewRow">
           <label>Reviewer :</label>
           <div class="reviewerSelect">
               <select id="reviewer" name="reviewer">

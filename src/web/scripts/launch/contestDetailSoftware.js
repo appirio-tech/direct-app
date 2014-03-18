@@ -85,9 +85,12 @@
  *
  * Version 2.8 (F2F - TC Cockpit Update Bug Hunt type)
  * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
+ *
+ * Version 2.9 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
+ * - Add review type radios to choose 'community' or 'internal' review
  * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 2.8
+ * @version 2.9
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -411,6 +414,19 @@ $(document).ready(function(){
    },function(){
 	   $('#contestRound2ToolTip').hide();
    });
+
+
+    $("input[name=reviewType]").click(function(){
+        if('internal' == $("input[name=reviewType]:checked").val()) {
+            // show the reviewer dropdown
+            var selectedValue = $("#reviewer").val();
+            $("#reviewerEditDiv").show();
+            $("#reviewer").resetSS();
+            $("#reviewer").getSetSSValue(selectedValue);
+        } else {
+            $("#reviewerEditDiv").hide();
+        }
+    });
 
     $("#billingGroupCheckBox input[type=checkbox]").change(function () {
         if ($(this).is(":checked")) {
@@ -1232,7 +1248,10 @@ function showTypeSectionDisplay() {
 }
 
 function showTypeSectionEdit() {
+
      $("#reviewerEditDiv").hide();
+     $("#reviewTypeEditDiv").hide();
+
 	 $(".contest_type").css("display","none");
 	 $(".contest_type_edit").css("display","block");
 	 if(!$("#billingProjects").data('customized')){
@@ -2868,23 +2887,30 @@ function handleProjectDropDownChange() {
 
 function setupReviewerDropdown(challengeTypeId, directProjectId) {
     if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F) {
-        // show reviewer dropdown if the contest is Code or First2Finish and there is no reviewer for the contest
+        // show review type radios if the contest is Code or First2Finish and there is no reviewer for the contest
         if(getObjectSize(mainWidget.softwareCompetition.reviewers) == 0) {
+
+            $("#reviewTypeEditDiv").show();
+
             var resources = getProjectResourcesByDirectProjectId(directProjectId);
 
             var $projectResources = $("#reviewer");
 
             $projectResources.html("");
 
-            $projectResources.append($('<option></option>').val(0).html("Unassigned"));
-
             $.each(resources, function(id, value) {
                 $projectResources.append($('<option></option>').val(value.userId).html(value.name));
             });
 
-            $("#reviewerEditDiv").show();
-            $("#reviewer").resetSS();
-            $("#reviewer").getSetSSValue(0);
+            if('internal' == $("input[name=reviewType]:checked").val()) {
+                // show the reviewer dropdown
+                var selectedValue = $("#reviewer").val();
+                $("#reviewerEditDiv").show();
+                $("#reviewer").resetSS();
+                $("#reviewer").getSetSSValue(selectedValue);
+            } else {
+                $("#reviewerEditDiv").hide();
+            }
         }
     }
 }

@@ -57,9 +57,12 @@
  *
  * Version 2.5 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
  * - Add support for setting checkpoint end date and submission end date for software challenge
+ *
+ * Version 2.6 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
+ * - Add review type radios to choose 'community' or 'internal' review
  * 
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.5
+ * @version 2.6
  */
 $(document).ready(function() {
 
@@ -121,6 +124,19 @@ $(document).ready(function() {
     function getSelectedValue(id) {
         return $("#" + id).find("dt a span.value").html();
     }
+
+
+    $("input[name=reviewType]").click(function(){
+        if('internal' == $("input[name=reviewType]:checked").val()) {
+            // show the reviewer dropdown
+            var selectedValue = $("#reviewer").val();
+            $(".reviewerRow").show();
+            $("#reviewer").resetSS();
+            $("#reviewer").getSetSSValue(selectedValue);
+        } else {
+            $(".reviewerRow").hide();
+        }
+    });
 
     $(document).bind('click', function(e) {
         var $clicked = $(e.target);
@@ -678,8 +694,6 @@ function handleProjectDropDownChange() {
 
     $projectResources.html("");
 
-    $projectResources.append($('<option></option>').val(0).html("Unassigned"));
-
     $.each(resources, function(id, value) {
         $projectResources.append($('<option></option>').val(value.userId).html(value.name));
     });
@@ -904,22 +918,28 @@ function onContestTypeChange() {
         }
 
         if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
-            if(!$("#reviewer").parent().is(":visible")) {
-                // not display, display it
-                $("#reviewer").parent().parent().show();
+            if(!$("input[name=reviewType]").parent().is(":visible")) {
+                // the radios are not display, display them
+                $("input[name=reviewType]").parent().show();
+            }
+
+            // now check the radio value
+            if('internal' == $("input[name=reviewType]:checked").val()) {
+                // show the reviewer dropdown
                 var selectedValue = $("#reviewer").val();
+                $(".reviewerRow").show();
                 $("#reviewer").resetSS();
                 $("#reviewer").getSetSSValue(selectedValue);
             }
         } else {
-            $("#reviewer").parent().parent().hide();
+            $(".reviewRow").hide();
         }
     }
 
     /// Studio Contest
     if (mainWidget.isStudioContest()) {
         $('.software').hide();
-        $("#reviewer").parent().parent().hide();
+        $(".reviewRow").hide();
         $('.studio').show();
         $('#roundTypes').trigger('change');
 
@@ -947,7 +967,7 @@ function onContestTypeChange() {
     }
 
     if (mainWidget.isAlgorithmContest()) {
-        $("#reviewer").parent().parent().hide();
+        $(".reviewRow").hide();
         $.each(algorithmSubtypeFees, function (i, fee) {
             if (fee.id == typeId) {
                 // not set yet, auto fill
