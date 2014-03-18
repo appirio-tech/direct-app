@@ -1,0 +1,595 @@
+/**
+ * The CSS File contains CSS styles used by the home page.
+ *
+ * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
+ * 1) Updated styles of video area.
+ * 
+ * Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
+ * Update the CSS styles to fix multiple issues.
+ */
+
+BODY{
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f6f6f6;
+}
+
+
+/*--------------
+	LANDING PAGE
+----------------*/
+
+#landingPage #header {
+    background: url(../../images/header_landing_bg.png) repeat-x top;
+    height: 123px;
+}
+
+#landingPage #header .headerInner{
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#landingPage #header .logo {
+    position: absolute;
+    top: 40px;
+}
+
+#landingPage #header .welcomeHelp{
+	position: absolute;
+	right: 0;
+	top: 31px;
+}
+
+.welcomeHelp .welcome {
+    float: right;
+    padding: 4px 16px 4px 0;
+    border-right: 1px solid #bcbcbc;
+}
+
+.welcomeHelp .help {
+    float: right;
+    padding: 4px 17px 4px 9px;
+}
+
+.welcomeHelp .help A {
+    font-size: 11px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    background: url(../../images/help_ico.png) no-repeat top;
+    padding-top: 30px;
+    width: 26px;
+    text-align: center;
+}
+
+	.welcomeHelp .help A:hover{
+		color: #908886;
+	}
+
+/*--- WRAPPER --*/
+
+#wrapper{
+	width: 960px;
+	margin: 0 auto;
+	background-color: #FFF;
+}
+
+/*-- creating the border of the main content --*/
+
+/* the top border */
+.wrapperTop{ 
+	background: url(../../images/content_border.png) repeat-x top;
+}
+
+/* the bottom border */
+.wrapperBottom{ 
+	background: url(../../images/content_border.png) repeat-x bottom;
+}
+
+/* the left border */
+.wrapperLeft{ 
+	background: url(../../images/content_border.png) repeat-y left;
+}
+
+/* the right border */
+.wrapperRight{ 
+	background: url(../../images/content_border.png) repeat-y right;
+}
+
+/* the top left corner */
+.wrapperTopLeft{ 
+	background: url(../../images/border_top_left.png) no-repeat top left;
+}
+
+/* the top right corner */
+.wrapperTopRight{ 
+	background: url(../../images/border_top_right.png) no-repeat top right;
+}
+
+/* the bottom left corner */
+.wrapperBottomLeft{ 
+	background: url(../../images/border_bottom_left.png) no-repeat bottom left;
+}
+
+
+/*----------------------
+	The main Content
+-----------------------*/
+
+.content{
+	background: url(../../images/area2_bg.png) repeat-y right;
+}
+
+.contentInner{
+	background: url(../../images/area2_bottom.png) no-repeat bottom right;
+	height: 100%;
+	overflow: hidden;
+}
+
+.area1{
+	float: left;
+	width: 719px;
+}
+
+/*---------------
+	AREA1
+----------------*/
+
+/*------------ Carousel ---*/
+.carouselArea{
+	padding-top: 3px;
+	padding-left: 1px;
+}
+
+.jcarousel-control{ /* bottom area of the carousel */
+	background: url(../../images/carousel_control.png) repeat-x;
+	height: 23px;
+	font-size: 11px;
+	color: #333333;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 10px;
+	position: relative;
+}
+
+.jcarousel-control A{ /* links on the bottom area of the carousel */
+	text-decoration: none;
+	color: #333333;
+}
+
+.jcarousel-control A:hover{
+	text-decoration: underline;
+}
+
+.jcarousel-pages{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.jcarousel-pages .nextCarousel{ /* the "next" button*/
+	padding-left: 20px;
+	float: right;
+}
+
+.jcarousel-pages .pageNum{ 
+	float: right;
+	font-weight: normal;
+}
+
+	.jcarousel-pages .pageNum #currentPage{
+		font-weight: bold;
+	}
+	
+/*----------------------------------------*/	
+
+.area1content{
+	width: 640px;
+	margin: 0 auto;
+	padding-top: 24px;
+}
+
+/*--- News Column ---*/
+.newsColumn{
+	float: left;
+	width: 275px;
+}
+
+.newsColumn .news{
+	padding: 0 5px;
+	color: #3e3e3e;
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 8px;
+}
+
+.newsColumn .lastNews{
+	border-bottom: none;
+}
+
+/* news title*/
+.newsColumn .news H3{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	margin: 0;
+	font-weight: normal;
+	padding: 10px 0 3px 0;
+}
+
+.newsColumn .news P{
+	margin: 3px 0;
+	font-size: 11px;
+	color: #000;
+}
+
+.newsColumn .news .readmore{
+	color: #ec1c23;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.newsColumn .news A.readmore:hover{
+	text-decoration: underline;
+}
+
+/*-- Statistics columns --*/
+
+.statColumn{
+	float: right;
+	width: 330px;
+}
+
+.statColumn TABLE{
+	font-size: 11px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border-collapse: collapse;
+} 
+
+.statColumn TABLE TR{
+	background-color: #e5e5e5;
+	border-bottom: 1px solid #FFF;
+}
+
+.statColumn TABLE TR.even{
+	background-color: #f2f2f2;
+}
+
+.statColumn TABLE TR TD{
+	padding: 0 10px;
+	height: 25px;
+	border-bottom: 1px solid #FFF;
+}
+
+.statColumn TABLE TR TD.first{
+	background: #e5e5e5 url(../../images/stat_table_left1.png) no-repeat left;
+}
+
+.statColumn TABLE TR TD.last{
+	background: #e5e5e5 url(../../images/stat_table_right1.png) no-repeat right;
+}
+
+
+.statColumn TABLE TR.even TD.first{
+	background: #f2f2f2 url(../../images/stat_table_left2.png) no-repeat left;
+}
+
+.statColumn TABLE TR.even TD.last{
+	background: #f2f2f2 url(../../images/stat_table_right2.png) no-repeat right;
+}
+
+
+.statColumn TABLE TD.highLight{
+	color: #ec1c23;
+	text-align: right;
+}
+
+.statColumn TABLE TD.highLight2{
+	text-align: right;
+}
+
+.statColumn A.helpIco{
+	background: url(../../images/help_ico2.png) no-repeat center;
+	padding-right: 13px;
+	text-decoration: none;
+}
+
+.statColumn .copilots{
+	padding-top: 20px;
+}
+
+
+/*--- title ----*/
+
+.title{ /* title caption */
+	background: url(../../images/title_bg.png) repeat-x;
+	height: 100%;
+	overflow: hidden;
+}
+
+.titleLeft{ /* left corner of the title caption */
+	background: url(../../images/title_left.png) no-repeat left; 
+}
+
+.titleRight{  /* right corner of the title caption */
+	background: url(../../images/title_right.png) no-repeat right;
+	height: 35px;
+}
+
+.title H2{ /* title */
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	margin: 0;
+	padding-top: 9px;
+	padding-left: 10px;
+	font-weight: normal;
+	color: #000;
+}
+
+/*-----------------
+	AREA2
+-----------------*/
+
+.area2{ /* the right column area */
+	float: right;
+	width: 240px;
+	background: url(../../images/area2_top.png) no-repeat top;
+}
+
+.login{ 
+	padding: 15px;
+	font-size: 11px;
+	color: #FFF;
+	background-color: transparent;
+}
+
+	.login H3{ /* form title*/
+		font-size:12px;
+		color: #efe2d2;
+		margin: 0 0 5px 0;
+		padding: 0;
+	}
+	
+	.login P{
+		padding: 3px 0;
+		margin: 0;
+		height: 100%;
+		overflow: hidden;
+	}
+	
+	.login INPUT.text{ /* forms input */
+		background: url(../../images/login_input.png) no-repeat;
+		width: 184px;
+		height: 18px;
+		border: none;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 3px;
+	}
+	
+	.login .rememberMe{ /* remember me check box and label container*/
+		float: left;
+		margin: 0 0 0 0;
+	}
+	
+	.login INPUT.rememberMe{
+		width: 13px;
+		height: 13px;
+        margin-right: 4px;
+	}
+	
+	.login LABEL.rememberMe{
+		padding-left: 3px;
+	}
+	
+	.login A.forgotPass{ /*forgot password link */
+		color: #a9a3a0;
+		float: right;
+		padding-top: 0px;
+		text-decoration: none;
+	}
+	
+	.login A.forgotPass:hover{
+		text-decoration: underline;
+	}
+	
+	.login .register{ /* container of register link and login button*/
+		background: url(../../images/login_register.png) repeat-x top;
+		padding: 10px 0 0 0;
+		margin-top: 3px;
+		width: 100%;
+		overflow: hidden;
+	}
+	
+	.login .registerLink{
+		float: left;
+		width: 49%;
+	}
+	
+	.login .registerLink A{
+		color: #ec1c23;
+		text-decoration: none;
+		font-weight: bold;
+	}
+	
+	.login .registerLink A:hover{
+		text-decoration: underline;
+	}
+	
+	.login .button8{ /* login button */
+		width: 91px;
+	}
+
+.box{
+	background: url(../../images/box_top.png) no-repeat top;
+	padding: 15px;
+	position: relative;
+}
+
+A.allVideos {
+/* all videos link */
+    background: transparent url(../../images/all_videos.png) no-repeat;
+    width: 59px;
+    height: 16px;
+    padding-top: 4px;
+    padding-left: 21px;
+    display: block;
+    float: right;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+A.allVideos:hover {
+    background: transparent url(../../images/all_videosHover.png) no-repeat;
+}
+
+.box .title {
+/* links title */
+    background: url(../../images/title2_left.png) no-repeat left;
+}
+
+	.box .title .titleInner{ /* links title */
+		background: url(../../images/title2_right.png) no-repeat right;
+		height: 35px;
+	}
+
+.box .title H3{ /* links title */
+	font-size: 14px;
+	font-family: Verdana, Geneva, sans-serif;
+	margin: 0;
+	font-weight: normal;
+	padding-top: 9px;
+	padding-left: 11px;
+}
+
+.box UL{
+	list-style: none;
+	margin: 0;
+	padding: 10px 0 0 8px;
+}
+
+	.box UL LI{
+		margin: 3px 0;
+	}
+
+	.box UL.links A{
+		color: #efe2d2;
+		font-family: Verdana, Geneva, sans-serif;
+		font-size: 13px;
+		text-decoration: none;
+		background: url(../../images/li_arrow.png) no-repeat left;
+		padding-left: 15px;
+	}
+	
+	.box UL.links A:hover{
+		color: #FFF;
+		background-color: transparent;
+	}
+
+/*-- need help box --*/
+
+.needHelpBox{ /* help box container */
+	background: url(../../images/need_help.png) repeat-x;
+}
+
+	.needHelpLeft{ /* left border */
+		background: url(../../images/need_help_left.png) no-repeat left; 
+	}
+	
+	.needHelpRight{ /* right border */
+		background: url(../../images/need_help_right.png) no-repeat right;
+		height: 138px;
+	}
+	
+	.needHelpContent{
+		padding: 10px;
+		font-size: 17px;
+		font-family: Verdana, Geneva, sans-serif;
+	}
+	
+	.needHelpContent H3 a{
+		margin: 0;
+		color: #ec1c23;
+		text-decoration: none;
+	}
+	
+	.needHelpContent P{
+		margin: 0;
+		padding: 0;
+	}
+	
+	.needHelpContent P STRONG{
+		font-size: 15px;
+	}
+	
+	.needHelpContent P A{
+		font-size: 13px;
+		color: #000;
+		text-decoration: none;
+	}
+	
+	.needHelpContent .faq{
+		background: url(../../images/border.png) repeat-x 0 7px;
+		margin-top:10px;
+	}
+	
+		.needHelpContent .faq .faqHelp{
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 11px;
+			color: #333;
+			padding: 15px 0 6px 46px;
+			background: url(../../images/help_ico3.png) no-repeat left bottom;
+		}
+		
+		.needHelpContent .faq .faqHelp A{
+			font-size: 12px;
+			font-weight: bold;
+			color: #ec1c23;
+			text-decoration: none;
+		}
+		
+		.needHelpContent .faq .faqHelp A:hover{
+			text-decoration: underline;
+		}
+
+/*-----------------
+	FOOTER
+------------------*/
+
+#footer {
+/* footer container */
+    width: 960px;
+    padding: 17px 0;
+    margin: 0 auto;
+    font-size: 11px;
+    color: #333;
+    position: relative;
+    border-top: none;
+}
+
+#footer A{
+	text-decoration: none;
+	color: #333;
+}
+
+#footer H2{
+	font-family: Verdana, Geneva, sans-serif;
+	margin: 0 0 7px 0;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+#footer P{
+	margin: 2px;
+}
+
+#footer .poweredBy{
+	position: absolute;
+	right: 0;
+	top: 30px;
+}
+

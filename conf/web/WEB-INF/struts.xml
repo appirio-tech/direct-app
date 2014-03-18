@@ -168,9 +168,16 @@
 
         <action name="home" class="com.topcoder.direct.services.view.action.LandingPage">
             <interceptor-ref name="preProcessorStack"/>
+            <result name="success">/WEB-INF/old_index.jsp</result>
+            <result name="input">/WEB-INF/old_index.jsp</result>
+        </action>
+
+        <action name="newHome" class="com.topcoder.direct.services.view.action.LandingPage">
+            <interceptor-ref name="preProcessorStack"/>
             <result name="success">/WEB-INF/index.jsp</result>
             <result name="input">/WEB-INF/index.jsp</result>
         </action>
+
         <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
