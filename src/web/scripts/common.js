@@ -380,6 +380,11 @@ function clearDialog(dialogId) {
 }
 
 function checkRequired(value) {
+
+    if(typeof value === 'undefined' || value == null) {
+        return false;
+    }
+
     return $.trim(value + '').length > 0;
 }
 

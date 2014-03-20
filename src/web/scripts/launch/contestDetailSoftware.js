@@ -2448,11 +2448,14 @@ function validateFieldsSpecSection() {
         }
     }
 
-    var maxSubmissions = $('#maxSubmissions').val();
+    if($('#maxSubmissions').length) {
+        var maxSubmissions = $('#maxSubmissions').val();
 
-    if (!(optional(maxSubmissions) || (/^\d+$/.test(maxSubmissions) && parseInt(maxSubmissions) > 0))) {
-        errors.push('Max Submissions field should be empty or positive integer.');
+        if (!(optional(maxSubmissions) || (/^\d+$/.test(maxSubmissions) && parseInt(maxSubmissions) > 0))) {
+            errors.push('Max Submissions field should be empty or positive integer.');
+        }
     }
+
 
     if (errors.length > 0) {
         showErrors(errors);
