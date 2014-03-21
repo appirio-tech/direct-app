@@ -1,6 +1,6 @@
 <%--
   - Author: isv, winsty, Blues, Ghost_141, GreatKevin
-  - Version: 2.0
+  - Version: 2.1
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Landing page for TC Direct application.
@@ -18,6 +18,9 @@
   - Fix multiple bugs.
   - Version 2.0 (TC Direct Rebranding - Homepage Update)
   - - Rebranding the home page.
+  - Version 2.1 (TC - Direct Rebranding NewHome Page Social Login Update)
+  - - Change the social login implementation from widget to direct links
+  - - Add GitHub and Salesforce social login
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
          import="com.topcoder.shared.util.ApplicationServer,
@@ -39,8 +42,8 @@
     <link rel="stylesheet" href="/css/direct/homepage.css" media="all" type="text/css"/>
 
     <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
-    <script src="/scripts/auth0-widget-2.3.6.min.js"></script>
-    <script src="https://d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.3.6.min.js"></script>
+    <script src="https://cdn.auth0.com/w2/auth0-1.6.4.min.js"></script>
+
 
     <script type="text/javascript">
 
@@ -56,33 +59,42 @@
             return false;
         }
 
-        var widget = new Auth0Widget({
+
+        var auth0Login = new Auth0({
             domain: '<%=DirectProperties.DOMAIN_AUTH0%>',
             clientID: '<%=DirectProperties.CLIENT_ID_AUTH0%>',
             callbackURL: 'https://<%=DirectProperties.REG_SERVER_NAME%><%=DirectProperties.REDIRECT_URL_AUTH0%>'
         });
 
-        function showAuth0Widget() {
-            widget.signin({
-                state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/',
-                icon: 'http://www.topcoder.com/i/24x24_brackets.png',
-                showIcon: true}).on('signin_ready', function () {
-                        $('.a0-email input').each(function () {
-                            $(this)
-                                    .clone()
-                                    .attr('type', 'text')
-                                    .attr('placeholder', 'Username')
-                                    .attr('title', 'Username')
-                                    .insertAfter($(this)).prev().remove();
-                        });
-                    });
-        }
+        $(document).ready(function(){
 
-        $(function () {
-            $('.socialLogin').click(function () {
-                showAuth0Widget();
+
+            $('.gPlusIcon').click( function () {
+                auth0Login.login({
+                    connection: 'google-oauth2',
+                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
-        });
+
+            $('.facebookIcon').click( function () {
+                auth0Login.login({connection: 'facebook',
+                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+            });
+
+            $('.twitterIcon').click( function () {
+                auth0Login.login({connection: 'twitter',
+                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+            });
+
+            $('.githubIcon').click( function () {
+                auth0Login.login({connection: 'github',
+                    state: 'http://www.topcoder.com/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+            });
+
+            $('.salesforceIcon').click( function () {
+                auth0Login.login({connection: 'salesforce',
+                    state: 'http://www.topcoder.com/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+            });
+        })
 
     </script>
 
@@ -141,10 +153,11 @@
                 </s:form>
             </div>      
             <div class="socialNetwork">
-                <a href="javascript:;" class="linkedInIcon socialLogin" title="Sign up with LinkedIn"></a>
-                <a href="javascript:;" class="twitterIcon socialLogin" title="Sign up with Twitter"></a>
-                <a href="javascript:;" class="gPlusIcon socialLogin"  title="Sign up with Google+"></a>
-                <a href="javascript:;" class="facebookIcon socialLogin" title="Sign up with Facebook"></a>
+                <a href="javascript:;" class="salesforceIcon socialLogin" title="Login with Salesforce"></a>
+                <a href="javascript:;" class="githubIcon socialLogin" title="Login with GitHub"></a>
+                <a href="javascript:;" class="twitterIcon socialLogin" title="Login with Twitter"></a>
+                <a href="javascript:;" class="gPlusIcon socialLogin"  title="Login with Google+"></a>
+                <a href="javascript:;" class="facebookIcon socialLogin" title="Login with Facebook"></a>
                 <span>Login with :</span>
             </div>
 

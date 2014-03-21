@@ -242,21 +242,31 @@ input:-moz-placeholder {
     top: -3px;
 }
 
-.socialNetwork .linkedInIcon {
+.socialNetwork .linkedInIcon{
     background-position: -96px 0;
 }
-
-.socialNetwork .twitterIcon {
+.socialNetwork .twitterIcon{
     background-position: -64px 0;
 }
-
-.socialNetwork .gPlusIcon {
+.socialNetwork .gPlusIcon{
     background-position: -32px 0;
 }
-
-.socialNetwork .facebookIcon {
+.socialNetwork .facebookIcon{
     background-position: 0 0;
 }
+
+.socialNetwork .githubIcon{
+    background-position: -128px 0;
+    width: 26px;
+}
+.socialNetwork .salesforceIcon {
+    background-position: -160px 0;
+}
+
+.socialNetwork a:hover {
+    background-image: url(/images/socialIcon-hover.png);
+}
+
 
 /*-----------------
 	FOOTER
