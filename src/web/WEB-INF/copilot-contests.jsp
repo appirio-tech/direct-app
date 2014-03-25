@@ -1,7 +1,7 @@
 <%--
-  - Author: tangzx, GreatKevin, Ghost_141
-  - Version: 1.3
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: tangzx, GreatKevin, Ghost_141, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -14,6 +14,9 @@
   - 
   - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) Change notes:
   - Add readonly in date element.
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -156,8 +159,8 @@
                                             
                                             <thead>
                                             <tr>
-                                                <th class="sorting_asc alignLeft">Copilot Posting</th>
-                                                <th class="sorting alignLeft">Project Name</th>
+                                                <th class="sorting_asc">Copilot Posting</th>
+                                                <th class="sorting">Project Name</th>
                                                 <th class="sorting">Start Date</th>
                                                 <th class="sorting">End Date</th>
                                                 <th class="sorting truncateRegs">Registrants</th>

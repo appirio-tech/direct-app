@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, GreatKevin, Blues
-  - Version 1.6
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: isv, GreatKevin, Blues, TCSASSEMBLER
+  - Version 1.7
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
   -
@@ -22,6 +22,9 @@
   -
   - Version 1.6 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
   - - Updated to add "Download All" link for software final submissions.
+  -
+  - Version 1.7 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Rebranding the software submissions page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -250,7 +253,7 @@
 
                                                 <s:set var="viewData" value="viewData" scope="page"/>
                                                     <h2 class="finalRound">All Final Round Submissions</h2>
-                                                    <a class="downloadAll finalRound" href="<s:url action='downloadAllSoftwareFinalSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                    <a class="downloadAll downloadAllbtn finalRound" href="<s:url action='downloadAllSoftwareFinalSubmissions' namespace='/contest'/>?projectId=${param.projectId}"><span>Download All</span></a>
 <%--
                                                 <table class="${viewData.showApproval ? 'softwareStatsApproval' : 'softwareStats'}" 
 --%>
@@ -282,7 +285,7 @@
                                                         <th rowspan="2" class="left">Handle</th>
                                                         <th rowspan="2">ID</th>
                                                         <th rowspan="2">Date Submitted</th>
-                                                        <s:if test="viewData.contestStats.contset.typeId != 38">
+                                                        <s:if test="viewData.contestStats.contest.typeId != 38">
                                                             <th rowspan="2">Screening Score</th>
                                                             <th rowspan="2">Initial Score</th>
                                                         </s:if>
@@ -345,7 +348,7 @@
                                                                 <fmt:formatDate value="${submission.submissionDate}"
                                                                                 pattern="MM.dd.yyyy HH:mm:ss"/>
                                                             </td>
-                                                            <s:if test="viewData.contestStats.contset.typeId != 38">
+                                                            <s:if test="viewData.contestStats.contest.typeId != 38">
                                                                 <td>
                                                                     <c:choose>
                                                                         <c:when test="${submission.screeningScore ne null}">
@@ -483,7 +486,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll2" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}"><span>Download All</span></a>
                                                                     </th>
                                                                     <th>
                                                                         Submission Date/Time
@@ -550,7 +553,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAll2" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}"><span>Download All</span></a>
                                                                     </th> 
                                                                     <th>
                                                                         Feedback
@@ -638,7 +641,7 @@
                                                                 <tr>
                                                                     <th>
                                                                         Submission
-                                                                        <a class="downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                        <a class="downloadAllbtn downloadAll" href="<s:url action='downloadAllSoftwareCheckpointSubmissions' namespace='/contest'/>?projectId=${param.projectId}"><span>Download All</span></a>
                                                                     </th>
                                                                     <th>
                                                                         Select Placement

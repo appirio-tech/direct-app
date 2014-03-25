@@ -23,7 +23,7 @@
 .descTask {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #000000;
+    color: #666666;
     cursor: default;
     white-space: nowrap;
 }
@@ -31,12 +31,19 @@
 .descProject {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    color: #000000;
+    color: #666666;
     cursor: default;
     white-space: nowrap;
 }
 
-.dayNumber, .monthName{font-family:Tahoma,Arial;font-weight:bold;font-size:9px;color:#858585;text-align:center;vertical-align:middle;}
+.dayNumber, .monthName {
+    font-family: Tahoma, Arial;
+    font-weight: bold;
+    font-size: 9px;
+    color: #858585;
+    text-align: center;
+    vertical-align: middle;
+}
 
 .poPupInfo {
     background: #FFFFFF;
@@ -46,7 +53,13 @@
     float: left;
 }
 
-.monthName {border-top:1px solid #f1f3f1; border-bottom:1px solid #f1f3f1; border-left:1px solid #f1f3f1;text-align:left;padding-left:5px;}
+.monthName {
+    border-top: 1px solid #f1f3f1;
+    border-bottom: 1px solid #f1f3f1;
+    border-left: 1px solid #f1f3f1;
+    text-align: left;
+    padding-left: 5px;
+}
 
 .poPupTime {
     background: #FFFFFF;
@@ -109,18 +122,18 @@
 #ganttChartDiv {
     min-height: 550px;
     position: relative;
-     padding-top:20px;
+    padding-top: 20px;
 }
 
 #ganttChartDiv a {
     font-family: Tahoma, Arial, Helvetica, serif;
-    font-size:10px;
+    font-size: 10px;
     color: #000000;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 #ganttChartDiv a:hover {
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
 #ganttChartError {
@@ -128,5 +141,5 @@
     font-size: 16px;
     font-weight: bold;
     padding-top: 30px;
-    text-align:center;
+    text-align: center;
 }

@@ -64,8 +64,8 @@
 						jQuery(dc('th')).attr({'scope':'col', 'abbr':day, 'title':day, 'class':(weekday == 0 || weekday == 6 ? 'weekend' : 'weekday')}).html(s.showHeader == $.dpConst.SHOW_HEADER_SHORT ? day.substr(0, 3) : day)
 					);
 				}
-				headRow.find('th:first').css("border-left","2px solid #bdc2c5");
-				headRow.find('th:last').css("border-right","2px solid #bdc2c5");
+				headRow.find('th:first').css("border-left","1px solid #E7E7E7");
+				headRow.find('th:last').css("border-right","1px solid #E7E7E7");
 			};
 			
 			var calendarTable = $(dc('table'))

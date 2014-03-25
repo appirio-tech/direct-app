@@ -90,9 +90,9 @@
 /* title */
 #mainSection .memberPaymentBlockContainer .projectTitle {
     height: 49px;
-    border: #bdbdbd solid 1px;
+    border: #E7E7E7 solid 1px;
     border-bottom: 0;
-    background: url(/images/bg_grey.png) repeat-x left top;
+    background: #F1F1F1;
 }
 #mainSection .memberPaymentBlockContainer .projectTitle h3 {
     width: auto;
@@ -168,24 +168,25 @@
 #mainSection .memberPaymentBlockContainer table {
     width: 100%;
     table-layout: fixed;
-    border: #bdbdbd solid 1px;
+    border: #E7E7E7 solid 1px;
     border-collapse: collapse;
     vertical-align: middle;
   font-size: 12px;
 }
+
 #mainSection .memberPaymentBlockContainer table th {
     height: 28px;
-    border: #bdbdbd solid 1px;
+    border: #E7E7E7 solid 1px;
     font-size: 12px;
     vertical-align: middle;
     table-layout: fixed;
-    background: url(/images/bg_table_th.png) repeat-x left top #e8e8e8;
-  text-align: center;
-  font-weight: bold;
+    background: #F1F1F1;
+    text-align: center;
+    font-weight: bold;
 }
 #mainSection .memberPaymentBlockContainer table td {
     height: 36px;
-    border: #bdbdbd solid 1px;
+    border: #E7E7E7 solid 1px;
     font-size: 12px;
     vertical-align: middle;
   text-align: center;
@@ -278,7 +279,7 @@ select.sortTop10{
   line-height: 18px;
   font-size: 12px;
   font-weight:bold;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #E7E7E7;
   border-bottom-width: 0;
   background: #E8E8E8 url("/images/bg_table_th.png") 0 0 repeat-x; 
 }
@@ -354,7 +355,7 @@ select.sortTop10{
 
 /*Charts*/
 #mainSection .memberPaymentAverageTotalBlock .chartsContainer{
-  border: 1px solid #bdbdbd;
+  border: 1px solid #E7E7E7;
   height: 324px;
   padding: 0 3px;
 }

@@ -4,7 +4,7 @@
 	font-weight: bold;
 }
 .permissions{
-	border-bottom: 1px solid #A8ABAD;
+	border-bottom: 1px solid #E7E7E7;
 }
 #users{
 	display: none;
@@ -23,7 +23,7 @@
 .permissions  table tr.subTr td{
 	border:0px solid #FFFFFF;
 	padding:3px 0px 3px 10px;
-	font-size: 10px;
+	font-size: 11px;
 	background: transparent url(../../images/dot.png) repeat-x scroll bottom center;
 }
 .permissions table th.permCol{
@@ -46,6 +46,7 @@
 
 .permissions table tr.applyForAll a.button1{
 	margin-right:10px;
+    position: static !important;
 }
 .permissions table td a.addUser{
 	background: transparent url(../../images/user.png) no-repeat;

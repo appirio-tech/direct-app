@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin
-  - Version: 3.2
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, TCSASSEMBLER
+  - Version: 3.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -79,6 +79,9 @@
   -
   - Version 3.3 (TopCoder Cockpit Copilot Posting Submission Game Plan Preview and Stats)
   - - Adds the modal window for the copilot posting submission preview
+  -
+  - Version 3.4 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Updated the popup modals for reabranding
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -179,9 +182,9 @@
 
     <div id="TB_window_custom" class="specrev-window">
         <h1>Plan Specification Review</h1>
-        <a class="review-now" href="../contest/startSpecReview.action?startMode=now"></a>
+        <a class="review-now newButtonGreen" href="../contest/startSpecReview.action?startMode=now">START SPEC REVIEW NOW</a>
         <p class="or">or</p>
-        <a class="review-later" href="../contest/startSpecReview.action?startMode=later"></a>
+        <a class="review-later newButtonGreen" href="../contest/startSpecReview.action?startMode=later">START SPEC REVIEW LATER</a>
         <p class="note">*48 hours prior to the scheduled challenge start time.</p>
     </div>
 
@@ -435,7 +438,7 @@
 
                 <div class="modalCommandBox">
                     <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC"
-                                                                                       onclick="addNewProject();">CREATE</span></span></a>
+                                                                                       onclick="addNewProject();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></a>
                     <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
                        onclick="modalCloseAddNewProject();"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>
@@ -516,9 +519,9 @@
                 </div>
 
                 <div class="modalCommandBox">
-                    <a href="javascript:;" class="newButton1 updateInvoice"><span class="btnR"><span class="btnC"
+                    <a href="javascript:;" class="newButton1 updateInvoice newButtonGreen"><span class="btnR"><span class="btnC"
                                                                                        onclick="">SAVE</span></span></a>
-                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal"><span class="btnR"><span
+                    <a href="javascript:;" class="newButton1 newButtonCancel newButtonOrange closeModal"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>
                 </div>
             </div>
@@ -550,9 +553,9 @@
                     </div>
                 </div>
                 <div class="modalCommandBox">
-                    <a href="javascript:;" class="newButton1 updateInvoice"><span class="btnR"><span class="btnC"
+                    <a href="javascript:;" class="newButton1 updateInvoice newButtonGreen"><span class="btnR"><span class="btnC"
                                                                                        onclick="">YES</span></span></a>
-                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal"><span class="btnR"><span
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal newButtonOrange"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>
                 </div>
             </div>
@@ -590,7 +593,7 @@
                         <!-- search -->
                         <div class="searchBox">
                             <input type="text" class="text"/>
-                            <a href="javascript:;" class="downloadProfile searchCopilot"><span
+                            <a href="javascript:;" class="downloadProfile newButtonGreen searchCopilot"><span
                                     class="profileLeft">Search</span></a>
                         </div>
                         <!-- End .searchBox -->
@@ -2014,8 +2017,8 @@
                         <label for="emailNotifyAdd">Notification email reminder now  &amp; 48 hours before the milestone due.</label>
                     </p>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="SAVE" class="button6 saveButton newButtonGreen"><span class="left"><span class="right">SAVE</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton newButtonGreen"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2053,7 +2056,7 @@
                         </div>
                         <div class="clear"></div>
                         <div class="buttonArea">
-                            <a href="javascript:;" title="OK" class="closebutton button6"><span class="left"><span class="right">OK</span></span></a>
+                            <a href="javascript:;" title="OK" class="closebutton buttonBlue"><span class="left"><span class="right">OK</span></span></a>
                         </div>
                 </div>
                 <!-- End .content --> 
@@ -3067,7 +3070,7 @@
                         <span class="deleteModal">You have Successfully Deleted the Custom Forum <br/> from the List.</span>
                     </div>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                        <a href="javascript:;" title="OK" class="buttonBlue cancelButton"><span class="left"><span class="right">OK</span></span></a>
                     </div>
                 </div>
                 <!-- End .content -->
@@ -3101,7 +3104,7 @@
                         <span class="deleteModal">You should select a forum to delete.</span>
                    </div>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                        <a href="javascript:;" title="OK" class="buttonBlue cancelButton"><span class="left"><span class="right">OK</span></span></a>
                     </div>
                 </div>
                 <!-- End .content -->
@@ -3137,7 +3140,7 @@
                         <span class="errorModal"></span>
                     </div>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                        <a href="javascript:;" title="OK" class="buttonBlue cancelButton"><span class="left"><span class="right">OK</span></span></a>
                     </div>
                 </div>
                 <!-- End .content -->

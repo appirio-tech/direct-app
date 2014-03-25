@@ -116,7 +116,7 @@
                                             </div>
 <br>                                            
                                             <div>
-                                                Upload excel file:<input type="file" name="file" /><input type="submit" value="Upload"/>
+                                                Upload excel file:<input type="file" name="file" /><input type="submit" value="Upload" class="newButtonGreen" style="border-left: none; border-right: none; border-top: none"/>
                                             </div>
                                         </div>                                    
                                 </div>

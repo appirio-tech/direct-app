@@ -71,9 +71,9 @@
                     <div class="hide"><jsp:include page="includes/right.jsp"/></div>
 
                     <div id="area1"><!-- the main area -->
-                        <div class="area1Content">
+                        <div class="area1Content" >
                             <div class="currentPage"> <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt; <strong>Create New Project</strong> </div>
-							<div class="areaHeader">
+							<div class="areaHeader" style="display: none">
 								<h2 class="startProjectTitle">Start a New Project</h2>
 							</div>
 

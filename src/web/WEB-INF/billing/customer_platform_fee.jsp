@@ -151,8 +151,8 @@
                                 </div>
                                 
                                 <div class="saveButtonBox">
-                                    <a class="button6 applyButton" href="<s:property value="#feeMainPage"/>" id="cancelPlatformFee"><span class="left"><span class="right">CANCEL</span></span></a>
-                                    <a class="button6 applyButton" href="javascript:" id="submitPlatformFee"><span class="left"><span class="right">SAVE</span></span></a>
+                                    <a class="button6 applyButton newButtonOrange" href="<s:property value="#feeMainPage"/>" id="cancelPlatformFee"><span class="left"><span class="right">CANCEL</span></span></a>
+                                    <a class="button6 applyButton newButtonGreenn" href="javascript:" id="submitPlatformFee"><span class="left"><span class="right">SAVE</span></span></a>
                                 </div>
 
                               </div>

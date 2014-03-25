@@ -44,10 +44,6 @@
                 </span>
                 <div class="clearFix"></div>
             </div>
-            <span class="corner tl"></span>
-            <span class="corner tr"></span>
-            <span class="corner bl"></span>
-            <span class="corner br"></span>
         </div>
     </div>
 </div>

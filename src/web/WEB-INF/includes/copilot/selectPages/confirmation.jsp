@@ -40,13 +40,7 @@
                 </div>
             </div>
             <!-- End .form -->
-          
-            <!-- corner -->
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-            
+
         </div>
         
         <div class="buttonBottom">

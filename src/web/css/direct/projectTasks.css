@@ -1,12 +1,15 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * Used for the project tasks pages.
  *
  * @version 1.0 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task)
  * @version 1.1 (Release Assembly - TC Cockpit Tasks Management Release 2)
  * - Update the error label css
- * @author GreatKevin
+ * @version 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the project tasks page
+ *
+ * @author GreatKevin, TCSASSEMBLER
  */
 .taskPage #content{
 	min-width: 1347px
@@ -20,51 +23,52 @@
 .addTaskPanel{
 	position: relative;
 	margin-top: 26px;
-	background: url(/images/tabs3_bg.png) 0 0 repeat-x;
+	border:1px solid #f7f7f7;
+	background: #f1f1f1;
+	padding: 0 26px 0 16px;
 	z-index: 10;
 }
 	.addTaskPanel .panelHeader{
-		height: 34px;
+		height: 62px;
 		overflow: hidden;
-    	background: url(/images/tabs3_left.png) 0 0 no-repeat;
+    	        background: #f1f1f1;
 	}
 		.addTaskPanel .panelHeader h3{
-			line-height: 36px;
-			height: 34px;
+			line-height: 61px;
+			border-bottom:1px solid #999999;
+			height: 61px;
 			overflow: hidden;
 			padding-left: 37px;
-			background: url(/images/icon-project-task.png) 16px 10px no-repeat;
-			color: #333333;
+			background: url(/images/icon-project.png) 0 center no-repeat;
+			color: #666666;
 			font-weight: bold;
-			font-size: 12px;
-			text-shadow: 0px 1px 0px #ffffff;			
+			font-size: 24px;			
 		}
 		.addTaskPanel .panelHeader .jsAddTaskDetailedPopup{
 			display: block;
 			position: absolute;
-			top: 0;
-			right: 0;
-			line-height: 34px;
-			height: 34px;
-			background: url(/images/tabs3_bg_hover.png) 0 0 repeat-x;
-			border-left: 1px solid #bdbdbd;
+			top: 9px;
+			right: 23px;
+			line-height: 45px;
+			height: 45px;
+			border-left: 1px solid #cccccc;
 			text-decoration: none;
 			font-size: 12px;
 			font-weight: normal;
-			color: #ff0000;
+			color: #FF6700;
 		}
 			.addTaskPanel .panelHeader .jsAddTaskDetailedPopup span{
 				display: block;
 				height: 34px;
-				background: url(/images/tabs3_right.png) 100% -40px no-repeat;
-				padding: 0 16px 0 0;
+				padding: 9px 16px 0 45px;
 				text-decoration: none;
 			}
 				.addTaskPanel .panelHeader .jsAddTaskDetailedPopup span span{
 					display: block;
-					height: 34px;
-					background: url(/images/icon-task-more-details.png) 15px 10px no-repeat;
-					padding: 0 0 0 36px;
+					height: 28px;
+					line-height: 29px;
+					background: url(/images/icon-task-more-details2.png) 0 center no-repeat;
+					padding: 0 0 0 37px;
 				}
 		.addTaskPanel .panelHeader .jsAddTaskDetailedPopup:hover{
 			text-decoration: underline;
@@ -74,8 +78,7 @@
 				cursor: pointer;
 			}
 	.addTaskPanel .panelContent{
-		background-color: #f5f5f5;
-		border: 1px solid #cccccc;
+		background-color: #f1f1f1;
 		border-top-width: 0;
 		padding: 15px 96px 15px 15px;
 		height: 24px;
@@ -106,21 +109,22 @@
 		min-width:170px;
 	}
 	.addTaskPanel input{
-		font-family: Arial,Helvetica,sans-serif;
+		font-family:  "Source Sans Pro", Arial,Helvetica,sans-serif;
 		font-size: 11px;
 	}
 	.addTaskPanel .textInput{
 		padding: 4px 6px;
+		border-radius: 4px;
 		width: 179px;
 		margin-right: 14px;
 		color: #666666;
-		border: 1px solid #bdbdbd;
+		border: 1px solid #e7e7e7;
 	}
 	.addTaskPanel .focused{
-		color: #333333;
+		color: #666666;
 	}
 	.addTaskPanel select{
-		color: #333333;
+		color: #666666;
 		margin-top: 1px;
 		padding: 1px;
 		height: 21px;
@@ -131,12 +135,13 @@
 	}
 	.addTaskPanel .task-date-pick{
 		padding: 2px 5px;
+		border-radius: 4px;
 		width: 58px;
 		color: #666666;
-		border: 1px solid #bdbdbd;
+		border: 1px solid #e7e7e7;
 	}
 	.addTaskPanel .selected{
-		color: #333333;
+		color: #666666;
 	}
 	.addTaskPanel .dp-choose-date{
 		margin-left: 3px;
@@ -154,45 +159,147 @@
 		height: 4px;
 		overflow: hidden;
 	}
-	.addTaskPanel .cornerBl{
-		left: 0;
-		bottom: 0;
-		background-position: 0 -4px;		
-	}
-	.addTaskPanel .cornerBr{
-		right: 0;
-		bottom: 0;
-		background-position: -4px -4px;
-	}
 	.addTaskPanel #quickAssignTask{
 		width: 170px;
 	}
 	.addTaskPanel .quickAddTaskBtn{
 		position: absolute;
+		background:  url(/images/button-left-plus.png) 0 0 no-repeat;
 		top: 15px;
 		right: 15px;
 		margin: 0;
+		padding-left: 27px;
+		height: 24px;
+		line-height: 24px;
+		display: inline-block;
+		width: auto;
 	}
 	.addTaskPanel .quickAddTaskBtn span{
-		padding: 0 0 0 28px;
-		width: 36px;
+		background:  url(/images/button-right.png) 100% 0 no-repeat;
+		padding: 0 6px;
 		height: 24px;
-		line-height: 22px;
-		text-align: left;
-		display: block;
-		position: relative;
+		font-size: 13px;
+		color: #fffffe;
+		overflow: hidden;
+		text-decoration: none;
+		line-height: 24px;
+		display: inline-block;
+		width: auto;
 	}
-	.addTaskPanel .quickAddTaskBtn span i{
+	.addTaskPanel .quickAddTaskBtn:hover{
+		background-position: 0 -24px;
+	}
+	.addTaskPanel .quickAddTaskBtn:hover span{
+		background-position: 100% -24px;
+	}
+.taskMultiSelector {
+	position: relative;
+}
+	.taskMultiSelector .trigger{
+		margin-right: 24px;
+		cursor: pointer;
+	}
+		.taskMultiSelector .trigger .msValue, .taskMultiSelector .trigger .msValue:hover{
+			display: block;
+			height: 24px;
+			line-height: 24px;
+			font-size: 11px;
+			color: #666666;
+			overflow: hidden;
+			padding-left: 7px;
+			/*background: url(/images/task-multi-selector.png) 0 0 no-repeat;*/
+			text-decoration: none;
+		}
+		.taskMultiSelector .trigger .selectorArrow{
+			display: block;
+			height: 24px;
+			width: 24px;
+			background: url(/images/task-multi-selector.png) 100% -48px no-repeat;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+		.taskMultiSelector .trigger .hidden{
+			display: none;
+		}
+	.taskMultiSelector .dropDown{
+		display: none;
 		position: absolute;
-		display: block;
-		width: 12px;
-		height: 14px;
-		background: url(/images/icon-project-task.png) 0 -40px no-repeat;
-		top: 5px;
-		left: 8px;
+		top: 23px;
+		left: 0;
+		border: 1px solid #e7e7e7;
+		background-color: #ffffff;
 	}
+		.taskMultiSelectorOpen .dropDown ul{
+			padding: 7px 0 6px 0;
+			overflow-y: auto;
+			overflow-x: hidden;
+			max-height: 120px;
+			border-bottom: 1px solid #dddddd;
+			position: relative;
+			list-style-type: none;
+		}
+			.taskMultiSelectorOpen .dropDown ul li{
+				padding: 5px 0 3px 32px;
+				font-size: 11px;
+				line-height: 16px!important;
+				position: relative;
+				list-style-type: none;
+				min-height: 16px!important;
+			}
+				.taskMultiSelectorOpen .dropDown ul li input{
+					position: absolute;
+					top: 6px;
+					left: 12px;
+					width: 13px;
+					height: 13px;
+				}
+				.taskMultiSelectorOpen .dropDown ul li label{
+					display: inline-block;
+					line-height: 16px!important;
+					font-size: 11px;
+					cursor: pointer;
+					padding: 0;
+				}
+		.taskMultiSelectorOpen .dropDown .btnWrapper{
+			height: 24px;
+			padding: 7px 0;
+			background-color: #f1f1f1;
+			text-align: center;
+		}
+				.taskMultiSelectorOpen .dropDown .btnWrapper a span{
+					padding: 0 26px 0 22px;
+				}
+	
+	.taskMultiSelectorOpen .dropDown{
+		display: block;	
+	}
+		
+		.taskMultiSelectorOpen .trigger span{
+			background-position: 0 -24px;
+		}
+		.taskMultiSelectorOpen .trigger .selectorArrow{
+			background-position: 100% -72px;
+		}
+		.dropDown .buttonRed1{
+			height: 21px;
+		    line-height: 21px;
+		    background: #00aeff;
+		    border-bottom: 3px solid #0096ff;
+		    border-radius: 4px;
+		    behavior: url(/css/PIE.htc);
+		    color: #ffffff;
+
+		}
+		.dropDown .buttonRed1 span{
+			background: none;
+		}
+		.dropDown .buttonRed1:hover{
+		    border-bottom: 3px solid #00aeff;
+
+		}
 .taskListContainer{
-	padding: 20px 0 0 243px;
+	padding: 20px 0 0 343px;
 	min-height: 540px;
 	position: relative;
 	z-index: 9;
@@ -201,13 +308,13 @@
 		list-style-type: none;
 	}
 	.taskListContainer .taskListFilter{
-		width: 191px;
+		width: 272px;
 		position: absolute;
 		top: 20px;
 		left: 0;
-		border: 1px solid #cccccc;
-		background-color: #f5f5f5;
-		padding: 9px 15px 14px 15px;
+		border: 1px solid #e7e7e7;
+		background-color: #f1f1f1;
+		padding: 28px 22px 60px 22px;
 		font-size: 11px;
 	}
 	.taskListFilter .fieldLabel{
@@ -215,27 +322,27 @@
 		line-height: 12px;
 		font-size: 11px;
 		font-weight: bold;
-		color: #333333;
+		color: #666666;
 	}
 	.taskListFilter .searchTaskByName{
-		height: 22px;
 		background: url("/images/filter-panel/search_icon.png") no-repeat scroll 98% 3px #FFFFFF;
-		border: 1px solid #bdbdbd;
+		height: 22px;
+		border: 1px solid #c2c2c2;
 		height: 20px;
-		width: 189px;
+		width: 270px;
 		margin-bottom: 13px;
 	}
 		.taskListFilter .searchTaskByName input{
 			border-width: 0;
-			width: 144px;
+			width: 234px;
 			padding: 1px 0 0 6px;
 		}
 	.taskListFilter select{
-		color: #333333;
+		color: #666666;
 		margin-top: 1px;
 		padding: 1px;
 		height: 21px;
-		width: 191px;
+		width: 272px;
 		margin-bottom: 12px;
 	}
 .dueDateFilter{
@@ -243,12 +350,13 @@
 	height: 22px;
 }
 	.dueDateFilter input{
-		width: 58px;
-		border: 1px solid #bdbdbd;
+		width: 97px;
+		border: 1px solid #e7e7e7;
+		border-radius: 4px;
 		padding: 3px 0;
-		font-family: Arial,Helvetica,sans-serif;
+		font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
 		font-size: 11px;
-		color: #333333;
+		color: #666666;
 	}
 	.dueDateFilter .dp-choose-date{
 		margin: 0 0 0 2px;	
@@ -270,8 +378,8 @@
 			background-image: url(/images/icon-task-priority.png);
 			background-repeat: no-repeat;
 			padding-left: 24px;
-			height: 17px;
-			line-height: 17px;
+			height: 18px;
+			line-height: 18px;
 			display: inline-block;
 			cursor: pointer;
 		}
@@ -315,130 +423,90 @@
 	.taskListFilter #filerByContest{
 		z-index: 9;
 	}
-	.taskListFilter .corner{
-		background: url(/images/gray-corners-custom.png) 0 0 no-repeat;
-		display: block;
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		overflow: hidden;
-	}
-	.taskListFilter .cornerTl{
-		top: -1px;
-		left: -1px;
-		background-position: 0 0;
-	}
-	.taskListFilter .cornerTr{
-		top: -1px;
-		right: -1px;
-		background-position: 0 -4px;
-	}
-	.taskListFilter .cornerBl{
-		left: -1px;
-		bottom: -1px;
-		background-position: 0 -4px;		
-	}
-	.taskListFilter .cornerBr{
-		right: -1px;
-		bottom: -1px;
-		background-position: -4px -4px;
-	}
 .taskListControlPanel {
-	height: 84px;
-	border: 1px solid #bdbdbd;
+	height: 119px;
+	border: 1px solid #e7e7e7;
 	position: relative;
-	background: url(/images/task-list-bg.png) 0 -16px repeat-x;
-	padding: 12px 14px 14px 14px;
+	background: #f1f1f1;
+	padding: 0 16px 6px 16px;
 	margin-bottom: 20px;
 }
 	.taskListControlPanel h2{
-		height: 38px;
-		line-height: 38px;
-		padding: 0 0 6px 44px;
-		color: #333333;
-		font-size: 18px;
+		height: 62px;
+		line-height: 62px;
+		padding: 0 0 0 44px;
+		color: #666666;
+		font-size: 24px;
 		font-weight: bold;
-		border-bottom: 1px solid #bdbdbd;
-		background: url(/images/icon-task-list.png) 3px 0 no-repeat;
+		border-bottom: 1px solid #999999;
+		background: url(/images/icon-task-list.png) 8px 10px no-repeat;
 	}
 	.taskListControlPanel .taskListSummary{
 		position: absolute;
 		top: 12px;
-		right: 15px;	
+		right: 45px;	
 	}
 		.taskListControlPanel .taskListSummary .emptyTxt{
 			line-height: 34px;
 			font-size: 11px;
-			color: #333333;
+			color: #666666;
 			white-space: nowrap;
 		}
 		.taskListControlPanel .taskListSummary .summaryTxt{
 			line-height: 26px;
 			font-size: 11px;
-			color: #333333;
+			color: #666666;
 			white-space: nowrap;
 			text-indent: 2px;
 		}
 .progressBarBg {
-    width: 195px;
-    height: 13px;
-    padding: 2px;
-    background: url(/images/total_bg.png) no-repeat left center;
+    width: 237px;
+    height: 18px;
+    border: 1px solid #d9d9d9;
     position: relative;
 }
 	.progressBarBg .progressBar {
 		width: auto;
-		height: 13px;
+		height: 18px;
 		float: left;
 		display: inline;
 		overflow: hidden;
 		position: absolute;
-		left: 2px;
-		top: 2px;
 	}
 	.progressBarBg .progressBarLeft {
 		width: auto;
 		float: left;
 		display: inline;
 		padding-left: 4px;
-		background-position: left 0;
-		background-repeat: no-repeat;
-		background-image: url(/images/actual_green.png);
+		background: #00aeff;
 	}
 	.progressBarBg .progressBarRight {
 		width: auto;
 		float: left;
 		display: inline;
 		padding-right: 4px;
-		background-position: right -26px;
-		background-repeat: no-repeat;
-		background-image: url(/images/actual_green.png);
+		background: #00aeff;
 	}
 	.progressBarBg .progressBarMid {
 		width: 10px;
 		float: left;
 		display: inline;
-		height: 13px;
-		background-position: left -13px;
-		background-repeat: repeat-x;
-		background-image: url(/images/actual_green.png);
+		height: 18px;
+		background: #00aeff;
 	}
 .smallProgressBarBg {
-    width: 116px;
-    height: 10px;
-    padding: 2px;
-    background: url(/images/small-progress-bg.png) 0 0 no-repeat;
+    width: 158px;
+    height: 18px;
+    border:1px solid #e7e7e7;
+    background: #fff;
     position: relative;
 }
 	.smallProgressBarBg .smallProgressBar {
 		width: auto;
-		height: 10px;
+		height: 18px;
 		float: left;
 		display: inline;
 		overflow: hidden;
-		position: absolute;
-		left: 2px;
-		top: 2px;
 	}
 	.smallProgressBarBg .smallProgressBarLeft {
 		width: auto;
@@ -447,25 +515,21 @@
 		padding-left: 3px;
 		background-position: 0 0;
 		background-repeat: no-repeat;
-		background-image: url(/images/small-progress-green.png);
+		background:#00aeff;
 	}
 	.smallProgressBarBg .smallProgressBarRight {
 		width: auto;
 		float: left;
 		display: inline;
 		padding-right: 3px;
-		background-position: 100% -20px;
-		background-repeat: no-repeat;
-		background-image: url(/images/small-progress-green.png);
+		background: #00aeff;
 	}
 	.smallProgressBarBg .smallProgressBarMid {
 		width: 10px;
 		float: left;
 		display: inline;
-		height: 10px;
-		background-position: 0 -10px;
-		background-repeat: repeat-x;
-		background-image: url(/images/small-progress-green.png);
+		height: 18px;
+		background: #00aeff;
 	}
 	.taskListControlPanel .taskListControlArea{
 		padding: 14px 1px 0 2px;
@@ -474,12 +538,12 @@
 	}
 		.taskListControlPanel .taskListControlArea label{
 			font-size: 12px;
-			color: #333333;
+			color: #666666;
 			font-weight: bold;
 			line-height: 24px;
 		}
 		.taskListControlPanel .taskListControlArea select {
-			color: #333333;
+			color: #666666;
 			height: 21px;
 			width: 150px;
 			font-size: 11px;
@@ -490,7 +554,7 @@
 			margin: 0;
 		}
 		.taskListControlPanel .taskListControlArea .addTaskList span{
-			padding: 0 12px 0 22px;
+			padding: 0 6px;
 			position: relative;
 		}
 		.taskListControlPanel .taskListControlArea .addTaskList span i{
@@ -502,57 +566,29 @@
 			top: 8px;
 			left: 9px;
 		}
-	.taskListControlPanel .corner{
-		background: url(/images/task-list-bg.png) 0 0 no-repeat;
-		display: block;
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		overflow: hidden;
-	}
-	.taskListControlPanel .cornerTl{
-		top: -1px;
-		left: -1px;
-		background-position: 0 0;
-	}
-	.taskListControlPanel .cornerTr{
-		top: -1px;
-		right: -1px;
-		background-position: 0 -4px;
-	}
-	.taskListControlPanel .cornerBl{
-		left: -1px;
-		bottom: -1px;
-		background-position: 0 -8px;		
-	}
-	.taskListControlPanel .cornerBr{
-		right: -1px;
-		bottom: -1px;
-		background-position: 0 -12px;
-	}
 .taskListPanel{
 	margin-bottom: 20px;
 	position: relative;
 }
 	.taskListPanel .taskListPanelHeader{
-		height: 40px;
+		height: 47px;
 		padding: 0 0 0 10px;
-		background: url(/images/tabs5.png) 0 0 no-repeat;
+		background: #f1f1f1;
 	}
 	.taskListPanel .taskListPanelHeaderRight{
-		height: 40px;
+		height: 47px;
 		padding: 0 10px 0 0;
-		background: url(/images/tabs5.png) 100% -80px no-repeat;
+		background: #f1f1f1;
 	}
 	.taskListPanel .taskListPanelHeaderInner{
-		height: 40px;
-		padding: 0 6px 0 0;
-		background: url(/images/tabs5.png) 0 -40px repeat-x;
+		height: 47px;
+		padding: 0 45px 0 10px;
+		background: #f1f1f1;
 	}
 		.taskListPanel .taskListPanelHeaderInner h3{
-			padding: 0 0 0 36px;
-			color: #333333;
-			font-size: 14px;
+			padding: 5px 0 0 37px;
+			color: #666666;
+			font-size: 18px;
 			font-weight: bold;
 			line-height: 40px;
 			background: url(/images/icon-task-list.png) 5px -100px no-repeat;
@@ -561,39 +597,47 @@
 			background-position: 5px -60px;
 		}
 		.taskListPanel .taskListPanelHeaderInner a{
-			margin: 8px 0 0 5px;
+			margin: 10px 0 0 19px;
 		}
 		.taskListPanel .taskListPanelHeaderInner .hide{
 			display: none;	
 		}
 .buttonGray {
     display: block;
-    background: transparent url(/images/edit/grayBtn-left.png) left top no-repeat;
     font-size: 11px;
     -webkit-text-size-adjust: none;
-    color: #333333;
-    line-height: 25px;
     font-weight: normal;
     text-align: left;
-    padding-left: 4px;
-    font-family: Arial, Helvetica, sans-serif;
+    padding:0 4px;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
+
+    height: 25px;
+    line-height: 25px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 2px;
+    behavior: url(/css/PIE.htc);
+    color: #666666;
+
 }
 	.buttonGray span {
-		display: block;
-		background: transparent url(/images/edit/grayBtn-right.png) right top no-repeat;
-		cursor: pointer;
-		height: 25px;
-		padding-right: 4px;
+    height: 25px;
+    line-height: 25px;
+    display: block;
 		position: relative;
 	}
 .buttonGray:hover {
-    background-position: left -25px;
+    background:#ebebeb;
+}
+.buttonGray:active{
+    background:#ff8b03;
+    border:1px solid #ff8b04;
+    color: #fffffe;
 }
 	.buttonGray:hover span {
-		background-position: right -25px;
 	}
 	.taskListPanel .taskListPanelHeaderInner .buttonGray span i{
 			background-image: url("/images/icon-project-task.png");
@@ -607,35 +651,52 @@
 	.addNewTaskToList span{
 		padding: 0 10px 0 27px;
 	}
-		.addNewTaskToList span i{
+		.addNewTaskToList span i,
+		.addNewTaskToList:hover span i{
 			background-position: 0 -115px;
 			left: 6px;
+		}
+		.addNewTaskToList:active span i{
+			background-position: 0 -588px;
 		}
 	.editTaskList span {
 		padding: 0 24px 0 41px;
 	}
-		.editTaskList span i{
+		.editTaskList span i,
+		.editTaskList:hover span i{
 			background-position: 0 -152px;
 			left: 20px;
+		}
+		.editTaskList:active span i{
+			background-position: 0 -623px;
 		}
 	.deleteTaskList span{
 		padding: 0 17px 0 35px;
 	}
-		.deleteTaskList span i{
+		.deleteTaskList span i,
+		.deleteTaskList:hover span i{
 			background-position: 0 -194px;
 			left: 14px;
+		}
+		.deleteTaskList:active span i{
+			background-position: 0 -662px;
+
 		}
 	.resolveTaskList span{
 		padding: 0 14px 0 29px;
 	}
-		.resolveTaskList span i{
+		.resolveTaskList span i,
+		.resolveTaskList:hover span i{
 			background-position: 0 -233px;
 			left: 11px;
 		}
+		.resolveTaskList:active span i{
+			background-position: 0 -711px;
+		}
 	.taskListContent{
-		border: 1px solid #bdbdbd;
+		border: 1px solid #e7e7e7;
 		border-top-width: 0;
-		padding: 15px 15px 17px 14px;	
+		padding: 15px 26px 17px;	
 	}
 		.taskListContent .emptyHint{
 			padding-top: 6px;
@@ -651,7 +712,7 @@
 				padding-bottom: 3px;
 				font-size: 14px;
 				font-weight: bold;
-				color: #333333;
+				color: #666666;
 			}
 			.taskListContent .emptyHint .linkswrapper{
 				line-height: 13px;
@@ -670,7 +731,7 @@
 		line-height: 15px;
 		padding-bottom: 5px;
 		position: relative;
-		color: #333333;
+		color: #666666;
 	}
 		.taskListContent .taskListInfo .associatedInfo{
 			font-size: 12px;
@@ -679,6 +740,7 @@
 		}
 			.taskListContent .taskListInfo .associatedInfo a{
 				text-decoration: underline;
+				color: #f90;
 			}
 			.taskListContent .taskListInfo .associatedInfo a:hover{
 				text-decoration: none;
@@ -691,7 +753,7 @@
 		}
 			.taskListContent .taskListInfo .taskListProgress p{
 				font-size: 11px;
-				line-height: 14px;
+				line-height: 18px;
 				padding-right: 10px;
 				white-space: nowrap;
 			}
@@ -701,24 +763,6 @@
 			line-height: 16px;
 			
 		}
-	.taskListPanel .corner{
-		background: url(/images/white_corner.png) 0 0 no-repeat;
-		display: block;
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		overflow: hidden;
-	}
-	.taskListPanel .cornerBl{
-		bottom: 0;
-		left: 0;
-		background-position: 0 -4px;
-	}
-	.taskListPanel .cornerBr{
-		right: 0;
-		bottom: 0;
-		background-position: -4px -4px;
-	}
 .taskItem {
 	border: 1px solid #e5e5e5;
 	margin-top: 15px;
@@ -730,13 +774,13 @@
     overflow: hidden;
 }
 .taskItemHeader{
-	background-color: #e5e5e5;
+	background-color: #f1f1f1;
 	height: 40px;
 }
 	.taskItemHeader .checkBoxWrapper {
 		height: 18px;
 		padding: 11px 0 0 16px;
-		color: #333333;
+		color: #666666;
 		font-size: 12px;
 		font-weight: bold;
 		max-width: 500px;
@@ -752,21 +796,22 @@
 .taskItemLink {
 	line-height: 18px;	
 	display: inline-block;
+	color: #f90;
 	padding: 0 13px 0 21px;
 	margin: 11px 0 0 10px;
 	font-size: 11px;
-	text-decoration: underline;
-	background-image: url("/images/icon-project-task.png");
+	text-decoration: none;
+	background-image: url("../../images/icon-project-task.png");
 	background-repeat: no-repeat;
 }
 .taskItemLink:hover {
-	text-decoration: none;
+	text-decoration: underline;
 }
 .taskEditLink {
 	background-position: 0 -156px;
 }
 .taskDeleteLink {
-	background-position: 0 -198px;
+	background-image: url("../../images/trash-icon.png");
 }
 .taskMoreDetailsLink {
 	background-position: 0 -276px;
@@ -842,25 +887,21 @@
 .taskItemDetailed .col5, .taskItemDetailed .col7{
 	display: block;	
 }
-
-.statusText0 {
-    font-weight: bold;
-    color: #999999;
+.statusTextGray{
+	font-weight: bold;
+	color: #666666;	
 }
-
-.statusText1 {
-    font-weight: bold;
-    color: #228aea;
+.statusTextBlue{
+	font-weight: bold;
+	color: #00aeff;	
 }
-
-.statusText3 {
-    font-weight: bold;
-    color: #00a900;
+.statusTextGreen{
+	font-weight: bold;
+	color: #80b728;	
 }
-
-.statusText2 {
-    font-weight: bold;
-    color: #ec0008;
+.statusTextRed{
+	font-weight: bold;
+	color: #ff0000;	
 }
 .dateTxt, .noteTxt{
 	color: #666666;	
@@ -898,15 +939,16 @@
 	}
 		.taskAttachmentUl li a, .editTaskAttachment li a.taskAttachment {
 			padding-left: 21px;
+			color: #f90;
 			display: inline-block;
+			text-decoration: none;
 			font-size: 11px;
 			background-image: url("/images/icon-project-task.png");
 			background-repeat: no-repeat;
 			line-height: 22px;
-			text-decoration: underline;
 		}
 		.taskAttachmentUl li a:hover, .editTaskAttachment li a.taskAttachment:hover{
-			text-decoration: none;
+			text-decoration: underline;
 		}
 .typeZip{
 	background-position: 0 -317px;
@@ -936,21 +978,28 @@
 			text-decoration: none;
 		}
 .completedTaskTogger {
-	height: 14px;
 	overflow: hidden;
 	padding: 15px 9px 0 16px;	
+	height: 23px;
+	line-height: 23px;
 }
 .completedTasksNum{
-	padding: 2px 0 0 20px;
-	line-height: 12px;	
+	height: 23px;
+	line-height: 23px;
+	padding: 0 0 0 38px;
 	font-size: 12px;
 	font-weight: bold;
-	background: url("/images/icon-project-task.png") 0 -440px no-repeat;
+	background: url("/images/icon-project-task-complete.png") 0 center no-repeat;
 }
 .showCompletedTasks{
 	padding: 2px 0 0 0;
 	line-height: 12px;	
-	font-size: 11px;
+	color: #ff8a00;
+	font-size: 14px;
+}
+.completedTaskTogger .showCompletedTasks{
+
+	text-decoration: underline;
 }
 .showCompletedTasks:hover{
 	text-decoration: none;
@@ -960,34 +1009,39 @@
 }
 .completedTaskListTogger{
 	height: 40px;
+	border: 1px solid #e7e7e7;
 	padding: 0 0 0 10px;
-	background: url(/images/tabs5.png) 0 -120px no-repeat;
+	background: #f1f1f1;
 }
 .completedTaskListToggerRight{
 	height: 40px;
 	padding: 0 10px 0 0;
-	background: url(/images/tabs5.png) 100% -160px no-repeat;
+	background: #f1f1f1;
 }
 .completedTaskListToggerInner{
 	height: 40px;
 	padding: 0 6px 0 0;
-	background: url(/images/tabs5.png) 0 -200px repeat-x;
+	background: #f1f1f1;
 }
 .completedTaskListNum {
-	line-height: 16px;	
-	margin: 13px 0 0 6px;
+	line-height: 23px;	
+	height: 23px;
+	color: #666666;
+	margin: 8px 0 0 6px;
 	font-size: 14px;
 	font-weight: bold;
-	padding: 0 0 0 23px;
-	background: url("/images/icon-project-task.png") 0 -480px no-repeat;
+	padding: 0 0 0 27px;
+	background: url("../../images/icon-project-task-complete.png") 0 center no-repeat;
 }
 .showCompletedTaskLists {
+	color: #f90;
 	line-height: 16px;	
 	margin: 12px 0 0 0;
 	font-size: 12px;
+	text-decoration: none;
 }
 .showCompletedTaskLists:hover {
-	text-decoration: none;
+	text-decoration: underline;
 }
 .completedTaskListsShowed{
 	background-position: 0 -240px;
@@ -1038,7 +1092,7 @@
 	display: block;	
 }
 .groupByDueDate .taskListContent{
-	padding: 5px 15px 20px 14px
+	padding: 15px 28px 16px;
 }
 .taskListPanel .taskListPanelHeaderInner h3.dateList {
 	background-image: none;
@@ -1057,6 +1111,9 @@
 #new-modal .outLay .modalHeader .modalHeaderCenter{
     height: 36px;
     line-height: 36px;
+    color: #666666;
+    background: #f1f1f1;
+    border-bottom: 1px solid #e7e7e7;
     padding: 4px 0 0 14px;
 }
 .popups .taskForm{
@@ -1082,18 +1139,18 @@
 	width: 418px;
 }
 .taskPage .popups input.text  {
-    border: 1px solid #BDBDBD;
-    color: #333333;
+    border: 1px solid #e7e7e7;
+    color: #666666;
     padding: 4px 6px;
-	font-family:Arial,Helvetica,sans-serif;
+	font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
 	background-image: none;
 	height: 15px;
 	width: 405px;
 	line-height: 14px;
 }
 .taskPage .popups input.fileInput  {
-    color: #333333;
-	font-family:Arial,Helvetica,sans-serif;
+    color: #666666;
+	font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
 	height: 25px;
 	width: 360px;
 }
@@ -1114,7 +1171,6 @@
 	text-align: right;
 	color: #999999;
 	line-height: 20px;
-        float: right;
 }
 .popups .taskForm div.right  .rightRow{
 	min-height: 25px;
@@ -1125,19 +1181,20 @@
 	float: left;
 }
 .taskPage .popups textarea  {
-    border: 1px solid #BDBDBD;
+    border: 1px solid #e7e7e7;
     padding: 4px 6px;
-	font-family:Arial,Helvetica,sans-serif;
+    border-radius: 4px;
+	font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
 	line-height: 14px;
 	resize: none;
 	overflow: auto;
 	width: 405px;
 	height: 59px;
 	font-size: 11px;
-    color: #333333;
+    color: #666666;
 }
 .taskPage .popups  select {
-    color: #333333;
+    color: #666666;
     height: 21px;
     margin-top: 1px;
     padding: 1px;
@@ -1225,7 +1282,7 @@
 	width: 48px;
 }
 #addProjectTaskSuccessModal .buttonArea .button6 span.right, #addProjectTaskListSuccessModal .buttonArea .button6 span.right, #editProjectTaskListSuccessModal .buttonArea .button6 span.right, #resolveTaskListSuccessModal .buttonArea .button6 span.right {
-    padding: 4px 10px 0;
+    padding: 0 10px;
 	text-align: center;
 }
 #addProjectTaskListModal, #editProjectTaskListModal{
@@ -1279,7 +1336,7 @@
 	margin-right: 32px;
 }
 #resolveTaskListModal .buttonArea .button6 span.right {
-    padding: 4px 10px 0;
+    padding: 0px 10px;
 	text-align: center;
 }
 /*Delete task list / Delete task modal*/
@@ -1303,7 +1360,7 @@
 	margin-right: 32px;
 }
 #deleteTaskListModal .buttonArea .button6 span.right, #deleteTaskModal .buttonArea .button6 span.right {
-    padding: 4px 10px 0;
+    padding: 0px 10px;
 	text-align: center;
 }
 #deleteTaskListSuccessModal, #deleteTaskSuccessModal{
@@ -1322,7 +1379,7 @@
 	width: 48px;
 }
 #deleteTaskListSuccessModal .buttonArea .button6 span.right, #deleteTaskSuccessModal .buttonArea .button6 span.right {
-    padding: 4px 10px 0;
+    padding: 0px 10px;
 	text-align: center;
 }
 
@@ -1338,11 +1395,11 @@
 	padding: 11px 0 0 15px;
 }
 .editTaskItem .taskItemHeader .inputWrapper input{
-    border: 1px solid #BDBDBD;
+    border: 1px solid #e7e7e7;
     color: #666666;
     padding: 2px 6px;
     width: 417px;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
     font-size: 11px;
 	display: block;	
 }
@@ -1361,7 +1418,7 @@
 	float: left;
 }
 	.editTaskItem select {
-		color: #333333;
+		color: #666666;
 		height: 21px;
 		margin-top: 1px;
 		padding: 1px;
@@ -1372,11 +1429,11 @@
 	float: left;
 }
 .quickEditTaskItem .quickEditCol3 .task-date-pick {
-    border: 1px solid #BDBDBD;
-    color: #333333;
+    border: 1px solid #e7e7e7;
+    color: #666666;
     padding: 2px 5px;
     width: 56px;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
     font-size: 11px;
 }
 .editColLeft{
@@ -1423,11 +1480,11 @@
 	width: 170px;	
 }
 .editTaskItem .task-date-pick {
-    border: 1px solid #BDBDBD;
-    color: #333333;
+    border: 1px solid #e7e7e7;
+    color: #666666;
     padding: 2px 2px;
     width: 59px;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
     font-size: 11px;
 }
 .editTaskItem .dp-choose-date {
@@ -1440,16 +1497,16 @@
 	line-height: 24px;
 }
 .editTaskItem  textarea  {
-    border: 1px solid #BDBDBD;
+    border: 1px solid #e7e7e7;
     padding: 4px 6px;
-	font-family:Arial,Helvetica,sans-serif;
+	font-family: "Source Sans Pro", Arial,Helvetica,sans-serif;
 	line-height: 14px;
 	resize: none;
 	overflow: auto;
 	width: 92%;
 	height: 59px;
 	font-size: 11px;
-    color: #333333;
+    color: #666666;
 }
 .editTaskAttachment li{
 	width: 240px;
@@ -1482,8 +1539,25 @@
 	padding: 0 0 6px 0;	
 }
 
-label.error {
-    background-color: none;
-    background-image: none;
-    color:red;
+#addProjectTaskSuccessModal .buttonArea .button6, #addProjectTaskListSuccessModal .buttonArea .button6, #editProjectTaskListSuccessModal .buttonArea .button6, #resolveTaskListSuccessModal .buttonArea .button6 {
+    background: #00aeff;
+    border-bottom: 3px solid #0096ff;
+}
+
+#addProjectTaskSuccessModal .buttonArea .button6:hover, 
+#addProjectTaskListSuccessModal .buttonArea .button6:hover,
+ #editProjectTaskListSuccessModal .buttonArea .button6:hover, 
+ #resolveTaskListSuccessModal .buttonArea .button6:hover {
+{
+    border-bottom: 3px solid #00aeff;
+
+}
+
+#addProjectTaskModal .buttonArea a.closeNewProjectTask  {
+	background: #ff8a00;
+    border-bottom: 3px solid #ff6700;
+}
+#addProjectTaskModal .buttonArea a.closeNewProjectTask:hover{
+    border-bottom: 3px solid #ff8a00;
+
 }

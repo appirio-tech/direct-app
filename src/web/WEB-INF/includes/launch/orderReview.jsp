@@ -34,7 +34,7 @@
 					</tr>
 					<tr>
 						<th>Competition Title :</th>
-						<td><span id="orContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+						<td><span id="orContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 					<tr>
 						<th>Review Style :</th>
@@ -42,15 +42,15 @@
 					</tr>
 					<tr>
 						<th>Project :</th>
-						<td><span id="orRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+						<td><span id="orRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 					<tr>
 			      <th>Billing Account :</th>
-			      <td><span id="orBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			      <td><span id="orBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 					<tr>
 						<th>Launch Time :</th>
-						<td><span id="orStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+						<td><span id="orStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 				</table>
 			</div>
@@ -81,7 +81,7 @@
 	<table class="prizesTable">
 		<tr>
 			<td>Administration Fee : <span id="orAdminFee1"></span></td>
-			<td>Specification Review : <span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td>Specification Review : <span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
             <td>Screening : <span id="orReviewPayment"></span> </td>
 			<td>Copilot Fee : <span id="orCopilotFee"></span></td>
 			<td class="last"><span id="orAdminFee2"></span></td>

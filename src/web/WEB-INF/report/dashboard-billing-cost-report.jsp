@@ -1,14 +1,16 @@
 <%--
   - Author: Blues, GreatKevin, notpad, Ghost_141, TCSASSEMBLER
-  - Version: 2.4
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 2.5
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+  -
   - Version 1.2 (TC Cockpit Permission and Report Update One) change log:
   - - Change parameter name from projectIds to projectId.
   - - Change parameter name from billingAccountIds to billingAccount.
   - - Change parameter name from customerIds to customerId.
+  -
   - Version 1.3 (TC Accounting Tracking Invoiced Payments) changes: Display the processed columns in "Billing Cost Detail" table.
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
@@ -44,6 +46,9 @@
   -
   - Version 2.4 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to report
+  -
+  - Version 2.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -339,7 +344,7 @@
 			<div class="clearFix"></div>
 
 			<div class="applyButtonBox" data-intro="Click apply to run the report." data-step="8">
-				<a class="button6 applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
+				<a class="button6 newButtonGreen applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
 			</div>
 			<!-- end .applyButtonBox -->
 
@@ -354,6 +359,7 @@
                                     <s:actionerror/>
                                 </div>
            </s:if>
+        <div class="clearFix"></div>
     </div>
    </s:form>
 	<!-- End .filterContainer -->
@@ -467,7 +473,7 @@
         <th class="tableColumn" style="width:100px">
             <input type="checkbox" id="checkAllInvoice">
             <label for="checkAllInvoice">All</label>
-            <input type="button" value="Invoice" class="processBtn">
+            <input type="button" value="Invoice" class="processBtn newButtonGreen">
         </th>
         <th class="tableColumn" style="width:50px">&nbsp;Credit&nbsp;</th>
         </c:if>

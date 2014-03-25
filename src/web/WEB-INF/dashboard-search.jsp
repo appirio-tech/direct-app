@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, GreatKevin, bugbuka, Ghost_141, TCSDEVELOPER
-  - Version: 1.8 (Release Assembly - TC Cockpit Operations Dashboard Bug Fix and Improvements 1)
-  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin, bugbuka, Ghost_141, TCSASSEMBLER
+  - Version: 1.9
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
   -
@@ -21,6 +21,8 @@
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
   - Version 1.8 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4) changes:
   - - Added Copilots filter
+  - Version 1.9 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Added new class operationDashboardFilterPanel for filter panel in operation dashboard to increase the height
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -109,7 +111,7 @@
                         <s:if test="viewData.resultType.name() == 'PROJECTS' || viewData.resultType.name() == 'PM_PROJECTS'">
 
                             <form id="filterPanelForm" autocompleted="off">
-                               <div class='filterPanel' id='allProjectsFilter'>
+                               <div class='filterPanel <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">operationDashboardFilterPanel</s:if>' id='allProjectsFilter'>
                                 <div class='filterHead'>
                                     <div class='rightSide'>
                                         <div class='inner'>

@@ -1,8 +1,11 @@
 <%--
-  - Author: jiajizhou86
+  - Author: jiajizhou86, TCSASSEMBLER
   -
   - Version: 1.0 (Release Assembly - TopCoder Direct VM Instances Management)
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Rebranding the project VM management page.
   -
   - Description: This page renders the project vm management view.
 --%>
@@ -73,7 +76,7 @@
                                 <a id="refreshBtn" href="javascript:projectVMService.refresh(tcDirectProjectId);" class="grayButton">
                                     <span class="buttonMask"><span class="text">Refresh</span></span>
                                 </a>
-                                <a class="lanchVMInstanceBtn button6 btnAddNew" href="<s:url action="dashboardVMAction" namespace="/"/>">
+                                <a class="lanchVMInstanceBtn button6 newButtonGreen btnAddNew" href="<s:url action="dashboardVMAction" namespace="/"/>">
                                     <span class="left">
                                         <span class="right">LAUNCH VIRTUAL MACHINE</span>
                                     </span>
@@ -102,7 +105,7 @@
                                     </div>
                                 </div>
                                 <!-- end .filterHead -->
-                                <div class='filterContent'>
+                                <div class='filterContent' style="height: 100px">
                                     <div class='rightSide'>
                                         <div class='inner'>
                                             <div class='column1'>

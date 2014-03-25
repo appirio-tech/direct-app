@@ -13,6 +13,9 @@
  *
  * 1.3 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Bug Fixes)
  * - Adjust the modal width to better to fit the long description, and make the description align to left to be more readable.
+ *
+ * 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Update the CSS to rebranding the assets related page
  */
 
 @charset "utf-8";
@@ -80,7 +83,6 @@ a.button7 span.right{
     font-weight:bold;
     color:#000000;
     padding:6px 0 0 22px;
-    background:url(/images/modal-header.png) left -40px repeat-x;
 	}
 	
 /* Button For Modal */
@@ -185,7 +187,7 @@ a.button7 span.right{
 	}
 	
 	#area1 .btnUpload .right{
-		padding:4px 20px 0 20px;
+		padding:0 20px 0 20px;
 		}
 	
 	#area1 .btnUpload .icon{
@@ -193,7 +195,7 @@ a.button7 span.right{
 		padding:0 0 0 14px;
 		background-image:url(/images/icon-assets.png);
 		background-repeat:no-repeat;
-		background-position:0 3px;
+		background-position:0 5px;
 		}
 		
 /* Filter For Assets */
@@ -282,14 +284,14 @@ a.button7 span.right{
 				}
 				
 			#filterPanelForm .filterContent .columnDateRange .dateRangeRow input{
-				width:100px;
-				height:20px;
-				border:1px solid #bdbdbd;
-				padding:0 6px;
-				font-family:Arial, Helvetica, sans-serif;
-				font-size:12px;
-				color:#6c6c6c;
-				line-height:20px;				
+				float: left;
+				display: inline;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				border: 1px solid #e7e7e7;
+				border-radius: 4px;
+				color: #6c6c6c;
+				height: 20px;
 				}
 				
 		  /* Apply */
@@ -301,6 +303,7 @@ a.button7 span.right{
 			  #filterPanelForm .filterContent .columnDateRange .buttonApply .clearLink{
 				  width:auto;
 				  float:right;
+				  color: #ff8a00;
 				  display:inline;
 				  margin:0 18px 0 0;
 				  font-size:11px;
@@ -505,27 +508,7 @@ a.button7 span.right{
 	position:relative;
 	}
 	
-	#filterPanelForm .resultTableContainer .corner{
-		width:6px;
-		height:5px;
-		overflow:hidden;
-		position:absolute;
-		background-image:url(/images/bg-assets-table-header.png);
-		background-repeat:no-repeat;
-		}
-		
-	#filterPanelForm .resultTableContainer .tl{
-		top:0;
-		left:-1px;
-		background-position:0 0;
-		}
-		
-	#filterPanelForm .resultTableContainer .tr{
-		top:0;
-		right:-1px;
-		background-position:0 -5px;
-		}
-		
+
 		#filterPanelForm table{
 			/*table-layout:fixed;*/
 			}
@@ -533,7 +516,7 @@ a.button7 span.right{
 		#filterPanelForm table th{
 			height:37px;
 			white-space:nowrap;
-			background-image:url(/images/bg-assets-table-header.png);
+			background: #f1f1f1;
 			background-repeat:repeat-x;
 			background-position:0 -10px;
 			}
@@ -581,7 +564,7 @@ a.button7 span.right{
 			font-size:12px;
 			vertical-align:top;
 			text-align:left;
-			border:#a8abad solid 1px;
+			border:#e7e7e7 solid 1px;
 			}
 			
 		#filterPanelForm table td.dataTables_empty{
@@ -590,7 +573,7 @@ a.button7 span.right{
 			}
 			
 		#filterPanelForm table tr.even td{
-			background-color:#f3f3f3;
+			background-color:#f7f7f7;
 			}
 			
 		#filterPanelForm table tr.odd td{
@@ -605,9 +588,7 @@ a.button7 span.right{
 			font-weight:bold;
 			text-align:left;
 			line-height:32px;
-			background-image:url(/images/bg-assets-table-header.png);
-			background-repeat:repeat-x;
-			background-position:0 -47px;
+			background:#f1f1f1;
 			}
 			
 		#filterPanelForm table td.first{
@@ -747,14 +728,55 @@ a.button7 span.right{
 				line-height:17px;
 				} 
 					
+			/* Management */
+			#filterPanelForm table td.managementCell a{
+				width:108px;
+				margin:0 0 10px 0;
+				padding:0 0 0 20px;
+				display:inline-block;
+				font-size:12px;
+				line-height:17px;
+				background-repeat:no-repeat;
+				}
+				
+			#filterPanelForm table td.managementCell a:hover{
+				text-decoration:none;
+				}
+				
+			#filterPanelForm table td.managementCell a.upload{
+				background-position:0 -150px;
+				}
+				
+			#filterPanelForm table td.managementCell a.download{
+				width:54px;
+				background-position:0 -178px;
+				}
+				
+			#filterPanelForm table td.managementCell a.edit{
+				background-position:2px -206px;
+				}
+				
+			#filterPanelForm table td.managementCell a.remove{
+				width:54px;
+				background-position:2px -238px;
+				}
+				
 			#filterPanelForm #dataTableLength{
 				margin:6px 0 0 0;
 				}
 				
 			#filterPanelForm .dataTables_paginate span a{
 				padding:0 3px;
-				color:#000000;
+				color:#ff8a00;
 				}
+			#filterPanelForm .dataTables_paginate span a:hover{
+				text-decoration: underline;
+			}
+			#filterPanelForm .dataTables_paginate span a.paginate_active,
+			#filterPanelForm .dataTables_paginate span a.paginate_active:hover{
+				color: #666;
+				text-decoration: none;
+			}
 				
 		/* Bottom */
 		#filterPanelForm .container2Bottom{
@@ -815,14 +837,16 @@ a.button7 span.right{
 			float:left;
 			display:inline;
 			font-size:11px;
-			color:#333333;
+			text-decoration: none;
+			color:#666666;
 			padding:0 0 0 18px;
 			background-image:url(/images/icon-assets.png);
 			background-repeat:no-repeat;
 			}
 			
 		.batchOperation li a:hover{
-			text-decoration:none;
+			text-decoration:underline;
+			color: #ff8a00;
 			}
 			
 		.batchOperation li a.delete{
@@ -1614,9 +1638,9 @@ a.button7 span.right{
 			.versionView .versionViewTable table th{
 				height:37px;
 				font-size:12px;
-				color:#ffffff;
+				color:#666666;
 				text-align:center;
-				background-image:url(/images/bg-assets-table-header.png);
+                background: #F3F3F3;
 				background-repeat:repeat-x;
 				background-position:0 -10px;
 				}
@@ -1665,8 +1689,8 @@ a.button7 span.right{
 				vertical-align:top;
 				text-align:left;
 				cursor:pointer;
-				border-top:#a8abad solid 1px;
-				border-left:#a8abad solid 1px;
+				border-top:#e7e7e7 solid 1px;
+				border-left:#e7e7e7 solid 1px;
 				}
 				
 			.versionView .versionViewTable table tr.even td{

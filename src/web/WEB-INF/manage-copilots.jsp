@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBLER
   - Version: 1.2
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Manage copilot projects page.
   - Since: TC Direct Manage Copilots Assembly
@@ -9,6 +9,9 @@
   - Version 1.1 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
   - - Fixed upper case issue for SAVE and CANCEL buttons in Copilot Management popup, and scroll issue in IE for copilot removal.  
   - -  Re-use same modal windows for manage copilot screen.
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   -    
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -66,7 +69,7 @@
                                             
                                                 <div class="container2Left"><div class="container2Right">
                                                     <div class="tableContainer">
-                                                        <table id="copilotProjectTable" class="projectStats newManageStatus" cellpadding="0" cellspacing="0">
+                                                        <table id="copilotProjectTable" class="projectStats newManageStatus" cellpadding="0" cellspacing="0" style="border: none">
                                                             <thead>
                                                                 <tr>
                                                                     <th class="thOne">Project / Copilot</th>
@@ -85,12 +88,12 @@
                                                                         </td>
                                                                         <td>${fn:length(copilots)}</td>
                                                                         <td></td>
-                                                                        <td><a href="javascript:;" class="downloadProfile triggerModal copilotManage" name="copilotManage"> <span class="profileLeft">Add Copilot</span></a></td>
+                                                                        <td><a href="javascript:;" class="downloadProfile triggerModal newButtonGreen copilotManage" name="copilotManage"> <span class="profileLeft">Add Copilot</span></a></td>
                                                                     </tr>
                                                                     
                                                                     <s:iterator value="copilots" status="stat">
                                                                         <tr class="trChild hide <c:if test='${stat.last}'>lastTr</c:if>">
-                                                                            <td class="photo"><img src="/images/photo_people_small.png" alt="photo" />
+                                                                            <td class="photo"><i class="icon-user"></i>
                                                                                 <span name="copilot_${copilotProfileId}">${handle}</span>
                                                                                 <input id="project_${project.id}_copilot_${copilotProfileId}" type="hidden" value="${copilotProjectId}">
                                                                                 </input>

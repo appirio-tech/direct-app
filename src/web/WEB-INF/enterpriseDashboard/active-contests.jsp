@@ -1,12 +1,15 @@
 <%--
-  - Author: GreatKevin, Ghost_141
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, Ghost_141, TCSASSEMBLER
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Add checkpoint / final submission number to the submission column of active contests table.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Add readonly in data pick element.
+  -
+  - Version 1.3 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The active contests page of the new enterprise dashboard
 --%>
@@ -345,10 +348,7 @@
 												<!-- End .tableData -->
 												
 											</div>
-										
-											<div class="corner tl"></div>
-											<div class="corner tr"></div>
-											
+
 										</div>
 									</div>
 									<!-- End .financialsSection -->

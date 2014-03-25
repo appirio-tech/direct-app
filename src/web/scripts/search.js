@@ -1024,8 +1024,8 @@ $(document).ready(function() {
                 { "sType": "link-number" },
                 { "sType": "link-number" },
                 { "sType": "project-status" },
-                null,
-                null
+                { "bSortable": false },
+                { "bSortable": false }
             ]
 
     });

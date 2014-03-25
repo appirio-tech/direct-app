@@ -641,19 +641,15 @@ a.jqTransformCheckbox {
 a.jqTransformChecked{ background-position: 0 -13px;}
 
 .container2 {
-    background: url(/images/content_border.png) repeat-x top;
 }
 
 .container2Left {
-    background: url(/images/content_border.png) repeat-y left;
 }
 
 .container2Right {
-    background: url(/images/content_border.png) repeat-y right;
 }
 
 .container2Bottom {
-    background: url(/images/container2_bottom.png) repeat-x bottom;
 }
 
 .container2BottomClear {

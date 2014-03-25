@@ -25,24 +25,24 @@ table.jCalendar {
 }
 
 table.jCalendar thead th {
-	border-top:#bdc2c5 solid 2px;
+    border-top: #e7e7e7 solid 1px;
 }
 table.jCalendar th {
-	font-family:Arial, Helvetica, sans-serif;
-	padding:5px 0px;
-	text-align:center;
-	font-size:11px;
-	color:#fffffe;
-	background-color:#d2080b;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    padding: 5px 0px;
+    text-align: center;
+    font-size: 11px;
+    color: #fffffe;
+    background-color: #ff8a00;
 }
 
 table.jCalendar td {
-	color: #555555;
-	padding:6px;
-	font-weight:bold;
-	text-align: center;
-	border:#bdc2c5 solid 2px;
-	font-family:Arial, Helvetica, sans-serif;
+    color: #555555;
+    padding: 6px;
+    font-weight: bold;
+    text-align: center;
+    border: #e7e7e7 solid 1px;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 table.jCalendar tr td.other-month {
@@ -50,35 +50,35 @@ table.jCalendar tr td.other-month {
 }
 
 table.jCalendar td.today {
-	background: #f89a9b;
-	color: #ffffff;
-	font-weight:bold;
+    background: #ff6700;
+    color: #fff;
+    font-weight: bold;
 }
 
 table.jCalendar td.selected {
-	background: #d2080b;
-	color: #fff;
+    background: #ff8a00;;
+    color: #fff;
 }
 
 table.jCalendar td.selected.dp-hover {
-	background: #d2080b;
-	color: #fff;
+    background: #ff8a00;
+    color: #fff;
 }
 
 table.jCalendar td.dp-hover,
 table.jCalendar tr.activeWeekHover td {
-	background: #878787;
-	color: #fff;
+    background: #ff8a00;
+    color: #fff;
 }
 
 table.jCalendar tr.selectedWeek td {
-	background: #f66;
-	color: #fff;
+    background: #ff8a00;
+    color: #fff;
 }
 
 table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
-	background: #dfe1e3;
-	color: #888;
+    background: #ff8a00;
+    color: #888;
 }
 
 table.jCalendar td.unselectable,
@@ -93,28 +93,34 @@ table.jCalendar td.unselectable.dp-hover {
 /* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
 
 div.dp-popup {
-	font-size: 11px;
-	font-family: arial, sans-serif;
-	line-height: 1.2em;
+    font-size: 11px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    line-height: 1.2em;
 }
-div.dp-popup .datePickerWrapper{
-	padding-top:4px;
-	background:url(../../images/datePicker-bg-top.png) left top no-repeat;
+
+div.dp-popup .datePickerWrapper {
+    padding-top: 4px;
+    border: 1px solid #e7e7e7;
+    background: #ffffff ;
 }
-div.dp-popup .datePickerWrapper .datePickerBottom{
-	padding-bottom:6px;
-	background:url(../../images/datePicker-bg-bottom.png) left bottom no-repeat;
+
+div.dp-popup .datePickerWrapper .datePickerBottom {
+    padding-bottom: 6px;
+    background: #ffffff ;
 }
-div.dp-popup .datePickerWrapper .datePickerCenter{
-	width:208px;
-	padding:0 2px;
-	background:url(../../images/datePicker-bg-center.png) left top repeat-y;
+
+div.dp-popup .datePickerWrapper .datePickerCenter {
+    width: 208px;
+    padding: 0 2px;
+    background: #fff;
+    background: #ffffff ;
 }
-div.dp-popup .datePickerWrapper .datePickerCenterInner{
-	position: relative;
-	width:198px;
-	padding:3px 5px;
-	background:#ffffff url(../../images/datePicker-bg-center-repeat.png) left top repeat-x;
+
+div.dp-popup .datePickerWrapper .datePickerCenterInner {
+    position: relative;
+    width: 198px;
+    padding: 3px 5px;
+    background: #ffffff ;
 }
 
 div#dp-popup {

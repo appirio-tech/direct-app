@@ -1,10 +1,15 @@
 <%--
   - Author: TCSASSEMBLER
+  -
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to admin
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: This page renders the contest fee admin setting page.
 --%>
@@ -65,10 +70,7 @@
                 </span>
                         <div class="clearFix"></div>
                     </div>
-                    <span class="corner tl"></span>
-                    <span class="corner tr"></span>
-                    <span class="corner bl"></span>
-                    <span class="corner br"></span>
+
                 </div>
             </div>
         </div>

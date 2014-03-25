@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - Cockpit Enterprise Dashboard Chart Drill-In)
   - - Add total spend chart drill-in popup
@@ -11,6 +11,9 @@
   -
   - Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
   - - Add projected cost
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The financial page the new enterprise dashboard
 --%>
@@ -100,9 +103,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
-
                                     </div>
 
                                 </div>
@@ -156,9 +156,6 @@
                                             <!-- End .tableData -->
 
                                         </div>
-
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
 
                                     </div>
                                 </div>

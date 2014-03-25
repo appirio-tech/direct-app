@@ -1,7 +1,7 @@
 <%--
   - Author: Ghost_141, GreatKevin, TCSASSEMBLER
-  - Version: 1.3
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 Module Assembly - TopCoder Copilot Feedback Integration
   - 
@@ -13,6 +13,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to admin
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Reskin the button style
   - 
   - The admin page for the copilot feedback management
 --%>
@@ -140,8 +143,8 @@
                         <s:property value="feedback.status.toUpperCase()"/>
                     </td>
                     <td class="last">
-                        <a href="javascript:;" class="approveButton button1 <s:if test='feedback.status == "Approved"'>hideButton</s:if>"><span class="btnR"><span class="btnC"><span class="btnIcon">Approve</span></span></span></a>
-                        <a href="javascript:;" class="rejectButton button1 <s:if test='feedback.status != "Pending"'>hideButton</s:if>"><span class="btnR"><span class="btnC"><span class="btnIcon">&nbsp;&nbsp;Reject&nbsp;&nbsp;</span></span></span></a>
+                        <a href="javascript:;" class="approveButton buttonEdit <s:if test='feedback.status == "Approved"'>hideButton</s:if>">Approve</a>
+                        <a href="javascript:;" class="rejectButton buttonEdit <s:if test='feedback.status != "Pending"'>hideButton</s:if>">&nbsp;&nbsp;Reject&nbsp;&nbsp;</a>
                     </td>
 
                 </tr>

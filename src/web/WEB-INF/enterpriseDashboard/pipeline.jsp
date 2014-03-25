@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  -
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Add the projects pipeline chart into the pipeline page
@@ -11,6 +11,9 @@
   -
   - Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - - Add history.js to support push state and back-compatible with IE with hash-fallback
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The pipeline page the new enterprise dashboard
 --%>
@@ -126,9 +129,6 @@
                                             <!-- End .pipelineChart -->
 
                                         </div>
-
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
                                     </div>
 
                                     <div class="sectionInner contestsPipeline" data-intro="This section displays the challenges you have started and completed." data-step="4"  data-position="top">
@@ -167,8 +167,6 @@
 
                                         </div>
 
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
                                     </div>
                                 </div>
 
@@ -193,7 +191,7 @@
 <div class="popUps">
     <div class="expandViewPopup" id="contestPipelineViewPopup" style="display:none">
         <div class="close">
-            <a href="javascript:void(0)" id="contestPipelineViewClose"></a>.
+            <a href="javascript:void(0)" id="contestPipelineViewClose"></a>
         </div>
         <div class="popContent">
             <h2><span id="contestPipelineViewPopupMonth"></span><a class="exportLink" href="javascript:;" target="_blank">Export</a></h2>
@@ -227,7 +225,7 @@
 <div class="popUps">
     <div class="expandViewPopup" id="projectPipelineViewPopup" style="display:none">
         <div class="close">
-            <a href="javascript:void(0)" id="projectPipelineViewClose"></a>.
+            <a href="javascript:void(0)" id="projectPipelineViewClose"></a>
         </div>
         <div class="popContent">
             <h2><span id="projectPipelineViewPopupMonth"></span><a class="exportLink" href="javascript:;" target="_blank">Export</a></h2>

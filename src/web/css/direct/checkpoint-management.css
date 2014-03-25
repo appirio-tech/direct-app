@@ -6,7 +6,10 @@
  * Version: 1.1 (Release Assembly - TopCoder Cockpit - Software Contest Download All)
  * - Add CSS styles for Download all link of final round software submissions
  *
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Version: 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Updated to rebranding the checkpoint submissions page
+ *
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The CSS File contains CSS styles used for software checkpoint management.
  */
@@ -17,36 +20,36 @@
 }
 /* .mmTabs */
 #tcSoftwareMM .mmTabs{
-    background: url("../../images/calendar_header.png") repeat-x left top #37302E;
+    background: none repeat scroll 0 0 #F1F1F1;
+    color: #666666;
+    font-size: 11px;
     height: 35px;
-    padding-left:10px;
 }
     #tcSoftwareMM .mmTabs a{
-        background: url("../../images/bank_selection_tab_left.png") no-repeat left -25px;
-        color: #000000;
+        color: #FFFFFF;
         float: left;
-        font-size: 11px;
+        font-size: 12px;
         line-height: 25px;
         margin: 10px 3px 0 0;
         padding: 0 0 0 4px;
         text-decoration: none;
-        text-shadow:1px 0 0 #b8b5b5;
     }
     #tcSoftwareMM .mmTabs a.on{
         background-position:0 0;
         text-shadow:none;
     }
         #tcSoftwareMM .mmTabs a span{
-            background: url("../../images/bank_selection_tab_right.png") no-repeat right -25px;
             cursor: pointer;
             float: left;
             height: 25px;
             text-align: center;
             padding:0 14px;
             min-width:50px;
+            background: none repeat scroll 0 0 #FF8A00;
         }
         #tcSoftwareMM .mmTabs a.on span{
-            background-position:right 0;
+            color: #666666;
+            background: none repeat scroll 0 0 #FFFFFF;
         }
 /* .notify */
 #tcSoftwareMM .notify{
@@ -259,69 +262,110 @@
             padding-left:15px;
         }
 /* .mmDataTable */
-    #tcSoftwareMM .mmDataTable .mmPagers {
-        overflow:hidden;
-        color:#333;
-        padding:12px 10px 10px;
-        font-size:11px;
-    }
-        #tcSoftwareMM .mmDataTable .mmPagers .dataTables_length{
-            float:left;   
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .dataTables_paginate{
-            float:right;
-            font-size:11px;
-            height:auto;
-            margin-top:2px;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .first,
-        #tcSoftwareMM .mmDataTable .mmPagers .last{
-            display:none;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button:hover{
-            text-decoration:underline;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button,
-        #tcSoftwareMM .mmDataTable .mmPagers .paginate_active{
-            padding:0 3px;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .previous{
-            padding-left:10px;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .next{
-            padding-right:10px;
-        }
-        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button_disabled {
-            display:none;
-        }
-    #tcSoftwareMM .mmDataTable table{
-        width:100%;
-        border-collapse:collapse;
-        table-layout:fixed;
-    }
-        #tcSoftwareMM .mmDataTable table th{
-            background:url(../../images/th-bg-2.gif) repeat-x 0 0;
-            height:28px;
-            color:#333;
-            font-weight: bold;
-            border:1px solid #bdbdbd;
-        }
-            a.downloadAll{
-                line-height:18px;
-                border-left:1px solid #bdbdbd;
-                text-decoration:underline;
-                color:#000000;
-                font-size:11px;
-                font-weight:normal;
-                background:url(../../images/download-icon.png) no-repeat 8px center;
-                padding-left:26px;
-                margin-left:4px;
-                display:inline-block;
-            }
+#tcSoftwareMM .mmDataTable .mmPagers {
+    overflow: hidden;
+    color: #333;
+    padding: 12px 10px 10px;
+    font-size: 11px;
+}
 
-        h2.finalRound {
-            float: left;
-        }
+#tcSoftwareMM .mmDataTable .mmPagers .dataTables_length {
+    float: left;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .dataTables_paginate {
+    float: right;
+    font-size: 11px;
+    height: auto;
+    margin-top: 2px;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .first,
+#tcSoftwareMM .mmDataTable .mmPagers .last {
+    display: none;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .paginate_button:hover {
+    text-decoration: underline;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .paginate_button,
+#tcSoftwareMM .mmDataTable .mmPagers .paginate_active {
+    padding: 0 3px;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .previous {
+    padding-left: 10px;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .next {
+    padding-right: 10px;
+}
+
+#tcSoftwareMM .mmDataTable .mmPagers .paginate_button_disabled {
+    display: none;
+}
+
+#tcSoftwareMM .mmDataTable table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#tcSoftwareMM .mmDataTable table th {
+    background: #F1F1F1;
+    height: 28px;
+    color: #333;
+    font-weight: bold;
+    border-top: 1px solid #bdbdbd;
+}
+
+a.downloadAll2 {
+    line-height:18px;
+    border-left:1px solid #bdbdbd;
+    text-decoration:underline;
+    color:#000000;
+    font-size:11px;
+    font-weight:normal;
+    background:url(/images/download-icon.png) no-repeat 8px center;
+    padding-left:26px;
+    margin-left:4px;
+    display:inline-block;
+}
+
+a.downloadAll {
+
+    background:  url(/images/button-left-down.png) 0 0 no-repeat;
+    padding-left: 27px;
+    height: 23px;
+    line-height: 23px;
+    display: inline-block;
+    width: auto;
+}
+
+    .downloadAll span{
+        background:  url(/images/button-right.png) 100% 0 no-repeat;
+        padding: 0 6px;
+        height: 24px;
+        font-size: 13px;
+        color: #fffffe;
+        overflow: hidden;
+        text-decoration: none;
+        line-height: 24px;
+        display: inline-block;
+        width: auto;
+    }
+.downloadAll:hover{
+    background-position: 0 -24px;
+}
+    .downloadAll:hover span{
+        background-position: 100% -24px;
+    }
+
+
+h2.finalRound {
+    float: left;
+}
 
         div.containerNoPadding a.finalRound {
             border: none;
@@ -361,7 +405,7 @@
             } 
             #tcSoftwareMM .mmDataTable table p.time{
                 padding-top:5px;
-                font-size:11px;
+                font-size:12px;
             }
     #tcSoftwareMM .mmDataTable .prizes{
         display:inline-block;   
@@ -418,7 +462,7 @@
             background-position:0 -150px;
         }
     #tcSoftwareMM .mmDataTable .fbMask{
-        font-size:11px; 
+        font-size:12px;
         position:relative;
     }
         #tcSoftwareMM .mmDataTable .fbMask .fbArea{
@@ -427,7 +471,7 @@
             overflow:auto;
             min-height:32px; 
             display:none;
-            padding:3px 3px 6px;
+            padding:3px 10px 6px;
         }
         #tcSoftwareMM .mmDataTable .readonly .fbMask .fbArea{
             display:block;

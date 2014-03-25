@@ -1,7 +1,7 @@
 <%--
   - Author: bugbuka, Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 1.5
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.6
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
   - - Add logics to display Checkpoint Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
@@ -21,6 +21,9 @@
   -
   - Version 1.5 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to report
+  -
+  - Version 1.6 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   - 
   - Description: This page renders the view for participation metrics report including form and report data.
   -
@@ -168,7 +171,6 @@
 
         <div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="7">
             <a class="button6 applyButton" href="javascript:;" id="participationReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
-            <div class="clearFix"></div>
         </div>
         <!-- end .applyButtonBox -->
         <s:if test="hasActionErrors()">

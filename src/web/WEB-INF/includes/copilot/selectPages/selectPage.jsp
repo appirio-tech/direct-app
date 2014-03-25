@@ -56,11 +56,7 @@
                     Copilot has its own payment rates are adjusted to the type of challenge and may change depending on the needs of the challenge.
                     <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">view rate</a>
                 </p>
-                
-                <span class="corner tl"></span>
-                <span class="corner tr"></span>
-                <span class="corner bl"></span>
-                <span class="corner br"></span>
+
             </div>
             <!--End .grayTextArea-->
             

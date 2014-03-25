@@ -1,5 +1,6 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMBLER
+  -
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
   -
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
@@ -11,7 +12,10 @@
   - Version 1.3 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - - Add history.js to support push state and back-compatible with IE with hash-fallback
   -
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version 1.4 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
+  -
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: The overview page of the new enterprise dashboard
 --%>
@@ -152,9 +156,6 @@
                                 </div>
                                 <!-- End .containerSection -->
 
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
-
                             </div>
                         </div>
                         <!-- End .overTotalSpendSection -->
@@ -175,9 +176,9 @@
                                     <div id="tab">
                                         <div class="tabPanel" data-intro="Switch between overdue, upcoming, and completed project milestones." data-step="5">
                                             <ul>
-                                                <li class="overDue"><a href="javascript:;" class="current"><span><span>Overdue</span></span></a></li>
-                                                <li class="upcoming"><a href="javascript:;"><span><span>Upcoming</span></span></a></li>
-                                                <li class="completed"><a href="javascript:;"><span><span>Completed</span></span></a></li>
+                                                <li class="overDue"><a href="javascript:;" class="current"><span><span><span></span>Overdue</span></span></a></li>
+                                                <li class="upcoming"><a href="javascript:;"><span><span><span></span>Upcoming</span></span></a></li>
+                                                <li class="completed"><a href="javascript:;"><span><span><span></span>Completed</span></span></a></li>
                                             </ul>
                                         </div>
 
@@ -272,9 +273,6 @@
                                 </div>
                                 <!-- End .containerSection -->
 
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
-
                             </div>
                         </div>
                         <!-- End .overTotalSpendSection -->
@@ -302,10 +300,6 @@
                                         <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
                                     </div>
                                 </div>
-                                <!-- End .containerSection -->
-
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
 
                             </div>
                         </div>
@@ -329,9 +323,6 @@
                                     </div>
                                 </div>
                                 <!-- End .containerSection -->
-
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
 
                             </div>
                         </div>
@@ -381,9 +372,6 @@
                                     </table>
                                 </div>
                                 <!-- End .containerSection -->
-
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
                             </div>
                         </div>
                         <!-- End .overprojectsHealthSection -->
@@ -423,9 +411,6 @@
                                     <div id="overviewCommunity"></div>
                                 </div>
                                 <!-- End .containerSection -->
-
-                                <div class="corner tl"></div>
-                                <div class="corner tr"></div>
 
                             </div>
                         </div>

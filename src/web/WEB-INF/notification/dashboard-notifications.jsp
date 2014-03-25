@@ -1,7 +1,7 @@
 <%--
   - Author: greatKevin, winsty, isv, Ghost_141, TCSASSEMBLER
-  - Version: 1.8
-  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.9
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
   -
@@ -19,6 +19,9 @@
   - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   - 1) Update button text to uppercase.
   - 2) Rewrite part of the page to update layout.
+  -
+  - Version 1.9 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Update the button style
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -417,7 +420,7 @@
 
 
                                                                 <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
-                                                                    <a href="javascript:notifications.update();" class="button8" style="margin-left: 10px;">
+                                                                    <a href="javascript:notifications.update();" class="button6" style="margin-left: 10px;">
                                                                         <span class="left">
                                                                             <span class="right">SAVE NOTIFICATIONS</span>
                                                                         </span>

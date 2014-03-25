@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * This css used to render edit project page.
  *
@@ -17,9 +17,12 @@
  *
  * Version 1.5 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
  * - Adjust project properties label padding
+ *
+ * Version 1.6 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the edit direct project page
  * 
- * Author: GreatKevin, Ghost_141
- * Version 1.5
+ * Author: GreatKevin, Ghost_141, TCSASSEMBLER
+ * Version 1.6
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -92,10 +95,10 @@
 .editPage #area1 h2.contestTitle {
     font-weight: bold;
     font-size: 18px;
-    color: #333;
+    color: #666666;
     line-height: 32px;
     padding: 0 0 12px 43px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e7e7e7;
     position: relative;
     background-position: 0 0;
     overflow: hidden;
@@ -122,19 +125,21 @@
 
 .editProjectForm input.textInput {
     padding: 4px 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333333;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    color: #666666;
     font-size: 11px;
-    border: 1px solid #a8abad;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
     line-height: 15px;
 }
 
 .editProjectForm textarea {
+    border-radius: 4px;
     padding: 3px 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333333;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    color: #666666;
     font-size: 11px;
-    border: 1px solid #a8abad;
+    border: 1px solid #e7e7e7;
     line-height: 16px;
     height: 91px;
 }
@@ -143,7 +148,7 @@ h3.projectMetaAreaLabel {
     line-height: 22px;
     font-size: 14px;
     font-weight: bold;
-    color: #333333;
+    color: #666666;
 }
 
 .multiMetaArea h3.projectMetaAreaLabel {
@@ -212,18 +217,18 @@ h3.projectMetaAreaLabel {
 }
 
 .multiMetaArea {
-    border-bottom: 1px solid #cfcfcd;
+    border-bottom: 1px solid #e7e7e7;
     height: 1%;
 }
 
 .multiMetaArea	.oddRowItem {
-    background-color: #f5f5f5;
+    background-color: #f1f1f1;
 }
 
 .multiMetaArea .projectMetaAreaField {
-    border-top: 1px solid #cfcfcd;
-    border-left: 1px solid #cfcfcd;
-    border-right: 1px solid #cfcfcd;
+    border-top: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
     padding-left: 230px;
     padding-top: 10px;
     position: relative;
@@ -243,7 +248,7 @@ h3.projectMetaAreaLabel {
     font-size: 12px;
     line-height: 18px;
     font-weight: normal;
-    color: #333333;
+    color: #666666;
     overflow: hidden;
 }
 
@@ -366,14 +371,14 @@ h3.projectMetaAreaLabel {
 
 .comboContainer select {
     width: 241px;
-    border: 1px solid #8a8a8a;
+    border: 1px solid #e7e7e7;
     height: 19px;
     padding: 0;
     font-size: 11px;
     -webkit-text-size-adjust: none;
-    color: #000000;
+    color: #666666;
     vertical-align: middle;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 .subLabel {
@@ -382,7 +387,7 @@ h3.projectMetaAreaLabel {
 }
 
 a.clearValue, a.clearValue:visited {
-    color: #e10000;
+    color: #ff8a00;
     font-size: 11px;
     -webkit-text-size-adjust: none;
     line-height: 25px;
@@ -399,7 +404,7 @@ a.clearValue:hover {
 }
 
 a.clearValueDisabled, a.clearValueDisabled:visited, a.clearValueDisabled:hover {
-    color: #efabab;
+    color: #fabf79;
     text-decoration: underline;
     cursor: default;
 }
@@ -435,7 +440,7 @@ a.buttonGray {
     font-weight: bold;
     text-align: center;
     padding-left: 4px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
@@ -501,11 +506,13 @@ a.buttonGray:hover span {
     float: left;
     width: 15px;
     height: 15px;
-    margin: 2px 5px 0 0;
+    margin: 5px 5px 0 0;
 }
 
 .projectMetaArea .radioContainer label {
     display: inline-block;
+    height: 20px;
+    line-height: 20px;
     font-size: 12px;
     color: #000000;
     margin-right: 18px;
@@ -513,54 +520,73 @@ a.buttonGray:hover span {
 }
 
 .editPage label.draftStatus {
-    padding: 0 6px 0 27px;
+    padding: 0 6px 0 32px;
     background: transparent url(/images/status_draft_icon.png) 0 0 no-repeat;
     font-size: 14px;
 }
+.editPage label.draftStatus:hover{
+    background: transparent url(/images/status_draft_icon_hover.png) 0 0 no-repeat;
+}
 
 .editPage label.activeStatus {
-     padding: 0 6px 0 27px;
-     background: transparent url(/images/status_active_icon.png) 0 0 no-repeat;
-     font-size: 14px;
- }
+    padding: 0 6px 0 32px;
+    background: transparent url(/images/status_active_icon.png) 0 0 no-repeat;
+    font-size: 14px;
+}
+.editPage label.activeStatus:hover{
+    background: transparent url(/images/status_active_icon_hover.png) 0 0 no-repeat;
+
+}
 
 .editPage label.archivedStatus {
-    padding: 0 6px 0 27px;
+    padding: 0 6px 0 32px;
     background: transparent url(/images/status_archived_icon.png) 0 0 no-repeat;
     font-size: 14px;
     color: #333333;
     margin-right: 9px;
 }
+.editPage label.archivedStatus:hover{
+    background: transparent url(/images/status_archived_icon_hover.png) 0 0 no-repeat;
+
+}
 
 .editPage label.deletedStatus {
-    padding: 0 6px 0 27px;
+    padding: 0 6px 0 32px;
     background: transparent url(/images/status_delete_icon.png) 0 0 no-repeat;
     font-size: 14px;
     color: #333333;
     margin-right: 20px;
 }
+.editPage label.deletedStatus:hover{
+    background: transparent url(/images/status_delete_icon_hover.png) 0 0 no-repeat;
+
+}
 
 .editPage label.completedStatus {
-    padding: 0 6px 0 27px;
+    padding: 0 6px 0 32px;
     background: transparent url(/images/status_completed_icon.png) 0 0 no-repeat;
     font-size: 14px;
     color: #333333;
     margin-right: 0;
+}
+.editPage label.completedStatus:hover{
+    background: transparent url(/images/status_completed_icon_hover.png) 0 0 no-repeat;
+
 }
 
 .editPage label.disabled {
     cursor: default !important;
 }
 
-.setDatePopup{
-    background:url(/images/popup-box.png) no-repeat 0 0;
-    height:253px;
-    width:227px;
-    position:absolute;
-    z-index:1000;
-    font-size:12px;
-    padding:5px 22px 5px 30px;
-    display:none;
+.setDatePopup {
+    background: url(/images/popup-box.png) no-repeat 0 0;
+    height: 253px;
+    width: 227px;
+    position: absolute;
+    z-index: 1000;
+    font-size: 12px;
+    padding: 5px 22px 5px 30px;
+    display: none;
 }
 
 .setDatePopup h4 {
@@ -582,8 +608,8 @@ a.buttonGray:hover span {
 }
 
 .setDatePopup input.text {
-    border: 1px solid #eee;
-    border-top: 2px solid #bebebe;
+    border: 1px solid #e7e7e7;
+    border-radius:4px; 
     height: 18px;
     line-height: 18px;
     width: 156px;
@@ -637,31 +663,33 @@ a.buttonGray:hover span {
 .editPage #new-modal .outLay .modalHeader .modalHeaderCenter {
     padding-top: 4px;
     height: 36px;
+    border-bottom: 1px solid #e7e7e7;
     line-height: 36px;
 }
 
 #new-modal .outLay .modalHeaderSmall {
     height: 8px;
-    background: url(/images/preloader-corner.png) left top no-repeat;
+    background: #fff;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight {
     height: 8px;
-    background: url(/images/preloader-corner.png) right -16px no-repeat;
+    background: #fff;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
     height: 8px;
-    background: url(/images/preloader-corner.png) left -8px repeat-x;
+    background: #fff;
 }
 
 .outLay .modalBody .modalCommandBox {
-    border-top: 1px solid #CCCCCC;
+    border-top: 1px solid #e7e7e7;
     height: 36px;
     padding-top: 16px;
+    margin:0 4px;
     text-align: center;
 }
 
@@ -736,8 +764,6 @@ a.buttonGray:hover span {
     width: 60px;
     padding-left: 0;
     padding-right: 0;
-    line-height: 16px;
-    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
 }
 
 /*Remove Custom Metadata Modal*/
@@ -794,8 +820,8 @@ a.buttonGray:hover span {
     width: 60px;
     padding-left: 0;
     padding-right: 0;
-    line-height: 16px;
-    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+
+
 }
 
 /*Add Custom Metadata Modal*/
@@ -807,7 +833,7 @@ a.buttonGray:hover span {
     border-left: 1px solid #b4b4b4;
     border-right: 1px solid #b4b4b4;
     border-bottom: 1px solid #dadada;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     color: #333333;
     line-height: 18px;
     font-size: 12px;
@@ -821,7 +847,7 @@ a.buttonGray:hover span {
     padding-right: 6px;
     padding-top: 4px;
     padding-bottom: 4px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     color: #333333;
     line-height: 18px;
     font-size: 12px;
@@ -833,15 +859,15 @@ a.buttonGray:hover span {
 }
 
 #new-modal #addCustomeMeta .modalHeader {
-    background: transparent url("/images/modal-header-new.png") 0 0 no-repeat;
+    background: #f1f1f1;
 }
 
 #new-modal #addCustomeMeta .modalHeader .modalHeaderRight {
-    background: transparent url("/images/modal-header-new.png") 100% -80px no-repeat;
+    background: #f1f1f1;
 }
 
 #new-modal #addCustomeMeta .modalHeader .modalHeaderCenter {
-    background: transparent url("/images/modal-header-new.png") 0 -40px repeat-x;
+    background: #f1f1f1;
 }
 
 #addCustomeMeta .modalBody .noticeContent {
@@ -862,7 +888,7 @@ a.buttonGray:hover span {
     width: 250px;
     line-height: 25px;
     font-size: 14px;
-    color: #333333;
+    color: #666666;
     font-weight: bold;
     display: inline-block;
 }
@@ -872,7 +898,7 @@ a.buttonGray:hover span {
     width: 333px;
     display: inline-block;
     padding: 2px 6px;
-    border: 1px solid #adb0b2;
+    border: 1px solid #e7e7e7;
 }
 
 #addCustomeMeta .modalBody .noticeContent .modalRow .hintTxt {
@@ -896,7 +922,8 @@ a.buttonGray:hover span {
     margin: 0;
     height: 39px;
     display: inline-block;
-    border: 1px solid #adb0b2;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
     max-width: 380px;
 }
 
@@ -935,8 +962,6 @@ a.buttonGray:hover span {
     width: 90px;
     padding-left: 0;
     padding-right: 0;
-    line-height: 16px;
-    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
 }
 
 #budgetSlider {
@@ -999,7 +1024,7 @@ a.buttonGray:hover span {
 .slideContainer .spot .insideText {
     position: relative;
     left: -50%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #2f2f2f;
     -webkit-text-size-adjust: none;
@@ -1052,11 +1077,11 @@ a.buttonGray:hover span {
 }
 
 .budgetField input.text, .durationField input.text {
-    font-family: Arial, Helvetica, sans-serif;
     color: #333;
     font-size: 11px;
     padding: 4px 5px 4px 5px;
-    border: 1px solid #adb0b2;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
 }
 
 #budgetOutput, #durationOutput {
@@ -1198,14 +1223,15 @@ div#dp-popup {
 }
 
 .userManagementModal {
-    width:660px;
-    display:none;
+    width: 660px;
+    display: none;
 }
 
-.userManagementModal .addUserForm{
-    padding-top:30px;
+.userManagementModal .addUserForm {
+    padding-top: 30px;
     padding-bottom: 36px;
 }
+
 .userManagementModal .errorMessage {
     color: #ff0001;;
     font-size: 12px;
@@ -1214,122 +1240,123 @@ div#dp-popup {
 }
 
 /* left */
-.userManagementModal .addUserForm .addUserLeft{
-    width:220px;
-    height:300px;
-    float:left;
-    display:inline;
-    margin-left:67px;
-    border:#bcbcbc solid 1px;
-    background:#eeeeee;
+.userManagementModal .addUserForm .addUserLeft {
+    width: 220px;
+    height: 300px;
+    float: left;
+    display: inline;
+    margin-left: 67px;
+    border: #e7e7e7 solid 1px;
+    background: #fff;
 }
 
-.userManagementModal .addUserForm .addUserButton{
-    width:74px;
-    height:300px;
-    float:left;
-    display:inline;
+.userManagementModal .addUserForm .addUserButton {
+    width: 74px;
+    height: 300px;
+    float: left;
+    display: inline;
 }
 
 /* right */
-.userManagementModal .addUserForm .addUserRight{
-    width:220px;
-    height:300px;
-    float:left;
-    display:inline;
-    border:#bcbcbc solid 1px;
-    background:#eeeeee;
+.userManagementModal .addUserForm .addUserRight {
+    width: 220px;
+    height: 300px;
+    float: left;
+    display: inline;
+    border: #e7e7e7 solid 1px;
+    background: #fff;
 }
 
-.userManagementModal .addUserForm .addUserTitle{
-    height:33px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    line-height:33px;
-    background:#3e3532;
+.userManagementModal .addUserForm .addUserTitle {
+    height: 33px;
+    line-height: 33px;
+    background: #f1f1f1;
+    border-bottom: 1px solid #e7e7e7;
+    color: #666666;
 }
 
-.userManagementModal .addUserForm .addUserTitle p{
-    width:auto;
-    float:left;
-    display:inline;
-    margin-left:10px;
-    font-size:12px;
-    font-weight:bold;
-    color:#fffffe;
+.userManagementModal .addUserForm .addUserTitle p {
+    width: auto;
+    float: left;
+    display: inline;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666666;
 }
 
-.userManagementModal .addUserForm .addUserTitle a{
-    width:auto;
-    float:right;
-    display:inline;
-    margin-right:5px;
-    font-size:12px;
-    color:#c9c9c9;
-    text-decoration:none;
+.userManagementModal .addUserForm .addUserTitle a {
+    width: auto;
+    float: right;
+    display: inline;
+    margin-right: 5px;
+    font-size: 12px;
+    color: #ff8a00;
+    text-decoration: none;
 }
 
-.userManagementModal .addUserForm .addUserTitle a:hover{
-    text-decoration:underline;
+.userManagementModal .addUserForm .addUserTitle a:hover {
+    text-decoration: underline;
 }
 
 /* search box */
-.userManagementModal .addUserForm .searchBox{
-    height:47px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    border-bottom:#c6c6c6 solid 1px;
+.userManagementModal .addUserForm .searchBox {
+    height: 47px;
+    border-bottom: #e7e7e7 solid 1px;
 }
 
-.userManagementModal .addUserForm .searchBox .text{
-    width:108px;
-    height:17px;
-    float:left;
-    display:inline;
-    margin-top:12px;
-    margin-left:10px;
-    margin-right:10px;
-    padding:2px;
-    background:#f8f8f8;
-    font-size:12px;
-    border:#a2a1a5 solid 1px;
+.userManagementModal .addUserForm .searchBox .text {
+    width: 108px;
+    height: 17px;
+    float: left;
+    display: inline;
+    margin-top: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 2px;
+    background: #fff;
+    font-size: 12px;
+    border: #e7e7e7 solid 1px;
 }
 
-.userManagementModal .addUserForm .searchBox .downloadProfile{
-    width:64px;
-    float:left;
-    display:inline;
-    margin-top:13px;
+.userManagementModal .addUserForm .searchBox .downloadProfile {
+    width: 64px;
+    float: left;
+    display: inline;
+    margin-top: 13px;
 }
 
-.userManagementModal .addUserForm .searchBox .downloadProfile .profileLeft{
-    width:64px;
-    font-size:12px;
-    text-align:center;
-    text-indent:-2px;
+.userManagementModal .addUserForm .searchBox .downloadProfile .profileLeft {
+    width: 64px;
+    font-size: 12px;
+    text-align: center;
+    text-indent: -2px;
 }
 
 /* copilotManageList */
-.userManagementModal .addUserForm .addUserLeft .addUserList{
-    height:219px;
+.userManagementModal .addUserForm .addUserLeft .addUserList {
+    height: 219px;
 }
 
-.userManagementModal .addUserForm .addUserRight .addUserList{
-    height:266px;
+.userManagementModal .addUserForm .addUserRight .addUserList {
+    height: 266px;
 }
 
-.userManagementModal .addUserForm .addUserList li{
-    margin-bottom:1px;
-    padding-left:10px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    font-size:12px;
-    line-height:20px;
-    height:20px;
-    list-style:none;
-    border-bottom:#c3c4c6 dotted 1px;
-    cursor:pointer;
+.userManagementModal .addUserForm .addUserList li {
+    margin-bottom: 1px;
+    padding-left: 10px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    list-style: none;
+    border-bottom: #c3c4c6 dotted 1px;
+    cursor: pointer;
 }
 
-.userManagementModal .addUserForm .addUserList li.selected{
-    background:#c1c1c1;
+.userManagementModal .addUserForm .addUserList li.selected {
+    background: #ff8a00;
+	color:#fffffe;
 }
 
 .userManagementModal.outLay .inner {
@@ -1338,50 +1365,49 @@ div#dp-popup {
 }
 
 /* button */
-.userManagementModal .addUserForm .addItem{
-    width:34px;
-    height:19px;
-    display:block;
-    margin:0 auto;
-    margin-top:136px;
-    text-indent:-9999px;
-    background:url(/images/add_tech.png) no-repeat left top;
+.userManagementModal .addUserForm .addItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 136px;
+    text-indent: -9999px;
+    background: url(/images/add_tech.png) no-repeat left top;
 }
 
-.userManagementModal .addUserForm .addItem:hover{
-    background:url(/images/add_tech_hover.png) no-repeat left top;
+.userManagementModal .addUserForm .addItem:hover {
+    background: url(/images/add_tech_hover.png) no-repeat left top;
 }
 
-.userManagementModal .addUserForm .removeItem{
-    width:34px;
-    height:19px;
-    display:block;
-    margin:0 auto;
-    margin-top:5px;
-    text-indent:-9999px;
-    background:url(/images/remove_tech.png) no-repeat left top;
+.userManagementModal .addUserForm .removeItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    text-indent: -9999px;
+    background: url(/images/remove_tech.png) no-repeat left top;
 }
 
-.userManagementModal .addUserForm .removeItem:hover{
-    background:url(/images/remove_tech_hover.png) no-repeat left top;
+.userManagementModal .addUserForm .removeItem:hover {
+    background: url(/images/remove_tech_hover.png) no-repeat left top;
 }
 
-#new-modal .userManagementModal .modalBody .buttonArea .button6{
-    width:100px;
-    float:left;
-    display:inline;
-    margin-left:206px;
-    margin-right:40px;
+#new-modal .userManagementModal .modalBody .buttonArea .button6 {
+    width: 100px;
+    float: left;
+    display: inline;
+    margin-left: 206px;
+    margin-right: 40px;
     margin-top: 16px;
 }
 
-#new-modal .userManagementModal .modalBody .buttonArea .cancelButton{
-    margin-left:0;
+#new-modal .userManagementModal .modalBody .buttonArea .cancelButton {
+    margin-left: 0;
 }
 
-.userManagementModal .modalBody .buttonArea .button6 span.right{
-    padding:4px 0 0 0;
-    text-align:center;
+.userManagementModal .modalBody .buttonArea .button6 span.right {
+    text-align: center;
 }
 
 .customKeyError {
@@ -1389,7 +1415,6 @@ div#dp-popup {
     padding-left: 235px;
     color: red;
 }
-
 
 .metaAreaLeft {
     float: left;
@@ -1476,278 +1501,281 @@ div#dp-popup {
 
 /** Add in edit permission and notifications **/
 
-.editPage #mainContent .editProjectSaveBtnContainer{
-    padding:15px 0 20px 0;
+.editPage #mainContent .editProjectSaveBtnContainer {
+    padding: 15px 0 20px 0;
 }
 
 /* permissionsNotifications */
-.permissionsNotifications h3{
-    font-size:18px;
-    line-height:50px;
+.permissionsNotifications h3 {
+    font-size: 18px;
+    line-height: 50px;
 }
 
-.permissionsNotifications table{
-    width:100%;
-    table-layout:fixed;
-    border:1px solid #D0D0D1;
-    border-bottom:0;
-    border-collapse:collapse;
+.permissionsNotifications table {
+    width: 100%;
+    table-layout: fixed;
+    border: 1px solid #e7e7e7;
+    border-bottom: 0;
+    border-collapse: collapse;
 }
 
-.permissionsNotifications .loadingIndicator{
-    height:13px;
-    display:none;
-    padding:10px 0;
-    border:1px solid #D0D0D1;
-    border-top:0;
-    text-align:center;
+.permissionsNotifications .loadingIndicator {
+    height: 13px;
+    display: none;
+    padding: 10px 0;
+    border: 1px solid #e7e7e7;
+    border-top: 0;
+    text-align: center;
 }
 
-.permissionsNotifications table th{
-    padding:6px 0px;
-    border:1px solid #D0D0D1;
-    font-size:12px;
-    background:url(/images/big_table_th.png) repeat-x left top #e9e9e9;
+.permissionsNotifications table th {
+    padding: 6px 0px;
+    border: 1px solid #e7e7e7;
+    font-size: 12px;
+    color: #666666;
+    background: #f1f1f1;
 }
 
-.permissionsNotifications table th.userColumn{
-    text-align:left;
+.permissionsNotifications table th.userColumn {
+    text-align: left;
 }
 
-.permissionsNotifications table th.userColumn span{
-    display:block;
-    padding-left:10px;
+.permissionsNotifications table th.userColumn span {
+    display: block;
+    padding-left: 10px;
 }
 
-.permissionsNotifications table th li{
-    width:24%;
-    float:left;
-    display:inline;
-    list-style:none;
+.permissionsNotifications table th li {
+    width: 24%;
+    float: left;
+    display: inline;
+    list-style: none;
 }
 
-.permissionsNotifications table th a{
-    width:81px;
-    margin:0 auto;
+.permissionsNotifications table th a {
+    width: 81px;
+    margin: 0 auto;
 }
 
-.permissionsNotifications table td{
-    height:33px;
-    font-size:12px;
-    border:1px solid #D0D0D1;
+.permissionsNotifications table td {
+    height: 33px;
+    font-size: 12px;
+    border: 1px solid #D0D0D1;
 }
 
-.permissionsNotifications table .odd td{
-    background-color:#f5f5f5;
+.permissionsNotifications table .odd td {
+    background-color: #f5f5f5;
 }
 
-.permissionsNotifications table td.alignCenter{
-    text-align:center;
+.permissionsNotifications table td.alignCenter {
+    text-align: center;
 }
 
-.permissionsNotifications table td .useName{
-    display:inline-block;
-    margin-left:10px;
-    padding-left:21px;
-    font-weight:bold;
-    color:#333333;
-    line-height:16px;
-    text-decoration:none;
-    background:url(/images/clientManagers_icon.png) no-repeat left center;
+.permissionsNotifications table td .useName {
+    display: inline-block;
+    margin-left: 10px;
+    padding-left: 21px;
+    font-weight: bold;
+    color: #ff8a00;
+    line-height: 16px;
+    text-decoration: none;
+    background: url(/images/clientManagers_icon.png) no-repeat left center;
 }
 
-.permissionsNotifications table td .useName:hover{
-    text-decoration:underline;
+.permissionsNotifications table td .useName:hover {
+    text-decoration: underline;
 }
 
-.permissionsNotifications table td .setting{
-    display:inline-block;
-    padding-left:21px;
-    font-size:11px;
-    line-height:16px;
-    text-decoration:underline;
-    background:url(/images/icon_setting.png) no-repeat left center;
+.permissionsNotifications table td .setting {
+    display: inline-block;
+    padding-left: 21px;
+    font-size: 11px;
+    color: #ff8a00;
+    line-height: 16px;
+    text-decoration: none;
+    background: url(/images/icon_setting.png) no-repeat left center;
 }
 
-.permissionsNotifications table td .setting:hover{
-    text-decoration:none;
+.permissionsNotifications table td .setting:hover {
+    text-decoration: underline;
 }
 
-.permissionsNotifications table td .remove{
-    display:inline-block;
-    padding-left:21px;
-    font-size:11px;
-    line-height:16px;
-    text-decoration:underline;
-    background:url(/images/icon_remove.png) no-repeat left center;
+.permissionsNotifications table td .remove {
+    display: inline-block;
+    padding-left: 21px;
+    color: #ff8a00;
+    font-size: 11px;
+    line-height: 16px;
+    text-decoration: none;
+    background: url(/images/icon_remove.png) no-repeat left center;
 }
 
-.permissionsNotifications table td .remove:hover{
-    text-decoration:none;
+.permissionsNotifications table td .remove:hover {
+    text-decoration: underline;
 }
 
-.permissionsNotifications table td li{
-    width:24%;
-    float:left;
-    display:inline;
-    list-style:none;
-    text-align:center;
+.permissionsNotifications table td li {
+    width: 24%;
+    float: left;
+    display: inline;
+    list-style: none;
+    text-align: center;
 }
 
 /* add user modal */
-#addUserModal{
-    width:660px;
-    display:none;
+#addUserModal {
+    width: 660px;
+    display: none;
 }
 
-#addUserModal .addUserForm{
-    padding-top:30px;
-    padding-bottom:36px;
+#addUserModal .addUserForm {
+    padding-top: 30px;
+    padding-bottom: 36px;
 }
 
 /* left */
-#addUserModal .addUserForm .addUserLeft{
-    width:220px;
-    height:300px;
-    float:left;
-    display:inline;
-    margin-left:67px;
-    border:#bcbcbc solid 1px;
-    background:#eeeeee;
+#addUserModal .addUserForm .addUserLeft {
+    width: 220px;
+    height: 300px;
+    float: left;
+    display: inline;
+    margin-left: 67px;
+    border: #e7e7e7 solid 1px;
+    background: #fff;
 }
 
-#addUserModal .addUserForm .addUserButton{
-    width:74px;
-    height:300px;
-    float:left;
-    display:inline;
+#addUserModal .addUserForm .addUserButton {
+    width: 74px;
+    height: 300px;
+    float: left;
+    display: inline;
 }
 
 /* right */
-#addUserModal .addUserForm .addUserRight{
-    width:220px;
-    height:300px;
-    float:left;
-    display:inline;
-    border:#bcbcbc solid 1px;
-    background:#eeeeee;
+#addUserModal .addUserForm .addUserRight {
+    width: 220px;
+    height: 300px;
+    float: left;
+    display: inline;
+    border: #e7e7e7 solid 1px;
+    background: #fff;
 }
 
 /* addUserTitle */
-#addUserModal .addUserForm .addUserTitle{
-    height:33px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    line-height:33px;
-    background:#3e3532;
+#addUserModal .addUserForm .addUserTitle {
+    height: 33px;
+    line-height: 33px;
+    color: #666;
+    border-bottom: #e7e7e7 1px solid;
+    background: #f1f1f1;
 }
 
-#addUserModal .addUserForm .addUserTitle p{
-    width:auto;
-    float:left;
-    display:inline;
-    margin-left:10px;
-    font-size:12px;
-    font-weight:bold;
-    color:#fffffe;
+#addUserModal .addUserForm .addUserTitle p {
+    width: auto;
+    float: left;
+    display: inline;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
 }
 
-#addUserModal .addUserForm .addUserTitle a{
-    width:auto;
-    float:right;
-    display:inline;
-    margin-right:5px;
-    font-size:12px;
-    color:#c9c9c9;
-    text-decoration:none;
+#addUserModal .addUserForm .addUserTitle a {
+    width: auto;
+    float: right;
+    display: inline;
+    margin-right: 5px;
+    font-size: 12px;
+    color: #ff8a00;
+    text-decoration: none;
 }
 
-#addUserModal .addUserForm .addUserTitle a:hover{
-    text-decoration:underline;
+#addUserModal .addUserForm .addUserTitle a:hover {
+    text-decoration: underline;
 }
 
 /* search box */
-#addUserModal .addUserForm .searchBox{
-    height:47px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    border-bottom:#c6c6c6 solid 1px;
+#addUserModal .addUserForm .searchBox {
+    height: 47px;
+    border-bottom: #e7e7e7 solid 1px;
 }
 
-#addUserModal .addUserForm .searchBox .text{
-    width:108px;
-    height:17px;
-    float:left;
-    display:inline;
-    margin-top:12px;
-    margin-left:10px;
-    margin-right:10px;
-    padding:2px;
-    background:#f8f8f8;
-    font-size:12px;
-    border:#a2a1a5 solid 1px;
+#addUserModal .addUserForm .searchBox .text {
+    width: 108px;
+    height: 17px;
+    float: left;
+    display: inline;
+    margin-top: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 2px;
+    background: #fff;
+    font-size: 12px;
+    border: #e7e7e7 solid 1px;
 }
 
-#addUserModal .addUserForm .searchBox .downloadProfile{
-    width:64px;
-    float:left;
-    display:inline;
-    margin-top:13px;
+#addUserModal .addUserForm .searchBox .downloadProfile {
+    width: 64px;
+    float: left;
+    display: inline;
+    margin-top: 13px;
 }
 
-#addUserModal .addUserForm .searchBox .downloadProfile .profileLeft{
-    width:64px;
-    font-size:12px;
-    text-align:center;
-    text-indent:-2px;
+#addUserModal .addUserForm .searchBox .downloadProfile .profileLeft {
+    width: 64px;
+    font-size: 12px;
+    text-align: center;
+    text-indent: -2px;
 }
 
 /* copilotManageList */
-#addUserModal .addUserForm .addUserLeft .addUserList{
-    height:219px;
+#addUserModal .addUserForm .addUserLeft .addUserList {
+    height: 219px;
 }
 
-#addUserModal .addUserForm .addUserRight .addUserList{
-    height:266px;
+#addUserModal .addUserForm .addUserRight .addUserList {
+    height: 266px;
 }
 
-#addUserModal .addUserForm .addUserList li{
-    margin-bottom:1px;
-    padding-left:10px;
-    font-family:Tahoma, Arial, Helvetica, sans-serif;
-    font-size:12px;
-    line-height:20px;
-    height:20px;
-    list-style:none;
-    border-bottom:#c3c4c6 dotted 1px;
-    cursor:pointer;
+#addUserModal .addUserForm .addUserList li {
+    margin-bottom: 1px;
+    padding-left: 10px;
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    list-style: none;
+    border-bottom: #e7e7e7 solid 1px;
+    cursor: pointer;
 }
 
-#addUserModal .addUserForm .addUserList li.selected{
-    background:#c1c1c1;
+#addUserModal .addUserForm .addUserList li.selected {
+    background: #ff8a00;
+	color:#fffffe;
 }
 
 /* button */
-#addUserModal .addUserForm .addItem{
-    width:34px;
-    height:19px;
-    display:block;
-    margin:0 auto;
-    margin-top:136px;
-    text-indent:-9999px;
-    background:url(/images/add_tech.png) no-repeat left top;
+#addUserModal .addUserForm .addItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 136px;
+    text-indent: -9999px;
+    background: url(/images/add_tech.png) no-repeat left top;
 }
 
-#addUserModal .addUserForm .addItem:hover{
-    background:url(/images/add_tech_hover.png) no-repeat left top;
+#addUserModal .addUserForm .addItem:hover {
+    background: url(/images/add_tech_hover.png) no-repeat left top;
 }
 
-#addUserModal .addUserForm .removeItem{
-    width:34px;
-    height:19px;
-    display:block;
-    margin:0 auto;
-    margin-top:5px;
-    text-indent:-9999px;
-    background:url(/images/remove_tech.png) no-repeat left top;
+#addUserModal .addUserForm .removeItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    text-indent: -9999px;
+    background: url(/images/remove_tech.png) no-repeat left top;
 }
 
 #addUserModal .addUserForm .removeItem:hover{
@@ -1766,9 +1794,8 @@ div#dp-popup {
     margin-left:0;
 }
 
-#addUserModal .buttonArea .button6 span.right{
-    padding:4px 0 0 0;
-    text-align:center;
+#addUserModal .buttonArea .button6 span.right {
+    text-align: center;
 }
 
 /* setting modal */
@@ -1788,47 +1815,50 @@ div#dp-popup {
     overflow:hidden;
 }
 
-#settingModal .settingTable table{
-    width:100%;
-    table-layout:fixed;
-    border:1px solid #D0D0D1;
-    border-collapse:collapse;
+#settingModal .settingTable table {
+    width: 100%;
+    table-layout: fixed;
+    border: 1px solid #e7e7e7;
+    border-top: none;
+    border-collapse: collapse;
 }
 
-#settingModal .settingTable .tableBody table{
-    border-bottom:0;
-    border-top:0;
+#settingModal .settingTable .tableBody table {
+    border-bottom: 0;
+    border-top: 0;
+    border: none;
 }
 
-#settingModal .settingTable .tableHeader{
-    height:29px;
-    overflow:hidden;
+#settingModal .settingTable .tableHeader {
+    height: 29px;
+    overflow: hidden;
 }
 
-#settingModal table th{
-    height:28px;
-    border:1px solid #D0D0D1;
-    font-size:12px;
-    background:url(/images/modal_table_bg.png) repeat-x left top #e9e9e9;
+#settingModal table th {
+    height: 28px;
+    border: 1px solid #e7e7e7;
+    border-top: none;
+    font-size: 12px;
+    background: #f1f1f1;
 }
 
-#settingModal .tableBody table th{
-    display:none;
+#settingModal .tableBody table th {
+    display: none;
 }
 
-#settingModal table td{
-    height:29px;
-    font-size:12px;
-    border:1px solid #D0D0D1;
-    background:#fffffd;
+#settingModal table td {
+    height: 29px;
+    font-size: 12px;
+    border: 1px solid #e7e7e7;
+    background: #fffffd;
 }
 
 #settingModal .tableHeader table td{
     display:none;
 }
 
-#settingModal table .odd td{
-    background-color:#f5f5f5;
+#settingModal table .odd td {
+    background-color: #f1f1f1;
 }
 
 #settingModal table .last td{
@@ -1870,9 +1900,8 @@ div#dp-popup {
     margin-left:0;
 }
 
-#settingModal .buttonArea .button6 span.right{
-    padding:4px 0 0 0;
-    text-align:center;
+#settingModal .buttonArea .button6 span.right {
+    text-align: center;
 }
 
 /* projectTypeArea */
@@ -1970,16 +1999,7 @@ div#dp-popup {
     text-decoration:none;
 }
 
-/* text shadow */
-.editProjectSaveBtnContainer a,
-.permissionsButtonContainer a,
-.groupButtonContainer a,
-.permissionsNotifications table th a,
-.groupPermissions table th a,
-#settingModal .buttonArea a,
-#addUserModal .buttonArea a{
-    text-shadow:#c14040 0 -1px 0;
-}
+
 
 .noneList{
     display:none !important;
@@ -2014,7 +2034,7 @@ div.billingAccountEntry {
 }
 
 a.removeBilling, a.removeBilling:visited {
-    color: #e10000;
+    color: #ff8a00;
     font-size: 11px;
     -webkit-text-size-adjust: none;
     line-height: 25px;
@@ -2042,7 +2062,7 @@ a.removeBilling:hover {
 .groupPermissions table {
     width: 100%;
     table-layout: fixed;
-    border: 1px solid #D0D0D1;
+    border: 1px solid #e7e7e7;
     border-bottom: 0;
     border-collapse: collapse;
 }
@@ -2051,14 +2071,14 @@ a.removeBilling:hover {
     height: 13px;
     display: none;
     padding: 10px 0;
-    border: 1px solid #D0D0D1;
+    border: 1px solid #e7e7e7;
     border-top: 0;
     text-align: center;
 }
 
 .groupPermissions table th {
     padding: 6px 0px;
-    border: 1px solid #D0D0D1;
+    border: 1px solid #e7e7e7;
     font-size: 12px;
     background: url(/images/big_table_th.png) repeat-x left top #e9e9e9;
 }
@@ -2087,11 +2107,11 @@ a.removeBilling:hover {
 .groupPermissions table td {
     height: 33px;
     font-size: 12px;
-    border: 1px solid #D0D0D1;
+    border: 1px solid #e7e7e7;
 }
 
 .groupPermissions table .odd td {
-    background-color: #f5f5f5;
+    background-color: #f1f1f1;
 }
 
 .groupPermissions table td.alignCenter {
@@ -2103,7 +2123,7 @@ a.removeBilling:hover {
     margin-left: 10px;
     padding-left: 21px;
     font-weight: bold;
-    color: #333333;
+    color: #666666;
     line-height: 16px;
     text-decoration: none;
     background: url(/images/clientManagers_icon.png) no-repeat left center;
@@ -2185,8 +2205,8 @@ a.removeBilling:hover {
     float: left;
     display: inline;
     margin-left: 67px;
-    border: #bcbcbc solid 1px;
-    background: #eeeeee;
+    border: #E7E7E7 solid 1px;
+    background: #FFFFFF;
 }
 
 #addGroupModal .addUserForm .addUserButton {
@@ -2202,15 +2222,16 @@ a.removeBilling:hover {
     height: 300px;
     float: left;
     display: inline;
-    border: #bcbcbc solid 1px;
-    background: #eeeeee;
+    border: #e7e7e7 solid 1px;
+    background: #fff;
 }
 
 #addGroupModal .addUserForm .addUserTitle {
     height: 33px;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
     line-height: 33px;
-    background: #3e3532;
+    background: #f1f1f1;
+    border-bottom:1px solid #e7e7e7;
+    color: #666666;
 }
 
 #addGroupModal .addUserForm .addUserTitle p {
@@ -2220,7 +2241,7 @@ a.removeBilling:hover {
     margin-left: 10px;
     font-size: 12px;
     font-weight: bold;
-    color: #fffffe;
+    color: #666666;
 }
 
 #addGroupModal .addUserForm .addUserTitle a {
@@ -2229,7 +2250,7 @@ a.removeBilling:hover {
     display: inline;
     margin-right: 5px;
     font-size: 12px;
-    color: #c9c9c9;
+    color: #ff8a00;
     text-decoration: none;
 }
 
@@ -2240,8 +2261,7 @@ a.removeBilling:hover {
 /* search box */
 #addGroupModal .addUserForm .searchBox {
     height: 47px;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
-    border-bottom: #c6c6c6 solid 1px;
+    border-bottom: #e7e7e7 solid 1px;
 }
 
 #addGroupModal .addUserForm .searchBox .text {
@@ -2253,9 +2273,9 @@ a.removeBilling:hover {
     margin-left: 10px;
     margin-right: 10px;
     padding: 2px;
-    background: #f8f8f8;
+    background: #fff;
     font-size: 12px;
-    border: #a2a1a5 solid 1px;
+    border: #e7e7e7 solid 1px;
 }
 
 #addGroupModal .addUserForm .searchBox .downloadProfile {
@@ -2284,17 +2304,17 @@ a.removeBilling:hover {
 #addGroupModal .addUserForm .addUserList li {
     margin-bottom: 1px;
     padding-left: 10px;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
     font-size: 12px;
     line-height: 20px;
     height: 20px;
     list-style: none;
-    border-bottom: #c3c4c6 dotted 1px;
+    border-bottom: #e7e7e7 solid 1px;
     cursor: pointer;
 }
 
 #addGroupModal .addUserForm .addUserList li.selected {
-    background: #c1c1c1;
+    background: #ff8a00;
+    color:#fffffe;
 }
 
 #addGroupModal.outLay .inner {
@@ -2345,10 +2365,22 @@ a.removeBilling:hover {
 }
 
 #addGroupModal .modalBody .buttonArea .button6 span.right {
-    padding: 4px 0 0 0;
     text-align: center;
 }
 
 #addGroup {
     padding-left: 3px;
 }
+
+
+a.saveSetting,
+.modalBody .buttonArea a.saveSetting{
+    background: #81bc01;
+    border-bottom: 3px solid #5ba801;
+
+}
+a.saveSetting:hover,
+.modalBody .buttonArea a.saveSetting:hover{
+    border-bottom: 3px solid #81bc02;
+}
+

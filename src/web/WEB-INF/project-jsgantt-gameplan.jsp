@@ -1,19 +1,22 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.1
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: JSP page for the jsgantt project game plan
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
   - - Change the use of %{#session.currentSelectDirectProjectID} to sessionData.currentSelectDirectProjectID so the JSP
   -   page can access the session on the first hit.
   -
-  - Version 1.2 (BUGR-7728Cockpit Game Plan Export Feature - Excel and Microsoft Project Support)
+  - Version 1.2 (BUGR-7728 Cockpit Game Plan Export Feature - Excel and Microsoft Project Support)
   - - Add game plan export link
   -
-  - Description: JSP page for the jsgantt project game plan
-  -
-  - Version 1.1 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
+  - Version 1.3 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
   - remove include of TinyMCE, replaced with CKEditor.
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Rebranding the jsgantt page
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -28,6 +31,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />

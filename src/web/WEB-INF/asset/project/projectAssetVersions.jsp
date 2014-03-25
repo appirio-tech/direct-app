@@ -1,9 +1,12 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMBLER
   -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Asset View And File Version)
   -
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Version 1.1 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Use new font "Source Sans Pro" for the page
+  -
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project asset versions view.
   -
@@ -20,6 +23,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/dashboard.css" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/modal.css" media="all" type="text/css"/>

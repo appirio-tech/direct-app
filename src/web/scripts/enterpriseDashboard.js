@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for new Enterprise Dashboard
  *
@@ -40,8 +40,11 @@
  * - Add projected cost to total spend chart and total spend chart drill in
  * - Add project health page with financial health data
  *
- * @author GreatKevin, hanshuai, GreatKevin
- * @version 2.0
+ * Version 2.1 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+ * - Adjusts the empty row number projects widget in direct enterprise dashboard overview page
+ *
+ * @author GreatKevin, hanshuai, GreatKevin, TCSASSEMBLER
+ * @version 2.1
  */
 var shortNameMap = {
     "1" : ["Design" , "Design"],
@@ -1816,9 +1819,9 @@ function renderOverviewProjects(resultJson) {
         }
 
 
-        if (length < 5) {
+        if (length < 4) {
             for(var left = 1; left <= (5 - length); ++ left) {
-                strData += "<tr></tr>"
+                strData += '<tr style="border-left:1px solid #E7E7E7; border-right:1px solid #E7E7E7"></tr>';
             }
         }
 
@@ -2747,19 +2750,25 @@ $(document).ready(function () {
             if ($("#contestPipelineViewPopup").is(':visible')) {
                 visibleOverlay = $("#contestPipelineViewPopup");
                 curOverlayDataTable = $("#contestPipelineDrillInTable").dataTable();
-                var calHeight = 168 + 22 * $("#contestPipelineDrillInTable tbody tr").length;
+
+                var rowHeight = 0;
+                if($("#contestPipelineDrillInTable tbody tr").length > 0) {
+                    rowHeight = $("#contestPipelineDrillInTable tbody tr:eq(0)").height();
+                }
+
+                var calHeight = 168 + rowHeight * $("#contestPipelineDrillInTable tbody tr").length;
                 hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
             }
             if ($("#projectPipelineViewPopup").is(':visible')) {
                 visibleOverlay = $("#projectPipelineViewPopup");
                 curOverlayDataTable = $("#projectPipelineDrillInTable").dataTable();
-                var calHeight = 168 + 22 * $("#projectPipelineDrillInTable tbody tr").length;
+                var calHeight = 168 + 28 * $("#projectPipelineDrillInTable tbody tr").length;
                 hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
             }
             if ($("#financialViewPopup").is(':visible')) {
                 visibleOverlay = $("#financialViewPopup");
                 curOverlayDataTable = $("#financialDrillInTable").dataTable();
-                var calHeight = 168 + 22 * $("#financialDrillInTable tbody tr").length;
+                var calHeight = 168 + 28 * $("#financialDrillInTable tbody tr").length;
                 hHht = $(window).height() > calHeight ? calHeight : $(window).height() - 60;
             }
 

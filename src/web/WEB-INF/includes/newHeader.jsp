@@ -1,7 +1,15 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMBLER
+  -
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Navigation Update)
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version: 1.1 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Update the header title for launch new challenge page
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Update the header for the dashboard page and admin pages
   -
   - Description: The new cockpit header and navigation.
 --%>
@@ -336,19 +344,15 @@
                     <a class="logo resultsPageLogo" href="javascript:;"> Search Results </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
-                        <img src="/images/dashboard_logo.png" alt="Dashboard" />
-                    </a>
                 </c:otherwise>
             </c:choose>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'launch'}">
             <a href="javascript:;" class="logo">
-                <img src="/images/launghContent_logo.png" alt="Launch Challenge" /></a>
+                <span>Launch New Challenge</span></a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
-            <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo" style="top:54px">
-                <img src="/images/copilot_logo.png" alt="Laungh Copilot Challenge" class="copilotTitle"/>
+            <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo" style="top:14px">
                 <span>TopCoder Copilots</span>
             </a>
         </c:when>
@@ -358,14 +362,14 @@
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'report'}">
-            <h1><a href="javascript:;" class="logo"><span>Cockpit Reports</span></a></h1>
+            <a href="javascript:;" class="logo"><span>Cockpit Reports</span></a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'admin'}">
-            <h1><a href="javascript:;" class="logo"><span>Cockpit Admin</span></a></h1>
+            <a href="javascript:;" class="logo"><span>Cockpit Admin</span></a>
         </c:when>
         <c:when test="${requestScope.CURRENT_TAB eq 'createNewProject'}">
             <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
-                <img src="/images/dashboard_logo.png" alt="Dashboard" />
+                <span>Start a New Project</span>
             </a>
         </c:when>
         <c:otherwise>
@@ -459,7 +463,7 @@
 </c:if>
 
 <ui:isCopilotPage>
-    <div id="tabs1" class="copilotsTabs1" style="top:100px">
+    <div id="tabs1" class="copilotsTabs1" style="top:98px">
         <ul>
 
             <li <c:if test="${requestScope.CURRENT_TAB eq 'launchCopilot'}">class="on"</c:if>><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>

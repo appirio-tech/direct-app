@@ -88,7 +88,7 @@
         </div>
         <div class="modalCommandBox">
             <a href="javascript:;" class="btnGreyModal btnUseLateVersion"><span class="btnR"><span class="btnC">NO, USE LATEST VERSION</span></span></a>
-            <a href="javascript:;" class="newButton1 btnUploadYes"><span class="btnR"><span class="btnC">YES</span></span></a>
+            <a href="javascript:;" class="newButton1 newButtonGreen btnUploadYes"><span class="btnR"><span class="btnC">YES</span></span></a>
         </div>
     </div>
     <!-- end .modalBody -->
@@ -425,8 +425,8 @@
             <div class="clearFix"></div>
         </div>
         <div class="modalCommandBox">
-            <a href="javascript:;" class="newButton1 btnYes"><span class="btnR"><span class="btnC">YES</span></span></a>
-            <a href="javascript:;" class="newButton1 btnCancel"><span class="btnR"><span class="btnC">NO</span></span></a>
+            <a href="javascript:;" class="newButton1 newButtonGreen btnYes"><span class="btnR"><span class="btnC">YES</span></span></a>
+            <a href="javascript:;" class="newButton1 newButtonGreen btnCancel"><span class="btnR"><span class="btnC">NO</span></span></a>
         </div>
     </div>
     <!-- end .modalBody -->

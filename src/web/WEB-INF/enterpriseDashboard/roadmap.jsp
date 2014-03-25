@@ -1,10 +1,13 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.1
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
   -
-  - - Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Cockpit New Enterprise Dashboard Release 2)
   - Add history.js to support push state and back-compatible with IE with hash-fallback
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The roadmap page the new enterprise dashboard
 --%>
@@ -195,8 +198,6 @@
                                         </div>
                                         <!-- End #tab -->
 
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
                                     </div>
                                 </div>
                                 <!-- end road map section -->

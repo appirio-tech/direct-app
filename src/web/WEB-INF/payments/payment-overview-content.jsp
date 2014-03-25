@@ -83,8 +83,8 @@
                     </table>
                 </div>
                 <!-- End .containerSection -->
-                <div class="corner tl"></div>
-                <div class="corner tr"></div>
+              
+                
             </div>
         </div>
         <!-- End .memberPaymentBlockContainer -->
@@ -130,8 +130,8 @@
                     </table>
                 </div>
                 <!-- End .containerSection -->
-                <div class="corner tl"></div>
-                <div class="corner tr"></div>
+              
+                
             </div>
         </div>
         <!-- End .memberPaymentBlockContainer -->
@@ -170,8 +170,8 @@
                     </table>
                 </div>
                 <!-- End .containerSection -->
-                <div class="corner tl"></div>
-                <div class="corner tr"></div>
+              
+                
             </div>
         </div>
         <!-- End .memberPaymentBlockContainer -->
@@ -220,8 +220,8 @@
                     </div>
                 </div>
                 <!-- End .containerSection -->
-                <div class="corner tl"></div>
-                <div class="corner tr"></div>
+              
+                
             </div>
         </div>
         <!-- End .memberPaymentBlockContainer -->
@@ -268,8 +268,8 @@
                 </table>
             </div>
             <!-- End .containerSection -->
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
+          
+            
         </div>
     </div>
     <!-- End .memberPaymentBlockContainer -->
@@ -316,8 +316,8 @@
                 </table>
             </div>
             <!-- End .containerSection -->
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
+          
+            
         </div>
     </div>
     <!-- End .memberPaymentBlockContainer -->

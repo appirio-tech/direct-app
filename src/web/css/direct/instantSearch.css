@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * This css used to render edit project page.
  *
@@ -8,43 +8,50 @@
  * Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
  * - Adds new styles for the new cockpit navigation
  *
- * Author: GreatKevin
+ * Version 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the instance search in the top navigation.
+ *
+ * Author: GreatKevin, TCSASSEMBLER
  */
 #page #newHeader {
     z-index: 105;
 }
-#page #newHeader .helloUser {
-    top: 5px;
-    z-index: 100;
+#newHeader .helloUser {
+    float:right;
+    font-size: 12px;
+    margin-top:8px;
 }
-#newHeader .helloUser .instantSearch{
+#newHeader .helloUser .instantSearch {
     display: block;
     float: left;
-    height: 23px;
+    height: 21px;
     width: 306px;
     padding: 0 0 0 10px;
-    background: url('/images/instantSearch.png') 0 0 no-repeat;
+    border:1px solid #c2c2c2;
+    background: #fff;
     position: relative;
 }
-#newHeader .helloUser .instantSearch .instantSearchBg{
+
+#newHeader .helloUser .instantSearch .instantSearchBg {
     display: block;
     width: 278px;
-    height: 20px;
-    padding: 3px 28px 0 0;
-    background: url('/images/instantSearch.png') 0 -23px repeat-x;
+    height: 21px;
+    padding: 2px 28px 0 0;
     position: relative;
 }
-#newHeader .helloUser .instantSearch span.searchIcon{
+
+#newHeader .helloUser .instantSearch span.searchIcon {
     display: block;
     width: 23px;
     height: 23px;
     padding: 0;
-    background: url('/images/instantSearch.png') 0 -46px no-repeat;
+    background: url('../../images/instantSearch.png') 0 0 no-repeat;
     position: absolute;
     top: 0;
     right: 0;
 }
-#newHeader .helloUser .instantSearch input{
+
+#newHeader .helloUser .instantSearch input {
     display: block;
     float: left;
     height: 18px;
@@ -52,14 +59,14 @@
     width: 278px;
     padding: 0;
     margin: 0;
-    border: none;
-    border-width: 0;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 11px;
+    border: 0;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    font-size: 12px;
     color: #999999;
 }
-#newHeader .helloUser .instantSearch input.focused{
-    color: #333333;
+
+#newHeader .helloUser .instantSearch input.focused {
+    color: #666666;
 }
 #page #newHeader .helloUser UL {
     display:block;

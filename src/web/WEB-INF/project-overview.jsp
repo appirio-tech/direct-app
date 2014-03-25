@@ -1,8 +1,8 @@
 <%--
-  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin
+  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin, TCSASSEMBLER
   -
-  - Version: 1.9
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 2.0
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
   -
@@ -40,6 +40,8 @@
   - - Add email icon with mail to for Client Managers and TopCoder Account Managers
   - Version 1.9 - Release Assembly - TopCoder Copilot Feedback Updates
   - - Adds 4 ratings to the copilot feedback
+  - Version 2.0 - TC Direct Rebranding Assembly Project and Contest related pages
+  - - Rebranding the project overview page
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -500,7 +502,7 @@
                             </div>
                             <!-- end project general information table -->
 
-                            <div class="dashboardTable" data-intro="The active work in your project is shown here. Check the green/yellow/red indicators to quickly monitor the health of each competition or task." data-step="14" data-position="top">
+                            <div class="dashboardTable dashboardTable2" data-intro="The active work in your project is shown here. Check the green/yellow/red indicators to quickly monitor the health of each competition or task." data-step="14" data-position="top">
                                 <dl>
                                     <dt>
                                         <a href="javascript:void(0)" class="expand">Active Challenges Health</a>
@@ -610,7 +612,7 @@
                             <s:else>
                                <div class="projectCopilotsList">
                   <div class="copilotsListHeader">
-                    <h3><strong class="red"><s:property value="copilotStats.size"/></strong> <s:if test="copilotStats.size == 1">copilot</s:if><s:else>copilots</s:else> working on this project.</h3>
+                    <h3><strong class="red"><s:property value="copilotStats.size"/></strong> &nbsp;<s:if test="copilotStats.size == 1">copilot</s:if><s:else>copilots</s:else> working on this project.</h3>
                   </div>
                   <div class="copilotsListBody">
                     <div id="projectCopilotsCarouselWrapper" class="noCopilotType">
@@ -658,17 +660,17 @@
                                                                                 value="draftContestsNumber"/></span>
                                                                         </dd>
                                                                         <dd>
-                                                                            <span class="dt"># Active Challenges :</span>
+                                                                            <span class="dt"># of Active :</span>
                                                                             <span class="dd"><s:property
                                                                                 value="activeContestsNumber"/></span>
                                                                         </dd>
                                                                         <dd>
-                                                                            <span class="dt"># Finished Challenges :</span>
+                                                                            <span class="dt"># of Finished :</span>
                                                                             <span class="dd"><s:property
                                                                                 value="finishedContestsNumber"/></span>
                                                                         </dd>
                                                                         <dd>
-                                                                            <span class="dt"># Failures :</span>
+                                                                            <span class="dt"># of Failures :</span>
                                                                             <span class="dd"><s:property
                                                                                 value="failuresContestsNumber"/></span>
                                                                         </dd>

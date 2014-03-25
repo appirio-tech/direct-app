@@ -1,5 +1,3 @@
-/* css for dashboard view */
-
 /* common css */
 .spaceWhite{
     height:30px;
@@ -12,9 +10,10 @@
 }
 
 /* dashboardTable */
-.dashboardTable{
-    background: url(../../images/dashboard-table-bg.png) repeat-x left top;
-    margin-bottom:20px;
+.dashboardTable {
+    background: #f1f1f1;
+    margin-bottom: 20px;
+    border: 1px solid #e7e7e7;
 }
 .dashboardTableHeader{
     padding-right:17px;   
@@ -30,17 +29,17 @@
     position:relative;
 }
 .dashboardTable dt a.expand{
-    background: url(../../images/icon-expand.png) no-repeat left center;
-    text-decoration:none;
-    font-size:14px;
-    color:#ffffff; 
-    padding-left:30px;
-    display:inline-block;
-    font-weight:bold;
-    height:32px;
+    background: url(/images/icon-expand.png) no-repeat left center;
+    text-decoration: none;
+    font-size: 14px;
+    color: #666666;
+    padding-left: 30px;
+    display: inline-block;
+    font-weight: bold;
+    height: 32px;
 }
 .dashboardTable dt a.collapse{
-    background: url(../../images/icon-collapse.png) no-repeat left center; 
+    background: url(/images/icon-collapse.png) no-repeat left center; 
 }
 .dashboardTable dt span.viewall{
     display:inline-block;
@@ -59,30 +58,26 @@
     padding-left:5px;
     vertical-align:middle;
 }
-.dashboardTable dd{
-    border-left:1px solid #a9acae;
-    border-right:1px solid #a9acae;
-    border-bottom:1px solid #a9acae;
+
+.dashboardTable table {
+    width: 100%;
 }
-.dashboardTable table{
-    width:100%;
+
+.dashboardTable  th {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666666;
+    border-left: 1px solid #e7e7e7;
+    height: 28px;
 }
-.dashboardTable  th{
-    font-size:11px;
-    font-weight:bold;
-    color:#333333;
-    border-left:1px solid #d0d0d1;
-    height:28px;
-}
-.dashboardTable  td, .costHead th{
-    font-size:11px; 
-    color:#333333;
-    border-left:1px solid #d0d0d1;
-    border-top:1px solid #d0d0d1;
-    padding:5px 0px;
-    text-align:center;
-    background-color:#fffffe;
-	height:auto !important;
+
+.dashboardTable  td, .costHead th {
+    font-size: 12px;
+    color: #333333;
+    padding: 5px 0px;
+    text-align: center;
+    background-color: #fffffe;
+    height: auto !important;
 }
 .dashboardTable tr.topRow td{
     border-top:0px;   
@@ -102,13 +97,13 @@
 
 .dashboardTable td  a.red,.dashboardTable td  label.red{
    display:inline-block;
-   background: url(../../images/red-icon.png) no-repeat left center;
+   background: url(/images/red-icon.png) no-repeat left center;
    padding-left:18px;
    min-height:13px;
 }
 .dashboardTable td  a.orange,.dashboardTable td  label.orange{
    display:inline-block;
-   background: url(../../images/orange-icon.png) no-repeat left center;
+   background: url(/images/orange-icon.png) no-repeat left center;
    padding-left:18px;
    min-height:13px;
 }
@@ -123,7 +118,7 @@
 
 .dashboardTable td  a.green,.dashboardTable td  label.green{
    display:inline-block;
-   background: url(../../images/green-icon.png) no-repeat left center;
+   background: url(/images/green-icon.png) no-repeat left center;
    padding-left:18px;
    min-height:13px;
 }
@@ -131,7 +126,7 @@
 
 .dashboardTable td span.red{
     display:inline-block;
-    background: url(../../images/red-icon.png) no-repeat left center;
+    background: url(/images/red-icon.png) no-repeat left center;
     height:12px;
     width:12px;
     margin-top:3px;
@@ -139,7 +134,7 @@
 
 .dashboardTable td span.orange{
     display:inline-block;
-    background: url(../../images/orange-icon.png) no-repeat left center;
+    background: url(/images/orange-icon.png) no-repeat left center;
     height:12px;
     width:12px;
     margin-top:3px;
@@ -147,7 +142,7 @@
 
 .dashboardTable td span.green{
     display:inline-block;
-    background: url(../../images/green-icon.png) no-repeat left center;
+    background: url(/images/green-icon.png) no-repeat left center;
     height:12px;
     width:12px; 
 }
@@ -178,12 +173,12 @@
 
 /* visualization chart */
 .chartCollapse{
-    background: url(../../images/dashboard-table-bg.png) repeat-x left top;
+    background: url(/images/dashboard-table-bg.png) repeat-x left top;
     height:34px;
     padding-left:8px;
 }
 .chartCollapse a.expand{
-    background: url(../../images/icon-expand.png) no-repeat left center;
+    background: url(/images/icon-expand.png) no-repeat left center;
     text-decoration:none;
     font-size:14px;
     color:#ffffff;
@@ -193,7 +188,7 @@
     height:32px;
 }
 .chartCollapse a.collapse{
-    background: url(../../images/icon-collapse.png) no-repeat left center;
+    background: url(/images/icon-collapse.png) no-repeat left center;
 }
 .visualization{
     border:1px solid #a9acae;
@@ -240,7 +235,7 @@
     display:inline-block;
 }
 .visualization .bottom .text {
-    background:url("../../images/date_input.gif") no-repeat scroll 0 0 transparent;
+    background:url("/images/date_input.gif") no-repeat scroll 0 0 transparent;
     border:0 none;
     color:#6C6C6C;
     display:inline;
@@ -251,7 +246,7 @@
     width:80px;
 } 
 .visualization .bottom a.dp-choose-date {
-    background:url("../../images/date_icon.gif") no-repeat scroll 0 0 transparent;
+    background:url("/images/date_icon.gif") no-repeat scroll 0 0 transparent;
     display:inline;
     float:left;
     height:19px;
@@ -311,7 +306,7 @@
 /* visualization chart end */
 
 #header a.overviewLogo{
-     background:url("../../images/overview.png") no-repeat left center ;
+     background:url("/images/overview.png") no-repeat left center ;
     display:inline-block;
     height:32px;
     line-height:32px;
@@ -341,10 +336,15 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
 	cursor:pointer;
 }
 
-.projectHealthHeader th{
-	height:28px;
-	background: url(../../images/dashboard-table-bg.png) repeat-x left -34px;
+.projectHealthHeader th {
+    height: 28px;
+    color: #666666;
+    background: #f1f1f1;
 }
+.projectHealthHeader table{
+   border-bottom: none; 
+}
+
 /*.projectHealthBody{*/
 	/*min-height:10px;*/
 /*}*/
@@ -363,15 +363,19 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
     padding-left:8px;
 }
 
-##projectHealthTable {
+#projectHealthTable {
     width: 100%;
 }
 
-.projectHealthBody #projectHealthTable tr.hover td{
-	background-color:#FF9;
+.projectHealthBody #projectHealthTable tr.hover td {
+    background-color: #ffffdc;
 }
-.dateTruncateFormat{
-	display:none;
+TABLE#projectActivities TR.hover{
+    background: #f1f1f1;
+}
+
+.dateTruncateFormat {
+    display: none;
 }
 .alignTop{
 	vertical-align:top;
@@ -400,23 +404,23 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
 		display: block;
 		width: 7px;
 		height: 5px;
-		background: url(../../images/popup_new_arrow.png) no-repeat;
+		background: url(/images/popup_new_arrow.png) no-repeat;
 	}
 	
 	.tooltipHeader{
 		height:26px;
-		background:url(../../images/tooltip_new_green.png) left top no-repeat;
+		background:url(/images/tooltip_new_green.png) left top no-repeat;
 		padding-left:3px;
 		overflow:hidden;
 	}
 		.tooltipHeader .tooltipHeaderRight{
 			height:26px;
-			background:url(../../images/tooltip_new_green.png) right -52px no-repeat;
+			background:url(/images/tooltip_new_green.png) right -52px no-repeat;
 			padding-right:3px;
 		}
 			.tooltipHeader .tooltipHeaderCenter{
 				height:26px;
-				background:url(../../images/tooltip_new_green.png) left -26px repeat-x;
+				background:url(/images/tooltip_new_green.png) left -26px repeat-x;
 			}
 			.tooltipHeader h2{
 				font-size: 12px;
@@ -447,18 +451,18 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
 			}
 	.tooltipFooter{
 		height:3px;
-		background:url(../../images/tooltip_new_cornner.png) left top no-repeat;
+		background:url(/images/tooltip_new_cornner.png) left top no-repeat;
 		padding-left:3px;
 		overflow:hidden;
 	}
 		.tooltipFooter .tooltipFooterRight{
 			height:3px;
-			background:url(../../images/tooltip_new_cornner.png) right -6px no-repeat;
+			background:url(/images/tooltip_new_cornner.png) right -6px no-repeat;
 			padding-right:3px;
 		}
 			.tooltipFooter .tooltipFooterCenter{
 				height:3px;
-				background:url(../../images/tooltip_new_cornner.png) left -3px repeat-x;
+				background:url(/images/tooltip_new_cornner.png) left -3px repeat-x;
 			}
 	.tooltipBox .tooltipContent a.viewDetailsLink{
 		float:right;
@@ -473,21 +477,21 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
 	.greenToolTipBox .tooltipHeader,
 	.greenToolTipBox .tooltipHeaderRight,
 	.greenToolTipBox .tooltipHeaderCenter{
-		background-image: url(../../images/tooltip_new_green.png);
+		background-image: url(/images/tooltip_new_green.png);
 	}
 	
 	/* Orange Tooltip */
 	.orangeToolTipBox .tooltipHeader,
 	.orangeToolTipBox .tooltipHeaderRight,
 	.orangeToolTipBox .tooltipHeaderCenter{
-		background-image: url(../../images/tooltip_new_orange.png);
+		background-image: url(/images/tooltip_new_orange.png);
 	}
 	
 	/* Red caption*/
 	.redToolTipBox .tooltipHeader,
 	.redToolTipBox .tooltipHeaderRight,
 	.redToolTipBox .tooltipHeaderCenter{
-		background-image: url(../../images/tooltip_new_red.png);
+		background-image: url(/images/tooltip_new_red.png);
 	}
 
 /* End Edit 05/16/2011 */

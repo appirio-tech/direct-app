@@ -11,6 +11,9 @@
   -  
   - Version 1.2 (Release Assembly - TopCoder Cockpit Asset View Release 4 - Bug Fixes)
   - - Hide the Upload save details button by default, only display it when the uploads are finished
+  -
+  - Version 1.3 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Use new font "Source Sans Pro" for the page
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -23,6 +26,7 @@
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
@@ -254,8 +258,8 @@
                                         <div class="sectionHeaderR">
                                             <div class="sectionHeaderM">
                                                 <div class="uploadSucess">
-                                                    <a class="button6 btnSaveDetails" href="javascript:"><span class="left"><span class="right">SAVE DETAILS</span></span></a>
-                                                    <a class="button7" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="left"><span class="right">DISCARD</span></span></a>
+                                                    <a class="button6 newButtonGreen btnSaveDetails" href="javascript:"><span class="left"><span class="right">SAVE DETAILS</span></span></a>
+                                                    <a class="button7 newButtonOrange" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="left"><span class="right">DISCARD</span></span></a>
                                                     <p>All Files have been successfully uploaded</p>
                                                 </div>
                                                 <!-- End allFileProcessBar -->
@@ -355,7 +359,7 @@
 
                                 <div class="uploadButtonBox">
                                     <div class="uploadSucess" style="display: none">
-                                        <a class="button6 btnSaveDetails" href="javascript:"><span class="left"><span class="right">SAVE DETAILS</span></span></a>
+                                        <a class="button6 newButtonGreen btnSaveDetails" href="javascript:"><span class="left"><span class="right">SAVE DETAILS</span></span></a>
                                         <a class="button7" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>"><span class="left"><span class="right">DISCARD</span></span></a>
                                     </div>
                                 </div>

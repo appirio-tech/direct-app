@@ -179,7 +179,7 @@
         <h3><span class="icon">General Information</span>
             <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active' || #contestStatus eq 'Completed'">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" alt="edit" src="/images/edit-icon.png"/> </a>
             </s:if>
         </h3>
 
@@ -261,7 +261,7 @@
     <div class="addNewContest editPanel">
         <h3>
             <span class="icon">General Information</span>
-            <a href="javascript:" class="editLink"> <img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <a href="javascript:" class="editLink"> <img class="edit_type" alt="edit" src="/images/edit-icon.png"/></a>
         </h3>
 
         <div class="editPanelMask">
@@ -381,7 +381,7 @@
     <div class="caption_det_prize">
         <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" style="padding-top:20px; padding-right:8px" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" style="padding-top:20px; padding-right:8px" alt="edit" src="/images/edit-icon.png"/> </a>
          </s:if>
         <div style="height:30px">
             <h2>Prizes </h2>
@@ -470,7 +470,7 @@
             <span class="icon">Schedule</span>
             <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" alt="edit" src="/images/edit-icon.png"/> </a>
             </if:isEditable>
         </h3>
 
@@ -493,7 +493,6 @@
     <div class="schedule editPanel">
         <h3>
             <span class="icon">Schedule</span>
-            <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a>
         </h3>
 
         <div class="editPanelMask">
@@ -528,7 +527,7 @@
             <span class="icon">Description that you want everyone to see</span>
             <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" alt="edit" src="/images/edit-icon.png"/> </a>
             </s:if>
         </h3>
 
@@ -539,7 +538,6 @@
     <div class="description editPanel">
         <h3>
             <span class="icon">Enter a description that you want everyone to see</span>
-            <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a>
         </h3>
 
         <div class="editPanelMask">
@@ -564,7 +562,7 @@
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
             <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" alt="edit" src="/images/edit-icon.png"/> </a>
             </s:if>
         </h3>
 
@@ -575,7 +573,6 @@
     <div class="description editPanel">
         <h3>
             <span class="icon">Enter a description that is only viewable to copilots that register for this posting</span>
-            <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a></h3>
 
         <div class="editPanelMask">
             <div class="textarea">
@@ -601,7 +598,7 @@
             <span class="icon">Files</span>
             <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
-                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+                    <img class="edit_type" alt="edit" src="/images/edit-icon.png"/> </a>
             </s:if>
         </h3>
 
@@ -623,7 +620,6 @@
     <div class="fileUpload editPanel">
         <h3>
             <span class="icon">Files (20MB maximum)</span>
-            <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a>
         </h3>
 
         <div class="editPanelMask">

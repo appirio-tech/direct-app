@@ -1,8 +1,8 @@
 <%--
   - Author: GreatKevin, TCSASSEMLBER
   -
-  - Version: 1.3
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project tasks view.
   -
@@ -16,6 +16,8 @@
   - Version 1.3 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Move the beta notification out of the bread crumb area
   -
+  - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Rebranding the project tasks page
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -559,7 +561,7 @@
             <option value="0">Task List Name</option>
             <option value="1">Due Date</option>
         </select>
-        <a class="buttonRed1 fRight addTaskList jsAddTaskList" href="javascript:;"><span><i></i>ADD A TASK LIST</span></a>
+        <a class="addBtn fRight addTaskList jsAddTaskList" href="javascript:;"><span>ADD A TASK LIST</span></a>
     </div>
     <div class="corner cornerTl"></div>
     <div class="corner cornerTr"></div>

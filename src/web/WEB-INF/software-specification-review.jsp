@@ -213,7 +213,7 @@
                                                                                         <div class="old_comment">
                                                                                             <c:if test="${commentBy eq userHandle}">
                                                                                                 <a href="javascript:;">
-                                                                                                    <img src="/images/edit.png" alt="Edit comment" class="sr_editcomment">
+                                                                                                    <img src="/images/edit-icon.png" alt="Edit comment" class="sr_editcomment">
                                                                                                 </a>
                                                                                             </c:if>
                                                                                             <p>

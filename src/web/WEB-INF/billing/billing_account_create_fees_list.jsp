@@ -218,9 +218,9 @@
                                     <br/><br/>
 
                                     <p style="float:right;"><s:if test="%{formData.contestFees!=null}"><s:submit
-                                            value="Submit"/> &nbsp; </s:if>
+                                            value="Submit" cssClass="newButtonGreen"/> &nbsp; </s:if>
                                         <s:submit action="cancelFeesManagement" value="Cancel"
-                                                  onclick="form.onsubmit=null"/></p>
+                                                  onclick="form.onsubmit=null" cssClass="newButtonOrange"/></p>
                                     </s:form>
 
                                 </div>

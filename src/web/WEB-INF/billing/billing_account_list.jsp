@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141
-  - Version: 1.1
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, TCSASSEMBLER
+  - Version: 1.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
   - Initialized the page functions.
@@ -11,6 +11,9 @@
   - 
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  -
+  - Version 1.3 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Update the header for rebranding
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,8 +24,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="../includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="project_fee"/>
-	<jsp:include page="../includes/paginationSetup.jsp"/>
+    <ui:adminPageType tab="contestFee"/>
+    <jsp:include page="../includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
     <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>

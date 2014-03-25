@@ -36,27 +36,27 @@
 	<table class="overviewData" cellpadding="0" cellspacing="0">
 		<tr>
 			<th>Challenge Name :</th>
-			<td><span id="rswContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rswContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Project Name :</th>
-			<td><span id="rswProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rswProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Billing Account :</th>
-			<td><span id="rswBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rswBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
             <th>Round Type :</th>
-            <td><span id="rswRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+            <td><span id="rswRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
 		<tr>
 			<th>Start :</th>
-			<td><span id="rswStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rswStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr id="rswCheckpointTR">
             <th>Checkpoint End :</th>
-            <td><span id="rswCheckpointDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+            <td><span id="rswCheckpointDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
 	</table>
 </div>
@@ -66,10 +66,10 @@
 <div class="contentList previewMask">
 	<dl>
 		<dt>Detailed Requirements :</dt>
-		<dd><span id="rswDetailedRequirements"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+		<dd><span id="rswDetailedRequirements"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
 		<dt>Software Guidelines :</dt>
-		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->
@@ -83,7 +83,7 @@
 	<div class="cbox" id="swCboxFiles">		
 		<dl id="swDocUploadList">
 		</dl>                      
-    <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>		
+    <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
 </div>
 <!-- end #cboxFiles -->
                   
@@ -102,7 +102,7 @@
             <span class="dw">$</span>
             <span class="numberDor"><span id="rswSecondPlaceCost"></span></span>
         </span>
-        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
+        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
     </div>    
 </div>
 <!-- end .prizes -->
@@ -118,7 +118,7 @@
         <strong>for each submission up to</strong>
         <span class="numberDor" id="rswMPrizesNumberOfSubmissions"></span>
         
-        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>
+        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
     </div>
 </div>
 <!-- end .mPrizes -->

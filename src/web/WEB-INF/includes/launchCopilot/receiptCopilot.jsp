@@ -61,7 +61,6 @@
     
 </div>
 <!-- end .contestDetails -->
-<hr class="dualDivider" />
 
 <div class="bottom-review" id="contestDetailLinkDiv">
     <a href="#" class="button"></a>

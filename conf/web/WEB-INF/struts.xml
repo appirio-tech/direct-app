@@ -185,7 +185,7 @@
                 <param name="namespace">enterpriseDashboard</param>
             </result>
             <result name="forward" type="redirect">${forwardUrl}</result>
-            <result name="input">/WEB-INF/old_index.jsp</result>
+            <result name="input">/WEB-INF/index.jsp</result>
         </action>
 
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">

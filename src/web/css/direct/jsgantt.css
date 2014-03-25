@@ -1,6 +1,5 @@
 /** CSS for the jsgantt game plan **/
 .gantt {
-    font-family: tahoma, arial, verdana;
     font-size: 10px;
 }
 
@@ -178,7 +177,12 @@ DIV.scroll2 {
     PADDING-BOTTOM: 0px;
     WIDTH: 605px;
     PADDING-TOP: 0px;
-    BACKGROUND-COLOR: #ffffff
+    BACKGROUND-COLOR: #ffffff;
+}
+
+body {
+    font-size: 12px !important;
+    color: #333;
 }
 
 .completedHeader {

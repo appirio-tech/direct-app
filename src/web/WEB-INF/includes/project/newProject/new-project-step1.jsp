@@ -105,7 +105,7 @@ own project, and will not be shown to TopCoder members.
                        ">
                     </a>
                     <label>Project Billing Account<span class="red">*</span></label>
-                    <select id="projectBillingAccount">
+                    <select id="projectBillingAccount" style="float:left">
                         <option value="-1">--Please select a billing account--</option>
                         <option value="0">I don't have a billing account</option>
                         <s:iterator value="availableBillingAccounts">

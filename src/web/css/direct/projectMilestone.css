@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * Used for the project management pages.
  *
@@ -10,39 +10,50 @@
  *
  * Version 1.2 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
  * - Update the milestone list view page to display contest associations with the milestones
+ *
+ * Version 1.3 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the project milestone page.
  */
 .projectMilestoneListViewPage {
     min-width: 1024px !important;
 }
 
 a.grayButton {
-    background: url(/images/gray-button.png) no-repeat left top;
     display: inline-block;
-    padding-left: 5px;
+    padding: 0 5px;
     text-decoration: none;
+
+    height: 25px;
+    line-height: 25px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 2px;
+    behavior: url(/css/PIE.htc);
+    color: #666666;
+
 }
 
+.addMilestonePopup .popupMask a.grayButton:hover{
+    background:#ebebeb;
+}
+.addMilestonePopup .popupMask a.grayButton:active{
+    background:#ff8b03;
+    border:1px solid #ff8b04;
+}
+
+
 a.grayButton .buttonMask {
-    background: url(/images/gray-button.png) no-repeat right -108px;
-    padding-right: 5px;
-    display: inline-block;
-    cursor: pointer;
+    background: none;
 }
 
 a.grayButton .text {
-    background: url(/images/gray-button.png) repeat-x left -54px;
-    display: inline-block;
-    height: 27px;
-    line-height: 25px;
-    color: #333;
-    font-size: 12px;
-    text-align: center;
-    padding: 0 5px;
-    cursor: pointer;
+
+    background: none;
 }
 
-a.grayButton .text .plus {
-    background: url(/images/plus-icon.png) no-repeat left 8px;
+a.grayButton .text .plus,
+a.grayButton:hover .text .plus {
+    background: url(../../images/plus-icon.png) no-repeat left 8px;
     display: inline-block;
     height: 27px;
     line-height: 25px;
@@ -51,17 +62,19 @@ a.grayButton .text .plus {
 }
 
 a.grayButton:hover {
-    background-position: 0 -27px;
+    background:#ebebeb;
     text-decoration: none;
 }
+a.grayButton:active {
+    background:#ff8b03;
+    border:1px solid #ff8b04;
+    color: #fffffe;
+}
+a.grayButton:active .text .plus{
+    background-image: url(../../images/plus-icon-active.png);
 
-a.grayButton:hover .buttonMask {
-    background-position: right -135px;
 }
 
-a.grayButton:hover .text {
-    background-position: 0 -81px;
-}
 
 /* .milestoneManage */
 .milestoneManage {
@@ -96,12 +109,12 @@ a.grayButton:hover .text {
 }
 
 .milestoneManage .topLine .viewBtns a.listViewBtn {
-    background: url("/images/left-view-button.gif") no-repeat scroll left -21px transparent;
-    color: #333333;
+    background: url("/images/left-view-button.gif") no-repeat scroll left 0 transparent;
+    color: #fffffe;
     float: left;
     font-size: 11px;
-    height: 21px;
-    line-height: 19px;
+    height: 23px;
+    line-height: 20px;
     padding-left: 8px;
     text-decoration: none;
     width: 74px;
@@ -111,38 +124,38 @@ a.grayButton:hover .text {
     background: url("/images/list-icon.gif") no-repeat scroll left center transparent;
     cursor: pointer;
     display: inline-block;
-    padding-left: 13px;
+    padding-left: 16px;
 }
 
 .milestoneManage .topLine .viewBtns a.calendarViewBtn {
-    background: url("/images/right-view-button.gif") no-repeat scroll left -21px transparent;
-    color: #333333;
+    background: url("/images/right-view-button.gif") no-repeat scroll left 0px transparent;
+    color: #fffffe;
     float: left;
     font-size: 11px;
-    height: 21px;
-    line-height: 19px;
+    height: 23px;
+    line-height: 20px;
     padding-left: 8px;
     text-decoration: none;
     width: 67px;
 }
 
 .milestoneManage .topLine .viewBtns a.calendarViewBtn span {
-    background: url("/images/calendar-icon.gif") no-repeat scroll left center transparent;
+    background: url("/images/icon_small_calendar.png") no-repeat scroll left center transparent;
     cursor: pointer;
     display: inline-block;
-    padding-left: 13px;
+    padding-left: 16px;
 }
 
 .milestoneManage .topLine .viewBtns a:hover {
-    background-position: 0 -42px;
+    background-position: 0 -46px;
 }
 
 .milestoneManage .topLine .viewBtns a.active {
-    background-position: 0 0;
+    background-position: 0 -23px;
 }
 
 .milestoneManage .topLine .viewBtns a.active:hover {
-    background-position: 0 0;
+    background-position: 0 -23px;
 }
 
 .milestoneManage p.notes {
@@ -158,74 +171,77 @@ a.grayButton:hover .text {
 }
 
 .milestoneManage .milestoneList dt {
-    border-bottom: 3px solid #aa0005;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .milestoneManage .milestoneList.upcoming dt {
-    border-bottom: 3px solid #ff9900;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .milestoneManage .milestoneList.completed dt {
-    border-bottom: 3px solid #2d8d00;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .milestoneManage .milestoneList dt .tabL {
-    background: url(/images/red-tab.png) no-repeat 0 0;
+    background: #CC0000;
     padding-left: 4px;
+    border: 1px solid #e7e7e7;
+    border-bottom: none;
     display: inline-block;
 }
 
 .milestoneManage .milestoneList dt .tabR {
-    background: url(/images/red-tab.png) no-repeat right -58px;
+    background: #CC0000;
     padding-right: 4px;
     display: inline-block;
 
 }
 
 .milestoneManage .milestoneList dt .tabR span {
-    background: url(/images/red-tab.png) repeat-x 0 -29px;
+    background: #CC0000;
     display: inline-block;
-    height: 29px;
-    line-height: 29px;
+    height: 42px;
+    line-height: 42px;
+    width: 180px;
+    text-align:center;
     color: #fff;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 17px;
     padding: 0 9px;
 }
 
 .milestoneManage .milestoneList.upcoming dt .tabL,
 .milestoneManage .milestoneList.upcoming dt .tabR,
 .milestoneManage .milestoneList.upcoming dt .tabR span {
-    background-image: url(/images/yellow-tab.png);
+    background: #ff8a00;
 }
 
 .milestoneManage .milestoneList.completed dt .tabL,
 .milestoneManage .milestoneList.completed dt .tabR,
 .milestoneManage .milestoneList.completed dt .tabR span {
-    background-image: url(/images/green-tab.png);
+    background:#80b728;
 }
 
 .milestoneManage .milestoneList dd {
     position: relative;
     padding: 13px 0;
-    border-bottom: 1px solid #a9acae;
+    border-bottom: 1px solid #e8e8e8;
     height: 100%;
 }
 
 .milestoneManage .milestoneList dd .date {
     position: absolute;
     right: 0;
-    top: 0; 
+    top: 0;
 }
 
 .milestoneManage .milestoneList dd .project {
-    padding: 0 112px 0 0; 
+    padding: 0 112px 0 0;
     position:relative;
 }
 
 .milestoneManage .milestoneList dd .projectS {
     overflow: hidden;
-    font-size:11px;
+    font-size:12px;
     color:#666; 
 }
 .milestoneManage .milestoneList dd .projectS p{
@@ -270,18 +286,15 @@ a.grayButton:hover .text {
 
 .milestoneManage .milestoneList dd .project .projectT a {
     float: left;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .milestoneManage .milestoneList dd .project .projectD {
-    font-size: 11px;
+    font-size: 12px;
     color: #666;
     margin:10px 0 0;
     overflow:hidden;
     height:14px;
-}
-.milestoneManage .milestoneList dd.expand .project .projectD{
-    height:auto;   
 }
 
 .milestoneManage .milestoneList dd .project .projectD a {
@@ -289,21 +302,21 @@ a.grayButton:hover .text {
     text-decoration: underline;
 }
 
-.milestoneManage .milestoneList dd a:hover {
+.milestoneManage .milestoneList dd .project .projectD a:hover {
     text-decoration: none;
 }
 
 .milestoneManage .milestoneList dd .actions {
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 28px;
-    width: 65px;
+    width: 68px;
 }
 
 .milestoneManage .milestoneList dd .actions a {
     display: inline-block;
     line-height: 14px;
-    color: #333;
+    color: #ff8a00;
     font-size: 11px;
     text-decoration: underline;
     padding-left: 20px;
@@ -324,7 +337,7 @@ a.grayButton:hover .text {
      
 .milestoneManage .milestoneList dd table {
     width:100%;
-    font-size:11px;
+    font-size:12px;
     display:none;
     margin-top:10px;
 }
@@ -397,7 +410,7 @@ a.grayButton:hover .text {
 
 .multiMilestones .topLine a.button6 span.right {
     width: 68px;
-    padding: 4px 10px 0;
+    padding: 0 10px ;
     text-align: center;
 }
 
@@ -422,7 +435,7 @@ a.grayButton:hover .text {
     width: 92%;
     padding: 0 5px;
     font-size: 12px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     color: #333;
 }
 
@@ -450,7 +463,7 @@ a.grayButton:hover .text {
     min-width: 146px;
     font-size: 11px;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 .multiMilestones table td .invalid {
@@ -479,7 +492,7 @@ a.grayButton:hover .text {
 
 .multiMilestones .bottomLine a.button6 span.right {
     width: 68px;
-    padding: 4px 10px 0;
+    padding: 0 10px;
     text-align: center;
 }
 
@@ -519,11 +532,36 @@ a.grayButton:hover .text {
     padding-left: 1px;
 }
 
-.addMilestonePopup .popupMask a.grayButton span.text {
+.addMilestonePopup .popupMask a.grayButton {
     width: 127px;
     font-size: 11px;
     font-weight: bold;
-    color: #d90303;
+
+    height: 25px;
+    line-height: 25px;
+    background: #fff;
+    background-image:none;
+    border-bottom: 1px solid #e7e7e7;
+    border-radius: 2px;
+    behavior: url(/css/PIE.htc);
+    color: #666666;
+    text-align: center;
+
+}
+
+.addMilestonePopup .popupMask a.grayButton:hover{
+    background:#ebebeb;
+}
+.addMilestonePopup .popupMask a.grayButton:active{
+    background:#ff8b03;
+    border:1px solid #ff8b04;
+    color: #fffffe;
+}
+
+
+.addMilestonePopup .popupMask a.grayButton span.text {
+    background: none;
+
 }
 
 .addMilestonePopup .arrow {
@@ -588,22 +626,23 @@ a.grayButton:hover .text {
 
 /* modal */
 .newOutLay input.text {
-    border: 1px solid #a8abad;
+    border: 1px solid #e7e7e7;
     height: 22px;
     padding: 0 5px;
     color: #333;
     font-size: 12px;
     width: 338px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 .newOutLay textarea {
-    border: 1px solid #a8abad;
+    border: 1px solid #e7e7e7;
     padding-left: 5px;
     color: #333;
+    border-radius: 4px;
     font-size: 12px;
     width: 343px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     overflow: auto;
     height: 46px;
     text-align: left;
@@ -633,7 +672,7 @@ a.grayButton:hover .text {
     font-size: 11px;
     width: 196px;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 
 #new-modal .newOutLay .modalHeader .modalHeaderCenter {
@@ -721,7 +760,6 @@ a.grayButton:hover .text {
 
 #editMilestoneModal .buttonArea .button6 span.right,
 #addMilestoneModal .buttonArea .button6 span.right {
-    padding: 4px 0 0;
     text-align: center;
 }
 
@@ -762,7 +800,6 @@ a.grayButton:hover .text {
 }
 
 #removeMilestoneModal .buttonArea .button6 span.right {
-    padding: 4px 0 0;
     text-align: center;
 }
 
@@ -772,7 +809,7 @@ a.grayButton:hover .text {
 }
 
 .milestoneCalView table.fc-header {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif !important;
 }
 
 .milestoneCalView .fc-event a {
@@ -784,7 +821,7 @@ a.grayButton:hover .text {
 }
 
 .milestoneCalView .fc-event-title {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     color: #333;
 }

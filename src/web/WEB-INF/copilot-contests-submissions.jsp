@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141, GreatKevin
-  - Version: 2.4
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141, GreatKevin, TCSASSEMBLER
+  - Version: 2.5
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - Add new button to allow user not choose the 2nd place winner of copilot posting contest when review.
@@ -30,6 +30,9 @@
   - Version 2.4 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
   - - Add esitmates data for the copilot submissions
   -
+  - Version 2.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
+  -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
 --%>
@@ -50,6 +53,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
@@ -191,7 +195,7 @@
                                                     <a href="<s:url action='downloadAllCopilotPostingSubmissions' namespace='/copilot'/>?projectId=${param.projectId}" class="download link">Download all Submissions</a>
                                                 </div>
                                                 <div class="fRight">
-                                                    <a class="btn btn-compare"
+                                                    <a class="btn btn-compare newButtonGreen"
                                                        href="javascript:;"><span class="bRt"> <span
                                                             class="bMid">COMPARE COPILOTS</span></span></a>
 												<span class="switch">
@@ -265,9 +269,9 @@
 
                                                     <s:iterator value="copilotSubmissions">
                                                         <tr class="<c:choose><c:when test="${userId eq firstPlaceWinner.id}">rowSelCP</c:when><c:when test="${userId eq secondPlaceWinner.id}">rowSelRUP</c:when></c:choose>">
-                                                            <input type="hidden" name="submissionId" value="${submissionId}"/>
-                                                            <input type="hidden" name="profileId" value="${copilotProfileId}"/>
                                                             <td class="tdCopilot">
+                                                                <input type="hidden" name="submissionId" value="${submissionId}"/>
+                                                                <input type="hidden" name="profileId" value="${copilotProfileId}"/>
                                                                 <div class="colLt">
 
                                                                     <s:if test="imagePath == null || imagePath.length == 0">

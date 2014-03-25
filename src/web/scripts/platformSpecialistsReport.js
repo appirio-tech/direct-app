@@ -1,12 +1,15 @@
 /**
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for Platform Specialist Report
  *
  * Version 1.0 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph)
  *
+ * Version 1.1 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+ * - Handle the case when there is no data returned
+ *
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1
  */
 
 $(document).ready(function(){
@@ -262,6 +265,8 @@ function renderPlatformSpecialistsReport() {
     }
 
     if(requestData == null) {
+        $(".ajaxTableLoader").hide();
+        $("#loadingTable").hide();
         return;
     }
 
@@ -433,14 +438,18 @@ function getRequest() {
             headerText = options.length + " SELECTED";
         } else if (options.length == 1 ) {
             headerText = options.parent().text();
+        } else {
+            return null;
         }
     } else {
         request.userIds = $("#platformSpecialist").val();
 
-        if(request.userIds.length > 1) {
+        if(request.userIds && request.userIds.length > 1) {
             headerText = request.userIds.length + " SELECTED";
-        } else if (request.userIds.length == 1 ) {
+        } else if (request.userIds && request.userIds.length == 1 ) {
             headerText = $("#platformSpecialist option:selected").text();
+        } else {
+            return null;
         }
     }
 

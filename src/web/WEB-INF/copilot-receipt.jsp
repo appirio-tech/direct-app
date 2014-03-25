@@ -57,8 +57,8 @@
                             </div>
                             <!-- End .currentPage -->
 
-                            <div id="copilotsIntroduction">
-                                <div class="orderReview">
+                            <div>
+                                <div>
 
                                     <div class="myCopilotsContests">
                                         <span class="introductionHeadIcon">
@@ -79,7 +79,7 @@
                                             <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
                             <div><div>
 
-                            <div class="container2Content">
+                            <div class="container2Content" style="background: #FFFFFF">
                                 <jsp:include page="includes/contest/receiptTab.jsp"/>
                             </div><!-- End .container2Content_det -->
 

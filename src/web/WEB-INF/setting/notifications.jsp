@@ -1,10 +1,14 @@
 <%--
   - Author: TCSASSEMBLER
+  -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   -- Version 1.1 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to admin
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove th uneeded corners in div and update the button style
   -
   - Description: This page renders the notifications setting page.
 --%>
@@ -89,10 +93,7 @@
                 </span>
                 <div class="clearFix"></div>
             </div>
-            <span class="corner tl"></span>
-            <span class="corner tr"></span>
-            <span class="corner bl"></span>
-            <span class="corner br"></span>
+
         </div>
     </div>
     <%--<div class="select">--%>
@@ -337,7 +338,7 @@
 
 
                         <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
-                            <a href="javascript:notifications.update();" class="button8" style="margin-left: 10px;">
+                            <a href="javascript:notifications.update();" class="button6" style="margin-left: 10px;">
                                                                         <span class="left">
                                                                             <span class="right">SAVE NOTIFICATIONS</span>
                                                                         </span>

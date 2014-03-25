@@ -1,10 +1,13 @@
 <%--
   - Author: Ghost_141, TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - Fix multiple bugs.
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   - 
   - Description: The page for selecting copilot.
   - Since: Release Assembly - TC Direct Select From Copilot Pool Assembly
@@ -116,19 +119,7 @@
                                             <div class="pageArea" id="pagingDiv"></div>
                                         </div>
                                     	<!-- End .BottomBar -->
-                                      
-                                        <!-- corner -->
-                                        <div class="corner white tl"></div>
-                                        <div class="corner white tr"></div>
-                                        <div class="corner bl"></div>
-                                        <div class="corner br"></div>
-                                        
-                                        <div class="bottomCopyArea hide">
-                                            <div class="corner white tl"></div>
-                                            <div class="corner white tr"></div>
-                                            <div class="corner bl"></div>
-                                            <div class="corner br"></div>
-                                        </div>    
+
                                     </div>
 									
                                 </div>
@@ -240,7 +231,7 @@
 
             <div class="modalCommandBox">
                 <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC"
-                                                                                   onclick="addNewProject();">YES</span></span></a>
+                                                                                   onclick="addNewProject();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></a>
                 <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
                    onclick="modalCloseAddNewProject();"><span class="btnR"><span
                         class="btnC">CANCEL</span></span></a>

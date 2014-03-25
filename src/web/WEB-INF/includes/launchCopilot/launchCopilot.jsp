@@ -87,7 +87,7 @@
                     <label id="billingAccountEdit" class="textValue"></label>
                 </li>
             </ul>
-            <a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a>
+            <a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a>
         </div> 
     </div>
 </div>
@@ -123,7 +123,7 @@
     </div>
     
     <div class="infoPanel scheduleInfo hide"> 
-        <h3><span class="icon">Schedule</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+        <h3><span class="icon">Schedule</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a></h3>
         <div class="infoPanelMask">
             <ul>
                 <li>
@@ -158,7 +158,7 @@
     </div>
     
      <div class="descriptionInfo hide htmlDescription">
-            <h3><span class="icon">Description that you want everyone to see</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+            <h3><span class="icon">Description that you want everyone to see</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a></h3>
             <div class="infoPanelMask">
                 <p id="allDescriptionEdit"></p>
             </div> 
@@ -188,7 +188,7 @@
     </div>
     
     <div class="htmlDescription descriptionInfo hide">
-            <h3><span class="icon">Description that is only viewable to copilots that register for this posting</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+            <h3><span class="icon">Description that is only viewable to copilots that register for this posting</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a></h3>
             <div class="infoPanelMask">
                 <p id="privateDescriptionEdit"></p>
             </div> 
@@ -235,7 +235,7 @@
     </div>
 
     <div class="infoPanel descriptionInfo hide">
-        <h3><span class="icon">Challenge Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+        <h3><span class="icon">Challenge Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a></h3>
         <div class="infoPanelMask">
             <table class="prizesTable">
             <tbody><tr>
@@ -287,7 +287,7 @@
     </div>
     
     <div class="infoPanel fileuploadInfo hide">
-         <h3><span class="icon">File Upload</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+         <h3><span class="icon">File Upload</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit-icon.png" /></a></h3>
          <div class="infoPanelMask">   
             <table id="fileUploadTableEdit">
             </table> 

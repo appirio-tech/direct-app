@@ -2030,7 +2030,7 @@
 <div class="popups">
     <div class="expandViewPopup hide" id="contestDViewPopup">
         <div class="close">
-            <a href="javascript:void(0)" id="contestDViewClose"></a>.
+            <a href="javascript:void(0)" id="contestDViewClose"></a>
         </div>
         <div class="popContent">
             <h2>Cost Details</h2>

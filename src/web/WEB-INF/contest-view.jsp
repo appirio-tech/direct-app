@@ -1,7 +1,7 @@
 <%--
   - Author: BeBetter, isv, tangzx, Blues, Ghost_141, TCSASSEMBLER
-  - Version: 1.9
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 2.0
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
   -
@@ -31,6 +31,9 @@
   - 
   - Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Fix a text inconsistency bug.
+  -
+  - Version 2.0 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Rebranding the page to use new buttons.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -251,20 +254,20 @@
                                                 <td><span
                                                         class="<s:property value="status.shortName"/>"><s:property
                                                         value="status.name"/></span></td>
-                                                <td class="last">
+                                                <td class="last" style="text-align: left; padding-left:16px">
                                                     <s:if test="contestType.name == 'Copilot Posting'">
-                                                        <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                        <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="buttonEdit">View/Edit</a>
                                                     </s:if>
                                                     <s:if test="contestType.name != 'Copilot Posting'">
-                                                        <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                        <a href="contest/detail?projectId=${contest.id}" class="buttonEdit">View/Edit</a>
                                                      </s:if>
                                                      <%// repost if it is software contest and it is cancelled status %>
                                                      <s:if test="!isStudio && status.name.startsWith('Cancelled')">
-                                                        <a href="javascript:repostHandler(${contest.id},${contest.project.id});" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">Repost</span></span></span></a>
+                                                        <a href="javascript:repostHandler(${contest.id},${contest.project.id});" class="buttonEdit">Repost</a>
                                                      </s:if>
                                                      <%// new version if it is component design/dev contest and it is completed status %>
                                                      <s:if test="(contestType.toString() == 'COMPONENT_DESIGN' || contestType.toString() == 'COMPONENT_DEVELOPMENT') && status.name == 'Completed'">
-                                                        <a href="javascript:newVersionHandler(${contest.id},${contest.project.id},<s:property value="contestType.toString() == 'COMPONENT_DESIGN'" />);" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">New Version</span></span></span></a>
+                                                        <a href="javascript:newVersionHandler(${contest.id},${contest.project.id},<s:property value="contestType.toString() == 'COMPONENT_DESIGN'" />);" class="buttonEdit">New Version</a>
                                                      </s:if>
                                                 </td>
                                             </tr>
@@ -307,7 +310,7 @@
                                                         class="<s:property value="contestLikeStatusClass"/>"><s:property
                                                         value="contestLikeStatus"/></span></td>
                                                 <td class="last">
-                                                     <a href="<s:property value='issueLink'/>" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                     <a href="<s:property value='issueLink'/>" class="buttonEdit">View/Edit</a>
                                                 </td>
                                             </tr>
                                         </s:iterator>

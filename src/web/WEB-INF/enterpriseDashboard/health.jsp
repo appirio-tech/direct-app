@@ -1,7 +1,12 @@
 <%--
   - Author: TCSASSEMLBER
+
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  -
   - Version: 1.0 (Release Assembly - TC Cockpit Enterprise Dashboard Projected Cost and Project Health Page)
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The project health page, it displays project financial health data
 --%>
@@ -59,7 +64,7 @@
                                         <div class="projectsHealthTitle">
                                             <h3>Projects Health</h3>
                                             <a href="javascript:;" class="icon"
-                                               rel="">!</a>
+                                               rel="Showing the overall projects Health of all projects">!</a>
                                         </div>
                                         <!-- title -->
 
@@ -102,9 +107,6 @@
                                             <!-- End .tableData -->
 
                                         </div>
-
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
 
                                     </div>
                                 </div>

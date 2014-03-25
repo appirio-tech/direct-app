@@ -1,12 +1,15 @@
 /*
   - Author: TCSASSEMBLER
   - Version: 1.1
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 Added this file
   -
   - Version 1.1 (Release Assembly - TopCoder Security Groups Release 3) changes:
   -   Updated to fixed the bugs in this assembly.
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - - Rebranding all the modal windows used
 */
 *{padding: 0; margin: 0;}
 #TB_window {
@@ -172,7 +175,8 @@ position: absolute;
 		width:360px !important;
 		height:211px !important;
 		border: none !important;
-		background: transparent url(../../images/specplan_window.gif) no-repeat top left !important;
+        border-radius: 4px;
+		background: #f6f6f6 !important;
 		text-align:center !important;
 		position:absolute;
 		overflow:hidden;
@@ -183,14 +187,10 @@ position: absolute;
 		width: 191px;
 		height: 25px;
 	}
-	.specrev-window a.review-now { background: url(../../images/specplan_btn_now.gif) no-repeat top left; }
-	.specrev-window a.review-later { background: url(../../images/specplan_btn_l8r.gif) no-repeat top left; }
-	.specrev-window a:hover {
-		background-position: 0 -25px;
-	}
 	.specrev-window h1 {
 		font-size: 19px !important;
 		margin: 25px 0 20px 0;
+        color: #666666;
 	}
 	.specrev-window p {
 		font-size: 12px;
@@ -257,53 +257,38 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalHeader {
-    background: url(../../images/modal-header.png) left top no-repeat;
+    background: #f1f1f1;
     padding-left: 8px;
     height: 36px;
 }
 
 #new-modal-window .outLay .modalHeader .modalHeaderRight {
-    background: url(../../images/modal-header.png) right -80px no-repeat;
+    background: #f1f1f1;
     padding-right: 8px;
 }
 
 #new-modal-window .outLay .modalHeader .modalHeaderCenter {
-    background: url(../../images/modal-header.png) left -40px repeat-x;
-    padding: 10px 0 10px 22px;
-    color: #000001;
-    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f1f1;
+    padding: 10px 0 10px 10px;
+    color: #666666;
+    border-bottom: 1px solid #e7e7e7;
     font-weight: bold;
-    height: 36px;
+    height: 26px;
 }
 
 #new-modal-window .outLay .modalHeader .modalHeaderCenter h2 {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 #new-modal-window .outLay .modalHeader.confirmation .modalHeaderCenter h2 {
     font-size: 14px;
 }
 
-#new-modal-window .outLay .modalFooter {
-    background: url(../../images/preloader-corner.png) left -24px no-repeat;
-    padding-left: 8px;
-}
-
-#new-modal-window .outLay .modalFooter .modalFooterRight {
-    background: url(../../images/preloader-corner.png) right -40px no-repeat;
-    padding-right: 8px;
-}
-
-#new-modal-window .outLay .modalFooter .modalFooterCenter {
-    background: url(../../images/preloader-corner.png) left -32px repeat-x;
-    padding-top: 8px;
-}
 
 #new-modal-window .outLay .modalBody {
-    border: 4px solid #000000;
     border-top-width: 0;
     border-bottom-width: 0;
-    background: #e6e6e6 url(../../images/modal-body-normal.png) left top repeat-x;
+    background:#ffffff;
     min-width: 352px;
     min-height: 10px;
     padding: 33px 0 0 0;
@@ -320,7 +305,7 @@ position: absolute;
     background: url(../../images/modal-notice.png) left center no-repeat;
     width: 241px;
     margin: 0 0 24px 19px;
-    padding: 0 25px 11px 66px;
+    padding: 20px 25px 11px 66px;
     min-height: 40px;
     list-style: none;
 }
@@ -358,7 +343,6 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody .modalContent li.single {
-    padding-top: 10px;
 }
 
 #new-modal-window .outLay .modalBody .modalContent.multiple li {
@@ -367,10 +351,11 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody .modalCommandBox {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #e7e7e7;
     padding: 16px 0 12px;
+    margin:0 4px;
     text-align: center;
-    height:25px;
+    height: 25px;
 }
 
 #new-modal-window .outLay .modalBody.confirmation .modalCommandBox,

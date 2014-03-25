@@ -1,7 +1,7 @@
 <%--
   - Author: Ghost_141, csy2012, TCSASSEMBER
-  - Version: 1.3
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for project metrics report including form and report data.
   -
@@ -15,6 +15,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to report
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -139,7 +142,6 @@
 
         <div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="6">
             <a class="button6 applyButton" href="javascript:;" id="reportMetricsReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
-            <div class="clearFix"></div>
         </div>
         <!-- end .applyButtonBox -->
         <s:if test="hasActionErrors()">

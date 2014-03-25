@@ -26,6 +26,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=210789" media="all" type="text/css"/>

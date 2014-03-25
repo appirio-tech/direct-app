@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: HTML header file linking to the CSS and javascript files. It is included by all the other JSP pages.
   -
@@ -19,12 +19,16 @@
   -
   - Version 1.3 (Module Assembly - TopCoder Cockpit Instant Search)
   - - Add css and js for the instant search feature
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Use new font "Source Sans Pro" for the page
 --%>
 <title>TopCoder Cockpit</title>
 
 <!-- Meta Tags -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
 <!-- External CSS -->
 <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
@@ -53,6 +57,7 @@
 <!--[if IE 9]>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
 <![endif]-->
+
 
 <!-- External javascript -->
 <script type="text/javascript">
@@ -90,3 +95,5 @@
 <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
 <script type="text/javascript" src="/scripts/instantSearch.js"></script>
 <script type="text/javascript" src="/scripts/intro.js"></script>
+<script type="text/javascript" src="/scripts/jquery.jqtransform.js" ></script>
+<link rel="stylesheet" href="/css/direct/jqtransform.css" media="all" type="text/css"/>

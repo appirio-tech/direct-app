@@ -1,15 +1,17 @@
 <%--
   - Author: xjtufreeman, Ghost_141, TCSASSEMBLER
-  - Version 1.2
+  - Version 1.3
   -
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
 
   - Version: 1.1 (TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
   - Added logic to display the project bugs.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   - Fix multiple bugs.
+  -
+  - Version 1.3 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Update the icons of project issues tracking page
   - 
   - Description: This page renders the project issue tracking view.
   -
@@ -75,7 +77,7 @@
                                             	<input type="checkbox" class="checkbox" /><label>View All Details</label>
                                             </div>
 
-                                            <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
+                                            <a class="lanchProjectBugRaceBtn button6 newButtonGreen btnAddNew" href="javascript:;">
                                                 <span class="left">
                                                     <span class="right">LAUNCH PROJECT RACE</span>
                                                 </span>
@@ -286,7 +288,7 @@
                                             	<input type="checkbox" class="checkbox" /><label>View All Details</label>
                                             </div>
 
-                                            <a class="lanchProjectBugRaceBtn button6 btnAddNew" href="javascript:;">
+                                            <a class="lanchProjectBugRaceBtn button6 newButtonGreen btnAddNew" href="javascript:;">
                                                 <span class="left">
                                                     <span class="right">LAUNCH PROJECT RACE</span>
                                                 </span>

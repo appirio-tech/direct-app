@@ -1,11 +1,14 @@
 <%--
-  - Author: GreatKevin
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 1)
   -
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Analysis 2)
   - - Add table view and volume view summary table.
+  -
+  - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: The analysis contests page of the new enterprise dashboard
 --%>
@@ -133,7 +136,7 @@
         <!-- End .column -->
         <div class="clear"></div>
 
-        <div class="button">
+        <div class="buttonContainer">
             <span class="errorMessage" style="padding-left: 20px"></span>
             <a href="javascript:;" id="filterApply" class="redButton"><span class="left"><span class="right">APPLY</span></span></a>
         </div>
@@ -468,12 +471,12 @@
             <th colspan="2">Duration (days)</th>
         </tr>
         <tr>
-            <th>Challenge</th>
-            <th>Market Avg</th>
-            <th>Challenge</th>
-            <th>Market Avg</th>
-            <th>Challenge</th>
-            <th>Market Avg</th>
+            <th class="smallTh">>Challenge</th>
+            <th class="smallTh">Market Avg</th>
+            <th class="smallTh">Challenge</th>
+            <th class="smallTh">Market Avg</th>
+            <th class="smallTh">Challenge</th>
+            <th class="smallTh">Market Avg</th>
         </tr>
         </thead>
         <tbody>
@@ -686,9 +689,6 @@
 <!-- End .volumeView -->
 
 </div>
-
-<div class="corner tl"></div>
-<div class="corner tr"></div>
 
 </div>
 

@@ -980,11 +980,11 @@ $(document).ready(function(){
 	}
 	
 	/*----------------- projects table hover --*/
-	$("table.project TR").mouseover(function(){
+	$("table.project tbody TR").mouseover(function(){
 			$(this).addClass("hover");
 	});
 	
-	$("table.project TR").mouseout(function(){
+	$("table.project tbody TR").mouseout(function(){
 			$(this).removeClass("hover");
 	});
 

@@ -1,7 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  -
   - Version: 1.0 (Module Assembly - TC Cockpit Platform Specialist Utilization Report and Graph)
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   -
   - Description: The TopCoder Platform Specialists Report
 --%>
@@ -110,9 +114,6 @@
                                             <!-- End .tableData -->
 
                                         </div>
-
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
 
                                     </div>
                                 </div>

@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TopCoder Cockpit Copilot Selection Update and Other Fixes Assembly)
   - - Adds new buttons for the new copilot posting winners pickup flow
@@ -11,6 +11,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
   - - Add esitmates data for the copilot submissions
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   -
   - Description: This page renders the copilot posting submissions comparison mode.
 --%>
@@ -31,6 +34,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />

@@ -1,7 +1,10 @@
 <%--
-  - Author: isv, flexme, minhu
+  - Author: isv, flexme, minhu, TCSASSEMBLER
   -
-  - Version 1.7 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes: 
+  - Version 1.8 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Use new font "Source Sans Pro" for the page
+  -
+  Version 1.7 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes:
   -   Added reference to studioFinalFix.css
   - Version 1.6 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
   -   Added wireframe-viewer.js if and only if the contest type is wireframe.
@@ -13,9 +16,9 @@
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.7
+  - Version: 1.8
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders HTML HEAD area to be included into Studio Submissions Grid, List and
   - Single views.
@@ -27,6 +30,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- External CSS -->
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
 <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/dashboard.css?v=214405" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css" />

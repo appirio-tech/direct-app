@@ -1,7 +1,7 @@
 <%--
-  - Author: tangzx, duxiaoyang, Ghost_141
-  - Version: 1.4
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: tangzx, duxiaoyang, Ghost_141, TCSASSEMBLER
+  - Version: 1.5
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: provide two ways to select a copilot.
   - Since: TC Direct - Launch Copilot Selection Contest assembly
@@ -17,6 +17,9 @@
   - 
   - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Fix multiple bugs.
+  -
+  - Version 1.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.topcoder.shared.util.ApplicationServer" %>
@@ -91,11 +94,7 @@
                                                     Copilots are paid per challenge based on outcomes, not hours.
                                                     <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">View More</a>
                                                 </p>
-                                                
-                                                <span class="corner tl"></span>
-                                                <span class="corner tr"></span>
-                                                <span class="corner bl"></span>
-                                                <span class="corner br"></span>
+
                                             </div>
                                             <!--End .grayTextArea-->
                                             
@@ -106,10 +105,7 @@
                                                     <strong>It is important to note</strong> that the Copilot is responsible for running challenges, but more importantly they are responsible for delivering the "product" to the customer. Many customers will not want to know the details of what challenges you are running. In fact, the concept of a challenge will not be important to them. They just want their product completed. So, it is the Copilot's responsibility to work with the customer at an appropriate level of detail.
                                                 </p>
                                                 
-                                                <span class="corner tl"></span>
-                                                <span class="corner tr"></span>
-                                                <span class="corner bl"></span>
-                                                <span class="corner br"></span>
+
                                             </div>
                                             <!--End .grayTextAreaCustom-->
                                             
@@ -117,8 +113,7 @@
                                         
                                         <div class="leftColumn">
                                             <div class="copilot-carousel">
-                                                <span class="corner tl"></span>
-                                                <span class="corner tr"></span>
+
                                                 <div class="carousel-content" id="copilotProfileCarouselDiv">
                                                     <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
                                                     <c:forEach var="profile" items="${profiles}" varStatus="varStatus">
@@ -158,7 +153,7 @@
 
 
                                                                     <div class="buttonArea">
-                                                                        <a href="${profileLink}" class="btnRed"> <span class="right"> <span class="middle">VIEW PROFILE</span> </span> </a>
+                                                                        <a href="${profileLink}" class="btnRed newButtonGreen"> <span class="right"> <span class="middle">VIEW PROFILE</span> </span> </a>
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.colRight -->
@@ -203,7 +198,7 @@
                                             <div class="item">
                                                
                                                 <div class="buttonArea">
-                                                    <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
+                                                    <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2 newButtonGreen">
                                                         <span class="left"><span class="right">ENGAGE THE COPILOTS</span></span>
                                                     </a>
                                                                              

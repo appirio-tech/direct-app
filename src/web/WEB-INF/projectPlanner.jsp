@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, TCSASSEMBLER
   -
   - Version: 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
   -
@@ -7,7 +7,10 @@
   - - Add bug race fee and bug race cost calculation to the project planner
   - - Add VM cost plan for the project planner
   -
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+  - Rebranding the project planner page
+  -
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project planner page.
   -
@@ -25,6 +28,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />

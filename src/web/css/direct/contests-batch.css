@@ -1,8 +1,19 @@
+/**
+ * Author: TCSASSEMBLER
+ *
+ * Version: 1.0 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Updated to rebranding the checkpoint submissions page
+ *
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+ *
+ * The CSS File contains CSS styles used for contests batch edit page.
+ */
 #area1 .batchTitle {
     font-size: 18px;
     padding-top: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #a9acae;
+    border-bottom: 1px solid #e7e7e7;
+    color: #666666;
 }
 
 #area1 .buttonBar {
@@ -20,7 +31,7 @@
     width: 100%;
     margin-top: 3px;
     padding-top: 14px;
-    border-top: 1px solid #a9acae;
+    border-top: 1px solid #e7e7e7;
 }
 
 #area1 .buttonBar a {
@@ -47,12 +58,17 @@
 #area1 .buttonBar a.remove {
     background: url("/images/remove-bascket.png") no-repeat;
     float: right;
+    color: #ff8a00;
     height: 13px;
     line-height: 13px;
     padding-left: 17px;
     font-size: 11px;
-    text-decoration: underline;
+    text-decoration: none;
     margin: 5px 5px 0;
+}
+#area1 .buttonBar a.remove:hover{
+    text-decoration: underline;
+
 }
 
 #area1 .buttonBar a.moreContest:hover {
@@ -71,6 +87,7 @@
     height: 20px;
     padding: 2px 3px;
     border: 1px solid #A8ABAD;
+    border-radius: 4px;
     margin: 0 5px;
     float: left;
 }
@@ -82,17 +99,19 @@
 #area1 .buttonBar div.postpone a.postponeBtn {
     float: left;
     background: url("/images/postpone-btn.png") no-repeat;
-    width: 81px;
-    height: 25px;
-    padding-left: 25px;
+    width: 105px;
+    height: 29px;
+    padding-left: 35px;
     display: inline-block;
-    font-size: 11px;
+    font-size: 13px;
+    color: #ffffff;
     text-decoration: none;
-    margin-top: 2px;
+    position: relative;
+    top: -2px;
 }
 
 #area1 .buttonBar div.postpone a.postponeBtn:hover {
-    background: url("/images/postpone-btn.png") no-repeat 0 -25px;
+    background: url("/images/postpone-btn.png") no-repeat 0 -29px;
 }
 
 #area1 .buttonBar div.postpone span.text {
@@ -114,8 +133,8 @@
     font-size: 11px;
     background: url("/images/note-icon.png") no-repeat;
     padding-left: 20px;
-    height: 14px;
-    line-height: 14px;
+    height: 16px;
+    line-height: 16px;
     display: block;
     margin-top: 8px;
 }
@@ -126,6 +145,7 @@
 
 #area1 #contestTable.editTable {
     padding-bottom: 5px;
+    border: none;
 }
 
 #area1 #contestTable thead tr td {
@@ -144,11 +164,12 @@
 }
 
 #area1 #contestTable tbody tr.selectRow td {
-    background: #f6f4d8;
+    background: #ffffdc;
 }
 
 #area1 #contestTable.editTable thead tr td {
     padding: 7px 0 0;
+    color: #666666;
 }
 
 #area1 #contestTable.editTable tbody tr td {
@@ -181,8 +202,10 @@
     padding: 0 5px;
     height: 23px;
     line-height: 23px;
-    border: 1px solid #a8abad;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
     float: left;
+    color: #666666;
 }
 
 #area1 #contestTable.editTable tr td input[type=checkbox] {

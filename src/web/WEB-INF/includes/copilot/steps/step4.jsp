@@ -39,7 +39,7 @@
             <div class="rowItem">
                 <div class="lineItem">
                     <label>Do you want to post this opportunity to the Copilots now?</label>
-                    <a href="javascript:;" class="red-button-big"><span class="right"><span class="middle">YES, POST NOW</span></span></a>
+                    <a href="javascript:;" class="red-button-big newButtonGreen"><span class="right"><span class="middle">YES, POST NOW</span></span></a>
                     <div class="clear"></div>
                 </div>
                 <div class="lineItem amountItem inputItem">
@@ -69,7 +69,7 @@
                 </div>
                 <div class="lineItem">
                     <label>Would you like to schedule it for a later date?</label>
-                    <a href="javascript:;" class="red-button-big"><span class="right"><span class="middle">YES, DO IT LATER</span></span></a>
+                    <a href="javascript:;" class="red-button-big newButtonGreen"><span class="right"><span class="middle">YES, DO IT LATER</span></span></a>
                     <div class="clear"></div>
                 </div>               
             

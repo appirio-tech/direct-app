@@ -1,6 +1,15 @@
+/*
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the project overview pages.
+ *
+ * Version 1.0 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the project overview page.
+ */
 .projectInforDiv {
     overflow: hidden;
-    background: url(/images/dashboard-table-bg.png) repeat-x left top;
+    background: #f1f1f1;
+    border: 1px solid #e7e7e7;
     margin-bottom: 20px;
     position: relative;
 }
@@ -18,7 +27,7 @@
     background: url(/images/icon-expand.png) no-repeat left center;
     text-decoration: none;
     font-size: 14px;
-    color: #ffffff;
+    color: #666666;
     padding-left: 30px;
     display: inline-block;
     font-weight: bold;
@@ -37,7 +46,8 @@
 }
 .projectInforDiv .exportProject a {
     background: url("/images/export-icon.png") no-repeat scroll 0 0 transparent;
-    color: #FFFFFF;
+    color: #666666;
+    
     display: block;
     font-size: 12px;
     line-height: 22px;
@@ -59,7 +69,7 @@
 
 .projectInforDiv .editProject a {
     background: url("/images/edit-project-icon.png") no-repeat scroll 0 0 transparent;
-    color: #FFFFFF;
+    color: #666666;
     display: block;
     font-size: 12px;
     line-height: 22px;
@@ -68,13 +78,11 @@
 
 .projectInformation {
     background: #fffffe;
-    border-left: 1px solid #a9acae;
-    border-right: 1px solid #a9acae;
-    border-bottom: 1px solid #a9acae;
 }
 
 .projectInformation h3 {
-    font-size: 12px;
+    color: #666666;
+    font-size: 13px;
     line-height: 18px;
 }
 
@@ -100,13 +108,13 @@
 
 .columeFirst .projectDescription p {
     width: 263px;
-    font-size: 11px;
+    font-size: 12px;
     color: #666666;
     line-height: 14px;
 }
 
 .columeFirst .projectDescription a {
-    font-size: 11px;
+    font-size: 12px;
     color: #666666;
 }
 
@@ -128,7 +136,7 @@
 }
 
 .columeSecond .projectType p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 18px;
     color: #666666;
 }
@@ -141,6 +149,7 @@
 .columeSecond .projectStatus h3 {
     width: 96px;
     float: left;
+    color: #666666;
     display: inline;
     line-height: 20px;
 }
@@ -148,6 +157,7 @@
 .columeSecond .projectStatus p {
     width: 99px;
     height: 20px;
+    color: #666666;
     float: left;
     display: inline;
     padding-left: 28px;
@@ -184,7 +194,7 @@
 }
 
 .columeSecond .projectTechnology p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 18px;
     color: #666666;
 }
@@ -205,7 +215,7 @@
     float: left;
     display: inline;
     padding-left: 20px;
-    font-size: 11px;
+    font-size: 12px;
     color: #666666;
     line-height: 18px;
     background-position: left center;
@@ -243,6 +253,7 @@
 }
 
 .columeThird .projectBudget h3 {
+    color: #666666;
     margin-bottom: 6px;
     padding-top: 2px;
     padding-left: 22px;
@@ -326,7 +337,7 @@
     height: auto;
     float: left;
     display: inline;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 22px;
     margin-left: 1px;
     padding-left: 18px;
@@ -377,6 +388,7 @@
 
 .columeForth .projectDuration h3 {
     margin-bottom: 6px;
+    color: #666666;
     padding-top: 2px;
     padding-left: 22px;
     line-height: 16px;
@@ -387,8 +399,8 @@
 .managersBox {
     width: 100%;
     padding: 8px 0 6px 0;
-    border-top: #d0d0d1 solid 1px;
-    background: #f5f5f5;
+    border-top: #e7e7e7 solid 1px;
+    background: #f1f1f1;
 }
 
 /* clientManagers */
@@ -506,6 +518,7 @@ td.contestActivities .leftLaunch {
 
 td.contestActivities .leftLaunch h3 {
     font-size: 12px;
+    color: #666666;
     line-height: 18px;
 }
 
@@ -515,7 +528,7 @@ td.contestActivities .leftLaunch p {
     display: inline;
     padding-left: 24px;
     margin-right: 20px;
-    font-size: 11px;
+    font-size: 12px;
     color: #ff0000;
     line-height: 18px;
     background-position: left center;
@@ -531,7 +544,7 @@ td.contestActivities .leftLaunch a {
     float: left;
     display: inline;
     padding-left: 16px;
-    font-size: 11px;
+    font-size: 12px;
     color: #666666;
     line-height: 18px;
     background: url(/images/view_icon.png) no-repeat left center;
@@ -603,13 +616,13 @@ td.contestActivities .completed .rightLaunch p a {
 }
 
 .notSetMessage {
-    font-size: 11px !important;
+    font-size: 12px !important;
     color:red !important;
 }
 
 .notSetMessage a {
     color: red !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     text-decoration:underline !important;
     float: none !important;
     padding-left: 0px !important;
@@ -662,7 +675,7 @@ td.contestActivities .completed .rightLaunch p a {
 }
 
 .managersBox .pRatings {
-    font-size: 11px;
+    font-size: 12px;
     padding-left: 10px;
     width: 263px;
     float: left;
@@ -707,7 +720,7 @@ td.contestActivities .completed .rightLaunch p a {
 .managersBox  .additionalInfo {
     float: left;
     padding: 4px 2px 6px 0;
-    font-size: 11px;
+    font-size: 12px;
     min-width: 200px;
 }
 
@@ -798,10 +811,10 @@ td.contestActivities .completed .rightLaunch p a {
     background: url(/images/edit-icon.png) no-repeat 0 2px;
     display: inline-block;
     line-height: 14px;
-    color: #ea0107 !important;
+    color: #ff8a00 !important;
     padding-left: 20px;
     margin-top: 4px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .projectEditLink:hover {
@@ -870,7 +883,7 @@ td.contestActivities .leftLaunch p {
     color: #FF0000;
     display: inline;
     float: left;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 18px;
     margin-right: 20px;
     padding-left: 24px;
@@ -885,7 +898,7 @@ td.contestActivities .leftLaunch a {
     color: #666666;
     display: inline;
     float: left;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 18px;
     padding-left: 16px;
     width: auto;
@@ -915,14 +928,12 @@ td.contestActivities .completed .rightLaunch p a {
     color: #00A900;
 }
 
+#projectActivities tbody td {
+    border: none;
+}
 
-#projectActivities tbody td{
-    border-top: 0px !important;
-    border-bottom: 1px !important;
-    border-left: 1px !important;
-    border-right: 1px !important;
-    border-style: solid !important;
-    border-color: #BDBDBD !important;
+#projectActivities {
+    border: none;
 }
 
 #projectStatistics {
@@ -936,8 +947,8 @@ td.contestActivities .completed .rightLaunch p a {
 
 /* Added for configuring forum popups */
 .projectForumButton {
-    background: none repeat scroll 0 0 #F5F5F5;
-    border-top: 1px solid #D0D0D1;
+    background: none repeat scroll 0 0 #f1f1f1;
+    border-top: 1px solid #e7e7e7;
     display: block;
     height: 40px;
     padding-top: 10px;
@@ -950,7 +961,7 @@ td.contestActivities .completed .rightLaunch p a {
 }
 
 a.configreButton {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .projectForumLeaderButton .configreButton {
@@ -989,14 +1000,14 @@ a.configreButton span {
 
 .toolTipContainer p.textBox {
     padding: 8px 5px 2px 10px;
-    font-size: 11px;
+    font-size: 12px;
     color: #333;
     text-decoration: none;
     font-family: Tahoma, Arial, Helvetica, sans-serif;
 }
 
 p.tooltipContent {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     padding: 2px 5px 2px 10px;
 }
@@ -1031,13 +1042,13 @@ p.tooltipContent {
 .buttonToolTipContainer p.textBox {
     color: #333333;
     font-family: Tahoma,Arial,Helvetica,sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     padding: 8px 5px 2px 10px;
     text-decoration: none;
 }
 
 .buttonToolTipContainer p.tooltipContent {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     padding: 2px 5px 2px 10px;
 }
@@ -1051,7 +1062,7 @@ p.tooltipContent {
 }
 
 table.projectForum {
-    border: 1px solid #A8ABAD;
+    border: 1px solid #e7e7e7;
     border-collapse: collapse;
     max-height: 500px;
     overflow: auto;
@@ -1059,25 +1070,25 @@ table.projectForum {
 }
 
 table.projectForum th {
-    background: url("/images/calendar_header.png") repeat-x scroll 0 0 transparent;
-    color: #FFFFFF;
-    font-size: 11px;
+    background: #f1f1f1;
+    color: #666;
+    font-size: 12px;
     height: 33px;
 }
 
 table.projectForum th.first {
-    border-left: 1px solid #37302D;
+    border-left: 1px solid #e7e7e7;
     width: 300px;
 }
 
 table.projectForum th.last {
-    border-right: 1px solid #37302D;
+    border-right: 1px solid #e7e7e7;
     width: 70px !important;
 }
 
 table.projectForum td {
     background-color: #FFFFFF;
-    border: 1px solid #A8ABAD;
+    border: 1px solid #e7e7e7;
     color: #333333;
     font-size: 12px;
     font-weight: normal;
@@ -1087,7 +1098,7 @@ table.projectForum td {
 }
 
 table.projectForum tr.applyForAll td {
-    background-color: #E8E8E8 !important;
+    background-color: #f1f1f1 !important;
 }
 
 table.projectForum td .downloadProfile {
@@ -1126,7 +1137,7 @@ table.projectForum td.last {
 
 table.projectForum td.checkbox {
     color: #333333;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     text-align: center;
 }
@@ -1157,7 +1168,6 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
 }
 
 #viewForumModal .buttonArea .button6 span.right {
-    padding: 4px 0 0;
     text-align: center;
 }
 
@@ -1251,12 +1261,16 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
     display: inline;
     float: right;
     font-family: Tahoma,Arial,Helvetica,sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 25px;
     margin-right: 12px;
     width: auto;
 }
 
+#newCopilotFeedbackModal textarea{
+    border:1px solid #e7e7e7;
+    border-radius: 4px;
+}
 .forumModelContent .row span.red {
     color: #FF0000;
 }
@@ -1300,7 +1314,7 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
 
 .forumModelContent .row .errmessage {
     color: #999999;
-    font-size: 11px;
+    font-size: 12px;
     height: 14px;
     margin-left: 157px;
     overflow: hidden;
@@ -1339,7 +1353,6 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
 }
 
 #createForumModalNew .buttonArea .button6 span.right {
-    padding: 4px 0 0;
     text-align: center;
 }
 
@@ -1433,4 +1446,34 @@ table.projectForum td .disabledDeleteIcon, table.projectForum td .disabledDelete
     clear:both;
     background:url(/images/icon-email.png) left 4px no-repeat;
     padding-left:18px;
+}
+
+.ratingEdit {
+    overflow: hidden;
+    float: left;
+}
+
+.ratingEdit span {
+    float: left;
+    background: url(../../images/rating2.png) no-repeat 0 0;
+    height: 13px;
+    width: 17px;
+    margin-right: 1px;
+    cursor: pointer;
+}
+
+.ratingEdit span.active {
+    background-position: 0 -13px;
+}
+
+.question .pRatings {
+    margin-top: 15px;
+}
+
+.question .pRatings dd {
+    overflow: hidden;
+}
+
+.question .pRatings dt, .question .pRatings dd {
+    margin-bottom: 6px;
 }

@@ -1,7 +1,7 @@
 <%--
   - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 2.2
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 2.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
   - - Add a popup window to support the cost breakdown data.
@@ -41,6 +41,9 @@
   -
   - Version 2.2 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to report
+  -
+  - Version 2.3 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -277,7 +280,7 @@
         			<div class="clearFix"></div>
 
         			<div class="applyButtonBox" data-intro="Click Apply to run the report." data-step="8">
-        				<a class="button6 applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
+        				<a class="button6 newButtonGreen applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
         			</div>
         			<!-- end .applyButtonBox -->
 
@@ -611,7 +614,7 @@
 <div class="popups">
     <div class="expandViewPopup hide" id="contestDViewPopup">
         <div class="close">
-            <a href="javascript:void(0)" id="contestDViewClose"></a>.
+            <a href="javascript:void(0)" id="contestDViewClose"></a>
         </div>
         <div class="popContent">
             <h2>Cost Details</h2>

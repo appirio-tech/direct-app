@@ -46,7 +46,7 @@
                     </option>
                     </s:iterator>
                 </select>
-                <a href="javascript:;" class="button6" id="addNewProject"><span class="left"><span class="right">ADD NEW</span></span></a>
+                <a href="javascript:;" class="button6 newButtonGreen" id="addNewProject"><span class="left"><span class="right">ADD NEW</span></span></a>
             </div>
             <div class="projectNameTips">Select an existing project or add a new one. The copilot opportunity you are about to create will be placed in this project.
             Your Project Name is NOT visible to the community.</div>

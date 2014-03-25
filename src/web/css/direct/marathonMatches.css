@@ -69,11 +69,11 @@
 		}
 		
 		#timelineModule .timelineContainer .startDate{
-			left:2px !important;
+			/*left:2px !important;*/
 			}
 			
 		#timelineModule .timelineContainer .endDate{
-			right:2px !important;
+			/*right:2px !important;*/
 			}
 			
 	/* Processbar */

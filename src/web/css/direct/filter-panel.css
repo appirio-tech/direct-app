@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
 
  * CSS for filter panels.
  *
@@ -11,13 +11,27 @@
  * Version 1.1 (Release Assembly - TopCoder Direct VM Instances Management) changes:
  * - Added new styles for Project VM Management Page.
  *
- * @version 1.1
+ * Version 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Rebranding the filter panel in direct (the filter panel is used in multiple pages)
+ *
+ * Version 1.3 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+ * - Rebranding the filter panel in the dashboard related pages in direct
+ *
+ * @version 1.3
  */
 .title {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: #333;
     font-weight: bold;
+}
+.filterContent .title{
+    color:#666;
+}
+.searchContainer .title{
+    color:#666;
+    font-weight: normal;
+
 }
 
 .filterPanel {
@@ -25,20 +39,19 @@
 }
 
 .filterPanel .filterHead {
-    background: url(/images/filter-panel/panel-head-l.png) no-repeat left top;
     height: 32px;
-    padding-left: 6px;
+    background: #f1f1f1;
+    border:1px solid #e7e7e7;
+    padding-left: 8px;
 }
 
 .filterPanel .filterHead .rightSide {
-    background: url(/images/filter-panel/panel-head-r.png) no-repeat right top;
     height: 32px;
-    padding-right: 7px;
+    padding-right: 13px;
 }
 
 .filterPanel .filterHead .inner {
-    background: url(/images/filter-panel/panel-head-m.png) repeat-x left top;
-    height: 32px;
+    height: 28px;
 }
 
 .filterPanel .filterHead .filterText {
@@ -51,7 +64,7 @@
 }
 
 .filterPanel .filterHead .inner .expand, .filterPanel .filterHead .inner .collapse {
-    margin: 6px 10px 0 3px;
+    margin: 6px 10px 0 0;
     float: left;
 }
 
@@ -64,11 +77,10 @@
 .filterPanel .filterHead .inner .searchContainer .filterSearch {
     width: 250px;
     height: 20px;
-    border: 1px solid #999;
+    border: 1px solid #c2c2c2;
     float: right;
     background: url(/images/filter-panel/search_icon.png) no-repeat 98% 3px #fff;
-    margin-top: 3px;
-    margin-right: 5px;
+    margin-top: 2px;
 }
 
 .filterPanel .filterHead .inner .searchContainer input {
@@ -87,47 +99,41 @@
 }
 
 .filterPanel .filterBottom {
-    background: url(/images/filter-panel/panel-bottom-l.png) no-repeat left top;
     height: 6px;
     padding-left: 6px;
 }
 
 .filterPanel .filterBottom .rightSide {
-    background: url(/images/filter-panel/panel-bottom-r.png) no-repeat right top;
     height: 6px;
     padding-right: 6px;
 }
 
 .filterPanel .filterBottom .inner {
-    background: url(/images/filter-panel/panel-bottom-m.png) repeat-x left top;
     height: 6px;
 }
 
 .filterPanel .collapseBottom {
-    background: url(/images/filter-panel/collapse-bottom-l.png) no-repeat left top;
     height: 5px;
     padding-left: 7px;
 }
 
 .filterPanel .collapseBottom .rightSide {
-    background: url(/images/filter-panel/collapse-bottom-r.png) no-repeat right top;
     height: 5px;
     padding-right: 7px;
 }
 
 .filterPanel .collapseBottom .inner {
-    background: url(/images/filter-panel/collapse-bottom-m.png) repeat-x left top;
     height: 5px;
 }
 
 .filterPanel .filterContent {
-    background: url(/images/filter-panel/panel-cotent-l.png) repeat-y left top;
+    border:1px solid #e7e7e7;
+    border-top: none;
     height: 90px;
     padding-left: 6px;
 }
 
 .filterPanel .filterContent .rightSide {
-    background: url(/images/filter-panel/panel-cotent-r.png) repeat-y right top;
     height: 90px;
     padding-right: 6px;
 }
@@ -244,6 +250,8 @@
 
 .filterPanel .filterContent .inner .column3 input {
     width: 60px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
     height: 18px;
     float: left;
     color: #6c6c6c;
@@ -278,6 +286,9 @@
 
 .searchBar .filterHead .inner .title {
     line-height: 33px;
+}
+#pipelineSearchBar .filterHead .inner .title{
+    line-height: 27px;
 }
 
 .searchBar .collapseBottom {
@@ -371,7 +382,6 @@
     height: 50px;
 }
 
-
 #enterpriseCalendarFilter.filterPanel .filterContent .inner .column1 .row .title {
     width: 70px;
 }
@@ -425,13 +435,11 @@ a.redBtn:hover span.left{
 }
 
 .riskPanel .filterContent {
-    background: url(/images/filter-panel/panel-cotent-l.png) repeat-y left top;
     height: 50px;
     padding-left: 6px;
 }
 
 .riskPanel .filterContent .rightSide {
-    background: url(/images/filter-panel/panel-cotent-r.png) repeat-y right top;
     height: 50px;
     padding-right: 6px;
 }
@@ -449,7 +457,7 @@ a.redBtn:hover span.left{
 }
 
 .riskPanel .riskFilterPrefix {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #333;
     font-weight: bold;
@@ -540,6 +548,10 @@ a.redBtn:hover span.left{
     width: 180px;
 }
 
+#pmProjectsResult table th {
+    padding-bottom: 10px;
+}
+
 .selectFilter .column1 .row label,
 .selectFilter .column1 .row  span.label {
     padding: 6px 0 0 0;
@@ -570,9 +582,19 @@ a.redBtn:hover span.left{
 }
 
 TABLE.contests TD.avoidWrapping {
-    font-size: 9px;
+    font-size: 12px;
 }
 
 TABLE.contests TD.avoidWrapping SPAN {
     font-weight: normal;
+    white-space: nowrap;
+}
+
+.operationDashboardFilterPanel .filterContent,
+.operationDashboardFilterPanel .filterContent .rightSide {
+    height: 110px;
+}
+
+#applyRiskFilters {
+    margin-top: 4px;
 }

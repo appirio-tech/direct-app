@@ -22,23 +22,23 @@
 	<table class="overviewData" cellpadding="0" cellspacing="0">
 		<tr>
 			<th>Challenge Name :</th>
-			<td><span id="ralContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="ralContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Project Name :</th>
-			<td><span id="ralProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="ralProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Billing Account :</th>
-			<td><span id="ralBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="ralBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Start :</th>
-			<td><span id="ralStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="ralStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
         <tr>
             <th>End :</th>
-            <td><span id="ralEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+            <td><span id="ralEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
 	</table>
 </div>
@@ -48,13 +48,13 @@
 <div class="contentList previewMask">
 	<dl>
         <dt>Problem Statement :</dt>
-        <dd><span id="ralProblemStatement"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>        
+        <dd><span id="ralProblemStatement"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	
 		<dt>Match Details :</dt>
-		<dd><span id="ralMatchDetails"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+		<dd><span id="ralMatchDetails"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
 		<dt>Match Rules :</dt>
-		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->
@@ -68,7 +68,7 @@
 	<div class="cbox" id="alCboxFiles">		
 		<dl id="alDocUploadList">
 		</dl>                      
-    <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>		
+    <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
 </div>
 <!-- end #cboxFiles -->
                   
@@ -81,7 +81,7 @@
     <div class="prizesInner">
         <div  id="ralPrizes">
         </div>
-        <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
+        <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
     </div>    
 </div>
 <!-- end .prizes -->

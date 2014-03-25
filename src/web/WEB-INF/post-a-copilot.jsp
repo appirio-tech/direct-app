@@ -1,10 +1,13 @@
 <%--
   - Author: Ghost_141, TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
   - Fix multiple bugs.
+  -
+  - Version 1.4 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
+  - - Rebranding the copilot and reporting related pages.
   - 
   - Description: Launch copilot selection contest page.
   - Since: TC Cockpit Post a Copilot Assembly 1
@@ -113,7 +116,7 @@
                 <!--step buttons-->
                                 <div class="stepNav">
                   <a id="saveDraftButton" href="javascript:;" class="button6 draft draftBtn"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
-                                    <a id="submitButton" href="javascript:;" class="button6 smallRed submitButton"><span class="left"><span class="right">SUBMIT</span></span></a>
+                                    <a id="submitButton" href="javascript:;" class="button6 smallRed submitButton newButtonGreen"><span class="left"><span class="right">SUBMIT</span></span></a>
                   <a href="/direct/dashboardActive.action" class="button4 backDashboardBtn">BACK TO DASHBOARD</a>
                   <div class="clear"></div>
                 </div>
@@ -147,12 +150,6 @@
                                           <a href="javascript:;" class="nextStepButton">NEXT STEP</a>
                                         </div>
                                       <!-- End .BottomBar -->
-
-                                        <!-- corner -->
-                                        <div class="corner tl"></div>
-                                        <div class="corner tr"></div>
-                                        <div class="corner bl"></div>
-                                        <div class="corner br"></div>
 
                                     </div>
 
@@ -281,7 +278,7 @@
 
                 <div class="modalCommandBox">
                     <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC"
-                                                                                       onclick="addNewProject();">YES</span></span></a>
+                                                                                       onclick="addNewProject();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></a>
                     <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
                        onclick="modalCloseAddNewProject();"><span class="btnR"><span
                             class="btnC">CANCEL</span></span></a>

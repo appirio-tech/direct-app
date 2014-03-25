@@ -35,7 +35,6 @@
 	var jqTransformGetLabel = function(objfield){
 		var selfForm = $(objfield.get(0).form);
 		var oLabel = objfield.next();
-		if(oLabel.is('label')){return oLabel.css('cursor','pointer');}
 		if(!oLabel.is('label')) {
 			oLabel = objfield.prev();
 			if(oLabel.is('label')){
@@ -45,13 +44,13 @@
 				} 
 			}
 		}
+		if(oLabel.is('label')){return oLabel.css('cursor','pointer');}
 		return false;
 	};
 	
 	/* Hide all open selects */
 	var jqTransformHideSelect = function(oTarget){
-         $('.jqTransformSelectWrapper').removeClass("jqTransformSelectOpened"); 
-        var ulVisible = $('.jqTransformSelectWrapper ul:visible');
+		var ulVisible = $('.jqTransformSelectWrapper ul:visible');
 		ulVisible.each(function(){
 			var oSelect = $(this).parents(".jqTransformSelectWrapper:first").find("select").get(0);
 			//do not hide if click on the label object associated to the select
@@ -104,11 +103,14 @@
 			oLabel && oLabel.bind('click',function(){$input.focus();});
 	
 			var inputSize=$input.width();
-			
+			if($input.attr('size')){
+				inputSize = $input.attr('size')*10;
+				$input.css('width',inputSize);
+			}
 			
 			$input.addClass("jqTransformInput").wrap('<div class="jqTransformInputWrapper"><div class="jqTransformInputInner"><div></div></div></div>');
-			var $wrapper = $input.parent().parent().parent(); 
-            $wrapper.css("width", inputSize-10);       // changing
+			var $wrapper = $input.parent().parent().parent();
+			$wrapper.css("width", inputSize+10);
 			$input
 				.focus(function(){$wrapper.addClass("jqTransformInputWrapper_focus");})
 				.blur(function(){$wrapper.removeClass("jqTransformInputWrapper_focus");})
@@ -117,7 +119,7 @@
 	
 			/* If this is safari we need to add an extra class */
 			$.browser.safari && $wrapper.addClass('jqTransformSafari');
-			$.browser.safari && $input.css('width',$wrapper.width()+20);
+			$.browser.safari && $input.css('width',$wrapper.width()+16);
 			this.wrapper = $wrapper;
 			
 		});
@@ -150,12 +152,7 @@
 				//do nothing if the original input is disabled
 				if($input.attr('disabled')){return false;}
 				//trigger the envents on the input object
-				if($input.is(":checked")){
-                    $input.removeAttr("checked");
-                }else{
-                    $input.attr("checked","checked");
-                }
-                $input.trigger("change");	
+				$input.trigger('click').trigger("change");	
 				return false;
 			});
 
@@ -260,7 +257,7 @@
 				.addClass('jqTransformHidden')
 				.wrap('<div class="jqTransformSelectWrapper"></div>')
 				.parent()
-				.css({zIndex: 9998-index})
+				.css({zIndex: 10-index})
 			;
 			
 			/* Now add the html for the select */
@@ -281,27 +278,19 @@
 					$select[0].selectedIndex = $(this).attr('index');
 					$('span:eq(0)', $wrapper).html($(this).html());
 					$ul.hide();
-                    $select.trigger('change');
-                    $wrapper.removeClass("jqTransformSelectOpened");
-                    return false;
+					return false;
 			});
 			/* Set the default */
 			$('a:eq('+ this.selectedIndex +')', $ul).click();
 			$('span:first', $wrapper).click(function(){$("a.jqTransformSelectOpen",$wrapper).trigger('click');});
-			//oLabel && oLabel.click(function(){$("a.jqTransformSelectOpen",$wrapper).trigger('click');});
+			oLabel && oLabel.click(function(){$("a.jqTransformSelectOpen",$wrapper).trigger('click');});
 			this.oLabel = oLabel;
 			
 			/* Apply the click handler to the Open */
 			var oLinkOpen = $('a.jqTransformSelectOpen', $wrapper)
 				.click(function(){
-                    $(this).blur();
-                    //Check if box is already open to still allow toggle, but close all other selects
-					if( $ul.css('display') == 'none' ) {
-                        jqTransformHideSelect();
-                        $wrapper.addClass("jqTransformSelectOpened");
-                    }else{
-                        $wrapper.removeClass("jqTransformSelectOpened"); 
-                    }
+					//Check if box is already open to still allow toggle, but close all other selects
+					if( $ul.css('display') == 'none' ) {jqTransformHideSelect();} 
 					if($select.attr('disabled')){return false;}
 
 					$ul.slideToggle('fast', function(){					
@@ -338,8 +327,8 @@
 			if(selfForm.hasClass('jqtransformdone')) {return;}
 			selfForm.addClass('jqtransformdone');
 			
-			//$('input:submit, input:reset, input[type="button"]', this).jqTransInputButton();			
-			//$('input:text, input:password', this).jqTransInputText();			
+			$('input:submit, input:reset, input[type="button"]', this).jqTransInputButton();			
+			$('input:text, input:password', this).jqTransInputText();			
 			$('input:checkbox', this).jqTransCheckBox();
 			$('input:radio', this).jqTransRadio();
 			$('textarea', this).jqTransTextarea();

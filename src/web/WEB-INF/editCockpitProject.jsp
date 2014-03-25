@@ -109,7 +109,6 @@
     <strong>Edit Project Details</strong>
 </div>
 
-<div class="spaceWhite"></div>
 <h2 class="contestTitle">Edit Project Details
     <a name="saveProject" class="buttonRed1 triggerModal saveProjectButton"
                                                  href="javascript:;"><span>SAVE</span></a>
@@ -514,7 +513,7 @@
             </th>
             <th>Project Forum Notification</th>
             <th>Challenge Notifications</th>
-            <th><a name="addUserModal" class="buttonRed1 triggerModal" href="javascript:;" id="addUser"><span>ADD USER</span></a></th>
+            <th><a name="addUserModal" class="buttonRed1 newButtonGreen triggerModal" href="javascript:;" id="addUser"><span>ADD USER</span></a></th>
         </tr>
         </thead>
         <tbody>
@@ -553,7 +552,7 @@
 
 <div class="permissionsButtonContainer">
     <a class="buttonRed1 cancelProjectButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
-    <a id="savePermissionNotification" class="buttonRed1" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
+    <a id="savePermissionNotification" class="buttonRed1 newButtonGreen" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
 </div>
 </s:if>
 
@@ -574,7 +573,7 @@
                 <th class="userColumn"><span>Group Name</span></th>
                 <th>Access Rights</th>
                 <th>Group Members</th>
-                <th><a name="addGroupModal" class="buttonRed1 triggerModal" href="javascript:;" id="addGroup"><span>ADD GROUP</span></a></th>
+                <th><a name="addGroupModal" class="buttonRed1 triggerModal newButtonGreen" href="javascript:;" id="addGroup"><span>ADD GROUP</span></a></th>
             </tr>
             </thead>
             <tbody>
@@ -605,7 +604,7 @@
 
     <div class="groupButtonContainer">
         <a class="buttonRed1 cancelProjectButton cancelGroupsButton" href="javascript:;"><span>CANCEL</span></a>
-        <a id="saveSecurityGroups" class="buttonRed1" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
+        <a id="saveSecurityGroups" class="buttonRed1 newButtonGreen" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
     </div>
 
 </if:isSecurityGroupsUIAccessible>

@@ -4,11 +4,13 @@ input[type="checkbox"] {
     height: 13px;
     width: 13px;
 }
-#content.liquid{
+
+#content.liquid {
     min-width: 1539px;
 }
+
 /* button */
-.btn, .btn .bRt, .btn .bMid{
+.btn, .btn .bRt, .btn .bMid {
     height: 24px;
     line-height: 24px;
     display: inline-block;
@@ -20,34 +22,42 @@ input[type="checkbox"] {
     text-decoration: none;
     cursor: pointer;
 }
-.btn:hover, .btn:hover .bRt, .btn:hover .bMid{
+
+.btn:hover, .btn:hover .bRt, .btn:hover .bMid {
     background-image: url('/images/copilotPosting/bg-btn-hover.png');
 }
-.btn{
+
+.btn {
     padding-left: 23px;
     background-position: left top;
 }
-.btn .bRt{
+
+.btn .bRt {
     background-position: right bottom;
     padding-right: 4px;
 }
-.btn .bMid{
+
+.btn .bMid {
     background-position: left center;
     background-repeat: repeat-x;
     padding: 0 8px;
 }
+
 /* action button */
-.action-btn, .action-btn .bRt, .action-btn .bMid{
+.action-btn, .action-btn .bRt, .action-btn .bMid {
     background-image: url('/images/copilotPosting/bg-btnAction.png');
 }
-.action-btn:hover, .action-btn:hover .bRt, .action-btn:hover .bMid{
+
+.action-btn:hover, .action-btn:hover .bRt, .action-btn:hover .bMid {
     background-image: url('/images/copilotPosting/bg-btnAction-hover.png');
 }
+
 /* red button */
-.btn-red{
+.btn-red {
     padding-left: 4px;
 }
-.btn-red, .btn-red .bRt, .btn-red .bMid{
+
+.btn-red, .btn-red .bRt, .btn-red .bMid {
     background-image: url('/images/copilotPosting/btn-red.png');
     color: #fffffe;
     font-weight: bold;
@@ -56,93 +66,114 @@ input[type="checkbox"] {
     text-shadow: 0 -1px 0 #982016;
 }
 
-.btn-red:hover, .btn-red:hover .bRt, .btn-red:hover .bMid{
+.btn-red:hover, .btn-red:hover .bRt, .btn-red:hover .bMid {
     background-image: url('/images/copilotPosting/btn-red-hover.png');
 }
-.btn-pickup .ico{
+
+.btn-pickup .ico {
     background: url('/images/copilotPosting/ico-tick.png') left center no-repeat;;
     padding-left: 14px;
 }
+
 /* white button */
-.btn-white{
+.btn-white {
     padding-left: 4px;
 }
-.btn-white, .btn-white .bRt, .btn-white .bMid{
+
+.btn-white, .btn-white .bRt, .btn-white .bMid {
     background-image: url('/images/copilotPosting/btn-white.png');
     color: #333;
     font-weight: bold;
     font-size: 11px;
 }
-.btn-white:hover, .btn-white:hover .bRt, .btn-white:hover .bMid{
+
+.btn-white:hover, .btn-white:hover .bRt, .btn-white:hover .bMid {
     background-image: url('/images/copilotPosting/btn-white-hover.png');
 }
+
 /* compare button */
-.btn-compare, .btn-compare .bRt, .btn-compare .bMid{
+.btn-compare, .btn-compare .bRt, .btn-compare .bMid {
     background-image: url('/images/copilotPosting/btn-compare.png');
     font-size: 11px;
     font-weight: bold;
     color: #fffffe;
     line-height: 24px;
 }
-.btn-compare:hover, .btn-compare:hover .bRt, .btn-compare:hover .bMid{
+
+.btn-compare:hover, .btn-compare:hover .bRt, .btn-compare:hover .bMid {
     background-image: url('/images/copilotPosting/btn-compare-hover.png');
 }
+
 /* switch */
-.switch{
+.switch {
     overflow: hidden;
     display: inline-block;
     height: 24px;
 }
-.switch a{
+
+.switch a {
     background: url('/images/copilotPosting/btn-switch.png') no-repeat;
     float: left;
     width: 30px;
     height: 24px;
     display: inline-block;
 }
-.switch.btn-nexPrev a{
+
+.switch.btn-nexPrev a {
     background: url('/images/copilotPosting/btn-nexPrev.png') no-repeat;
     width: 28px;
 }
-.switch .listView{
+
+.switch .listView {
     background-position: left top;
 }
+
 .switch .listView:hover,
-.switch .listView.active{
+.switch .listView.active {
     background-position: left bottom;
 }
-.switch .gridview{
+
+.switch .gridview {
     width: 29px;
     background-position: right top;
 }
+
 .switch .gridview:hover,
-.switch .gridview.active{
+.switch .gridview.active {
     background-position: right bottom;
 }
-.switch.btn-nexPrev .prev{
+
+.switch.btn-nexPrev .prev {
     background-position: left top;
 }
-.switch.btn-nexPrev .prev:hover{
+
+.switch.btn-nexPrev .prev:hover {
     background-position: left bottom;
 }
-.switch.btn-nexPrev .next{
+
+.switch.btn-nexPrev .next {
     background-position: right top;
     padding: 0;
     font-size: 0;
 }
-.switch.btn-nexPrev .next:hover{
+
+.switch.btn-nexPrev .next:hover {
     background-position: right bottom;
 }
-.switch.btn-nexPrev .prev.disabled{
+
+.switch.btn-nexPrev .prev.disabled {
     background: url('/images/copilotPosting/btn-next-prev-disabled.png') left top no-repeat;
 }
-.switch.btn-nexPrev .next.disabled{
+
+.switch.btn-nexPrev .next.disabled {
     background: url('/images/copilotPosting/btn-next-prev-disabled.png') right top no-repeat;
 }
-.fRight{
+
+.fRight {
     float: right;
 }
-.fLeft{
+
+.fLeft {
     float: left;
 }
 
@@ -153,101 +184,259 @@ input[type="checkbox"] {
     height: 48px;
     padding-bottom: 2px;
 }
-.col4 .colSkills{
+
+.col4 .colSkills {
     padding-bottom: 12px;
 }
 
-.col4 .achiv{
+.col4 .achiv {
     margin: 0;
 }
-.col4 .noBadgeHint{
+
+.col4 .noBadgeHint {
     text-align: left;
     line-height: 12px;
 }
+
 .badge-ui {
     width: 200px;
 }
+
 .badge-imple {
     width: 200px;
 }
 
-.badge-ig  {
+.badge-ig {
     width: 112px;
     padding: 0 0 0 88px;
 }
+
 .badge-qa {
     width: 110px;
     padding: 0 0 0 90px;
 }
-.badge-bd  {
+
+.badge-bd {
     width: 86px;
     padding: 0 0 0 114px;
 }
+
 .achiv div {
     float: left;
     height: 48px;
-    margin:0;
+    margin: 0;
     padding: 0;
     display: block;
     background: url(/images/skillBadges.png) no-repeat 0 0;
     position: relative;
 }
-.quoteBadgesItem{
+
+.quoteBadgesItem {
     cursor: pointer;
 }
-.achiv div.skill-rule-55   { width: 32px; background-position: 0 0;}
-.achiv div.skill-rule-55y  { width: 32px; background-position: -216px 0;}
-.achiv div.skill-rule-56   { width: 32px; background-position:  -32px 0;}
-.achiv div.skill-rule-56y  { width: 32px; background-position: -248px 0;}
-.achiv div.skill-rule-57   { width: 26px; background-position:  -64px 0;}
-.achiv div.skill-rule-57y  { width: 26px; background-position: -280px 0;}
-.achiv div.skill-rule-58   { width: 32px; background-position:  -90px 0;}
-.achiv div.skill-rule-58y  { width: 32px; background-position: -306px 0;}
-.achiv div.skill-rule-59   { width: 28px; background-position: -122px 0;}
-.achiv div.skill-rule-59y  { width: 28px; background-position: -338px 0;}
-.achiv div.badge-ui-all { width: 50px; background-position: -150px 0;}
-.achiv div.badge-ui-ally{ width: 50px; background-position: -366px 0;}
 
-.achiv div.skill-rule-60   { width: 38px; background-position: 0 -51px;}
-.achiv div.skill-rule-60y  { width: 38px; background-position: -216px -51px;}
-.achiv div.skill-rule-61   { width: 32px; background-position:  -38px -51px;}
-.achiv div.skill-rule-61y  { width: 32px; background-position: -254px -51px;}
-.achiv div.skill-rule-62   { width: 38px; background-position:  -70px -51px;}
-.achiv div.skill-rule-62y  { width: 38px; background-position: -286px -51px;}
-.achiv div.skill-rule-63   { width: 42px; background-position: -108px -51px;}
-.achiv div.skill-rule-63y  { width: 42px; background-position: -324px -51px;}
-.achiv div.badge-imple-all { width: 50px; background-position: -150px -51px;}
-.achiv div.badge-imple-ally{ width: 50px; background-position: -366px -51px;}
+.achiv div.skill-rule-55 {
+    width: 32px;
+    background-position: 0 0;
+}
 
-.achiv div.skill-rule-64   { width: 30px; background-position:  -88px -103px;}
-.achiv div.skill-rule-64y  { width: 30px; background-position: -304px -103px;}
-.achiv div.skill-rule-65   { width: 32px; background-position: -118px -103px;}
-.achiv div.skill-rule-65y  { width: 32px; background-position: -334px -103px;}
-.achiv div.badge-ig-all { width: 50px; background-position: -150px -103px;}
-.achiv div.badge-ig-ally{ width: 50px; background-position: -366px -103px;}
+.achiv div.skill-rule-55y {
+    width: 32px;
+    background-position: -216px 0;
+}
 
-.achiv div.skill-rule-66   { width: 28px; background-position:  -90px -154px;}
-.achiv div.skill-rule-66y  { width: 28px; background-position: -306px -154px;}
-.achiv div.skill-rule-67   { width: 32px; background-position: -118px -154px;}
-.achiv div.skill-rule-67y  { width: 32px; background-position: -334px -154px;}
-.achiv div.badge-qa-all { width: 50px; background-position: -150px -154px;}
-.achiv div.badge-qa-ally{ width: 50px; background-position: -366px -154px;}
+.achiv div.skill-rule-56 {
+    width: 32px;
+    background-position: -32px 0;
+}
 
-.achiv div.skill-rule-68   { width: 36px; background-position: 0 -103px;}
-.achiv div.skill-rule-68y  { width: 36px; background-position: -216px -103px;}
-.achiv div.badge-bd-all { width: 50px; background-position:  -36px -103px;}
-.achiv div.badge-bd-ally{ width: 50px; background-position: -252px -103px;}
+.achiv div.skill-rule-56y {
+    width: 32px;
+    background-position: -248px 0;
+}
 
-.quoteBadgesItem span.badgeTips{
+.achiv div.skill-rule-57 {
+    width: 26px;
+    background-position: -64px 0;
+}
+
+.achiv div.skill-rule-57y {
+    width: 26px;
+    background-position: -280px 0;
+}
+
+.achiv div.skill-rule-58 {
+    width: 32px;
+    background-position: -90px 0;
+}
+
+.achiv div.skill-rule-58y {
+    width: 32px;
+    background-position: -306px 0;
+}
+
+.achiv div.skill-rule-59 {
+    width: 28px;
+    background-position: -122px 0;
+}
+
+.achiv div.skill-rule-59y {
+    width: 28px;
+    background-position: -338px 0;
+}
+
+.achiv div.badge-ui-all {
+    width: 50px;
+    background-position: -150px 0;
+}
+
+.achiv div.badge-ui-ally {
+    width: 50px;
+    background-position: -366px 0;
+}
+
+.achiv div.skill-rule-60 {
+    width: 38px;
+    background-position: 0 -51px;
+}
+
+.achiv div.skill-rule-60y {
+    width: 38px;
+    background-position: -216px -51px;
+}
+
+.achiv div.skill-rule-61 {
+    width: 32px;
+    background-position: -38px -51px;
+}
+
+.achiv div.skill-rule-61y {
+    width: 32px;
+    background-position: -254px -51px;
+}
+
+.achiv div.skill-rule-62 {
+    width: 38px;
+    background-position: -70px -51px;
+}
+
+.achiv div.skill-rule-62y {
+    width: 38px;
+    background-position: -286px -51px;
+}
+
+.achiv div.skill-rule-63 {
+    width: 42px;
+    background-position: -108px -51px;
+}
+
+.achiv div.skill-rule-63y {
+    width: 42px;
+    background-position: -324px -51px;
+}
+
+.achiv div.badge-imple-all {
+    width: 50px;
+    background-position: -150px -51px;
+}
+
+.achiv div.badge-imple-ally {
+    width: 50px;
+    background-position: -366px -51px;
+}
+
+.achiv div.skill-rule-64 {
+    width: 30px;
+    background-position: -88px -103px;
+}
+
+.achiv div.skill-rule-64y {
+    width: 30px;
+    background-position: -304px -103px;
+}
+
+.achiv div.skill-rule-65 {
+    width: 32px;
+    background-position: -118px -103px;
+}
+
+.achiv div.skill-rule-65y {
+    width: 32px;
+    background-position: -334px -103px;
+}
+
+.achiv div.badge-ig-all {
+    width: 50px;
+    background-position: -150px -103px;
+}
+
+.achiv div.badge-ig-ally {
+    width: 50px;
+    background-position: -366px -103px;
+}
+
+.achiv div.skill-rule-66 {
+    width: 28px;
+    background-position: -90px -154px;
+}
+
+.achiv div.skill-rule-66y {
+    width: 28px;
+    background-position: -306px -154px;
+}
+
+.achiv div.skill-rule-67 {
+    width: 32px;
+    background-position: -118px -154px;
+}
+
+.achiv div.skill-rule-67y {
+    width: 32px;
+    background-position: -334px -154px;
+}
+
+.achiv div.badge-qa-all {
+    width: 50px;
+    background-position: -150px -154px;
+}
+
+.achiv div.badge-qa-ally {
+    width: 50px;
+    background-position: -366px -154px;
+}
+
+.achiv div.skill-rule-68 {
+    width: 36px;
+    background-position: 0 -103px;
+}
+
+.achiv div.skill-rule-68y {
+    width: 36px;
+    background-position: -216px -103px;
+}
+
+.achiv div.badge-bd-all {
+    width: 50px;
+    background-position: -36px -103px;
+}
+
+.achiv div.badge-bd-ally {
+    width: 50px;
+    background-position: -252px -103px;
+}
+
+.quoteBadgesItem span.badgeTips {
     display: none;
 }
-.quoteBadgesItem span.toolTipsHover{
+
+.quoteBadgesItem span.toolTipsHover {
     display: block;
     position: absolute;
     bottom: 49px;
     width: 158px;
     cursor: default;
 }
+
 .quoteBadgesItem span.badgeName {
     display: block;
     background: transparent url("/images/toolTipsBg.png") 0 0 repeat;
@@ -260,6 +449,7 @@ input[type="checkbox"] {
     line-height: 14px;
     padding: 5px 7px 4px;
 }
+
 .quoteBadgesItem span.badgeDesc {
     display: block;
     background: transparent url("/images/toolTipsBg.png") 0 0 repeat;
@@ -280,7 +470,8 @@ input[type="checkbox"] {
     overflow: hidden;
     width: 158px;
 }
-p.noBadgeHint{
+
+p.noBadgeHint {
     text-align: center;
     font-size: 12px;
     color: #999999;
@@ -288,15 +479,17 @@ p.noBadgeHint{
 }
 
 /* #area1 section*/
-#area1 h2.copilotPositng{
+#area1 h2.copilotPositng {
     background: url('/images/copilotPosting/ico-copilotPosting.png') left top no-repeat;
     overflow: hidden;
 }
-#area1 h2 .currentStatus{
+
+#area1 h2 .currentStatus {
     font-size: 12px;
     font-weight: normal;
 }
-#area1 h2 .currentStatus .statDraft{
+
+#area1 h2 .currentStatus .statDraft {
     background: url('/images/copilotPosting/ico-draft.png') left top no-repeat;
     display: inline-block;
     padding-left: 20px;
@@ -305,7 +498,8 @@ p.noBadgeHint{
     line-height: 20px;
     margin-left: 8px;
 }
-#area1 h2 .currentStatus .statActive{
+
+#area1 h2 .currentStatus .statActive {
     background: url('/images/copilotPosting/ico-active.png') left top no-repeat;
     display: inline-block;
     padding-left: 22px;
@@ -314,7 +508,8 @@ p.noBadgeHint{
     line-height: 20px;
     margin-left: 8px;
 }
-#area1 h2 .currentStatus .statCompleted{
+
+#area1 h2 .currentStatus .statCompleted {
     background: url('/images/copilotPosting/ico-completed.png') left top no-repeat;
     display: inline-block;
     padding-left: 22px;
@@ -323,59 +518,74 @@ p.noBadgeHint{
     line-height: 20px;
     margin-left: 8px;
 }
+
 /* dashboardModule */
-.timelineModule{
+.timelineModule {
     margin-right: 256px;
     height: 140px;
 }
-.timelineModule .content{
+
+.timelineModule .content {
     height: 113px;
 }
-.dashboardModule.moduleAction{
+
+.dashboardModule.moduleAction {
     float: right;
     width: 249px;
     margin-top: -140px;
     height: 140px;
 }
-.dashboardModule .actionContent{
+
+.dashboardModule .actionContent {
     height: 113px;
 }
-.dashboardModule .actionContent .btn{
+
+.dashboardModule .actionContent .btn {
     margin-top: 40px;
 }
-#area1 .dashboardTable{
+
+#area1 .dashboardTable {
     background: none;
     margin-bottom: 12px;
 }
-.area1Content{
+
+.area1Content {
     position: relative;
 }
-.copilotPostingDashboard .dashboardModule .content .timelineContainer{
+
+.copilotPostingDashboard .dashboardModule .content .timelineContainer {
     min-width: 578px;
 }
-.copilotPostingDashboard .appositeContainer .registrationModule{
+
+.copilotPostingDashboard .appositeContainer .registrationModule {
     width: 32.8%;
     margin-right: .7%;
 }
-.copilotPostingDashboard .appositeContainer .forumModule{
+
+.copilotPostingDashboard .appositeContainer .forumModule {
     width: 33.1%;
     margin-right: .7%;
 }
-.copilotPostingDashboard .appositeContainer .copilotStats{
+
+.copilotPostingDashboard .appositeContainer .copilotStats {
     width: 32.7%;
     margin-right: 0;
 }
-.copilotPostingDashboard .appositeContainer .content{
+
+.copilotPostingDashboard .appositeContainer .content {
     padding-top: 9px;
     height: 75px;
     padding-left: 14px;
 }
-.dashboardModule .listContent .healthy .progressStatus .progress{
+
+.dashboardModule .listContent .healthy .progressStatus .progress {
     width: 80px;
 }
-.appositeContainer .copilotStats .listContent p{
+
+.appositeContainer .copilotStats .listContent p {
     width: auto;
 }
+
 .dashboardModule .list-alternate p.row {
     display: inline-block;
     text-align: left;
@@ -384,89 +594,104 @@ p.noBadgeHint{
     margin-bottom: 4px;
     width: 265px;
 }
-.dashboardModule .list-alternate .fLeft{
+
+.dashboardModule .list-alternate .fLeft {
     margin-left: 14px;
 }
-.dashboardModule p.row{
+
+.dashboardModule p.row {
     width: 265px;
     overflow: hidden;
 }
-.dashboardModule p.row .fLeft{
+
+.dashboardModule p.row .fLeft {
     margin-left: 0;
     min-width: 145px;
 }
-.dashboardModule p.row .fLeft.last{
+
+.dashboardModule p.row .fLeft.last {
     min-width: 105px;
     margin-left: 14px;
     margin-top: 0;
 }
-.dashboardModule p.row .fLeft.last.date{
+
+.dashboardModule p.row .fLeft.last.date {
     margin-left: 8px;
 }
-.copilotPostingDashboard .dashboardModule .list-alternate .statusP{
+
+.copilotPostingDashboard .dashboardModule .list-alternate .statusP {
     margin-bottom: 4px;
     float: left;
 }
-.dashboardModule .progressWrapper{
+
+.dashboardModule .progressWrapper {
     display: inline-block;
     width: 265px;
 }
-.color-gold{
+
+.color-gold {
     color: #FF9900 !important;
 }
 
 /* flyout */
-.flyout{
+.flyout {
     position: absolute;
     left: 10px;
     top: 10px;
     z-index: 9999;
 }
-.flyout .flyoutBody{
+
+.flyout .flyoutBody {
     padding-top: 10px;
 }
-.moreFlyout{
+
+.moreFlyout {
     width: 233px;
     height: 65px;
     padding: 10px 15px;
-    border: solid #bdbdbd;
+    border: solid #E7E7E7;
     border-width: 0 1px;
     background: url('/images/copilotPosting/bg-flyout.png') left top repeat-x;
 }
-.xperienceFlyout{
+
+.xperienceFlyout {
     width: 200px;
     min-height: 194px;
     padding: 18px 15px 14px;
-    border: solid #bdbdbd;
+    border: solid #E7E7E7;
     border-width: 0 1px 1px;
     font-size: 14px;
     line-height: 16px;
     background: #e7e7e7 url('/images/copilotPosting/bg-flyout-long.png') left top repeat-x;
 
 }
-.trackFlyout{
+
+.trackFlyout {
     height: 34px;
     line-height: 34px;
     padding: 0 15px;
-    border: solid #bdbdbd;
+    border: solid #E7E7E7;
     border-width: 0 1px;
     font-size: 12px;
     font-weight: bold;
     background: url(/images/tabs3_bg.png) repeat-x top left;
 
 }
-.skillsFlyout{
+
+.skillsFlyout {
     height: 70px;
     padding: 0 15px;
-    border: solid #bdbdbd;
+    border: solid #E7E7E7;
     border-width: 0 1px 1px;
     background: url('/images/copilotPosting/bg-flyout.png') left top repeat-x;
 }
-.skillsFlyout img{
+
+.skillsFlyout img {
     height: 49px;
     padding-top: 10px;
 }
-.flyout .arrow{
+
+.flyout .arrow {
     position: absolute;
     background: url('/images/copilotPosting/ico-arrow.png') left top no-repeat;
     height: 7px;
@@ -474,163 +699,197 @@ p.noBadgeHint{
     right: 20px;
     top: -6px;
 }
-.flyout h2{
+
+.flyout h2 {
     font-size: 11px;
     padding-bottom: 6px;
 }
-.flyout.moreFlyout li{
+
+.flyout.moreFlyout li {
     font-size: 11px;
     padding-bottom: 2px;
     list-style: none;
     line-height: 14px;
 }
 
-.xperienceFlyout .row{
+.xperienceFlyout .row {
     padding-bottom: 10px;
 }
+
 .xperienceFlyout .xpStat {
     color: #666667;
     font-size: 11px;
     font-weight: bold;
 }
+
 .xperienceFlyout .xpStat .active {
     color: #3994ED;
     text-decoration: none;
 }
+
 .xperienceFlyout .xpStat .completed {
     color: #027200;
     text-decoration: none;
 }
+
 /* contest links */
-.contest-links{
+.contest-links {
     height: auto;
     overflow: hidden;
     margin-bottom: 10px;
 }
-.contest-links ul.links li{
+
+.contest-links ul.links li {
     border-right: 1px solid #d6d6d6;
     padding-right: 10px;
     margin-right: 9px;
     margin-left: 4px;
 }
-.contest-links .links li a{
+
+.contest-links .links li a {
     padding-left: 22px;
     line-height: 19px;
     height: 19px;
     display: inline-block;
     text-decoration: none;
 }
-.contest-links .links li a:hover{
+
+.contest-links .links li a:hover {
     color: #666665;
 }
-.contest-links .links li .viewContest{
+
+.contest-links .links li .viewContest {
     background: url('/images/link-icon-view-contest.gif') left top no-repeat;
 }
-.contest-links .links li .registration{
+
+.contest-links .links li .registration {
     background: url('/images/link-icon-registration-page.gif') left top no-repeat;
 }
-.contest-links .links li .OR{
+
+.contest-links .links li .OR {
     background: url('/images/link-icon-online-review.gif') left top no-repeat;
 }
-.contest-links .links li .forum{
+
+.contest-links .links li .forum {
     background: url('/images/link-icon-forum.gif') left center no-repeat;
 }
+
 /* tabs */
-#tabs3.newLayout ul li{
+#tabs3.newLayout ul li {
     width: 25%;
 }
-#tabs3 UL LI.lastItem{
+
+#tabs3 UL LI.lastItem {
     width: auto;
 }
-.det_font .lbl{
+
+.det_font .lbl {
     font-weight: bold;
     min-width: 168px;
     display: inline-block;
 }
-.det_font .value{
+
+.det_font .value {
     font-weight: bold;
     color: #3B3B3B;
     font-size: 13px;
     font-family: Arial, Helvetica, sans-serif;
 }
-.det_font.normalValue .value{
+
+.det_font.normalValue .value {
     font-weight: normal;
 }
+
 .no_details .caption_det_prize .captionInner,
-.no_details .caption_det_round .captionInner{
+.no_details .caption_det_round .captionInner {
     padding: 30px 0 0 0;
     height: 28px;
 }
-.detailsContent_det_prize{
+
+.detailsContent_det_prize {
     padding: 0px 10px 30px 40px;
 }
-.container2Content_det{
+
+.container2Content_det {
     padding: 10px 1px 0 1px;
     position: relative;
 }
-#area1{
+
+#area1 {
     padding-bottom: 250px;
 }
-/* tabs3Container 
+
+/* tabs3Container
 -------------------------------*/
 /* table */
 /* list view */
-.listview-table{
+.listview-table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 }
-.listview-table th{
+
+.listview-table th {
     background: url(/images/tabs3_bg.png) repeat-x top left;
     height: 34px;
     vertical-align: middle;
     font-size: 11px;
     font-weight: bold;
-    border-left: 1px solid #bdbdbd;
+    border-left: 1px solid #E7E7E7;
 }
-.listview-table td{
+
+.listview-table td {
     height: 143px;
-    border-left: 1px solid #bdbdbd;
+    border-left: 1px solid #E7E7E7;
     padding-top: 15px;
-    font-size: 11px;
-    border-bottom: 1px solid #bdbdbd;
+    font-size: 12px;
+    border-bottom: 1px solid #E7E7E7;
     vertical-align: top;
 }
-.listview-table .even td{
+
+.listview-table .even td {
     background: #f3f3f3;
 }
+
 .listview-table th:first-child,
-.listview-table td:first-child{
+.listview-table td:first-child {
     border-left: none;
 }
-.listview-table td a:hover{
+
+.listview-table td a:hover {
     text-decoration: none;
 }
+
 /* copilot cells */
-.listview-table .tdCopilot .colLt{
+.listview-table .tdCopilot .colLt {
     padding: 0 0 0 15px;
     width: 78px;
     float: left;
     height: 143px;
     position: relative;
 }
-.listview-table .tdCopilot .colRt{
+
+.listview-table .tdCopilot .colRt {
     float: left;
     height: 143px;
 }
-.listview-table .tdCopilot .top{
+
+.listview-table .tdCopilot .top {
     height: 69px;
     padding-bottom: 10px;
 }
-.listview-table .tdCopilot p{
+
+.listview-table .tdCopilot p {
     padding-bottom: 4px;
 }
-.listview-table .tdCopilot .compare{
+
+.listview-table .tdCopilot .compare {
     overflow: hidden;
     font-size: 12px;
     padding-top: 7px;
 }
-.listview-table .tdCopilot .compare label{
+
+.listview-table .tdCopilot .compare label {
     float: left;
     display: inline-block;
     height: 14px;
@@ -640,109 +899,136 @@ p.noBadgeHint{
     margin-left: 4px;
     letter-spacing: -0.5px;
 }
-.listview-table .tdCopilot .compare input[type="checkbox"]{
+
+.listview-table .tdCopilot .compare input[type="checkbox"] {
     float: left;
 }
-.listview-table .tdCopilot .memberPic{
+
+.listview-table .tdCopilot .memberPic {
     width: 63px;
     height: 69px;
     display: block;
     padding-bottom: 10px;
 }
-.listview-table .tdCopilot .track{
+
+.listview-table .tdCopilot .track {
     overflow: hidden;
 }
-.listview-table .tdCopilot .track a{
+
+.listview-table .tdCopilot .track a {
     display: inline-block;
     height: 31px;
     width: 31px;
     text-decoration: none;
     float: left;
 }
-.listview-table .tdCopilot .track a:first-child{
+
+.listview-table .tdCopilot .track a:first-child {
     margin-right: 1px;
 }
-.listview-table .tdCopilot .track .dev{
+
+.listview-table .tdCopilot .track .dev {
     background: url('/images/copilotPosting/ico-tc.png') left top no-repeat;
 }
-.listview-table .tdCopilot .track .studio{
+
+.listview-table .tdCopilot .track .studio {
     background: url('/images/copilotPosting/ico-studio.png') left top no-repeat;
 }
-.listview-table .handle{
+
+.listview-table .handle {
     font-size: 12px;
 }
-.listview-table .colFulFill{
+
+.listview-table .colFulFill {
     text-align: center;
     font-weight: bold;
     font-size: 16px;
     vertical-align: top;
 
 }
-.txtRed{
+
+.txtRed {
     color: #fe0000;
 }
-.txtYellow{
+
+.txtYellow {
     color: #eea900;
 }
-.txtBlue{
+
+.txtBlue {
     color: #0049ff;
 }
-.txtGreen{
+
+.txtGreen {
     color: #008f15;
 }
-.txtGrey{
+
+.txtGrey {
     color: #666667;
 }
-.listview-table .colWorkload{
+
+.listview-table .colWorkload {
     text-align: center;
     font-size: 16px;
     vertical-align: top;
     color: #333333;
 }
-.listview-table .colWorkload p{
+
+.listview-table .colWorkload p {
     padding-bottom: 6px;
 }
-.colExperience{
+
+.colExperience {
     font-size: 14px;
     vertical-align: top;
 }
-.colExperience .row{
+
+.colExperience .row {
     padding-left: 12px;
     padding-bottom: 10px;
 }
-.colExperience .row .xp{
+
+.colExperience .row .xp {
     font-size: 14px;
 }
-.colExperience .xpStat{
+
+.colExperience .xpStat {
     color: #666667;
     font-size: 11px;
     font-weight: bold;
 }
-.colExperience .xpStat .active{
+
+.colExperience .xpStat .active {
     color: #3994ed;
     text-decoration: none;
 }
-.colExperience .xpStat .completed{
+
+.colExperience .xpStat .completed {
     color: #027200;
     text-decoration: none;
 }
-.colExperience .link{
+
+.colExperience .link {
     font-size: 11px;
     padding-left: 12px;
     padding-bottom: 10px;
 }
-.gridview-table .colExperience .link{
+
+.gridview-table .colExperience .link {
     padding-left: 0px;
 }
-.listview-table td.colSkills{
-		font-size: 12px;
-		vertical-align: top;
-		padding: 8px 0 7px 0;
-	}
-.colSkills ul{
+
+.listview-table td.colSkills {
+    font-size: 12px;
+    vertical-align: top;
+    padding: 8px 0 7px 0;
+}
+
+.colSkills ul {
     padding-left: 18px;
 }
-.colSkills li{
+
+.colSkills li {
     list-style: none;
     min-height: 17px;
     line-height: 17px;
@@ -752,65 +1038,82 @@ p.noBadgeHint{
     padding-left: 28px;
     cursor: pointer;
 }
-.colSkills li.uiNgd{
+
+.colSkills li.uiNgd {
     background-position: 0 -0;
 }
-.colSkills li.imple{
+
+.colSkills li.imple {
     background-position: 0 -25px;
 }
-.colSkills li.ba{
+
+.colSkills li.ba {
     background-position: 0 -50px;
 }
-.colSkills li.ana{
+
+.colSkills li.ana {
     background-position: 0 -75px;
 }
-.colSkills li.tqa{
+
+.colSkills li.tqa {
     background-position: 0 -100px;
 }
+
 table .colPickup {
     vertical-align: top;
     padding-top: 0;
     height: 158px;
 }
-.compareItems .colPickup{
+
+.compareItems .colPickup {
     text-align: center;
 }
-.compareItems .colPickup .btn-red{
+
+.compareItems .colPickup .btn-red {
     margin-bottom: 8px;
 }
+
 table .colPickup .btn .bMid,
-.compareItems .colPickup .btn .bMid{
+.compareItems .colPickup .btn .bMid {
     width: 136px;
     padding: 0;
 }
-table .colPickup .btn{
+
+table .colPickup .btn {
     margin: 8px 0 0;
 }
-table .colPickup .row{
+
+table .colPickup .row {
     text-align: center;
     padding-top: 10px;
 }
-.compare-table .colPickup .row{
+
+.compare-table .colPickup .row {
     padding-top: 0;
 }
-.compare-table .colPickup .btn-red{
+
+.compare-table .colPickup .btn-red {
     margin-top: 0;
 }
+
 table .colPickup .row.highlighted,
-.compareItems .colPickup .row.highlighted{
+.compareItems .colPickup .row.highlighted {
     background: #fcffe5;
     border-bottom: 1px solid #d3d3d3;
     height: 60px;
     font-size: 11px;
 }
-.compareItems .colPickup .row.highlighted{
+
+.compareItems .colPickup .row.highlighted {
     text-align: center;
 }
+
 table.compare-table .colPickup .row.highlighted,
-.compareItems .colPickup .row.highlighted{
+.compareItems .colPickup .row.highlighted {
     background: #fff;
     border-bottom: none;
 }
+
 table .submitedFile,
 .compareItems .submitedFile {
     font-size: 12px;
@@ -822,150 +1125,189 @@ table .submitedFile,
     padding-left: 28px;
 }
 
-.caption{
+.caption {
     overflow: hidden;
     padding: 5px 10px 1px;
-    border-right: 1px solid #bdbdbd;
 }
-.caption.bottom{
-    border: solid #bdbdbd;
+
+.caption.bottom {
+    border: solid #E7E7E7;
     border-width: 0 0 1px 0;
     padding: 10px 10px 10px;
 }
-.caption .fRight .btn{
+
+.caption .fRight .btn {
     float: left;
     margin-right: 10px;
 }
-.caption .fRight .switch{
+
+.caption .fRight .switch {
     float: left;
 }
-.caption .link{
+
+.caption .link {
     font-size: 11px;
     padding-left: 18px;
     height: 17px;
     line-height: 17px;
     display: inline-block;
 }
-.caption .link:hover{
+
+.caption .link:hover {
     text-decoration: none;
 }
-.caption .seprator{
+
+.caption .seprator {
     margin: 0 10px;
-    border-right: 1px solid #bdbdbd;
+    border-right: 1px solid #E7E7E7;
     font-weight: normal;
 }
-.caption .download{
+
+.caption .download {
     background: url('/images/copilotPosting/ico-dwld.png') left center no-repeat;
 }
-.caption .choose{
+
+.caption .choose {
     background: url('/images/copilotPosting/ico-noMem.png') left center no-repeat;
 }
 
 /* grid view */
-.gridview-table{
-    border-top:1px solid #BDBDBD;
+.gridview-table {
+    border-top: 1px solid #E7E7E7 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
     border-collapse: collapse;
     width: 100%;
 }
-.gridview-table tr td{
-		border: solid #BDBDBD;
-		border-width: 0 0 1px 1px;
-		height: 318px;
-		vertical-align: top;
-	}
+
+.gridview-table tr td {
+    border: solid #E7E7E7;
+    border-width: 0 0 1px 1px;
+    height: 318px;
+    vertical-align: top;
+}
+
 .gridview-table tr td:first-child {
     border-width: 0 0 1px 0;
 }
 
-.gridview-table .col1{
-		min-width: 160px;
-		width: 31%;
-		height: 298px;
-		text-align: center;
-		padding-top: 20px;
-		float: left;
-		background: #f3f3f3;
-		border-right: 1px solid #dadada; 
-		position: relative;
-	}
-.gridview-table .memberPic{
+.gridview-table .col1 {
+    min-width: 160px;
+    width: 31%;
+    height: 298px;
+    text-align: center;
+    padding-top: 20px;
+    float: left;
+    background: #f3f3f3;
+    border-right: 1px solid #dadada;
+    position: relative;
+}
+
+.gridview-table .memberPic {
     padding-bottom: 8px;
 }
-.gridview-table .handle{
+
+.gridview-table .handle {
     font-size: 14px;
     font-weight: bold;
 }
-.gridview-table .handle:hover{
+
+.gridview-table .handle:hover {
     text-decoration: none;
 }
-.gridview-table .copilotStat{
-    font-size: 11px;
+
+.gridview-table .copilotStat {
+    font-size: 12px;
+    color: #FF9900;
 }
-.gridview-table .copilotStat:hover{
+
+.gridview-table .copilotStat:hover {
     text-decoration: none;
 }
-.gridview-table .track{
+
+a.copilotStat {
+    font-size: 12px;
+    color: #FF9900;
+}
+
+a.viewXperience {
+    font-size: 12px;
+    color: #FF9900;
+}
+
+.gridview-table .track {
     overflow: hidden;
     padding-top: 12px;
     position: relative;
 }
-.gridview-table .track a{
+
+.gridview-table .track a {
     display: inline-block;
     height: 31px;
     width: 31px;
     text-decoration: none;
 }
-.gridview-table .track a:first-child{
+
+.gridview-table .track a:first-child {
     margin-right: 1px;
 }
-.track .dev{
+
+.track .dev {
     background: url('/images/copilotPosting/ico-tc.png') left top no-repeat;
 }
-.track .studio{
+
+.track .studio {
     background: url('/images/copilotPosting/ico-studio.png') left top no-repeat;
 }
-.gridview-table .compare{
+
+.gridview-table .compare {
     font-size: 12px;
     vertical-align: top;
     padding-top: 12px;
 }
-.gridview-table .compare label{
+
+.gridview-table .compare label {
     color: #000;
     line-height: 16px;
     display: inline-block;
     padding-left: 2px;
     vertical-align: top;
 }
-.gridview-table .compare .chkCompare{
+
+.gridview-table .compare .chkCompare {
     vertical-align: top;
     height: 16px;
     display: inline-block;
 }
 
-.gridview-table .col2{
-		padding-top: 20px;
-		float: left;
-		text-align: left;
-		min-width: 138px;
-		width: 27%;
-		padding-left: 3.3%;
-		font-size: 11px;
-		height: 90px;
-	}
-.gridview-table .location{
+.gridview-table .col2 {
+    padding-top: 20px;
+    float: left;
+    text-align: left;
+    min-width: 138px;
+    width: 27%;
+    padding-left: 3.3%;
+    font-size: 11px;
+    height: 90px;
+}
+
+.gridview-table .location {
     height: 14px;
     line-height: 14px;
     padding-left: 21px;
     padding-bottom: 10px;
     background: url('/images/copilotPosting/ico-globe.png') left top no-repeat;
 }
-.gridview-table .fullfillMent span{
+
+.gridview-table .fullfillMent span {
     display: block;
     font-size: 12px;
     font-weight: bold;
     line-height: 22px;
 }
-.gridview-table .fullfillMent .percent{
+
+.gridview-table .fullfillMent .percent {
     font-size: 24px;
     line-height: 44px;
     height: 44px;
@@ -975,49 +1317,60 @@ table .submitedFile,
     position: relative;
     width: 138px;
 }
-.gridview-table .fullfillMent .percent.bgRed{
+
+.gridview-table .fullfillMent .percent.bgRed {
     background: #ff0000;
 }
-.gridview-table .fullfillMent .percent.bgYellow{
+
+.gridview-table .fullfillMent .percent.bgYellow {
     background: #eea800;
 }
-.gridview-table .fullfillMent .percent.bgBlue{
+
+.gridview-table .fullfillMent .percent.bgBlue {
     background: #0048ff;
 }
-.gridview-table .fullfillMent .percent.bgGreen{
+
+.gridview-table .fullfillMent .percent.bgGreen {
     background: #008f14;
 }
-.gridview-table .fullfillMent .percent.bgGrey{
+
+.gridview-table .fullfillMent .percent.bgGrey {
     background: #666666;
 }
-.gridview-table .corner{
+
+.gridview-table .corner {
     background-image: url(/images/copilotPosting/bg-corners.png);
     background-repeat: no-repeat;
     position: absolute;
     height: 3px;
     width: 3px;
 }
-.gridview-table .tl{
+
+.gridview-table .tl {
     top: 0;
     left: 0;
     background-position: top left;
 }
-.gridview-table .tr{
+
+.gridview-table .tr {
     top: 0;
     right: 0;
     background-position: top right;
 }
-.gridview-table .bl{
+
+.gridview-table .bl {
     bottom: 0;
     left: 0;
     background-position: bottom left;
 }
-.gridview-table .br{
+
+.gridview-table .br {
     bottom: 0;
     right: 0;
     background-position: bottom right;
 }
-.gridview-table .skills .title , .gridview-table .estimatesWrapper .title {
+
+.gridview-table .skills .title, .gridview-table .estimatesWrapper .title {
     font-weight: bold;
     font-size: 12px;
     padding: 15px 0 6px 0;
@@ -1039,44 +1392,50 @@ table .submitedFile,
 table.gridview-table .colSkills ul {
     padding-left: 0;
 }
-table.gridview-table .colSkills ul li{
+
+table.gridview-table .colSkills ul li {
     word-spacing: -1px;
 }
 
-.gridview-table .col3{
-		padding-top: 20px;
-		height: 90px;
-		float: left;
-		min-width: 165px;
-		width: 31.2%;
-		padding-left: 7%;
-		text-align: left;
-	}
+.gridview-table .col3 {
+    padding-top: 20px;
+    height: 90px;
+    float: left;
+    min-width: 165px;
+    width: 31.2%;
+    padding-left: 7%;
+    text-align: left;
+}
+
 /*Start Col4 Styles*/
-	.gridview-table .col4{
-		float: left;
-		font-size: 11px;
-		min-width: 313px;
-		padding-left: 3.3%;
-		text-align: left;
-		width: 64.5%;
-	}
-	.submission-table .col4{
-		padding-bottom: 75px;
-		position: relative;
-	}
-	.submission-table .col4	.highlightedCell{
-		position: absolute;
-		bottom: 15px;
-		left: 5.1%;
-	}
-	.submission-table .col4	.pickupCell  {
-		position: absolute;
-		bottom: 15px;
-		left: 54%;
-	}
-	/*End Col4 Styles*/
-.gridview-table .time{
+.gridview-table .col4 {
+    float: left;
+    font-size: 11px;
+    min-width: 313px;
+    padding-left: 3.3%;
+    text-align: left;
+    width: 64.5%;
+}
+
+.submission-table .col4 {
+    padding-bottom: 75px;
+    position: relative;
+}
+
+.submission-table .col4 .highlightedCell {
+    position: absolute;
+    bottom: 15px;
+    left: 5.1%;
+}
+
+.submission-table .col4 .pickupCell {
+    position: absolute;
+    bottom: 15px;
+    left: 54%;
+}
+
+/*End Col4 Styles*/
+.gridview-table .time {
     height: 14px;
     line-height: 14px;
     padding-left: 21px;
@@ -1084,12 +1443,14 @@ table.gridview-table .colSkills ul li{
     font-size: 11px;
     background: url('/images/copilotPosting/ico-time.png') left top no-repeat;
 }
-.gridview-table .workload{
+
+.gridview-table .workload {
     font-size: 11px;
     font-weight: normal;
     line-height: 10px;
 }
-.gridview-table .workload .value{
+
+.gridview-table .workload .value {
     background: #777777;
     position: relative;
     height: 40px;
@@ -1099,38 +1460,46 @@ table.gridview-table .colSkills ul li{
     overflow: hidden;
     width: 152px;
 }
-.gridview-table .workload .title{
+
+.gridview-table .workload .title {
     display: block;
     font-size: 12px;
     font-weight: bold;
     line-height: 22px;
 }
-.gridview-table .workload .value strong{
+
+.gridview-table .workload .value strong {
     font-size: 24px;
     line-height: 28px;
 }
-.gridview-table .workload .value .v1{
+
+.gridview-table .workload .value .v1 {
     float: left;
     border-right: 1px solid #5f5f5f;
     width: 75px;
 }
-.gridview-table .workload .value .v2{
+
+.gridview-table .workload .value .v2 {
     float: left;
     border-left: 1px solid #858585;
     width: 75px;
 }
-.gridview-table .xperience .title{
+
+.gridview-table .xperience .title {
     font-weight: bold;
     font-size: 12px;
     padding: 13px 0;
 }
+
 .gridview-table .colExperience .row {
     padding-left: 0;
 }
-.gridview-table .colExperience .row .xp{
+
+.gridview-table .colExperience .row .xp {
     word-spacing: -1px;
 }
-.gridview-table .highlightedCell{
+
+.gridview-table .highlightedCell {
     background: #FCFFE5;
     border: 1px solid #D3D3D3;
     text-align: center;
@@ -1139,59 +1508,73 @@ table.gridview-table .colSkills ul li{
     width: 133px;
     position: relative;
 }
-.gridview-table .corAlt .corner{
+
+.gridview-table .corAlt .corner {
     background-image: url('/images/copilotPosting/bg-corners-gray.png');
     height: 6px;
     width: 6px;
 }
-.gridview-table .corAlt .tl{
+
+.gridview-table .corAlt .tl {
     left: -1px;
     top: -1px;
 }
-.gridview-table .corAlt .tr{
+
+.gridview-table .corAlt .tr {
     right: -1px;
     top: -1px;
 }
-.gridview-table .corAlt .bl{
+
+.gridview-table .corAlt .bl {
     left: -1px;
     bottom: -1px;
 }
-.gridview-table .corAlt .br{
+
+.gridview-table .corAlt .br {
     right: -1px;
     bottom: -1px;
 }
-.gridview-table  .pickupCell{
+
+.gridview-table .pickupCell {
     width: 150px;
     height: 57px;
     position: relative;
 }
-.gridview-table .inner{
+
+.gridview-table .inner {
     height: 296px;
 }
-.gridview-table  .pickupCell .btn-red{
+
+.gridview-table .pickupCell .btn-red {
     margin-bottom: 10px;
 }
-.gridview-table  .pickupCell .bMid{
+
+.gridview-table .pickupCell .bMid {
     width: 142px;
     padding: 0;
 }
+
 .gridview-table .pickupCell.cpPicked,
-.gridview-table .pickupCell.rupPicked{
+.gridview-table .pickupCell.rupPicked {
     background: #f3f3f3;
     border: 1px solid #D3D3D3;
     text-align: center;
 }
-.gridview-table .pickupCell .corner{
+
+.gridview-table .pickupCell .corner {
     display: none;
 }
+
 .gridview-table .pickupCell.cpPicked .corner,
-.gridview-table .pickupCell.rupPicked .corner{
+.gridview-table .pickupCell.rupPicked .corner {
     display: inline-block;
 }
-.pickupCell .pickedCP{
+
+.pickupCell .pickedCP {
     display: none;
 }
-.pickupCell .pikedAsCP{
+
+.pickupCell .pikedAsCP {
     color: #da0000;
     background: url('/images/copilotPosting/ico-tick-cp.png') left top no-repeat;
     padding-left: 21px;
@@ -1201,10 +1584,12 @@ table.gridview-table .colSkills ul li{
     text-align: left;
     margin: 22px 0 0 0;
 }
-.pickupCell .pickedRunnerUp{
+
+.pickupCell .pickedRunnerUp {
     display: none;
 }
-.pickupCell .pikedAsRUP{
+
+.pickupCell .pikedAsRUP {
     color: #333;
     background: url('/images/copilotPosting/ico-tick-rup.png') left top no-repeat;
     padding-left: 21px;
@@ -1214,31 +1599,38 @@ table.gridview-table .colSkills ul li{
     text-align: left;
     margin: 22px 0 0 0;
 }
+
 .listview-table .pickupCell .pikedAsRUP,
-.listview-table .pickupCell .pikedAsCP{
+.listview-table .pickupCell .pikedAsCP {
     margin-top: 38px;
 }
+
 .compare-table .pickupCell .pikedAsRUP,
-.compare-table .pickupCell .pikedAsCP{
+.compare-table .pickupCell .pikedAsCP {
     margin-top: 0;
 }
-.pickupCell.cpPicked .pickedCP{
+
+.pickupCell.cpPicked .pickedCP {
     display: block;
     text-align: center;
 }
-.pickupCell.cpPicked .unPickedCP{
+
+.pickupCell.cpPicked .unPickedCP {
     display: none;
 }
-.pickupCell.rupPicked .pickedRunnerUp{
+
+.pickupCell.rupPicked .pickedRunnerUp {
     display: block;
     word-spacing: -1px;
     text-align: center;
 }
-.pickupCell.rupPicked .unPickedCP{
+
+.pickupCell.rupPicked .unPickedCP {
     display: none;
 }
+
 .rowSelCP .ribbon,
-.rowSelRUP .ribbon{
+.rowSelRUP .ribbon {
     position: absolute;
     left: 0;
     top: -16px;
@@ -1247,59 +1639,70 @@ table.gridview-table .colSkills ul li{
     width: 67px;
     background: url(/images/copilotPosting/ribbon-cp.png) left top no-repeat;
 }
+
 .gridview-table .rowSelCP .ribbon,
-.gridview-table .rowSelRUP .ribbon{
+.gridview-table .rowSelRUP .ribbon {
     top: -1px;
 }
-.rowSelRUP .ribbon{
+
+.rowSelRUP .ribbon {
     background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
 }
-.submission-table tr td{
-	height: 388px;	
+
+.submission-table tr td {
+    height: 388px;
 }
-	.submission-table .col2, .submission-table .col3{
-		height: 90px;
-	}
-	
+
+.submission-table .col2, .submission-table .col3 {
+    height: 90px;
+}
+
 /* compare list */
-.compareList{
+.compareList {
     overflow: hidden;
-    border: solid #BDBDBD;
+    border: solid #E7E7E7;
     border-width: 1px 0;
     position: relative;
 }
-.compareList li{
+
+.compareList li {
     list-style: none;
 }
-.compareList .cLeft{
+
+.compareList .cLeft {
     float: left;
     background: #F3F3F3;
 }
-.compareList .cLeft ul{
+
+.compareList .cLeft ul {
     width: 153px;
     overflow: hidden;
 }
-.compareList .cLeft li{
+
+.compareList .cLeft li {
     font-weight: bold;
     font-size: 14px;
     text-align: left;
     width: 153px;
-    border-top: 1px solid #BDBDBD;
+    border-top: 1px solid #E7E7E7;
     position: relative;
     overflow: hidden;
     float: left;
 }
-.compareList .cLeft li p{
+
+.compareList .cLeft li p {
     bottom: -50%;
     position: relative;
     line-height: 0px;
     padding-left: 8px;
 }
-.compareList .cLeft li.doubleLine p{
+
+.compareList .cLeft li.doubleLine p {
     line-height: 16px;
     margin-top: -16px;
 }
-.compareList .cRight{
+
+.compareList .cRight {
     background: #fff;
     position: absolute;
     left: 153px;
@@ -1307,90 +1710,110 @@ table.gridview-table .colSkills ul li{
     top: 0;
     bottom: 0;
 }
-.compareList .cRight .cell{
+
+.compareList .cRight .cell {
     border-left: 1px solid #DADADA;
     border-right: 1px solid #DADADA;
-    border-top: 1px solid #BDBDBD;
+    border-top: 1px solid #E7E7E7;
     margin-right: -1px;
 }
-.compareList .cRight ul{
+
+.compareList .cRight ul {
     overflow: hidden;
 }
-.compareList .cRight ul .colCopilot{
+
+.compareList .cRight ul .colCopilot {
     float: left;
     width: 25%;
     display: inline;
 }
-.compareList .cRight ul .colCopilot.hide{
+
+.compareList .cRight ul .colCopilot.hide {
     display: none;
 }
 
-.compareList .cRight .rCopilot{
+.compareList .cRight .rCopilot {
     height: 341px;
     border-top: none;
     text-align: center;
     position: relative;
 }
-.compareList .cLeft li.rCopilot{
+
+.compareList .cLeft li.rCopilot {
     height: 341px;
     border-top: none;
 }
-.compareList .rFullFill{
+
+.compareList .rFullFill {
     height: 52px;
 }
-.compareList .rWorkLoad{
+
+.compareList .rWorkLoad {
     height: 66px;
     text-align: center;
-    font-size:16px;
+    font-size: 16px;
 }
-.compareList .rMatchedXp{
+
+.compareList .rMatchedXp {
     height: 138px;
 }
-.compareList .rExperience{
+
+.compareList .rExperience {
     height: 220px;
 }
-.compareList .rSkills{
-				min-height: 144px;
-				padding: 10px 0 11px 0;
-			}
-			.compareList .rSkills .achiv{
-				margin: 0 0 0 12px;
-			}
+
+.compareList .rSkills {
+    min-height: 144px;
+    padding: 10px 0 11px 0;
+}
+
+.compareList .rSkills .achiv {
+    margin: 0 0 0 12px;
+}
+
 .compareList .rEstimates {
     height: 160px;
     padding: 20px 0 11px 0;
     text-align: center;
 }
-.compareList .rSbumission{
+
+.compareList .rSbumission {
     height: 70px;
 }
-.compareList .rPickUp{
+
+.compareList .rPickUp {
     height: 85px;
 }
-.compareList .colFulFill{
+
+.compareList .colFulFill {
     padding-top:
 }
 
-.compareList .rFullFill span{
+.compareList .rFullFill span {
     line-height: 53px;
 }
-.compareList .cellWorkload p:first-child{
-    padding-top:13px;
+
+.compareList .cellWorkload p:first-child {
+    padding-top: 13px;
 }
-.compareList .colExperience .row:first-child{
+
+.compareList .colExperience .row:first-child {
     padding-top: 10px;
 }
-.compareList .colSkills ul:first-child{
+
+.compareList .colSkills ul:first-child {
     padding-top: 10px;
 }
-.compareList .colPickup .row:first-child{
+
+.compareList .colPickup .row:first-child {
     padding-top: 5px;
 }
-.compareList .rPickUp div{
+
+.compareList .rPickUp div {
     padding-top: 10px !important;
 }
 
-.compareList .dragSection{
+.compareList .dragSection {
     overflow: hidden;
     height: 23px;
     border-bottom: 1px solid #A8ABAD;
@@ -1398,100 +1821,119 @@ table.gridview-table .colSkills ul li{
     margin-bottom: 14px;
 }
 
-
 /* compare table */
-.compare-table{
+.compare-table {
     border-collapse: collapse;
     border-top: 1px solid #a8abad;
     width: 100%;
 }
-.compare-table thead th{
+
+.compare-table thead th {
     height: 26px;
     border-bottom: 1px solid #a8abad;
     border-left: 1px solid #dadada;
     width: auto;
 }
-.compare-table thead th:first-child{
+
+.compare-table thead th:first-child {
     background: #F3F3F3;
     border: none;
     width: 154px;
 }
-.compare-table td{
+
+.compare-table td {
     border-left: 1px solid #dadada;
     border-bottom: 1px solid #a8abad;
     vertical-align: middle;
 }
-.compareItems .rFullFill{
+
+.compareItems .rFullFill {
     height: 52px;
     text-align: center;
     font-size: 30px;
     font-weight: bold;
 }
-.compare-table .rWorkLoad td{
+
+.compare-table .rWorkLoad td {
     height: 66px;
     text-align: center;
 }
-.compare-table .rMatchedXp td{
+
+.compare-table .rMatchedXp td {
     height: 138px;
 }
-.compare-table .rExperience td{
+
+.compare-table .rExperience td {
     height: 220px;
 }
-.compare-table .rSkills td{
+
+.compare-table .rSkills td {
     height: 144px;
 }
-.compare-table .rSbumission td{
+
+.compare-table .rSbumission td {
     height: 70px;
 }
-.compare-table .rPickUp td{
+
+.compare-table .rPickUp td {
     height: 85px;
 }
-.compare-table .rCopilot{
+
+.compare-table .rCopilot {
     text-align: center;
     height: 292px;
 }
-.compareItems .rCopilot .colCopilot{
+
+.compareItems .rCopilot .colCopilot {
     position: relative;
 }
-.compareItems .rCopilot .memberPic{
-			padding-bottom: 4px;
-			display: block;
-			margin: 0 auto;
-		}
-.compareItems .rCopilot .handle{
+
+.compareItems .rCopilot .memberPic {
+    padding-bottom: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+.compareItems .rCopilot .handle {
     font-size: 14px;
 }
-.compareItems .rCopilot .track{
-			padding-top: 8px;
-		}
-.compareItems .rCopilot .track a{
+
+.compareItems .rCopilot .track {
+    padding-top: 8px;
+}
+
+.compareItems .rCopilot .track a {
     display: inline-block;
     height: 31px;
     width: 31px;
     text-decoration: none;
     margin-left: 6px;
 }
-.compareItems .rCopilot .timestamp{
+
+.compareItems .rCopilot .timestamp {
     padding-top: 13px;
     font-size: 12px;
 }
-.compareItems .rCopilot .copilotStat{
+
+.compareItems .rCopilot .copilotStat {
     margin-top: 12px;
     font-size: 12px;
     padding-left: 21px;
     line-height: 17px;
     height: 17px;
     display: inline-block;
-    background:  url('/images/copilotPosting/ico-view-cp.png') left top no-repeat;
+    background: url('/images/copilotPosting/ico-view-cp.png') left top no-repeat;
 }
-.compareItems .rCopilot .copilotStat:hover{
-    text-decoration: none;
-}
-.pickupCell .submitedFile:hover{
+
+.compareItems .rCopilot .copilotStat:hover {
     text-decoration: none;
 }
 
-.compare-table td:first-child{
+.pickupCell .submitedFile:hover {
+    text-decoration: none;
+}
+
+.compare-table td:first-child {
     background: #f3f3f3;
     border-left: none;
     padding-left: 8px;
@@ -1499,11 +1941,13 @@ table.gridview-table .colSkills ul li{
     font-size: 14px;
     text-align: left;
 }
-.compare-table th{
+
+.compare-table th {
     padding: 0 6px;
     line-height: 27px;
 }
-.compareItems .dragSection .reorder{
+
+.compareItems .dragSection .reorder {
     background: url('/images/copilotPosting/btn-drag.png') left top no-repeat;
     cursor: move;
     color: #999999;
@@ -1514,10 +1958,12 @@ table.gridview-table .colSkills ul li{
     line-height: 20px;
     padding-left: 22px;
 }
-.compareItems .dragSection .reorder:hover{
+
+.compareItems .dragSection .reorder:hover {
     background: url('/images/copilotPosting/btn-drag.png') left bottom no-repeat;
 }
-.compareItems .dragSection .close{
+
+.compareItems .dragSection .close {
     display: inline-block;
     height: 17px;
     line-height: 17px;
@@ -1528,17 +1974,21 @@ table.gridview-table .colSkills ul li{
     position: relative;
     z-index: 1001;
 }
-.compareItems .dragSection .close:hover{
+
+.compareItems .dragSection .close:hover {
     background: url('/images/copilotPosting/btn-close.png') left bottom no-repeat;
 }
-.caption .comparisonResult{
+
+.caption .comparisonResult {
     font-size: 16px;
 }
 
-/* .dragging */                                             f
-.dragtable-drag-handle{
+/* .dragging */
+f
+.dragtable-drag-handle {
     cursor: move;
 }
+
 .ui-sortable .ui-sortable-helper {
     background: #F3F3F3;
 }
@@ -1546,7 +1996,8 @@ table.gridview-table .colSkills ul li{
 #timeLineTip.tooltipContainer {
     width: 185px;
 }
-.rCopilot .ribbonCP{
+
+.rCopilot .ribbonCP {
     position: absolute;
     top: 28px;
     left: 0;
@@ -1555,7 +2006,8 @@ table.gridview-table .colSkills ul li{
     z-index: 9999;
     background: url(/images/copilotPosting/ribbon-cp.png) left top no-repeat;
 }
-.rCopilot .ribbonRUP{
+
+.rCopilot .ribbonRUP {
     position: absolute;
     top: 28px;
     left: 0;
@@ -1570,149 +2022,214 @@ table.gridview-table .colSkills ul li{
 }
 
 /*Start Copilot Feedback Stats*/
-ul.feedbacks{
-	display: block;
-	height: 20px;
-	width: 106px;
-	overflow: hidden;
-	padding: 12px 0 0 0;
+ul.feedbacks {
+    display: block;
+    height: 20px;
+    width: 106px;
+    overflow: hidden;
+    padding: 12px 0 0 0;
 }
-	ul.feedbacks li{
-		display: block;
-		width: 25px;
-		height: 20px;
-		overflow: hidden;
-		float: left;
-		padding: 0 0 0 25px;
-		font-size: 14px;
-		font-weight: bold;
-		line-height: 20px;
-		text-align: left;
-	}
-	ul.feedbacks li.positiveFeedback{
-		background: url(/images/positive-feedback.png) 0 0 no-repeat;
-		padding-right: 6px;
-	}
-	ul.feedbacks li.negativeFeedback{
-		background: url(/images/negative-feedback.png) 0 0 no-repeat;
-	}
-	ul.feedbacks li.zeroPositiveFeedback, ul.feedbacks li.zeroNegativeFeedback {
-		background-position: 0 -20px;
-	}
-.gridview-table .feedbackWrapper{
-	margin: 10px 16px 0 18px;
-	padding: 10px 0 0 12px;
-	border-top: 1px solid #dadada;
+
+ul.feedbacks li {
+    display: block;
+    width: 25px;
+    height: 20px;
+    overflow: hidden;
+    float: left;
+    padding: 0 0 0 25px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: left;
 }
-	.gridview-table .feedbackWrapper ul.feedbacks{
-		margin: 0 auto;
-		padding: 0;
-	}
-.submission-table .feedbackWrapper{
-	padding: 10px 0 10px 12px;
-	border-top: 1px solid #dadada;
-	border-bottom: 1px solid #dadada;
+
+ul.feedbacks li.positiveFeedback {
+    background: url(/images/positive-feedback.png) 0 0 no-repeat;
+    padding-right: 6px;
 }
-.submission-table ul.feedbacks{
-	padding: 0;
-	margin: 0 auto;
+
+ul.feedbacks li.negativeFeedback {
+    background: url(/images/negative-feedback.png) 0 0 no-repeat;
 }
-.cellCopilot ul.feedbacks{
-	margin: 0 auto;
-	padding: 10px 0 0 20px;
+
+ul.feedbacks li.zeroPositiveFeedback, ul.feedbacks li.zeroNegativeFeedback {
+    background-position: 0 -20px;
+}
+
+.gridview-table .feedbackWrapper {
+    margin: 10px 16px 0 18px;
+    padding: 10px 0 0 12px;
+    border-top: 1px solid #dadada;
+}
+
+.gridview-table .feedbackWrapper ul.feedbacks {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.submission-table .feedbackWrapper {
+    padding: 10px 0 10px 12px;
+    border-top: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+
+.submission-table ul.feedbacks {
+    padding: 0;
+    margin: 0 auto;
+}
+
+.cellCopilot ul.feedbacks {
+    margin: 0 auto;
+    padding: 10px 0 0 20px;
 }
 
 .btn-pickup, .btn-pickup-rup {
     margin-top: 12px;
 }
 
-.gridview-table .pickCPBox{
-    padding:6px 0;
-}
-.listview-table .pickCPBox{
-    padding:28px 0;
-}
-.pickCPBox{
-    height:45px;
-    overflow:hidden;
-    width:92px;
-    margin:0 auto;
-}
-.pickCPBox .pickCopilotCell{
-    float:left;
-    width:39px;
-    height:38px;
-    text-align:left;
-    padding-top:7px;
-    padding-left:7px;
-}
-.pickCPBox .pickCopilotCell.active{
-    background:url(../../../images/copilotPosting/btn-pick-copilot.png) 0 -135px  no-repeat;
-}
-.pickCPBox .pickCopilotCell a{
-    display:inline-block;
-    width:31px;
-    height:31px;
-    text-align:center;
-    line-height:32px;
-    font-size:23px;
-    font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
-    font-weight:bold;
-    text-decoration:none;
-    color:#909090;
-    background:url(../../../images/copilotPosting/btn-pick-copilot.png) -7px -7px  no-repeat;
-    overflow:hidden;
-}
-.pickCPBox .pickCopilotCell.active .pickCopilotPrimary,
-.pickCPBox .pickCopilotCell .pickCopilotPrimary:hover{
-    background-position:-7px -97px;
-    color:#fff;
-}
-.pickCPBox .pickCopilotCell.active .pickCopilotSecondary,
-.pickCPBox .pickCopilotCell .pickCopilotSecondary:hover{
-    background-position:-7px -52px;
-    color:#4f4f4f;
+.gridview-table .pickCPBox {
+    padding: 6px 0;
 }
 
-.copilotPostingCommand{
-    height:24px;
-    overflow:hidden;
-    padding-top:20px;
+.listview-table .pickCPBox {
+    padding: 28px 0;
 }
-.copilotPostingCommand .btn{
-    float:right;
-    margin-left:6px;
+
+.pickCPBox {
+    height: 45px;
+    overflow: hidden;
+    width: 92px;
+    margin: 0 auto;
 }
-.btnForgiveChooseCopilot .ico{
-    padding-left:15px;
-    font-size:11px;
-    background:url(../../../images/copilotPosting/ico-btn-remove.png) left center no-repeat;
+
+.pickCPBox .pickCopilotCell {
+    float: left;
+    width: 39px;
+    height: 38px;
+    text-align: left;
+    padding-top: 7px;
+    padding-left: 7px;
 }
-.btnConfirmPlacements .ico{
-    padding-left:15px;
-    font-size:11px;
-    background:url(../../../images/copilotPosting/ico-btn-tick-cp.png) left center no-repeat;
+
+.pickCPBox .pickCopilotCell.active {
+    background: url(/images/copilotPosting/btn-pick-copilot.png) 0 -135px no-repeat;
+}
+
+.pickCPBox .pickCopilotCell a {
+    display: inline-block;
+    width: 31px;
+    height: 31px;
+    text-align: center;
+    line-height: 31px;
+    font-size: 23px;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    background: url(/images/copilotPosting/btn-pick-copilot.png) -7px -7px no-repeat;
+    overflow: hidden;
+}
+
+.pickCPBox .pickCopilotCell.active .pickCopilotPrimary,
+.pickCPBox .pickCopilotCell .pickCopilotPrimary:hover {
+    background-position: -7px -98px;
+    color: #fffffe;
+}
+
+.pickCPBox .pickCopilotCell.active .pickCopilotSecondary,
+.pickCPBox .pickCopilotCell .pickCopilotSecondary:hover {
+    background-position: -7px -53px;
+    color: #fffffe;
+}
+
+.copilotPostingCommand {
+    height: 27px;
+    overflow: hidden;
+    padding-top: 20px;
+}
+
+.copilotPostingCommand .btn {
+    float: right;
+    margin-left: 6px;
+}
+
+.btnForgiveChooseCopilot .ico {
+    padding-left: 15px;
+    font-size: 11px;
+    height: 27px;
+    line-height: 27px;
+    display: block;
+    background: url(/images/copilotPosting/ico-btn-remove.png) left center no-repeat;
+}
+
+.btnForgiveChooseCopilot:active .ico {
+    color: #fffffe;
+    background: url(/images/copilotPosting/ico-btn-remove-active.png) left center no-repeat;
+}
+
+.btnConfirmPlacements .ico {
+    height: 27px;
+    line-height: 27px;
+    display: block;
+    padding-left: 15px;
+    font-size: 11px;
+    background: url(/images/copilotPosting/ico-btn-tick-cp.png) left center no-repeat;
+}
+
+.btnConfirmPlacements:active .ico {
+    color: #fffffe;
+    background: url(/images/copilotPosting/ico-btn-tick-cp-active.png) left center no-repeat;
+
 }
 
 .btn.disabled {
     padding-left: 4px;
+    border-radius: 2px;
 }
-.btn.disabled, .btn.disabled .bRt, .btn.disabled .bMid {
-    background-image: url(../../../images/copilotPosting/btn-white-disable.png);
+
+.btn.disabled {
+    background: #c2c2c3;
     color: #d3d3d3;
     font-weight: bold;
     font-size: 11px;
-    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
-    text-shadow:none;
+    text-shadow: none;
+
+    height: 27px;
+    line-height: 27px;
+    border: 1px solid #d3d3d4;
+
 }
+
+.btn.disabled:hover,
+.btn.disabled:active {
+    color: #d3d3d3;
+}
+
+.btn.disabled .bRt, .btn.disabled .bMid {
+    background: none;
+    color: #d3d3d3;
+}
+
 .btn.disabled:hover, .btn.disabled:hover .bRt, .btn.disabled:hover .bMid {
-    background-image: url(../../../images/copilotPosting/btn-white-disable.png);
+    color: #d3d3d3;
+    cursor: default;
 }
-.btnConfirmPlacements.disabled .ico{
-    background:url(../../../images/copilotPosting/ico-btn-tick-cp-diable.png) left center no-repeat;
+
+.btn.disabled:active {
+    border: 1px solid #d3d3d4;
+    color: #d3d3d3;
 }
-.btnForgiveChooseCopilot.disabled .ico{
-    background:url(../../../images/copilotPosting/ico-btn-remove-disable.png) left center no-repeat;
+
+.btn.disabled:active, .btn.disabled:active .bRt, .btn.disabled:active .bMid {
+    color: #d3d3d3;
+}
+
+.btnConfirmPlacements.disabled .ico {
+    background: url(/images/copilotPosting/ico-btn-tick-cp-diable.png) left center no-repeat;
+}
+
+.btnForgiveChooseCopilot.disabled .ico {
+    background: url(/images/copilotPosting/ico-btn-remove-disable.png) left center no-repeat;
 }
 
 /* modal */
@@ -1733,100 +2250,145 @@ ul.feedbacks{
     position: fixed;
     z-index: 10001;
 }
+
 .newModal .barTop {
-    background: url(../../../images/modal-corner.png) no-repeat left top;
+    background: #fff;
     padding-left: 8px;
 }
+
 .newModal .barTopR {
-    background: url(../../../images/modal-corner.png) no-repeat right top;
+    background: #fff;
     padding-right: 8px;
 }
+
 .newModal .barTopM {
-    background: url(../../../images/modal-bg-horizontal.png) repeat-x left top;
+    background: #fff;
     height: 9px;
     overflow: hidden;
 }
 
 .newModal .barMid {
-    background-color: #000;
+    background-color: #fff;
     padding-left: 4px;
 }
+
 .newModal .barMidR {
-    background-color: #000;
+    background-color: #fff;
     padding-right: 4px;
 }
-.newModal .barMidM {
-    background: url("../../images/modalBg.png") repeat-x scroll left top #E8E8E8;
-}
 
-.newModal .barBot {
-    background: url(../../../images/modal-corner.png) no-repeat left -9px;
-    padding-left: 8px;
-}
-.newModal .barBotR {
-    background: url(../../../images/modal-corner.png) no-repeat right -9px;
-    padding-right: 8px;
-}
-.newModal .barBotM {
-    background: url(../../../images/modal-bg-horizontal.png) repeat-x left -9px;
-    height: 9px;
-    overflow: hidden;
+.newModal .barMidM {
+    background: #fff;
 }
 
 #new-modal .outLay {
     position: relative;
 }
+
 #new-modal .inner {
     margin: 0 4px;
-    background: url(../../../images/modalBg.png) repeat-x left top #e8e8e8;
+    border-top: 1px solid #e7e7e7;
+    background: #fff;
 }
-#forgiveChooseCopilotConfirmModal .modalContainer{
-    font-size:14px;
-    line-height:16px;
-    padding:30px 50px 27px;
-    text-align:center;
+
+#forgiveChooseCopilotConfirmModal .modalContainer {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 30px 50px 27px;
+    text-align: center;
 }
+
 /* buttonArea */
 #forgiveChooseCopilotConfirmModal .buttonArea {
     height: 52px;
-    background: #e8e8e8;
-    border:0;
-    padding-left:102px;
+    background: #fff;
+    border: 0;
+    padding-left: 102px;
 }
 
-#forgiveChooseCopilotConfirmModal .buttonArea .button6 {
-    width: 60px;
+#forgiveChooseCopilotConfirmModal .buttonArea .button6,
+#forgiveChooseCopilotConfirmModal .buttonArea .buttonGreen {
     float: left;
     display: block;
-    margin:0 5px;
-}
-#forgiveChooseCopilotConfirmModal strong.red{
-    color:#b60000;
+    margin: 0 5px;
+    text-align: center;
+
+    height: 21px;
+    line-height: 21px;
+    background: #81bc01;
+    border-bottom: 3px solid #5ba801;
+    border-radius: 4px;
+    behavior: url(/css/PIE.htc);
+    color: #ffffff;
 }
 
-#cofirmChooseCopilotConfirmModal .modalContainer{
-    font-size:14px;
-    line-height:16px;
-    padding:30px 50px 27px;
-    text-align:center;
+#forgiveChooseCopilotConfirmModal .buttonArea .button6 span,
+#forgiveChooseCopilotConfirmModal .buttonArea .buttonGreen span {
+    background: none;
 }
+
+#forgiveChooseCopilotConfirmModal .buttonArea .button6:hover,
+#forgiveChooseCopilotConfirmModal .buttonArea .buttonGreen:hover {
+    border-bottom: 3px solid #81bc01;
+
+}
+
+#forgiveChooseCopilotConfirmModal .buttonArea .closebutton {
+    background: #ff8a00;
+    border-bottom: 3px solid #ff6700;
+}
+
+#forgiveChooseCopilotConfirmModal .buttonArea .closebutton:hover {
+    border-bottom: 3px solid #ff8a00;
+
+}
+
+#forgiveChooseCopilotConfirmModal strong.red {
+    color: #f00;
+}
+
+#cofirmChooseCopilotConfirmModal .modalContainer {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 30px 50px 27px;
+    text-align: center;
+}
+
 /* buttonArea */
 #cofirmChooseCopilotConfirmModal .buttonArea {
     height: 52px;
-    background: #e8e8e8;
-    border:0;
-    padding-left:102px;
+    background: #fff;
+    border-top: 1px solid #e7e7e7;
+    border: 0;
+    padding-left: 102px;
+}
+
+#cofirmChooseCopilotConfirmModal .buttonArea .buttonGreen {
+    float: left;
+
 }
 
 #cofirmChooseCopilotConfirmModal .buttonArea .button6 {
     width: 60px;
     float: left;
+    text-align: center;
     display: block;
-    margin:0 5px;
+    margin: 0 5px;
+
+    background: #ff8a00;
+    border-bottom: 3px solid #ff6700;
 }
-#cofirmChooseCopilotConfirmModal strong.red{
-    color:#b60000;
+
+#cofirmChooseCopilotConfirmModal .buttonArea .button6:hover {
+    border-bottom: 3px solid #ff8a01;
+
 }
+
+#cofirmChooseCopilotConfirmModal strong.red {
+    color: #b60000;
+}
+
+/* END new added for BUGR-8385 */
 
 .previewCopilotGamePlan {
     padding-left: 15px;
@@ -1841,19 +2403,61 @@ td.estimates {
     font-size: 12px;
 }
 
-.btnDownload{
-    display:inline-block;
+.btnDownload {
+    display: inline-block;
     margin: 2px 5px 0 5px;
-    width:11px;
-    height:12px;
+    width: 11px;
+    height: 12px;
     background: url('/images/copilot_posting_dowload.png') no-repeat;
 }
 
-.btnPreview{
-    display:inline-block;
+.btnPreview {
+    display: inline-block;
     margin: 2px 5px 0 0;
-    width:13px;
-    height:14px;
+    width: 13px;
+    height: 14px;
     background: url('/images/copilot_posting_preview.png') no-repeat;
+}
+
+.compareList .rPickUp .pickCPBox {
+    padding-top: 18px !important;
+}
+
+.compareList .rPickUp .pickCPBox .pickCopilotCell {
+    padding-top: 7px !important;
+}
+
+.compareList .rCopilot .ribbonCP {
+    display: none;
+}
+
+.compareList .rowSelCP .rCopilot .ribbonCP {
+    display: block;
+    background: url(/images/copilotPosting/ribbon-cp.png) left top no-repeat;
+}
+
+.compareList .rowSelRUP .rCopilot .ribbonCP {
+    display: block;
+    background: url(/images/copilotPosting/ribbon-rup.png) left top no-repeat;
+}
+
+/* END new added for BUGR-8491 */
+
+a.nobutton {
+    height: 21px;
+    line-height: 21px;
+    background: #ff8a00;
+    border-bottom: 3px solid #ff6700;
+    border-radius: 4px;
+    behavior: url(/css/PIE.htc);
+    color: #ffffff;
+}
+
+a.nobutton:hover {
+    border-bottom: 3px solid #ff8a00;
+}
+
+#copilotsIntroduction {
+    color: #666666 !important;
 }
 

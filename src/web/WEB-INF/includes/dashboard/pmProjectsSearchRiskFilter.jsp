@@ -1,8 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Since: Module Assembly - TC Cockpit Operations Dashboard 
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  -
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  -
+  - Version: 1.0 (Module Assembly - TC Cockpit Operations Dashboard)
+  -
+  - Version 1.1 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
+  - - Remove the uneeded corners in div
   -
   - Description: This page renders risk filter.  
 --%>
@@ -21,7 +25,7 @@
                         <span class="left">Save Filters</span>
                     </a>
                     -->
-                    <a class="redBtn" href="javascript:;" id="applyRiskFilters">
+                    <a class="button6" href="javascript:;" id="applyRiskFilters">
                         <span class="left">Apply</span>
                     </a>
                 </div>

@@ -11,8 +11,11 @@
  * Version 1.1.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
  * - Fix a small rendering issue for project health table.
  *
- * @author isv, GreatKevin, csy2012
- * @version 1.1.2
+ * Version 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
+ * - Remove the padding added for active challenges health table after rebranding
+ *
+ * @author isv, GreatKevin, csy2012, TCSASSEMBLER
+ * @version 1.2
  */
 $(document).ready(function(){
     // Color the rows for projects in Enterprise Health area
@@ -312,7 +315,7 @@ if ($('.dataTables_scrollBody').length != 0) {        // Determine if scrollbar 
         }
         
         if ($.browser.msie) {
-            $('.projectHealthHeader').css('padding-right', o + 'px');
+            // $('.projectHealthHeader').css('padding-right', o + 'px');
             if (parseInt($.browser.version) == 7) {
                 $('#projectHealthTable').css('width', $('#projectHealthTable').parent().width() - o);
             } else {
@@ -320,7 +323,7 @@ if ($('.dataTables_scrollBody').length != 0) {        // Determine if scrollbar 
             }
         } else {
             $('#projectHealthTable').css('width', '100%');
-            $('.projectHealthHeader table').css('padding-right', o + 'px');
+            // $('.projectHealthHeader table').css('padding-right', o + 'px');
         }
     }
 }
