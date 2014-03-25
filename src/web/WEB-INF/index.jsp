@@ -121,7 +121,7 @@
             <div class="loginBoxInner">
                 <h2>Login to your account</h2>
 
-                <s:form action="login" namespace="/" id="LoginForm" method="post" onsubmit="return submitLoginForm();">
+                <s:form action="home" namespace="/" id="LoginForm" method="post" onsubmit="return submitLoginForm();">
 
                     <p class="errorMessage">
                         <s:if test="hasActionErrors()">

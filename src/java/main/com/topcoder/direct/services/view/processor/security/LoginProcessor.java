@@ -68,6 +68,12 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
         String username = form.getUsername();
         String password = form.getPassword();
 
+        if((username == null || (username != null && username.trim().length() == 0))
+                && (password == null || (password != null && password.trim().length() == 0))) {
+            action.setResultCode(LoginAction.RC_EMPTY_CREDENTIALS);
+            return;
+        }
+
         try {
             TCSubject tcSubject = login(username, password);
             action.getSessionData().setCurrentUser(tcSubject);

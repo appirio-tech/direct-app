@@ -52,6 +52,8 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
      */
     public static final int RC_INVALID_CREDENTIALS = 1;
 
+    public static final int RC_EMPTY_CREDENTIALS = 2;
+
     /**
      * <p>A <code>LoginForm</code> providing the input parameters submitted by user.</p>
      */
@@ -115,7 +117,9 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
     @Override
     public String execute() throws Exception {
         String result = super.execute();
-        if (SUCCESS.equals(result) && getResultCode() != RC_INVALID_CREDENTIALS) {
+        if (SUCCESS.equals(result)
+                && getResultCode() != RC_INVALID_CREDENTIALS
+                && getResultCode() != RC_EMPTY_CREDENTIALS) {
             getSessionData().getSession().removeAttribute("redirectBackUrl");
             forwardUrl = ServletActionContext.getRequest().getParameter("forwardUrl");
 
@@ -139,6 +143,8 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
             return SUCCESS;
         } else if (RC_INVALID_CREDENTIALS == getResultCode()) {
             addActionError("Username or password is not valid");
+            return INPUT;
+        } else if (RC_EMPTY_CREDENTIALS == getResultCode()) {
             return INPUT;
         } else {
             return result;

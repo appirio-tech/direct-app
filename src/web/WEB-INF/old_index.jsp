@@ -351,7 +351,7 @@
 							<div class="area2Content">
 							
 								<div class="login">
-                                    <s:form action="login" namespace="/" id="LoginForm" method="post">
+                                    <s:form action="home" namespace="/" id="LoginForm" method="post">
                                         <s:actionerror/>
                                         <h3>Please Login</h3>
                                         <p>

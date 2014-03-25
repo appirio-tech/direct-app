@@ -135,6 +135,12 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
         String username = form.getUsername();
         String password = form.getPassword();
 
+        if((username == null || (username != null && username.trim().length() == 0))
+                && (password == null || (password != null && password.trim().length() == 0))) {
+            action.setResultCode(LoginAction.RC_EMPTY_CREDENTIALS);
+            return;
+        }
+
         TCSubject tcSubject = null;
         if (passwordsMap.containsKey(username) && password.equalsIgnoreCase(passwordsMap.get(username))) {
             Long userId = usersMap.get(username);
