@@ -166,7 +166,7 @@
             <exception-mapping result="error" exception="java.lang.Exception"/>
         </global-exception-mappings>
 
-        <action name="home" class="com.topcoder.direct.services.view.action.LandingPage">
+        <action name="oldHome" class="com.topcoder.direct.services.view.action.LandingPage">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success">/WEB-INF/old_index.jsp</result>
             <result name="input">/WEB-INF/old_index.jsp</result>
@@ -178,15 +178,16 @@
             <result name="input">/WEB-INF/index.jsp</result>
         </action>
 
-        <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
+        <action name="home" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
                 <param name="actionName">activeContests</param>
                 <param name="namespace">enterpriseDashboard</param>
             </result>
             <result name="forward" type="redirect">${forwardUrl}</result>
-            <result name="input">/WEB-INF/index.jsp</result>
+            <result name="input">/WEB-INF/old_index.jsp</result>
         </action>
+
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
             <result name="success" type="redirect">/scorecard/logout</result>
       <!-- type="redirectAction">
