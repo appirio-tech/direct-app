@@ -101,7 +101,7 @@
 
 <div class="buttonBox" id="orderReview_buttonBox">
 	<a href="javascript:activateContest();" class="button6 contiune" id="orderReview_activateButton"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CONTEST</span></span></a>
-	<a href="javascript:saveAsDraftOrderReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
+	<a href="javascript:saveAsDraftOrderReview();" class="button6 newButtonGreen draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
 	<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>
 	<a href="javascript:backOrderReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>		
 </div>

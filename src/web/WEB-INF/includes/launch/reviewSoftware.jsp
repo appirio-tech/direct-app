@@ -27,7 +27,7 @@
 		<li class="current">Software</li>
 		<li id="rswContestTypeName"></li>
 	</ul>
-	<a href="javascript:showPage('contestSelectionPage');" class="button6 draft"><span class="left"><span class="right">EDIT</span></span></a>								
+	<a href="javascript:showPage('contestSelectionPage');" class="button6 newButtonGreen draft"><span class="left"><span class="right">EDIT</span></span></a>
 	<div class="tr"></div>								
 </div>
 
@@ -125,7 +125,7 @@
 
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
-    <a href="javascript:saveAsDraftReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
+    <a href="javascript:saveAsDraftReview();" class="button6 newButtonGreen draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
 		<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>  
     <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
     <a href="javascript:backReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>		

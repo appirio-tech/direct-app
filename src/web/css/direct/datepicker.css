@@ -50,8 +50,8 @@ table.jCalendar tr td.other-month {
 }
 
 table.jCalendar td.today {
-    background: #ff6700;
-    color: #fff;
+    background: #FAEACD;
+    color: #666666;
     font-weight: bold;
 }
 

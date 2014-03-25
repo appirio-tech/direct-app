@@ -173,10 +173,10 @@
         <div id="footerInner">
 
             <div class="copyright">
-        <span>&#0169; Copyright TopCoder, Inc. 2001-<script type="text/javascript">d = new Date();
-        document.write(d.getFullYear());</script></span>
+        <span>&#0169; Copyright TopCoder, Inc. 2001 - <script type="text/javascript">d = new Date();
+        document.write(d.getFullYear());</script></span> &nbsp;|&nbsp;
                 <a href="http://www.topcoder.com/community/how-it-works/privacy-policy/" target="_blank" title="Privacy Policy">Privacy
-                    Policy</a>
+                    Policy</a> &nbsp;|&nbsp;
                 <a href="http://www.topcoder.com/community/how-it-works/terms/" target="_blank" title="Terms of Use">Terms
                     of Use</a>
             </div>

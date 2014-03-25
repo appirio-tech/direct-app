@@ -239,7 +239,7 @@
                             <div class="clear"></div>
                             <div class="buttonArea">
                                 <a href="javascript:;" title="YES" class="button6"><span class="left"><span class="right">YES</span></span></a>
-                                <a href="javascript:;" title="NO" class="closebutton button6"><span class="left"><span class="right">NO</span></span></a>
+                                <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span class="left"><span class="right">NO</span></span></a>
                             </div>
                         </div>
                         <!-- End .content -->
@@ -274,7 +274,7 @@
                             <div class="clear"></div>
                             <div class="buttonArea">
                                 <a href="javascript:;" title="YES" class="button6"><span class="left"><span class="right">YES</span></span></a>
-                                <a href="javascript:;" title="NO" class="closebutton button6"><span class="left"><span class="right">NO</span></span></a>
+                                <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span class="left"><span class="right">NO</span></span></a>
                             </div>
                         </div>
                         <!-- End .content -->
@@ -630,7 +630,7 @@
             <div class="buttonArea">
                 <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span
                         class="right">SAVE</span></span></a>
-                <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span
+                <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span
                         class="left"><span class="right">CANCEL</span></span></a>
 
                     <div class="clearFix"></div>
@@ -1137,7 +1137,7 @@
                         </div>
                         <div class="buttonArea">
                             <a href="javascript:;" title="SAVE" class="button6 saveButton createNewFeedback"><span class="left"><span class="right">SAVE</span></span></a>
-                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                             <div class="clearFix"></div>
                         </div>
                     </div>
@@ -1201,7 +1201,7 @@
                         </div>
                         <div class="buttonArea">
                             <a href="javascript:;" title="SAVE" class="button6 saveButton editNewFeedback"><span class="left"><span class="right">SAVE</span></span></a>
-                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                             <div class="clearFix"></div>
                         </div>
                     </div>
@@ -1298,7 +1298,7 @@
                                 </div>
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="OK" class="closebutton button6"><span
+                                    <a href="javascript:;" title="OK" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span
                                             class="right">OK</span></span></a>
                                 </div>
@@ -1331,7 +1331,7 @@
                                 </div>
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="OK" class="closebutton button6"><span
+                                    <a href="javascript:;" title="OK" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">OK</span></span></a>
                                 </div>
                             </div>
@@ -1361,7 +1361,7 @@
                                 </div>
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="OK" class="closebutton button6"><span
+                                    <a href="javascript:;" title="OK" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">OK</span></span></a>
                                 </div>
                             </div>
@@ -1430,7 +1430,7 @@
                                 <div class="clear"></div>
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="CLOSE"
-                                       class="closebutton button6 closeButton"><span
+                                       class="closebutton newButtonOrange  button6 closeButton"><span
                                             class="left"><span class="right">CLOSE</span></span></a>
                                 </div>
                             </div>
@@ -1465,7 +1465,7 @@
                             <div id="ganttChartDiv"></div>
                             <div class="clear"></div>
                             <div class="buttonArea">
-                                <a href="javascript:;" title="CLOSE" class="closebutton button6 closeButton"><span
+                                <a href="javascript:;" title="CLOSE" class="closebutton newButtonOrange  button6 closeButton"><span
                                         class="left"><span class="right">CLOSE</span></span></a>
                             </div>
                         </div>
@@ -1509,7 +1509,7 @@
                             <div class="clear"></div>
                             <div class="buttonArea">
                                 <a href="javascript:;" title="YES, I UNDERSTAND"
-                                   class="closebutton button6"><span class="left"><span
+                                   class="closebutton newButtonOrange  button6"><span class="left"><span
                                         class="right">YES, I UNDERSTAND</span></span></a>
                             </div>
                         </div>
@@ -1585,7 +1585,7 @@
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="SAVE" class="button6 saveButton"><span
                                             class="left"><span class="right">SAVE</span></span></a>
-                                    <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span
+                                    <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span
                                             class="left"><span class="right">CANCEL</span></span></a>
                                 </div>
                             </div>
@@ -1616,7 +1616,7 @@
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="YES" class="yesbutton button6"><span
                                             class="left"><span class="right">YES</span></span></a>
-                                    <a href="javascript:;" title="NO" class="closebutton button6"><span
+                                    <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">NO</span></span></a>
                                 </div>
                             </div>
@@ -1644,7 +1644,7 @@
 
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="OK" class="closebutton button6"><span
+                                    <a href="javascript:;" title="OK" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">OK</span></span></a>
                                 </div>
                             </div>
@@ -1675,7 +1675,7 @@
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="YES" class="step6Button button6"><span
                                             class="left"><span class="right">YES</span></span></a>
-                                    <a href="javascript:;" title="NO" class="closebutton button6"><span
+                                    <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">NO</span></span></a>
                                 </div>
                             </div>
@@ -1706,7 +1706,7 @@
                                 <div class="buttonArea">
                                     <a href="javascript:;" title="YES" class="step6Button button6"><span
                                             class="left"><span class="right">YES</span></span></a>
-                                    <a href="javascript:;" title="NO" class="closebutton button6"><span
+                                    <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">NO</span></span></a>
                                 </div>
                             </div>
@@ -1752,8 +1752,8 @@
                     <div class="clear"></div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="CONFIRM"
-                           class="closebutton button6 confirmBtn"><span class="left"><span class="right">CONFIRM</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6"><span class="left"><span
+                           class="closebutton newButtonOrange  button6 confirmBtn"><span class="left"><span class="right">CONFIRM</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6"><span class="left"><span
                                 class="right">CANCEL</span></span></a>
                     </div>
                 </div>
@@ -1797,7 +1797,7 @@
                     </div>
                     <div class="clear"></div>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="OK" class="closebutton button6 okButton"><span
+                        <a href="javascript:;" title="OK" class="closebutton newButtonOrange  button6 okButton"><span
                                 class="left"><span class="right">OK</span></span></a>
                     </div>
                 </div>
@@ -1912,7 +1912,7 @@
                                     </p>
                                     <div class="buttonArea">
                                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                                         <div class="clearFix"></div>
                                     </div>
                                 </div>
@@ -1949,7 +1949,7 @@
                                     </div>
                                     <div class="buttonArea">
                                         <a href="javascript:;" class="button6 saveButton"><span class="left"><span class="right">YES</span></span></a>
-                                        <a href="javascript:;" class="closebutton button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
+                                        <a href="javascript:;" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
                                         <div class="clearFix"></div>
                                     </div>
                                 </div>
@@ -2018,7 +2018,7 @@
                     </p>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton newButtonGreen"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton newButtonGreen"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton newButtonGreen"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2056,7 +2056,7 @@
                         </div>
                         <div class="clear"></div>
                         <div class="buttonArea">
-                            <a href="javascript:;" title="OK" class="closebutton buttonBlue"><span class="left"><span class="right">OK</span></span></a>
+                            <a href="javascript:;" title="OK" class="closebutton newButtonOrange  buttonBlue"><span class="left"><span class="right">OK</span></span></a>
                         </div>
                 </div>
                 <!-- End .content --> 
@@ -2110,7 +2110,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton1"><span class="left"><span class="right">INSERT</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                     </div>
                 </div>
                 <!-- End .content -->
@@ -2402,7 +2402,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2476,7 +2476,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2550,7 +2550,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2770,7 +2770,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2847,7 +2847,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span
                                 class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
@@ -2923,8 +2923,8 @@
                         </div>
                     </div>
                     <div class="buttonArea">
-                        <a href="javascript:;" title="SAVE" class="button6 closebutton saveSetting"><span class="left"><span class="right">SAVE</span></span></a>
-                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelBtn"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" title="SAVE" class="button6 closebutton newButtonOrange  saveSetting"><span class="left"><span class="right">SAVE</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelBtn"><span class="left"><span class="right">CANCEL</span></span></a>
                         <div class="clearFix"></div>
                     </div>
                 </div>
@@ -2998,7 +2998,7 @@
                         </div>
                         <div class="buttonArea">
                             <a href="javascript:;" title="SAVE" class="button6 saveButton1"><span class="left"><span class="right">INSERT</span></span></a>
-                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
                         </div>
                     </div>
                 </div>
@@ -3034,7 +3034,7 @@
                     </div>
                     <div class="buttonArea">
                         <a href="javascript:;" title="YES" class="button6 saveButton1"><span class="left"><span class="right">YES</span></span></a>
-                        <a href="javascript:;" title="NO" class="closebutton button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
+                        <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
                     </div>
                 </div>
                 <!-- End .content -->

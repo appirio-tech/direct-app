@@ -46,8 +46,6 @@
 
 <div class="contestViews">
 <div class="areaHeader">
-    <h2 class="title contestTitle">Challenges</h2>
-
     <div class="calendarLegends">
         <span class="legendColor draftLegendColor"></span><span class="legendText">Draft</span>
         <span class="legendColor activeLegendColor"></span><span class="legendText">Active</span>

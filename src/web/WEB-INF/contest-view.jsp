@@ -78,7 +78,6 @@
 
                           <div class="contestViews">
                             <div class="areaHeader">
-                                <h2 class="title contestTitle">Challenges</h2>
 
                                 <div class="viewBtns">
                                     <a href="javascript:;" class="listViewBtn active">

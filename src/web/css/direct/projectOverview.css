@@ -811,14 +811,16 @@ td.contestActivities .completed .rightLaunch p a {
     background: url(/images/edit-icon.png) no-repeat 0 2px;
     display: inline-block;
     line-height: 14px;
-    color: #ff8a00 !important;
     padding-left: 20px;
     margin-top: 4px;
     font-size: 12px;
+    border-bottom: 1px dotted #333333;
+    text-decoration: none;
 }
 
 .projectEditLink:hover {
     text-decoration: none;
+    border-bottom: none;
 }
 
 table.project th.activitiesTitle {

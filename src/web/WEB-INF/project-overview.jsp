@@ -585,11 +585,11 @@
                     <c:if test="${hasWritePermission}">
                     <div class="goForCopilotBox">
                       <div class="leftBox">
-                        <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1"><span>GET A COPILOT</span></a>
+                        <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1 newButtonGreen"><span>GET A COPILOT</span></a>
                         <p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
                       </div>
                       <div class="rightBox">
-                        <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
+                        <a href="javascript:;" class="buttonRed1 newButtonGreen triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
                         <p>If you already have a copilot that you would like to assign. </p>
                       </div>
                     </div>
@@ -703,10 +703,10 @@
                   </div>
                   <c:if test="${hasWritePermission}">
                   <div class="copilotsListButtonBox">
-                        <a href="javascript:;" class="buttonRed1 triggerModal" name="newCopilotFeedbackModal"><span>LEAVE FEEDBACK</span></a>
-                        <a href="javascript:;" class="buttonRed1 triggerModal hide" name="viewCopilotFeedbackModal"><span>VIEW FEEDBACK</span></a>
-                        <a href="javascript:;" class="buttonRed1 triggerModal hide" name="editCopilotFeedbackModal"><span>EDIT FEEDBACK</span></a>
-                        <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
+                        <a href="javascript:;" class="buttonRed1 newButtonGreen triggerModal" name="newCopilotFeedbackModal"><span>LEAVE FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 newButtonGreen triggerModal hide" name="viewCopilotFeedbackModal"><span>VIEW FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 newButtonGreen triggerModal hide" name="editCopilotFeedbackModal"><span>EDIT FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 newButtonGreen triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
                   </div>
                   </c:if>
                 </div>
@@ -752,7 +752,7 @@
                                             </div>
                                         </div>
 										<div class="projectForumButton">
-                                            <a href="javascript:;" class="buttonRed1 configreButton buttonToolTip">
+                                            <a href="javascript:;" class="buttonRed1 newButtonGreen configreButton buttonToolTip">
                                                 <span>CONFIGURE PROJECT FORUM</span>
                                                 <div class="buttonToolTipContainer hide">
                                                     <div class="arrow"></div>
@@ -772,7 +772,7 @@
                                         <p>If you have a question / problem about your project, you can create a project forum to start the discussion with TopCoder PM and your copilots</p>
                                         <c:if test="${hasWritePermission}">
                                         <div class="projectForumLeaderButton">
-                                            <a href="javascript:;" class="buttonRed1 createForumButton"><span>CREATE PROJECT FORUM</span></a>
+                                            <a href="javascript:;" class="buttonRed1 newButtonGreen createForumButton"><span>CREATE PROJECT FORUM</span></a>
                                         </div>
                                         </c:if>
                                     </div>
@@ -783,8 +783,8 @@
                                         <p>Need to discuss this project?</p>
                                         <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
-                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
-											 <a href="javascript:;" class="buttonRed1 configreButton buttonToolTip">
+                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1 newButtonGreen"><span>LET'S TALK</span></a>
+											 <a href="javascript:;" class="buttonRed1 newButtonGreen configreButton buttonToolTip">
 												<span>CONFIGURE PROJECT FORUM</span>
 												<div class="buttonToolTipContainer hide">
 													<div class="arrow"></div>

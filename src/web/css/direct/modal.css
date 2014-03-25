@@ -28,7 +28,7 @@
 /* ----------------------------------------------------------------------------------------------------------------*/
 #TB_overlay {
 	position:absolute;
-	z-index:100;
+	z-index:201;
 	top: 0px;
 	left: 0px;
 	height:100%;
@@ -160,7 +160,7 @@ position: absolute;
 /* OVERRIDE! */
 #TB_window_custom {
 	position:absolute;
-	z-index: 102;
+	z-index: 202;
 	color:#000000;
 	display:none;
 	top:0;
