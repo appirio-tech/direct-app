@@ -85,11 +85,6 @@
                                     <input type="checkbox" class="checkbox" /><label>View All Details</label>
                                 </div>
                                 
-                                <a class="button6 btnAddNew" href="#">
-                                    <span class="left">
-                                        <span class="right">LAUNCH RACE</span>
-                                    </span>
-                                </a>
 
 							</div><!-- End #issueTabs -->
 
@@ -548,11 +543,6 @@
                                                             <input type="checkbox" class="checkbox" /><label>View All Details</label>
                                                         </div>
                                                         
-                                                        <a class="button6 btnAddNew" href="#">
-                                                            <span class="left">
-                                                                <span class="right">LAUNCH RACE</span>
-                                                            </span>
-                                                        </a>
 
                                                     </div><!-- End #issueTabs -->
 

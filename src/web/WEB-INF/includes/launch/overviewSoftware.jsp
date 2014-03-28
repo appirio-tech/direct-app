@@ -249,15 +249,14 @@
         <br/>
           <span class="head">
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
-              <span class="topcoderPrize">
-                  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-                   <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"
-                                                                                checked="checked" autocomplete="off"/>
-                  <span class="mid_info">
+              <span class="">
+                  <span class="mid_info topcoderPrize">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
+                   <span class="mid_info topcoderPrize codePrize">&nbsp;Digital Run:&nbsp;</span>
+                  <input type="checkbox" id="DRCheckbox" checked="checked" autocomplete="off" class="topcoderPrize codePrize"/>
+                  <span class="mid_info topcoderPrize codePrize">
                     Digital Points:&nbsp;&nbsp;$
                   </span>
-                  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"
-                         style="padding: 0 5px; font-size: 11px;"/>
+                  <input type="text" class="prizesInput topcoderPrize codePrize" value="" id="swDigitalRun" readonly="true" size="7" style="padding: 0 5px; font-size: 11px;"/>
                   <br/>
               </span>
               <span class="first_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>

@@ -77,11 +77,6 @@
                                             	<input type="checkbox" class="checkbox" /><label>View All Details</label>
                                             </div>
 
-                                            <a class="lanchProjectBugRaceBtn button6 newButtonGreen btnAddNew" href="javascript:;">
-                                                <span class="left">
-                                                    <span class="right">LAUNCH PROJECT RACE</span>
-                                                </span>
-                                            </a>
 
                                         </div>
                                     </div>
@@ -288,11 +283,11 @@
                                             	<input type="checkbox" class="checkbox" /><label>View All Details</label>
                                             </div>
 
-                                            <a class="lanchProjectBugRaceBtn button6 newButtonGreen btnAddNew" href="javascript:;">
-                                                <span class="left">
-                                                    <span class="right">LAUNCH PROJECT RACE</span>
-                                                </span>
-                                            </a>
+                                            <%--<a class="lanchProjectBugRaceBtn button6 newButtonGreen btnAddNew" href="javascript:;">--%>
+                                                <%--<span class="left">--%>
+                                                    <%--<span class="right">LAUNCH PROJECT RACE</span>--%>
+                                                <%--</span>--%>
+                                            <%--</a>--%>
 
                                         </div>
                                     </div>

@@ -1737,7 +1737,6 @@ IMG {
     height: 40px;
     border-bottom: 1px solid #e7e7e7;
     overflow: hidden;
-    border-radius: 5px 5px 0 0;
 }
 
 #new-modal .outLay .modalHeader .modalHeaderRight {
@@ -1791,7 +1790,6 @@ IMG {
     color: #666666;
     line-height: 18px;
     min-height: 10px;
-    border-radius: 0 0 5px 5px;
 }
 
 .outLay .iconNotice {

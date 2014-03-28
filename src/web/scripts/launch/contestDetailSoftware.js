@@ -1833,7 +1833,8 @@ function updateContestCostData() {
 
     // (6) set the contest fee
     if (contestPercentage!= null && contestPercentage > 0) {
-        var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestPercentage;
+
+       var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotFee) * contestPercentage;
        $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        $('#swContestFee').html(actualFee.formatMoney(2));
        $("#swContestFeePercentage").text(' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
@@ -1871,9 +1872,9 @@ function updateContestCostData() {
 
     //totals
     if (mainWidget.competitionType != 'STUDIO' && mainWidget.competitionType != 'ALGORITHM') {
-        $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_low').html((getContestTotal(feeObject, 'low') + copilotFee).formatMoney(2));
+        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + copilotFee).formatMoney(2));
+        $('#swPrize_high').html((getContestTotal(feeObject, 'high') + copilotFee).formatMoney(2));
     }
 
     //if custom, make the first place editable

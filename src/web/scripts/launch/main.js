@@ -1967,7 +1967,6 @@ function updateSoftwarePrizes() {
 
 
     if ($("#DRCheckbox").is(":checked")
-        && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
         && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F
         && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT) {
         projectHeader.properties['Digital Run Flag'] = 'On';
@@ -2239,13 +2238,21 @@ function calcPrizes(prizes) {
    } else {
        contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
    }
-   if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
+
+
+    if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
+        && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT)
+    {
+        contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
+    } else {
+        contestCost.reliabilityBonusCost = 0;
+    }
+
+   if (projectCategoryId != REPORTING_ID
        && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT)
    {
-       contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
        contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);
    } else {
-       contestCost.reliabilityBonusCost = 0;
        contestCost.drCost = 0;
    }
 
@@ -2365,6 +2372,7 @@ function getContestTotal(feeObject, prizeType, useDomElem, noCheckpointCost, act
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + ($('#DRCheckbox').is(":checked") ? contestCost.drCost : 0) + (actualFee == null ? feeObject.contestFee : actualFee)
     + (contestCost.specReviewCost != undefined ? contestCost.specReviewCost : feeObject.specReviewCost);
+
 
     // check if there are multiple prizes
     if(contestCost.extraPrizes && contestCost.extraPrizes.length > 0) {

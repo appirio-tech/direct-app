@@ -455,7 +455,7 @@
                    </tr>
                    <tr class="rightbor">
                        <td class="first_tab topcoderPrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
-                       <td class="sec_tab_prize topcoderPrize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
+                       <td class="sec_tab_prize topcoderPrize codePrize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
                        
                    </tr>
@@ -535,12 +535,12 @@
                          <br />
                          <span class="head">
                              <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
-                             <span class="topcoderPrize">
-                                 <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span
+                             <span class="">
+                                 <span class="mid_info topcoderPrize">Reliability Bonus:&nbsp;&nbsp;$ <span
                                          id="swReliabilityBonus"></span></span>
-                                 <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
-                                 <span class="mid_info">Digital Points:&nbsp;&nbsp;$</span>
-                                 <input type="text" class="prizesInput" value="" id="swDigitalRun"
+                                 <span class="mid_info topcoderPrize codePrize">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
+                                 <span class="mid_info topcoderPrize codePrize">Digital Points:&nbsp;&nbsp;$</span>
+                                 <input type="text" class="prizesInput" value="" id="swDigitalRun" class="topcoderPrize codePrize"
                                         readonly="true" size="7"/>
                              </span>
 

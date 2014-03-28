@@ -146,7 +146,7 @@ function updateOrderReviewSoftware() {
    $('#sworFirstPlaceCost').html(firstPrize.formatMoney(2));
    var secondPrize = mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost();
    $('#sworSecondPlaceCost').html(secondPrize.formatMoney(2));
-   var drPoints = mainWidget.softwareCompetition.projectHeader.getDRPoints();
+   var  drPoints = mainWidget.softwareCompetition.projectHeader.getDRPoints();
    $('#sworDRPoints').html(drPoints.formatMoney(2));
 
    if(!$("#DRCheckbox").is(":checked")) {
@@ -167,9 +167,18 @@ function updateOrderReviewSoftware() {
             var amount = prize.prizeAmount;
             contestPrizesPart += amount;
             contestPrizesHTML +=
-                '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+                '<td>'+ place +' : $'+ amount.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
         });
-        contestPrizesHTML += '<td class="last">$'+ contestPrizesPart.formatMoney(0) +'</td>';
+
+        var prizeTotalDisplay = contestPrizesPart;
+
+        if($("#DRCheckbox").is(":checked")) {
+            prizeTotalDisplay += drPoints;
+            contestPrizesHTML +=
+                '<td>' +' DR Points : $'+ drPoints.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+        }
+
+        contestPrizesHTML += '<td class="last">$'+ prizeTotalDisplay.formatMoney(1) +'</td>';
         $('#orderReviewSoftwarePage .prizesTable tbody tr:eq(0)').html(contestPrizesHTML);
     } else {
         contestPrizesPart = firstPrize + secondPrize;
