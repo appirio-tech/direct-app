@@ -2711,7 +2711,7 @@ function handleActivationResultEdit(jsonResult) {
             $(".activateButton").hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        var specResponse = " and specification review has bee scheduled.";
+        var specResponse = " and specification review has be scheduled.";
         if(!contestHasSpecReview) {
             specResponse = ".";
         }
