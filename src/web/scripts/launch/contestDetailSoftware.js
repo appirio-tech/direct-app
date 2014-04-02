@@ -2709,6 +2709,10 @@ function handleActivationResultEdit(jsonResult) {
             canEditMultiRound = false;
             $('#resubmit').hide();
             $(".activateButton").hide();
+
+            $("#timelineModule .heading .status").removeClass('draft');
+            $("#timelineModule .heading .status").addClass(result.projectStatus.name.toLowerCase());
+            $("#timelineModule .heading .status span").text(result.projectStatus.name);
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         var specResponse = " and specification review has be scheduled.";
