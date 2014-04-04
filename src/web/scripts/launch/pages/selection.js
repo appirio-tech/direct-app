@@ -223,6 +223,12 @@ function validateFieldsContestSelectionSoftware() {
         validateDirectProjectMilestone(projectMilestoneId, errors);
     }
 
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F || categoryId == SOFTWARE_CATEGORY_ID_CODE) {
+        if(!$('input[name=reviewType]').is(':checked')) {
+            errors.push("Please select the review type for the challenge");
+        }
+    }
+
 
     if (isMultiRound) {
         if (checkPointDate.getTime() <= startDate.getTime()) {
