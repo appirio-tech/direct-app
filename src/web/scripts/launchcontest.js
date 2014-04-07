@@ -934,6 +934,13 @@ function onContestTypeChange() {
         } else {
             $(".reviewRow").hide();
         }
+
+
+        // hide the end date for F2F and set default 30 days
+        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+            $("#endDate").datePicker().val(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy')).trigger('change');
+            $("#endDateDiv").hide();
+        }
     }
 
     /// Studio Contest
