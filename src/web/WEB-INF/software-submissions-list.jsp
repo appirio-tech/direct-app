@@ -408,7 +408,8 @@
                                                                             <c:choose>
                                                                                 <c:when test="${review ne null and review.committed}">
                                                                                     <link:onlineReviewScorecard
-                                                                                            reviewId="${review.reviewId}" 
+                                                                                            reviewId="${review.reviewId}"
+                                                                                            contestTypeId="${viewData.contestStats.contest.typeId}"
                                                                                             styleClass="scores">
                                                                                             <fmt:formatNumber
                                                                                                     value="${review.finalScore}"

@@ -11,9 +11,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ attribute name="reviewId" required="true" type="java.lang.Long" %>
+<%@ attribute name="contestTypeId" required="false" type="java.lang.Long" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
-<a href="https://<%=ApplicationServer.SOFTWARE_SERVER_NAME%>/review/actions/ViewReview.do?method=viewReview&amp;rid=${reviewId}"
-   <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
-    <jsp:doBody/>
-</a>
+
+<c:choose>
+    <c:when test="${not empty contestTypeId && contestTypeId == 38}">
+        <a href="https://<%=ApplicationServer.SOFTWARE_SERVER_NAME%>/review/actions/ViewIterativeReview?rid=${reviewId}"
+           <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
+            <jsp:doBody/>
+        </a>
+    </c:when>
+    <c:otherwise>
+        <a href="https://<%=ApplicationServer.SOFTWARE_SERVER_NAME%>/review/actions/ViewReview.do?method=viewReview&amp;rid=${reviewId}"
+           <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
+            <jsp:doBody/>
+        </a>
+    </c:otherwise>
+</c:choose>
+
