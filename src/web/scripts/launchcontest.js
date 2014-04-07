@@ -559,7 +559,8 @@ $(document).ready(function() {
     if($("#startTime").length > 0) {
         $(".startEtSelect ul li:eq(9) a, #endDateDiv .endEtSelect ul li:eq(9) a, #checkPointEndDateDiv .endEtSelect ul li:eq(9) a").trigger('click');
     }
-   
+
+
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
     CKEDITOR.replace( 'round2Info' ); 
@@ -938,8 +939,18 @@ function onContestTypeChange() {
 
         // hide the end date for F2F and set default 30 days
         if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
-            $("#endDate").datePicker().val(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy')).trigger('change');
+            $("#startDate").bind('change.f2f', function(){
+                $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy'));
+            }).trigger('change');
+
+            $("#startTime").bind('change.f2f', function(){
+                $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
+            }).trigger('change');
             $("#endDateDiv").hide();
+        } else {
+            $("#endDateDiv").show();
+            $("#startDate").unbind('change.f2f');
+            $("#startTime").unbind('change.f2f');
         }
     }
 
