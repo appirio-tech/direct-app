@@ -538,10 +538,9 @@
                              <span class="">
                                  <span class="mid_info topcoderPrize">Reliability Bonus:&nbsp;&nbsp;$ <span
                                          id="swReliabilityBonus"></span></span>
-                                 <span class="mid_info topcoderPrize codePrize">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
+                                 <span class="mid_info topcoderPrize codePrize">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" class="topcoderPrize codePrize"/>
                                  <span class="mid_info topcoderPrize codePrize">Digital Points:&nbsp;&nbsp;$</span>
-                                 <input type="text" class="prizesInput" value="" id="swDigitalRun" class="topcoderPrize codePrize"
-                                        readonly="true" size="7"/>
+                                 <input type="text" class="prizesInput topcoderPrize codePrize" value="" id="swDigitalRun" readonly="true" size="7"/>
                              </span>
 
                          <br />
