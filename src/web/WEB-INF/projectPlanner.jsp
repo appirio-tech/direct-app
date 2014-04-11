@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <title>TopCoder Direct</title>
+    <title>[topcoder] Direct</title>
     <ui:projectPageType tab="gameplan"/>
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

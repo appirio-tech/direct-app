@@ -13,7 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <title>TopCoder Direct</title>
+    <title>[topcoder] Direct</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css"/>

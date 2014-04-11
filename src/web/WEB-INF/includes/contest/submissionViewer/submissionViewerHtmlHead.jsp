@@ -24,7 +24,7 @@
   - Single views.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-<title>TopCoder Direct</title>
+<title>[topcoder] Direct</title>
 
 <!-- Meta Tags -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

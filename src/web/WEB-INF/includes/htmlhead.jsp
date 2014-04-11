@@ -23,7 +23,7 @@
   - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Use new font "Source Sans Pro" for the page
 --%>
-<title>TopCoder Direct</title>
+<title>[topcoder] Direct</title>
 
 <!-- Meta Tags -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
