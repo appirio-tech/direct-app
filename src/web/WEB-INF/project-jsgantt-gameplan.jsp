@@ -25,7 +25,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>TopCoder Cockpit</title>
+    <title>TopCoder Direct</title>
 
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
