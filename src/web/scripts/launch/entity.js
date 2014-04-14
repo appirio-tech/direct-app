@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file defines classes to store informations about contest.
@@ -60,9 +60,12 @@
  *   Version 1.8 (Module Assembly - TC Cockpit Launch Code contest)
  *   - Add Code contest type to software group
  * </p>
+ *
+ * Version 1.9 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * - Add new Design First2Finish contest to studio group
  * 
  * @author duxiaoyang, bugbuka, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 if(!com) {
    var com = {};
@@ -183,8 +186,8 @@ var SOFTWARE_CATEGORY_ID_CONTENT = 35;
 var SOFTWARE_CATEGORY_ID_ASSEMBLY = 14;
 var SOFTWARE_CATEGORY_ID_F2F = 38;
 var SOFTWARE_CATEGORY_ID_CODE = 39;
+var STUDIO_CATEGORY_ID_DESIGN_F2F = 40;
 var SOFTWARE_CATEGORY_ID_BUG_HUNT = 9;
-
 var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 
 var DRAFT_STATUS = "Draft";
@@ -204,6 +207,7 @@ var projectCategoryArray = [
 {id:29,                                name:'Copilot Posting',                  label:'Copilot Posting',                    typeId:2, typeName:'Application', hasMulti:false},
 {id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',                 label:'Content Creation',                   typeId:2, typeName:'Application', hasMulti:true},
 {id:17,                                name:'Web Design',                       label:'Web Design',                         typeId:3, typeName:'Studio', hasMulti:true},
+{id:STUDIO_CATEGORY_ID_DESIGN_F2F,     name:'Design First2Finish',              label:'Design First2Finish',                typeId:3, typeName:'Studio', hasMulti:false},
 {id:20,                                name:'Logo Design',                      label:'Logo Design',                        typeId:3, typeName:'Studio', hasMulti:true},
 {id:16,                                name:'Banners/Icons',                    label:'Banners/Icons',                      typeId:3, typeName:'Studio', hasMulti:true},
 {id:32,                                name:'Application Front-End Design',     label:'Application Front-End Design',       typeId:3, typeName:'Studio', hasMulti:true},

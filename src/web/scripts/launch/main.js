@@ -90,8 +90,11 @@
  * Version 3.3 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
  * - Add review type radios to choose 'community' or 'internal' review
  *
+ * Version 3.4 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * - Handles new Design First2Finish contest
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.3
+ * @version 3.4
  */
 
  /**
@@ -1303,6 +1306,20 @@ function showPage(pageId) {
        $('#checkpointPrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
        $('#checkpointPrize').val('50');
    }
+
+   if (pageId == "overviewPage" && mainWidget.softwareCompetition.projectHeader.projectCategory.id == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+       // special handling for the "Design First2Finish" page
+       $("#overviewPage .prizesInner").children(":gt(2)").hide();
+       $("#overviewPage .prizesInner input:gt(0)").val('');
+       $("#overviewPage .maxSubmissions input").val('');
+       $("#overviewPage .maxSubmissions").hide();
+   } else {
+       $("#overviewPage .prizesInner").children().show();
+       $("#overviewPage .maxSubmissions").show();
+
+   }
+
+
    if (pageId == "overviewSoftwarePage") {
 
        if (isDevOrDesign()) {
@@ -2045,34 +2062,42 @@ function updateAlgorithmPrizes() {
  * Once contest type is defined, all values are determined.
  */
 function updateStudioPrizes() {
-   //update all fees
-   var projectHeader = mainWidget.softwareCompetition.projectHeader;
-   var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
-   var feeObject = getStudioContestCost(projectCategoryId);
-   if (projectHeader.prizes.length == 0) {
-       projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
-       projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
-       var prizes = [];
-       prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-       prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-       prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
-       projectHeader.prizes = prizes;
-       projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
-   }
-   projectHeader.setReviewCost(feeObject.reviewCost);
-   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
+    // update all prize cost
+    var projectHeader = mainWidget.softwareCompetition.projectHeader;
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+    var feeObject = getStudioContestCost(projectCategoryId);
+    if (projectHeader.prizes.length == 0) {
+        projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
+        projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
+        var prizes = [];
+        prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+        prizes.push(new com.topcoder.direct.Prize(1, 0, CHECKPOINT_PRIZE_TYPE_ID, 1));
+        projectHeader.prizes = prizes;
+        projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
+    }
+    projectHeader.setReviewCost(feeObject.reviewCost);
+    projectHeader.setSpecReviewCost(feeObject.specReviewCost);
 
-   var billingProjectId =  mainWidget.softwareCompetition.projectHeader.getBillingProject();
 
-   if (billingProjectId > 0) {
-        if (billingFeesPercentage[billingProjectId]!= null) {
+    // do some special cases handling here
+    // 1) if challenge is of type design first2finish, no DR points
+    if (isDesignF2F()) {
+        projectHeader.setDRPoints(0);
+    }
+
+
+    // update the contest fee
+    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+    if (billingProjectId > 0) {
+        if (billingFeesPercentage[billingProjectId] != null) {
             var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
-            if (contestFeePercentage!=null) {
+            if (contestFeePercentage != null) {
                 var total = 0;
                 var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
                 for (var i = 0; i < prizes.length; i++) {
-                        total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
-                } 
+                    total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
+                }
                 total += parseFloat(projectHeader.getReviewCost());
                 total += parseFloat(projectHeader.getSpecReviewCost());
                 total += parseFloat(projectHeader.getDRPoints());
@@ -2660,7 +2685,6 @@ function validatePrizes(errors) {
    var prizeInputs = [];
    var lastPrizeIndex = -1;
    var errorsAdded = false;
-   var stop = false;
    var $prizeElements;
    
    if(mainWidget.isStudioContest()) {
@@ -2668,23 +2692,21 @@ function validatePrizes(errors) {
    } else {
        $prizeElements = $('div.alPrizes .prizesInput');
    }
-   
-   $.each($prizeElements,function(i, element) {
+
+    $.each($prizeElements, function (i, element) {
         var value = $.trim($(this).val());
-        prizeInputs.push(value);
-        if(isNotEmpty(value)) {
-            if (!stop) {
-                lastPrizeIndex = i;
-            }
+        if (isNotEmpty(value)) {
+            prizeInputs.push(value);
         } else {
-            stop = true;
+            return false;
         }
     });
-    prizeInputs.splice(lastPrizeIndex+1, 10);
+
+   var requiredPrizeNumber = isDesignF2F() ? 1 : 2;
 
    //validation
-   if(prizeInputs.length < 2) {
-       errors.push('At least first & second place prizes should be set');
+   if(prizeInputs.length < requiredPrizeNumber) {
+       errors.push('At least ' + (requiredPrizeNumber >= 2 ? 'First & Second place prizes' : 'First place prize') + ' should be set');
        errorsAdded = true;
    }
 
@@ -2717,8 +2739,9 @@ function validatePrizes(errors) {
           prevPrize = value.prizeAmount;
       });
 
-      if(prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount) {
-          errors.push('Second place prize should at least be 20% of first place prize!');
+      if(!isDesignF2F() &&
+            prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount) {
+          errors.push('Second place prize should at least be 20% of first place prize.');
           errorsAdded = true;
       }
    }
@@ -2863,6 +2886,15 @@ function isF2F() {
     } else {
         var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
         return (categoryId == SOFTWARE_CATEGORY_ID_F2F);
+    }
+}
+
+function isDesignF2F() {
+    if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+        return false;
+    } else {
+        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+        return (categoryId == STUDIO_CATEGORY_ID_DESIGN_F2F);
     }
 }
 

@@ -219,7 +219,9 @@ function validateFieldsContestSelectionSoftware() {
     validateTcProject(tcProjectId, errors);
 
     // do not check First2Finish or CODE contest for milestone
-    if (categoryId != SOFTWARE_CATEGORY_ID_F2F && categoryId != SOFTWARE_CATEGORY_ID_CODE) {
+    if (categoryId != SOFTWARE_CATEGORY_ID_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_CODE
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
         validateDirectProjectMilestone(projectMilestoneId, errors);
     }
 
@@ -356,7 +358,9 @@ function validateFieldsContestSelectionStudio() {
    validateContestName(contestName, errors);
    validateTcProject(tcProjectId, errors);
 
-   if(contestTypeId != SOFTWARE_CATEGORY_ID_F2F && contestTypeId != SOFTWARE_CATEGORY_ID_CODE) {
+   if(contestTypeId != SOFTWARE_CATEGORY_ID_F2F
+       && contestTypeId != SOFTWARE_CATEGORY_ID_CODE
+       && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
        validateDirectProjectMilestone(projectMilestoneId, errors);
    }
 

@@ -72,6 +72,13 @@
                 <specReviewCost>75</specReviewCost>
                 <reviewCost>100</reviewCost>
         </subType>
+        <subType contestTypeId="40"> <!-- Design First2Finish -->
+            <contestFee>0</contestFee>
+            <firstPlaceCost>200</firstPlaceCost>
+            <secondPlaceCost>0</secondPlaceCost>
+            <specReviewCost>0</specReviewCost>
+            <reviewCost>0</reviewCost>
+        </subType>
         <subType contestTypeId="32"> <!-- Application Front-End Design -->
           <contestFee>0</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>

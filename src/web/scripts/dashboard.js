@@ -2336,7 +2336,7 @@ $(document).ready(function(){
     	});
 
     	//Multi Select checkbox function
-    	$('.multiSelectBox :checkbox').live('click', function(){
+    	$('.multiSelectBox input[type=checkbox]').live('click', function(){
     			var parentBox = $(this).closest('.multiSelectBox');
     			var parentRow = $(this).parent('.multiOptionRow');
     			var parentSelectLen = parentBox.find(':checkbox').length;

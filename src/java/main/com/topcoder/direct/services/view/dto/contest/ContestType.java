@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -34,8 +34,15 @@ package com.topcoder.direct.services.view.dto.contest;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.5 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * <ul>
+ *     <li>Added {@link #DESIGN_FIRST2FINISH}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public enum ContestType {
 
@@ -213,7 +220,14 @@ public enum ContestType {
      *
      *  @since 1.3
      */
-    CODE("Code", "code", 39);
+    CODE("Code", "code", 39),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Design First2Finish</code> contest type.</p>
+     *
+     *  @since 1.5
+     */
+    DESIGN_FIRST2FINISH("Design First2Finish", "df", 40);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the

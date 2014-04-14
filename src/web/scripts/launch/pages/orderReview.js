@@ -37,8 +37,11 @@
  * Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
  * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
  *
+ * Version 2.0 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * - Handles new Design First2Finish contest
+ *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 1.9
+ * @version 2.0
  */
 
 /**
@@ -68,7 +71,7 @@ function updateOrderReviewAlgorithm() {
        var amount = prize.prizeAmount;
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
+       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    });
    html += '<td style="width:47%;"></td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
@@ -136,7 +139,7 @@ function updateOrderReviewSoftware() {
    	  for(var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
    	     checkpointPrizesTotal += amount;	
          html +=
-         '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+         '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    	  }
       html += '<td class="last">$' + checkpointPrizesTotal.formatMoney(2) + '</td>';
       $('#orswCheckpointPrizeTR').html(html);   	  
@@ -167,7 +170,7 @@ function updateOrderReviewSoftware() {
             var amount = prize.prizeAmount;
             contestPrizesPart += amount;
             contestPrizesHTML +=
-                '<td>'+ place +' : $'+ amount.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+                '<td>'+ place +' : $'+ amount.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
         });
 
         var prizeTotalDisplay = contestPrizesPart;
@@ -175,7 +178,7 @@ function updateOrderReviewSoftware() {
         if($("#DRCheckbox").is(":checked")) {
             prizeTotalDisplay += drPoints;
             contestPrizesHTML +=
-                '<td>' +' DR Points : $'+ drPoints.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+                '<td>' +' DR Points : $'+ drPoints.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
         }
 
         contestPrizesHTML += '<td class="last">$'+ prizeTotalDisplay.formatMoney(1) +'</td>';
@@ -255,9 +258,12 @@ function updateOrderReviewStudio() {
 	   }
        var place = prize.place;
        var amount = prize.prizeAmount;
+
+       if(amount <= 0) return;
+
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
+       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    });
    html +=   '<td>' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
@@ -275,7 +281,7 @@ function updateOrderReviewStudio() {
    	  for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
    	   checkpointPrizesTotal += amount;	
        html +=
-       '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';          	  	
+       '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    	  }
       html += '<td class="last">$'+ checkpointPrizesTotal.formatMoney(0) +'</td>';
       $('#orCheckpointPrizeTR').html(html);   	  
@@ -314,6 +320,10 @@ function updateOrderReviewStudio() {
  * @return points
  */
 function calculateStudioCupPoints() {
+
+    if(isDesignF2F()) return 0; //no studio cup points for Design First2Finish
+
+
     var isMultiRound = mainWidget.softwareCompetition.multiRound;
     var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
     var checkpointAmount = prizes[prizes.length - 1].prizeAmount;
@@ -375,7 +385,7 @@ function activateContest() {
         "YES",
         function() {
             closeModal();
-            if(isF2F() || isCode()) {
+            if(isF2F() || isCode() || isDesignF2F()) {
                 activateContestSoftware('now');
             } else {
                 showActivateSpecReviewModal();

@@ -216,6 +216,7 @@ public class SaveContestSubmissionRankAction extends ContestAction {
                     submission.setExtra(false);
                 }
             }
+
             contestServiceFacade.updateSoftwareSubmissions(currentUser, submissions);
         }
     }

@@ -88,9 +88,12 @@
  *
  * Version 2.9 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
  * - Add review type radios to choose 'community' or 'internal' review
+ *
+ * Version 3.0 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * - Handles new Design First2Finish contest
  * 
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 2.9
+ * @version 3.0
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -541,6 +544,22 @@ function onContestTypeChange() {
             showErrors("You cannot change saved Code challenge to other challenge type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
+        if(typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+            showErrors("You cannot change saved non-Design F2F challenge to Design F2F challenge type");
+            // switch back to Design First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('STUDIO' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+            showErrors("You cannot change saved Design F2F challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('STUDIO' + currentTypeId);
             }, 1000);
             return;
         }
@@ -1194,7 +1213,9 @@ function validateFieldsTypeSection() {
 
 
     // do NOT need milestone for First2Finish and CODE contest
-    if (categoryId != SOFTWARE_CATEGORY_ID_F2F && categoryId != SOFTWARE_CATEGORY_ID_CODE) {
+    if (categoryId != SOFTWARE_CATEGORY_ID_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_CODE
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
 
@@ -1705,6 +1726,24 @@ function populatePrizeSection(initFlag) {
         } else {
             $('#extraPrizes').hide();
         }
+
+        if(isDesignF2F()) {
+            // hide non first prize in challenge details
+            for(var i = 2; i <= 5; i++) {
+                $('#rPrize' + i).parents("td:eq(0)").hide();
+            }
+
+            // hide non first prize input in challenge prizes edit
+            $(".contest_prize_edit .prizesInner").children().hide();
+            $(".contest_prize_edit .prizesInner").children(":lt(3)").show();
+
+            // hide max submissions display in challenge details
+            $("#rMaxSubmissions").parents("p:eq(0)").hide();
+
+            // hide max submission edit in the challenge details
+            $(".maxSubmissions").hide();
+        }
+
     } else {
         //edit
         //display

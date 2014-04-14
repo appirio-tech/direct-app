@@ -18,8 +18,11 @@
  * Version 1.5 (Module Assembly - TC Cockpit Launch Code Contest)
  * - Add multiple prize support for Code contest type
  *
+ * Version 1.6 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
+ * - Handles new Design First2Finish contest
+ *
  * @author bugbuka, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 /**
  * Rerender the review page.
@@ -171,11 +174,15 @@ function updateReviewStudio() {
 	   }
        var place = prize.place;
        var amount = prize.prizeAmount;
+
+       if(amount <= 0) return;
+
        html = html +
         '<label class="first">' + placeMap[place] + '</label>' +
         '<span class="dw">$</span>' +
         '<span class="numberDor">' + amount + '</span>';
    });
+
    $('#rPrizes').html(html);
 
    // file types
@@ -218,6 +225,12 @@ function updateReviewStudio() {
   } else {
       $('#rMaxSubmissions').html("Maximum " + mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] + " submissions allowed in each round");
   }
+
+    if (studioSubtypeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $("#reviewPage .maxSubmissions").hide();
+    } else {
+        $("#reviewPage .maxSubmissions").show();
+    }
 }
 
 function validateFieldsReview() {
