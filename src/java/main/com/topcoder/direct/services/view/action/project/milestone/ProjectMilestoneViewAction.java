@@ -18,6 +18,7 @@ import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneD
 import com.topcoder.direct.services.view.form.ProjectMilestoneViewForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.service.permission.Permission;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.text.DateFormat;
@@ -147,13 +148,15 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
         List<Map<String, Object>> result = new LinkedList<Map<String, Object>>();
 
         try {
-            final List<ResponsiblePerson> allResponsiblePeople =
-                    getMilestoneResponsiblePersonService().getAllResponsiblePeople(getFormData().getProjectId());
 
-            for (ResponsiblePerson p : allResponsiblePeople) {
+            List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
+                    DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+
+
+            for (Permission p : permissionsByProject) {
                 Map<String, Object> data = new HashMap<String, Object>();
                 data.put("userId", p.getUserId());
-                data.put("name", p.getName());
+                data.put("name", p.getUserHandle());
                 result.add(data);
             }
             setResult(result);
