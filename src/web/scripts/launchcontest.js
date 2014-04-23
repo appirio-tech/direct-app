@@ -521,6 +521,7 @@ $(document).ready(function() {
     // round types
     $('#roundTypes').bind("change", function () {
         var contestType = getContestType(true)[0];
+        var typeId = getContestType(true)[1];
         var roundType = $('#roundTypes').val();
         updateRoundDurationLabels();
         if (roundType == 'single') {
@@ -537,6 +538,11 @@ $(document).ready(function() {
             } else {
                 $('#checkpointDiv').show();
                 $("#checkPointEndDateDiv").hide();
+            }
+
+            if(typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+                // do not display any end date picker for Design First2Finish
+                $('#checkpointDiv').hide();
             }
 
             $('#checkpointPrizeDiv').show();
@@ -725,16 +731,27 @@ function handleProblemsDropDownChange() {
 
 function updateRoundDurationLabels() {
 	var contestType = getContestType(true)[0];
-	var roundType = $('#roundTypes').val();
+    var typeId = getContestType(true)[1];
+
+    var roundType = $('#roundTypes').val();
     if(contestType == "SOFTWARE") {
 		$("#checkpointDiv label").html("Checkpoint Duration:");
 	} else {
 		if (roundType == "single") {
 			$("#endDiv label").html("Round 1 Duration:");
+            $("#endDiv").show();
 		} else {
 			$("#checkpointDiv label").html("Round 1 Duration:");
-			$("#endDiv label").html("Round 2 Duration:");
-		}
+            $("#checkpointDiv").show();
+            $("#endDiv label").html("Round 2 Duration:");
+            $("#endDiv").show();
+        }
+
+        if(typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+            // do not display any end date picker for Design First2Finish
+            $("#checkpointDiv").hide();
+            $("#endDiv").hide();
+        }
 	}
 }
 

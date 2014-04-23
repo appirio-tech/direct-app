@@ -1110,6 +1110,13 @@ function saveAsDraftRequestStudio() {
    }
    // end date
    request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
+
+   if(isDesignF2F()) {
+       // remove end date for Design First2Finish, let the phase templates decide the end date
+       delete request['endDate'];
+   }
+
+
    request['hasMulti'] = mainWidget.softwareCompetition.multiRound;
 
    //document uploads
