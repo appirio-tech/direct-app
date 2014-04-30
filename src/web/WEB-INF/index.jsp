@@ -145,7 +145,7 @@
                     </c:if>
 
                     <p class="additonalAction jqtransform">
-                        <span class="signForget"><a href="http://www.topcoder.com/?action=callback" target="_blank">Sign Up</a> | <a href="https://community.topcoder.com/tc?module=FindUser" target="_blank">Forgot Password
+                        <span class="signForget"><a href="http://www.topcoder.com/?action=callback" target="_blank">Sign Up</a> | <a href="http://www.topcoder.com/password-recovery/" target="_blank">Forgot Password
                             ?</a></span>
                         <input type="checkbox" name="formData.remember" id="remember_me"><label>Remember me</label>
                     </p>
