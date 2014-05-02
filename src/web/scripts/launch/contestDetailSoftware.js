@@ -974,9 +974,9 @@ function initContest(contestJson) {
         } else {
              $(".copilotsSelect").html(mainWidget.softwareCompetition.copilotUserName);
         }
-        // $('.detailsContent_det_type_edit span.name3').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required")
-        $("#chkboxCCA").attr('disabled','disabled');
-        
+        $('.detailsContent_det_type_edit span.name3 input').hide();
+        $('.detailsContent_det_type_edit span.name3 strong').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required");
+
         $('#contestTypes').attr("disabled", true);
         $('.contestTypeRO').show();
         $('.contestTypeEditSection').hide();
@@ -995,9 +995,9 @@ function initContest(contestJson) {
         } else {
              $(".copilotsSelect").html(mainWidget.softwareCompetition.copilotUserName);
         }
-        // $('.detailsContent_det_type_edit span.name3').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required")
-        $("#chkboxCCA").attr('disabled','disabled');
-        
+        $('.detailsContent_det_type_edit span.name3 input').hide();
+        $('.detailsContent_det_type_edit span.name3 strong').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required");
+
         $('#contestTypes').attr("disabled", true);
         $('.contestTypeRO').show();
         $('.contestTypeEditSection').hide();
