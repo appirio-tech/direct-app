@@ -1385,6 +1385,16 @@ function populateRoundSection() {
             $('#checkPointEndTime').val(getRoundedTime(checkpointDate));
         }
     }
+
+    if(isF2F()) {
+        $("#endDateEditDiv").hide();
+    }
+
+    if(isDesignF2F()) {
+        $("#endEditDiv").hide();
+    }
+
+
 	if (!hasMultiRound(mainWidget.softwareCompetition.projectHeader.projectCategory.id) || !canEditMultiRound) {
 		$('#type').hide();
    	} else {
@@ -1554,7 +1564,7 @@ function validateFieldsRoundSection() {
 
 	if (mainWidget.competitionType == "STUDIO") {
 		var subEndDateHours = $('#endDateDay').val() * 24 + parseInt($('#endDateHour').val());
-		if (subEndDateHours == 0) {
+		if (subEndDateHours == 0 && !isDesignF2F()) {
 		   if (isMultiRound) {
 			   errors.push('Round 2 duration should be positive.');
 		   } else {

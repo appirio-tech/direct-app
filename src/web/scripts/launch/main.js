@@ -1011,6 +1011,11 @@ function saveAsDraftRequestSoftware() {
        request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
    }
 
+    if(isF2F()) {
+        // remove end date for First2Finish, let the phase templates decide the end date
+        delete request['endDate'];
+    }
+
     //checkpoint
     if(mainWidget.softwareCompetition.multiRound) {
         request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
