@@ -1992,6 +1992,7 @@ function updateSoftwarePrizes() {
 
     if ($("#DRCheckbox").is(":checked")
         && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F
+        && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
         && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT) {
         projectHeader.properties['Digital Run Flag'] = 'On';
     } else {
@@ -2280,7 +2281,7 @@ function calcPrizes(prizes) {
         contestCost.reliabilityBonusCost = 0;
     }
 
-   if (projectCategoryId != REPORTING_ID
+   if (projectCategoryId != REPORTING_ID && projectCategoryId != SOFTWARE_CATEGORY_ID_CODE
        && projectCategoryId != SOFTWARE_CATEGORY_ID_F2F && projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT)
    {
        contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);

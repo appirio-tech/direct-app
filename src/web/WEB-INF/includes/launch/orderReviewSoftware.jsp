@@ -68,7 +68,7 @@
   		<tbody><tr>
   			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize codePrize">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+  			<td class="topcoderPrize">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="last">$<span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
