@@ -40,8 +40,13 @@
  * Version 2.0 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
  * - Handles new Design First2Finish contest
  *
+ * Version 2.1 (Release Assembly - TC Direct Edit Challenge - prize section update v1.0)
+ * - Bug fix in total cost formula.
+ *
+ *
+ *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 
 /**
@@ -249,7 +254,7 @@ function updateOrderReviewStudio() {
    $('#orStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));   
    
    //prizes
-   var contestPrizesTotal = 0;
+   var contestPrizesTotal = calculateStudioCupPoints();
    var html = "";
    var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
    $.each(prizes, function(i, prize) {
@@ -298,7 +303,7 @@ function updateOrderReviewStudio() {
    if (typeof billingFeesPercentage != 'undefined' && billingFeesPercentage[billingProjectId]!= null) {
        var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
        if (contestFeePercentage!=null) {
-           var memberCost = contestPrizesTotal + checkpointPrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
+           var memberCost = contestPrizesTotal + checkpointPrizesTotal + specificationReviewPayment + reviewPayment + copilotCost;
            mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
            mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
            mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee);
@@ -310,7 +315,7 @@ function updateOrderReviewStudio() {
    $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
    $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));
    
-   var total = contestPrizesTotal + checkpointPrizesTotal + adminFee + specificationReviewPayment + copilotCost;
+   var total = contestPrizesTotal + checkpointPrizesTotal + adminFee + specificationReviewPayment + copilotCost + reviewPayment;
    $('#orTotal').html('$' + total.formatMoney(0));
 }
 

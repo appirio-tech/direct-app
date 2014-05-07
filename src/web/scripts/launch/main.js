@@ -93,8 +93,12 @@
  * Version 3.4 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
  * - Handles new Design First2Finish contest
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.4
+ * Version 3.5 (Release Assembly - TC Direct Prize Section Update)
+ * - Update prize section to support on the fly cost calculation for design challenge
+ * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin, TCSASSEMBLER
+ * @version 3.5
  */
 
  /**
@@ -558,8 +562,9 @@ function updateContestFee( ) {
                 var specificationReviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost());
                 var reviewPayment = parseFloat(mainWidget.softwareCompetition.projectHeader.getReviewCost());
                 var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
+                var digitalRun = parseFloat(mainWidget.softwareCompetition.projectHeader.getDRPoints());
 
-                var memberCost = contestPrizesTotal + checkpointPrizesTotal + (isNaN(specificationReviewPayment) ? 0 : specificationReviewPayment) + (isNaN(reviewPayment) ? 0 : reviewPayment) + copilotCost;
+                var memberCost = contestPrizesTotal + checkpointPrizesTotal + (isNaN(specificationReviewPayment) ? 0 : specificationReviewPayment) + (isNaN(reviewPayment) ? 0 : reviewPayment) + copilotCost + (digitalRun || 0);
                 /* + calculateStudioCupPoints() ; left to FF. */
                 mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
                 mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
@@ -1642,11 +1647,63 @@ function resetSoftwarePrizes() {
      $('.customRadio').show();
 }
 
+
+function fillStudioPrizes(billingProjectId) {
+    if (!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
+        return;
+    }
+
+    if (billingProjectId == null) {
+        billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+    }
+
+    var _PH = mainWidget.softwareCompetition.projectHeader;
+
+    var totalCost = 0;
+
+    var specReview = parseFloat(_PH.getSpecReviewCost());
+    var copilotCost = parseFloat(_PH.getCopilotCost());
+    var screeningCost = parseFloat(_PH.getReviewCost());
+    var studioCupPoints = parseFloat(_PH.getDRPoints());
+    var adminFee = parseFloat(_PH.getAdminFee());
+
+    var prizes = _PH.prizes;
+
+
+    $("#rswSpecCost").text(specReview.formatMoney(2));
+    $("#rswReviewCost").text(screeningCost.formatMoney(2));
+    $("#rswDigitalRun").text(studioCupPoints.formatMoney(2));
+    $("#rswCopilotFee").text(copilotCost.formatMoney(2));
+    $("#rswContestFee").text(adminFee.formatMoney(2));
+
+    totalCost = specReview + screeningCost + studioCupPoints + copilotCost + adminFee;
+
+    $.each(prizes, function(index, p){
+        if(p.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID && mainWidget.softwareCompetition.multiRound == true) {
+            // checkpoint prize
+            totalCost += p.prizeAmount * p.numberOfSubmissions;
+            $("#rMPrizesAmount").text("$" + p.prizeAmount.formatMoney(2));
+            $("#rMPrizesNumberOfSubmissions").text(p.numberOfSubmissions);
+        } else {
+            // main prize
+            $("#rPrize" + p.place).text("$" + p.prizeAmount.formatMoney(2));
+            totalCost += p.prizeAmount;
+        }
+    });
+
+    $("#rswTotal").text(totalCost.formatMoney(2));
+}
+
+
+
+
 /**
  * Render the prizes on the page depending on the contest type and prize type.
  * It is called when either contest type or prize type is changed. Therefore it is called in
  * validateFieldsContestSelectionSoftware (it is when contest type is changed) and listener function
  * when the prize radio button is changed.
+ *
+ * @param billingProjectId if billing project id is not specified, it will use the billing project ID in contest model object.
  *
  * @see updateSoftwarePrizes which is for persisting all changes
  */
@@ -1655,6 +1712,9 @@ function fillPrizes(billingProjectId) {
         return;
     }
 
+    if (billingProjectId == null) {
+        billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+    }
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
 
@@ -1666,6 +1726,10 @@ function fillPrizes(billingProjectId) {
     }
 
     var feeObject = softwareContestFees[projectCategoryId];
+
+    if(!feeObject) {
+        return;
+    }
 
 
     if (!feeObject && mainWidget.isSoftwareContest()) {
@@ -1748,10 +1812,6 @@ function fillPrizes(billingProjectId) {
 
     if(contestCost.specReviewCost != undefined) {
         $("#swSpecCost").text(contestCost.specReviewCost.formatMoney(2));
-    }
-
-    if (billingProjectId == null) {
-        billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
     }
 
     var contestBillingFee = -1;
@@ -2211,11 +2271,14 @@ var changeTimer = false;
 
 function onSoftwarePrizeInputChange(_input, _name, required) {
 
-    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    if(_input.attr('id') != 'swCheckpointPrize') {
+        // do not check prize type for checkpoint prize
+        var prizeType = $('input[name="prizeRadio"]:checked').val();
 
-    // only apply to custom prize type
-    if(prizeType != 'custom') {
-        return;
+        // only apply to custom prize type
+        if(prizeType != 'custom') {
+            return;
+        }
     }
 
     var value = _input.val();
@@ -2239,6 +2302,140 @@ function onSoftwarePrizeInputChange(_input, _name, required) {
     changeTimer = setTimeout(function () {
         calcPrizes(getPrizesForSoftware());
     }, 500);
+}
+
+function onStudioPrizeInputChange(_input, _name, required) {
+    var value = _input.val();
+
+    if(required == true && $.trim(value).length > 0) {
+        if(!checkRequired(value)) {
+            showErrors('The <b>' + _name + '</b> should be set');
+        }
+    }
+
+    if(checkRequired(value) && !checkNumber(value)) {
+        var floatValue = parseFloat(value);
+        if(isNaN(floatValue)) {
+            showErrors('The ' + _name + ' is an invalid prize.');
+        }
+        return;
+    }
+
+    if(changeTimer !== false) clearTimeout(changeTimer);
+
+    changeTimer = setTimeout(function () {
+        onTheFlyCalculateStudioCosts();
+    }, 500);
+}
+
+function onTheFlyCalculateStudioCosts() {
+
+    var mainPrizesSum = 0;
+    var checkpointPrizesSum = 0;
+
+    $(".studioPrizes input[type=text].prizesInput").each(function(index, _prize) {
+        mainPrizesSum += parseFloat($(this).val()) ? parseFloat($(this).val()) : 0;
+    })
+
+    if(mainWidget.softwareCompetition.multiRound == true) {
+        checkpointPrizesSum = (parseFloat($("#checkpointPrize").val()) ? parseFloat($("#checkpointPrize").val()) : 0) * parseFloat($("#checkpointSubmissionNumber").val());
+    }
+
+    var studioCupPoints = (mainPrizesSum + checkpointPrizesSum) * 0.25;
+    var specReviewCost = 0;
+    var screeningCost = 0;
+
+    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
+
+    if(!copilotCost) {
+        copilotCost = mainWidget.softwareCompetition.copilotCost;
+    }
+
+    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+
+    $.ajax({
+        type: 'POST',
+        url: ctx + "/launch/getReviewCostAjax",
+        data: {'projectCategoryId': mainWidget.softwareCompetition.projectHeader.projectCategory.id, 'prize': mainPrizesSum},
+        cache: false,
+        dataType: 'json',
+        async: true,
+        success: function (jsonResult) {
+            handleJsonResult(jsonResult,
+                function (result) {
+                    if (result) {
+                        if (result.screeningCost) {
+                            screeningCost += result.screeningCost;
+                        }
+                        if (result.reviewCost) {
+                            screeningCost += result.reviewCost;
+                        }
+
+                        if (result.specReviewCost) {
+                            specReviewCost = result.specReviewCost;
+
+                            if (typeof(contestHasSpecReview) !== 'undefined' && contestHasSpecReview == false) {
+                                specReviewCost = 0;
+                            }
+                        }
+
+                        $("#studioSpecReviewFee").text(specReviewCost.formatMoney(2));
+                        $("#studioScreeningCost").text(screeningCost.formatMoney(2));
+                        $("#studioCupPoints").text(studioCupPoints.formatMoney(2));
+                        $("#studioCopilotFee").text(copilotCost.formatMoney(2));
+
+                        var contestBillingFee;
+                        var contestFeePercentage;
+                        var feeObject;
+
+                        for (var i = 0; i < studioSubtypeFees.length; i++) {
+                            if (studioSubtypeFees[i].id == mainWidget.softwareCompetition.projectHeader.projectCategory.id) {
+                                feeObject = studioSubtypeFees[i];
+                                break;
+                            }
+                        }
+
+
+                        if (billingFees[billingProjectId] != null) {
+                            var fees = billingFees[billingProjectId];
+
+                            for(var i = 0; i < fees.length; ++i) {
+                                if(fees[i].contestTypeId == mainWidget.softwareCompetition.projectHeader.projectCategory.id) {
+                                    contestBillingFee = fees[i].contestFee;
+                                }
+                            }
+                        }
+
+                        if (billingFeesPercentage[billingProjectId]!= null) {
+                            contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+
+                            if (contestFeePercentage != null) {
+                                contestBillingFee = (mainPrizesSum + checkpointPrizesSum + studioCupPoints + specReviewCost + screeningCost + copilotCost) * contestFeePercentage;
+                            }
+                        }
+
+                        if(contestBillingFee >= 0) {
+                            if (contestFeePercentage != null && contestFeePercentage > 0) {
+                                $('#studioAdminFee').html(contestBillingFee.formatMoney(2) + ' (' + contestFeePercentage * 100 + '% markup)');
+                            } else {
+                                $('#studioAdminFee').html(contestBillingFee.formatMoney(2));
+                            }
+                        } else {
+                            // no billing is loaded, use the default fee loaded from configuration
+                            $('#studioAdminFee').html(feeObject.contestFee.formatMoney(2));
+                            contestBillingFee = feeObject.contestFee;
+                        }
+
+                        //totals
+                        $('#studioTotal').html( (  mainPrizesSum + checkpointPrizesSum + studioCupPoints + specReviewCost + screeningCost + copilotCost + contestBillingFee ).formatMoney(2));
+                    }
+                },
+                function (errorMessage) {
+                    showServerError(errorMessage);
+                })
+        }
+    });
+
 }
 
 /**
@@ -2437,21 +2634,33 @@ function getContestTotal(feeObject, prizeType, useDomElem, noCheckpointCost, act
         }
         total += prize * parseFloat($("#swCheckpointSubmissionNumber").val());
     }
+
     return total;
 }
 
 // get contest cost object from the default configuration
 
 function getContestCost(feeObject, prizeType) {
+
+    var contestCostObject;
+
     if (prizeType == 'custom') {
         //If custom costs is not set, use medium to initalize it
         customCosts = customCosts || $.extend({}, getContestCost(feeObject, 'medium'));
-        return customCosts;
+        contestCostObject = customCosts;
+    } else {
+        contestCostObject = $.grep(feeObject.contestCost.contestCostBillingLevels, function (cost, i) {
+            return cost.id == prizeType;
+        })[0];
     }
 
-    return $.grep(feeObject.contestCost.contestCostBillingLevels, function (cost, i) {
-        return cost.id == prizeType;
-    })[0];
+    if(mainWidget.softwareCompetition.multiRound == true && contestCostObject) {
+        contestCostObject.checkpointCost = ( parseFloat($("#swCheckpointPrize").val()) ? parseFloat($("#swCheckpointPrize").val()) : 0 ) * parseFloat($("#swCheckpointSubmissionNumber").val());
+
+    }
+
+    return contestCostObject;
+
 }
 
 function getStudioContestCost(projectCategoryId) {

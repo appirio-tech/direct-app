@@ -90,7 +90,6 @@
 <script type="text/javascript" src="/scripts/jquery.cookie.js?v=215325"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js?v=215352"></script>
-<script type="text/javascript" src="/scripts/launch/main.js?v=215352"></script>
 <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
 <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>

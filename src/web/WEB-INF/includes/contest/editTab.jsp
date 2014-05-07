@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.9
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 2.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -36,6 +36,14 @@
   -
   - Version 2.1 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 2.2 (Release Assembly - TC Direct Edit Challenge - prize section update v1.0)
+  -- Move checkpoint prize information to prize section.
+  -- Add extra cost information to prize section.
+  -
+  - Version 2.3 (Release Assembly - TC Direct Prize Section Update)
+  - Update prize section to support on the fly cost calculation for design challenge
+  - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -103,7 +111,7 @@
             </tr>
             <tr></tr>            
             <tr>
-                <td class="first_tab_type"><strong>Challenge Fee</strong></td>
+                <td class="first_tab_type"><strong>Administration Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
             <tr></tr>
@@ -276,13 +284,6 @@
         </table>
         
         <div id="rMultiRoundInfoDiv">
-                  <p class="det_font">
-           <span class="name"><strong>Checkpoint Prizes</strong></span>
-           <br /><br />
-           <span class="small_info_spec">
-              Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
-           </span>
-          </p>
                                             
           <div class="bottom_spec">
           </div>     
@@ -411,27 +412,6 @@
              </div>
              </div> <!-- end .schedule -->
              
-             <!-- Checkpoint Prizes -->
-               <div class="mPrizes" id="checkpointPrizeDiv">               
-                   <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                   
-                   <div class="mPrizesInner">
-                    <label class="first">Pay</label>
-                       <span class="dw">$</span>
-                       <input type="text" id="checkpointPrize" class="prizesInput" value="" />
-                       <strong>for each submission up to</strong>
-                       <div class="numSelect">
-                        <select id="checkpointSubmissionNumber" >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                       </div>
-                   </div>                   
-              </div>
-              <!-- end .mPrizes -->             
-              
             <div class="contestDetail" id="roundInfoDiv">               
                 <!-- Round one information -->
                   <div class="description">                
@@ -486,27 +466,57 @@
                             <table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
                         <td class="first_tab"  align="left"><strong>Main Prizes</strong></td>
-                         <td class="sec_tab_prize"><strong>Additional Prizes</strong></td>
+                        <td class="sec_tab"><strong>Additional Prizes</strong></td>
+                        <td class="third_tab"><strong>Other costs</strong></td>
                      </tr>
                      <tr class="rightbor">
                         <td class="first_tab_prize"><strong>First Prize
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
-                         </strong><span id="rPrize1"></span></td>
-                         <td class="sec_tab"><strong>3rd Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize3"></span></td>                         
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
+                        </strong><span id="rPrize1"></span></td>
+                        <td class="sec_tab_prize"><strong>3rd Prize&nbsp;&nbsp;&nbsp;&nbsp;:
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize3"></span></td>                         
+                        <td class="third_tab_prize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                       </tr>
                       <tr class="rightbor">
                         <td class="first_tab_prize"><strong>Second Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize2"></span></td>
-                         <td class="sec_tab"><strong>4th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize4"></span></td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize2"></span></td>
+                        <td class="sec_tab_prize"><strong>4th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize4"></span></td>
+                        <td class="third_tab_prize"><strong>Screening Cost:</strong> $<span id="rswReviewCost"></span></td>
                       </tr>                      
                       <tr>
                         <td class="first_tab"></td>
-                         <td class="sec_tab"><strong>5th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>                         
-                       </tr>                                                     
+                        <td class="sec_tab_prize"><strong>5th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>                         
+                        <td class="third_tab_prize"><strong>Studio Cup:</strong> $<span id="rswDigitalRun"></span></td>
+                      </tr>                                                     
+                      <tr>
+                        <td class="first_tab"></td>
+                        <td class="sec_tab_prize"></td>                         
+                        <td class="third_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
+                      </tr>                                                     
+                      <tr>
+                        <td class="first_tab"></td>
+                        <td class="sec_tab_prize"></td>                         
+                        <td class="third_tab_prize"><strong>Administration Fee:</strong> $<span id="rswContestFee"></span></td>
+                      </tr>                                                     
               </table>
+              <div id="rCheckPointPrizeDiv">
+                  <p class="det_font">
+                      <span class="name"><strong>Checkpoint Prizes</strong></span>
+                      <br />
+                      <span class="small_info_spec">
+                          Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
+                      </span>
+                  </p>
+              </div>
+              <br />
+              <div class="totalCostContainer">
+                  <p class="det_font">
+                      <span class="name" class="last_info"><strong>Total Cost:</strong></span> $<span id="rswTotal"></span>
+                  </p>
+              </div>
+             <div class="clear"></div>
                 </div><!-- End .detailsContent -->                                              
 </div><!-- End .details -->
 <!-- End Prize Display -->
@@ -520,7 +530,7 @@
                 </div><!-- End .caption -->
                                                                 
                 <div class="detailsContent_det_prize_edit">
-                                <div class="prizes">
+                                <div class="prizes studioPrizes">
                     <div class="prizesInner">
                           <label class="first">1st Place</label>
                         <span class="dw">$</span>
@@ -547,6 +557,47 @@
                     </div>        
                 </div> <!-- End .prizes -->
                    
+             <!-- Checkpoint Prizes -->
+               <div class="mPrizes" id="checkpointPrizeDiv">               
+                   <h3><span class="icon subTitle">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+                   <div class="mPrizesInner">
+                    <label class="first">Pay</label>
+                       <span class="dw">$</span>
+                       <input type="text" id="checkpointPrize" class="prizesInput" value="" />
+                       <strong>for each submission up to</strong>
+                       <div class="numSelect">
+                        <select id="checkpointSubmissionNumber" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                       </div>
+                   </div>                   
+              </div>
+
+
+                    <div class="onTheFlyCosts">
+                        <table>
+                            <tr>
+                                <td>Spec Review Fee: $<span id="studioSpecReviewFee"></span></td>
+                                <td>Screening Cost: $<span id="studioScreeningCost"></span></td>
+                                <td>Studio Cup: $<span id="studioCupPoints"></span></td>
+                                <td>Copilot Fee: $<span id="studioCopilotFee"></span></td>
+                                <td>Administration Fee: $<span id="studioAdminFee"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="totalCostContainer">
+                        <strong>Challenge Total:&nbsp;&nbsp;$  <span id="studioTotal"></span></strong>
+                    </div>
+
+                    <div class="clear"></div>
+
+              <!-- end .mPrizes -->             
+
                 <p class="save">                                                    
                     <a href="javascript:;" class="cancel_text_prize">cancel</a>
                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_prize" /></a>

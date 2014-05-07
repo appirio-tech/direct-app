@@ -427,7 +427,7 @@ com.topcoder.direct.Project = function() {
 
 	  this.setAdminFee = function(adminFee) {
 	  	  this.properties['Admin Fee'] = adminFee;
-	  }
+          }
 	  
 	  this.getAdminFee = function() {
 	  	  return this.properties['Admin Fee'];

@@ -18,8 +18,12 @@
 * Version 1.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
 * - Rebranding the copilot and reporting related pages.
 *
+* Version 1.6 (Release Assembly - TC Direct Prize Section Update)
+* - Update prize section to support on the fly cost calculation for design challenge
+* - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
+*
 * Author: GreatKevin, TCSASSEMBLER
-* Version 1.5
+* Version 1.6
 */
 @charset "utf-8";
 
@@ -1104,6 +1108,27 @@ table.total td.toRight {
 
 .prizesInner_software .mid_info {
     margin-left: 12px;
+    font-weight: bold;
+}
+
+.prizesInner_software .mid_info span {
+    font-weight: normal;
+}
+
+.prizesInner_software .first_info {
+    font-weight: bold;
+}
+
+.prizesInner_software .first_info span {
+    font-weight: normal;
+}
+
+.prizesInner_software .last_info {
+    font-weight: bold;
+}
+
+.prizesInner_software .last_info span {
+    font-weight: normal;
 }
 
 .contest_prize_edit .save {

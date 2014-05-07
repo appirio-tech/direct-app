@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.6
+  - Version: 2.8
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -63,6 +63,12 @@
   -
   - Version 2.6 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
   - - Add review type radios to choose 'community' or 'internal' review
+  -
+  - Version 2.7 (Release Assembly - TC Direct Edit Challenge - prize section update v1.0)
+  -- Move checkpoint prize information to prize section.
+  -
+  - Version 2.8 (Release Assembly - TC Direct Prize Section Update)
+  - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -303,13 +309,6 @@
         </table>        
         
          <div id="rMultiRoundInfoDiv">
-		   <p class="det_font">
-             <span class="name"><strong>Checkpoint prizes</strong></span>
-             <br /><br />
-             <span class="small_info_spec">
-           	  Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
-             </span>
-           </p>
          </div>
           
      </div><!-- End .detailsContent -->												
@@ -392,27 +391,6 @@
 
              </div><!-- end .schedule -->
              
-             <!-- Checkpoint prizes -->
-	           <div class="mPrizes" id="checkpointPrizeDiv">               
-                   <h3><span class="icon">Checkpoint prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                   
-                   <div class="mPrizesInner">
-                   	<label class="first">Pay</label>
-                       <span class="dw">$</span>
-                       <input type="text" id="swCheckpointPrize" class="prizesInput" value="" />
-                       <strong>for each submission up to</strong>
-                       <div class="numSelect">
-                       	<select id="swCheckpointSubmissionNumber" >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                       </div>
-                   </div>                   
-              </div>
-              <!-- end .mPrizes -->  
-              
              </div> <!-- end .schedule -->                            
         </div> <!-- end of #launchContestOut -->
                                      
@@ -461,9 +439,26 @@
                    </tr>
                    <tr class="rightbor">
                        <td class="first_tab"  align="left"><strong>Challenge Fee:</strong> $<span id="rswContestFee"></span></td>
-					   <td class="sec_tab_prize"><strong>Challenge Total:</strong> $<span id="rswTotal"></span></td>
+					   <td class="sec_tab_prize"></td>
                    </tr>
               </table>
+
+         <div id="rCheckPointPrizeDiv">
+           <p class="det_font">
+             <span class="name subTitle"><strong>Checkpoint prizes</strong></span>
+             <br />
+             <span class="small_info_spec">
+           	  Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
+             </span>
+           </p>
+         </div>
+
+         <div class="totalCostContainer">
+             <strong>Challenge Total:</strong> $<span id="rswTotal"></span>
+         </div>
+
+         <div class="clear"></div>
+
 				</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- End Prize Display -->
@@ -545,15 +540,44 @@
 
                          <br />
                          <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span><span id="swContestFeePercentage"></span></span>
-                         <span class="mid_inf topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+                         <span class="mid_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
                          <br />
-                         <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
+                         <span class="last_info"></span>
                          </span>                                                                
                      </div>
                  </div>
                  <!-- end .prizes -->
                    
+             <!-- Checkpoint prizes -->
+	           <div class="mPrizes" id="checkpointPrizeDiv">               
+                   <h3><span class="icon subTitle">Checkpoint prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+                   <div class="mPrizesInner">
+                   	<label class="first">Pay</label>
+                       <span class="dw">$</span>
+                       <input type="text" id="swCheckpointPrize" class="prizesInput" value="" />
+                       <strong>for each submission up to</strong>
+                       <div class="numSelect">
+                       	<select id="swCheckpointSubmissionNumber" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                       </div>
+                   </div>                   
+              </div>
+
+
+              <div class="totalCostContainer">
+                  <strong>Challenge Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong>
+              </div>
+
+                    <div class="clear"></div>
+
+              <!-- end .mPrizes -->  
+
                 <p class="save">                                                	
                     <a href="javascript:;" class="cancel_text_prize">cancel</a>
                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_prize" /></a>

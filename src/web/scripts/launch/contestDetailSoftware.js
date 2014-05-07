@@ -91,9 +91,16 @@
  *
  * Version 3.0 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
  * - Handles new Design First2Finish contest
+ *
+ * Version 3.1 ( Release Assembly - TC Direct Edit Challenge - prize section update v1.0)
+ * - Add support for updates in edit contest JSPs (checkpoint prize and studio costs related changes).
+ *
+ * Version 3.2 (Release Assembly - TC Direct Prize Section Update)
+ * - Update prize section to support on the fly cost calculation for design challenge
+ * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  * 
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.0
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
+ * @version 3.2
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -302,6 +309,7 @@ $(document).ready(function(){
            $('#roundInfoDiv').hide();	     
            $('[id=rCheckpointTR]').hide();
            $('#rMultiRoundInfoDiv').hide();                 
+           $('#rCheckPointPrizeDiv').hide();
         } else {
             // multiple round
 		   $('#endEditDiv .name_label').html('<strong>Round 2 Duration:</strong>');
@@ -311,6 +319,7 @@ $(document).ready(function(){
            $('#roundInfoDiv').show();	     
            $('[id=rCheckpointTR]').show();
            $('#rMultiRoundInfoDiv').show();                 
+           $('#rCheckPointPrizeDiv').show();
 		   $(".checkpointEtSelect select,.numSelect select, #checkPointEndTime").each(function(index){
 				if(!$(this).is(":hidden") && !$(this).data('customized')){
 					$(this).data('customized',true);
@@ -383,6 +392,22 @@ $(document).ready(function(){
        onFirstPlaceChangeKeyUp();
     });
 
+    $("#swCheckpointPrize").bind('keyup', function() {
+        onSoftwarePrizeInputChange($('#swCheckpointPrize'), "Checkpoint prize", true);
+    });
+
+    $("#swCheckpointSubmissionNumber").bind('change', function() {
+        onSoftwarePrizeInputChange($('#swCheckpointPrize'), "Checkpoint prize", true);
+    })
+
+    $("#checkpointPrize").bind('keyup', function() {
+        onStudioPrizeInputChange($('#checkpointPrize'), "Checkpoint prize", true);
+    });
+
+    $("#checkpointSubmissionNumber").bind('change', function() {
+        onStudioPrizeInputChange($('#checkpointPrize'), "Checkpoint prize", true);
+    })
+
     $(".prizesInner_software input[type=text].prizesInput").bind('keyup', function(){
         if($(this).attr('id') == 'swFirstPlace') return;
         var prizeIndex = $(".prizesInner_software input[type=text].prizesInput").index(this) + 1;
@@ -393,6 +418,19 @@ $(document).ready(function(){
             default: prizeName = prizeIndex + "th"; break;
         }
         onSoftwarePrizeInputChange($(this), prizeName + " Place Prize", false);
+    })
+
+
+    $(".studioPrizes input[type=text].prizesInput").bind('keyup', function(){
+        var prizeIndex = $(".studioPrizes input[type=text].prizesInput").index(this) + 1;
+        var prizeName;
+        switch (prizeIndex) {
+            case 1 : prizeName = "1st"; break;
+            case 2 : prizeName = "2nd"; break;
+            case 3 : prizeName = "3rd"; break;
+            default: prizeName = prizeIndex + "th"; break;
+        }
+        onStudioPrizeInputChange($(this), prizeName + " Place Prize", prizeIndex == 1);
     })
     
     $('#swDigitalRun').bind('keyup',function() {
@@ -968,11 +1006,12 @@ function initContest(contestJson) {
         $('#contestNameText').show();
         $('#copilots').attr("disabled", true);
         $('#milestones').attr("disabled", true);
-        $('.copilotsSelect').html('');
-        if (mainWidget.softwareCompetition.copilotUserId <=0) {
-             $(".copilotsSelect").html("Unassigned");
+        $('.copilotsSelect').hide();
+        if (mainWidget.softwareCompetition.copilotUserId <= 0) {
+            $('<span style="line-height:30px;font-size:14px"></span>').text("Unassigned").insertAfter(".copilotsSelect");
         } else {
-             $(".copilotsSelect").html(mainWidget.softwareCompetition.copilotUserName);
+            $('<span style="line-height:30px;font-size:14px"></span>').text(mainWidget.softwareCompetition.copilotUserName).insertAfter(".copilotsSelect");
+
         }
         $('.detailsContent_det_type_edit span.name3 input').hide();
         $('.detailsContent_det_type_edit span.name3 strong').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required");
@@ -990,10 +1029,11 @@ function initContest(contestJson) {
         $('#copilots').attr("disabled", true);
         $('#milestones').attr("disabled", true);
         $('.copilotsSelect').html('');
-        if (mainWidget.softwareCompetition.copilotUserId <=0) {
-             $(".copilotsSelect").html("Unassigned");
+        if (mainWidget.softwareCompetition.copilotUserId <= 0) {
+            $('<span style="line-height:30px;font-size:14px"></span>').text("Unassigned").insertAfter(".copilotsSelect");
         } else {
-             $(".copilotsSelect").html(mainWidget.softwareCompetition.copilotUserName);
+            $('<span style="line-height:30px;font-size:14px"></span>').text(mainWidget.softwareCompetition.copilotUserName).insertAfter(".copilotsSelect");
+
         }
         $('.detailsContent_det_type_edit span.name3 input').hide();
         $('.detailsContent_det_type_edit span.name3 strong').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "NDA is Required" : "NDA is Not Required");
@@ -1358,7 +1398,6 @@ function populateRoundSection() {
 	var subDuration = getDurationDayHour(startDate, subEndDate);
 	if (isMultiRound) {
 		var checkpointDate = mainWidget.softwareCompetition.checkpointDate;
-		var checkpointPrizes = getCheckpointPrizes();
 		var checkpointDuration = getDurationDayHour(startDate, checkpointDate);
 		subDuration = getDurationDayHour(checkpointDate, subEndDate);
 	}
@@ -1401,18 +1440,13 @@ function populateRoundSection() {
 		$('#type').show();
 	}
 	if(!isMultiRound) {	
-		$('#checkpointEditDiv').hide();  		     
-	      
-	    $('#checkpointPrizeDiv').hide();  	
+    	   $('#checkpointEditDiv').hide();  		     
+      
 	    $('#roundInfoDiv').hide();	     
 	} else {
 		$('#checkpointEditDiv').show();  	
 		$('#checkpointDateDay').val(checkpointDuration[0]).trigger('change');
 		$('#checkpointDateHour').val(checkpointDuration[1]).trigger('change');
-		 	  
-		$('#checkpointPrizeDiv').show();
-		$('#checkpointPrize, #swCheckpointPrize').val(checkpointPrizes[0]);
-		$('#checkpointSubmissionNumber, #swCheckpointSubmissionNumber').val(checkpointPrizes[1]).trigger('change');
 		 	  
 		$('#roundInfoDiv').show();	     
 		if (mainWidget.competitionType == "STUDIO") {
@@ -1442,8 +1476,6 @@ function populateRoundSection() {
   	 	$('#rCheckpointDateRO').html(formatDateForReview(checkpointDate));
   	 	  	 	  
         $('#rMultiRoundInfoDiv').show();
-        $('#rMPrizesAmount').text('$'+checkpointPrizes[0].formatMoney(2));
-        $('#rMPrizesNumberOfSubmissions').html(checkpointPrizes[1]);
         if (mainWidget.competitionType == "STUDIO") {
         	$('#rRound1Info').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction);
         	$('#rRound2Info').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction);
@@ -1528,8 +1560,6 @@ function validateFieldsRoundSection() {
 
 	var round1Info = getCKEditorContent('round1Info'); 
 	var round2Info = getCKEditorContent('round2Info');
-	//checkpoint prize
-	var checkpointPrizeInput;
    
 	//validation
 	var errors = [];
@@ -1573,27 +1603,7 @@ function validateFieldsRoundSection() {
 		}
 	}
 
-	var checkpointPrize;
-
-    // validate the prizes
 	if(isMultiRound) {
-		if (mainWidget.competitionType == "STUDIO") {
-			checkpointPrizeInput = $('#checkpointPrize').val();
-		} else {
-			checkpointPrizeInput = $('#swCheckpointPrize').val();
-		}
-		checkpointPrize = parseFloat(checkpointPrizeInput);
-		if(!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
-			errors.push('Checkpoint prize is invalid.');
-		} else {
-            // If registration is already started then check that the checkpoint prize is not decreased
-            if (phaseOpen) {
-                if (checkpointPrize < getCheckpointPrizes()[0]){
-                    errors.push('The checkpoint prize can not be decreased');
-                }
-            }
-        }
-	       
 		if (mainWidget.competitionType == "STUDIO") {
 			if(!checkRequired(round1Info)) {
 				errors.push('Round 1 information is empty.');
@@ -1602,37 +1612,8 @@ function validateFieldsRoundSection() {
 			if(!checkRequired(round2Info)) {
 				errors.push('Round 2 information is empty.');
 			}
-			
-			// set checkpoint prizes
-			var find = false;
-			var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
-			if (!prizes) {
-				prizes = [];
-			}
-			var newPrizes = [];
-			for (var i = 0; i < prizes.length; i++) {
-				newPrizes.push(new com.topcoder.direct.Prize(prizes[i].place, prizes[i].prizeAmount, prizes[i].prizeType.id, prizes[i].numberOfSubmissions));
-			}
-			prizes = newPrizes;
-			var ind = getCheckpointPrize(prizes);
-			if (ind == -1) {
-				prizes.push(new com.topcoder.direct.Prize(1, checkpointPrize, CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#checkpointSubmissionNumber').val())));
-			} else {
-				prizes[ind].prizeAmount = checkpointPrize;
-				prizes[ind].numberOfSubmissions = parseInt($('#checkpointSubmissionNumber').val());
-			}
 		}
 	} else if (mainWidget.competitionType == "STUDIO") {
-		// remove the checkpoint prize
-		var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
-		var newPrizes = [];
-		for (var i = 0; i < prizes.length; i++) {
-			if (prizes[i].prizeType.id != CHECKPOINT_PRIZE_TYPE_ID) {
-				newPrizes.push(prizes[i]);
-			}
-		}
-		prizes = newPrizes;
-
         // set check point date hours for studio to 0 for single round contest
 		checkpointDateHours = 0;
 	}
@@ -1661,7 +1642,6 @@ function validateFieldsRoundSection() {
 
 
    if (mainWidget.isStudioContest()) {
-	   mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
 	   mainWidget.softwareCompetition.subEndDate = new Date();
@@ -1696,10 +1676,22 @@ function showRoundSectionEdit() {
 	}
 }
 
+
 /**
  * Prize Section Functions
  */
 function populatePrizeSection(initFlag) {
+    if(mainWidget.softwareCompetition.multiRound) {
+        $('#rCheckPointPrizeDiv').show();
+        var checkpointPrizes = getCheckpointPrizes();
+        $('#rMPrizesAmount').text('$'+checkpointPrizes[0].formatMoney(2));
+        $('#rMPrizesNumberOfSubmissions').html(checkpointPrizes[1]);
+        $('#swCheckpointPrize,#checkpointPrize').val(checkpointPrizes[0].formatMoney(2));
+        $('#swCheckpointSubmissionNumber,#checkpointSubmissionNumber').val(checkpointPrizes[1]);
+    } else {
+        $('#rCheckPointPrizeDiv').hide();
+    }
+
     //billing account
     var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
     $('#billingProjects').getSetSSValue(billingProjectId);
@@ -1737,6 +1729,13 @@ function populatePrizeSection(initFlag) {
             $('#extraPrizes').show();
         } else {
             $('#extraPrizes').hide();
+        }
+
+
+        if (!initFlag) {
+            fillStudioPrizes();
+        } else {
+            updateContestCostData();
         }
 
         if(isDesignF2F()) {
@@ -1882,11 +1881,29 @@ function updateContestCostData() {
     originalPrizes.prizes = prizes;
     originalPrizes.digitalRun = digitalRun;
 
+    // checkpoint prize and extra prize
+    var checkpointPrize = 0;
+    var extraPrize = 0;
+    $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize){
+        if(prize.prizeType.id == CHECKPOINT_PRIZE_TYPE_ID) {
+            checkpointPrize += prize.numberOfSubmissions * prize.prizeAmount;
+        }
+        if(prize.prizeType.id == CONTEST_PRIZE_TYPE_ID && prize.place > 2) {
+            // sum extra prize
+            extraPrize += prize.numberOfSubmissions * prize.prizeAmount;
+        }
+    });
+
     // (6) set the contest fee
     if (contestPercentage!= null && contestPercentage > 0) {
+        // calculate the percentage fee
+        var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotFee) * contestPercentage;
 
-       var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotFee) * contestPercentage;
-       $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
+        if(mainWidget.competitionType == 'STUDIO') {
+            actualFee = (firstPlacePrize + (secondPlacePrize || 0) + extraPrize + checkpointPrize + reviewCost + (reliability || 0) + specReview + (digitalRun || 0) + copilotFee) * contestPercentage;
+        }
+
+        $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        $('#swContestFee').html(actualFee.formatMoney(2));
        $("#swContestFeePercentage").text(' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        if(actualFee != contestFee) {
@@ -1896,7 +1913,8 @@ function updateContestCostData() {
        }
 
     } else {
-       $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
+        // the fixed fee
+        $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
         $("#swContestFeePercentage").text('');
     }
 
@@ -1906,7 +1924,7 @@ function updateContestCostData() {
     // (8) set the spec review cost
     $('#swSpecCost,#rswSpecCost').html(specReview.formatMoney(2));
 
-    var total = firstPlacePrize + secondPlacePrize + reviewCost + reliability + specReview + digitalRun + contestFee + copilotFee;
+    var total = firstPlacePrize + (secondPlacePrize || 0) + reviewCost + (reliability || 0) + specReview + (digitalRun || 0) + contestFee + copilotFee;
 
     // add checkpoint prize and extra prizes if there is any
     $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize){
@@ -1999,19 +2017,76 @@ function savePrizeSection() {
 }
 
 function validateFieldsPrizeSection() {
-	//validation
-	var errors = [];
+    //validation
+    var errors = [];
 
-	if (mainWidget.competitionType == "SOFTWARE") {
-		var prizeType = $('input[name="prizeRadio"]:checked').val();
-		if(prizeType == 'custom') {
-			var value = $('#swFirstPlace').val();
-			if(!checkRequired(value) || !checkNumber(value)) {
-				errors.push('First place value is invalid.');
-			}
-		}
+    //checkpoint prize
+    var isMultiRound = ('multi' == $('#roundTypes').val());
+    var checkpointPrizeInput;
+    var checkpointPrize;
+    if (isMultiRound) {
+        if (mainWidget.competitionType == "STUDIO") {
+            checkpointPrizeInput = $('#checkpointPrize').val();
+        } else {
+            checkpointPrizeInput = $('#swCheckpointPrize').val();
+        }
+        checkpointPrize = parseFloat(checkpointPrizeInput);
+        if (!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
+            errors.push('Checkpoint prize is invalid.');
+        } else {
+            // If registration is already started then check that the checkpoint prize is not decreased
+            if (phaseOpen) {
+                if (checkpointPrize < getCheckpointPrizes()[0]) {
+                    errors.push('The checkpoint prize can not be decreased');
+                }
+            }
+        }
 
-        if(isCode()) {
+        if (mainWidget.competitionType == "STUDIO") {
+            // set checkpoint prizes
+            var find = false;
+            var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+            if (!prizes) {
+                prizes = [];
+            }
+            var newPrizes = [];
+            for (var i = 0; i < prizes.length; i++) {
+                newPrizes.push(new com.topcoder.direct.Prize(prizes[i].place, prizes[i].prizeAmount, prizes[i].prizeType.id, prizes[i].numberOfSubmissions));
+            }
+            prizes = newPrizes;
+            var ind = getCheckpointPrize(prizes);
+            if (ind == -1) {
+                prizes.push(new com.topcoder.direct.Prize(1, checkpointPrize, CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#checkpointSubmissionNumber').val())));
+            } else {
+                prizes[ind].prizeAmount = checkpointPrize;
+                prizes[ind].numberOfSubmissions = parseInt($('#checkpointSubmissionNumber').val());
+            }
+        }
+    } else if (mainWidget.competitionType == "STUDIO") {
+        // remove the checkpoint prize
+        var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+        var newPrizes = [];
+        for (var i = 0; i < prizes.length; i++) {
+            if (prizes[i].prizeType.id != CHECKPOINT_PRIZE_TYPE_ID) {
+                newPrizes.push(prizes[i]);
+            }
+        }
+        prizes = newPrizes;
+    }
+    if (mainWidget.competitionType == "STUDIO") {
+        mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+    }
+
+    if (mainWidget.competitionType == "SOFTWARE") {
+        var prizeType = $('input[name="prizeRadio"]:checked').val();
+        if (prizeType == 'custom') {
+            var value = $('#swFirstPlace').val();
+            if (!checkRequired(value) || !checkNumber(value)) {
+                errors.push('First place value is invalid.');
+            }
+        }
+
+        if (isCode()) {
             // validate multiple prizes settings for Code contest type
             validateCodePrizes(errors);
         }
@@ -2034,66 +2109,66 @@ function validateFieldsPrizeSection() {
                 }
             }
         }
-	} else {
-		var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
-		if (!prizes) {
-			prizes = [];
-		}
-		var ind = getCheckpointPrize(prizes);
-		// store checkpoint prizes first
-		var checkpointPrize = null;
-		if (ind != -1) {
-			checkpointPrize = prizes[ind];
-		}
-		
-		var prizes = validatePrizes(errors);
-		var dr = 0;
-		for(var i = 0, len = prizes.length; i < len; i++) {
-			dr += prizes[i].prizeAmount;
-		}
-		if (!prizes) {
-			prizes = [];
-		}
-		if (checkpointPrize) {
-			dr += parseInt($('#checkpointSubmissionNumber').val()) * checkpointPrize.prizeAmount;
-			prizes.push(checkpointPrize);
-		}
+    } else {
+        var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+        if (!prizes) {
+            prizes = [];
+        }
+        var ind = getCheckpointPrize(prizes);
+        // store checkpoint prizes first
+        var checkpointPrize = null;
+        if (ind != -1) {
+            checkpointPrize = prizes[ind];
+        }
 
-		//save the DR points
-		mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
-	}
-	
+        var prizes = validatePrizes(errors);
+        var dr = 0;
+        for (var i = 0, len = prizes.length; i < len; i++) {
+            dr += prizes[i].prizeAmount;
+        }
+        if (!prizes) {
+            prizes = [];
+        }
+        if (checkpointPrize) {
+            dr += parseInt($('#checkpointSubmissionNumber').val()) * checkpointPrize.prizeAmount;
+            prizes.push(checkpointPrize);
+        }
+
+        //save the DR points
+        mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
+    }
+
     if (isActiveContest) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
             errors.push('The cost of active challenge should not be decreased.');
         }
     }
-   
-	if(errors.length > 0) {
-		showErrors(errors);
-		return false;
-	}
-   
-	if(isBillingEditable()) {		
-		var billingProjectId = $('select#billingProjects').val();
-		mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
-	}
+
+    if (errors.length > 0) {
+        showErrors(errors);
+        return false;
+    }
+
+    if (isBillingEditable()) {
+        var billingProjectId = $('select#billingProjects').val();
+        mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
+    }
 
     var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
 
-    if(!copilotCost) {
+    if (!copilotCost) {
         copilotCost = mainWidget.softwareCompetition.copilotCost;
     }
 
-   // add copilot cost into project header
-   mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
+    // add copilot cost into project header
+    mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
 
-	if (mainWidget.competitionType == "SOFTWARE") {
-		updateSoftwarePrizes();
-	} else {
-		mainWidget.softwareCompetition.projectHeader.prizes = prizes;
-	}
+    if (mainWidget.competitionType == "SOFTWARE") {
+        updateSoftwarePrizes();
+    } else {
+        mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+    }
 
     return true;
 }
@@ -2104,6 +2179,7 @@ function showPrizeSectionDisplay() {
 }
 
 function showPrizeSectionEdit() {
+
     if (mainWidget.competitionType == "SOFTWARE") {
         var p = mainWidget.softwareCompetition.projectHeader.properties;
 
@@ -2137,7 +2213,6 @@ function showPrizeSectionEdit() {
         originalPrizes.prizes = prizes;
         originalPrizes.digitalRun = digitalRun;
     } else {
-
         originalPrizes = [];
         for (var i = 1; i <=5; i++) {
             var value = $('#prize' + i).val();
@@ -2146,8 +2221,7 @@ function showPrizeSectionEdit() {
             }
         };
     }
-    
-	$(".contest_prize").css("display","none");
+    $(".contest_prize").css("display","none");
 	$(".contest_prize_edit").css("display","block");
 /*	if(!$(".prizeBillingSelect select").data('customized')){
 		$(".prizeBillingSelect select").data('customized',true);
@@ -2167,7 +2241,13 @@ function showPrizeSectionEdit() {
         updateBillingGroups();
     });
 	$("#billingProjects").getSetSSValue(mainWidget.softwareCompetition.projectHeader.getBillingProject());
+
+    if(mainWidget.competitionType == "STUDIO") {
+        onTheFlyCalculateStudioCosts();
+    }
     fillPrizes();
+
+
 }
 
 /**

@@ -134,7 +134,11 @@
  *
  * - TC Direct Rebranding Assembly Copilot and Reporting related pages
  * -- Rebranding the copilot and reporting related pages.
- * 00
+ *
+ * - Release Assembly - TC Direct Prize Section Update
+ * -- Update prize section to support on the fly cost calculation for design challenge
+ * -- Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
+ *
  */
 
 body{
@@ -13753,4 +13757,26 @@ td.amount {
 
 .costReportContent .filterTitle, .billingCostReportContent .filterTitle {
     overflow: visible;
+}
+
+div.totalCostContainer {
+    float: right;
+    margin-top: 5px;
+    font-size: 14px
+}
+
+.subTitle {
+    font-size: 12px;
+}
+
+#swCheckpointSubmissionNumber, #checkpointSubmissionNumber {
+    width: 50px;
+}
+
+.onTheFlyCosts {
+    margin-top:10px;font-size:13px;
+}
+
+.onTheFlyCosts td {
+    padding-right: 10px;
 }
