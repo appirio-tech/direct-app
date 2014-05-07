@@ -40,6 +40,7 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/direct/jqtransform.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/homepage.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/customFont.css" media="all" type="text/css"/>
 
     <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
     <script src="https://cdn.auth0.com/w2/auth0-1.6.4.min.js"></script>
@@ -185,10 +186,6 @@
 
         </div>
     </div>
-
-
-
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400" rel="stylesheet" type="text/css"/>
 
     <!-- External javascripts -->
     <script type="text/javascript" src="/scripts/jquery.jqtransform.js"></script>
