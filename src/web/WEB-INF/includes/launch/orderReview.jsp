@@ -80,7 +80,7 @@
 	<h3>Administration</h3>
 	<table class="prizesTable">
 		<tr>
-			<td>Administration Fee : <span id="orAdminFee1"></span></td>
+			<td>Challenge Fee : <span id="orAdminFee1"></span></td>
 			<td>Specification Review : <span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
             <td>Screening : <span id="orReviewPayment"></span> </td>
 			<td>Copilot Fee : <span id="orCopilotFee"></span></td>

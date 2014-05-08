@@ -44,7 +44,7 @@
     <h2 class="sectionHead">Costs</h2> 
     <table class="prizesTable">
         <tbody><tr>
-            <td class="prize"><span>Administration Fee:</span> $<span id="adminFeeReceipt" class="feeValue"></span> </td>
+            <td class="prize"><span>Challenge Fee:</span> $<span id="adminFeeReceipt" class="feeValue"></span> </td>
             <td class="prize"><span>1st Prize :</span> $<span id="firstFeeReceipt" class="feeValue"></span> </td>
             <td class="prize"><span>2nd Prize :</span> $<span id="secondFeeReceipt" class="feeValue"></span></td>
             <td class="total">Total</td>

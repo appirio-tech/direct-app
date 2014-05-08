@@ -74,7 +74,7 @@
                                                             competition and chose no winner. This may discourage members
                                                             from competing in your future contests.</p>
 
-                                                        <p>3. The challenge administration fee you paid to launch this
+                                                        <p>3. The challenge fee you paid to launch this
                                                             competition is non-refundable.</p>
 
                                                         <h4>Make a choice, but do something.</h4>

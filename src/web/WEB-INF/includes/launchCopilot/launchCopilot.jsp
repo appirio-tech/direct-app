@@ -219,7 +219,7 @@
             <br/>
             <table class="prizesTable">
                 <tbody><tr>
-                    <td class="prize"><span>Administration Fee:</span> $ <span id="swContestFee" class="feeValue"></span> </td>
+                    <td class="prize"><span>Challenge Fee:</span> $ <span id="swContestFee" class="feeValue"></span> </td>
                     <td class="prize"><span>1st Prize :</span> $ <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" /></td>
                     <td class="prize"><span>2nd Prize :</span> $ <span id="swSecondPlace" class="prizeInfo"></span></td>
                     <td class="total">Total</td>
@@ -239,7 +239,7 @@
         <div class="infoPanelMask">
             <table class="prizesTable">
             <tbody><tr>
-                <td class="prize"><span>Administration Fee:</span> $ <span id="sworContestFee" class="feeValue"></span> </td>
+                <td class="prize"><span>Challenge Fee:</span> $ <span id="sworContestFee" class="feeValue"></span> </td>
                 <td class="prize"><span>1st Prize :</span> $ <span id="sworFirstPlace" class="feeValue"></span></td>
                 <td class="prize"><span>2nd Prize :</span> $ <span id="sworSecondPlace" class="feeValue"></span></td>
                 <td class="total">Total</td>

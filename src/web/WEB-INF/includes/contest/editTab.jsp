@@ -110,11 +110,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
             <tr></tr>            
-            <tr>
-                <td class="first_tab_type"><strong>Administration Fee</strong></td>
-                <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
-            </tr>
-            <tr></tr>
+            <%--<tr>--%>
+                <%--<td class="first_tab_type"><strong>Challenge Fee</strong></td>--%>
+                <%--<td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>--%>
+            <%--</tr>--%>
+            <%--<tr></tr>--%>
         </table>
     </div><!-- End .detailsContent -->                                              
 </div><!-- End .details -->
@@ -498,7 +498,7 @@
                       <tr>
                         <td class="first_tab"></td>
                         <td class="sec_tab_prize"></td>                         
-                        <td class="third_tab_prize"><strong>Administration Fee:</strong> $<span id="rswContestFee"></span></td>
+                        <td class="third_tab_prize"><strong>Challenge Fee:</strong> $<span id="rswContestFee"></span></td>
                       </tr>                                                     
               </table>
               <div id="rCheckPointPrizeDiv">
@@ -585,7 +585,7 @@
                                 <td>Screening Cost: $<span id="studioScreeningCost"></span></td>
                                 <td>Studio Cup: $<span id="studioCupPoints"></span></td>
                                 <td>Copilot Fee: $<span id="studioCopilotFee"></span></td>
-                                <td>Administration Fee: $<span id="studioAdminFee"></span></td>
+                                <td>Challenge Fee: $<span id="studioAdminFee"></span></td>
                             </tr>
                         </table>
                     </div>
