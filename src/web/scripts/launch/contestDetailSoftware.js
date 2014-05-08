@@ -1028,7 +1028,7 @@ function initContest(contestJson) {
 //        $('#contestNameText').show();
         $('#copilots').attr("disabled", true);
         $('#milestones').attr("disabled", true);
-        $('.copilotsSelect').html('');
+        $('.copilotsSelect').hide();
         if (mainWidget.softwareCompetition.copilotUserId <= 0) {
             $('<span style="line-height:30px;font-size:14px"></span>').text("Unassigned").insertAfter(".copilotsSelect");
         } else {
