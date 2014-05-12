@@ -1326,6 +1326,8 @@ public class SaveDraftContestAction extends ContestAction {
         // set registration date to now
         resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
 
+        resource.setUserId(getContestCopilotId());
+
         return resource;
     }
 

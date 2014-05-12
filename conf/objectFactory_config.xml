@@ -1189,7 +1189,7 @@
                 </Property>
 
                 <Property name="searchableFields">
-                    <Property name="resource_id">
+                    <Property name="resource.resource_id">
                         <Property name="validator">
                             <Property name="class">
                                 <Value>validator</Value>
@@ -1274,6 +1274,7 @@
                                resource_role_lu.resource_role_id AS resource_role_id,
                                project_id,
                                project_phase_id,
+                               user_id,
                                resource.create_user AS create_user,
                                resource.create_date AS create_date,
                                resource.modify_user AS modify_user,

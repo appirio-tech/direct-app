@@ -3147,6 +3147,7 @@ public final class DirectUtils {
         resource.setProperty("Payment", "0");
         resource.setProperty("Payment Status", "N/A");
         resource.setProperty("Registration Date", registrationDateFormat.format(new Date()));
+        resource.setUserId(userId);
         resource = getProjectServices().updateResource(resource, String.valueOf(userId));
         return resource;
     }

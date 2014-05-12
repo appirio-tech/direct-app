@@ -256,6 +256,7 @@ public class SubmitApprovalAction extends BaseDirectStrutsAction {
             approverResource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT), "0");
             approverResource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
             approverResource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
+            approverResource.setUserId(currentUser.getUserId());
             approverResource = getProjectServices().updateResource(approverResource, 
                                                                    String.valueOf(currentUser.getUserId()));
         }
