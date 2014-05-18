@@ -78,6 +78,13 @@
             <c:forEach items="${projectHeader.prizes}" var="p" varStatus="loop" >
             prizes.push(new com.topcoder.direct.Prize(${p.place}, ${p.prizeAmount}, CONTEST_PRIZE_TYPE_ID, ${p.numberOfSubmissions}));
             </c:forEach>
+
+
+            if(!prizes || prizes.length == 0) {
+                prizes.push(new com.topcoder.direct.Prize(1, ${projectHeader.properties["First Place Cost"]}, CONTEST_PRIZE_TYPE_ID, 1));
+                prizes.push(new com.topcoder.direct.Prize(2, ${projectHeader.properties["Second Place Cost"]}, CONTEST_PRIZE_TYPE_ID, 1));
+            }
+
             <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
             <!--
             ${doc.uploadedFileName}

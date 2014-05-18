@@ -261,8 +261,8 @@
                                                         <a href="contest/detail?projectId=${contest.id}" class="buttonEdit">View/Edit</a>
                                                      </s:if>
                                                      <%// repost if it is software contest and it is cancelled status %>
-                                                     <s:if test="!isStudio && status.name.startsWith('Cancelled')">
-                                                        <a href="javascript:repostHandler(${contest.id},${contest.project.id});" class="buttonEdit">Repost</a>
+                                                     <s:if test="status.name.startsWith('Cancelled')">
+                                                        <a href="javascript:repostHandler(${contest.id},${contest.project.id},${contestType.id});" class="buttonEdit">Repost</a>
                                                      </s:if>
                                                      <%// new version if it is component design/dev contest and it is completed status %>
                                                      <s:if test="(contestType.toString() == 'COMPONENT_DESIGN' || contestType.toString() == 'COMPONENT_DEVELOPMENT') && status.name == 'Completed'">

@@ -40,16 +40,19 @@ $(document).ready(function() {
 var repostProjectId = -1;
 var repostTcProjectId = -1;
 var repostNewProjectId = -1;
+var repostProjectTypeId;
 
 /**
  * repost event handler. It shows the repost dialog.
  *
  * @param projectId the project id
- * @param tcProjectId the tc project id 
+ * @param tcProjectId the tc project id
+ * @param projectTypeId the type id of the project
  */    	
-function repostHandler(projectId, tcProjectId) {
+function repostHandler(projectId, tcProjectId, projectTypeId) {
 	 repostProjectId = projectId;
 	 repostTcProjectId = tcProjectId;
+     repostProjectTypeId = projectTypeId
 	 
 	 $('#repostDialog').dialog('open');
 }    	 
@@ -106,7 +109,7 @@ function editRepost() {
 	  	 return;
 	  }
 	  
-	  location.href = ctx + "/contest/detail?projectId=" + repostNewProjectId;
+	  location.href = ctx + (repostProjectTypeId == 29 ? "/copilot/copilotContestDetails.action?projectId=" : "/contest/detail?projectId=") + repostNewProjectId;
 }
 
 /**
