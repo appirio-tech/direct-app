@@ -1,12 +1,13 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
+
+import com.topcoder.service.project.CompetitionPrize;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import com.topcoder.service.project.CompetitionPrize;
 
 /**
  * <p>A DTO providing the statistics on requested contest.</p>
@@ -41,8 +42,13 @@ import com.topcoder.service.project.CompetitionPrize;
  * - Add property {@link #totalActiveVMNumber}.
  * </p>
  *
- * @author isv, Veve, jiajizhou86
- * @version 1.4
+ * <p>
+ * Version 1.5 (Release Assembly - Port Design Challenge Forum to use Dev Forum) changes:
+ * - Add property {@link #isNewForum} and its getter and setter.
+ * </p>
+ *
+ * @author isv, Veve, jiajizhou86, TCSASSEMBLER
+ * @version 1.5
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -101,6 +107,13 @@ public class ContestStatsDTO implements Serializable {
      * <p>A <code>long</code> providing the id of the contest forum.</p>
      */
     private long forumId;
+
+    /**
+     * Flag representing whether the forum is created after porting studio challenge to use software forum.
+     *
+     * @since 1.5
+     */
+    private boolean isNewForum;
 
     /**
      * The competition prizes.
@@ -284,6 +297,26 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setForumId(long forumId) {
         this.forumId = forumId;
+    }
+
+    /**
+     * Gets the flag to tell whether the forum is created after porting.
+     *
+     * @return true if yes, false otherwise
+     * @since 1.5
+     */
+    public boolean isNewForum() {
+        return isNewForum;
+    }
+
+    /**
+     * Sets the flag of isNewForum
+     *
+     * @param isNewForum the flag
+     * @since 1.5
+     */
+    public void setNewForum(boolean isNewForum) {
+        this.isNewForum = isNewForum;
     }
 
     /**

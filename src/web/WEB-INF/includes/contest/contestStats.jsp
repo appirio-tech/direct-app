@@ -1,13 +1,17 @@
 <%--
-  - Author: isv, morehappiness
-  - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: isv, morehappiness, GreatKevin
+  - Version: 1.3
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
   - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
   - for Studio contests.
+  -
   - Version 1.2 (Direct Replatforming Release 4) changes: remove the condition test on whether it's studio contest or not.
+  -
+  - Version 1.3 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -53,7 +57,8 @@
             </td>
             <td>
 				<s:if test="forumId != -1">
-					<s:if test="isStudio == true"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                    		<s:if test="isStudio == true && !newForum"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                    		<s:if test="isStudio == true && newForum"><a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
 					<s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
 				</s:if>
 				<s:property value="forumPostsNumber"/>

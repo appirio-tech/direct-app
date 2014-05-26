@@ -602,8 +602,16 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86
- * @version 1.11
+ * <p>
+ * Version 1.2 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+ * <ul>
+ *     <li>Updated method {@link #getContestStats(com.topcoder.security.TCSubject, long, com.topcoder.service.project.SoftwareCompetition)}
+ *     to include the forum type data for the contest</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
+ * @version 1.2
  */
 public final class DirectUtils {
 
@@ -1009,6 +1017,14 @@ public final class DirectUtils {
             dto.setForumId(forumId);
         } catch (NumberFormatException ne) {
             // ignore
+        }
+
+
+        if (resultContainer.getStringItem(recordIndex, "forum_type") != null
+                && !resultContainer.getStringItem(recordIndex, "forum_type").equals("")) {
+            dto.setNewForum(true);
+        } else {
+            dto.setNewForum(false);
         }
 
         dto.setContest(contest);

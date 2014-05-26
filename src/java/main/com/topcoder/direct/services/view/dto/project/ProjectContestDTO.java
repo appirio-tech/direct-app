@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -35,8 +35,15 @@ import java.util.Date;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+ * <ul>
+ *     <li>Added property {@link #isNewForum} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class ProjectContestDTO implements Serializable {
 
@@ -147,6 +154,13 @@ public class ProjectContestDTO implements Serializable {
      * <p>A <code>int</code> providing the id of the contest forum.</p> 
      */
     private int forumId;
+
+    /**
+     * The flag isNewForum.
+     *
+     * @since 1.4
+     */
+    private boolean isNewForum;
 	
 	private Boolean isStudio;
 	
@@ -496,5 +510,25 @@ public class ProjectContestDTO implements Serializable {
      */
     public void setMultipleRound(boolean multipleRound) {
         isMultipleRound = multipleRound;
+    }
+
+    /**
+     * Gets the flag of isNewForum.
+     *
+     * @return whether is new forum.
+     * @since 1.4
+     */
+    public boolean isNewForum() {
+        return isNewForum;
+    }
+
+    /**
+     * Sets the flag of isNewForum
+     *
+     * @param isNewForum whether is new forum.
+     * @since 1.4
+     */
+    public void setNewForum(boolean isNewForum) {
+        this.isNewForum = isNewForum;
     }
 }

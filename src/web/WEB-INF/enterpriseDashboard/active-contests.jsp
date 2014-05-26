@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin, Ghost_141, TCSASSEMBLER
+  - Author: GreatKevin, Ghost_141, GreatKevin
   - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
@@ -10,6 +10,9 @@
   -
   - Version 1.3 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
   - - Remove the uneeded corners in div
+  -
+  - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
   -
   - Description: The active contests page of the new enterprise dashboard
 --%>
@@ -257,7 +260,8 @@
                                                                     </td>
                                                                     <td>
                                                                     <s:if test="forumId != -1">
-                                                                        <s:if test="isStudio == true"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                                        <s:if test="isStudio == true && !newForum"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                                        <s:if test="isStudio == true && newForum"><a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
                                                                         <s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
                                                                     </s:if>
                                                                     <s:property value="forumPostsNumber"/>

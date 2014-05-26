@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBER, TCSASSEMBER, Ghost_141
-  - Version: 1.3 (For TCCC-2827)
-  - Copyright (C) 2011 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest links area for Contest Details page
   -
@@ -14,6 +14,9 @@
   -
   - Version 1.3 (BUGR - 9796) changes:
   - 1. Add link for update/set round id.
+  -
+   - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
@@ -100,7 +103,13 @@
             <a href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.roundId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
         </s:elseif>
         <s:else>
-        <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+            <s:if test="viewData.contestStats.newForum">
+                <a href="https://apps.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+            </s:if>
+            <s:else>
+                <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+            </s:else>
+
         </s:else>
         </li>
 		<li class="splitter"></li>

@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER, Ghost_141
+  - Author: Ghost_141, GreatKevin
   -
   - Version 1.1 (HTML Cockpit Spec Review Assembly assembly)
   -
@@ -11,8 +11,11 @@
   -  
   - Version 1.3 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
+  -
+  - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
   - 
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the specification reivew view.
 --%>
@@ -271,7 +274,14 @@
                                                         </s:iterator>
                                                         
                                                         <c:if test="${viewData.contestStats.isStudio and viewData.specificationReview ne null}">
-                                                            <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                            <c:choose>
+                                                                <c:when test="${viewData.contestStats.newForum}">
+                                                                    <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://apps.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </c:if>
                                                         
                                                         <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES' and !viewData.hasActiveSpecSubmission}">

@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv, tangzx, Blues, Ghost_141, TCSASSEMBLER
-  - Version: 2.0
+  - Author: BeBetter, isv, tangzx, Blues, Ghost_141, GreatKevin
+  - Version: 2.1
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
@@ -34,6 +34,9 @@
   -
   - Version 2.0 (TC Direct Rebranding Assembly Project and Contest related pages)
   - - Rebranding the page to use new buttons.
+  -
+  - Version 2.1 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -244,7 +247,8 @@
                                                 </td>
                                                 <td>
                                                 <s:if test="forumId != -1">
-                                                    <s:if test="isStudio == true"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                    <s:if test="isStudio == true && !newForum"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                    <s:if test="isStudio == true && newForum"><a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
                                                     <s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
                                                 </s:if>
                                                 <s:property value="forumPostsNumber"/>

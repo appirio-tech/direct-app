@@ -40,6 +40,9 @@
         <Property name="studioForumBeanProviderUrl">
         	<Value>@studioForumBeanProviderUrl@</Value>
         </Property>
+        <Property name="studioForumRootCategoryId">
+            <Value>@studioForumRootCategoryId@</Value>
+        </Property>
         <Property name="userBeanProviderUrl">
         	<Value>@userBeanProviderUrl@</Value>
         </Property>

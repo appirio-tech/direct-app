@@ -1010,10 +1010,21 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.3 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+ * <ul>
+ *     <li>Updated method {@link #getProjectContests(long, long)} to include the forum type data for each contest</li>
+ *     <li>Updated method {@link #getActiveContests(long)} to include the forum type data for each contest</li>
+ *     <li>Updated method {@link #getContestDashboardData(long, boolean, boolean)} to include the forum type data for the contest</li>
+ *
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, Ghost_141, GreatKevin, Veve
- * @version 6.28
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, 
+ * @author Ghost_141, GreatKevin, Veve, GreatKevin
+ * @version 6.3
  * @since 1.0
  */
 public class DataProvider {
@@ -2665,6 +2676,14 @@ public class DataProvider {
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
                                                              forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
+
+            if (resultContainer.getStringItem(i, "forum_type") != null
+                    && !resultContainer.getStringItem(i, "forum_type").equals("")) {
+                contest.setNewForum(true);
+            } else {
+                contest.setNewForum(false);
+            }
+
             contests.add(contest);
         }
 
@@ -2792,6 +2811,14 @@ public class DataProvider {
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
                                                              forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
+
+
+            if (resultContainer.getStringItem(i, "forum_type") != null
+                    && !resultContainer.getStringItem(i, "forum_type").equals("")) {
+                contest.setNewForum(true);
+            } else {
+                contest.setNewForum(false);
+            }
 
             contest.setMultipleRound(isMultipleRound);
             contest.setCheckpointSubmissionNumber(checkpointSubmissionCount);
@@ -4087,6 +4114,8 @@ public class DataProvider {
         }
 
         // Analyze registration status
+        boolean isNewForum = false;
+
         final ResultSetContainer registrationStats = results.get("registration_status_replatforming");
         if (!registrationStats.isEmpty()) {
             ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
@@ -4097,6 +4126,12 @@ public class DataProvider {
             double reliabilityTotal = getDouble(row, "reliability_total");
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
             long projectCategoryId = getLong(row, "project_category_id");
+
+
+            if (row.getStringItem("forum_type") != null
+                    && !row.getStringItem("forum_type").equals("")) {
+                isNewForum = true;
+            }
 
             if(isStudio || projectCategoryId == 29L) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
@@ -4126,6 +4161,7 @@ public class DataProvider {
         int unansweredForumPostsNumber = 0;
         Date latestTime = null;
 
+
         DirectUtils.refreshCache("contest_forum_stats_replatforming");
 
         final ResultSetContainer forumStats = results.get("contest_forum_stats_replatforming");
@@ -4153,9 +4189,7 @@ public class DataProvider {
                 calendar.set(Calendar.ZONE_OFFSET, 0);
                 latestTime = calendar.getTime();
             }
-
         }
-
 
         UserDTO latestForumPostAuthor = new UserDTO();
         latestForumPostAuthor.setHandle(latestHandle);
@@ -4163,7 +4197,7 @@ public class DataProvider {
 
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
-        if (!isStudio) {
+        if (!isStudio || isNewForum) {
             latestForumPost.setUrl("https://apps.topcoder.com/forums/?module=Thread&threadID=" + latestThreadId);
         } else {
             latestForumPost.setUrl("https://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
@@ -4186,7 +4220,11 @@ public class DataProvider {
         if (!isStudio) {
             dto.setForumURL("https://apps.topcoder.com/forums/?module=Category&categoryID=" + forumId);
         } else {
-            dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+            if(isNewForum) {
+                dto.setForumURL("http://apps.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+            } else {
+                dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+            }
         }
         dto.setTotalForumPostsCount(totalForum);
         dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);

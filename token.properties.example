@@ -156,6 +156,7 @@
 @payFlowVendor@=tcTestAccount2
 @payFlowPassword@=password123
 @createForum@=false
+@studioForumRootCategoryId@=23
 
 # typical windows configuration
 @userBeanProviderUrl@=jnp://localhost:1199

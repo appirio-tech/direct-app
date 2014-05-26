@@ -1,7 +1,7 @@
 <%--
-  - Author: tangzx, GreatKevin, Ghost_141
-  - Version: 1.6
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Author: tangzx, GreatKevin, Ghost_141, GreatKevin
+  - Version: 1.7
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the View/Edit buttons. 
@@ -23,6 +23,9 @@
   - 
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix multiple bugs.
+  -
+  - Version 1.7 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - - Update forum link for studio contest
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -323,7 +326,8 @@
                                                     </td>
                                                     <td>
                                                     <s:if test="forumId != -1">
-                                                        <s:if test="isStudio == true"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == true && !newForum"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == true && newForum"><a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
                                                         <s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
                                                     </s:if>
                                                     <s:property value="forumPostsNumber"/>
