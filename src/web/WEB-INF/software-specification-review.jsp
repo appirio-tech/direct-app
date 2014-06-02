@@ -276,7 +276,7 @@
                                                         <c:if test="${viewData.contestStats.isStudio and viewData.specificationReview ne null}">
                                                             <c:choose>
                                                                 <c:when test="${viewData.contestStats.newForum}">
-                                                                    <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://apps.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                                    <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>

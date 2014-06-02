@@ -104,7 +104,7 @@
         </s:elseif>
         <s:else>
             <s:if test="viewData.contestStats.newForum">
-                <a href="https://apps.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+                <a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
             </s:if>
             <s:else>
                 <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>

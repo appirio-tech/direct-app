@@ -4221,7 +4221,7 @@ public class DataProvider {
             dto.setForumURL("https://apps.topcoder.com/forums/?module=Category&categoryID=" + forumId);
         } else {
             if(isNewForum) {
-                dto.setForumURL("http://apps.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+                dto.setForumURL("http://apps.topcoder.com/forums/?module=ThreadList&forumID=" + forumId);
             } else {
                 dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
             }
