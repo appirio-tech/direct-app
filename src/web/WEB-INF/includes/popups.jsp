@@ -1673,7 +1673,7 @@
 
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="YES" class="yesbutton newButtonGreen button6"><span
+                                    <a href="javascript:;" title="YES" class="yesbutton newButtonGreen button6 step6Button"><span
                                             class="left"><span class="right">YES</span></span></a>
                                     <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">NO</span></span></a>
@@ -1704,7 +1704,7 @@
 
                                 <div class="clear"></div>
                                 <div class="buttonArea">
-                                    <a href="javascript:;" title="YES" class="yesbutton newButtonGreen button6"><span
+                                    <a href="javascript:;" title="YES" class="yesbutton newButtonGreen button6 step6Button"><span
                                             class="left"><span class="right">YES</span></span></a>
                                     <a href="javascript:;" title="NO" class="closebutton newButtonOrange  button6"><span
                                             class="left"><span class="right">NO</span></span></a>
