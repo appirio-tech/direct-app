@@ -73,27 +73,27 @@
             $('.gPlusIcon').click( function () {
                 auth0Login.login({
                     connection: 'google-oauth2',
-                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https:/<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.facebookIcon').click( function () {
                 auth0Login.login({connection: 'facebook',
-                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.twitterIcon').click( function () {
                 auth0Login.login({connection: 'twitter',
-                    state: 'http://www.topcoder.com/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.githubIcon').click( function () {
                 auth0Login.login({connection: 'github',
-                    state: 'http://www.topcoder.com/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.salesforceIcon').click( function () {
                 auth0Login.login({connection: 'salesforce',
-                    state: 'http://www.topcoder.com/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
         })
 

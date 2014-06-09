@@ -38,7 +38,7 @@
         
 
         <s:if test="viewData.contestStats.isStudio">
-           <s:set name="contestLink" value="'https://studio.topcoder.com/?module=ViewContestDetails&ct=' + viewData.contestStats.contest.id"/>
+            <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
         </s:if>
         <s:elseif test="marathon">
             <s:if test="viewData.active">
@@ -49,7 +49,7 @@
             </s:else>
         </s:elseif>
         <s:else>
-           <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id"/>
+           <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
         </s:else>
 
         <s:if test="marathon">

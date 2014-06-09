@@ -5,7 +5,7 @@
 
 
         <s:set name="contestLink"
-               value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id"/>
+               value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
 
         <s:if test="viewData.contestStats.draft">
 
