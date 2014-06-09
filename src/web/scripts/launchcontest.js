@@ -549,6 +549,15 @@ $(document).ready(function() {
             $('#swCheckpointPrizeDiv').show();
             $('#round1InfoDiv').show();
             $('#round2InfoDiv').show();
+
+            //set checkpoint end date to be 2 days after start date
+            $("#startDate").bind('change.chkpt', function () {
+              $("#checkPointEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(2).days().toString('MM/dd/yyyy'));
+            }).trigger('change');
+
+            $("#startTime").bind('change.chkpt', function () {
+              $("#checkPointEndTime").getSetSSValue($("#startTime").getSetSSValue());
+            }).trigger('change');
         }
     });
 
@@ -981,7 +990,6 @@ function onContestTypeChange() {
               $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
             }).trigger('change');
           }
-
         }
     }
 
