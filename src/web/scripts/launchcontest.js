@@ -8,10 +8,10 @@
  * - Bind change event to project dropdown to dynamically load copilots of the selected project
  * - Add method isCopilotDropDownHidden to check if the copilot dropdown is hidden
  * - Add method handleProjectDropDownChange for project dropdown change event
- * 
+ *
  * Version 1.1 TC Direct Replatforming Release 1 change note
  * - Changes were made to work for the new studio contest type and multiround type.
- * 
+ *
  * Version 1.2 TC Direct Replatforming Release 2 change note
  * - The software contest can set checkpoint prizes.
  *
@@ -33,16 +33,16 @@
  *
  * Version 1.7 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
  * - Add js to populate billing accounts based on project selection.
- * 
+ *
  * Version 1.8 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
  *
  * Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) change notes:
- * - Fixed a drop down layout issue for a lenghthy project name.  
- * 
+ * - Fixed a drop down layout issue for a lenghthy project name.
+ *
  * Version 2.0 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
  * - Update to support launching mm contest.
- * 
+ *
  * Version 2.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
  * - Add billing account CCA specific
  *
@@ -60,7 +60,7 @@
  *
  * Version 2.6 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
  * - Add review type radios to choose 'community' or 'internal' review
- * 
+ *
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
  * @version 2.6
  */
@@ -68,15 +68,15 @@ $(document).ready(function() {
 
     // reset the fake form to prevent Firefox from caching local form data
     document.getElementById("fakeForm").reset();
-    
-    //truncate the project name    
+
+    //truncate the project name
     $(".addNewContest .row .projectSelect select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,60)+'...';
-    		$(this).text(txt);    		
+    		$(this).text(txt);
     	}
-    });	
-    
+    });
+
     //truncate the billing account, copilot and round type
     $(".addNewContest .row .billingSelect select option," +
         ".addNewContest .row .copilotSelect select option, .addNewContest .row .milestoneSelect select option," +
@@ -84,7 +84,7 @@ $(document).ready(function() {
         "#overviewAlgorithmPage .problemDiv select option").each(function(){
     	if($(this).text().length>60){
     		var txt=$(this).text().substr(0,50)+'...';
-    		$(this).text(txt);    		
+    		$(this).text(txt);
     	}
     });
 
@@ -453,7 +453,7 @@ $(document).ready(function() {
             $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Data']");
         }
     });
-    
+
 
     if ($('select').length > 0) {
         $('.selectSoftware select,.selectDesing select,.startSelect select,.checkpointSelect select,.endSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
@@ -498,7 +498,7 @@ $(document).ready(function() {
     CKEDITOR.loadTemplates(SGTemplatesList);
     CKEDITOR.loadTemplates(DRTemplatesList);
     CKEDITOR.loadTemplates(StudioContestSpecTemplates);
-    
+
     // choose contest type
     $('#contestTypes').bind("change", function() {
         onContestTypeChange();
@@ -569,16 +569,16 @@ $(document).ready(function() {
 
     CKEDITOR.replace( 'contestIntroduction' );
     CKEDITOR.replace( 'round1Info' );
-    CKEDITOR.replace( 'round2Info' ); 
-    
+    CKEDITOR.replace( 'round2Info' );
+
     CKEDITOR.replace( 'matchDetails' );
     CKEDITOR.replace( 'matchRules' );
-    
+
 
     handleProjectDropDownChange();
-    
+
     handleProblemsDropDownChange();
-    
+
     $('#overviewAlgorithmPage').hide();
 }); // end of jQuery onload
 
@@ -800,7 +800,7 @@ function onContestTypeChange() {
             templates_files: StudioContestSpecTemplates
         });
     }
-    
+
     if(isContestSaved() && typeId != currentTypeId) {
         if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
             showErrors("You cannot change saved non-First2Finish challenge to First2Finish challenge type");
@@ -964,10 +964,22 @@ function onContestTypeChange() {
                 $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
             }).trigger('change');
             $("#endDateDiv").hide();
-        } else {
+            $("#startDate").unbind('change.dev');
+            $("#startTime").unbind('change.dev');
+
+        } else {  //default all other Software challenges to 5 days in length
             $("#endDateDiv").show();
             $("#startDate").unbind('change.f2f');
             $("#startTime").unbind('change.f2f');
+
+            $("#startDate").bind('change.dev', function(){
+              $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(5).days().toString('MM/dd/yyyy'));
+            }).trigger('change');
+
+            $("#startTime").bind('change.dev', function(){
+              $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
+            }).trigger('change');
+
         }
     }
 
