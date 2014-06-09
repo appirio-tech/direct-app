@@ -972,13 +972,15 @@ function onContestTypeChange() {
             $("#startDate").unbind('change.f2f');
             $("#startTime").unbind('change.f2f');
 
-            $("#startDate").bind('change.dev', function(){
+          if($("#startDate").val() !== null && $("#startDate").val() !== '') {
+            $("#startDate").bind('change.dev', function () {
               $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(5).days().toString('MM/dd/yyyy'));
             }).trigger('change');
 
-            $("#startTime").bind('change.dev', function(){
+            $("#startTime").bind('change.dev', function () {
               $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
             }).trigger('change');
+          }
 
         }
     }
