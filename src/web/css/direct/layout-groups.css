@@ -1,7 +1,7 @@
 /* 
-  - Author: TCSASSEMBLER
-  - Version: 1.6
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.7
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
 
   This file will contain css used in group pages.
 
@@ -22,6 +22,9 @@
   -
   - Version 1.6 (Release Assembly - TopCoder Security Groups Release 8 - Automatically Grant Permissions) changes:
   - - Updated to suit auto grant permissions to make sure the label is in one line.
+  -
+  - Version 1.7 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group management pages
 */
 /* tab width */
 /*#tabs1 ul li.firstTabs a span.dashboardSpan{	width:100px; }
@@ -30,6 +33,14 @@
 #tabs1 ul li.forthTabs a span.dashboardSpan{	width:195px; }
 #tabs1 ul li.fifthTabs a span.dashboardSpan{	width:132px; }
 #tabs1 ul li.sixthTabs a span.dashboardSpan{	width:150px; }*/
+
+body {
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif !important;
+}
+
+body#page{
+    padding: 0 0 50px !important;
+}
 
 /* #wholeAreaHeader */
 #wholeAreaHeader{
@@ -61,17 +72,17 @@
 	.filterTitle{
 		height:36px;
 		padding-left:4px;
-		background:url(/images/bg-newbox-header.png) left top no-repeat;
+		/*background:url(/images/bg-newbox-header.png) left top no-repeat;*/
 		overflow:hidden;
 	}
 		.filterTitle .filterTitleRight{
 			height:36px;
 			padding-right:4px;
-			background:url(/images/bg-newbox-header.png) right -72px no-repeat;
+			/*background:url(/images/bg-newbox-header.png) right -72px no-repeat;*/
 		}
 			.filterTitle .filterTitleCenter{
 				height:36px;
-				background:url(/images/bg-newbox-header.png) left -36px repeat-x;
+				/*background:url(/images/bg-newbox-header.png) left -36px repeat-x;*/
 			}
 				.filterTitle .filterTitleCenter h3.title{
 					font-size:14px;
@@ -86,7 +97,7 @@
 			}
 		.filterTitle .expanded{
 			float:left;
-			height:21px;
+			height:20px;
 			width:21px;
 			margin-left:4px;
 			margin-top:8px;
@@ -95,7 +106,7 @@
 			overflow:hidden;
 		}
 		.filterTitle .collapsed{
-			background-position:left -21px;
+			background-position:left -20px;
 		}
 		.filterTitle h4{
 			float:left;
@@ -109,7 +120,7 @@
 	
 	/* .filterContainer */
 	.filterContainer{
-		border:1px solid #bdbdbd;
+		border:1px solid #E7E7E7 !important;
 		border-top-width:0;
 		padding:16px 18px 13px;
 		min-height:10px;
@@ -207,11 +218,11 @@
 				}
 	.groupDetailsTableContainer table{
 		width:100%;
-		border:1px solid #cfd0d1;
+		border:1px solid #E7E7E7;
 		border-top:0;
 	}
 		.groupDetailsTableContainer table tbody td{
-			border:1px solid #cfd0d1;
+			border:1px solid #E7E7E7;
 			vertical-align:middle;
 			text-align:left;
 			line-height:14px;
@@ -251,7 +262,7 @@
 		}
 		.groupMembersTable table{
 			width:100%;
-			border:1px solid #cfd0d1;
+			border:1px solid #E7E7E7;
 			border-top:0;
 			}
 			.groupMembersTable table thead th{
@@ -260,7 +271,6 @@
 				vertical-align:middle;
 				border-bottom:0;
 				color:#fff;
-				background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
 				}
 				.groupMembersTable table tbody td{
 					padding:6px 10px 5px 9px;
@@ -364,7 +374,7 @@
 			width:100%;
 			}	
 			.sendGroupInvitationTable table td{
-				border:1px solid #bdbdbd;
+				border:1px solid #E7E7E7;
 				}
 			.sendGroupInvitationTable table td.firstColumn{
 				background-color:#f5f5f5;
@@ -376,7 +386,7 @@
 					font-size:12px;
 					}
 				.sendGroupInvitationTable table td.firstColumn .noteLabel{
-					font-size:11px;
+					font-size:12px;
 					background:url(/images/icon-note.png) left 2px no-repeat;
 					padding-left:22px;
 					margin-top:56px;
@@ -409,13 +419,13 @@
 	.mainContent{
 		margin-top:24px;
 		min-height:10px;
-		font-size:11px;
+		font-size:12px;
 	}
 		.tableControlBox{
-			padding:7px 17px;
+			padding:12px 17px;
 			height:21px;
 			overflow:hidden;
-			border:1px solid #bdbdbd;
+			border:1px solid #E7E7E7;
 		}
 		.tableControlBoxTop{
 			border-bottom:0;
@@ -442,19 +452,20 @@
 		/* normal table style */
 		.tableGroupWrapper .normalTableList{
 			width:100%;
-			border:1px solid #cfd0d1;
+			border:1px solid #E7E7E7;
 			border-top:0;
 		}
 			.tableGroupWrapper .normalTableList thead th{
-				border-top:0;
+				border-top:1px solid #E7E7E7;
 				height:33px;
 				vertical-align:middle;
-				border-bottom:0;
-				color:#fff;
-				background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
+				border-bottom:1px solid #E7E7E7;
+				color:#333333;
+                background-color: #f5f5f5;
+				/*background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;*/
 			}
 			.tableGroupWrapper .normalTableList tbody td{
-				border:1px solid #cfd0d1;
+				border:1px solid #E7E7E7;
 				vertical-align:middle;
 				text-align:center;
 				line-height:13px;
@@ -480,7 +491,7 @@
 			overflow:hidden;
 			padding:4px 21px;
 			line-height:24px;
-			background-color:#bdbdbd;
+			background-color:#f5f5f5;
 		}
 			.tableControlPage .leftSide{
 				float:left;
@@ -565,10 +576,9 @@
 /* button */
 A.button6{
 	float: right;
-	background:transparent url(/images/button5_bg.png) repeat-x top;
 	font-weight: bold;
 	font-size: 12px;
-	font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+	font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 	color: #FFF;
 	text-decoration: none;
 }
@@ -579,12 +589,10 @@ A.button6{
 	}
 
 	A.button6 SPAN.left{
-		background: url(/images/button5_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button6 SPAN.right{
-		background: url(/images/button5_right.png) no-repeat right top;
 		padding: 0px 22px;
 		height: 24px;
 		line-height:24px;
@@ -778,7 +786,7 @@ input[type=text]{
 	font-size:12px;
 	height:20px;
 	line-height:20px;
-	border:1px solid #BDBDBD;
+	border:1px solid #E7E7E7;
 	padding:0 6px;
 	font-family:Arial, Helvetica, sans-serif;
 }
@@ -805,7 +813,7 @@ select{
 
 .multiSelectBox{
 	height:84px;
-	border:1px solid #bdbdbd;
+	border:1px solid #E7E7E7;
 	overflow:scroll;
 	background-color:#fffffc;
 }
@@ -862,117 +870,6 @@ select{
 	width:370px;
 }
 
-#new-modal .outLay .modalHeader .closeModal,
-#new-modal .outLay .modalHeader .closeOtherModal{
-	position:absolute;
-	right:0;
-	top:0;
-	display:block;
-	width:30px;
-	height:30px;
-	text-indent:-9999px;
-	background:url(/images/modal-close.png) left top no-repeat;
-	z-index:2;
-}
-#new-modal .outLay .modalHeader .closeModal:hover,
-#new-modal .outLay .modalHeader .closeOtherModal:hover{
-	background-position:left -30px;
-}
-
-#new-modal .outLay .modalHeader{
-	height:40px;
-	background:url(/images/modal-header.png) left top no-repeat;
-	padding-left:8px;
-	overflow:hidden;
-}
-	#new-modal .outLay .modalHeader .modalHeaderRight{
-		height:40px;
-		background:url(/images/modal-header.png) right -80px no-repeat;
-		padding-right:8px;
-	}
-	#new-modal .outLay .modalHeader .modalHeaderCenter{
-		height:40px;
-		font-size:14px;
-		line-height:40px;
-		font-family:Arial, Helvetica, sans-serif;
-		font-weight:bold;
-		color:#000000;
-		padding-left:22px;
-		background:url(/images/modal-header.png) left -40px repeat-x;
-	}
-
-#new-modal .outLay .modalHeaderSmall{
-	height:8px;
-	background:url(/images/preloader-corner.png) left top no-repeat;
-	padding-left:8px;
-	overflow:hidden;
-}
-	#new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight{
-		height:8px;
-		background:url(/images/preloader-corner.png) right -16px no-repeat;
-		padding-right:8px;
-	}
-	#new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter{
-		height:8px;
-		background:url(/images/preloader-corner.png) left -8px repeat-x;
-	}
-
-#new-modal .outLay .modalFooter{
-	height:8px;
-	background:url(/images/preloader-corner.png) left -24px no-repeat;
-	padding-left:8px;
-	overflow:hidden;
-}
-	#new-modal .outLay .modalFooter .modalFooterRight{
-		height:8px;
-		background:url(/images/preloader-corner.png) right -40px no-repeat;
-		padding-right:8px;
-	}
-	#new-modal .outLay .modalFooter .modalFooterCenter{
-		height:8px;
-		background:url(/images/preloader-corner.png) left -32px repeat-x;
-	}
-
-.outLay .modalBody{
-	border:4px solid #000000;
-	border-top-width:0;
-	border-bottom-width:0;
-	background:#e6e6e6 url(/images/modal-body-normal.png) left top repeat-x;
-	font-size:12px;
-	color:#333333;
-	line-height:18px;
-	min-height:10px;
-}
-	.outLay .iconNotice{
-		position:absolute;
-		left:22px;
-		top:73px;
-	}
-		
-	.outLay .modalBody .noticeContent{
-		padding-left:96px;
-		min-height:109px;
-		width:240px;
-	}
-	
-	.outLay .modalBody .modalCommandBox{
-		border-top:1px solid #ccc;
-		padding-top:16px;
-		height:36px;
-		text-align:center;
-	}
-/* #preloaderModal */
-#preloaderModal{
-	width:100px;
-	height:80px;
-}
-#preloaderModal .modalBody, #sendInvitationModal .modalBody{
-    height:auto;
-    min-height:10px;
-    padding-top:4px;
-    text-align:center;
-    background:url(/images/preloader-body.png) left -2px repeat-x;
-}
 #sendInvitationModal .modalBody{
     background:url(/images/preloader-body.png) left -16px repeat-x !important;
 }
@@ -1002,10 +899,8 @@ select{
 			text-align:center;
 		}
 		#deleteGroupModal .modalBody .noticeContent{
-			text-align:center;
 			padding-top:27px;
 			min-height:82px;
-			padding-left:80px;
 			width:266px;
 		}
 		
@@ -1142,7 +1037,7 @@ select{
 	
 .groupMembersTableContainer .normalTableList{
 	width:100%;
-	border:1px solid #cfd0d1;
+	border:1px solid #E7E7E7;
 	border-top:0;
 	}
 	
@@ -1151,16 +1046,17 @@ select{
 		height:33px;
 		vertical-align:middle;
 		border-bottom:0;
-		color:#fff;
-		background:transparent url(/images/bg-normal-table-th.png) left top repeat-x;
+		color:#333;
+		background-color:#f5f5f5;
 		}
 		
 	.groupMembersTableContainer .normalTableList tbody td{
-		border:1px solid #cfd0d1;
+		border:1px solid #E7E7E7;
 		vertical-align:middle;
 		text-align:center;
 		line-height:13px;
 		padding:8px;
+        font-size: 12px;
 		}
 		
 	.groupMembersTableContainer .normalTableList tbody tr.firstRow td{
@@ -1379,25 +1275,19 @@ select{
 #createAdminModal .noticeContent{
 	width:auto;
 	min-height:73px;
-	padding-left:63px;
 	padding-top:36px;
-	text-align:center;
 	}
 	
 #updateGroupConfirmModal .noticeContent{
 	width:280px;
 	min-height:73px;
-	padding-left:63px;
 	padding-top:36px;
-	text-align:center;
 	}
 #noChangeConfirmModal .noticeContent{
 	width:280px;
 	min-height:73px;
-	padding-left:63px;
 	padding-top:36px;
-	text-align:center;
-	}	
+	}
 /* searchInputDiv */
 #searchModal,#searchListModal{
 	width:398px;
@@ -1500,7 +1390,7 @@ a.createNewGroup span.left{
 		
 		
 		.tableGroupWrapper .emptyTableList{
-			border:1px solid #cfd0d1;
+			border:1px solid #E7E7E7;
 			padding: 5px;
             font-size: 12px;
             line-height: 36px;
@@ -1530,4 +1420,9 @@ a#createGroup, a#updateGroup {
 }
 #pageSizeSelect {
     width: 40px;
+}
+
+input[type=text], textarea, select {
+    font-size: 12px !important;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif !important;
 }

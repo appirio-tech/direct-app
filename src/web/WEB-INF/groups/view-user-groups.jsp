@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER, freegod
+  - Author: GreatKevin, freegod
   - Version: 1.2 (TopCoder Security Groups Release 8 - Automatically Grant Permissions)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
@@ -124,7 +124,7 @@
                         <div class="noInvitation <s:if test='0 < groups.values.size()'>hide</s:if>">
 							<div class="tableControlBox tableControlBoxTop">
 								<div class="leftSide">
-									<a class="button7 createNewGroup" href="<s:url action='enterCreateGroup' namespace='/group'/>"><span class="left">Create New Group</span></a>
+									<a class="button7 newButtonGreen createNewGroup" href="<s:url action='enterCreateGroup' namespace='/group'/>"><span class="left">Create New Group</span></a>
 								</div>
 								<div class="rightSide"></div>
 							</div>
@@ -134,7 +134,7 @@
                             </div></div>
 							<div class="tableControlBox tableControlBoxBottom">
 								<div class="leftSide">
-									<a class="button7 createNewGroup" href="<s:url action='enterCreateGroup' namespace='/group'/>"><span class="left">Create New Group</span></a>
+									<a class="button7 newButtonGreen createNewGroup" href="<s:url action='enterCreateGroup' namespace='/group'/>"><span class="left">Create New Group</span></a>
 								</div>
 								<div class="rightSide"></div>
 							</div>

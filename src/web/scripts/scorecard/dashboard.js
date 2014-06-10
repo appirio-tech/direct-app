@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for scorecard.
  *
@@ -7,10 +7,98 @@
  *  - Created document header.
  *  - Modified scorecard right side bar to match direct application right side bar.
  *
- * @author TCSASSEMBLER, pvmagacho
- * @version 2.0
+ *  Version 2.1 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+ *  - Reskin the scorecard pages
+ *
+ * @author pvmagacho, GreatKevin
+ * @version 2.1
  */
- 
+
+jQuery.fn.outerHTML = function () {
+    return jQuery('<div />').append(this.eq(0).clone()).html();
+};
+
+(function ($) {
+    $.fn.ellipsis = function () {
+        return this.each(function () {
+            var el = $(this);
+
+            if (el.css("overflow") == "hidden") {
+                var text = el.html();
+                var multiline = el.hasClass('multiline');
+                var t = $(this.cloneNode(true))
+                        .hide()
+                        .css('position', 'absolute')
+                        .css('overflow', 'visible')
+                        .width(multiline ? el.width() : 'auto')
+                        .height(multiline ? 'auto' : el.height())
+                    ;
+
+                el.after(t);
+
+                function height() {
+                    return t.height() > el.height();
+                };
+                function width() {
+                    return t.width() > el.width();
+                };
+
+                var func = multiline ? height : width;
+
+                while (text.length > 0 && func()) {
+                    text = text.substr(0, text.length - 1);
+                    t.html(text + "...");
+                }
+
+                el.html(t.html());
+                t.remove();
+            }
+        });
+    };
+})(jQuery);
+
+function populateRecentProjects(data) {
+
+    if (data && data.length > 0) {
+
+        $("#recentProjectsTopNav").show();
+
+        $("#recentProjectsTopNav .recentProjectsFlyout li").remove();
+
+        var currentProjectId = $("input[name=topNavCurrentProjectId]").val();
+        var hasNotCurrentContests = false;
+
+        $.each(data, function (index, pItem) {
+
+            if (pItem.accessItemId == currentProjectId) {
+                return;
+            }
+            var a = $('<li class="trigger"></li>').html($("#recentProjectItemTemplate").html());
+
+            // set project name
+            a.find("a.recentProjectName").html('<span class="ellipsis">' + pItem.itemName + '</span><span class="arrow"></span>').attr('title', pItem.itemName).addClass("ellipsis");
+            a.find("a.recentProjectOverview").attr('href',
+                '/direct/projectOverview.action?formData.projectId=' + pItem.accessItemId);
+            a.find("a.recentProjectPlan").attr('href',
+                '/direct/ProjectJsGanttGamePlanView.action?formData.projectId=' + pItem.accessItemId);
+            a.find("a.recentProjectSetting").attr('href',
+                '/direct/editProject.action?formData.projectId=' + pItem.accessItemId);
+            $("#recentProjectsTopNav .recentProjectsFlyout").append(a);
+            hasNotCurrentContests = true;
+        });
+
+        if(!hasNotCurrentContests) {
+            $("#recentProjectsTopNav").hide();
+        }
+
+    } else {
+        // no data, hide recent projects
+        $("#recentProjectsTopNav").hide();
+    }
+}
+
+
+
 $(document).ready(function(){
     
     /*-------------------------- Show/hide the dropdown list --*/
@@ -321,6 +409,68 @@ $(document).ready(function(){
     if ($.browser.msie && $.browser.version == 7.0) {
         $(".contestsContent").css("overflow-x", "hidden");
     }
+
+    $.ajax({
+        type: 'POST',
+        url: '/direct/getCurrentUserRecentProjects',
+        dataType: "json",
+        cache: false,
+        async: false,
+        success: function (jsonResult) {
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    userRecentProjects = result;
+                    populateRecentProjects(result);
+                    $(this).find(".flyout:eq(0)").show();
+                    $(this).addClass("on");
+                    $(this).next().addClass("noBg");
+                },
+                function (errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
+
+    (function (newHeader) {
+        newHeader.find(".topMenu .menus li").hover(function(){
+            $(this).find(".flyout:eq(0)").show();
+            $(this).addClass("on");
+            $(this).next().addClass("noBg");
+            $(this).find(".flyout:eq(0)").find(".ellipsis").ellipsis().parent().append('<span class="arrow"></span>');
+        },function(){
+            $(this).find(".flyout:eq(0)").hide();
+            $(this).removeClass("on");
+            $(this).next().removeClass("noBg");
+        });
+        newHeader.find(".mainMenu .menus li").hover(function () {
+            $(this).find(".flyout").show();
+            $(this).addClass("on");
+        }, function () {
+            $(this).find(".flyout").hide();
+            $(this).removeClass("on");
+        });
+
+        newHeader.find(".flyout a").click(function () {
+            $(this).closest(".flyout").hide();
+            return true;
+        });
+    })($("#newHeader"));
+
+    // functions for newSidebar
+    (function(sidebar){
+        sidebar.find(".switchBtn").click(function(){
+            $("#mainContent").toggleClass("newSidebarCollapse");
+            $(window).trigger("resize");
+            return false;
+        });
+        sidebar.find(".sideBox dt").click(function(){
+            $(this).closest(".sideBox").toggleClass("collapse");
+            return false;
+        })
+
+    })($(".newSidebar"));
+
 });
 
 function resetForm(className) {
@@ -449,5 +599,6 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
         modalCloseAddNewProject();
         return false;
     });
+
 
 })(jQuery);

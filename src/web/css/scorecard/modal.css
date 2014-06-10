@@ -202,7 +202,7 @@ position: absolute;
 	.addWindow.ui-dialog-content.ui-widget-content .header{
 		height: 42px;
 		background-color: #f0f0f0;
-		border-bottom: #bdbdbd 1px solid;
+		border-bottom: #ededed 1px solid;
 	}
 		.addWindow.ui-dialog-content.ui-widget-content .header p.title{
 			padding: 0;
@@ -264,15 +264,14 @@ position: absolute;
 	.addWindow.ui-dialog-content.ui-widget-content .foot{
 		height: 54px;
 		width: 100%;
-		background-color: #f0f0f0;
-		border-top: #bdbdbd 1px solid;
+		border-top: #ededed 1px solid;
 	}
 		#addScorecard2.addWindow a.clearBtn,
 		#addManually.addWindow a.moreQuestions,
 		#addReq.addWindow a.moreQuestions{
 			padding: 15px 10px;
-			color: #ec1c23;
-			font-size: 11px;
+			color: #08c;
+			font-size: 12px;
 			font-weight: bold;
 			text-decoration: none; 
 		}

@@ -1,7 +1,7 @@
 /* 
-  - Author: GreatKevin
-  - Version: 1.2
-  - Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, GreatKevin
+  - Version: 1.3
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
 
   This file will contain css used in both the index and the other pages.
 
@@ -10,6 +10,9 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Updated to support the new cockpit navigation header for group pages
+  -
+  - Version 1.3 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin groups management page
 */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -299,7 +302,7 @@ body#page{
 /* tabs1 ( the main tabs )*/
 #tabs1{
 	position: absolute;
-	top: 92px;
+	top: 89px;
 	left: 21px;
 }
 
@@ -311,7 +314,7 @@ body#page{
 
 #tabs1 UL LI{
 	float: left;
-	margin: 0 3px;
+	margin: 0 5px;
 }
 
 	#tabs1 UL LI A{
@@ -319,12 +322,12 @@ body#page{
 		font-size: 12px;
 		font-weight: bold;
 		text-decoration: none;
-		background: #000 url(/images/tabs_left2.png) no-repeat left top; /* left corner */
+		/*background: #000 url(/images/tabs_left2.png) no-repeat left top; *//* left corner */
 		float: left;
 	}
 	
 	#tabs1 UL LI A SPAN{
-		background: url(../../images/tabs_right.png) no-repeat right top; /* right corner */
+		/*background: url(../../images/tabs_right.png) no-repeat right top; *//* right corner */
 		float: left;
 		height: 20px;
 		/*width: 100px;*/
@@ -350,11 +353,11 @@ body#page{
 	
 	#tabs1 UL LI.on A{
 		color: #ec1c23;
-		background: url(/images/tabs_left_on2.png) no-repeat left; /* left corner */
+		/*background: url(/images/tabs_left_on2.png) no-repeat left; *//* left corner */
 	}
 	
 	#tabs1 UL LI.on A SPAN{
-		background: url(/images/tabs_right_on.png) no-repeat right; /* left corner */
+		/*background: url(/images/tabs_right_on.png) no-repeat right; *//* left corner */
 	}
 	
 	#tabs1 ul li a span.dashboardSpan { width: auto; }

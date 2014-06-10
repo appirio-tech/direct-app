@@ -1214,6 +1214,16 @@ IMG{
     display: none;
     background: #000002;
 }
+#modalBackground {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    display: none;
+    background: #000002;
+}
 
 #new-modal {
     top: 0;
@@ -1231,6 +1241,18 @@ IMG{
     width: 360px;
 }
 
+#new-modal-new {
+    left: 0;
+    position: fixed;
+    top: 0;
+    z-index: 10002;
+}
+
+#new-modal-new .outLayNew {
+    display: none;
+    position: relative;
+}
+
 #new-modal .outLay .modalHeader .closeModal,
 #new-modal .outLay .modalHeader .closeOtherModal {
     position: absolute;
@@ -1240,7 +1262,7 @@ IMG{
     width: 30px;
     height: 30px;
     text-indent: -9999px;
-    background: url(../../../images/modal-close.png) left top no-repeat;
+    background: url(../../images/modal-close.png) left top no-repeat;
     z-index: 2;
 }
 
@@ -1250,72 +1272,59 @@ IMG{
 
 #new-modal .outLay .modalHeader {
     height: 40px;
-    background: url(../../../images/modal-header.png) left top no-repeat;
-    padding-left: 8px;
+    border-bottom: 1px solid #e7e7e7;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeader .modalHeaderRight {
     height: 40px;
-    background: url(../../../images/modal-header.png) right -80px no-repeat;
-    padding-right: 8px;
 }
 
 #new-modal .outLay .modalHeader .modalHeaderCenter {
     height: 40px;
-    font-size: 14px;
+    font-size: 15px;
+    border-bottom: 1px solid #e7e7e7;
     line-height: 40px;
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #000000;
+    color: #666666;
+    background: #f1f1f1;
     padding-left: 22px;
-    background: url(../../../images/modal-header.png) left -40px repeat-x;
 }
 
 #new-modal .outLay .modalHeaderSmall {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) left top no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) right -16px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) left -8px repeat-x;
 }
 
 #new-modal .outLay .modalFooter {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) left -24px no-repeat;
-    padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalFooter .modalFooterRight {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) right -40px no-repeat;
-    padding-right: 8px;
 }
 
 #new-modal .outLay .modalFooter .modalFooterCenter {
     height: 8px;
-    background: url(../../../images/preloader-corner.png) left -32px repeat-x;
 }
 
-
 .outLay .modalBody {
-    border: 4px solid #000000;
+    background: #fff;
     border-top-width: 0;
     border-bottom-width: 0;
-    background: #e6e6e6 url(../../../images/modal-body-normal.png) left top repeat-x;
-    font-size: 12px;
-    color: #333333;
+    font-size: 13px;
+    color: #666666;
     line-height: 18px;
     min-height: 10px;
 }
@@ -1333,36 +1342,34 @@ IMG{
 }
 
 .outLay .modalBody .modalCommandBox {
-    border-top: 1px solid #ccc;
-    padding-top: 16px;
+    border-top: 1px solid #e7e7e7;
+    margin: 0 4px;
+    padding-top: 10px;
     height: 36px;
     text-align: center;
 }
 
 .outLay input.text {
     height: 19px;
-    padding-left: 6px;
-    padding-right: 6px;
-    border-top: 1px solid #717171;
-    border-left: 1px solid #b4b4b4;
-    border-right: 1px solid #b4b4b4;
-    border-bottom: 1px solid #dadada;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333333;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    color: #666666;
     line-height: 18px;
-    font-size: 12px;
-    background: #ffffff url(../../../images/modal-text-shadow.png) left top repeat-x;
+    font-size: 11px;
 }
 
 .outLay .textField {
-    border: 1px solid #999999;
-    border-top-color: #737373;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
     padding-left: 6px;
     padding-right: 6px;
     padding-top: 4px;
     padding-bottom: 4px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333333;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    color: #666666;
     line-height: 18px;
     font-size: 12px;
     overflow: auto;
@@ -1377,15 +1384,15 @@ IMG{
 #preloaderModal .modalBody {
     height: auto;
     min-height: 10px;
-    padding-top: 4px;
+    padding-top: 10px;
     text-align: center;
-    background: url(../../../images/preloader-body.png) left -2px repeat-x;
+    background: #fff;
 }
 
 #preloaderModal .modalBody .preloaderTips {
     padding-top: 5px;
     font-size: 12px;
-    color: #333333;
+    color: #666666;
 }
 
 /* end #preloaderModal */
@@ -1393,3 +1400,80 @@ IMG{
 #errorDialog li {
     list-style-type: disc;
 }
+/** cockpit footer **/
+
+#footer .socialNetwork {
+    float: right;
+    position: relative;
+    top: -2px;
+}
+
+.homeFooter .socialNetwork {
+    padding-right: 6px;
+}
+
+#footer .socialNetwork span {
+    position: relative;
+    top: -3px;
+}
+
+#footer .socialNetwork a,
+#footer .socialNetwork a:visited {
+    background-image: url(../../images/followIcon.gif);
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    overflow: hidden;
+    margin-left: 6px;
+}
+
+#footer .socialNetwork a.twitterIcon,
+#footer .socialNetwork a.twitterIcon:visited {
+    background-position: 0 0;
+}
+
+#footer .socialNetwork a.linkedInIcon,
+#footer .socialNetwork a.linkedInIcon:visited {
+    background-position: -16px 0;
+}
+
+#footer .socialNetwork a.facebookIcon,
+#footer .socialNetwork a.facebookIcon:visited {
+    background-position: -32px 0;
+}
+
+#footer .socialNetwork a.gPlusIcon,
+#footer .socialNetwork a.gPlusIcon:visited {
+    background-position: -48px 0;
+}
+
+#footer .socialNetwork a.youtubeIcon,
+#footer .socialNetwork a.youtubeIcon:visited {
+    background-position: -64px 0;
+}
+
+#footer .copyright {
+    font-size: 12px;
+    color: #666666;
+}
+
+#footer .copyright span {
+    display: inline-block;
+    padding-right: 0px;
+}
+
+#footer .copyright a,
+#footer .copyright a:visited {
+    background: url(../../images/footerSeparator.gif) no-repeat left center;
+    color: #666666;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 1px 0 4px;
+}
+
+#footer .copyright a:hover {
+    text-decoration: underline;
+}
+
+

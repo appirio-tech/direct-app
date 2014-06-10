@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for scorecard's right side bar.
  *
@@ -7,8 +7,11 @@
  *  - Created document header.
  *  - Modified scorecard right side bar to match direct application right side bar.
  *
- * @author TCSASSEMBLER, pvmagacho
- * @version 2.0
+ *  Version 2.1 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+ *  - Reskin the scorecard pages
+ *
+ * @author pvmagacho. GreatKevin
+ * @version 2.1
  */
  
 var rightSidebarData = {};
@@ -16,6 +19,116 @@ var currentProjectName = "";
 var contestData;
 var isInProjectScope;
 var currentProjectContests;
+var currentContestsData = [];
+
+function handleJsonResult2(jsonResult, successCallBack, failureCallBack) {
+    if(jsonResult.result) {
+        successCallBack(jsonResult.result['return']);
+    } else {
+        failureCallBack(jsonResult.error.errorMessage);
+    }
+}
+
+var updateContestsTable = function (contestsData, emptyMessage) {
+    var contests = $(".contestList .contestListMask .tableBody table tbody");
+
+    if(!contests) {
+        // there is no right sidebar or there is no contests panel, return
+        return;
+    }
+
+    contests.empty();
+
+    $.each(contestsData, function (i, item) {
+        var urlPart = "/contest/detail?projectId=";
+
+        if(item.typeName == 'Copilot Posting') {
+            urlPart = "/copilot/copilotContestDetails?projectId=";
+        }
+
+        var newRow = $("<tr onclick=\"document.location.href ='" + "/direct" + urlPart
+            + item.id + "';this.style.cursor='pointer';\"><td><span class='"
+            + item.statusShortName.toLowerCase() + "' title='" + item.statusName
+            + "'></span></td><td class='leftAlign'></td><td><img/></td></tr>");
+        $("td.leftAlign", newRow).text(item.name);
+        switch (item.statusShortName) {
+            case "Running":
+                $("td:eq(0) span", newRow).attr("class", "running");
+                break;
+
+            case "Draft":
+                $("td:eq(0) span", newRow).attr("class", "draft");
+                break;
+
+            case "Completed":
+                $("td:eq(0) span", newRow).attr("class", "completed");
+                break;
+
+            case "Cancelled":
+                $("td:eq(0) span", newRow).attr("class", "cancelled");
+                break;
+        }
+        $("td:eq(2) img", newRow).attr("alt", item.typeShortName.toLowerCase()).attr("src", "/images/"
+            + item.typeShortName.toLowerCase() + "_small.png").attr('title',  item.typeName);
+
+        if (i % 2 == 0) {
+            newRow.removeClass("even");
+        } else {
+            newRow.addClass("even");
+        }
+        newRow.appendTo(contests);
+    });
+
+    if (contestsData.length == 0) {
+        $("<tr><td class='hide'></td><td class='hide'></td><td colspan='3'>" + emptyMessage + "</td></tr>").appendTo(contests);
+    }
+    $("#contestsTable:has(tbody tr)").tablesorter();
+    $("#contestsTable").trigger("update");
+    sortCurrentContestsTable();
+}
+
+var selectProjectRightSidebar = function (projectId) {
+
+    var list = $("#dropDown1 .dropList");
+    if (!list.is(":hidden")) {
+        list.hide();
+        if ($(".projectSelectMask .contestsDropDown UL").height() > 200) {
+            $(".projectSelectMask .contestsDropDown UL").css('width', 233);
+        }
+    }
+
+    currentProjectId = projectId;
+    var projectName = "Select a project here";
+    $(".projectSelectMask .dropList li").each(function () {
+        if ($(this).data("id") == projectId) {
+            projectName = $.trim($("a", this).text());
+        }
+    });
+    $(".projectSelectMask .inputSelect input").val(projectName);
+
+    if(!projectId || projectId <= 0) {
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: "/direct/getDirectProjectContests",
+        data: {directProjectId: projectId},
+        cache: false,
+        dataType: 'json',
+        success: function (jsonResult) {
+            handleJsonResult2(jsonResult,
+                function (contestsData) {
+                    currentContestsData = contestsData;
+                    updateContestsTable(contestsData, "No Contests this project");
+                    $(".contestList .searchMask input").val('').trigger("keyup");
+                },
+                function (errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+}
 
 // JavaScript Document
 $(document).ready(function(){
@@ -161,14 +274,15 @@ $(document).ready(function(){
         input.val("");
         var hasCurrentProject = false;
         $.each(items,function(index,item){
-            var li = $("<li><a class='longWordsBreak' href='/direct/projectOverview?formData.projectId=" + item.id + "'></a></li>");
+            var li = $("<li><a class='longWordsBreak' href='javascript:selectProjectRightSidebar(" + item.id + ");'></a></li>");
             li.data("id",item.id);
             li.find("a").text(item.value);
+            li.appendTo(dropDown);
             if($.trim(item.value) == currentProjectName){
                 input.val(item.value);
                 hasCurrentProject = true;
+                selectProjectRightSidebar(item.id);
             }
-            li.appendTo(dropDown);
         })
 
         if (!hasCurrentProject) input.val("Select a project here");
@@ -339,59 +453,10 @@ $(document).ready(function(){
 
         $("#contestsContent").append(row);
     });
-            
-	/* sort contests */
-    if ($("#contestsTable").length > 0) {
-        $("#contestsTable").tablesorter();
-        
-        $("#rightTableHeader .statusTh").click().click();
-    }
-    
-	/* sort contest by title */
-	sortTitle = function(){
-		 var sorting = [[1,0]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tr").removeClass("even");
-		$("#contestsTable tr").each(function(){
-			$("#contestsTable tr:even").addClass("even");
-		});
-	}
-	
-	/* sort contest by status */
-	sortStatus = function(){
-		var sorting = [[0,1]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tr").removeClass("even");
-		$("#contestsTable tr").each(function(){
-			$("#contestsTable tr:even").addClass("even");
-		});
-	}
 
-    if ($("#contestsTable tbody tr").length > 0) {
-        sortStatus();
-    }
 
-	/* sort contest by type */
-	sortType = function(){
-		var sorting = [[2,0]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tr").removeClass("even");
-		$("#contestsTable tr").each(function(){
-			$("#contestsTable tr:even").addClass("even");
-		});
-	}
-	
-	/* get the selected index and sort the contests table */
-	sortTable = function(mySelect){
-		var selected = mySelect.options[mySelect.selectedIndex].value;
-		
-		if( selected == "title" )
-			sortTitle();
-		else if(selected == "status")
-			sortStatus();
-		else 
-			sortType();
-	}
+
+
 /*
     $(".customerSelectMask  UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
@@ -485,35 +550,7 @@ $(document).ready(function(){
         })
     });
     
-    
-    showHideRows = function(myLink, tableId){
-        
-        if( $(myLink).html() == "View More" ){ //when the user click the view more link we will show the hidden rows
-            $("#"+tableId+" TBODY TR").each(function(){
-                $(this).removeClass("hide");
-            });
-            
-             $(myLink).html("Hide Rows");
-             $(myLink).addClass("less");
-             
-        }else{ //when the user click the hide rows link we will hide some rows
-            var hide_row = false;
-            $("#"+tableId +" TBODY TR").each(function(){
-                    
-                    if( this.className.search("hideStart") != -1 ){
-                        hide_row = true;
-                    }
-                    
-                    if( hide_row )
-                        $(this).addClass("hide");
-            });
-            
-            $(myLink).html("View More");
-            $(myLink).removeClass("less");
-        }
-        
-    }
-    
+
     /*----------------- projects table hover --*/
     $("table.project TR").mouseover(function(){
             $(this).addClass("hover");
@@ -604,6 +641,32 @@ $(document).ready(function(){
             }
         ]
     });
+
+
+    $(".contestList input.selectProjectBtn").click(function () {
+        if (typeof (currentProjectId) != "undefined" && currentProjectId > 0) {
+            document.location.href = '/direct/projectOverview?formData.projectId=' + currentProjectId;
+        } else {
+            alert('Select a project first');
+        }
+    });
+
+    $(".contestList .searchMask input").keyup(function () {
+        var keyword = $.trim($(this).val()).toLowerCase();
+        var count = 0;
+        var filtered = [];
+        $.each(currentContestsData, function (i, item) {
+            var found = keyword.length == 0 ||
+                item.statusName.toLowerCase().indexOf(keyword) >= 0 ||
+                item.name.toLowerCase().indexOf(keyword) >= 0 ||
+                item.typeName.toLowerCase().indexOf(keyword) >= 0;
+            if (found) {
+                filtered.push(item);
+            }
+        });
+        updateContestsTable(filtered, "No Matched Challenge");
+    });
+
 });    
 
  /* Add js code for  https://apps.topcoder.com/bugs/browse/TCCC-4119 */
@@ -661,4 +724,156 @@ $(document).ready(function(){
          
     });
 
+
+    /* sort contests */
+    if ($("#contestsTable").length > 0) {
+
+        $("#contestsTable:has(tbody tr)").tablesorter();
+
+        $("#rightTableHeader .statusTh").click().click();
+    }
+
+    /* init date-pack */
+    if($('.date-pick').length > 0){
+        $(".date-pick").datePicker({startDate:'01/01/2001'});
+    }
+
+    if ($("#contestsTable tbody tr").length > 0) {
+        sortStatus();
+    }
+
+    adjustContestListHeight();
+
+    if ($(".contestsContent").length > 0) {
+        /* Stylished scrollbar*/
+        $('.contestsContent').jScrollPane({
+            scrollbarWidth: 17,
+            showArrows: true
+        });
+    }
+
 })
+
+var currentSorting = [[0, 1]];
+
+var sortCurrentContestsTable = function() {
+    if ($("#contestsTable tbody tr").size() > 0) {
+        $("#contestsTable").trigger("sorton", [currentSorting]);
+        $("#contestsTable tr").removeClass("even");
+        $("#contestsTable tr:even").addClass("even");
+    }
+}
+
+/* sort contest by title */
+var sortTitle = function(){
+    var sorting = [[1,0]];
+    $("#contestsTable").trigger("sorton",[sorting]);
+    $("#contestsTable tr").removeClass("even");
+    $("#contestsTable tr").each(function(){
+        $("#contestsTable tr:even").addClass("even");
+    });
+}
+
+/* sort contest by status */
+var sortStatus = function(){
+    var sorting = [[0,1]];
+    $("#contestsTable").trigger("sorton",[sorting]);
+    $("#contestsTable tr").removeClass("even");
+    $("#contestsTable tr").each(function(){
+        $("#contestsTable tr:even").addClass("even");
+    });
+}
+
+
+/* sort contest by type */
+var sortType = function(){
+    var sorting = [[2,0]];
+    $("#contestsTable").trigger("sorton",[sorting]);
+    $("#contestsTable tr").removeClass("even");
+    $("#contestsTable tr").each(function(){
+        $("#contestsTable tr:even").addClass("even");
+    });
+}
+
+/* get the selected index and sort the contests table */
+var sortTable = function(mySelect){
+    var selected = mySelect.options[mySelect.selectedIndex].value;
+
+    if( selected == "title" )
+        sortTitle();
+    else if(selected == "status")
+        sortStatus();
+    else
+        sortType();
+}
+
+/*-Show the scrollbar when the number of contests is more than 10-*/
+
+var adjustContestListHeight = function() {
+    var rows_height = 0;
+    var contests_nbre = 0;
+
+    /* get the height of the 10 first rows ( one contest per row)*/
+    $("#contestsTable TBODY").children().each(function() {
+        if (contests_nbre < 10)
+            rows_height += $(this).height();
+        contests_nbre++;
+    });
+
+    if (contests_nbre > 10) {
+        $(".contestsContent").height(rows_height);
+
+        // Chrome
+        if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // Safari
+        if (ua.match(/version\/([\d.]+).*safari/) != null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0] > 3) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // IE 7
+        if ($.browser.msie && $.browser.version == 7.0) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // IE 8
+        if ($.browser.msie && $.browser.version == 8.0) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+        $(".contestsContent TABLE").css("width", "232px");
+
+        return rows_height + 20;
+    }
+
+    return 0;
+}
+
+var showHideRows = function (myLink, tableId) {
+
+        if ($(myLink).html() == "View More") { //when the user click the view more link we will show the hidden rows
+            $("#" + tableId + " TBODY TR").each(function () {
+                $(this).removeClass("hide");
+            });
+
+            $(myLink).html("Hide Rows");
+            $(myLink).addClass("less");
+
+        } else { //when the user click the hide rows link we will hide some rows
+            var hide_row = false;
+            $("#" + tableId + " TBODY TR").each(function () {
+
+                if (this.className.search("hideStart") != -1) {
+                    hide_row = true;
+                }
+
+                if (hide_row)
+                    $(this).addClass("hide");
+            });
+
+            $(myLink).html("View More");
+            $(myLink).removeClass("less");
+        }
+
+    };

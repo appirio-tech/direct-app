@@ -1,15 +1,19 @@
 /**
- * - Author: TCSASSEMBLER, pvmagacho
- * - Version: 1.2
- * - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * - Author: pvmagacho, GreatKevin
+ * - Version: 1.3
+ * - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  * 
  * This file contains all the client javascript code for the scorecard pages.
  * Version 1.1 (Release Assembly - TopCoder Scorecard Tool Ajax Loading and Static Files Sharing) Change notes:
  * - Add Clone scoreboard
  * - Change AJAX loading animiation.
+ *
  * Version 1.2 ((TCCC-3917) Scorecard Tool - Document Upload Option) Change notes:
  * - Modified upload options from YES/NO to N/A, Optional or Required. Will use both
  * - uploadDocument and uploadDocumentRequired properties.
+ *
+ *  Version 1.3 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+ *  - Reskin the scorecard pages
  */
 
 /**
@@ -766,7 +770,7 @@ $(document).ready(function() {
     
         var menu = $(this).parent().find('.addmenu');
         $(menu).css("top",(myLinkTop+21)+'px');
-        $(menu).css("left",myLinkLeft+'px');
+        $(menu).css("left",(myLinkLeft-90)+'px');
         
         $(menu).show();
         $(this).addClass("hover");

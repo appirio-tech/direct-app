@@ -4,7 +4,7 @@
 /**
  * Javascript for security group pages.
  *
- * @author xjtufreeman, TCSASSEMBLER, freegod
+ * @author xjtufreeman, freegod
  * @version 1.8
  * 
  * Version: 1.1 (Release Assembly - TopCoder Security Groups Frontend - Invitations Approvals) change notes:
@@ -110,7 +110,7 @@ $(document).ready(function(){
     var currentUserInput;
 	// custom method
 	$('.searchUser').live('click',function(){
-        currentUserInput = $(this).parent().find("input");
+        currentUserInput = $(this).parent().find("input[type=text]");
         $("#handle").val(currentUserInput.val());
         $(".handleInputError").hide();
 		modalLoad("#searchModal");

@@ -139,6 +139,9 @@
  * -- Update prize section to support on the fly cost calculation for design challenge
  * -- Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
+ * - Release Assembly - TC Group Management and Scorecard Tool Rebranding
+ * -- Update the tooltip header color from red to grey
+ *
  */
 
 body{
@@ -1648,15 +1651,16 @@ DIV.notif-div{
 
 /* red caption*/
 .tooltipCaption{
-	background: url(../../images/tooltip_bg.png) repeat-x;
+	/*background: url(../../images/tooltip_bg.png) repeat-x;*/
+    background-color: #808080;
 }
 
 .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left.png) no-repeat left;
+	/*background: url(../../images/tooltip_caption_left.png) no-repeat left;*/
 }
 
 .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right.png) no-repeat right;
+	/*background: url(../../images/tooltip_caption_right.png) no-repeat right;*/
 }
 
 /* Blue Caption*/
@@ -1809,7 +1813,7 @@ DIV.notif-div{
 	.tooltipContent P{
 		margin: 0;
 		padding: 0;
-		font-size: 11px;
+		font-size: 12px;
 	}
 	
 		.tooltipContent P A{

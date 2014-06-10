@@ -16,9 +16,7 @@
                 <li>No Challenge type is selected.</li>
             </ul>
             <div class="modalCommandBox">
-                <a href="javascript:;" class="newButton1 defaultBtn"><span class="btnR"><span
-                        class="btnC">OK</span></span></a>
-                <a href="javascript:;" class="newButton1 noBtn"><span class="btnR"><span
+                <a href="javascript:;" class="newButton1 newButtonBlue defaultBtn"><span class="btnR"><span
                         class="btnC">OK</span></span></a>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER, freegod, caru, suno1234
-  - Version: 1.5
+  - Author: freegod, caru, suno1234, GreatKevin
+  - Version: 1.6
   - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the create/update security group page.
@@ -27,6 +27,9 @@
   -
   - Version 1.5 (48hr Cockpit Group Management Improvement Release Assembly) change notes:
   - - Add a hide input to the member data row to store the userId.
+  -
+  - Version 1.6 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -68,7 +71,7 @@
                             </c:if>
                             <c:if test="${empty group}">
                                 <h2 class="createGroupsTitle">Create New Group</h2>
-                                <a class="button7" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
+                                <a class="button7 newButtonBlue" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
                             </c:if>
 						</div>
 						<!-- End #wholeAreaHeader -->
@@ -359,10 +362,10 @@
 						    <input type="checkbox" id="skipInvitationEmail" class="skipInvitationEmail" autocomplete="off" checked="checked"/>
 						    <label for="skipInvitationEmail" class="skipInvitationEmail">Skip invitation process for newly added members</label>
                             <c:if test="${empty group}">
-							<a id="createGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">CREATE GROUP</span></span></a>
+							<a id="createGroup" href="javascript:;" class="newButton1 newButtonGreen triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">CREATE GROUP</span></span></a>
                             </c:if>
                             <c:if test="${not empty group}">
-                            <a id="updateGroup" href="javascript:;" class="newButton1 triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">SAVE GROUP</span></span></a>
+                            <a id="updateGroup" href="javascript:;" class="newButton1 newButtonGreen triggerModal" rel="#createGroupConfirmModal"><span class="btnR"><span class="btnC">SAVE GROUP</span></span></a>
                             <input type="hidden" id="groupId" value="${group.id}"/>
                             </c:if>
                             
@@ -377,7 +380,7 @@
                                 <s:param name="criteria.permissions" value="new java.lang.String[]{'REPORT','READ','WRITE','FULL'}"/>
                             </s:url>
                             </c:if>
-							<a href="${backUrl}" class="newButton1 newButtonGray"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+							<a href="${backUrl}" class="newButton1 newButtonOrange newButtonGray"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
 						</div>
 						
 					</div>
@@ -414,7 +417,7 @@
 			<div class="noticeContent">"<span class="confirmGroupName"></span>" Group has been successfully created for <span id="confirmCustomName"></span>. <span class="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -445,7 +448,7 @@
 			<div class="noticeContent">"<span class="confirmGroupName"></span>" Group details have been successfully updated. <span class="emailMessage">Invitation emails have been sent to the members added to the group.</span></div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal gotoGroupDetail"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -476,7 +479,7 @@
 			<div class="noticeContent">"<span id="noChangeGroupName"></span>" Group details haven't been changed.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->

@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.2
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.3
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the pending approvals page.
   -
@@ -13,6 +13,9 @@
   -
   - Version 1.2.2 updates (Release Assembly - TopCoder Security Groups - Release 4)
   - - Change date picker input box editable.
+  -
+  - Version 1.3 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -196,8 +199,8 @@
 			</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 triggerNoPreloaderModal" rel="#rejecResulttModal"><span class="btnR"><span class="btnC">REJECT</span></span></a>
-    			<a href="javascript:;" class="newButton1 newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue triggerNoPreloaderModal" rel="#rejecResulttModal"><span class="btnR"><span class="btnC">REJECT</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonOrange newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -228,7 +231,7 @@
 			<div class="noticeContent">Selected requests were rejected.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -259,7 +262,7 @@
 			<div class="noticeContent">Selected requests were approved.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->

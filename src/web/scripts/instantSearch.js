@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * This javascript handles the instant search and search all.
  *
@@ -8,12 +8,16 @@
  * Version 1.1 (System Assembly - TopCoder Direct Member Payments Dashboard v1.0)
  * - Fix the issue if instance search input is not there
  *
- * @Author TCSASSEMBLER, TCSASSEMBLER
- * @Version 1.1
+ * Version 1.2 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+ * - Make instant search supports scorecard tool
+ *
+ * @Author GreatKevin
+ * @Version 1.2
  */
 var instantSearchDelay = 500;
 var searcherId = 0;
 var searcherLength = 0;
+var queryURL = "/direct/instantSearch";
 
 function loadInstantSearch() {
     if ($('.instantSearch input').length == 0) {
@@ -34,9 +38,10 @@ function loadInstantSearch() {
         searcherId = setTimeout(function () {
             $.ajax({
                 type: 'POST',
-                url: ctx + "/instantSearch",
+                url: queryURL,
                 data: {"searchKey": q},
                 cache: false,
+                beforeSend: function() {},
                 dataType: 'json',
                 async: true,
                 success: function (jsonResult) {

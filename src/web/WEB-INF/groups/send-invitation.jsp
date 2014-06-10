@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version 1.1
+  - Author: GreatKevin
+  - Version 1.2
   -
   - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
@@ -8,6 +8,9 @@
   - Changes:
   - Version 1.1 (Release Assembly - TopCoder Security Groups Release 3) changes:
   -   updated to fixed the bugs in this assembly.
+  -
+  - Version 1.2 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
   -
   - This jsp file is used to render the send group invitation page.
 --%>
@@ -108,7 +111,7 @@
 						</div>
 						
 						<div class="commandOperationBox">
-							<a href="javascript:;" id="sendInvitation" class="newButton1 triggerModal" rel="#sendInvitationConfirmModal"><span class="btnR"><span class="btnC">SEND INVITATION</span></span></a>
+							<a href="javascript:;" id="sendInvitation" class="newButton1 newButtonGreen triggerModal" rel="#sendInvitationConfirmModal"><span class="btnR"><span class="btnC">SEND INVITATION</span></span></a>
 						</div>
 						
 					</div>
@@ -142,7 +145,7 @@
 			<div class="noticeContent noticeContentSendInviteConfirmation">Invitation emails have been sent to the new members added to the checked groups.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -173,7 +176,7 @@
 			<div class="noticeContent noticeContentSendInviteWarn"></div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->

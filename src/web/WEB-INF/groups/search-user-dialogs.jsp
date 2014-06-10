@@ -1,13 +1,15 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.1
+  - Author: GreatKevin
+  - Version: 1.2
   -
-  - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Changes:
   - Version 1.1 (Release Assembly - TopCoder Security Groups Release 3) changes:
   -   updated to fixed the bugs in this assembly.
+  -
+  - Version 1.2 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
   -
   - This jsp file of search user dialogs, it's statically included in other group security pages.
 --%>
@@ -32,8 +34,8 @@
         </div>
         
         <div class="modalCommandBox">
-            <a href="javascript:;" id="searchUser" class="newButton1 searchButton" rel="#searchListModal"><span class="btnR"><span class="btnC">SEARCH</span></span></a>
-            <a href="javascript:;" class="newButton1 newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+            <a href="javascript:;" id="searchUser" class="newButtonGreen searchButton" rel="#searchListModal"><span class="btnR"><span class="btnC">SEARCH</span></span></a>
+            <a href="javascript:;" class="newButtonOrange newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
         </div>
     </div>
     <!-- end .modalBody -->
@@ -75,15 +77,15 @@
         </div>
         
         <div class="modalCommandBox">
-            <a href="javascript:;" class="newButton1 searchButton" id="addUser"><span class="btnR"><span class="btnC">
+            <a href="javascript:;" class="newButton1 newButtonGreen searchButton" id="addUser"><span class="btnR"><span class="btnC">
             <c:choose>
                 <c:when test="${request.CURRENT_TAB=='createAdministrator'}">SELECT USER</c:when>
                 <c:when test="${request.CURRENT_TAB=='approvals'}">ADD TO SEARCH</c:when>
                 <c:otherwise>ADD USER TO GROUP</c:otherwise>
             </c:choose>
             </span></span></a>
-            <a href="javascript:;" class="newButton1 searchButton triggerNoPreloaderModal" rel="#searchModal"><span class="btnR"><span class="btnC">SEARCH AGAIN</span></span></a>
-            <a href="javascript:;" class="newButton1 newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+            <a href="javascript:;" class="newButtonGreen searchButton triggerNoPreloaderModal" rel="#searchModal"><span class="btnR"><span class="btnC">SEARCH AGAIN</span></span></a>
+            <a href="javascript:;" class="newButtonOrange newButtonGray closeModal"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
         </div>
     </div>
     <!-- end .modalBody -->

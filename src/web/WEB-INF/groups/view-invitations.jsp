@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.2
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - This jsp file is used to render the received invitations page.
   -
@@ -11,6 +11,9 @@
   -
   - Version 1.2.2 updates (Release Assembly - TopCoder Security Groups - Release 4)
   - - Change date picker input box editable.
+  -
+  - Version 1.3 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -213,7 +216,7 @@
 			<div class="noticeContent">You've successfully accepted the group invitation.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->
@@ -242,7 +245,7 @@
 			<div class="noticeContent">You've successfully rejected the group invitation.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButton1 newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->

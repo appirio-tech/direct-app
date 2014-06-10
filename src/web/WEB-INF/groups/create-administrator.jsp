@@ -1,7 +1,11 @@
 <%--
   - Author: TCSASSEMBER
+  -
   - Version: 1.0 (Release Assembly - TopCoder Security Groups Frontend - Miscellaneous)
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
   -
   - This jsp file is used to render the create customer administrator page.
 --%>
@@ -72,7 +76,7 @@
 							
 							<!-- create new admin button -->
 							<div class="createAdminButton">
-								<a href="javascript:;" class="newButton1 triggerModal" rel="#createAdminModal"><span class="btnR"><span class="btnC">CREATE</span></span></a>
+								<a href="javascript:;" class="newButton1 newButtonGreen triggerModal" rel="#createAdminModal"><span class="btnR"><span class="btnC">CREATE</span></span></a>
 							</div>
 							<!-- End .createAdminButton -->
 							
@@ -109,7 +113,7 @@
 			<div class="noticeContent">Customer Administrator user was successfully <br />created.</div>
 			
 			<div class="modalCommandBox">
-    			<a href="javascript:;" class="newButton1 closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
+    			<a href="javascript:;" class="newButtonBlue closeModal"><span class="btnR"><span class="btnC">OK</span></span></a>
 			</div>
 		</div>
 		<!-- end .modalBody -->

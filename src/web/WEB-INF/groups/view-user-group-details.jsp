@@ -1,7 +1,7 @@
 <%--
-  - Author: backstreetlili, freegod
-  - Version: 1.5
-  - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+  - Author: backstreetlili, freegod, GreatKevin
+  - Version: 1.6
+  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Release Assembly - TopCoder Security Groups Frontend - View Group Details) changes:
   - Initialized the page functions.
@@ -18,6 +18,9 @@
   -
   - Version 1.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
   - - Remove Resource Restrictions part and add Automatically Grant Permissions
+  -
+  - Version 1.6 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
+  - - Reskin the group pages
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -57,7 +60,7 @@
                             <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
                               <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
                             </s:url>
-							<a class="button7" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
+							<a class="button7 newButtonBlue" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
 						</div>
 						<!-- End #wholeAreaHeader -->
 						
@@ -187,8 +190,8 @@
 							
 							<div class="groupDetailsButton">
                                 <c:if test="${not groupFullPermission}">
-								<a class="newButton1 newButtonGray triggerModal deleteGroupButton" href="javascript:;"><span class="btnR"><span class="btnC">DELETE GROUP</span></span></a>
-								<a class="newButton1 updateGroupButton" href="<s:url action="enterUpdateGroup" namespace="/group"><s:param name="groupId">${group.id}</s:param></s:url>"><span class="btnR"><span class="btnC">EDIT GROUP</span></span></a>
+								<a class="newButton1 newButtonGreen newButtonGray triggerModal deleteGroupButton" href="javascript:;"><span class="btnR"><span class="btnC">DELETE GROUP</span></span></a>
+								<a class="newButton1 newButtonGreen updateGroupButton" href="<s:url action="enterUpdateGroup" namespace="/group"><s:param name="groupId">${group.id}</s:param></s:url>"><span class="btnR"><span class="btnC">EDIT GROUP</span></span></a>
                                 </c:if>
 							</div>
 							
