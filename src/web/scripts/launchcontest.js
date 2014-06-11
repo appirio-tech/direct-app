@@ -634,6 +634,7 @@ function handleProjectDropDownChange() {
     }
 
     $("#billingProjects").resetSS();
+
     $('#billingProjects').bind("change", function() {
     	if ($(this).find(":selected").data("cca")){
     		$("#lccCheckBox").attr('checked','true').attr('disabled','true');
@@ -654,7 +655,6 @@ function handleProjectDropDownChange() {
 
 
     $("#lccCheckBox").removeAttr('disabled');
-    $("#lccCheckBox").removeAttr('checked');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     if(value > 0) {
         $("a.addBilling, a.addMilestone, div.addNewMilestone").show();
