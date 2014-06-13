@@ -73,7 +73,7 @@
             $('.gPlusIcon').click( function () {
                 auth0Login.login({
                     connection: 'google-oauth2',
-                    state: 'https:/<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.facebookIcon').click( function () {
