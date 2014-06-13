@@ -34,10 +34,10 @@
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'health'}">class="active"</c:if>><a href="<s:url action="health" namespace="/enterpriseDashboard"/>" class="projectHealthIcon filterSynEnabled" title="Project Health" rel="Showing the overall projects Health of all projects.">Project Health</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'roadmap'}">class="active"</c:if>><a href="<s:url action="roadmap" namespace="/enterpriseDashboard"/>" class="roadmapIcon filterSynEnabled" title="Road map" rel="Aggregate view of all your project milestones.">Road map</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'pipeline'}">class="active"</c:if>><a href='<s:url action="pipeline" namespace="/enterpriseDashboard"/>' class="pipelineIcon filterSynEnabled" title="Pipeline" rel="A historical and future view of your challenge and project pipeline.">Pipeline</a></li>
-        <li><a href="javascript:;" class="communityIcon" title="Community" rel="See what your community looks like.">Community</a></li>
+        <!--<li><a href="javascript:;" class="communityIcon" title="Community" rel="See what your community looks like.">Community</a></li>-->
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'analysis'}">class="active"</c:if>><a href="<s:url action="analysis" namespace="/enterpriseDashboard"/>" class="analyticsIcon filterSynEnabled" title="Analytics" rel="Gain insight into your platform usage.  See average cost, duration, fulfillment, volume, etc.">Analytics</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'activeContests'}">class="active"</c:if>><a href='<s:url action="activeContests" namespace="/enterpriseDashboard"/>' class="activeContestIcon" title="Active Challenges" rel="See your current activity.">Active Challenges</a></li>
-        <li><a href="javascript:;" class="latestActivityIcon" title="Latest Activity" rel="Your recently completed activity.">Latest Activity</a></li>
+        <!--<li><a href="javascript:;" class="latestActivityIcon" title="Latest Activity" rel="Your recently completed activity.">Latest Activity</a></li>-->
         <li></li>
     </ul>
 </div>
