@@ -349,6 +349,7 @@
 #@payoneerService@=com.topcoder.direct.services.payments.impl.PayoneerServiceImpl
 @payoneerService@=com.topcoder.direct.services.payments.impl.MockPayoneerServiceImpl
 @westernUnionBalanceFileName@=/mnt/shared/western.txt
+@paymentsByStatusByDays@=30,60,120
 
 #######################################
 # Wireframe Submissions Configuration #
