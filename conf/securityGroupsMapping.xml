@@ -27,6 +27,7 @@
         <property name="description" column="description" type="string" length="255"/>
         <many-to-one name="client" column="client_id" class="Client"/>
         <property name="deleted" column="is_deleted" type="boolean"/>
+		<property name="active" column="active" type="boolean"/>
     </class>
 
     <class name="CustomerAdministrator" table="customer_administrator">
