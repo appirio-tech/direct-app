@@ -109,7 +109,7 @@ $(document).ready(function() {
       $("#newProjectDescription").bind('keydown keyup paste', limitFileDescriptionChars(2000));
 });
 
-var invalidCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
+var invalidCharsRegExp = /[^a-zA-Z0-9\$!\(\)\[\]\'\"\-\.\,\/ ]+/mg;
 
 /**
  * Limits the allowed chars to alphanumeric, $, and !
@@ -134,7 +134,7 @@ function limitContestProjectNameChars(maxChars) {
         timeId = setTimeout(function() {
             timeId = -1;
             if (invalid) {
-                showErrors("Only alphanumeric, $, -, ! and space characters are allowed.");
+                showErrors("Only alphanumeric, $-!()[]/'\",. and space characters are allowed.");
                 textArea.val(ori);
                 return;
             }
