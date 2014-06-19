@@ -590,7 +590,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
         Response response = client.path(url).get();
 
         if (response.getStatus() != 200) {
-            throw new MarathonMatchAnalyticsServiceException("The rest call is failed.");
+            throw new MarathonMatchAnalyticsServiceException("The rest call is failed :" + response.getStatus());
         } else {
             return IOUtils.toString((InputStream) response.getEntity(), "UTF-8");
         }
