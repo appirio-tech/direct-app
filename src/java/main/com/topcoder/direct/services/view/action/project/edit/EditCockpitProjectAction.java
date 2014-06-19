@@ -643,7 +643,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             final List<BillingAccount> securityGroupBillingAccounts
                     = securityGroup.getBillingAccounts();
             for(BillingAccount ba : securityGroupBillingAccounts) {
-                if (!result.containsKey(ba.getId())) {
+                if (ba.isActive() && !result.containsKey(ba.getId())) {
                     IdNamePair billing = new IdNamePair();
                     billing.setId(ba.getId());
                     billing.setName(ba.getName());
