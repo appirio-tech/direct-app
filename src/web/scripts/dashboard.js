@@ -3468,6 +3468,8 @@ $(document).ready(function () {
 
                 // set project name
                 a.find("a.recentProjectName").html('<span class="ellipsis">' + pItem.itemName + '</span><span class="arrow"></span>').attr('title', pItem.itemName).addClass("ellipsis");
+                a.find("a.recentProjectName").attr('href',
+                    '/direct/projectOverview.action?formData.projectId=' + pItem.accessItemId);
                 a.find("a.recentProjectOverview").attr('href',
                     '/direct/projectOverview.action?formData.projectId=' + pItem.accessItemId);
                 a.find("a.recentProjectPlan").attr('href',
