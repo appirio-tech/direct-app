@@ -965,6 +965,20 @@ function onContestTypeChange() {
 
         // hide the end date for F2F and set default 30 days
         if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
+
+            //start today
+            var currentdate = new Date();
+            var nextHourNum = currentdate.getHours() + 1;
+            var nextHour = '';
+            if(nextHourNum < 10){
+              nextHour = '0';
+            }
+            nextHour += nextHourNum + ":00";
+
+            //set START DATE for today and start time to next hour
+            $("#startDate").dpSetSelected(Date.parse($("#startDate").val()).add(-1).days().toString('MM/dd/yyyy'));
+            $("#startTime").getSetSSValue(nextHour);
+
             $("#startDate").bind('change.f2f', function(){
                 $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy'));
             }).trigger('change');
