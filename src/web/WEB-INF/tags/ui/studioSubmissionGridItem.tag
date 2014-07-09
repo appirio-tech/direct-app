@@ -34,7 +34,7 @@
         </div>
         <label>Submission ID: <span class="submissionID">${submissionId}</span>(<link:studioSubmissionDownload submissionId="${submission.id}">Download</link:studioSubmissionDownload>)</label>
         <a href="javascript:;" class="thumbGrid"><span></span>
-            <ui:studioSubmissionImage submissionId="${submissionId}" imageType="small" dimension="200"/>
+            <ui:studioSubmissionImage submissionId="${submissionId}" imageType="small" />
         </a>
 
         <ui:submissionAction contestId="${contestId}" submission="${submission}"/>

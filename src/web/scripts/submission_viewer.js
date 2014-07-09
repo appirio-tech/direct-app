@@ -8,16 +8,16 @@
  * Version 1.0 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
  */
 // resize the image keep width-height ratio 
-function imgLoaded(obj){
+function imgLoaded(obj,maxHeight, maxWidth){
     var img=$(obj);
     var w=obj.width;
     var h=obj.height;
     if (w && h) {
-        var r=Math.max(w/800, h/600);
+        var r=Math.max(w/maxHeight, h/maxWidth);
         var nw=w/r;
         var nh=h/r;
-        var left=(800-nw)/2;
-        var top=(600-nh)/2;
+        var left=(maxHeight-nw)/2;
+        var top=(maxWidth-nh)/2;
         img.attr('width', nw);
         img.attr('height', nh);
         img.css({position:"relative",left:left,top:top});
@@ -44,7 +44,7 @@ $(document).ready(function(){
             }
             var img = $('#singleCarouselLookup li').eq(i-1).html().
                 replace('#IMGSTART#','<img id="JCarouselImage' + i +'"').replace('#IMGEND#',
-                    ' onload="imgLoaded(this)"/>');
+                    ' onload="imgLoaded(this, 800, 600)"/>');
             
             carousel.add(i, img);
         }	    
@@ -140,7 +140,6 @@ $(document).ready(function(){
 		$('.mainArea .pageBar .showPerPage').css('top','-8px');
 	}
 	
-	
 	var iItem = parseInt($('.thumbnailsList').width()/($('.thumbnailsItem').width()+32));
 	var iLeft =  $('.thumbnailsList').width() - ($('.thumbnailsItem').width()+32)*iItem;
 	$('.thumbnailsList').css('margin-left',iLeft/2);
@@ -155,4 +154,12 @@ $(document).ready(function(){
 	$('a#downTips').bind('mouseover',function(){$(".infoPointBox").removeClass("none")});	
 	$('a#downTips').bind('mouseout',function(){$(".infoPointBox").addClass("none")});
     $('div.full' + artifactNum).show();
+    
+	$('img.studioSubmissionImg').each(function(){
+	    imgLoaded(this, 200, 200);
+	});
+	
+	$('#bankSelectionItem a.thumb img').each(function(){
+	    imgLoaded(this, 66, 66);
+	});
 });

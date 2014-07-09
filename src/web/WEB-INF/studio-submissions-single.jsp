@@ -310,7 +310,7 @@
                                                             roundType="${roundType}"
                                                             fullView="true"
                                                             artifactNum="${artifactNum}"><img src="${imgUrl}"
-                                                                                              alt="thumbnails"/><span
+                                                                                              alt="thumbnails" onload="imgLoaded(this, 350, 350)"/><span
                                                             class="hoverPic"></span></link:studioSubmission>
                                                     <p>${filename}</p>
                                                 </div>
@@ -332,7 +332,7 @@
                                                             roundType="${roundType}"
                                                             fullView="true"
                                                             artifactNum="${artifactNum}"><img src="${imgUrl}"
-                                                                                              alt="thumbnails"/><span
+                                                                                              alt="thumbnails" onload="imgLoaded(this, 350, 350)"/><span
                                                             class="hoverPic"></span></link:studioSubmission>
                                                     <p>${filename}</p>
                                                 </div>

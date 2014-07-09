@@ -138,3 +138,4 @@
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
 <script type="text/javascript" src="/scripts/finalFixDecision.js"></script>
 
+<script type="text/javascript" src="/scripts/submission_viewer.js"></script>

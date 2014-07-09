@@ -152,7 +152,7 @@ $(document).ready(function(){
 				var $itemlabel = $(this).children("label").text();
 				var $slotId = arrPrize[index];
 				var $slotName = arrSlot[index];
-				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)" /></a><label>' + $itemlabel + '</label>');
 				$(".statusSubmission").removeClass($slotName);
 				$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass($slotName);
 				getBankData();
@@ -318,7 +318,7 @@ $(document).ready(function(){
                         removeIfExist($itemlabel);
                         var $slotId = $(this).attr('id');
                         var $slotName = arrSlot[arrPrize.indexOf($slotId)];
-                        $(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+                        $(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
                         $(".statusSubmission").removeClass($slotName);
                         $('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass($slotName);
 
@@ -368,7 +368,7 @@ $(document).ready(function(){
 			var $itemlabel = $(this).attr("rel");
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("firstSlot");
-			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("firstSlot");
 			$('#removeFirstPrize').click(function() {
 				$("#firstPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -386,7 +386,7 @@ $(document).ready(function(){
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("secondSlot");
-			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("secondSlot");
 			$('#removeSecondPrize').click(function() { 
 				$("#secondPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -404,7 +404,7 @@ $(document).ready(function(){
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("thirdSlot");
-			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("thirdSlot");
 			$('#removeThirdPrize').click(function() { 
 				$("#thirdPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -422,7 +422,7 @@ $(document).ready(function(){
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("fourthSlot");
-			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("fourthSlot");
 			$('#removeFourthPrize').click(function() { 
 				$("#fourthPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -440,7 +440,7 @@ $(document).ready(function(){
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("fifthSlot");
-			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("fifthSlot");
 			$('#removeFifthPrize').click(function() { 
 				$("#fifthPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -588,11 +588,11 @@ $(document).ready(function(){
         if (link.hasClass('disabledControl')) {
             $("#" + f).html('<a href="javascript:;" onclick="activate_modal(\''+ submissionUrl + '\',' + $itemlabel + ')"' + 
                             'class="thumb"><span></span><img src="' + $item +
-                            '" alt="" /></a><label>' + $itemlabel + '</label>');
+                            '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
         } else {
             $("#" + f).html('<a href="#" id="remove' + f + '" class="btn_remove"></a><a href="' +
                             getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item +
-                            '" alt="" /></a><label>' + $itemlabel + '</label>');
+                            '" alt="" onload="imgLoaded(this, 66, 66)"/></a><label>' + $itemlabel + '</label>');
             $('#remove' + f).click(function() {
                 $("#" + f).html('<a href="#" class="thumb"><span></span></a>');
                 $('#submission-' + $itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission");

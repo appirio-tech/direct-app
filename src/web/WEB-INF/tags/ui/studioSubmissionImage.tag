@@ -20,7 +20,9 @@
 
 <img <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>
      src="${tcdirect:getSubmissionPreviewImageURL(submissionId, imageType, artifactNum, pageContext.request)}"
+     onload="imgLoaded(this, 200, 200)"
      alt="" <c:if test="${not empty dimension}">width="${dimension}" height="${dimension}"</c:if>
      <c:if test="${not empty longdesc}">longdesc="${longdesc}"</c:if>
      <c:if test="${not empty width}">width="${width}"</c:if>
-     <c:if test="${not empty height}">height="${height}"</c:if>/>
+     <c:if test="${not empty height}">height="${height}"</c:if>
+     class="studioSubmissionImg"/>
