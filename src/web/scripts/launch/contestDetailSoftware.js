@@ -6,7 +6,7 @@
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
  * - Add repost and new version function on details page.
- * 
+ *
  * Version 1.2 TC Direct Replatforming Release 1 change note
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
@@ -16,10 +16,10 @@
  *
  * Version 1.1.2 (TC Direct - Software Creation Update Assembly) Change notes:
  * - Update method populateTypeSection to populate copilots data.
- * 
+ *
  * Version 1.1.3 (TCCC-2926)
  * -  Add support to restrict the max characters of private description and public description.
- * 
+ *
  * Version 1.1.4 (TC Direct "Contest Links and Button" Update 24Hr Assembly)
  * - Add support to show the 'Preview Contest' link if the contest is in draft status.
  *
@@ -31,10 +31,10 @@
  *
  * Version 1.4.1 TC Direct Release 6 change note
  * - Updated retrieveContestCostWithoutAdminFee method to check for non-existing feeObject
- * 
+ *
  *  Version 1.4.2 Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp changes:
  * - Updated software contest details page to use new cockpit tinyMCE editor
- * 
+ *
  * Version 1.4.3 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
  * - Fixed bug TCCC-3724. Updated logic for editing the contests.
  *
@@ -98,7 +98,7 @@
  * Version 3.2 (Release Assembly - TC Direct Prize Section Update)
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
- * 
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
  * @version 3.2
  */
@@ -115,59 +115,59 @@ function getContestPrize(prizesData, place) {
     return -1;
 }
 
-$(document).ready(function(){	
+$(document).ready(function(){
 
 	  /* init select */
 	  if($('select').length > 0){
-	  	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.checkpointSelect select,.endSelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-	  	
+	  	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.checkpointSelect select,.endSelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+
 	  	//$('.selectDesing div.selectedTxt').html('Select Contest Type');
 	  }
-	  
+
     /* init date-pack */
     if($('.date-pick').length > 0){
       $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
-	  
+
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
         $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
-    });	
+    });
 	  /* Optgroup 2 columns fix */
 	  if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
 	  	var optgroupMaxHeight = 0, num;
-	  	
+
 	  	$('.selectDesing optgroup').each(function(){
 	  		num = $(this).children().length + 1;
 	  		optgroupMaxHeight = num * 22 > optgroupMaxHeight ? num * 22 : optgroupMaxHeight;
 	  	});
-	  	
+
 	  	$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');
-	  	
+
 	  	$(window).resize(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
 	  	$(window).scroll(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
 	  }
-	
+
     //contest type
-		$("#editTypeButton").click(function(){			
+		$("#editTypeButton").click(function(){
 			showTypeSectionEdit();
 		});
-		
-		$(".save_btn").click(function(){			
+
+		$(".save_btn").click(function(){
 			saveTypeSection();
 		});
-		
-		$(".cancel_text").click(function(){			
+
+		$(".cancel_text").click(function(){
 			populateTypeSection();
 			showTypeSectionDisplay();
 		});
 
-    //round 		
-		$(".edit_round").click(function(){			
+    //round
+		$(".edit_round").click(function(){
 			showRoundSectionEdit();
 		});
-		
-		$(".save_btn_round").click(function(){			
+
+		$(".save_btn_round").click(function(){
 			saveRoundSection();
 		});
 
@@ -175,14 +175,14 @@ $(document).ready(function(){
             populateRoundSection();
             showRoundSectionDisplay();
         });
-		
+
 		//prize
-		$(".edit_prize").click(function(){			
-        showPrizeSectionEdit();			
+		$(".edit_prize").click(function(){
+        showPrizeSectionEdit();
 		});
-		
-		$(".save_btn_prize").click(function(){			
-			  savePrizeSection();									
+
+		$(".save_btn_prize").click(function(){
+			  savePrizeSection();
 		});
 		$(".cancel_text_prize").click(function(){
             if (mainWidget.competitionType == 'SOFTWARE') {
@@ -192,27 +192,27 @@ $(document).ready(function(){
             populatePrizeSection();
             updateContestCostData();
             showPrizeSectionDisplay();
-        });		
-		
+        });
+
 		//spec
 		$(".edit_spec").click(function(){
 			 showSpecSectionEdit();
 		});
-		
+
 		$(".save_btn_spec").click(function(){
 			 saveSpecSection();
 		});
 		$(".cancel_text_spec").click(function(){
 			  populateSpecSection();
 			  showSpecSectionDisplay();
-		});		
+		});
 
 		//documents/files
 		$(".edit_files").click(function(){
 			 setRollbackDocuments();
 			 showDocumentSectionEdit();
 		});
-		
+
 		$(".save_btn_files").click(function(){
 			 saveDocumentSection();
 		});
@@ -229,7 +229,7 @@ $(document).ready(function(){
     var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
     CKEDITOR.loadTemplates(SGTemplatesList);
     CKEDITOR.loadTemplates(DRTemplatesList);
-    CKEDITOR.loadTemplates(StudioContestSpecTemplates);  
+    CKEDITOR.loadTemplates(StudioContestSpecTemplates);
 
    	//Get the contest and populate each section
    // loading some configuration data
@@ -247,10 +247,10 @@ $(document).ready(function(){
           handleJsonResult(jsonResult,
           function(result) {
             initContest(result);
-            
+
             //render values
             populateTypeSection();
-            populateRoundSection();            
+            populateRoundSection();
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
@@ -277,7 +277,7 @@ $(document).ready(function(){
                         } catch (err) {
                             // ignore
                         }
-            }            
+            }
             //execute some actions specific for component design/dev
             //onContestTypeChange();
             $("#contestLoading").hide();
@@ -296,7 +296,7 @@ $(document).ready(function(){
           })
       }
    });
-   
+
    // round types
    $('#roundTypes').bind("change", function() {
         var roundType = $('#roundTypes').val();
@@ -306,9 +306,9 @@ $(document).ready(function(){
            $('#checkpointEditDiv').hide();
            $('#checkPointEndDateEditDiv').hide();
            $('#checkpointPrizeDiv').hide();
-           $('#roundInfoDiv').hide();	     
+           $('#roundInfoDiv').hide();
            $('[id=rCheckpointTR]').hide();
-           $('#rMultiRoundInfoDiv').hide();                 
+           $('#rMultiRoundInfoDiv').hide();
            $('#rCheckPointPrizeDiv').hide();
         } else {
             // multiple round
@@ -316,26 +316,26 @@ $(document).ready(function(){
            $('#checkpointEditDiv').show();
            $('#checkPointEndDateEditDiv').show();
            $('#checkpointPrizeDiv').show();
-           $('#roundInfoDiv').show();	     
+           $('#roundInfoDiv').show();
            $('[id=rCheckpointTR]').show();
-           $('#rMultiRoundInfoDiv').show();                 
+           $('#rMultiRoundInfoDiv').show();
            $('#rCheckPointPrizeDiv').show();
 		   $(".checkpointEtSelect select,.numSelect select, #checkPointEndTime").each(function(index){
 				if(!$(this).is(":hidden") && !$(this).data('customized')){
 					$(this).data('customized',true);
 					$(this).sSelect({ddMaxHeight: '220',yscroll: true});
 				}
-			}); 	
+			});
 		   if (!mainWidget.softwareCompetition.multiRound && mainWidget.softwareCompetition.assetDTO.directjsProductionDate) {
 			   var startDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
 			   // $('#checkpointDate').datePicker().val(getDatePart(new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000))).trigger('change');
-			   $('#checkPointEndDate').datePicker().val(getDatePart(new Date(startDate.getTime()+ 3 * 24 * 60 * 60 * 1000))).trigger('change');
+			   $('#checkPointEndDate').datePicker().val(getDatePart(new Date(startDate.getTime()+ 2 * 24 * 60 * 60 * 1000))).trigger('change');
                $("#checkPointEndTime").val('09:00').trigger('change');
 		   }
         }
    });
-   $('#roundTypes').trigger("change");   
-   
+   $('#roundTypes').trigger("change");
+
    // choose contest type
    $('#contestTypes').bind("change", function() {
    	   onContestTypeChange();
@@ -360,34 +360,34 @@ $(document).ready(function(){
        sortTechnologySelects();
        technologyAndPlatformSelectsChanged();
    });
-   
+
    $('#removeTechnologies').click(function(){
-       $('#masterTechnologiesChoosenSelect option:selected').appendTo('#masterTechnologiesSelect');   	 
+       $('#masterTechnologiesChoosenSelect option:selected').appendTo('#masterTechnologiesSelect');
        sortTechnologySelects();
        technologyAndPlatformSelectsChanged();
    });
-   
+
    $('#catalogSelect').bind("change", function() {
    	   updateCategories();
    });
-   
-   
+
+
    $('#addCategories').click(function(){
        $('#select1_categories option:selected').appendTo('#select2_categories');
-       sortCategorySelects();   	 
-   });
-   
-   $('#removeCategories').click(function(){
-       $('#select2_categories option:selected').appendTo('#select1_categories');   	 
        sortCategorySelects();
-   });        			      	
-   
+   });
+
+   $('#removeCategories').click(function(){
+       $('#select2_categories option:selected').appendTo('#select1_categories');
+       sortCategorySelects();
+   });
+
    // prizes
    $('input[name="prizeRadio"]').click(function(){
       var billingProjectId = $('select#billingProjects').val();
    	  fillPrizes(billingProjectId);
    });
-   
+
    $('#swFirstPlace').bind('keyup',function() {
        onFirstPlaceChangeKeyUp();
     });
@@ -432,24 +432,24 @@ $(document).ready(function(){
         }
         onStudioPrizeInputChange($(this), prizeName + " Place Prize", prizeIndex == 1);
     })
-    
+
     $('#swDigitalRun').bind('keyup',function() {
        onDigitalRunChangeKeyUp();
     });
-	
-   
+
+
    $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){
 	   showPopup(this,'contestDescriptionToolTip');
    },function(){
 	   $('#contestDescriptionToolTip').hide();
    });
-	  
+
    $('#Round1HelpIcon .helpIcon').hover(function(){
 	   showPopup(this,'contestRound1ToolTip');
    },function(){
 	   $('#contestRound1ToolTip').hide();
    });
-	  
+
    $('#Round2HelpIcon .helpIcon').hover(function(){
 	    showPopup(this,'contestRound2ToolTip');
    },function(){
@@ -531,22 +531,22 @@ function onContestTypeChange() {
         if (swDetailedRequirements) {
             swDetailedRequirements.destroy(true);
         }
-        CKEDITOR.replace('swGuidelines', { 
+        CKEDITOR.replace('swGuidelines', {
             templates: getSGTemplatesName(typeId),
             templates_files: SGTemplatesList
-        });    
-        CKEDITOR.replace('swDetailedRequirements', { 
+        });
+        CKEDITOR.replace('swDetailedRequirements', {
             templates: getDRTemplatesName(typeId),
-            templates_files: DRTemplatesList 
+            templates_files: DRTemplatesList
         });
     } else if (contestType == 'STUDIO'){
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {
             contestDescription.destroy(true);
         }
-        CKEDITOR.replace('contestDescription', { 
+        CKEDITOR.replace('contestDescription', {
             templates: getStudioTemplatesName(typeId),
-            templates_files: StudioContestSpecTemplates 
+            templates_files: StudioContestSpecTemplates
         });
     } else if (contestType == 'ALGORITHM') {
         // algorithm has only one type now, no need to destory
@@ -610,7 +610,7 @@ function onContestTypeChange() {
     }
 
     mainWidget.competitionType = contestType;
-          
+
     if(isDevOrDesign()) {
      $('.component').show();
     } else {
@@ -702,7 +702,7 @@ function initContest(contestJson) {
             }
         }
     });
-    
+
 
    //contest data
    mainWidget.softwareCompetition.multiRound = contestJson.hasMulti;
@@ -718,13 +718,13 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
    mainWidget.softwareCompetition.adminFee = contestJson.adminFee;
 
-   var startDate =  parseDate(contestJson.startDate);  
+   var startDate =  parseDate(contestJson.startDate);
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    mainWidget.softwareCompetition.subEndDate = parseDate(contestJson.subEndDate);
 
     $('#contestTypeNameText').html(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-    
+
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -749,7 +749,7 @@ function initContest(contestJson) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories = contestJson.categoryIds;
    }
-   
+
    if(isTechnologyContest()) {
      mainWidget.softwareCompetition.assetDTO.directjsTechnologies = contestJson.technologyIds;
    }
@@ -757,11 +757,11 @@ function initContest(contestJson) {
    if(isPlatformContest()) {
        mainWidget.softwareCompetition.platforms = contestJson.platformIds;
    }
-   
-   var projectHeader = mainWidget.softwareCompetition.projectHeader;   
+
+   var projectHeader = mainWidget.softwareCompetition.projectHeader;
    projectHeader.tcDirectProjectId = contestJson.tcDirectProjectId;
    projectHeader.tcDirectProjectName = contestJson.tcDirectProjectName;
-   projectHeader.setBillingProject(contestJson.billingProjectId);   
+   projectHeader.setBillingProject(contestJson.billingProjectId);
    projectHeader.setProjectName(contestJson.contestName);
    projectHeader.properties = contestJson.properties;
 
@@ -815,20 +815,20 @@ function initContest(contestJson) {
             customCosts.extraPrizes = extraPrizes;
         }
    }
-   
-   
+
+
    //documentations, each doc has fields of documentId, fileName, description, documentTypId, url
    swDocuments = contestJson.documentation;
    // mark them as documentation
    $.each(swDocuments, function(i, doc) {
    	  doc['comp'] = true;
-   });      
+   });
    setRollbackDocuments();
 
    //it ensures the data is here so we could show prize data
-   softwareContestFees = contestJson.softwareContestFees;  
+   softwareContestFees = contestJson.softwareContestFees;
    //billing information
-   initContestFeeForEdit(false, mainWidget.softwareCompetition.projectHeader.projectCategory.id, projectHeader.getBillingProject());      
+   initContestFeeForEdit(false, mainWidget.softwareCompetition.projectHeader.projectCategory.id, projectHeader.getBillingProject());
 
     // Check if the prizes were updated manually in Online Review, if so then treat this as custom
     // prize schema
@@ -901,8 +901,8 @@ function initContest(contestJson) {
 	 	  $('.customRadio').show();
 	 } else {
 	 	  $('.customRadio').hide();
-	 }	     
-	 
+	 }
+
 	 //it show/hide the component specific part
    if(isDevOrDesign()) {
    	 $('.component').show();
@@ -954,9 +954,9 @@ function initContest(contestJson) {
    } else {
      $(".platform").hide();
    }
-   
+
    // preview contest, repost and new version
-   var statusName = contestJson.projectStatus.name;    
+   var statusName = contestJson.projectStatus.name;
     if(statusName.indexOf('Draft') != -1) {
          $('#previewContestButton').show();
     } else {
@@ -965,11 +965,11 @@ function initContest(contestJson) {
    if(statusName.indexOf('Cancelled') != -1) {
     	 repostProjectId = contestJson.contestId;
 	     repostTcProjectId = contestJson.tcDirectProjectId;
-   	  
+
    	  $('#repostButton').show();
       $('#repostButtonSplitter').show();
    	  $('#repostButton').click(function(){
-   	      $('#repostDialog').dialog('open');	 
+   	      $('#repostDialog').dialog('open');
    	  });
    }
 
@@ -979,18 +979,18 @@ function initContest(contestJson) {
 	     newVersionDevCreation = isDesign();
 	     newVersionIsDesign = isDesign();
 	     newVersionMinorVersion = false;
-   	  
+
    	  $('#newVersionButton').show();
       $('#newVersionButtonSplitter').show();
    	  $('#newVersionButton').click(function(){
-   	      $('#newVersionDialog').dialog('open');	 
+   	      $('#newVersionDialog').dialog('open');
    	  });
    }
-   
+
     phaseOpen = contestJson.phaseOpen;
     isCompleted = contestJson.projectStatus.id == 7;
     isCancelled = (contestJson.projectStatus.id > 3) && !isCompleted;
-    
+
     // if has no write permission, no edit; if any phase is open, no edit
     $('#contestNameText').hide();
     if (!hasContestWritePermission) {
@@ -1019,7 +1019,7 @@ function initContest(contestJson) {
         $('#contestTypes').attr("disabled", true);
         $('.contestTypeRO').show();
         $('.contestTypeEditSection').hide();
-        
+
     } else if(phaseOpen) {
         $('a.button11').hide();
         $('a.editType').show();
@@ -1041,7 +1041,7 @@ function initContest(contestJson) {
         $('#contestTypes').attr("disabled", true);
         $('.contestTypeRO').show();
         $('.contestTypeEditSection').hide();
-        
+
         // open prize edit section if project is active
         if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
@@ -1052,12 +1052,12 @@ function initContest(contestJson) {
             $('#roundEdit').hide();
             $('#roundText').show();
         }
-        
+
         $(".edit_spec").show();
         $(".edit_files").show();
     } else {
         $('.contestTypeEditSection').show();
-    }    
+    }
 
     // if review / iterative review (can have multiple) phases are all closed - do not allow prize edit
     if(contestJson.isReviewPhaseClosed) {
@@ -1067,8 +1067,8 @@ function initContest(contestJson) {
 
 
     showSpecReview(contestJson);
-    
-    // can't change the multi round type if conetst is not draft 
+
+    // can't change the multi round type if conetst is not draft
     if (contestJson.projectStatus.name != "Draft") {
     	canEditMultiRound = false;
     }
@@ -1082,7 +1082,7 @@ function retrieveContestCostWithoutAdminFee() {
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
     var feeObject = softwareContestFees[projectCategoryId];
-    
+
     if(!feeObject) {
          return 0;
     }
@@ -1102,7 +1102,7 @@ function populateTypeSection() {
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#contestNameText').html(mainWidget.softwareCompetition.assetDTO.name);
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
-	
+
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
 	$('#rContestName').html(mainWidget.softwareCompetition.assetDTO.name);
@@ -1118,7 +1118,7 @@ function populateTypeSection() {
     }
 
 	//$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
-  
+
   if (mainWidget.softwareCompetition.copilotUserId <=0) {
   	 $("#rCopilots").html("Unassigned");
   } else {
@@ -1141,7 +1141,7 @@ function populateTypeSection() {
       for (var i = 0; i < prizes.length; i++) {
           total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
       }
-	
+
       total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getReviewCost()) ? 0 : mainWidget.softwareCompetition.projectHeader.getReviewCost()));
       total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost()) ? 0 : mainWidget.softwareCompetition.projectHeader.getSpecReviewCost()));
       total += parseFloat((isNaN(mainWidget.softwareCompetition.projectHeader.getDRPoints())? 0 : mainWidget.softwareCompetition.projectHeader.getDRPoints()));
@@ -1223,7 +1223,7 @@ function saveTypeSection() {
       dataType: 'json',
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
-         populateTypeSection();  
+         populateTypeSection();
 	     populateRoundSection();
          if (mainWidget.competitionType == "SOFTWARE") {
             var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
@@ -1235,8 +1235,8 @@ function saveTypeSection() {
          updateMCEPlaceHolderCtl();
       },
       beforeSend: beforeAjax,
-      complete: afterAjax            
-   });	 
+      complete: afterAjax
+   });
 }
 
 function validateFieldsTypeSection() {
@@ -1307,7 +1307,7 @@ function validateFieldsTypeSection() {
 
 function showTypeSectionDisplay() {
 	 $(".contest_type").css("display","block");
-	 $(".contest_type_edit").css("display","none");												         	
+	 $(".contest_type_edit").css("display","none");
 }
 
 function showTypeSectionEdit() {
@@ -1327,7 +1327,7 @@ function showTypeSectionEdit() {
       	$(".selectDesing select").sSelect();
 		$('.selectDesing div.selectedTxt').html('Select Challenge Type');
     }
-	 
+
      $.each(billingAccounts,function(k, v){
     	 var _cca = v["cca"] == "true" ? true : false;
   	   	if (v["id"] == mainWidget.softwareCompetition.projectHeader.getBillingProject()){
@@ -1336,14 +1336,14 @@ function showTypeSectionEdit() {
   		   }
   	   }
      });
-  
+
     if(!$('#projects').data('customized')) {
         $('#projects').sSelect({ddMaxHeight: '220',yscroll: true}).change(function() {
               handleProjectDropDownChange();
           });
         $('#projects').data('customized',true);
     }
-    
+
     if(!$('#copilots').data('customized')) {
        $('#copilots').sSelect({ddMaxHeight: '220',yscroll: true});
        $('#copilots').data('customized',true);
@@ -1361,7 +1361,7 @@ function showTypeSectionEdit() {
     }
 
 	 $('#contestTypes').getSetSSValue(mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id);
-    
+
     var projectType = mainWidget.competitionType;
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
     setupReviewerDropdown(projectCategoryId, mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
@@ -1401,7 +1401,7 @@ function populateRoundSection() {
 		var checkpointDuration = getDurationDayHour(startDate, checkpointDate);
 		subDuration = getDurationDayHour(checkpointDate, subEndDate);
 	}
-	
+
 	//edit
     $('#roundTypes').val(isMultiRound ? 'multi' : 'single');
     $('#roundTypes').trigger("change");
@@ -1439,22 +1439,22 @@ function populateRoundSection() {
    	} else {
 		$('#type').show();
 	}
-	if(!isMultiRound) {	
-    	   $('#checkpointEditDiv').hide();  		     
-      
-	    $('#roundInfoDiv').hide();	     
+	if(!isMultiRound) {
+    	   $('#checkpointEditDiv').hide();
+
+	    $('#roundInfoDiv').hide();
 	} else {
-		$('#checkpointEditDiv').show();  	
+		$('#checkpointEditDiv').show();
 		$('#checkpointDateDay').val(checkpointDuration[0]).trigger('change');
 		$('#checkpointDateHour').val(checkpointDuration[1]).trigger('change');
-		 	  
-		$('#roundInfoDiv').show();	     
+
+		$('#roundInfoDiv').show();
 		if (mainWidget.competitionType == "STUDIO") {
 			$('#round1Info').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction);
 			$('#round2Info').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction);
 		}
 	}
-		
+
 	//display
     var startDateString = formatDateForReview(startDate);
     $('#rStartDate').html(startDateString);
@@ -1466,15 +1466,15 @@ function populateRoundSection() {
     $('table.projectStats td:eq(1)').html(endDateString);
 	$('#rSubEndDate').html(formatDateForReview(subEndDate));
 	$('#rSubEndDateRO').html(formatDateForReview(subEndDate));
-   
-    if(!isMultiRound) {	
+
+    if(!isMultiRound) {
     	$('#rCheckpointTR').hide();
-        $('#rMultiRoundInfoDiv').hide();      
+        $('#rMultiRoundInfoDiv').hide();
   	} else {
-  		$('#rCheckpointTR').show();  	
+  		$('#rCheckpointTR').show();
   	 	$('#rCheckpointDate').html(formatDateForReview(checkpointDate));
   	 	$('#rCheckpointDateRO').html(formatDateForReview(checkpointDate));
-  	 	  	 	  
+
         $('#rMultiRoundInfoDiv').show();
         if (mainWidget.competitionType == "STUDIO") {
         	$('#rRound1Info').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction);
@@ -1508,18 +1508,18 @@ function saveRoundSection() {
 			 mainWidget.softwareCompetition.subEndDate = preSubEndDate;
 			 mainWidget.softwareCompetition.checkpointDate = preCheckpointDate;
 		 }
-         populateRoundSection();  
+         populateRoundSection();
          populatePrizeSection();
-         showRoundSectionDisplay();                  
+         showRoundSectionDisplay();
       },
       beforeSend: beforeAjax,
-      complete: afterAjax            
-   });	    
+      complete: afterAjax
+   });
 }
 
 /**
  * Gets the index of checkpoint type prize from a list of prizes.
- * 
+ *
  * @param prizes the list of prizes
  * @returns {Number} the index of checkpoint type prize
  */
@@ -1534,7 +1534,7 @@ function getCheckpointPrize(prizes) {
 
 /**
  * Gets the content of a CKEditor.
- * 
+ *
  * @param id the id of CKEditor
  * @returns the content of the CKEditor
  */
@@ -1558,9 +1558,9 @@ function validateFieldsRoundSection() {
     // check point hours duration for studio
 	var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($('#checkpointDateHour').val());
 
-	var round1Info = getCKEditorContent('round1Info'); 
+	var round1Info = getCKEditorContent('round1Info');
 	var round2Info = getCKEditorContent('round2Info');
-   
+
 	//validation
 	var errors = [];
 
@@ -1608,7 +1608,7 @@ function validateFieldsRoundSection() {
 			if(!checkRequired(round1Info)) {
 				errors.push('Round 1 information is empty.');
 			}
-	      
+
 			if(!checkRequired(round2Info)) {
 				errors.push('Round 2 information is empty.');
 			}
@@ -1622,7 +1622,7 @@ function validateFieldsRoundSection() {
 	/**if(getCurrentContestTotal(true) < mainWidget.softwareCompetition.paidFee) {
 		errors.push('Your payment can not be lower than paid amount.');
 	}*/
-	
+
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -1647,7 +1647,7 @@ function validateFieldsRoundSection() {
 	   mainWidget.softwareCompetition.subEndDate = new Date();
 	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
- 
+
     if (mainWidget.isAlgorithmContest() || mainWidget.isSoftwareContest()) {
         mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
     }
@@ -1668,7 +1668,7 @@ function showRoundSectionEdit() {
 			$(this).data('customized',true);
 			$(this).sSelect({ddMaxHeight: '220',yscroll: true});
 		}
-	}); 
+	});
 	if (!hasMultiRound(mainWidget.softwareCompetition.projectHeader.projectCategory.id) || !canEditMultiRound) {
 		$('#type').hide();
    	} else {
@@ -1965,7 +1965,7 @@ function updateContestCostData() {
 function isBillingViewable() {
 	// billing can not be found, meaning is not eligible, don't show/edit
 	// or not set yet, allow edit
-	var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();  
+	var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
 	return billingProjectId <=0 || $("#billingProjects option[value="+ billingProjectId +"]").length == 1;
 }
 
@@ -1992,7 +1992,7 @@ function savePrizeSection() {
         }
         request['activationFlag'] = true;
     }
-    
+
    $.ajax({
       type: 'POST',
       url: ctx + "/launch/saveDraftContest",
@@ -2002,18 +2002,18 @@ function savePrizeSection() {
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
          populatePrizeSection();
-         //populateTypeSection();  
-         showPrizeSectionDisplay();      
+         //populateTypeSection();
+         showPrizeSectionDisplay();
          if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
             var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
             if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
                 populateTypeSection();
             }
-         }			
+         }
       },
       beforeSend: beforeAjax,
-      complete: afterAjax            
-   });	 
+      complete: afterAjax
+   });
 }
 
 function validateFieldsPrizeSection() {
@@ -2252,7 +2252,7 @@ function showPrizeSectionEdit() {
 
 /**
  * Gets the default file types and other format file types from a list of file types.
- * 
+ *
  * @param allFileTypes the list of file type.
  * @returns the default file types and other format file types
  */
@@ -2292,25 +2292,25 @@ function getSplitFileTypes(allFileTypes) {
  *
  * @param initFlag initiation Flag when the section is first populated. It is for some special action only performed when
  * first time initialized. It could be ignored if it is not first time initialized.
- */ 
-function populateSpecSection(initFlag) {	
+ */
+function populateSpecSection(initFlag) {
    var detailedRequirements = mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements;
    var guidelines = mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines;
    var privateDescription = mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription;
-	
+
 	//edit
 	$('#swDetailedRequirements').val(detailedRequirements);
-	$('#swGuidelines').val(guidelines);		
+	$('#swGuidelines').val(guidelines);
     $('#swPrivateDescription').val(privateDescription);
-    
-    if(isDevOrDesign()) {  	   
-       if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag){ 
+
+    if(isDevOrDesign()) {
+       if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag){
           $('#catalogSelect').val(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
           updateCategories(fillCategories);
        } else {
        	  fillCategories();
-       }       
-  } 
+       }
+  }
 
   if(isTechnologyContest()) {
   	   //technlogies
@@ -2335,7 +2335,7 @@ function populateSpecSection(initFlag) {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
 
-  
+
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
 	  $('#contestIntroduction').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
@@ -2367,28 +2367,28 @@ function populateSpecSection(initFlag) {
 	  });
 	  $('#deliverablesCheckboxs').html(html);
   }
-		
+
   //display
-  $('#rswDetailedRequirements').html(detailedRequirements);   
-  $('#rswGuidelines').html(guidelines);   
+  $('#rswDetailedRequirements').html(detailedRequirements);
+  $('#rswGuidelines').html(guidelines);
   $('#rswPrivateDescription').html(privateDescription);
-  
+
   if(isDevOrDesign()) {
      $('#rswRootCatalog').html($("#catalogSelect option[value="+ mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId +"]").text());
-     
+
      var html = "";
      $.each($('#select2_categories option'),function(i,option){
      	  html += option.text +"<br/>";
      });
-     $('#rswCategories').html(html);     
-  } 
+     $('#rswCategories').html(html);
+  }
 
   if(isTechnologyContest()) {
   	 var html = "";
-     $.each($('#masterTechnologiesChoosenSelect option'),function(i,option){     	  
+     $.each($('#masterTechnologiesChoosenSelect option'),function(i,option){
      	  html += option.text +"<br/>";
      });
-     $('#rswTechnologies').html(html);     
+     $('#rswTechnologies').html(html);
   }
 
   if(isPlatformContest()) {
@@ -2398,10 +2398,10 @@ function populateSpecSection(initFlag) {
       });
       $('#rswPlatforms').html(html);
   }
-  
+
   // For studio
   if (mainWidget.competitionType == "STUDIO") {
-	  $('#rContestIntroduction').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);   
+	  $('#rContestIntroduction').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
 	  $('#rContestDescription').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription);
 	  html = "";
       var studioSubtypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
@@ -2493,11 +2493,11 @@ function saveSpecSection() {
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
          populateSpecSection();
-         showSpecSectionDisplay();         			
+         showSpecSectionDisplay();
       },
       beforeSend: beforeAjax,
-      complete: afterAjax            
-   });	 
+      complete: afterAjax
+   });
 }
 
 function validateFieldsSpecSection() {
@@ -2661,8 +2661,8 @@ function showSpecSectionEdit() {
 /**
  * Document Section Functions
  */
-// document array used for rollback for cancel button 
-var rbDocuments; 
+// document array used for rollback for cancel button
+var rbDocuments;
 
 /**
  * Set rollback documents. It simply takes the snapshot of current swDocuments array.
@@ -2698,12 +2698,12 @@ function populateDocumentSection() {
 
 function showDocumentSectionDisplay() {
 	 $(".contest_files").css("display","block");
-	 $(".contest_files_edit").css("display","none");												
+	 $(".contest_files_edit").css("display","none");
 }
 
 function showDocumentSectionEdit() {
 	 $(".contest_files").css("display","none");
-	 $(".contest_files_edit").css("display","block");												
+	 $(".contest_files_edit").css("display","block");
 }
 
 function saveDocumentSection() {
@@ -2735,19 +2735,19 @@ function saveDocumentSection() {
 				 // mark them as documentation
 				 $.each(swDocuments, function(i, doc) {
 					  doc['comp'] = true;
-				 });      
+				 });
 				 setRollbackDocuments();
-				 populateDocumentSection();  
-				 showDocumentSectionDisplay();    
+				 populateDocumentSection();
+				 showDocumentSectionDisplay();
 			  },
 			  function(errorMessage) {
 				  showServerError(errorMessage);
 			  })
 		  }
-	   });			
+	   });
       },
       beforeSend: beforeAjax,
-      complete: afterAjax            
+      complete: afterAjax
    });
 }
 
@@ -2755,7 +2755,7 @@ function saveDocumentSection() {
 /**
  * Activation in edit page
  */
-function activateContestEdit() {	
+function activateContestEdit() {
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
 
     if(!validateFieldsSpecSection()) {
@@ -2881,7 +2881,7 @@ function showSpecReview(contestJson) {
    var PROJECT_STATUS_ACTIVE = 1;
    contestHasSpecReview = contestJson.hasSpecReview;
    // only if contest is active (activated), has spec review phases, and sepc review phaase have not started
-   if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted 
+   if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted
           && contestJson.projectStatus.id == PROJECT_STATUS_ACTIVE) {
 
        $.ajax({
@@ -2994,7 +2994,7 @@ function handleProjectDropDownChange() {
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
         $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
-    });	
+    });
     $("#chkboxCCA").removeAttr('checked');
     $("#chkboxCCA").removeAttr('disabled');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
