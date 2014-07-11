@@ -121,7 +121,7 @@
                         <a class="short" target="_blank" href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="data.projectId"/></s:url>'><img src="/images/edit-icon.png" alt=""/>Edit</a>
                         </c:if>
                         <a class="long" target="_blank" <s:if test="data.projectForumCategoryId == null || data.projectForumCategoryId <=0"> style='visibility: hidden;' </s:if>
-                           href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}">
+                           href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${projectSummary.projectForumCategoryId}">
                             <img src="/images/forum-link-icon.png" alt=""/>Project Forum
                         </a>
 

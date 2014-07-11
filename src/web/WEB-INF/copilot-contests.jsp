@@ -207,7 +207,7 @@
                                                     </td>
                                                     <td>
                                                         <s:if test="%{#attr['contest'].forumId != -1}">
-                                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${contest.forumId}" target="_blank">
+                                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${contest.forumId}" target="_blank">
                                                                 ${contest.forumPostsNumber}
                                                             </a>
                                                         </s:if>

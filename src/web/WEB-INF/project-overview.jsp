@@ -784,7 +784,7 @@
                                         <p>Need to discuss this project?</p>
                                         <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
-                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1 newButtonGreen"><span>LET'S TALK</span></a>
+                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1 newButtonGreen"><span>LET'S TALK</span></a>
 											 <a href="javascript:;" class="buttonRed1 newButtonGreen configreButton buttonToolTip">
 												<span>CONFIGURE PROJECT FORUM</span>
 												<div class="buttonToolTipContainer hide">

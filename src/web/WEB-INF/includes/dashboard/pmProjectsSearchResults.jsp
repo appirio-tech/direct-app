@@ -201,7 +201,7 @@
                     </td>
                     <td>
 					 <c:if test="${projectSummary.projectForumCategoryId > 0}">
-						<a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}" target="_blank">
+						<a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${projectSummary.projectForumCategoryId}" target="_blank">
 						${projectSummary.messageNumber}
 						</a>
                      </c:if>

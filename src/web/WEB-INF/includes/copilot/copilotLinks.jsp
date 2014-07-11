@@ -35,7 +35,7 @@
         <li class="splitter"></li>
 
         <li>
-            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${viewData.contestStats.forumId}"
+            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${viewData.contestStats.forumId}"
                target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
 
         </li>
