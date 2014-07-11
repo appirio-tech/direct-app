@@ -25,8 +25,7 @@
                     <strong>Note:</strong>
                     <a href="javascript:void(0)">Hide</a>
                 </dt>
-                <dd>Add users to your project to grant an access to them. Search for the user handle and add the
-                    users to the list of authorized users.
+                <dd>Search for the user handle and add the users to the list of authorized users.
                 </dd>
             </dl>
         </div>

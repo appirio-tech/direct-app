@@ -1669,7 +1669,7 @@
                             <!-- End .modal-title -->
                             <!-- content -->
                             <div class="modal-content">
-                                <p>Are you sure to decide to not add authorized user(s) to your new project?</p>
+                                <p>You have not added anyone to your project. You will be the only person with access. Is this ok?</p>
 
                                 <div class="clear"></div>
                                 <div class="buttonArea">
