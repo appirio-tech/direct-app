@@ -399,6 +399,29 @@
             </fileset>
         </zip>
     </target>
+	
+	<target name="package-static-direct" >
+	        <zip destfile="direct-static-all.jar">
+	            <fileset dir="${srcdir}/web">
+	                <include name="css/direct/**/*.css"/>
+	                <include name="css/scorecard/**/*.css"/>
+	                <exclude name="scripts/tiny_mce/**/*.*"/>
+	                <include name="scripts/*.*"/>
+	                <include name="scripts/launch/**/*.*"/>
+					<include name="scripts/copilot/**/*.*"/>
+	                <include name="scripts/scorecard/**/*.*"/>
+	                <include name="scripts/tinyMCE/templates/*.html"/>
+	                <include name="scripts/ckeditor/templates/**/*.*"/>
+	            	<include name="images/*.*"/>
+	            	<include name="images/copilotPosting/*.*"/>
+	            	<include name="images/edit/*.*"/>
+	            	<include name="images/filter-panel/*.*"/>
+	            	<include name="images/gantt/*.*"/>
+	            	<include name="images/gantt/menu/*.*"/>
+	            	<include name="images/public-roadmap/*.*"/>
+	            </fileset>
+	        </zip>
+	    </target>
 
 
     <target name="dist" depends="ear">
