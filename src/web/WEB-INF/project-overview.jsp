@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin, TCSASSEMBLER
   -
@@ -624,7 +625,7 @@
                                                         <div class="itemContainer">
                                                             <div class="userPhoto">
                                                                 <div class="userPhotoInner">
-                                                                    <a href="https://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=<s:property value='copilotInfo.userId'/>">
+                                                                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=ViewCopilotProfile&amp;pid=<s:property value='copilotInfo.userId'/>">
                                                                         <s:if test="copilotInfo.avatarPath == null || copilotInfo.avatarPath.length == 0">
                                                                             <img class="projectCopilotPhoto" src="/images/user-photo-placeholder.png"
                                                                                  alt="Copilot Photo"/>
@@ -783,7 +784,7 @@
                                         <p>Need to discuss this project?</p>
                                         <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
-                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1 newButtonGreen"><span>LET'S TALK</span></a>
+                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1 newButtonGreen"><span>LET'S TALK</span></a>
 											 <a href="javascript:;" class="buttonRed1 newButtonGreen configreButton buttonToolTip">
 												<span>CONFIGURE PROJECT FORUM</span>
 												<div class="buttonToolTipContainer hide">

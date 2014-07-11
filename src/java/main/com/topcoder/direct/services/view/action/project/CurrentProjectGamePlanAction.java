@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.project.milestone.MilestoneService;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
@@ -32,7 +33,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for generating the project game plan data for the client
@@ -157,7 +167,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      *
      * @since 1.2
      */
-    private static final String JIRA_LINK = "https://apps.topcoder.com/bugs/browse/";
+    private static final String JIRA_LINK = "https://" + ServerConfiguration.JIRA_SERVER_NAME + "/browse/";
 
     /**
      * The project milestone link.

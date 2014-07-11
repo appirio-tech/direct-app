@@ -22,6 +22,8 @@
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <jsp:include page="includes/serverConfiguration.jsp"/>
+
     <!-- External CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
     <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css" />

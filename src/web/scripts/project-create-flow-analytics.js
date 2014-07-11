@@ -516,7 +516,7 @@ function updateAnalyticsProjectSummaryPage() {
         var first = true;
         $.each(copilotsData, function(index, value){
             if (!first) copilotsList = copilotsList + ", "
-            copilotsList = copilotsList + ('<span><a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr='
+            copilotsList = copilotsList + ('<span><a href="http://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&amp;cr='
                 + userIdsMap[value.copilotProfileId] + '">'+value.copilotHandle+'</a></span>');
             first = false;
         });

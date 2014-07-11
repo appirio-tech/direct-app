@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: Ghost_141, GreatKevin
   - Version: 1.4
@@ -38,18 +39,18 @@
         
 
         <s:if test="viewData.contestStats.isStudio">
-            <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
+            <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
         </s:if>
         <s:elseif test="marathon">
             <s:if test="viewData.active">
-                <s:set name="contestLink" value="'http://community.topcoder.com/tc?module=MatchDetails&rd=' + viewData.roundId"/>
+                <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:if>
             <s:else>
-                <s:set name="contestLink" value="'http://community.topcoder.com/tc?module=MatchDetails&rd=' + viewData.roundId"/>
+                <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:else>
         </s:elseif>
         <s:else>
-           <s:set name="contestLink" value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
+           <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
         </s:else>
 
         <s:if test="marathon">
@@ -97,17 +98,17 @@
         <li class="splitter"></li>
         <li>
         <s:if test="!viewData.contestStats.isStudio">
-        <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
+        <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
         </s:if>
         <s:elseif test="marathon">
-            <a href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.roundId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+            <a href="http://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.roundId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
         </s:elseif>
         <s:else>
             <s:if test="viewData.contestStats.newForum">
-                <a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+                <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
             </s:if>
             <s:else>
-                <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+                <a href="https://<%=ServerConfiguration.STUDIO_FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
             </s:else>
 
         </s:else>

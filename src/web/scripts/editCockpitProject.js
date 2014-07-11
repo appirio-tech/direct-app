@@ -1688,7 +1688,7 @@ $(document).ready(function (e) {
                             $.each(result, function (key, value) {
 
                                 var entry = $('<li class="memberLink"><span name="' + key + '" class="hide"></span>'
-                                    + '<a href="https://community.topcoder.com/tc?module=MemberProfile&cr='
+                                    + '<a href="https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&cr='
                                     + value.userId + '" class="memberLink">' + value.handle + '</a><a href="javascript:;" class="close" title="Remove this handle"></a></li>');
                                 handleList.append(entry);
                                 entry.hover(

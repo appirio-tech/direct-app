@@ -1,3 +1,4 @@
+<%@ tag import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: TCSDEVELOPER
   - Version: 1.0
@@ -12,7 +13,7 @@
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 <%@ attribute name="target" required="false" type="java.lang.String" %>
 
-<a href="https://www.topcoder.com/bugs/secure/IssueNavigator.jspa?reset=true&jqlQuery=%22Contest+ID%22+%7E+%22${projectId}%22+ORDER+BY+resolved+DESC%2C+priority+DESC"
+<a href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/secure/IssueNavigator.jspa?reset=true&jqlQuery=%22Contest+ID%22+%7E+%22${projectId}%22+ORDER+BY+resolved+DESC%2C+priority+DESC"
    class="${styleClass}" target="${target}">
     <jsp:doBody/>
 </a>

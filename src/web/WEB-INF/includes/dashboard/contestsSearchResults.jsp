@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: isv, TCSASSEMBLER
   - Version: 1.2
@@ -89,8 +90,8 @@
                 </td>
                 <td>
 					<s:if test="forumId != -1">
-						<s:if test="contestType == 'Studio'"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
-						<s:if test="contestType != 'Studio'"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
+						<s:if test="contestType == 'Studio'"><a href="https://<%=ServerConfiguration.STUDIO_FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+						<s:if test="contestType != 'Studio'"><a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${forumId}" target="_blank"></s:if>
 					</s:if>
 					<s:property value="forumPostsNumber"/>
 					<s:if test="forumId != -1"></a></s:if>

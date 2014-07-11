@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: GreatKevin, TCSASSEMBLER
   - Version: 1.4
@@ -32,6 +33,8 @@
     <title>[topcoder] Direct</title>
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <jsp:include page="includes/serverConfiguration.jsp"/>
 
     <!-- External CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
@@ -228,7 +231,7 @@
             </p>
             <p class="timestamp">${country} / ${timeZone}</p>
             <p>
-                <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
+                <a href="http://<%=ServerConfiguration.SERVER_NAME%>/tc?module=ViewCopilotProfile&amp;pid=${userId}"
                    class="copilotStat" target="_blank"> View Copilot Statistics</a>
             </p>
             <ul class="feedbacks">

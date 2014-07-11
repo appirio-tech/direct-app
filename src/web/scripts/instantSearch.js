@@ -373,7 +373,7 @@ var instantSearchFeaturesList = {
         {
             "title":    "Operations Dashboard",
             "link":     "/direct/operationsDashboardEnterprise.action",
-            "brief":    "Administrator - Views fullfillment, Cost and Timeline data for all the projects running on TopCoder Platform",
+            "brief":    "Administrator - Views fulfillment, Cost and Timeline data for all the projects running on TopCoder Platform",
             "group":    "Dashboard",
             "reqAdmin": "yes"
         },
@@ -470,7 +470,7 @@ var instantSearchFeaturesList = {
         },
         {
             "title":    "Member Badges Management",
-            "link":     "community.topcoder.com/tc?module=BadgeAdminHome",
+            "link":     "https://" + SERVER_CONFIG_SERVER_NAME + "/tc?module=BadgeAdminHome",
             "brief":    "Manage the member badges and copilot badges of TopCoder users",
             "group":    "Admin",
             "reqAdmin": "yes"

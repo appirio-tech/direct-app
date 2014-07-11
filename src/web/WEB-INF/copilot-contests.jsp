@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: tangzx, GreatKevin, Ghost_141, TCSASSEMBLER
   - Version: 1.4
@@ -206,7 +207,7 @@
                                                     </td>
                                                     <td>
                                                         <s:if test="%{#attr['contest'].forumId != -1}">
-                                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${contest.forumId}" target="_blank">
+                                                            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${contest.forumId}" target="_blank">
                                                                 ${contest.forumPostsNumber}
                                                             </a>
                                                         </s:if>

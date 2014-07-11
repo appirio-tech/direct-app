@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: tangzx, GreatKevin, Ghost_141, GreatKevin
   - Version: 1.7
@@ -326,9 +327,9 @@
                                                     </td>
                                                     <td>
                                                     <s:if test="forumId != -1">
-                                                        <s:if test="isStudio == true && !newForum"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
-                                                        <s:if test="isStudio == true && newForum"><a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
-                                                        <s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == true && !newForum"><a href="https://<%=ServerConfiguration.STUDIO_FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == true && newForum"><a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == false"><a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${forumId}" target="_blank"></s:if>
                                                     </s:if>
                                                     <s:property value="forumPostsNumber"/>
                                                     <s:if test="forumId != -1"></a></s:if>

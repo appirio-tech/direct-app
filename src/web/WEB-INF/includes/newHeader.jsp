@@ -13,9 +13,8 @@
   -
   - Description: The new cockpit header and navigation.
 --%>
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
-<%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
-<%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- topcoder maintenance module -->
@@ -242,7 +241,7 @@
                             </li>
 
                             <li>
-                                <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges <span class="icon badgesI"></span></a>
+                                <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges <span class="icon badgesI"></span></a>
                             </li>
                         </c:if>
                         <c:if test="${tcdirect:isScorecardAdmin()}">
@@ -265,7 +264,7 @@
                 <div class="flyout lv2">
                     <ul class="liIcons">
                         <li>
-                            <a class="first" href="http://community.topcoder.com/tc?module=MyHome" target="_blank">My Profile <span class="icon profileI"></span></a>
+                            <a class="first" href="http://<%=ServerConfiguration.SERVER_NAME%>/tc?module=MyHome" target="_blank">My Profile <span class="icon profileI"></span></a>
                         </li>
                         <li>
                             <a href="<s:url action="notifications" namespace="/settings"/>">Notifications <span class="icon notifyI"></span></a>

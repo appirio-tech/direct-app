@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141, GreatKevin, TCSASSEMBLER
   - Version: 2.5
@@ -314,7 +315,7 @@
                                                                         <p>${timeZone}</p>
 
                                                                         <p>
-                                                                            <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
+                                                                            <a href="http://<%=ServerConfiguration.SERVER_NAME%>/tc?module=ViewCopilotProfile&amp;pid=${userId}"
                                                                                class="copilotStat" target="_blank"> View Copilot Statistics</a>
                                                                         </p>
 
@@ -482,7 +483,7 @@
                                                                 </p>
 
                                                                 <p>
-                                                                    <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${userId}"
+                                                                    <a href="http://<%=ServerConfiguration.SERVER_NAME%>/tc?module=ViewCopilotProfile&amp;pid=${userId}"
                                                                        class="copilotStat" target="_blank">
                                                                         View Copilot Statistics</a>
                                                                 </p>

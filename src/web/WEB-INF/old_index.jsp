@@ -18,8 +18,9 @@
   - Fix multiple bugs.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" 
- import="com.topcoder.shared.util.ApplicationServer,
+ import="com.topcoder.direct.services.configs.ServerConfiguration,
          com.topcoder.direct.services.view.util.DirectProperties" %>
+<%@ page import="com.topcoder.shared.util.ApplicationServer" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -330,7 +331,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="even">
-                                                <td><a href="https://www.topcoder.com/tc?module=ActiveContests&pt=29" style="color:black;text-decoration: none;" target="_blank">
+                                                <td><a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=ActiveContests&pt=29" style="color:black;text-decoration: none;" target="_blank">
                                                     <strong>Projects Available</strong> for Copilots</a>
                                                 </td>
                                                 <td class="highLight2">
@@ -366,7 +367,7 @@
                                             <s:checkbox id="remember_me" cssClass="rememberMe"
                                                         name="formData.remember"/>
                                             <s:label for="remember_me" cssClass="rememberMe">Remember Me</s:label>
-                                            <a href="https://community.topcoder.com/tc?module=FindUser"
+                                            <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=FindUser"
                                                class="forgotPass" target="_blank">Forgot Password?</a>
                                             <s:submit cssStyle="display:none;"/>
                                         </p>

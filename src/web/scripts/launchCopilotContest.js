@@ -866,7 +866,7 @@ function changeStep(target, forumUrl) {
         $(".BottomBar, .topBar").hide();
         $(".buttonBottom .viewContest").show();
         
-        $(".buttonBottom .viewContest").attr("href", "https://www.topcoder.com/tc?module=ProjectDetail&pj=" + mainWidget.softwareCompetition.projectHeader.id);
+        $(".buttonBottom .viewContest").attr("href", "https://" + SERVER_CONFIG_SERVER_NAME + "/tc?module=ProjectDetail&pj=" + mainWidget.softwareCompetition.projectHeader.id);
 		$(".buttonBottom .viewProjectOverview").show();
 		$(".buttonBottom .viewProjectOverview").attr("href", "/direct/projectOverview?formData.projectId=" + mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
         if (forumUrl) {

@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.dto.project;
 
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
@@ -380,7 +381,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
         if(getProjectGeneralInfo().getProject().getForumCategoryId() == null) {
             row.getCell(2).setStringValue(NOT_SET);
         } else {
-            row.getCell(2).setStringValue("https://apps.topcoder.com/forums/?module=Category&categoryID=" + getProjectGeneralInfo().getProject().getForumCategoryId());
+            row.getCell(2).setStringValue("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Category&categoryID=" + getProjectGeneralInfo().getProject().getForumCategoryId());
         }
 
 

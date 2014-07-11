@@ -53,9 +53,9 @@
   - Version 3.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes: rename "Assets"->"Files"
   - Version 3.3 (Release Assembly - TC Cockpit Misc Bug Fixes) change notes: Make Game Plan tab clickable and link to game plan page
 --%>
-<%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
-<%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
+<%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- topcoder maintenance module -->
@@ -207,7 +207,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>
@@ -281,7 +281,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>
@@ -355,7 +355,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>
@@ -418,7 +418,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Contest Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>
@@ -481,7 +481,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>
@@ -541,7 +541,7 @@
                     <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                         <a href="javascript:">Manage Challenge Fee</a>
                     </c:if>
-                    <a href="https://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
+                    <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=BadgeAdminHome">Manage Member Badges</a>
                 </div>
             </li>
         </c:if>

@@ -267,7 +267,11 @@
 ################################
 ## MEMBER_DEV
 @ApplicationServer.ENVIRONMENT@=3
+# old server name which hosts the /tc - old community site
 @ApplicationServer.SERVER_NAME@=tc.cloud.topcoder.com
+# server name which hosts the new community site - www.topcoder.com
+@ApplicationServer.NEW_SERVER_NAME@=newtc.cloud.topcoder.com
+@ApplicationServer.JIRA_SERVER_NAME@=jira.topcoder.com/bugs/
 @ApplicationServer.STUDIO_SERVER_NAME@=studio.cloud.topcoder.com
 @ApplicationServer.OPENAIM_SERVER_NAME@=www.dev.topcoder.com/openaim
 @ApplicationServer.TRUVEO_SERVER_NAME@=www.dev.topcoder.com/truveo
@@ -276,6 +280,7 @@
 @ApplicationServer.CORP_SERVER_NAME@=www.dev.topcoder.com/corp
 @ApplicationServer.SOFTWARE_SERVER_NAME@=tcs.cloud.topcoder.com
 @ApplicationServer.FORUMS_SERVER_NAME@=forums.dev.topcoder.com
+@ApplicationServer.STUDIO_FORUMS_SERVER_NAME@=studio.cloud.topcoder.com/forums
 @ApplicationServer.HOST_URL@=localhost:1199
 @ApplicationServer.FORUMS_HOST_URL@=localhost:1199
 @ApplicationServer.CONTEST_HOST_URL@=63.118.154.180:10099

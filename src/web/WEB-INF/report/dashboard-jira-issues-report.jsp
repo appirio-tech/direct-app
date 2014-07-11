@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: Ghost_141, csy2012, TCSASSEMBLER
   - Version: 1.5
@@ -205,10 +206,10 @@
                         </td>
                        
                         <td>
-                            <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketId}</a>
+                            <a href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/browse/${ticketId}">${ticketId}</a>
                         </td>
 						 <td>
-                            <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketTitle}</a>
+                            <a href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/browse/${ticketId}">${ticketTitle}</a>
                         </td>
                         <td  class="singleLineCol">
                             <s:date name="launchDate" format="yyyy-MM-dd" />

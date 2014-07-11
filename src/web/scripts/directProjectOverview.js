@@ -277,7 +277,7 @@ $(document).ready(function() {
 
                     isReadStatus = (item.isRead == false ? "isNew" : " ");
 
-                    newRow += '<h3 class="' + isReadStatus + '"><a target="_blank" href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
+                    newRow += '<h3 class="' + isReadStatus + '"><a target="_blank" href="https://' + SERVER_CONFIG_FORUM_SERVER_NAME + '/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
                     newRow += '<p>' + item.summary + '</p>';
                     newRow += '</div>';
                     newRow += '</td>';
@@ -898,7 +898,7 @@ $(document).ready(function() {
                         tableRow += '<tr class="odd">'
                     }
                     tableRow += '<td class="colTab1"><div><h3 class="isNew">';
-                    tableRow += '<a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + forumId + '" target="_blank">' + forumName + '</a>';
+                    tableRow += '<a href="https://' + SERVER_CONFIG_FORUM_SERVER_NAME + '/forums/?module=ThreadList&forumID=' + forumId + '" target="_blank">' + forumName + '</a>';
                     tableRow += '</h3><p>' + forumDesc + '</p></div></td>';
                     tableRow += '<td class="colTab2"><div>0/0</div></td>';
                     tableRow += '<td class="colTab3"></td>';

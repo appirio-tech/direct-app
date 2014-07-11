@@ -58,6 +58,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
 <![endif]-->
 
+<jsp:include page="serverConfiguration.jsp"/>
 
 <!-- External javascript -->
 <script type="text/javascript">

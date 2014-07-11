@@ -28,7 +28,7 @@ var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
 var ganttCopilotPostingUrl = "./copilot/copilotContestDetails.action?projectId="
 var ganttContestUrl = ganttSoftwareContestUrl;
 var ganttProjectUrl = "./currentProjectOverview.action";
-var ganttBugRaceUrlPrefix = "https://apps.topcoder.com/bugs/browse/";
+var ganttBugRaceUrlPrefix = "https://" + SERVER_CONFIG_JIRA_SERVER_NAME + "/browse/";
 
 function getProgressBackground(status) {
     if (status.toLowerCase() == 'active') {

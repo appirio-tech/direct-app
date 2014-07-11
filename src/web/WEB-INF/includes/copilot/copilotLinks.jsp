@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
 
@@ -5,7 +6,7 @@
 
 
         <s:set name="contestLink"
-               value="'http://www.topcoder.com/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
+               value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
 
         <s:if test="viewData.contestStats.draft">
 
@@ -34,7 +35,7 @@
         <li class="splitter"></li>
 
         <li>
-            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}"
+            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>/forums/?module=Category&categoryID=${viewData.contestStats.forumId}"
                target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
 
         </li>

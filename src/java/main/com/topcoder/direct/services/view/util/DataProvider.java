@@ -7,6 +7,7 @@ import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.commons.utils.ValidationUtility;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
 import com.topcoder.direct.services.exception.DirectException;
@@ -4198,9 +4199,9 @@ public class DataProvider {
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
         if (!isStudio || isNewForum) {
-            latestForumPost.setUrl("https://apps.topcoder.com/forums/?module=Thread&threadID=" + latestThreadId);
+            latestForumPost.setUrl("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Thread&threadID=" + latestThreadId);
         } else {
-            latestForumPost.setUrl("https://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
+            latestForumPost.setUrl("https://" + ServerConfiguration.STUDIO_FORUMS_SERVER_NAME + "?module=Thread&threadID=" + latestThreadId);
         }
 
         if (latestTime != null)
@@ -4218,12 +4219,12 @@ public class DataProvider {
         }
 
         if (!isStudio) {
-            dto.setForumURL("https://apps.topcoder.com/forums/?module=Category&categoryID=" + forumId);
+            dto.setForumURL("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Category&categoryID=" + forumId);
         } else {
             if(isNewForum) {
-                dto.setForumURL("http://apps.topcoder.com/forums/?module=ThreadList&forumID=" + forumId);
+                dto.setForumURL("http://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=ThreadList&forumID=" + forumId);
             } else {
-                dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+                dto.setForumURL("http://" + ServerConfiguration.STUDIO_FORUMS_SERVER_NAME + "?module=ThreadList&forumID=" + forumId);
             }
         }
         dto.setTotalForumPostsCount(totalForum);

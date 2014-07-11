@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: xjtufreeman, Ghost_141, TCSDEVELOPER, TCSASSEMBLER
   - Version: 1.0.5
@@ -381,7 +382,7 @@
                                                     <input type="hidden" id="issueId" name="issue.issueId" value=""/>
                                                     <input type="hidden" id="attachmentIds" name="attachmentIds" value=""/>
                                                     <div class="row">
-                                                        <p class="projectText">Fill in the details about the Race you want to launch below. When you click the Activate button, it will publish your Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Races</a> page.</p>
+                                                        <p class="projectText">Fill in the details about the Race you want to launch below. When you click the Activate button, it will publish your Race to the TopCoder Community on the <a href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/browse/BUGR" target="_blank">Active Races</a> page.</p>
                                                     </div>
                                                     <label><em>*Challenge Name:</em></label>
                                                     <div class="row">
@@ -422,7 +423,7 @@
                                                             <option value="Bug Fix">Bug Fix</option>
                                                             <option value="Studio Bug">Studio Bug</option>
                                                         </select>
-                                                        <p class="projectText">Races in Studio Bug type will show up in <a href="https://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Race Competitions</a> list.</p>
+                                                        <p class="projectText">Races in Studio Bug type will show up in <a href="https://<%=ServerConfiguration.STUDIO_SERVER_NAME%>/?module=ViewActiveBugRaces">Active Studio Race Competitions</a> list.</p>
                                                     </div>
                                                     <div id="existingAtt">
                                                     <label>Existing Attachments:</label>

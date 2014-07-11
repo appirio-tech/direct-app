@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: xjtufreeman, Ghost_141, TCSASSEMBLER
   - Version 1.3
@@ -750,7 +751,7 @@
                                                         <input type="hidden" id="projectBug" name="issue.projectBug" value="true"/>
                                                         <input type="hidden" id="attachmentIds" name="attachmentIds" value=""/>
                                                         <div class="row">
-                                                            <p class="projectText">Fill in the details about the Race you want to launch below. When you click the Activate button, it will publish your Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Races</a> page.</p>
+                                                            <p class="projectText">Fill in the details about the Race you want to launch below. When you click the Activate button, it will publish your Race to the TopCoder Community on the <a href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/browse/BUGR" target="_blank">Active Races</a> page.</p>
                                                         </div>
                                                         <label><em>*Challenge Name:</em></label>
                                                         <div class="row">

@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, TCSASSEMBLER
   - Version: 3.3
@@ -1739,12 +1740,12 @@
                             <dt>You've chosen this copliot for your project.</dt>
                             <dd>
                                 <span>username1</span>
-                                <a href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
+                                <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=MemberProfile&amp;cr=22706873">View Copilot
                                     Profile</a>
                             </dd>
                             <dd>
                                 <span>iamcopilot</span>
-                                <a href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
+                                <a href="https://<%=ServerConfiguration.SERVER_NAME%>/tc?module=MemberProfile&amp;cr=22706873">View Copilot
                                     Profile</a>
                             </dd>
                         </dl>

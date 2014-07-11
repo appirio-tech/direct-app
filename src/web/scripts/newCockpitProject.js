@@ -1812,7 +1812,7 @@ $(document).ready(function() {
             var userIdsMap = widgetResult.userIdsMap;
 
             $.each(copilotsData, function(index, value){
-                $("#selectionConfirmationModal .modalContainer dt").append('<dd><span>' + value.copilotHandle + '</span><a href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr='
+                $("#selectionConfirmationModal .modalContainer dt").append('<dd><span>' + value.copilotHandle + '</span><a href="https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&amp;cr='
                     + userIdsMap[value.copilotProfileId] + '">View Copilot Profile</a></dd>');
             });
 

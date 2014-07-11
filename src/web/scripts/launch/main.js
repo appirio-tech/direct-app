@@ -914,9 +914,9 @@ function previewContest() {
      showErrors("You must 'Save as Draft' before you can preview your challenge.");
   } else {
     if(mainWidget.isSoftwareContest()) {
-        window.open('https://www.topcoder.com/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
+        window.open('https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
     } else if(mainWidget.isStudioContest()) {
-        window.open('https://studio.topcoder.com/?module=ViewContestDetails&ct='+mainWidget.softwareCompetition.projectHeader.id);
+        window.open('https://' + SERVER_CONFIG_STUDIO_SERVER_NAME + '/?module=ViewContestDetails&ct='+mainWidget.softwareCompetition.projectHeader.id);
     } else {
         // see thread http://apps.topcoder.com/forums/?module=Thread&threadID=782914&start=0, preview link is disabled.
     }

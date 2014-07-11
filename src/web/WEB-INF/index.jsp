@@ -25,6 +25,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"
          import="com.topcoder.shared.util.ApplicationServer,
                  com.topcoder.direct.services.view.util.DirectProperties" %>
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -146,7 +147,7 @@
                     </c:if>
 
                     <p class="additonalAction jqtransform">
-                        <span class="signForget"><a href="http://www.topcoder.com/?action=callback" target="_blank">Sign Up</a> | <a href="http://www.topcoder.com/password-recovery/" target="_blank">Forgot Password
+                        <span class="signForget"><a href="http://<%=ServerConfiguration.NEW_SERVER_NAME%>/?action=callback" target="_blank">Sign Up</a> | <a href="http://www.topcoder.com/password-recovery/" target="_blank">Forgot Password
                             ?</a></span>
                         <input type="checkbox" name="formData.remember" id="remember_me"><label>Remember me</label>
                     </p>
