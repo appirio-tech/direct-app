@@ -7,29 +7,17 @@ import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction;
-import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
-import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.security.TCSubject;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
-
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -148,92 +136,22 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 
             if (SUCCESS.equals(result)) {
                 List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
-                TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-
-                List<ProjectBriefDTO> userProjects = getViewData().getUserProjects().getProjects();
-
-                HashMap<Long, String> userDirectProjects = new HashMap<Long, String>();
-
-                // get the direct project IDs of all active user projects
-                for (ProjectBriefDTO p : userProjects) {
-                    userDirectProjects.put(p.getId(), p.getName());
-                }
-
-                // add the direct project bugs
-                List<TcJiraIssue> activeProjectLevelBugRaces = null;
-
-                if(this instanceof ActiveContestsAction) {
-                    activeProjectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProjects(userDirectProjects.keySet(), FILTER_ACTIVE_BUG_RACES);
-                }
-
 
                 if (contests.isEmpty()) {
                     // there is no contests, get project-level bug races only
                     getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+
                     if (this instanceof ActiveContestsAction) {
-                        getViewData().setProjectBugRaces(activeProjectLevelBugRaces);
+                        getViewData().setProjectBugRaces(null);
                     } else if (this instanceof ProjectContestsAction) {
                         getViewData().setProjectBugRaces(JiraRpcServiceWrapper.getBugRacesForDirectProject(getSessionData().getCurrentProjectContext().getId(), null));
                     }
+
                 } else {
                     // there are contests, get project-level bug races & contest-level bug races
                     if (this instanceof ActiveContestsAction) {
 
-                        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-                        Request request = new Request();
-                        String queryName = "my_active_projects_contest_ids";
-                        request.setContentHandle(queryName);
-                        request.setProperty("uid", String.valueOf(currentUser.getUserId()));
-
-                        Map<Long, IdNamePair> contestProjectMapping = new HashMap<Long, IdNamePair>();
-                        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(queryName);
-                        final int recordNum = resultContainer.size();
-                        for (int i = 0; i < recordNum; i++) {
-                            long contestId = resultContainer.getLongItem(i, "project_id");
-                            long projectId = resultContainer.getLongItem(i, "direct_project_id");
-                            String projectName = resultContainer.getStringItem(i, "direct_project_name");
-
-                            IdNamePair project = new IdNamePair();
-                            project.setId(projectId);
-                            project.setName(projectName);
-                            contestProjectMapping.put(contestId, project);
-                        }
-
-                        // get contest-level bug races
-                        final List<TcJiraIssue> contestBugRacesForDirectProject =
-                                JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), FILTER_ACTIVE_BUG_RACES);
-
-                        List<TcJiraIssue> filteredIssue = new ArrayList<TcJiraIssue>();
-
-                        for (TcJiraIssue issue : contestBugRacesForDirectProject) {
-
-                            // filter out bug races for the active contests
-                            if (contestProjectMapping.containsKey(issue.getProjectID())) {
-                                // use contest ID in the issue to locate the cockpit project ID and name
-                                IdNamePair project = contestProjectMapping.get(issue.getProjectID());
-                                issue.setDirectProjectId(project.getId());
-                                issue.setDirectProjectName(project.getName());
-                                if (DirectUtils.getClientIdForProject(currentUser, project.getId()) != null) {
-                                    issue.setClientId(DirectUtils.getClientIdForProject(currentUser, project.getId()));
-                                }
-                                filteredIssue.add(issue);
-                            }
-                        }
-
-                        for (TcJiraIssue issue : activeProjectLevelBugRaces) {
-
-                            // get cockpit project id set for this bug race
-                            Long directProjectId = issue.getCockpitProjectId();
-                            issue.setDirectProjectId(directProjectId);
-                            issue.setDirectProjectName(userDirectProjects.get(directProjectId));
-                            if (DirectUtils.getClientIdForProject(currentUser, directProjectId) != null) {
-                                issue.setClientId(DirectUtils.getClientIdForProject(currentUser, directProjectId));
-                            }
-
-                            filteredIssue.add(issue);
-                        }
-
-                        getViewData().setProjectBugRaces(filteredIssue);
+                        getViewData().setProjectBugRaces(null);
 
                     } else if (this instanceof ProjectContestsAction) {
 
