@@ -3,6 +3,8 @@
  */
 package com.topcoder.direct.services.view.dto;
 
+import com.topcoder.direct.services.view.util.DirectUtils;
+
 /**
  * <p>A <code>DTO</code> class providing the data for single software contest winner.</p>
  *
@@ -108,5 +110,9 @@ public class SoftwareContestWinnerDTO extends UserDTO {
      */
     public void setSubmissionId(long submissionId) {
         this.submissionId = submissionId;
+    }
+
+    public String getPlacementStr() {
+        return DirectUtils.ordinal(getPlacement());
     }
 }

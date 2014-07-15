@@ -3283,4 +3283,19 @@ public final class DirectUtils {
             DatabaseUtils.close(connection);
         }
     }
+
+    private static String[] ORDINAL_SUFFIX
+            = new String[]{"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
+
+    public static String ordinal(int i) {
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + ORDINAL_SUFFIX[i % 10];
+
+        }
+    }
 }

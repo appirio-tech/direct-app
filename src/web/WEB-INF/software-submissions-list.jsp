@@ -195,6 +195,8 @@
                                                            scope="page"/>
                                                     <s:set var="secondPlaceWinner" value="viewData.secondPlaceWinner"
                                                            scope="page"/>
+                                                    <s:set var="winners" value="viewData.winners"
+                                                           scope="page"/>
                                                 <c:if test="${firstPlaceWinner != null}">
                                                     <div id="winnerPanel">
                                                         <div class="winnerCol">
@@ -214,6 +216,7 @@
                                                             </s:else>
                                                             <div class="winnerData">
                                                                 <h3>1st Place Winner</h3>
+
                                                                 <link:user styleClass="handle"
                                                                            handle="${firstPlaceWinner.handle}"
                                                                            userId="${firstPlaceWinner.id}"/>
@@ -225,28 +228,51 @@
                                                             </div>
                                                         </div>
                                                         <!-- End .winnerCol -->
-
-                                                        <c:if test="${secondPlaceWinner != null}">
-                                                            <div class="winnerCol">
+                                                        <c:forEach var="iWinner" items="${winners}">
+                                                            <c:if test="${iWinner.placement > 1}">
+                                                                <div class="winnerCol">
                                                                     <link:onlineReviewDownloadSubmission
-                                                                            projectId="${secondPlaceWinner.projectId}"
-                                                                            submissionId="${secondPlaceWinner.submissionId}"
+                                                                            projectId="${iWinner.projectId}"
+                                                                            submissionId="${iWinner.submissionId}"
                                                                             styleClass="downloadFile">
-                                                                </link:onlineReviewDownloadSubmission>
-                                                                <div class="winnerData">
-                                                                    <h3>2nd Place Winner</h3>
-                                                                    <link:user styleClass="handle"
-                                                                               handle="${secondPlaceWinner.handle}"
-                                                                               userId="${secondPlaceWinner.id}"/>
-                                                                    <label class="score">Final Score:
-                                                                        <span> <fmt:formatNumber
-                                                                                value="${secondPlaceWinner.finalScore}"
-                                                                                pattern="##0.00"/></span>
-                                                                    </label>
+                                                                    </link:onlineReviewDownloadSubmission>
+                                                                    <div class="winnerData">
+                                                                        <h3>${iWinner.placementStr} Place Winner</h3>
+                                                                        <link:user styleClass="handle"
+                                                                                   handle="${iWinner.handle}"
+                                                                                   userId="${iWinner.id}"/>
+                                                                        <label class="score">Final Score:
+                                                                            <span> <fmt:formatNumber
+                                                                                    value="${iWinner.finalScore}"
+                                                                                    pattern="##0.00"/></span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- End .winnerCol -->
-                                                        </c:if>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        
+
+                                                        <%--<c:if test="${secondPlaceWinner != null}">--%>
+                                                            <%--<div class="winnerCol">--%>
+                                                                    <%--<link:onlineReviewDownloadSubmission--%>
+                                                                            <%--projectId="${secondPlaceWinner.projectId}"--%>
+                                                                            <%--submissionId="${secondPlaceWinner.submissionId}"--%>
+                                                                            <%--styleClass="downloadFile">--%>
+                                                                <%--</link:onlineReviewDownloadSubmission>--%>
+                                                                <%--<div class="winnerData">--%>
+                                                                    <%--<h3>2nd Place Winner</h3>--%>
+                                                                    <%--<link:user styleClass="handle"--%>
+                                                                               <%--handle="${secondPlaceWinner.handle}"--%>
+                                                                               <%--userId="${secondPlaceWinner.id}"/>--%>
+                                                                    <%--<label class="score">Final Score:--%>
+                                                                        <%--<span> <fmt:formatNumber--%>
+                                                                                <%--value="${secondPlaceWinner.finalScore}"--%>
+                                                                                <%--pattern="##0.00"/></span>--%>
+                                                                    <%--</label>--%>
+                                                                <%--</div>--%>
+                                                            <%--</div>--%>
+                                                            <%--<!-- End .winnerCol -->--%>
+                                                        <%--</c:if>--%>
                                                     </div>
                                                     <!-- End #winnerPanel -->
                                                 </c:if>

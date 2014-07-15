@@ -74,6 +74,8 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     private SoftwareContestWinnerDTO secondPlaceWinner;
 
+    private List<SoftwareContestWinnerDTO> winners;
+
     /**
      * <p>A <code>List</code> providing the details on submissions for contest.</p>
      */
@@ -475,6 +477,14 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     public String getCheckpointSubmissionsGeneralFeedback() {
         return checkpointSubmissionsGeneralFeedback;
+    }
+
+    public List<SoftwareContestWinnerDTO> getWinners() {
+        return winners;
+    }
+
+    public void setWinners(List<SoftwareContestWinnerDTO> winners) {
+        this.winners = winners;
     }
 
     public boolean isApprovalRejected() {

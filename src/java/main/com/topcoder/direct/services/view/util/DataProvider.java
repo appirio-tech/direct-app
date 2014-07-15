@@ -3127,6 +3127,9 @@ public class DataProvider {
         final ResultSetContainer submissionsContainer
             = dataAccessor.getData(request).get("direct_software_project_submissions");
         List<SoftwareSubmissionDTO> submissions = new ArrayList<SoftwareSubmissionDTO>();
+
+        List<SoftwareContestWinnerDTO> winners = new ArrayList<SoftwareContestWinnerDTO>();
+
         for (ResultSetContainer.ResultSetRow submissionRow : submissionsContainer) {
             UserDTO submitter = new UserDTO();
             submitter.setId(Long.parseLong(submissionRow.getStringItem("submitter_id")));
@@ -3148,10 +3151,13 @@ public class DataProvider {
             submission.setReviews(reviewsMap.get(submission.getSubmissionId()));
             submission.setScreeningReview(screeningReviewsMap.get(submission.getSubmissionId()));
 
+            int totalWinnerPlacement = submissionRow.getIntItem("prize_placement_number");
+
             submissions.add(submission);
 
             Integer placement = submission.getPlacement();
-            if (placement != null && placement < 3 && submission.getPassedReview()) {
+
+            if (placement != null && placement <= totalWinnerPlacement && submission.getPassedReview()) {
                 SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
                 winner.setFinalScore(submission.getFinalScore());
                 winner.setHandle(submitter.getHandle());
@@ -3159,14 +3165,21 @@ public class DataProvider {
                 winner.setPlacement(placement);
                 winner.setProjectId(dto.getProjectId());
                 winner.setSubmissionId(submissionId);
+
+
+
                 if (placement == 1) {
                     dto.setFirstPlaceWinner(winner);
                 } else if (winner.getPlacement() == 2) {
                     dto.setSecondPlaceWinner(winner);
                 }
+
+                winners.add(winner);
             }
 
         }
+
+        dto.setWinners(winners);
         dto.setSubmissions(submissions);
     }
 
