@@ -791,14 +791,14 @@ function onContestTypeChange() {
         if (swDetailedRequirements) {
             swDetailedRequirements.destroy(true);
         }
-        CKEDITOR.replace('swGuidelines', $.extend({}, CKEDITOR_DIRECT_CONFIGURATION, {
+        CKEDITOR.replace('swGuidelines', {
             templates: getSGTemplatesName(typeId),
             templates_files: SGTemplatesList
-        }));
-        CKEDITOR.replace('swDetailedRequirements', $.extend({}, CKEDITOR_DIRECT_CONFIGURATION, {
+        });
+        CKEDITOR.replace('swDetailedRequirements', {
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList
-        }));
+        });
     } else {
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {

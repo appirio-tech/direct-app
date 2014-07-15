@@ -839,8 +839,3 @@ function getObjectSize(object) {
     }
     return count;
 }
-
-var CKEDITOR_DIRECT_CONFIGURATION = {
-    extraPlugins: 'sourcedialog',
-    removePlugins: 'sourcearea'
-};
