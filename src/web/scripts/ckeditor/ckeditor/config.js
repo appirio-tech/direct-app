@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function (config) {
     // config.uiColor = '#AADC6E';
     config.filebrowserImageUploadUrl = null;
     config.toolbar = [
-        { name: 'document', items : ['NewPage','DocProps','Preview','Print','-','Templates' ] },
+        { name: 'document', items : ['NewPage','DocProps','Preview','Print','-','Templates', '-', 'Sourcedialog' ] },
         { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
         { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
         '/',
