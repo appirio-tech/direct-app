@@ -42,7 +42,7 @@ public class GetReviewCostAction extends BaseDirectStrutsAction {
     /**
      * Represents the default number of submissions to be considered when computing the payment.
      */
-    private final int DEFAULT_SUBMISSION_COUNT = 1;
+    private final int DEFAULT_SUBMISSION_COUNT = 3;
 
     /**
      * <p>Constructs new <code>GetReviewCostAction</code> instance. This implementation does nothing.</p>
