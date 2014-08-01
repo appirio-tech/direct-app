@@ -1,24 +1,19 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Project Contests</code> page
@@ -50,9 +45,15 @@ import java.util.Set;
  *   <li>Add project level bug races to active contests and project contests page</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.6 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+ * <ul>
+ *     <li>Remove the codes to get the project bug races / issues</li>
+ * </ul>
+ * </p>
  *
- * @author isv, GreatKevin, xjtufreeman, Veve
- * @version 1.5
+ * @author isv, GreatKevin, xjtufreeman, Veve, -jacob-
+ * @version 1.6
  */
 public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
         ViewAction<ProjectContestsDTO> {
@@ -137,47 +138,8 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
             if (SUCCESS.equals(result)) {
                 List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
 
-                if (contests.isEmpty()) {
-                    // there is no contests, get project-level bug races only
-                    getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
-
-                    if (this instanceof ActiveContestsAction) {
-                        getViewData().setProjectBugRaces(null);
-                    } else if (this instanceof ProjectContestsAction) {
-                        getViewData().setProjectBugRaces(JiraRpcServiceWrapper.getBugRacesForDirectProject(getSessionData().getCurrentProjectContext().getId(), null));
-                    }
-
-                } else {
-                    // there are contests, get project-level bug races & contest-level bug races
-                    if (this instanceof ActiveContestsAction) {
-
-                        getViewData().setProjectBugRaces(null);
-
-                    } else if (this instanceof ProjectContestsAction) {
-
-                        // add bug races to the contests
-                        Set<Long> contestIds = new HashSet<Long>();
-
-                        Long directProjectId = getSessionData().getCurrentProjectContext().getId();
-
-                        for (ProjectContestDTO c : contests) {
-                            contestIds.add(c.getContest().getId());
-                        }
-
-                        List<TcJiraIssue> contestLevelBugRaces = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds, null);
-
-                        List<TcJiraIssue> projectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProject(directProjectId, null);
-
-                        for (TcJiraIssue issue : projectLevelBugRaces) {
-                            contestLevelBugRaces.add(issue);
-
-                        }
-
-                        getViewData().setProjectBugRaces(contestLevelBugRaces);
-                    }
-
+                if (!contests.isEmpty()) {
                     getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
-
                 }
 
                 // set the current direct project id in session, the contest details codes incorrectly

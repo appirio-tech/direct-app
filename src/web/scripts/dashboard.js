@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for dashboard.
  *
@@ -126,8 +126,11 @@
  * - Added search contests feature to the right sidebar
  * - Added feature to display contests of selected project by AJAX
  *
+ * Version 3.2.8 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+ * - Added getting issues number by ajax for contest pages
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin
- * @version 3.2.7
+ * @version 3.2.8
  */
 
 var mouse_is_inside;
@@ -1521,6 +1524,36 @@ $(document).ready(function(){
             $("#attachmentIds").val("");
         }
         return true;
+    }
+
+    // display the unresolved contest issues number and total contest issues number
+    if($("#contestDashboardUnresolvedIssuesNumber").length > 0) {
+        var contestId = $("input[name=contestDashboardContestId]").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/direct/contest/getContestIssuesNumber',
+            data: {projectId: contestId},
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $("#contestDashboardUnresolvedIssuesNumber").text(result.unresolvedIssuesNumber);
+                        if(result.unresolvedIssuesNumber > 0) {
+                            $("#contestDashboardUnresolvedIssuesDetails").show();
+                        } else {
+                            $("#contestDashboardUnresolvedIssuesDetails").hide();
+                        }
+
+                        $("#contestIssuesTotalNumberInTab").text("Issue Tracking (" + result.issuesNumber + ")");
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
     }
     
     // add a new JIRA issue (Race)

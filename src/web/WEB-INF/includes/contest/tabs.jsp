@@ -1,7 +1,7 @@
 <%--
   - Author: isv, Veve, morehappiness, gentva, jiajizhou86
-  - Version: 1.11
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.12
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
@@ -29,6 +29,8 @@
   - - Added VM Instances tab.
   - Version 1.11 (Release Assembly - TopCoder Direct VM Instances Management) changes:
   - - Added active VM count to the VM Instances tab
+  - Version 1.12 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+  - - Remove the total issues count from Issues Tracking tab, it will be set by Ajax response.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -138,7 +140,7 @@
 
         <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>
                 <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
+                <span class="left"><span class="right" id="contestIssuesTotalNumberInTab">Issue Tracking </span></span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
             <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">

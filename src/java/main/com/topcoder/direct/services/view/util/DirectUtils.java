@@ -610,8 +610,16 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+ * <ul>
+ *     <li>Updated {@link #getContestStats(com.topcoder.security.TCSubject, long,
+ *     com.topcoder.service.project.SoftwareCompetition)}</li> to remove getting issues data
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public final class DirectUtils {
 
@@ -976,9 +984,9 @@ public final class DirectUtils {
 
         ContestBriefDTO contest;
 
-            PhasedContestDTO phasedContest = new PhasedContestDTO();
-            phasedContest.setCurrentPhases(DataProvider.getCurrentPhases(contestId));
-            phasedContest.setStatus(ContestStatus.forName(resultContainer.getStringItem(recordIndex, "status")));
+        PhasedContestDTO phasedContest = new PhasedContestDTO();
+        phasedContest.setCurrentPhases(DataProvider.getCurrentPhases(contestId));
+        phasedContest.setStatus(ContestStatus.forName(resultContainer.getStringItem(recordIndex, "status")));
             /*List<DashboardContestSearchResultDTO> contests =
                 DataProvider.searchUserContests(currentUser, null, null, null);
             for (DashboardContestSearchResultDTO c : contests) {
@@ -1029,12 +1037,6 @@ public final class DirectUtils {
 
         dto.setContest(contest);
         dto.setIsStudio(isStudio);
-
-        // sets the issues of contests
-        dto.setIssues(DataProvider.getContestIssues(contestId));
-
-        // gets the number of issues and bug races for contest
-        dto.setTotalJiraIssuesNumber(dto.getIssues().getIssuesNumber() + dto.getIssues().getBugRacesNumber());
 
         // set additional properties here
         if (softwareCompetition != null) {

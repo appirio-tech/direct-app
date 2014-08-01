@@ -1,7 +1,7 @@
 <%--
   - Author: isv, Veve, GreatKevin, Ghost_141, Veve, gentva
-  - Version: 1.12
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.13
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
   - Version 1.1 change notes: add issue tracking health status into dashboard page.
@@ -36,14 +36,18 @@
   - - Update the tc-web:handle tag to add handle property.
   -
   - Version 1.11 (TopCoder Direct Contest VM Instances Management)
-  - - Fix the registration status expression.  -
+  - - Fix the registration status expression.
+  -
   - Version 1.12 (Release Assembly - TC Cockpit Misc Bug Fixes)
   - - Fix TCCC-3857: Make the forum link in the contest dashboard openned in a new window/tab
+  -
+  - Version 1.13 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+  - - Remove the JSP to read unresolved issues number from action. It will be set by AJAX response.
   - 
   - Description: Contest Dashboard area for Contest Details page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-
+<input type="hidden" name="contestDashboardContestId" value="${viewData.contestStats.contest.id}"/>
 <div class="dashboardTable contestDashboard 
     <s:if test="!viewData.contestStats.isStudio && !marathon">softWareDashboard softwareDetail</s:if>
     <s:else>studioDashboard studioDetails</s:else>
@@ -505,17 +509,16 @@
                 <span class="br"></span>
                 <div class="listContent">
                     <p>
-                        <strong><label>Open Issues</label>: <s:property value='viewData.contestStats.issues.unresolvedIssuesNumber'/></strong>
+                        <strong><label>Open Issues</label>: <span id="contestDashboardUnresolvedIssuesNumber"> </span></strong>
                     </p>
-                    <s:if test="viewData.contestStats.issues.unresolvedIssuesNumber > 0">
-                        <p>
-                            <a href="
+
+                    <p id="contestDashboardUnresolvedIssuesDetails" class="hide">
+                        <a href="
                                 <s:url action='contestIssuesTracking'>
                                     <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url>">
-                                View Details
-                            </a>
-                        </p>
-                    </s:if>
+                            View Details
+                        </a>
+                    </p>
                 </div>
                 <!-- End .listContent -->
             </div>

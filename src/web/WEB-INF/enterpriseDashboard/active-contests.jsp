@@ -1,6 +1,7 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: GreatKevin, Ghost_141, GreatKevin
+  - Author: GreatKevin, Ghost_141
+  -
   - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Project Pipeline and Project Completion Date Update)
@@ -14,6 +15,9 @@
   -
   - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
   - - Update forum link for studio contest
+  -
+  - Version 1.5 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+  - - Comment out the jira issues listing jsp code
   -
   - Description: The active contests page of the new enterprise dashboard
 --%>
@@ -297,52 +301,52 @@
                                                                 </tr>
                                                             </s:iterator>
 
-                                                            <s:iterator value="viewData.projectBugRaces"
-                                                                        status="status">
-                                                                <tr>
+                                                            <%--<s:iterator value="viewData.projectBugRaces"--%>
+                                                                        <%--status="status">--%>
+                                                                <%--<tr>--%>
 
-                                                                    <td class="first">Race</td>
-                                                                    <td>
-                                                                        <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                                            <img class="contestTypeIcon" src="/images/br_small.png"
-                                                                                 alt="BR"/>
+                                                                    <%--<td class="first">Race</td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--<div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">--%>
+                                                                            <%--<img class="contestTypeIcon" src="/images/br_small.png"--%>
+                                                                                 <%--alt="BR"/>--%>
 
-                                                                        </div>
-                                                                        <div style="display:table-cell;text-align:left">
-                                                                            <a href="<s:property value='issueLink'/>"><s:property value='issueKey'/> <s:property value='title'/></a>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div style="display:table-cell;text-align:left">
-                                                                            <a href="../projectOverview?formData.projectId=${directProjectId}"><s:property value="directProjectName"/></a>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${creationDate}"/> ET (GMT-400)
-                                                                    </td>
-                                                                    <td>
-                                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${endDate}"/> ET (GMT-400)
-                                                                    </td>
+                                                                        <%--</div>--%>
+                                                                        <%--<div style="display:table-cell;text-align:left">--%>
+                                                                            <%--<a href="<s:property value='issueLink'/>"><s:property value='issueKey'/> <s:property value='title'/></a>--%>
+                                                                        <%--</div>--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--<div style="display:table-cell;text-align:left">--%>
+                                                                            <%--<a href="../projectOverview?formData.projectId=${directProjectId}"><s:property value="directProjectName"/></a>--%>
+                                                                        <%--</div>--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${creationDate}"/> ET (GMT-400)--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${endDate}"/> ET (GMT-400)--%>
+                                                                    <%--</td>--%>
 
-                                                                    <td>
-                                                                        <a href="<s:property value='issueLink'/>">
-                                                                            <s:property value="votesNumber"/>
-                                                                        </a></td>
-                                                                    <td>
-                                                                        n/a
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="<s:property value='issueLink'/>">0</a>
-                                                                    </td>
-                                                                    <td class="contestStatus"><span
-                                                                            class="<s:property value="contestLikeStatusClass"/>"><s:property
-                                                                            value="contestLikeStatus"/></span></td>
-                                                                    <td class="last">
-                                                                        <a href="<s:property value='issueLink'/>" class="short" style="text-align: center;display: inline-block"><img alt="" src="/images/edit-icon.png">View/Edit</a>
-                                                                    </td>
-                                                                    <td class="hide"><span><s:if test="clientId <= 0">none</s:if><s:else><s:property value='clientId'/></s:else></span></td>
-                                                                </tr>
-                                                            </s:iterator>
+                                                                    <%--<td>--%>
+                                                                        <%--<a href="<s:property value='issueLink'/>">--%>
+                                                                            <%--<s:property value="votesNumber"/>--%>
+                                                                        <%--</a></td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--n/a--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td>--%>
+                                                                        <%--<a href="<s:property value='issueLink'/>">0</a>--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td class="contestStatus"><span--%>
+                                                                            <%--class="<s:property value="contestLikeStatusClass"/>"><s:property--%>
+                                                                            <%--value="contestLikeStatus"/></span></td>--%>
+                                                                    <%--<td class="last">--%>
+                                                                        <%--<a href="<s:property value='issueLink'/>" class="short" style="text-align: center;display: inline-block"><img alt="" src="/images/edit-icon.png">View/Edit</a>--%>
+                                                                    <%--</td>--%>
+                                                                    <%--<td class="hide"><span><s:if test="clientId <= 0">none</s:if><s:else><s:property value='clientId'/></s:else></span></td>--%>
+                                                                <%--</tr>--%>
+                                                            <%--</s:iterator>--%>
 
                                                         </tbody>
                                                         

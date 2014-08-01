@@ -47,8 +47,13 @@ import java.util.List;
  * - Add property {@link #isNewForum} and its getter and setter.
  * </p>
  *
- * @author isv, Veve, jiajizhou86, TCSASSEMBLER
- * @version 1.5
+ * <p>
+ * Version 1.6 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+ * - Removed issues related fields.
+ * </p>
+ *
+ * @author isv, Veve, jiajizhou86, -jacob-
+ * @version 1.6
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -433,46 +438,6 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setSvn(String svn) {
         this.svn = svn;
-    }
-
-    /**
-     * Gets the issues of the contest.
-     *
-     * @return the issues of the contest.
-     * @since 1.0.2
-     */
-    public ContestIssuesTrackingDTO getIssues() {
-        return issues;
-    }
-
-    /**
-     * Sets the issues of the contest.
-     *
-     * @param issues the issues of the contest.
-     * @since 1.0.2
-     */
-    public void setIssues(ContestIssuesTrackingDTO issues) {
-        this.issues = issues;
-    }
-
-    /**
-     * <p>Gets the total number of jira issues and bug races for this contest.</p>
-     *
-     * @return the total number of jira issues and bug races for the contest.
-     * @since 1.0.1
-     */
-    public int getTotalJiraIssuesNumber() {
-        return totalJiraIssuesNumber;
-    }
-
-    /**
-     * <p>Sets the total number of jira issues and bug races for this contest.</p>
-     *
-     * @param totalJiraIssuesNumber the number to set.
-     * @since 1.0.1
-     */
-    public void setTotalJiraIssuesNumber(int totalJiraIssuesNumber) {
-        this.totalJiraIssuesNumber = totalJiraIssuesNumber;
     }
 
     /**

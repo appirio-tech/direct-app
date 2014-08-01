@@ -1,7 +1,7 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
   - Author: BeBetter, isv, tangzx, Blues, Ghost_141, GreatKevin
-  - Version: 2.1
+  - Version: 2.2
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
@@ -38,6 +38,9 @@
   -
   - Version 2.1 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
   - - Update forum link for studio contest
+  -
+  - Version 2.2 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+  - - Comment out the jira issues listing jsp code
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -277,47 +280,47 @@
                                             </tr>
                                         </s:iterator>
 
-                                        <s:iterator value="viewData.projectBugRaces"
-                                                    status="status">
-                                            <tr>
+                                        <%--<s:iterator value="viewData.projectBugRaces"--%>
+                                                    <%--status="status">--%>
+                                            <%--<tr>--%>
 
-                                                <td class="first">Race</td>
-                                                <td>
-                                                    <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                        <img src="/images/br_small.png"
-                                                             alt="BR"/>
+                                                <%--<td class="first">Race</td>--%>
+                                                <%--<td>--%>
+                                                    <%--<div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">--%>
+                                                        <%--<img src="/images/br_small.png"--%>
+                                                             <%--alt="BR"/>--%>
 
-                                                    </div>
-                                                    <div style="display:table-cell;text-align:left">
-                                                        <a href="<s:property value='issueLink'/>"><s:property value='issueKey'/> <s:property value='title'/></a>
-                                                    </div>
-                                                </td>
+                                                    <%--</div>--%>
+                                                    <%--<div style="display:table-cell;text-align:left">--%>
+                                                        <%--<a href="<s:property value='issueLink'/>"><s:property value='issueKey'/> <s:property value='title'/></a>--%>
+                                                    <%--</div>--%>
+                                                <%--</td>--%>
 
-                                                <td>
-                                                    <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${creationDate}"/> ET (GMT-400)
-                                                </td>
-                                                <td>
-                                                    <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${endDate}"/> ET (GMT-400)
-                                                </td>
+                                                <%--<td>--%>
+                                                    <%--<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${creationDate}"/> ET (GMT-400)--%>
+                                                <%--</td>--%>
+                                                <%--<td>--%>
+                                                    <%--<fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${endDate}"/> ET (GMT-400)--%>
+                                                <%--</td>--%>
 
-                                                <td>
-                                                    <a href="<s:property value='issueLink'/>">
-                                                        <s:property value="votesNumber"/>
-                                                    </a></td>
-                                                <td>
-                                                    n/a
-                                                </td>
-                                                <td>
-                                                    <a href="<s:property value='issueLink'/>">0</a>
-                                                </td>
-                                                <td><span
-                                                        class="<s:property value="contestLikeStatusClass"/>"><s:property
-                                                        value="contestLikeStatus"/></span></td>
-                                                <td class="last">
-                                                     <a href="<s:property value='issueLink'/>" class="buttonEdit">View/Edit</a>
-                                                </td>
-                                            </tr>
-                                        </s:iterator>
+                                                <%--<td>--%>
+                                                    <%--<a href="<s:property value='issueLink'/>">--%>
+                                                        <%--<s:property value="votesNumber"/>--%>
+                                                    <%--</a></td>--%>
+                                                <%--<td>--%>
+                                                    <%--n/a--%>
+                                                <%--</td>--%>
+                                                <%--<td>--%>
+                                                    <%--<a href="<s:property value='issueLink'/>">0</a>--%>
+                                                <%--</td>--%>
+                                                <%--<td><span--%>
+                                                        <%--class="<s:property value="contestLikeStatusClass"/>"><s:property--%>
+                                                        <%--value="contestLikeStatus"/></span></td>--%>
+                                                <%--<td class="last">--%>
+                                                     <%--<a href="<s:property value='issueLink'/>" class="buttonEdit">View/Edit</a>--%>
+                                                <%--</td>--%>
+                                            <%--</tr>--%>
+                                        <%--</s:iterator>--%>
 
 
                                         </tbody>

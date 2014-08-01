@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.analytics.longcontest;
 
@@ -13,7 +13,6 @@ import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
@@ -70,8 +69,15 @@ import java.util.TimeZone;
  *     </ol>
  * </p>
  *
+ * <p>
+ *      Version 1.3 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
+ *      <ul>
+ *          <li>Updated method getCommonData to remove the code to get issues number</li>
+ *      </ul>
+ * </p>
+ *
  * @author Ghost_141
- * @version 1.2
+ * @version 1.3
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - 
  *             Dashboard and Submissions Tab)
  */
@@ -355,11 +361,6 @@ public final class MarathonMatchHelper {
                 DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
         DirectUtils.setDashboardData(currentUser, projectId, viewData, contestServiceFacade, !DirectUtils
                 .isStudio(softwareCompetition));
-
-        // calculate the contest issues tracking health
-        viewData.getDashboard().setUnresolvedIssuesNumber(
-                viewData.getContestStats().getIssues().getUnresolvedIssuesNumber());
-        DashboardHelper.setContestStatusColor(viewData.getDashboard());
 
         viewData.getDashboard().setAllPhases(sortContestPhases(viewData.getDashboard().getAllPhases()));
 

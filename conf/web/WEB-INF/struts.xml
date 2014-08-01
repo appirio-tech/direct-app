@@ -1607,6 +1607,11 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="getContestIssuesNumber" method="getContestIssuesNumber" class="contestDetailJSONAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="detailJson" class="contestDetailJSONAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
