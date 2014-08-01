@@ -97,8 +97,11 @@
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, TCSASSEMBLER
- * @version 3.5
+ * Version 3.6 (TopCoder Direct - Review Cost Calculation Quick Updates) @author GreatKevin @challenge 30044580
+ * - Updated codes related to the review cost calculation ajax.
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin
+ * @version 3.6
  */
 
  /**
@@ -939,21 +942,39 @@ function cancelContest() {
 
 function saveAsDraftRequest() {
 
-   if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
-       mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
-   }
-
-    if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+    if ($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
 
-   if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
-       mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
-   } else {
-       mainWidget.softwareCompetition.projectHeader.securityGroupId = 0;
-   }
+    if ($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
+        mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
+    }
 
-   var request;
+    if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
+    } else {
+        mainWidget.softwareCompetition.projectHeader.securityGroupId = 0;
+    }
+
+    if ($("input[name=reviewType]:checked").length > 0
+        || !mainWidget.softwareCompetition.projectHeader.properties['Review Type']) {
+
+        var reviewType = isDesignType() ? "INTERNAL" : "COMMUNITY";
+
+        if (isCode() || isF2F()) {
+            // read from the choice
+            if ('internal' == $("input[name=reviewType]:checked").val()) {
+                reviewType = "INTERNAL";
+            } else {
+                reviewType = "COMMUNITY";
+            }
+        }
+
+        mainWidget.softwareCompetition.projectHeader.properties['Review Type'] = reviewType;
+    }
+
+
+    var request;
 
    if(mainWidget.isSoftwareContest()) {
        request =  saveAsDraftRequestSoftware();
@@ -2353,10 +2374,14 @@ function onTheFlyCalculateStudioCosts() {
 
     var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
 
+    var reviewType = isDesignType() ? "INTERNAL" : "COMMUNITY";
+
     $.ajax({
         type: 'POST',
         url: ctx + "/launch/getReviewCostAjax",
-        data: {'projectCategoryId': mainWidget.softwareCompetition.projectHeader.projectCategory.id, 'prize': mainPrizesSum},
+        data: {'projectCategoryId': mainWidget.softwareCompetition.projectHeader.projectCategory.id,
+            'prize': mainPrizesSum, projectId : mainWidget.softwareCompetition.projectHeader.id,
+            reviewType: reviewType},
         cache: false,
         dataType: 'json',
         async: true,
@@ -2364,15 +2389,15 @@ function onTheFlyCalculateStudioCosts() {
             handleJsonResult(jsonResult,
                 function (result) {
                     if (result) {
-                        if (result.screeningCost) {
-                            screeningCost += result.screeningCost;
+                        if (result['Screening']) {
+                            screeningCost += result['Screening'];
                         }
-                        if (result.reviewCost) {
-                            screeningCost += result.reviewCost;
+                        if (result['Review']) {
+                            screeningCost += result['Review'];
                         }
 
-                        if (result.specReviewCost) {
-                            specReviewCost = result.specReviewCost;
+                        if (result['Specification Review']) {
+                            specReviewCost = result['Specification Review'];
 
                             if (typeof(contestHasSpecReview) !== 'undefined' && contestHasSpecReview == false) {
                                 specReviewCost = 0;
@@ -2506,11 +2531,24 @@ function calcPrizes(prizes) {
         // Bug hunt contest will only have 1st place prize
         contestCost.secondPlaceCost = 0;
     }
+
+    // get review type
+    var reviewType = isDesignType() ? "INTERNAL" : "COMMUNITY";
+
+    if(isCode() || isF2F()) {
+        // read from the choice
+        if('internal' == $("input[name=reviewType]:checked").val()) {
+            reviewType = "INTERNAL";
+        } else {
+            reviewType = "COMMUNITY";
+        }
+    }
    
     $.ajax({
         type: 'POST',
         url:  ctx+"/launch/getReviewCostAjax",
-        data: {'projectCategoryId' : categoryId, 'prize' : contestCost.firstPlaceCost},
+        data: {'projectCategoryId': categoryId, 'prize': contestCost.firstPlaceCost,
+            reviewType: reviewType, projectId : mainWidget.softwareCompetition.projectHeader.id},
         cache: false,
         dataType: 'json',
         async : true,
@@ -2519,31 +2557,36 @@ function calcPrizes(prizes) {
             function(result) {
                 if(result) {
                     var reviewBoardCost = 0;
-                    if (result.screeningCost) {
-                        reviewBoardCost += result.screeningCost;
-                    }
-                    if (result.reviewCost) {
-                        reviewBoardCost += 3 * result.reviewCost;
-                    }
-                    if (result.aggregationCost) {
-                        reviewBoardCost += result.aggregationCost;
-                    }
-                    if (result.finalReviewCost) {
-                        reviewBoardCost += result.finalReviewCost;
-                    }                    
-                    if (result.specReviewCost) {
-                        contestCost.specReviewCost = result.specReviewCost;
+
+                    if (result['Specification Review']) {
+                        contestCost.specReviewCost = result['Specification Review'];
 
                         if(typeof(contestHasSpecReview) !== 'undefined' && contestHasSpecReview == false) {
                             contestCost.specReviewCost = 0;
                         }
                     }
-                    if (result.iterativeReviewCost) {
-                        // only has one reviewer
-                        reviewBoardCost += result.iterativeReviewCost;
+
+                    if (result['Screening']) {
+                        reviewBoardCost += result['Screening'];
                     }
+                    if (result['Review']) {
+                        reviewBoardCost += result['Review'];
+                    }
+                    if (result['Aggregation']) {
+                        reviewBoardCost += result['Aggregation'];
+                    }
+                    if (result['Final Review']) {
+                        reviewBoardCost += result['Final Review'];
+                    }
+                    if (result['Iterative Review']) {
+                        reviewBoardCost += result['Iterative Review'];
+                    }
+
+
                     contestCost.reviewBoardCost = reviewBoardCost;
+
                     var billingProjectId = $('select#billingProjects').val();
+
                     // if the first prize value has been changed, this request should be ignored
                     if (contestCost.firstPlaceCost == prizes[0]) {
                         fillPrizes(billingProjectId);
@@ -3120,6 +3163,23 @@ function isDesignF2F() {
     }
 }
 
+function isDesignType(categoryId) {
+    if(mainWidget.softwareCompetition.projectHeader.projectCategory) {
+         categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    }
+
+    return (getProjectCategoryById(categoryId).typeName == 'Studio');
+}
+
+function isDevelopmentType(categoryId) {
+    if(mainWidget.softwareCompetition.projectHeader.projectCategory) {
+        categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    }
+
+    return (getProjectCategoryById(categoryId).typeName == 'Application'
+        || getProjectCategoryById(categoryId).typeName == 'Component');
+}
+
 function beforeAjax() {
      modalPreloader();
 }
@@ -3197,3 +3257,5 @@ function getStudioTemplatesName(categoryId) {
         return "default_studio_contest_spec_templates";
     }
 }
+
+

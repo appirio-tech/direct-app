@@ -850,6 +850,7 @@
     <pathelement location="${review_application_management.jar}" />
     <pathelement location="${project_payment_calculator.jar}" />
     <pathelement location="${marathon_match_resources.jar}"/>
+    <pathelement location="${project_phase_template.jar}"/>
   </path>
 
   <path id="component.3rdParty-dependencies">

@@ -551,23 +551,23 @@
         <specReviewCost>0</specReviewCost>
         <contestCost>
             <billingLevel id="low">
-                <firstPlaceCost>500</firstPlaceCost>
-                <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>270</reviewBoardCost>
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>231</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="medium">
-                <firstPlaceCost>500</firstPlaceCost>
-                <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>270</reviewBoardCost>
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>231</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="high">
-                <firstPlaceCost>500</firstPlaceCost>
-                <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>270</reviewBoardCost>
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>231</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>

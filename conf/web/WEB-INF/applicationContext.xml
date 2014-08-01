@@ -617,6 +617,7 @@
     <bean id="getReviewCostAction" class="com.topcoder.direct.services.view.action.contest.launch.GetReviewCostAction"
           scope="prototype" parent="baseDirectStrutsAction">
           <property name="projectPaymentCalculator" ref="projectPaymentCalculator"/>
+          <property name="templateManager" ref="templateManager"/>
     </bean>
 
 
@@ -1568,5 +1569,42 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="xmlPhaseTemplatePersistence"
+          class="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence"
+          scope="prototype">
+        <constructor-arg>
+            <list>
+                <value>phase_templates/TCSTemplate_Design.xml</value>
+                <value>phase_templates/TCSTemplate_Development.xml</value>
+                <value>phase_templates/TCSTemplate_Application.xml</value>
+                <value>phase_templates/TCSTemplate_Component_Testing.xml</value>
+                <value>phase_templates/TCSTemplate_Studio.xml</value>
+                <value>phase_templates/TCSTemplate_SpecReview.xml</value>
+                <value>phase_templates/TCSTemplate_Copilot_Posting.xml</value>
+                <value>phase_templates/TCSTemplate_Marathon_Match.xml</value>
+                <value>phase_templates/TCSTemplate_Bug_Hunt.xml</value>
+                <value>phase_templates/TCSTemplate_F2F.xml</value>
+                <value>phase_templates/TCSTemplate_Code.xml</value>
+                <value>phase_templates/TCSTemplate_Design_F2F.xml</value>
+            </list>
+        </constructor-arg>
+    </bean>
 
+    <bean id="startDateGenerator" class="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator"
+          scope="prototype">
+        <constructor-arg type="int" value="1"/>
+        <constructor-arg type="int" value="5"/>
+        <constructor-arg type="int" value="9"/>
+        <constructor-arg type="int" value="0"/>
+        <constructor-arg type="int" value="0"/>
+    </bean>
+
+    <bean id="workdays" class="com.topcoder.date.workdays.DefaultWorkdays" scope="prototype">
+    </bean>
+
+    <bean id="templateManager" class="com.topcoder.project.phases.template.DefaultPhaseTemplate">
+        <constructor-arg ref="xmlPhaseTemplatePersistence"/>
+        <constructor-arg ref="startDateGenerator"/>
+        <constructor-arg ref="workdays"/>
+    </bean>
 </beans>
