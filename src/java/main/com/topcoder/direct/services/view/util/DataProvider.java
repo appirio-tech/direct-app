@@ -4148,9 +4148,10 @@ public class DataProvider {
                 isNewForum = true;
             }
 
-            if(isStudio || projectCategoryId == 29L || 'false'.equals(reliabilityEligible)) {
+			// if reliability is not eligiable, alwasy sets to healthys
+            if(isStudio || projectCategoryId == 29L || "false"s.equals(reliabilityEligible)) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
-            } else if (registrationPhaseStatus == 2) {
+            } else if (registrationPhaseStatus == 2) {s
                 if (reliabilityTotal >= 200) {
                     dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
                 } else {
