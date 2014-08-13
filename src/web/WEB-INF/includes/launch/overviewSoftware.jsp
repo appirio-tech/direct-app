@@ -50,7 +50,7 @@
     
   <!-- guidelines -->
 	<div class="guidelines">    
-        <h3><span class="icon">Software Guidelines</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
+        <h3><span class="icon">Submission Guidelines</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
         
         <div class="textarea">
             <textarea id="swGuidelines" rows="15" cols="80"></textarea>

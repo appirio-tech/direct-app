@@ -18,7 +18,7 @@ CKEDITOR.addTemplates("default_software_guidelines_templates", {
         {
             title: "Assembly",
             image: "template.gif",
-            description: "Assembly Software Guidelines.",
+            description: "Assembly Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/assembly_software_guidelines_template.txt'
         }
@@ -31,7 +31,7 @@ CKEDITOR.addTemplates("assembly_software_guidelines_templates", {
         {
             title: "Assembly",
             image: "template.gif",
-            description: "Assembly Software Guidelines.",
+            description: "Assembly Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/assembly_software_guidelines_template.txt'
         }
@@ -44,7 +44,7 @@ CKEDITOR.addTemplates("ui_prototype_software_guidelines_templates", {
         {
             title: "UI Prototype",
             image: "template.gif",
-            description: "UI Prototype Software Guidelines.",
+            description: "UI Prototype Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/ui_prototype_software_guidelines_template.txt'
         }
@@ -57,7 +57,7 @@ CKEDITOR.addTemplates("architecture_software_guidelines_templates", {
         {
             title: "Architecture",
             image: "template.gif",
-            description: "Architecture Software Guidelines.",
+            description: "Architecture Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/architecture_software_guidelines_template.txt'
         }
@@ -70,7 +70,7 @@ CKEDITOR.addTemplates("conceptualization_software_guidelines_templates", {
         {
             title: "Conceptualization",
             image: "template.gif",
-            description: "Conceptualization Software Guidelines.",
+            description: "Conceptualization Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/conceptualization_software_guidelines_template.txt'
         }
@@ -83,7 +83,7 @@ CKEDITOR.addTemplates("specification_software_guidelines_templates", {
         {
             title: "Specification",
             image: "template.gif",
-            description: "Specification Software Guidelines.",
+            description: "Specification Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/specification_software_guidelines_template.txt'
         }
@@ -96,7 +96,7 @@ CKEDITOR.addTemplates("bug_hunt_software_guidelines_templates", {
         {
             title: "Bug Hunt",
             image: "template.gif",
-            description: "Bug Hunt Software Guidelines.",
+            description: "Bug Hunt Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/bug_hunt_software_guidelines_template.txt'
         }
@@ -109,7 +109,7 @@ CKEDITOR.addTemplates("test_scenarios_software_guidelines_templates", {
         {
             title: "Test Scenarios",
             image: "template.gif",
-            description: "Test Scenarios Software Guidelines.",
+            description: "Test Scenarios Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/test_scenarios_software_guidelines_template.txt'
         }
@@ -122,7 +122,7 @@ CKEDITOR.addTemplates("test_suites_software_guidelines_templates", {
         {
             title: "Test Suites",
             image: "template.gif",
-            description: "Test Suites Software Guidelines.",
+            description: "Test Suites Submission Guidelines.",
             html: '',
             path: '/scripts/ckeditor/templates/test_suites_software_guidelines_template.txt'
         }

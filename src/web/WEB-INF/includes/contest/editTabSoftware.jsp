@@ -643,7 +643,7 @@
                 
                 <s:if test="result.projectHeader.projectCategory.id != 29">
                    <p class="det_font">
-                   <span class="name"><strong>Software Guidelines</strong></span>
+                   <span class="name"><strong>Submission Guidelines</strong></span>
                    <br />
                    <span class="gray_name"><strong>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</strong>
                    </span>
@@ -759,7 +759,7 @@
                 
                 <!-- Contest Description -->
                 <div class="guidelines <s:if test='result.projectHeader.projectCategory.id == 29'>hide</s:if>">                  
-                      <h3><span class="icon">Software Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
+                      <h3><span class="icon">Submission Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
                       
                       <div class="textarea1">
                           <textarea id="swGuidelines" rows="" cols=""></textarea>

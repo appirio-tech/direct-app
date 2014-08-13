@@ -2540,7 +2540,7 @@ function validateFieldsSpecSection() {
             }
 
             if (!checkRequired(softwareGuidelines)) {
-                errors.push('Software guidelines is empty.');
+                errors.push('Submission guidelines is empty.');
             }
 
             if (isDevOrDesign()) {

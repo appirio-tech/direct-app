@@ -8,6 +8,7 @@ CKEDITOR.editorConfig = function (config) {
     // config.language = 'fr';
     // config.uiColor = '#AADC6E';
     config.filebrowserImageUploadUrl = null;
+	config.enterMode: CKEDITOR.ENTER_BR;
     config.toolbar = [
         { name: 'document', items : ['NewPage','DocProps','Preview','Print','-','Templates' ] },
         { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },

@@ -68,7 +68,7 @@
 		<dt>Detailed Requirements :</dt>
 		<dd><span id="rswDetailedRequirements"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
-		<dt>Software Guidelines :</dt>
+		<dt>Submission Guidelines :</dt>
 		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
