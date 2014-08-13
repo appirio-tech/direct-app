@@ -4140,7 +4140,7 @@ public class DataProvider {
             double reliabilityTotal = getDouble(row, "reliability_total");
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
             long projectCategoryId = getLong(row, "project_category_id");
-			String reliabilityEligible = getLong(row, "reliability_eligible");
+			String reliabilityEligible = row.getStringItem("reliability_eligible");
 
 
             if (row.getStringItem("forum_type") != null
