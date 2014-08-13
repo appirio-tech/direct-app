@@ -4140,6 +4140,7 @@ public class DataProvider {
             double reliabilityTotal = getDouble(row, "reliability_total");
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
             long projectCategoryId = getLong(row, "project_category_id");
+			String reliabilityEligible = getLong(row, "reliability_eligible");
 
 
             if (row.getStringItem("forum_type") != null
@@ -4147,7 +4148,7 @@ public class DataProvider {
                 isNewForum = true;
             }
 
-            if(isStudio || projectCategoryId == 29L) {
+            if(isStudio || projectCategoryId == 29L || 'false'.equals(reliabilityEligible)) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
             } else if (registrationPhaseStatus == 2) {
                 if (reliabilityTotal >= 200) {
