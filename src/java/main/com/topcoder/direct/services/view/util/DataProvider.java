@@ -4149,7 +4149,7 @@ public class DataProvider {
             }
 
 			// if reliability is not eligiable, alwasy sets to healthys
-            if(isStudio || projectCategoryId == 29L || "false"s.equals(reliabilityEligible)) {
+            if(isStudio || projectCategoryId == 29L || "false".equals(reliabilityEligible)) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
             } else if (registrationPhaseStatus == 2) {s
                 if (reliabilityTotal >= 200) {
