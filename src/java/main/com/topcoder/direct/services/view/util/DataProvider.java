@@ -5857,7 +5857,8 @@ public class DataProvider {
                     double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
                     long registrationPhaseStatus = getLong(resultContainer.getRow(i), "registration_phase_status");
                     long projectCategoryId = getLong(resultContainer.getRow(i), "project_category_id");
-                    setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus);
+					String reliabilityEligible = row.getStringItem("reliability_eligible");
+                    setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus, reliabilityEligible);
 
                     if(projectCategoryId == 29L) {
                         // always set to health
@@ -5983,8 +5984,12 @@ public class DataProvider {
      * @since 2.5.0
      */
     private static void setRegistrationPhaseStatus(ContestHealthDTO dto, double reliabilityTotal,
-                                                   long registrationPhaseStatus) {
+                                                   long registrationPhaseStatus, String reliabilityEligible) {
         dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+		
+		if ("false".equals(reliabilityEligible)) {
+			return;
+		}
         if (registrationPhaseStatus == 2) {
             if (reliabilityTotal >= 200) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
