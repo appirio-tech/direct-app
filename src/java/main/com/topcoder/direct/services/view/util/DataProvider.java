@@ -5857,7 +5857,7 @@ public class DataProvider {
                     double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
                     long registrationPhaseStatus = getLong(resultContainer.getRow(i), "registration_phase_status");
                     long projectCategoryId = getLong(resultContainer.getRow(i), "project_category_id");
-					String reliabilityEligible = row.getStringItem("reliability_eligible");
+					String reliabilityEligible = resultContainer.getRow(i).getStringItem("reliability_eligible");
                     setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus, reliabilityEligible);
 
                     if(projectCategoryId == 29L) {
