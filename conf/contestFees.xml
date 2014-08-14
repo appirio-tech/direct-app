@@ -102,22 +102,22 @@
             	<billingLevel id="low">
                 <firstPlaceCost>500</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>295</reviewBoardCost>
-                <reliabilityBonusCost>127.5</reliabilityBonusCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>150</reliabilityBonusCost>
                 <drCost>225</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>700</firstPlaceCost>
                 <secondPlaceCost>350</secondPlaceCost>
-                <reviewBoardCost>409</reviewBoardCost>
-                <reliabilityBonusCost>150</reliabilityBonusCost>
+                <reviewBoardCost>633</reviewBoardCost>
+                <reliabilityBonusCost>210</reliabilityBonusCost>
                 <drCost>315</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>900</firstPlaceCost>
                 <secondPlaceCost>450</secondPlaceCost>
-                <reviewBoardCost>523</reviewBoardCost>
-                <reliabilityBonusCost>172.5</reliabilityBonusCost>
+                <reviewBoardCost>811</reviewBoardCost>
+                <reliabilityBonusCost>270</reliabilityBonusCost>
                 <drCost>405</drCost>
             </billingLevel>
         </contestCost>
@@ -130,7 +130,7 @@
             <billingLevel id="low">
                 <firstPlaceCost>1000</firstPlaceCost>
                 <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>520</reviewBoardCost>
+                <reviewBoardCost>720</reviewBoardCost>
                 <reliabilityBonusCost>300</reliabilityBonusCost>
                 <drCost>450</drCost>
                 <checkpointBonusCost>600</checkpointBonusCost>
@@ -138,7 +138,7 @@
             <billingLevel id="medium">
                 <firstPlaceCost>1200</firstPlaceCost>
                 <secondPlaceCost>600</secondPlaceCost>
-                <reviewBoardCost>622</reviewBoardCost>
+                <reviewBoardCost>862</reviewBoardCost>
                 <reliabilityBonusCost>360</reliabilityBonusCost>
                 <drCost>540</drCost>
                 <checkpointBonusCost>600</checkpointBonusCost>
@@ -146,7 +146,7 @@
             <billingLevel id="high">
                 <firstPlaceCost>1400</firstPlaceCost>
                 <secondPlaceCost>700</secondPlaceCost>
-                <reviewBoardCost>724</reviewBoardCost>
+                <reviewBoardCost>1004</reviewBoardCost>
                 <reliabilityBonusCost>420</reliabilityBonusCost>
                 <drCost>630</drCost>
                 <checkpointBonusCost>600</checkpointBonusCost>
@@ -161,21 +161,21 @@
             <billingLevel id="low">
                 <firstPlaceCost>900</firstPlaceCost>
                 <secondPlaceCost>450</secondPlaceCost>
-                <reviewBoardCost>343</reviewBoardCost>
+                <reviewBoardCost>523</reviewBoardCost>
                 <reliabilityBonusCost>270</reliabilityBonusCost>
                 <drCost>405</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1300</firstPlaceCost>
                 <secondPlaceCost>650</secondPlaceCost>
-                <reviewBoardCost>491</reviewBoardCost>
+                <reviewBoardCost>751</reviewBoardCost>
                 <reliabilityBonusCost>390</reliabilityBonusCost>
                 <drCost>585</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1700</firstPlaceCost>
                 <secondPlaceCost>850</secondPlaceCost>
-                <reviewBoardCost>639</reviewBoardCost>
+                <reviewBoardCost>979</reviewBoardCost>
                 <reliabilityBonusCost>510</reliabilityBonusCost>
                 <drCost>765</drCost>
             </billingLevel>
@@ -189,22 +189,22 @@
             <billingLevel id="low">
                 <firstPlaceCost>1100</firstPlaceCost>
                 <secondPlaceCost>550</secondPlaceCost>
-                <reviewBoardCost>637</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <reviewBoardCost>989</reviewBoardCost>
+                <reliabilityBonusCost>330</reliabilityBonusCost>
                 <drCost>495</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1400</firstPlaceCost>
                 <secondPlaceCost>700</secondPlaceCost>
-                <reviewBoardCost>808</reviewBoardCost>
-                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <reviewBoardCost>1256</reviewBoardCost>
+                <reliabilityBonusCost>420</reliabilityBonusCost>
                 <drCost>630</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1700</firstPlaceCost>
                 <secondPlaceCost>850</secondPlaceCost>
-                <reviewBoardCost>979</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <reviewBoardCost>1523</reviewBoardCost>
+                <reliabilityBonusCost>510</reliabilityBonusCost>
                 <drCost>765</drCost>
             </billingLevel>
         </contestCost>
@@ -217,22 +217,22 @@
             <billingLevel id="low">
                 <firstPlaceCost>480</firstPlaceCost>
                 <secondPlaceCost>240</secondPlaceCost>
-                <reviewBoardCost>418</reviewBoardCost>
-                <reliabilityBonusCost>97.5</reliabilityBonusCost>
+                <reviewBoardCost>581.8</reviewBoardCost>
+                <reliabilityBonusCost>144</reliabilityBonusCost>
                 <drCost>216</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>700</firstPlaceCost>
                 <secondPlaceCost>350</secondPlaceCost>
-                <reviewBoardCost>599</reviewBoardCost>
-                <reliabilityBonusCost>150</reliabilityBonusCost>
+                <reviewBoardCost>837</reviewBoardCost>
+                <reliabilityBonusCost>210</reliabilityBonusCost>
                 <drCost>315</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>920</firstPlaceCost>
                 <secondPlaceCost>460</secondPlaceCost>
-                <reviewBoardCost>779</reviewBoardCost>
-                <reliabilityBonusCost>225</reliabilityBonusCost>
+                <reviewBoardCost>1092.2</reviewBoardCost>
+                <reliabilityBonusCost>276</reliabilityBonusCost>
                 <drCost>414</drCost>
             </billingLevel>
         </contestCost>
@@ -245,21 +245,21 @@
             <billingLevel id="low">
                 <firstPlaceCost>1000</firstPlaceCost>
                 <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>610</reviewBoardCost>
+                <reviewBoardCost>930</reviewBoardCost>
                 <reliabilityBonusCost>300</reliabilityBonusCost>
                 <drCost>450</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1400</firstPlaceCost>
                 <secondPlaceCost>700</secondPlaceCost>
-                <reviewBoardCost>850</reviewBoardCost>
+                <reviewBoardCost>1298</reviewBoardCost>
                 <reliabilityBonusCost>420</reliabilityBonusCost>
                 <drCost>630</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1800</firstPlaceCost>
                 <secondPlaceCost>900</secondPlaceCost>
-                <reviewBoardCost>1090</reviewBoardCost>
+                <reviewBoardCost>1666</reviewBoardCost>
                 <reliabilityBonusCost>540</reliabilityBonusCost>
                 <drCost>810</drCost>
             </billingLevel>
@@ -273,23 +273,23 @@
             <billingLevel id="low">
                 <firstPlaceCost>475</firstPlaceCost>
                 <secondPlaceCost>237.5</secondPlaceCost>
-                <reviewBoardCost>271</reviewBoardCost>
-                <reliabilityBonusCost>105</reliabilityBonusCost>
-                <drCost>213</drCost>
+                <reviewBoardCost>423.25</reviewBoardCost>
+                <reliabilityBonusCost>142.5</reliabilityBonusCost>
+                <drCost>213.75</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>625</firstPlaceCost>
                 <secondPlaceCost>312.5</secondPlaceCost>
-                <reviewBoardCost>354</reviewBoardCost>
-                <reliabilityBonusCost>150</reliabilityBonusCost>
-                <drCost>281</drCost>
+                <reviewBoardCost>553.75</reviewBoardCost>
+                <reliabilityBonusCost>187.5</reliabilityBonusCost>
+                <drCost>281.25</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>775</firstPlaceCost>
                 <secondPlaceCost>387.5</secondPlaceCost>
-                <reviewBoardCost>436</reviewBoardCost>
-                <reliabilityBonusCost>225</reliabilityBonusCost>
-                <drCost>349</drCost>
+                <reviewBoardCost>684.25</reviewBoardCost>
+                <reliabilityBonusCost>232.5</reliabilityBonusCost>
+                <drCost>348.75</drCost>
             </billingLevel>
         </contestCost>
 	</contestType>
@@ -301,9 +301,9 @@
             <billingLevel id="low">
                 <firstPlaceCost>450</firstPlaceCost>
                 <secondPlaceCost>225</secondPlaceCost>
-                <reviewBoardCost>258</reviewBoardCost>
-                <reliabilityBonusCost>105</reliabilityBonusCost>
-                <drCost>203</drCost>
+                <reviewBoardCost>401.5</reviewBoardCost>
+                <reliabilityBonusCost>135</reliabilityBonusCost>
+                <drCost>202.5</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>550</firstPlaceCost>
@@ -315,9 +315,9 @@
             <billingLevel id="high">
                 <firstPlaceCost>650</firstPlaceCost>
                 <secondPlaceCost>325</secondPlaceCost>
-                <reviewBoardCost>368</reviewBoardCost>
-                <reliabilityBonusCost>225</reliabilityBonusCost>
-                <drCost>293</drCost>
+                <reviewBoardCost>488.5</reviewBoardCost>
+                <reliabilityBonusCost>165</reliabilityBonusCost>
+                <drCost>247.5</drCost>
             </billingLevel>
         </contestCost>
 	</contestType>
@@ -329,23 +329,23 @@
             <billingLevel id="low">
                 <firstPlaceCost>1150</firstPlaceCost>
                 <secondPlaceCost>575</secondPlaceCost>
-                <reviewBoardCost>368</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
-                <drCost>518</drCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>345</reliabilityBonusCost>
+                <drCost>517.5</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1300</firstPlaceCost>
                 <secondPlaceCost>650</secondPlaceCost>
-                <reviewBoardCost>580</reviewBoardCost>
-                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>390</reliabilityBonusCost>
                 <drCost>585</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1450</firstPlaceCost>
                 <secondPlaceCost>725</secondPlaceCost>
-                <reviewBoardCost>694</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
-                <drCost>653</drCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>435</reliabilityBonusCost>
+                <drCost>652.5</drCost>
             </billingLevel>
         </contestCost>
 	</contestType>
@@ -357,23 +357,23 @@
             <billingLevel id="low">
                 <firstPlaceCost>1150</firstPlaceCost>
                 <secondPlaceCost>575</secondPlaceCost>
-                <reviewBoardCost>436</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
-                <drCost>518</drCost>
+                <reviewBoardCost>665.5</reviewBoardCost>
+                <reliabilityBonusCost>345</reliabilityBonusCost>
+                <drCost>517.5</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1300</firstPlaceCost>
                 <secondPlaceCost>650</secondPlaceCost>
-                <reviewBoardCost>491</reviewBoardCost>
-                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <reviewBoardCost>751</reviewBoardCost>
+                <reliabilityBonusCost>390</reliabilityBonusCost>
                 <drCost>585</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1450</firstPlaceCost>
                 <secondPlaceCost>725</secondPlaceCost>
-                <reviewBoardCost>547</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
-                <drCost>653</drCost>
+                <reviewBoardCost>836.5</reviewBoardCost>
+                <reliabilityBonusCost>435</reliabilityBonusCost>
+                <drCost>652.5</drCost>
             </billingLevel>
         </contestCost>
 	</contestType>
@@ -385,22 +385,22 @@
             <billingLevel id="low">
                 <firstPlaceCost>600</firstPlaceCost>
                 <secondPlaceCost>300</secondPlaceCost>
-                <reviewBoardCost>323</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <reviewBoardCost>352</reviewBoardCost>
+                <reliabilityBonusCost>180</reliabilityBonusCost>
                 <drCost>270</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1100</firstPlaceCost>
                 <secondPlaceCost>550</secondPlaceCost>
-                <reviewBoardCost>417</reviewBoardCost>
-                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <reviewBoardCost>637</reviewBoardCost>
+                <reliabilityBonusCost>330</reliabilityBonusCost>
                 <drCost>495</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1600</firstPlaceCost>
                 <secondPlaceCost>800</secondPlaceCost>
-                <reviewBoardCost>602</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <reviewBoardCost>922</reviewBoardCost>
+                <reliabilityBonusCost>480</reliabilityBonusCost>
                 <drCost>720</drCost>
             </billingLevel>
         </contestCost>
@@ -441,23 +441,23 @@
             <billingLevel id="low">
                 <firstPlaceCost>575</firstPlaceCost>
                 <secondPlaceCost>287.5</secondPlaceCost>
-                <reviewBoardCost>223</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
-                <drCost>259</drCost>
+                <reviewBoardCost>337.75</reviewBoardCost>
+                <reliabilityBonusCost>172.5</reliabilityBonusCost>
+                <drCost>258.75</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1000</firstPlaceCost>
                 <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>380</reviewBoardCost>
+                <reviewBoardCost>580</reviewBoardCost>
                 <reliabilityBonusCost>300</reliabilityBonusCost>
                 <drCost>450</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1425</firstPlaceCost>
                 <secondPlaceCost>712.5</secondPlaceCost>
-                <reviewBoardCost>537</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
-                <drCost>641</drCost>
+                <reviewBoardCost>822.25</reviewBoardCost>
+                <reliabilityBonusCost>427.5</reliabilityBonusCost>
+                <drCost>641.25</drCost>
             </billingLevel>
         </contestCost>
 	</contestType>
@@ -469,21 +469,21 @@
             <billingLevel id="low">
                 <firstPlaceCost>800</firstPlaceCost>
                 <secondPlaceCost>400</secondPlaceCost>
-                <reviewBoardCost>466</reviewBoardCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="medium">
                 <firstPlaceCost>1000</firstPlaceCost>
                 <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>580</reviewBoardCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="high">
                 <firstPlaceCost>1200</firstPlaceCost>
                 <secondPlaceCost>600</secondPlaceCost>
-                <reviewBoardCost>694</reviewBoardCost>
+                <reviewBoardCost>0</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
@@ -523,23 +523,23 @@
         <specReviewCost>0</specReviewCost>
         <contestCost>
             <billingLevel id="low">
-                <firstPlaceCost>250</firstPlaceCost>
+                <firstPlaceCost>800</firstPlaceCost>
                 <secondPlaceCost>0</secondPlaceCost>
-                <reviewBoardCost>30</reviewBoardCost>
+                <reviewBoardCost>112.00</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="medium">
-                <firstPlaceCost>250</firstPlaceCost>
+                <firstPlaceCost>800</firstPlaceCost>
                 <secondPlaceCost>0</secondPlaceCost>
-                <reviewBoardCost>30</reviewBoardCost>
+                <reviewBoardCost>112.00</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="high">
-                <firstPlaceCost>250</firstPlaceCost>
+                <firstPlaceCost>800</firstPlaceCost>
                 <secondPlaceCost>0</secondPlaceCost>
-                <reviewBoardCost>30</reviewBoardCost>
+                <reviewBoardCost>112.00</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
@@ -551,23 +551,23 @@
         <specReviewCost>0</specReviewCost>
         <contestCost>
             <billingLevel id="low">
-                <firstPlaceCost>350</firstPlaceCost>
-                <secondPlaceCost>150</secondPlaceCost>
-                <reviewBoardCost>231</reviewBoardCost>
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="medium">
-                <firstPlaceCost>350</firstPlaceCost>
-                <secondPlaceCost>150</secondPlaceCost>
-                <reviewBoardCost>231</reviewBoardCost>
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
             <billingLevel id="high">
-                <firstPlaceCost>350</firstPlaceCost>
-                <secondPlaceCost>150</secondPlaceCost>
-                <reviewBoardCost>231</reviewBoardCost>
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>0</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
                 <reliabilityBonusCost>0</reliabilityBonusCost>
                 <drCost>0</drCost>
             </billingLevel>
