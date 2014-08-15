@@ -25,8 +25,15 @@ import com.topcoder.shared.util.logging.Logger;
  *     <li>Add REG_SERVER_NAME constant.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ *   Version 1.2 (TopCoder Direct - Update Login and add Admin Login) @author Veve @challenge 30044719
+ *   <ul>
+ *       <li>Add {@link #LDAP_AUTH0_CONNECTION_NAME}</li>
+ *   </ul>
+ * </p>
  * @author BeBetter, ecnu_haozi
- * @version 1.1
+ * @version 1.2
  */
 public final class DirectProperties {
     /**
@@ -93,6 +100,13 @@ public final class DirectProperties {
      *  @since 1.1
      */
     public static String REG_SERVER_NAME;
+
+    /**
+     * The auth0 connection name to connect to the LDAP authentication.
+     *
+     * @since 1.2
+     */
+    public static String LDAP_AUTH0_CONNECTION_NAME;
 
     /**
      * <p>

@@ -21,6 +21,7 @@
   - Version 2.1 (TC - Direct Rebranding NewHome Page Social Login Update)
   - - Change the social login implementation from widget to direct links
   - - Add GitHub and Salesforce social login
+  - Version 2.2 (TopCoder Direct - Update Login and add Admin Login)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
          import="com.topcoder.shared.util.ApplicationServer,
@@ -57,7 +58,7 @@
 
         function submitOnEnter(e) {
             if (!isEnterKeyPressed(e)) return true;
-            $('#LoginForm').submit();
+            submitAuth0LoginForm();
             return false;
         }
 
@@ -68,34 +69,58 @@
             callbackURL: 'https://<%=DirectProperties.REG_SERVER_NAME%><%=DirectProperties.REDIRECT_URL_AUTH0%>'
         });
 
+        var dbLogin = function () {
+            var isError = false;
+            try {
+                auth0Login.login({
+                    connection: '<%=DirectProperties.LDAP_AUTH0_CONNECTION_NAME%>',
+                    username: $("#LoginForm_formData_username").val(),
+                    password: $("#LoginForm_formData_password").val(),
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'
+                }, function(error) {
+                    $('.loginBoxInner .errorMessage').text(error.message);
+                    $('.loginBoxInner .errorMessage').show();
+                    isError=true;
+                })
+            } catch (e) {
+                console.log(e);
+            }
+
+            if(isError == false) {
+                $('.loginBoxInner .errorMessage').text('');
+                $('.loginBoxInner .errorMessage').hide();
+            }
+        };
+
         $(document).ready(function(){
 
 
             $('.gPlusIcon').click( function () {
                 auth0Login.login({
                     connection: 'google-oauth2',
-                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.facebookIcon').click( function () {
                 auth0Login.login({connection: 'facebook',
-                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.twitterIcon').click( function () {
                 auth0Login.login({connection: 'twitter',
-                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'}); // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.githubIcon').click( function () {
                 auth0Login.login({connection: 'github',
-                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
 
             $('.salesforceIcon').click( function () {
                 auth0Login.login({connection: 'salesforce',
-                    state: 'https://<%=ApplicationServer.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
+                    state: 'https://<%=ServerConfiguration.SERVER_NAME%>/direct/'});  // this tells Auth0 to send the user back to the main site after login. Please replace the var for current page URL.
             });
+
         })
 
     </script>
@@ -123,28 +148,15 @@
             <div class="loginBoxInner">
                 <h2>Login to your account</h2>
 
-                <s:form action="home" namespace="/" id="LoginForm" method="post" onsubmit="return submitLoginForm();">
-
                     <p class="errorMessage">
-                        <s:if test="hasActionErrors()">
-                            <s:iterator value="actionErrors">
-                                <s:property escape="false"/>
-                            </s:iterator>
-                        </s:if>
+
                     </p>
 
-                    <p class="username inputF"><s:textfield name="formData.username" value="" placeholder="Username"
-                                                            onkeypress="submitOnEnter(event);"/><span></span></p>
+                    <p class="username inputF"><input type="text" placeholder="Username" onkeypress="submitOnEnter(event);" id="LoginForm_formData_username" value="" name="formData.username"><span></span></p>
 
-                    <p class="password inputF"><s:password name="formData.password" placeholder="Password"
-                                                           onkeypress="submitOnEnter(event);"/><span></span></p>
+                    <p class="password inputF"><input type="password" placeholder="Password" onkeypress="submitOnEnter(event);" id="LoginForm_formData_password" name="formData.password"><span></span></p>
 
-                    <a class="login" href="javascript:;" onclick="submitLoginForm();">Login</a>
-                        <s:submit cssStyle="display:none;"/>
-
-                    <c:if test="${not empty sessionScope.redirectBackUrl}">
-                        <s:hidden name="forwardUrl" value="%{#session.redirectBackUrl}" />
-                    </c:if>
+                    <a class="login" href="javascript:;" onclick="submitAuth0LoginForm();">Login</a>
 
                     <p class="additonalAction jqtransform">
                         <span class="signForget"><a href="http://<%=ServerConfiguration.NEW_SERVER_NAME%>/?action=callback" target="_blank">Sign Up</a> | <a href="http://www.topcoder.com/password-recovery/" target="_blank">Forgot Password
@@ -152,7 +164,6 @@
                         <input type="checkbox" name="formData.remember" id="remember_me"><label>Remember me</label>
                     </p>
 
-                </s:form>
             </div>      
             <div class="socialNetwork">
                 <a href="javascript:;" class="salesforceIcon socialLogin" title="Login with Salesforce"></a>
@@ -165,7 +176,6 @@
 
         </div>
         <!-- End .loginBox -->
-
 
     </div>
     <!-- End #landingPage -->

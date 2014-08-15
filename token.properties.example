@@ -404,3 +404,9 @@
 @contestUpdateSubject@=cmc challenge contest update
 @contestCreationMessageTemplatePath@=contest_creation_sns_message.txt
 @contestUpdateMessageTemplatePath@=contest_update_sns_message.txt
+
+
+@DOMAIN_AUTH0@=sma.auth0.com
+@CLIENT_ID_AUTH0@=CMaBuwSnY0Vu68PLrWatvvu3iIiGPh7t
+@REG_SERVER_NAME@=tc.cloud.topcoder.com
+@LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
