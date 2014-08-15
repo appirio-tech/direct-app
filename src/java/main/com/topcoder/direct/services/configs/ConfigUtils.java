@@ -3,7 +3,10 @@
  */
 package com.topcoder.direct.services.configs;
 
+import com.topcoder.direct.services.view.dto.contest.ReviewType;
+import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 import com.topcoder.management.payment.calculator.impl.DefaultProjectPaymentCalculator;
+import com.topcoder.project.phases.PhaseType;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -132,6 +135,14 @@ public final class ConfigUtils {
      */
     private static CloudVMServiceAccessErrorConfig cloudVMServiceAccessErrorConfig;
 
+    /**
+     * The challenge fee configuration object, it contains separate configuration for
+     * - development
+     * - design
+     * - data
+     */
+    private static ChallengeFeeConfiguration challengeFeeConfiguration;
+
 
     static {
         try {
@@ -179,6 +190,7 @@ public final class ConfigUtils {
                 ConfigUtils.class.getResourceAsStream("/contestFees.xml"));
 
         softwareContestFees = new HashMap<String, ContestFee>();
+
         for (ContestFee contestFee : contestFees.getContestFees()) {
             if (contestFee.isStudioFee()) {
                 studioSubtypeContestFees = contestFee.getStudioSubtypeContestFees();
@@ -204,7 +216,7 @@ public final class ConfigUtils {
         CopilotFees parsedFees = (CopilotFees) copilotFeesJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/copilotFees.xml"));
         copilotFees = new HashMap<String, CopilotFee>();
-        BigDecimal zeroValue = new BigDecimal("0");
+
         // put copilot fee into the map
         for(CopilotFee copilotFee : parsedFees.getCopilotFees()) {
             copilotFees.put(String.valueOf(copilotFee.getContestTypeId()), copilotFee);
@@ -212,13 +224,11 @@ public final class ConfigUtils {
             // gets the copilot fee from default project payment calculator to overrides if exists
 
             BigDecimal copilotPayment = calculator.getDefaultPayment(copilotFee.getContestTypeId(),
-                    DefaultProjectPaymentCalculator.COPILOT_RESOURCE_ROLE_ID, zeroValue, 1);
+                    DefaultProjectPaymentCalculator.COPILOT_RESOURCE_ROLE_ID, BigDecimal.ZERO, 1);
             if(copilotPayment != null) {
                 copilotFee.setCopilotFee(copilotPayment.doubleValue());
             }
         }
-
-
 
         // load Jira issue tracking configuration
         JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
@@ -271,15 +281,78 @@ public final class ConfigUtils {
         return null;
     }
 
+
+    public static ChallengeFeeConfiguration getChallengeFeeConfiguration() {
+        if (challengeFeeConfiguration == null) {
+            setupChallengeFeeConfiguration();
+        }
+        return challengeFeeConfiguration;
+    }
+
+    private static void setupChallengeFeeConfiguration() {
+
+        try {
+            CostCalculationService service = CostCalculationService.getInstance();
+
+            if (challengeFeeConfiguration == null) {
+                for (StudioSubtypeContestFee studioSubtypeContestFee : studioSubtypeContestFees) {
+                    double totalReviewCost = 0;
+                    Map<String, BigDecimal> phasesPayment = service.getPhasesPayment(0, studioSubtypeContestFee.getId(),
+                            ReviewType.COMMUNITY, new BigDecimal(studioSubtypeContestFee.getFirstPlaceCost()));
+
+                    for (Map.Entry<String, BigDecimal> entry : phasesPayment.entrySet()) {
+                        if (!(entry.getKey().equalsIgnoreCase(CostCalculationService.TOTAL_RESULT_KEY) ||
+                                entry.getKey().equalsIgnoreCase(PhaseType.SPECIFICATION_REVIEW_PHASE.getName()))) {
+                            totalReviewCost += entry.getValue().doubleValue();
+                        }
+                    }
+
+                    studioSubtypeContestFee.setReviewCost(totalReviewCost);
+                    studioSubtypeContestFee.setSpecReviewCost(
+                            (phasesPayment.get(PhaseType.SPECIFICATION_REVIEW_PHASE.getName()) ==
+                                    null) ? 0 : phasesPayment.get(
+                                    PhaseType.SPECIFICATION_REVIEW_PHASE.getName()).doubleValue());
+                }
+
+
+                for (ContestFee softwareEntry : softwareContestFees.values()) {
+
+                    List<ContestCostBillingLevel> contestCostBillingLevels = softwareEntry.getContestCost().getContestCostBillingLevels();
+
+                    for (ContestCostBillingLevel contestCostBillingLevel : contestCostBillingLevels) {
+                        Map<String, BigDecimal> phasesPayment = service.getPhasesPayment(0,
+                                softwareEntry.getContestTypeId(),
+                                ReviewType.COMMUNITY, new BigDecimal(contestCostBillingLevel.getFirstPlaceCost()));
+                        double totalReviewCost = 0;
+                        for (Map.Entry<String, BigDecimal> entry : phasesPayment.entrySet()) {
+                            if (!(entry.getKey().equalsIgnoreCase(CostCalculationService.TOTAL_RESULT_KEY) ||
+                                    entry.getKey().equalsIgnoreCase(PhaseType.SPECIFICATION_REVIEW_PHASE.getName()))) {
+                                totalReviewCost += entry.getValue().doubleValue();
+                            }
+                        }
+                        contestCostBillingLevel.setReviewBoardCost(totalReviewCost);
+                    }
+                }
+
+                challengeFeeConfiguration = new ChallengeFeeConfiguration();
+                challengeFeeConfiguration.setDevelopment(softwareContestFees);
+                challengeFeeConfiguration.setDesign(studioSubtypeContestFees);
+                challengeFeeConfiguration.setData(algorithmSubtypeContestFees);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error when setting up challenge fee configuration", e);
+        }
+    }
+
     /**
      * <p>
-     * Gets contest fees.
+     * Gets software contest fees.
      * </p>
      *
-     * @return contest fees
+     * @return software contest fees
      */
-    public static ContestFees getContestFees() {
-        return contestFees;
+    public static Map<String, ContestFee> getSoftwareContestFees() {
+        return getChallengeFeeConfiguration().getDevelopment();
     }
 
     /**
@@ -290,7 +363,7 @@ public final class ConfigUtils {
      * @return studio subtype contest fees
      */
     public static List<StudioSubtypeContestFee> getStudioContestFees() {
-        return studioSubtypeContestFees;
+        return getChallengeFeeConfiguration().getDesign();
     }
 
     /**
@@ -302,7 +375,7 @@ public final class ConfigUtils {
      * @since 1.3
      */
     public static List<AlgorithmSubtypeContestFee> getAlgorithmSubtypeContestFees() {
-        return algorithmSubtypeContestFees;
+        return getChallengeFeeConfiguration().getData();
     }
 
     /**
@@ -314,17 +387,6 @@ public final class ConfigUtils {
      */
     public static FileTypes getFileTypes() {
         return fileTypes;
-    }
-
-    /**
-     * <p>
-     * Gets software contest fees.
-     * </p>
-     *
-     * @return software contest fees
-     */
-    public static Map<String, ContestFee> getSoftwareContestFees() {
-        return softwareContestFees;
     }
 
     /**
@@ -361,5 +423,38 @@ public final class ConfigUtils {
      */
     public static CloudVMServiceAccessErrorConfig getCloudVMServiceAccessErrorConfig() {
         return cloudVMServiceAccessErrorConfig;
+    }
+
+    public static class ChallengeFeeConfiguration {
+
+        private List<StudioSubtypeContestFee> design;
+
+        private List<AlgorithmSubtypeContestFee> data;
+
+        private Map<String, ContestFee> development;
+
+        public List<StudioSubtypeContestFee> getDesign() {
+            return design;
+        }
+
+        public void setDesign(List<StudioSubtypeContestFee> design) {
+            this.design = design;
+        }
+
+        public List<AlgorithmSubtypeContestFee> getData() {
+            return data;
+        }
+
+        public void setData(List<AlgorithmSubtypeContestFee> data) {
+            this.data = data;
+        }
+
+        public Map<String, ContestFee> getDevelopment() {
+            return development;
+        }
+
+        public void setDevelopment(Map<String, ContestFee> development) {
+            this.development = development;
+        }
     }
 }

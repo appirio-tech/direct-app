@@ -614,10 +614,14 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="costCalculationService" class="com.topcoder.direct.services.view.util.challenge.CostCalculationService" factory-method="getInstance">
+        <property name="projectServices" ref="projectServices"/>
+        <property name="templateManager" ref="templateManager"/>
+        <property name="projectPaymentCalculator" ref="projectPaymentCalculator"/>
+    </bean>
+
     <bean id="getReviewCostAction" class="com.topcoder.direct.services.view.action.contest.launch.GetReviewCostAction"
           scope="prototype" parent="baseDirectStrutsAction">
-          <property name="projectPaymentCalculator" ref="projectPaymentCalculator"/>
-          <property name="templateManager" ref="templateManager"/>
     </bean>
 
 

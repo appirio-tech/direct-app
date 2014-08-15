@@ -7,7 +7,7 @@
   -
   - Version 1.0 (TopCoder Direct - Update Login and add Admin Login)
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

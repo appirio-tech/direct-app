@@ -12,7 +12,10 @@ import java.util.Map;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
+import com.topcoder.direct.services.configs.AlgorithmSubtypeContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.configs.ContestFee;
+import com.topcoder.direct.services.configs.StudioSubtypeContestFee;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
@@ -25,6 +28,7 @@ import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
@@ -118,6 +122,8 @@ public class CommonAction extends BaseContestFeeAction {
      * </p>
      */
     private long catalogId = -1;
+
+    private CostCalculationService costCalculationService;
 
     /**
      * <p>
@@ -276,12 +282,20 @@ public class CommonAction extends BaseContestFeeAction {
      * @throws Exception if any error occurs
      */
     public String getContestConfigs() throws Exception {
+
         Map<String, Object> configs = new HashMap<String, Object>();
         configs.put("overview", ConfigUtils.getStudioOverviews());
         configs.put("fileTypes", ConfigUtils.getFileTypes().getFileTypes());
-        configs.put("studioContestFees", ConfigUtils.getStudioContestFees());
-        configs.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
-        configs.put("algorithmContestFees", ConfigUtils.getAlgorithmSubtypeContestFees());
+
+
+        ConfigUtils.ChallengeFeeConfiguration challengeFeeConfiguration = ConfigUtils.getChallengeFeeConfiguration();
+
+        configs.put("softwareContestFees", challengeFeeConfiguration.getDevelopment());
+        configs.put("studioContestFees", challengeFeeConfiguration.getDesign());
+        configs.put("algorithmContestFees", challengeFeeConfiguration.getData());
+
+
+
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
         configs.put("billingInfos", getBillingProjectInfos());
         setResult(configs);
@@ -483,5 +497,9 @@ public class CommonAction extends BaseContestFeeAction {
      */
     public void setDirectProjectId(long directProjectId) {
         this.directProjectId = directProjectId;
+    }
+
+    public void setCostCalculationService(CostCalculationService costCalculationService) {
+        this.costCalculationService = costCalculationService;
     }
 }
