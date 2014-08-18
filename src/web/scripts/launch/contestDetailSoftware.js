@@ -105,6 +105,7 @@
 // can edit multi round
 var canEditMultiRound = true;
 var contestHasSpecReview = true;
+var loadingChallengeDetails = false;
 
 function getContestPrize(prizesData, place) {
     if(prizesData && prizesData.length >= place
@@ -242,10 +243,12 @@ $(document).ready(function(){
       async : true,
       beforeSend: function() {
         $("#contestLoading").show();
+        loadingChallengeDetails = true;
       },
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
+
             initContest(result);
 
             //render values
@@ -254,6 +257,8 @@ $(document).ready(function(){
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
+
+            loadingChallengeDetails = false;
 
             try {
             	CKEDITOR.replace( 'contestIntroduction' );
@@ -494,7 +499,10 @@ $(document).ready(function(){
         }else{
             $("#chkboxCCA").removeAttr('disabled');
         }
-        updateContestFee();
+
+        if(!loadingChallengeDetails) {
+            updateContestFee();
+        }
         updateBillingGroups();
     });
 });
@@ -642,6 +650,7 @@ function fixFileTypeIds() {
 }
 
 function initContest(contestJson) {
+
     if (contestJson.projectMMSpecification) {
         mainWidget.competitionType = 'ALGORITHM';
         // set  marathon match specification to main widget
@@ -815,9 +824,7 @@ function initContest(contestJson) {
             customCosts.extraPrizes = extraPrizes;
         }
    }
-
-
-   //documentations, each doc has fields of documentId, fileName, description, documentTypId, url
+    //documentations, each doc has fields of documentId, fileName, description, documentTypId, url
    swDocuments = contestJson.documentation;
    // mark them as documentation
    $.each(swDocuments, function(i, doc) {
