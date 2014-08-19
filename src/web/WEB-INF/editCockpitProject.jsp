@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, freegod
-  - Version: 1.5
+  - Version: 1.6
   - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
@@ -31,6 +31,9 @@
   -
   - Version 1.5 (TopCoder Security Groups Release 8 - Automatically Grant Permissions) change notes:
   - - Remove Resource Restrictions and add automatically grant permissions.
+  -
+  - Version 1.6 (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142 changes:
+  - - Add anchor to billing accounts section
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -256,6 +259,7 @@
         </div>
     </div>
 
+    <a name="projectBilling">
     <div class="projectMetaAreaField oddRowItem">
         <h4 class="projectMetaLabel ptypeIcon">Project Billing Account:</h4>
         <div class="comboContainer" id="billingSelection">
@@ -277,6 +281,7 @@
             </s:iterator>
         </div>
     </div>
+    </a>
 
 </div>
 <!-- End .projectMetaArea -->

@@ -2,7 +2,7 @@
 <%--
   - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin, TCSASSEMBLER
   -
-  - Version: 2.0
+  - Version: 2.1
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -43,6 +43,8 @@
   - - Adds 4 ratings to the copilot feedback
   - Version 2.0 - TC Direct Rebranding Assembly Project and Contest related pages
   - - Rebranding the project overview page
+  - Version 2.1 - (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142 changes:
+  - - Add billing accounts list
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -184,7 +186,17 @@
                                                 </c:if>
                                             </div>
                                             <!-- End Project Permissions -->
-
+                                            <!-- Project Billing -->
+                                            <div class="projectTechnology" data-intro="What is associated billing account? Click here to see the full list." data-step="6" data-position="left">
+                                                <h3>Project Billings :</h3>
+                                                <s:iterator value="viewData.billingAccounts" var="billing">
+                                                        <p>${billing.name}</p>
+                                                </s:iterator>
+                                                <c:if test="${hasWritePermission}">
+                                                    <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>#projectBilling">Edit Project Billings</a>
+                                                </c:if>
+                                            </div>
+                                            <!-- End Project Billing -->
                                             <!-- Project Links -->
                                             <div class="smallProjectLinks" >
                                                 <h3 >Project Links :</h3>

@@ -147,9 +147,16 @@ import java.util.Map;
  *     <li>Adds email data for client managers and TopCoder platform managers.</li>
  * </ul>
  * </p>
- * 
+ *
+ * <p>
+ * Version 2.4 (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142
+ * <ul>
+ *     <li>Update {@link #execute()} to set billing accounts</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, Veve, Blues, GreatKevin
- * @version 2.3
+ * @version 2.4
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -363,7 +370,8 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 // get project
                 ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
                 getViewData().getProjectStats().setProject(DirectUtils.createProjectBriefDTOFromProjectData(project));
-
+                // set project billing accounts
+                viewData.setBillingAccounts(getProjectServiceFacade().getBillingAccountsByProject(getFormData().getProjectId()));
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
 
                 // set the current direct project id in session, the contest details

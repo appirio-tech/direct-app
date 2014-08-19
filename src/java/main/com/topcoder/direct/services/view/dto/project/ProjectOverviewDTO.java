@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.dto.project;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
@@ -73,8 +74,17 @@ import java.util.Map;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.6 (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142
+ * <ul>
+ *     <li>Added {@link #billingAccounts} proprety for billing account</li>
+ *     <li>Added {@link #getBillingAccounts()}</li>
+ *     <li>Added {@link #setBillingAccounts(java.util.List)}</li>
+ *     <li>Updated on {@link #insertSheetData(com.topcoder.excel.Sheet)} to include project billing data</li>
+ * </ul>
+ * </p>
  * @author isv, Blues, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
         UpcomingActivitiesDTO.Aware,
@@ -121,6 +131,13 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * @since 1.4
      */
     private ProjectGeneralInfoDTO projectGeneralInfo = new ProjectGeneralInfoDTO();
+
+    /**
+     * The billing accounts the project has.
+     *
+     * @since 1.6
+     */
+    private List<Project> billingAccounts;
 
     /**
      * <p>
@@ -250,6 +267,26 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
         this.projectGeneralInfo = projectGeneralInfo;
     }
 
+    /**
+     * Getter for <code>billingAccounts</code>
+     *
+     * @return billingAccounts
+     * @since 1.6
+     */
+    public List<Project> getBillingAccounts() {
+        return billingAccounts;
+    }
+
+    /**
+     * Setter for <code>billingAcconunts</code>
+     *
+     * @param billingAccounts
+     * @since 1.6
+     */
+    public void setBillingAccounts(List<Project> billingAccounts) {
+        this.billingAccounts = billingAccounts;
+    }
+
     public InputStream getExportExcel() {
         try {
 
@@ -357,6 +394,19 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
         row.getCell(1).setStringValue("Projected Duration");
         row.getCell(2).setNumberValue(getProjectGeneralInfo().getProjectedDuration());
 
+        //Billing Accounts
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Project Billings");
+        if(getBillingAccounts() == null || getBillingAccounts().size() <= 0) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            index = 2;
+
+            for(Project billing : getBillingAccounts()) {
+                row.getCell(index++).setStringValue(billing.getName());
+            }
+        }
+
         // Jira link
         row = sheet.getRow(rowIndex++);
         row.getCell(1).setStringValue("Bug Tracker");
@@ -383,7 +433,6 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
         } else {
             row.getCell(2).setStringValue("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Category&categoryID=" + getProjectGeneralInfo().getProject().getForumCategoryId());
         }
-
 
         // client managers
         row = sheet.getRow(rowIndex++);
