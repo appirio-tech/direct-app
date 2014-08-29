@@ -432,7 +432,7 @@
                       <td class="sec_tab_prize topcoderPrize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                    </tr>
                    <tr class="rightbor">
-                       <td class="first_tab topcoderPrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
+                       <td class="first_tab topcoderPrize codePrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
                        <td class="sec_tab_prize topcoderPrize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
                        
