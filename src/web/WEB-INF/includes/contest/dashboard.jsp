@@ -325,6 +325,7 @@
                             <label>Registrants</label>: ${viewData.dashboard.numberOfRegistrants}
                         </p>
                         <div class="statusP ${regStatusColor}">
+                            <s:if test="viewData.contestStats.showHealth">
                             <span class="progressStatus">
                                 <span class="progress" style="width:${statusWidth}%"></span>
                                 <span class="cover"></span>
@@ -351,6 +352,7 @@
                                         </div></div>
                                     </div></div></div>
                                 </div>
+                            </s:if>
                                 <!-- End .tooltipContainer -->
                             </div>
                             <s:if test="viewData.contestStats.isStudio">

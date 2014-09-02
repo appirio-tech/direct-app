@@ -5,9 +5,12 @@ package com.topcoder.direct.services.view.dto.contest;
 
 import com.topcoder.service.project.CompetitionPrize;
 
+import com.topcoder.management.project.ProjectCategory;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * <p>A DTO providing the statistics on requested contest.</p>
@@ -599,5 +602,28 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setShowStudioFinalFixTab(boolean showStudioFinalFixTab) {
         this.showStudioFinalFixTab = showStudioFinalFixTab;
+    }
+
+    /**
+     * <p>Flag whether or not to show health indication
+     */
+    public boolean getShowHealth() {
+
+        if (isStudio) { 
+            return false;
+        }
+
+        if (contest.getTypeId() == ProjectCategory.COPILOT_POSTING.getId() 
+             || contest.getTypeId() == ProjectCategory.BUG_HUNT.getId() 
+             || contest.getTypeId() == ProjectCategory.FIRST2FINISH.getId() 
+             || contest.getTypeId() == ProjectCategory.CODE.getId() ) {
+            
+
+            return false;
+        }
+
+        
+        return true;
+
     }
 }
