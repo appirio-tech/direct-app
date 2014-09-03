@@ -4147,10 +4147,13 @@ public class DataProvider {
                     && !row.getStringItem("forum_type").equals("")) {
                 isNewForum = true;
             }
+	
+			dto.setShowRegHealth(true);
 
 			// if reliability is not eligiable, alwasy sets to healthys
             if(isStudio || projectCategoryId == 29L || "false".equals(reliabilityEligible)) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                dto.setShowRegHealth(false);
             } else if (registrationPhaseStatus == 2) {
                 if (reliabilityTotal >= 200) {
                     dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
@@ -5849,9 +5852,11 @@ public class DataProvider {
                 ContestHealthDTO contestHealthDTO = new ContestHealthDTO();
 
                 boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
+				contestHealthDTO.setShowRegHealth(true);
 
                 if (isStudio) {
                     contestHealthDTO.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                    contestHealthDTO.setShowRegHealth(false);
                 } else {
                     // Evaluate current registration status
                     double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
@@ -5860,9 +5865,10 @@ public class DataProvider {
 					String reliabilityEligible = resultContainer.getRow(i).getStringItem("reliability_eligible");
                     setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus, reliabilityEligible);
 
-                    if(projectCategoryId == 29L) {
+                    if(projectCategoryId == 29L || "false".equals(reliabilityEligible)) {
                         // always set to health
                         contestHealthDTO.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                        contestHealthDTO.setShowRegHealth(false);
                     }
 
                 }

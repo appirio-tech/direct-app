@@ -111,6 +111,13 @@ public class ContestHealthDTO implements Serializable {
     private ContestDashboardDTO dashboardData;
 
     /**
+     * <p>A bollean indicating whether or not to show reg health</p>
+     * 
+     * @since 1.3
+     */
+    private boolean showRegHealth;
+
+    /**
      * <p>Constructs new <code>ContestHealthDTO</code> instance. This implementation does nothing.</p>
      *
      * @since 1.1
@@ -398,5 +405,15 @@ public class ContestHealthDTO implements Serializable {
      */
     public void setDashboardData(ContestDashboardDTO dashboardData) {
         this.dashboardData = dashboardData;
+    }
+
+    public boolean getShowRegHealth() {
+        return this.showRegHealth;
+
+    }
+
+    public void setShowRegHealth(boolean showRegHealth) {
+        this.showRegHealth =  showRegHealth;
+
     }
 }

@@ -100,53 +100,55 @@
         </td>
         <%-- Registration --%>
         <td>
-            <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-            <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
-            <span class="${value.regStatusColor.name}"></span></a>
-            </s:if>
-            <s:else>
-            <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
-            <span class="${value.regStatusColor.name}"></span></a>
-            </s:else>
-            
-            <div class="tooltipBox">
-                <span class="arrow"></span>
-                <div class="tooltipHeader">
-                    <div class="tooltipHeaderRight">
-                        <div class="tooltipHeaderCenter">
-                            <h2>Registration</h2>
+            <s:if test="%{#attr['value'].showRegHealth}" >
+                <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
+                <span class="${value.regStatusColor.name}"></span></a>
+                </s:if>
+                <s:else>
+                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
+                <span class="${value.regStatusColor.name}"></span></a>
+                </s:else>
+                
+                <div class="tooltipBox">
+                    <span class="arrow"></span>
+                    <div class="tooltipHeader">
+                        <div class="tooltipHeaderRight">
+                            <div class="tooltipHeaderCenter">
+                                <h2>Registration</h2>
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End .tooltipHeader -->
-                    
-                <div class="tooltipContent">
-                    <s:set var="registrationStatus" value="%{#attr['value'].registrationStatus.toString()}"/>
-                    <c:choose>
-                        <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
-                            <h3><c:out value="Registration is less than ideal."/></h3>
-                            <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your challenge."/></p>
-                        </c:when>
-                        <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
-                            <h3><c:out value="Registration is less than ideal."/></h3>
-                            <p><c:out value="Consider re-opening registration and increasing prize money."/></p>
-                        </c:when>
-                        <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
-                            <h3><c:out value="Registration is poor."/></h3>
-                            <p><c:out value="It is unlikely you will receive good submissions. Consider reposting."/></p>
-                        </c:when>
-                        <c:otherwise>
-                            <h3><c:out value="Registration is healthy."/></h3>
-                        </c:otherwise>
-                    </c:choose>
-                    <p><strong># of registrants</strong> : <c:out value="${numberOfRegistrants}"/></p>
-                </div><!-- End .tooltipContent -->
-                    
-                <div class="tooltipFooter">
-                    <div class="tooltipFooterRight">
-                        <div class="tooltipFooterCenter"></div>
-                    </div>
-                </div><!-- End .tooltipFooter -->
-            </div><!-- End .tooltipBox -->
+                    </div><!-- End .tooltipHeader -->
+                        
+                    <div class="tooltipContent">
+                        <s:set var="registrationStatus" value="%{#attr['value'].registrationStatus.toString()}"/>
+                        <c:choose>
+                            <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_ACTIVE'}">
+                                <h3><c:out value="Registration is less than ideal."/></h3>
+                                <p><c:out value="Consider increasing prize money and double-check the clarity and scope of your challenge."/></p>
+                            </c:when>
+                            <c:when test="${registrationStatus eq 'REGISTRATION_LESS_IDEAL_CLOSED'}">
+                                <h3><c:out value="Registration is less than ideal."/></h3>
+                                <p><c:out value="Consider re-opening registration and increasing prize money."/></p>
+                            </c:when>
+                            <c:when test="${registrationStatus eq 'REGISTRATION_POOR'}">
+                                <h3><c:out value="Registration is poor."/></h3>
+                                <p><c:out value="It is unlikely you will receive good submissions. Consider reposting."/></p>
+                            </c:when>
+                            <c:otherwise>
+                                <h3><c:out value="Registration is healthy."/></h3>
+                            </c:otherwise>
+                        </c:choose>
+                        <p><strong># of registrants</strong> : <c:out value="${numberOfRegistrants}"/></p>
+                    </div><!-- End .tooltipContent -->
+            
+                    <div class="tooltipFooter">
+                        <div class="tooltipFooterRight">
+                            <div class="tooltipFooterCenter"></div>
+                        </div>
+                    </div><!-- End .tooltipFooter -->
+                </div><!-- End .tooltipBox -->
+            </s:if>
         </td>
         <%-- Review --%>
         <td>
