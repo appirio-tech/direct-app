@@ -1,0 +1,17 @@
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Submission Deliverables</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This section contains the things that the submitter needs to check before submitting. ]</span></strong></p>
+
+<ul style="font-size: 12px; line-height: 16px;">
+	<li>Provide an SRC package (Ant or Eclipse) of your code.</li>
+	<li>Provide a detailed document of your solution including details for installation and setup. Provide any details about governor limits or any other limitations to your solution.</li>
+	<li>Provide a simple video of you solution in action. If English is not your first language feel free to annotate your video with text.</li>
+	<li>Not required: provide access to your dev org. If the package does not install due to missing dependencies or conflicts in the judges org, access to your org may be helpful. If you do provide this you should also install the <a href=http://raydehler.com/cloud/clod/enable-all-trusted-ip-ranges-for-a-salesforce-org.html>'Enable All Trusted IP Ranges for a Salesforce Org' </a> by Ray Dehler. This will prevent the judge for asking you the activation code. </li>
+	<li>Provide 95% test coverage for your solution.</li>
+</ul>
+
+<h2 style="padding: 0px; margin: 0px; font-weight: bold;"><span style="color: rgb(255, 0, 0);">Submission Guidelines</span></h2>
+
+<p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the submission process. How does submitter prepare the files to upload, what are the files and where to upload it etc. ]</span></strong></p>
+
+<p style="font-size: 12px; line-height: 16px;">For each member, the final submission should be uploaded to the&nbsp;<a href="">Online Review Tool.</a></p>

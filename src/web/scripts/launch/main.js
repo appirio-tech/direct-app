@@ -3212,7 +3212,7 @@ function getDRTemplatesName(categoryId) {
 
 function getSGTemplatesName(categoryId) {
     if (categoryId == 14) {
-        return "assembly_software_guidelines_templates";
+        return "assembly_software_guidelines_templates,salesforce_software_guidelines_templates";
     } else if (categoryId == 19) {
         return "ui_prototype_software_guidelines_templates";
     } else if (categoryId == 7) {
@@ -3227,7 +3227,9 @@ function getSGTemplatesName(categoryId) {
         return "test_scenarios_software_guidelines_templates";
     } else if (categoryId == 13) {
         return "test_suites_software_guidelines_templates";
-    } else {
+    } else if (categoryId == 38 || categoryId == 39){
+        return "default_software_guidelines_templates,salesforce_software_guidelines_templates";
+    }else {
         return "default_software_guidelines_templates";
     }
 }

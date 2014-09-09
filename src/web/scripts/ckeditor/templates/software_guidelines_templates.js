@@ -129,6 +129,19 @@ CKEDITOR.addTemplates("test_suites_software_guidelines_templates", {
     ]
 });
 
+CKEDITOR.addTemplates("salesforce_software_guidelines_templates", {
+    imagesPath: "/scripts/ckeditor/templates/images/",
+    templates: [
+        {
+            title: "Salesforce",
+            image: "template.gif",
+            description: "Salesforce Submission Guidelines.",
+            html: '',
+            path: '/scripts/ckeditor/templates/salesforce_software_guidelines_template.txt'
+        }
+    ]
+});
+
 var templatesList = [
                         "default_software_guidelines_templates",
                         "assembly_software_guidelines_templates",
@@ -138,7 +151,8 @@ var templatesList = [
                         "specification_software_guidelines_templates",
                         "bug_hunt_software_guidelines_templates",
                         "test_scenarios_software_guidelines_templates",
-                        "test_suites_software_guidelines_templates"
+                        "test_suites_software_guidelines_templates",
+                        "salesforce_software_guidelines_templates"
                     ];
                     
 // loading templates asychronously
