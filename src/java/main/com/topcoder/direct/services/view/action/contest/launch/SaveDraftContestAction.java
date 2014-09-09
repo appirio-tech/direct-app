@@ -16,6 +16,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.topcoder.management.project.ProjectCategory;
 import com.topcoder.management.project.ProjectPlatform;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -50,6 +51,7 @@ import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.pipeline.CompetitionType;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.apache.commons.lang3.SerializationUtils;
 
 
 /**
@@ -541,6 +543,11 @@ public class SaveDraftContestAction extends ContestAction {
     private com.topcoder.management.project.Project projectHeader;
 
     /**
+     * <p>A cloned copy of the project header before updating the challenge</p>
+     */
+    private com.topcoder.management.project.Project oldProjectHeader;
+
+    /**
      * <p>
      * <code>softwareCompetition</code> to hold the software competition.
      * </p>
@@ -653,6 +660,50 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Override the parent method to retrieve or create the prize list, the asset dto and the contest data. This method
+     * will be called in a http round trip (another round trip different from the execute method) to init the html
+     * client lists. This method is obviously re-called in the following round-trip, when the execute method is
+     * performed but at the point it will does nothing.
+     * </p>
+     *
+     * @throws IllegalStateException
+     *             if the contest service facade is not set yet
+     * @throws Exception
+     *             if any problem occurs.
+     */
+    @Override
+    public void prepare() throws Exception {
+        // call super
+        super.prepare();
+
+        try {
+            ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
+
+            if (projectId > 0) {
+                softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
+                        DirectStrutsActionsHelper.getTCSubjectFromSession(), projectId);
+                assetDTO = softwareCompetition.getAssetDTO();
+                projectHeader = softwareCompetition.getProjectHeader();
+
+                // has a deep copy of the old header in case we need to any comparison
+                oldProjectHeader = (com.topcoder.management.project.Project) SerializationUtils.clone(projectHeader);
+            }
+
+            if (null == softwareCompetition) {
+                assetDTO = new AssetDTO();
+                projectHeader = new com.topcoder.management.project.Project();
+            }
+            projectHeader.setPrizes(null);
+            projectHeader.setProjectCopilotTypes(null);
+            projectHeader.setCopilotContestExtraInfos(null);
+        } catch (Exception e) {
+            setResult(e);
+            throw e;
+        }
+    }
+
+    /**
+     * <p>
      * Executes the action.
      * </p>
      * <p>
@@ -682,6 +733,7 @@ public class SaveDraftContestAction extends ContestAction {
 
 
         if (projectId > 0) {
+            // **** update of the software competition ***
             softwareCompetition.setProjectHeaderReason("user update");
             populateCompetition(softwareCompetition);
 
@@ -700,7 +752,7 @@ public class SaveDraftContestAction extends ContestAction {
             }
             setResult(getSoftwareResult(softwareCompetition));
         } else {
-            // creation of the software competition
+            // *** creation of the software competition ***
             softwareCompetition = new SoftwareCompetition();
             softwareCompetition.setAssetDTO(getAssetDTOForNewSoftware());
             softwareCompetition.setProjectHeader(projectHeader);
@@ -777,6 +829,7 @@ public class SaveDraftContestAction extends ContestAction {
     private void updateSoftwareCompetitionCopilotResource() {
         // get the resources before updating
         Resource[] rs = softwareCompetition.getProjectResources();
+        long challengeCategoryId = softwareCompetition.getProjectHeader().getProjectCategory().getId();
 
         String currentCopilotId = null;
         Resource currentCopilot = null;
@@ -804,16 +857,37 @@ public class SaveDraftContestAction extends ContestAction {
         }
 
         if (!oldCopilots.containsKey(currentCopilotId)) {
+            // C1 - C2, C1 - U, U - C1 && U - U
             // copilot to update is not one of the old copilots
             if (currentCopilot != null) {
+                // C1 - C2, U - C1
                 updatedResources.add(currentCopilot);
+
+                // update copilot cost data  from config
+                softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
+                        String.valueOf(getCopilotFeeFromConfig(challengeCategoryId)));
+            } else {
+               // C1 - U, U - U
+                softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, "0");
             }
 
             softwareCompetition.setProjectResources(updatedResources.toArray(new Resource[updatedResources.size()]));
         } else {
             // copilot to update is one of the old copilots, update payment because the payment info could be changed
-            Resource r = oldCopilots.get(currentCopilotId);
-            r.setProperty(RESOURCE_INFO_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_PAYMENT));
+            // Updated 09/09/2014 - Comment these out because we want if copilot is not changed, do not update
+            // Resource r = oldCopilots.get(currentCopilotId);
+            // r.setProperty(RESOURCE_INFO_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_PAYMENT));
+
+            // c1 - c1, use the old value, do not overide it
+            if (oldProjectHeader != null) {
+
+                String v = oldProjectHeader.getProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY);
+
+                if (v == null) {
+                    v = "0";
+                }
+                softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, v);
+            }
         }
     }
 
@@ -1001,19 +1075,24 @@ public class SaveDraftContestAction extends ContestAction {
         // process project resources
 
         // if has a valid copilot id and copilot name is not empty
+        long challengeCategoryId = softwareCompetition.getProjectHeader().getProjectCategory().getId();
+
         if (getContestCopilotId() > 0 && getContestCopilotName() != null &&
                 getContestCopilotName().trim().length() != 0) {
             // add copilot resource to project resources
             softwareCompetition.setProjectResources(new Resource[]{getUserResource(), getCopilotResource()});
+            softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
+                    String.valueOf(getCopilotFeeFromConfig(challengeCategoryId)));
         } else {
             softwareCompetition.setProjectResources(new Resource[]{getUserResource()});
+            softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
+                    "0");
         }
-        ;
 
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
 
-        if(softwareCompetition.getProjectHeader().getProjectCategory().getId() == PROJECT_CATEGORY_MM) {
+        if(challengeCategoryId == PROJECT_CATEGORY_MM) {
             initializeMMCompetition(softwareCompetition);
         } else if (!DirectUtils.isStudio(softwareCompetition)) {
             initializeSoftwareCompetition(softwareCompetition);
@@ -1309,18 +1388,8 @@ public class SaveDraftContestAction extends ContestAction {
         resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), getContestCopilotName());
         resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(getContestCopilotId()));
 
-        // get the copilot fee from the configuration
-        CopilotFee copilotFee = ConfigUtils.getCopilotFees().get(String.valueOf(getProjectHeader().getProjectCategory().getId()));
-
-        // user zero by default in case there is no fee configured
-        double feeValue = 0.0;
-
-        if (copilotFee != null) {
-            feeValue = copilotFee.getCopilotFee();
-        }
-
-        // set payment information
-        resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT), String.valueOf(feeValue));
+        resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT),
+                String.valueOf(getCopilotFeeFromConfig(getProjectHeader().getProjectCategory().getId())));
         // set payment status to "not paid"
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
         // set registration date to now
@@ -1329,6 +1398,12 @@ public class SaveDraftContestAction extends ContestAction {
         resource.setUserId(getContestCopilotId());
 
         return resource;
+    }
+
+    private static double getCopilotFeeFromConfig(long challengeCategoryId) {
+        CopilotFee copilotFee = ConfigUtils.getCopilotFees().get(String.valueOf(challengeCategoryId));
+
+        return copilotFee == null ? 0 : copilotFee.getCopilotFee();
     }
 
     /**
@@ -1502,48 +1577,6 @@ public class SaveDraftContestAction extends ContestAction {
         result.put("documents", documentation);
 
         return result;
-    }
-
-    /**
-     * <p>
-     * Override the parent method to retrieve or create the prize list, the asset dto and the contest data. This method
-     * will be called in a http round trip (another round trip different from the execute method) to init the html
-     * client lists. This method is obviously re-called in the following round-trip, when the execute method is
-     * performed but at the point it will does nothing.
-     * </p>
-     * 
-     * @throws IllegalStateException
-     *             if the contest service facade is not set yet
-     * @throws Exception
-     *             if any problem occurs.
-     */
-    @Override
-    public void prepare() throws Exception {
-        // call super
-        super.prepare();
-
-        try {
-            ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
-            
-            // if both projectId
-            if (projectId > 0) {
-                softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
-                        DirectStrutsActionsHelper.getTCSubjectFromSession(), projectId);
-                assetDTO = softwareCompetition.getAssetDTO();
-                projectHeader = softwareCompetition.getProjectHeader();
-            }
-    
-            if (null == softwareCompetition) {
-                assetDTO = new AssetDTO();
-                projectHeader = new com.topcoder.management.project.Project();
-            }
-            projectHeader.setPrizes(null);
-    		projectHeader.setProjectCopilotTypes(null);
-            projectHeader.setCopilotContestExtraInfos(null);
-        } catch (Exception e) {
-            setResult(e);
-            throw e;
-        }
     }
 
     /**
@@ -1733,7 +1766,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.4
      */
     public String getContestCopilotName() {
-        return contestCopilotName;
+        return contestCopilotName.trim();
     }
 
     /**
