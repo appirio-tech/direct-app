@@ -342,13 +342,13 @@
 # Payment Dashboard                   #
 #######################################
 @paypal.baseUrl@=https://api-3t.sandbox.paypal.com/nvp
-@paypal.username@=platfo_1255077030_biz_api1.gmail.com
-@paypal.password@=1255077037
-@paypal.signature@=Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf
-@payoneer.baseApiUrl@=api.payoneer.com
-@payoneer.username@=username
-@payoneer.password@=password
-@payoneer.partnerId@=partnerId
+@paypal.username@=
+@paypal.password@=
+@paypal.signature@=
+@payoneer.baseApiUrl@=
+@payoneer.username@=
+@payoneer.password@=
+@payoneer.partnerId@=
 @paymemtStatsService.resultLimit@=10
 @paymentsService.paymentMethodID@=2
 #@payoneerService@=com.topcoder.direct.services.payments.impl.PayoneerServiceImpl
@@ -382,31 +382,31 @@
 #OAuth settings.
 @oauth.authorizationURL@=https://api.login.yahoo.com/oauth/v2/request_auth?oauth_token=%s
 @oauth.callBackActionUrl@=https://cockpit.cloud.topcoder.com/direct/marathonmatch/callBack.action
-@oauth.consumerKey@=dj0yJmk9TXZDWVpNVVdGaVFmJmQ9WVdrOWMweHZXbkZLTkhVbWNHbzlNVEl5TWprd05qUTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD0wMw--
-@oauth.consumerSecret@=262be559f92a2be20c4c039419018f2b48cdfce9
+@oauth.consumerKey@=--
+@oauth.consumerSecret@=
 @oauth.providerClass@=org.scribe.builder.api.YahooApi
 
 ##################################################
 # Marathon Match Analytics Service Configuration #
 ##################################################
-@api_server_domain@=api.topcoder.com
-@apiKey@=a47d06ceff527eddd5c9b51623a0eaad
+@api_server_domain@=
+@apiKey@=
 @clientId@=test
 @clientSecret@=test
 
 #######################################
 # Contest Creation SNS Configuration #
 #######################################
-@amazonSNSAccessKey@=AKIAIGN4KRVNTBGLQDJA
-@amazonSNSSecretKey@=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
-@contestCreationArn@=arn:aws:sns:us-west-2:170569073448:tc-test
+@amazonSNSAccessKey@=
+@amazonSNSSecretKey@=
+@contestCreationArn@=
 @contestCreationSubject@=cmc challenge contest creation
 @contestUpdateSubject@=cmc challenge contest update
 @contestCreationMessageTemplatePath@=contest_creation_sns_message.txt
 @contestUpdateMessageTemplatePath@=contest_update_sns_message.txt
 
 
-@DOMAIN_AUTH0@=sma.auth0.com
-@CLIENT_ID_AUTH0@=CMaBuwSnY0Vu68PLrWatvvu3iIiGPh7t
+@DOMAIN_AUTH0@=
+@CLIENT_ID_AUTH0@=
 @REG_SERVER_NAME@=tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
