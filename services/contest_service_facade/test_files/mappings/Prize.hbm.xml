@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="Prize" table="prize" lazy="true">
+		<comment>
+			This table describes prize for contest. It contains amount
+			of money for each place.
+		</comment>
+
+		<id name="prizeId" column="prize_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">STUDIO_PRIZE_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="place"/>
+
+		<property name="amount" not-null="false" />
+
+		<set name="contests" table="contest_prize_xref" fetch="select">
+			<key column="prize_id" />
+			<many-to-many column="contest_id" class="com.topcoder.service.studio.contest.Contest" />
+		</set>
+
+		<set name="submissions" table="submission_prize_xref" inverse="true" fetch="select">
+			<key column="prize_id" />
+			<many-to-many
+				class="com.topcoder.service.studio.submission.Submission" 
+				column="submission_id" />
+		</set>
+
+		<many-to-one name="type" column="prize_type_id"
+			class="com.topcoder.service.studio.submission.PrizeType" fetch="select"
+			 />
+
+		<property name="createDate" column="create_date" generated="insert"
+					not-null="true" />
+	</class>
+</hibernate-mapping>

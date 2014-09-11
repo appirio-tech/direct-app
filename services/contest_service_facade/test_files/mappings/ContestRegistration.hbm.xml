@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+    <class name="com.topcoder.service.studio.contest.ContestRegistration"
+        table="contest_registration">
+        <composite-id>
+            <key-many-to-one name="contest"
+                class="com.topcoder.service.studio.contest.Contest">
+                <column name="contest_id" />
+            </key-many-to-one>
+            <key-property name="userId" type="long" column="user_id" />
+        </composite-id>
+        <property name="termsOfUseId" type="long"
+            column="terms_of_use_id" not-null="true" />
+        <property name="createDate" type="date" column="create_date" generated="insert"
+            not-null="true" />
+    </class>
+</hibernate-mapping>

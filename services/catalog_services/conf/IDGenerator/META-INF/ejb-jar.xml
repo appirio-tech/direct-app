@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN"
+                         "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+
+<ejb-jar>
+    <enterprise-beans>
+        <session>
+            <ejb-name>IDGeneratorBean</ejb-name>
+            <home>com.topcoder.util.idgenerator.ejb.IDGeneratorHome</home>
+            <remote>com.topcoder.util.idgenerator.ejb.IDGenerator</remote>
+            <local-home>com.topcoder.util.idgenerator.ejb.IDGeneratorLocalHome</local-home>
+            <local>com.topcoder.util.idgenerator.ejb.IDGeneratorLocal</local>
+            <ejb-class>com.topcoder.util.idgenerator.ejb.IDGeneratorBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Bean</transaction-type>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

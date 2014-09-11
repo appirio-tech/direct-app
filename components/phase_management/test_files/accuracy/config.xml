@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<CMConfig>
+  <Config name="com.topcoder.management.phase.DefaultPhaseManager">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.accuracytests.MockPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>stress1</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.accuracytests.MockIDGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+</CMConfig>

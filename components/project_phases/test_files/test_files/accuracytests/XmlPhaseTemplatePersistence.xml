@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/accuracytests/sample.xml</Value>
+		</Property>
+	</Config>
+
+</CMConfig>

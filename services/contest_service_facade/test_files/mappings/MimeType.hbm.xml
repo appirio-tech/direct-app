@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="MimeType" table="mime_type_lu" lazy="false">
+		<comment>This table describes mime type</comment>
+
+		<id name="mimeTypeId" column="mime_type_id" type="long" />
+
+		<property name="description" not-null="true" length="100"
+			column="mime_type_desc" />
+
+		<many-to-one name="studioFileType" column="file_type_id"
+			class="com.topcoder.service.studio.contest.StudioFileType" fetch="select"
+			 />
+	</class>
+</hibernate-mapping>

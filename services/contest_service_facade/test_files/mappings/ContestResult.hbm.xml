@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="ContestResult" table="contest_result" lazy="true">
+		<comment>
+			This table describes contest result. It contains score and
+			place for each submission in contest.
+		</comment>
+
+		<composite-id>
+			<key-many-to-one name="contest"
+				class="com.topcoder.service.studio.contest.Contest"
+				column="contest_id" />
+			<key-many-to-one name="submission"
+				class="com.topcoder.service.studio.submission.Submission"
+				column="submission_id" />
+		</composite-id>
+
+		<property name="finalScore" column="final_score"
+			not-null="false" />
+
+		<property name="placed" not-null="true" />
+
+		<property name="createDate" column="create_date" generated="insert"
+			not-null="true" />
+	</class>
+</hibernate-mapping>

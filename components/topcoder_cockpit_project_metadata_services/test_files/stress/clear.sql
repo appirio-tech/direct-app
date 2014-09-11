@@ -1,0 +1,9 @@
+
+delete from direct_project_metadata_audit;
+delete from direct_project_metadata_key_audit;
+delete from direct_project_metadata_predefined_value_audit;
+delete from direct_project_metadata;
+delete from direct_project_metadata_predefined_value;
+delete from direct_project_metadata_key;
+delete from tc_direct_project;
+delete from audit_action_type_lu;

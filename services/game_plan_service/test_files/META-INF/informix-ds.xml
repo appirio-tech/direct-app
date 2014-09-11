@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: informix-ds.xml,v 1.3 2004/09/15 14:37:40 loubyansky Exp $ -->
+
+
+<datasources>
+    <xa-datasource>
+        <jndi-name>InformixDS</jndi-name>
+        <connection-url>jdbc:informix-sqli://192.168.1.114:9088/tcs_catalog:INFORMIXSERVER=ol_topcoder</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+	      <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">192.168.1.114</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">9088</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">tcs_catalog</xa-datasource-property>
+        <xa-datasource-property name="ServerName">ol_topcoder</xa-datasource-property>
+        <xa-datasource-property name="User">informix</xa-datasource-property>
+        <xa-datasource-property name="Password">system</xa-datasource-property>
+
+
+        <user-name>informix</user-name>
+        <password>system</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+    </xa-datasource>
+
+    <xa-datasource>
+        <jndi-name>StudioDS</jndi-name>
+
+        <connection-url>jdbc:informix-sqli://192.168.1.114:9088/studio_oltp:INFORMIXSERVER=ol_topcoder</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+	      <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">192.168.1.114</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">9088</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">ol_topcoder</xa-datasource-property>
+        <xa-datasource-property name="User">informix</xa-datasource-property>
+        <xa-datasource-property name="Password">system</xa-datasource-property>
+
+
+        <user-name>informix</user-name>
+        <password>system</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource>
+</datasources>
+

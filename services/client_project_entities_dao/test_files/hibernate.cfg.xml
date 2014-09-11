@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory name="cped">
+		<property name="hibernate.connection.driver_class">
+			com.informix.jdbc.IfxDriver
+		</property>
+		<property name="hibernate.connection.url">
+			jdbc:informix-sqli://localhost:9088/tc:INFORMIXSERVER=ol_svr_custom
+		</property>
+		<property name="hibernate.connection.username">
+			informix
+		</property>
+		<property name="hibernate.connection.password">
+			123456
+		</property>
+		<property name="current_session_context_class">thread</property>
+
+		<property name="use_sql_comments">false</property>
+		<property name="show_sql">false</property>
+		<property name="dialect">org.hibernate.dialect.InformixDialect</property>
+
+		<!-- NO mapping files but mapping classes -->
+        <!-- mapping package="com.topcoder.clients.model"/-->
+        <mapping class="com.topcoder.clients.model.AuditableEntity"/>
+        <mapping class="com.topcoder.clients.model.Project"/>
+        <mapping class="com.topcoder.clients.model.ProjectStatus"/>
+        <mapping class="com.topcoder.clients.model.Client"/>
+        <mapping class="com.topcoder.clients.model.ClientStatus"/>
+        <mapping class="com.topcoder.clients.model.Company"/>
+        <!-- @since Configurable Contest Fees v1.0 Assembly -->
+        <mapping class="com.topcoder.clients.model.ProjectContestFee"/>
+	</session-factory>
+</hibernate-configuration>

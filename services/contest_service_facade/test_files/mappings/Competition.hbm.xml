@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.project">
+    <class name="Competition"
+           table="competition">
+        <id name="competitionId" column="competition_id">
+            <generator class="sequence">
+                <param name="sequence">competition_sequence</param>
+            </generator>
+        </id>
+        <many-to-one name="project"
+                     class="com.topcoder.service.project.Project" column="project_id"/>
+    </class>
+</hibernate-mapping>

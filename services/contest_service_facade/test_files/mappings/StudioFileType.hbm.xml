@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="StudioFileType" table="file_type_lu" lazy="false">
+		<comment>
+			This table describes file type. Currently possible only zip
+			file type
+		</comment>
+
+		<id name="studioFileType" column="file_type_id" type="long" />
+
+		<property name="sort" not-null="true" />
+		<property name="imageFile" column="image_file_ind"
+			not-null="true" />
+		<property name="description" column="file_type_desc"
+			length="100" not-null="true" />
+		<property name="extension" length="10" not-null="true" />
+
+		<set name="mimeTypes"  inverse="true" fetch="select">
+			<key column="file_type_id" not-null="true"/>
+			<one-to-many
+				class="com.topcoder.service.studio.contest.MimeType" />
+		</set>
+
+	</class>
+</hibernate-mapping>

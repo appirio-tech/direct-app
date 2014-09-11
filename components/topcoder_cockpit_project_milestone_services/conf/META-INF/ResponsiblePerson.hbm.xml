@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.project.milestone.model">
+	<class name="ResponsiblePerson" table="project_milestone_owner">
+		<id name="id" column="project_milestone_owner_id" type="long">
+			<generator class="native" />
+		</id>
+		<property name="userId" column="user_id" type="long" />
+		<property name="name" column="user_handle" type="string" length="45" />
+	</class>
+
+    <sql-query name="getCopilotsForProject">
+        <return alias="person" class="com.topcoder.direct.services.project.milestone.model.ResponsiblePerson">
+            <return-property name="userId" column="user_id"/>
+            <return-property name="name" column="handle"/>
+            <return-property name="id" column="id"/>
+        </return>
+        <![CDATA[
+        select u.user_id, u.handle, u.user_id as id from user u where u.user_id IN 
+        ( select c.user_id from copilot_project cp, copilot_profile c
+          where c.copilot_profile_id = cp.copilot_profile_id and
+          cp.tc_direct_project_id = :directProjectId )
+        ]]>
+    </sql-query>
+    <sql-query name="getManagersForProject">
+        <return alias="person" class="com.topcoder.direct.services.project.milestone.model.ResponsiblePerson">
+            <return-property name="userId" column="user_id"/>
+            <return-property name="name" column="handle"/>
+            <return-property name="id" column="id"/>
+        </return>
+    <![CDATA[
+        select u.user_id, u.handle, u.user_id as id from user u where u.user_id IN
+        (select cast(dpm.metadata_value as integer)  from direct_project_metadata dpm 
+         where project_metadata_key_id IN (1,2) and tc_direct_project_id = :directProjectId)
+     ]]>
+    </sql-query>
+
+</hibernate-mapping>

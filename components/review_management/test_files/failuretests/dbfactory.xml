@@ -1,0 +1,28 @@
+<CMConfig>  
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>failureTest</Value>
+            </Property>
+            <Property name="failureTest">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://172.30.114.230:1526/or:INFORMIXSERVER=or</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>google</Value>
+                    </Property>
+                </Property>
+            </Property>  
+        </Property>
+    </Config>
+</CMConfig> 

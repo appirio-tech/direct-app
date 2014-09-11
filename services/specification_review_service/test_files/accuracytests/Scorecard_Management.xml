@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <!-- Namespace for ScorecardManagerImpl class -->
+    <Config name="com.topcoder.management.scorecard">
+        <Property name="SearchBuilderNamespace">
+            <Value>com.topcoder.searchbuilder.ScorecardManager</Value>
+        </Property>
+        
+        <Property name="PersistenceClass">
+            <Value>com.topcoder.management.scorecard.persistence.InformixScorecardPersistence</Value>
+        </Property>
+        
+        <Property name="PersistenceNamespace">
+            <Value>com.topcoder.management.scorecard.persistence.InformixScorecardPersistence</Value>
+        </Property>
+        
+        <Property name="ValidatorClass">
+            <Value>com.topcoder.management.scorecard.validation.DefaultScorecardValidator</Value>
+        </Property>
+    </Config>
+    
+  <Config name="com.topcoder.searchbuilder.ScorecardManager">
+        <Property name="searchStrategyFactoryNamespace">
+            <Value>com.topcoder.search.builder.strategy.factory</Value>
+        </Property>
+        <Property name="fieldValidatorFactoryNamespace">
+            <Value>com.topcoder.search.builder.validator.factory</Value>
+        </Property>
+
+        <Property name="searchBundles">
+            <Property name="ScorecardSearchBundle">
+            
+                <Property name="searchStrategy">
+                    <Property name="class">
+                        <Value>dbStrategy</Value>
+                    </Property>
+                </Property>
+            
+                <Property name="searchableFields">
+                    <Property name="dummy">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                </Property>
+
+                <Property name="type">
+                    <Value>Database</Value>
+                </Property>
+				<Property name="DBNamcespace"> 
+						<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>  
+				</Property> 
+				<Property name="connectionProducerName"> 
+						<Value>informix_connection</Value>  
+				</Property>
+                <Property name="name">
+                    <Value>ScorecardSearchBundle</Value>
+                </Property>
+
+                <Property name="context">
+                    <Value>SELECT scorecard.scorecard_id FROM scorecard 
+JOIN scorecard_status_lu ON
+scorecard.scorecard_status_id=scorecard_status_lu.scorecard_status_id
+JOIN scorecard_type_lu ON 
+scorecard.scorecard_type_id=scorecard_type_lu.scorecard_type_id
+JOIN project_category_lu ON 
+scorecard.project_category_id=project_category_lu.project_category_id
+LEFT JOIN project_scorecard ON
+scorecard.scorecard_id=project_scorecard.scorecard_id WHERE </Value>
+                </Property>
+
+                <Property name="alias">
+					<Property name="ScorecardStatusID">
+                        <Value>scorecard_status_lu.scorecard_status_id</Value>
+                     </Property>
+                     <Property name="ScorecardStatusName">
+                        <Value>scorecard_status_lu.name</Value>
+                     </Property>
+                    <Property name="ScorecardTypeID">
+                        <Value>scorecard_type_lu.scorecard_type_id</Value>
+                    </Property>
+                    <Property name="ScorecardTypeName">
+                        <Value>scorecard_type_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectCategoryID">
+                        <Value>project_category_lu.project_category_id</Value>
+                    </Property>
+                    <Property name="ProjectID">
+                        <Value>project_scorecard.project_id</Value>
+                    </Property>
+                    <Property name="ScorecardName">
+                        <Value>scorecard.name</Value>
+                    </Property>
+                    <Property name="ScorecardVersion">
+                        <Value>scorecard.version</Value>
+                    </Property>
+				</Property>
+            </Property>
+        </Property>
+	</Config>
+
+	<Config name="com.topcoder.management.scorecard.persistence.InformixScorecardPersistence">
+
+		<Property name="ConnectionFactoryNS">
+			<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+		</Property>
+
+		<Property name="ConnectionName">
+			<Value>informix_connection</Value>
+		</Property>
+
+	</Config>
+</CMConfig>

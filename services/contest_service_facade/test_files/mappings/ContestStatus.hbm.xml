@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="ContestStatus" table="contest_detailed_status_lu" lazy="false">
+		<comment>Table which describes contest status</comment>
+
+		<id name="contestStatusId" column="contest_detailed_status_id" type="long" />
+
+		<property name="description" length="100" not-null="true"
+			column="contest_detailed_status_desc" />
+
+		<property name="name" length="100" column="name"/>
+		
+		<property name="statusId" column="contest_status_id" type="long" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,243 @@
+<?xml version="1.0" ?>
+<CMConfig>
+	<Config name="com.topcoder.search.builder">
+		<Property name="searchStrategyFactoryNamespace">
+			<Value>com.topcoder.search.builder.strategy.factory</Value>
+		</Property>
+
+		<Property name="fieldValidatorFactoryNamespace">
+			<Value>com.topcoder.search.builder.validator.factory</Value>
+		</Property>
+
+		<Property name="searchBundles">
+		 	<!-- project  -->
+			<Property name="TestSearchBundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>MockSearchStrategy</Value>
+					</Property>
+				</Property>
+				<Property name="context">
+					<Value>select p from Project as p where </Value>
+				</Property>
+				<Property name="alias">
+					<Property name="company">
+						<Value>p.company.id</Value>
+					</Property>
+					<Property name="active">
+						<Value>p.active</Value>
+					</Property>
+					<Property name="salesTax">
+						<Value>p.salesTax</Value>
+					</Property>
+					<Property name="pOBoxNumber">
+						<Value>p.pOBoxNumber</Value>
+					</Property>
+					<Property name="paymentTermsId">
+						<Value>p.paymentTermsId</Value>
+					</Property>
+					<Property name="description">
+						<Value>p.description</Value>
+					</Property>
+					<Property name="projectStatus">
+						<Value>p.projectStatus.id</Value>
+					</Property>
+					<Property name="client">
+						<Value>p.client.id</Value>
+					</Property>
+					<Property name="parentProjectId">
+						<Value>p.parentProjectId</Value>
+					</Property>
+					<!-- general properties -->
+					<Property name="createUsername">
+						<Value>p.createUsername</Value>
+					</Property>
+					<Property name="createDate">
+						<Value>p.createDate</Value>
+					</Property>
+					<Property name="modifyUsername">
+						<Value>p.modifyUsername</Value>
+					</Property>
+					<Property name="modifyDate">
+						<Value>p.modifyDate</Value>
+					</Property>
+					<Property name="name">
+						<Value>p.name</Value>
+					</Property>
+					<Property name="deleted">
+						<Value>p.deleted</Value>
+					</Property>
+				</Property>
+				<Property name="searchableFields">
+					<Property name="company">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="active">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="salesTax">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="pOBoxNumber">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="paymentTermsId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="description">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="projectStatus">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="client">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="parentProjectId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<!-- general properties  -->
+					<Property name="deleted">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="createUsername">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="createDate">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="modifyUsername">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="modifyDate">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="name">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.search.builder.validator.factory">
+		<Property name="validator:default">
+			<Property name="type">
+				<Value>com.topcoder.clients.dao.ejb3.MockValidator</Value>
+			</Property>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.search.builder.strategy.factory">
+		<Property name="MockSearchStrategy">
+			<Property name="type">
+				<Value>com.topcoder.clients.dao.ejb3.MockSearchStrategy</Value>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

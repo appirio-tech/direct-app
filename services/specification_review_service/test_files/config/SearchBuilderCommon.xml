@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <!-- Object factory configuration for DBStrategy -->
+    <Config name="com.topcoder.search.builder.strategy.factory">
+        <Property name="dbStrategy">
+            <Property name="type">
+                <Value>com.topcoder.search.builder.database.DatabaseSearchStrategy</Value>
+            </Property>
+            <Property name="params">
+                <Property name="param1">
+                    <Property name="type">
+                        <Value>String</Value>
+                    </Property>
+                    <Property name="value">
+                        <Value>com.topcoder.search.builder.database.DBSearchStrategy</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+
+    <!-- Object Factory configuration for validator -->
+    <Config name="com.topcoder.search.builder.validator.factory">
+        <Property name="validator:default">
+            <Property name="type">
+                <Value>com.topcoder.util.datavalidator.NotValidator</Value>
+            </Property>
+            <Property name="params">
+                <Property name="param1">
+                    <Property name="name">
+                        <Value>validator:null</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+        <Property name="validator:null">
+            <Property name="type">
+                <Value>com.topcoder.util.datavalidator.NullValidator</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+    <!-- Configuration for DBSearchStrategy -->
+    <Config name="com.topcoder.search.builder.database.DBSearchStrategy">
+        <!-- Property defining a specification for constructing the dbConnectionFactory to use. -->
+        <Property name="connectionFactory">
+
+            <!-- The namespace of the ConnectionFactory -->
+            <Property name="name">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+
+        <!--
+            The name to request from the connection factory when acquiring a connection.
+            If not present, then the default connection is used.
+        -->
+        <Property name="connectionName">
+            <Value>informix_connection</Value>
+        </Property>
+
+        <Property name="searchFragmentFactoryNamespace">
+            <Value>com.topcoder.search.builder.database.factory</Value>
+        </Property>
+
+        <Property name="searchFragmentBuilders">
+            <Property name="first">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.AndFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.AndFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="second">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.OrFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.OrFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="third">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.LikeFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.LikeFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="fourth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.NotFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.NotFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="fifth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.EqualToFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.EqualsFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="sixth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.InFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.InFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="eighth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.NullFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.NullFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="ninth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.GreaterThanFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="tenth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.GreaterThanOrEqualToFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="eleventh">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.BetweenFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="twelvth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.LessThanOrEqualToFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+                </Property>
+            </Property>
+
+            <Property name="thirteenth">
+                <Property name="targetFilter">
+                    <Value>com.topcoder.search.builder.filter.LessThanFilter</Value>
+                </Property>
+                <Property name="className">
+                    <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+    
+    <Config name="com.topcoder.search.builder.database.factory">
+    </Config>
+    
+</CMConfig>

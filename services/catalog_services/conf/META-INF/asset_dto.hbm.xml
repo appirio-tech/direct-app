@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.topcoder.catalog.service">
+    <!--
+          This is an entity for findAssets method.
+          Should be used only with the following hint:
+
+          query.setHint("org.hibernate.readOnly", true);
+    -->
+    <class name="com.topcoder.catalog.service.AssetDTO" abstract="true">
+        <id name="id" column="component_id"/>
+        <property name="compVersionId" column="comp_vers_id"/>
+        <property name="name" column="component_name"/>
+        <property name="shortDescription" column="short_desc"/>
+        <property name="versionText" column="version_text"/>
+        <many-to-one name="rootCategory" column="root_category_id"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.topcoder.asset"/>
+
+    <bean id="assetDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>java:TCS_CATALOG</value>
+        </property>
+    </bean>
+
+    <bean id="assetEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="assetDataSource"/>
+        <property name="jpaVendorAdapter" ref="assetJpaAdapter"/>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/asset/persistence.xml"/>
+    </bean>
+
+    <bean id="assetTransactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="assetEntityManagerFactory"/>
+    </bean>
+
+    <tx:advice id="assetTxAdvice" transaction-manager="assetTransactionManager">
+        <tx:attributes>
+            <tx:method name="create*"/>
+            <tx:method name="remove*"/>
+            <tx:method name="set*"/>
+            <tx:method name="update*"/>
+            <tx:method name="delete*"/>
+            <tx:method name="*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="assetTxPointcut" expression="execution(* com.topcoder.asset.services.impl.*.*(..))"/>
+        <aop:advisor advice-ref="assetTxAdvice" pointcut-ref="assetTxPointcut"/>
+    </aop:config>
+
+    <bean id="assetJpaAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="INFORMIX"/>
+        <property name="showSql" value="true"/>
+    </bean>
+
+    <bean id="log" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>com.topcoder.util.log.LogManager.getLog</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>com.topcoder.asset.logger</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="assetEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="assetEntityManagerFactory"/>
+    </bean>
+
+</beans>

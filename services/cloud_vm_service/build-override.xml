@@ -1,0 +1,9 @@
+<project name="Override Macrodef Standard Behaviour Import" basedir=".">
+    <!-- macrodef override definition in order to change the standard behaviour from
+         build.xml/build_dist.xml
+     -->
+
+    <!--<property name="cobertura.datafile.remote" value="${jboss_home}/bin/cobertura.ser"/>-->
+    <!--<property name="cobertura.datafile.local" value="${testlogdir}/cobertura_local.ser"/>-->
+
+</project>

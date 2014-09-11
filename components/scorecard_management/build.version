@@ -1,0 +1,9 @@
+#property file defining the component's information
+component.name=Scorecard Management
+component.distfilename=scorecard_management
+component.package=com.topcoder.management.scorecard
+component.packagedir=com/topcoder/management/scorecard
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

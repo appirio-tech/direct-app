@@ -1,0 +1,61 @@
+<project name="Dependency Import" default="dist" basedir=".">
+    <!-- property file defining the component's dependencies -->
+
+    <!-- Properties used in compile_targets ANT target for JDK version x -->
+    <property name="component.target" value="1.5"/>
+    <property name="component.bootclasspath" value="${java_1_5_bootclasspath}"/>
+
+    <!-- TCS dependencies -->
+    <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0.0/logging_wrapper.jar"/>
+    <property name="topcoder_commons_utility.jar"
+              value="${tcs_libdir}/topcoder_commons_utility/1.0.0/topcoder_commons_utility.jar"/>
+
+    <property name="base_exception.jar" value="${tcs_libdir}/base_exception/2.0.0/base_exception.jar"/>
+    <property name="object_formatter.jar" value="${tcs_libdir}/object_formatter/1.0.0/object_formatter.jar"/>
+    <property name="typesafe_enum.jar" value="${tcs_libdir}/typesafe_enum/1.1.0/typesafe_enum.jar"/>
+
+    <!-- 3rd party dependencies -->
+    <property name="junit.jar" value="${ext_libdir}/junit/4.6/junit-4.6.jar"/>
+
+    <property name="ifxjdbc.jar" value="${ext_libdir}/informix/ifxjdbc.jar"/>
+    <property name="javaee.jar" value="${ext_libdir}/j2ee/5.0/javaee.jar"/>
+
+    <property name="spring-framework.dir" value="${ext_libdir}/spring/"/>
+    <property name="commons-logging.jar" value="${ext_libdir}/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+    <property name="hibernate.dir" value="${ext_libdir}/hibernate"/>
+    <property name="jackson.dir" value="${ext_libdir}/jackson/1.9.7"/>
+    <property name="aspectj.dir" value="${ext_libdir}/aspectj/"/>
+
+    <path id="component.tcs-dependencies">
+        <pathelement location="${base_exception.jar}"/>
+        <pathelement location="${logging_wrapper.jar}"/>
+        <pathelement location="${topcoder_commons_utility.jar}"/>
+        <pathelement location="${object_formatter.jar}"/>
+        <pathelement location="${typesafe_enum.jar}"/>
+    </path>
+
+    <path id="component.3rdParty-dependencies">
+        <pathelement location="${javaee.jar}"/>
+        <pathelement location="${commons-logging.jar}"/>
+
+        <fileset dir="${spring-framework.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${hibernate.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${jackson.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${aspectj.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="component.test.3rdParty-dependencies">
+        <pathelement location="${junit.jar}"/>
+
+        <pathelement location="${ifxjdbc.jar}"/>
+    </path>
+
+</project>

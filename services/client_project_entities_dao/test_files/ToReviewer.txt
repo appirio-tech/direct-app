@@ -1,0 +1,18 @@
+[Run Test]
+1. Setup database.
+1.1 download informix 11.5
+1.2 Setup the database using the Schema.sql and id_sequences.sql.
+1.3 config the database properties.
+1.3.1 test_files\com\topcoder\db\connectionfactory\DBConnectionFactoryImpl.xml
+1.3.2 test_files\hibernate.cfg.xml
+1.3.3 test_files\META-INF\informix-ds.xml
+1.4. Install and start JBoss AS.
+1.5. Run 'ant test.setup' to deploy the component into JBoss container.
+1.6. Run 'ant test'
+
+[About Changes and Improvement]
+1. There are problems to run GenericEJB3DAOTest and SearchByFilterUtilityImplTest simutaniously, but they can be run singlely. This problem already exists in the old source code, according to http://forums.topcoder.com/?module=Thread&threadID=664147&start=0.  I have tried to find the cause, it seems related to the max number of informix connections. which can not be solved since I am using Developer Edition.
+2. I add some simply test cases for previous update, but they are not complete, just for coverage purpose. And PM has confirmed that they are not required. see http://forums.topcoder.com/?module=Thread&threadID=664070&start=0
+3. I made some changes to the previous update, they does not work, according to the test, the problem is the sql script problem.
+4. code clean up : unused imports and @SuppressWarnings("unchecked") tag are removed, etc.
+5. imporvement: query are updated, like in CompanyDAOBean, Utils class is removed to reduce scope.

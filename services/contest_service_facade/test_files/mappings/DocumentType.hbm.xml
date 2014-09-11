@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="DocumentType" table="document_type_lu" lazy="false">
+		<comment>
+			This table describes document type. Currently possible two
+			types: 1. Specification 2. Template
+		</comment>
+
+		<id name="documentTypeId" column="document_type_id" type="long"/>
+
+		<property name="description" length="100" column="document_type_desc"/>
+
+	</class>
+</hibernate-mapping>

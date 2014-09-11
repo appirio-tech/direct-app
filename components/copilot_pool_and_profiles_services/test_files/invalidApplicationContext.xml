@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.informix.jdbc.IfxDriver"/>
+        <property name="url" value="jdbc:informix-sqli://localhost:9088/copilot:informixserver=ol_tcs"/>
+        <property name="username" value="informix"/>
+        <property name="password" value="123456"/>
+    </bean>     
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>mapping.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.InformixDialect
+                hibernate.show_sql=false
+                hibernate.current_session_context_class=none
+            </value>
+        </property>
+    </bean>    
+       
+</beans>
+

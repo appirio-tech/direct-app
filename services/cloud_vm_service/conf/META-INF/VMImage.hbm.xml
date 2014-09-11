@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.view.dto.cloudvm">
+  <class name="VMImage" table="vm_image" lazy="false">
+
+    <id name="id" column="vm_image_id" >
+      <generator class="increment">
+      </generator>
+    </id>
+      
+      <property name="awsImageId" length="50" column="aws_image_id"/>
+      <property name="createDate" column="create_date"/>
+      <property name="modifyDate" column="modify_date"/>
+
+      <many-to-one name="securityGroup" column="vm_security_group_id" class="VMSecurityGroup" fetch="select" />
+      <many-to-one name="instanceType" column="vm_instance_type_id" class="VMInstanceType" fetch="select" />
+      <many-to-one name="availabilityZone" column="vm_availability_zone_id" class="VMAvailabilityZone" fetch="select" />
+      <many-to-one name="keyPair" column="vm_key_pair_id" class="VMKeyPair" fetch="select" />
+      <many-to-one name="vmAccount" column="vm_account_id" class="VMAccount" fetch="select" />
+
+
+      <bag name="userData" table="vm_image_user_data" fetch="select">
+        <key column="vm_image_id" />
+        <many-to-many column="vm_user_data_id" class="VMUserData" />
+      </bag>
+      
+      <property name="tcName" column="vm_image_tc_name"/>
+      
+	  <many-to-one name="vmProvider" column="vm_provider_id" class="VMProvider" fetch="select" />      
+  </class>
+</hibernate-mapping>

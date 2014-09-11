@@ -1,0 +1,96 @@
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+ "http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+    <display-name>Project Service</display-name>
+
+    <!-- DataSource -->
+    <module>
+        <java>informix-ds.xml</java>
+    </module>
+
+    <!-- Project Service EJB -->
+    <module>
+        <ejb>project_service.jar</ejb>
+    </module>
+    
+    <!-- The EJB used to save Cobertura data on server side -->
+    <module>
+        <ejb>SaveCoberturaData.jar</ejb>
+    </module>
+
+    <!-- Informix Driver -->
+    <module>
+        <java>ifxjdbc.jar</java>
+    </module>
+
+    <!-- The mock used for authentication/authentization -->
+    <module>
+        <java>mock.jar</java>
+    </module>
+
+    <!-- The tcs dependencies -->
+    <module>
+        <java>auditor.jar</java>
+    </module>
+    <module>
+        <java>authentication_factory.jar</java>
+    </module>
+    <module>
+        <java>authentication_manager.jar</java>
+    </module>
+    <module>
+        <java>configuration_api.jar</java>
+    </module>
+    <module>
+        <java>configuration_persistence.jar</java>
+    </module>
+    <module>
+        <java>resource_management.jar</java>
+    </module>
+    <module>
+        <java>data_entitlement.jar</java>
+    </module>
+    <module>
+        <java>functional_entitlement.jar</java>
+    </module>
+    <module>
+        <java>jboss_login_module.jar</java>
+    </module>
+    <module>
+        <java>object_factory.jar</java>
+    </module>
+    <module>
+        <java>object_factory_configuration_api_plugin.jar</java>
+    </module>
+    <module>
+        <java>search_builder.jar</java>
+    </module>
+    <module>
+        <java>security_facade.jar</java>
+    </module>
+    <module>
+        <java>user_group_manager.jar</java>
+    </module>
+    
+    <module>
+        <java>base_exception.jar</java>
+    </module>
+    <module>
+        <java>logging_wrapper.jar</java>
+    </module>
+    <module>
+        <java>object_formatter.jar</java>
+    </module>
+    <module>
+        <java>typesafe_enum.jar</java>
+    </module>
+    <module>
+        <java>id_generator.jar</java>
+    </module>
+    <module>
+        <java>configuration_manager.jar</java>
+    </module>
+    <module>
+        <java>db_connection_factory.jar</java>
+    </module>
+</application>

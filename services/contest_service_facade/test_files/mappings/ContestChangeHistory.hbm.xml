@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="ContestChangeHistory" table="contest_change_history"
+		lazy="true">
+		<composite-id>
+			<key-property name="contestId" column="contest_id" />
+			<key-property name="fieldName" column="field_name" />
+		</composite-id>
+		<property name="transactionId" column="transaction_id" />
+		<property name="timestamp" column="timestamp" />
+		<property name="userName" column="username" />
+		<property name="userAdmin" column="is_user_admin" />
+		<property name="oldData" column="old_data" />
+		<property name="newData" column="new_data" />
+	</class>
+</hibernate-mapping>

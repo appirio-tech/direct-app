@@ -1,0 +1,554 @@
+<?xml version="1.0"?>
+<CMConfig>
+
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator1">
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator2">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+
+
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator3">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator4">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator5">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator6">
+		<Property name="week_offset">
+			<Value>notNumber</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator7">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>notNumber</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator8">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>notNumber</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator9">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>notNumber</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator10">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>notNumber</Value>
+		</Property>
+	</Config>
+	
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator11">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>0</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator12">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>8</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator13">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>-1</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator14">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>60</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator15">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>-1</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator16">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>60</Value>
+		</Property>
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator17">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>-1</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator18">
+		<Property name="week_offset">
+			<Value>0</Value>
+		</Property>
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<Property name="hour">
+			<Value>0</Value>
+		</Property>
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<Property name="second">
+			<Value>60</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence">
+		<Property name="template_files">
+			<Value>test_files/failuretests/template_file1.xml</Value>
+			<Value>test_files/failuretests/template_file2.xml</Value>
+			<Value>test_files/failuretests/template_file3.xml</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence1">
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence2">
+		<Property name="template_files">
+			<Value>test_files/failuretests/template_file1.xml</Value>
+			<Value>test_files/failuretests/template_file2.xml</Value>
+			<Value>test_files/failuretests/template_file3.xml</Value>
+			<Value>test_files/failuretests/template_file_wrong.xml</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence3">
+		<Property name="template_files">
+			<Value>test_files/failuretests/template_file4.xml</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence4">
+		<Property name="template_files">
+			<Value>test_files/failuretests/template_file5.xml</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence5">
+		<Property name="template_files">
+			<Value>test_files/failuretests/template_file6.xml</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate1">
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate2">
+		<Property name="persistence">
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate3">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate4">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate5">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate6">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_key">
+				<Value>workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate7">
+		<Property name="persistence">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<Property name="start_date_generator">
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<Property name="workdays">
+			<Property name="object_specification_namespace">
+				<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+			</Property>
+			<Property name="object_identifier">
+				<Value>default</Value>
+			</Property>
+		</Property>
+	</Config>
+
+</CMConfig>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+     
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+    <!--  Configuration for entityManager -->
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="INFORMIX" />
+            </bean>
+        </property>
+        <property name="persistenceUnitManager" ref="persistenceUnitManager" />
+        <property name="persistenceUnitName" value="applicationPersistence" />
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.cache.use_query_cache" value="true"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Data Source -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="com.informix.jdbc.IfxDriver" />
+        <property name="url"
+            value="jdbc:informix-sqli://localhost:9088/common_oltp:informixserver=ol_svr_custom" />
+        <property name="username" value="informix" />
+        <property name="password" value="123456" />
+        <property name="minIdle" value="2" />
+    </bean>
+
+    <!--  Configuration for persistence unit manager -->
+    <bean id="persistenceUnitManager"
+        class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+        <property name="persistenceXmlLocations">
+            <list>
+                <value>classpath*:META-INF/persistence.xml</value>
+            </list>
+        </property>
+        <property name="dataSources">
+            <map>
+                <entry key="localDataSource" value-ref="dataSource" />
+            </map>
+        </property>
+        <property name="defaultDataSource" ref="dataSource" />
+    </bean>
+
+    <!-- Configuration for transaction managers and annotation driven manager enable -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Validators configuration -->
+    <bean id="directProjectMetadataKeyValidator" 
+        class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataKeyValidatorImpl" >
+        <property name="loggerName" value="loggerName" />      
+    </bean>
+
+    <bean id="directProjectMetadataValidator" 
+        class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataValidatorImpl" >
+        
+        <property name="loggerName" value="loggerName" />
+        <property name="validatorMapping">
+            <map>
+                <!-- Example for Budget/Planned Duration/Project Forum Id - positive integer value -->
+                <entry key="1" value="^0*[1-9][0-9]*$"/>                  
+                <!-- Example for project svn address -->
+                <entry key="2" value="^(svn\+ssh):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&amp;%@!\-\/]))?$"/>  
+                <!-- Example for Private Flag - true or false -->
+                <entry key="5" value="^true|false$"/>       
+                <!-- Example for Project Jira Key - Non-empty string -->
+                <entry key="6" value="^.*\S.*$"/>               
+            </map>
+        </property>
+
+        <property name="predefinedKeys">
+            <map>               
+                <!-- Example for choose from predefined list -->
+                <entry key="4" value="true"/>                  
+            </map>
+        </property>
+    </bean>
+    
+    <!-- Services configuration -->
+    <bean id="directProjectMetadataService" 
+        class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataServiceImpl" >
+        
+        <property name="loggerName" value="loggerName" />      
+        <property name="directProjectMetadataValidator" ref="directProjectMetadataValidator" />
+        <property name="auditActionTypeIdMap">
+            <map>                               
+                <entry key="create" value="1"/>
+                <entry key="update" value="2"/>             
+                <entry key="delete" value="3"/>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="directProjectMetadataKeyService" 
+        class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataKeyServiceImpl" >
+        
+        <property name="loggerName" value="loggerName" />      
+        <property name="directProjectMetadataKeyValidator" ref="directProjectMetadataKeyValidator" />
+        <property name="auditActionTypeIdMap">
+            <map>                               
+                <entry key="create" value="4"/>
+                <entry key="update" value="5"/>             
+                <entry key="delete" value="6"/>
+            </map>
+        </property>
+    </bean>
+</beans>

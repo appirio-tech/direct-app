@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CMConfig>
+	<Property name="Prop1">
+		<Value>Value</Value>
+	</Property>
+	<Property name="Prop2">
+		<Value>Value1</Value>
+		<Value>Value2</Value>
+	</Property>
+</CMConfig>

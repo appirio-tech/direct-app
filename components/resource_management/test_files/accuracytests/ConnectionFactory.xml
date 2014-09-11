@@ -1,0 +1,51 @@
+<CMConfig>
+<Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+    <Property name="connections">
+        <Property name="default">
+            <Value>dbconnection</Value>
+        </Property>
+
+        <Property name="dbconnection">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+					<Property name="jdbc_driver">
+						<Value>com.informix.jdbc.IfxDriver</Value>
+					</Property>
+					<Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.200:9088/resource_manager:informixserver=informix</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>topcoder</Value>
+                    </Property>
+            </Property>
+        </Property>
+
+
+        <Property name="TestConnectionImpl">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+					<Property name="jdbc_driver">
+						<Value>com.informix.jdbc.IfxDriver</Value>
+					</Property>
+					<Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.200:9088/resource_manager:informixserver=informix</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>topcoder</Value>
+                    </Property>
+            </Property>
+        </Property>
+
+     </Property>
+  </Config>
+</CMConfig>

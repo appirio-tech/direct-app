@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<jboss>
+	<enterprise-beans>
+		<session>
+			<ejb-name>PipelineServiceFacadeBean</ejb-name>
+			<jndi-name>remote/PipelineServiceFacadeBean</jndi-name>
+
+			<ejb-ref>
+				<ejb-ref-name>ejb/ContestPipelineService</ejb-ref-name>
+				<jndi-name>remote/ContestPipelineServiceBean</jndi-name>
+			</ejb-ref>
+
+			<port-component>
+				<port-component-name>PipelineServiceFacadeBean</port-component-name>
+				<port-component-uri>/PipelineServiceFacadeBean</port-component-uri>
+				<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			</port-component>
+		</session>
+	</enterprise-beans>
+</jboss>

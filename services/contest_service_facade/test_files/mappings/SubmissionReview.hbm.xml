@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="SubmissionReview" table="submission_review"
+		lazy="true">
+		<comment>
+			This table describe submission review. It contains reviewer
+			id, review text, status and modify date
+		</comment>
+
+		<composite-id>
+			<key-many-to-one name="submission" column="submission_id"
+				class="com.topcoder.service.studio.submission.Submission" />
+			<key-property name="reviewerId" column="reviewer_id" />
+		</composite-id>
+
+		<property name="text" length="10000" not-null="true" />
+
+		<many-to-one name="status" column="review_status_id"
+			class="com.topcoder.service.studio.submission.ReviewStatus"  fetch="select"
+			 />
+
+		<property name="modifyDate" column="modify_date" generated="always"
+			not-null="true" />
+	</class>
+</hibernate-mapping>

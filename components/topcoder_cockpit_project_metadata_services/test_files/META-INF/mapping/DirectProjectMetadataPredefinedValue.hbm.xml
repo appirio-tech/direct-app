@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.project.metadata.entities.dao">
+  <class name="DirectProjectMetadataPredefinedValue" table="direct_project_metadata_predefined_value">
+    <id name="id" column="id">
+			<generator class="increment"/>
+    </id>
+
+	<many-to-one name="projectMetadataKey" class="DirectProjectMetadataKey" column="project_metadata_key_id" insert="false" update="false" />
+	<property name="predefinedMetadataValue" column="predefined_metadata_value" not-null="true" />
+	<property name="position" column="position" not-null="true" />
+  </class>
+</hibernate-mapping>

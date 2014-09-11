@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>AdminServiceFacadeBean</ejb-name>
+            <jndi-name>remote/AdminServiceFacadeBean</jndi-name>
+        </session>
+    </enterprise-beans>
+</jboss>

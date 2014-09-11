@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.topcoder.catalog.entity">
+    <!-- Type definition for Status enumeration -->
+    <typedef name="Status" class="com.topcoder.catalog.entity.StatusUserType"/>
+
+    <class name="Component" table="comp_catalog">
+        <id name="id" column="component_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">COMPONENT_SEQ</param>
+            </generator>
+        </id>
+        <property name="name" column="component_name"/>
+        <property name="status" type="Status" column="status_id"/>
+        <property name="shortDesc" column="short_desc"/>
+        <property name="functionalDesc" column="function_desc"/>
+        <property name="description" column="description"/>
+        <many-to-one name="rootCategory" class="Category" column="root_category_id"/>
+		<property name="currentVersionNumber" column="current_version"/>
+        <idbag name="categories" table="comp_categories" cascade="persist">
+            <collection-id column="comp_categories_id" type="long">
+                <generator class="com.topcoder.catalog.entity.IdGenerator">
+                    <param name="sequence_name">COMPCATEGORY_SEQ</param>
+                </generator>
+            </collection-id>
+            <key column="component_id" not-null="true"/>
+            <many-to-many column="category_id" class="Category"/>
+        </idbag>
+        <set name="users" table="comp_user" cascade="all-delete-orphan" inverse="true">
+            <key column="component_id" not-null="true"/>
+            <one-to-many class="CompUser"/>
+        </set>
+        <set name="clients" table="comp_client" cascade="all-delete-orphan" inverse="true">
+            <key column="component_id" not-null="true"/>
+            <one-to-many class="CompClient"/>
+        </set>
+        <set name="versionsSet" table="comp_versions" cascade="save-update" inverse="true">
+            <key column="component_id"/>
+            <one-to-many class="CompVersion"/>
+        </set>
+    </class>
+    <class name="Category" table="categories">
+        <id name="id" column="category_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">CATEGORY_SEQ</param>
+            </generator>
+        </id>
+        <property name="name" column="category_name"/>
+        <property name="description" column="description"/>
+        <property name="status" type="Status" column="status_id"/>
+        <property name="viewable" column="viewable"/>
+        <many-to-one name="parentCategory" class="Category" column="parent_category_id" lazy="false"/>
+        <property name="catalogName" lazy="false">
+            <formula>
+                (SELECT A.catalog_name FROM category_catalog B, catalog A
+                    WHERE B.catalog_id = A.catalog_id AND B.category_id = category_id)
+            </formula>
+        </property>
+    </class>
+    <class name="CompUser" table="comp_user">
+        <composite-id>
+            <key-property name="userId" column="user_id"/>
+            <key-many-to-one name="component" column="component_id" foreign-key="component_id"/>
+        </composite-id>
+    </class>
+    <class name="CompClient" table="comp_client">
+        <composite-id>
+            <key-property name="clientId" column="client_id"/>
+            <key-many-to-one name="component" column="component_id" foreign-key="component_id"/>
+        </composite-id>
+        <set name="users" table="user_client" inverse="true">
+            <key>
+                <column name="client_id"/>
+                <column name="component_id"/>
+            </key>
+            <element column="user_id" type="long"/>
+            <loader query-ref="getUsersByCompClient"/>
+        </set>
+    </class>
+    <class name="CompVersion" table="comp_versions">
+        <id name="id" column="comp_vers_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">COMPVERSION_SEQ</param>
+            </generator>
+        </id>
+		 <property name="version" column="version"/>
+		 <many-to-one name="component" class="Component" column="component_id"/>
+         <property name="versionText" column="version_text"/>
+        <many-to-one name="phase" class="Phase" column="phase_id"/>
+        <property name="phaseTime" column="phase_time"/>
+        <property name="phasePrice" column="price"/>
+        <property name="comments" column="comments"/>
+        <property name="suspended" column="suspended_ind"/>
+        <one-to-one name="forum" cascade="all" property-ref="compVersion"/>
+        <one-to-one name="link" cascade="all" property-ref="compVersion"/>
+
+        <map name="versionDates" table="comp_version_dates" cascade="all-delete-orphan" lazy="false">
+            <key column="comp_vers_id" not-null="true"/>
+            <map-key type="java.lang.Long" column="phase_id"/>
+            <one-to-many class="CompVersionDates"/>
+        </map>
+        <idbag name="technologies" table="comp_technology" cascade="all" lazy="false">
+            <collection-id column="comp_tech_id" type="long">
+                <generator class="com.topcoder.catalog.entity.IdGenerator">
+                    <param name="sequence_name">COMPTECH_SEQ</param>
+                </generator>
+            </collection-id>
+            <key column="comp_vers_id" not-null="true"/>
+            <many-to-many column="technology_type_id" class="Technology"/>
+        </idbag>
+        <!-- new dependencies add in bug fix -->
+        <idbag name="dependencies" table="comp_dependencies" cascade="all" lazy="false">
+            <collection-id column="comp_dependency_id" type="long">
+                <generator class="com.topcoder.catalog.entity.IdGenerator">
+                    <param name="sequence_name">DEPENDENCIES_SEQ</param>
+                </generator>
+            </collection-id>
+            <key column="comp_vers_id" not-null="true"/>
+            <many-to-many column="child_comp_vers_id" class="CompVersion"/>
+        </idbag>
+    	<set  name="documentation" cascade="all" inverse="true" lazy="false">
+          	<key column="comp_vers_id" />
+          	<one-to-many class="CompDocumentation" />
+    	</set >
+    </class>
+    <class name="CompVersionDates" table="comp_version_dates">
+        <id name="id" column="comp_version_dates_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">COMPVERSIONDATES_SEQ</param>
+            </generator>
+        </id>
+        <many-to-one name="phase" class="Phase" column="phase_id" insert="false" update="false"/>
+        <many-to-one name="compVersion" column="comp_vers_id" insert="false" update="false"/>
+        <property name="postingDate" column="posting_date"/>
+        <property name="initialSubmissionDate" column="initial_submission_date"/>
+        <property name="winnerAnnouncedDate" column="winner_announced_date"/>
+        <property name="finalSubmissionDate" column="final_submission_date"/>
+        <property name="estimatedDevDate" column="estimated_dev_date"/>
+        <property name="price" column="price"/>
+        <property name="totalSubmissions" column="total_submissions"/>
+        <property name="status" type="Status" column="status_id"/>
+        <property name="levelId" column="level_id"/>
+        <property name="screeningCompleteDate" column="screening_complete_date"/>
+        <property name="reviewCompleteDate" column="review_complete_date"/>
+        <property name="aggregationCompleteDate" column="aggregation_complete_date"/>
+        <property name="phaseCompleteDate" column="phase_complete_date"/>
+        <property name="productionDate" column="production_date"/>
+        <property name="aggregationCompleteDateComment" column="aggregation_complete_date_comment"/>
+        <property name="phaseCompleteDateComment" column="phase_complete_date_comment"/>
+        <property name="reviewCompleteDateComment" column="review_complete_date_comment"/>
+        <property name="winnerAnnouncedDateComment" column="winner_announced_date_comment"/>
+        <property name="initialSubmissionDateComment" column="initial_submission_date_comment"/>
+        <property name="screeningCompleteDateComment" column="screening_complete_date_comment"/>
+        <property name="finalSubmissionDateComment" column="final_submission_date_comment"/>
+        <property name="productionDateComment" column="production_date_comment"/>
+    </class>
+    <class name="Technology" table="technology_types">
+        <id name="id" column="technology_type_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">TECHNOLOGY_SEQ</param>
+            </generator>
+        </id>
+        <property name="name" column="technology_name"/>
+        <property name="description" column="description"/>
+        <property name="status" type="Status" column="status_id"/>
+    </class>
+    <class name="Phase" table="phase">
+        <id name="id" column="phase_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">PHASE_SEQ</param>
+            </generator>
+        </id>
+        <property name="description" column="description"/>
+    </class>
+    <class name="CompForum" table="comp_jive_category_xref">
+        <id name="jiveCategoryId" column="jive_category_id"></id>
+        <many-to-one name="compVersion" column="comp_vers_id" unique="true" not-null="true"/>
+    </class>
+    <class name="CompLink" table="comp_link">
+        <id name="id" column="comp_link_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">COMPLINK_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="link" column="link"/>
+        <many-to-one name="compVersion" column="comp_vers_id" unique="true" not-null="true"/>
+    </class>
+    <!-- add in version 1.1 -->
+    <class name="CompDocumentation" table="comp_documentation">
+        <id name="id" column="document_id">
+            <generator class="com.topcoder.catalog.entity.IdGenerator">
+                <param name="sequence_name">COMPDOCUMENT_SEQ</param>
+            </generator>
+        </id>
+        <many-to-one name="compVersion" class="CompVersion" column="comp_vers_id"/>
+        <property name="documentTypeId" column="document_type_id"/>
+        <property name="documentType">
+            <formula>
+                (SELECT A.description FROM doc_types A
+                    WHERE A.document_type_id = document_type_id)
+            </formula>
+        </property>
+        <property name="documentName" column="document_name"/>
+        <property name="url" column="url"/>
+    </class>
+
+    <sql-query name="getUsersByCompClient">
+        <load-collection alias="users" role="CompClient.users">
+            <return-property name="element" column="user_id"/>
+            <return-property name="key">
+                <return-column name="client_id"/>
+                <return-column name="component_id"/>
+            </return-property>
+        </load-collection>
+        SELECT uc.user_id, uc.client_id, cc.component_id
+        FROM user_client uc
+        INNER JOIN comp_client cc ON uc.client_id = cc.client_id
+        WHERE uc.client_id=? AND cc.component_id=?
+    </sql-query>
+
+    <query name="getAllPhases">
+        SELECT p FROM Phase p
+    </query>
+    <query name="getActiveTechnologies">
+        SELECT t FROM Technology t WHERE t.status=1
+    </query>
+    <query name="getActiveCategories">
+        SELECT c FROM Category c WHERE c.status=1
+    </query>
+
+
+
+</hibernate-mapping>

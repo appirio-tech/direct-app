@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+        https://java.sun.com/xml/ns/persistence/orm_2_0.xsd" version="1.0">
+    
+    <entity name="User" class="com.topcoder.asset.entities.User">
+      <table name="user"/>
+      <attributes>
+        <id name="id">
+          <column name="user_id" nullable="false" column-definition="DECIMAL(10,0)" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="name">
+          <column name="handle" nullable="false" column-definition="VARCHAR(50)"/>
+        </basic>
+      </attributes>
+    </entity>
+    
+    <entity name="AssetPermission" class="com.topcoder.asset.entities.AssetPermission">
+      <table name="AssetPermission"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="assetId">
+          <column name="asset_id" column-definition="INT8" />
+        </basic>
+        <many-to-one name="user" target-entity="com.topcoder.asset.entities.User">
+          <join-column name="user_id" referenced-column-name="user_id" nullable="false" column-definition="INT8" />
+        </many-to-one>
+      </attributes>
+    </entity>
+    
+    <entity name="Category" class="com.topcoder.asset.entities.Category">
+      <table name="AssetCategory"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="name">
+          <column name="name" nullable="false" column-definition="VARCHAR(50)" />
+        </basic>
+        <basic name="containerType">
+          <column name="container_type" nullable="false" column-definition="VARCHAR(50)" />
+        </basic>
+        <basic name="containerId">
+          <column name="container_id" nullable="false" column-definition="INT8" />
+        </basic>
+      </attributes>
+    </entity>
+    
+    <entity name="FileTypeIcon" class="com.topcoder.asset.entities.FileTypeIcon">
+      <table name="FileTypeIcon"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="fileType">
+          <column name="file_type" nullable="false" column-definition="VARCHAR(50)" />
+        </basic>
+        <basic name="fileTypeCategory">
+          <column name="file_type_category" nullable="false" column-definition="VARCHAR(50)" />
+        </basic>
+        <basic name="iconPath">
+          <column name="icon_path" nullable="false" column-definition="VARCHAR(200)" />
+        </basic>
+      </attributes>
+    </entity>
+  
+    <entity name="AuditRecord" class="com.topcoder.asset.entities.AuditRecord">
+      <table name="AssetAuditRecord"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="timestamp">
+          <column name="timestamp" nullable="false" column-definition="DATETIME" />
+        </basic>
+        <basic name="userId">
+          <column name="user_id" nullable="false" column-definition="INT8" />
+        </basic>
+        <basic name="action">
+          <column name="action" nullable="false"  column-definition="VARCHAR(200)" />
+        </basic>
+        <basic name="entityType">
+          <column name="entity_type" nullable="false" column-definition="VARCHAR(200)" />
+        </basic>
+        <basic name="entityId">
+          <column name="entity_id" nullable="false" column-definition="INT8" />
+        </basic>
+        <basic name="oldValue">
+          <column name="old_value" nullable="true" column-definition="LVARCHAR(4000)" />
+        </basic>
+        <basic name="newValue">
+          <column name="new_value" nullable="true" column-definition="LVARCHAR(4000)" />
+        </basic>
+      </attributes>
+    </entity>
+    
+    <entity name="AssetVersion" class="com.topcoder.asset.entities.AssetVersion">
+      <table name="AssetVersion"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="version">
+          <column name="version" nullable="false" column-definition="VARCHAR(50)" />
+        </basic>
+        <basic name="fileName">
+          <column name="file_name" nullable="false" column-definition="VARCHAR(100)" />
+        </basic>
+        <basic name="fileType">
+          <column name="file_type" nullable="false" column-definition="VARCHAR(100)" />
+        </basic>
+        <basic name="fileSizeBytes">
+          <column name="file_size_bytes" nullable="false" column-definition="INT8" />
+        </basic>
+        <basic name="uploadTime">
+          <column name="upload_time" nullable="false" column-definition="DATETIME" />
+        </basic>
+        <basic name="description">
+          <column name="description" nullable="true" column-definition="LVARCHAR(1000)" />
+        </basic>
+        <basic name="assetId">
+          <column name="asset_id" nullable="false" column-definition="INT8" />
+        </basic>
+        <basic name="filePath">
+          <column name="file_path" nullable="false" column-definition="VARCHAR(200)" />
+        </basic>
+        <basic name="previewImagePath">
+          <column name="preview_image_path" nullable="true" column-definition="VARCHAR(200)"/>
+        </basic>
+        <many-to-one name="uploader" target-entity="com.topcoder.asset.entities.User">
+          <join-column name="uploader_id" referenced-column-name="user_id" nullable="false" column-definition="INT8" />
+        </many-to-one>
+      </attributes>
+    </entity>
+    
+    <entity name="Asset" class="com.topcoder.asset.entities.Asset" access="FIELD">
+      <table name="Asset"/>
+      <attributes>
+        <id name="id">
+          <column name="id" nullable="false" column-definition="INT8" />
+          <generated-value strategy="IDENTITY"/>
+        </id>
+        <basic name="name">
+          <column name="name" nullable="false" column-definition="VARCHAR(100)"/>
+        </basic>
+        <basic name="containerType">
+          <column name="container_type" nullable="false" column-definition="VARCHAR(50)"/>
+        </basic>
+        <basic name="containerId">
+          <column name="container_id" nullable="false" column-definition="INT8"/>
+        </basic>
+        <basic name="isPublic">
+          <column name="public" nullable="false" column-definition="CHAR(1)"/>
+        </basic>
+        <one-to-one name="currentVersion" target-entity="com.topcoder.asset.entities.AssetVersion">
+          <join-column name="current_version_id" referenced-column-name="id" nullable="true" column-definition="INT8"/>
+        </one-to-one>
+        <many-to-many name="categories" target-entity="com.topcoder.asset.entities.Category">
+          <join-table name="AssetCategoryMapping">
+            <join-column name="asset_id" referenced-column-name="id" nullable="false" column-definition="INT8"/>
+            <inverse-join-column name="category_id" referenced-column-name="id" nullable="false" column-definition="INT8"/>
+          </join-table>
+        </many-to-many>
+      </attributes>
+    </entity>
+  
+</entity-mappings>

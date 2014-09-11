@@ -1,0 +1,6 @@
+insert into tc_direct_project values(1, 'GLUI', 'Description 1', 997, CURRENT, CURRENT)                        
+insert into tc_direct_project values(2, 'Vesta', 'Description 2', 998, CURRENT, CURRENT)
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (1, 'First Studio Contest', 1, 1, CURRENT, CURRENT, 2)
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (2, 'Second Studio Contest', 2, 2, CURRENT, CURRENT, 7)
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (3, 'Third Studio Contest', 2, 2, CURRENT, CURRENT, 10)
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (4, 'Fourth Studio Contest', 2, 2, CURRENT, CURRENT, 11)

@@ -1,0 +1,10 @@
+<CMConfig>
+	<Config name="com.topcoder.naming.jndiutility">
+		<Property name="context.default.factory">
+			<Value>org.mockejb.jndi.MockContextFactory</Value>
+		</Property>
+		<Property name="context.default.url">
+			<Value>file:test_files/test_root</Value>
+		</Property>
+	</Config>
+</CMConfig>

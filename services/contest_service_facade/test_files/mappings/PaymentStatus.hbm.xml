@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="PaymentStatus" table="payment_status_lu" lazy="true">
+		<comment>Tables which describes payment status</comment>
+
+		<id name="paymentStatusId" column="payment_status_id"
+			type="long" />
+
+		<property name="description" length="100"
+			column="payments_status_desc" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration
+          PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.InformixDialect</property>
+        <property name="show_sql">true</property>
+
+        <property name="connection.url">jdbc:informix-sqli://174.129.88.8:2021/common_oltp:informixserver=informixoltp_tcp</property>
+        <property name="connection.username">coder</property>
+        <property name="connection.password">c0d3r4T</property>
+        <property name="connection.driver_class">com.informix.jdbc.IfxDriver</property>
+        <!--
+        <property name="connection.datasource">java:/InformixDS</property>
+        -->
+        <!--
+        <property name="hbm2ddl.auto">create-drop</property>
+        -->
+
+        <mapping resource="META-INF/mapping.xml"/>
+    </session-factory>
+</hibernate-configuration>

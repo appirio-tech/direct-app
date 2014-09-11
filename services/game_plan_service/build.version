@@ -1,0 +1,14 @@
+# Property file defining the component's information.
+component.name=Game Plan Service
+component.distfilename=game_plan_service
+component.package=com.topcoder.service.gameplan
+component.packagedir=com/topcoder/service/gameplan
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1
+
+# Defines the Main-Class property for the mainfest file (e.g. com.topcoder.utility.SomeClass)
+# This property is only used for components that can be run from command line.
+# Leave the property value empty if not applicable.
+component.mainclass=

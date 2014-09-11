@@ -1,0 +1,9 @@
+#property file defining the component's information
+component.name=Project Phases
+component.distfilename=project_phases
+component.package=com.topcoder.project.phases
+component.packagedir=com/topcoder/project/phases
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

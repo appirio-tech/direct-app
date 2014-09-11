@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<CMConfig>
+
+<!-- Namespace for ProjectManagerImpl class -->
+<Config name="com.topcoder.management.project.ProjectManagerImpl">
+	<Property name="SearchBuilderNamespace">
+		<Value>com.topcoder.searchbuilder.ProjectManagement</Value>
+	</Property>
+	<Property name="PersistenceClass">
+		<Value>com.topcoder.management.project.persistence.InformixProjectPersistence</Value>
+	</Property>
+	<Property name="PersistenceNamespace">
+		<Value>com.topcoder.management.project.persistence.InformixProjectPersistence</Value>
+	</Property>
+	<Property name="ValidatorClass">
+		<Value>com.topcoder.management.project.validation.DefaultProjectValidator</Value>
+	</Property>
+	<Property name="ValidatorNamespace">
+		<Value>com.topcoder.management.project.validation.DefaultProjectValidator</Value>
+	</Property>
+</Config>
+
+   <Config name="com.topcoder.management.project">
+        <Property name="SearchBuilderNamespace">
+            <Value>com.topcoder.searchbuilder.ProjectManagement</Value>
+        </Property>
+        <Property name="PersistenceClass">
+            <Value>com.topcoder.management.project.persistence.InformixProjectPersistence</Value>
+        </Property>
+        <Property name="PersistenceNamespace">
+            <Value>com.topcoder.management.project.persistence.InformixProjectPersistence</Value>
+        </Property>
+        <Property name="ValidatorClass">
+            <Value>com.topcoder.management.project.validation.DefaultProjectValidator</Value>
+        </Property>
+        <Property name="ValidatorNamespace">
+            <Value>com.topcoder.management.project.validation.DefaultProjectValidator</Value>
+        </Property>
+    </Config>
+
+<!-- Namespace for InformixProjectPersistence class -->
+<Config name="com.topcoder.management.project.persistence.InformixProjectPersistence">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+</Config>
+
+<!-- Namespace for SearchBuilder component
+The setting in this section decides the logic of project searching.
+-->
+<Config name="com.topcoder.searchbuilder.ProjectManagement">
+        <Property name="searchStrategyFactoryNamespace">
+            <Value>com.topcoder.search.builder.strategy.factory</Value>
+        </Property>
+        <Property name="fieldValidatorFactoryNamespace">
+            <Value>com.topcoder.search.builder.validator.factory</Value>
+        </Property>
+
+        <Property name="searchBundles">
+            <Property name="ProjectSearchBundle">
+
+                <Property name="searchStrategy">
+                    <Property name="class">
+                        <Value>dbStrategy</Value>
+                    </Property>
+                </Property>
+
+                <Property name="searchableFields">
+                    <Property name="dummy">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                </Property>
+
+                <Property name="type">
+                    <Value>Database</Value>
+                </Property>
+				<Property name="DBNamcespace">
+						<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+						<Value>informix_connection</Value>
+				</Property>
+                <Property name="name">
+                    <Value>ProjectSearchBundle</Value>
+                </Property>
+
+                <Property name="context">
+                    <Value>SELECT project.project_id FROM project
+JOIN project_category_lu ON
+project.project_category_id = project_category_lu.project_category_id
+JOIN project_status_lu ON
+project.project_status_id = project_status_lu.project_status_id
+JOIN project_type_lu ON
+project_category_lu.project_type_id = project_type_lu.project_type_id
+LEFT JOIN project_info ON
+project.project_id = project_info.project_id
+JOIN project_info_type_lu ON
+project_info.project_info_type_id = project_info_type_lu.project_info_type_id
+LEFT JOIN project_scorecard ON
+project.project_id = project_scorecard.project_id
+JOIN scorecard_assignment_lu ON
+project_scorecard.scorecard_assignment_id =
+scorecard_assignment_lu.scorecard_assignment_id
+LEFT JOIN resource ON
+project.project_id=resource.project_id
+LEFT JOIN resource_info ON
+resource.resource_id = resource_info.resource_id
+JOIN resource_info_type_lu ON
+resource_info.resource_info_type_id =
+resource_info_type_lu.resource_info_type_id WHERE </Value>
+                </Property>
+                <Property name="alias">
+					<Property name="ProjectTypeID">
+                        <Value>project_type_lu.project_type_id</Value>
+                    </Property>
+                    <Property name="ProjectTypeName">
+    	                <Value>project_type_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectCategoryID">
+                        <Value>project_category_lu.project_category_id</Value>
+                    </Property>
+                    <Property name="ProjectCategoryName">
+                        <Value>project_category_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectStatusID">
+                        <Value>project_status_lu.project_type_id</Value>
+                    </Property>
+                    <Property name="ProjectStatusName">
+                        <Value>project_status_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectPropertyName">
+                        <Value>project_info_type_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectPropertyValue">
+                        <Value>project_info.value</Value>
+                    </Property>
+                    <Property name="ProjectResourcePropertyName">
+                        <Value>resource_info_type_lu.name</Value>
+                    </Property>
+                    <Property name="ProjectResourcePropertyValue">
+                        <Value>resource_info.value</Value>
+                    </Property>
+				</Property>
+            </Property>
+        </Property>
+	</Config>
+</CMConfig>

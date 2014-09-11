@@ -1,0 +1,85 @@
+<CMConfig>
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultManagersProvider">
+		<Property name="objectFactoryNamespace">
+			<Value>myObjectFactory</Value>
+		</Property>
+		<Property name="resourceManagerIdentifier">
+			<Value>resourceManager</Value>
+		</Property>
+		<Property name="phaseManagerIdentifier">
+			<Value>phaseManager</Value>
+		</Property>
+		<Property name="projectManagerIdentifier">
+			<Value>projectManager</Value>
+		</Property>
+		<Property name="screeningManagerIdentifier">
+			<Value>screeningManager</Value>
+		</Property>
+		<Property name="uploadManagerIdentifier">
+			<Value>uploadManager</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultUploadServices">
+		<Property name="objectFactoryNamespace">
+			<Value>myObjectFactory</Value>
+		</Property>
+		<Property name="managersProviderIdentifier">
+			<Value>managersProvider</Value>
+		</Property>
+	</Config>
+	
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultUploadExternalServices">
+		<Property name="objectFactoryNamespace">
+			<Value>myObjectFactory</Value>
+		</Property>
+		<Property name="uploadServicesIdentifier">
+			<Value>uploadServicesWrong</Value>
+		</Property>
+		<Property name="filenamePattern">
+			<Value>submission-{0}-{1}</Value>
+		</Property>
+		<Property name="fileStorageLocation">
+			<Value>temp/</Value>
+		</Property>
+	</Config>
+	
+	<Config name="myObjectFactory">
+		<Property name="resourceManager">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.MockResourceManager</Value>
+      		</Property>
+      	</Property>
+      	<Property name="phaseManager">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.MockPhaseManager</Value>
+      		</Property>
+      	</Property>
+      	<Property name="projectManager">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.MockProjectManager</Value>
+      		</Property>
+      	</Property>
+      	<Property name="screeningManager">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.MockScreeningManager</Value>
+      		</Property>
+      	</Property>
+      	<Property name="uploadManager">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.MockUploadManager</Value>
+      		</Property>
+      	</Property>
+      	<Property name="managersProvider">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.DefaultManagersProvider</Value>
+      		</Property>
+      	</Property>
+      	<Property name="uploadServices">
+      		<Property name="type">
+        		<Value>com.cronos.onlinereview.services.uploads.impl.DefaultUploadServices</Value>
+      		</Property>
+      	</Property>
+	</Config>
+</CMConfig>
+	

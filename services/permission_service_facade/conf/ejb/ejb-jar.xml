@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+    <description>Permission Service Facade EJB</description>
+    <display-name>Permission Service Facade EJB</display-name>
+    <enterprise-beans>
+
+        <session>
+            <ejb-name>PermissionServiceFacadeBean</ejb-name>
+            <remote>com.topcoder.service.facade.permission.ejb.PermissionServiceFacadeRemote</remote>
+            <local>com.topcoder.service.facade.permission.ejb.PermissionServiceFacadeLocal</local>
+            <ejb-class>com.topcoder.service.facade.permission.ejb.PermissionServiceFacadeBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>logName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>permission_service_facade_log</env-entry-value>
+            </env-entry>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityValidation</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerRemote
+                </remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityPersistence</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerRemote</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.permission.PermissionService</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.user.UserService</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ProjectDAORemote</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.project.ProjectServiceRemote</remote>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

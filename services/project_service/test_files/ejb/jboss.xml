@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<jboss>
+  <enterprise-beans>
+    <session>
+      <ejb-name>ProjectServiceBean</ejb-name>
+      <jndi-name>remote/ProjectServiceBean</jndi-name>   
+    </session>
+    <session>
+      <ejb-name>UserServiceBean</ejb-name>
+      <jndi-name>remote/UserServiceBean</jndi-name>   
+    </session>
+  </enterprise-beans>
+  <security-domain>java:/jaas/JBossLoginModule</security-domain>
+</jboss>

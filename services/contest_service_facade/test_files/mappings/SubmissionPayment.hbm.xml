@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="SubmissionPayment" table="submission_payment"
+		lazy="true">
+		<comment>
+			This table describes submission payment. It contain payments
+			status and price. Each submission strongly bounded to one
+			submission payment.
+		</comment>
+
+		<composite-id>
+			<key-many-to-one name="submission"
+				class="com.topcoder.service.studio.submission.Submission"
+				column="submission_id" />
+		</composite-id>
+
+		<many-to-one name="status" column="payment_status_id"
+			class="com.topcoder.service.studio.submission.PaymentStatus"  fetch="select"/>
+
+		<property name="price" not-null="true" />
+
+		<property name="PayPalOrderId" column="paypal_order_id" not-null="false" />
+		<property name="createDate" column="create_date" not-null="true" generated="insert"/>
+	</class>
+</hibernate-mapping>

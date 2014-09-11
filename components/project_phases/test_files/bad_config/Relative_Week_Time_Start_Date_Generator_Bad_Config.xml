@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="week_offset_missing">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<!-- the week offset from current week, here 1 means the next week -->
+		<!--
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		-->
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>5</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="week_offset_malformed">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>invalid</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>5</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="day_of_week_missing">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<!--
+		<Property name="day_of_week">
+			<Value>5</Value>
+		</Property>
+		-->
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="day_of_week_malformed">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>invalid</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="day_of_week_too_small">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>0</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="day_of_week_too_large">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>8</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="hour_missing">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<!-- 
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		-->
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="hour_malformed">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>malformed</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="hour_too_small">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>-1</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="hour_too_large">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>24</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="minute_missing">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<!-- 
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		-->
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="minute_malformed">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>invalid</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="minute_too_small">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>-1</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="minute_too_large">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>60</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<Config name="second_missing">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<!-- 
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+		-->
+	</Config>
+	
+	<Config name="second_malformed">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>invalid</Value>
+		</Property>
+	</Config>
+	
+	<Config name="second_too_small">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>-1</Value>
+		</Property>
+	</Config>
+	
+	<Config name="second_too_large">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>1</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>60</Value>
+		</Property>
+	</Config>
+</CMConfig>

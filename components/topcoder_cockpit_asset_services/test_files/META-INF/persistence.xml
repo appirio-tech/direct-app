@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+ <persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
+  <mapping-file>META-INF/orm.xml</mapping-file>
+    <properties>
+      <property name="hibernate.connection.url" value="jdbc:informix-sqli://localhost:1526/test:informixserver=ol_topcoder"/>
+      <property name="hibernate.connection.driver_class" value="com.informix.jdbc.IfxDriver"/>
+      <property name="hibernate.connection.username" value="informix"/>
+      <property name="hibernate.connection.password" value="123456"/>
+      <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect"/>
+      <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>        
+      <property name="hibernate.c3p0.acquire_increment">1</property>
+      <property name="hibernate.c3p0.idle_test_period">60</property>
+      <property name="hibernate.c3p0.min_size">1</property>
+      <property name="hibernate.c3p0.max_size">10</property>
+      <property name="hibernate.c3p0.max_statements">50</property>
+      <property name="hibernate.c3p0.timeout">0</property>
+      <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
+      <property name="hibernate.c3p0.acquireRetryDelay">250</property>
+    </properties>
+ </persistence-unit>
+ <persistence-unit name="persistenceUnitInvalid" transaction-type="RESOURCE_LOCAL">
+  <mapping-file>META-INF/orm.xml</mapping-file>
+    <properties>
+      <property name="hibernate.connection.url" value="invalid_url"/>
+      <property name="hibernate.connection.driver_class" value="com.informix.jdbc.IfxDriver"/>
+      <property name="hibernate.connection.username" value="invalid_username"/>
+      <property name="hibernate.connection.password" value="invalid_password"/>
+      <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect"/>
+    </properties>
+ </persistence-unit>
+</persistence>

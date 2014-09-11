@@ -1,0 +1,390 @@
+
+package com.cronos.onlinereview.services.uploads.impl;
+import com.cronos.onlinereview.autoscreening.management.ScreeningManager;
+import com.cronos.onlinereview.services.uploads.*;
+import com.cronos.onlinereview.services.uploads.ConfigurationException;
+import com.cronos.onlinereview.services.uploads.InvalidProjectException;
+import com.cronos.onlinereview.services.uploads.InvalidProjectPhaseException;
+import com.cronos.onlinereview.services.uploads.InvalidSubmissionException;
+import com.cronos.onlinereview.services.uploads.InvalidSubmissionStatusException;
+import com.cronos.onlinereview.services.uploads.InvalidUserException;
+import com.cronos.onlinereview.services.uploads.ManagersProvider;
+import com.cronos.onlinereview.services.uploads.PersistenceException;
+import com.cronos.onlinereview.services.uploads.UploadServicesException;
+import com.topcoder.management.deliverable.*;
+import com.topcoder.management.deliverable.UploadManager;
+import com.topcoder.management.deliverable.search.*;
+import com.topcoder.management.phase.PhaseManager;
+import com.topcoder.management.project.Project;
+import com.topcoder.management.project.ProjectManager;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceManager;
+import com.topcoder.management.resource.search.*;
+import com.topcoder.project.phases.*;
+import com.topcoder.search.builder.filter.*;
+import com.topcoder.util.config.ConfigManager;
+import com.topcoder.util.log.*;
+import com.topcoder.util.log.Log;
+import com.topcoder.util.log.LogManager;
+import com.topcoder.util.objectfactory.ObjectFactory;
+import com.topcoder.util.objectfactory.impl.ConfigManagerSpecificationFactory;
+import java.rmi.RemoteException;
+
+/**
+ * <p>This is the default implementation of UploadServices interface. It manages different type of upload. It used all managers from ManagerProvider to perform several operations. All the methods are logged. It's possible to construct the instance through configuration and Object Factory and set wia constructor.</p>
+ * <p>Thread safe: the thread safety is completely relied to the managers implementations because it's impossible to change the other variables.</p>
+ * 
+ */
+public class DefaultUploadServices implements com.cronos.onlinereview.services.uploads.UploadServices {
+/**
+ * 
+ * 
+ */
+    private com.cronos.onlinereview.services.uploads.ManagersProvider managersProvider;
+/**
+ * 
+ * 
+ */
+    private com.cronos.onlinereview.services.uploads.ManagersProvider managersProvider;
+
+/**
+ * <p>
+ * Represents the default namespace for this class used to load the
+ * configuration with Config Manager
+ * </p>
+ * 
+ * 
+ */
+    public static final String DEFAULT_NAMESPACE = DefaultUploadServices.class.getName();
+
+/**
+ * <p>
+ * It's the logger to log all operations, exceptions, etc...See the
+ * Algorithm Section for the logging policy
+ * </p>
+ * <p>
+ * Initial Value: defined statically
+ * </p>
+ * <p>
+ * Accessed In: none
+ * </p>
+ * <p>
+ * Modified In: none
+ * </p>
+ * <p>
+ * Utilized In: all methods
+ * </p>
+ * <p>
+ * Valid Values: not null
+ * </p>
+ * 
+ * 
+ */
+    private static final Log LOG = LogManager.getLog(DefaultUploadServices.class.getName());
+
+/**
+ * <p>
+ * It contains all the managers used in this class. When you meet a *Manager
+ * you must use the related getter methods of this ManagersProvider.
+ * </p>
+ * <p>
+ * Initial Value: defined in constructor
+ * </p>
+ * <p>
+ * Accessed In: none
+ * </p>
+ * <p>
+ * Modified In: none
+ * </p>
+ * <p>
+ * Utilized In: all methods
+ * </p>
+ * <p>
+ * Valid Values: not null
+ * </p>
+ * 
+ * 
+ */
+    private final ManagersProvider managersProvider;
+
+/**
+ * <p>
+ * Construct DefaultUploadServices with the specified managersProvider
+ * </p>
+ * <p>
+ * <strong>Implementation:</strong>
+ * </p>
+ * <p>
+ * set the fields or used the related default value if exists
+ * </p>
+ * 
+ * 
+ * 
+ * @param managersProvider the provider of managers used by this class
+ * @throws IllegalArgumentException
+ * if managersProvider argumen is null
+ */
+    public  DefaultUploadServices(ManagersProvider managersProvider) {        
+		this.managersProvider = managersProvider;
+    } 
+
+/**
+ * <p>
+ * Construct DefaultUploadServices using the configuration with default
+ * namespace.
+ * </p>
+ * <p>
+ * <strong>Implementation:</strong>
+ * </p>
+ * <p>
+ * this(DEFAULT_NAMESPACE)
+ * </p>
+ * 
+ * 
+ * 
+ * @throws ConfigurationException
+ * If any error occurs during accessing configuration. If bad
+ * configuration is detected.
+ */
+    public  DefaultUploadServices() {        
+		this.managersProvider = null;
+    } 
+
+/**
+ * <p>
+ * Construct DefaultUploadServices using the configuration with specified
+ * namespace.
+ * </p>
+ * <p>
+ * <strong>Implementation:</strong>
+ * </p>
+ * <p>
+ * <ol>
+ * <li>read the objectFactoryNamespace property</li>
+ * <li>if it doesn't exist create the DefaultManagerProvider</li>
+ * <li>else:</li>
+ * <li>create a ConfigManagerSpecificationFactory with this namespace</li>
+ * <li>create an ObjectFactory with the previous SpecificationFactory</li>
+ * <li>read the "managersProviderIdentifier" property</li>
+ * <li>create the ManagersProvider instance using the previous identifier</li>
+ * </ol>
+ * </p>
+ * 
+ * 
+ * 
+ * @param namespace the namespace to load configuration
+ * @throws ConfigurationException
+ * If any error occurs during accessing configuration. If bad
+ * configuration is detected.
+ * @throws IllegalArgumentException
+ * if namespace is null or trim to empty
+ */
+    public  DefaultUploadServices(String namespace) {        
+		this.managersProvider = null;
+    } 
+
+/**
+ * <p>Adds a new submission for an user in a particular project. If the project allows multiple submissions for users, it will add the new submission and return. If multiple submission are not allowed for the project. Firstly, it will add the new submission, secondly mark previous submissions as deleted and then return.</p>
+ * <p><strong>Implementation:</strong></p>
+ * <p></p>
+ * <ol>
+ * <li>use ProjectManager#getProject(projectId) to check if the project exists</li>
+ * <li>Check that the user exists and has the submitter role: {</li>
+ * <li>retrieve the resource which represents the user: use ResourceManager.searchResources(Filter filter) and build a filter with ResourceFilterBuilder and ResourceRoleFilterBuilder for a resource that:</li>
+ * <li>a. belongs to the project</li>
+ * <li>b. has the resource role id of &quot;Submitter&quot;. The resource role id can be obtain iterating the result of getAllResourceRoles().</li>
+ * <li>c. has a property with key == &quot;External Reference ID&quot; and value == userId</li>
+ * <li>}</li>
+ * <li>get the projectPhases using PhaseManager.getPhases(projectId)</li>
+ * <li>get the phases using projectPhases.getAllPhases</li>
+ * <li>iterate over the phases to find if the type is &quot;Submission&quot; or &quot;Screening&quot;</li>
+ * <li>check if submission or screening phase are open checking its the status</li>
+ * <li>create a new Submission</li>
+ * <li>submissionStatus must be set to: iterate over all SubmissionStatuses, get the SubmissionStatus with name &quot;Active&quot; and set to submission</li>
+ * <li>create a new Upload</li>
+ * <li>uploadStatus must be set to: iterate over all UploadStatuses, get the UploadStatus with name &quot;Active&quot; and set to Upload</li>
+ * <li>uploadType must be set to: iterate over all UploadTypes, get the UploaType with name &quot;Submission&quot; and set to Upload</li>
+ * <li>set the owner as userId</li>
+ * <li>set the projectId</li>
+ * <li>file name have to be passed to upload.setParameter(String)</li>
+ * <li>persist the submission with uploadManager.createSubmission with the useId as operator</li>
+ * <li>associate the submission with the submitter resource: resource#setSubmission, Persiste the resource using ResourceManager#updateResource</li>
+ * <li>initiate the screening: you have to invoke ScreeningManager.initiateScreening method with the id of submission with the useId as operator</li>
+ * <li>If the project DOESN'T allow multiple submissions hence its property &acirc;&euro;&oelig;Allow multiple submissions&acirc;&euro;? will be false :</li>
+ * <li>Change previous submissions status to &acirc;&euro;&oelig;Deleted&acirc;&euro;?: {</li>
+ * <li>before the submission persisted you have to find all submission already persisted</li>
+ * <li>for this it's necessary to obtain the submitter's and then obtain the submissions. For obtaining the resource you have to use a filter like this:</li>
+ * <li>AndFilter fullFilter = new AndFilter(Arrays.asList(new Filter[] { ResourceFilterBuilder.createResourceRoleIdFilter(submitterRoleId), ResourceFilterBuilder.createProjectIdFilter(projectId), ResourceFilterBuilder.createExtensionPropertyNameFilter(&quot;External Reference ID&quot;), ResourceFilterBuilder.createExtensionPropertyValueFilter(userId)}));</li>
+ * <li>Finally, use the resource it to retrieve the submissions:create a filter SubmissionFilterBuilder.createResourceIdFilter with resourceId and get the submissions with UploadManager#searchSubmissions</li>
+ * <li>set the statuses of these submission to &quot;Deleted&quot;: retrieve all submission statuses with UploadManager#getAllSubmissionStatutes, check which SubmissionStatus has the &quot;Deleted&quot; name and set it to submissions using the method in this class, persist the submissions using UploadManager#updateSubmission with the useId as operator</li>
+ * <li>}</li>
+ * </ol>
+ * 
+ * 
+ * @return the id of the new submission.
+ * @param projectId the project's id
+ * @param userId the user's id.
+ * @param filename the file name to use.
+ * @throws InvalidProjectException
+ * if the project doesn't exists.
+ * @throws InvalidProjectPhaseException
+ * if neither Submission or Screening phase are opened.
+ * @throws InvalidUserException
+ * if the user doesn't exists or hasn't the submitter role.
+ * @throws IllegalArgumentException
+ * if any id is < 0, if filename is null or trim to empty
+ * @throws PersistenceException
+ * if some error occurs in persistence layer
+ * @throws UploadServicesException
+ * if some other exception occurs in the process (wrap it)
+ */
+    public long uploadSubmission(long projectId, long userId, String filename) throws InvalidProjectException, InvalidProjectPhaseException, InvalidUserException {        
+		return 0;
+    } 
+
+/**
+ * <p>Adds a new final fix upload for an user in a particular project. This submission always overwrite the previous ones.</p>
+ * <p><strong>Implementation:</strong></p>
+ * <p></p>
+ * <ol>
+ * <li>use ProjectManager#getProject(projectId) to check if the project exists</li>
+ * <li>Check that the user exists and has the submitter role: {</li>
+ * <li>use ResourceManager.searchResources(Filter filter) and build a filter with ResourceFilterBuilder and ResourceRoleFilterBuilder for a resource that:</li>
+ * <li>a. belongs to the project</li>
+ * <li>b. has the resource role id of &quot;Submitter&quot;. The resource role id can be obtain iterating the result of getAllResourceRoles().</li>
+ * <li>c. has a property with key == &quot;External Reference ID&quot; and value == userId }</li>
+ * <li>Check that the user is the winner: The winner id is stored in the Project property: Winner External Reference ID?</li>
+ * <li>check that the Final Fix phase is open for the project: {</li>
+ * <li>get the projectPhases using phaseManager.getPhases(projectId)</li>
+ * <li>get the phases using projectPhases.getAllPhases</li>
+ * <li>iterate over the phases to find if the type is &quot;Final Fix&quot;</li>
+ * <li>check if final fix is open checking its the status</li>
+ * <li>}</li>
+ * <li>create a new Upload</li>
+ * <li>uploadStatus must be set to: iterate over all UploadStatuses, get the UploadStatus with name &quot;Active&quot; and set to Upload</li>
+ * <li>uploadType must be set to: iterate over all UploadTypes, get the UploaType with name &quot;Final Fix&quot; and set to Upload</li>
+ * <li>set the owner as userId</li>
+ * <li>set the projectId</li>
+ * <li>file name have to be passed to upload.setParameter(String)</li>
+ * <li>persist the upload with uploadManager.createUpload with the useId as operator</li>
+ * <li>initiate the screening: you have to invoke ScreeningManager.initiateScreening with the useId as operator</li>
+ * <li>Change previous submissions status to &quot;Deleted&quot;: {</li>
+ * <li>before the submission persisted you have to find all submission already persisted:</li>
+ * <li>for this it's necessary to obtain the submitter's and then obtain the submissions. For obtaining the resource you have to use a filter like this:</li>
+ * <li>AndFilter fullFilter = new AndFilter(Arrays.asList(new Filter[] { ResourceFilterBuilder.createResourceRoleIdFilter(submitterRoleId), ResourceFilterBuilder.createProjectIdFilter(projectId), ResourceFilterBuilder.createExtensionPropertyNameFilter(&quot;External Reference ID&quot;), ResourceFilterBuilder.createExtensionPropertyValueFilter(userId)}));</li>
+ * <li>Finally, use the resource it to retrieve the submissions:create a filter SubmissionFilterBuilder.createResourceIdFilter with resourceId and get the submissions with UploadManager#searchSubmissions</li>
+ * <li>set the statuses of these submission to &quot;Deleted&quot;: retrieve all submission statuses with UploadManager#getAllSubmissionStatutes, check which SubmissionStatus has the &quot;Deleted&quot; name and set it to submissions using the method in this class, persist the submissions using UploadManager#updateSubmission with the useId as operator</li>
+ * <li>}</li>
+ * </ol>
+ * 
+ * 
+ * @return the id of the created final fix submission.
+ * @param projectId the project's id
+ * @param userId the user's id.
+ * @param filename the file name to use.
+ * @throws InvalidProjectException
+ * if the project doesn't exists.
+ * @throws InvalidProjectPhaseException
+ * if Final Fix phase isn't opened.
+ * @throws InvalidUserException
+ * if the user doesn't exists or she/he is not winner submitter.
+ * @throws IllegalArgumentException
+ * if any id is < 0, if filename is null or trim to empty
+ * @throws PersistenceException
+ * if some error occurs in persistence layer
+ * @throws UploadServicesException
+ * if some other exception occurs in the process (wrap it)
+ */
+    public long uploadFinalFix(long projectId, long userId, String filename) throws InvalidProjectException, InvalidProjectPhaseException, InvalidUserException {        
+		return 0;
+    } 
+
+/**
+ * <p>Adds a new test case upload for an user in a particular project. This submission always overwrite the previous ones.</p>
+ * <p><strong>Implementation:</strong></p>
+ * <p></p>
+ * <ol>
+ * <li>use ProjectManager#getProject(projectId) to check if the project exists</li>
+ * <li>Check that the user exists and has at least one of the following roles: Accuracy Reviewer, Failure Reviewer or Stress Reviewer: {</li>
+ * <li>use ResourceManager.searchResources(Filter filter) and build a filter with ResourceFilterBuilder and ResourceRoleFilterBuilder for a resource that:</li>
+ * <li>a. belongs to the project</li>
+ * <li>b. has the resource role id of &quot;Accuracy Reviewer&quot; OR &quot;Failure Reviewer&quot; OR &quot;Stress Reviewer&quot;. The resource role id can be obtain iterating the result of getAllResourceRoles().</li>
+ * <li>c. has a property with key == &quot;External Reference ID&quot; and value == userId }</li>
+ * <li>check that the Review phase is open for the project: {</li>
+ * <li>get the projectPhases using phaseManager.getPhases(projectId)</li>
+ * <li>get the phases using projectPhases.getAllPhases</li>
+ * <li>iterate over the phases to find if the type is &quot;Review&quot;</li>
+ * <li>check if final fix is open checking its the status</li>
+ * <li>}</li>
+ * <li>create a new Upload</li>
+ * <li>uploadStatus must be set to: iterate over all UploadStatuses, get the UploadStatus with name &quot;Active&quot; and set to Upload</li>
+ * <li>uploadType must be set to: iterate over all UploadTypes, get the UploaType with name &quot;Review&quot; and set to Upload</li>
+ * <li>set the owner as userId</li>
+ * <li>set the projectId</li>
+ * <li>file name have to be passed to upload.setParameter(String)</li>
+ * <li>persist the upload with uploadManager.createUpload with the useId as operator</li>
+ * <li>Change previous submissions status to &quot;Deleted&quot;: {</li>
+ * <li>before the submission persisted you have to find all submission already persisted</li>
+ * <li>for this it's necessary to obtain the submitter's and then obtain the submissions. For obtaining the resource you have to use a filter like this:</li>
+ * <li>AndFilter fullFilter = new AndFilter(Arrays.asList(new Filter[] { ResourceFilterBuilder.createResourceRoleIdFilter(submitterRoleId), ResourceFilterBuilder.createProjectIdFilter(projectId), ResourceFilterBuilder.createExtensionPropertyNameFilter(&quot;External Reference ID&quot;), ResourceFilterBuilder.createExtensionPropertyValueFilter(userId)}));</li>
+ * <li>Finally, use the resource it to retrieve the submissions:create a filter SubmissionFilterBuilder.createResourceIdFilter with resourceId and get the submissions with UploadManager#searchSubmissions</li>
+ * <li>set the statuses of these submission to &quot;Deleted&quot;: retrieve all submission statuses with UploadManager#getAllSubmissionStatutes, check which SubmissionStatus has the &quot;Deleted&quot; name and set it to submissions using the method in this class, , persist the submissions using UploadManager#updateSubmission with the useId as operator</li>
+ * <li>}</li>
+ * </ol>
+ * 
+ * 
+ * @return the id of the created test cases submission.
+ * @param projectId the project's id.
+ * @param userId the user's id.
+ * @param filename the file name to use.
+ * @throws InvalidProjectException
+ * if the project doesn't exists.
+ * @throws InvalidProjectPhaseException
+ * if Review phase isn't opened.
+ * @throws InvalidUserException
+ * if the user doesn't exists or hasn't the submitter role.
+ * @throws IllegalArgumentException
+ * if any id is < 0, if filename is null or trim to empty
+ * @throws PersistenceException
+ * if some error occurs in persistence layer
+ * @throws UploadServicesException
+ * if some other exception occurs in the process (wrap it)
+ */
+    public long uploadTestCases(long projectId, long userId, String filename) throws InvalidProjectException, InvalidProjectPhaseException, InvalidUserException {        
+		return 0;
+    } 
+
+/**
+ * <p>Sets the status of a existing submission.</p>
+ * <p><strong>Implementation:</strong></p>
+ * <p></p>
+ * <ol>
+ * <li>get Submission with UploadManager#getSubmission</li>
+ * <li>get all SubmissionStatus with UploadManager#getAllSubmissionStatuses</li>
+ * <li>iterate over statuses and check which status has the submissionStatusId defined</li>
+ * <li>set to Submission this SubmissionStatus</li>
+ * <li>persist the change with UploadManager#updateSubmission with the useId as operator</li>
+ * </ol>
+ * 
+ * 
+ * @param submissionId the submission's id
+ * @param submissionStatusId the submission status' id
+ * @param operator the operator wich execute the operation
+ * @throws InvalidSubmissionException
+ * if the submission doesn't exists.
+ * @throws IllegalArgumentException
+ * if any id is < 0
+ * @throws PersistenceException
+ * if some error occurs in persistence layer
+ * @throws UploadServicesException
+ * if some other exception occurs in the process (wrap it)
+ */
+    public void setSubmissionStatus(long submissionId, int submissionStatusId, String operator) throws InvalidSubmissionException, InvalidSubmissionStatusException {        
+        // your code here
+    } 
+/**
+ * 
+ * 
+ */
+    private static com.topcoder.util.log.Log LOG;
+ }

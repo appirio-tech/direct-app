@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+    <class name="Contest" table="contest" lazy="true">
+        <comment>
+            This table describes contest. It contains foreign keys for
+            different tables like category, status etc. Also it contain
+            name of content, short summary, start, end and winner
+            announcement dates.
+        </comment>
+
+        <id name="contestId" column="contest_id" unsaved-value="-1">
+            <generator class="sequence">
+                <param name="sequence">STUDIO_CONTEST_SEQ</param>
+            </generator>
+        </id>
+
+        <many-to-one name="contestChannel" column="contest_channel_id"
+            class="com.topcoder.service.studio.contest.ContestChannel" fetch="select" />
+
+        <property name="name" length="254" not-null="true" />
+
+        <many-to-one name="contestType" column="contest_type_id"
+            class="com.topcoder.service.studio.contest.ContestType" fetch="select"/>
+
+        <property name="projectId" column="project_id" />
+
+        <property name="tcDirectProjectId" column="tc_direct_project_id" />
+
+        <many-to-one name="status" column="contest_detailed_status_id"
+            class="com.topcoder.service.studio.contest.ContestStatus" fetch="select"/>
+
+        <property name="forumId" column="forum_id" />
+
+        <property name="statusId" column="contest_status_id" not-null="true"/>
+
+        <property name="eventId" column="event_id" />
+
+        <property name="startDate" column="start_time" not-null="true" />
+
+        <property name="endDate" column="end_time" not-null="true" />
+        
+        <property name="launchImmediately" column="launch_immediately" not-null="false" />
+        
+        <property name="deleted" column="deleted" not-null="false" />
+
+        <property name="winnerAnnoucementDeadline"
+            column="winner_announcement_time" not-null="true" />
+
+        <property name="createdUser" column="create_user_id"
+            not-null="true" />
+
+        <set name="submissions" fetch="select" inverse="true">
+            <key column="contest_id" />
+            <one-to-many
+                class="com.topcoder.service.studio.submission.Submission" />
+        </set>
+
+        <set name="fileTypes" table="contest_file_type_xref" fetch="select">
+            <key column="contest_id" />
+            <many-to-many column="file_type_id"
+                class="com.topcoder.service.studio.contest.StudioFileType" />
+        </set>
+
+        <set name="results" fetch="select">
+            <key column="contest_id" />
+            <one-to-many
+                class="com.topcoder.service.studio.submission.ContestResult" />
+        </set>
+
+        <set name="documents" table="contest_document_xref" fetch="select">
+            <key column="contest_id" />
+            <many-to-many column="document_id"
+                class="com.topcoder.service.studio.contest.Document" />
+        </set>
+
+        <set name="media" table="contest_medium_xref" fetch="select">
+            <key column="contest_id" />
+            <many-to-many column="medium_id"
+                class="com.topcoder.service.studio.contest.Medium" />
+        </set>
+
+        <set name="config" cascade="all-delete-orphan" fetch="select" batch-size="100">
+            <key column="contest_id" />
+            <one-to-many
+                class="com.topcoder.service.studio.contest.ContestConfig" />
+        </set>
+
+        <set name="contestRegistrations" cascade="all-delete-orphan" fetch="select">
+            <key column="contest_id" />
+            <one-to-many
+                class="com.topcoder.service.studio.contest.ContestRegistration" />
+        </set>
+        
+        <set name="prizes" table="contest_prize_xref" cascade="all-delete-orphan" inverse="true" fetch="select">
+            <key column="contest_id" />
+            <many-to-many column="prize_id"
+                class="com.topcoder.service.studio.submission.Prize" />
+        </set>
+    </class>
+</hibernate-mapping>

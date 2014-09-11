@@ -1,0 +1,9 @@
+#property file defining the components information
+component.name=Cloud VM Service
+component.distfilename=cloud_vm_service
+component.package=com.topcoder.direct
+component.packagedir=com/topcoder/direct
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

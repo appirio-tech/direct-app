@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="SubmissionStatus" table="submission_status_lu"
+		lazy="false">
+		<comment>
+			Tables which describe submission status. Possible values: 1.
+			Active 2. Deleted
+		</comment>
+
+		<id name="submissionStatusId" column="submission_status_id" type="long" />
+
+		<property name="description" length="100" not-null="true"
+			column="submission_status_desc" />
+
+	</class>
+</hibernate-mapping>

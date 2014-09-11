@@ -1,0 +1,144 @@
+<?xml version="1.0" ?>
+<CMConfig>
+
+<Config name="com.topcoder.management.review.DefaultReviewManager">
+	<Property name="persistence">
+		<Property name="persistence_namespace">
+			<Value>com.topcoder.management.review.persistence.InformixReviewPersistence</Value>
+		</Property>
+		<Property name="persistence_class">
+			<Value>com.topcoder.management.review.persistence.InformixReviewPersistence</Value>
+		</Property>
+	</Property>
+</Config>
+
+<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence">
+	<Property name="connection">
+		<!-- the connection name to retrieve connection in DB Connection Factory, required -->
+		<Property name="name">
+			<Value>informix_connection</Value>
+		</Property>
+		<!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+		<Property name="factory_namespace">
+			<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+		</Property>
+		<Property name="factory_class">
+			<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+		</Property>
+	</Property>
+	<Property name="search_bundle_manager_namespace">
+		<Value>com.topcoder.management.review.persistence.InformixSearchBundle</Value>
+	</Property>
+	<Property name="search_bundle_name">
+		<Value>ReviewSearchBundle</Value>
+	</Property>
+
+</Config>
+
+    <Config name="com.topcoder.management.review.persistence.InformixSearchBundle">
+        <Property name="searchStrategyFactoryNamespace">
+            <Value>com.topcoder.search.builder.strategy.factory</Value>
+        </Property>
+        <Property name="fieldValidatorFactoryNamespace">
+            <Value>com.topcoder.search.builder.validator.factory</Value>
+        </Property>
+
+        <Property name="searchBundles">
+            <Property name="ReviewSearchBundle">
+                <Property name="searchStrategy">
+                    <Property name="class">
+                        <Value>dbStrategy</Value>
+                    </Property>
+                </Property>
+
+                <Property name="type">
+                    <Value>Database</Value>
+                </Property>
+                <Property name="name">
+                    <Value>ReviewSearchBundle</Value>
+                </Property>
+                
+                <Property name="DBNamcespace"> 
+						<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>  
+				</Property> 
+				<Property name="connectionProducerName"> 
+						<Value>informix_connection</Value>  
+				</Property>
+
+
+                <Property name="context">
+                    <Value>
+                        SELECT DISTINCT review_id,
+                               review.resource_id AS resource_id,
+                               review.submission_id AS submission_id,
+                               review.scorecard_id AS scorecard_id,
+                               committed,
+                               score,
+                               review.create_user AS create_user,
+                               review.create_date AS create_date,
+                               review.modify_user AS modify_user,
+                               review.modify_date AS modify_date
+                          FROM review,
+                               scorecard,
+                               resource
+                         WHERE review.scorecard_id = scorecard.scorecard_id
+                           AND review.resource_id = resource.resource_id
+                           AND
+                    </Value>
+                </Property>
+
+                <Property name="alias">
+                    <Property name="scorecardType">
+                        <Value>scorecard.scorecard_type_id</Value>
+                    </Property>
+                    <Property name="reviewer">
+                        <Value>review.resource_id</Value>
+                    </Property>
+                    <Property name="submission">
+                        <Value>review.submission_id</Value>
+                    </Property>
+                    <Property name="committed">
+                        <Value>review.committed</Value>
+                    </Property>
+                    <Property name="project">
+                        <Value>resource.project_id</Value>
+                    </Property>
+                </Property>
+
+                <Property name="searchableFields">
+                    <Property name="dummy">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                    <Property name="reviewer">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                    <Property name="submission">
+                        <Property name="validator">
+                            <Property name="class">
+                                <Value>validator</Value>
+                            </Property>
+                            <Property name="identifier">
+                                <Value>default</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+	</Config>
+
+</CMConfig>

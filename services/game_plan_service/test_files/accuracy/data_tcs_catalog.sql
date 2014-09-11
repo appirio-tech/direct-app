@@ -1,0 +1,5 @@
+insert into project values (1, 5, 3, 1, 'ivern', CURRENT, 'ivern', CURRENT)                         
+insert into tc_direct_project values(1, 'GLUI', 'Description 1', 997, CURRENT, CURRENT)
+insert into project values (2, 7, 7, 2, 'mashannon168', CURRENT, 'mashannon168', CURRENT)                         
+insert into tc_direct_project values(2, 'Vesta', 'Description 2', 998, CURRENT, CURRENT)
+insert into linked_project_xref values (1, 2, 1)

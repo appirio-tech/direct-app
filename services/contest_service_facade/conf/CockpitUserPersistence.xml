@@ -1,0 +1,47 @@
+<CMConfig>
+    <Config name="com.topcoder.cockpit.security">
+        <Property name="DBConnectionFactoryKey">
+            <Value>connectionFactoryKey</Value>
+        </Property>
+        <Property name="userPersistentConnectionName">
+            <Value>cockpitDBConnection</Value>
+        </Property>
+        <Property name="allUsersRole">
+            <Value>defaultRole</Value>
+        </Property>
+        <Property name="authenticationModuleConnectionName">
+            <Value>cockpitDBConnection</Value>
+        </Property>
+        <!-- Password Hashing related for authenticationModule -->
+        <Property name="keystore">
+            <Value>F:/servers/jboss-4.2.3.GA/server/default/conf/security.keystore</Value>
+<!--
+            <Value>/home/cockpit/jboss-4.2.3.GA/server/default/conf/security.keystore</Value>
+-->
+        </Property>
+        <Property name="kspassword">
+            <Value>88#DoGthats&lt;100%evolved</Value>
+        </Property>
+        <Property name="alias">
+            <Value>users</Value>
+        </Property>
+        <!-- DB connection factory configuration -->
+        <Property name="connectionFactoryKey">
+            <Property name="connections">
+                <Property name="default">
+                    <Value>cockpitDBConnection</Value>
+                </Property>
+                <Property name="cockpitDBConnection">
+                    <Property name="producer">
+                        <Value>com.topcoder.db.connectionfactory.producers.JNDIConnectionProducer</Value>
+                    </Property>
+                    <Property name="parameters">
+                        <Property name="jndi_name">
+                            <Value>java:/InformixDS</Value>
+                        </Property>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

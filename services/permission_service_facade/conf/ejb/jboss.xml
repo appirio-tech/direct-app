@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>PermissionServiceFacadeBean</ejb-name>
+            <jndi-name>PermissionServiceFacadeBean/remote</jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityValidation</ejb-ref-name>
+                <jndi-name>ContestEligibilityValidationBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityPersistence</ejb-ref-name>
+                <jndi-name>ContestEligibilityPersistenceBean/remote</jndi-name>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectServicesBean</ejb-ref-name>
+                <jndi-name>ProjectServicesBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <jndi-name>PermissionServiceBean/remote</jndi-name>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectService</ejb-ref-name>
+                <jndi-name>remote/ProjectServiceBean</jndi-name>
+            </ejb-ref>
+
+        </session>
+    </enterprise-beans>
+</jboss>

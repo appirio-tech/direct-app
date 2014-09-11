@@ -1,0 +1,32 @@
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+ "http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+	<display-name>contest_eligibility_persistence</display-name>
+	<module>
+		<java>ifxjdbc.jar</java>
+	</module>
+	<module>
+		<java>ifxjdbcx.jar</java>
+	</module>
+	<module>
+		<ejb>contest_eligibility_persistence.jar</ejb>
+	</module>
+
+	<module>
+		<java>informix-ds.xml</java>
+	</module>
+
+	<module>
+		<java>base_exception.jar</java>
+	</module>
+	<module>
+		<java>logging_wrapper.jar</java>
+	</module>
+	<module>
+		<java>object_formatter.jar</java>
+	</module>
+
+	<module>
+		<java>typesafe_enum.jar</java>
+	</module>
+</application>

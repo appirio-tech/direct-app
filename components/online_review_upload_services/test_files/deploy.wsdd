@@ -1,0 +1,16 @@
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+            xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<typeMapping qname="OR:DataHandler" xmlns:OR="http://onlinereview.topcoder.com"
+		serializer="org.apache.axis.encoding.ser.JAFDataHandlerSerializerFactory"
+		deserializer="org.apache.axis.encoding.ser.JAFDataHandlerDeserializerFactory"
+		languageSpecificType="java:javax.activation.DataHandler"
+		encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+	/>
+
+	<service name="UploadService" provider="java:RPC">
+		<namespace>http://onlinereview.topcoder.com</namespace>
+		<parameter name="className" value="com.cronos.onlinereview.services.uploads.impl.DefaultUploadExternalServices" />
+		<parameter name="allowedMethods" value="*" />
+	</service>
+</deployment>
+

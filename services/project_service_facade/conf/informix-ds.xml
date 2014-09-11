@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: informix-ds.xml,v 1.3 2004/09/15 14:37:40 loubyansky Exp $ -->
+
+
+<datasources>
+    <local-tx-datasource>
+        <jndi-name>InformixDS</jndi-name>
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/common_oltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+    </local-tx-datasource>
+
+    <local-tx-datasource>
+        <jndi-name>JTS_CORPORATE_OLTP</jndi-name>
+
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/corporate_oltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </local-tx-datasource>
+
+
+    <local-tx-datasource>
+        <jndi-name>JTS_STUDIO_OLTP</jndi-name>
+
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/studio_oltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </local-tx-datasource>
+
+    <no-tx-datasource>
+        <jndi-name>OLTP</jndi-name>
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </no-tx-datasource>
+
+
+    <local-tx-datasource>
+        <jndi-name>DS</jndi-name>
+
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/common_oltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </local-tx-datasource>
+
+
+    <local-tx-datasource>
+        <jndi-name>JTS_OLTP</jndi-name>
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </local-tx-datasource>
+
+
+</datasources>
+

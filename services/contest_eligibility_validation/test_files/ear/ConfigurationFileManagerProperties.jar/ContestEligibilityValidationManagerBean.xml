@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config
+		name="com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerBean">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>GroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

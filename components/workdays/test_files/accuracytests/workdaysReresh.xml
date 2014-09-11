@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CMConfig>
+    <Property name="startTime">
+        <Property name="hours">
+            <Value>10</Value>
+        </Property>
+        <Property name="minutes">
+            <Value>10</Value>
+        </Property>
+    </Property>
+    <Property name="endTime">
+        <Property name="hours">
+            <Value>20</Value>
+        </Property>
+        <Property name="minutes">
+            <Value>30</Value>
+        </Property>
+    </Property>
+    <Property name="isSaturdayWorkday">
+        <Value>true</Value>
+    </Property>
+    <Property name="isSundayWorkday">
+        <Value>false</Value>
+    </Property>
+    <Property name="locale">
+        <Property name="language">
+            <Value>en</Value>
+        </Property>
+        <Property name="country">
+            <Value>US</Value>
+        </Property>
+        <Property name="variant">
+            <Value></Value>
+        </Property>
+    </Property>
+    <Property name="nonWorkdays">
+        <Value>Jan 2, 2004</Value>
+        <Value>Jan 5, 2004</Value>
+        <Value>Apr 12, 2004</Value>
+        <Value>May 6, 2004</Value>
+        <Value>Jun 18, 2004</Value>
+        <Value>Jul 2, 2004</Value>
+        <Value>Jan 3, 2004</Value>
+    </Property>
+</CMConfig>

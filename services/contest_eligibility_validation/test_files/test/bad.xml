@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config
+		name="missRequiredElements">
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config
+		name="badOFConfiguration">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>GroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>	
+
+
+	<Config
+		name="classCastError">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>GroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>java.lang.String</Value>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+
+	<Config
+		name="InvalidClassSpecificationException">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>GroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibility.ContestEligibility</Value>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+
+<Config
+		name="same_validators">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>GroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+			<Property name="anotherGroupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>AnotherGroupEligibilityValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+			
+			<Property name="AnotherGroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config
+		name="missRequiredProperty">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+	
+<Config
+		name="emptyProperty">
+		<Property name="validators">
+			<Property name="groupEligibilityValidator">
+				<Property name="validator_obj_key"><Value>  </Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibility.GroupContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="GroupEligibilityValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.GroupEligibilityValidator</Value>
+				</Property>
+				<Property name="params">
+					<Property name="param1">
+						<Property name="type">
+							<Value>java.lang.String</Value>
+						</Property>
+						<Property name="value">
+							<Value>persistence-unit</Value>
+						</Property>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="mockValidator">
+		<Property name="validators">
+			<Property name="mockValidator">
+				<Property name="validator_obj_key"><Value>mockValidator</Value></Property>
+				<Property name="entity_name"><Value>com.topcoder.service.contest.eligibilityvalidation.MockContestEligibility</Value></Property>
+			</Property>
+		</Property>
+		
+		<Property name="object_factory_config">
+			<Property name="mockValidator">
+				<Property name="type">
+					<Value>com.topcoder.service.contest.eligibilityvalidation.MockEligibilityValidator</Value>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

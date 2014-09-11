@@ -1,0 +1,89 @@
+<project name="Override Macrodef Standard Behaviour Import" basedir=".">
+
+	<property name="jboss.home" value="C:/tcs/lib/jboss-4.2.2.GA" />
+	<property name="deploy.dir" value="${jboss.home}/server/default/deploy" />
+	<property name="cobertura.datafile.remote" value="${jboss.home}/bin/cobertura.ser" />
+	<property name="cobertura.datafile.remote" value="${jboss.home}/bin/cobertura.ser" />
+    <property name="cobertura.datafile.local" value="${testlogdir}/cobertura_local.ser" />
+    <property name="conf.dir.ejb" value="${testfiles}/conf/ejb"/>
+	<property name="build_jar_dir" value="${builddir}/jar" />
+
+    <!--This task is responsible for clean the build files of the application -->
+    <target name="clean">
+        <delete dir="${builddir}"/>
+    </target>
+
+    <!--This task is responsible for create an EJB archive -->
+    <target name="ejb" description="creates the EJB jar" depends="compile, compile_tests">
+    	<delete dir="${build_jar_dir}" />
+    	<mkdir dir="${build_jar_dir}" />
+
+    	<copy todir="${build_jar_dir}">
+			<fileset dir="${build_classdir}">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+    	
+    	<copy todir="${build_jar_dir}">
+			<fileset dir="${build_testclassdir}">
+				<include name="**/Mock*.class" />
+			</fileset>
+    	</copy>
+
+    	<copy todir="${build_jar_dir}/config">
+    				<fileset dir="${testfiles}/config">
+    					<include name="*.xml" />
+    					<exclude name="Failure_Config.xml" />
+    				</fileset>
+    	    	</copy>
+    	<copy todir="${build_jar_dir}">
+    	    				<fileset dir="${testfiles}">
+    	    					<include name="**/ConfigManager.properties" />
+    	    				</fileset>
+    	    	    	</copy>
+    	
+    	<delete dir="${build_distdir}/jar" />
+    	<mkdir dir="${build_distdir}/jar" />
+
+        <copy todir="${build_jar_dir}/META-INF" file="${conf.dir.ejb}/ejb-jar.xml" />
+        <jar destfile="${build_distdir}/specification_review_service.jar" basedir="${build_jar_dir}" />
+    	
+    	<copy todir="${build_jar_dir}" flatten="true">
+    		<fileset dir="${tcs_libdir}">
+    			<include name="**/**/*.jar" />
+    		</fileset>
+    	</copy>
+    	<copy todir="${build_jar_dir}" flatten="true">
+    	    		<fileset dir="${ext_libdir}">
+    	    			<include name="**/ifxjdbc.jar" />
+    	    		</fileset>
+    	    	</copy>
+    	<copy todir="${build_jar_dir}" file="${build_distdir}/specification_review_service.jar" />
+    </target>
+
+    <target name="ear" description="creates the EAR file" depends="ejb">
+        <ear destfile="${builddir}/${component.distfilename}.ear" appxml="${testfiles}/conf/ear/application.xml" >
+        	<fileset dir="${build_jar_dir}">
+        	    <include name="**/*.jar" />
+        	</fileset>
+        </ear>
+    </target>
+
+	<macrodef name="deployCommand">
+		<!-- standard deploy command -->
+		<sequential>
+			<antcall target="deployToJBoss" />
+		</sequential>
+	</macrodef>
+
+    <!-- This task is responsible for deploy the application to the configurated application server -->
+    <target name="deployToJBoss" description="copies the EAR to JBoss folder" depends="ear">
+        <copy file="${builddir}/${component.distfilename}.ear" todir="${deploy.dir}" overwrite="true"/>
+    	<!-- copy the mock specificatin submission files -->
+    	<copy file="${testfiles}/mock_submission/sample_component_1.0_requirements_specification.rtf" todir="${jboss.home}/bin" overwrite="true"/>
+    	<copy file="${testfiles}/mock_submission/mock_rs.rtf" todir="${jboss.home}/bin/mock" overwrite="true"/>
+    	<delete dir="${jboss.home}/bin/test_files/upload" />
+    	<mkdir dir="${jboss.home}/bin/test_files/upload" />
+    </target>
+
+</project>

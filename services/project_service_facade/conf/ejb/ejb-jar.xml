@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+    <description>Project Services Facade EJB</description>
+    <display-name>Project Services Facade EJB</display-name>
+    <enterprise-beans>
+        <session>
+            <ejb-name>ProjectServiceFacadeBean</ejb-name>
+            <remote>com.topcoder.service.facade.project.ejb.ProjectServiceFacadeRemote</remote>
+            <local>com.topcoder.service.facade.project.ejb.ProjectServiceFacadeLocal</local>
+            <ejb-class>com.topcoder.service.facade.project.ejb.ProjectServiceFacadeBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>documentManagerConfigFile</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>DocumentManager.xml</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>projectCreationEmailSubject</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>New Project : %PROJECT_NAME%</env-entry-value>
+            </env-entry>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.project.ProjectServiceRemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/CompanyDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.CompanyDAORemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectStatusDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ProjectStatusDAORemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ClientStatusDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ClientStatusDAORemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ClientDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ClientDAORemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ProjectDAORemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.permission.PermissionServiceRemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.user.UserService</remote>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

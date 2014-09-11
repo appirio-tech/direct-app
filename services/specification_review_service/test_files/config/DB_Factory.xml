@@ -1,0 +1,70 @@
+<CMConfig>
+    <!-- Namespace for DBConnectionFactory component -->
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>informix_connection</Value>
+            </Property>
+            <Property name="informix_connection">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.114:9088/spec_review:informixserver=ol_topcoder</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>system</Value>
+                    </Property>
+                </Property>
+            </Property>
+            <Property name="DefaultSequence">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.114:9088/spec_review:informixserver=ol_topcoder</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>system</Value>
+                    </Property>
+                </Property>
+            </Property>
+            
+			
+            
+            <Property name="failure_connection">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.114:9000/spec_review2:informixserver=tcs</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>system</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

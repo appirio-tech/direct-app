@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+    <display-name>Pipeline Service Demo</display-name>
+    <!-- wsdl address updated. Cockpit Security Facade V1.0 -->
+    <context-param>
+        <description>An URL for the Pipeline Service WSDL document</description>
+        <param-name>facade_wsdl</param-name>
+        <param-value>http://cockpit.cloud.topcoder.com/pipelinefacade/PipelineServiceFacadeWebServiceBean?wsdl</param-value>
+    </context-param>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>demo</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Cockpit User</role-name>
+            <role-name>Cockpit Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role>
+        <role-name>Cockpit User</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Cockpit Administrator</role-name>
+    </security-role>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>java:/jaas/JBossLoginModule</realm-name>
+    </login-config>
+</web-app>

@@ -1,0 +1,9 @@
+ <CMConfig>
+    <Config name="invalid1">
+        <Property name="persistence">
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.MySimpleReviewPersistence</Value>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

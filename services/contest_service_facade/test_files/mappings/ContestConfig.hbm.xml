@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="ContestConfig" table="contest_config" lazy="true">
+		<comment>
+			Base table for configuration. It keeps id of property
+			and value of property. In additional it keeps name and
+			required of configuration parameter
+		</comment>
+		<composite-id name="id" class="ContestConfig$Identifier">
+			<key-many-to-one name="contest"
+					class="com.topcoder.service.studio.contest.Contest"
+					column="contest_id" />
+			<key-many-to-one name="property"
+					class="com.topcoder.service.studio.contest.ContestProperty"
+					column="property_id" />
+		</composite-id>
+				
+		<property name="value" not-null="false" column="property_value" />
+	</class>
+</hibernate-mapping>

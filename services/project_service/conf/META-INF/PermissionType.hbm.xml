@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- since Module Cockpit Contest Service Enhancement Assembly -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.permission">
+	<class name="PermissionType" table="permission_type" lazy="false">
+		<comment>
+			This table describes permission type.
+		</comment>
+
+		<id name="permissionTypeId" column="permission_type_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">PERMISSION_TYPE_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="name" length="254"
+			column="name" />
+	</class>
+</hibernate-mapping>

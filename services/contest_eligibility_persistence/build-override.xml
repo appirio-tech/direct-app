@@ -1,0 +1,69 @@
+<project name="Override Macrodef Standard Behaviour Import" basedir=".">
+	<!-- macrodef override definition in order to change and add the standard behaviour from
+		build.xml/build_dist.xml
+	-->
+	<property name="component.application.dir" value="${build_distdir}/app" />
+
+	<property name="component.ejb.dir" value="${build_distdir}/ejb" />
+	<property name="component.ejb.jar" value="${component.ejb.dir}/contest_eligibility_persistence.jar" />
+
+	<property name="component.ear.name" value="contest_eligibility_persistence.ear" />
+	<property name="component.ear" value="${builddir}/${component.ear.name}" />
+
+	<property name="component.ear.dir" value="${component.application.dir}/${component.ear.name}" />
+
+
+	<target name="package.ejb" depends="compile">
+		<mkdir dir="${component.ejb.dir}" />
+		<mkdir dir="${component.ejb.jar}" />
+		<copy todir="${component.ejb.jar}">
+			<fileset dir="${build_classdir}" />
+		</copy>
+		<copy todir="${component.ejb.jar}">
+			<fileset dir="${testfiles}/ejb" />
+		</copy>
+	</target>
+
+	<target name="create_ear" depends="clean,package.ejb">
+		<delete file="${component.ear}" failonerror="false" />
+		<mkdir dir="${component.ear.dir}" />
+		<copy todir="${component.ear.dir}">
+			<fileset dir="${component.ejb.dir}" />
+		</copy>
+		<copy file="${base_exception}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy file="${typesafe_enum}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy file="${object_formatter}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy file="${logging_wrapper}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy file="${ifxjdbc.jar}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy file="${ifxjdbcx.jar}" todir="${component.ear.dir}" overwrite="true" />
+
+		<copy todir="${component.ear.dir}">
+			<fileset dir="${testfiles}/ear" />
+		</copy>
+
+	</target>
+
+	<target name="deploy_ear" depends="undeploy_ear,create_ear">
+		<!-- Copy ear to server -->
+
+		<copy todir="${deploy-dir}">
+			<fileset dir="${component.application.dir}" />
+		</copy>
+	</target>
+
+	<target name="undeploy_ear">
+		<delete dir="${deploy-dir}/${component.ear.name}" />
+	</target>
+
+	<macrodef name="deployCommand">
+		<!-- standard deploy command overwrite -->
+		<sequential>
+			<antcall target="deploy_ear" />
+		</sequential>
+	</macrodef>
+</project>

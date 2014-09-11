@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+  http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd" version="3.0">
+    <description>Specification Review Service EJB</description>
+    <display-name>Specification Review Service EJB</display-name>
+		<enterprise-beans>
+		<session>
+			<ejb-name>SpecificationReviewServiceBean</ejb-name>
+			<remote>com.topcoder.service.review.specification.ejb.SpecificationReviewServiceRemote</remote>
+			<local>com.topcoder.service.review.specification.ejb.SpecificationReviewServiceLocal</local>
+			<ejb-class>com.topcoder.service.review.specification.ejb.SpecificationReviewServiceBean</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+			<env-entry>
+				<env-entry-name>loggerName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>specification_review_service_log</env-entry-value>
+				</env-entry>
+				
+				
+				<env-entry>
+				<env-entry-name>mockSoftwareSubmissionContent</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Please review the contest as if you were going to compete in it. You can access the contest at the following link:
+http://www.topcoder.com/tc?module=ProjectDetail&amp;pj=[pj]
+Submit the specification review scorecard when you are finished reviewing the contest. If any elements of the contest are missing or difficult to find/understand you should fail the spec and comment appropriately in the scorecard.</env-entry-value>
+				</env-entry>
+
+                <env-entry>
+				<env-entry-name>mockStudioSubmissionContent</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Please review the contest as if you were going to compete in it. You can access the contest at the following link:
+http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=[pj]
+
+Submit the specification review scorecard when you are finished reviewing the contest.
+
+    Be sure to use the guide found in the Wiki regarding spec review: http://apps.topcoder.com/wiki/display/tcstudio/Reviewer+Process+for+Studio+Spec+Reviews.
+    If you need help, you can contact fellow spec reviewers and Studio Admin in this private forum: http://studio.topcoder.com/forums?module=ThreadList&amp;forumID=855
+
+If any elements of the contest are missing or confusing you should fail the spec and comment appropriately in the scorecard. 
+Your comments should be detailed, helpful and contain links to appropriate help files or Wiki pages found within 
+the Studio Guide for Contest Holders: http://apps.topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders.</env-entry-value>
+				</env-entry>
+
+				<env-entry>
+				<env-entry-name>searchBundleManageNamespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+				com.topcoder.searchbuilder.common
+				</env-entry-value>
+				</env-entry>
+				<env-entry>
+				<env-entry-name>reviewManagerClassName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+				com.topcoder.management.review.DefaultReviewManager
+				</env-entry-value>
+				</env-entry>
+				<env-entry>
+				<env-entry-name>scorecardManagerClassName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+				com.topcoder.management.scorecard.ScorecardManagerImpl
+				</env-entry-value>
+				</env-entry>
+				<env-entry>
+				<env-entry-name>uploadExternalServicesClassName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+				com.cronos.onlinereview.services.uploads.impl.DefaultUploadExternalServices
+				</env-entry-value>
+				</env-entry>
+				<env-entry>
+				<env-entry-name>dbConnectionFactoryClassName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</env-entry-value>
+			</env-entry>
+                        <env-entry>
+				<env-entry-name>dbConnectionFactoryNamespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</env-entry-value>
+			</env-entry>
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.user.UserService</remote>
+            </ejb-ref>
+			<ejb-local-ref>
+			    <ejb-ref-name>ejb/ProjectServices</ejb-ref-name>
+			    <ejb-ref-type>Session</ejb-ref-type>
+			    <local>com.topcoder.project.service.ejb.ProjectServicesLocal</local>
+                            <ejb-link>ProjectServicesBean</ejb-link>
+			</ejb-local-ref>
+            
+		</session>
+
+	</enterprise-beans>
+</ejb-jar>

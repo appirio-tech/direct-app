@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>SpecificationReviewServiceBean</ejb-name>
+            <jndi-name>SpecificationReviewServiceBean/remote</jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectServicesBean</ejb-ref-name>
+                <jndi-name>ProjectServicesBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+</jboss>

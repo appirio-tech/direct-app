@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<!DOCTYPE policy PUBLIC "-//JBoss//DTD JBOSS Security Config 3.0//EN"
+        "http://www.jboss.org/j2ee/dtd/security_config.dtd">
+<policy>
+    <application-policy name="JBossLoginModule">
+        <authentication>
+            <login-module code="com.topcoder.security.auth.module.JBossLoginModule" flag="required">
+                <module-option name="fileName">JBossLoginModuleConfig.properties</module-option>
+                <module-option name="password-stacking">useFirstPass</module-option>
+            </login-module>
+        </authentication>
+    </application-policy>
+</policy>

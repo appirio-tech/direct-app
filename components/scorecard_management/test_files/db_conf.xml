@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<CMConfig>
+	<Config
+		name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+		<Property name="connections">
+			<!-- the "default" property refers to a configured connection -->
+			<Property name="default">
+				<Value>informix</Value>
+			</Property>
+			<Property name="informix">
+				<Property name="producer">
+					<Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+				</Property>
+				<Property name="parameters">
+					<Property name="jdbc_driver">
+						<Value>com.informix.jdbc.IfxDriver</Value>
+					</Property>
+					<Property name="jdbc_url">
+						<Value>jdbc:informix-sqli://vpc:1526/or:INFORMIXSERVER=ol_vpc</Value>
+					</Property>
+					<Property name="user">
+						<Value>informix</Value>
+					</Property>
+					<Property name="password">
+						<Value>topcoder</Value>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

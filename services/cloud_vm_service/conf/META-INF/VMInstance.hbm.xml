@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.view.dto.cloudvm">
+    <class name="VMInstance" table="vm_instance" lazy="false">
+
+        <id name="id" column="vm_instance_id" >
+            <generator class="increment">
+            </generator>
+        </id>
+
+        <property name="createDate" column="create_date" />
+        <property name="modifyDate" column="modify_date" />
+        <property name="awsInstanceId" column="aws_instance_id" />
+        <property name="vmImageId" column="vm_image_id" />
+        <property name="vmAccountUserId" column="vm_account_user_id" />
+        <property name="tcMemberHandle" column="tc_member_handle" />
+        <property name="svnBranch" column="svn_branch" />
+        <property name="contestId" column="contest_id" />
+        <property name="contestName" column="contest_name" />
+        <property name="contestTypeId" column="vm_contest_type_id" />
+        <property name="terminated" column="is_terminated" />
+	    <property name="publicIP" column="public_ip" />
+        <property name="usageId" column="vm_usage_id" />
+        <property name="creationTime" column="vm_creation_time" />
+	      
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<CMConfig>
+
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>MainConn</Value>
+            </Property>
+            <Property name="MainConn">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.mysql.jdbc.Driver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:mysql://localhost:3306/test</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>root</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>123456</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

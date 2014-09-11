@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.view.dto.cloudvm">
+    <class name="VMAccountUser" table="vm_account_user" lazy="false">
+
+        <id name="id" column="vm_account_user_id" >
+            <generator class="increment">
+            </generator>
+        </id>
+
+        <property name="vmAccountId" column="vm_account_id" />
+        <property name="userId" column="user_id" />
+        <property name="createDate" column="create_date" />
+        <property name="modifyDate" column="modify_date" />
+    </class>
+</hibernate-mapping>

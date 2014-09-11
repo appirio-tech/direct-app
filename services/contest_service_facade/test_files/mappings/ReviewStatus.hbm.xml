@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="ReviewStatus" table="review_status_lu" lazy="true">
+		<comment>
+			Tables which describe review status. Possible Values : 1.
+			Passed 2. Failed 3. Cheated
+		</comment>
+
+		<id name="reviewStatusId" column="review_status_id" type="long" />
+
+		<property name="description" length="100" not-null="true"
+			column="review_status_desc" />
+
+	</class>
+</hibernate-mapping>

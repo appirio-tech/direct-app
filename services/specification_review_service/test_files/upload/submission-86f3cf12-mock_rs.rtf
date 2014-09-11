@@ -1,0 +1,1025 @@
+/*
+ * Copyright (C) 2009 TopCoder Inc., All Rights Reserved.
+ */
+package com.topcoder.service.review.specification.ejb;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
+import com.cronos.onlinereview.phases.lookup.ResourceRoleLookupUtility;
+import com.cronos.onlinereview.phases.lookup.SubmissionStatusLookupUtility;
+import com.cronos.onlinereview.phases.lookup.SubmissionTypeLookupUtility;
+import com.cronos.onlinereview.services.uploads.UploadExternalServices;
+import com.cronos.onlinereview.services.uploads.UploadServicesException;
+import com.topcoder.db.connectionfactory.DBConnectionException;
+import com.topcoder.db.connectionfactory.DBConnectionFactory;
+import com.topcoder.management.deliverable.PersistenceUploadManager;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.UploadManager;
+import com.topcoder.management.deliverable.persistence.UploadPersistence;
+import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
+import com.topcoder.management.deliverable.persistence.sql.SqlUploadPersistence;
+import com.topcoder.management.deliverable.search.SubmissionFilterBuilder;
+import com.topcoder.management.resource.ResourceManager;
+import com.topcoder.management.resource.persistence.PersistenceResourceManager;
+import com.topcoder.management.resource.persistence.ResourcePersistence;
+import com.topcoder.management.resource.persistence.ResourcePersistenceException;
+import com.topcoder.management.resource.persistence.sql.SqlResourcePersistence;
+import com.topcoder.management.resource.search.ResourceFilterBuilder;
+import com.topcoder.management.review.ReviewManagementException;
+import com.topcoder.management.review.ReviewManager;
+import com.topcoder.management.review.data.Review;
+import com.topcoder.management.scorecard.PersistenceException;
+import com.topcoder.management.scorecard.ScorecardManager;
+import com.topcoder.management.scorecard.data.Scorecard;
+import com.topcoder.project.phases.Phase;
+import com.topcoder.project.phases.PhaseStatus;
+import com.topcoder.project.phases.PhaseType;
+import com.topcoder.project.service.FullProjectData;
+import com.topcoder.project.service.ProjectServices;
+import com.topcoder.project.service.ProjectServicesException;
+import com.topcoder.search.builder.SearchBuilderConfigurationException;
+import com.topcoder.search.builder.SearchBuilderException;
+import com.topcoder.search.builder.SearchBundleManager;
+import com.topcoder.search.builder.filter.AndFilter;
+import com.topcoder.search.builder.filter.EqualToFilter;
+import com.topcoder.search.builder.filter.Filter;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.review.specification.SpecificationReview;
+import com.topcoder.service.review.specification.SpecificationReviewServiceConfigurationException;
+import com.topcoder.service.review.specification.SpecificationReviewServiceException;
+import com.topcoder.service.review.specification.SpecificationReviewStatus;
+import com.topcoder.util.idgenerator.IDGenerationException;
+import com.topcoder.util.log.Log;
+import com.topcoder.util.log.LogFactory;
+
+/**
+ * <p>
+ * This class is an EJB that implements <code>SpecificationReviewService</code> business
+ * interface. This bean uses Logging Wrapper component to log all occurred errors. This
+ * class uses pluggable implementations of <code>UploadManager</code>,
+ * <code>UploadExternalServices</code>, <code>ProjectServices</code>,
+ * <code>ReviewManager</code>, <code>ScorecardManager</code> and
+ * <code>ResourceManager</code> interfaces to access data in persistence and perform the
+ * actual specification review management.
+ * </p>
+ * <p>
+ * Thread Safety: This class is mutable and not thread safe. But it is always used in
+ * thread safe manner in EJB container because its state doesn't change after
+ * initialization. Instances of <code>ProjectServices</code>,
+ * <code>UploadExternalServices</code> and <code>DBConnectionFactory</code> used by
+ * this class are thread safe. Instances of <code>UploadManager</code>,
+ * <code>ReviewManager</code>, <code>ScorecardManager</code> and
+ * <code>ResourceManager</code> are not thread safe, thus all calls of their methods are
+ * synchronized in this class. This bean assumes that transactions are managed by the
+ * container.
+ * </p>
+ * 
+ * @author saarixx, TCSDEVELOPER
+ * @version 1.0
+ */
+@Stateless
+public class SpecificationReviewServiceBean implements SpecificationReviewServiceLocal,
+    SpecificationReviewServiceRemote {
+    /**
+     * 
+     */
+    private static final String SPECIFICATION_SUBMISSION = "Specification Submission";
+
+    /**
+     * 
+     */
+    private static final String SPECIFICATION_REVIEW = "Specification Review";
+
+    /**
+     * 
+     */
+    private static final String SPECIFICATION_REVIEWER = "Specification Reviewer";
+
+    /**
+     * <p>
+     * The project services instance used by this class. Is initialized via EJB container
+     * injection.
+     * </p>
+     * <p>
+     * Cannot be null after initialization. Is used in
+     * {@link #scheduleSpecificationReview(TCSubject, long, Date)},
+     * {@link #getSpecificationReviewStatus(TCSubject, long)} and
+     * {@link #getOpenSpecificationReviewPositions(TCSubject)}.
+     * </p>
+     */
+    @EJB(name = "ejb/ProjectServices")
+    private ProjectServices projectServices;
+
+    /**
+     * <p>
+     * The upload manager used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #getSpecificationReview(TCSubject, long)}.
+     * </p>
+     * <p>
+     * Thread safety: Implementations of UploadManager are not required to be thread safe.
+     * Thus to make SpecificationReviewServiceBean thread safe, all calls to
+     * uploadManager's methods must be synchronized on "this" instance.
+     * </p>
+     */
+    private UploadManager uploadManager;
+
+    /**
+     * <p>
+     * The review manager used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #getSpecificationReview(TCSubject, long)}.
+     * </p>
+     * </p>
+     * Thread safety: Implementations of ReviewManager are not required to be thread safe.
+     * Thus to make SpecificationReviewServiceBean thread safe, all calls to
+     * reviewManager's methods must be synchronized on "this" instance.
+     * </p>
+     */
+    private ReviewManager reviewManager;
+
+    /**
+     * <p>
+     * The scorecard manager used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #getSpecificationReview(TCSubject, long)}.
+     * </p>
+     * <p>
+     * Thread safety: Implementations of ScorecardManager are not required to be thread
+     * safe. Thus to make SpecificationReviewServiceBean thread safe, all calls to
+     * scorecardManager's methods must be synchronized on "this" instance.
+     * </p>
+     */
+    private ScorecardManager scorecardManager;
+
+    /**
+     * <p>
+     * The resource manager used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #getOpenSpecificationReviewPositions(TCSubject)}.
+     * </p>
+     * <p>
+     * Thread safety: Implementations of <code>ResourceManager</code> are not required
+     * to be thread safe. Thus to make <code>SpecificationReviewServiceBean</code>
+     * thread safe, all calls to resourceManager's methods must be synchronized on "this"
+     * instance.
+     * </p>
+     */
+    private ResourceManager resourceManager;
+
+    /**
+     * <p>
+     * The upload external services used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #scheduleSpecificationReview(TCSubject, long, Date)} and
+     * {@link #submitSpecificationAsFile(TCSubject, long, String)}.
+     * </p>
+     */
+    private UploadExternalServices uploadExternalServices;
+
+    /**
+     * <p>
+     * The DB connection factory used by this class.
+     * </p>
+     * <p>
+     * Is initialized in {@link #initialize()}. Cannot be null after initialization. Is
+     * used in {@link #createConnection()}.
+     * </p>
+     */
+    private DBConnectionFactory dbConnectionFactory;
+
+    /**
+     * <p>
+     * The logger instance to be used by this class for logging errors.
+     * </p>
+     * <p>
+     * Can be set in {@link #initialize()}. Is null if logging is not required. Is used
+     * in all public methods.
+     * </p>
+     */
+    private Log log;
+
+    /**
+     * <p>
+     * The name of the Logging Wrapper logger to be used by this class for logging errors
+     * and debug information.
+     * </p>
+     * <p>
+     * Is null if logging is not required. Can be modified with EJB container injection.
+     * Cannot be empty. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "loggerName")
+    private String loggerName;
+
+    /**
+     * <p>
+     * The connection passed to <code>DBConnectionFactory</code> when establishing a
+     * database connection.
+     * </p>
+     * <p>
+     * If null, the default connection is used. Can be modified with EJB container
+     * injection. Cannot be empty. Is used in {@link #createConnection()}.
+     * </p>
+     */
+    @Resource(name = "connectionName")
+    private String connectionName;
+
+    /**
+     * <p>
+     * The mock specification submission file path (without file name).
+     * </p>
+     * <p>
+     * Can be modified with EJB container injection. Cannot be null or empty. Is used in
+     * {@link #scheduleSpecificationReview(TCSubject, long, Date)}.
+     * </p>
+     */
+    @Resource(name = "mockSubmissionFilePath")
+    private String mockSubmissionFilePath;
+
+    /**
+     * <p>
+     * The mock specification submission file name (without file path).
+     * </p>
+     * <p>
+     * Can be modified with EJB container injection. Cannot be null or empty. Is used in
+     * {@link #scheduleSpecificationReview(TCSubject, long, Date)}.
+     * </p>
+     */
+    @Resource(name = "mockSubmissionFileName")
+    private String mockSubmissionFileName;
+
+    /**
+     * <p>
+     * The full class name of upload manager to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. Cannot be null or empty after
+     * initialization. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "searchBundleManageNamespace")
+    private String searchBundleManageNamespace;
+
+    /**
+     * <p>
+     * The full class name of review manager to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. Cannot be null or empty after
+     * initialization. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "reviewManagerClassName")
+    private String reviewManagerClassName;
+
+    /**
+     * <p>
+     * The namespace of review manager to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. If null, the default constructor is
+     * used, otherwise this namespace is passed as the only string argument to the
+     * constructor. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "reviewManagerNamespace")
+    private String reviewManagerNamespace;
+
+    /**
+     * <p>
+     * The full class name of scorecard manager to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. Cannot be null or empty after
+     * initialization. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "scorecardManagerClassName")
+    private String scorecardManagerClassName;
+
+    /**
+     * <p>
+     * The namespace of scorecard manager to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. If null, the default constructor is
+     * used, otherwise this namespace is passed as the only string argument to the
+     * constructor. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "scorecardManagerNamespace")
+    private String scorecardManagerNamespace;
+
+    /**
+     * <p>
+     * The full class name of upload external services to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. Cannot be null or empty after
+     * initialization. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "uploadExternalServicesClassName")
+    private String uploadExternalServicesClassName;
+
+    /**
+     * <p>
+     * The namespace of upload external services to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. If null, the default constructor is
+     * used, otherwise this namespace is passed as the only string argument to the
+     * constructor. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "uploadExternalServicesNamespace")
+    private String uploadExternalServicesNamespace;
+
+    /**
+     * <p>
+     * The full class name of DB connection factory to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. Cannot be null or empty after
+     * initialization. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "dbConnectionFactoryClassName")
+    private String dbConnectionFactoryClassName;
+
+    /**
+     * <p>
+     * The namespace of DB connection factory to be used by this class.
+     * </p>
+     * <p>
+     * Is initialized via EJB container injection. If null, the default constructor is
+     * used, otherwise this namespace is passed as the only string argument to the
+     * constructor. Is used in {@link #initialize()}.
+     * </p>
+     */
+    @Resource(name = "dbConnectionFactoryNamespace")
+    private String dbConnectionFactoryNamespace;
+
+    /**
+     * Creates an instance of <code>SpecificationReviewServiceBean</code>.
+     */
+    public SpecificationReviewServiceBean() {
+    }
+
+    /**
+     * Initializes this bean.
+     * 
+     * @throws SpecificationReviewServiceConfigurationException
+     *             if error occurred when initializing this bean.
+     */
+    @PostConstruct
+    protected void initialize() {
+        checkNull(projectServices, "projectServices");
+        checkNullOrEmpty(mockSubmissionFileName, "mockSubmissionFileName");
+        checkNullOrEmpty(mockSubmissionFilePath, "mockSubmissionFilePath");
+        checkNullOrEmpty(searchBundleManageNamespace, "searchBundleManageNamespace");
+        checkNullOrEmpty(reviewManagerClassName, "reviewManagerClassName");
+        checkNullOrEmpty(scorecardManagerClassName, "scorecardManagerClassName");
+        checkNullOrEmpty(uploadExternalServicesClassName, "uploadExternalServicesClassName");
+        checkNullOrEmpty(dbConnectionFactoryClassName, "dbConnectionFactoryClassName");
+        checkEmpty(loggerName, "loggerName");
+        checkEmpty(connectionName, "connectionName");
+        checkEmpty(reviewManagerNamespace, "reviewManagerNamespace");
+        checkEmpty(scorecardManagerNamespace, "scorecardManagerNamespace");
+        checkEmpty(uploadExternalServicesNamespace, "uploadExternalServicesNamespace");
+        checkEmpty(dbConnectionFactoryNamespace, "dbConnectionFactoryNamespace");
+
+        if (loggerName != null) {
+            log = LogFactory.getLog(loggerName);
+        }
+
+        reviewManager = createObject(reviewManagerClassName, reviewManagerNamespace,
+            ReviewManager.class);
+        scorecardManager = createObject(scorecardManagerClassName, scorecardManagerNamespace,
+            ScorecardManager.class);
+        uploadExternalServices = createObject(uploadExternalServicesClassName,
+            uploadExternalServicesNamespace, UploadExternalServices.class);
+        dbConnectionFactory = createObject(dbConnectionFactoryClassName, dbConnectionFactoryNamespace,
+            DBConnectionFactory.class);
+
+        SearchBundleManager searchBundleManager;
+        try {
+            searchBundleManager = new SearchBundleManager(searchBundleManageNamespace);
+        } catch (SearchBuilderConfigurationException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Fails to create search bundle manager with namespace: " + searchBundleManageNamespace,
+                e);
+        }
+
+        try {
+            UploadPersistence uploadPersistence = new SqlUploadPersistence(dbConnectionFactory,
+                this.connectionName);
+            this.uploadManager = new PersistenceUploadManager(uploadPersistence, searchBundleManager);
+        } catch (IDGenerationException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Fails to create upload manager implementation.", e);
+        } catch (IllegalArgumentException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Fails to create upload manager implementation"
+                    + " due to required search bundles or id generator not found.", e);
+        }
+
+        try {
+            ResourcePersistence resourcePersistence = new SqlResourcePersistence(dbConnectionFactory);
+            this.resourceManager = new PersistenceResourceManager(resourcePersistence,
+                searchBundleManager);
+        } catch (IllegalArgumentException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Fails to create resource manager implementation"
+                    + " due to required search bundle or id generator not found.", e);
+        }
+    }
+
+    /**
+     * <p>
+     * Validates the value of a variable. The value can not be <c>null</c>.
+     * </p>
+     * 
+     * @param value
+     *            the value of the variable to be validated.
+     * @param name
+     *            the name of the variable to be validated.
+     * @throws SpecificationReviewServiceConfigurationException
+     *             if the value of the variable is <c>null</c>.
+     */
+    private void checkNull(Object value, String name) {
+        if (value == null) {
+            throw new SpecificationReviewServiceConfigurationException("The " + name
+                + " should not be null.");
+        }
+    }
+
+    /**
+     * <p>
+     * Validates the value of a string. The value can not be <code>null</code> or an
+     * empty string.
+     * </p>
+     * 
+     * @param value
+     *            the value of the variable to be validated.
+     * @param name
+     *            the name of the variable to be validated.
+     * @throws SpecificationReviewServiceConfigurationException
+     *             if the given string is <code>null</code> or an empty string.
+     */
+    private void checkNullOrEmpty(String value, String name) {
+        checkNull(value, name);
+
+        if (value.trim().length() == 0) {
+            throw new SpecificationReviewServiceConfigurationException("The " + name
+                + " should not be empty.");
+        }
+    }
+
+    /**
+     * <p>
+     * Validates the value of a string when it is not null. The value can not be an empty
+     * string.
+     * </p>
+     * 
+     * @param value
+     *            the value of the variable to be validated.
+     * @param name
+     *            the name of the variable to be validated.
+     * @throws SpecificationReviewServiceConfigurationException
+     *             if the given string is an empty string.
+     */
+    private void checkEmpty(String value, String name) {
+        if ((value != null) && (value.trim().length() == 0)) {
+            throw new SpecificationReviewServiceConfigurationException("The " + name
+                + " should not be an empty string.");
+        }
+    }
+
+    /**
+     * Helper method to instantiate the specified <code>className</code> using
+     * reflection. The parameter is passed to constructor during reflection.
+     * 
+     * @param <T>
+     *            the generic class type.
+     * @param className
+     *            name of class to be instantiated.
+     * @param expectedType
+     *            expected type of the return instance.
+     * @param parameter
+     *            constructor argument.
+     * @return instance of type <code>className</code>.
+     * @throws SpecificationReviewServiceConfigurationException
+     *             if any error occurred when creating instance.
+     */
+    private <T> T createObject(String className, String parameter, Class<T> expectedType) {
+        try {
+            Class<?> clazz = Class.forName(className);
+
+            Object ret;
+
+            if (parameter == null) {
+                ret = clazz.newInstance();
+            } else {
+                ret = clazz.getConstructor(String.class).newInstance(parameter);
+            }
+            return expectedType.cast(ret);
+        } catch (ClassNotFoundException e) {
+            throw new SpecificationReviewServiceConfigurationException("Could not find class:"
+                + className, e);
+        } catch (IllegalArgumentException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Illegal argument for constructor", e);
+        } catch (SecurityException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "The object could not be instantiated.", e);
+        } catch (InstantiationException e) {
+            throw new SpecificationReviewServiceConfigurationException("The class[" + className
+                + "] can not be instantiated.", e);
+        } catch (IllegalAccessException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Constructor taking a Properties argument for this class[" + className
+                    + "] can not access", e);
+        } catch (InvocationTargetException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "Underlying constructor throws an exception", e);
+        } catch (NoSuchMethodException e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "No constructor taking a Properties argument found for class:" + className, e);
+        } catch (ClassCastException e) {
+            throw new SpecificationReviewServiceConfigurationException(className + " must be of type "
+                + expectedType.getName(), e);
+        } catch (ExceptionInInitializerError e) {
+            throw new SpecificationReviewServiceConfigurationException(
+                "The object could not be instantiated.", e);
+        }
+    }
+
+    /**
+     * Schedules a specification review for the given project on the given date
+     * 
+     * @param tcSubject
+     *            the user making the request
+     * @param projectId
+     *            the ID of the project
+     * @param reviewStartDate
+     *            the date the review is to begin (immediately if null or in the past)
+     * @throws IllegalArgumentException
+     *             if tcSubject is null or projectId is not positive.
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void scheduleSpecificationReview(TCSubject tcSubject, long projectId, Date reviewStartDate)
+        throws SpecificationReviewServiceException {
+        FullProjectData fullProjectData = getFullProjectData(projectId);
+        Phase[] allPhases = fullProjectData.getAllPhases();
+        fullProjectData.setStartDate(reviewStartDate);
+        Phase specificationSubmissionPhase = null;
+        for (Phase phase : allPhases) {
+            PhaseType phaseType = phase.getPhaseType();
+            if (SPECIFICATION_SUBMISSION.equals(phaseType.getName())) {
+                specificationSubmissionPhase = phase;
+                break;
+            }
+        }
+        if (specificationSubmissionPhase == null) {
+            throw new SpecificationReviewServiceException(
+                "Specification submission phase does not exist for the project: " + projectId);
+        }
+        specificationSubmissionPhase.setPhaseStatus(PhaseStatus.OPEN);
+        // long userId = tcSubject.getUserId();
+        String operator = Long.toString(tcSubject.getUserId());
+        updatePhases(fullProjectData, operator);
+        System.out.println(mockSubmissionFilePath + mockSubmissionFileName);
+        submitSpecificationAsFile(tcSubject, projectId, mockSubmissionFilePath + mockSubmissionFileName);
+        specificationSubmissionPhase.setPhaseStatus(PhaseStatus.SCHEDULED);
+        updatePhases(fullProjectData, operator);
+    }
+
+    /**
+     * Gets project with all associated information.
+     * 
+     * @param projectId
+     *            the project id.
+     * @return the project data with all associated information.
+     * @throws SpecificationReviewServiceException
+     *             if any error occurs when retrieving project data.
+     */
+    private FullProjectData getFullProjectData(long projectId)
+        throws SpecificationReviewServiceException {
+        try {
+            return projectServices.getFullProjectData(projectId);
+        } catch (ProjectServicesException e) {
+            throw logException(new SpecificationReviewServiceException(
+                "Fails to retrieve the project with id[" + projectId
+                    + "] along with all known associated information."));
+        }
+    }
+
+    /**
+     * Updates given project data.
+     * 
+     * @param fullProjectData
+     *            the full project data.
+     * @param operator
+     *            the operator.
+     * @throws SpecificationReviewServiceException
+     *             if any error occurs when updating phases.
+     */
+    private void updatePhases(FullProjectData fullProjectData, String operator)
+        throws SpecificationReviewServiceException {
+        try {
+            // projectServices.updatePhases(fullProjectData, operator);
+        } catch (ProjectServicesException e) {
+            throw new SpecificationReviewServiceException("Fails to update phase.", e);
+        }
+    }
+
+    /**
+     * Uploads a specification in the form of a file, for the given project by the given
+     * user. This method can be used for an initial submission or an updated submission.
+     * 
+     * @param tcSubject
+     *            the user making the request
+     * @param filename
+     *            the name of the file with the submission to upload
+     * @param projectId
+     *            the ID of the project
+     * @return the submission ID
+     * @throws IllegalArgumentException
+     *             if tcSubject is null, or projectId is not positive, or if filename is
+     *             null or empty.
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public long submitSpecificationAsFile(TCSubject tcSubject, long projectId, String filename)
+        throws SpecificationReviewServiceException {
+        FileDataSource fileDataSource = new FileDataSource(filename);
+        System.out.println(filename);
+        DataHandler dataHandler = new DataHandler(fileDataSource);
+
+        try {
+            System.out.println(dataHandler.getDataSource().getInputStream().available());
+            return uploadExternalServices.uploadSpecification(projectId, tcSubject.getUserId(),
+                mockSubmissionFileName, dataHandler);
+        } catch (RemoteException e) {
+            throw new SpecificationReviewServiceException("Fails to upload specification.", e);
+        } catch (UploadServicesException e) {
+            throw new SpecificationReviewServiceException("Fails to upload specification.", e);
+        } catch (IOException e) {
+            throw new SpecificationReviewServiceException();
+        }
+    }
+
+    /**
+     * Uploads a specification in the form of a String, for the given project by the given
+     * user. This method can be used for an initial submission or an updated submission.
+     * 
+     * @param content
+     *            the content to upload
+     * @param tcSubject
+     *            the user making the request
+     * @param projectId
+     *            the ID of the project
+     * @return the submission ID
+     * @throws IllegalArgumentException
+     *             if tcSubject is null, or projectId is not positive, or content is null
+     *             or empty
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public long submitSpecificationAsString(TCSubject tcSubject, long projectId, String content)
+        throws SpecificationReviewServiceException {
+        File file = null;
+        FileWriter fileWriter = null;
+        try {
+            file = File.createTempFile("specification", ".tmp");
+            fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            return submitSpecificationAsFile(tcSubject, projectId, file.getAbsolutePath());
+        } catch (IOException e) {
+            throw new SpecificationReviewServiceException("Fails to submit specification as string.", e);
+        } finally {
+            try {
+                if (fileWriter != null) {
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        throw new SpecificationReviewServiceException("Fails to close file writer.", e);
+                    }
+                }
+            } finally {
+                if (file != null) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets a specification review, including the scorecard structure as well as the
+     * review content. Returns null if not found.
+     * 
+     * @param tcSubject
+     *            the user making the request.
+     * @param projectId
+     *            the ID of the project.
+     * @return the entity with scorecard and review (null if not found).
+     * @throws IllegalArgumentException
+     *             if tcSubject is null or projectId is not positive.
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation.
+     */
+    public SpecificationReview getSpecificationReview(TCSubject tcSubject, long projectId)
+        throws SpecificationReviewServiceException {
+        Connection connection = null;
+
+        long activeSubmissionStatusId;
+        long specificationSubmissionTypeId;
+
+        try {
+            connection = createConnection();
+            // Lookup ID of submission status with "Active" name
+            activeSubmissionStatusId = SubmissionStatusLookupUtility.lookUpId(connection, "Active");
+            // Lookup ID of submission type with "Specification Submission" name
+            specificationSubmissionTypeId = SubmissionTypeLookupUtility.lookUpId(connection,
+                SPECIFICATION_SUBMISSION);
+        } catch (SQLException e) {
+            throw new SpecificationReviewServiceException("Fails to look up id.", e);
+        } finally {
+            closeConnection(connection);
+        }
+
+        // create filter to search specification submission
+        Filter projectIdFilter = SubmissionFilterBuilder.createProjectIdFilter(projectId);
+        Filter activeSubmissionStatusFilter = SubmissionFilterBuilder
+            .createSubmissionStatusIdFilter(activeSubmissionStatusId);
+        Filter specificationSubmissionTypeFilter = SubmissionFilterBuilder
+            .createSubmissionTypeIdFilter(specificationSubmissionTypeId);
+        Filter fullSpecificationSubmissionFilter = new AndFilter(Arrays.asList(new Filter[] {
+            projectIdFilter, activeSubmissionStatusFilter, specificationSubmissionTypeFilter}));
+
+        Submission[] specSubmissions;
+        try {
+            synchronized (this) {
+                specSubmissions = uploadManager.searchSubmissions(fullSpecificationSubmissionFilter);
+            }
+        } catch (UploadPersistenceException e) {
+            throw new SpecificationReviewServiceException("Fails to search specification submission.", e);
+        } catch (SearchBuilderException e) {
+            throw new SpecificationReviewServiceException("Fails to search specification submission.", e);
+        }
+
+        if (specSubmissions.length == 0) {
+            return null;
+        }
+        if (specSubmissions.length > 1) {
+            throw new SpecificationReviewServiceException(
+                "Mulitiple specification submissions exists for project: " + projectId);
+        }
+
+        long specSubmissionId = specSubmissions[0].getId();
+        Filter reviewFilter = new EqualToFilter("submission", specSubmissionId);
+
+        Review[] reviews;
+        try {
+            synchronized (this) {
+                reviews = reviewManager.searchReviews(reviewFilter, true);
+            }
+        } catch (ReviewManagementException e) {
+            throw new SpecificationReviewServiceException(
+                "Fails to search review for specification submission with id[" + specSubmissionId + "].",
+                e);
+        }
+
+        if (reviews.length == 0) {
+            return null;
+        }
+        if (reviews.length > 1) {
+            throw new SpecificationReviewServiceException(
+                "Mulitiple reviews exists for specification submission with id[" + specSubmissionId
+                    + "].");
+        }
+        long scorecardId = reviews[0].getScorecard();
+        Scorecard scorecard;
+        try {
+            synchronized (this) {
+                scorecard = scorecardManager.getScorecard(scorecardId);
+            }
+        } catch (PersistenceException e) {
+            throw new SpecificationReviewServiceException("Fails to get scorecard with id:"
+                + scorecardId, e);
+        }
+
+        SpecificationReview result = new SpecificationReview();
+        result.setReview(reviews[0]);
+        result.setScorecard(scorecard);
+        return result;
+    }
+
+    /**
+     * Closes the given database connection.
+     * 
+     * @param connection
+     *            the database connection.
+     * @throws SpecificationReviewServiceException
+     *             if error occurs when closing connection.
+     */
+    private static void closeConnection(Connection connection)
+        throws SpecificationReviewServiceException {
+        if (null != connection) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new SpecificationReviewServiceException("Fails to close the connection.", e);
+            }
+        }
+    }
+
+    /**
+     * Gets the specification review status of the given project. It can be in
+     * specification submission phase, or specification review phase, or null if neither.
+     * 
+     * @param tcSubject
+     *            the user making the request.
+     * @param projectId
+     *            the ID of the project.
+     * @return the status of the specification review (null if not ("waiting for fixes" or
+     *         "pending review")).
+     * @throws IllegalArgumentException
+     *             if tcSubject is null or projectId is not positive.
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation.
+     */
+    public SpecificationReviewStatus getSpecificationReviewStatus(TCSubject tcSubject, long projectId)
+        throws SpecificationReviewServiceException {
+        FullProjectData fullProjectData = getFullProjectData(projectId);
+
+        // get current phase
+        Phase[] allPhases = fullProjectData.getAllPhases();
+        Phase currentPhase = null;
+        for (Phase phase : allPhases) {
+            String phaseStatusName = phase.getPhaseStatus().getName();
+            if (PhaseStatus.OPEN.getName().equals(phaseStatusName)) {
+                currentPhase = phase;
+                break;
+            }
+        }
+
+        if (currentPhase == null) {
+            return null;
+        }
+
+        // return depending on the phase type
+        String phaseTypeName = currentPhase.getPhaseType().getName();
+        if (SPECIFICATION_SUBMISSION.equals(phaseTypeName)) {
+            return SpecificationReviewStatus.WAITING_FOR_FIXES;
+        }
+        if (SPECIFICATION_REVIEW.equals(phaseTypeName)) {
+            return SpecificationReviewStatus.PENDING_REVIEW;
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the IDs of all projects whose specification review positions are yet not
+     * filled. Will return an empty list if there are no such projects
+     * 
+     * @param tcSubject
+     *            the user making the request.
+     * @return the IDs of all projects whose specification review positions are yet not
+     *         filled (not null; doesn't contain null).
+     * @throws IllegalArgumentException
+     *             if tcSubject is null.
+     * @throws SpecificationReviewServiceException
+     *             if there are any errors during this operation.
+     */
+    public List<Long> getOpenSpecificationReviewPositions(TCSubject tcSubject)
+        throws SpecificationReviewServiceException {
+        List<Long> result = new ArrayList<Long>();
+
+        com.topcoder.management.project.Project[] activeProjects;
+        try {
+            activeProjects = projectServices.findActiveProjectsHeaders();
+        } catch (ProjectServicesException e) {
+            throw new SpecificationReviewServiceException("Fails to finds all active projects.", e);
+        }
+
+        Connection connection = null;
+        long specificationReviewerResourceRoleId;
+        try {
+            connection = createConnection();
+            specificationReviewerResourceRoleId = ResourceRoleLookupUtility.lookUpId(connection,
+                SPECIFICATION_REVIEWER);
+        } catch (SQLException e) {
+            throw new SpecificationReviewServiceException(
+                "Fails to lookup id for resource role[Specification Reviewer].", e);
+        } finally {
+            closeConnection(connection);
+        }
+
+        try {
+            for (com.topcoder.management.project.Project activeProject : activeProjects) {
+                long projectId = activeProject.getId();
+                Filter projectIdFilter = ResourceFilterBuilder.createProjectIdFilter(projectId);
+                Filter specificationReviewerResourceRoleIdFilter = ResourceFilterBuilder
+                    .createResourceRoleIdFilter(specificationReviewerResourceRoleId);
+                Filter fullFilter = new AndFilter(projectIdFilter,
+                    specificationReviewerResourceRoleIdFilter);
+
+                com.topcoder.management.resource.Resource[] specReviewers;
+                synchronized (this) {
+                    specReviewers = resourceManager.searchResources(fullFilter);
+                }
+
+                if (specReviewers.length == 0) {
+                    result.add(projectId);
+                }
+            }
+        } catch (ResourcePersistenceException e) {
+            throw new SpecificationReviewServiceException("Fails to search resource.", e);
+        } catch (SearchBuilderException e) {
+            throw new SpecificationReviewServiceException("Fails to search resource.", e);
+        }
+        return result;
+    }
+
+    /**
+     * Creates a DB connection.
+     * 
+     * @return the created Connection instance (not null).
+     * @throws SpecificationReviewServiceException
+     *             if some error occurred.
+     */
+    private Connection createConnection() throws SpecificationReviewServiceException {
+        Connection connection;
+        try {
+            if (null == connectionName) {
+                // create a default db connection
+                connection = dbConnectionFactory.createConnection();
+            } else {
+                // Create a connection with the configured name
+                connection = dbConnectionFactory.createConnection(connectionName);
+            }
+        } catch (DBConnectionException e) {
+            throw new SpecificationReviewServiceException("Fails to create database connection");
+        }
+        return connection;
+    }
+
+    /**
+     * <p>
+     * Logs the given exception at <c>ERROR</c> level. Both error message and stack trace
+     * will be logged.
+     * </p>
+     * 
+     * @param <T>
+     *            the generic type of exception.
+     * @param exception
+     *            The exception to log.
+     * @return the passed in exception.
+     */
+    private <T extends Throwable> T logException(T exception) {
+        if (log == null) {
+            return exception;
+        }
+
+        // log.(Level.ERROR, exception, exception.getMessage());
+
+        return exception;
+    }
+}

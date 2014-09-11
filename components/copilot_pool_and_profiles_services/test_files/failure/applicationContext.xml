@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+  <bean id="jiraDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/jira"/>
+    <property name="username" value="root"/>
+    <property name="password" value="123456"/>
+  </bean>
+
+  <bean id="paymentDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.informix.jdbc.IfxDriver"/>
+    <property name="url" value="jdbc:informix-sqli://localhost:9088/copilot:informixserver=ol_tcs"/>
+    <property name="username" value="informix"/>
+    <property name="password" value="123456"/>
+  </bean>
+
+  <bean id="tcsCatalogDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.informix.jdbc.IfxDriver"/>
+    <property name="url" value="jdbc:informix-sqli://localhost:9088/copilot:informixserver=ol_tcs"/>
+    <property name="username" value="informix"/>
+    <property name="password" value="123456"/>
+  </bean>
+
+  <bean id="jiraSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="jiraDataSource"/>
+    <property name="hibernateProperties">
+      <props>
+            <prop key="hibernate.show_sql">false</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="paymentSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="paymentDataSource"/>
+    <property name="hibernateProperties">
+      <props>
+            <prop key="hibernate.show_sql">false</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.InformixDialect</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="tcsCatalogSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="tcsCatalogDataSource"/>
+    <property name="mappingResources">
+      <list>
+        <value>mapping.hbm.xml</value>
+      </list>
+    </property>
+    <property name="hibernateProperties">
+      <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.InformixDialect</prop>
+            <prop key="hibernate.show_sql">false</prop>
+      </props>
+    </property>
+  </bean>
+
+    <!-- Define the DAOs -->
+    <bean id="utilityDAO" class="com.topcoder.direct.services.copilot.dao.impl.UtilityDAOImpl">
+    	<property name="loggerName" value="myLogger" />
+    	<property name="copilotPaymentTypeId" value="1" />
+    	<property name="copilotResourceRoleId" value="1" />
+    	<property name="userResourceInfoTypeId" value="1" />
+    	<property name="jiraSessionFactory" ref="jiraSessionFactory" />
+    	<property name="paymentSessionFactory" ref="paymentSessionFactory" />
+    	<property name="sessionFactory" ref="tcsCatalogSessionFactory" />
+    </bean>
+
+    <bean id="copilotProfileDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProfileDAOImpl">
+	   <property name="loggerName" value="myLogger"/>
+	   <property name="sessionFactory" ref="tcsCatalogSessionFactory"/>
+	</bean>
+	
+	<bean id="copilotProjectDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProjectDAOImpl">
+	   <property name="loggerName" value="myLogger"/>
+	   <property name="sessionFactory" ref="tcsCatalogSessionFactory"/>
+	</bean>
+	
+	<bean id="copilotProjectPlanDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProjectPlanDAOImpl">
+	   <property name="loggerName" value="myLogger"/>
+	   <property name="sessionFactory" ref="tcsCatalogSessionFactory"/>
+	</bean>
+	
+	<bean id="lookupDAO" class="com.topcoder.direct.services.copilot.dao.impl.LookupDAOImpl">
+	   <property name="loggerName" value="myLogger"/>
+	   <property name="sessionFactory" ref="tcsCatalogSessionFactory"/>
+	</bean>
+
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+       <property name="sessionFactory" ref="tcsCatalogSessionFactory"/>
+    </bean>
+  
+    <!-- Enable the configuration of transactional behavior based on annotations -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    <!-- Enable the @PostConstruct annotation -->
+    <context:annotation-config/>
+</beans>

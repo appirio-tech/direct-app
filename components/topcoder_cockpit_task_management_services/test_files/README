@@ -1,0 +1,36 @@
+=================== enhancement ================
+1. 
+resolveTaskList(long userId, long taskListId) 
+
+In this method, the designer's code:
+oldTask = entityManager.find(...);
+
+He finds the oldTask from the database, but this is not necessary, 
+we only need to save the oldTaskStatus, which can be directly retrieve from the task.getStatus();
+
+
+================= Steps to run the unit tests ==========
+
+1. 
+put spring, hiberate and other dependencies (the build-dependencies.xml may help) to your classpath.
+2.
+I have provided the mock_user_service.jar and the cockpit_modules.jar in reflib, 
+add them to the class path too.
+3. 
+run create.sql in your database, make sure that delete all your existing tables before running the script.
+4.
+I use the devnullsmtp.jar (provided in test_files) as the smtp server.
+use jar -jar devnullsmtp.jar to start the server before running the unit tests.
+And you can save the receiving emails to a directory in the devnull stmp server to manully check the emails.
+5.
+Modifies the configurations for your own in:
+a). test_files/jdbc.properties
+b). test_files/com/topcoder/message/email/EmailEngine.xml
+
+NOTE, I have success run my tests both in the spring 2.5.6 and hibernate 3.4(JPA1),
+and also the spring 3.1 and hibernate 3.5.6 (JPA2).
+But failed in spring 2.5.6 (JPA1) and hibernate 3.5.6(JPA2), you can try.
+
+============== CS has been updated ============
+
+

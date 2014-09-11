@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+<xa-datasource >
+        <jndi-name>DS</jndi-name>
+	<xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+	<xa-datasource-property name="IfxIFXHOST">localhost</xa-datasource-property>
+	<xa-datasource-property name="PortNumber">9088</xa-datasource-property>
+	<xa-datasource-property name="DatabaseName">common_oltp</xa-datasource-property>
+	<xa-datasource-property name="ServerName">ol_svr_custom</xa-datasource-property>
+	<xa-datasource-property name="User">informix</xa-datasource-property>
+	<xa-datasource-property name="Password">topcoder</xa-datasource-property>
+        <user-name>informix</user-name>
+        <password>topcoder</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource >
+</datasources>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<jboss>
+  <enterprise-beans>
+    <session>
+      <ejb-name>ProjectServiceBean</ejb-name>
+      <jndi-name>remote/ProjectServiceBean</jndi-name>   
+    </session>
+  </enterprise-beans>
+  <enterprise-beans>
+        <session>
+            <ejb-name>PermissionServiceBean</ejb-name>
+            <jndi-name>PermissionServiceBean/remote</jndi-name>
+        </session>
+    </enterprise-beans>
+	<enterprise-beans>
+		<session>
+			<ejb-name>SpecReviewServiceBean</ejb-name>
+			<jndi-name>SpecReviewServiceBean/remote</jndi-name>
+			<ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+		</session>
+	</enterprise-beans>  
+</jboss>

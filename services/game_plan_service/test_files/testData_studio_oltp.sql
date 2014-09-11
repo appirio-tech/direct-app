@@ -1,0 +1,4 @@
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (1, 'Contest Name 1', 1, 1, '2010-05-01 10:49:11.000', '2010-05-14 10:49:11.000', 2);
+insert into tc_direct_project(project_id, name, description, user_id, create_date, modify_date) values(1, 'Project Name 1', 'Project Description 1', 2, CURRENT, CURRENT);
+insert into contest (contest_id, name, project_id, tc_direct_project_id, start_time, end_time, contest_detailed_status_id) values (2, 'Contest Name 2', 2, 2, '2010-06-14 10:49:11.000', '2010-06-20 10:49:11.000', 2);
+insert into tc_direct_project(project_id, name, description, user_id, create_date, modify_date) values(2, 'Project Name 2', 'Project Description 2', 4, CURRENT, CURRENT);

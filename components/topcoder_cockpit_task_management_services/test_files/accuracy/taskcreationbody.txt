@@ -1,0 +1,29 @@
+<html>
+<body>
+<p>
+Task has been created.
+
+Task name is %TASK_NAME%
+
+Task notes are\:
+%TASK_NOTES%
+
+Task start date is %TASK_START_DATE%
+
+Task due date is %TASK_DUE_DATE%
+
+Task status is %TASK_STATUS%
+
+Task priority is %TASK_PRIORITY%
+
+Task assignees are\:
+<ul>
+%loop:TASK_ASSIGNEES%
+<li>
+<%USER_ID%>%USER_HANDLE%</a>
+</li>
+%endloop%
+</ul>
+</p>
+</body>
+</html>

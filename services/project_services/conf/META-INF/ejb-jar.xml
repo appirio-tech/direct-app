@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+	<enterprise-beans>
+		<session>
+      <!-- 
+      It's not necessary to define the class and Local and Remote interface.
+      When an EJB is deployed, the container looks at the interfaces of the
+      bean class to see if they are annotated with @javax.ejb.Local or @javax.ejb.Remote.
+      This introspection determines the remote and local interfaces of the bean class. 
+      The @Stateless annotation will determine the bean and its default name will be the nameof class
+      -->			
+      <ejb-name>ProjectServicesBean</ejb-name>
+      <remote>com.topcoder.project.service.ejb.ProjectServicesRemote</remote>
+      <local>com.topcoder.project.service.ejb.ProjectServicesLocal</local>
+      <ejb-class>com.topcoder.project.service.ejb.ProjectServicesBean</ejb-class>
+      
+			<env-entry>
+				<env-entry-name>projectServicesFactoryNamespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>com.topcoder.project.service.ProjectServicesFactory</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>loggerName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>defaultLogger</env-entry-value>
+			</env-entry>
+			<ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.user.UserServiceRemote</remote>
+            </ejb-ref>
+		</session>
+	</enterprise-beans>
+</ejb-jar>

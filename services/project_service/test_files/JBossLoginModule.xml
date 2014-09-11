@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.security.auth.module">
+		<property name="securityFacadeChild">
+			<property name="logName">
+				<value>justALogName</value>
+			</property>
+			<property name="entitlementAssignmentManagerKey">
+				<value>eamk</value>
+			</property>
+			<property name="authenticationManagerKey">
+				<value>amk</value>
+			</property>
+			<property name="maxFailedLoginTimesBeforeLock">
+				<value>3</value>
+			</property>
+			<property name="passwordDuration">
+				<value>100000</value>
+			</property>
+			<property name="logoutHandlerKey">
+				<value>lohk</value>
+			</property>
+			<property name="functionalEntitlementManagerKey">
+				<value>femk</value>
+			</property>
+			<property name="auditorKey">
+				<value>ak</value>
+			</property>
+			<property name="userGroupManagerKey">
+				<value>ugmk</value>
+			</property>
+			<property name="objectFactoryConfigurationObject">
+				<property name="eamk">
+					<property name="type">
+						<value>com.topcoder.security.entitlement.data.EntitlementAssignmentManager</value>
+					</property>
+				</property>
+				<property name="lohk">
+					<property name="type">
+						<value>com.topcoder.service.project.MockLogoutHandler</value>
+					</property>
+				</property>
+				<property name="amk">
+					<property name="type">
+						<value>com.topcoder.security.authenticationmanager.AuthenticationManager</value>
+					</property>
+				</property>
+				<property name="femk">
+					<property name="type">
+						<value>com.topcoder.security.entitlement.functional.FunctionalEntitlementManager</value>
+					</property>
+				</property>
+				<property name="ugmk">
+					<property name="type">
+						<value>com.topcoder.service.project.MockUserGroupManager</value>
+					</property>
+				</property>
+				<property name="ak">
+					<property name="type">
+						<value>com.topcoder.service.project.MockAuditor</value>
+					</property>
+				</property>
+			</property>
+		</property>
+		<property name="objectFactoryChild">
+
+			<Property name="nameCallback">
+				<Property name="type">
+					<Value>com.topcoder.service.project.FailedNameCallback</Value>
+				</Property>
+			</Property>
+
+			<Property name="passwordCallback">
+				<Property name="type">
+					<Value>com.topcoder.service.project.FailedPasswordCallback</Value>
+				</Property>
+			</Property>
+		</property>
+		<property name="authenticationManagerChild">
+			<property name="log">
+				<value>demolog</value>
+			</property>
+			<property name="modules">
+				<property name="module1">
+					<property name="key">
+						<value>Module1</value>
+					</property>
+				</property>
+			</property>
+			<property name="specification">
+				<property name="Module1">
+					<property name="type">
+						<value>com.topcoder.service.project.MockAuthenticationModule</value>
+					</property>
+					<property name="params">
+						<property name="param2">
+							<property name="value">
+								<value>ModuleName1</value>
+							</property>
+							<property name="type">
+								<value>String</value>
+							</property>
+						</property>
+						<property name="param1">
+							<property name="value">
+								<value>required</value>
+							</property>
+							<property name="type">
+								<value>String</value>
+							</property>
+						</property>
+					</property>
+				</property>
+				<property name="AggregationStrategy">
+					<property name="type">
+						<value>com.topcoder.security.authenticationmanager.DefaultAggregationStrategy</value>
+					</property>
+				</property>
+			</property>
+		</property>
+	</Config>
+</CMConfig>

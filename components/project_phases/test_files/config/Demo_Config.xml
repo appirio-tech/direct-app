@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<!-- Configuration for DefaultPhaseTemplate -->
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<!-- Configuration for XmlPhaseTemplatePersistence -->
+	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/template/TCSTemplate_Design.xml</Value>
+			<Value>test_files/template/TCSTemplate_Development.xml</Value>
+		</Property>
+	</Config>
+	
+	<!-- Configuration for RelativeWeekTimeStartDateGenerator -->
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<!-- the week offset from current week, here 1 means the next week -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>5</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+	
+	<!-- Object Specification Configuration for workdays -->
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays">
+    	<Property name="workdays:default">
+      		<Property name="type">
+        		<Value>com.topcoder.date.workdays.DefaultWorkdays</Value>
+      		</Property>
+      		<Property name="params">
+        		<Property name="param1">
+          			<Property name="type">
+            			<Value>String</Value>
+          			</Property>
+          			<Property name="value">
+            			<Value>config/workdays.xml</Value>
+          			</Property>
+        		</Property>
+        		<Property name="param2">
+          			<Property name="type">
+            			<Value>String</Value>
+          			</Property>
+          			<Property name="value">
+            			<Value>XML</Value>
+          			</Property>
+        		</Property>
+      		</Property>
+    	</Property>
+  	</Config>
+</CMConfig>

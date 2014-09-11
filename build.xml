@@ -28,6 +28,8 @@
 
     <!--Import the build-master.xml -->
     <property name="subprojects.conf" value="${basedir}/subprojects.xml"/>
+    <property name="components.conf" value="${basedir}/components.xml"/>
+    <property name="services.conf" value="${basedir}/services.xml"/>
     <import file="${basedir}/build-master.xml"/>
 
     <!-- COMPONENT PARAMETERS -->
@@ -151,7 +153,6 @@
         <copy file="${authentication_manager.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${base_exception.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${class_associations.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${client_project_entities_dao_validator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${cockpit_auth.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${cockpit_facade_util.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${cockpit_phase_handlers.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -160,10 +161,8 @@
         <copy file="${configuration_manager.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${configuration_persistence.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${confluence_user_soap_client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${copilot_pool_and_profiles_dao.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${copilot_pool_and_profiles_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${client_invoice_entities_dao.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${topcoder_cockpit_project_metadata_entities.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_milestone_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_asset_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -175,7 +174,6 @@
         <copy file="${database_abstraction.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${db_connection_factory.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${deliverable_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${deliverable_management_persistence.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${document_generator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${email_engine.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${excel_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -195,7 +193,6 @@
         <copy file="${object_formatter.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${online_review_phases.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${PactsClientServices.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${project_phase_template.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${search_builder.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${security.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${security_facade.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -212,6 +209,19 @@
         <copy file="${review_application_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${project_payment_calculator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${marathon_match_resources.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+
+        <copy file="${phase_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${project_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${project_phases.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${online_review_upload_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${auto_screening_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${resource_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${review_score_aggregator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${scorecard_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${review_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${team_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${team_management_persistence.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${user_project_data_store.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- third-party libs -->
         <copy file="${asm-3.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -304,32 +314,11 @@
     	<copy file="${yuicompressor.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- EJB components -->
-        <copy file="${catalog_entities.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${catalog_services.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}" overwrite="true"/>        <copy file="${catalog_services.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${cloud_vm_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${auto_screening_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${online_review_upload_services.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${phase_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${phase_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_phases.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${resource_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${resource_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${review_data_structure.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${review_score_aggregator.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${scorecard_data_structure.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${scorecard_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${scorecard_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${review_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${review_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${team_management.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${team_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${user_project_data_store.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${game_plan_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${contest_eligibility_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${contest_eligibility_validation.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -343,16 +332,9 @@
         <copy file="${admin_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${pipeline_service_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${ldap_sdk_interface.jar}" todir="${build_distdir}" overwrite="true"/>
-        <!-- war files -->
-        <copy file="${contest_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${admin_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${user_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${pipeline_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
 
         <!-- Copy configuration files -->
         <copy todir="${build_distdir}">
@@ -655,7 +637,7 @@
     </target>
 
     <!-- Builds the WAR file for web application module -->
-    <target name="war" depends="clean, init, compile" description="Builds the WAR file">
+    <target name="war" depends="clean, init, dist-components, compile" description="Builds the WAR file">
         <antcall target="marathonmatch_compile" />
 
         <war warfile="temp.war" webxml="${tokenized_conf}/web/WEB-INF/web.xml">

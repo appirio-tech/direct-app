@@ -1,0 +1,58 @@
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+    version="3.0">
+    <enterprise-beans>
+        <session>
+            <ejb-name>contest_eligibility_validation</ejb-name>
+            <remote>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerRemote</remote>
+            <local>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerLocal</local>
+            <ejb-class>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>logName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>contest_eligibility_validation</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>configFileName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>ContestEligibilityValidationManagerBean.xml</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>namespace</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerBean</env-entry-value>
+            </env-entry>
+        </session>
+
+        <session>
+            <ejb-name>ContestEligibilityServiceBean</ejb-name>
+            <remote>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityServiceRemote</remote>
+            <local>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityServiceLocal</local>
+            <service-endpoint>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityService</service-endpoint>
+            <ejb-class>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>logName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>contest_service_facade_log</env-entry-value>
+            </env-entry>
+		
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_validation</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerRemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_persistence</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerRemote</remote>
+            </ejb-ref>
+            
+       
+        </session>
+    </enterprise-beans>
+</ejb-jar>

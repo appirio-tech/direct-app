@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+ <persistence-unit name="persistenceUnit">
+  <provider>org.hibernate.ejb.HibernatePersistence</provider>
+  <mapping-file>META-INF/mapping/TcDirectProject.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadataAudit.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadataKeyAudit.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadataPredefinedValueAudit.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadataKey.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadataPredefinedValue.hbm.xml</mapping-file>
+  <mapping-file>META-INF/mapping/DirectProjectMetadata.hbm.xml</mapping-file>
+  <properties>
+   <property name="hibernate.show_sql" value="false" />
+   <property name="hibernate.format_sql" value="false" /> 
+   <property name="hibernate.hbm2ddl.auto" value="none" />
+   <property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect" />
+   <property name="hibernate.connection.driver_class" value="com.informix.jdbc.IfxDriver" />
+   <property name="hibernate.connection.url" value="jdbc:informix-sqli://127.0.0.1:9088/topcoder:informixserver=ol_svr_custom" />
+   <property name="hibernate.connection.username" value="informix" />
+   <property name="hibernate.connection.password" value="123456" />
+  </properties>
+ </persistence-unit>
+</persistence>

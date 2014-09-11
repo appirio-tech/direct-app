@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+	<enterprise-beans>
+		<session>
+			<ejb-name>CompanyDAOBean</ejb-name>
+			<remote>com.topcoder.clients.dao.ejb3.CompanyDAORemote</remote>
+			<local>com.topcoder.clients.dao.ejb3.CompanyDAOLocal</local>
+			<ejb-class>com.topcoder.clients.dao.ejb3.CompanyDAOBean</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+			<env-entry>
+				<env-entry-name>unitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistenceUnit</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>
+					search_bundle_manager_namespace
+				</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+					com.topcoder.search.builder
+				</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_file_name</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>test.properties</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_namespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>CPE_DAO</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					persistenceUnit
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					persistenceUnit
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+		<session>
+			<ejb-name>ProjectStatusDAOBean</ejb-name>
+			<remote>
+				com.topcoder.clients.dao.ejb3.ProjectStatusDAORemote
+			</remote>
+			<local>
+				com.topcoder.clients.dao.ejb3.ProjectStatusDAOLocal
+			</local>
+			<ejb-class>
+				com.topcoder.clients.dao.ejb3.ProjectStatusDAOBean
+			</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+
+			<env-entry>
+				<env-entry-name>unitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistenceUnit</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>
+					search_bundle_manager_namespace
+				</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+					com.topcoder.search.builder
+				</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_file_name</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>test.properties</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_namespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>CPE_DAO</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					persistenceUnit
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					persistenceUnit
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+		<session>
+			<ejb-name>ClientStatusDAOBean</ejb-name>
+			<remote>
+				com.topcoder.clients.dao.ejb3.ClientStatusDAORemote
+			</remote>
+			<local>
+				com.topcoder.clients.dao.ejb3.ClientStatusDAOLocal
+			</local>
+			<ejb-class>
+				com.topcoder.clients.dao.ejb3.ClientStatusDAOBean
+			</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+
+			<env-entry>
+				<env-entry-name>unitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistenceUnit</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>
+					search_bundle_manager_namespace
+				</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+					com.topcoder.search.builder
+				</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_file_name</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>test.properties</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_namespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>CPE_DAO</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					persistenceUnit
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					persistenceUnit
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+		<session>
+			<ejb-name>ClientDAOBean</ejb-name>
+			<remote>
+				com.topcoder.clients.dao.ejb3.ClientDAORemote
+			</remote>
+			<local>com.topcoder.clients.dao.ejb3.ClientDAOLocal</local>
+			<ejb-class>
+				com.topcoder.clients.dao.ejb3.ClientDAOBean
+			</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+
+			<env-entry>
+				<env-entry-name>unitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistenceUnit</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>
+					search_bundle_manager_namespace
+				</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+					com.topcoder.search.builder
+				</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_file_name</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>test.properties</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_namespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>CPE_DAO</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					persistenceUnit
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					persistenceUnit
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+
+
+		<session>
+			<ejb-name>ProjectDAOBean</ejb-name>
+			<remote>
+				com.topcoder.clients.dao.ejb3.ProjectDAORemote
+			</remote>
+			<local>com.topcoder.clients.dao.ejb3.ProjectDAOLocal</local>
+			<ejb-class>
+				com.topcoder.clients.dao.ejb3.ProjectDAOBean
+			</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+
+			<env-entry>
+				<env-entry-name>unitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistenceUnit</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>
+					search_bundle_manager_namespace
+				</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>
+					com.topcoder.search.builder
+				</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_file_name</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>test.properties</env-entry-value>
+			</env-entry>
+
+			<env-entry>
+				<env-entry-name>config_namespace</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>CPE_DAO</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					persistenceUnit
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					persistenceUnit
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+
+	</enterprise-beans>
+</ejb-jar>

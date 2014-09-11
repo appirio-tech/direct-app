@@ -1,0 +1,551 @@
+<CMConfig>
+
+<!-- Namespace for InformixProjectPersistence class -->
+<Config name="InformixProjectPersistence.CustomNamespace">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NoFactoryNamespace">
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyFactoryNamespace">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>    </Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistFactoryNamespace">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>do_not_exist</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NoConnectionName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyConnectionName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>    </Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistConnectionName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>do_not_exist</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NoProjectIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyProjectIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>    </Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistProjectIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>do_not_exist</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NoProjectAuditIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyProjectAuditIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>    </Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistProjectAuditIdSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>do_not_exist</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NoFileTypeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyFileTypeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>  </Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistFileTypeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>invalid_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+<Config name="InformixProjectPersistence.CustomNamespace.NoPrizeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyPrizeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>   </Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistPrizeIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>invalid_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>studio_spec_id_seq</Value>
+    </Property>
+</Config>
+<Config name="InformixProjectPersistence.CustomNamespace.NoStudioSpecIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.EmptyStudioSpecIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>  </Value>
+    </Property>
+</Config>
+
+<Config name="InformixProjectPersistence.CustomNamespace.NonExistStudioSpecIdGeneratorSequenceName">
+    <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+    <Property name="ConnectionFactoryNS">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+    </Property>
+    <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+    <Property name="ConnectionName">
+        <Value>informix_connection</Value>
+    </Property>
+    <Property name="ProjectIdSequenceName">
+        <Value>project_id_seq</Value>
+    </Property>
+    <Property name="ProjectAuditIdSequenceName">
+        <Value>project_audit_id_seq</Value>
+    </Property>
+    <Property name="FileTypeIdGeneratorSequenceName">
+        <Value>file_type_id_seq</Value>
+    </Property>
+    <Property name="PrizeIdGeneratorSequenceName">
+        <Value>prize_id_seq</Value>
+    </Property>
+    <Property name="StudioSpecIdGeneratorSequenceName">
+        <Value>invalid_id_seq</Value>
+    </Property>
+</Config>
+
+</CMConfig>

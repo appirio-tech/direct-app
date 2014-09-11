@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration
+          PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="java:comp/env/hibernate/SessionFactory">
+        <property name="connection.datasource">java:JTS_CORPORATE_OLTP</property>
+        <property name="show_sql">true</property>
+        <property name="dialect">org.hibernate.dialect.InformixDialect</property>
+        <mapping resource="META-INF/mapping.xml"/>
+
+    </session-factory>
+</hibernate-configuration>

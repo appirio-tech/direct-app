@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="FilePath" table="path" lazy="false">
+		<comment>This table describe URL path to file.</comment>
+
+		<id name="filePathId" column="path_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">STUDIO_PATH_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="path" length="254" />
+
+		<property name="modifyDate" column="modify_date"
+			not-null="true"
+			generated="always" />
+
+	</class>
+</hibernate-mapping>

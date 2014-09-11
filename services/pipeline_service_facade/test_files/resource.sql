@@ -1,0 +1,1 @@
+ALTER TABLE resource ADD name VARCHAR(45) NULL;

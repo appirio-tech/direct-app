@@ -1,0 +1,64 @@
+ <project name="build.common.tasks">
+    <!--
+        ++ =======================================================================
+        ++ Macro: mxmlc
+        ++ Compile Flex source into a SWF
+        ++ =======================================================================
+    -->
+     <macrodef name="mxmlc" description="">
+        <attribute name="src" />
+        <attribute name="dest" />
+        <attribute name="lib.path.id"/>
+ 
+        <sequential>
+       
+            <pathconvert property="_mxmlc.lib.files" refid="@{lib.path.id}" pathsep="," />
+            <condition property="_mxmlc.libpath" value='-include-libraries+="${_mxmlc.lib.files}"' else="">
+                <not>
+                    <equals arg1="" arg2="${_mxmlc.lib.files}" trim="true" />
+                </not>
+            </condition>
+         
+            <java jar="${flex.mxmlc.jar}" dir="." fork="true" failonerror="true">
+                <jvmarg value="-Xmx512m" />
+                <arg line="${_mxmlc.libpath}" />
+                <arg value="+flexlib=${flex.frameworks.dir}" />
+            
+                <arg value="-file-specs=@{src}" />
+                <arg value="-output=@{dest}" />
+            </java>
+            
+        </sequential>
+    </macrodef>
+
+    <!--
+        ++ =======================================================================
+        ++ Macro: compc
+        ++ Compile Flex source into a SWC
+        ++ =======================================================================
+    -->
+	<macrodef name="compc" description="">
+        <attribute name="src.dir" />
+        <attribute name="dest" />
+        <attribute name="lib.path.id" />
+
+        <sequential>
+            <pathconvert property="_compc.lib.files" refid="@{lib.path.id}" pathsep="," />
+            <condition property="_compc.libpath" value='-library-path+="${_compc.lib.files}"' else="">
+                <not>
+                    <equals arg1="" arg2="${_compc.lib.files}" trim="true" />
+                </not>
+            </condition>
+          
+            <java jar="${flex.compc.jar}" dir="." fork="true" failonerror="true">
+                <jvmarg value="-Xmx512m" />
+                <arg line="${_compc.libpath}" />
+                <arg value="+flexlib=${flex.frameworks.dir}" />
+                
+                <arg value="-source-path=@{src.dir}" />
+                <arg value="-include-sources=@{src.dir}" />
+                <arg value="-output=@{dest}" />
+            </java>
+        </sequential>
+    </macrodef>
+</project>
