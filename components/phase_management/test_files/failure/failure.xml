@@ -1,0 +1,206 @@
+<CMConfig>
+
+	<Config name="MissingPhasePersistenceClassName">
+
+		<Property name="Idgenerator">
+            <Property name="sequenceName">
+                <Value>phase_id_seq</Value>
+            </Property>
+						<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+		<Property name="ConnectionFactory">
+            <Property name="className"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+			<Property name="namespace"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+   <Config name="InvalidPhasePersistenceClassName">
+        <Property name="PhasePersistence">
+            <Property name="className"> 
+                <Value>I.am.not.a.valid.class</Value>
+            </Property>
+        </Property>
+
+		<Property name="Idgenerator">
+            <Property name="sequenceName">
+                <Value>phase_id_seq</Value>
+            </Property>
+			<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+		<Property name="ConnectionFactory">
+            <Property name="className"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+			<Property name="namespace"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+	<Config name="MissingIdgeneratorSequenceName">
+        <Property name="PhasePersistence">
+            <Property name="className"> 
+                <Value>com.topcoder.management.phase.db.InformixPhasePersistence</Value>
+            </Property>
+        </Property>
+
+				<Property name="Idgenerator">
+
+			<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+		<Property name="ConnectionFactory"> <!--required.-->
+            <Property name="className"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+			<Property name="namespace"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+	<Config name="InvalidIdgeneratorSequenceName">
+        <Property name="PhasePersistence">
+				<!--required.-->
+            <Property name="className"> 
+                <Value>com.topcoder.management.phase.db.InformixPhasePersistence</Value>
+            </Property>
+        </Property>
+
+				<Property name="Idgenerator">
+            <Property name="sequenceName"> 
+                <Value>not.a.valid.seq.name</Value>
+            </Property>
+						<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+		<Property name="ConnectionFactory"> <!--required.-->
+            <Property name="className"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+			<Property name="namespace"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+    <Config name="InvalidConnectionFactoryInfo">
+        <Property name="PhasePersistence">
+            <Property name="className"> <!--required.-->
+                <Value>com.topcoder.management.phase.db.MockPhasePersistence</Value>
+            </Property>
+        </Property>
+
+				<Property name="PhaseValidator"> <!--optional.-->
+            <Property name="className"> 
+                <Value>com.topcoder.management.phase.validation.DefaultPhaseValidator</Value>
+            </Property>
+        </Property>
+
+				<!--required.-->
+				<Property name="Idgenerator">
+            <Property name="sequenceName">
+                <Value>phase_id_seq</Value>
+            </Property>
+						<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+				<!--optional.-->
+				<Property name="connectionName"> 
+            <Value>Phase</Value>
+        </Property>
+
+				<!--required.-->
+				<Property name="ConnectionFactory">
+            <Property name="className"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+						<Property name="namespace"> 
+                <Value>not.exist.db.connection.factory</Value>
+            </Property>
+        </Property>
+    </Config>
+
+    <Config name="InvalidConnectionFactoryClass">
+        <Property name="PhasePersistence">
+            <Property name="className"> <!--required.-->
+                <Value>com.topcoder.management.phase.db.MockPhasePersistence</Value>
+            </Property>
+        </Property>
+
+				<Property name="PhaseValidator"> <!--optional.-->
+            <Property name="className"> 
+                <Value>com.topcoder.management.phase.validation.DefaultPhaseValidator</Value>
+            </Property>
+        </Property>
+
+				<!--required.-->
+				<Property name="Idgenerator">
+            <Property name="sequenceName">
+                <Value>phase_id_seq</Value>
+            </Property>
+						<Property name="className"> 
+                <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+            </Property>
+        </Property>
+
+				<!--optional.-->
+				<Property name="connectionName"> 
+            <Value>Phase</Value>
+        </Property>
+
+				<!--required.-->
+				<Property name="ConnectionFactory">
+            <Property name="className"> 
+                <Value>not.a.valid.class</Value>
+            </Property>
+						<Property name="namespace"> 
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+	    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>Phase</Value>
+            </Property>
+
+            <Property name="Phase">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://wishingbone:15260/or:INFORMIXSERVER=or</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>informix</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

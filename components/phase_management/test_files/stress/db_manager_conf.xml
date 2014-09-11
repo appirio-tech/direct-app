@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.management.phase.db.DbManager">
+
+		<Property name="connection_factory_ns">
+			<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+		</Property>
+
+		<Property name="connection_name">
+			<Value>informix</Value>
+		</Property>
+
+		<Property name="tableNames">
+			<Value>phase_dependency</Value>
+			<Value>phase_criteria</Value>
+			<Value>project_phase</Value>
+			<Value>phase_type_lu</Value>
+			<Value>phase_status_lu</Value>
+			<Value>phase_criteria_type_lu</Value>
+			<Value>project</Value>
+
+		</Property>
+	</Config>
+
+
+
+</CMConfig>

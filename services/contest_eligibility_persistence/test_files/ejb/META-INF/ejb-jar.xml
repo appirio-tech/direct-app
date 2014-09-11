@@ -1,0 +1,29 @@
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+    version="3.0">
+    <enterprise-beans>
+        <session>
+            <ejb-name>contest_eligibility_persistence</ejb-name>
+            <remote>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerRemote</remote>
+            <local>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerLocal</local>
+            <ejb-class>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>logName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>contest_eligibility_persistence_logger</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>unitName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>persistence/ContestEligibilityPersistence</env-entry-value>
+            </env-entry>
+            <persistence-context-ref>
+                <persistence-context-ref-name>persistence/ContestEligibilityPersistence</persistence-context-ref-name>
+                <persistence-unit-name>ContestEligibilityPersistence</persistence-unit-name>
+            </persistence-context-ref>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

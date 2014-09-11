@@ -1,0 +1,112 @@
+ABOUT THE TESTS:
+
+* The tests in this submission only cover the methods and classes that added in this competition. The old
+ test should cover the rest of the code.
+* The old tests are included but are not executed by default. These tests were modified only so they
+ can be compiled but some of them fail if executed. It was agreed that for this competition these test
+ should not be fixed.
+* There are some issues with using cobertura with jboss. So the coverage report is incorrect.
+
+TO RUN:
+
+1. Install the component structure in ${basedir}
+
+2. Create "topcoder_global.properties" in ${basedir}/.. and add the properties from steps 2,3,4
+
+3. The following standard build script properties must be set
+	ext_libdir - root of third party libraries
+	tcs_libdir - root of topcoder components
+	cronos_libdir - root of cronos components
+	java_1_5_bootclasspath - installation path for java 1.5 (only needed for compile_targets task)
+	jboss_home - root of JBoss 4.2.3 installation.
+	jboss_config_name - the name for the jboss configuration (default)
+
+4. The following standard build script properties can be changed (defaults are noted)
+	debug=off - as expected
+	verbose=no - as expected
+	cobertura.dir=${ext_libdir}/cobertura/1.8
+		installation directory of cobertura script expects {$cobertura.dir}/cobertura.jar
+		and {$cobertura.dir}/lib/containg Jars for asm, jakarta, and log4j to run cobertura task
+
+Example:
+
+junit.jar=${ext_libdir}/junit/4.6/junit.jar
+cobertura.dir=${ext_libdir}/cobertura/1.8
+cronos_libdir=C:/topcoder/tcs/lib/tcs
+jboss_home=C:/Program Files/jboss-4.2.3.GA
+jboss_config_name=default
+java_1_5_bootclasspath=C:/Program Files/Java/jdk1.5.0_21/jre/lib/rt.jar
+
+
+NB:
+	The folder ${basedir}/test_reflib contains some TopCoder components 
+	that are required by this component's test code. These components are
+    guaranteed work with jdk 1.5 (Components in the VM are compiled 
+    with jdk6 so it is not possible to use them with a jvm 1.5).
+    
+    Components that are not included are common TopCoder components that
+    are easy to find.
+
+Setup
+------------------------------------------------------
+
+Database
+
+1. install Informix and make sure the database is started.
+2. create a database named 'project' in Informix.
+3. use 'dbaccess project <path>/test_files/create.sql' to create database. it will create tables, sequences and
+some entries that are supposed to exist.
+
+NOTE 1: If these entries already exist (very likely if using the VM) in the DB they can be commented.
+NOTE 2: The name of the used sequences can be configured in the file ejb-jar.xml so it is not necesarry to use
+the sequences' names in this script.
+
+4. change the ip address and port and username and password in test_files/informix-ds.xml and
+test_files/InformixDBConnectionFactory.xml and test_files/META-INF/hibernate.cfg.xml.
+
+Here, database is ready.
+
+JBoss
+
+1. Download and install JBoss 4.2.3.
+2. It is recommended that you use JDK 1.5 to run jboss and the tests. When using JDK 1.6
+  you must download and install the special version of JBoss 4.2.3 intended to run with
+  JDK 1.6 and consider the following issue if the tests don't work:
+  
+  https://jira.jboss.org/jira/browse/JBWS-1439?focusedCommentId=12500660#action_12500660
+  
+  The libraries in ${basedir}/test_reflib were all compiled with jdk 1.5.
+  
+2. modify <jboss-home>\server\default\conf\login-config.xml, adding
+
+   <application-policy name="JBossLoginModule">
+	    <authentication>
+	      <login-module code="com.topcoder.security.auth.module.JBossLoginModule"
+	        flag="required">
+	        <module-option name="fileName"C:/topcoder/project_service_1.0.1/test_files/demoConfigs.properties</module-option>
+	        <module-option name="password-stacking">useFirstPass</module-option>
+	      </login-module>
+	    </authentication>
+  </application-policy>
+
+  Notes, fileName property should be point to test_files/demoConfigs.properties file.
+
+3. change demoConfigs.properties, using the correct path for JBossLoginModule.xml.
+
+Build.xml
+
+1. there are some settings need to be adjusted according to your environment.
+like
+1.1 "configuration for checkstyles"
+1.2 "codertura task definitation"
+1.4 See build-dependencies.xml for required tcs jars and third party jars. If some are missing
+ they can be found in the VM but you have to be careful not to include libraries compiled for
+ jdk 1.6 if using jdk 1.5 to run jboss.
+
+Now, all the setup is ready. Let's start.
+
+1. If JBoss is running stop it.
+2. use 'ant deployEAR', to package ear file and deploy to jboss, a latest built is alredy saved as test_files/project_service.ear.
+1. start JBoss 4.2.3
+3. use 'ant test' to run the test cases.
+4. 'ant undeployEAR' is used to delete the ear file in JBoss. and 'ant package.ejb' is used to package the ejb jar.

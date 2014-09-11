@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.copilot.model">
+
+    <class name="CopilotProfile" table="copilot_profile">
+        <id name="id" column="copilot_profile_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="userId" column="user_id" type="long"/>
+        <many-to-one name="status" class="CopilotProfileStatus" column=" copilot_profile_status_id" cascade="none"/>
+        <property name="suspensionCount" column="suspension_count" type="integer"/>
+        <property name="reliability" column="reliability" type="float"/>
+        <property name="activationDate" column="activation_date" type="timestamp"/>
+        <property name="showCopilotEarnings" column="show_copilot_earnings" type="yes_no"/>
+        <set name="profileInfos" lazy="false" cascade="all-delete-orphan">
+            <key column="copilot_profile_id" not-null="true"/>
+            <one-to-many class="CopilotProfileInfo"/>
+        </set>
+    </class>
+
+    <class name="CopilotProfileStatus" table="copilot_profile_status">
+        <id name="id" column="copilot_profile_status_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+
+    <class name="CopilotProfileInfo" table="copilot_profile_info">
+        <id name="id" column="copilot_profile_info_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <many-to-one name="infoType" class="CopilotProfileInfoType" column="copilot_profile_info_type_id"
+                     cascade="none"/>
+        <property name="copilotProfileId" column="copilot_profile_id" type="long" insert="false" update="false"/>
+        <property name="value" column="value" type="string"/>
+    </class>
+
+    <class name="CopilotProfileInfoType" table="copilot_profile_info_type">
+        <id name="id" column="copilot_profile_info_type_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+
+    <class name="CopilotProject" table="copilot_project">
+        <id name="id" column="copilot_project_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="copilotProfileId" column="copilot_profile_id" type="long"/>
+        <property name="name" column="name" type="string"/>
+        <property name="tcDirectProjectId" column="tc_direct_project_id" type="long"/>
+        <many-to-one name="copilotType" class="CopilotType" column="copilot_type_id" cascade="none"/>
+        <many-to-one name="status" class="CopilotProjectStatus" column="copilot_project_status_id" cascade="none"/>
+        <property name="customerFeedback" column="customer_feedback" type="string"/>
+        <property name="customerRating" column="customer_rating" type="float"/>
+        <property name="pmFeedback" column="pm_feedback" type="string"/>
+        <property name="pmRating" column="pm_rating" type="float"/>
+        <property name="privateProject" column="private_project" type="yes_no"/>
+        <set name="projectInfos" lazy="false" cascade="all-delete-orphan">
+            <key column="copilot_project_id" not-null="true"/>
+            <one-to-many class="CopilotProjectInfo"/>
+        </set>
+        <property name="completionDate" column="completion_date" type="timestamp"/>
+    </class>
+
+    <class name="CopilotType" table="copilot_type">
+        <id name="id" column="copilot_type_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+
+    <class name="CopilotProjectStatus" table="copilot_project_status">
+        <id name="id" column="copilot_project_status_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+
+    <class name="CopilotProjectPlan" table="copilot_project_plan">
+        <id name="id" column="copilot_project_plan_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="copilotProjectId" column="copilot_project_id" type="long"/>
+        <property name="plannedDuration" column="planned_duration" type="integer"/>
+        <property name="plannedBugRaces" column="planned_bug_races" type="integer"/>
+        <set name="plannedContests" lazy="false" cascade="all-delete-orphan">
+            <key column="copilot_project_plan_id" not-null="true"/>
+            <one-to-many class="PlannedContest"/>
+        </set>
+    </class>
+
+    <class name="PlannedContest" table="planned_contest">
+        <id name="id" column="planned_contest_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+        <property name="description" column="description" type="string"/>
+        <property name="projectCategoryId" column="project_category_id" type="long"/>
+        <property name="copilotProjectPlanId" column="copilot_project_plan_id" type="long" insert="false"
+                  update="false"/>
+        <property name="startDate" column="start_date" type="timestamp"/>
+        <property name="endDate" column="end_date" type="timestamp"/>
+    </class>
+
+    <class name="CopilotProjectInfo" table="copilot_project_info">
+        <id name="id" column="copilot_project_info_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <many-to-one name="infoType" class="CopilotProjectInfoType" column="copilot_project_info_type_id"
+                     cascade="none"/>
+        <property name="copilotProjectId" column="copilot_project_id" type="long" insert="false" update="false"/>
+        <property name="value" column="value" type="string"/>
+    </class>
+
+    <class name="CopilotProjectInfoType" table="copilot_project_info_type">
+        <id name="id" column="copilot_project_info_type_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+
+</hibernate-mapping>

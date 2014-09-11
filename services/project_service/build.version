@@ -1,0 +1,9 @@
+#property file defining the components information
+component.name=Project Service
+component.distfilename=project_service
+component.package=com.topcoder.service
+component.packagedir=com/topcoder/service
+component.version.major=1
+component.version.minor=1
+component.version.micro=0
+component.version.build=1

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<CMConfig>
+    <Config name="test">
+        <Property name="requiredPropertyValid">
+            <Value>valid</Value>
+        </Property>
+        <Property name="requiredPropertyNull">
+        </Property>
+        <Property name="requiredPropertyEmpty">
+            <Value>  </Value>
+        </Property>
+        <Property name="loggerNameEmpty">
+            <Value></Value>
+        </Property>
+    </Config>
+    
+    <!-- Configuration for ObjectFactory -->
+    <Config name="com.topcoder.util.objectfactory">
+        <Property name="projectServicesKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.ejb.ProjectServicesBean</Value>
+            </Property>
+        </Property> 
+    </Config>
+    
+    <!-- Configuration for ObjectFactory -->
+    <Config name="IllegalReferenceException">
+        <Property name="invalidClassSpecification">
+            <Property name="type">
+                <Value>invalidClassSpecification</Value>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>
+

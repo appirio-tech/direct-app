@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+	version="3.0">
+	<description>Contest Pipeline Service EJB</description>
+	<display-name>Contest Pipeline Service EJB</display-name>
+	<enterprise-beans>
+		<session>
+			<ejb-name>ContestPipelineServiceBean</ejb-name>
+			<remote>com.topcoder.service.pipeline.ejb.ContestPipelineServiceRemote</remote>
+			<local>com.topcoder.service.pipeline.ejb.ContestPipelineServiceLocal</local>
+			<service-endpoint>com.topcoder.service.pipeline.ContestPipelineService</service-endpoint>
+			<ejb-class>com.topcoder.service.pipeline.ejb.ContestPipelineServiceBean</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+			<env-entry>
+				<env-entry-name>logName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>pipeline_service_log</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>softwareUnitName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>persistence/softwarePipelinePersistenceUnit</env-entry-value>
+			</env-entry>
+			<persistence-context-ref>
+				<persistence-context-ref-name>persistence/softwarePipelinePersistenceUnit</persistence-context-ref-name>
+				<persistence-unit-name>softwarePipelinePersistenceUnit</persistence-unit-name>
+			</persistence-context-ref>
+		</session>
+	</enterprise-beans>
+</ejb-jar>

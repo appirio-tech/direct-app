@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="Document" table="document" lazy="true">
+		<comment>
+			This table saves document data like path, original and
+			system name, document type, mime type and creation date.
+		</comment>
+
+		<id name="documentId" column="document_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">STUDIO_DOCUMENT_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="originalFileName" length="254"
+			column="original_file_name" />
+
+		<property name="systemFileName" length="254"
+			column="system_file_name" />
+
+        <!-- fix TCCC-135 -->
+		<property name="description" length="254"
+			column="description" />
+
+		<many-to-one name="path" column="path_id"
+			class="com.topcoder.service.studio.contest.FilePath"  
+			cascade="all"  fetch="select"/> 
+
+		<many-to-one name="mimeType" column="mime_type_id" not-null="true"
+			class="com.topcoder.service.studio.contest.MimeType"   fetch="select"/>
+
+		<many-to-one name="type" column="document_type_id" not-null="false"
+			class="com.topcoder.service.studio.contest.DocumentType" fetch="select"
+			 />
+
+		<set name="contests" table="contest_document_xref" inverse="true" fetch="select">
+			<key column="document_id" />
+			<many-to-many column="contest_id" class="com.topcoder.service.studio.contest.Contest" />
+		</set>
+
+		<property name="createDate" column="create_date" generated="insert" not-null="true" />
+
+	</class>
+</hibernate-mapping>

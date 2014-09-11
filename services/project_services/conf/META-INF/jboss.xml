@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN"
+        "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+<jboss>    
+    <enterprise-beans>
+        <session>
+            <ejb-name>ProjectServicesBean</ejb-name>
+            <jndi-name>ProjectServicesBean/remote</jndi-name>
+            <local-jndi-name>ProjectServicesBean/local</local-jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+            
+            <method-attributes>
+              <method>
+                <method-name>createProject</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+              <method>
+                <method-name>updateProject</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+            </method-attributes>
+        </session>
+    </enterprise-beans>
+</jboss>

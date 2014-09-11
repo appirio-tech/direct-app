@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+    <description>Contest Services Facade EJB</description>
+    <display-name>Contest Services Facade EJB</display-name>
+    <enterprise-beans>
+    
+        <session>
+            <ejb-name>ContestServiceFacadeBean</ejb-name>
+            <remote>com.topcoder.service.facade.contest.ejb.ContestServiceFacadeRemote</remote>
+            <local>com.topcoder.service.facade.contest.ejb.ContestServiceFacadeLocal</local>
+            <ejb-class>com.topcoder.service.facade.contest.ejb.ContestServiceFacadeBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+            <env-entry>
+                <env-entry-name>logName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>contest_service_facade_log</env-entry-value>
+            </env-entry>
+            
+            <!--  BUGR-3738 -->
+            <env-entry>
+                <env-entry-name>objectFactoryConfigName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com.topcoder.util.objectfactory</env-entry-value>
+            </env-entry> 
+            
+            <!--  BUGR-3738 -->
+            <env-entry>
+                <env-entry-name>uploadManagerOFKey</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>uploadManagerKey</env-entry-value>
+            </env-entry> 
+		
+             <env-entry>
+                <env-entry-name>projectManagerOFKey</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>projectManagerKey</env-entry-value>
+             </env-entry>
+
+            
+            <!-- System Assembly - TopCoder Security Groups Frontend - Permission Propagation Integration -->
+            <env-entry>
+                <env-entry-name>securityGroupsHibernateConfig</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>securityGroupsHibernateEJB.cfg.xml</env-entry-value>
+            </env-entry> 
+            
+            <env-entry>
+                <env-entry-name>payFlowUser</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.payFlowUser@</env-entry-value>
+            </env-entry> 
+            <env-entry>
+                <env-entry-name>payFlowPartner</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.payFlowPartner@</env-entry-value>
+            </env-entry> 
+            <env-entry>
+                <env-entry-name>payFlowVendor</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.payFlowVendor@</env-entry-value>
+            </env-entry> 
+            <env-entry>
+                <env-entry-name>payFlowPassword</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.payFlowPassword@</env-entry-value>
+            </env-entry>
+			<env-entry>
+                <env-entry-name>forumBeanProviderUrl</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.forumBeanProviderUrl@</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>studioForumBeanProviderUrl</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.studioForumBeanProviderUrl@</env-entry-value>
+            </env-entry>  
+            <env-entry>
+                <env-entry-name>createForum</env-entry-name>
+                <env-entry-type>java.lang.Boolean</env-entry-type>
+                <env-entry-value>@build-rep.contest_service_facade.createForum@</env-entry-value>
+            </env-entry> 
+			
+			<!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>documentManagerConfigFile</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>DocumentManager.xml</env-entry-value>
+            </env-entry>
+
+            <env-entry>
+                <env-entry-name>customActivateContestReceiptContestTypeIds</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>29</env-entry-value>
+            </env-entry>
+
+            <env-entry>
+                <env-entry-name>customActivateContestReceiptEmailTemplatePaths</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>email_templates/activate_copilot_posting_receipt.txt</env-entry-value>
+            </env-entry>
+
+            <!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>activateContestReceiptEmailTemplatePath</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>email_templates/activate_contest_receipt.txt</env-entry-value>
+            </env-entry> 
+			
+			<!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>activateContestReceiptEmailFromAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry>
+
+            <!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>activateContestReceiptEmailBCCAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry> 
+            
+            <!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>activateContestReceiptEmailSubject</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>Your TopCoder Direct Order (%ORDER_NUMBER%)</env-entry-value>
+            </env-entry>
+
+
+            <env-entry>
+                <env-entry-name>copilotWinnerEmailTemplatePath</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>email_templates/copilot_winner_email_template.txt</env-entry-value>
+            </env-entry>
+
+            <env-entry>
+                <env-entry-name>copilotWinnerEmailFromAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry>
+
+            <env-entry>
+                <env-entry-name>copilotWinnerEmailBCCAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry>
+
+            <!-- Cockpit Release Assembly for Receipts -->
+            <env-entry>
+                <env-entry-name>copilotWinnerEmailSubject</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>You are selected as copilot for (%PROJECT_NAME%)</env-entry-value>
+            </env-entry>
+
+			<!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>purchaseSubmissionReceiptEmailTemplatePath</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>email_templates/purchase_submission_receipt.txt</env-entry-value>
+            </env-entry> 
+			
+			<!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>purchaseSubmissionReceiptEmailFromAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry>
+
+            <!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>purchaseSubmissionReceiptEmailBCCAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry> 
+            
+            <!-- Cockpit Release Assembly for Receipts -->
+			<env-entry>
+                <env-entry-name>purchaseSubmissionReceiptEmailSubject</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>Your TopCoder Direct Order (%ORDER_NUMBER%)</env-entry-value>
+            </env-entry> 
+            
+            <!-- Spec Review Finishing Touches Assembly v1.0 -->
+			<env-entry>
+                <env-entry-name>specReviewNotificationEmailTemplatePath</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>email_templates/spec_review_notification.txt</env-entry-value>
+            </env-entry> 
+			
+			<!-- Spec Review Finishing Touches Assembly v1.0 -->
+			<env-entry>
+                <env-entry-name>specReviewNotificationEmailFromAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry>
+
+            <!-- Spec Review Finishing Touches Assembly v1.0 -->
+			<env-entry>
+                <env-entry-name>specReviewNotificationEmailBCCAddr</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>directassist@topcoder.com</env-entry-value>
+            </env-entry> 
+            
+            <!-- Spec Review Finishing Touches Assembly v1.0 -->
+			<env-entry>
+                <env-entry-name>specReviewNotificationEmailSubject</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>Spec Review for %CONTEST_NAME% was updated</env-entry-value>
+            </env-entry>
+
+            <!-- Cockpit Spec Review Backend Service Update v1.0 -->
+            <env-entry>
+                <env-entry-name>specReviewPrize</env-entry-name>
+                <env-entry-type>java.lang.Double</env-entry-type>
+                <env-entry-value>50</env-entry-value>
+            </env-entry>
+            <env-entry>
+                <env-entry-name>mockSubmissionFileName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>mock.zip</env-entry-value>
+            </env-entry>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityValidation</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerRemote</remote>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityPersistence</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.contest.eligibility.dao.ContestEligibilityManagerRemote</remote>
+            </ejb-ref>
+	        <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.permission.PermissionService</remote>
+            </ejb-ref>
+ 			<ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.user.UserService</remote>
+            </ejb-ref>
+			 <ejb-ref>
+                <ejb-ref-name>ejb/SpecReviewService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.specreview.SpecReviewService</remote>
+            </ejb-ref>
+            
+            <!-- added for Cockpit Release Assembly 5 v1.0 -->
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectDAOBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.clients.dao.ejb3.ProjectDAORemote</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionServiceFacadeBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.facade.permission.ejb.PermissionServiceFacadeRemote</remote>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/SpecificationReviewServiceBean</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.review.specification.ejb.SpecificationReviewServiceRemote</remote>
+            </ejb-ref>
+            
+	     <!-- added for Direct Search Assembly -->
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectService</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.project.ProjectServiceRemote</remote>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="Template">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="PhaseTypes"/>
+        <xs:element ref="Phases"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PhaseTypes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="PhaseType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PhaseType">
+    <xs:complexType>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="typeId" use="required" type="xs:integer"/>
+      <xs:attribute name="typeName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Phases">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Phase"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Phase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Dependency"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="length" use="required" type="xs:integer"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Dependency">
+    <xs:complexType>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="isDependencyStart" use="optional" type="xs:boolean"/>
+      <xs:attribute name="isDependentStart" use="optional" type="xs:boolean"/>
+      <xs:attribute name="lagTime" use="optional" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

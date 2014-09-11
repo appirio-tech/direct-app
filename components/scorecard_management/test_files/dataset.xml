@@ -1,0 +1,36 @@
+<dataset>
+
+	<project_category_lu project_category_id="1"/>
+	<project_category_lu project_category_id="2"/>
+	<project_category_lu project_category_id="3"/>
+	<project_category_lu project_category_id="4"/>
+	<project_category_lu project_category_id="5"/>
+
+	<scorecard_type_lu scorecard_type_id="1" name="'scorecard_type_1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_type_lu scorecard_type_id="2" name="'scorecard_type_2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_type_lu scorecard_type_id="3" name="'scorecard_type_3'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<scorecard_status_lu scorecard_status_id="1" name="'scorecard_status_1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_status_lu scorecard_status_id="2" name="'scorecard_status_2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_status_lu scorecard_status_id="3" name="'scorecard_status_3'" description="'Deleted'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+
+	<scorecard_question_type_lu scorecard_question_type_id="1" name="'question_type_1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_question_type_lu scorecard_question_type_id="2" name="'question_type_2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard_question_type_lu scorecard_question_type_id="3" name="'question_type_3'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<phase_criteria_type_lu phase_criteria_type_id="1" name="'Scorecard ID'" description="'Scorecard ID'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<project_phase project_phase_id="1" />
+
+</dataset>

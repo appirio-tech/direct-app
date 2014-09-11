@@ -1,0 +1,9 @@
+1. To run the testcases, you should create the database(test_files/createdatabase.sql) and
+add the tables(/test_files/createTable.sql) to your test database first.
+And the test data don't need to be inserted manually.
+
+2. Modify jdbc-url, user, password properties in the following files to match your database:
+   - test_files/accuracy/config.xml
+   - test_files/config.xml
+
+3. Execute ant test

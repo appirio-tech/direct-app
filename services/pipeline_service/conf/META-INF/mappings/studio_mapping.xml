@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.topcoder.management.resource.Resource" table="resource"
+		lazy="false">
+		<comment>
+		</comment>
+
+		<id name="id" column="resource_id" type="long" unsaved-value="-1" />
+
+		<property name="name" column="resource_name" />
+
+		<many-to-one name="resourceRole" column="resource_role_id"
+			class="com.topcoder.management.resource.ResourceRole" />
+	</class>
+	<class name="com.topcoder.management.resource.ResourceRole"
+		table="resource_role_lu" lazy="false">
+		<comment>
+		</comment>
+
+		<id name="id" column="resource_role_id" type="long" unsaved-value="-1" />
+
+		<property name="name" column="name" />
+	</class>
+</hibernate-mapping>

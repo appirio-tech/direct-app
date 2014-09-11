@@ -1,0 +1,11 @@
+delete from review_item_comment;
+delete from review_comment;
+delete from review_item;
+delete from review;
+delete from scorecard;
+delete from scorecard_type_lu;
+delete from scorecard_question;
+delete from resource;
+delete from submission;
+delete from comment_type_lu;
+DELETE FROM id_sequences;

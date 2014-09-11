@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.topcoder.direct.services.project.milestone.model">
+	<class name="Milestone" table="project_milestone">
+		<id name="id" column="project_milestone_id" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="name" column="name" type="string" length="80" />
+		<property name="description" column="description" type="string"
+			length="250" />
+		<property name="dueDate" column="due_date" type="timestamp" />
+		<property name="sendNotifications" column="send_notifications"
+			type="boolean" />
+		<property name="completed" column="completed" type="boolean" />
+		<property name="projectId" column="project_id" type="long" />
+		<bag name="owners" fetch="join" cascade="all">
+			<key column="project_milestone_id" not-null="true"/>
+			<one-to-many class="ResponsiblePerson"/>
+		</bag>
+	</class>
+	<query name="getList">
+        <![CDATA[FROM Milestone m WHERE m.id IN (:ids)]]>
+	</query>
+	<sql-query name="checkMilestoneId">
+        <![CDATA[SELECT project_milestone_id FROM project_milestone WHERE project_milestone_id = :id]]>
+	</sql-query>
+	<sql-query name="checkMilestoneIds">
+        <![CDATA[SELECT project_milestone_id FROM project_milestone WHERE project_milestone_id IN (:ids)]]>
+	</sql-query>
+	<query name="getAll">
+        <![CDATA[FROM Milestone m WHERE m.projectId = :projectId]]>
+	</query>
+
+</hibernate-mapping>

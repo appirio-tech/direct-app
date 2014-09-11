@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- A template which defines a set of project phases -->
+<Template name="Design" category="1" isDefault="true"
+          creationDate="2007.12.04 14:45:02"
+          description="This is a design phases template">
+  <!-- An enumeration of project phase types defined in this template -->
+  <PhaseTypes>
+    <PhaseType id="firstPhaseType" typeId="1" typeName="FirstPhaseType"/>
+    <PhaseType id="secondPhaseType" typeId="2" typeName="SecondPhaseType"/>
+  </PhaseTypes>
+  <!-- A set of project phases defined in this template. -->
+  <Phases>
+    <Phase id="firstPhase" phaseId="1" length="604800000" type="firstPhaseType"/>
+    <Phase id="secondPhase" phaseId="2" length="86400000" type="secondPhaseType">
+      <Dependency id="firstPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+    </Phase>
+  </Phases>
+</Template>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="1.0"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="catalog_manager">
+
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.connection.driver_class" value="com.informix.jdbc.IfxDriver"/>
+            <property name="hibernate.connection.username" value="informix"/>
+            <property name="hibernate.connection.password" value="topcoder"/>
+            <property name="hibernate.connection.url"
+                      value="jdbc:informix-sqli://192.168.1.88:1526/tcs_catalog:INFORMIXSERVER=topcoder"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>

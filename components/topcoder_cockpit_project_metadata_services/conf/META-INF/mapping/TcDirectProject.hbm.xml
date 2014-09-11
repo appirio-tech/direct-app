@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.project.metadata.entities.dao">
+  <class name="TcDirectProject" table="tc_direct_project">
+    <id name="projectId" column="project_id">
+			<generator class="increment"/>
+    </id>
+    <property name="name" column="name" not-null="true" />
+    <property name="description" column="description" not-null="false" />
+    <property name="projectStatusId" column="project_status_id" not-null="true" />
+    <property name="userId" column="user_id" not-null="true" />
+    <property name="createDate" column="create_date" not-null="true" />
+    <property name="modifyDate" column="modify_date" />
+  </class>
+</hibernate-mapping>

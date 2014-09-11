@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+   <local-tx-datasource>
+
+      <jndi-name>InformixDS</jndi-name>
+
+      <connection-url>jdbc:informix-sqli://174.129.103.205:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp</connection-url>
+
+
+      <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+
+    <user-name>coder</user-name>
+        <password>c0d3r4T</password>
+
+      <min-pool-size>1</min-pool-size>
+      <max-pool-size>5</max-pool-size>
+
+      <idle-timeout-minutes>0</idle-timeout-minutes>
+
+      <prepared-statement-cache-size>32</prepared-statement-cache-size>
+
+      <metadata>
+         <type-mapping>InformixDB</type-mapping>
+      </metadata>
+
+   </local-tx-datasource>
+</datasources>

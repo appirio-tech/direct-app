@@ -1,0 +1,31 @@
+<dataset>
+
+	<project project_id="1"/>
+	<project project_id="2"/>
+	<project project_id="3"/>
+	<project project_id="4"/>
+	<project project_id="5"/>
+
+	<phase_status_lu phase_status_id="1" name="'phase_status_1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_status_lu phase_status_id="2" name="'phase_status_2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_status_lu phase_status_id="3" name="'phase_status_3'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<phase_type_lu phase_type_id="1" name="'phase_type_1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_type_lu phase_type_id="2" name="'phase_type_2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_type_lu phase_type_id="3" name="'phase_type_3'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<phase_criteria_type_lu phase_criteria_type_id="1" name="'criteria1'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_criteria_type_lu phase_criteria_type_id="2" name="'criteria2'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+	<phase_criteria_type_lu phase_criteria_type_id="3" name="'criteria3'" description="'desc'" create_user="'x'"
+		create_date="current" modify_user="'x'" modify_date="current"/>
+
+
+</dataset>

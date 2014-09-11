@@ -1,0 +1,71 @@
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+ "http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+	<display-name>DR Points Manager</display-name>
+
+	<!-- DataSource -->
+	<!-- 
+	-->
+
+	<module>
+		<java>informix-ds.xml</java>
+	</module>
+
+	<!-- DR Contest Points EJB -->
+	<module>
+		<ejb>client_project_entities_dao.jar</ejb>
+	</module>
+
+	<!-- The EJB used to save Cobertura data on server side -->
+	<module>
+		<ejb>SaveCoberturaData.jar</ejb>
+	</module>
+
+	<!-- Informix Driver -->
+	<module>
+		<java>ifxjdbc.jar</java>
+	</module>
+
+	<module>
+		<java>base_exception.jar</java>
+	</module>
+	<module>
+		<java>logging_wrapper.jar</java>
+	</module>
+	<module>
+		<java>object_formatter.jar</java>
+	</module>
+	<module>
+		<java>typesafe_enum.jar</java>
+	</module>
+	<module>
+		<java>search_builder_1.4_modified.jar</java>
+	</module>
+	<module>
+		<java>configuration_api.jar</java>
+	</module>
+	<module>
+		<java>configuration_persistence.jar</java>
+	</module>
+	<module>
+		<java>object_factory_config_manager_plugin.jar</java>
+	</module>
+	<module>
+		<java>object_factory.jar</java>
+	</module>
+	<module>
+		<java>object_factory_configuration_api_plugin.jar</java>
+	</module>
+	<module>
+		<java>data_validation.jar</java>
+	</module>
+	<module>
+		<java>class_associations.jar</java>
+	</module>
+	<module>
+		<java>id_generator.jar</java>
+	</module>
+	<module>
+		<java>db_connection_factory.jar</java>
+	</module>
+</application>

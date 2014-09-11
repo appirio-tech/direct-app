@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>ContestServiceFacadeBean</ejb-name>
+            <jndi-name>ContestServiceFacadeBean/remote</jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityValidation</ejb-ref-name>
+                <jndi-name>ContestEligibilityValidationBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ContestEligibilityPersistence</ejb-ref-name>
+                <jndi-name>ContestEligibilityPersistenceBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/CatalogService</ejb-ref-name>
+                <jndi-name>CatalogService/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectServicesBean</ejb-ref-name>
+                <jndi-name>ProjectServicesBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <jndi-name>PermissionServiceBean/remote</jndi-name>
+            </ejb-ref>
+
+			 <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+
+			<ejb-ref>
+                <ejb-ref-name>ejb/SpecReviewService</ejb-ref-name>
+                <jndi-name>SpecReviewServiceBean/remote</jndi-name>
+            </ejb-ref>
+            
+            <!-- added for Cockpit Release Assembly 5 v1.0 -->
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectDAOBean</ejb-ref-name>
+                <jndi-name>ProjectDAOBean/remote</jndi-name>
+            </ejb-ref>
+    	     <!-- added for Direct Search Assembly -->
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectService</ejb-ref-name>
+                <jndi-name>remote/ProjectServiceBean</jndi-name>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionServiceFacadeBean</ejb-ref-name>
+                <jndi-name>PermissionServiceFacadeBean/remote</jndi-name>
+            </ejb-ref>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/SpecificationReviewServiceBean</ejb-ref-name>
+                <jndi-name>SpecificationReviewServiceBean/remote</jndi-name>
+            </ejb-ref>
+
+        </session>
+    </enterprise-beans>
+</jboss>

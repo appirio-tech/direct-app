@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.project">
+    <class name="Project"
+           table="tc_direct_project">
+        <id name="projectId" column="project_id">
+            <generator class="sequence">
+                <param name="sequence">project_sequence</param>
+            </generator>
+        </id>
+        <property name="name"/>
+        <property name="description"/>
+        <property name="userId" column="user_id"/>
+        <property name="createDate" column="create_date" type="date"/>
+        <property name="modifyDate" column="modify_date" type="date"/>
+        <set name="competitions">
+            <key column="project_id"/>
+            <one-to-many class="com.topcoder.service.project.Competition"/>
+        </set>
+    </class>
+</hibernate-mapping>

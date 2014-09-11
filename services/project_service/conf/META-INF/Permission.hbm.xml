@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!-- since Module Cockpit Contest Service Enhancement Assembly -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.permission">
+	<class name="Permission" table="user_permission_grant" lazy="true">
+		<comment>
+			This tables describes permission instance.
+		</comment>
+
+		<id name="permissionId" column="user_permission_grant_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">PERMISSION_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="userId" column="user_id"
+			not-null="true" />
+            
+        <property name="userHandle" formula="(SELECT u.handle FROM user u where u.user_id = user_id)"
+			not-null="true" />
+
+		<property name="resourceId" column="resource_id"
+			not-null="true" />
+        <property name="resourceName"
+                  formula="(
+    CASE
+        WHEN permission_type_id BETWEEN 0 AND 3 THEN (
+            SELECT p.name
+            FROM tc_direct_project p
+            WHERE p.project_id = resource_id
+        )
+        WHEN permission_type_id BETWEEN 4 AND 6 AND is_studio = 1 THEN (
+            SELECT p.name
+            FROM studio_oltp:contest p
+            WHERE p.contest_id = resource_id
+        )
+        WHEN permission_type_id BETWEEN 4 AND 6 AND is_studio = 0 THEN (
+            SELECT pi.value
+            FROM tcs_catalog:project p JOIN tcs_catalog:project_info pi ON p.project_id = pi.project_id
+            WHERE p.project_id = resource_id
+            AND   pi.project_info_type_id = 6
+        )
+    END 
+)"
+			      not-null="true" />
+
+		<many-to-one name="permissionType"
+			class="com.topcoder.service.permission.PermissionType"
+			column="permission_type_id" fetch="select"/>
+            
+        <!-- updated for Cockpit Project Admin Release Assembly v1.0 - introduced new field is_studio -->
+        <property name="studio" column="is_studio"
+			not-null="true" />
+	</class>
+</hibernate-mapping>

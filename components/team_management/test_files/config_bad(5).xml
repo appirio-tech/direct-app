@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <!-- Namespace for TeamManagerImpl class -->
+    <Config name="com.topcoder.management.team.impl.TeamManagerImpl">
+        <Property name="specNamespace">
+            <Value>of.persistence</Value>
+        </Property>
+        <Property name="persistenceKey">
+            <Value>MockTeamPersistence</Value>
+        </Property>
+        <Property name="loggerName">
+            <Value>com.topcoder.util.log</Value>
+        </Property>
+    </Config>
+    
+
+    <!-- Namespace for ObjectFactory component -->
+    <Config name="of.persistence">
+        <Property name="MockTeamPersistence">
+            <Property name="type">
+                <Value>com.topcoder.management.team.MockTeamPersistence</Value>
+            </Property>
+            <Property name="params">
+            </Property>
+        </Property>
+    </Config>
+
+</CMConfig>

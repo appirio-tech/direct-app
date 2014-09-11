@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.management.scorecard.persistence.InformixScorecardPersistenceTest">
+
+		<Property name="ConnectionFactoryNS">
+			<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+		</Property>
+
+		<Property name="ConnectionName">
+			<Value>informix</Value>
+		</Property>
+
+	</Config>
+
+</CMConfig>

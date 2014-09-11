@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator">
+		<!-- 9:00 AM next Thursday will be generated -->
+		<!-- the week offset from current week, here 1 means the next week -->
+		<Property name="week_offset">
+			<Value>1</Value>
+		</Property>
+		<!-- the day of the week, values will be 1 to 7, representing SUNDAY to SATURDAY respectively. -->
+		<Property name="day_of_week">
+			<Value>5</Value>
+		</Property>
+		<!-- hour in 24-hour clock -->
+		<Property name="hour">
+			<Value>9</Value>
+		</Property>
+		<!-- minute value -->
+		<Property name="minute">
+			<Value>0</Value>
+		</Property>
+		<!-- second value -->
+		<Property name="second">
+			<Value>0</Value>
+		</Property>
+	</Config>
+</CMConfig>

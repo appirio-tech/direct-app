@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="ContestTypeConfig" table="contest_type_config" lazy="true">
+		<composite-id name="id" class="ContestTypeConfig$Identifier" >
+			<key-many-to-one name="contestType"
+					class="com.topcoder.service.studio.contest.ContestType"
+					column="contest_type_id" />
+			<key-many-to-one name="property"
+					class="com.topcoder.service.studio.contest.ContestProperty"
+					column="property_id" />
+		</composite-id>
+				
+		<property name="propertyValue" column="default_value"
+			not-null="true" />
+
+		<property name="required" not-null="true" />
+
+	</class>
+</hibernate-mapping>

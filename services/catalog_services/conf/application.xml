@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC
+   "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+   "http://java.sun.com/dtd/application_1_3.dtd">
+
+<application>
+   <display-name>Catalog Services v1.0</display-name>
+
+    <!-- The datasource configuration -->
+    <module>
+        <java>informix-ds.xml</java>
+    </module>
+
+    <!-- Deploy ID Generator first component -->
+    <module>
+        <ejb>id_generator_ejb.jar</ejb>
+    </module>
+    <!-- Client Associations v1.0 component -->
+    <module>
+       <ejb>catalog_services_ejb.jar</ejb>
+   </module>
+
+    <!-- Depend components -->
+    <module>
+        <java>catalog_entities.jar</java>
+    </module>
+    <module>
+        <java>base_exception.jar</java>
+    </module>
+    <module>
+        <java>configuration_manager.jar</java>
+    </module>
+    <module>
+        <java>configuration_api.jar</java>
+    </module>
+    <module>
+        <ejb>id_generator.jar</ejb>
+    </module>
+    <module>
+        <java>db_connection_factory.jar</java>
+    </module>
+</application>
+

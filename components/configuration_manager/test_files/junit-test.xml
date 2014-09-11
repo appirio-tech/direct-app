@@ -1,0 +1,8 @@
+<config name="bla">
+<property 
+name="first" 
+value="smiling bag"/>
+<property 
+name="second" 
+value=owls/>
+</config>

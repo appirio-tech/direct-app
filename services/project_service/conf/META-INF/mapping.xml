@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.topcoder.service.project.Project"
+           table="tc_direct_project">
+        <id name="projectId" column="project_id">
+            <generator class="sequence">
+                <param name="sequence">project_sequence</param>
+            </generator>
+        </id>
+        <property name="name"/>
+        <property name="description"/>
+        <property name="userId" column="user_id"/>
+        <property name="projectStatusId" column="project_status_id"/>
+        <property name="forumCategoryId" column="project_forum_id"/>
+        <property name="createDate" column="create_date" type="date"/>
+        <property name="modifyDate" column="modify_date" type="date"/>
+        <property name="completionDate" column="completion_date" type="date"/>
+        <many-to-one name="projectType" column="direct_project_type_id" class="com.topcoder.service.project.ProjectType"/>
+        <many-to-one name="projectCategory" column="direct_project_category_id" class="com.topcoder.service.project.ProjectCategory"/>
+        <property name="fixedBugContestFee" column="fixed_bug_contest_fee"/>
+        <property name="percentageBugContestFee" column="percentage_bug_contest_fee"/>
+        
+        <bag name="projectAnswers" cascade="all" fetch="select" lazy="false">
+        	<key column="tc_direct_project_id" />
+        	<one-to-many class="com.topcoder.service.project.entities.ProjectAnswer"/>
+        </bag>
+    </class>
+
+    <class name="com.topcoder.service.project.ProjectType" table="direct_project_type" lazy="false">
+        <id name="projectTypeId" column="direct_project_type_id">
+            <generator class="sequence">
+                <param name="sequence">direct_project_type_sequence</param>
+            </generator>
+        </id>
+        <property name="name"/>
+    </class>
+
+    <class name="com.topcoder.service.project.ProjectCategory" table="direct_project_category" lazy="false">
+        <id name="projectCategoryId" column="direct_project_category_id">
+            <generator class="sequence">
+                <param name="sequence">direct_project_category_sequence</param>
+            </generator>
+        </id>
+        <property name="name"/>
+        <property name="projectTypeId" column="direct_project_type_id"/>
+    </class>
+
+    <class name="com.topcoder.service.project.ProjectBillingAccount" table="direct_project_account">
+        <id name="id" column="direct_project_account_id">
+            <generator class="sequence">
+                <param name="sequence">direct_project_account_sequence</param>
+            </generator>
+        </id>
+        <property name="projectId" column="project_id" />
+        <property name="billingAccountId" column="billing_account_id"/>
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.DirectProjectType" table="direct_project_type">
+    	<id name="id" column="direct_project_type_id">
+    		<generator class="sequence">
+    			<param name="sequence">direct_project_type_sequence</param>
+    		</generator>
+    	</id>
+    	
+    	<property name="name" type="string" access="field" column="name" />
+    	
+    	<bag name="projectQuestions" cascade="save-update" fetch="select" inverse="false" lazy="false">
+    		<key column="direct_project_type_id" />
+    		<one-to-many class="com.topcoder.service.project.entities.ProjectQuestion"/>
+    	</bag>
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.ProjectQuestion" table="project_question">
+    	<id name="id" column="question_id">
+    		<generator class="sequence">
+    			<param name="sequence">project_question_sequence</param>
+    		</generator>
+    	</id>
+    	
+    	<property name="questionText" column="question_text" type="text" access="field" />
+    	<property name="answerHtmlId" column="answer_html_id" type="string" access="field" />
+    	<property name="multipleAnswersHtmlXpath" column="multiple_answers_html_xpath" type="string" access="field"/>
+    	
+    	<many-to-one name="directProjectType" column="direct_project_type_id"/>
+    	<bag name="questionOptions" inverse="false" cascade="save-update" lazy="false" >
+    		<key column="question_id" />
+    		<one-to-many class="com.topcoder.service.project.entities.ProjectQuestionOption"/>
+    	</bag>
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.ProjectQuestionOption" table="project_question_option">
+    	<id name="id" column="question_option_id">
+    		<generator class="sequence">
+    			<param name="sequence">project_question_option_sequence</param>
+    		</generator>
+    	</id>
+    	
+    	<property name="questionOptionText" column="question_option_text" type="text" access="field" />
+    	<property name="answerHtmlId" column="answer_html_id" />
+    	<property name="hasAssociatedTextbox" column="has_associated_textbox" />
+    	<property name="associatedTextboxHtmlId" column="associated_textbox_html_id" />
+    	<many-to-one name="projectQuestion" column="question_id" cascade="save-update"
+    		class="com.topcoder.service.project.entities.ProjectQuestion" />
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.ProjectAnswer" table="project_answer">
+    	<id name="id" column="answer_id">
+    		<generator class="sequence">
+    			<param name="sequence">project_answer_sequence</param>
+    		</generator>
+    	</id>
+    	
+    	<property name="textualAnswer" column="textual_answer" type="text" />
+    	
+    	<many-to-one name="projectQuestion" column="question_id" unique="true" not-null="true" cascade="save-update"
+    		class="com.topcoder.service.project.entities.ProjectQuestion" />
+    	
+    	<idbag name="multipleAnswers" table="project_multiple_answer" cascade="save-update">
+    		<collection-id type="long" column="project_multiple_answer_id">
+    			<generator class="sequence">
+    				<param name="sequence">project_multiple_answer_sequence</param>
+    			</generator>
+    		</collection-id>
+    		<key column="answer_id" />
+    		<element type="string" column="answer_value" />
+    	</idbag>
+    	
+    	<bag name="optionAnswers" cascade="all, delete-orphan" lazy="true" fetch="select">
+    		<key column="answer_id" update="false" on-delete="noaction"/>
+    		<one-to-many class="com.topcoder.service.project.entities.ProjectAnswerOption"/>
+    	</bag>
+    	
+    	<many-to-one name="project" class="com.topcoder.service.project.Project" column="tc_direct_project_id" />
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.ProjectAnswerOption" table="project_answer_option">
+    	<id name="id" column="project_answer_option_id">
+    		<generator class="sequence">
+    			<param name="sequence">project_answer_option_sequence</param>
+    		</generator>
+    	</id>
+    	<property name="answerHtmlValue" column="answer_html_value" type="text" />
+    	<many-to-one name="projectQuestionOption" column="question_option_id" not-null="true" cascade="save-update"
+    		class="com.topcoder.service.project.entities.ProjectQuestionOption" />
+    	<many-to-one name="projectAnswer" column="answer_id" not-null="true"
+    		class="com.topcoder.service.project.entities.ProjectAnswer" />
+    </class>
+    
+    <class name="com.topcoder.service.project.entities.ProjectAudit" table="tc_direct_project_audit">
+        <comment>
+            This tables describes project audit instance.
+        </comment>
+        <id name="id" column="tc_direct_project_audit_id">
+            <generator class="sequence">
+                <param name="sequence">tc_direct_project_audit_sequence</param>
+            </generator>
+        </id>
+        <property name="recordId" column="tc_direct_project_id" not-null="true"/>
+        <property name="actionTypeId" column="audit_action_type_id" not-null="true"/>
+        <property name="actionUserId" column="action_user_id" not-null="true"/>
+        <property name="fieldName" column="field_name" not-null="true"/>
+        <property name="oldValue" column="old_value"/>
+        <property name="newValue" column="new_value"/>
+        <property name="timestamp" column="timestamp"/>
+    </class>
+
+</hibernate-mapping>

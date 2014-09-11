@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="Submission" table="submission" lazy="true">
+		<comment>
+			This tables describes submission instance. It contains all
+			information about submission.
+		</comment>
+
+		<id name="submissionId" column="submission_id" type="long" unsaved-value="-1">
+			<generator class="sequence">
+				<param name="sequence">STUDIO_SUBMISSION_SEQ</param>
+			</generator>
+		</id>
+
+		<many-to-one name="status"
+			class="com.topcoder.service.studio.submission.SubmissionStatus" 
+			column="submission_status_id" fetch="select"/>
+
+		<property name="submitterId" column="submitter_id"
+			not-null="true" />
+
+		<many-to-one name="contest"
+			class="com.topcoder.service.studio.contest.Contest"
+			column="contest_id" fetch="select" not-null="true"/>
+
+		<property name="createDate" column="create_date" generated="insert"
+			not-null="true" />
+
+		<property name="originalFileName" column="original_file_name"
+			length="254" />
+
+		<property name="systemFileName" column="system_file_name"
+			length="254" />
+
+		<many-to-one name="type"
+			class="com.topcoder.service.studio.submission.SubmissionType"
+			column="submission_type_id" fetch="select"/>
+
+		<many-to-one name="mimeType"
+			class="com.topcoder.service.studio.contest.MimeType"
+			column="mime_type_id" fetch="select"/>
+
+		<property name="rank" />
+
+		<property name="submissionDate" column="submission_date"
+			not-null="false" />
+
+		<property name="paymentId" not-null="false" column="payment_id"/>
+
+		<property name="height" />
+
+		<property name="width" />
+
+		<property name="modifyDate" column="modify_date" generated="always"
+			not-null="true" />
+
+		<property name="orSubmission" column="or_submission_id" />
+			
+		<many-to-one name="fullSubmissionPath"
+			class="com.topcoder.service.studio.contest.FilePath"
+			column="path_id" fetch="select" />
+
+		<bag name="review" fetch="select" batch-size="100">
+			<key column="submission_id" />
+			<one-to-many
+				class="com.topcoder.service.studio.submission.SubmissionReview" />
+		</bag>
+
+		<set name="prizes" table="submission_prize_xref" fetch="select">
+			<key column="submission_id" />
+			<many-to-many
+				class="com.topcoder.service.studio.submission.Prize" 
+				column="prize_id" />
+		</set>
+
+		<many-to-one name="result" unique="true" insert="false"
+			update="false" fetch="select">
+			<column name="submission_id" />
+			<column name="contest_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

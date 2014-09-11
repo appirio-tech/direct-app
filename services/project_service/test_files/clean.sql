@@ -1,0 +1,12 @@
+delete from competition;
+delete from tc_direct_project;
+delete from security_user where user_id in ('foo', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5', 'foo6', 'foo7', 'foo8', 'foo9', 'foo10', 'foo11', 'foo12', 'foo13', 'foo14', 'foo15', 'foo16', 'foo17', 'foo18', 'foo19', 'foo20');
+delete from address;
+delete from email;
+delete from phone;
+delete from user_group_xref where group_id in (888801, 888802, 888803);
+delete from user;
+delete from security_groups where group_id in (888801, 888802, 888803);
+delete from user_terms_of_use_xref where terms_of_use_id = 666601;
+delete from terms_of_use where terms_of_use_id = 666601;
+delete from terms_of_use_type where terms_of_use_type_id = 77701;

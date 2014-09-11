@@ -1,0 +1,11 @@
+<html>
+<body>
+<p>
+Task status has been changed.
+
+Task name is %TASK_NAME%
+
+Updated task status is %UPDATED_TASK_STATUS%
+</p>
+</body>
+</html>

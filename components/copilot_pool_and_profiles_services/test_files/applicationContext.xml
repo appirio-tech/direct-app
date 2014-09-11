@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	<bean id="copilotProjectPlanService" init-method="checkInit" class="com.topcoder.direct.services.copilot.impl.CopilotProjectPlanServiceImpl">
+		<property name="loggerName">
+			<value>myLogger</value>
+		</property>
+		<property name="genericDAO" ref="copilotProjectPlanDAO" />
+	</bean>
+	<bean id="copilotProjectPlanDAO" class="com.topcoder.direct.services.copilot.mock.CopilotProjectPlanDAOMock">
+	</bean>
+	<bean id="copilotProfileDAO" class="com.topcoder.direct.services.copilot.mock.CopilotProfileDAOMock">
+	</bean>
+	<bean id="utilityDAO" class="com.topcoder.direct.services.copilot.mock.UtilityDAOMock">
+	</bean>
+	<bean id="projectManager" class="com.topcoder.direct.services.copilot.mock.ProjectManagerMock">
+	</bean>
+	<bean id="projectLinkManager" class="com.topcoder.direct.services.copilot.mock.ProjectLinkManagerMock">
+	</bean>
+	<bean id="copilotProjectDAO" class="com.topcoder.direct.services.copilot.mock.CopilotProjectDAOMock">
+	</bean>
+	<bean id="phaseManager" class="com.topcoder.direct.services.copilot.mock.PhaseManagerMock">
+	</bean>
+
+	<bean id="copilotProfileService" class="com.topcoder.direct.services.copilot.impl.CopilotProfileServiceImpl" init-method="checkInit">
+		<property name="loggerName">
+			<value>myLogger</value>
+		</property>
+		<property name="genericDAO" ref="copilotProfileDAO" />
+		<property name="copilotProjectPlanDAO" ref="copilotProjectPlanDAO" />
+		<property name="utilityDAO" ref="utilityDAO" />
+		<property name="projectManager" ref="projectManager" />
+		<property name="projectLinkManager" ref="projectLinkManager" />
+		<property name="copilotProjectDAO" ref="copilotProjectDAO" />
+		<property name="activeProjectStatusId">
+			<value>1</value>
+		</property>
+		<property name="failedProjectStatusIds">
+			<list>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+				<value>10</value>
+				<value>11</value>
+			</list>
+		</property>
+		<property name="activeCopilotProjectStatusId">
+			<value>1</value>
+		</property>
+
+	</bean>
+
+	<bean id="copilotProjectService" init-method="checkInit" class="com.topcoder.direct.services.copilot.impl.CopilotProjectServiceImpl">
+		<property name="loggerName">
+			<value>myLogger</value>
+		</property>
+		<property name="genericDAO" ref="copilotProjectDAO" />
+		<property name="copilotProjectPlanDAO" ref="copilotProjectPlanDAO" />
+		<property name="utilityDAO" ref="utilityDAO" />
+		<property name="projectManager" ref="projectManager" />
+		<property name="projectLinkManager" ref="projectLinkManager" />
+		<property name="copilotProfileDAO" ref="copilotProfileDAO" />
+		<property name="phaseManager" ref="phaseManager" />
+		<property name="activeProjectStatusId">
+			<value>1</value>
+		</property>
+		<property name="failedProjectStatusIds">
+			<list>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+				<value>10</value>
+				<value>11</value>
+			</list>
+		</property>
+		<property name="activeCopilotProjectStatusId">
+			<value>1</value>
+		</property>
+	</bean>
+	<bean id="lookupService" init-method="checkInit" class="com.topcoder.direct.services.copilot.impl.LookupServiceImpl">
+		<property name="loggerName">
+			<value>myLogger</value>
+		</property>
+		<property name="lookupDAO" ref="lookupDAO" />
+	</bean>
+	<bean id="lookupDAO" class="com.topcoder.direct.services.copilot.mock.LookupDAOMock">
+	</bean>
+</beans>

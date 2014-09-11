@@ -16,24 +16,25 @@
 
           Builds a target on each of the subprojects.
          = = = = = = = = = = = = = = = = = -->
-    <macrodef name="run-target-all" description="Builds a target on each of the subprojects.">
+    <macrodef name="run-target-all" description="Builds a target on each of the components.">
 
         <!-- the target to build on every subproject -->
         <attribute name="target" />
+        <attribute name="config" />
 
         <!-- properties that will be passed to the target to build -->
         <element name="properties" optional="true"/>
 
         <sequential>
-            <execute-all prefix="project.current">
+            <execute-all prefix="project.current" config="@{config}">
                 <sequential>
                   <echo message=""/>
                   <echo message="--- Executing for: ${project.current.name}"/>
-                  <ant antfile="${project.current.basedir}/${project.current.buildfile}" target="@{target}" inheritall="false">
+                  <ant antfile="${project.current.buildType}/${project.current.basedir}/${project.current.buildfile}" target="@{target}" inheritall="false">
                     <propertyset>
                       <propertyref builtin="commandline"/>
                     </propertyset>
-                    <properties />
+                    <property name="needTokenize" value="${project.current.tokenize}"/>
                   </ant>
                 </sequential>
             </execute-all>
@@ -50,6 +51,9 @@
         <!-- the prefix of the exported properties -->
         <attribute name="prefix" />
 
+        <!-- the prefix of the config name -->
+        <attribute name="config"/>
+
         <!-- the ant-script to run on each of the projects -->
         <element name="sequential" type="sequential" />
 
@@ -57,14 +61,19 @@
         import groovy.util.XmlParser
 
         def prefix = attributes.prefix
-        def projects = new XmlParser().parse(new File(project.getProperty("subprojects.conf")))
+        def config = attributes.config;
+        def projects = new XmlParser().parse(new File(project.getProperty("${config}")))
 
         projects.project.each { subproject ->
-            [[name : 'name', required : true ],
-                    [name : 'svnbase', required : true ],
-                    [name : 'basedir', required : false, defaultValue : subproject.'@name'],
-                    [name : 'buildfile', required : false, defaultValue : 'build.xml'],
-          [name : 'projectType', required : false, defaultValue : 'backend']].each {
+                    [
+
+                        [name : 'name', required : true ],
+                        [name : 'basedir', required : false, defaultValue : subproject.'@name'],
+                        [name : 'buildfile', required : false, defaultValue : 'build.xml'],
+                        [name : 'buildType', required : false, defaultValue : 'components'],
+                        [name : 'tokenize', required : false, defaultValue : 'false']
+
+                    ].each {
 
                         def value = subproject."@${it.name}"
 
@@ -77,7 +86,7 @@
                         }
 
                         value = project.replaceProperties(value)
-                        project.setProperty("${prefix}.${it.name}", value)
+                        if(value != null) project.setProperty("${prefix}.${it.name}", value)
                     }
 
             subproject.versions.version.each {

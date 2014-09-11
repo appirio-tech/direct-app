@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>contest_eligibility_validation</ejb-name>
+            <jndi-name>ContestEligibilityValidationBean/remote</jndi-name>
+        </session>
+
+         <session>
+            <ejb-name>ContestEligibilityServiceBean</ejb-name>
+            <jndi-name>remote/ContestEligibilityServiceBean</jndi-name>
+
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_validation</ejb-ref-name>
+                <jndi-name>ContestEligibilityValidationBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_persistence</ejb-ref-name>
+                <jndi-name>ContestEligibilityPersistenceBean/remote</jndi-name>
+            </ejb-ref>
+          
+          
+			<port-component>
+				<port-component-name>ContestEligibilityServiceBean</port-component-name>
+				<port-component-uri>/ContestEligibilityServiceBean</port-component-uri>
+				<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			</port-component>
+        </session>
+
+    </enterprise-beans>
+
+</jboss>

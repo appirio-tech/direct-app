@@ -1,0 +1,54 @@
+<CMConfig>
+
+    <Config name="com.cronos.onlinereview.external">
+        <!-- the forum type to match in the comp_forum_xref table -->
+        <Property name="forumType">
+            <Value>5</Value>
+        </Property>
+        
+        <Property name="connName">
+            <Value>informix_connection</Value>
+        </Property>
+
+        <Property name="connections">
+            <Property name="default">
+                <Value>informix_connection</Value>
+            </Property>
+            <Property name="informix_connection">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://192.168.1.114:9088/spec_review:informixserver=ol_topcoder</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>system</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+
+    <!-- defines the values for the RatingType enum -->
+    <Config name="com.cronos.onlinereview.external.RatingType">
+        <Property name="Design">
+            <Value>112</Value>
+        </Property>
+        <Property name="Development">
+            <Value>113</Value>
+        </Property>
+
+        <!-- this is fictional (i.e., not in the database at this time) -->
+        <Property name="Assembly">
+            <Value>114</Value>
+        </Property>
+    </Config>
+
+</CMConfig>

@@ -1,0 +1,8 @@
+insert into jiraissue(id) values(1)
+insert into jiraissue(id) values(2)
+insert into customfield(id, cfname) values(1, 'ProjectID')
+insert into customfield(id, cfname) values(2, 'Resolution Date')
+insert into customfieldvalue(id, issue, numbervalue, customfield) values(1, 1, 1, 1)
+insert into customfieldvalue(id, issue, numbervalue, customfield) values(2, 2, 1, 1)
+insert into customfieldvalue(id, issue, numbervalue, customfield) values(3, 2, 2, 1)
+insert into customfieldvalue(id, issue, datevalue, customfield) values(4, 1, '2010-09-02 12:00:00', 2)

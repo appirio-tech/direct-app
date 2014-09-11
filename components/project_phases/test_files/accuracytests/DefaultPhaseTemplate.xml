@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate1">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.accuracytests.MockPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.accuracytests.MockStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    <Property name="workdays">
+      <!-- namespace of the object specification configuration of the workdays, required -->
+      <Property name="object_specification_namespace">
+        <Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      </Property>
+      <!-- key of the workdays object, required -->
+      <Property name="object_key">
+        <Value>workdays</Value>
+      </Property>
+      <!-- identifier of the workdays object, optional -->
+      <Property name="object_identifier">
+        <Value>default</Value>
+      </Property>
+    </Property>
+	</Config>
+		<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate2">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.accuracytests.MockPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.accuracytests.MockStartDateGenerator</Value>
+			</Property>
+		  <!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    <Property name="workdays">
+      <!-- namespace of the object specification configuration of the workdays, required -->
+      <Property name="object_specification_namespace">
+        <Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      </Property>
+      <!-- key of the workdays object, required -->
+      <Property name="object_key">
+        <Value>workdays</Value>
+      </Property>
+      <!-- identifier of the workdays object, optional -->
+      <Property name="object_identifier">
+        <Value>default</Value>
+      </Property>
+    </Property>
+	</Config>
+</CMConfig>

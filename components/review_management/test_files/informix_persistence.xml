@@ -1,0 +1,381 @@
+<CMConfig>
+
+<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NoConnectionName">
+    <Property name="connection">
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.EmptyConnectionName">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>    </Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NoFactoryNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>       
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.EmptyFactoryNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>    </Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NoFactoryClass">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>       
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.EmptyFactoryClass">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>    </Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NonExistFactoryNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>do_not_exist</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NonExistFactoryClass">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>do_not_exist</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.InvalidFactoryClass">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>java.lang.Exception</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.InvalidFactoryClass1">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>java.util.ArrayList</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NoBundleManagerNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.EmptyBundleManagerNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>    </Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NonExistBundleManagerNamespace">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>do_not_exist</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>ReviewSearchBundle</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NoBundleName">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.EmptyBundleName">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>    </Value>
+    </Property>
+</Config>
+
+<Config name="InformixReviewPersistence.CustomNamespace.NonExistBundleName">
+    <Property name="connection">
+        <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+        <Property name="name">
+            <Value>informix_connection</Value>
+        </Property>
+        <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+        <Property name="factory_namespace">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+        <Property name="factory_class">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+        </Property>
+    </Property>
+    <Property name="search_bundle_manager_namespace">
+        <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+    </Property>
+    <Property name="search_bundle_name">
+        <Value>do_not_exist</Value>
+    </Property>
+</Config>
+
+</CMConfig>

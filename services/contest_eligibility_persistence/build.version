@@ -1,0 +1,9 @@
+#property file defining the components information
+component.name=Contest Eligibility Persistence
+component.distfilename=contest_eligibility_persistence
+component.package=com.topcoder.service.contest.eligibility
+component.packagedir=com/topcoder/service/contest/eligibility
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

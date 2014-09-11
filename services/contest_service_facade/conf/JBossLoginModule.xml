@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<CMConfig>
+    <Config name="com.topcoder.security.auth.module">
+        <property name="securityFacadeChild">
+            <property name="logName">
+                <value>cockpitLoggerSecurityFacade</value>
+            </property>
+            <property name="entitlementAssignmentManagerKey">
+                <value>eamk</value>
+            </property>
+            <property name="authenticationManagerKey">
+                <value>amk</value>
+            </property>
+            <property name="maxFailedLoginTimesBeforeLock">
+                <value>10</value>
+            </property>
+            <!-- in milliseconds -->
+            <property name="passwordDuration">
+                <value>3600000</value>
+            </property>
+            <property name="logoutHandlerKey">
+                <value>lohk</value>
+            </property>
+            <property name="functionalEntitlementManagerKey">
+                <value>femk</value>
+            </property>
+            <property name="auditorKey">
+                <value>ak</value>
+            </property>
+            <property name="userGroupManagerKey">
+                <value>ugmk</value>
+            </property>
+            <property name="objectFactoryConfigurationObject">
+                <property name="eamk">
+                    <property name="type">
+                        <value>com.topcoder.security.entitlement.data.EntitlementAssignmentManager</value>
+                    </property>
+                </property>
+                <property name="lohk">
+                    <property name="type">
+                        <value>com.topcoder.cockpit.security.CockpitLogoutHandler</value>
+                    </property>
+                </property>
+                <property name="amk">
+                    <property name="type">
+                        <value>com.topcoder.security.authenticationmanager.AuthenticationManager</value>
+                    </property>
+                </property>
+                <property name="femk">
+                    <property name="type">
+                        <value>com.topcoder.security.entitlement.functional.FunctionalEntitlementManager</value>
+                    </property>
+                </property>
+                <property name="ugmk">
+                    <property name="type">
+                        <value>com.topcoder.cockpit.security.CockpitUserManagerImpl</value>
+                    </property>
+                    <Property name="params">
+                        <Property name="param1">
+                            <Property name="name">
+                                <Value>cockpit_user_persistence</Value>
+                            </Property>
+                        </Property>
+                    </Property>
+                </property>
+                <property name="cockpit_user_persistence">
+                    <property name="type">
+                        <value>com.topcoder.cockpit.security.CockpitUserPersistenceImpl</value>
+                    </property>
+                </property>
+                <property name="ak">
+                    <property name="type">
+                        <value>com.topcoder.cockpit.security.CockpitAuditor</value>
+                    </property>
+                </property>
+            </property>
+        </property>
+        <property name="authenticationManagerChild">
+            <property name="log">
+                <value>cockpitLoggerAuthenticationManager</value>
+            </property>
+            <property name="modules">
+                <property name="module1">
+                    <property name="key">
+                        <value>cockpitAuthenticationModule</value>
+                    </property>
+                </property>
+            </property>
+            <property name="specification">
+                <property name="cockpitAuthenticationModule">
+                    <property name="type">
+                        <value>com.topcoder.cockpit.security.CockpitAuthenticationModule</value>
+                    </property>
+                </property>
+                <property name="AggregationStrategy">
+                    <property name="type">
+                        <value>com.topcoder.security.authenticationmanager.DefaultAggregationStrategy</value>
+                    </property>
+                </property>
+            </property>
+        </property>
+    </Config>
+</CMConfig>

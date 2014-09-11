@@ -1,0 +1,189 @@
+<CMConfig>
+    <!-- Team Maanager Config Details-->
+    <Config name="com.topcoder.management.team.impl.TeamManagerImpl">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>persistenceKey</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+
+
+    <Config name="invalid.specNamespacePropertyNotPresent">
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>persistenceKey</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+    
+    
+    <Config name="invalid.specNamespacePropertyIncorrect">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>Incorrect</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>persistenceKey</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+    
+    
+    <Config name="invalid.persistenceKeyPropertyNotPresent">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+    
+    <Config name="invalid.persistenceKeyPropertyIncorrect">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>incorrect</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+    
+    
+    <Config name="invalid.persistenceKeyPropertyStringType">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>string</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>failuretests</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+
+    <Config name="invalid.idGeneratorPropertyNotPresent">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>persistenceKey</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+
+    <Config name="invalid.idGeneratorPropertyIncorrect">
+        <!-- Namespace to use with the ConfigManagerSpecificationFactory-->
+        <Property name="specNamespace">
+            <Value>SpecificationNamespace</Value>
+        </Property>
+        <!-- Key for the TeamPersistence to pass to ObjectFactory -->
+        <Property name="persistenceKey">
+            <Value>persistenceKey</Value>
+        </Property>
+        <!-- Name of IDGenerator to pass to IDGeneratorFactory -->
+        <Property name="idGenerator">
+            <Value>incorrect</Value>
+        </Property>
+        <!-- The name of the log to get from the LogManager. A valid name of the log. If not given, logging is not performed. -->
+        <Property name="loggerName">
+            <Value>defaultLogger</Value>
+        </Property>
+    </Config>
+
+
+    <!-- Config Namespace-->
+    <Config name="SpecificationNamespace">
+        <!-- A mock Team persistence class for testing.-->
+        <Property name="persistenceKey">
+            <Property name="type">
+                <Value>com.topcoder.management.team.failuretests.MockTeamPersistence</Value>
+            </Property>
+        </Property>
+        <Property name="string">
+            <Property name="type">
+                <Value>java.lang.String</Value>
+            </Property>
+        </Property>
+    </Config>
+    <!-- DB Connection for the ID Generator. -->
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>MainConn</Value>
+            </Property>
+            <Property name="MainConn">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.mysql.jdbc.Driver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:mysql://localhost:3306/test</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>root</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>123456</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

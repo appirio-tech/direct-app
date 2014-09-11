@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- A template which defines a set of project phases -->
+<Template name="TCS Component Project"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="xml_phase_template.xsd">
+	<!-- An enumeration of project phase types defined in this template -->
+	<PhaseTypes>
+		<PhaseType id="submission" typeId="1" typeName="Submission"/>
+		<PhaseType id="screening" typeId="2" typeName="Screening"/>
+		<PhaseType id="review" typeId="3" typeName="Review"/>
+		<PhaseType id="appeals" typeId="4" typeName="Appeals"/>
+		<PhaseType id="appeals_response" typeId="5" typeName="Appeals Response"/>
+		<PhaseType id="aggregation" typeId="6" typeName="Aggregation"/>
+		<PhaseType id="aggregation_review" typeId="7" typeName="Aggregation Review"/>
+		<PhaseType id="final_fixes" typeId="8" typeName="Final Fixes"/>
+		<PhaseType id="final_review" typeId="9" typeName="Final Review"/>
+		<PhaseType id="component_preparation" typeId="10" typeName="Component Preparation"/>
+	</PhaseTypes>
+	<!-- A set of project phases defined in this template. -->
+	<Phases>
+		<!-- A definition of a single phase. -->
+		<Phase id="submissionPhase" length="604800000" type="submission"/>
+
+		<Phase id="screeningPhase" length="86400000" type="screening">
+			<Dependency id="submissionPhase" isDependencyStart="true" isDependentStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="reviewPhase" length="259200000" type="review">
+			<!-- "isDependencyStart" is optional attribute(default to "false"), here it is omitted -->
+			<Dependency id="screeningPhase" isDependentStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="appealsPhase" length="86400000" type="appeals">
+			<!-- "isDependentStart" is optional attribute(default to "true"), here it is omitted -->
+			<Dependency id="reviewPhase" isDependencyStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="appealsReponsePhase" length="86400000" type="appeals_response">
+			<!-- "lagTime" is optional attribute(default to "0"), here it is omitted -->
+			<Dependency id="appealsPhase" isDependencyStart="false" isDependentStart="false"/>
+		</Phase>
+
+		<Phase id="aggregationPhase" length="43200000" type="aggregation">
+			<!-- all attributes except "id" are omitted -->
+			<Dependency id="appealsReponsePhase"/>
+		</Phase>
+
+		<Phase id="aggregationReviewPhase" length="43200000" type="aggregation_review">
+			<Dependency id="aggregationPhase" isDependencyStart="false" isDependentStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="finalFixesPhase" length="172800000" type="final_fixes">
+			<Dependency id="aggregationReviewPhase" isDependencyStart="false" isDependentStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="finalReviewPhase" length="86400000" type="final_review">
+			<Dependency id="finalFixesPhase" isDependencyStart="false" isDependentStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="componentPreparationPhase" length="86400000" type="component_preparation">
+			<Dependency id="finalReviewPhase" isDependencyStart="false" isDependentStart="false" lagTime="0"/>
+		</Phase>
+	</Phases>
+</Template>

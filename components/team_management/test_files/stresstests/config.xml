@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<CMConfig>
+<!-- default config file used in TeamManagerImplTest -->
+
+<Config name="com.topcoder.management.team.impl.TeamManagerImpl">
+	<Property name="specNamespace">
+		<Value>com.topcoder.service.ServiceEngineTest.ObjectFactory</Value>
+	</Property>
+	<Property name="persistenceKey">
+		<Value>MockTeamPersistence</Value>
+	</Property>
+	<Property name="idGenerator">
+		<Value>team_id_seq</Value>
+	</Property>
+</Config>
+
+<!-- config file for object factory -->
+
+<Config name="com.topcoder.service.ServiceEngineTest.ObjectFactory">
+	<Property name="MockTeamPersistence">
+		<Property name="type">
+			<Value>com.topcoder.management.team.stresstests.MockTeamPersistence</Value>
+		</Property>
+	</Property>
+
+	<Property name="Object">
+		<Property name="type">
+			<Value>java.lang.Object</Value>
+		</Property>
+	</Property>
+</Config>
+
+
+	<Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+		<Property name="connections">
+			<Property name="default">
+				<Value>MainConn</Value>
+			</Property>
+			<Property name="MainConn">
+				<Property name="producer">
+					<Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+				</Property>
+				<Property name="parameters">
+					<Property name="jdbc_driver">
+						<Value>com.mysql.jdbc.Driver</Value>
+					</Property>
+					<Property name="jdbc_url">
+						<Value>jdbc:mysql://localhost:3306/test</Value>
+					</Property>
+					<Property name="user">
+						<Value>root</Value>
+					</Property>
+					<Property name="password">
+						<Value>123456</Value>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+	
+</CMConfig>

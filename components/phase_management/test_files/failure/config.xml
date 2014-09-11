@@ -1,0 +1,221 @@
+<CMConfig>
+	<Config name="com.topcoder.management.phase.db.InformixPhasePersistence.failure">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="failure1">
+		
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		
+		<!-- 
+		<Property name="ConnectionFactory">
+			
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		 -->
+		 
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="failure2">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			-->
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+	</Config>
+	<Config name="failure3">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<!--  
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			-->
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="failure4">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<!--  
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+		-->
+	</Config>
+	
+	<Config name="failure5">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<!--  
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+			-->
+		</Property>
+		
+	</Config>
+	
+	<Config name="failure6">
+		<Property name="connectionName">
+			<Value>oracle</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="failure7">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+			<Property name="className">
+				<Value>not.exit</Value>
+			</Property>
+		</Property>
+	</Config>
+	<Config name="failure8">
+		<Property name="connectionName">
+			<Value>informix</Value>
+		</Property>
+		<Property name="ConnectionFactory">
+			<!--  -->
+			<Property name="className">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+			</Property>
+			<Property name="namespace">
+				<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl.notexsit</Value>
+			</Property>
+		</Property>
+		<Property name="Idgenerator">
+			<Property name="sequenceName">
+				<Value>phase_id_seq</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+		<Property name="connections">
+			<Property name="default">
+				<Value>informix</Value>
+			</Property>
+			<Property name="informix">
+				<Property name="producer">
+					<Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+				</Property>
+				<Property name="parameters">
+					<Property name="jdbc_driver">
+						<Value>com.informix.jdbc.IfxDriver</Value>
+					</Property>
+					<Property name="jdbc_url">
+						<Value>jdbc:informix-sqli://59.66.77.226:1527/demo:INFORMIXSERVER=test</Value>
+					</Property>
+					<Property name="user">
+						<Value>informix</Value>
+					</Property>
+					<Property name="password">
+						<Value>123456</Value>
+					</Property>
+				</Property>
+			</Property>
+		</Property>
+	</Config>
+</CMConfig>

@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.facade.contest.ejb.ContestServiceFacadeBean">
+        <Property name="ContestEligibilityMapping">
+            <Property name="1">
+              <Property name="EligibilityName">
+                <Value>TextName1</Value>
+              </Property>
+              <Property name="EligibilityGroupId">
+                <Value>1</Value>
+              </Property>
+              <Property name="EligibilityAdminRole">
+                <Value>LCSUPPORT</Value>
+              </Property>
+            </Property>
+        </Property>
+        <Property name="PayflowProPaymentProcessor">
+		        <Property name="payFlowHostAddress">
+		            <Value>pilot-payflowpro.paypal.com</Value>
+		        </Property>
+		        <Property name="payFlowUser">
+		            <Value>tcTestAccount2</Value>
+		        </Property>
+		        <Property name="payFlowPartner">
+		            <Value>PayPal</Value>
+		        </Property>
+		        <Property name="payFlowVendor">
+		            <Value>tcTestAccount2</Value>
+		        </Property>
+		        <Property name="payFlowPassword">
+		            <Value>password123</Value>
+		        </Property>
+        </Property>
+        <Property name="createForum">
+        	<Value>false</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>jnp://63.118.154.182:1099</Value>
+        </Property>
+        <Property name="userBeanProviderUrl">
+        	<Value>jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199</Value>
+        </Property>
+        <Property name="projectBeanProviderUrl">
+        	<Value>jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199</Value>
+        </Property>
+        <Property name="mockSubmissionFilePath">
+        	<Value>/home/direct/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/</Value>
+        </Property>
+    </Config>
+</CMConfig>

@@ -1,0 +1,28 @@
+<webservices xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                                 http://java.sun.com/xml/ns/javaee/javaee_web_services_1_2.xsd"
+             version="1.2">
+
+ <webservice-description>
+  <webservice-description-name>ProjectServiceBeanService</webservice-description-name>
+  <port-component>
+   <port-component-name>ProjectServiceBeanService</port-component-name>
+   <wsdl-port xmlns:portNS="http://impl.project.service.topcoder.com/">portNS:ProjectServiceBeanPort</wsdl-port>
+   <service-endpoint-interface>com.topcoder.service.project.ProjectService</service-endpoint-interface>
+   <service-impl-bean>
+       <ejb-link>ProjectServiceBean</ejb-link>
+   </service-impl-bean>
+   <handler-chains>
+       <handler-chain>
+           <protocol-bindings>##SOAP11_HTTP</protocol-bindings>
+           <handler>
+               <handler-name>WSSecurity Handler</handler-name>
+               <handler-class>org.jboss.ws.extensions.security.jaxws.WSSecurityHandlerServer</handler-class>
+           </handler>
+       </handler-chain>
+   </handler-chains>
+  </port-component>
+ </webservice-description>
+
+</webservices>

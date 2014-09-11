@@ -6,115 +6,31 @@
              version="5">
 
     <display-name>TC Direct</display-name>
-    
-    <module>
-        <java>pipeline_service_persistence.jar</java>
-    </module>
-    
+
     <module>
         <ejb>client_project_entities_dao.jar</ejb>
     </module>
-    
+
     <module>
         <ejb>catalog_services_id_generator.jar</ejb>
     </module>
-        
-    <module>
-        <ejb>auto_screening_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>catalog_entities.jar</ejb>
-    </module>
-    
+
     <module>
         <ejb>catalog_services.jar</ejb>
     </module>
-    
-    <module>
-        <ejb>online_review_upload_services.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>phase_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>phase_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>project_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>project_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>project_phases.jar</ejb>
-    </module>
-        
+
     <module>
         <ejb>user_service.jar</ejb>
     </module>
-    
+
     <module>
         <ejb>project_service.jar</ejb>
     </module>
-    
-    <module>
-        <ejb>resource_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>resource_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>review_data_structure.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>review_score_aggregator.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>scorecard_data_structure.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>scorecard_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>scorecard_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>review_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>review_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>team_management.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>team_management_persistence.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>user_project_data_store.jar</ejb>
-    </module>
-    
+
     <module>
         <ejb>game_plan_service.jar</ejb>
     </module>
- 
+
     <module>
         <ejb>contest_eligibility_persistence.jar</ejb>
     </module>
@@ -122,48 +38,48 @@
     <module>
         <ejb>contest_eligibility_validation.jar</ejb>
     </module>
-	
-	  <module>
+
+    <module>
         <ejb>project_services.jar</ejb>
     </module>
 
-	  <module>
+    <module>
         <ejb>specification_review_service.jar</ejb>
     </module>
 
     <module>
-      <ejb>specification_review_comment_service.jar</ejb>
+        <ejb>specification_review_comment_service.jar</ejb>
     </module>
-  
+
 
     <module>
         <ejb>permission_service_facade.jar</ejb>
     </module>
-  
-     <module>
+
+    <module>
         <ejb>contest_service_facade.jar</ejb>
     </module>
-    
+
     <module>
         <ejb>cloud_vm_service.jar</ejb>
     </module>
-    
+
     <module>
         <ejb>user_service_facade.jar</ejb>
     </module>
-    
-     <module>
+
+    <module>
         <ejb>project_service_facade.jar</ejb>
     </module>
-        
-     <module>
+
+    <module>
         <ejb>admin_service_facade.jar</ejb>
     </module>
-        
-     <module>
+
+    <module>
         <ejb>pipeline_service.jar</ejb>
     </module>
-    
+
     <module>
         <ejb>pipeline_service_facade.jar</ejb>
     </module>
@@ -176,44 +92,10 @@
         <ejb>Project.jar</ejb>
     </module>
 
-    <!-- WARs -->
-    <module>
-        <web>
-            <web-uri>project_service_facade_demo.war</web-uri>
-            <context-root>/projectdemo</context-root>
-        </web>
-    </module>
-
-    <module>
-        <web>
-            <web-uri>contest_service_facade_demo.war</web-uri>
-            <context-root>/contestdemo</context-root>
-        </web>
-    </module>
-
-
-    <module>
-        <web>
-            <web-uri>user_service_facade_demo.war</web-uri>
-            <context-root>/userdemo</context-root>
-        </web>
-    </module>
-
-    <module>
-        <web>
-            <web-uri>admin_service_facade_demo.war</web-uri>
-            <context-root>/adminservicedemo</context-root>
-        </web>
-    </module>
-     <module>
-        <web><web-uri>pipeline_service_facade_demo.war</web-uri>
-            <context-root>/pipelineservicedemo</context-root>
-        </web>
-    </module>
     <module>
         <web>
             <web-uri>scorecard.war</web-uri>
-            <context-root>/direct/scorecard </context-root>
+            <context-root>/direct/scorecard</context-root>
         </web>
     </module>
     <module>

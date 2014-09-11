@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.submission">
+	<class name="PrizeType" table="prize_type_lu" lazy="false">
+		<comment>
+			This tables describes prize type. Possible values: 1.
+			Contest 2. Bonus
+		</comment>
+
+		<id name="prizeTypeId" column="prize_type_id" type="long" />
+
+		<property name="description" length="100" not-null="true"
+			column="prize_type_desc" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,693 @@
+<?xml version="1.0"?>
+<CMConfig>
+    <!-- Namespace for DBConnectionFactory component -->
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>dbconnection</Value>
+            </Property>
+            <Property name="dbconnection">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                  <Value>jdbc:informix-sqli://192.168.1.114:1526/tcs_catalog:informixserver=ol_topcoder</Value>
+                    </Property>
+                    <Property name="SelectMethod">
+                        <Value>cursor</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>system</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>    
+
+  <!-- Namespace for SearchBuilder component -->
+<Config name="ReviewApplicationManagement.SearchBuilderManager">
+    <Property name="searchStrategyFactoryNamespace">
+      <Value>com.topcoder.search.builder.strategy.factory</Value>
+    </Property>
+    <Property name="fieldValidatorFactoryNamespace">
+      <Value>com.topcoder.search.builder.validator.factory</Value>
+    </Property>
+    <Property name="searchBundles">
+      <Property name="reviewApplicationSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT review_application_id,
+            user_id,
+            review_auction_id,
+            review_application_role_id,
+            review_application_status_id,
+            create_date
+            FROM review_application
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="userId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="auctionId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="applicationRoleId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="statusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="createDate">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>review_application_id</Value>
+          </Property>
+          <Property name="auctionId">
+            <Value>review_auction_id</Value>
+          </Property>
+          <Property name="userId">
+            <Value>user_id</Value>
+          </Property>
+          <Property name="applicationRoleId">
+            <Value>review_application_role_id</Value>
+          </Property>
+          <Property name="statusId">
+            <Value>review_application_status_id</Value>
+          </Property>
+          <Property name="createDate">
+            <Value>create_date</Value>
+          </Property>
+        </Property>
+      </Property>
+      
+      <Property name="specReviewAuctionSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT
+            ra.review_auction_id,
+            ratl.review_auction_type_id,
+            ra.project_id,
+            nvl(pp13.actual_start_time,pp13.scheduled_start_time) + 1 units hour as assignment_date,
+            (case when p.project_status_id = 1 and pp13.phase_status_id in (2,3) and pp14.phase_status_id in (1,2) then 't' else 'f' end)::boolean as open,
+            1 - (select count(r.resource_id) from resource r where r.project_id=p.project_id and r.resource_role_id = 18) as reviewers_required
+
+            FROM review_auction ra
+            INNER JOIN review_auction_type_lu ratl ON ratl.review_auction_type_id=ra.review_auction_type_id and ratl.review_auction_category_id=2
+            INNER JOIN project p ON p.project_id=ra.project_id
+            INNER JOIN project_phase pp13 ON pp13.project_id=p.project_id and pp13.phase_type_id=13 and
+                not exists (select 1 from phase_dependency where dependent_phase_id=pp13.project_phase_id)
+            INNER JOIN phase_dependency pd ON pd.dependency_phase_id=pp13.project_phase_id
+            INNER JOIN project_phase pp14 ON pp14.project_id=p.project_id and pp14.phase_type_id=14 and pp14.project_phase_id=pd.dependent_phase_id
+
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectCategoryId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectStatusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>ra.review_auction_id</Value>
+          </Property>
+          <Property name="projectCategoryId">
+            <Value>p.project_category_id</Value>
+          </Property>
+          <Property name="projectStatusId">
+            <Value>p.project_status_id</Value>
+          </Property>
+        </Property>
+      </Property>
+      <Property name="contestReviewAuctionSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT
+            ra.review_auction_id,
+            ra.review_auction_type_id,
+            ra.project_id,
+            nvl(pp2.actual_end_time,pp2.scheduled_end_time) - 24 units hour as assignment_date,
+            (case when p.project_status_id = 1 and pp2.phase_status_id in (2,3) and pp4.phase_status_id in (1,2) then 't' else 'f' end)::boolean as open,
+            pc.parameter::int - (select count(r.resource_id) from resource r where r.project_id=p.project_id and r.resource_role_id in (4,5,6,7)) as reviewers_required
+
+            FROM review_auction ra
+            INNER JOIN review_auction_type_lu ratl ON ratl.review_auction_type_id=ra.review_auction_type_id and ratl.review_auction_category_id=1
+            INNER JOIN project p ON p.project_id=ra.project_id
+            INNER JOIN project_phase pp2 ON pp2.project_id=p.project_id and pp2.phase_type_id=2
+            INNER JOIN project_phase pp4 ON pp4.project_id=p.project_id and pp4.phase_type_id=4
+            INNER JOIN phase_criteria pc ON pc.project_phase_id=pp4.project_phase_id and pc.phase_criteria_type_id=6
+
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectCategoryId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectStatusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>ra.review_auction_id</Value>
+          </Property>
+          <Property name="projectCategoryId">
+            <Value>p.project_category_id</Value>
+          </Property>
+          <Property name="projectStatusId">
+            <Value>p.project_status_id</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+  </Config>    
+
+  <!-- Namespace for SearchBuilder component -->
+<Config name="ReviewApplicationManagement.SearchBuilderManager.Invalid1">
+    <Property name="searchStrategyFactoryNamespace">
+      <Value>com.topcoder.search.builder.strategy.factory</Value>
+    </Property>
+    <Property name="fieldValidatorFactoryNamespace">
+      <Value>com.topcoder.search.builder.validator.factory</Value>
+    </Property>
+    <Property name="searchBundles">
+      <Property name="reviewApplicationSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT review_application_id
+            FROM review_application
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="userId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="auctionId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="applicationRoleId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="statusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="createDate">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>review_application_id</Value>
+          </Property>
+          <Property name="auctionId">
+            <Value>review_auction_id</Value>
+          </Property>
+          <Property name="userId">
+            <Value>user_id</Value>
+          </Property>
+          <Property name="applicationRoleId">
+            <Value>review_application_role_id</Value>
+          </Property>
+          <Property name="statusId">
+            <Value>review_application_status_id</Value>
+          </Property>
+          <Property name="createDate">
+            <Value>create_date</Value>
+          </Property>
+        </Property>
+      </Property>
+      
+      <Property name="specReviewAuctionSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT
+            ra.review_auction_id,
+            ratl.review_auction_type_id,
+            ra.project_id,
+            nvl(pp13.actual_start_time,pp13.scheduled_start_time) + 1 units hour as assignment_date,
+            (case when p.project_status_id = 1 and pp13.phase_status_id in (2,3) and pp14.phase_status_id in (1,2) then 't' else 'f' end)::boolean as open,
+            1 - (select count(r.resource_id) from resource r where r.project_id=p.project_id and r.resource_role_id = 18) as reviewers_required
+
+            FROM review_auction ra
+            INNER JOIN review_auction_type_lu ratl ON ratl.review_auction_type_id=ra.review_auction_type_id and ratl.review_auction_category_id=2
+            INNER JOIN project p ON p.project_id=ra.project_id
+            INNER JOIN project_phase pp13 ON pp13.project_id=p.project_id and pp13.phase_type_id=13 and
+                not exists (select 1 from phase_dependency where dependent_phase_id=pp13.project_phase_id)
+            INNER JOIN phase_dependency pd ON pd.dependency_phase_id=pp13.project_phase_id
+            INNER JOIN project_phase pp14 ON pp14.project_id=p.project_id and pp14.phase_type_id=14 and pp14.project_phase_id=pd.dependent_phase_id
+
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectCategoryId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectStatusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>ra.review_auction_id</Value>
+          </Property>
+        </Property>
+      </Property>
+      <Property name="contestReviewAuctionSearchBundle">
+        <Property name="searchStrategy">
+          <Property name="class">
+            <Value>dbStrategy</Value>
+          </Property>
+        </Property>
+        <Property name="context">
+          <Value>
+            SELECT
+            ra.review_auction_id
+            
+            FROM review_auction ra
+            INNER JOIN review_auction_type_lu ratl ON ratl.review_auction_type_id=ra.review_auction_type_id and ratl.review_auction_category_id=1
+            INNER JOIN project p ON p.project_id=ra.project_id
+            INNER JOIN project_phase pp2 ON pp2.project_id=p.project_id and pp2.phase_type_id=2
+            INNER JOIN project_phase pp4 ON pp4.project_id=p.project_id and pp4.phase_type_id=4
+            INNER JOIN phase_criteria pc ON pc.project_phase_id=pp4.project_phase_id and pc.phase_criteria_type_id=6
+
+            WHERE
+          </Value>
+        </Property>
+        <Property name="searchableFields">
+          <Property name="id">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectCategoryId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+          <Property name="projectStatusId">
+            <Property name="validator">
+              <Property name="class">
+                <Value>validator</Value>
+              </Property>
+              <Property name="identifier">
+                <Value>default</Value>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+        <Property name="alias">
+          <Property name="id">
+            <Value>ra.review_auction_id</Value>
+          </Property>
+          <Property name="projectCategoryId">
+            <Value>p.project_category_id</Value>
+          </Property>
+          <Property name="projectStatusId">
+            <Value>p.project_status_id</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="com.topcoder.search.builder.validator.factory">
+    <Property name="validator:null">
+      <Property name="type">
+        <Value>com.topcoder.util.datavalidator.NullValidator</Value>
+      </Property>
+    </Property>
+    <Property name="validator:default">
+      <Property name="type">
+        <Value>com.topcoder.management.review.application.MockValidator</Value>
+      </Property>
+    </Property>
+  </Config>
+  <Config name="com.topcoder.search.builder.strategy.factory">
+    <Property name="dbStrategy">
+      <Property name="type">
+        <Value>com.topcoder.search.builder.database.DatabaseSearchStrategy</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>DBSearchStrategy</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+  </Config>
+  <Config name="DBSearchStrategy">
+    <!-- Property defining a specification for constructing the dbConnectionFactory to use. -->
+    <Property name="connectionFactory">
+
+      <!-- The namespace of the ConnectionFactory -->
+      <Property name="name">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+      </Property>
+      <Property name="class">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+      </Property>
+    </Property>
+
+
+    <!-- The name to request from the connection factory when acquiring a connection. If not present, then the default connection is used. -->
+    <Property name="connectionName">
+      <Value>dbconnection</Value>
+    </Property>
+
+
+    <Property name="searchFragmentFactoryNamespace">
+      <Value>com.topcoder.search.builder.database.factory</Value>
+    </Property>
+
+    <Property name="searchFragmentBuilders">
+      <Property name="first">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.AndFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.AndFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="second">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.OrFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.OrFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="third">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LikeFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.LikeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="fourth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.NotFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.NotFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="fifth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.EqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.EqualsFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="sixth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.InFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.InFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="eighth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.NullFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.NullFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="ninth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.GreaterThanFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="tenth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.GreaterThanOrEqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="eleventh">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.BetweenFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="twelvth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LessThanOrEqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="thirteenth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LessThanFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.database.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+    </Property>
+  </Config>
+  <Config name="com.topcoder.search.builder.database.factory">
+  </Config>
+</CMConfig>

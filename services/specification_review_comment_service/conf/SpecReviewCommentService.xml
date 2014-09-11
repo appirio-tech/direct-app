@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.review.comment.specification.ejb.SpecReviewCommentServiceBean">
+        <Property name="createComment">
+        	<Value>false</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>63.118.154.182:1099</Value>
+        </Property>
+    </Config>
+</CMConfig>

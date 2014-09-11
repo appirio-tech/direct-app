@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- since Module Cockpit Contest Service Enhancement Assembly -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.permission">
+    <class name="PermissionAudit" table="user_permission_grant_audit">
+        <comment>
+            This tables describes permission audit instance.
+        </comment>
+
+        <id name="id" column="user_permission_grant_audit_id">
+            <generator class="sequence">
+                <param name="sequence">user_permission_grant_audit_sequence</param>
+            </generator>
+        </id>
+        <property name="recordId" column="user_permission_grant_id" not-null="true"/>
+        <property name="actionTypeId" column="audit_action_type_id" not-null="true"/>
+        <property name="actionUserId" column="action_user_id" not-null="true"/>
+        <property name="userId" column="user_id" not-null="true"/>
+        <property name="resourceId" column="resource_id" not-null="true"/>
+        <property name="fieldName" column="field_name" not-null="true"/>
+        <property name="oldValue" column="old_value"/>
+        <property name="newValue" column="new_value"/>
+        <property name="timestamp" column="timestamp"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,163 @@
+<project name="Override Macrodef Standard Behaviour Import" basedir=".">
+    <!-- macrodef override definition in order to change the standard behaviour from
+         build.xml/build_dist.xml
+     -->
+
+    <property name="cobertura.datafile.remote" value="${jboss_home}/bin/cobertura.ser" />
+    <property name="cobertura.datafile.local" value="${testlogdir}/cobertura_local.ser" />
+
+    <target name="test.setup" depends="compile_tests">
+        <property name="jboss_libdir" value="${jboss_home}/server/${jboss_config_name}/lib"/>
+        <property name="deploy-dir" value="${jboss_home}/server/${jboss_config_name}/deploy"/>
+        <property name="log4j.jar" value="${jboss_home}/server/${jboss_config_name}/lib/log4j.jar"/>
+
+        <property name="component.conf.dir" value="${build_distdir}/conf"/>
+        <property name="component.ejb.dir" value="${build_distdir}/application/ejb"/>
+        <property name="component.ejb.jar" value="${component.ejb.dir}/${distfilename}.jar"/>
+        <property name="component.ear.dir" value="${build_distdir}/application/ear"/>
+        <property name="component.ear" value="${component.ear.dir}/${distfilename}.ear"/>
+        <property name="package.dir" value="${builddir}/package"/>
+
+
+        <delete dir="${package.dir}"/>
+
+        <!-- Copy classes -->
+        <copy todir="${package.dir}" overwrite="true">
+            <fileset dir="${build_classdir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+
+        <delete file="${cobertura.datafile.remote}" />
+
+        <!-- Instrument classes so they can be covered on server side -->
+        <cobertura-instrument todir="${package.dir}" datafile="${cobertura.datafile.remote}">
+          <fileset dir="${build_classdir}">
+            <include name="**/*.class" />
+          </fileset>
+        </cobertura-instrument>
+
+        <copy todir="${package.dir}" overwrite="true">
+            <fileset dir="${build_testclassdir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </copy>
+
+        <mkdir dir="${component.ejb.dir}"/>
+        <jar basedir="${package.dir}" destfile="${component.ejb.jar}">
+            <metainf dir="${testfiles}/META-INF">
+            </metainf>
+        </jar>
+
+        <delete file="${component.ear}" failonerror="false"/>
+
+        <mkdir dir="${component.ear.dir}"/>
+
+        <!-- copy informix driver to jboss -->
+        <copy file="${jdbc.informix.jar}" todir="${jboss_libdir}"/>
+
+        <copy file="${jdbc.informix.jar}" todir="${component.ear.dir}" overwrite="true"/>
+
+        <copy file="${component.ejb.jar}" todir="${component.ear.dir}" overwrite="true"/>
+
+        <copy file="${base_exception.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${logging_wrapper.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${object_formatter.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${typesafe_enum.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${search_builder.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${configuration_api.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${configuration_persistence.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${object_factory.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${object_factory_configuration_api_plugin.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${object_factory_config_manager_plugin.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${data_validation.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${class_associations.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${configuration_manager.jar}" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${SaveCoberturaData.jar}" todir="${component.ear.dir}" overwrite="true"/>
+
+        <copy file="${testfiles}/META-INF/persistence.xml" todir="${component.ear.dir}" overwrite="true"/>
+        <copy file="${testfiles}/META-INF/informix-ds.xml" todir="${component.ear.dir}" overwrite="true"/>
+    	<copy file="${testfiles}/config.xml" todir="${component.ear.dir}" overwrite="true"/>
+    	<copy file="${testfiles}/hibernateSearchStrategyConfig.xml" todir="${component.ear.dir}" overwrite="true"/>
+    	<copy file="${testfiles}/dao_config.xml" todir="${component.ear.dir}" overwrite="true"/>
+    	<copy file="${testfiles}/test.properties" todir="${component.ear.dir}" overwrite="true"/>
+    	<copy file="${testfiles}/hibernate.cfg.xml" todir="${component.ear.dir}" overwrite="true"/>
+    	
+        <copy todir="${component.ear.dir}/test_files/" overwrite="true">
+            <fileset dir="${testfiles}">
+                <include name="*.xml" />
+            </fileset>
+        </copy>
+
+        <copy file="${testfiles}/com/topcoder/util/config/ConfigManager.properties"
+              todir="${component.ear.dir}/com/topcoder/util/config" overwrite="true"/>
+
+        <copy file="${testfiles}/com/topcoder/db/connectionfactory/DBConnectionFactoryImpl.xml"
+              todir="${component.ear.dir}/com/topcoder/db/connectionfactory" overwrite="true"/>
+
+        <copy file="${testfiles}/META-INF/application.xml" todir="${component.ear.dir}/META-INF" overwrite="true"/>
+        <copy file="${testfiles}/META-INF/ejb-jar.xml" todir="${component.ear.dir}/META-INF" overwrite="true"/>
+
+        <!-- copy ear to jboss -->
+        <copy todir="${deploy-dir}/${distfilename}.ear" overwrite="true">
+            <fileset dir="${component.ear.dir}">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+
+        <!-- copy the cobertura jars to jboss -->
+        <copy todir="${jboss_home}/server/${jboss_config_name}/lib" overwrite="true">
+          <fileset dir="${cobertura.dir}">
+              <include name="**/*.jar"/>
+          </fileset>
+        </copy>
+    </target>
+
+    <target name="test.teardown">
+        <delete file="${deploy-dir}/${distfilename}.ear"/>
+    </target>
+
+    <target name="coveragetest.execute">
+        <!-- standard test task -->
+        <mkdir dir="${testlogdir}"/>
+        <mkdir dir="${instrumented.dir}"/>
+        <delete file="${cobertura.datafile.local}"/>
+        <cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.datafile.local}">
+            <!-- all included -->
+            <fileset dir="${build_classdir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </cobertura-instrument>
+        <junit fork="true" haltonerror="false">
+            <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.datafile.local}"/>
+            <classpath location="${instrumented.dir}"/>
+            <classpath location="${build_testclassdir}"/>
+            <classpath refid="test.build.classpath"/>
+            <classpath refid="cobertura.classpath"/>
+            <test name="${package}.UnitTestsWithEJB" todir="${testlogdir}">
+                <formatter type="plain" usefile="true"/>
+                <formatter type="xml" usefile="true"/>
+            </test>
+        </junit>
+
+        <!-- Merge the client and server cobertura datafiles -->
+        <delete file="${cobertura.datafile}" />
+
+        <cobertura-merge datafile="${cobertura.datafile}">
+            <fileset dir="${jboss_home}/bin">
+                <include name="cobertura.ser" />
+            </fileset>
+            <fileset dir="${testlogdir}">
+                <include name="cobertura_local.ser" />
+            </fileset>
+        </cobertura-merge>
+    </target>
+
+    <target name="deployEAR" depends="compile_tests">
+        <test.setup/>
+    </target>
+
+    <target name="undeployEAR">
+        <test.teardown/>
+    </target>
+</project>

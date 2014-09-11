@@ -1,0 +1,3 @@
+1. Please execute the phase_management.sql
+2. for the demov11, please follow another readme.txt
+3. change the db configs

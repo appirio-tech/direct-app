@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>ContestServiceFacadeBean</ejb-name>
+            <jndi-name>remote/ContestServiceFacadeBean</jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_validation</ejb-ref-name>
+                <jndi-name>ContestEligibilityValidationBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/contest_eligibility_persistence</ejb-ref-name>
+                <jndi-name>ContestEligibilityPersistenceBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/CatalogService</ejb-ref-name>
+                <jndi-name>CatalogService/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectServicesBean</ejb-ref-name>
+                <jndi-name>ProjectServicesBean/remote</jndi-name>
+            </ejb-ref>
+            <ejb-ref>
+                <ejb-ref-name>ejb/PermissionService</ejb-ref-name>
+                <jndi-name>PermissionServiceBean/remote</jndi-name>
+            </ejb-ref>
+			 <ejb-ref>
+                <ejb-ref-name>ejb/UserService</ejb-ref-name>
+                <jndi-name>UserServiceBean/remote</jndi-name>
+            </ejb-ref>
+			 <ejb-ref>
+                <ejb-ref-name>ejb/SpecReviewService</ejb-ref-name>
+                <jndi-name>SpecReviewServiceBean/remote</jndi-name>
+            </ejb-ref>
+            
+            <!-- added for Cockpit Release Assembly 5 v1.0 -->
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectDAOBean</ejb-ref-name>
+                <jndi-name>ProjectDAOBean/remote</jndi-name>
+            </ejb-ref>
+            <method-attributes>
+              <method>
+                <method-name>createSoftwareContest</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+              <method>
+                <method-name>updateSoftwareContest</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+              <method>
+                <method-name>processContestCreditCardSale</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+              <method>
+                <method-name>processContestPurchaseOrderSale</method-name>
+                <transaction-timeout>3600</transaction-timeout>
+              </method>
+            </method-attributes>
+        </session>
+    </enterprise-beans>
+
+    <security-domain>java:/jaas/JBossLoginModule</security-domain>
+	<webservices> 
+		<context-root>/contestfacade</context-root> 
+		<webservice-description> 
+		<webservice-description-name />
+		<wsdl-publish-location />
+    </webservice-description>
+ </webservices>
+</jboss>

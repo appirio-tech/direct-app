@@ -1,677 +1,444 @@
 <project name="Dependency Import" basedir=".">
-  <!-- Properties used in compile_targets ANT target -->
-  <property name="component.target" value="1.5" />
-  <property name="component.bootclasspath" value="${java_1_5_bootclasspath}" />
-
-  <!-- TopCoder dependencies -->
-  <property name="admin_service_facade.version" value="1.0.0" />
-  <property name="admin_service_facade.jar.name" value="admin_service_facade.jar" />
-  <property name="admin_service_facade.path" value="admin_service_facade/${admin_service_facade.version}" />
-  <property name="admin_service_facade.jar" value="${tcs_libdir}/${admin_service_facade.path}/${admin_service_facade.jar.name}" />
-
-  <property name="admin_service_facade_ws.jar.name" value="admin_service_facade_ws.jar" />
-  <property name="admin_service_facade_ws.path" value="admin_service_facade/${admin_service_facade.version}" />
-  <property name="admin_service_facade_ws.jar" value="${tcs_libdir}/${admin_service_facade_ws.path}/${admin_service_facade_ws.jar.name}" />
-
-  <property name="admin_service_facade_demo.war.name" value="admin_service_facade_demo.war" />
-  <property name="admin_service_facade_demo.path" value="admin_service_facade/${admin_service_facade.version}" />
-  <property name="admin_service_facade_demo.war" value="${tcs_libdir}/${admin_service_facade_demo.path}/${admin_service_facade_demo.war.name}" />
-
-  <property name="auditor.version" value="2.0.1" />
-  <property name="auditor.jar.name" value="auditor.jar" />
-  <property name="auditor.path" value="auditor/${auditor.version}" />
-  <property name="auditor.jar" value="${tcs_libdir}/${auditor.path}/${auditor.jar.name}" />
-
-  <property name="authentication_manager.version" value="1.0.2" />
-  <property name="authentication_manager.jar.name" value="authentication_manager.jar" />
-  <property name="authentication_manager.path" value="authentication_manager/${authentication_manager.version}" />
-  <property name="authentication_manager.jar" value="${tcs_libdir}/${authentication_manager.path}/${authentication_manager.jar.name}" />
-
-  <property name="auto_screening_management.version" value="1.0" />
-  <property name="auto_screening_management.jar.name" value="auto_screening_management.jar" />
-  <property name="auto_screening_management.path" value="auto_screening_management/${auto_screening_management.version}" />
-  <property name="auto_screening_management.jar" value="${tcs_libdir}/${auto_screening_management.path}/${auto_screening_management.jar.name}" />
-
-  <property name="base_exception.version" value="2.0.0" />
-  <property name="base_exception.jar.name" value="base_exception.jar" />
-  <property name="base_exception.path" value="base_exception/${base_exception.version}" />
-  <property name="base_exception.jar" value="${tcs_libdir}/${base_exception.path}/${base_exception.jar.name}" />
-
-  <property name="catalog_entities.version" value="1.2.0" />
-  <property name="catalog_entities.jar.name" value="catalog_entities.jar" />
-  <property name="catalog_entities.path" value="catalog_entities/${catalog_entities.version}" />
-  <property name="catalog_entities.jar" value="${tcs_libdir}/${catalog_entities.path}/${catalog_entities.jar.name}" />
-
-  <property name="catalog_services.version" value="1.1" />
-  <property name="catalog_services.jar.name" value="catalog_services.jar" />
-  <property name="catalog_services.path" value="catalog_services/${catalog_services.version}" />
-  <property name="catalog_services.jar" value="${tcs_libdir}/${catalog_services.path}/${catalog_services.jar.name}" />
-
-  <property name="catalog_services_id_generator.jar.name" value="catalog_services_id_generator.jar" />
-  <property name="catalog_services_id_generator.path" value="catalog_services/${catalog_services.version}" />
-  <property name="catalog_services_id_generator.jar" value="${tcs_libdir}/${catalog_services_id_generator.path}/${catalog_services_id_generator.jar.name}" />
-
-  <property name="class_associations.version" value="1.0.0" />
-  <property name="class_associations.jar.name" value="class_associations.jar" />
-  <property name="class_associations.path" value="class_associations/${class_associations.version}" />
-  <property name="class_associations.jar" value="${tcs_libdir}/${class_associations.path}/${class_associations.jar.name}" />
-
-  <property name="client_project_entities_dao.version" value="1.1.0" />
-  <property name="client_project_entities_dao.jar.name" value="client_project_entities_dao.jar" />
-  <property name="client_project_entities_dao.path" value="client_project_entities_dao/${client_project_entities_dao.version}" />
-  <property name="client_project_entities_dao.jar" value="${tcs_libdir}/${client_project_entities_dao.path}/${client_project_entities_dao.jar.name}" />
-
-  <property name="client_project_entities_dao_validator.jar.name" value="client_project_entities_dao_validator.jar" />
-  <property name="client_project_entities_dao_validator.path" value="client_project_entities_dao_validator" />
-  <property name="client_project_entities_dao_validator.jar" value="${tcs_libdir}/${client_project_entities_dao_validator.path}/${client_project_entities_dao_validator.jar.name}" />
-
-  <property name="client_invoice_entities_dao.version" value="1.0.0" />
-  <property name="client_invoice_entities_dao.jar.name" value="client_invoice_entities_dao.jar" />
-  <property name="client_invoice_entities_dao.path" value="client_invoice_entities_dao/${client_invoice_entities_dao.version}" />
-  <property name="client_invoice_entities_dao.jar" value="${tcs_libdir}/${client_invoice_entities_dao.path}/${client_invoice_entities_dao.jar.name}" />
-  
-  <property name="cloud_vm_service.version" value="1.0.0" />
-  <property name="cloud_vm_service.jar.name" value="cloud_vm_service.jar" />
-  <property name="cloud_vm_service.path" value="cloud_vm_service/${cloud_vm_service.version}" />
-  <property name="cloud_vm_service.jar" value="${tcs_libdir}/${cloud_vm_service.path}/${cloud_vm_service.jar.name}" />
-
-  <property name="cockpit_auth.version" value="1.0" />
-  <property name="cockpit_auth.jar.name" value="cockpit_auth.jar" />
-  <property name="cockpit_auth.path" value="cockpit_auth/${cockpit_auth.version}" />
-  <property name="cockpit_auth.jar" value="${tcs_libdir}/${cockpit_auth.path}/${cockpit_auth.jar.name}" />
-
-  <property name="cockpit_facade_util.version" value="1.0.0" />
-  <property name="cockpit_facade_util.jar.name" value="cockpit_facade_util.jar" />
-  <property name="cockpit_facade_util.path" value="cockpit_facade_util/${cockpit_facade_util.version}" />
-  <property name="cockpit_facade_util.jar" value="${tcs_libdir}/${cockpit_facade_util.path}/${cockpit_facade_util.jar.name}" />
-
-  <property name="cockpit_phase_handlers.version" value="1.1.0" />
-  <property name="cockpit_phase_handlers.jar.name" value="cockpit_phase_handlers.jar" />
-  <property name="cockpit_phase_handlers.path" value="cockpit_phase_handlers/${cockpit_phase_handlers.version}" />
-  <property name="cockpit_phase_handlers.jar" value="${tcs_libdir}/${cockpit_phase_handlers.path}/${cockpit_phase_handlers.jar.name}" />
-
-  <property name="command_line_utility.version" value="1.0.0" />
-  <property name="command_line_utility.jar.name" value="command_line_utility.jar" />
-  <property name="command_line_utility.path" value="command_line_utility/${command_line_utility.version}" />
-  <property name="command_line_utility.jar" value="${tcs_libdir}/${command_line_utility.path}/${command_line_utility.jar.name}" />
-
-  <property name="configuration_api.version" value="1.1.0" />
-  <property name="configuration_api.jar.name" value="configuration_api.jar" />
-  <property name="configuration_api.path" value="configuration_api/${configuration_api.version}" />
-  <property name="configuration_api.jar" value="${tcs_libdir}/${configuration_api.path}/${configuration_api.jar.name}" />
-
-  <property name="configuration_manager.version" value="2.1.5" />
-  <property name="configuration_manager.jar.name" value="configuration_manager.jar" />
-  <property name="configuration_manager.path" value="configuration_manager/${configuration_manager.version}" />
-  <property name="configuration_manager.jar" value="${tcs_libdir}/${configuration_manager.path}/${configuration_manager.jar.name}" />
-
-  <property name="configuration_persistence.version" value="1.0" />
-  <property name="configuration_persistence.jar.name" value="configuration_persistence.jar" />
-  <property name="configuration_persistence.path" value="configuration_persistence/${configuration_persistence.version}" />
-  <property name="configuration_persistence.jar" value="${tcs_libdir}/${configuration_persistence.path}/${configuration_persistence.jar.name}" />
-
-  <property name="confluence_user_soap_client.version" value="1.0.2" />
-  <property name="confluence_user_soap_client.jar.name" value="confluence_user_soap_client.jar" />
-  <property name="confluence_user_soap_client.path" value="confluence_user_soap_client/${confluence_user_soap_client.version}" />
-  <property name="confluence_user_soap_client.jar" value="${tcs_libdir}/${confluence_user_soap_client.path}/${confluence_user_soap_client.jar.name}" />
-
-  <property name="contest_eligibility_persistence.version" value="1.0.0" />
-  <property name="contest_eligibility_persistence.jar.name" value="contest_eligibility_persistence.jar" />
-  <property name="contest_eligibility_persistence.path" value="contest_eligibility_persistence/${contest_eligibility_persistence.version}" />
-  <property name="contest_eligibility_persistence.jar" value="${tcs_libdir}/${contest_eligibility_persistence.path}/${contest_eligibility_persistence.jar.name}" />
-
-  <property name="contest_eligibility_validation.version" value="1.0.0" />
-  <property name="contest_eligibility_validation.jar.name" value="contest_eligibility_validation.jar" />
-  <property name="contest_eligibility_validation.path" value="contest_eligibility_validation/${contest_eligibility_validation.version}" />
-  <property name="contest_eligibility_validation.jar" value="${tcs_libdir}/${contest_eligibility_validation.path}/${contest_eligibility_validation.jar.name}" />
-
-  <property name="contest_service_facade.version" value="1.1.0" />
-  <property name="contest_service_facade.jar.name" value="contest_service_facade.jar" />
-  <property name="contest_service_facade.path" value="contest_service_facade/${contest_service_facade.version}" />
-  <property name="contest_service_facade.jar" value="${tcs_libdir}/${contest_service_facade.path}/${contest_service_facade.jar.name}" />
-
-  <property name="permission_service_facade.version" value="1.0.0"/>
-  <property name="permission_service_facade.jar.name" value="permission_service_facade.jar"/>
-  <property name="permission_service_facade.path" value="permission_service_facade/${permission_service_facade.version}"/>
-  <property name="permission_service_facade.jar"
-              value="${tcs_libdir}/${permission_service_facade.path}/${permission_service_facade.jar.name}"/>
-
-  <property name="contest_service_facade_ws.jar.name" value="contest_service_facade_ws.jar" />
-  <property name="contest_service_facade_ws.path" value="contest_service_facade/${contest_service_facade.version}" />
-  <property name="contest_service_facade_ws.jar" value="${tcs_libdir}/${contest_service_facade_ws.path}/${contest_service_facade_ws.jar.name}" />
-
-  <property name="contest_service_facade_demo.war.name" value="contest_service_facade_demo.war" />
-  <property name="contest_service_facade_demo.path" value="contest_service_facade/${contest_service_facade.version}" />
-  <property name="contest_service_facade_demo.war" value="${tcs_libdir}/${contest_service_facade_demo.path}/${contest_service_facade_demo.war.name}" />
-
-  <property name="copilot_pool_and_profiles_dao.version" value="1.0.0" />
-  <property name="copilot_pool_and_profiles_dao.jar.name" value="copilot_pool_and_profiles_dao.jar" />
-  <property name="copilot_pool_and_profiles_dao.path" value="copilot_pool_and_profiles_dao/${copilot_pool_and_profiles_dao.version}" />
-  <property name="copilot_pool_and_profiles_dao.jar" value="${tcs_libdir}/${copilot_pool_and_profiles_dao.path}/${copilot_pool_and_profiles_dao.jar.name}" />
-
-  <property name="copilot_pool_and_profiles_services.version" value="1.0.0" />
-  <property name="copilot_pool_and_profiles_services.jar.name" value="copilot_pool_and_profiles_services.jar" />
-  <property name="copilot_pool_and_profiles_services.path" value="copilot_pool_and_profiles_services/${copilot_pool_and_profiles_services.version}" />
-  <property name="copilot_pool_and_profiles_services.jar" value="${tcs_libdir}/${copilot_pool_and_profiles_services.path}/${copilot_pool_and_profiles_services.jar.name}" />
-
-  <property name="data_entitlement.version" value="1.1.4" />
-  <property name="data_entitlement.jar.name" value="data_entitlement.jar" />
-  <property name="data_entitlement.path" value="data_entitlement/${data_entitlement.version}" />
-  <property name="data_entitlement.jar" value="${tcs_libdir}/${data_entitlement.path}/${data_entitlement.jar.name}" />
-
-  <property name="data_validation.version" value="1.1.1" />
-  <property name="data_validation.jar.name" value="data_validation.jar" />
-  <property name="data_validation.path" value="data_validation/${data_validation.version}" />
-  <property name="data_validation.jar" value="${tcs_libdir}/${data_validation.path}/${data_validation.jar.name}" />
-
-  <property name="database_abstraction.version" value="1.1" />
-  <property name="database_abstraction.jar.name" value="database_abstraction.jar" />
-  <property name="database_abstraction.path" value="database_abstraction/${database_abstraction.version}" />
-  <property name="database_abstraction.jar" value="${tcs_libdir}/${database_abstraction.path}/${database_abstraction.jar.name}" />
-
-  <property name="db_connection_factory.version" value="1.1" />
-  <property name="db_connection_factory.jar.name" value="db_connection_factory.jar" />
-  <property name="db_connection_factory.path" value="db_connection_factory/${db_connection_factory.version}" />
-  <property name="db_connection_factory.jar" value="${tcs_libdir}/${db_connection_factory.path}/${db_connection_factory.jar.name}" />
-
-  <property name="deliverable_management.version" value="1.0.4" />
-  <property name="deliverable_management.jar.name" value="deliverable_management.jar" />
-  <property name="deliverable_management.path" value="deliverable_management/${deliverable_management.version}" />
-  <property name="deliverable_management.jar" value="${tcs_libdir}/${deliverable_management.path}/${deliverable_management.jar.name}" />
-
-  <property name="deliverable_management_persistence.version" value="1.0.3" />
-  <property name="deliverable_management_persistence.jar.name" value="deliverable_management_persistence.jar" />
-  <property name="deliverable_management_persistence.path" value="deliverable_management_persistence/${deliverable_management_persistence.version}" />
-  <property name="deliverable_management_persistence.jar" value="${tcs_libdir}/${deliverable_management_persistence.path}/${deliverable_management_persistence.jar.name}" />
-
-  <property name="document_generator.version" value="3.0.0" />
-  <property name="document_generator.jar.name" value="document_generator.jar" />
-  <property name="document_generator.path" value="document_generator/${document_generator.version}" />
-  <property name="document_generator.jar" value="${tcs_libdir}/${document_generator.path}/${document_generator.jar.name}" />
-
-  <property name="email_engine.version" value="3.1.0" />
-  <property name="email_engine.jar.name" value="email_engine.jar" />
-  <property name="email_engine.path" value="email_engine/${email_engine.version}" />
-  <property name="email_engine.jar" value="${tcs_libdir}/${email_engine.path}/${email_engine.jar.name}" />
-
-  <property name="excel_utility.version" value="2.0" />
-  <property name="excel_utility.jar.name" value="excel_utility.jar" />
-  <property name="excel_utility.path" value="excel_utility/${excel_utility.version}" />
-  <property name="excel_utility.jar" value="${tcs_libdir}/${excel_utility.path}/${excel_utility.jar.name}" />
-
-  <property name="forums.version" value="1.0.0" />
-  <property name="forums.jar.name" value="forums.jar" />
-  <property name="forums.path" value="forums/${forums.version}" />
-  <property name="forums.jar" value="${tcs_libdir}/${forums.path}/${forums.jar.name}" />
-
-  <property name="jivebase.jar.name" value="jivebase_modified.jar" />
-  <property name="jivebase.jar" value="${tcs_libdir}/${forums.path}/${jivebase.jar.name}" />
-
-  <property name="jiveforums.jar.name" value="jiveforums.jar" />
-  <property name="jiveforums.jar" value="${tcs_libdir}/${forums.path}/${jiveforums.jar.name}" />
-
-  <property name="functional_entitlement.version" value="1.0" />
-  <property name="functional_entitlement.jar.name" value="functional_entitlement.jar" />
-  <property name="functional_entitlement.path" value="functional_entitlement/${functional_entitlement.version}" />
-  <property name="functional_entitlement.jar" value="${tcs_libdir}/${functional_entitlement.path}/${functional_entitlement.jar.name}" />
-
-  <property name="game_plan_service.version" value="1.0.0" />
-  <property name="game_plan_service.jar.name" value="game_plan_service.jar" />
-  <property name="game_plan_service.path" value="game_plan_service/${game_plan_service.version}" />
-  <property name="game_plan_service.jar" value="${tcs_libdir}/${game_plan_service.path}/${game_plan_service.jar.name}" />
-
-  <property name="guid_generator.version" value="1.0.1" />
-  <property name="guid_generator.jar.name" value="guid_generator.jar" />
-  <property name="guid_generator.path" value="guid_generator/${guid_generator.version}" />
-  <property name="guid_generator.jar" value="${tcs_libdir}/${guid_generator.path}/${guid_generator.jar.name}" />
-
-  <property name="id_generator.version" value="3.0" />
-  <property name="id_generator.jar.name" value="id_generator.jar" />
-  <property name="id_generator.path" value="id_generator/${id_generator.version}" />
-  <property name="id_generator.jar" value="${tcs_libdir}/${id_generator.path}/${id_generator.jar.name}" />
-
-  <property name="json_object.version" value="1.0.0" />
-  <property name="json_object.jar.name" value="json_object.jar" />
-  <property name="json_object.path" value="json_object/${json_object.version}" />
-  <property name="json_object.jar" value="${tcs_libdir}/${json_object.path}/${json_object.jar.name}" />
-
-  <property name="jboss_login_module.version" value="2.1.0" />
-  <property name="jboss_login_module.jar.name" value="jboss_login_module.jar" />
-  <property name="jboss_login_module.path" value="jboss_login_module/${jboss_login_module.version}" />
-  <property name="jboss_login_module.jar" value="${tcs_libdir}/${jboss_login_module.path}/${jboss_login_module.jar.name}" />
-
-  <property name="jira_user_soap_client.version" value="1.0.2" />
-  <property name="jira_user_soap_client.jar.name" value="jira_user_soap_client.jar" />
-  <property name="jira_user_soap_client.path" value="jira_user_soap_client/${jira_user_soap_client.version}" />
-  <property name="jira_user_soap_client.jar" value="${tcs_libdir}/${jira_user_soap_client.path}/${jira_user_soap_client.jar.name}" />
-
-  <property name="ldap_sdk_interface.version" value="1.0.2" />
-  <property name="ldap_sdk_interface.jar.name" value="ldap_sdk_interface.jar" />
-  <property name="ldap_sdk_interface.path" value="ldap_sdk_interface/${ldap_sdk_interface.version}" />
-  <property name="ldap_sdk_interface.jar" value="${tcs_libdir}/${ldap_sdk_interface.path}/${ldap_sdk_interface.jar.name}" />
-
-  <property name="logging_wrapper.version" value="2.0.0" />
-  <property name="logging_wrapper.jar.name" value="logging_wrapper.jar" />
-  <property name="logging_wrapper.path" value="logging_wrapper/${logging_wrapper.version}" />
-  <property name="logging_wrapper.jar" value="${tcs_libdir}/${logging_wrapper.path}/${logging_wrapper.jar.name}" />
-
-  <property name="multiple_locale_resource_bundle.version" value="1.0.0" />
-  <property name="multiple_locale_resource_bundle.jar.name" value="multiple_locale_resource_bundle.jar" />
-  <property name="multiple_locale_resource_bundle.path" value="multiple_locale_resource_bundle/${multiple_locale_resource_bundle.version}" />
-  <property name="multiple_locale_resource_bundle.jar" value="${tcs_libdir}/${multiple_locale_resource_bundle.path}/${multiple_locale_resource_bundle.jar.name}" />
-
-  <property name="object_factory.version" value="2.0.1" />
-  <property name="object_factory.jar.name" value="object_factory.jar" />
-  <property name="object_factory.path" value="object_factory/${object_factory.version}" />
-  <property name="object_factory.jar" value="${tcs_libdir}/${object_factory.path}/${object_factory.jar.name}" />
-
-  <property name="object_factory_config_manager_plugin.version" value="1.0.0" />
-  <property name="object_factory_config_manager_plugin.jar.name" value="object_factory_config_manager_plugin.jar" />
-  <property name="object_factory_config_manager_plugin.path" value="object_factory_config_manager_plugin/${object_factory_config_manager_plugin.version}" />
-  <property name="object_factory_config_manager_plugin.jar" value="${tcs_libdir}/${object_factory_config_manager_plugin.path}/${object_factory_config_manager_plugin.jar.name}" />
-
-  <property name="object_factory_configuration_api_plugin.version" value="1.0" />
-  <property name="object_factory_configuration_api_plugin.jar.name" value="object_factory_configuration_api_plugin.jar" />
-  <property name="object_factory_configuration_api_plugin.path" value="object_factory_configuration_api_plugin/${object_factory_configuration_api_plugin.version}" />
-  <property name="object_factory_configuration_api_plugin.jar" value="${tcs_libdir}/${object_factory_configuration_api_plugin.path}/${object_factory_configuration_api_plugin.jar.name}" />
-
-  <property name="object_formatter.version" value="1.0.0" />
-  <property name="object_formatter.jar.name" value="object_formatter.jar" />
-  <property name="object_formatter.path" value="object_formatter/${object_formatter.version}" />
-  <property name="object_formatter.jar" value="${tcs_libdir}/${object_formatter.path}/${object_formatter.jar.name}" />
-
-  <property name="online_review_phases.version" value="1.4.2" />
-  <property name="online_review_phases.jar.name" value="online_review_phases.jar" />
-  <property name="online_review_phases.path" value="online_review_phases/${online_review_phases.version}" />
-  <property name="online_review_phases.jar" value="${tcs_libdir}/${online_review_phases.path}/${online_review_phases.jar.name}" />
-
-  <property name="online_review_upload_services.version" value="1.0" />
-  <property name="online_review_upload_services.jar.name" value="online_review_upload_services.jar" />
-  <property name="online_review_upload_services.path" value="online_review_upload_services/${online_review_upload_services.version}" />
-  <property name="online_review_upload_services.jar" value="${tcs_libdir}/${online_review_upload_services.path}/${online_review_upload_services.jar.name}" />
-
-  <property name="PactsClientServices.version" value="x.x.x" />
-  <property name="PactsClientServices.jar.name" value="PactsClientServices.jar" />
-  <property name="PactsClientServices.path" value="pacts/${PactsClientServices.version}" />
-  <property name="PactsClientServices.jar" value="${tcs_libdir}/${PactsClientServices.path}/${PactsClientServices.jar.name}" />
-
-  <property name="phase_management.version" value="1.0.4" />
-  <property name="phase_management.jar.name" value="phase_management.jar" />
-  <property name="phase_management.path" value="phase_management/${phase_management.version}" />
-  <property name="phase_management.jar" value="${tcs_libdir}/${phase_management.path}/${phase_management.jar.name}" />
-
-  <property name="phase_management_persistence.version" value="1.1" />
-  <property name="phase_management_persistence.jar.name" value="phase_management_persistence.jar" />
-  <property name="phase_management_persistence.path" value="phase_management_persistence/${phase_management_persistence.version}" />
-  <property name="phase_management_persistence.jar" value="${tcs_libdir}/${phase_management_persistence.path}/${phase_management_persistence.jar.name}" />
-
-  <property name="pipeline_service.version" value="1.0.0" />
-  <property name="pipeline_service.jar.name" value="pipeline_service.jar" />
-  <property name="pipeline_service.path" value="pipeline_service/${pipeline_service.version}" />
-  <property name="pipeline_service.jar" value="${tcs_libdir}/${pipeline_service.path}/${pipeline_service.jar.name}" />
-
-  <property name="pipeline_service_facade.version" value="1.0.0" />
-  <property name="pipeline_service_facade.jar.name" value="pipeline_service_facade.jar" />
-  <property name="pipeline_service_facade.path" value="pipeline_service_facade/${pipeline_service_facade.version}" />
-  <property name="pipeline_service_facade.jar" value="${tcs_libdir}/${pipeline_service_facade.path}/${pipeline_service_facade.jar.name}" />
-
-  <property name="pipeline_service_facade_ws.jar.name" value="pipeline_service_facade_ws.jar" />
-  <property name="pipeline_service_facade_ws.path" value="pipeline_service_facade/${pipeline_service_facade.version}" />
-  <property name="pipeline_service_facade_ws.jar" value="${tcs_libdir}/${pipeline_service_facade_ws.path}/${pipeline_service_facade_ws.jar.name}" />
-
-  <property name="pipeline_service_facade_demo.war.name" value="pipeline_service_facade_demo.war" />
-  <property name="pipeline_service_facade_demo.path" value="pipeline_service_facade/${pipeline_service_facade.version}" />
-  <property name="pipeline_service_facade_demo.war" value="${tcs_libdir}/${pipeline_service_facade_demo.path}/${pipeline_service_facade_demo.war.name}" />
-
-  <property name="pipeline_service_persistence.version" value="1.0.0" />
-  <property name="pipeline_service_persistence.jar.name" value="pipeline_service_persistence.jar" />
-  <property name="pipeline_service_persistence.path" value="pipeline_service_persistence/${pipeline_service_persistence.version}" />
-  <property name="pipeline_service_persistence.jar" value="${tcs_libdir}/${pipeline_service_persistence.path}/${pipeline_service_persistence.jar.name}" />
-
-  <property name="project.jar.name" value="Project.jar" />
-  <property name="project.path" value="project" />
-  <property name="project.jar" value="${tcs_libdir}/${project.path}/${project.jar.name}" />
-
-  <property name="project_management.version" value="1.0.1" />
-  <property name="project_management.jar.name" value="project_management.jar" />
-  <property name="project_management.path" value="project_management/${project_management.version}" />
-  <property name="project_management.jar" value="${tcs_libdir}/${project_management.path}/${project_management.jar.name}" />
-
-  <property name="project_management_persistence.version" value="1.1.1" />
-  <property name="project_management_persistence.jar.name" value="project_management_persistence.jar" />
-  <property name="project_management_persistence.path" value="project_management_persistence/${project_management_persistence.version}" />
-  <property name="project_management_persistence.jar" value="${tcs_libdir}/${project_management_persistence.path}/${project_management_persistence.jar.name}" />
-
-  <property name="project_phase_template.version" value="1.0.0" />
-  <property name="project_phase_template.jar.name" value="project_phase_template.jar" />
-  <property name="project_phase_template.path" value="project_phase_template/${project_phase_template.version}" />
-  <property name="project_phase_template.jar" value="${tcs_libdir}/${project_phase_template.path}/${project_phase_template.jar.name}" />
-
-  <property name="project_phases.version" value="2.0.1" />
-  <property name="project_phases.jar.name" value="project_phases.jar" />
-  <property name="project_phases.path" value="project_phases/${project_phases.version}" />
-  <property name="project_phases.jar" value="${tcs_libdir}/${project_phases.path}/${project_phases.jar.name}" />
-
-  <property name="project_service.version" value="1.1.0" />
-  <property name="project_service.jar.name" value="project_service.jar" />
-  <property name="project_service.path" value="project_service/${project_service.version}" />
-  <property name="project_service.jar" value="${tcs_libdir}/${project_service.path}/${project_service.jar.name}" />
-
-  <property name="project_service_facade.version" value="1.0.0" />
-  <property name="project_service_facade.jar.name" value="project_service_facade.jar" />
-  <property name="project_service_facade.path" value="project_service_facade/${project_service_facade.version}" />
-  <property name="project_service_facade.jar" value="${tcs_libdir}/${project_service_facade.path}/${project_service_facade.jar.name}" />
-
-  <property name="project_service_facade_ws.jar.name" value="project_service_facade_ws.jar" />
-  <property name="project_service_facade_ws.path" value="project_service_facade/${project_service_facade.version}" />
-  <property name="project_service_facade_ws.jar" value="${tcs_libdir}/${project_service_facade_ws.path}/${project_service_facade_ws.jar.name}" />
-
-  <property name="project_service_facade_demo.war.name" value="project_service_facade_demo.war" />
-  <property name="project_service_facade_demo.path" value="project_service_facade/${project_service_facade.version}" />
-  <property name="project_service_facade_demo.war" value="${tcs_libdir}/${project_service_facade_demo.path}/${project_service_facade_demo.war.name}" />
-
-  <property name="project_services.version" value="1.1" />
-  <property name="project_services.jar.name" value="project_services.jar" />
-  <property name="project_services.path" value="project_services/${project_services.version}" />
-  <property name="project_services.jar" value="${tcs_libdir}/${project_services.path}/${project_services.jar.name}" />
-
-  <property name="resource_management.version" value="1.1.1" />
-  <property name="resource_management.jar.name" value="resource_management.jar" />
-  <property name="resource_management.path" value="resource_management/${resource_management.version}" />
-  <property name="resource_management.jar" value="${tcs_libdir}/${resource_management.path}/${resource_management.jar.name}" />
-
-  <property name="resource_management_persistence.version" value="1.2.1" />
-  <property name="resource_management_persistence.jar.name" value="resource_management_persistence.jar" />
-  <property name="resource_management_persistence.path" value="resource_management_persistence/${resource_management_persistence.version}" />
-  <property name="resource_management_persistence.jar" value="${tcs_libdir}/${resource_management_persistence.path}/${resource_management_persistence.jar.name}" />
-
-  <property name="review_data_structure.version" value="1.0.0" />
-  <property name="review_data_structure.jar.name" value="review_data_structure.jar" />
-  <property name="review_data_structure.path" value="review_data_structure/${review_data_structure.version}" />
-  <property name="review_data_structure.jar" value="${tcs_libdir}/${review_data_structure.path}/${review_data_structure.jar.name}" />
-
-  <property name="review_management.version" value="1.0.0" />
-  <property name="review_management.jar.name" value="review_management.jar" />
-  <property name="review_management.path" value="review_management/${review_management.version}" />
-  <property name="review_management.jar" value="${tcs_libdir}/${review_management.path}/${review_management.jar.name}" />
-
-  <property name="review_management_persistence.version" value="1.0.1" />
-  <property name="review_management_persistence.jar.name" value="review_management_persistence.jar" />
-  <property name="review_management_persistence.path" value="review_management_persistence/${review_management_persistence.version}" />
-  <property name="review_management_persistence.jar" value="${tcs_libdir}/${review_management_persistence.path}/${review_management_persistence.jar.name}" />
-
-  <property name="review_score_aggregator.version" value="1.0" />
-  <property name="review_score_aggregator.jar.name" value="review_score_aggregator.jar" />
-  <property name="review_score_aggregator.path" value="review_score_aggregator/${review_score_aggregator.version}" />
-  <property name="review_score_aggregator.jar" value="${tcs_libdir}/${review_score_aggregator.path}/${review_score_aggregator.jar.name}" />
-
-  <property name="scorecard_data_structure.version" value="1.0.0" />
-  <property name="scorecard_data_structure.jar.name" value="scorecard_data_structure.jar" />
-  <property name="scorecard_data_structure.path" value="scorecard_data_structure/${scorecard_data_structure.version}" />
-  <property name="scorecard_data_structure.jar" value="${tcs_libdir}/${scorecard_data_structure.path}/${scorecard_data_structure.jar.name}" />
-
-  <property name="scorecard_management.version" value="1.0.1" />
-  <property name="scorecard_management.jar.name" value="scorecard_management.jar" />
-  <property name="scorecard_management.path" value="scorecard_management/${scorecard_management.version}" />
-  <property name="scorecard_management.jar" value="${tcs_libdir}/${scorecard_management.path}/${scorecard_management.jar.name}" />
-
-  <property name="scorecard_management_persistence.version" value="1.0.1" />
-  <property name="scorecard_management_persistence.jar.name" value="scorecard_management_persistence.jar" />
-  <property name="scorecard_management_persistence.path" value="scorecard_management_persistence/${scorecard_management_persistence.version}" />
-  <property name="scorecard_management_persistence.jar" value="${tcs_libdir}/${scorecard_management_persistence.path}/${scorecard_management_persistence.jar.name}" />
-
-  <property name="search_builder.version" value="1.4.0" />
-  <property name="search_builder.jar.name" value="search_builder_1.4_modified.jar" />
-  <property name="search_builder.path" value="search_builder/${search_builder.version}" />
-  <property name="search_builder.jar" value="${tcs_libdir}/${search_builder.path}/${search_builder.jar.name}" />
-
-  <property name="security.version" value="1.0" />
-  <property name="security.jar.name" value="security.jar" />
-  <property name="security.path" value="security/${security.version}" />
-  <property name="security.jar" value="${tcs_libdir}/${security.path}/${security.jar.name}" />
-
-  <property name="security_facade.version" value="2.0.0" />
-  <property name="security_facade.jar.name" value="security_facade.jar" />
-  <property name="security_facade.path" value="security_facade/${security_facade.version}" />
-  <property name="security_facade.jar" value="${tcs_libdir}/${security_facade.path}/${security_facade.jar.name}" />
-
-  <property name="specification_review_service.version" value="1.0.0" />
-  <property name="specification_review_service.jar.name" value="specification_review_service.jar" />
-  <property name="specification_review_service.path" value="specification_review_service/${specification_review_service.version}" />
-  <property name="specification_review_service.jar" value="${tcs_libdir}/${specification_review_service.path}/${specification_review_service.jar.name}" />
-
-  <property name="specification_review_comment_service.version" value="1.0.0" />
-  <property name="specification_review_comment_service.jar.name" value="specification_review_comment_service.jar" />
-  <property name="specification_review_comment_service.path" value="specification_review_comment_service/${specification_review_comment_service.version}" />
-  <property name="specification_review_comment_service.jar" value="${tcs_libdir}/${specification_review_comment_service.path}/${specification_review_comment_service.jar.name}" />
-
-  <property name="team_management.version" value="1.0.1" />
-  <property name="team_management.jar.name" value="team_management.jar" />
-  <property name="team_management.path" value="team_management/${team_management.version}" />
-  <property name="team_management.jar" value="${tcs_libdir}/${team_management.path}/${team_management.jar.name}" />
-
-  <property name="team_management_persistence.version" value="1.0.1" />
-  <property name="team_management_persistence.jar.name" value="team_management_persistence.jar" />
-  <property name="team_management_persistence.path" value="team_management_persistence/${team_management_persistence.version}" />
-  <property name="team_management_persistence.jar" value="${tcs_libdir}/${team_management_persistence.path}/${team_management_persistence.jar.name}" />
-  
-  <property name="topcoder_cockpit_project_metadata_entities.version" value="1.0.0" />
-  <property name="topcoder_cockpit_project_metadata_entities.jar.name" value="topcoder_cockpit_project_metadata_entities.jar" />
-  <property name="topcoder_cockpit_project_metadata_entities.path" value="topcoder_cockpit_project_metadata_entities/${topcoder_cockpit_project_metadata_entities.version}" />
-  <property name="topcoder_cockpit_project_metadata_entities.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_entities.path}/${topcoder_cockpit_project_metadata_entities.jar.name}" />
-    
-  <property name="topcoder_cockpit_project_metadata_services.version" value="1.0.0" />
-  <property name="topcoder_cockpit_project_metadata_services.jar.name" value="topcoder_cockpit_project_metadata_services.jar" />
-  <property name="topcoder_cockpit_project_metadata_services.path" value="topcoder_cockpit_project_metadata_services/${topcoder_cockpit_project_metadata_services.version}" />
-  <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_services.path}/${topcoder_cockpit_project_metadata_services.jar.name}" />
-
-  <property name="topcoder_cockpit_project_milestone_services.version" value="1.0.0"/>
-  <property name="topcoder_cockpit_project_milestone_services.jar.name"
-              value="topcoder_cockpit_project_milestone_services.jar"/>
-  <property name="topcoder_cockpit_project_milestone_services.path"
-              value="topcoder_cockpit_project_milestone_services/${topcoder_cockpit_project_milestone_services.version}"/>
-  <property name="topcoder_cockpit_project_milestone_services.jar"
-              value="${tcs_libdir}/${topcoder_cockpit_project_milestone_services.path}/${topcoder_cockpit_project_milestone_services.jar.name}"/>
-
-  <property name="topcoder_cockpit_asset_services.version" value="1.0.0"/>
-  <property name="topcoder_cockpit_asset_services.jar.name"
-              value="topcoder_cockpit_asset_services.jar"/>
-  <property name="topcoder_cockpit_asset_services.path"
-              value="topcoder_cockpit_asset_services/${topcoder_cockpit_asset_services.version}"/>
-  <property name="topcoder_cockpit_asset_services.jar"
-              value="${tcs_libdir}/${topcoder_cockpit_asset_services.path}/${topcoder_cockpit_asset_services.jar.name}"/>
-
-   <property name="topcoder_cockpit_task_management_services.version" value="1.0.0"/>
-    <property name="topcoder_cockpit_task_management_services.jar.name"
-              value="topcoder_cockpit_task_management_services.jar"/>
-    <property name="topcoder_cockpit_task_management_services.path"
-              value="topcoder_cockpit_task_management_services/${topcoder_cockpit_task_management_services.version}"/>
-    <property name="topcoder_cockpit_task_management_services.jar"
-              value="${tcs_libdir}/${topcoder_cockpit_task_management_services.path}/${topcoder_cockpit_task_management_services.jar.name}"/>
-
-  <property name="topcoder_commons_utility.version" value="1.0.0" />
-  <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar" />
-  <property name="topcoder_commons_utility.path" value="topcoder_commons_utility/${topcoder_commons_utility.version}" />
-  <property name="topcoder_commons_utility.jar" value="${tcs_libdir}/${topcoder_commons_utility.path}/${topcoder_commons_utility.jar.name}" />
-  
-  <property name="topcoder_security_groups.version" value="1.0.0"/>
-  <property name="topcoder_security_groups.jar.name" value="topcoder_security_groups.jar"/>
-  <property name="topcoder_security_groups.path" value="topcoder_security_groups/${topcoder_security_groups.version}"/>
-  <property name="topcoder_security_groups.jar" value="${tcs_libdir}/${topcoder_security_groups.path}/${topcoder_security_groups.jar.name}"/>
-	
-  <property name="typesafe_enum.version" value="1.1.0" />
-  <property name="typesafe_enum.jar.name" value="typesafe_enum.jar" />
-  <property name="typesafe_enum.path" value="typesafe_enum/${typesafe_enum.version}" />
-  <property name="typesafe_enum.jar" value="${tcs_libdir}/${typesafe_enum.path}/${typesafe_enum.jar.name}" />
-
-  <property name="user.jar.name" value="User.jar" />
-  <property name="user.path" value="user" />
-  <property name="user.jar" value="${tcs_libdir}/${user.path}/${user.jar.name}" />
-
-  <property name="user_group_manager.version" value="1.0.0" />
-  <property name="user_group_manager.jar.name" value="user_group_manager.jar" />
-  <property name="user_group_manager.path" value="user_group_manager/${user_group_manager.version}" />
-  <property name="user_group_manager.jar" value="${tcs_libdir}/${user_group_manager.path}/${user_group_manager.jar.name}" />
-
-  <property name="user_project_data_store.version" value="1.0.1" />
-  <property name="user_project_data_store.jar.name" value="user_project_data_store.jar" />
-  <property name="user_project_data_store.path" value="user_project_data_store/${user_project_data_store.version}" />
-  <property name="user_project_data_store.jar" value="${tcs_libdir}/${user_project_data_store.path}/${user_project_data_store.jar.name}" />
-
-  <property name="user_service.version" value="1.0.0" />
-  <property name="user_service.jar.name" value="user_service.jar" />
-  <property name="user_service.path" value="user_service/${user_service.version}" />
-  <property name="user_service.jar" value="${tcs_libdir}/${user_service.path}/${user_service.jar.name}" />
-
-  <property name="user_service_facade.version" value="1.0.0" />
-  <property name="user_service_facade.jar.name" value="user_service_facade.jar" />
-  <property name="user_service_facade.path" value="user_service_facade/${user_service_facade.version}" />
-  <property name="user_service_facade.jar" value="${tcs_libdir}/${user_service_facade.path}/${user_service_facade.jar.name}" />
-
-  <property name="user_service_facade_ws.jar.name" value="user_service_facade_ws.jar" />
-  <property name="user_service_facade_ws.path" value="user_service_facade/${user_service_facade.version}" />
-  <property name="user_service_facade_ws.jar" value="${tcs_libdir}/${user_service_facade_ws.path}/${user_service_facade_ws.jar.name}" />
-
-  <property name="user_service_facade_demo.war.name" value="user_service_facade_demo.war" />
-  <property name="user_service_facade_demo.path" value="user_service_facade/${user_service_facade.version}" />
-  <property name="user_service_facade_demo.war" value="${tcs_libdir}/${user_service_facade_demo.path}/${user_service_facade_demo.war.name}" />
-
-  <property name="workdays.version" value="1.0.1" />
-  <property name="workdays.jar.name" value="workdays.jar" />
-  <property name="workdays.path" value="workdays/${workdays.version}" />
-  <property name="workdays.jar" value="${tcs_libdir}/${workdays.path}/${workdays.jar.name}" />
-
-  <property name="random_string_generator.version" value="1.0" />
-  <property name="random_string_generator.jar.name" value="random_string_generator.jar" />
-  <property name="random_string_generator.path" value="random_string_generator/${random_string_generator.version}" />
-  <property name="random_string_generator.jar" value="${tcs_libdir}/${random_string_generator.path}/${random_string_generator.jar.name}" />
-
-  <property name="random_string_image.version" value="1.0" />
-  <property name="random_string_image.jar.name" value="random_string_image.jar" />
-  <property name="random_string_image.path" value="random_string_image/${random_string_image.version}" />
-  <property name="random_string_image.jar" value="${tcs_libdir}/${random_string_image.path}/${random_string_image.jar.name}" />
-  
-  <property name="spell_check.version" value="1.0" />
-  <property name="spell_check.jar.name" value="spell_check.jar" />
-  <property name="spell_check.path" value="spell_check/${spell_check.version}" />
-  <property name="spell_check.jar" value="${tcs_libdir}/${spell_check.path}/${spell_check.jar.name}" />
-  
-  <property name="file_upload.version" value="2.0" />
-  <property name="file_upload.jar.name" value="file_upload.jar" />
-  <property name="file_upload.path" value="file_upload/${file_upload.version}" />
-  <property name="file_upload.jar" value="${tcs_libdir}/${file_upload.path}/${file_upload.jar.name}" />
-  
-  <property name="review_application_management.version" value="1.0.0" />
-  <property name="review_application_management.jar.name" value="review_application_management.jar" />
-  <property name="review_application_management.path" value="review_application_management/${review_application_management.version}" />
-  <property name="review_application_management.jar" value="${tcs_libdir}/${review_application_management.path}/${review_application_management.jar.name}" />  
-
-  <property name="project_payment_calculator.version" value="1.1.0" />
-  <property name="project_payment_calculator.jar.name" value="project_payment_calculator.jar" />
-  <property name="project_payment_calculator.path" value="project_payment_calculator/${project_payment_calculator.version}" />
-  <property name="project_payment_calculator.jar" value="${tcs_libdir}/${project_payment_calculator.path}/${project_payment_calculator.jar.name}" />  
-
-  <property name="marathon_match_resources.version" value="1.0.0" />
-  <property name="marathon_match_resources.jar.name" value="marathon_match_resources.jar"/>
-  <property name="marathon_match_resources.path" value="marathon_match_resources/${marathon_match_resources.version}"/>
-  <property name="marathon_match_resources.jar" value="${tcs_libdir}/${marathon_match_resources.path}/${marathon_match_resources.jar.name}"/>
-
-  <property name="scribe.jar.name" value="scribe.jar" />
-  <property name="scribe.jar.path" value="${ext_libdir}/scribe" />
-  <property name="scribe.jar" value="${scribe.jar.path}/${scribe.jar.name}" />
-
-  <property name="shared.jar.name" value="shared.jar" />
-  <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
-
-  <property name="tcwebcommon.jar.name" value="tcwebcommon.jar" />
-  <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}" />
-  <!-- 3rd party dependencies -->
-  <property name="asm-3.3.jar" value="${ext_libdir}/asm/asm-3.3.jar" />
-  <property name="asm-commons-3.3.jar" value="${ext_libdir}/asm/asm-commons-3.3.jar" />
-  <property name="asm-tree-3.3.jar" value="${ext_libdir}/asm/asm-tree-3.3.jar" />
-  <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar" />
-  <property name="jackson-core.jar" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
-  <property name="jackson-mapper.jar" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
-  <property name="axis.jar" value="${ext_libdir}/axis/1.3/axis.jar" />
-  <property name="commons-dbcp.jar" value="${ext_libdir}/commons-dbcp/commons-dbcp.jar" />
-  <property name="commons-discovery.jar" value="${ext_libdir}/commons-discovery/0.2/commons-discovery.jar" />
-  <property name="commons-pool.jar" value="${ext_libdir}/commons-pool/commons-pool.jar" />
-  <property name="confluence-service-axis-client.jar" value="${ext_libdir}/confluence/2.7.3/confluence-service-axis-client.jar" />
-  <property name="httpProxyPackage.jar" value="${ext_libdir}/httpProxyPackage/httpProxyPackage.jar" />
-  <property name="ifxjdbcx.jar" value="${ext_libdir}/informix/ifxjdbcx.jar" />
-  <property name="ifxjdbc.jar" value="${ext_libdir}/informix/ifxjdbc.jar" />
-  <property name="jira-service-axis-client.jar" value="${ext_libdir}/jira/3.13.4/jira-service-axis-client.jar" />
-  <property name="jira-soapclient-all.jar" value="${ext_libdir}/jira/jira-soapclient-all.jar" />
-  <property name="mysql-connector-java-5.1.6-bin.jar" value="${ext_libdir}/mysql/mysql-connector-java-5.1.6-bin.jar" />
-  <property name="payflow.jar" value="${ext_libdir}/payflow/4.3/payflow.jar" />
-  <property name="paypal_base.jar" value="${ext_libdir}/paypal/paypal_base.jar" />
-  <property name="paypal_stubs.jar" value="${ext_libdir}/paypal/paypal_stubs.jar" />
-  <property name="saxon9he.jar" value="${ext_libdir}/saxonhe-9.0.2j/saxon9he.jar" />
-  <property name="jboss-cache-jdk50.jar" value="${ext_libdir}/jboss-cache/jboss-cache-jdk50.jar" />
-  <property name="jgroups.jar" value="${ext_libdir}/jboss-cache/jgroups.jar" />
-  
-  <property name="ehcache.jar" value="${ext_libdir}/hibernate/ehcache-1.5.0.jar" />
-  <property name="hibernate-jpa.jar" value="${ext_libdir}/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar" />
-  <property name="hibernate.jar" value="${ext_libdir}/hibernate/hibernate3.jar" />
-  <property name="aspectjrt.jar" value="${ext_libdir}/aspectj/aspectjrt.jar" />
-  <property name="aspectjweaver.jar" value="${ext_libdir}/aspectj/aspectjweaver.jar" />
-
-
-  <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar" />
-
-  <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar" />
-  <property name="ejb3-persistence.jar" value="${ext_libdir}/ejb-api/ejb3-persistence.jar" />
-  <property name="javaee.jar" value="${ext_libdir}/j2ee/1.5/javaee.jar" />
-  <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar" />
-  <property name="jsr311.jar" value="${ext_libdir}/j2ee/jsr311-api-1.1.1.jar"/>
-
-  <property name="jai_codec-1.1.3.jar" value="${ext_libdir}/jai/jai_codec-1.1.3.jar" />
-  <property name="jai_core-1.1.3.jar" value="${ext_libdir}/jai/jai_core-1.1.3.jar" />
-
-  <property name="cxf.jar" value="${ext_libdir}/cxf/cxf-2.6.4.jar"/>
-  <property name="aopalliance-1.0.jar" value="${ext_libdir}/cxf/aopalliance-1.0.jar"/>
-  <property name="geronimo-jaxws_2.2_spec-1.1.jar" value="${ext_libdir}/cxf/geronimo-jaxws_2.2_spec-1.1.jar"/>
-  <property name="geronimo-annotation_1.0_spec-1.1.1.jar" value="${ext_libdir}/cxf/geronimo-annotation_1.0_spec-1.1.1.jar"/>
-  <property name="neethi-3.0.1.jar" value="${ext_libdir}/cxf/neethi-3.0.1.jar"/>
-
-  <!-- Struts 2 libs -->
-  <property name="struts2_libdir" value="${ext_libdir}/struts" />
-  <property name="commons-beanutils-1.8.0.jar" value="${struts2_libdir}/commons-beanutils-1.8.0.jar" />
-  <property name="commons-collections-3.2.jar" value="${struts2_libdir}/commons-collections-3.2.jar" />
-  <property name="commons-fileupload-1.3.jar" value="${struts2_libdir}/commons-fileupload-1.3.jar" />
-  <property name="commons-io-2.0.1.jar" value="${struts2_libdir}/commons-io-2.0.1.jar" />
-  <property name="commons-lang-2.4.jar" value="${struts2_libdir}/commons-lang-2.4.jar" />
-  <property name="commons-lang3-3.1.jar" value="${struts2_libdir}/commons-lang3-3.1.jar" />
-  <property name="commons-logging-1.1.3.jar" value="${struts2_libdir}/commons-logging-1.1.3.jar" />
-  <property name="ezmorph-1.0.6.jar" value="${struts2_libdir}/ezmorph-1.0.6.jar" />
-  <property name="freemarker-2.3.19.jar" value="${struts2_libdir}/freemarker-2.3.19.jar" />
-  <property name="json-lib-2.3-jdk15.jar" value="${struts2_libdir}/json-lib-2.3-jdk15.jar" />
-  <property name="ognl-3.0.6.jar" value="${struts2_libdir}/ognl-3.0.6.jar" />
-  <property name="struts2-convention-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-convention-plugin-2.3.15.1.jar" />
-  <property name="struts2-core-2.3.15.1.jar" value="${struts2_libdir}/struts2-core-2.3.15.1.jar" />
-  <property name="struts2-spring-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-spring-plugin-2.3.15.1.jar" />
-  <property name="struts2-json-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-json-plugin-2.3.15.1.jar" />
-  <property name="struts2-ssl-plugin-1.2.1.jar" value="${struts2_libdir}/struts2-ssl-plugin-1.2.1.jar" />
-  <property name="xwork-1.2.3.jar" value="${struts2_libdir}/xwork-1.2.3.jar" />
-  <property name="xwork-core-2.3.15.1.jar" value="${struts2_libdir}/xwork-core-2.3.15.1.jar" />
-
-  <!-- Spring libs -->
-  <property name="spring_libdir" value="${ext_libdir}/spring" />
-  <property name="spring.jar" value="${spring_libdir}/spring.jar" />
-  <property name="spring-context.jar" value="${spring_libdir}/spring-context.jar" />
-  <property name="spring-context-support.jar" value="${spring_libdir}/spring-context-support.jar" />
-  <property name="spring-test.jar" value="${spring_libdir}/spring-test.jar" />
-  <property name="spring-tx.jar" value="${spring_libdir}/spring-tx.jar" />
-  <property name="common-annotations.jar" value="${spring_libdir}/common-annotations.jar" />
-
-  <!-- Apache POI libs -->
-  <property name="poi_libdir" value="${ext_libdir}/poi/3.7" />
-  <property name="poi_version_tag" value="3.7-20101029" />
-  <property name="poi.jar" value="${poi_libdir}/poi-${poi_version_tag}.jar" />
-  <property name="poi-ooxml.jar" value="${poi_libdir}/poi-ooxml-${poi_version_tag}.jar" />
-  <property name="poi-ooxml-schemas.jar" value="${poi_libdir}/poi-ooxml-schemas-${poi_version_tag}.jar" />
-  <property name="dom4j-1.6.1.jar" value="${poi_libdir}/ooxml-lib/dom4j-1.6.1.jar" />
-  <property name="xmlbeans-2.3.0.jar" value="${poi_libdir}/ooxml-lib/xmlbeans-2.3.0.jar" />
+    <!-- Properties used in compile_targets ANT target -->
+    <property name="component.target" value="1.5"/>
+    <property name="component.bootclasspath" value="${java_1_5_bootclasspath}"/>
+
+    <!-- TopCoder dependencies -->
+    <property name="configuration_manager.jar" value="${tcs_libdir}/configuration_manager.jar"/>
+
+    <property name="cockpit_facade_util.jar" value="${tcs_libdir}/cockpit_facade_util.jar"/>
+
+    <property name="workdays.jar" value="${tcs_libdir}/workdays.jar"/>
+
+    <property name="auto_screening_management.jar" value="${tcs_libdir}/auto_screening_management.jar"/>
+
+    <property name="review_management.jar" value="${tcs_libdir}/review_management.jar"/>
+
+    <property name="scorecard_management.jar" value="${tcs_libdir}/scorecard_management.jar"/>
+
+    <property name="resource_management.jar" value="${tcs_libdir}/resource_management.jar"/>
+
+    <property name="project_phases.jar" value="${tcs_libdir}/project_phases.jar"/>
+
+    <property name="phase_management.jar" value="${tcs_libdir}/phase_management.jar"/>
+
+    <property name="project_management.jar" value="${tcs_libdir}/project_management.jar"/>
+
+    <property name="deliverable_management.jar" value="${tcs_libdir}/deliverable_management.jar"/>
+
+    <property name="team_management.jar" value="${tcs_libdir}/team_management.jar"/>
+
+    <property name="review_application_management.jar" value="${tcs_libdir}/review_application_management.jar"/>
+
+    <property name="online_review_upload_services.jar" value="${tcs_libdir}/online_review_upload_services.jar"/>
+
+    <property name="copilot_pool_and_profiles_services.jar" value="${tcs_libdir}/copilot_pool_and_profiles_services.jar"/>
+
+    <property name="client_invoice_entities_dao.jar" value="${tcs_libdir}/client_invoice_entities_dao.jar"/>
+
+    <property name="client_project_entities_dao.jar" value="${direct_service_libdir}/client_project_entities_dao.jar"/>
+
+    <property name="user_service.jar" value="${direct_service_libdir}/user_service.jar"/>
+
+    <property name="catalog_services.jar" value="${direct_service_libdir}/catalog_services.jar"/>
+
+    <property name="catalog_services_id_generator.jar" value="${direct_service_libdir}/catalog_services_id_generator.jar"/>
+
+    <property name="project_services.jar" value="${direct_service_libdir}/project_services.jar"/>
+
+    <property name="project_service.jar" value="${direct_service_libdir}/project_service.jar"/>
+
+    <property name="contest_eligibility_persistence.jar" value="${direct_service_libdir}/contest_eligibility_persistence.jar"/>
+
+    <property name="contest_eligibility_validation.jar" value="${direct_service_libdir}/contest_eligibility_validation.jar"/>
+
+    <property name="pipeline_service.jar" value="${direct_service_libdir}/pipeline_service.jar"/>
+
+    <property name="pipeline_service_facade.jar" value="${direct_service_libdir}/pipeline_service_facade.jar"/>
+
+    <property name="admin_service_facade.jar" value="${direct_service_libdir}/admin_service_facade.jar"/>
+
+    <property name="game_plan_service.jar" value="${direct_service_libdir}/game_plan_service.jar"/>
+
+    <property name="user_service_facade.jar" value="${direct_service_libdir}/user_service_facade.jar"/>
+
+    <property name="project_service_facade.jar" value="${direct_service_libdir}/project_service_facade.jar"/>
+
+    <property name="permission_service_facade.jar" value="${direct_service_libdir}/permission_service_facade.jar"/>
+
+    <property name="specification_review_service.jar" value="${direct_service_libdir}/specification_review_service.jar"/>
+
+    <property name="contest_service_facade.jar" value="${direct_service_libdir}/contest_service_facade.jar"/>
+
+    <property name="cloud_vm_service.jar" value="${direct_service_libdir}/cloud_vm_service.jar"/>
+
+    <property name="specification_review_comment_service.jar" value="${direct_service_libdir}/specification_review_comment_service.jar"/>
+
+    <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/topcoder_cockpit_project_metadata_services.jar"/>
+
+    <property name="topcoder_cockpit_task_management_services.jar" value="${tcs_libdir}/topcoder_cockpit_task_management_services.jar"/>
+
+    <property name="topcoder_cockpit_asset_services.jar" value="${tcs_libdir}/topcoder_cockpit_asset_services.jar"/>
+
+    <property name="topcoder_cockpit_project_milestone_services.jar" value="${tcs_libdir}/topcoder_cockpit_project_milestone_services.jar"/>
+
+    <property name="auditor.version" value="2.0.1"/>
+    <property name="auditor.jar.name" value="auditor.jar"/>
+    <property name="auditor.path" value="auditor/${auditor.version}"/>
+    <property name="auditor.jar" value="${tcs_libdir}/${auditor.path}/${auditor.jar.name}"/>
+
+    <property name="authentication_manager.version" value="1.0.2"/>
+    <property name="authentication_manager.jar.name" value="authentication_manager.jar"/>
+    <property name="authentication_manager.path" value="authentication_manager/${authentication_manager.version}"/>
+    <property name="authentication_manager.jar" value="${tcs_libdir}/${authentication_manager.path}/${authentication_manager.jar.name}"/>
+
+    <property name="base_exception.version" value="2.0.0"/>
+    <property name="base_exception.jar.name" value="base_exception.jar"/>
+    <property name="base_exception.path" value="base_exception/${base_exception.version}"/>
+    <property name="base_exception.jar" value="${tcs_libdir}/${base_exception.path}/${base_exception.jar.name}"/>
+
+    <property name="class_associations.version" value="1.0.0"/>
+    <property name="class_associations.jar.name" value="class_associations.jar"/>
+    <property name="class_associations.path" value="class_associations/${class_associations.version}"/>
+    <property name="class_associations.jar" value="${tcs_libdir}/${class_associations.path}/${class_associations.jar.name}"/>
+
+    <property name="cockpit_auth.version" value="1.0"/>
+    <property name="cockpit_auth.jar.name" value="cockpit_auth.jar"/>
+    <property name="cockpit_auth.path" value="cockpit_auth/${cockpit_auth.version}"/>
+    <property name="cockpit_auth.jar" value="${tcs_libdir}/${cockpit_auth.path}/${cockpit_auth.jar.name}"/>
+
+    <property name="cockpit_phase_handlers.version" value="1.1.0"/>
+    <property name="cockpit_phase_handlers.jar.name" value="cockpit_phase_handlers.jar"/>
+    <property name="cockpit_phase_handlers.path" value="cockpit_phase_handlers/${cockpit_phase_handlers.version}"/>
+    <property name="cockpit_phase_handlers.jar" value="${tcs_libdir}/${cockpit_phase_handlers.path}/${cockpit_phase_handlers.jar.name}"/>
+
+    <property name="command_line_utility.version" value="1.0.0"/>
+    <property name="command_line_utility.jar.name" value="command_line_utility.jar"/>
+    <property name="command_line_utility.path" value="command_line_utility/${command_line_utility.version}"/>
+    <property name="command_line_utility.jar" value="${tcs_libdir}/${command_line_utility.path}/${command_line_utility.jar.name}"/>
+
+    <property name="configuration_api.version" value="1.1.0"/>
+    <property name="configuration_api.jar.name" value="configuration_api.jar"/>
+    <property name="configuration_api.path" value="configuration_api/${configuration_api.version}"/>
+    <property name="configuration_api.jar" value="${tcs_libdir}/${configuration_api.path}/${configuration_api.jar.name}"/>
+
+    <property name="configuration_persistence.version" value="1.0"/>
+    <property name="configuration_persistence.jar.name" value="configuration_persistence.jar"/>
+    <property name="configuration_persistence.path" value="configuration_persistence/${configuration_persistence.version}"/>
+    <property name="configuration_persistence.jar" value="${tcs_libdir}/${configuration_persistence.path}/${configuration_persistence.jar.name}"/>
+
+    <property name="confluence_user_soap_client.version" value="1.0.2"/>
+    <property name="confluence_user_soap_client.jar.name" value="confluence_user_soap_client.jar"/>
+    <property name="confluence_user_soap_client.path" value="confluence_user_soap_client/${confluence_user_soap_client.version}"/>
+    <property name="confluence_user_soap_client.jar" value="${tcs_libdir}/${confluence_user_soap_client.path}/${confluence_user_soap_client.jar.name}"/>
+
+    <property name="data_entitlement.version" value="1.1.4"/>
+    <property name="data_entitlement.jar.name" value="data_entitlement.jar"/>
+    <property name="data_entitlement.path" value="data_entitlement/${data_entitlement.version}"/>
+    <property name="data_entitlement.jar" value="${tcs_libdir}/${data_entitlement.path}/${data_entitlement.jar.name}"/>
+
+    <property name="data_validation.version" value="1.1.1"/>
+    <property name="data_validation.jar.name" value="data_validation.jar"/>
+    <property name="data_validation.path" value="data_validation/${data_validation.version}"/>
+    <property name="data_validation.jar" value="${tcs_libdir}/${data_validation.path}/${data_validation.jar.name}"/>
+
+    <property name="database_abstraction.version" value="1.1"/>
+    <property name="database_abstraction.jar.name" value="database_abstraction.jar"/>
+    <property name="database_abstraction.path" value="database_abstraction/${database_abstraction.version}"/>
+    <property name="database_abstraction.jar" value="${tcs_libdir}/${database_abstraction.path}/${database_abstraction.jar.name}"/>
+
+    <property name="db_connection_factory.version" value="1.1"/>
+    <property name="db_connection_factory.jar.name" value="db_connection_factory.jar"/>
+    <property name="db_connection_factory.path" value="db_connection_factory/${db_connection_factory.version}"/>
+    <property name="db_connection_factory.jar" value="${tcs_libdir}/${db_connection_factory.path}/${db_connection_factory.jar.name}"/>
+
+    <property name="document_generator.version" value="3.0.0"/>
+    <property name="document_generator.jar.name" value="document_generator.jar"/>
+    <property name="document_generator.path" value="document_generator/${document_generator.version}"/>
+    <property name="document_generator.jar" value="${tcs_libdir}/${document_generator.path}/${document_generator.jar.name}"/>
+
+    <property name="email_engine.version" value="3.1.0"/>
+    <property name="email_engine.jar.name" value="email_engine.jar"/>
+    <property name="email_engine.path" value="email_engine/${email_engine.version}"/>
+    <property name="email_engine.jar" value="${tcs_libdir}/${email_engine.path}/${email_engine.jar.name}"/>
+
+    <property name="excel_utility.version" value="2.0"/>
+    <property name="excel_utility.jar.name" value="excel_utility.jar"/>
+    <property name="excel_utility.path" value="excel_utility/${excel_utility.version}"/>
+    <property name="excel_utility.jar" value="${tcs_libdir}/${excel_utility.path}/${excel_utility.jar.name}"/>
+
+    <property name="forums.version" value="1.0.0"/>
+    <property name="forums.jar.name" value="forums.jar"/>
+    <property name="forums.path" value="forums/${forums.version}"/>
+    <property name="forums.jar" value="${tcs_libdir}/${forums.path}/${forums.jar.name}"/>
+
+    <property name="jivebase.jar.name" value="jivebase_modified.jar"/>
+    <property name="jivebase.jar" value="${tcs_libdir}/${forums.path}/${jivebase.jar.name}"/>
+
+    <property name="jiveforums.jar.name" value="jiveforums.jar"/>
+    <property name="jiveforums.jar" value="${tcs_libdir}/${forums.path}/${jiveforums.jar.name}"/>
+
+    <property name="functional_entitlement.version" value="1.0"/>
+    <property name="functional_entitlement.jar.name" value="functional_entitlement.jar"/>
+    <property name="functional_entitlement.path" value="functional_entitlement/${functional_entitlement.version}"/>
+    <property name="functional_entitlement.jar" value="${tcs_libdir}/${functional_entitlement.path}/${functional_entitlement.jar.name}"/>
+
+    <property name="guid_generator.version" value="1.0.1"/>
+    <property name="guid_generator.jar.name" value="guid_generator.jar"/>
+    <property name="guid_generator.path" value="guid_generator/${guid_generator.version}"/>
+    <property name="guid_generator.jar" value="${tcs_libdir}/${guid_generator.path}/${guid_generator.jar.name}"/>
+
+    <property name="id_generator.version" value="3.0"/>
+    <property name="id_generator.jar.name" value="id_generator.jar"/>
+    <property name="id_generator.path" value="id_generator/${id_generator.version}"/>
+    <property name="id_generator.jar" value="${tcs_libdir}/${id_generator.path}/${id_generator.jar.name}"/>
+
+    <property name="json_object.version" value="1.0.0"/>
+    <property name="json_object.jar.name" value="json_object.jar"/>
+    <property name="json_object.path" value="json_object/${json_object.version}"/>
+    <property name="json_object.jar" value="${tcs_libdir}/${json_object.path}/${json_object.jar.name}"/>
+
+    <property name="jboss_login_module.version" value="2.1.0"/>
+    <property name="jboss_login_module.jar.name" value="jboss_login_module.jar"/>
+    <property name="jboss_login_module.path" value="jboss_login_module/${jboss_login_module.version}"/>
+    <property name="jboss_login_module.jar" value="${tcs_libdir}/${jboss_login_module.path}/${jboss_login_module.jar.name}"/>
+
+    <property name="jira_user_soap_client.version" value="1.0.2"/>
+    <property name="jira_user_soap_client.jar.name" value="jira_user_soap_client.jar"/>
+    <property name="jira_user_soap_client.path" value="jira_user_soap_client/${jira_user_soap_client.version}"/>
+    <property name="jira_user_soap_client.jar" value="${tcs_libdir}/${jira_user_soap_client.path}/${jira_user_soap_client.jar.name}"/>
+
+    <property name="ldap_sdk_interface.version" value="1.0.2"/>
+    <property name="ldap_sdk_interface.jar.name" value="ldap_sdk_interface.jar"/>
+    <property name="ldap_sdk_interface.path" value="ldap_sdk_interface/${ldap_sdk_interface.version}"/>
+    <property name="ldap_sdk_interface.jar" value="${tcs_libdir}/${ldap_sdk_interface.path}/${ldap_sdk_interface.jar.name}"/>
+
+    <property name="logging_wrapper.version" value="2.0.0"/>
+    <property name="logging_wrapper.jar.name" value="logging_wrapper.jar"/>
+    <property name="logging_wrapper.path" value="logging_wrapper/${logging_wrapper.version}"/>
+    <property name="logging_wrapper.jar" value="${tcs_libdir}/${logging_wrapper.path}/${logging_wrapper.jar.name}"/>
+
+    <property name="multiple_locale_resource_bundle.version" value="1.0.0"/>
+    <property name="multiple_locale_resource_bundle.jar.name" value="multiple_locale_resource_bundle.jar"/>
+    <property name="multiple_locale_resource_bundle.path" value="multiple_locale_resource_bundle/${multiple_locale_resource_bundle.version}"/>
+    <property name="multiple_locale_resource_bundle.jar" value="${tcs_libdir}/${multiple_locale_resource_bundle.path}/${multiple_locale_resource_bundle.jar.name}"/>
+
+    <property name="object_factory.version" value="2.0.1"/>
+    <property name="object_factory.jar.name" value="object_factory.jar"/>
+    <property name="object_factory.path" value="object_factory/${object_factory.version}"/>
+    <property name="object_factory.jar" value="${tcs_libdir}/${object_factory.path}/${object_factory.jar.name}"/>
+
+    <property name="object_factory_config_manager_plugin.version" value="1.0.0"/>
+    <property name="object_factory_config_manager_plugin.jar.name" value="object_factory_config_manager_plugin.jar"/>
+    <property name="object_factory_config_manager_plugin.path" value="object_factory_config_manager_plugin/${object_factory_config_manager_plugin.version}"/>
+    <property name="object_factory_config_manager_plugin.jar" value="${tcs_libdir}/${object_factory_config_manager_plugin.path}/${object_factory_config_manager_plugin.jar.name}"/>
+
+    <property name="object_factory_configuration_api_plugin.version" value="1.0"/>
+    <property name="object_factory_configuration_api_plugin.jar.name" value="object_factory_configuration_api_plugin.jar"/>
+    <property name="object_factory_configuration_api_plugin.path" value="object_factory_configuration_api_plugin/${object_factory_configuration_api_plugin.version}"/>
+    <property name="object_factory_configuration_api_plugin.jar" value="${tcs_libdir}/${object_factory_configuration_api_plugin.path}/${object_factory_configuration_api_plugin.jar.name}"/>
+
+    <property name="object_formatter.version" value="1.0.0"/>
+    <property name="object_formatter.jar.name" value="object_formatter.jar"/>
+    <property name="object_formatter.path" value="object_formatter/${object_formatter.version}"/>
+    <property name="object_formatter.jar" value="${tcs_libdir}/${object_formatter.path}/${object_formatter.jar.name}"/>
+
+    <property name="online_review_phases.version" value="1.4.2"/>
+    <property name="online_review_phases.jar.name" value="online_review_phases.jar"/>
+    <property name="online_review_phases.path" value="online_review_phases/${online_review_phases.version}"/>
+    <property name="online_review_phases.jar" value="${tcs_libdir}/${online_review_phases.path}/${online_review_phases.jar.name}"/>
+
+    <property name="PactsClientServices.version" value="x.x.x"/>
+    <property name="PactsClientServices.jar.name" value="PactsClientServices.jar"/>
+    <property name="PactsClientServices.path" value="pacts/${PactsClientServices.version}"/>
+    <property name="PactsClientServices.jar" value="${tcs_libdir}/${PactsClientServices.path}/${PactsClientServices.jar.name}"/>
+
+    <property name="project.jar.name" value="Project.jar"/>
+    <property name="project.path" value="project"/>
+    <property name="project.jar" value="${tcs_libdir}/${project.path}/${project.jar.name}"/>
+
+    <property name="review_score_aggregator.version" value="1.0"/>
+    <property name="review_score_aggregator.jar.name" value="review_score_aggregator.jar"/>
+    <property name="review_score_aggregator.path" value="review_score_aggregator/${review_score_aggregator.version}"/>
+    <property name="review_score_aggregator.jar" value="${tcs_libdir}/${review_score_aggregator.path}/${review_score_aggregator.jar.name}"/>
+
+    <property name="search_builder.version" value="1.4.0"/>
+    <property name="search_builder.jar.name" value="search_builder_1.4_modified.jar"/>
+    <property name="search_builder.path" value="search_builder/${search_builder.version}"/>
+    <property name="search_builder.jar" value="${tcs_libdir}/${search_builder.path}/${search_builder.jar.name}"/>
+
+    <property name="security.version" value="1.0"/>
+    <property name="security.jar.name" value="security.jar"/>
+    <property name="security.path" value="security/${security.version}"/>
+    <property name="security.jar" value="${tcs_libdir}/${security.path}/${security.jar.name}"/>
+
+    <property name="security_facade.version" value="2.0.0"/>
+    <property name="security_facade.jar.name" value="security_facade.jar"/>
+    <property name="security_facade.path" value="security_facade/${security_facade.version}"/>
+    <property name="security_facade.jar" value="${tcs_libdir}/${security_facade.path}/${security_facade.jar.name}"/>
+
+    <property name="team_management_persistence.version" value="1.0.1"/>
+    <property name="team_management_persistence.jar.name" value="team_management_persistence.jar"/>
+    <property name="team_management_persistence.path" value="team_management_persistence/${team_management_persistence.version}"/>
+    <property name="team_management_persistence.jar" value="${tcs_libdir}/${team_management_persistence.path}/${team_management_persistence.jar.name}"/>
+
+    <property name="topcoder_commons_utility.version" value="1.0.0"/>
+    <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar"/>
+    <property name="topcoder_commons_utility.path" value="topcoder_commons_utility/${topcoder_commons_utility.version}"/>
+    <property name="topcoder_commons_utility.jar" value="${tcs_libdir}/${topcoder_commons_utility.path}/${topcoder_commons_utility.jar.name}"/>
+
+    <property name="topcoder_security_groups.version" value="1.0.0"/>
+    <property name="topcoder_security_groups.jar.name" value="topcoder_security_groups.jar"/>
+    <property name="topcoder_security_groups.path" value="topcoder_security_groups/${topcoder_security_groups.version}"/>
+    <property name="topcoder_security_groups.jar" value="${tcs_libdir}/${topcoder_security_groups.path}/${topcoder_security_groups.jar.name}"/>
+
+    <property name="typesafe_enum.version" value="1.1.0"/>
+    <property name="typesafe_enum.jar.name" value="typesafe_enum.jar"/>
+    <property name="typesafe_enum.path" value="typesafe_enum/${typesafe_enum.version}"/>
+    <property name="typesafe_enum.jar" value="${tcs_libdir}/${typesafe_enum.path}/${typesafe_enum.jar.name}"/>
+
+    <property name="user.jar.name" value="User.jar"/>
+    <property name="user.path" value="user"/>
+    <property name="user.jar" value="${tcs_libdir}/${user.path}/${user.jar.name}"/>
+
+    <property name="user_group_manager.version" value="1.0.0"/>
+    <property name="user_group_manager.jar.name" value="user_group_manager.jar"/>
+    <property name="user_group_manager.path" value="user_group_manager/${user_group_manager.version}"/>
+    <property name="user_group_manager.jar" value="${tcs_libdir}/${user_group_manager.path}/${user_group_manager.jar.name}"/>
+
+    <property name="user_project_data_store.version" value="1.0.1"/>
+    <property name="user_project_data_store.jar.name" value="user_project_data_store.jar"/>
+    <property name="user_project_data_store.path" value="user_project_data_store/${user_project_data_store.version}"/>
+    <property name="user_project_data_store.jar" value="${tcs_libdir}/${user_project_data_store.path}/${user_project_data_store.jar.name}"/>
+
+    <property name="random_string_generator.version" value="1.0"/>
+    <property name="random_string_generator.jar.name" value="random_string_generator.jar"/>
+    <property name="random_string_generator.path" value="random_string_generator/${random_string_generator.version}"/>
+    <property name="random_string_generator.jar" value="${tcs_libdir}/${random_string_generator.path}/${random_string_generator.jar.name}"/>
+
+    <property name="random_string_image.version" value="1.0"/>
+    <property name="random_string_image.jar.name" value="random_string_image.jar"/>
+    <property name="random_string_image.path" value="random_string_image/${random_string_image.version}"/>
+    <property name="random_string_image.jar" value="${tcs_libdir}/${random_string_image.path}/${random_string_image.jar.name}"/>
+
+    <property name="spell_check.version" value="1.0"/>
+    <property name="spell_check.jar.name" value="spell_check.jar"/>
+    <property name="spell_check.path" value="spell_check/${spell_check.version}"/>
+    <property name="spell_check.jar" value="${tcs_libdir}/${spell_check.path}/${spell_check.jar.name}"/>
+
+    <property name="file_upload.version" value="2.0"/>
+    <property name="file_upload.jar.name" value="file_upload.jar"/>
+    <property name="file_upload.path" value="file_upload/${file_upload.version}"/>
+    <property name="file_upload.jar" value="${tcs_libdir}/${file_upload.path}/${file_upload.jar.name}"/>
+
+    <property name="project_payment_calculator.version" value="1.1.0"/>
+    <property name="project_payment_calculator.jar.name" value="project_payment_calculator.jar"/>
+    <property name="project_payment_calculator.path" value="project_payment_calculator/${project_payment_calculator.version}"/>
+    <property name="project_payment_calculator.jar" value="${tcs_libdir}/${project_payment_calculator.path}/${project_payment_calculator.jar.name}"/>
+
+    <property name="marathon_match_resources.version" value="1.0.0"/>
+    <property name="marathon_match_resources.jar.name" value="marathon_match_resources.jar"/>
+    <property name="marathon_match_resources.path" value="marathon_match_resources/${marathon_match_resources.version}"/>
+    <property name="marathon_match_resources.jar" value="${tcs_libdir}/${marathon_match_resources.path}/${marathon_match_resources.jar.name}"/>
+
+    <property name="scribe.jar.name" value="scribe.jar"/>
+    <property name="scribe.jar.path" value="${ext_libdir}/scribe"/>
+    <property name="scribe.jar" value="${scribe.jar.path}/${scribe.jar.name}"/>
+
+    <property name="shared.jar.name" value="shared.jar"/>
+    <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}"/>
+
+    <property name="tcwebcommon.jar.name" value="tcwebcommon.jar"/>
+    <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}"/>
+
+
+    <!-- 3rd party dependencies -->
+    <property name="asm-3.3.jar" value="${ext_libdir}/asm/asm-3.3.jar"/>
+    <property name="asm-commons-3.3.jar" value="${ext_libdir}/asm/asm-commons-3.3.jar"/>
+    <property name="asm-tree-3.3.jar" value="${ext_libdir}/asm/asm-tree-3.3.jar"/>
+    <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
+    <property name="jackson-core.jar" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
+    <property name="jackson-mapper.jar" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
+    <property name="axis.jar" value="${ext_libdir}/axis/1.3/axis.jar"/>
+    <property name="commons-dbcp.jar" value="${ext_libdir}/commons-dbcp/commons-dbcp.jar"/>
+    <property name="commons-discovery.jar" value="${ext_libdir}/commons-discovery/0.2/commons-discovery.jar"/>
+    <property name="commons-pool.jar" value="${ext_libdir}/commons-pool/commons-pool.jar"/>
+    <property name="confluence-service-axis-client.jar" value="${ext_libdir}/confluence/2.7.3/confluence-service-axis-client.jar"/>
+    <property name="httpProxyPackage.jar" value="${ext_libdir}/httpProxyPackage/httpProxyPackage.jar"/>
+    <property name="ifxjdbcx.jar" value="${ext_libdir}/informix/ifxjdbcx.jar"/>
+    <property name="ifxjdbc.jar" value="${ext_libdir}/informix/ifxjdbc.jar"/>
+    <property name="jira-service-axis-client.jar" value="${ext_libdir}/jira/3.13.4/jira-service-axis-client.jar"/>
+    <property name="jira-soapclient-all.jar" value="${ext_libdir}/jira/jira-soapclient-all.jar"/>
+    <property name="mysql-connector-java-5.1.6-bin.jar" value="${ext_libdir}/mysql/mysql-connector-java-5.1.6-bin.jar"/>
+    <property name="payflow.jar" value="${ext_libdir}/payflow/4.3/payflow.jar"/>
+    <property name="paypal_base.jar" value="${ext_libdir}/paypal/paypal_base.jar"/>
+    <property name="paypal_stubs.jar" value="${ext_libdir}/paypal/paypal_stubs.jar"/>
+    <property name="saxon9he.jar" value="${ext_libdir}/saxonhe-9.0.2j/saxon9he.jar"/>
+    <property name="jboss-cache-jdk50.jar" value="${ext_libdir}/jboss-cache/jboss-cache-jdk50.jar"/>
+    <property name="jgroups.jar" value="${ext_libdir}/jboss-cache/jgroups.jar"/>
+
+    <property name="ehcache.jar" value="${ext_libdir}/hibernate/ehcache-1.5.0.jar"/>
+    <property name="hibernate-jpa.jar" value="${ext_libdir}/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+    <property name="hibernate.jar" value="${ext_libdir}/hibernate/hibernate3.jar"/>
+    <property name="aspectjrt.jar" value="${ext_libdir}/aspectj/aspectjrt.jar"/>
+    <property name="aspectjweaver.jar" value="${ext_libdir}/aspectj/aspectjweaver.jar"/>
+
+
+    <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar"/>
+
+    <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
+    <property name="ejb3-persistence.jar" value="${ext_libdir}/ejb-api/ejb3-persistence.jar"/>
+    <property name="javaee.jar" value="${ext_libdir}/j2ee/1.5/javaee.jar"/>
+    <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
+    <property name="jsr311.jar" value="${ext_libdir}/j2ee/jsr311-api-1.1.1.jar"/>
+
+    <property name="jai_codec-1.1.3.jar" value="${ext_libdir}/jai/jai_codec-1.1.3.jar"/>
+    <property name="jai_core-1.1.3.jar" value="${ext_libdir}/jai/jai_core-1.1.3.jar"/>
+
+    <property name="cxf.jar" value="${ext_libdir}/cxf/cxf-2.6.4.jar"/>
+    <property name="aopalliance-1.0.jar" value="${ext_libdir}/cxf/aopalliance-1.0.jar"/>
+    <property name="geronimo-jaxws_2.2_spec-1.1.jar" value="${ext_libdir}/cxf/geronimo-jaxws_2.2_spec-1.1.jar"/>
+    <property name="geronimo-annotation_1.0_spec-1.1.1.jar" value="${ext_libdir}/cxf/geronimo-annotation_1.0_spec-1.1.1.jar"/>
+    <property name="neethi-3.0.1.jar" value="${ext_libdir}/cxf/neethi-3.0.1.jar"/>
+
+    <!-- Struts 2 libs -->
+    <property name="struts2_libdir" value="${ext_libdir}/struts"/>
+    <property name="commons-beanutils-1.8.0.jar" value="${struts2_libdir}/commons-beanutils-1.8.0.jar"/>
+    <property name="commons-collections-3.2.jar" value="${struts2_libdir}/commons-collections-3.2.jar"/>
+    <property name="commons-fileupload-1.3.jar" value="${struts2_libdir}/commons-fileupload-1.3.jar"/>
+    <property name="commons-io-2.0.1.jar" value="${struts2_libdir}/commons-io-2.0.1.jar"/>
+    <property name="commons-lang-2.4.jar" value="${struts2_libdir}/commons-lang-2.4.jar"/>
+    <property name="commons-lang3-3.1.jar" value="${struts2_libdir}/commons-lang3-3.1.jar"/>
+    <property name="commons-logging-1.1.3.jar" value="${struts2_libdir}/commons-logging-1.1.3.jar"/>
+    <property name="ezmorph-1.0.6.jar" value="${struts2_libdir}/ezmorph-1.0.6.jar"/>
+    <property name="freemarker-2.3.19.jar" value="${struts2_libdir}/freemarker-2.3.19.jar"/>
+    <property name="json-lib-2.3-jdk15.jar" value="${struts2_libdir}/json-lib-2.3-jdk15.jar"/>
+    <property name="ognl-3.0.6.jar" value="${struts2_libdir}/ognl-3.0.6.jar"/>
+    <property name="struts2-convention-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-convention-plugin-2.3.15.1.jar"/>
+    <property name="struts2-core-2.3.15.1.jar" value="${struts2_libdir}/struts2-core-2.3.15.1.jar"/>
+    <property name="struts2-spring-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-spring-plugin-2.3.15.1.jar"/>
+    <property name="struts2-json-plugin-2.3.15.1.jar" value="${struts2_libdir}/struts2-json-plugin-2.3.15.1.jar"/>
+    <property name="struts2-ssl-plugin-1.2.1.jar" value="${struts2_libdir}/struts2-ssl-plugin-1.2.1.jar"/>
+    <property name="xwork-1.2.3.jar" value="${struts2_libdir}/xwork-1.2.3.jar"/>
+    <property name="xwork-core-2.3.15.1.jar" value="${struts2_libdir}/xwork-core-2.3.15.1.jar"/>
+
+    <!-- Spring libs -->
+    <property name="spring_libdir" value="${ext_libdir}/spring"/>
+    <property name="spring.jar" value="${spring_libdir}/spring.jar"/>
+    <property name="spring-context.jar" value="${spring_libdir}/spring-context.jar"/>
+    <property name="spring-context-support.jar" value="${spring_libdir}/spring-context-support.jar"/>
+    <property name="spring-test.jar" value="${spring_libdir}/spring-test.jar"/>
+    <property name="spring-tx.jar" value="${spring_libdir}/spring-tx.jar"/>
+    <property name="common-annotations.jar" value="${spring_libdir}/common-annotations.jar"/>
+
+    <!-- Apache POI libs -->
+    <property name="poi_libdir" value="${ext_libdir}/poi/3.7"/>
+    <property name="poi_version_tag" value="3.7-20101029"/>
+    <property name="poi.jar" value="${poi_libdir}/poi-${poi_version_tag}.jar"/>
+    <property name="poi-ooxml.jar" value="${poi_libdir}/poi-ooxml-${poi_version_tag}.jar"/>
+    <property name="poi-ooxml-schemas.jar" value="${poi_libdir}/poi-ooxml-schemas-${poi_version_tag}.jar"/>
+    <property name="dom4j-1.6.1.jar" value="${poi_libdir}/ooxml-lib/dom4j-1.6.1.jar"/>
+    <property name="xmlbeans-2.3.0.jar" value="${poi_libdir}/ooxml-lib/xmlbeans-2.3.0.jar"/>
 
     <!-- Http Client libs -->
     <property name="httpclient_libdir" value="${ext_libdir}/httpclient"/>
@@ -680,104 +447,104 @@
     <property name="itext_libdir" value="${ext_libdir}/flyingsaucer"/>
 
     <!-- jRSS -->
-   <property name="jrss.jar" value="${ext_libdir}/jrss/jrss.jar" />
+    <property name="jrss.jar" value="${ext_libdir}/jrss/jrss.jar"/>
 
-  <!-- YUI Compressor -->
-  <property name="yuicompressor.jar" value="${ext_libdir}/yuicompressor/2.4.7/yuicompressor-2.4.7.jar"/>
+    <!-- YUI Compressor -->
+    <property name="yuicompressor.jar" value="${ext_libdir}/yuicompressor/2.4.7/yuicompressor-2.4.7.jar"/>
 
-  <!-- joda-time -->
-  <property name="joda-time.jar" value="${ext_libdir}/joda-time/joda-time-2.1.jar" />
-
-
-  <property name="log4j.jar" value="${ext_libdir}/hibernate/slf4j-log4j12-1.5.8.jar" />
-
-  <!-- MIME util -->
-  <property name="mime-util.jar" value="${ext_libdir}/mime-util/mime-util.jar"/>
-
-  <!-- slf4j -->
-  <property name="slf4j.jar" value="${ext_libdir}/mime-util/slf4j-api-1.5.11.jar"/>
+    <!-- joda-time -->
+    <property name="joda-time.jar" value="${ext_libdir}/joda-time/joda-time-2.1.jar"/>
 
 
-  <!-- EJB/Persistence libraries -->
-  <path id="ejb.libs">
-    <pathelement location="${ejb-api.jar}" />
-    <pathelement location="${ejb3-persistence.jar}" />
-  </path>
+    <property name="log4j.jar" value="${ext_libdir}/hibernate/slf4j-log4j12-1.5.8.jar"/>
 
-  <!-- Struts2 libraries -->
-  <path id="struts.libs">
-    <pathelement location="${commons-beanutils-1.8.0.jar}" />
-    <pathelement location="${commons-collections-3.2.jar}" />
-    <pathelement location="${commons-fileupload-1.3.jar}" />
-    <pathelement location="${commons-io-2.0.1.jar}" />
-    <pathelement location="${commons-lang-2.4.jar}" />
-      <pathelement location="${commons-lang3-3.1.jar}" />
-    <pathelement location="${commons-logging-1.1.3.jar}" />
-    <pathelement location="${ezmorph-1.0.6.jar}" />
-    <pathelement location="${freemarker-2.3.19.jar}" />
-    <pathelement location="${json-lib-2.3-jdk15.jar}" />
-    <pathelement location="${ognl-3.0.6.jar}" />
-    <pathelement location="${struts2-convention-plugin-2.3.15.1.jar}" />
-    <pathelement location="${struts2-core-2.3.15.1.jar}" />
-    <pathelement location="${struts2-spring-plugin-2.3.15.1.jar}" />
-    <pathelement location="${struts2-json-plugin-2.3.15.1.jar}" />
-	<pathelement location="${struts2-ssl-plugin-1.2.1.jar}" />
-    <pathelement location="${xwork-1.2.3.jar}" />
-    <pathelement location="${xwork-core-2.3.15.1.jar}" />
-  </path>
+    <!-- MIME util -->
+    <property name="mime-util.jar" value="${ext_libdir}/mime-util/mime-util.jar"/>
 
-  <!-- Spring libraries -->
-  <path id="spring.libs">
-    <pathelement location="${spring-context-support.jar}" />
-    <pathelement location="${spring-context.jar}" />
-    <pathelement location="${spring-test.jar}" />
-    <pathelement location="${spring-tx.jar}" />
-    <pathelement location="${spring.jar}" />
-    <pathelement location="${common-annotations.jar}" />
-  </path>
+    <!-- slf4j -->
+    <property name="slf4j.jar" value="${ext_libdir}/mime-util/slf4j-api-1.5.11.jar"/>
 
-  <!-- JBoss libraries -->
-  <path id="jboss.libs">
-    <pathelement location="${ext_libdir}/jboss/jboss-jaxws.jar" />
-    <pathelement location="${ext_libdir}/jboss/jnp-client.jar" />
-    <pathelement location="${ext_libdir}/jboss/log4j.jar" />
-  </path>
 
-  <!-- Hibernate libraries -->
-  <path id="hibernate.libs">
-    <pathelement location="${ext_libdir}/hibernate/antlr-2.7.6.jar" />
-    <pathelement location="${ext_libdir}/hibernate/cglib-nodep-2.1_3.jar" />
-    <pathelement location="${ext_libdir}/hibernate/commons-collections-3.1.jar" />
-    <pathelement location="${ext_libdir}/hibernate/dom4j-1.6.1.jar" />
-    <pathelement location="${ext_libdir}/hibernate/hibernate3.jar" />
-    <pathelement location="${ext_libdir}/hibernate/javassist-3.9.0.GA.jar" />
-    <pathelement location="${ext_libdir}/hibernate/jta-1.1.jar" />
-    <pathelement location="${ext_libdir}/hibernate/slf4j-api-1.5.8.jar" />
-    <pathelement location="${ext_libdir}/hibernate/slf4j-log4j12-1.5.8.jar" />
-  </path>
+    <!-- EJB/Persistence libraries -->
+    <path id="ejb.libs">
+        <pathelement location="${ejb-api.jar}"/>
+        <pathelement location="${ejb3-persistence.jar}"/>
+    </path>
 
-  <!-- Commons libraries -->
-  <path id="commons.libs">
-    <pathelement location="${ext_libdir}/commons-dbcp/commons-dbcp.jar" />
-    <pathelement location="${ext_libdir}/commons-pool/commons-pool.jar" />
-  </path>
+    <!-- Struts2 libraries -->
+    <path id="struts.libs">
+        <pathelement location="${commons-beanutils-1.8.0.jar}"/>
+        <pathelement location="${commons-collections-3.2.jar}"/>
+        <pathelement location="${commons-fileupload-1.3.jar}"/>
+        <pathelement location="${commons-io-2.0.1.jar}"/>
+        <pathelement location="${commons-lang-2.4.jar}"/>
+        <pathelement location="${commons-lang3-3.1.jar}"/>
+        <pathelement location="${commons-logging-1.1.3.jar}"/>
+        <pathelement location="${ezmorph-1.0.6.jar}"/>
+        <pathelement location="${freemarker-2.3.19.jar}"/>
+        <pathelement location="${json-lib-2.3-jdk15.jar}"/>
+        <pathelement location="${ognl-3.0.6.jar}"/>
+        <pathelement location="${struts2-convention-plugin-2.3.15.1.jar}"/>
+        <pathelement location="${struts2-core-2.3.15.1.jar}"/>
+        <pathelement location="${struts2-spring-plugin-2.3.15.1.jar}"/>
+        <pathelement location="${struts2-json-plugin-2.3.15.1.jar}"/>
+        <pathelement location="${struts2-ssl-plugin-1.2.1.jar}"/>
+        <pathelement location="${xwork-1.2.3.jar}"/>
+        <pathelement location="${xwork-core-2.3.15.1.jar}"/>
+    </path>
 
-  <!-- Asm libraries -->
-  <path id="asm.libs">
-    <pathelement location="${asm-commons-3.3.jar}" />
-    <pathelement location="${asm-tree-3.3.jar}" />
-    <pathelement location="${asm-3.3.jar}" />
-  </path>
+    <!-- Spring libraries -->
+    <path id="spring.libs">
+        <pathelement location="${spring-context-support.jar}"/>
+        <pathelement location="${spring-context.jar}"/>
+        <pathelement location="${spring-test.jar}"/>
+        <pathelement location="${spring-tx.jar}"/>
+        <pathelement location="${spring.jar}"/>
+        <pathelement location="${common-annotations.jar}"/>
+    </path>
 
-  <path id="svnant.lib" >
-    <fileset dir="${ext_libdir}" includes="*.jar" />
-  </path>
+    <!-- JBoss libraries -->
+    <path id="jboss.libs">
+        <pathelement location="${ext_libdir}/jboss/jboss-jaxws.jar"/>
+        <pathelement location="${ext_libdir}/jboss/jnp-client.jar"/>
+        <pathelement location="${ext_libdir}/jboss/log4j.jar"/>
+    </path>
 
-  <path id="poi.libs" >
-    <pathelement location="${poi.jar}" />
-    <pathelement location="${poi-ooxml.jar}" />
-    <pathelement location="${poi-ooxml-schemas.jar}" />
-  </path>
+    <!-- Hibernate libraries -->
+    <path id="hibernate.libs">
+        <pathelement location="${ext_libdir}/hibernate/antlr-2.7.6.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/cglib-nodep-2.1_3.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/commons-collections-3.1.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/dom4j-1.6.1.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/hibernate3.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/javassist-3.9.0.GA.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/jta-1.1.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/slf4j-api-1.5.8.jar"/>
+        <pathelement location="${ext_libdir}/hibernate/slf4j-log4j12-1.5.8.jar"/>
+    </path>
+
+    <!-- Commons libraries -->
+    <path id="commons.libs">
+        <pathelement location="${ext_libdir}/commons-dbcp/commons-dbcp.jar"/>
+        <pathelement location="${ext_libdir}/commons-pool/commons-pool.jar"/>
+    </path>
+
+    <!-- Asm libraries -->
+    <path id="asm.libs">
+        <pathelement location="${asm-commons-3.3.jar}"/>
+        <pathelement location="${asm-tree-3.3.jar}"/>
+        <pathelement location="${asm-3.3.jar}"/>
+    </path>
+
+    <path id="svnant.lib">
+        <fileset dir="${ext_libdir}" includes="*.jar"/>
+    </path>
+
+    <path id="poi.libs">
+        <pathelement location="${poi.jar}"/>
+        <pathelement location="${poi-ooxml.jar}"/>
+        <pathelement location="${poi-ooxml-schemas.jar}"/>
+    </path>
 
     <path id="httpclient.lib">
         <fileset dir="${httpclient_libdir}" includes="*.jar"/>
@@ -786,98 +553,92 @@
     <path id="pdf.lib">
         <fileset dir="${itext_libdir}" includes="*.jar"/>
     </path>
-    
-    <path id="component.tcs-dependencies">
-    <pathelement location="${base_exception.jar}" />
-    <pathelement location="${configuration_manager.jar}" />
-    <pathelement location="${copilot_pool_and_profiles_dao.jar}" />
-    <pathelement location="${copilot_pool_and_profiles_services.jar}" />
-    <pathelement location="${excel_utility.jar}" />
-    <pathelement location="${logging_wrapper.jar}" />
-    <pathelement location="${object_factory.jar}" />
-    <pathelement location="${object_formatter.jar}" />
-    <pathelement location="${search_builder.jar}" />
-    <pathelement location="${security.jar}" />
-    <pathelement location="${typesafe_enum.jar}" />
-    <pathelement location="${contest_service_facade.jar}" />
-    <pathelement location="${permission_service_facade.jar}" />
-    <pathelement location="${cloud_vm_service.jar}" />
-    <pathelement location="${authentication_manager.jar}" />
-    <pathelement location="${project_service_facade.jar}" />
-    <pathelement location="${pipeline_service_facade.jar}" />
-    <pathelement location="${user.jar}" />
-    <pathelement location="${shared.jar}" />
-    <pathelement location="${tcwebcommon.jar}" />
-    <pathelement location="${online_review_upload_services.jar}" />
-    <pathelement location="${catalog_entities.jar}" />
-    <pathelement location="${catalog_services.jar}" />
-    <pathelement location="${admin_service_facade.jar}" />
-    <pathelement location="${client_project_entities_dao.jar}" />
-    <pathelement location="${client_invoice_entities_dao.jar}" />
-    <pathelement location="${deliverable_management.jar}" />
-    <pathelement location="${phase_management.jar}" />
-    <pathelement location="${pipeline_service.jar}" />
-    <pathelement location="${pipeline_service_persistence.jar}" />
-    <pathelement location="${project_management.jar}" />
-    <pathelement location="${project_phases.jar}" />
-    <pathelement location="${project_service.jar}" />
-    <pathelement location="${project_services.jar}" />
-    <pathelement location="${resource_management.jar}" />
-    <pathelement location="${review_data_structure.jar}" />
-    <pathelement location="${review_management.jar}" />
-    <pathelement location="${email_engine.jar}"/>
-    <pathelement location="${scorecard_data_structure.jar}" />
-    <pathelement location="${team_management.jar}" />
-    <pathelement location="${user_service_facade.jar}" />
-    <pathelement location="${user_service.jar}" />
-    <pathelement location="${workdays.jar}" />
-    <pathelement location="${file_upload.jar}" />
-    <pathelement location="${game_plan_service.jar}" />
-    <pathelement location="${cockpit_facade_util.jar}" />
-    <pathelement location="${specification_review_service.jar}" />
-    <pathelement location="${specification_review_comment_service.jar}" />
-    <pathelement location="${json_object.jar}" />
-    <pathelement location="${topcoder_cockpit_project_metadata_entities.jar}" />
-    <pathelement location="${topcoder_cockpit_project_metadata_services.jar}" />
-    <pathelement location="${topcoder_cockpit_project_milestone_services.jar}" />
-    <pathelement location="${topcoder_cockpit_asset_services.jar}" />
-    <pathelement location="${topcoder_cockpit_task_management_services.jar}" />
-    <pathelement location="${random_string_generator.jar}" />
-    <pathelement location="${random_string_image.jar}" />
-    <pathelement location="${spell_check.jar}" />
-    <pathelement location="${topcoder_security_groups.jar}" />
-    <pathelement location="${topcoder_commons_utility.jar}" />
-    <pathelement location="${review_application_management.jar}" />
-    <pathelement location="${project_payment_calculator.jar}" />
-    <pathelement location="${marathon_match_resources.jar}"/>
-    <pathelement location="${project_phase_template.jar}"/>
-  </path>
 
-  <path id="component.3rdParty-dependencies">
-    <path refid="struts.libs" />
-    <path refid="spring.libs" />
-    <path refid="ejb.libs" />
-    <path refid="jboss.libs" />
-    <path refid="hibernate.libs" />
-    <path refid="commons.libs" />
-    <path refid="asm.libs" />
-    <path refid="poi.libs" />
-    <path refid="httpclient.lib" />
-    <path refid="pdf.lib" />
-    <pathelement location="${jira-soapclient-all.jar}" />
-    <pathelement location="${servlet-api.jar}" />
-    <pathelement location="${jaxb.jar}" />
-    <pathelement location="${javaee.jar}" />
-    <pathelement location="${aws-java-sdk.jar}" />
-    <pathelement location="${jrss.jar}" />
-    <pathelement location="${joda-time.jar}" />
-    <pathelement location="${mime-util.jar}" />
-    <pathelement location="${yuicompressor.jar}" />
-    <pathelement location="${jackson-core.jar}" />
-    <pathelement location="${jackson-mapper.jar}" />
-    <pathelement location="${scribe.jar}"/>
-    <pathelement location="${jsr311.jar}"/>
-    <pathelement location="${cxf.jar}"/>
-  </path>
+    <path id="component.tcs-dependencies">
+        <pathelement location="${base_exception.jar}"/>
+        <pathelement location="${configuration_manager.jar}"/>
+        <pathelement location="${copilot_pool_and_profiles_services.jar}"/>
+        <pathelement location="${excel_utility.jar}"/>
+        <pathelement location="${logging_wrapper.jar}"/>
+        <pathelement location="${object_factory.jar}"/>
+        <pathelement location="${object_formatter.jar}"/>
+        <pathelement location="${search_builder.jar}"/>
+        <pathelement location="${security.jar}"/>
+        <pathelement location="${typesafe_enum.jar}"/>
+        <pathelement location="${contest_service_facade.jar}"/>
+        <pathelement location="${permission_service_facade.jar}"/>
+        <pathelement location="${cloud_vm_service.jar}"/>
+        <pathelement location="${authentication_manager.jar}"/>
+        <pathelement location="${project_service_facade.jar}"/>
+        <pathelement location="${pipeline_service_facade.jar}"/>
+        <pathelement location="${user.jar}"/>
+        <pathelement location="${shared.jar}"/>
+        <pathelement location="${tcwebcommon.jar}"/>
+        <pathelement location="${online_review_upload_services.jar}"/>
+        <pathelement location="${catalog_services.jar}"/>
+        <pathelement location="${admin_service_facade.jar}"/>
+        <pathelement location="${client_project_entities_dao.jar}"/>
+        <pathelement location="${client_invoice_entities_dao.jar}"/>
+        <pathelement location="${deliverable_management.jar}"/>
+        <pathelement location="${phase_management.jar}"/>
+        <pathelement location="${pipeline_service.jar}"/>
+        <pathelement location="${project_management.jar}"/>
+        <pathelement location="${project_phases.jar}"/>
+        <pathelement location="${project_service.jar}"/>
+        <pathelement location="${project_services.jar}"/>
+        <pathelement location="${resource_management.jar}"/>
+        <pathelement location="${review_management.jar}"/>
+        <pathelement location="${email_engine.jar}"/>
+        <pathelement location="${team_management.jar}"/>
+        <pathelement location="${user_service_facade.jar}"/>
+        <pathelement location="${user_service.jar}"/>
+        <pathelement location="${workdays.jar}"/>
+        <pathelement location="${file_upload.jar}"/>
+        <pathelement location="${game_plan_service.jar}"/>
+        <pathelement location="${cockpit_facade_util.jar}"/>
+        <pathelement location="${specification_review_service.jar}"/>
+        <pathelement location="${specification_review_comment_service.jar}"/>
+        <pathelement location="${json_object.jar}"/>
+        <pathelement location="${topcoder_cockpit_project_metadata_services.jar}"/>
+        <pathelement location="${topcoder_cockpit_project_milestone_services.jar}"/>
+        <pathelement location="${topcoder_cockpit_asset_services.jar}"/>
+        <pathelement location="${topcoder_cockpit_task_management_services.jar}"/>
+        <pathelement location="${random_string_generator.jar}"/>
+        <pathelement location="${random_string_image.jar}"/>
+        <pathelement location="${spell_check.jar}"/>
+        <pathelement location="${topcoder_security_groups.jar}"/>
+        <pathelement location="${topcoder_commons_utility.jar}"/>
+        <pathelement location="${review_application_management.jar}"/>
+        <pathelement location="${project_payment_calculator.jar}"/>
+        <pathelement location="${marathon_match_resources.jar}"/>
+        <pathelement location="${scorecard_management.jar}"/>
+    </path>
+
+    <path id="component.3rdParty-dependencies">
+        <path refid="struts.libs"/>
+        <path refid="spring.libs"/>
+        <path refid="ejb.libs"/>
+        <path refid="jboss.libs"/>
+        <path refid="hibernate.libs"/>
+        <path refid="commons.libs"/>
+        <path refid="asm.libs"/>
+        <path refid="poi.libs"/>
+        <path refid="httpclient.lib"/>
+        <path refid="pdf.lib"/>
+        <pathelement location="${jira-soapclient-all.jar}"/>
+        <pathelement location="${servlet-api.jar}"/>
+        <pathelement location="${jaxb.jar}"/>
+        <pathelement location="${javaee.jar}"/>
+        <pathelement location="${aws-java-sdk.jar}"/>
+        <pathelement location="${jrss.jar}"/>
+        <pathelement location="${joda-time.jar}"/>
+        <pathelement location="${mime-util.jar}"/>
+        <pathelement location="${yuicompressor.jar}"/>
+        <pathelement location="${jackson-core.jar}"/>
+        <pathelement location="${jackson-mapper.jar}"/>
+        <pathelement location="${scribe.jar}"/>
+        <pathelement location="${jsr311.jar}"/>
+        <pathelement location="${cxf.jar}"/>
+    </path>
 
 </project>

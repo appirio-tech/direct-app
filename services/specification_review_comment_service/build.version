@@ -1,0 +1,9 @@
+#property file defining the components information
+component.name=Specification Review Comment Service
+component.distfilename=specification_review_comment_service
+component.package=com.topcoder.service.review.comment.specification
+component.packagedir=com/topcoder/service/review/comment/specification
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

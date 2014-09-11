@@ -1,0 +1,7 @@
+insert into project(project_id, project_status_id, project_category_id, tc_direct_project_id, create_user, create_date, modify_user, modify_date) values (1, 1, 1, 1, 'user', CURRENT, 'user', CURRENT);
+insert into tc_direct_project(project_id, name, description, user_id, create_date, modify_date) values(1, 'Project Name 1', 'Project Description 1', 1, CURRENT, CURRENT);
+insert into project_phase(project_phase_id, project_id, phase_type_id, phase_status_id, scheduled_start_time, scheduled_end_time, duration, create_user, create_date, modify_user, modify_date) values (1, 1, 1, 1, '2010-05-09 10:49:11.000', '2010-05-30 10:49:11.000', 1, 'user', CURRENT, 'user', CURRENT);
+insert into project(project_id, project_status_id, project_category_id, tc_direct_project_id, create_user, create_date, modify_user, modify_date) values (2, 1, 1, 2, 'user', CURRENT, 'user', CURRENT);
+insert into tc_direct_project(project_id, name, description, user_id, create_date, modify_date) values(2, 'Project Name 2', 'Project Description 2', 3, CURRENT, CURRENT);
+insert into project_phase(project_phase_id, project_id, phase_type_id, phase_status_id, scheduled_start_time, scheduled_end_time, duration, create_user, create_date, modify_user, modify_date) values (2, 2, 1, 1, '2010-06-14 10:49:11.000', '2010-06-20 10:49:11.000', 1, 'user', CURRENT, 'user', CURRENT);
+insert into linked_project_xref(source_project_id, dest_project_id, link_type_id) values (1, 2, 1);

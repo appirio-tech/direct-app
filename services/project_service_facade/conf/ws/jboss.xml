@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>   
+		<session>
+            <ejb-name>ProjectServiceFacadeWebServiceBean</ejb-name>
+            <jndi-name>remote/ProjectServiceFacadeWebServiceBean</jndi-name>
+            <ejb-ref>
+                <ejb-ref-name>ejb/ProjectServiceFacade</ejb-ref-name>
+                <jndi-name>remote/ProjectServiceFacadeBean</jndi-name>
+            </ejb-ref>
+        </session>       
+    </enterprise-beans>
+    <security-domain>java:/jaas/JBossLoginModule</security-domain>
+
+	<webservices> 
+		<context-root>/projectfacade</context-root> 
+		<webservice-description> 
+		<webservice-description-name />
+		<wsdl-publish-location />
+		</webservice-description>
+ </webservices>
+</jboss>

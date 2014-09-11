@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>contest_eligibility_persistence</ejb-name>
+            <jndi-name>ContestEligibilityPersistenceBean/remote</jndi-name>
+        </session>
+    </enterprise-beans>
+</jboss>

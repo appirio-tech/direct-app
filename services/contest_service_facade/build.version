@@ -1,0 +1,9 @@
+#property file defining the components information
+component.name=TopCoder Contest Service Facade
+component.distfilename=contest_service_facade
+component.package=com.topcoder.service.facade.contest
+component.packagedir=com/topcoder/service/facade/contest
+component.version.major=1
+component.version.minor=1
+component.version.micro=0
+component.version.build=1

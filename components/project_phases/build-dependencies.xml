@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="dist" name="Dependency Import">
+    <!--property file defining the component's dependencies-->
+    <!--Properties used in compile_targets ANT target for JDK version x-->
+    <property name="component.target" value="1.3"/>
+    <property name="component.bootclasspath" value="${java_1_3_bootclasspath}"/>
+    <!--TCS dependencies-->
+    <property name="base_exception.jar" value="${tcs_libdir}/base_exception/2.0.0/base_exception.jar"/>
+    <property name="typesafe_enum.jar" value="${tcs_libdir}/typesafe_enum/1.1.0/typesafe_enum.jar"/>
+    <property name="object_factory.jar" value="${tcs_libdir}/object_factory/2.0.1/object_factory.jar"/>
+	<property name="command_line_utility.jar" value="${tcs_libdir}/command_line_utility/1.0.0/command_line_utility.jar"/>
+	<property name="db_connection_factory.jar" value="${tcs_libdir}/db_connection_factory/1.1/db_connection_factory.jar"/>
+	<property name="configuration_persistence.jar" value="${tcs_libdir}/configuration_persistence/1.0.0/configuration_persistence.jar"/>
+	<property name="configuration_api.jar" value="${tcs_libdir}/configuration_api/1.1.0/configuration_api.jar"/>
+	<property name="object_factory_config_manager_plugin.jar" value="${tcs_libdir}/object_factory_config_manager_plugin/1.0.0/object_factory_config_manager_plugin.jar"/>
+
+    <!-- Direct Dependencies -->
+    <property name="workdays.jar" value="${tcs_libdir}/workdays.jar"/>
+    <property name="configmanager.jar" value="${tcs_libdir}/configuration_manager.jar"/>
+
+
+    <!--3rd party dependencies-->
+    <property name="junit.jar" value="${ext_libdir}/junit/3.8.2/junit.jar"/>
+	<property name="jaxb-api.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
+    <!--Path declarations which are to be used in the master build file.-->
+    <path id="component.tcs-dependencies">
+        <pathelement location="${typesafe_enum.jar}"/>
+        <pathelement location="${base_exception.jar}"/>
+        <pathelement location="${db_connection_factory.jar}"/>
+        <pathelement location="${configmanager.jar}"/>
+        <pathelement location="${configuration_api.jar}"/>
+        <pathelement location="${configuration_persistence.jar}"/>
+        <pathelement location="${object_factory.jar}"/>
+        <pathelement location="${object_factory_config_manager_plugin.jar}"/>
+        <pathelement location="${workdays.jar}"/>
+        <pathelement location="${command_line_utility.jar}"/>
+		<pathelement location="${jaxb-api.jar}"/>
+    </path>
+    <path id="component.3rdParty-dependencies"/>
+    <path id="component.test.3rdParty-dependencies">
+        <pathelement location="${junit.jar}"/>
+    </path>
+</project>

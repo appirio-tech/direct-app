@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="cloud_vm_service" transaction-type="JTA">
+
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:/DS</jta-data-source>
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect" />
+            <property name="hibernate.query.substitutions" value="'true'='t', 'false'='f'" />
+
+            <property name="jboss.entity.manager.jndi.name" value="java:/cloud_vm_service"/>
+            <!--<property name="jboss.entity.manager.factory.jndi.name" value="java:/contestManagerFactory"/>           -->
+        </properties>
+
+    </persistence-unit>
+</persistence>

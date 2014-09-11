@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.service.studio.contest">
+	<class name="ContestChannel" table="contest_channel_lu" lazy="false">
+		<comment>
+			This table describes channel of component.
+		</comment>
+
+		<id name="contestChannelId" column="contest_channel_id" type="long" />
+		
+		<property name="description" length="254" column="contest_channel_desc" />
+
+	</class>
+</hibernate-mapping>

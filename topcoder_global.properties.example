@@ -2,6 +2,7 @@
 base=/home/direct/direct
 libdir=${base}/lib
 tcs_libdir=${libdir}/tcs
+direct_service_libdir=${libdir}/tcs/ejb
 jar_tcs_libdir=${libdir}/tcs
 cronos_libdir=${libdir}/tcs
 ext_libdir=${libdir}/third_party

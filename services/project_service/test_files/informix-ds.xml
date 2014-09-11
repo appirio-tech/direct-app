@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: informix-ds.xml 63175 2007-05-21 16:26:06Z rrajesh $ -->
+
+
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>InformixDS</jndi-name>
+    <connection-url>jdbc:informix-sqli://174.129.88.8:2021/common_oltp:informixserver=informixoltp_tcp</connection-url>
+    <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+    <user-name>coder</user-name>
+    <password>c0d3r4T</password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+    <!-- sql to call when connection is created -->
+    <new-connection-sql>set lock mode to wait</new-connection-sql>
+
+    <!-- sql to call on an existing pooled connection when it is obtained from pool
+    <check-valid-connection-sql>some arbitrary sql</check-valid-connection-sql>
+      -->
+
+    <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+    <metadata>
+       <type-mapping>InformixDB</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+</datasources>

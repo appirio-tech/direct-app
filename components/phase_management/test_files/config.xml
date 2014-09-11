@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<CMConfig>
+  <Config name="test.default">
+	  
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+	  
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+	  
+	<!-- The handlers are defined here -->
+	<Property name="Handlers">
+		<Value>handler1</Value>
+	</Property>
+
+	<!-- The details about each handler -->
+	<Property name="handler1">
+			<Property name="phaseType">
+				<Value>type1</Value>
+			</Property>
+			<Property name="operation">
+				<Value>start</Value>
+			</Property>
+			<Property name="handler">
+				<Value>handlerDef1</Value>
+			</Property>		
+	</Property>
+
+	<!-- The object factory configurations -->
+	<Property name="ObjectFactoryNamespace">
+		<Value>com.topcoder.management.phase.ObjectFactory</Value>
+	</Property>
+  </Config>
+
+  <Config name="com.topcoder.management.phase.ObjectFactory">
+	  <!-- The definition for phase type -->
+	  <Property name="type1">
+		  <Property name="type">
+			  <Value>com.topcoder.project.phases.PhaseType</Value>
+		  </Property>
+		  <Property name="params">
+			  <Property name="param1">
+				  <Property name="type">
+					  <Value>long</Value>
+				  </Property>
+				  <Property name="value">
+					  <Value>1</Value>
+				  </Property>
+			  </Property>
+			  <Property name="param2">
+				  <Property name="type">
+					  <Value>String</Value>
+				  </Property>
+				  <Property name="value">
+					  <Value>Test</Value>
+				  </Property>
+			  </Property>
+		  </Property>
+	  </Property>
+      <!-- The defination for handler -->
+	  <Property name="handlerDef1">
+		  <Property name="type">
+			  <Value>com.topcoder.management.phase.NullPhaseHandler</Value>
+		  </Property>
+	  </Property>
+  </Config>	
+	
+  <Config name="test.bad.persistence">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>bad.class</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.invalid.persistence">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>java.lang.String</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.bad.validator">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="PhaseValidator">
+      <Property name="className">
+        <Value>bad.class</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.invalid.validator">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="PhaseValidator">
+      <Property name="className">
+        <Value>java.lang.String</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.validator">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="PhaseValidator">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.TestValidator</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullIdGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.bad.generator">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>bad.class</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="test.invalid.generator">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.NullPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>test</Value>
+      </Property>
+      <Property name="className">
+        <Value>java.lang.String</Value>
+      </Property>
+    </Property>
+  </Config>
+</CMConfig>

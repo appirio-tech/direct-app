@@ -1,0 +1,428 @@
+<CMConfig>
+	<Config name="com.topcoder.search.builder.Upload_Resource_Search">
+		<Property name="searchStrategyFactoryNamespace">
+			<Value>com.topcoder.search.builder.strategy.factory</Value>
+		</Property>
+		<Property name="fieldValidatorFactoryNamespace">
+			<Value>com.topcoder.search.builder.validator.factory</Value>
+		</Property>
+
+		<Property name="searchBundles">
+			<Property name="Resource Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="project_id">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="resource_role_id">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>ResourceSearchBundle</Value>
+				</Property>
+
+				<Property name="context">
+					<Value>
+						SELECT DISTINCT resource.resource_id AS resource_id,
+						resource_role_id,
+						project_id,
+						project_phase_id
+						FROM resource,
+						resource_info,
+						resource_info_type_lu,
+						OUTER resource_submission
+						WHERE resource.resource_id = resource_info.resource_id
+						AND resource_info.resource_info_type_id = resource_info_type_lu.resource_info_type_id
+						AND resource.resource_id = resource_submission.resource_id
+						AND
+					</Value>
+				</Property>
+
+				<Property name="alias">
+					<Property name="resource_id">
+						<Value>resource.resource_id</Value>
+					</Property>
+				</Property>
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+
+			</Property>
+			<Property name="Resource Role Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>ResourceRoleSearchBundle</Value>
+				</Property>
+				<Property name="context">
+                    <Value>
+                        SELECT DISTINCT resource_role_id,
+                               phase_type_id,
+                               name,
+                               description,
+                               create_user,
+                               create_date,
+                               modify_user,
+                               modify_date
+                          FROM resource_role_lu
+                         WHERE
+                    </Value>
+                </Property>
+
+                <Property name="alias">
+                    <Property name="resource_role_id">
+                        <Value>resource_role_id</Value>
+                    </Property>
+                </Property>
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+			</Property>
+
+			<Property name="Notification Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>NotificationSearchBundle</Value>
+				</Property>
+				<Property name="context">
+					<Value>SELECT external_ref_id, project_id, notification_type_id FROM notification WHERE</Value>
+				</Property>
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+				<Property name="alias">
+					<Property name="The ID">
+						<Value>peopleID</Value>
+					</Property>
+				</Property>
+			</Property>
+
+			<Property name="Notification Type Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>NotificationTypeSearchBundle</Value>
+				</Property>
+				<Property name="context">
+					<Value>SELECT notification_type_id FROM notification_type_lu WHERE</Value>
+				</Property>
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+				<Property name="alias">
+					<Property name="The ID">
+						<Value>peopleID</Value>
+					</Property>
+				</Property>
+			</Property>
+
+
+			<Property name="Upload Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>UploadSearchBundle</Value>
+				</Property>
+<Property name="context">
+                    <Value>
+                        SELECT DISTINCT upload.upload_id AS upload_id,
+                               upload.create_user AS upload_create_user,
+                               upload.create_date AS upload_create_date,
+                               upload.modify_user AS upload_modify_user,
+                               upload.modify_date AS upload_modify_date,
+                               upload.project_id AS project_id,
+                               upload.resource_id AS resource_id,
+                               upload.parameter AS upload_parameter,
+                               upload_type_lu.upload_type_id AS upload_type_id,
+                               upload_type_lu.create_user AS upload_type_create_user,
+                               upload_type_lu.create_date AS upload_type_create_date,
+                               upload_type_lu.modify_user AS upload_type_modify_user,
+                               upload_type_lu.modify_date AS upload_type_modify_date,
+                               upload_type_lu.name AS upload_type_name,
+                               upload_type_lu.description AS upload_type_description,
+                               upload_status_lu.upload_status_id AS upload_status_id,
+                               upload_status_lu.create_user AS upload_status_create_user,
+                               upload_status_lu.create_date AS upload_status_create_date,
+                               upload_status_lu.modify_user AS upload_status_modify_user,
+                               upload_status_lu.modify_date AS upload_status_modify_date,
+                               upload_status_lu.name AS upload_status_name,
+                               upload_status_lu.description AS upload_status_description
+                          FROM upload,
+                               upload_type_lu,
+                               upload_status_lu
+                         WHERE upload.upload_type_id = upload_type_lu.upload_type_id
+                           AND upload.upload_status_id = upload_status_lu.upload_status_id
+                           AND
+                    </Value>
+                </Property>
+                <Property name="alias">
+                    <Property name="upload_id">
+                        <Value>upload.upload_id</Value>
+                    </Property>
+                    <Property name="upload_type_id">
+                        <Value>upload.upload_type_id</Value>
+                    </Property>
+                    <Property name="upload_status_id">
+                        <Value>upload.upload_status_id</Value>
+                    </Property>
+                    <Property name="project_id">
+                        <Value>upload.project_id</Value>
+                    </Property>
+                    <Property name="resource_id">
+                        <Value>upload.resource_id</Value>
+                    </Property>
+                </Property>
+
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+			</Property>
+
+			<Property name="Submission Search Bundle">
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="dummy">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>SubmissionSearchBundle</Value>
+				</Property>
+				<Property name="context">
+					<Value>
+						SELECT DISTINCT submission.submission_id AS submission_id,
+						submission.create_user AS submission_create_user,
+						submission.create_date AS submission_create_date,
+						submission.modify_user AS submission_modify_user,
+						submission.modify_date AS submission_modify_date,
+						submission_status_lu.submission_status_id AS submission_status_id,
+						submission_status_lu.create_user AS submission_status_create_user,
+						submission_status_lu.create_date AS submission_status_create_date,
+						submission_status_lu.modify_user AS submission_status_modify_user,
+						submission_status_lu.modify_date AS submission_status_modify_date,
+						submission_status_lu.name AS submission_status_name,
+						submission_status_lu.description AS submission_status_description,
+						submission_type_lu.submission_type_id AS submission_type_id,
+						submission_type_lu.create_user AS submission_type_create_user,
+						submission_type_lu.create_date AS submission_type_create_date,
+						submission_type_lu.modify_user AS submission_type_modify_user,
+						submission_type_lu.modify_date AS submission_type_modify_date,
+						submission_type_lu.name AS submission_type_name,
+						submission_type_lu.description AS submission_type_description,
+						upload.upload_id AS upload_id,
+						upload.create_user AS upload_create_user,
+						upload.create_date AS upload_create_date,
+						upload.modify_user AS upload_modify_user,
+						upload.modify_date AS upload_modify_date,
+						upload.project_id AS project_id,
+						upload.resource_id AS resource_id,
+						upload.parameter AS upload_parameter,
+						upload_type_lu.upload_type_id AS upload_type_id,
+						upload_type_lu.create_user AS upload_type_create_user,
+						upload_type_lu.create_date AS upload_type_create_date,
+						upload_type_lu.modify_user AS upload_type_modify_user,
+						upload_type_lu.modify_date AS upload_type_modify_date,
+						upload_type_lu.name AS upload_type_name,
+						upload_type_lu.description AS upload_type_description,
+						upload_status_lu.upload_status_id AS upload_status_id,
+						upload_status_lu.create_user AS upload_status_create_user,
+						upload_status_lu.create_date AS upload_status_create_date,
+						upload_status_lu.modify_user AS upload_status_modify_user,
+						upload_status_lu.modify_date AS upload_status_modify_date,
+						upload_status_lu.name AS upload_status_name,
+						upload_status_lu.description AS upload_status_description,
+						submission.screening_score,
+						submission.initial_score,
+						submission.final_score,
+						submission.placement
+						FROM submission,
+						upload,
+						submission_status_lu,
+						submission_type_lu,
+						upload_type_lu,
+						upload_status_lu
+						WHERE submission.upload_id = upload.upload_id
+						AND submission.submission_status_id = submission_status_lu.submission_status_id
+						AND submission.submission_type_id = submission_type_lu.submission_type_id
+						AND upload.upload_type_id = upload_type_lu.upload_type_id
+						AND upload.upload_status_id = upload_status_lu.upload_status_id
+						AND
+					</Value>
+				</Property>
+				<Property name="DBNamcespace">
+					<Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+				</Property>
+				<Property name="connectionProducerName">
+					<Value>informix_connection</Value>
+				</Property>
+				<Property name="alias">
+					<Property name="submission_id">
+						<Value>submission.submission_id</Value>
+					</Property>
+					<Property name="upload_id">
+						<Value>submission.upload_id</Value>
+					</Property>
+					<Property name="submission_status_id">
+						<Value>submission.submission_status_id</Value>
+					</Property>
+					<Property name="submission_type_id">
+						<Value>submission.submission_type_id</Value>
+					</Property>
+					<Property name="project_id">
+						<Value>upload.project_id</Value>
+					</Property>
+					<Property name="resource_id">
+						<Value>upload.resource_id</Value>
+					</Property>
+				</Property>
+			</Property>
+
+		</Property>
+	</Config>
+</CMConfig>

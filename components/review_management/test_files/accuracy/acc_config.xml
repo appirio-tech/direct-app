@@ -1,0 +1,34 @@
+<CMConfig>
+    <!-- Config with all necessary properties-->
+    <Config name="com.topcoder.management.review.accuracy1">
+        <Property name="persistence">
+            <Property name="persistence_class">
+                <Value>com.topcoder.management.review.accuracytests.ReviewPersistenceImpl</Value>
+            </Property>
+            <Property name="persistence_namespace">
+                <Value>com.topcoder.namespace</Value>
+            </Property>
+        </Property>
+    </Config>
+
+    <!-- Config with only class name property (persistence_namespace is optional)-->
+    <Config name="com.topcoder.management.review.accuracy2">
+        <Property name="persistence">
+            <Property name="persistence_class">
+                <Value>com.topcoder.management.review.accuracytests.ReviewPersistenceImpl</Value>
+            </Property>
+        </Property>
+    </Config>
+
+    <!-- Config with all necessary properties under default namespace (DefaultReviewManager class name)-->
+    <Config name="com.topcoder.management.review.DefaultReviewManager">
+        <Property name="persistence">
+            <Property name="persistence_class">
+                <Value>com.topcoder.management.review.accuracytests.ReviewPersistenceImpl</Value>
+            </Property>
+            <Property name="persistence_namespace">
+                <Value>com.topcoder.namespace</Value>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

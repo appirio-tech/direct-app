@@ -1,0 +1,119 @@
+<CMConfig>
+
+  <Config name="com.cronos.onlinereview.autoscreening.management">
+
+    <!-- Construct the DefaultDbScreeningManager with two arguments -->
+    <Property name="com/cronos/onlinereview/autoscreening/management/ScreeningManager">
+      <Property name="type">
+        <Value>com.cronos.onlinereview.autoscreening.management.db.DefaultDbScreeningManager</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="name">
+            <Value>connectionFactory</Value>
+          </Property>
+        </Property>
+        <Property name="param2">
+          <Property name="name">
+            <Value>idGenerator</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+    <!-- Construct the connectionFactory argument of the DefaultDbScreeningManager -->
+    <Property name="connectionFactory">
+      <Property name="type">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>com.cronos.onlinereview.autoscreening.management.db</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+    <!-- Construct the idGenerator argument of the DefaultDbScreeningManager -->
+    <Property name="idGenerator">
+      <Property name="type">
+        <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>screening_task_id_seq</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+  </Config>
+
+  <!-- Specify the parameters of the database connection -->
+  <Config name="com.cronos.onlinereview.autoscreening.management.db">
+     <Property name="connections">
+        <Property name="default">
+            <Value>default_conn</Value>
+        </Property>
+        
+        <Property name="default_conn">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+                <Property name="jdbc_driver">
+                    <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                    <Value>jdbc:informix-sqli://10.37.129.3:1526/test_auto:INFORMIXSERVER=ol_topcoder</Value>
+                </Property>
+                <Property name="user">
+                    <Value>informix</Value>
+                </Property>
+                <Property name="password">
+                    <Value>sa</Value>
+                </Property>
+            </Property>
+        </Property>
+    </Property>
+  </Config>
+
+  <!-- Specify the parameters of the database connection of id generator-->
+  <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+     <Property name="connections">
+        <!-- The default should not be oracle, the db should be in the scope of the DBs which are allowed in IDGenerator 2.0 -->
+        <Property name="default">
+            <Value>IDGeneratorImpl</Value>
+        </Property>
+        
+        <Property name="IDGeneratorImpl">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+                <Property name="jdbc_driver">
+                    <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                    <Value>jdbc:informix-sqli://10.37.129.3:1526/test_auto:INFORMIXSERVER=ol_topcoder</Value>
+                </Property>
+                <Property name="user">
+                    <Value>informix</Value>
+                </Property>
+                <Property name="password">
+                    <Value>sa</Value>
+                </Property>
+            </Property>
+        </Property>
+    </Property>
+  </Config>
+
+</CMConfig>

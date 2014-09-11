@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+	<enterprise-beans>
+		<session>
+			<ejb-name>GamePlanServiceBean</ejb-name>
+			<remote>com.topcoder.service.gameplan.ejb.GamePlanServiceRemote</remote>
+			<local>com.topcoder.service.gameplan.ejb.GamePlanServiceLocal</local>
+			<ejb-class>com.topcoder.service.gameplan.ejb.GamePlanServiceBean</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+
+			<env-entry>
+				<env-entry-name>logName</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Test</env-entry-value>
+			</env-entry>
+
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					softwarePersistence
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					softwarePersistence
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+			
+			<persistence-context-ref>
+				<persistence-context-ref-name>
+					studioPersistence
+				</persistence-context-ref-name>
+				<persistence-unit-name>
+					studioPersistence
+				</persistence-unit-name>
+				<persistence-context-type>
+					Transaction
+				</persistence-context-type>
+			</persistence-context-ref>
+		</session>
+	</enterprise-beans>
+</ejb-jar>

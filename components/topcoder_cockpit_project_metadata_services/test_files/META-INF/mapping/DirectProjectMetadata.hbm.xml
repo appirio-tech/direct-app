@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.project.metadata.entities.dao">
+  <class name="DirectProjectMetadata" table="direct_project_metadata">
+    <id name="id" column="id">
+			<generator class="increment"/>
+    </id>
+
+    <property name="tcDirectProjectId" column="tc_direct_project_id" not-null="true" />
+    <property name="metadataValue" column="metadata_value" not-null="true" />
+    <many-to-one name="projectMetadataKey" class="DirectProjectMetadataKey" column="project_metadata_key_id" not-null="true" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,60 @@
+<CMConfig>
+
+  <Config name="com.cronos.onlinereview.autoscreening.management.DefaultDBScreeningManager">
+
+    <!-- Construct the DefaultDbScreeningManager with two arguments -->
+    <Property name="com/cronos/onlinereview/autoscreening/management/ScreeningManager">
+      <Property name="type">
+        <Value>com.cronos.onlinereview.autoscreening.management.db.DefaultDbScreeningManager</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="name">
+            <Value>connectionFactory</Value>
+          </Property>
+        </Property>
+        <Property name="param2">
+          <Property name="name">
+            <Value>idGenerator</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+    <!-- Construct the connectionFactory argument of the DefaultDbScreeningManager -->
+    <Property name="connectionFactory">
+      <Property name="type">
+        <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+    <!-- Construct the idGenerator argument of the DefaultDbScreeningManager -->
+    <Property name="idGenerator">
+      <Property name="type">
+        <Value>com.topcoder.util.idgenerator.IDGeneratorImpl</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>screening_task_id_seq</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+
+  </Config>
+
+</CMConfig>

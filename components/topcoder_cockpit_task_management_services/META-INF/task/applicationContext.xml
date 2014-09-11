@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.topcoder.direct.services.project.task"/>
+
+    <bean id="taskDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>java:TCS_CATALOG</value>
+        </property>
+    </bean>
+
+    <bean id="taskEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="taskDataSource"/>
+        <property name="jpaVendorAdapter" ref="taskJpaAdapter"/>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/task/persistence.xml"/>
+    </bean>
+
+    <bean id="taskTransactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="taskEntityManagerFactory"/>
+    </bean>
+
+    <tx:advice id="taskTxAdvice" transaction-manager="taskTransactionManager">
+        <tx:attributes>
+            <tx:method name="add*"/>
+            <tx:method name="delete*"/>
+            <tx:method name="resolve*"/>
+            <tx:method name="update*"/>
+            <tx:method name="get*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="taskTxPointcut" expression="execution(* com.topcoder.direct.services.project.task.impl.*.*(..))"/>
+        <aop:advisor advice-ref="taskTxAdvice" pointcut-ref="taskTxPointcut"/>
+    </aop:config>
+
+    <bean id="taskJpaAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="INFORMIX"/>
+        <property name="showSql" value="true"/>
+    </bean>
+
+    <bean id="log" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>com.topcoder.util.log.LogManager.getLog</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>com.topcoder.task.logger</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="taskEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="taskEntityManagerFactory"/>
+    </bean>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <bean id="taskLogFactory" class="com.topcoder.util.log.log4j.Log4jLogFactory" />
+
+    <bean id="taskLogger" factory-bean="taskLogFactory" factory-method="createLog">
+        <constructor-arg>
+            <value>task_log</value>
+        </constructor-arg>
+    </bean>
+
+</beans>

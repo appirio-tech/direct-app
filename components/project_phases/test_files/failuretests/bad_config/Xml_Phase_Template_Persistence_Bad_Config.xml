@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="no_template_files_property">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+		</Property>
+	</Config>
+
+	<Config name="no_files">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+		</Property>
+	</Config>
+	
+	<Config name="empty_filename">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value></Value>
+		</Property>
+	</Config>
+	
+	<Config name="nonexist_filename">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/failuretests/nonexist.xml</Value>
+		</Property>
+	</Config>
+	
+	<Config name="malformed_file">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/failuretests/bad_template/malformed.xml</Value>
+		</Property>
+	</Config>
+	
+	<Config name="invalid_file">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/failuretests/bad_template/invalid.xml</Value>
+		</Property>
+	</Config>
+
+	<Config name="empty_template_name">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/failuretests/bad_template/BadTemplate_EmptyName.xml</Value>
+		</Property>
+	</Config>
+	
+		<Config name="invalid_date">
+		<!-- XML files from which the templates will be loaded. -->
+		<Property name="template_files">
+			<Value>test_files/failuretests/new_template/New_TCSTemplate_Design_Bad.xml</Value>
+		</Property>
+	</Config>
+	
+  <Config name="factory_space_not_exist">
+		<Property name="object_factory_namespace">
+			<Value>object_factory_namespace</Value>
+		</Property>
+    <Property name="connection_factory_class_name">
+      <Value>ConnectionFactory</Value>
+    </Property>
+    <Property name="connection_name">
+      <Value>MyConnection</Value>
+    </Property>
+  </Config>
+  
+    <Config name="not_db_factory">
+		<Property name="object_factory_namespace">
+			<Value>wrong_spec_not_db_factory</Value>
+		</Property>
+    <Property name="connection_factory_class_name">
+      <Value>ConnectionFactory</Value>
+    </Property>
+    <Property name="connection_name">
+      <Value>MyConnection</Value>
+    </Property>
+  </Config>
+
+	<Config name="wrong_spec_not_db_factory">
+    	<Property name="ConnectionFactory">
+      		<Property name="type">
+        		<Value>java.lang.String</Value>
+      		</Property>
+    	</Property>
+ </Config>
+
+  <Config name="parameter_missing_1">
+		<Property name="object_factory_namespace">
+			<Value>com.topcoder.project.phases.template.MockDBConnectionFactory</Value>
+		</Property>
+    <Property name="connection_name">
+      <Value>MyConnection</Value>
+    </Property>
+  </Config>
+  
+	<Config name="parameter_missing_2">
+    <Property name="connection_factory_class_name">
+      <Value>ConnectionFactory</Value>
+    </Property>
+    <Property name="connection_name">
+      <Value>MyConnection</Value>
+    </Property>
+  </Config>
+
+  <Config name="wrong_class">
+		<Property name="object_factory_namespace">
+			<Value>wrong_class_spec</Value>
+		</Property>
+    <Property name="connection_factory_class_name">
+      <Value>ConnectionFactory</Value>
+    </Property>
+    <Property name="connection_name">
+      <Value>MyConnection</Value>
+    </Property>
+  </Config>
+  
+  	<Config name="wrong_class_spec">
+    	<Property name="ConnectionFactory">
+      		<Property name="type">
+        		<Value>com.topcoder.project.phases.template.NoConnectionFactory</Value>
+      		</Property>
+    	</Property>
+ </Config>
+
+</CMConfig>

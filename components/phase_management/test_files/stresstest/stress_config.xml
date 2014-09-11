@@ -1,0 +1,17 @@
+<CMConfig>
+  <Config name="stress_test_ns">
+    <Property name="PhasePersistence">
+      <Property name="className">
+        <Value>com.topcoder.management.phase.stresstests.StressMockPhasePersistence</Value>
+      </Property>
+    </Property>
+    <Property name="Idgenerator">
+      <Property name="sequenceName">
+        <Value>phaseManager</Value>
+      </Property>
+      <Property name="className">
+        <Value>com.topcoder.management.phase.stresstests.StressMockIDGenerator</Value>
+      </Property>
+    </Property>
+  </Config>
+</CMConfig>

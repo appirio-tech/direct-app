@@ -1,0 +1,214 @@
+<CMConfig>
+    <!-- connection name not existed -->
+    <Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid1">
+        <Property name="connection">
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- connection name is empty -->
+    <Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid2">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>    </Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- factory_namespace not existed -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid3">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- factory_namespace is invalid -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid4">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl.invalid</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- factory_class not existed -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid5">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- factory_class is invalid -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid6">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>invalid</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- search_bundle_manager_namespace not existed -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid7">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- search_bundle_manager_namespace is invalid -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid8">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager.invalid</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>ReviewSearchBundle</Value>
+        </Property>
+    </Config>
+
+    <!-- search_bundle_name not existed -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid9">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+    </Config>
+
+    <!-- search_bundle_name is invalid -->
+	<Config name="com.topcoder.management.review.persistence.InformixReviewPersistence.invalid10">
+        <Property name="connection">
+            <!-- the connection name to retrieve connection in DB Connection Factory, required -->
+            <Property name="name">
+                <Value>failureTest</Value>
+            </Property>
+            <!-- The DBConnectionFactory class name used to create DB Connection Factory, required -->
+            <Property name="factory_namespace">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+            <Property name="factory_class">
+                <Value>com.topcoder.db.connectionfactory.DBConnectionFactoryImpl</Value>
+            </Property>
+        </Property>
+        <Property name="search_bundle_manager_namespace">
+            <Value>com.topcoder.search.builder.SearchBundleManager</Value>
+        </Property>
+        <Property name="search_bundle_name">
+            <Value>invalid</Value>
+        </Property>
+    </Config>
+</CMConfig>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+ <CMConfig>
+     <Config name="testconfig">
+     
+     <property name="host">
+             <value>192.168.1.6</value>
+     </property>
+     
+     <property name="port">
+             <value>1526</value>
+     </property>
+     
+	   <property name="user">
+             <value>informix</value>
+     </property>
+
+     <property name="password">
+             <value>123456</value>
+     </property>
+     
+		 <property name="database">
+             <value>tcsdev</value>
+     </property>
+
+		 <property name="server">
+             <value>tcsdev</value>
+     </property>
+
+		<property name="driver">
+             <value>com.informix.jdbc.IfxDriver</value>
+     </property>
+     
+     </Config>
+ </CMConfig>

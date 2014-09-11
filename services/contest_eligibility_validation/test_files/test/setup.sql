@@ -1,0 +1,1 @@
+insert into user_group_xref(user_group_id ,login_id , group_id ,create_user_id ,security_status_id , create_date) values ( 1,5 ,5 ,1 ,1 ,null);

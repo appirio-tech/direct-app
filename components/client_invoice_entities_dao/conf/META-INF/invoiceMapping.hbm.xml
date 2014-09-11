@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.clients.invoices.model">
+    
+    <class name="InvoiceRecord" table="informixoltp:invoice_record">
+        <id name="id" column="invoice_record_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="billingAccountId" column="billing_account" type="long"/>
+        <property name="jiraIssueId" column="jira_issue_id" type="string"/>
+        <property name="contestId" column="contest_id" type="long"/>
+        <many-to-one name="invoiceType" class="InvoiceType" column="invoice_type_id" cascade="none"/>
+        <property name="paymentId" column="payment_id" type="long"/>
+        <property name="invoiceAmount" column="invoice_amount" type="double"/>
+        <property name="processed" column="processed" type="boolean"/>
+        <many-to-one name="invoice" class="Invoice" column="invoice_id"/>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+        <property name="referenceId" column="reference_id" type="long"/>
+        <property name="cockpitProjectId" column="cockpit_project_id" type="long"/>
+    </class>
+    
+    <class name="InvoiceType" table="informixoltp:invoice_type_lu">
+        <id name="id" column="invoice_type_id" type="long" />
+        <property name="name" column="name" type="string"/>
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="modify_date" type="timestamp"/>
+        <property name="modifyUser" column="modify_user" type="string"/>
+    </class>
+    
+    <class name="Invoice" table="informixoltp:invoice">
+        <id name="id" column="invoice_id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="invoiceNumber" column="invoice_number" type="string" />
+        <property name="invoiceDate" column="invoice_date" type="timestamp" />
+        <property name="createDate" column="create_date" type="timestamp" update="false"/>
+        <property name="createUser" column="create_user" type="string" update="false"/>
+        <property name="modifyDate" column="update_date" type="timestamp"/>
+        <property name="modifyUser" column="update_user" type="string"/>
+    </class>
+    
+</hibernate-mapping>

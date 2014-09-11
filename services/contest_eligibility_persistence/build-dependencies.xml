@@ -1,0 +1,53 @@
+<project name="Dependency Import" basedir=".">
+	<property name="jboss.home" value="D:/jboss-4.2.2.GA" />
+
+	<property name="server.name" value="default" />
+	<property name="jboss_client_libdir" value="${jboss.home}/client" />
+	<property name="jboss_server_libdir" value="${jboss.home}/server/${server.name}/lib" />
+
+	<property name="deploy-dir" value="${jboss.home}/server/${server.name}/deploy" />
+
+	<property name="component.target" value="1.5" />
+	<property name="component.bootclasspath" value="${java_1_5_bootclasspath}" />
+
+	<property name="base_exception" value="${tcs_libdir}/base_exception/2.0.0/base_exception.jar" />
+	<property name="typesafe_enum" value="${tcs_libdir}/typesafe_enum/1.1.0/typesafe_enum.jar" />
+	<property name="object_formatter" value="${tcs_libdir}/object_formatter/1.0.0/object_formatter.jar" />
+	<property name="logging_wrapper" value="${tcs_libdir}/logging_wrapper/2.0.0/logging_wrapper.jar" />
+
+	<property name="ifxjdbc.jar" value="${test_reflib}/ifxjdbc.jar" />
+	<property name="ifxjdbcx.jar" value="${test_reflib}/ifxjdbcx.jar" />
+	<property name="junit4.jar" value="${ext_libdir}/junit/4.6/junit.jar" />
+
+
+	<path id="component.tcs-dependencies">
+		<pathelement location="${base_exception}" />
+		<pathelement location="${typesafe_enum}" />
+		<pathelement location="${object_formatter}" />
+		<pathelement location="${logging_wrapper}" />
+
+		<pathelement location="${testfiles}/test" />
+	</path>
+
+	<path id="component.3rdParty-dependencies">
+		<pathelement location="${jboss_client_libdir}/ejb3-persistence.jar" />
+		<pathelement location="${jboss_client_libdir}/javassist.jar" />
+		<pathelement location="${jboss_client_libdir}/jbossall-client.jar" />
+		<pathelement location="${jboss_client_libdir}/jboss-j2ee.jar" />
+		<pathelement location="${jboss_client_libdir}/jboss-ejb3x.jar" />
+
+		<pathelement location="${jboss_server_libdir}/antlr.jar" />
+		<pathelement location="${jboss_server_libdir}/cglib.jar" />
+		<pathelement location="${jboss_server_libdir}/commons-collections.jar" />
+		<pathelement location="${jboss_server_libdir}/commons-logging.jar" />
+		<pathelement location="${jboss_server_libdir}/dom4j.jar" />
+		<pathelement location="${jboss_server_libdir}/hibernate3.jar" />
+		<pathelement location="${jboss_server_libdir}/hibernate-annotations.jar" />
+		<pathelement location="${jboss_server_libdir}/hibernate-entitymanager.jar" />
+		<pathelement location="${jboss_server_libdir}/log4j.jar" />
+	</path>
+
+	<path id="component.test.3rdParty-dependencies">
+		<pathelement location="${junit4.jar}" />
+	</path>
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="Component A">
+		<Property name="Prop1">
+			<Value>Value</Value>
+		</Property>
+		<Property name="Prop2">
+			<Value>Value1</Value>
+			<Value>Value2</Value>
+		</Property>
+	</Config>
+	<Config name="Component B">
+		<ListDelimiter>%</ListDelimiter>
+		<Property name="Prop1">
+			<Value>Value1%Value2</Value>
+		</Property>
+		<Property name="Prop2">
+			<Value>Value</Value>
+		</Property>
+	</Config>
+</CMConfig>

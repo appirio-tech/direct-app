@@ -1,0 +1,59 @@
+<CMConfig>
+
+    <Config name="com.topcoder.management.review.DefaultReviewManager">
+        <Property name="persistence">
+            <Property name="persistence_namespace">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+    <Config name="com.topcoder.management.review.DefaultReviewManager.OnlyClass">
+        <Property name="persistence">
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+    <Config name="com.topcoder.management.review.DefaultReviewManager.Exception_MissingPersistence">
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+    </Config>
+    
+    <Config name="com.topcoder.management.review.DefaultReviewManager.Exception_MissingClass">
+        <Property name="persistence">
+            <Property name="persistence_namespace">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+    <Config name="com.topcoder.management.review.DefaultReviewManager.Exception_WrongType">
+        <Property name="persistence">
+            <Property name="persistence_namespace">
+                <Value>ReviewManagementException</Value>
+            </Property>
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.ReviewManagementException</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+    <Config name="com.topcoder.management.review.DefaultReviewManager.Exception_EmptyString">
+        <Property name="persistence">
+            <Property name="persistence_namespace">
+                <Value>  </Value>
+            </Property>
+           <Property name="persistence_class">
+                <Value>com.topcoder.management.review.MockReviewPersistence</Value>
+            </Property>
+        </Property>
+    </Config>
+    
+</CMConfig>
+  

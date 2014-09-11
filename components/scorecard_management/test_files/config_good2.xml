@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <!-- Namespace for ScorecardManagerImpl class -->
+    <Config name="HELLOWORLD">
+        <Property name="SearchBuilderNamespace">
+            <Value>com.topcoder.searchbuilder</Value>
+        </Property>
+        
+        <Property name="PersistenceClass">
+            <Value>com.topcoder.management.scorecard.MockScorecardPersistence</Value>
+        </Property>
+        
+        <Property name="ValidatorClass">
+            <Value>com.topcoder.management.scorecard.validation.DefaultScorecardValidator</Value>
+        </Property>
+    </Config>
+    
+</CMConfig>

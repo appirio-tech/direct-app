@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<CMConfig>
+  <Config name="com.topcoder.management.review.application.impl.ReviewApplicationManagerImpl">
+    <Property name="loggerName">
+      <Value>myLogger</Value>
+    </Property>
+    <Property name="objectFactoryConfig">
+      <Property name="DatabaseReviewApplicationPersistence">
+        <Property name="type">
+          <Value>com.topcoder.management.review.application.impl.persistence.DatabaseReviewApplicationPersistence</Value>
+        </Property>
+      </Property>
+    </Property>
+    <Property name="searchBundleManagerNamespace">
+      <Value>ReviewApplicationManagement.SearchBuilderManager</Value>
+    </Property>
+    <Property name="reviewApplicationSearchBundleName">
+      <Value>reviewApplicationSearchBundle</Value>
+    </Property>
+    <Property name="persistenceKey">
+      <Value>DatabaseReviewApplicationPersistence</Value>
+    </Property>
+    <Property name="persistenceConfig">
+      <Property name="loggerName">
+        <Value>myLogger</Value>
+      </Property>
+      <Property name="dbConnectionFactoryConfig">
+        <Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+          <Property name="connections">
+            <Property name="default">
+              <Value>myConnection</Value>
+            </Property>
+            <Property name="myConnection">
+              <Property name="producer">
+                  <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+              </Property>
+              <Property name="parameters">
+                <Property name="jdbc_driver">
+                  <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                  <Value>jdbc:informix-sqli://192.168.1.114:1526/tcs_catalog:informixserver=ol_topcoder</Value>
+                </Property>
+                <Property name="SelectMethod">
+                  <Value>cursor</Value>
+                </Property>
+                <Property name="user">
+                  <Value>informix</Value>
+                </Property>
+                <Property name="password">
+                  <Value>system</Value>
+                </Property>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+      </Property>
+      <Property name="connectionName">
+        <Value>myConnection</Value>
+      </Property>
+    </Property>
+  </Config>
+
+  <Config name="InvalidReviewApplicationManagerImpl">
+    <Property name="loggerName">
+      <Value>myLogger</Value>
+    </Property>
+    <Property name="objectFactoryConfig">
+      <Property name="DatabaseReviewApplicationPersistence">
+        <Property name="type">
+          <Value>com.topcoder.management.review.application.impl.persistence.DatabaseReviewApplicationPersistence</Value>
+        </Property>
+      </Property>
+    </Property>
+    <Property name="searchBundleManagerNamespace">
+      <Value>ReviewApplicationManagement.SearchBuilderManager</Value>
+    </Property>
+    <Property name="reviewApplicationSearchBundleName">
+      <Value>reviewApplicationSearchBundle</Value>
+    </Property>
+    <Property name="persistenceKey">
+      <Value>DatabaseReviewApplicationPersistence</Value>
+    </Property>
+    <Property name="persistenceConfig">
+      <Property name="loggerName">
+        <Value>myLogger</Value>
+      </Property>
+      <Property name="dbConnectionFactoryConfig">
+        <Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+          <Property name="connections">
+            <Property name="default">
+              <Value>myConnection</Value>
+            </Property>
+            <Property name="myConnection">
+              <Property name="producer">
+                  <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+              </Property>
+              <Property name="parameters">
+                <Property name="jdbc_driver">
+                  <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                  <Value>jdbc:informix-sqli://192.168.1.114:1526/tcs_catalog:informixserver=ol_topcoder</Value>
+                </Property>
+                <Property name="SelectMethod">
+                  <Value>cursor</Value>
+                </Property>
+                <Property name="user">
+                  <Value>informix</Value>
+                </Property>
+                <Property name="password">
+                  <Value>system2</Value>
+                </Property>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+      </Property>
+      <Property name="connectionName">
+        <Value>myConnection</Value>
+      </Property>
+    </Property>
+  </Config>
+  
+  <Config name="com.topcoder.management.review.application.impl.ReviewAuctionManagerImpl">
+    <Property name="loggerName">
+      <Value>myLogger</Value>
+    </Property>
+    <Property name="objectFactoryConfig">
+      <Property name="DatabaseReviewAuctionPersistence">
+        <Property name="type">
+          <Value>com.topcoder.management.review.application.impl.persistence.DatabaseReviewAuctionPersistence</Value>
+        </Property>
+      </Property>
+    </Property>
+    <Property name="searchBundleManagerNamespace">
+      <Value>ReviewApplicationManagement.SearchBuilderManager</Value>
+    </Property>
+    <Property name="specReviewAuctionSearchBundleName">
+      <Value>specReviewAuctionSearchBundle</Value>
+    </Property>
+    <Property name="contestReviewAuctionSearchBundleName">
+      <Value>contestReviewAuctionSearchBundle</Value>
+    </Property>
+    <Property name="contestReviewAuctionCategoryId">
+      <Value>1</Value>
+    </Property>
+    <Property name="specReviewAuctionCategoryId">
+      <Value>2</Value>
+    </Property>
+    <Property name="persistenceKey">
+      <Value>DatabaseReviewAuctionPersistence</Value>
+    </Property>
+    <Property name="persistenceConfig">
+      <Property name="loggerName">
+        <Value>myLogger</Value>
+      </Property>
+      <Property name="dbConnectionFactoryConfig">
+        <Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+          <Property name="connections">
+            <Property name="default">
+              <Value>myConnection</Value>
+            </Property>
+            <Property name="myConnection">
+              <Property name="producer">
+                  <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+              </Property>
+              <Property name="parameters">
+                <Property name="jdbc_driver">
+                  <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                  <Value>jdbc:informix-sqli://192.168.1.114:1526/tcs_catalog:informixserver=ol_topcoder</Value>
+                </Property>
+                <Property name="SelectMethod">
+                  <Value>cursor</Value>
+                </Property>
+                <Property name="user">
+                  <Value>informix</Value>
+                </Property>
+                <Property name="password">
+                  <Value>system</Value>
+                </Property>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+      </Property>
+      <Property name="connectionName">
+        <Value>myConnection</Value>
+      </Property>
+    </Property>
+  </Config>
+</CMConfig>

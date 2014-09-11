@@ -1,0 +1,29 @@
+<CMConfig>
+    <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <Property name="connections">
+            <Property name="default">
+                <Value>Informix</Value>
+            </Property>
+
+            <Property name="Informix">
+                <Property name="producer">
+                    <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+                </Property>
+                <Property name="parameters">
+                    <Property name="jdbc_driver">
+                        <Value>com.informix.jdbc.IfxDriver</Value>
+                    </Property>
+                    <Property name="jdbc_url">
+                        <Value>jdbc:informix-sqli://174.129.88.8:2021/common_oltp:informixserver=informixoltp_tcp</Value>
+                    </Property>
+                    <Property name="user">
+                        <Value>coder</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>c0d3r4T</Value>
+                    </Property>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

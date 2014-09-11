@@ -1,0 +1,49 @@
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+ "http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+	<display-name>DR Points Manager</display-name>
+
+	<!-- DataSource -->
+	<!-- 
+	-->
+
+	<module>
+		<java>informix-ds.xml</java>
+	</module>
+
+	<!-- DR Contest Points EJB -->
+	<module>
+		<ejb>game_plan_service.jar</ejb>
+	</module>
+
+	<!-- The EJB used to save Cobertura data on server side -->
+	<module>
+		<ejb>SaveCoberturaData.jar</ejb>
+	</module>
+
+	<!-- Informix Driver -->
+	<module>
+		<java>ifxjdbc.jar</java>
+	</module>
+	<module>
+		<java>ifxjdbcx.jar</java>
+	</module>
+	<module>
+		<java>base_exception.jar</java>
+	</module>
+	<module>
+		<java>logging_wrapper.jar</java>
+	</module>
+	<module>
+		<java>object_formatter.jar</java>
+	</module>
+  <module>
+		<java>typesafe_enum.jar</java>
+	</module>
+	<module>
+		<java>security_manager.jar</java>
+	</module>
+	<module>
+		<java>cockpit_facade_util.jar</java>
+	</module>
+</application>

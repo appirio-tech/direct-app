@@ -1,0 +1,12 @@
+<dataset>
+	<scorecard scorecard_id="1" scorecard_status_id="1" scorecard_type_id="1" project_category_id="1" name="1" version="1" min_score="0" max_score="100" create_user="'x'" create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard scorecard_id="2" scorecard_status_id="2" scorecard_type_id="1" project_category_id="1" name="2" version="2" min_score="0" max_score="100" create_user="'x'" create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard scorecard_id="3" scorecard_status_id="1" scorecard_type_id="2" project_category_id="1" name="3" version="3" min_score="0" max_score="100" create_user="'x'" create_date="current" modify_user="'x'" modify_date="current"/>
+	<scorecard scorecard_id="4" scorecard_status_id="1" scorecard_type_id="2" project_category_id="2" name="4" version="4" min_score="0" max_score="100" create_user="'x'" create_date="current" modify_user="'x'" modify_date="current"/>
+
+	<default_scorecard default_scorecard_id="1" scorecard_type_id="1" scorecard_id="1" project_category_id="1"/>
+	<default_scorecard default_scorecard_id="2" scorecard_type_id="1" scorecard_id="2" project_category_id="1"/>
+	<default_scorecard default_scorecard_id="3" scorecard_type_id="2" scorecard_id="3" project_category_id="1"/>
+	<default_scorecard default_scorecard_id="4" scorecard_type_id="2" scorecard_id="4" project_category_id="2"/>
+
+</dataset>

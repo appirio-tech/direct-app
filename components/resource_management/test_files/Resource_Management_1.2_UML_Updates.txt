@@ -1,0 +1,82 @@
+Following annotation should be added for class and field.
+
+1. AuditableResourceStructure
+1.1 add @XmlTransient for the class.
+1.2 add @XmlElement(nillable = true) for the fields - creationUser, creationTimestamp, modificationUser, modificationTimestamp.
+
+2. Notification
+2.1 for class, 
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "notification", propOrder = {"project", "notificationType", "externalId", "creationUser",
+    "creationTimestamp", "modificationUser", "modificationTimestamp"})
+
+2.2 for Notification#project,#notificationType #externalId
+
+Annotated:
+@XmlElement(required = true)
+
+3. NotificationType
+
+3.1 for NotificationType class,
+Annotated:
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "notificationType", propOrder = {"id", "name", "description", "creationUser", "creationTimestamp",
+    "modificationUser", "modificationTimestamp"})
+    
+3.2 for NotificationType#id,
+Annotated:
+@XmlElement(required = true)
+
+3.3. for NotificationType#name, #description.
+Annotated:
+@XmlElement(nillable = true)
+
+4. Resource
+
+4.1 for class, 
+Annotated:
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "resource", propOrder = {"id", "resourceRole", "project", "phase", "properties", "submissions",
+    "creationUser", "creationTimestamp", "modificationUser", "modificationTimestamp"})
+    
+4.2 for Resource#id
+
+Annotated: @XmlElement(required = true)
+
+
+
+4.3 Resource#resourceRole, #project, #phase,
+
+Annotated:
+
+@XmlElement(nillable = true)
+
+4.4 no annotation for Resource#submissions, #properties
+
+4.5 for Resource#submissions, its type changed to Set<Long>.
+
+4.6 for Resource#properties, its type changed to Map<String, Object>.
+
+5. ResourceRole
+
+4.1 for class, 
+
+Annotated:
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "resourceRole", propOrder = {"id", "name", "description", "phaseType", "creationUser",
+    "creationTimestamp", "modificationUser", "modificationTimestamp"})
+    
+4.2 for ResourceRole#id, 
+
+Annotated:
+
+@XmlElement(required = true)
+
+4.3 for ResourceRole#name, #description, #phaseType
+
+Annotated:
+
+@XmlElement(nillable = true)

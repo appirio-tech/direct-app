@@ -1,0 +1,6 @@
+com.topcoder.catalog.entity
+com.topcoder.catalog.entity.accuracytests
+com.topcoder.catalog.entity.failuretests
+com.topcoder.catalog.entity.stresstests
+com.topcoder.catalog.entity.unittests
+com.topcoder.catalog.entity.unittests.persistence

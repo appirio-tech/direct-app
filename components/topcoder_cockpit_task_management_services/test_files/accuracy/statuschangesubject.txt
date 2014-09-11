@@ -1,0 +1,1 @@
+Task "%TASK_NAME%" status has been changed.

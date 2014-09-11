@@ -1,0 +1,118 @@
+<project name="Dependency Import" default="dist" basedir=".">
+    <!-- property file defining the component's dependencies
+    <property name="jboss_home" value="${ext_libdir}/jboss/4.2.2.GA"/>
+    <property name="jboss_config_name" value="default"/>-->
+
+    <!-- Properties used in compile_targets ANT target for JDK version 5 -->
+    <property name="component.target" value="1.5" />
+    <property name="component.bootclasspath" value="${java_1_5_bootclasspath}" />
+
+    <!-- TCS dependencies -->
+    <property name="typesafe_enum.jar" value="${tcs_libdir}/typesafe_enum/1.1.0/typesafe_enum.jar" />
+    <property name="base_exception.jar" value="${tcs_libdir}/base_exception/2.0.0/base_exception.jar" />
+    <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0.0/logging_wrapper.jar" />
+    <property name="object_formatter.jar" value="${tcs_libdir}/object_formatter/1.0.0/object_formatter.jar" />
+    <property name="security.jar" value="${tcs_libdir}/security/1.0/security.jar" />
+
+    <property name="security_facade.version" value="2.0.0" />
+    <property name="security_facade.jar.name" value="security_facade.jar" />
+    <property name="security_facade.path" value="security_facade/${security_facade.version}" />
+    <property name="security_facade.jar" value="${tcs_libdir}/${security_facade.path}/${security_facade.jar.name}" />
+
+    <property name="configuration_api.version" value="1.0" />
+    <property name="configuration_api.jar.name" value="configuration_api.jar" />
+    <property name="configuration_api.path" value="configuration_api/${configuration_api.version}" />
+    <property name="configuration_api.jar" value="${tcs_libdir}/${configuration_api.path}/${configuration_api.jar.name}" />
+
+    <property name="configuration_persistence.version" value="1.0" />
+    <property name="configuration_persistence.jar.name" value="configuration_persistence.jar" />
+    <property name="configuration_persistence.path" value="configuration_persistence/${configuration_persistence.version}" />
+    <property name="configuration_persistence.jar" value="${tcs_libdir}/${configuration_persistence.path}/${configuration_persistence.jar.name}" />
+
+    <property name="object_factory.version" value="2.0.1" />
+    <property name="object_factory.jar.name" value="object_factory.jar" />
+    <property name="object_factory.path" value="object_factory/${object_factory.version}" />
+    <property name="object_factory.jar" value="${tcs_libdir}/${object_factory.path}/${object_factory.jar.name}" />
+
+    <property name="object_factory_configuration_api_plugin.version" value="1.0" />
+    <property name="object_factory_configuration_api_plugin.jar.name" value="object_factory_configuration_api_plugin.jar" />
+    <property name="object_factory_configuration_api_plugin.path" value="object_factory_configuration_api_plugin/${object_factory_configuration_api_plugin.version}" />
+    <property name="object_factory_configuration_api_plugin.jar" value="${tcs_libdir}/${object_factory_configuration_api_plugin.path}/${object_factory_configuration_api_plugin.jar.name}" />
+
+    <property name="user_group_manager.version" value="1.0.0" />
+    <property name="user_group_manager.jar.name" value="user_group_manager.jar" />
+    <property name="user_group_manager.path" value="user_group_manager/${user_group_manager.version}" />
+    <property name="user_group_manager.jar" value="${tcs_libdir}/${user_group_manager.path}/${user_group_manager.jar.name}" />
+
+    <property name="authentication_manager.version" value="1.0.2" />
+    <property name="authentication_manager.jar.name" value="authentication_manager.jar" />
+    <property name="authentication_manager.path" value="authentication_manager/${authentication_manager.version}" />
+    <property name="authentication_manager.jar" value="${tcs_libdir}/${authentication_manager.path}/${authentication_manager.jar.name}" />
+    <property name="jboss_login_module.version" value="2.1.0" />
+    <property name="jboss_login_module.jar.name" value="jboss_login_module.jar" />
+    <property name="jboss_login_module.path" value="jboss_login_module/${jboss_login_module.version}" />
+    <property name="jboss_login_module.jar" value="${tcs_libdir}/${jboss_login_module.path}/${jboss_login_module.jar.name}" />
+    <!-- 3rd party dependencies -->
+    <property name="junit.jar" value="${ext_libdir}/junit/3.8.2/junit.jar" />
+    <property name="mockejb.jar" value="${ext_libdir}/mockejb/0.6/mockejb.jar" />
+    <property name="jdbc.informix.jar" value="${ext_libdir}/informix/1.4.1/ifxjdbc.jar" />
+
+    <property name="cglib.jar" value="${jboss_home}/server/${jboss_config_name}/lib/cglib.jar" />
+    <property name="dom4j.jar" value="${jboss_home}/server/${jboss_config_name}/lib/dom4j.jar" />
+    <property name="commons-collections.jar" value="${jboss_home}/server/${jboss_config_name}/lib/commons-collections.jar" />
+    <property name="hibernate3.jar" value="${jboss_home}/server/${jboss_config_name}/lib/hibernate3.jar" />
+    <property name="hibernate-annotations.jar" value="${jboss_home}/server/${jboss_config_name}/lib/hibernate-annotations.jar" />
+    <property name="hibernate-entitymanager.jar" value="${jboss_home}/server/${jboss_config_name}/lib/hibernate-entitymanager.jar" />
+
+    <property name="jboss-jaxws.jar" value="${jboss_home}/server/${jboss_config_name}/lib/jboss-jaxws.jar" />
+    <property name="log4j.jar" value="${jboss_home}/server/${jboss_config_name}/lib/log4j.jar" />
+    <property name="jaxb-api.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar" />
+
+    <property name="jboss-ejb3x.jar" value="${jboss_home}/client/jboss-ejb3x.jar" />
+    <property name="ejb3-persistence.jar" value="${jboss_home}/client/ejb3-persistence.jar" />
+    <property name="jbossall-client.jar" value="${jboss_home}/client/jbossall-client.jar" />
+    <property name="antlr.jar" value="${jboss_home}/client/antlr.jar" />
+    <property name="jbossws-client.jar" value="${jboss_home}/client/jbossws-client.jar" />
+
+    <property name="xercesImpl.jar" value="${jboss_home}/lib/endorsed/xercesImpl.jar" />
+
+    <path id="component.tcs-dependencies">
+        <pathelement location="${base_exception.jar}" />
+        <pathelement location="${logging_wrapper.jar}" />
+        <pathelement location="${object_formatter.jar}" />
+        <pathelement location="${typesafe_enum.jar}" />
+        <pathelement location="${security.jar}" />
+        <pathelement location="${security_facade.jar}" />
+        <pathelement location="${configuration_api.jar}" />
+        <pathelement location="${configuration_persistence.jar}" />
+        <pathelement location="${object_factory.jar}" />
+        <pathelement location="${object_factory_configuration_api_plugin.jar}" />
+        <pathelement location="${user_group_manager.jar}" />
+        <pathelement location="${authentication_manager.jar}" />
+        <pathelement location="${jboss_login_module.jar}" />
+    </path>
+
+    <path id="component.3rdParty-dependencies">
+        <pathelement location="${jboss-ejb3x.jar}" />
+        <pathelement location="${ejb3-persistence.jar}" />
+        <pathelement location="${jbossall-client.jar}" />
+        <pathelement location="${jboss-jaxws.jar}" />
+        <pathelement location="${jaxb-api.jar}" />
+    </path>
+
+    <path id="component.test.3rdParty-dependencies">
+        <pathelement location="${xercesImpl.jar}" />
+        <pathelement location="${antlr.jar}" />
+        <pathelement location="${jbossws-client.jar}" />
+        <pathelement location="${log4j.jar}" />
+        <pathelement location="${cglib.jar}" />
+        <pathelement location="${dom4j.jar}" />
+        <pathelement location="${commons-collections.jar}" />
+        <pathelement location="${hibernate3.jar}" />
+        <pathelement location="${hibernate-annotations.jar}" />
+        <pathelement location="${hibernate-entitymanager.jar}" />
+        <pathelement location="${junit.jar}" />
+        <pathelement location="${mockejb.jar}" />
+        <pathelement location="${jdbc.informix.jar}" />
+    </path>
+</project>

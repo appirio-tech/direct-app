@@ -1,0 +1,27 @@
+<CMConfig>
+  <Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays">
+    <Property name="workdays:default">
+      <Property name="type">
+        <Value>com.topcoder.date.workdays.DefaultWorkdays</Value>
+      </Property>
+      <Property name="params">
+        <Property name="param1">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>test_files/accuracytests/workdays.xml</Value>
+          </Property>
+        </Property>
+        <Property name="param2">
+          <Property name="type">
+            <Value>String</Value>
+          </Property>
+          <Property name="value">
+            <Value>XML</Value>
+          </Property>
+        </Property>
+      </Property>
+    </Property>
+  </Config>
+</CMConfig>

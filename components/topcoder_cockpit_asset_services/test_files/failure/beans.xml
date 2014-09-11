@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <context:annotation-config/>
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+
+    <bean id="assetService"
+      class="com.topcoder.asset.services.impl.AssetServiceImpl">
+      <property name="entityManager" ref="entityManager"/>
+      <property name="log" ref="log"/>
+      <property name="assetVersionService" ref="assetVersionService"/>
+    </bean>
+  
+    <bean id="assetVersionService"
+      class="com.topcoder.asset.services.impl.AssetVersionServiceImpl">
+      <property name="entityManager" ref="entityManager"/>
+      <property name="log" ref="log"/>
+      <property name="basePath" value="test_files/cockpit"/>
+      <property name="imageTypes">
+        <list>
+          <value>jpg</value>
+          <value>png</value>
+          <value>bmp</value>
+        </list>
+      </property>
+      <property name="previewImageWidth" value="10"/>
+      <property name="previewImageHeight" value="20"/>
+    </bean>
+    
+    <!-- Log -->
+    <bean id="log" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod">
+            <value>com.topcoder.util.log.LogManager.getLog</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>com.topcoder.asset.logger</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="entityManagerFactory"
+      class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean" >
+      <property name="persistenceUnitName" value="persistenceUnit" />
+    </bean>
+    <bean id="entityManager" class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
+            <property name = "entityManagerFactory" ref="entityManagerFactory"/>  
+    </bean>
+    
+    <bean id="entityManagerFactoryInvalid"
+      class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean" >
+      <property name="persistenceUnitName" value="persistenceUnitInvalid" />
+    </bean>
+    <bean id="entityManagerInvalid" class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
+            <property name = "entityManagerFactory" ref="entityManagerFactoryInvalid"/>  
+    </bean>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <context:annotation-config/>
+    <context:component-scan base-package="com.topcoder.asset.entities" />
+
+    <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+      <tx:attributes>
+        <tx:method name="create*"/>
+        <tx:method name="remove*"/>
+        <tx:method name="set*"/>
+        <tx:method name="update*"/>
+        <tx:method name="delete*"/>
+        <tx:method name="*" read-only="true"/>
+      </tx:attributes>
+    </tx:advice>
+
+
+    <!-- ensure that the above transactional advice runs for any execution of an operation defined by the service interfaces -->
+    <aop:config>
+      <aop:pointcut id="serviceOperation" expression="execution(* com.topcoder.asset.services.impl.*Service*.*(..))"/>
+      <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+    </aop:config>
+
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+</beans>

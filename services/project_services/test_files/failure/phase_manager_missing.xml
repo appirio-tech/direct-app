@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<CMConfig>
+    <!-- Configuration for ProjectServicesImpl -->
+    <Config name="com.topcoder.project.service.impl.ProjectServicesImpl">
+        <Property name="specNamespace">
+            <Value>com.topcoder.util.objectfactory</Value>
+        </Property>
+        <Property name="projectRetrievalKey">
+            <Value>projectRetrievalKey</Value>
+        </Property>
+        <Property name="resourceManagerKey">
+            <Value>resourceManagerKey</Value>
+        </Property>
+        <Property name="projectManagerKey">
+            <Value>projectManagerKey</Value>
+        </Property>
+        <Property name="teamManagerKey">
+            <Value>teamManagerKey</Value>
+        </Property>
+        <Property name="loggerName">
+            <Value>ProjectServicesLog</Value>
+        </Property>
+        <Property name="activeProjectStatusId">
+            <Value>1</Value>
+        </Property>
+    </Config>
+    
+	<!-- Configuration for ObjectFactory -->
+    <Config name="com.topcoder.util.objectfactory">
+        <Property name="projectRetrievalKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.failuretests.MockProjectRetrieval</Value>
+            </Property>
+        </Property>
+        <Property name="resourceManagerKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.failuretests.MockResourceManager</Value>
+            </Property>
+        </Property>
+        <Property name="phaseManagerKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.failuretests.MockPhaseManager</Value>
+            </Property>
+        </Property>
+        <Property name="projectManagerKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.failuretests.MockProjectManager</Value>
+            </Property>
+        </Property>
+        <Property name="teamManagerKey">
+            <Property name="type">
+                <Value>com.topcoder.project.service.failuretests.MockTeamManager</Value>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

@@ -37,13 +37,17 @@
           target: dist-backend
          ================================= -->
   <target name="dist-backend" description="Runs 'dist_tcs' target on every subproject.">
-    <run-target-all target="dist_tcs"/>
 
     <!-- build the parent project -->
+    <antcall target="dist-components" />
     <antcall target="dist" />
 
   </target>
 
+
+    <target name="dist-components" description="Runs 'dist_direct' target on every components.">
+        <run-target-all target="dist_direct" config="components.conf"/>
+    </target>
 
   <!-- =================================
           target: clean-all

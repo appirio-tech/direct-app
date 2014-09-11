@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.topcoder.direct.services.project.task.model">
+
+	<!-- TaskList -->
+	<class name="TaskList" table="direct_project_task_list">
+		<!-- IdentifiableEntity -->
+		<id name="id" column="direct_project_task_list_id">
+			<generator class="increment" />
+		</id>
+
+		<!-- AuditableEntity -->
+		<property name="createdDate" column="create_date" />
+		<property name="createdBy" column="create_user" />
+		<property name="lastModifiedDate" column="modify_date" />
+		<property name="lastModifiedBy" column="modify_user" />
+
+		<!-- BaseTaskEntity -->
+		<property name="name" column="name" not-null="true" />
+		<property name="notes" column="notes" />
+		<bag name="associatedToProjectMilestones" lazy="false"
+			table="direct_project_task_list_milestone_xref">
+			<key column="direct_project_task_list_id" />
+			<many-to-many column="project_milestone_id" class="MilestoneDTO" />
+		</bag>
+		<bag name="associatedToContests" lazy="false"
+			table="direct_project_task_list_contest_xref">
+			<key column="direct_project_task_list_id" />
+			<many-to-many column="project_id" class="ContestDTO" />
+		</bag>
+		
+		<!-- TaskList -->
+		<property name="projectId" column="project_id" />
+		<property name="active" column="is_active" type="yes_no" />
+		<property name="default" column="is_default" type="yes_no" />
+		<bag name="permittedUsers" lazy="false"
+			table="direct_project_task_list_permitted_user">
+			<key column="direct_project_task_list_id" />
+			<many-to-many column="user_id" class="UserDTO" />
+		</bag>
+
+		<bag name="tasks" table="direct_project_task" inverse="true" lazy="true">
+			<key column="direct_project_task_list_id" />
+			<one-to-many class="Task" />
+		</bag>
+		<property name="numberOfAllTasks"
+			formula="(SELECT count(*) FROM direct_project_task_list tl INNER JOIN direct_project_task t ON t.direct_project_task_list_id = tl.direct_project_task_list_id WHERE tl.direct_project_task_list_id = direct_project_task_list_id)" />
+		<property name="numberOfCompletedTasks"
+			formula="(SELECT count(*) FROM direct_project_task_list tl INNER JOIN direct_project_task t ON t.direct_project_task_list_id = tl.direct_project_task_list_id WHERE tl.direct_project_task_list_id = direct_project_task_list_id AND t.status = 3)" />
+	</class>
+	
+	<!-- Task -->
+	<class name="Task" table="direct_project_task">
+		<!-- IdentifiableEntity -->
+		<id name="id" column="direct_project_task_id">
+			<generator class="increment" />
+		</id>
+
+		<!-- AuditableEntity -->
+		<property name="createdDate" column="create_date" />
+		<property name="createdBy" column="create_user" />
+		<property name="lastModifiedDate" column="modify_date" />
+		<property name="lastModifiedBy" column="modify_user" />
+
+		<!-- BaseTaskEntity -->
+		<property name="name" column="name" not-null="true" />
+		<property name="notes" column="notes" />
+		<bag name="associatedToProjectMilestones" lazy="false"
+			table="direct_project_task_milestone_xref">
+			<key column="direct_project_task_id" />
+			<many-to-many column="project_milestone_id" class="MilestoneDTO" />
+		</bag>
+		<bag name="associatedToContests" lazy="false"
+			table="direct_project_task_contest_xref">
+			<key column="direct_project_task_id" />
+			<many-to-many column="project_id" class="ContestDTO" />
+		</bag>
+		
+		<!-- Task -->
+		<property name="startDate" column="start_date" />
+		<property name="dueDate" column="due_date" />
+		<property name="taskListId" column="direct_project_task_list_id" />
+		<property name="status" column="status">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.topcoder.direct.services.project.task.model.TaskStatus</param>
+			</type>
+		</property>
+		<property name="priority" column="priority">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.topcoder.direct.services.project.task.model.TaskPriority</param>
+			</type>
+		</property>
+		<bag name="assignees" lazy="false" table="direct_project_task_assignee">
+			<key column="direct_project_task_id" />
+			<many-to-many column="user_id" class="UserDTO" />
+		</bag>
+		<bag name="attachments" lazy="false" table="direct_project_task_attachment" inverse="true">
+			<key column="direct_project_task_id" not-null="true" />
+			<one-to-many class="TaskAttachment" />
+		</bag>
+	</class>
+	
+	<!-- TaskAttachment -->
+	<class name="TaskAttachment" table="direct_project_task_attachment">
+		<!-- IdentifiableEntity -->
+		<id name="id" column="direct_project_task_attachment_id">
+			<generator class="increment" />
+		</id>
+
+		<!-- AuditableEntity -->
+		<property name="createdDate" column="create_date" />
+		<property name="createdBy" column="create_user" />
+		<property name="lastModifiedDate" column="modify_date" />
+		<property name="lastModifiedBy" column="modify_user" />
+
+		<!-- TaskAttachment -->
+		<property name="fileName" column="file_name" not-null="true" />
+		<property name="mimeType" column="mime_type" not-null="true" />
+		<property name="taskId" column="direct_project_task_id" />
+	</class>
+	
+
+	<!-- UserDTO -->
+	<class name="UserDTO" table="user">
+		<id name="userId" column="user_id" />
+		<property name="handle" column="handle" />
+	</class>
+
+	<!-- MilestoneDTO -->
+	<class name="MilestoneDTO" table="project_milestone">
+		<id name="milestoneId" column="project_milestone_id" />
+		<property name="milestoneName" column="name" />
+	</class>
+
+	<!-- ContestDTO -->
+	<class name="ContestDTO" table="project">
+		<id name="contestId" column="project_id" />
+		<property name="contestName" formula="(select pi.value from project_info pi where pi.project_info_type_id = 6 and pi.project_id = project_id)" />
+	</class>
+
+
+    <!-- Not in the scope of this component, for unit tests only -->
+	<class name="com.topcoder.service.user.User" table="user">
+		<id name="userId" column="user_id">
+			<generator class="increment" />
+		</id>
+		<property name="handle" column="handle" />
+		<property name="emailAddress" column="email_address" />
+	</class>
+	
+
+</hibernate-mapping>
+

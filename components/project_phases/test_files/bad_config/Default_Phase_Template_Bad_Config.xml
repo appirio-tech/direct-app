@@ -1,0 +1,583 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="no_persistence">
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_persistence_class">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_xml_persistence_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="unknown_persistence_class">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.Foo</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="unknown_xml_persistence_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.Foo</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_start_date_generator">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_start_date_generator_class">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_relative_start_date_generator_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="unknown_start_date_generator_class">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.Foo</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="unknown_relative_start_date_generator_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.Foo</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_workdays">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+	</Config>
+	
+	<Config name="no_workdays_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="no_workdays_object_key">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<Config name="unknown_workdays_namespace">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays.unknown</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<!-- Configuration for DefaultPhaseTemplate -->
+	<Config name="unknown_workdays_object_key">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>foo_key</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>default</Value>
+      		</Property>
+    	</Property>
+	</Config>
+	
+	<!-- Configuration for DefaultPhaseTemplate -->
+	<Config name="unknown_workdays_object_identifier">
+		<!-- configuration for persistence -->
+		<Property name="persistence">
+			<!-- class of the PhaseTemplatePersistence -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+			<!-- namespace from which the PhaseTemplatePersistence will be created, optional, if not provided, no arg ctor will be used to create the persistence. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence</Value>
+			</Property>
+		</Property>
+		<!-- configuration for start date generator -->
+		<Property name="start_date_generator">
+			<!-- class of the StartDateGenerator -->
+			<Property name="class">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+			<!-- namespace from which the StartDateGenerator will be created, optional, if not provided, no arg ctor will be used to create the startDateGenerator. -->
+			<Property name="namespace">
+				<Value>com.topcoder.project.phases.template.startdategenerator.RelativeWeekTimeStartDateGenerator</Value>
+			</Property>
+		</Property>
+		<!-- configuration for workdays, the workdays will be created with Object Factory -->
+    	<Property name="workdays">
+      		<!-- namespace of the object specification configuration of the workdays, required -->
+      		<Property name="object_specification_namespace">
+        		<Value>com.topcoder.project.phases.template.DefaultPhaseTemplate.workdays</Value>
+      		</Property>
+      		<!-- key of the workdays object, required -->
+      		<Property name="object_key">
+        		<Value>workdays</Value>
+     		</Property>
+      		<!-- identifier of the workdays object, optional -->
+      		<Property name="object_identifier">
+        		<Value>foo_identifier</Value>
+      		</Property>
+    	</Property>
+	</Config>
+</CMConfig>
