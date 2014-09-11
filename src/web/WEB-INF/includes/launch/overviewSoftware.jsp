@@ -262,7 +262,11 @@
               <span class="first_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
               <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
-			  <span class="last_info"><strong>Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong></span>
+			  <div class="totalCostContainer"><strong>Estimated Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong>
+              <p class="note">
+                  Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+        </div>
 		  </span>
     </div>
 </div>
