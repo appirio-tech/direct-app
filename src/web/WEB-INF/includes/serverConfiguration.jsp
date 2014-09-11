@@ -19,7 +19,7 @@
 </script>
 
 <c:set var="SERVER_CONFIG_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
-<c:set var="SERVER_CONFIG_NEW_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
+<c:set var="SERVER_CONFIG_NEW_SERVER_NAME" value="<%=ServerConfiguration.NEW_SERVER_NAME%>" scope="application"/>
 <c:set var="SERVER_CONFIG_STUDIO_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
 <c:set var="SERVER_CONFIG_SOFTWARE_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
 <c:set var="SERVER_CONFIG_FORUM_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
