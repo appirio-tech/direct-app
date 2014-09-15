@@ -30,8 +30,11 @@
  * Version 1.5 (Release Assembly - TopCoder Copilot Feedback Updates)
  * - Add 4 ratings to the copilot feedback
  *
+ * Version 1.6 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests) @author Veve @challenge 30045453
+ * - Add ajax to get project overview issues stats.
+ *
  * @author Blues, GreatKevin, duxiaoyang, GreatKevin
- * @version 1.5
+ * @version 1.6
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
 var iProjectBudget;
@@ -722,9 +725,36 @@ $(document).ready(function() {
             $(".projectedCostSlot").html('$' + projectedCost.formatMoney(0));
 
             calculateProjectBudget();
+
+            // fire the ajax request to load issues/races number
+            $.ajax({
+                type : 'POST',
+                url : 'getProjectIssuesStatsAjax',
+                cache : true,
+                timeout:100*1000,
+                dataType:"json",
+                data : {formData:{projectId:tcDirectProjectId}},
+                beforeSend: function() {
+                    $("#unresolvedIssuesTD, #ongoingRacesTD").html("Loading data...");
+                },
+                success : function(jsonResult) {
+                    handleJsonResult2(jsonResult, function(r){
+
+                        var issuesHTML = '<a href="/direct/projectIssueTracking.action?formData.projectId='
+                            + tcDirectProjectId + '&amp;subTab=issues">' + r.unresolvedIssuesNumber + '</a>';
+                        var racesHTML = '<a href="/direct/projectIssueTracking.action?formData.projectId='
+                            + tcDirectProjectId + '&amp;subTab=bugRaces">' + r.ongoingBugRacesNumber + '</a>';
+
+                        $("#unresolvedIssuesTD").html(issuesHTML);
+                        $("#ongoingRacesTD").html(racesHTML);
+                    }, function(e) {
+                        showErrors("Fail to load the project issues data");
+                    });
+                }
+            });
         },
         error: function(result) {
-            showErrors("Fail to load the project copilots data");
+            showErrors("Fail to load the project Statistics data");
         }
     });
 

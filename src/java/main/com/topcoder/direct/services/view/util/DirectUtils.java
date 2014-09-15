@@ -618,8 +618,19 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.4 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests)
+ * @author Veve @challenge 30045453
+ * <ul>
+ *     <li>
+ *         Update method {@link #getContestStats(com.topcoder.security.TCSubject, long, com.topcoder.service.project.SoftwareCompetition)} ()}
+ *         to remove codes which get contest VM count data.
+ *     </li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public final class DirectUtils {
 
@@ -1051,21 +1062,6 @@ public final class DirectUtils {
             dto.setShowStudioFinalFixTab(showFinalFixTab);
         }
 
-        try {
-            // Get active VM instance number
-            List<VMInstanceData> vmInstances = getCloudVMService().getVMInstancesForContest(currentUser, contestId);
-            int activeVMs = 0;
-            for (VMInstanceData instance : vmInstances) {
-                if (instance.getStatus() == VMInstanceStatus.RUNNING) {
-                    activeVMs++;
-                }
-            }
-            dto.setTotalActiveVMNumber(activeVMs);
-        } catch (Exception ex) {
-            logger.error("Exception caught when accessing CloudVMService: " + ex);
-            dto.setTotalActiveVMNumber(0);
-        }
-        
         return dto;
     }
 

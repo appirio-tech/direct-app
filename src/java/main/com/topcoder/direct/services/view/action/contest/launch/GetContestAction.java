@@ -11,6 +11,8 @@ import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
+import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
@@ -225,8 +227,16 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.9 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests)
+ * @author Veve @challenge 30045453
+ * <ul>
+ *     <li>Add method {@link #getContestVMNumber()} ()}</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin
- * @version 2.8
+ * @version 2.9
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -582,6 +592,52 @@ public class GetContestAction extends ContestAction {
         }
         return SUCCESS;
     }
+
+    /**
+     * Gets the number of VM associated with the contest.
+     *
+     * @return the result code.
+     * @since 2.9
+     */
+    public String getContestVMNumber() {
+        try {
+
+            if (projectId <= 0) {
+                throw new DirectException("projectId less than 0 or not defined.");
+            }
+
+            int activeVMs = 0;
+
+            try {
+                // Get active VM instance number
+                List<VMInstanceData> vmInstances = DirectUtils.getCloudVMService().getVMInstancesForContest(
+                        DirectUtils.getTCSubjectFromSession(),
+                        projectId);
+
+                for (VMInstanceData instance : vmInstances) {
+                    if (instance.getStatus() == VMInstanceStatus.RUNNING) {
+                        activeVMs++;
+                    }
+                }
+            } catch (Exception ex) {
+                activeVMs = 0;
+            }
+
+            Map<String, String> result = new HashMap<String, String>();
+
+            result.put("vmNumber", String.valueOf(activeVMs));
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        return SUCCESS;
+    }
+
 
     /**
      * <p>

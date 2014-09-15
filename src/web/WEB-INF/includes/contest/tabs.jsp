@@ -144,7 +144,7 @@
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
             <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                <span class="left"><span class="right">VM Instances (<s:property value="totalActiveVMNumber"/>)</span></span></a>
+                <span class="left"><span class="right" id="contestVMsTotalNumberInTab">VM Instances</span></span></a>
             </li>
             <li id="rReceiptTab" class="lastItem <c:choose>
                 <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>

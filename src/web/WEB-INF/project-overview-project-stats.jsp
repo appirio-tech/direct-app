@@ -63,20 +63,12 @@
     </tr>
     <tr>
         <td class="statusName">Unresolved Issues</td>
-        <td>
-            <a href="<s:url action='projectIssueTracking' namespace='/'>
-                                                    <s:param name='formData.projectId' value='formData.projectId'/>
-                                                     <s:param name='subTab'>issues</s:param></s:url>">
-
-                    ${viewData.dashboardProjectStat.unresolvedIssuesNumber}</a>
+        <td id="unresolvedIssuesTD">
         </td>
     </tr>
     <tr>
         <td class="statusName">Ongoing Races</td>
-        <td>
-            <a href="<s:url action='projectIssueTracking' namespace='/'>
-                                                    <s:param name='formData.projectId' value='formData.projectId'/>
-                                                     <s:param name='subTab'>bugRaces</s:param></s:url>">${viewData.dashboardProjectStat.ongoingBugRacesNumber}</a>
+        <td id="ongoingRacesTD">
         </td>
     </tr>
 </s:push>

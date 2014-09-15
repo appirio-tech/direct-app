@@ -129,8 +129,11 @@
  * Version 3.2.8 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
  * - Added getting issues number by ajax for contest pages
  *
+ * Version 3.2.9 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests)
+ * - Added ajax request to get contest VM Number
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman, bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin
- * @version 3.2.8
+ * @version 3.2.9
  */
 
 var mouse_is_inside;
@@ -1548,6 +1551,28 @@ $(document).ready(function(){
                         }
 
                         $("#contestIssuesTotalNumberInTab").text("Issue Tracking (" + result.issuesNumber + ")");
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
+    }
+
+    if($("#contestVMsTotalNumberInTab").length > 0) {
+        var contestId = $("input[name=contestDashboardContestId]").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/direct/contest/getContestVMNumber',
+            data: {projectId: contestId},
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function (jsonResult) {
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $("#contestVMsTotalNumberInTab").text("VM Instances (" + result.vmNumber + ")");
                     },
                     function (errorMessage) {
                         showServerError(errorMessage);

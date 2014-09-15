@@ -696,11 +696,16 @@
             <result name="success">/WEB-INF/project-overview-project-stats.jsp</result>
         </action>
 
+        <action name="getProjectIssuesStatsAjax" method="getProjectIssuesStatsAjax" class="projectOverviewAction">
+            <interceptor-ref name="securedProjectStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getProjectActivitiesAjax" method="getProjectActivitiesAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
             <result name="success">/WEB-INF/project-overview-project-activities.jsp</result>
         </action>
-
 
         <action name="projectInfoExport" class="projectExportAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
@@ -1618,6 +1623,11 @@
         </action>
 
         <action name="getContestIssuesNumber" method="getContestIssuesNumber" class="contestDetailJSONAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="getContestVMNumber" method="getContestVMNumber" class="contestDetailJSONAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
