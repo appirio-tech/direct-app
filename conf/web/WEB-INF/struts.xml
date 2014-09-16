@@ -1517,6 +1517,23 @@
         <default-interceptor-ref name="baseStack"/>
     </package>
 
+    <package name="my" namespace="/my" extends="base">
+        <action name="createdChallenges" class="myCreatedChallengesAction">
+            <result>/WEB-INF/my/myCreatedChallenges.jsp</result>
+        </action>
+        <action name="getCreatedChallenges" method="getMyCreatedChallenges" class="myCreatedChallengesAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="challenges" class="myChallengesAction">
+            <result>/WEB-INF/my/myChallenges.jsp</result>
+        </action>
+        <action name="getMyChallenges" method="getMyChallenges" class="myChallengesAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+    </package>
+
     <package name="launch" namespace="/launch" extends="base">
         <action name="home" class="launchContestAction">
             <result>/WEB-INF/launch-contest.jsp</result>

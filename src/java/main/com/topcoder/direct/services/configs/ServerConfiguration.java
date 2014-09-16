@@ -9,9 +9,18 @@ import com.topcoder.shared.util.logging.Logger;
 
 /**
  * <p>This class extends ApplicationServer </p>
+ * <p/>
+ * <p>
+ * Version 1.1 (TopCoder Direct - My Created Challenges)
+ * <ul>
+ * <li>Added {@link #JWT_COOOKIE_KEY}</li>
+ * <li>Added {@link #DIRECT_API_SERVICE_ENDPOINT}</li>
+ * </ul>
+ * </p>
  *
  * @author GreatKevin
- * @version 1.0 (Tokenize the server part of URLs used in TopCoder Direct)
+ * @version 1.1
+ * @since 1.0 (Tokenize the server part of URLs used in TopCoder Direct)
  */
 public class ServerConfiguration extends ApplicationServer {
 
@@ -38,5 +47,20 @@ public class ServerConfiguration extends ApplicationServer {
     /**
      * The studio forum name.
      */
-    public static String STUDIO_FORUMS_SERVER_NAME = bundle.getProperty("STUDIO_FORUMS_SERVER_NAME", "studio.topcoder.com/forums");
+    public static String STUDIO_FORUMS_SERVER_NAME = bundle.getProperty("STUDIO_FORUMS_SERVER_NAME",
+            "studio.topcoder.com/forums");
+
+    /**
+     * The JWT Cookie Key
+     *
+     * @since 1.1
+     */
+    public static String JWT_COOOKIE_KEY = bundle.getProperty("JWT_COOOKIE_KEY", "tcjwt");
+
+    /**
+     * The end point URL of the direct API. The default value is set to empty
+     *
+     * @since 1.1
+     */
+    public static String DIRECT_API_SERVICE_ENDPOINT = bundle.getProperty("DIRECT_API_SERVICE_ENDPOINT", "");
 }

@@ -27,6 +27,11 @@ public interface TopCoderDirectAction {
     public static final int RC_SUCCESS = 0;
 
     /**
+     * The "Anonymous" result code.
+     */
+    public static final String ANONYMOUS = "anonymous";
+
+    /**
      * <p>Gets the current request mapped to this action.</p>
      *
      * @return a <code>RequestData</code> providing the access to request mapped to this action.
