@@ -14,4 +14,5 @@
 
 <p style="font-size: 12px; line-height: 16px;"><strong><span style="color: rgb(164, 31, 145);">[ This is the basic overview of the submission process. How does submitter prepare the files to upload, what are the files and where to upload it etc. ]</span></strong></p>
 
-<p style="font-size: 12px; line-height: 16px;">For each member, the final submission should be uploaded to the&nbsp;<a href="">Online Review Tool.</a></p>
+<p style="font-size: 12px; line-height: 16px;">For each member, the final submission should be uploaded via the challenge detail page on 
+<a href="http://www.topcoder.com">topcoder.com</a>.</p>

@@ -87,6 +87,7 @@
 <p><strong style="line-height: 1.6em;"><em>Example:</em></strong></p>
 
 <ul>
-	<li>For each member, the final submission should be uploaded to the Online Review Tool.</li>
+	<li>For each member, the final submission should be uploaded via the challenge detail page on 
+<a href="http://www.topcoder.com">topcoder.com</a>.</li>
 	<li>You must not include any identifying information, such as your handle, in your submission. Your submission should be anonymous and you will be scored down in screening for not complying.</li>
 </ul>

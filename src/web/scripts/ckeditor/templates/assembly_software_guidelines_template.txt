@@ -34,7 +34,8 @@ Below is an overview of the deliverables:</span></p>
 
 <h2><span style="color:#FF0000;"><strong>Final Submission</strong></span></h2>
 
-<p><span style="font-size:12px;">For each member, the final submission should be uploaded to the Online Review Tool.</span></p>
+<p><span style="font-size:12px;">For each member, the final submission should be uploaded via the challenge detail page on 
+<a href="http://www.topcoder.com">topcoder.com</a>.</span></p>
 
 <p><span style="font-size:12px;"><span style="color:#a41f91;"><strong>[Add any special instructions or restrictions on submission here.]</strong></span></span></p>
 
