@@ -76,10 +76,10 @@ function updateOrderReviewAlgorithm() {
        var amount = prize.prizeAmount;
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+       '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    });
    html += '<td style="width:47%;"></td>';
-   html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
+   html += '<td class="last">$'+ contestPrizesTotal.formatMoney(2) +'</td>';
    $('#alorPrizesTR').html(html);
 
    var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
@@ -107,11 +107,11 @@ function updateOrderReviewAlgorithm() {
    }
 
    var adminFee = mainWidget.softwareCompetition.adminFee;
-   $('#alorAdminFee1').html('$'+adminFee.formatMoney(0));
-   $('#alorAdminFee2').html('$'+(adminFee + copilotCost).formatMoney(0));
+   $('#alorAdminFee1').html('$'+adminFee.formatMoney(2));
+   $('#alorAdminFee2').html('$'+(adminFee + copilotCost).formatMoney(2));
    
    var total = contestPrizesTotal + adminFee + copilotCost;
-   $('#alorTotal').html('$' + total.formatMoney(0));
+   $('#alorTotal').html('$' + total.formatMoney(2));
 }
 
 
@@ -144,7 +144,7 @@ function updateOrderReviewSoftware() {
    	  for(var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
    	     checkpointPrizesTotal += amount;	
          html +=
-         '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+         '<td>'+ i +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    	  }
       html += '<td class="last">$' + checkpointPrizesTotal.formatMoney(2) + '</td>';
       $('#orswCheckpointPrizeTR').html(html);   	  
@@ -175,7 +175,7 @@ function updateOrderReviewSoftware() {
             var amount = prize.prizeAmount;
             contestPrizesPart += amount;
             contestPrizesHTML +=
-                '<td>'+ place +' : $'+ amount.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+                '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
         });
 
         var prizeTotalDisplay = contestPrizesPart;
@@ -183,10 +183,10 @@ function updateOrderReviewSoftware() {
         if($("#DRCheckbox").is(":checked")) {
             prizeTotalDisplay += drPoints;
             contestPrizesHTML +=
-                '<td>' +' DR Points : $'+ drPoints.formatMoney(1) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+                '<td>' +' DR Points : $'+ drPoints.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
         }
 
-        contestPrizesHTML += '<td class="last">$'+ prizeTotalDisplay.formatMoney(1) +'</td>';
+        contestPrizesHTML += '<td class="last">$'+ prizeTotalDisplay.formatMoney(2) +'</td>';
         $('#orderReviewSoftwarePage .prizesTable tbody tr:eq(0)').html(contestPrizesHTML);
     } else {
         contestPrizesPart = firstPrize + secondPrize;
@@ -268,10 +268,10 @@ function updateOrderReviewStudio() {
 
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+       '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    });
    html +=   '<td>' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
-   html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
+   html += '<td class="last">$'+ contestPrizesTotal.formatMoney(2) +'</td>';
    $('#orPrizesTR').html(html);
    
    //checkpoint prizes
@@ -286,9 +286,9 @@ function updateOrderReviewStudio() {
    	  for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
    	   checkpointPrizesTotal += amount;	
        html +=
-       '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+       '<td>'+ i +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    	  }
-      html += '<td class="last">$'+ checkpointPrizesTotal.formatMoney(0) +'</td>';
+      html += '<td class="last">$'+ checkpointPrizesTotal.formatMoney(2) +'</td>';
       $('#orCheckpointPrizeTR').html(html);   	  
    }
    
@@ -312,11 +312,11 @@ function updateOrderReviewStudio() {
    }
    
    var adminFee = mainWidget.softwareCompetition.projectHeader.contestAdministrationFee;
-   $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
-   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));
+   $('#orAdminFee1').html('$'+adminFee.formatMoney(2));
+   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(2));
    
    var total = contestPrizesTotal + checkpointPrizesTotal + adminFee + specificationReviewPayment + copilotCost + reviewPayment;
-   $('#orTotal').html('$' + total.formatMoney(0));
+   $('#orTotal').html('$' + total.formatMoney(2));
 }
 
 /**
