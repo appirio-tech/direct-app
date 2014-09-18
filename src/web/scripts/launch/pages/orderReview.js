@@ -313,7 +313,7 @@ function updateOrderReviewStudio() {
    
    var adminFee = mainWidget.softwareCompetition.projectHeader.contestAdministrationFee;
    $('#orAdminFee1').html('$'+adminFee.formatMoney(2));
-   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));
+   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(2));
    
    var total = contestPrizesTotal + checkpointPrizesTotal + adminFee + specificationReviewPayment + copilotCost + reviewPayment;
    $('#orTotal').html('$' + total.formatMoney(2));
