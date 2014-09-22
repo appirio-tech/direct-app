@@ -75,7 +75,7 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             params.put("filter",
                     "creator=" + getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId()));
             params.put("metadata", "true");
-            params.put("orderBy", "challengeEndDate desc null last");
+            params.put("orderBy", "id desc null last");
 
             JsonNode jsonNode = getJsonResultFromAPI(buildServiceEndPoint(params));
 
