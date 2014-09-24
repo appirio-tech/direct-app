@@ -56,7 +56,7 @@
                                         <tr>
                                             <th>Client Name</th>
                                             <th>Billing Account Name</th>
-                                            <th>Direct Project Name</th>
+                                            <th>Project Name</th>
                                             <th>Challenge Name</th>
                                             <th>Challenge Type</th>
                                             <th>Challenge Status</th>

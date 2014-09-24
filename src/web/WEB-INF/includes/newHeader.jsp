@@ -188,7 +188,7 @@
 
         <ul>
             <li>
-                <a class="first" href="<s:url action="createdChallenges" namespace="/my"/>">Created</a>
+                <a class="first" href="<s:url action="createdChallenges" namespace="/my"/>">Challenges I Created</a>
             </li>
             <li>
                 <a class="last" href="<s:url action="challenges" namespace="/my"/>">All Challenges</a>
