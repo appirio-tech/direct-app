@@ -886,7 +886,11 @@ $(document).ready(function() {
         "iDisplayLength": 10,
         "bStateSave": false,
         "bFilter": false,
-        "bSort": false,
+        "bSort": true,
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 8 ] }
+        ],
+        "aaSorting": [],
         "bAutoWidth": false,
         "bProcessing": true,
         "sPaginationType": "full_numbers",
@@ -933,7 +937,11 @@ $(document).ready(function() {
         "iDisplayLength": 10,
         "bStateSave": false,
         "bFilter": false,
-        "bSort": false,
+        "bSort": true,
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 8 ] }
+        ],
+        "aaSorting": [],
         "bAutoWidth": false,
         "sPaginationType": "full_numbers",
         "oLanguage": {

@@ -45,6 +45,16 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     private int iDisplayLength;
 
     /**
+     * The index of sorting column, start from 0.
+     */
+    private int iSortCol_0 = -1;
+
+    /**
+     * The order of the sorting. "asc" or "desc"
+     */
+    private String sSortDir_0;
+
+    /**
      * The echo value used by datatables plugin.
      */
     private String sEcho;
@@ -244,4 +254,39 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
         this.serviceURL = serviceURL;
     }
 
+    /**
+     * Gets the sort column index.
+     *
+     * @return the sort column index.
+     */
+    public int getISortCol_0() {
+        return iSortCol_0;
+    }
+
+    /**
+     * Sets the sort column index.
+     *
+     * @param iSortCol_0 the sort column index.
+     */
+    public void setISortCol_0(int iSortCol_0) {
+        this.iSortCol_0 = iSortCol_0;
+    }
+
+    /**
+     * Gets the sort order.
+     *
+     * @return the sort order.
+     */
+    public String getSSortDir_0() {
+        return sSortDir_0;
+    }
+
+    /**
+     * Gets the sort order.
+     *
+     * @param sSortDir_0 the sort order.
+     */
+    public void setSSortDir_0(String sSortDir_0) {
+        this.sSortDir_0 = sSortDir_0;
+    }
 }
