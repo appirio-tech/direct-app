@@ -1729,6 +1729,7 @@ function fillStudioPrizes(billingProjectId) {
  * @see updateSoftwarePrizes which is for persisting all changes
  */
 function fillPrizes(billingProjectId) {
+
     if (!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
         return;
     }

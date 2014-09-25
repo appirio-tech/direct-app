@@ -702,9 +702,13 @@ function handleProjectDropDownChange() {
 
     $('.milestoneSelect select').resetSS();
 
-
+    var resources;
     // update the reviewer dropdown
-    var resources = getProjectResourcesByDirectProjectId(value);
+    if(value > 0) {
+        resources = getProjectResourcesByDirectProjectId(value);
+    } else {
+        resources = [];
+    }
 
     var $projectResources = $("#reviewer");
 
