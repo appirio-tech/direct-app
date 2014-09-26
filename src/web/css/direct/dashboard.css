@@ -13764,7 +13764,7 @@ td.amount {
 }
 
 div.totalCostContainer {
-    float: right;
+    float: left;
     margin-top: 5px;
     font-size: 14px
 }

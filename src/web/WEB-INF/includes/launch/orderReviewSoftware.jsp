@@ -92,10 +92,19 @@
 	</table>
 	<table class="total">
 		<tr>
-			<td class="toLeft">Total:</td>
+			<td class="toLeft">Estimated Challenge Total:</td>
 			<td class="toRight">$<span id="sworTotal"></span></td>
 		</tr>
 	</table>	
+
+	<tablec lass="total">
+		<tr>
+        <p class="note">
+        Note: Challenge prizes, costs, and fees in this section are estimates. <br>
+        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+        </tr>
+    </table>    
+  
 </div>
 <!-- end .contestDetails -->
 <hr class="dualDivider" />

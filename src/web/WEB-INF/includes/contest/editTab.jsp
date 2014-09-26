@@ -591,7 +591,10 @@
                     </div>
 
                     <div class="totalCostContainer">
-                        <strong>Challenge Total:&nbsp;&nbsp;$  <span id="studioTotal"></span></strong>
+                        <strong>Estimated Challenge Total:&nbsp;&nbsp;$  <span id="studioTotal"></span></strong>
+                        <p class="note">
+                        Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                     </div>
 
                     <div class="clear"></div>
