@@ -155,8 +155,17 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.5 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests)
+ * @author Veve @challenge 30045453
+ * <ul>
+ *     <li>Add method {@link #getProjectIssuesStatsAjax()}</li>
+ *     <li>Update method {@link #getProjectStatsAjax()}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, Veve, Blues, GreatKevin
- * @version 2.4
+ * @version 2.5
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -487,25 +496,43 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
             // get and set dashboard stats
             setDashboardProjectStat();
+        } catch (Throwable error) {
+            if(getModel() != null) {
+                setResult(error);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    public String getProjectIssuesStatsAjax() {
+        try {
+
+
+            Map<String, Integer> result = new HashMap<String, Integer>();
 
             // get and set project issues statistics
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
+            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
+                    getSessionData().getCurrentUserId(), getFormData().getProjectId());
             Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
 
             int totalUnresolvedIssues = 0;
             int totalOngoingBugRaces = 0;
 
-            for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
+            for (Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
                 totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
                 totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
             }
 
             // count project level issues
-            List<TcJiraIssue> activeProjectLevelBugRaces =  JiraRpcServiceWrapper.getBugRacesForDirectProject(formData.getProjectId(), FILTER_ACTIVE_BUG_RACES);
+            List<TcJiraIssue> activeProjectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProject(
+                    getFormData().getProjectId(), FILTER_ACTIVE_BUG_RACES);
             totalOngoingBugRaces += activeProjectLevelBugRaces.size();
 
-            getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
-            getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+            result.put("unresolvedIssuesNumber", totalUnresolvedIssues);
+            result.put("ongoingBugRacesNumber", totalOngoingBugRaces);
+
+            setResult(result);
 
         } catch (Throwable error) {
             if(getModel() != null) {
@@ -515,6 +542,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
         return SUCCESS;
     }
+
 
     /**
      * Gets the project activities via ajax.
