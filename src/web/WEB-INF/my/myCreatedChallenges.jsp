@@ -54,14 +54,14 @@
 
                                         <thead>
                                         <tr>
-                                            <th>Client Name</th>
-                                            <th>Billing Account Name</th>
-                                            <th>Project Name</th>
-                                            <th>Challenge Name</th>
-                                            <th>Challenge Type</th>
-                                            <th>Challenge Status</th>
-                                            <th>Challenge Start Date</th>
-                                            <th>Challenge End Date</th>
+                                            <th>Customer</th>
+                                            <th>Billing Account</th>
+                                            <th>Project</th>
+                                            <th>Challenge</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
                                             <th>Total Prize</th>
                                         </tr>
                                         </thead>
