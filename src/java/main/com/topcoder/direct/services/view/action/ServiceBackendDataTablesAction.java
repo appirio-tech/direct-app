@@ -75,6 +75,11 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     protected static final String CHALLENGE_DETAILS_TD_HTML = "<a class=\"longWordsBreak\" href=\"/direct/contest/detail.action?projectId=%d\">%s</a>";
 
     /**
+     * The HTML template for the copilot posting details URL.
+     */
+    protected static final String COPILOT_POSTING_DETAILS_TD_HTML = "<a class=\"longWordsBreak\" href=\"/direct/copilot/copilotContestDetails.action?projectId=%d\">%s</a>";
+
+    /**
      * The HTML template for the project overview details URL.
      */
     protected static final String PROJECT_OVERVIEW_TD_HTML = "<a href=\"../projectOverview?formData.projectId=%d\">%s</a>";

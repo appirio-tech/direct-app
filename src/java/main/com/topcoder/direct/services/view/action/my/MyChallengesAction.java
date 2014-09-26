@@ -122,8 +122,13 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
                     challengeData.add(
                             String.format(PROJECT_OVERVIEW_TD_HTML, c.getDirectProjectId(), c.getDirectProjectName()));
 //                    <th>Challenge Name</th>
+                    if (c.getChallengeType().equals("Copilot Posting")) {
+                        challengeData.add(
+                            String.format(COPILOT_POSTING_DETAILS_TD_HTML, c.getId(), c.getChallengeName()));
+                    } else {
                     challengeData.add(
                             String.format(CHALLENGE_DETAILS_TD_HTML, c.getId(), c.getChallengeName()));
+                    }
 //                    <th>Challenge Type</th>
                     challengeData.add(c.getChallengeType());
 
