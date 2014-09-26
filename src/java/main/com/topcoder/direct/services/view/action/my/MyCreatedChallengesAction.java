@@ -38,6 +38,11 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
     private DateFormat challengeDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm 'ET (GMT -400)'");
 
     /**
+     * The mapping between display column index and column name to sort.
+     */
+    private static final Map<Integer, String> SORTING_MAP = new HashMap<Integer, String>();
+
+    /**
      * The user service.
      */
     private UserService userService;
@@ -61,6 +66,17 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
         return SUCCESS;
     }
 
+    static {
+        SORTING_MAP.put(0, "clientname");
+        SORTING_MAP.put(1, "billingname");
+        SORTING_MAP.put(2, "directprojectname");
+        SORTING_MAP.put(3, "challengename");
+        SORTING_MAP.put(4, "challengetype");
+        SORTING_MAP.put(5, "challengestatus");
+        SORTING_MAP.put(6, "challengestartdate");
+        SORTING_MAP.put(7, "challengeenddate");
+    }
+
 
     /**
      * Handles the ajax request to get my challenges json data.
@@ -75,7 +91,18 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             params.put("filter",
                     "creator=" + getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId()));
             params.put("metadata", "true");
-            params.put("orderBy", "id desc null last");
+
+            String sortColumn = "id";
+            String sortOrder = " desc null last";
+            if (getISortCol_0() >= 0 && getSSortDir_0() != null && getSSortDir_0().trim().length() > 0) {
+                // there is sorting parameters
+                sortColumn = SORTING_MAP.containsKey(getISortCol_0()) ? SORTING_MAP.get(getISortCol_0()) : "id";
+                if (getSSortDir_0().trim().equalsIgnoreCase("asc")) {
+                    sortOrder = " asc null first";
+                }
+            }
+
+            params.put("orderBy", sortColumn + sortOrder);
 
             JsonNode jsonNode = getJsonResultFromAPI(buildServiceEndPoint(params));
 
