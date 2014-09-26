@@ -106,8 +106,11 @@
  * Version 2.10 (Release Assembly - TC Cockpit Misc Bug Fixes)
  * - Fixed the sorting routines used by my copilot postings table
  *
+ * Version 2.11 (TopCoder Direct - My Created Challenges)
+ * - Added initialization scripts for my created challenges and my challenges table.
+ *
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin, TCSDEVELOPER
- * @version 2.10
+ * @version 2.11
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -877,6 +880,103 @@ $(document).ready(function() {
 			]
 
     });
+
+
+    $.myCreatedChallengesTable = $("#myCreatedChallengesTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": false,
+        "bSort": false,
+        "bAutoWidth": false,
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ Challenges"
+        },
+        "sDom": 'rti<"bottom2"p><"bottom1"l>',
+        "bServerSide": true,
+        "sAjaxSource": "./getCreatedChallenges.action",
+        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+            oSettings.jqXHR = $.ajax( {
+                "url":  sSource,
+                "data": aoData,
+                "success": function (json) {
+                    if ( json.sError ) {
+                        oSettings.oApi._fnLog( oSettings, 0, json.sError );
+                    }
+
+                    $(oSettings.oInstance).trigger('xhr', [oSettings, json]);
+
+                    if(json.error) {
+                        showErrors(json.error.errorMessage);
+                        $(".dataTables_wrapper .dataTables_processing").remove();
+
+                    } else {
+                        fnCallback( json['result']['return'] );
+                    }
+                },
+                "dataType": "json",
+                "cache": false,
+                "type": oSettings.sServerMethod,
+                "error": function (xhr, error, thrown) {
+                    if ( error == "parsererror" ) {
+                        oSettings.oApi._fnLog( oSettings, 0, "DataTables warning: JSON data from "+
+                            "server could not be parsed. This is caused by a JSON formatting error." );
+                    }
+                }
+            } );
+        }
+    });
+
+    $.myChallengesTable = $("#myChallengesTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": false,
+        "bSort": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ Challenges"
+        },
+        "sDom": 'rti<"bottom2"p><"bottom1"l>',
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "./getMyChallenges.action",
+        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+            oSettings.jqXHR = $.ajax( {
+                "url":  sSource,
+                "data": aoData,
+                "success": function (json) {
+                    if ( json.sError ) {
+                        oSettings.oApi._fnLog( oSettings, 0, json.sError );
+                    }
+
+                    $(oSettings.oInstance).trigger('xhr', [oSettings, json]);
+
+                    if(json.error) {
+                        showErrors(json.error.errorMessage);
+                        $(".dataTables_wrapper .dataTables_processing").remove();
+                    } else {
+                        fnCallback( json['result']['return'] );
+                    }
+                },
+                "dataType": "json",
+                "cache": false,
+                "type": oSettings.sServerMethod,
+                "error": function (xhr, error, thrown) {
+                    if ( error == "parsererror" ) {
+                        oSettings.oApi._fnLog( oSettings, 0, "DataTables warning: JSON data from "+
+                            "server could not be parsed. This is caused by a JSON formatting error." );
+                    }
+                }
+            } );
+        }
+    });
+
+
+
     $("#ProjectRegistrants .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": true,

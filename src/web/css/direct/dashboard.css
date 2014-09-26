@@ -2894,6 +2894,9 @@ A{
 }
 
 /* Tables pagination */
+.dataTables_wrapper {
+    position: relative;
+}
 
 .dataTables_paginate{
 	color: #000;
@@ -2915,10 +2918,13 @@ A{
     /* the current page */
     color: #666666 !important;
     cursor: pointer;
+    padding: 0 3px;
 }
 
 .paginate_button {
+    color: #ff8a00;
     cursor: pointer;
+    padding: 0 3px;
 }
 	.previous {
 		background: url(../../images/page_prev.png) no-repeat left;
@@ -2941,12 +2947,27 @@ A{
 		color: #333;
 	 }
 
-	.dataTables_paginate .showPages{
-		float: left;
-		top: 0;
-                color: #333;
-		left: 0;
-	}
+    .dataTables_paginate .showPages {
+        float: left;
+        top: 0;
+        color: #333;
+        left: 0;
+    }
+
+.dataTables_wrapper .dataTables_processing {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    font-size: 1.0em;
+    height: 40px;
+    left: 50%;
+    margin-left: -50%;
+    margin-top: -25px;
+    padding-top: 20px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+
 .table-sidebar a{ font-weight: bold; color: #666666; text-decoration: none; }
 .table-sidebar a:hover{ color: #ec1c23; }
 .table-sidebar tr:hover td, .table-sidebar tr:hover td a{ background: #ffffcc!important; font-weight: bold!important; }

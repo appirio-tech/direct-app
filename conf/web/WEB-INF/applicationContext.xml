@@ -1573,6 +1573,17 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="myCreatedChallengesAction"
+          class="com.topcoder.direct.services.view.action.my.MyCreatedChallengesAction" scope="prototype">
+        <property name="serviceURL" value="/challenges"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="myChallengesAction"
+          class="com.topcoder.direct.services.view.action.my.MyChallengesAction" scope="prototype">
+        <property name="serviceURL" value="/challenges"/>
+    </bean>
+
     <bean id="xmlPhaseTemplatePersistence"
           class="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence"
           scope="prototype">

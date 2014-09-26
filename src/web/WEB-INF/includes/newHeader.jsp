@@ -11,6 +11,9 @@
   - Version 1.2 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
   - - Update the header for the dashboard page and admin pages
   -
+  - Version 1.3 (TopCoder Direct - My Created Challenges)
+  - - Add "My" in top nav
+  -
   - Description: The new cockpit header and navigation.
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
@@ -177,6 +180,23 @@
     </div>
 </li>
 
+<li <ui:isChallengesPage>class="current"</ui:isChallengesPage>>
+    <span class="t"><a href="javascript:;">Challenges</a> <i></i></span>
+
+    <div class="flyout lv1">
+        <span class="h"><a href="javascript:;">Challenges</a></span>
+
+        <ul>
+            <li>
+                <a class="first" href="<s:url action="createdChallenges" namespace="/my"/>">Created</a>
+            </li>
+            <li>
+                <a class="last" href="<s:url action="challenges" namespace="/my"/>">All Challenges</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
 <li <ui:isReportPage>class="current"</ui:isReportPage>>
     <span class="t"><a href="javascript:;">Reporting</a> <i></i></span>
 
@@ -208,6 +228,7 @@
         </ul>
     </div>
 </li>
+
 
 <li <ui:isAdminPage>class="current"</ui:isAdminPage> <ui:isGroupPage>class="current"</ui:isGroupPage>>
     <span class="t"><a href="javascript:;">Admin</a> <i></i></span>
@@ -283,6 +304,7 @@
         </ul>
     </div>
 </li>
+
 </ul>
 
 <div class="helloUser">
@@ -365,6 +387,20 @@
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'admin'}">
             <a href="javascript:;" class="logo"><span>Cockpit Admin</span></a>
+        </c:when>
+        <c:when test="${requestScope.PAGE_TYPE eq 'challenges'}">
+            <a href="javascript:;" class="logo"><span>
+                <c:choose>
+                    <c:when test="${requestScope.CURRENT_TAB eq 'myCreatedChallenges'}">
+                       Created Challenges
+                    </c:when>
+                    <c:when test="${requestScope.CURRENT_TAB eq 'myChallenges'}">
+                       All Challenges
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+            </span></a>
         </c:when>
         <c:when test="${requestScope.CURRENT_TAB eq 'createNewProject'}">
             <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">

@@ -26,6 +26,7 @@ import java.util.zip.ZipOutputStream;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
@@ -629,8 +630,15 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.4.1 (TopCoder Direct - My Created Challenges)
+ * <ul>
+ *     <li>Added {@link #getCookieFromRequest(javax.servlet.http.HttpServletRequest, String)}</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.4
+ * @version 1.4.1
  */
 public final class DirectUtils {
 
@@ -3295,5 +3303,34 @@ public final class DirectUtils {
                 return i + ORDINAL_SUFFIX[i % 10];
 
         }
+    }
+
+    /**
+     * Gets the cookie value from HttpServletRequest with the cookie name.
+     *
+     * @param request    the HttpServletRequest object
+     * @param cookieName the name of the cookie
+     * @return the Cookie object, return null if not found.
+     * @since 1.4.1
+     */
+    public static Cookie getCookieFromRequest(HttpServletRequest request, String cookieName) {
+        if (request == null) {
+            throw new IllegalArgumentException("The argument HttpServletRequest should not be null");
+        }
+        if (cookieName == null) {
+            throw new IllegalArgumentException("The argument cookieName should not be null");
+        }
+
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals(cookieName)) {
+                    return c;
+                }
+            }
+        }
+
+        return null;
     }
 }
