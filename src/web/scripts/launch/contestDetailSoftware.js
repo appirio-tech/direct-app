@@ -1881,7 +1881,9 @@ function updateContestCostData() {
         var prizesData = mainWidget.softwareCompetition.projectHeader.prizes;
         for(var k = 1; k < prizesData.length; ++k) {
             // start from second place cost
+            var ep = prizesData[k].prizeAmount;
             prizes.push(prizesData[k]);
+            $("td.extraPrize:eq(" + (k-1) +")").show().find("span").text(ep.formatMoney(2));
         }
     }
 

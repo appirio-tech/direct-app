@@ -39,8 +39,15 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Quick Bug Fixes 09.23)
+ * <ul>
+ *     <li>Updated {@link #getProjectResponsiblePerson()} to only retrieve for positive (valid) project ID</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.2
  */
 public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implements FormAction<ProjectMilestoneViewForm> {
 
@@ -149,16 +156,19 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
 
         try {
 
-            List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
-                    DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+            if (getFormData().getProjectId() > 0) {
+                List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
+                        DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
 
 
-            for (Permission p : permissionsByProject) {
-                Map<String, Object> data = new HashMap<String, Object>();
-                data.put("userId", p.getUserId());
-                data.put("name", p.getUserHandle());
-                result.add(data);
+                for (Permission p : permissionsByProject) {
+                    Map<String, Object> data = new HashMap<String, Object>();
+                    data.put("userId", p.getUserId());
+                    data.put("name", p.getUserHandle());
+                    result.add(data);
+                }
             }
+
             setResult(result);
 
         } catch (Throwable e) {

@@ -142,6 +142,9 @@
  * - Release Assembly - TC Group Management and Scorecard Tool Rebranding
  * -- Update the tooltip header color from red to grey
  *
+ * - TopCoder Direct - Quick Bug Fixes 09.23 @author Veve @challenge 30045986
+ * - Fix the challenge health dashboard -  Registration Box alignment issue.
+ *
  */
 
 body{
@@ -8330,6 +8333,14 @@ table.resultTable td.last a img {
     padding-top: 9px;
 }
 
+.appositeContainer .registrationModule .content .listContent p {
+    margin: 0px 0px 4px 18px;
+}
+
+.appositeContainer .registrationModule .content .listContent .statusP {
+    margin: 0px 0px 4px 18px;
+}
+
 .appositeContainer.studio .registrationModule .content {
     height: 59px;
     padding-top: 14px;
@@ -8382,7 +8393,7 @@ table.resultTable td.last a img {
 }
 
 .appositeContainer .registrationModule .wrap {
-    width: 289px;
+    /*width: 289px;*/
     margin: 0 auto;
 }
 
