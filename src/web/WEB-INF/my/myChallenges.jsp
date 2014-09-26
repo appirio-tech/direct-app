@@ -42,13 +42,14 @@
 
                                         <colgroup>
                                             <col width="8%"/>
-                                            <col width="17%"/>
+                                            <col width="16%"/>
                                             <col width="13%"/>
                                             <col width="12%"/>
-                                            <col width="10%"/>
+                                            <col width="7%"/>
+                                            <col width="7%"/>
                                             <col width="15%"/>
                                             <col width="15%"/>
-                                            <col width="10%"/>
+                                            <col width="7%"/>
                                         </colgroup>
 
                                         <thead>
@@ -58,6 +59,7 @@
                                             <th>Direct Project Name</th>
                                             <th>Challenge Name</th>
                                             <th>Challenge Type</th>
+                                            <th>Challenge Status</th>
                                             <th>Challenge Start Date</th>
                                             <th>Challenge End Date</th>
                                             <th>Total Prize</th>

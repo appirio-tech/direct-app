@@ -110,6 +110,9 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
 //                    <th>Challenge Type</th>
                     challengeData.add(c.getChallengeType());
 
+                    // challenge status
+                    challengeData.add(c.getChallengeStatus());
+
 //                    <th>Challenge Start Date</th>
                     challengeData.add(challengeDateFormat.format(c.getChallengeStartDate()));
 

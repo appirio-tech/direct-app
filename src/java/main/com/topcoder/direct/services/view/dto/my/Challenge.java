@@ -25,6 +25,11 @@ public class Challenge {
     private String challengeName;
 
     /**
+     * The challenge status.
+     */
+    private String challengeStatus;
+
+    /**
      * The challenge type.
      */
     private String challengeType;
@@ -311,5 +316,23 @@ public class Challenge {
      */
     public void setDrPoints(double drPoints) {
         this.drPoints = drPoints;
+    }
+
+    /**
+     * Gets the challenge status.
+     *
+     * @return the challenge status.
+     */
+    public String getChallengeStatus() {
+        return challengeStatus;
+    }
+
+    /**
+     * Sets the challenge status.
+     *
+     * @param challengeStatus the challenge status.
+     */
+    public void setChallengeStatus(String challengeStatus) {
+        this.challengeStatus = challengeStatus;
     }
 }
