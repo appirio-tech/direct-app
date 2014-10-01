@@ -266,12 +266,12 @@
               </div>
               <div class="clearFix"></div>
           </div>
-
+          <br/>
           <div>
             <span class="name fixWidthName"><strong>Created By</strong></span>
-                        <span class="value">
-                            <span id="challegneCreatorLabel"></span>
-                        </span>
+               
+            <span class ='small_info_spec' id="challegneCreatorLabel"></span>
+                  
           </div>
 
 
