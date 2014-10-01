@@ -733,6 +733,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.subEndDate = parseDate(contestJson.subEndDate);
 
     $('#contestTypeNameText').html(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
+    $('#contestTypeNameText').html(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
 
 
     // copilots
@@ -773,6 +774,7 @@ function initContest(contestJson) {
    projectHeader.setBillingProject(contestJson.billingProjectId);
    projectHeader.setProjectName(contestJson.contestName);
    projectHeader.properties = contestJson.properties;
+   projectHeader.challengeCreator = contestJson.challengeCreator;
 
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
@@ -1108,11 +1110,14 @@ function populateTypeSection() {
 	$('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#contestNameText').html(mainWidget.softwareCompetition.assetDTO.name);
+  $('#challegneCreatorLabel').html(mainWidget.softwareCompetition.projectHeader.challengeCreator);
+  
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
 	$('#rContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+  $('#rChallengeCreator').html(mainWidget.softwareCompetition.projectHeader.challengeCreator);
 	$('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);

@@ -79,6 +79,10 @@
                 <td class="first_tab_type"><strong>Challenge Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
+            <tr>
+                <td class="first_tab_type"><strong>Created By</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
+            </tr>
             <tr></tr>
         </table>
     </div><!-- End .detailsContent -->
@@ -186,6 +190,14 @@
                     </select>
                 </div>
             </div>
+
+            <div>
+            <span class="name fixWidthName"><strong>Created By</strong></span>
+                        <span class="value">
+                            <span id="challegneCreatorLabel"></span>
+                        </span>
+            </div>
+     
 
         </div>
         <p class="save">

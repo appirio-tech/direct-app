@@ -177,6 +177,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("directProjectMilestoneId", bean.getDirectProjectMilestoneId());
         result.put("directProjectMilestoneName", bean.getDirectProjectMilestoneName());
         result.put("securityGroupId", project.getSecurityGroupId());
+        result.put("challengeCreator", project.getCreator());
 
         // get resources of project
         Resource[] resources = bean.getResources();

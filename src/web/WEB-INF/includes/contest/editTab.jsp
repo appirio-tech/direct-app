@@ -109,6 +109,10 @@
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
+            <tr>
+                <td class="first_tab_type"><strong>Created By</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
+            </tr>
             <tr></tr>            
             <%--<tr>--%>
                 <%--<td class="first_tab_type"><strong>Challenge Fee</strong></td>--%>
@@ -235,8 +239,14 @@
                             </s:iterator>
                       </select>
                  </div>
+                 <br /><br />
+                 <div>
+                    <span class="name fixWidthName"><strong>Created By</strong></span>
+                                <span class="value">
+                                    <span id="challegneCreatorLabel"></span>
+                                </span>
+                </div>
                  </div>
-                 
                  </div>
                  <p class="save">                   
                      <a href="javascript:;" class="cancel_text">cancel</a>
