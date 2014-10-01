@@ -240,8 +240,9 @@
                       </select>
                  </div>
                  <br /><br />
-                 <div>
+               
                     <span class="name fixWidthName"><strong>Created By</strong></span>
+                  <div>
                                 <span class="value">
                                     <span id="challegneCreatorLabel"></span>
                                 </span>
