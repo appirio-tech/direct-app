@@ -83,7 +83,7 @@ import javax.xml.bind.annotation.XmlType;
  * </p>
  *
  * @author tuenm, iamajia, duxiaoyang, bugbuka, GreatKevin
- * @version 1.8
+ * @version 1.9
  * @since 1.0
  */
 @XmlType(name = "project", namespace = "com.topcoder.management.project")
@@ -193,6 +193,13 @@ public class Project extends AuditableObject implements Serializable {
      * @since Cockpit Release Assembly for Receipts
      */
     private String tcDirectProjectName;
+
+    /**
+     * The creator
+     * 
+     * @since 
+     */
+    private String creator;
 
      /**
      * whether it is dev only
@@ -764,5 +771,26 @@ public class Project extends AuditableObject implements Serializable {
      */
     public void setAutoAssignReviewerId(long autoAssignReviewerId) {
         this.autoAssignReviewerId = autoAssignReviewerId;
+    }
+
+    /**
+     * Gets the creator
+     * 
+     * @return the creator
+     * @since 1.9
+     */
+    public String getCreator() {
+        return this.creator;
+    }
+
+   
+    /**
+     * Sets creator
+     * 
+     * @param creator
+     * @since 1.9
+     */
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }

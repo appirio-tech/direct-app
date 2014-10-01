@@ -262,6 +262,14 @@
                     </strong>
                 </li>
 
+                <li>
+                    <label>Created By :</label>
+                    
+                    <strong id="challengeCreatorLabel">
+                            ${projectHeader.creator}
+                    </strong>
+                </li>
+
             </ul>
         </div>
     </div>
@@ -369,6 +377,11 @@
                         <label for="notHaveBudget">b. I don't have a budget yet.</label> 
                     </li>
                 </ul>                
+            </div>
+            <div></div>
+            <div class="row budgetRow experienceRow">
+                        <label for="contestNameInput2">Created By:</label>
+                        <label for="contestNameInput2" class="value" id="challegneCreatorLabel"> ${projectHeader.creator}</label>
             </div>
 
 
