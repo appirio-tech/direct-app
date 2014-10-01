@@ -9,6 +9,10 @@ We have scheduled your competition.  The contest will now undergo a specificatio
 </p>
 
 <p>
+You can track the status of this competition by visiting %COMPETITION_URL%
+</p>
+
+<p>
 You can track the status of this competition, and all your competitions, by visiting http\://www.topcoder.com/direct
 </p>
 
