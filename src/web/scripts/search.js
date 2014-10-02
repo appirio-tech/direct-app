@@ -888,7 +888,7 @@ $(document).ready(function() {
         "bFilter": false,
         "bSort": true,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 8 ] }
+            { 'bSortable': false, 'aTargets': [ 9 ] }
         ],
         "aaSorting": [],
         "bAutoWidth": false,
@@ -939,7 +939,7 @@ $(document).ready(function() {
         "bFilter": false,
         "bSort": true,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 8 ] }
+            { 'bSortable': false, 'aTargets': [ 9 ] }
         ],
         "aaSorting": [],
         "bAutoWidth": false,
