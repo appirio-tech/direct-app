@@ -2149,6 +2149,10 @@ public class ProjectServicesImpl implements ProjectServices {
                             projectHeader.getAutoAssignReviewerId() > 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                         // code with auto assigned review only requires one reviewer.
                         p.setAttribute("Reviewer Number", "1");
+                    } else if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
+                            projectHeader.getAutoAssignReviewerId() == 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                        // code with auto assigned review only requires one reviewer.
+                        p.setAttribute("Reviewer Number", "2");
                     }
                 }
             }
@@ -5357,14 +5361,15 @@ public class ProjectServicesImpl implements ProjectServices {
                         ) {
                     // 1) copilot posting 2) studio 3) bug hunt 4) code with auto assigned review only requires one reviewer.
                     p.setAttribute("Reviewer Number", "1");
+                } else if(projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
+                                projectHeader.getAutoAssignReviewerId() == 0) {
+                    p.setAttribute("Reviewer Number", "2");
                 } else {
                     p.setAttribute("Reviewer Number", "3");
                 }
 
 
-                if(projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId()) {
-                    p.setAttribute("Reviewer Number", "2");
-                }
+                
             }
 			else if (p.getPhaseType().getName().equals("Secondary Reviewer Review"))
             {
