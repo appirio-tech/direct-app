@@ -382,7 +382,7 @@
             <br/>
             <div class="row budgetRow experienceRow">
                         <label for="contestNameInput2">Created By:</label>
-                        <label for="contestNameInput2" id="challegneCreatorLabel"> ${projectHeader.creator}</label>
+                        <span id="challegneCreatorLabel" > ${projectHeader.creator}</span>
             </div>
 
 
