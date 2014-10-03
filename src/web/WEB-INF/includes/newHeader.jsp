@@ -392,7 +392,7 @@
             <a href="javascript:;" class="logo"><span>
                 <c:choose>
                     <c:when test="${requestScope.CURRENT_TAB eq 'myCreatedChallenges'}">
-                       Created Challenges
+                       Challenges I Created 
                     </c:when>
                     <c:when test="${requestScope.CURRENT_TAB eq 'myChallenges'}">
                        All Challenges
