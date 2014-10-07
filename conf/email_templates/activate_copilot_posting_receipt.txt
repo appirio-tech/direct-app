@@ -15,7 +15,7 @@ You can track the status of this competition by visiting %COMPETITION_URL%
 </p>
 
 <p>
-You can track the status of this competition, and all your competitions, by visiting https\://www.topcoder.com/direct
+You can track the status of all your competitions, by visiting https\://www.topcoder.com/direct
 </p>
 
 <p>
