@@ -459,7 +459,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * 
      * @since 1.1.2
      */
-    public static final long PUBLIC_SUBMITTER_TERMS_ID = 20703;
+    public static final long PUBLIC_SUBMITTER_TERMS_ID = 21173;
 	
 	/**
      * <p>
