@@ -11,7 +11,7 @@ will be able to review all of the Copilots and their submissions, and then choos
 </p>
 
 <p>
-You can track the status of this competition by visiting %COMPETITION_URL%
+You can track the status of this competition by visiting <a href\="%COMPETITION_URL%">%COMPETITION_URL%</a>
 </p>
 
 <p>

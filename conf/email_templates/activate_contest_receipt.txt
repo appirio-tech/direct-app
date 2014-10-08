@@ -9,7 +9,7 @@ We have scheduled your competition.  The contest will now undergo a specificatio
 </p>
 
 <p>
-You can track the status of this competition by visiting %COMPETITION_URL%
+You can track the status of this competition by visiting <a href\="%COMPETITION_URL%">%COMPETITION_URL%</a>
 </p>
 
 <p>
