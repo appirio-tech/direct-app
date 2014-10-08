@@ -13,7 +13,7 @@ You can track the status of this competition by visiting <a href\="%COMPETITION_
 </p>
 
 <p>
-You can track the status of all your competitions, by visiting http\://www.topcoder.com/direct
+You can track the status of all your competitions, by visiting by visiting <a href\="https\://www.topcoder.com/direct">https\://www.topcoder.com/direct</a>
 </p>
 
 <p>
