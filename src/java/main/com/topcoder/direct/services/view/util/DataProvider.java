@@ -2138,29 +2138,14 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
 
 
-        if(DirectUtils.isCockpitAdmin(currentUser)) {
-            // cockpit admin, get all projects
-            Request request = new Request();
-            request.setContentHandle("direct_my_projects_v3_admin");
-            request.setProperty("uid", String.valueOf(userId));
-            request.setProperty("directProjectStatusId", String.valueOf(directProjectStatusId));
+        
+        Request request = new Request();
+        request.setContentHandle("is_customer_admin");
+        request.setProperty("uid", String.valueOf(userId));
 
-            final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v3_admin");
-            final int recordNum = resultContainer.size();
-            for (int i = 0; i < recordNum; i++) {
-                long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-                String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-                result.put(tcDirectProjectId, tcDirectProjectName);
-            }
+        ResultSetContainer resultContainer = dataAccessor.getData(request).get("is_customer_admin");
 
-        } else {
-            Request request = new Request();
-            request.setContentHandle("is_customer_admin");
-            request.setProperty("uid", String.valueOf(userId));
-
-            ResultSetContainer resultContainer = dataAccessor.getData(request).get("is_customer_admin");
-
-            if(!resultContainer.isEmpty()) {
+        if(!resultContainer.isEmpty()) {
                 // is customer admin, get customer admin's projects
                 request = new Request();
                 request.setContentHandle("direct_my_projects_v3_customer_admin");
@@ -2176,7 +2161,7 @@ public class DataProvider {
                 }
 
 
-            }
+        } else {
 
             request = new Request();
             request.setContentHandle("direct_my_projects_v3_user");
@@ -2190,9 +2175,10 @@ public class DataProvider {
                 String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
                 result.put(tcDirectProjectId, tcDirectProjectName);
             }
-
-
         }
+
+
+     
 
         return result;
     }
