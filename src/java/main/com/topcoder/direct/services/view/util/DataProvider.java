@@ -1017,7 +1017,18 @@ import java.util.Set;
  *     <li>Updated method {@link #getProjectContests(long, long)} to include the forum type data for each contest</li>
  *     <li>Updated method {@link #getActiveContests(long)} to include the forum type data for each contest</li>
  *     <li>Updated method {@link #getContestDashboardData(long, boolean, boolean)} to include the forum type data for the contest</li>
+ * </ul>
+ * </p>
  *
+ * <p>
+ * Version 6.4 (TopCoder Direct Performance Improvement - My Projects)
+ * <ul>
+ *     <li>Add method {@link #getProjectsOfUser(long, long)}</li>
+ *     <li>Updated {@link #getUserProjects(long)} to use the added {@link #getProjectsOfUser(long, long)}</li>
+ *     <li>Updated {@link #getUserProjectsList(long)} to use the added {@link #getProjectsOfUser(long, long)}</li>
+ *     <li>Add method {@link #fillGlobalClientBillingProjectCache()}</li>
+ *     <li>Update method {@link #getDashboardClientBillingProjectMappingsV2(com.topcoder.security.TCSubject)}
+ *     to use the added method {@link #fillGlobalClientBillingProjectCache()}</li>
  * </ul>
  * </p>
  *
@@ -1025,7 +1036,7 @@ import java.util.Set;
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, 
  * @author Ghost_141, GreatKevin, Veve, GreatKevin
- * @version 6.3
+ * @version 6.4
  * @since 1.0
  */
 public class DataProvider {
@@ -2112,6 +2123,81 @@ public class DataProvider {
     }
 
     /**
+     * Get all the projects a direct user has access to.
+     *
+     * @param userId the user id.
+     * @param directProjectStatusId the direct project status id. Use 0 to indicate all the direct project status id.
+     * @return the map of projects. The key is project ID, the value is project name
+     * @throws Exception if any error.
+     * @since 6.4
+     */
+    public static Map<Long, String> getProjectsOfUser(long userId, long directProjectStatusId) throws Exception {
+
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+        Map<Long, String> result = new LinkedHashMap<Long, String>();
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+
+        if(DirectUtils.isCockpitAdmin(currentUser)) {
+            // cockpit admin, get all projects
+            Request request = new Request();
+            request.setContentHandle("direct_my_projects_v3_admin");
+            request.setProperty("uid", String.valueOf(userId));
+            request.setProperty("directProjectStatusId", String.valueOf(directProjectStatusId));
+
+            final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v3_admin");
+            final int recordNum = resultContainer.size();
+            for (int i = 0; i < recordNum; i++) {
+                long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+                String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+                result.put(tcDirectProjectId, tcDirectProjectName);
+            }
+
+        } else {
+            Request request = new Request();
+            request.setContentHandle("is_customer_admin");
+            request.setProperty("uid", String.valueOf(userId));
+
+            ResultSetContainer resultContainer = dataAccessor.getData(request).get("is_customer_admin");
+
+            if(!resultContainer.isEmpty()) {
+                // is customer admin, get customer admin's projects
+                request = new Request();
+                request.setContentHandle("direct_my_projects_v3_customer_admin");
+                request.setProperty("uid", String.valueOf(userId));
+                request.setProperty("directProjectStatusId", String.valueOf(directProjectStatusId));
+                resultContainer = dataAccessor.getData(request).get("direct_my_projects_v3_customer_admin");
+                final int recordNum = resultContainer.size();
+
+                for (int i = 0; i < recordNum; i++) {
+                    long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+                    String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+                    result.put(tcDirectProjectId, tcDirectProjectName);
+                }
+
+
+            }
+
+            request = new Request();
+            request.setContentHandle("direct_my_projects_v3_user");
+            request.setProperty("uid", String.valueOf(userId));
+            request.setProperty("directProjectStatusId", String.valueOf(directProjectStatusId));
+            resultContainer = dataAccessor.getData(request).get("direct_my_projects_v3_user");
+            final int recordNum = resultContainer.size();
+
+            for (int i = 0; i < recordNum; i++) {
+                long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+                String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+                result.put(tcDirectProjectId, tcDirectProjectName);
+            }
+
+
+        }
+
+        return result;
+    }
+
+    /**
      * <p>Gets the list of projects associated with specified user.</p>
      *
      * @param userId a <code>long</code> providing the user ID.
@@ -2119,43 +2205,35 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      */
     public static List<ProjectBriefDTO> getUserProjects(long userId) throws Exception {
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        Request request = new Request();
-        request.setContentHandle("direct_my_projects_v2");
-        request.setProperty("uid", String.valueOf(userId));
-        request.setProperty("directProjectStatusId", "1");
 
+        // long currentTime = System.currentTimeMillis();
         List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v2");
-        final int recordNum = resultContainer.size();
-        for (int i = 0; i < recordNum; i++) {
-            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-            projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
-        }
+        Map<Long, String> projectsOfUser = getProjectsOfUser(userId, 1);
 
+        for (Map.Entry<Long, String> entry : projectsOfUser.entrySet()) {
+            projects.add(createProject(entry.getKey(), entry.getValue()));
+        }
 
         // get current user in session
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
         // if user id equals to current user id, get customers for it
         if (currentUser.getUserId() == userId) {
-            // get all clients of the user
-            Map<Long, String> allClients = DirectUtils.getAllClients(currentUser);
+            Map<Long, String> clients = DirectUtils.getGlobalClientsCache();
+            Map<Long, Long> projectClients = DirectUtils.getGlobalProjectClientCache();
 
-            for(Map.Entry<Long, String> client : allClients.entrySet()) {
-                Map<Long, String> projectsForClient = DirectUtils.getProjectsForClient(currentUser, client.getKey());
-
-                for(ProjectBriefDTO p : projects) {
-                    if (projectsForClient.containsKey(p.getId())) {
-                        p.setCustomerId(client.getKey());
-                        p.setCustomerName(client.getValue());
-                    }
+            for (ProjectBriefDTO p : projects) {
+                Long clientID = projectClients.get(p.getId());
+                if (clientID != null && clientID > 0) {
+                    p.setCustomerId(clientID);
+                    p.setCustomerName(clients.get(clientID));
                 }
-
             }
+
         }
+        // System.out.println("PERFORMANCE_LOG:" + DirectUtils.getTCSubjectFromSession().getUserId()
+        //        + " DataProvider#getUserProjects took " + (System.currentTimeMillis() - currentTime) + " ms");
 
         return projects;
     }
@@ -2168,21 +2246,19 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      */
     public static List<ProjectBriefDTO> getUserProjectsList(long userId) throws Exception {
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        Request request = new Request();
-        request.setContentHandle("direct_my_projects_v2");
-        request.setProperty("uid", String.valueOf(userId));
-        request.setProperty("directProjectStatusId", "0");
+
+        // long currentTime = System.currentTimeMillis();
 
         List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v2");
-        final int recordNum = resultContainer.size();
-        for (int i = 0; i < recordNum; i++) {
-            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-            projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
+        Map<Long, String> projectsOfUser = getProjectsOfUser(userId, 0);
+
+        for (Map.Entry<Long, String> entry : projectsOfUser.entrySet()) {
+            projects.add(createProject(entry.getKey(), entry.getValue()));
         }
+
+        // System.out.println("PERFORMANCE_LOG:" + DirectUtils.getTCSubjectFromSession().getUserId()
+        //        + " DataProvider#getUserProjectsList took " + (System.currentTimeMillis() - currentTime) + " ms");
 
         return projects;
     }
@@ -4851,6 +4927,115 @@ public class DataProvider {
         return result;
     }
 
+
+    /**
+     * Fills the global client-billing-project mapping cache in the application level.
+     *
+     * @throws Exception if any eror.
+     * @since 6.4
+     */
+    public static void fillGlobalClientBillingProjectCache() throws Exception {
+
+        final Map<String, Object> applicationContext = DirectUtils.getApplicationContext();
+
+        Map<String, Object> globalResult = new HashMap<String, Object>();
+
+        // project ID --> ClientBillingDirectProjectMappingDTO(Client ID, Billing ID, Project ID)
+        Map<Long, ClientBillingDirectProjectMappingDTO> globalRecordCache = new HashMap<Long, ClientBillingDirectProjectMappingDTO>();
+
+        if (applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE) == null
+                || applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE) == null) {
+
+            DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+            Request request = new Request();
+
+            ResultSetContainer resultContainer = null;
+            // get from the database
+            request.setContentHandle("admin_client_billing_accounts_v2");
+
+            // client ID -> MAP<Billing ID -> Billing Name>
+            Map<Long, Map<Long, String>> globalClientBillingMap = new HashMap<Long, Map<Long, String>>();
+
+            // client ID -> MAP<Project ID -> Project Name>
+            Map<Long, Map<Long, String>> globalClientProjectMap = new HashMap<Long, Map<Long, String>>();
+
+            // billing ID -> MAP<Project ID -> Project NAME>
+            Map<Long, Map<Long, String>> globalBillingProjectMap = new HashMap<Long, Map<Long, String>>();
+
+            // MAP<Client ID -> Client NAME>
+            Map<Long, String> globalClientsMap = new HashMap<Long, String>();
+
+            // MAP<Project ID -> Client ID>
+            Map<Long, Long> globalProjectClientMap = new HashMap<Long, Long>();
+
+            resultContainer = dataAccess.getData(request).get(
+                    "admin_client_billing_accounts_v2");
+
+            if (resultContainer != null) {
+                for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+                    long billingId = row.getLongItem("billing_account_id");
+                    String billingName = row.getStringItem("billing_account_name");
+                    long clientId = row.getLongItem("client_id");
+                    String clientName = row.getStringItem("client_name");
+                    long directProjectId = row.getLongItem("direct_project_id");
+                    String directProjectName = row.getStringItem("direct_project_name");
+                    // put into clients map
+                    globalClientsMap.put(clientId, clientName);
+
+                    // put into clientBillingMap
+                    Map<Long, String> billingsForClient = globalClientBillingMap.get(clientId);
+                    if (billingsForClient == null) {
+                        billingsForClient = new HashMap<Long, String>();
+                        globalClientBillingMap.put(clientId, billingsForClient);
+                    }
+
+                    billingsForClient.put(billingId, billingName);
+
+                    // put into clientProjectMap
+                    Map<Long, String> projectForClient = globalClientProjectMap.get(clientId);
+                    if (projectForClient == null) {
+                        projectForClient = new HashMap<Long, String>();
+                        globalClientProjectMap.put(clientId, projectForClient);
+                    }
+
+                    projectForClient.put(directProjectId, directProjectName);
+
+                    // put into billingProjectMap
+                    Map<Long, String> projectForBilling = globalBillingProjectMap.get(billingId);
+                    if (projectForBilling == null) {
+                        projectForBilling = new HashMap<Long, String>();
+                        globalBillingProjectMap.put(billingId, projectForBilling);
+                    }
+
+                    projectForBilling.put(directProjectId, directProjectName);
+
+                    globalProjectClientMap.put(directProjectId, clientId);
+
+                    ClientBillingDirectProjectMappingDTO mappingDTO = new ClientBillingDirectProjectMappingDTO();
+                    mappingDTO.setBillingId(billingId);
+                    mappingDTO.setBillingName(billingName);
+                    mappingDTO.setClientId(clientId);
+                    mappingDTO.setClientName(clientName);
+                    mappingDTO.setProjectId(directProjectId);
+                    mappingDTO.setProjectName(directProjectName);
+                    globalRecordCache.put(directProjectId, mappingDTO);
+                }
+            }
+
+            globalResult.put("client.billing", globalClientBillingMap);
+            globalResult.put("client.project", globalClientProjectMap);
+            globalResult.put("billing.project", globalBillingProjectMap);
+            globalResult.put("clients", globalClientsMap);
+            globalResult.put("project.client", globalProjectClientMap);
+            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE, globalResult);
+            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE,
+                    globalRecordCache);
+        }
+    }
+
+
     /**
      * Gets the clients and billing accounts for the admin user. This method is a new method to replace the
      * method getDashboardClientBillingProjectMappings. It gets the project and billing account relationship
@@ -4865,93 +5050,13 @@ public class DataProvider {
     public static Map<String, Object> getDashboardClientBillingProjectMappingsV2(TCSubject tcSubject)
             throws Exception {
 
-        Map<String, Object> globalResult = new HashMap<String, Object>();
-        Map<Long, ClientBillingDirectProjectMappingDTO> globalRecordCache = new HashMap<Long, ClientBillingDirectProjectMappingDTO>();
-        Map<Long, Map<Long, String>> globalClientBillingMap = new HashMap<Long, Map<Long, String>>();
-        Map<Long, Map<Long, String>> globalClientProjectMap = new HashMap<Long, Map<Long, String>>();
-        Map<Long, Map<Long, String>> globalBillingProjectMap = new HashMap<Long, Map<Long, String>>();
-        Map<Long, String> globalClientsMap = new HashMap<Long, String>();
-        Map<Long, Long> globalProjectClientMap = new HashMap<Long, Long>();
+        // fill into the cache if it's not filled
+        fillGlobalClientBillingProjectCache();
 
-        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-        Request request = new Request();
-
-        ResultSetContainer resultContainer = null;
-
-        final Map<String, Object> applicationContext = DirectUtils.getApplicationContext();
-
-        if(applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE) != null
-                && applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE) != null) {
-            globalResult = (Map<String, Object>) applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
-            globalRecordCache = (Map<Long, ClientBillingDirectProjectMappingDTO>) applicationContext.get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE);
-        } else {
-            // get from the database
-            request.setContentHandle("admin_client_billing_accounts_v2");
-            resultContainer = dataAccess.getData(request).get(
-                    "admin_client_billing_accounts_v2");
-
-        if (resultContainer != null) {
-            for (ResultSetContainer.ResultSetRow row : resultContainer) {
-
-                long billingId = row.getLongItem("billing_account_id");
-                String billingName = row.getStringItem("billing_account_name");
-                long clientId = row.getLongItem("client_id");
-                String clientName = row.getStringItem("client_name");
-                long directProjectId = row.getLongItem("direct_project_id");
-                String directProjectName = row.getStringItem("direct_project_name");
-                // put into clients map
-                globalClientsMap.put(clientId, clientName);
-
-                    // put into clientBillingMap
-                    Map<Long, String> billingsForClient = globalClientBillingMap.get(clientId);
-                    if (billingsForClient == null) {
-                        billingsForClient = new HashMap<Long, String>();
-                        globalClientBillingMap.put(clientId, billingsForClient);
-                    }
-
-                billingsForClient.put(billingId, billingName);
-
-                // put into clientProjectMap
-                Map<Long, String> projectForClient = globalClientProjectMap.get(clientId);
-                if (projectForClient == null) {
-                    projectForClient = new HashMap<Long, String>();
-                    globalClientProjectMap.put(clientId, projectForClient);
-                }
-
-                projectForClient.put(directProjectId, directProjectName);
-
-                // put into billingProjectMap
-                Map<Long, String> projectForBilling = globalBillingProjectMap.get(billingId);
-                if (projectForBilling == null) {
-                    projectForBilling = new HashMap<Long, String>();
-                    globalBillingProjectMap.put(billingId, projectForBilling);
-                }
-
-                projectForBilling.put(directProjectId, directProjectName);
-
-                globalProjectClientMap.put(directProjectId, clientId);
-
-                ClientBillingDirectProjectMappingDTO mappingDTO = new ClientBillingDirectProjectMappingDTO();
-                mappingDTO.setBillingId(billingId);
-                mappingDTO.setBillingName(billingName);
-                mappingDTO.setClientId(clientId);
-                mappingDTO.setClientName(clientName);
-                mappingDTO.setProjectId(directProjectId);
-                mappingDTO.setProjectName(directProjectName);
-                globalRecordCache.put(directProjectId, mappingDTO);
-        }
-      }
-
-            globalResult.put("client.billing", globalClientBillingMap);
-            globalResult.put("client.project", globalClientProjectMap);
-            globalResult.put("billing.project", globalBillingProjectMap);
-            globalResult.put("clients", globalClientsMap);
-            globalResult.put("project.client", globalProjectClientMap);
-            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE, globalResult);
-            DirectUtils.getApplicationContext().put(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE, globalRecordCache);
-        }
-
+        Map<String, Object> globalResult = (Map<String, Object>)
+                DirectUtils.getApplicationContext().get(DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
+        Map<Long, ClientBillingDirectProjectMappingDTO> globalRecordCache = (Map<Long, ClientBillingDirectProjectMappingDTO>)
+                DirectUtils.getApplicationContext().get(DirectUtils.PROJECT_BILLING_MAPPING_RECORD_CACHE);
 
         if (DirectUtils.isTcOperations(tcSubject) || DirectUtils.isTcStaff(tcSubject)) {
             return globalResult;
@@ -4965,7 +5070,7 @@ public class DataProvider {
 
             // get part of the result with the project ids the use has access to
             List<ProjectBriefDTO> projects = getUserProjectsList(tcSubject.getUserId());
-            for(ProjectBriefDTO data : projects) {
+            for (ProjectBriefDTO data : projects) {
                 if (globalRecordCache.containsKey(data.getId())) {
                     ClientBillingDirectProjectMappingDTO dto = globalRecordCache.get(data.getId());
                     long billingId = dto.getBillingId();
