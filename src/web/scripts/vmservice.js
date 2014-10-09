@@ -172,7 +172,7 @@ if (!window.vmService) var vmService = {
                 r = r.result['return'];
                 var errors = r.errors;
                 if (errors) {
-                    $('#generalError').html("failed to load vm data");
+                    $('#generalError').html("Failed to load vm data");
                 } else {
                     vmTable.fnClearTable();
                     for (var i=0; i<r.length; i++) {

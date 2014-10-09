@@ -732,8 +732,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    mainWidget.softwareCompetition.subEndDate = parseDate(contestJson.subEndDate);
 
-    $('#contestTypeNameText').html(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-    $('#contestTypeNameText').html(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
+   $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
 
 
     // copilots
@@ -1109,30 +1108,30 @@ function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
-	$('#contestNameText').html(mainWidget.softwareCompetition.assetDTO.name);
-  $('#challegneCreatorLabel').html(mainWidget.softwareCompetition.projectHeader.challengeCreator);
+	$('#contestNameText').text(mainWidget.softwareCompetition.assetDTO.name);
+        $('#challegneCreatorLabel').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
   
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//display
-	$('#rContestTypeName').html($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
-	$('#rContestName').html(mainWidget.softwareCompetition.assetDTO.name);
-  $('#rChallengeCreator').html(mainWidget.softwareCompetition.projectHeader.challengeCreator);
-	$('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
+	$('#rContestName').text(mainWidget.softwareCompetition.assetDTO.name);
+        $('#rChallengeCreator').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
+	$('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
-		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
+		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
 
     if (mainWidget.softwareCompetition.projectMilestoneId > 0) {
-        $('#rProjectMilestone').html(mainWidget.softwareCompetition.projectMilestoneName);
+        $('#rProjectMilestone').text(mainWidget.softwareCompetition.projectMilestoneName);
     } else {
-        $('#rProjectMilestone').html('');
+        $('#rProjectMilestone').text('');
     }
 
 	//$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
 
   if (mainWidget.softwareCompetition.copilotUserId <=0) {
-  	 $("#rCopilots").html("Unassigned");
+  	 $("#rCopilots").text("Unassigned");
   } else {
   	 $("#rCopilots").html('<a href=https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&cr=' + mainWidget.softwareCompetition.copilotUserId + '>' + mainWidget.softwareCompetition.copilotUserName + '</a>');
   }
@@ -2247,7 +2246,7 @@ function showPrizeSectionEdit() {
         if ($(this).find(":selected").data("cca")){
             mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
             $("#chkboxCCA").attr('checked','true').attr('disabled','true');
-            $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+            $('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
         }else{
             $("#chkboxCCA").removeAttr('disabled');
         }
@@ -2483,7 +2482,7 @@ function populateSpecSection(initFlag) {
         $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
 
         $.each(problems, function(key, value) {
-            $("#problems").append($('<option></option>').val(key).html(value));
+            $("#problems").append($('<option></option>').val(key).text(value));
         });
         $("#problems").val(marathonSpec.problemId);
         $("#rProblemStatement").text(marathonSpec.problemName);
@@ -2700,7 +2699,7 @@ function populateDocumentSection() {
     var html = "";
     var template = unescape($('#documentTemplate tbody').html());
     $.each(swDocuments, function (i, document) {
-        html += $.validator.format(template, (i + 1), document['fileName'], document['description'],
+        html += $.validator.format(template, (i + 1), htmlEncode(document['fileName']), htmlEncode(document['description']),
             document['documentId']);
     });
     $('#documentTable').html(html);
@@ -2995,7 +2994,7 @@ function handleProjectDropDownChange() {
     $contestMilestones.append($('<option></option>').val(0).html("Please select a milestone to associate"));
 
     $.each(milestones, function(id, value) {
-        $contestMilestones.append($('<option></option>').val(value.id).html(value.name).attr('title', value.description));
+        $contestMilestones.append($('<option></option>').val(value.id).text(value.name).attr('title', value.description));
     });
 
     $("#milestones").resetSS();
@@ -3007,14 +3006,14 @@ function handleProjectDropDownChange() {
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+        $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca));
     });
     $("#chkboxCCA").removeAttr('checked');
     $("#chkboxCCA").removeAttr('disabled');
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     $("#billingProjects").val(0);
 
-    $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+    $('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
     //showPrizeSectionEdit();
 	if(!$("#billingProjects").data('customized')){
 		$("#billingProjects").data('customized',true);
@@ -3025,7 +3024,7 @@ function handleProjectDropDownChange() {
         if ($(this).find(":selected").data("cca")){
                 mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
                 $("#chkboxCCA").attr('checked','true').attr('disabled','true');
-                $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+                $('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
         }else{
                 $("#chkboxCCA").removeAttr('disabled');
         }
@@ -3052,7 +3051,7 @@ function setupReviewerDropdown(challengeTypeId, directProjectId) {
             $projectResources.html("");
 
             $.each(resources, function(id, value) {
-                $projectResources.append($('<option></option>').val(value.userId).html(value.name));
+                $projectResources.append($('<option></option>').val(value.userId).text(value.name));
             });
 
             if('internal' == $("input[name=reviewType]:checked").val()) {

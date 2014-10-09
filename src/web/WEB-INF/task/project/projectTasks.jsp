@@ -446,7 +446,7 @@
             </div>
             <div class="col5 fLeft">
                 <select name="taskListId" id="quickAssignTask" class="fLeft">
-                    <option value="${defaultProjectTask.id}" selected="selected">${defaultProjectTask.name}</option>
+                    <option value="${defaultProjectTask.id}" selected="selected"><c:out value="${defaultProjectTask.name}" /></option>
                 </select>
             </div>
         </form>

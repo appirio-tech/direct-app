@@ -17,7 +17,7 @@
 <if:isConfirmedStudioSubmission negate="true">
 <div id="submissionFeedback">
     <h4>Feedback:</h4>
-    <textarea cols="10" rows="5" id="feedback">${viewData.feedbackText}</textarea>
+    <textarea cols="10" rows="5" id="feedback"><c:out value="${viewData.feedbackText}" /></textarea>
     <a href="javascript:;" class="button6" id="updateFeedback"><span class="left"><span
             class="right">SAVE FEEDBACK</span></span></a>
     <div class="clear"></div>

@@ -125,7 +125,7 @@
 
                                                                 <label>Billing Account:</label>
                                                                 <div id="selectPaymentWrapper">
-                                                                    ${viewData.billingAccount.name}
+                                                                    <c:out value="${viewData.billingAccount.name}" />
                                                                 </div>
 
                                                         </div>
@@ -150,12 +150,12 @@
                                                             <td>
                                                                 <c:choose>
                                                                     <c:when test="${viewData.hasCheckout}">
-                                                                        ${viewData.checkpointRoundFeedbackText}
+                                                                        <c:out value="${viewData.checkpointRoundFeedbackText}" />
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                     	<s:if test="viewData.phaseOpen">
                                                                         <textarea class="txtFeedback" cols="10" rows="5"
-                                                                                  id="feedbackTextCheckpointRound">${viewData.checkpointRoundFeedbackText}</textarea>
+                                                                                  id="feedbackTextCheckpointRound"><c:out value="${viewData.checkpointRoundFeedbackText}" /></textarea>
                                                                         <div class="generalFeedbackAction">
                                                                         <a href="javascript:" class="button6" rel="${contestId}"
                                                                            id="saveGeneralFeedback">

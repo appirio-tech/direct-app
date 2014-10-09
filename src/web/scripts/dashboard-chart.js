@@ -515,7 +515,7 @@ function drawChart() {
                             chartNormalTableView();
                         },
                         function(errorMessage) {
-                            $('#zoomMessage').html(errorMessage);
+                            $('#zoomMessage').text(errorMessage);
                         });
             }
         });
@@ -593,7 +593,7 @@ function drawChart() {
                             $("#secondDashboardTableBody table").trigger("update");
                         },
                         function(errorMessage) {
-                            $('#zoomMessage').html(errorMessage);
+                            $('#zoomMessage').text(errorMessage);
                         });
             }
         });

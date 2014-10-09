@@ -245,7 +245,7 @@
                         </c:forEach>
                         
                         <c:if test="${not empty viewData.dashboard.otherManagingExperienceString}">
-                            ${viewData.dashboard.otherManagingExperienceString}
+                            <c:out value="${viewData.dashboard.otherManagingExperienceString}" />
                         </c:if>
                     </strong>
                 </li>
