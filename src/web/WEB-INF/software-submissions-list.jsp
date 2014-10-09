@@ -563,7 +563,7 @@
                                                         <div class="borderLine"></div>
                                                         <div class="feedback">
                                                             <h3>General Feedback</h3>
-                                                            <div class="fbArea">${viewData.checkpointSubmissionsGeneralFeedback}</div>
+                                                            <div class="fbArea"><c:out value="${viewData.checkpointSubmissionsGeneralFeedback}" /></div>
                                                         </div>
                                                         <div class="corner tl"></div>
                                                         <div class="corner tr"></div>
@@ -601,7 +601,7 @@
                                                                     </td>
                                                                     <td class="fbTd">
                                                                         <div class="fbMask">
-                                                                            <div class="fbArea show">${submission.checkpointFeedback}</div>
+                                                                            <div class="fbArea show"><c:out value="${submission.checkpointFeedback}" /></div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -643,7 +643,7 @@
                                                                 </div>
                                                             </s:if>
                                                             <s:else>                                                            
-                                                                <div class="fbArea show">${viewData.checkpointSubmissionsGeneralFeedback}</div>
+                                                                <div class="fbArea show"><c:out value="${viewData.checkpointSubmissionsGeneralFeedback}" /></div>
                                                                 <div class="action">
                                                                     <a href="javascript:;" class="add hide">Provide Feedback</a>
                                                                     <a href="javascript:;" class="edit">Edit</a>
@@ -709,7 +709,7 @@
                                                                                 </div>
                                                                             </s:if>
                                                                             <s:else>
-                                                                                <div class="fbArea" style="display:block">${submission.checkpointFeedback}</div>
+                                                                                <div class="fbArea" style="display:block"><c:out value="${submission.checkpointFeedback}" /></div>
                                                                                 <div class='edit'>
                                                                                     <a href="javascript:;">Edit</a>
                                                                                 </div>

@@ -298,7 +298,7 @@
         <s:iterator value="viewData.customMetadata" status="stat">
 
             <div class="projectMetaAreaField <s:if test='#stat.odd'> oddRowItem </s:if> <s:if test='key.single'>multiValueArea </s:if>">
-                <h4 class="projectMetaLabel">${key.name}
+                <h4 class="projectMetaLabel"><c:out value="${key.name}" />
                     <s:if test='key.single'>
                         (Single):
                     </s:if>

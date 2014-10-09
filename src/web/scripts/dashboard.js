@@ -2810,7 +2810,7 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $("#removeProjectDialog .body").html("Choose <strong id='firstPlaceCopilot'></strong> as copilot of project <strong id='projectNameLabel'></strong> ?");
         
         $('#firstPlaceCopilot').html(handle);
-        $('#projectNameLabel').html(projectName);
+        $('#projectNameLabel').text(projectName);
     } else if (place == 2) {
         $('.selectRunnerUpCopilot').data('place', 2);
         $("#removeProjectDialog .header .title").text("Choose second place Confirmation");

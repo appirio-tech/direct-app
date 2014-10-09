@@ -95,7 +95,7 @@
 												<label for="vm_usage_id" >Usage</label>
 												 <select id="vm_usage_id" name="vmUsageId">
 													<c:forEach items="${vmUsages}" var="vmUsage">
-														<option value="${vmUsage.id}">${vmUsage.name}</option>
+														<option value="${vmUsage.id}"><c:out value="${vmUsage.name}" /></option>
 													</c:forEach>
 												</select>
 											</div>
@@ -233,11 +233,11 @@
                                         <c:forEach items="${vmInstances}" var="vmInstance">
                                             <tr>
                                                 <td>${vmInstance.instance.contestId}</td>
-                                                <td>${vmInstance.contestName}</td>
+                                                <td><c:out value="${vmInstance.contestName}" /></td>
                                                 <td>${vmInstance.vmImageTcName}</td>
                                                 <td>${vmInstance.accountName}</td>
-                                                <td>${vmInstance.instance.svnBranch}</td>
-                                                <td>${vmInstance.instance.tcMemberHandle}</td>
+                                                <td><c:out value="${vmInstance.instance.svnBranch}" /></td>
+                                                <td><c:out value="${vmInstance.instance.tcMemberHandle}" /></td>
                                                 <c:if test="${admin}">
                                                     <td>${vmInstance.managerHandle}</td>
                                                 </c:if>
@@ -246,7 +246,7 @@
 						<td>
 						<c:forEach items="${vmUsages}" var="vmUsage">
 						    <c:if test="${vmUsage.id == vmInstance.instance.usageId}">
-						        ${vmUsage.name}
+                                			<c:out value="${vmUsage.name}" />
 						    </c:if>
 						</c:forEach>
 					        </td>

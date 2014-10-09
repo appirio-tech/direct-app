@@ -56,7 +56,7 @@
 					<div id="wholeArea">
 					
 						<div id="wholeAreaHeader">
-							<h2 class="groupDetailsTitle">View Group - ${group.name}</h2>
+							<h2 class="groupDetailsTitle">View Group - <c:out value="${group.name}" /></h2>
                             <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
                               <s:param name="criteria.permissions" value="{'REPORT', 'READ','WRITE','FULL'}"/>
                             </s:url>
@@ -86,7 +86,7 @@
 									<tbody>
 										<tr class="firstRow">
 											<td class="firstColumn">Group Name:</td>
-											<td>${group.name}</td>
+											<td><c:out value="${group.name}" /></td>
 											<td class="firstColumn">Access Rights:</td>
 											<td>
 											    <c:if test="${group.defaultPermission eq 'FULL'}">Full</c:if>
@@ -97,7 +97,7 @@
 										</tr>
 										<tr>
 											<td class="firstColumn">Customer:</td>
-											<td>${group.client.name}</td>
+											<td><c:out value="${group.client.name}" /></td>
 											<td class="firstColumn">Billing Accounts:</td>
 											<td>
 											    <s:iterator value="group.billingAccounts" id="billingAccount" status="status">

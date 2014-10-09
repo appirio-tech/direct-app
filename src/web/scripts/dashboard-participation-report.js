@@ -3,7 +3,7 @@
  * 
  * Version 1.1 (TC Cockpit - Member Participation Metrics Report Upgrade) changes:
  * - Make the filter part collapsable.
- * - Show indicator when “Customer Name” or “Billing Account” has been changed.
+ * - Show indicator when Customer Name or Billing Account has been changed.
  * - Split the "Aggregation Participation Metrics Report" table into multiple tables to support sorting and pagination.
  * 
  * AUTHOR: bugbuka
@@ -182,20 +182,20 @@ $(document).ready(function() {
 
                             $billing.html("");
                             $.each(billings, function(key, value) {
-                                $billing.append($('<option></option>').val(key).html(value));
+                                $billing.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $billing.append($('<option></option>').val(0).html("All Billing Accounts"));
+                            $billing.append($('<option></option>').val(0).text("All Billing Accounts"));
                             $billing.val(0);
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).html(value));
+                                $project.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.append($('<option></option>').val(0).text("All Projects"));
                             $project.val(0);
 
                             sortDropDown("#formData\\.projectId");
@@ -244,11 +244,11 @@ $(document).ready(function() {
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).html(value));
+                                $project.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.append($('<option></option>').val(0).text("All Projects"));
                             $project.val(0);
                             sortDropDown("#formData\\.projectId");
                             

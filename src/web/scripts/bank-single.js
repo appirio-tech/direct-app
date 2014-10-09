@@ -337,7 +337,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			async : false,
 			success: function (jsonResult) {
-                $("#alertModal3").find(".modalBodyBox").find("p").html(feedback.replace(/[\n]/g,'<br />'));
+                $("#alertModal3").find(".modalBodyBox").find("p").html(htmlEncode(feedback).replace(/[\n]/g,'<br />'));
                 modalLoad("#alertModal3");
 			},
 			beforeSend: beforeAjax,

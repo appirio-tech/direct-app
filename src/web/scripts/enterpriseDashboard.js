@@ -2315,7 +2315,7 @@ function getRequestForAnalysis() {
         errorMessage += "- Please select at least one challenge type";
     }
 
-    $(".button .errorMessage").html(errorMessage);
+    $(".button .errorMessage").text(errorMessage);
 
     if(errorMessage.length > 0) {
         return;
@@ -2547,7 +2547,7 @@ $(document).ready(function () {
                         $project.html("");
                         $project.append($('<option></option>').val(0).html("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).html(value));
+                            $project.append($('<option></option>').val(key).text(value));
                         });
 
                         $project.val(0);
@@ -2607,9 +2607,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $project.append($('<option></option>').val(0).text("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).html(value));
+                            $project.append($('<option></option>').val(key).text(value));
                         });
 
                         $project.val(0);
@@ -2698,9 +2698,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $project.append($('<option></option>').val(0).text("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).html(value));
+                            $project.append($('<option></option>').val(key).text(value));
                         });
 
                         $project.val(0);
@@ -2962,9 +2962,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $project.append($('<option></option>').val(0).text("All Projects"));
                         $.each(projects, function (key, value) {
-                            $project.append($('<option></option>').val(key).html(value));
+                            $project.append($('<option></option>').val(key).text(value));
                         });
 
                         $project.val(0);
@@ -3351,11 +3351,11 @@ $(document).ready(function () {
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).html(value));
+                                $project.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.append($('<option></option>').val(0).text("All Projects"));
                             $project.val(0);
                             sortDropDown("#project");
                         },
@@ -3998,20 +3998,20 @@ function loadOptionsByClientId(clientId) {
 
                     $billing.html("");
                     $.each(billings, function(key, value) {
-                        $billing.append($('<option></option>').val(key).html(value));
+                        $billing.append($('<option></option>').val(key).text(value));
                     });
 
                     // append the default "select all"
-                    $billing.append($('<option></option>').val(0).html("All Billing Accounts"));
+                    $billing.append($('<option></option>').val(0).text("All Billing Accounts"));
                     $billing.val(0);
 
                     $project.html("");
                     $.each(projects, function(key, value) {
-                        $project.append($('<option></option>').val(key).html(value));
+                        $project.append($('<option></option>').val(key).text(value));
                     });
 
                     // append the default "select all"
-                    $project.append($('<option></option>').val(0).html("All Projects"));
+                    $project.append($('<option></option>').val(0).text("All Projects"));
                     $project.val(0);
                     if(projectToSync) {
                         $project.val(projectToSync);

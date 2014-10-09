@@ -162,7 +162,7 @@
                                               </div>
                                               <!-- End form Text -->
                                                 <h3>Submitter Notes</h3>
-                                                  <p><c:if test="${submission.submissionDeclaration != null}">${submission.submissionDeclaration.comment}</c:if></p>
+                                                  <p><c:if test="${submission.submissionDeclaration != null}"><c:out value="${submission.submissionDeclaration.comment}" /></c:if></p>
 
                                                 <h3>Fonts</h3>
                                                 <p>
@@ -401,7 +401,7 @@
             <div class="modalBodyBox">
               <div class="hasaddFeedback">
                   <div class="textBox">
-                      <p class="viewFeedbackContent">${viewData.feedbackText}</p>
+                      <p class="viewFeedbackContent"><c:out value="${viewData.feedbackText}" /></p>
                   </div>          
               </div> 
               <div class="modalCommandBox viewFeedback"> 
@@ -436,7 +436,7 @@
               <div class="addFeedbackBox">
                 <h3>Feedback</h3>
                 <div>
-                  <textarea name="textarea" id="feedback" cols="" rows="">${viewData.feedbackText}</textarea>
+                  <textarea name="textarea" id="feedback" cols="" rows=""><c:out value="${viewData.feedbackText}" /></textarea>
                 </div>
               </div>
               <div class="modalCommandBox"> 
@@ -474,7 +474,7 @@
                   <div class="textBox">
                     <h4>Feedback</h4>
     
-                      <p class="viewFeedbackContent">${viewData.feedbackText}</p>
+                      <p class="viewFeedbackContent"><c:out value="${viewData.feedbackText}" /></p>
                   </div>          
               </div>
               <div class="modalCommandBox"> 

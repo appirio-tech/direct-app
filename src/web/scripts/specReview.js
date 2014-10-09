@@ -82,8 +82,8 @@ $(function() {
             // set comments
             $.each(item.comments, function(index, comment) {
                 var c = oldComment.clone();
-                c.find(".text_comment").html(comment.commentType);
-                c.append($("<p>").append(comment.comment.replace(/&lt\;br\/&gt\;/g, "<br/>")));
+                c.find(".text_comment").text(comment.commentType);
+                c.append($("<p>").append(htmlEncode(comment.comment).replace(/&lt\;br\/&gt\;/g, "<br/>")));
                 $("#reviewer_comment_specreview" + qId).append(c);
             });
         });
@@ -214,7 +214,7 @@ $(function() {
         
         $("#" + commentDivId).next().hide();
         
-        $("#" + commentDivId + " .comment_field").html(userComment.comment);
+        $("#" + commentDivId + " .comment_field").text(userComment.comment);
         if (userComment.commentDate.month != null) {
             $("#" + commentDivId + " .date_field").html(getDateFormatString(userComment.commentDate));
         } else {

@@ -275,33 +275,36 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             new SessionPersistor(request.getSession()), new SimpleRequest(request),
             new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
         User user = auth.getActiveUser();
-        if (user != null  && !user.isAnonymous()) {
-            // get user roles for the user id
-            Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
-            TCSubject tcSubject = new TCSubject(roles, user.getId());
 
-            sessionData.setCurrentUser(tcSubject);
-            sessionData.setCurrentUserHandle(user.getUserName());
-         } else {
-            if ("GET".equalsIgnoreCase(request.getMethod())) {
-                StringBuffer redirectBackUrl = new StringBuffer();
-                redirectBackUrl.append("https://");
-                redirectBackUrl.append(request.getServerName());
-                redirectBackUrl.append(request.getRequestURI());
-                if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
-                    redirectBackUrl.append('?');
-                    redirectBackUrl.append(request.getQueryString());
+        if (sessionData.isAnonymousUser()) {
+            if (user != null  && !user.isAnonymous()) {
+                // get user roles for the user id
+                Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
+                TCSubject tcSubject = new TCSubject(roles, user.getId());
+
+                sessionData.setCurrentUser(tcSubject);
+                sessionData.setCurrentUserHandle(user.getUserName());
+             } else {
+                if ("GET".equalsIgnoreCase(request.getMethod())) {
+                    StringBuffer redirectBackUrl = new StringBuffer();
+                    redirectBackUrl.append("https://");
+                    redirectBackUrl.append(request.getServerName());
+                    redirectBackUrl.append(request.getRequestURI());
+                    if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
+                        redirectBackUrl.append('?');
+                        redirectBackUrl.append(request.getQueryString());
+                    }
+                    request.getSession().setAttribute(redirectBackUrlIdentityKey, redirectBackUrl.toString());
+                } else {
+                    // Get the referer URL if the request method is POST
+                    final String referer = request.getHeader("Referer");
+                    if (referer != null && referer.trim().length() != 0) {
+                        request.getSession().setAttribute(redirectBackUrlIdentityKey, referer);
+                    }
                 }
-                request.getSession().setAttribute(redirectBackUrlIdentityKey, redirectBackUrl.toString());
-            } else {
-                // Get the referer URL if the request method is POST
-                final String referer = request.getHeader("Referer");
-                if (referer != null && referer.trim().length() != 0) {
-                    request.getSession().setAttribute(redirectBackUrlIdentityKey, referer);
-                }
+                return loginPageName;
             }
-            return loginPageName;
-        }        
+        }
 
         String servletPath = request.getContextPath() + request.getServletPath();
         String query = request.getQueryString();

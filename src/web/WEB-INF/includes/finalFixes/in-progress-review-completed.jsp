@@ -198,7 +198,7 @@
                     <div class="ffAction ffItems${loop.index}">
                         <div class="comment reviewFFControlsBlock ">
                             <h4>Additional Comments</h4>
-                            <textarea cols="10" rows="10" id="additionalFFComment">${finalFix.additionalComment}</textarea>
+                            <textarea cols="10" rows="10" id="additionalFFComment"><c:out value="${finalFix.additionalComment}" /></textarea>
                         </div>
                         <ul class="ffActionButtons reviewFFControlsBlock EDIT_REVIEW_FF_HIDE">
                             <li class="first">

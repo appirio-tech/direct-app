@@ -161,21 +161,21 @@
                                                 <tbody class="vm_instances_body">
                                                 <c:forEach items="${vmInstances}" var="vmInstance">
                                                     <tr>
-                                                        <td>${vmInstance.vmImageTcName}</td>
-                                                        <td>${vmInstance.accountName}</td>
-                                                        <td>${vmInstance.instance.svnBranch}</td>
-                                                        <td>${vmInstance.instance.tcMemberHandle}</td>
-                                                        <td>${vmInstance.instance.publicIP}</td>
+                                                        <td><c:out value="${vmInstance.vmImageTcName}" /></td>
+                                                        <td><c:out value="${vmInstance.accountName}" /></td>
+                                                        <td><c:out value="${vmInstance.instance.svnBranch}" /></td>
+                                                        <td><c:out value="${vmInstance.instance.tcMemberHandle}" /></td>
+                                                        <td><c:out value="${vmInstance.instance.publicIP}" /></td>
                                                         <td><fmt:formatDate value="${vmInstance.instance.creationTime}" pattern="MM/dd/yyyy HH:mm"/></td>
                                                         <td>
                                                             <c:forEach items="${vmUsages}" var="vmUsage">
                                                                 <c:if test="${vmUsage.id == vmInstance.instance.usageId}">
-                                                                    ${vmUsage.name}
+                                                                    <c:out value="${vmUsage.name}" />
                                                                 </c:if>
                                                             </c:forEach>
                                                         </td>
-                                                        <td class="vm_instance_status">${vmInstance.status}</td>
-                                                        <td>${vmInstance.managerHandle}</td>
+                                                        <td class="vm_instance_status"><c:out value="${vmInstance.status}" /></td>
+                                                        <td><c:out value="${vmInstance.managerHandle}" /></td>
                                                         <td class="vm_instance_action" align="center"><c:if test="${vmInstance.status eq 'RUNNING' && (hasWriteOrFullPermission || vmInstance.managerHandle eq sessionData.currentUserHandle)}">
                                                             <div class="term1"><div>
                                                                 <a href="javascript:void(0)" onclick="javascript:contestVMService.terminate(${vmInstance.instance.id}, ${projectId}, ${studio}, this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>&nbsp;
