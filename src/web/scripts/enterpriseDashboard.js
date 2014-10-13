@@ -73,9 +73,9 @@ var shortNameMap = {
     "36" :  ["Reporting" , "Reporting"],
     "37" :  ["Marathon Match" , "Marathon Match"],
     "9" :  ["Bug Hunt" , "Bug Hunt"],
-	"38" :  ["First2Finish" , "First2Finish"],
-	"39" :  ["Code" , "Code"],
-	"40" : ["Design First2Finish", "Design First2Finish"]
+    "38" :  ["First2Finish" , "First2Finish"],
+    "39" :  ["Code" , "Code"],
+    "40" : ["Design First2Finish", "Design First2Finish"]
 };
 var volumeTableLoaded;
 var tableViewTable;
@@ -1846,7 +1846,7 @@ function renderOverviewRoadmap(resultJson) {
         for (i = 0; i < overdueLength; i++) {
             strDataOverDue += '<tr>';
             strDataOverDue += '<td>';
-            strDataOverDue += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.overdue[i].projectId + '">' + resultJson.overdue[i].projectName + ":" + resultJson.overdue[i].title + '</a></h4>';
+            strDataOverDue += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.overdue[i].projectId + '">' + htmlEncode(resultJson.overdue[i].projectName) + ":" + htmlEncode(resultJson.overdue[i].title) + '</a></h4>';
             strDataOverDue += '</td>';
             strDataOverDue += '<td class="alignCenter">';
             strDataOverDue += '<span class="date">' + pattern.exec(resultJson.overdue[i].date).toString().substr(0, 3) + resultJson.overdue[i].date.replace(pattern.exec(resultJson.overdue[i].date).toString(), '') + '</span>';
@@ -1866,7 +1866,7 @@ function renderOverviewRoadmap(resultJson) {
         for (i = 0; i < upcomingLength; i++) {
             strDataUpcoming += '<tr>';
             strDataUpcoming += '<td>';
-            strDataUpcoming += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.upcoming[i].projectId + '">' + resultJson.upcoming[i].projectName + ":" + resultJson.upcoming[i].title  + '</a></h4>';
+            strDataUpcoming += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.upcoming[i].projectId + '">' + htmlEncode(resultJson.upcoming[i].projectName) + ":" + htmlEncode(resultJson.upcoming[i].title)  + '</a></h4>';
             strDataUpcoming += '</td>';
             strDataUpcoming += '<td class="alignCenter">';
             strDataUpcoming += '<span class="date">' + pattern.exec(resultJson.upcoming[i].date).toString().substr(0, 3) + resultJson.upcoming[i].date.replace(pattern.exec(resultJson.upcoming[i].date).toString(), '') + '</span>';
@@ -1887,7 +1887,7 @@ function renderOverviewRoadmap(resultJson) {
         for (i = 0; i < completedLength; i++) {
             strDataCompleted += '<tr>';
             strDataCompleted += '<td>';
-            strDataCompleted += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.completed[i].projectId + '">' + resultJson.completed[i].projectName + ":" + resultJson.completed[i].title  + '</a></h4>';
+            strDataCompleted += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.completed[i].projectId + '">' + htmlEncode(resultJson.completed[i].projectName) + ":" + htmlEncode(resultJson.completed[i].title)  + '</a></h4>';
             strDataCompleted += '</td>';
             strDataCompleted += '<td class="alignCenter">';
             strDataCompleted += '<span class="date">' + pattern.exec(resultJson.completed[i].date).toString().substr(0, 3) + resultJson.completed[i].date.replace(pattern.exec(resultJson.completed[i].date).toString(), '') + '</span>';
@@ -1907,8 +1907,8 @@ function generateRoadMapRow(item) {
     var str = '';
     str += '<tr>';
     str += '<td>';
-    str += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + item.projectId + '">' + item.title + '</a></h4>';
-    str += '<p>' + item.description + '</p>';
+    str += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + item.projectId + '">' + htmlEncode(item.title) + '</a></h4>';
+    str += '<p>' + htmlEncode(item.description) + '</p>';
     str += '</td>';
     str += '<td>';
     str += '<h4 class="projectLink"><a target="_blank" href="' + 'projectOverview?formData.projectId=' + item.projectId + '">' + item.projectName + '</a></h4>';
@@ -2315,7 +2315,7 @@ function getRequestForAnalysis() {
         errorMessage += "- Please select at least one challenge type";
     }
 
-    $(".button .errorMessage").text(errorMessage);
+    $(".button .errorMessage").html(errorMessage);
 
     if(errorMessage.length > 0) {
         return;
@@ -2547,7 +2547,7 @@ $(document).ready(function () {
                         $project.html("");
                         $project.append($('<option></option>').val(0).html("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).text(value));
+                            $project.append($('<option></option>').val(key).html(value));
                         });
 
                         $project.val(0);
@@ -2607,9 +2607,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).text("All Projects"));
+                        $project.append($('<option></option>').val(0).html("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).text(value));
+                            $project.append($('<option></option>').val(key).html(value));
                         });
 
                         $project.val(0);
@@ -2698,9 +2698,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).text("All Projects"));
+                        $project.append($('<option></option>').val(0).html("All Projects"));
                         $.each(projects, function(key, value) {
-                            $project.append($('<option></option>').val(key).text(value));
+                            $project.append($('<option></option>').val(key).html(value));
                         });
 
                         $project.val(0);
@@ -2962,9 +2962,9 @@ $(document).ready(function () {
                         var $project = $("#projectFilter");
 
                         $project.html("");
-                        $project.append($('<option></option>').val(0).text("All Projects"));
+                        $project.append($('<option></option>').val(0).html("All Projects"));
                         $.each(projects, function (key, value) {
-                            $project.append($('<option></option>').val(key).text(value));
+                            $project.append($('<option></option>').val(key).html(value));
                         });
 
                         $project.val(0);
@@ -3351,11 +3351,11 @@ $(document).ready(function () {
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).text(value));
+                                $project.append($('<option></option>').val(key).html(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).text("All Projects"));
+                            $project.append($('<option></option>').val(0).html("All Projects"));
                             $project.val(0);
                             sortDropDown("#project");
                         },
@@ -3998,20 +3998,20 @@ function loadOptionsByClientId(clientId) {
 
                     $billing.html("");
                     $.each(billings, function(key, value) {
-                        $billing.append($('<option></option>').val(key).text(value));
+                        $billing.append($('<option></option>').val(key).html(value));
                     });
 
                     // append the default "select all"
-                    $billing.append($('<option></option>').val(0).text("All Billing Accounts"));
+                    $billing.append($('<option></option>').val(0).html("All Billing Accounts"));
                     $billing.val(0);
 
                     $project.html("");
                     $.each(projects, function(key, value) {
-                        $project.append($('<option></option>').val(key).text(value));
+                        $project.append($('<option></option>').val(key).html(value));
                     });
 
                     // append the default "select all"
-                    $project.append($('<option></option>').val(0).text("All Projects"));
+                    $project.append($('<option></option>').val(0).html("All Projects"));
                     $project.val(0);
                     if(projectToSync) {
                         $project.val(projectToSync);
