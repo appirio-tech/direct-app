@@ -85,6 +85,11 @@ public class Challenge {
     private double drPoints;
 
     /**
+     * The challenge creator.
+     */
+    private String challegneCreator;
+
+    /**
      * Gets the challenge id.
      *
      * @return the challenge id.
@@ -335,4 +340,23 @@ public class Challenge {
     public void setChallengeStatus(String challengeStatus) {
         this.challengeStatus = challengeStatus;
     }
+
+     /**
+     * Gets the challenge creator
+     *
+     * @return the challegne creator.
+     */
+    public String getChallengeCreator() {
+        return challegneCreator;
+    }
+
+    /**
+     * Sets the client name.
+     *
+     * @param challegneCreator the challegneCreator.
+     */
+    public void setChallengeCreator(String challegneCreator) {
+        this.challegneCreator = challegneCreator;
+    }
+
 }

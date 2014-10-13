@@ -109,6 +109,10 @@
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
+            <tr>
+                <td class="first_tab_type"><strong>Created By</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
+            </tr>
             <tr></tr>            
             <%--<tr>--%>
                 <%--<td class="first_tab_type"><strong>Challenge Fee</strong></td>--%>
@@ -234,14 +238,19 @@
                                 </option>
                             </s:iterator>
                       </select>
+                      <div class="clearFix"></div>
                  </div>
+                 <br /><br />
+               
+                    <span class="name fixWidthName"><strong>Created By</strong></span>
+                 <span class ='small_info_spec' id="challegneCreatorLabel"></span>
                  </div>
-                 
                  </div>
                  <p class="save">                   
                      <a href="javascript:;" class="cancel_text">cancel</a>
                      <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
-                 </p>                                                       
+                 </p>                         
+                 <div class="clear"></div>                              
                 </div><!-- End .detailsContent -->                                                              
 </div><!-- End .details -->
 <!-- End Contest Type Edit --> 

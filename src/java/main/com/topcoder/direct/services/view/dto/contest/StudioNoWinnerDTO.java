@@ -13,7 +13,7 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
  * @author TCSDEVELOPER
  * @version 1.0 (Submission Viewer Release 4 assembly)
  */
-public class StudioNoWinnerDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
+public class StudioNoWinnerDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of contest.</p>

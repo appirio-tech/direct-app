@@ -11,7 +11,11 @@ will be able to review all of the Copilots and their submissions, and then choos
 </p>
 
 <p>
-You can track the status of this competition, and all your competitions, by visiting https\://www.topcoder.com/direct
+You can track the status of this competition by visiting <a href\="%COMPETITION_URL%">%COMPETITION_URL%</a>
+</p>
+
+<p>
+You can track the status of all your competitions, by visiting <a href\="https\://www.topcoder.com/direct">https\://www.topcoder.com/direct</a>
 </p>
 
 <p>

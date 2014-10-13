@@ -141,6 +141,7 @@ import com.topcoder.service.user.UserServiceException;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.ApplicationServer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.util.config.ConfigManager;
 import com.topcoder.util.config.ConfigManagerException;
@@ -2477,7 +2478,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 projectName,
                 competition.getAssetDTO().getProductionDate()
                            .toGregorianCalendar().getTime(), totalMemberCost, totalCost,
-                result.getReferenceNumber(), hasContestSaleData, contestIndicator);
+                result.getReferenceNumber(), hasContestSaleData, contestIndicator, isStudio(competition), competition.getProjectHeader().getId());
 
             // publish event to AWS SNS if needed
             try {
@@ -5704,12 +5705,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private void sendActivateContestReceiptEmail(String toAddr,
         String purchasedBy, PaymentData paymentData, String competitionType, long competitionTypeId,
         String competitionTitle, String projectName, Date launchTime,
-        Double price, Double totalCost, String orderNumber, boolean hasContestSaleData, String contestIndicator)
+        Double price, Double totalCost, String orderNumber, boolean hasContestSaleData, String contestIndicator,
+        boolean isDesign, long challengeId)
         throws EmailMessageGenerationException, EmailSendingException {
         com.topcoder.project.phases.Phase phase = new com.topcoder.project.phases.Phase();
 
         setReceiptEmailCommonProperties(phase, purchasedBy, paymentData,
-            competitionType, competitionTitle, projectName);
+            competitionType, competitionTitle, projectName, isDesign, challengeId);
 
         phase.setAttribute("LAUNCH_TIME", launchTime);
         phase.setAttribute("CONTEST_COST", price);
@@ -5807,7 +5809,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private void setReceiptEmailCommonProperties(
         com.topcoder.project.phases.Phase phase, String purchasedBy,
         PaymentData paymentData, String competitionType,
-        String competitionTitle, String projectName) {
+        String competitionTitle, String projectName, boolean isDesign, long challengeId) {
         // TODO: keep the commented portion, once if/else start working in
         // document generator we should switch to it.
         StringBuffer sb = new StringBuffer();
@@ -5856,6 +5858,12 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         phase.setAttribute("COMPETITION_TYPE", competitionType);
         phase.setAttribute("COMPETITION_TITLE", competitionTitle);
         phase.setAttribute("PROJECT_NAME", projectName);
+
+        if (isDesign) {
+        	phase.setAttribute("COMPETITION_URL", "http://" + ApplicationServer.NEW_COMMUNITY_SERVER_NAME + "/challenge-details/" + challengeId + "/?type=design");
+        } else {
+        	phase.setAttribute("COMPETITION_URL", "http://" + ApplicationServer.NEW_COMMUNITY_SERVER_NAME + "/challenge-details/" + challengeId + "/?type=develop");
+        }
     }
 
     /**

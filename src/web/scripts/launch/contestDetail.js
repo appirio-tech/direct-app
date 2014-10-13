@@ -251,6 +251,7 @@ function initContest(contestJson) {
    mainWidget.competition.contestData.detailedStatusId=contestJson.detailedStatusId;
    mainWidget.competition.contestData.contestAdministrationFee = contestJson.contestAdministrationFee;
 	 mainWidget.competition.contestData.allowStockArt = contestJson.allowStockArt;
+   mainWidget.competition.contestData.projectHeader.challengeCreator = contestJson.challengeCreator;
    
    
    //multi round
@@ -330,6 +331,9 @@ function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue("STUDIO"+mainWidget.competition.contestData.contestTypeId);
 	$('#contestName').val(mainWidget.competition.contestData.name);
+
+  $('#challegneCreatorLabel').html(mainWidget.competition.contestData.challengeCreator);
+  $('#rChallengeCreator').html(mainWidget.competition.contestData.challengeCreator);
 
 	if(isBillingEditable()) {		
 		$('#billingAccountDivEdit').show(); 

@@ -459,7 +459,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * 
      * @since 1.1.2
      */
-    public static final long PUBLIC_SUBMITTER_TERMS_ID = 20703;
+    public static final long PUBLIC_SUBMITTER_TERMS_ID = 21173;
 	
 	/**
      * <p>
@@ -1458,13 +1458,15 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             + "project.project_id, status.project_status_id, status.name,"
             + "category.project_category_id, category.name, type.project_type_id, type.name,"
             + "project.create_user, project.create_date, project.modify_user, project.modify_date, category.description, "
-            + "project.tc_direct_project_id "
+            + "project.tc_direct_project_id, u.handle "
             + "FROM project JOIN project_status_lu AS status "
             + "ON project.project_status_id=status.project_status_id "
             + "JOIN project_category_lu AS category "
             + "ON project.project_category_id=category.project_category_id "
             + "JOIN project_type_lu AS type "
             + "ON category.project_type_id=type.project_type_id "
+            + "JOIN user AS u "
+            + "ON u.user_id=project.create_user "
             + "WHERE project.project_id IN ";
 
     /**
@@ -1476,7 +1478,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     private static final DataType[] QUERY_PROJECTS_COLUMN_TYPES = new DataType[]{Helper.LONG_TYPE, Helper.LONG_TYPE,
         Helper.STRING_TYPE, Helper.LONG_TYPE, Helper.STRING_TYPE, Helper.LONG_TYPE, Helper.STRING_TYPE,
         Helper.STRING_TYPE, Helper.DATE_TYPE, Helper.STRING_TYPE, Helper.DATE_TYPE, Helper.STRING_TYPE,
-        Helper.LONG_TYPE};
+        Helper.LONG_TYPE, Helper.STRING_TYPE};
     private static final String QUERY_PROJECTS_BY_CREATE_DATE_SQL = "SELECT "
 
 			+ "  project.project_id, project_status_lu.project_status_id, project_status_lu.name, "
@@ -5789,6 +5791,10 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
             // set the tc direct project id
             projects[i].setTcDirectProjectId(row[12] == null ? 0 : ((Long) row[12]).intValue());
+
+            //creator
+            projects[i].setCreator((String) row[13]);
+
             // set the file types
             projects[i].setProjectFileTypes(Arrays.asList(getProjectFileTypes(projectId)));
 

@@ -41,14 +41,15 @@
                                            cellspacing="0">
 
                                         <colgroup>
-                                            <col width="8%"/>
-                                            <col width="16%"/>
-                                            <col width="13%"/>
+                                            <col width="7%"/>
+                                            <col width="14%"/>
+                                            <col width="11%"/>
                                             <col width="12%"/>
                                             <col width="7%"/>
                                             <col width="7%"/>
-                                            <col width="15%"/>
-                                            <col width="15%"/>
+                                            <col width="14%"/>
+                                            <col width="14%"/>
+                                            <col width="7%"/>
                                             <col width="7%"/>
                                         </colgroup>
 
@@ -62,6 +63,7 @@
                                             <th>Status</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
+                                            <th>Created By</th>
                                             <th>Total Prize</th>
                                         </tr>
                                         </thead>

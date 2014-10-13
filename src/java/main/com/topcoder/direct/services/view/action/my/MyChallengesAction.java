@@ -67,6 +67,7 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
         SORTING_MAP.put(5, "challengestatus");
         SORTING_MAP.put(6, "challengestartdate");
         SORTING_MAP.put(7, "challengeenddate");
+        SORTING_MAP.put(8, "challengecreator");
     }
 
 
@@ -140,6 +141,8 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
 
 //                    <th>Challenge End Date</th>
                     challengeData.add(challengeDateFormat.format(c.getChallengeEndDate()));
+
+                    challengeData.add(c.getChallengeCreator());
 
 //                    <th>Total Prize</th>
 
