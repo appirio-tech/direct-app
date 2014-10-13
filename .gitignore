@@ -1,5 +1,5 @@
 lib/
-lib/tcs/
+lib/tcs
 build/
 direct.ear
 direct.jar
