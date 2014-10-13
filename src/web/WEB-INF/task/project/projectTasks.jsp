@@ -35,7 +35,7 @@
     <ui:projectPageType tab="tasks"/>
 
     <link rel="stylesheet" href="/css/direct/projectTasks.css" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript" src="/scripts/jsrender.min.js"></script>
     <script type="text/javascript" src="/scripts/projectTasks.js"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
