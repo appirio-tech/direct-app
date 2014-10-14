@@ -32,6 +32,7 @@ import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -185,6 +186,8 @@ public class CommonAction extends BaseContestFeeAction {
             List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
             for (Milestone mi : milestones) {
+                mi.setName(StringEscapeUtils.escapeHtml(mi.getName()));
+                mi.setDescription(StringEscapeUtils.escapeHtml(mi.getDescription()));
                 result.add(m.convertValue(mi, Map.class));
             }
 
