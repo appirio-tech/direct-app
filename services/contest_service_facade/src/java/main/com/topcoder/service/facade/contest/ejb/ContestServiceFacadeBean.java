@@ -3814,6 +3814,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
         // flag indicates whether current user is set as the copilot
         boolean isCopilotCurrentUser = false;
+        boolean isAppirioManagerCurrentUser = false;
 
         if (contestResources.length > 1) {
             for (int i = 1; i < contestResources.length; ++i) {
@@ -3828,6 +3829,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     }
                 } else if (contestResources[i].getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_MANAGER_ID) {
                     appirioManager = contestResources[i];
+                    if (appirioManager.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(
+                            String.valueOf(tcSubject.getUserId()))) {
+                        isAppirioManagerCurrentUser = true;
+                    }
                 }
             }
         }
@@ -3866,8 +3871,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         boolean tcstaff = isRole(tcSubject, TC_STAFF_ROLE);
         boolean isObserverCopilot = false;
 
-        // tc staff add as manager, other as observer
-        if (tcstaff) {
+        if (appirioManager != null) {
+        	resources[0] = appirioManager;
+        } else if (tcstaff) {
             resources[0].setResourceRole(managerRole);
         } else if (contest.getProjectHeader().getSecurityGroupId() > 0) {
             resources[0].setResourceRole(managerRole);
@@ -3881,7 +3887,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
         }
 
-        if (!isObserverCopilot) {
+        if (!isObserverCopilot && !isAppirioManagerCurrentUser) {
             // we don't override the copilot properties if the observer is the copilot
             resources[0].setProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID, String.valueOf(tcSubject.getUserId()));
             resources[0].setProperty(RESOURCE_INFO_HANDLE, getUserName(tcSubject));
