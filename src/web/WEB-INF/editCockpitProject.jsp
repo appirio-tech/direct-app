@@ -226,7 +226,7 @@
                     </s:iterator>
                 </ul>
 
-                <a name="appirioManagersModal" class="buttonRed1 triggerModal triggerManagerModal <s:if test='viewData.appirioManagerIds.size() > 0'>hidden</s:if>"
+                <a name="appirioManagersModal" class="buttonRed1 triggerModal triggerManagerModal"
                    href="javascript:;"><span>ADD/REMOVE</span></a>
             </div>
         </div>

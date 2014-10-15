@@ -911,7 +911,7 @@ $(document).ready(function (e) {
             return false;
         });
 
-        $('.memberList ul li, .techList ul li').each(function () {
+        /*$('.memberList ul li, .techList ul li').each(function () {
             $(this).append($('<a href="javascript:;" class="close" title="Remove this handle"></a>'));
             $(this).hover(
                 function () {
@@ -921,7 +921,7 @@ $(document).ready(function (e) {
                     $(this).removeClass('hovered');
                 }
             );
-        });
+        });*/
 
         $('.memberList .close').live('click', function () {
             var p = $(this).parent();
@@ -991,7 +991,7 @@ $(document).ready(function (e) {
 
             p.remove();
 
-            checkAppirioManagerNumber();
+            
             return false;
         });
 
@@ -1238,14 +1238,6 @@ $(document).ready(function (e) {
 
         }
 
-        function checkAppirioManagerNumber() {
-            if($("div.appirioManagerList ul li.memberLink").length > 0) {
-                $("div.appirioManagerList .triggerManagerModal").addClass('hidden');
-            } else {
-                $("div.appirioManagerList .triggerManagerModal").removeClass('hidden');
-            }
-
-        }
 
         // add item
         $('.userManagementModal .addUserForm .addItem').live('click', function () {
@@ -1733,7 +1725,7 @@ $(document).ready(function (e) {
 
                                 var entry = $('<li class="memberLink"><span name="' + key + '" class="hide"></span>'
                                     + '<a href="https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&cr='
-                                    + value.userId + '" class="memberLink">' + value.handle + '</a><a href="javascript:;" class="close" title="Remove this handle"></a></li>');
+                                    + value.userId + '" class="memberLink">' + value.handle + '</a></li>');
                                 handleList.append(entry);
                                 entry.hover(
                                     function () {
@@ -1745,7 +1737,6 @@ $(document).ready(function (e) {
                                 );
                             });
 
-                            checkAppirioManagerNumber();
                         },
                         function (errorMessage) {
                             modalAllClose();
