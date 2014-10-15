@@ -892,6 +892,13 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="saveAppirioManagers" class="saveCockpitProjectSettingAction"
+                method="saveAppirioManagers">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="addNewCustomMetadataKey" class="saveCockpitProjectSettingAction"
                 method="addNewCustomMetadataKey">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

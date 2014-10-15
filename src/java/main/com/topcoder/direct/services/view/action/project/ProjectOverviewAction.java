@@ -421,6 +421,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                     }
                     for (long accountManagerId : viewData.getProjectGeneralInfo().getAccountManagers()) {
                         viewData.getProjectGeneralInfo().getAccountManagersHandles().put(accountManagerId, userService.getUserHandle(accountManagerId));
+                        viewData.getProjectGeneralInfo().getAccountManagersHandles().put(accountManagerId, userService.getUserHandle(accountManagerId));
                     }
                     for(ProjectCopilotStatDTO copilot : getCopilotStats()) {
                         viewData.getProjectGeneralInfo().getCopilotHandles().put(copilot.getCopilotInfo().getUserId(), copilot.getCopilotInfo().getHandle());
@@ -584,6 +585,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         List<Long> clientManagers = new ArrayList<Long>();
         List<Long> tcManagers = new ArrayList<Long>();
         List<Long> accountManagers = new ArrayList<Long>();
+        Long appirioManager;
         Map<String, List<String>> additionalProjectInfo = new HashMap<String, List<String>>();
 
         for (DirectProjectMetadata m : metadata) {
@@ -627,6 +629,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 14L) {
                 // topcoder account managers
                 accountManagers.add(Long.parseLong(m.getMetadataValue()));
+            } else if (keyId == 15L) {
+                // topcoder appirio manager
+                getViewData().getProjectGeneralInfo().setAppirioManager(Long.parseLong(m.getMetadataValue()));
             }
 
             if (clientId > 0) {

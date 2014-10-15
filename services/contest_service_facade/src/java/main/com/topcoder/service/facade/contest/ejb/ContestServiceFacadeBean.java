@@ -839,9 +839,17 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 3.2 (TopCoder Direct - Add Appirio Manager)
+ * <ul>
+ *     <li>Updated {@link #createContestResources(com.topcoder.security.TCSubject, com.topcoder.service.project.SoftwareCompetition, long, boolean)}
+ *     to add Appirio Manager as manager resource if it's in the passed-in competition object</li>
+ * </ul>
+ * </p>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
- * @author isv, GreatKevin
- * @version 3.1
+ * @author isv, GreatKevin, Veve
+ * @version 3.2
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -3802,18 +3810,31 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
          // check if contest contains copilot resource
         com.topcoder.management.resource.Resource[] contestResources = contest.getResources();
         com.topcoder.management.resource.Resource copilot = null;
+        com.topcoder.management.resource.Resource appirioManager = null;
 
         // flag indicates whether current user is set as the copilot
         boolean isCopilotCurrentUser = false;
+        boolean isAppirioManagerCurrentUser = false;
 
         if (contestResources.length > 1) {
-            // contains copilot resource
-            copilot = contestResources[1];
+            for (int i = 1; i < contestResources.length; ++i) {
 
-            if(copilot.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(String.valueOf(tcSubject.getUserId()))) {
-                isCopilotCurrentUser = true;
+                if (contestResources[i].getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                    // contains copilot resource
+                    copilot = contestResources[1];
+
+                    if (copilot.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(
+                            String.valueOf(tcSubject.getUserId()))) {
+                        isCopilotCurrentUser = true;
+                    }
+                } else if (contestResources[i].getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_MANAGER_ID) {
+                    appirioManager = contestResources[i];
+                    if (appirioManager.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(
+                            String.valueOf(tcSubject.getUserId()))) {
+                        isAppirioManagerCurrentUser = true;
+                    }
+                }
             }
-
         }
 
         // create an array to store the resources, if copilot exists and copilot is not current user, we create
@@ -3850,8 +3871,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         boolean tcstaff = isRole(tcSubject, TC_STAFF_ROLE);
         boolean isObserverCopilot = false;
 
-        // tc staff add as manager, other as observer
-        if (tcstaff) {
+        if (appirioManager != null) {
+        	resources[0] = appirioManager;
+        } else if (tcstaff) {
             resources[0].setResourceRole(managerRole);
         } else if (contest.getProjectHeader().getSecurityGroupId() > 0) {
             resources[0].setResourceRole(managerRole);
@@ -3865,7 +3887,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
         }
 
-        if (!isObserverCopilot) {
+        if (!isObserverCopilot && appirioManager == null) {
             // we don't override the copilot properties if the observer is the copilot
             resources[0].setProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID, String.valueOf(tcSubject.getUserId()));
             resources[0].setProperty(RESOURCE_INFO_HANDLE, getUserName(tcSubject));
@@ -3935,6 +3957,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         for(com.topcoder.management.resource.Resource r : resources) {
             allResources.add(r);
             existingResourceIds.add(Long.valueOf(r.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID)));
+        }
+
+        if (appirioManager != null) {
+            allResources.add(appirioManager);
+            existingResourceIds.add(appirioManager.getUserId());
         }
 
         for (Permission p : permissions) {

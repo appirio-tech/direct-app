@@ -476,6 +476,25 @@
                                                 </ul>
                                             </div>
 
+                                            <div class="projectManagers" data-intro="Appirio Manager are TopCoder resources that are responsible for your relationship with TopCoder." data-step="12" data-position="left">
+                                                <h3>TopCoder Appirio Managers :</h3>
+
+                                                <s:if test="viewData.projectGeneralInfo.appirioManager == null">
+                                                    <c:if test="${hasWritePermission}">
+                                                        <a class="projectEditLink"
+                                                           href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
+                                                            TopCoder Appirio Manager</a>
+                                                    </c:if>
+                                                </s:if>
+                                                <s:else>
+                                                    <ul>
+                                                  
+                                                            <li><link:user userId="${viewData.projectGeneralInfo.appirioManager}"/><a href="mailto:${viewData.projectGeneralInfo.projectResourceEmails[viewData.projectGeneralInfo.appirioManager]}"><img src="/images/icon-email.png"/></a></li>
+                                                       
+                                                </s:else>
+                                                </ul>
+                                            </div>
+
                                         </div>
 
                                         <dl class="additionalInfo" data-intro="You can define additional fields for your projects.  Define them once by editing this project, and then you'll see the same fields in all projects.  You can then slice your data by these fields in your reports." data-step="13" data-position="left">

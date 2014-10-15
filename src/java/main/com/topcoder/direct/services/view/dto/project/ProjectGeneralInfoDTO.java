@@ -122,6 +122,13 @@ public class ProjectGeneralInfoDTO {
     private List<Long> accountManagers = new ArrayList<Long>();
 
     /**
+     * The TopCoder account managers of the project.
+     *
+     * @since 1.3
+     */
+    private Long appirioManager;
+
+    /**
      * The TopCoder platform specialists emails.
      *
      * @since 1.3
@@ -373,6 +380,26 @@ public class ProjectGeneralInfoDTO {
      */
     public void setTopcoderManagers(List<Long> topcoderManagers) {
         this.topcoderManagers = topcoderManagers;
+    }
+
+    /**
+     * Gets the appirio manager.
+     *
+     * @return the appirio manager
+     * @since 1.3
+     */
+    public Long getAppirioManager() {
+        return appirioManager;
+    }
+
+    /**
+     * Sets the appirio manager
+     *
+     * @param appirioManager the appirio manager.
+     * @since 1.3
+     */
+    public void setAppirioManager(Long appirioManager) {
+        this.appirioManager = appirioManager;
     }
 
     /**

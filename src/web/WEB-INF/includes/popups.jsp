@@ -1,7 +1,7 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, TCSASSEMBLER
-  - Version: 3.3
+  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, Veve
+  - Version: 3.5
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -83,6 +83,9 @@
   -
   - Version 3.4 (TC Direct Rebranding Assembly Project and Contest related pages)
   - - Updated the popup modals for reabranding
+  -
+  - Version 3.5 (TopCoder Direct - Add Appirio Manager)
+  - - Added the modal window for Add Appirio Manager in edit project page.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -2498,6 +2501,80 @@
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
                             <span>Manage Topcoder Account Managers</span>
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <div class="addUserForm">
+                        <div class="addUserLeft">
+                            <!-- title -->
+                            <div class="addUserTitle">
+                                <p>Available users</p>
+                                <a href="javascript:;" class="selectAll">Select All</a>
+                            </div>
+                            <!-- End .addUserTitle -->
+                            <!-- search -->
+                            <div class="searchBox">
+                                <input type="text" class="text" value="" />
+                                <a href="javascript:;" class="downloadProfile"><span class="profileLeft">Search</span></a>
+                            </div>
+                            <!-- End .searchBox -->
+                            <!-- list -->
+                            <div class="addUserList">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <!-- End .addUserList -->
+                        </div>
+                        <div class="addUserButton">
+                            <a href="javascript:;" class="addItem">Add</a>
+                            <a href="javascript:;" class="removeItem">Add</a>
+                        </div>
+                        <div class="addUserRight">
+                            <!-- title -->
+                            <div class="addUserTitle">
+                                <p>Chosen users</p>
+                                <a href="javascript:;" class="removeAll">Remove All</a>
+                            </div>
+                            <!-- End .addUserTitle -->
+                            <!-- list -->
+                            <div class="addUserList">
+                                <ul>
+
+                                </ul>
+                            </div>
+                            <!-- End .addUserList -->
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="SAVE" class="button6 newButtonGreen  saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton newButtonOrange  button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <div class="clearFix"></div>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+
+        <div id="appirioManagersModal" class="userManagementModal outLay">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            <span>Manage Appirio Manager</span>
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>
