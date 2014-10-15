@@ -109,8 +109,11 @@
  * Version 2.11 (TopCoder Direct - My Created Challenges)
  * - Added initialization scripts for my created challenges and my challenges table.
  *
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin, TCSDEVELOPER
- * @version 2.11
+ * Version 2.2 (TopCoder Direct - Challenges Section Filters Panel)
+ * - Add filter parameters for the my created challenges / my challenges data tables.
+ *
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
+ * @version 2.2
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -901,6 +904,12 @@ $(document).ready(function() {
         "sDom": 'rti<"bottom2"p><"bottom1"l>',
         "bServerSide": true,
         "sAjaxSource": "./getCreatedChallenges.action",
+        "fnServerParams": function (aoData) {
+            aoData.push({name: "customerFilter", value: $("#customerFilter").val()});
+            aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
+            aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
+            aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+        },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
                 "url":  sSource,
@@ -952,6 +961,12 @@ $(document).ready(function() {
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": "./getMyChallenges.action",
+        "fnServerParams": function (aoData) {
+            aoData.push({name: "customerFilter", value: $("#customerFilter").val()});
+            aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
+            aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
+            aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+        },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
                 "url":  sSource,
