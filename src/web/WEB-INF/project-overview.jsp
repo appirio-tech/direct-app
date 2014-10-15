@@ -477,7 +477,7 @@
                                             </div>
 
                                             <div class="projectManagers" data-intro="Appirio Manager are TopCoder resources that are responsible for your relationship with TopCoder." data-step="12" data-position="left">
-                                                <h3>TopCoder Account Managers :</h3>
+                                                <h3>TopCoder Appirio Managers :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.appirioManager == null">
                                                     <c:if test="${hasWritePermission}">
