@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, freegod
-  - Version: 1.6
-  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, freegod, Veve
+  - Version: 1.7
+  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
   -
@@ -34,6 +34,9 @@
   -
   - Version 1.6 (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142 changes:
   - - Add anchor to billing accounts section
+  -
+  - Version 1.7 (TopCoder Direct - Add Appirio Manager)
+  - - Add Appirio Manager
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -165,32 +168,37 @@
         <s:if test="!viewData.canAccessPermissionNotification">
             <input type="hidden" id="hasFullPermissionOnly" value="true">
         </s:if>
-    <div class="projectMetaAreaField oddRowItem">
-        <h4 class="projectMetaLabel cmIcon">Client Managers :</h4>
 
-        <div class="memberList">
-            <ul>
-                <s:iterator value="viewData.clientManagerIds" var="id">
-                    <li class="memberLink"><span class='hide' name="${id}"></span><link:user userId="${metadataValue}" styleClass="memberLink"/></li>
-                </s:iterator>
-            </ul>
-            <a name="clientManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
+        <div class="projectMetaAreaField oddRowItem">
+            <h4 class="projectMetaLabel cmIcon">Client Managers :</h4>
+
+            <div class="memberList">
+                <ul>
+                    <s:iterator value="viewData.clientManagerIds" var="id">
+                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user
+                                userId="${metadataValue}" styleClass="memberLink"/></li>
+                    </s:iterator>
+                </ul>
+                <a name="clientManagersModal" class="buttonRed1 triggerModal triggerManagerModal"
+                   href="javascript:;"><span>ADD/REMOVE</span></a>
+            </div>
         </div>
-    </div>
 
-    <div class="projectMetaAreaField">
-        <h4 class="projectMetaLabel pmIcon">TopCoder Platform Specialists  :</h4>
+        <div class="projectMetaAreaField">
+            <h4 class="projectMetaLabel pmIcon">TopCoder Platform Specialists :</h4>
 
-        <div class="memberList">
-            <ul>
-                <s:iterator value="viewData.tcManagerIds" var="id">
-                    <li class="memberLink"><span class='hide' name="${id}"></span><link:user userId="${metadataValue}" styleClass="memberLink"/></li>
-                </s:iterator>
-            </ul>
+            <div class="memberList">
+                <ul>
+                    <s:iterator value="viewData.tcManagerIds" var="id">
+                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user
+                                userId="${metadataValue}" styleClass="memberLink"/></li>
+                    </s:iterator>
+                </ul>
 
-            <a name="projectManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
+                <a name="projectManagersModal" class="buttonRed1 triggerModal triggerManagerModal"
+                   href="javascript:;"><span>ADD/REMOVE</span></a>
+            </div>
         </div>
-    </div>
 
         <div class="projectMetaAreaField oddRowItem">
             <h4 class="projectMetaLabel cmIcon">TopCoder Account Managers :</h4>
@@ -198,10 +206,28 @@
             <div class="memberList">
                 <ul>
                     <s:iterator value="viewData.tcAccountManagerIds" var="id">
-                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user userId="${metadataValue}" styleClass="memberLink"/></li>
+                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user
+                                userId="${metadataValue}" styleClass="memberLink"/></li>
                     </s:iterator>
                 </ul>
-                <a name="accountManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
+                <a name="accountManagersModal" class="buttonRed1 triggerModal triggerManagerModal"
+                   href="javascript:;"><span>ADD/REMOVE</span></a>
+            </div>
+        </div>
+
+        <div class="projectMetaAreaField">
+            <h4 class="projectMetaLabel pmIcon">Appirio Manager :</h4>
+
+            <div class="memberList appirioManagerList">
+                <ul>
+                    <s:iterator value="viewData.appirioManagerIds" var="id">
+                        <li class="memberLink"><span class='hide' name="${id}"></span><link:user
+                                userId="${metadataValue}" styleClass="memberLink"/></li>
+                    </s:iterator>
+                </ul>
+
+                <a name="appirioManagersModal" class="buttonRed1 triggerModal triggerManagerModal"
+                   href="javascript:;"><span>ADD/REMOVE</span></a>
             </div>
         </div>
 

@@ -89,8 +89,16 @@ import com.topcoder.shared.security.AuthorizationException;
  *     the fixed and percentage bug race contest fee for the TC direct project.
  * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 2.4
+ * <p>
+ *     Version 2.5 (TopCoder Direct - Add Appirio Manager)
+ *     <ul>
+ *         <li>Added {@link #APPIRIO_MANAGER_METADATA_KEY}</li>
+ *         <li>Added {@link #saveAppirioManagers()}</li>
+ *     </ul>
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 2.5
  */
 @WriteProject
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
@@ -126,6 +134,13 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @since 2.3
      */
     private static final long TOPCODER_ACCOUNT_MANAGER_METADATA_KEY = 14L;
+
+    /**
+     * Constant to represent the project metadata key id for Appirio Manager.
+     *
+     * @since 2.5
+     */
+    private static final long APPIRIO_MANAGER_METADATA_KEY = 15L;
 
     /**
      * constant for completed project status id.
@@ -492,6 +507,26 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
     public String saveTopCoderAccountManagers() {
         try {
             setResult(saveProjectResources(getFormData().getAccountManagers(), TOPCODER_ACCOUNT_MANAGER_METADATA_KEY));
+        } catch (Throwable e) {
+
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the save TopCoder Appirio managers ajax request.
+     *
+     * @return result code.
+     * @since 2.5
+     */
+    @WriteProject
+    public String saveAppirioManagers() {
+        try {
+            setResult(saveProjectResources(getFormData().getAppirioManagers(), APPIRIO_MANAGER_METADATA_KEY));
         } catch (Throwable e) {
 
             if (getModel() != null) {
