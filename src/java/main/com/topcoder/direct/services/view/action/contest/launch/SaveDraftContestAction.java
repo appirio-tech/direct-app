@@ -3,23 +3,6 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.topcoder.management.project.ProjectCategory;
-import com.topcoder.management.project.ProjectPlatform;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.CompDocumentation;
 import com.topcoder.catalog.entity.CompUploadedFile;
@@ -30,6 +13,7 @@ import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -37,6 +21,7 @@ import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectMMSpecification;
+import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectStudioSpecification;
@@ -51,7 +36,19 @@ import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.pipeline.CompetitionType;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.SerializationUtils;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -254,8 +251,17 @@ import org.apache.commons.lang3.SerializationUtils;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.2 (TopCoder Direct - Add Appirio Manager)
+ * <ul>
+ *     <li>Updated {@link #initializeCompetition(com.topcoder.service.project.SoftwareCompetition)} to add
+ *     Appirio Manager resource if there is Appirio Manager added for the direct project (in direct project
+ *     metadata type 15)</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
- * @version 2.1
+ * @version 2.2
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -443,6 +449,14 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.4
      */
     private static final long UNSET_RESOURCE_ID = -1;
+
+    /**
+     * <p>
+     *  The metadata key ID for the direct project metadata: Appirio Manager
+     * </p>
+     * @since 2.2
+     */
+    private static final long APPIRIO_MANAGER_METADATA_KEY_ID = 15L;
 
     /**
      * </p>
@@ -1077,17 +1091,27 @@ public class SaveDraftContestAction extends ContestAction {
         // if has a valid copilot id and copilot name is not empty
         long challengeCategoryId = softwareCompetition.getProjectHeader().getProjectCategory().getId();
 
+        List<Resource> resources = new ArrayList<Resource>();
+
+        resources.add(getUserResource());
+
         if (getContestCopilotId() > 0 && getContestCopilotName() != null &&
                 getContestCopilotName().trim().length() != 0) {
-            // add copilot resource to project resources
-            softwareCompetition.setProjectResources(new Resource[]{getUserResource(), getCopilotResource()});
+            resources.add(getCopilotResource());
             softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
                     String.valueOf(getCopilotFeeFromConfig(challengeCategoryId)));
         } else {
-            softwareCompetition.setProjectResources(new Resource[]{getUserResource()});
-            softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
-                    "0");
+            softwareCompetition.getProjectHeader().setProperty(
+                    ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, "0");
         }
+
+        Resource appirioManagerResource = getAppirioManagerResource();
+
+        if (appirioManagerResource != null) {
+            resources.add(appirioManagerResource);
+        }
+
+        softwareCompetition.setProjectResources(resources.toArray(new Resource[resources.size()]));
 
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
@@ -1354,6 +1378,52 @@ public class SaveDraftContestAction extends ContestAction {
     private boolean isPlatformContest(com.topcoder.management.project.Project projectHeader) {
         return isTechnologyContest(projectHeader);
     }
+
+
+    /**
+     * Gets the Appirio Manager resource.
+     *
+     * @return the created appirio manager resource, null if the direct project does not have appirio manager.
+     * @throws Exception if any error.
+     * @since 2.2
+     */
+    private Resource getAppirioManagerResource() throws Exception {
+
+        // check if need to insert Appirio manager
+        List<DirectProjectMetadata> appirioManagers = this.getMetadataService().getProjectMetadataByProjectAndKey(
+                softwareCompetition.getProjectHeader().getTcDirectProjectId(),
+                APPIRIO_MANAGER_METADATA_KEY_ID);
+
+        if (appirioManagers != null && appirioManagers.size() > 0) {
+            long userId = Long.parseLong(appirioManagers.get(0).getMetadataValue());
+
+            if (userId == DirectUtils.getTCSubjectFromSession().getUserId()) {
+                // current user, return null
+                return null;
+            }
+
+            Resource resource = new Resource();
+            // unset id
+            resource.setId(UNSET_RESOURCE_ID);
+            ResourceRole managerRole = new ResourceRole();
+            managerRole.setId(ResourceRole.RESOURCE_ROLE_MANAGER_ID);
+            managerRole.setName(ResourceRole.RESOURCE_ROLE_MANAGER_NAME);
+            managerRole.setDescription(ResourceRole.RESOURCE_ROLE_MANAGER_DESC);
+            resource.setResourceRole(managerRole);
+            resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), this.getUserService().getUserHandle(userId));
+            resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(userId));
+
+            // set registration date to now
+            resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
+
+            resource.setUserId(userId);
+            return resource;
+
+        } else {
+            return null;
+        }
+    }
+
 
     /**
      * <p>

@@ -51,8 +51,15 @@ import java.util.*;
  * </ol>
  * </p>
  *
- * @version 1.5
- * @author GreatKevin
+ * <p>
+ * Version 1.6 (TopCoder Direct - Add Appirio Manager)
+ * <ul>
+ *     <li>Added {@link #appirioManagerIds} and its getter and setter</li>
+ * </ul>
+ * </p>
+ *
+ * @version 1.6
+ * @author GreatKevin, Veve
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
@@ -82,6 +89,13 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * @since 1.5
      */
     private Set<DirectProjectMetadata> tcAccountManagerIds = new LinkedHashSet<DirectProjectMetadata>();
+
+    /**
+     * The Appirio Managers ids of the project.
+     *
+     * @since 1.6
+     */
+    private Set<DirectProjectMetadata> appirioManagerIds = new LinkedHashSet<DirectProjectMetadata>();
 
     /**
      * The SVN URL of the project.
@@ -292,6 +306,27 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setTcAccountManagerIds(Set<DirectProjectMetadata> tcAccountManagerIds) {
         this.tcAccountManagerIds = tcAccountManagerIds;
+    }
+
+    /**
+     * Gets the Appirio Manager ids.
+     *
+     * @return the Appirio Manager ids.
+     *
+     * @since 1.6
+     */
+    public Set<DirectProjectMetadata> getAppirioManagerIds() {
+        return appirioManagerIds;
+    }
+
+    /**
+     * Sets the Appirio Manager ids.
+     *
+     * @param appirioManagerIds the Appirio Manager ids.
+     * @since 1.6
+     */
+    public void setAppirioManagerIds(Set<DirectProjectMetadata> appirioManagerIds) {
+        this.appirioManagerIds = appirioManagerIds;
     }
 
     /**
