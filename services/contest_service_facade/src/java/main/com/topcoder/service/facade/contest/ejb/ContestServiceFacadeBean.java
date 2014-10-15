@@ -3887,7 +3887,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
         }
 
-        if (!isObserverCopilot && !isAppirioManagerCurrentUser) {
+        if (!isObserverCopilot && appirioManager == null) {
             // we don't override the copilot properties if the observer is the copilot
             resources[0].setProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID, String.valueOf(tcSubject.getUserId()));
             resources[0].setProperty(RESOURCE_INFO_HANDLE, getUserName(tcSubject));
