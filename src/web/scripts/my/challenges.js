@@ -14,6 +14,18 @@ $(document).ready(function () {
         "#challengeTypeFilter"
     ];
 
+    $('.challengesFilter .folder').live('click', function () {
+        if ($(this).hasClass('unfolder')) {
+            $(this).removeClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
+            $('.challengesFilter .filterContainer').show();
+        } else {
+            $(this).addClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', 'none');
+            $('.challengesFilter .filterContainer').hide();
+        }
+    });
+
 
     $.each(filters, function (index, value) {
         sortDropDown(value);

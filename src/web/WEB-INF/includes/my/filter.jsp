@@ -46,7 +46,10 @@
         <div class="row">
             <div class="column firstColumn">
                 <div>
-                    <label>Project:</label>
+                    <div style="padding:0;float:left">
+                        <label style="float: left">Project:</label>
+                        <img alt="" class="indicator" src="/images/dots-white.gif" style="display: none; padding: 17px 0 0 5px">
+                    </div>
                     <select id='projectFilter'>
                         <option selected="selected" value="All">All Projects</option>
                         <s:iterator value="projects">
