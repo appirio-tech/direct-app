@@ -1,9 +1,12 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.0
+  - Version: 1.1
   - Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 TopCoder Direct - My Created Challenges
+  -
+  - Version 1.1 (TopCoder Direct - Challenges Section Filters Panel)
+  - - Add filter panel
   -
   - Display my created challenges.
 --%>
@@ -18,6 +21,8 @@
     <ui:challengesPageType tab="myCreatedChallenges"/>
     <script type="text/javascript" src="/scripts/jquery.dataTables-1.9.1.min.js"></script>
     <script type="text/javascript" src="/scripts/search.js?v=214871"></script>
+    <script type="text/javascript" src="/scripts/my/challenges.js"></script>
+
 
 <body id="page">
 
@@ -33,6 +38,9 @@
                     <div id="area1">
                         <!-- the main area -->
                         <div class="area1Content">
+
+                            <jsp:include page="../includes/my/filter.jsp"/>
+
                             <div class="container2 resultTableContainer" style="margin-top: 40px">
                                 <div>
                                     <table id="myCreatedChallengesTable"

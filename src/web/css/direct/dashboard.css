@@ -145,6 +145,9 @@
  * - TopCoder Direct - Quick Bug Fixes 09.23 @author Veve @challenge 30045986
  * - Fix the challenge health dashboard -  Registration Box alignment issue.
  *
+ * - TopCoder Direct - Challenges Section Filters Panel
+ * - Add CSS for the final panel in my created challenges / my challenges
+ *
  */
 
 body{
@@ -13815,4 +13818,203 @@ div.totalCostContainer {
 
 .onTheFlyCosts td {
     padding-right: 10px;
+}
+
+/* calendar */
+.challengesFilter {
+    border: #e7e7e7 solid 1px;
+    margin-top: 20px;
+}
+
+/* title */
+.challengesFilter .filterTitle {
+    height: 34px;
+    color: #666;
+    border: 1px solid #E7E7E7;
+    border-width: 0 0 1px 0;
+    background: #f1f1f1;
+}
+
+.challengesFilter .filterTitle a.folder {
+    width: auto;
+    float: left;
+    display: inline;
+    margin: 9px 0 0 7px;
+    padding: 0 0 0 23px;
+    font-size: 12px;
+    color: #666666;
+    line-height: 21px;
+    text-decoration: none;
+    background-image: url(/images/filter-panel/expand_icon.png);
+    background-repeat: no-repeat;
+    background-position: left 2px;
+}
+
+.challengesFilter .filterTitle a.unfolder {
+    background-image: url(/images/filter-panel/collapse_icon.png);
+}
+
+/* input */
+.challengesFilter .filterTitle .searchInputArea {
+    width: auto;
+    float: right;
+    display: inline;
+    padding: 6px 12px 0 0;
+}
+
+.challengesFilter .filterTitle .searchInputArea label {
+    width: 50px;
+    float: left;
+    display: inline;
+    font-size: 12px;
+    line-height: 22px;
+}
+
+.challengesFilter .filterTitle .searchInputArea .inputLeft {
+    width: auto;
+    float: left;
+    display: inline;
+    border: 1px solid #c2c2c2;
+    background: #fffffe;
+}
+
+.challengesFilter .filterTitle .searchInputArea .inputRight {
+    width: auto;
+    float: left;
+    display: inline;
+}
+
+.challengesFilter .filterTitle .searchInputArea .inputMiddle {
+    width: 236px;
+    height: 20px;
+    float: left;
+    display: inline;
+    overflow: hidden;
+}
+
+.challengesFilter .filterTitle .searchInputArea .text {
+    width: 200px;
+    height: 15px;
+    float: left;
+    display: inline;
+    margin: 0;
+    background: #fff;
+    padding: 5px;
+    border: 0;
+    line-height: 15px;
+    background: transparent;
+}
+
+.challengesFilter .filterTitle .searchInputArea a {
+    width: 13px;
+    height: 13px;
+    float: right;
+    display: inline;
+    margin: 3px 3px 0 0;
+    padding: 0;
+    text-indent: -9999px;
+    background-image: url(/images/icon_small_search.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.challengesFilter .filterTitle .searchInputArea a:hover {
+    background-position: 0 -13px;
+}
+
+/* filterContainer */
+.challengesFilter .filterContainer {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    padding-bottom: 10px !important;
+}
+
+.challengesFilter .filterContainer .row {
+    height: 64px;
+}
+
+.challengesFilter .filterContainer .button {
+    height: 25px;
+    padding: 16px 0;
+}
+
+.challengesFilter .filterContainer .button .redButton {
+    width: auto;
+    float: right;
+    display: inline;
+    margin: 0 18px 0 0;
+}
+
+.challengesFilter .filterContainer .column {
+    width: auto;
+    float: left;
+    display: inline;
+}
+
+.challengesFilter .filterContainer .firstColumn {
+    width: 50%;
+}
+
+.challengesFilter .filterContainer .secondColumn {
+    width: 30%;
+}
+
+.challengesFilter .filterContainer .thirdCokumn {
+    width: 10%;
+    float: left;
+    display: inline;
+}
+
+.challengesFilter .filterContainer .button div {
+    text-align: center;
+}
+
+.challengesFilter .filterContainer .column div {
+    padding: 0 18px;
+}
+
+.challengesFilter .filterContainer .column label {
+    display: block;
+    padding: 2px 0 4px 0;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 32px;
+    color: #666;
+}
+
+.challengesFilter .filterContainer .column select {
+    width: 100%;
+    margin: 2px 0 0 0;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #000000;
+}
+
+.challengesFilter .filterContainer .column .date-pick {
+    width: 35%;
+    float: left;
+    display: inline;
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    color: #6c6c6c;
+    height: 20px;
+}
+
+.challengesFilter .filterContainer .column .toLabel {
+    width: auto;
+    float: left;
+    color: #666;
+    display: inline;
+    margin: 0 5px 0 10px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.challengesFilter .filterContainer a.dp-choose-date {
+    margin-right: 0;
 }

@@ -26,8 +26,13 @@ import java.util.Map;
  * The action to handle the my challenges request.
  * </p>
  *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Challenges Section Filters Panel)
+ * - Handle the filter panel parameters
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0
+ * @version 1.1
  */
 public class MyChallengesAction extends ServiceBackendDataTablesAction {
     /**
@@ -54,7 +59,9 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
         if (jwtCookie == null) {
             return ANONYMOUS;
         }
-        // do nothing, forward to the jsp page directly
+        // populate filter data
+        this.setupFilterPanel();
+
         return SUCCESS;
     }
 
@@ -94,6 +101,12 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
             }
 
             params.put("orderBy", sortColumn + sortOrder);
+
+            String filtersQuery = getFiltersQuery();
+
+            if (filtersQuery.trim().length() > 0) {
+                params.put("filter", filtersQuery);
+            }
 
             JsonNode jsonNode = getJsonResultFromAPI(buildServiceEndPoint(params));
 
