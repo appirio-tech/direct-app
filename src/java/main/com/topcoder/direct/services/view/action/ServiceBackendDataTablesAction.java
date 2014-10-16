@@ -545,13 +545,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             filters.add("directProjectId=" + getProjectFilter());
         }
         if (getChallengeStatusFilter() != null && !getChallengeStatusFilter().equalsIgnoreCase("all")) {
-            String statusFilter = getChallengeStatusFilter();
-            // ContestStatus Active has short name 'running' (to group with other phase status)
-            // so here convert to active
-            if ("running".equalsIgnoreCase(statusFilter)) {
-                statusFilter = "active";
-            }
-            filters.add("challengeStatus=" + statusFilter);
+            filters.add("challengeStatus=" + getChallengeStatusFilter());
         }
         if (getChallengeTypeFilter() != null && !getChallengeTypeFilter().equalsIgnoreCase("all")) {
             filters.add("challengeType=" + getChallengeTypeFilter());
