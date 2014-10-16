@@ -4,7 +4,11 @@
 package com.topcoder.direct.services.view.action;
 
 import com.topcoder.direct.services.configs.ServerConfiguration;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -21,6 +25,9 @@ import javax.servlet.http.Cookie;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,8 +36,23 @@ import java.util.Map;
  * ajax requests.
  * </p>
  *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Challenges Section Filters Panel)
+ * <ul>
+ *     <li>Added {@link #challengeTypes} and its getter</li>
+ *     <li>Added {@link #challengeStatus} and its getter</li>
+ *     <li>Added {@link #customers} and its getter</li>
+ *     <li>Added {@link #projects} and its getter and setter</li>
+ *     <li>Added {@link #customerFilter} and its getter and setter</li>
+ *     <li>Added {@link #projectFilter} and its getter and setter</li>
+ *     <li>Added {@link #challengeStatusFilter} and its getter and setter</li>
+ *     <li>Added {@link #challengeTypeFilter} and its getter and setter</li>
+ *     <li>Added method {@link #setupFilterPanel()}</li>
+ *     <li>Added method {@link #getFiltersQuery()}</li>
+ * </ul>
+ * </p>
  * @author GreatKevin
- * @version 1.0
+ * @version 1.1
  */
 public abstract class ServiceBackendDataTablesAction extends AbstractAction {
 
@@ -65,6 +87,62 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     private String serviceURL;
 
     /**
+     * The challenge types options in filter panel
+     *
+     * @since 1.1
+     */
+    private Map<Long, String> challengeTypes;
+
+    /**
+     * The challenge status options in filter panel.
+     *
+     * @since 1.1
+     */
+    private Map<ContestStatus, String> challengeStatus;
+
+    /**
+     * The customer options in filter panel.
+     *
+     * @since 1.1
+     */
+    private Map<Long, String> customers;
+
+    /**
+     * The project options in filter panel.
+     *
+     * @since 1.1
+     */
+    private List<ProjectBriefDTO> projects;
+
+    /**
+     * The customer filter.
+     *
+     * @since 1.1
+     */
+    private String customerFilter;
+
+    /**
+     * The project filter.
+     *
+     * @since 1.1
+     */
+    private String projectFilter;
+
+    /**
+     * The challenge status filter.
+     *
+     * @since 1.1
+     */
+    private String challengeStatusFilter;
+
+    /**
+     * The challenge type filter.
+     *
+     * @since 1.1
+     */
+    private String challengeTypeFilter;
+
+    /**
      * The max pagination size.
      */
     private static final int MAX_PAGINATION_SIZE = Integer.MAX_VALUE;
@@ -94,10 +172,46 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      */
     protected static final ObjectMapper objectMapper;
 
+    /**
+     * <p>A static <code>Map</code> mapping the existing contest statuses to their textual presentations.</p>
+     *
+     * @since 1.1
+     */
+    private static final Map<ContestStatus, String> CONTEST_STATUSES;
+
+
     static {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm"));
+
+        CONTEST_STATUSES = new LinkedHashMap<ContestStatus, String>();
+        CONTEST_STATUSES.put(ContestStatus.ACTIVE, ContestStatus.ACTIVE.getName());
+        CONTEST_STATUSES.put(ContestStatus.DRAFT, ContestStatus.DRAFT.getName());
+        CONTEST_STATUSES.put(ContestStatus.CANCELLED, ContestStatus.DRAFT.getName());
+        CONTEST_STATUSES.put(ContestStatus.COMPLETED, ContestStatus.COMPLETED.getName());
+
+
+    }
+
+    /**
+     * Setup the options to displayed in filter panel.
+     *
+     * @throws Exception if any error.
+     * @since 1.1
+     */
+    protected void setupFilterPanel() throws Exception {
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        // Get the list of available project categories
+        this.challengeTypes = DataProvider.getAllProjectCategories();
+
+        // Get all the clients accessible by current user
+        this.customers = DirectUtils.getAllClients(currentUser);
+
+        this.challengeStatus = CONTEST_STATUSES;
+
+        this.projects = DataProvider.getUserProjects(currentUser.getUserId());
     }
 
     /**
@@ -293,5 +407,163 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      */
     public void setSSortDir_0(String sSortDir_0) {
         this.sSortDir_0 = sSortDir_0;
+    }
+
+    /**
+     * Gets the challenge types.
+     *
+     * @return the challenge types.
+     * @since 1.1
+     */
+    public Map<Long, String> getChallengeTypes() {
+        return challengeTypes;
+    }
+
+    /**
+     * Gets the challenge status.
+     *
+     * @return the challenge status.
+     * @since 1.1
+     */
+    public Map<ContestStatus, String> getChallengeStatus() {
+        return challengeStatus;
+    }
+
+    /**
+     * Gets the customers.
+     *
+     * @return the customers.
+     * @since 1.1
+     */
+    public Map<Long, String> getCustomers() {
+        return customers;
+    }
+
+    /**
+     * Gets the projects.
+     *
+     * @return the projects.
+     * @since 1.1
+     */
+    public List<ProjectBriefDTO> getProjects() {
+        return projects;
+    }
+
+    /**
+     * Gets the customer filter value.
+     *
+     * @return the customer filter value.
+     * @since 1.1
+     */
+    public String getCustomerFilter() {
+        return customerFilter;
+    }
+
+    /**
+     * Sets the customer filter value.
+     *
+     * @param customerFilter the customer filter value.
+     * @since 1.1
+     */
+    public void setCustomerFilter(String customerFilter) {
+        this.customerFilter = customerFilter;
+    }
+
+    /**
+     * Gets the project filter value.
+     *
+     * @return the project filter value.
+     * @since 1.1
+     */
+    public String getProjectFilter() {
+        return projectFilter;
+    }
+
+    /**
+     * Sets the project filter value.
+     *
+     * @param projectFilter the project filter value.
+     * @since 1.1
+     */
+    public void setProjectFilter(String projectFilter) {
+        this.projectFilter = projectFilter;
+    }
+
+    /**
+     * Gets the challenge status filter.
+     *
+     * @return the challenge status filter.
+     * @since 1.1
+     */
+    public String getChallengeStatusFilter() {
+        return challengeStatusFilter;
+    }
+
+    /**
+     * Sets the challenge status filter value.
+     *
+     * @param challengeStatusFilter the challenge status filter.
+     * @since 1.1
+     */
+    public void setChallengeStatusFilter(String challengeStatusFilter) {
+        this.challengeStatusFilter = challengeStatusFilter;
+    }
+
+    /**
+     * Gets the challenge type filter.
+     *
+     * @return the challenge type filter.
+     * @since 1.1
+     */
+    public String getChallengeTypeFilter() {
+        return challengeTypeFilter;
+    }
+
+    /**
+     * Sets the challenge type filter.
+     *
+     * @param challengeTypeFilter the challenge type filter.
+     * @since 1.1
+     */
+    public void setChallengeTypeFilter(String challengeTypeFilter) {
+        this.challengeTypeFilter = challengeTypeFilter;
+    }
+
+    /**
+     * Gets the filter query.
+     *
+     * @return the filter query.
+     * @since 1.1
+     */
+    protected String getFiltersQuery() {
+        StringBuilder str = new StringBuilder();
+        List<String> filters = new ArrayList<String>();
+        if (getCustomerFilter() != null && !getCustomerFilter().equalsIgnoreCase("all")) {
+            filters.add("clientId=" + getCustomerFilter());
+        }
+        if (getProjectFilter() != null && !getProjectFilter().equalsIgnoreCase("all")) {
+            filters.add("directProjectId=" + getProjectFilter());
+        }
+        if (getChallengeStatusFilter() != null && !getChallengeStatusFilter().equalsIgnoreCase("all")) {
+            String statusFilter = getChallengeStatusFilter();
+            // ContestStatus Active has short name 'running' (to group with other phase status)
+            // so here convert to active
+            if ("running".equalsIgnoreCase(statusFilter)) {
+                statusFilter = "active";
+            }
+            filters.add("challengeStatus=" + statusFilter);
+        }
+        if (getChallengeTypeFilter() != null && !getChallengeTypeFilter().equalsIgnoreCase("all")) {
+            filters.add("challengeType=" + getChallengeTypeFilter());
+        }
+
+        for (int i = 0, len = filters.size(); i < len; ++i) {
+            if (i > 0) {
+                str.append('&');
+            }
+            str.append(filters.get(i));
+        }
+
+        return str.toString();
     }
 }
