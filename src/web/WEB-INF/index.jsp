@@ -152,9 +152,9 @@
 
                     </p>
 
-                    <p class="username inputF"><input type="text" placeholder="Username" onkeypress="submitOnEnter(event);" id="LoginForm_formData_username" value="" name="formData.username"><span></span></p>
+                    <p class="username inputF"><input type="text" placeholder="Username" onkeypress="submitOnEnter(event);" id="LoginForm_formData_username" value="" name="formData.username" maxlength="20"><span></span></p>
 
-                    <p class="password inputF"><input type="password" placeholder="Password" onkeypress="submitOnEnter(event);" id="LoginForm_formData_password" name="formData.password"><span></span></p>
+                    <p class="password inputF"><input type="password" placeholder="Password" onkeypress="submitOnEnter(event);" id="LoginForm_formData_password" name="formData.password" maxlength="50"><span></span></p>
 
                     <a class="login" href="javascript:;" onclick="submitAuth0LoginForm();">Login</a>
 
