@@ -49,7 +49,7 @@
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
 		// project questions for populate project answer.
-		var projectQuestions = <c:out value="${result.projectQuestions}" />;
+		var projectQuestions = ${result.projectQuestions};
     </script>
     <script type="text/javascript" src="/scripts/project-create-flow-custom.js?v=215356"></script>
     <script type="text/javascript" src="/scripts/project-create-flow-mobile.js?v=215566"></script>
