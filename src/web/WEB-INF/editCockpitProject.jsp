@@ -634,7 +634,7 @@
     <!-- End. permissionsNotifications -->
 
     <div class="groupButtonContainer">
-        <a class="buttonRed1 cancelProjectButton cancelGroupsButton" href="javascript:;"><span>CANCEL</span></a>
+        <a class="buttonRed1 cancelProjectButton cancelGroupsButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
         <a id="saveSecurityGroups" class="buttonRed1 newButtonGreen" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
     </div>
 
