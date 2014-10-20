@@ -1788,7 +1788,8 @@ function fillPrizes(billingProjectId) {
 
 
     $(".contest_prize td.extraPrize").hide();
-    if(contestCost.secondPlaceCost && contestCost.secondPlaceCost > 0) {
+
+    if(contestCost.secondPlaceCost && contestCost.secondPlaceCost > 0 && projectCategoryId == SOFTWARE_CATEGORY_ID_CODE) {
         $('.contest_prize td.extraPrize:eq(0) span').html(contestCost.secondPlaceCost.formatMoney(2)).parent().show();
     }
 
