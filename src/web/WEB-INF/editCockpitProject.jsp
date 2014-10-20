@@ -216,7 +216,7 @@
         </div>
 
         <div class="projectMetaAreaField">
-            <h4 class="projectMetaLabel pmIcon">Appirio Manager :</h4>
+            <h4 class="projectMetaLabel pmIcon">Appirio Project Manager :</h4>
 
             <div class="memberList appirioManagerList">
                 <ul>

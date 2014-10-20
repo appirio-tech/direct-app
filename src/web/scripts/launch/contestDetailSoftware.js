@@ -108,9 +108,12 @@ var contestHasSpecReview = true;
 var loadingChallengeDetails = false;
 
 function getContestPrize(prizesData, place) {
-    if(prizesData && prizesData.length >= place
-        && mainWidget.softwareCompetition.projectHeader.prizes[place - 1].place == place) {
-        return mainWidget.softwareCompetition.projectHeader.prizes[place - 1].prizeAmount;
+    if(prizesData && prizesData.length >= place) {
+        for(var i = 0; i < prizesData.length; ++i) {
+            if(prizesData[i].place == place && prizesData[i].prizeType.id == 15) {
+                return prizesData[i].prizeAmount;
+            }
+        }
     }
 
     return -1;
@@ -816,11 +819,16 @@ function initContest(contestJson) {
         customCosts.reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
         customCosts.specReviewCost = parseFloat(projectHeader.getSpecReviewCost());
         customCosts.drCost = parseFloat(digitalRunPoints);
+
         if(projectHeader.prizes.length > 2) {
             // there are extra prizes
             var extraPrizes = [];
-            for(var k = 2; k < projectHeader.prizes.length; ++k) {
-                extraPrizes.push(projectHeader.prizes[k].prizeAmount);
+
+            for(var placement = 3; placement <= 5; ++placement) {
+                var extraPrizeAmount = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, placement);
+                if(extraPrizeAmount > 0) {
+                    extraPrizes.push(extraPrizeAmount);
+                }
             }
             customCosts.extraPrizes = extraPrizes;
         }
@@ -1916,12 +1924,12 @@ function updateContestCostData() {
             actualFee = (firstPlacePrize + (secondPlacePrize || 0) + extraPrize + checkpointPrize + reviewCost + (reliability || 0) + specReview + (digitalRun || 0) + copilotFee) * contestPercentage;
         }
 
-        $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
+       $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        $('#swContestFee').html(actualFee.formatMoney(2));
        $("#swContestFeePercentage").text(' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
        if(actualFee != contestFee) {
            // this can be commented out for debug the contest fee consistency
-           //alert('DEBUG:not matched');
+           // alert('DEBUG:not matched -> calculated fee:' + actualFee + " fee value in project info:" + contestFee);
            contestFee = actualFee;
        }
 
