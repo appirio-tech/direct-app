@@ -911,7 +911,7 @@ $(document).ready(function (e) {
             return false;
         });
 
-        /*$('.memberList ul li, .techList ul li').each(function () {
+        $('.memberList ul li, .techList ul li').each(function () {
             $(this).append($('<a href="javascript:;" class="close" title="Remove this handle"></a>'));
             $(this).hover(
                 function () {
@@ -921,7 +921,7 @@ $(document).ready(function (e) {
                     $(this).removeClass('hovered');
                 }
             );
-        });*/
+        });
 
         $('.memberList .close').live('click', function () {
             var p = $(this).parent();
@@ -991,7 +991,7 @@ $(document).ready(function (e) {
 
             p.remove();
 
-            
+            checkAppirioManagerNumber();
             return false;
         });
 
@@ -1238,6 +1238,14 @@ $(document).ready(function (e) {
 
         }
 
+        function checkAppirioManagerNumber() {
+            if($("div.appirioManagerList ul li.memberLink").length > 0) {
+                $("div.appirioManagerList .triggerManagerModal").addClass('hidden');
+            } else {
+                $("div.appirioManagerList .triggerManagerModal").removeClass('hidden');
+            }
+
+        }
 
         // add item
         $('.userManagementModal .addUserForm .addItem').live('click', function () {
@@ -1245,7 +1253,7 @@ $(document).ready(function (e) {
 
             if(modal.find('.addUserForm .addUserLeft ul li.selected').length > 1
                 && modal.attr('id') == 'appirioManagersModal') {
-                showErrors("A project can only have 1 Appirio Manager");
+                showErrors("A project can only have 1 Appirio Project Manager");
                 return;
             }
 
@@ -1725,7 +1733,7 @@ $(document).ready(function (e) {
 
                                 var entry = $('<li class="memberLink"><span name="' + key + '" class="hide"></span>'
                                     + '<a href="https://' + SERVER_CONFIG_SERVER_NAME + '/tc?module=MemberProfile&cr='
-                                    + value.userId + '" class="memberLink">' + value.handle + '</a></li>');
+                                    + value.userId + '" class="memberLink">' + value.handle + '</a><a href="javascript:;" class="close" title="Remove this handle"></a></li>');
                                 handleList.append(entry);
                                 entry.hover(
                                     function () {
@@ -1737,6 +1745,7 @@ $(document).ready(function (e) {
                                 );
                             });
 
+                            checkAppirioManagerNumber();
                         },
                         function (errorMessage) {
                             modalAllClose();
@@ -1802,6 +1811,9 @@ $(document).ready(function (e) {
 
             var request = {"searchText":searchText};
 
+            // show loading
+            modal.find('.addUserLeft .addUserList').addClass('ajaxLoadingBackground').find('ul').empty();
+
             $.ajax({
                 type:'GET',
                 url:"getUser",
@@ -1812,6 +1824,9 @@ $(document).ready(function (e) {
                 success:function (jsonResult) {
                     handleJsonResult2(jsonResult,
                         function (result) {
+                            // hide loading
+                            modal.find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
+
                             // insert into the left list
                             modal.find('.addUserForm .addUserLeft ul').empty();
                             $.each(result, function () {
@@ -1822,6 +1837,7 @@ $(document).ready(function (e) {
 
                         },
                         function (errorMessage) {
+                            modal.find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
                             showErrors(errorMessage);
                         })
                 }

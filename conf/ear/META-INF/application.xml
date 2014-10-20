@@ -8,88 +8,92 @@
     <display-name>TC Direct</display-name>
 
     <module>
-        <ejb>client_project_entities_dao.jar</ejb>
+        <ejb>ejb/client_project_entities_dao.jar</ejb>
     </module>
 
     <module>
-        <ejb>catalog_services_id_generator.jar</ejb>
+        <ejb>ejb/catalog_services_id_generator.jar</ejb>
     </module>
 
     <module>
-        <ejb>catalog_services.jar</ejb>
+        <ejb>ejb/catalog_services.jar</ejb>
     </module>
 
     <module>
-        <ejb>user_service.jar</ejb>
+        <ejb>ejb/user_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>project_service.jar</ejb>
+        <ejb>ejb/project_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>game_plan_service.jar</ejb>
+        <ejb>ejb/game_plan_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>contest_eligibility_persistence.jar</ejb>
+        <ejb>ejb/contest_eligibility_persistence.jar</ejb>
     </module>
 
     <module>
-        <ejb>contest_eligibility_validation.jar</ejb>
+        <ejb>ejb/contest_eligibility_validation.jar</ejb>
     </module>
 
     <module>
-        <ejb>project_services.jar</ejb>
+        <ejb>ejb/project_services.jar</ejb>
     </module>
 
     <module>
-        <ejb>specification_review_service.jar</ejb>
+        <ejb>ejb/specification_review_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>specification_review_comment_service.jar</ejb>
+        <ejb>ejb/specification_review_comment_service.jar</ejb>
     </module>
 
 
     <module>
-        <ejb>permission_service_facade.jar</ejb>
+        <ejb>ejb/permission_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>contest_service_facade.jar</ejb>
+        <ejb>ejb/contest_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>cloud_vm_service.jar</ejb>
+        <ejb>ejb/cloud_vm_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>user_service_facade.jar</ejb>
+        <ejb>ejb/user_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>project_service_facade.jar</ejb>
+        <ejb>ejb/project_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>admin_service_facade.jar</ejb>
+        <ejb>ejb/admin_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>pipeline_service.jar</ejb>
+        <ejb>ejb/pipeline_service.jar</ejb>
     </module>
 
     <module>
-        <ejb>pipeline_service_facade.jar</ejb>
+        <ejb>ejb/pipeline_service_facade.jar</ejb>
     </module>
 
     <module>
-        <ejb>User.jar</ejb>
+        <ejb>ejb/User.jar</ejb>
     </module>
 
     <module>
-        <ejb>Project.jar</ejb>
+        <ejb>ejb/Project.jar</ejb>
+    </module>
+
+    <module>
+        <java>conf</java>
     </module>
 
     <module>

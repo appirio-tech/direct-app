@@ -14018,3 +14018,7 @@ div.totalCostContainer {
 .challengesFilter .filterContainer a.dp-choose-date {
     margin-right: 0;
 }
+
+.ajaxLoadingBackground {
+    background: url("/images/dots-white.gif") no-repeat scroll center center;
+}
