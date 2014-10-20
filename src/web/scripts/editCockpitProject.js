@@ -1802,6 +1802,9 @@ $(document).ready(function (e) {
 
             var request = {"searchText":searchText};
 
+            // show loading
+            modal.find('.addUserLeft .addUserList').addClass('ajaxLoadingBackground').find('ul').empty();
+
             $.ajax({
                 type:'GET',
                 url:"getUser",
@@ -1812,6 +1815,9 @@ $(document).ready(function (e) {
                 success:function (jsonResult) {
                     handleJsonResult2(jsonResult,
                         function (result) {
+                            // hide loading
+                            modal.find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
+
                             // insert into the left list
                             modal.find('.addUserForm .addUserLeft ul').empty();
                             $.each(result, function () {
@@ -1822,6 +1828,7 @@ $(document).ready(function (e) {
 
                         },
                         function (errorMessage) {
+                            modal.find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
                             showErrors(errorMessage);
                         })
                 }

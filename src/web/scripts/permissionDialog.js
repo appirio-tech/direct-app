@@ -32,6 +32,7 @@ $(function() {
    *            the result
    */
   var hanldeUserResult = function hanldeUserResult(jsonResult) {
+    $("#userManageModal .left .list").removeClass('ajaxLoadingBackground');
     var dialogId;
     var dialogAlias;
     
@@ -280,6 +281,8 @@ $(function() {
       $("#" + item + " .left .list").empty();
 
       var userName = $("#" + item + " .searchText").val();
+
+      $("#userManageModal .left .list").addClass('ajaxLoadingBackground');
       processor.addSendingData("searchText=" + userName);
     });
   });
