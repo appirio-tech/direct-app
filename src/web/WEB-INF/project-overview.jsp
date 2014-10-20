@@ -476,14 +476,14 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="projectManagers" data-intro="Appirio Manager are TopCoder resources that are responsible for your relationship with TopCoder." data-step="12" data-position="left">
-                                                <h3>TopCoder Appirio Managers :</h3>
+                                            <div class="projectManagers" data-intro="Appirio Project Manager are TopCoder resources that are responsible for your relationship with TopCoder." data-step="12" data-position="left">
+                                                <h3>TopCoder Appirio Project Managers :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.appirioManager == null">
                                                     <c:if test="${hasWritePermission}">
                                                         <a class="projectEditLink"
                                                            href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
-                                                            TopCoder Appirio Manager</a>
+                                                            TopCoder Appirio Project Manager</a>
                                                     </c:if>
                                                 </s:if>
                                                 <s:else>

@@ -1245,7 +1245,7 @@ $(document).ready(function (e) {
 
             if(modal.find('.addUserForm .addUserLeft ul li.selected').length > 1
                 && modal.attr('id') == 'appirioManagersModal') {
-                showErrors("A project can only have 1 Appirio Manager");
+                showErrors("A project can only have 1 Appirio Project Manager");
                 return;
             }
 
