@@ -314,30 +314,31 @@
     	<copy file="${yuicompressor.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- EJB components -->
-        <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}" overwrite="true"/>        <copy file="${catalog_services.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${cloud_vm_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${user_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${game_plan_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${contest_eligibility_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${contest_eligibility_validation.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_services.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${specification_review_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${specification_review_comment_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${contest_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${permission_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${user_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${admin_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${pipeline_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${pipeline_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${project.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${user.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${ldap_sdk_interface.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${catalog_services.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${cloud_vm_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${user_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${project_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${game_plan_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${contest_eligibility_persistence.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${contest_eligibility_validation.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${project_services.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${specification_review_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${specification_review_comment_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${contest_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${permission_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${user_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${project_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${admin_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${pipeline_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${pipeline_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${project.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${user.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
+        <copy file="${ldap_sdk_interface.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
 
         <!-- Copy configuration files -->
-        <copy todir="${build_distdir}">
+        <copy todir="${build_distdir}/conf">
             <fileset dir="${tokenized_conf}">
                  <include name="tc_login_bean.properties" />
                  <include name="email_templates/**/*.txt" />

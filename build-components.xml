@@ -6,22 +6,22 @@
 
     <property name="component.jar" value="${buildroot}/${distfilename}.jar"/>
 
-    <target name="check_meata_file">
+    <target name="check_metafile">
         <available file="${configdir}/META-INF/" property="meta_config_exists" type="dir"/>
     </target>
 
-    <target name="dist_direct_meata_file" depends="clean, compile" if="meta_config_exists">
+    <target name="dist_direct_metafile" depends="clean, compile" if="meta_config_exists">
         <jar jarfile="${buildroot}/${distfilename}.jar" basedir="${build_classdir}">
             <metainf dir="${configdir}/META-INF/" includes="**"/>
         </jar>
     </target>
 
-    <target name="dist_direct_no_meata_file" depends="clean, compile" unless="meta_config_exists">
+    <target name="dist_direct_no_metafile" depends="clean, compile" unless="meta_config_exists">
         <jar jarfile="${buildroot}/${distfilename}.jar" basedir="${build_classdir}">
         </jar>
     </target>
 
-    <target name="dist_direct" depends="check_meata_file, dist_direct_meata_file, dist_direct_no_meata_file">
+    <target name="dist_direct" depends="check_metafile, dist_direct_metafile, dist_direct_no_metafile">
         <if>
             <equals arg1="${needTokenize}" arg2="true"/>
             <then>

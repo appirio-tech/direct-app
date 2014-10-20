@@ -36,6 +36,9 @@
 
     <property name="client_invoice_entities_dao.jar" value="${tcs_libdir}/client_invoice_entities_dao.jar"/>
 
+
+    <!-- EJB services -->
+
     <property name="client_project_entities_dao.jar" value="${direct_service_libdir}/client_project_entities_dao.jar"/>
 
     <property name="user_service.jar" value="${direct_service_libdir}/user_service.jar"/>
