@@ -81,7 +81,7 @@
             </div>
             <div class="uploadComfirm">
                 <h2>Are you sure to upload new version of this file?</h2>
-                <p>New file will replace the current file in Cockpit.</p>
+                <p>New file will replace the current file in Direct.</p>
                 <span class="note">Note: You may access old versions of this file via version history.</span>
             </div>
             <div class="clearFix"></div>
@@ -388,7 +388,7 @@
     <div class="modalHeader">
         <div class="modalHeaderRight">
             <div class="modalHeaderCenter">
-                <span>REMOVE FILES FROM COCKPIT?</span>
+                <span>REMOVE FILES FROM DIRECT?</span>
                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
             </div>
         </div>
@@ -643,7 +643,7 @@
             <div class="fileDeleted">
                 <div class="icon-delete">DELETE</div>
                 <div class="fileDeletedInfor">
-                    <h2>All files has been deleted from the Cockpit Asset</h2>
+                    <h2>All files has been deleted from the Direct Asset</h2>
                     <span class="note">Note: You may access deleted file from Activity tab.</span>
                 </div>
             </div>
@@ -703,7 +703,7 @@
                     <p>All files have been zipped and ready for download.</p>
                     <div class="fileInfor">
                         <span class="icon-file"><img src="/images/icon-zip.png" alt="ZIP" /></span>
-                        <span class="filaName">2012-10-08 Cockpit Files.zip <span>(4.8 MB)</span></span>
+                        <span class="filaName">2012-10-08 Direct Files.zip <span>(4.8 MB)</span></span>
                     </div>
                 </div>
             </div>

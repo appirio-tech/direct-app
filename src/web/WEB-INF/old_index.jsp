@@ -28,7 +28,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <title>[topcoder] Direct</title>
+    <title>Topcoder Direct</title>
 
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -195,7 +195,7 @@
 				<!-- this will contain the welcome message and the help icon -->
 					<div class="help"><link:help/></div><!-- End .help -->
 					<div class="welcome">
-						<img src="/images/welcome.png" alt="Welcome To TopCoder Cockpit" />
+						<img src="/images/welcome.png" alt="Welcome To TopCoder Direct" />
 					</div><!-- end .welcome -->
                     <div class="clear"></div>
                     <p class="lookCP">Looking for Community Portal?

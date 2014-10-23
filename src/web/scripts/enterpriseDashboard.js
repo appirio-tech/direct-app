@@ -239,7 +239,7 @@ function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate, noSync
         var syncParameters = getFilterSynParameters();
 
         //history.pushState(syncParameters, "", getActionNameFromURL() + "?" + decodeURI(syncParameters));
-        window.History.pushState(syncParameters, "TopCoder Cockpit - Enterprise Dashboard", "?" + decodeURI(syncParameters));
+        window.History.pushState(syncParameters, "Topcoder Direct - Enterprise Dashboard", "?" + decodeURI(syncParameters));
 
         // sync in left sidebar
         $("#silderBar a.filterSynEnabled, a.viewAllSync").each(function () {

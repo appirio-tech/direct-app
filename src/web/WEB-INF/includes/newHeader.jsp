@@ -383,10 +383,10 @@
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'report'}">
-            <a href="javascript:;" class="logo"><span>Cockpit Reports</span></a>
+            <a href="javascript:;" class="logo"><span>Direct Reports</span></a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'admin'}">
-            <a href="javascript:;" class="logo"><span>Cockpit Admin</span></a>
+            <a href="javascript:;" class="logo"><span>Direct Admin</span></a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'challenges'}">
             <a href="javascript:;" class="logo"><span>
