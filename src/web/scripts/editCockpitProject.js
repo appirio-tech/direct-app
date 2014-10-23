@@ -1820,7 +1820,7 @@ $(document).ready(function (e) {
                 data:request,
                 cache:false,
                 dataType:'json',
-                async:false,
+                async:true,
                 success:function (jsonResult) {
                     handleJsonResult2(jsonResult,
                         function (result) {
