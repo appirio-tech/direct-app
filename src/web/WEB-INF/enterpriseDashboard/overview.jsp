@@ -376,7 +376,7 @@
                         </div>
                         <!-- End .overprojectsHealthSection -->
 
-                        <!-- Community -->
+                        <!-- Community 
                         <div class="sectionContainer overCommunitySection">
                             <div class="sectionInner">
 
@@ -385,9 +385,9 @@
                                     <a href="javascript:;" class="icon" rel="Showing the overall contri-bution for the projects from each country.">!</a>
                                     <a href="javascript:;" class="viewAllLink">View All</a>
                                 </div>
-                                <!-- title -->
+                                <!-- title 
 
-                                <!-- container -->
+                                <!-- container 
                                 <div class="containerSection noBorderSection">
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <colgroup>
@@ -410,7 +410,7 @@
                                     </table>
                                     <div id="overviewCommunity"></div>
                                 </div>
-                                <!-- End .containerSection -->
+                                <!-- End .containerSection 
 
                             </div>
                         </div>
