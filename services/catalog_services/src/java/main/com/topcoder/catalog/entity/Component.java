@@ -15,7 +15,7 @@ import java.util.Iterator;
  * <tt>component</tt>.</p>
  * <p>A <tt>component</tt> can have many versions and the current version stored in <code>currentVersion</code> field,
  * while others are stored in <code>versions</code> list.</p>
- * <p>It’s important to be aware of fact that the current version is not necessarily the most recent one - it points
+ * <p>It's important to be aware of fact that the current version is not necessarily the most recent one - it points
  * to a completed version (or to the first one if it's is the only one version of a component).</p>
  * <p>Also notice that the version field is just an "internal" field that will start from '1' and increase by '1' each
  * time. A user will see <code>CompVersion.versionText</code> where version numbers look like "1.1", "3.0" etc.</p>

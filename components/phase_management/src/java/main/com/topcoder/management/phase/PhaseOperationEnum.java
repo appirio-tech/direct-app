@@ -10,7 +10,7 @@ import com.topcoder.util.collection.typesafeenum.Enum;
  * operations of "start", "end", and "cancel". This is provided as a utility to the user when they need to identify
  * the phase operation when registering a phase handler with a manager. This is used when creating
  * HandlerRegistryInfo instances for handler registrations (used as keys to id handlers), which need to know what
- * operation the handler will handle (as well as which phase status it will deal with – which is covered by
+ * operation the handler will handle (as well as which phase status it will deal with - which is covered by
  * PhaseStatusEnum).</p>
  *
  * <p>PhaseOperation is an Enum and thus poses no thread-safety issues.</p>

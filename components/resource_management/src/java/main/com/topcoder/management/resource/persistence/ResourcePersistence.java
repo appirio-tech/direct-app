@@ -13,7 +13,7 @@ import com.topcoder.util.sql.databaseabstraction.CustomResultSet;
  * <p>
  * The ResourcePersistence interface defines the methods for persisting and
  * retrieving the object model in this component. This interface handles the
- * persistence of the four classes that make up the object model ¨C Resources,
+ * persistence of the four classes that make up the object model Resources,
  * ResourceRoles, Notifications, and NotificationTypes. This interface is not
  * responsible for searching the persistence for the various entities. This is
  * instead handled by a ResourceManager implementation.

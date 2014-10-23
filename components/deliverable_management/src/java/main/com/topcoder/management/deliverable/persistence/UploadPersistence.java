@@ -17,7 +17,7 @@ import com.topcoder.util.sql.databaseabstraction.CustomResultSet;
 /**
  * <p>
  * The UploadPersistence interface defines the methods for persisting and retrieving the object model in this
- * component. This interface handles the persistence of the upload related classes that make up the object model ¨C
+ * component. This interface handles the persistence of the upload related classes that make up the object model
  * Uploads, Submissions, UploadTypes, UploadStatuses, SubmissionStatuses. This interface is not responsible for
  * searching the persistence for the various entities. This is instead handled by an UploadManager implementation.
  * </p>
