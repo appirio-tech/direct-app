@@ -1251,7 +1251,6 @@ public class DataProvider {
         for (int i = 0; i < recordNum; i++) {
             long copilotUserId = Long.valueOf(resultContainer.getStringItem(i, "copilot_user_id"));
             long statusId = resultContainer.getLongItem(i, "status_id");
-            String status = resultContainer.getStringItem(i, "status");
 
             ProjectCopilotStatDTO currentStat = helperMap.get(copilotUserId);
 
@@ -1259,11 +1258,11 @@ public class DataProvider {
                 continue;
             }
 
-            if (status.toLowerCase().equals("draft") || statusId == 2L) {
+            if (statusId == 2L) {
                 // count the status id draft and status name draft
                 currentStat.setDraftContestsNumber(currentStat.getDraftContestsNumber() + 1);
                 continue;
-            } else if (status.toLowerCase().equals("completed")) {
+            } else if (statusId == 7L) {
                 // count the finished contests
                 currentStat.setFinishedContestsNumber(currentStat.getFinishedContestsNumber() + 1);
                 continue;
@@ -1272,7 +1271,7 @@ public class DataProvider {
                 currentStat.setActiveContestsNumber(currentStat.getActiveContestsNumber() + 1);
                 continue;
             } else if (statusId == 4L || statusId == 5L || statusId == 8L || statusId == 11L || statusId == 6L) {
-                // failed contests
+                // failed contests (9 and 10) does not count
                 currentStat.setFailuresContestsNumber(currentStat.getFailuresContestsNumber() + 1);
                 continue;
             }
