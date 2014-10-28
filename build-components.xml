@@ -3,10 +3,12 @@
     <property name="buildroot" value="../../build"/>
 
     <property name="builddir" value="${buildroot}/${distfilename}"/>
+    
+    <property name="builddir" value="${buildroot}/${distfilename}"/>
 
     <property name="component.jar" value="${buildroot}/${distfilename}.jar"/>
 
-    <target name="check_metafile">
+    <target name="check_metafile"> 
         <available file="${configdir}/META-INF/" property="meta_config_exists" type="dir"/>
     </target>
 
