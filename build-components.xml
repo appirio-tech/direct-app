@@ -3,6 +3,8 @@
     <property name="buildroot" value="../../build"/>
 
     <property name="builddir" value="${buildroot}/${distfilename}"/>
+    
+    <property name="builddir" value="${buildroot}/${distfilename}"/>
 
     <property name="component.jar" value="${buildroot}/${distfilename}.jar"/>
 
