@@ -645,6 +645,7 @@
                                 <th class="tableColumn sorting">Build</th>
                                 <th class="tableColumn sorting">Bugs</th>
                                 <th class="tableColumn sorting">Misc</th>
+                                <th class="tableColumn sorting">Testing</th>
                                 <th class="tableColumn sorting">Total</th>
                             </tr>
                         </thead>

@@ -226,6 +226,7 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
             row.getCell(index++).setStringValue("Build");
             row.getCell(index++).setStringValue("Bugs");
             row.getCell(index++).setStringValue("Misc");
+            row.getCell(index++).setStringValue("Testing");
         }
         row.getCell(index++).setStringValue("Total");
         
@@ -324,8 +325,11 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
                     
                     // set Misc cost
                     row.getCell(index++).setNumberValue(breakdown.getMisc());
+
+                    // set testing cost
+                    row.getCell(index++).setNumberValue(breakdown.getTesting());
                 } else {
-                    index += 9;
+                    index += 10;
                 }
             }
             // set the total cost

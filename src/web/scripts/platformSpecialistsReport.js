@@ -324,7 +324,7 @@ function renderPlatformSpecialistsReport() {
                         $.each(rows, function(index, value){
                             var emptyRow = [];
                             if($(value).is("option")) {
-                                emptyRow.push(value.text())
+                                emptyRow.push($(value).text())
                             } else {
                                 emptyRow.push($(value).parent().text());
                             }
