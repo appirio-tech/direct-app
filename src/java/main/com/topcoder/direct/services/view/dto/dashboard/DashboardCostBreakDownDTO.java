@@ -78,6 +78,11 @@ public class DashboardCostBreakDownDTO implements Serializable {
     private double misc;
 
     /**
+     * Represents the testing cost.
+     */
+    private double testing;
+
+    /**
      * Empty constructor.
      */
     public DashboardCostBreakDownDTO() {
@@ -298,5 +303,23 @@ public class DashboardCostBreakDownDTO implements Serializable {
      */
     public void setMisc(double misc) {
         this.misc = misc;
+    }
+
+    /**
+     * Gets the testing cost.
+     *
+     * @return the testing cost.
+     */
+    public double getTesting() {
+        return testing;
+    }
+
+    /**
+     * Sets the testing cost.
+     *
+     * @param testing the testing cost.
+     */
+    public void setTesting(double testing) {
+        this.testing = testing;
     }
 }

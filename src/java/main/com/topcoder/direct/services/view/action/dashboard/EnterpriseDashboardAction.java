@@ -997,6 +997,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             statData.put("bugs", numberFormat1.format(breakdown.getBugs()));
             statData.put("misc", numberFormat1.format(breakdown.getMisc()));
             statData.put("fullfillment", breakdown.getFullfillment());
+            statData.put("testing", breakdown.getTesting());
             list.add(statData);
         }
         return list;

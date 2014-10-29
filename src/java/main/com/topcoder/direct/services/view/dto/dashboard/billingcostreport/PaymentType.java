@@ -14,9 +14,16 @@ package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
  *   <li>Added {@link #PLATFORM_FEE}.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (TopCoder Direct - Add Marathon Payments part 1)
+ * <ul>
+ *     <li>Added {@link #TESTING}</li>
+ * </ul>
+ * </p>
  * 
- * @author Blues, TCSASSEMBLER
- * @version 1.1
+ * @author Blues, GreatKevin
+ * @version 1.2
  * @since 1.0 (TC Cockpit Billing Cost Report Assembly)
  */
 public enum PaymentType {
@@ -80,7 +87,14 @@ public enum PaymentType {
     /**
      * Credit payment type.
      */
-    CREDIT(12, "Credit");
+    CREDIT(12, "Credit"),
+
+    /**
+     * Testing payment type.
+     *
+     * @since 1.2
+     */
+    TESTING(13, "Testing");
      
     /**
      * The id of the payment type.
