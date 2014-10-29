@@ -37,8 +37,13 @@ import java.util.List;
  *     - Add the property {@link #accountManagers}
  * </p>
  *
- * @author GreatKevin
- * @version 1.3
+ * <p>
+ *     Version 1.4 (TopCoder Direct - Add Appirio Manager)
+ *     - Add {@link #appirioManagers} and its getter and setter.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.4
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
 
@@ -67,13 +72,19 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     private List<ProjectMetadataOperation> projectManagers;
 
-
     /**
      * The TopCoder account managers.
      *
      * @since 1.3
      */
     private List<ProjectMetadataOperation> accountManagers;
+
+    /**
+     * The Appirio Managers.
+     *
+     * @since 1.4
+     */
+    private List<ProjectMetadataOperation> appirioManagers;
 
     /**
      * The budget of the project.
@@ -278,6 +289,26 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setAccountManagers(List<ProjectMetadataOperation> accountManagers) {
         this.accountManagers = accountManagers;
+    }
+
+    /**
+     * Gets the Appirio Managers.
+     *
+     * @return the Appirio Managers.
+     * @since 1.4
+     */
+    public List<ProjectMetadataOperation> getAppirioManagers() {
+        return appirioManagers;
+    }
+
+    /**
+     * Sets the Appirio Managers
+     *
+     * @param appirioManagers the Appirio Managers.
+     * @since 1.4
+     */
+    public void setAppirioManagers(List<ProjectMetadataOperation> appirioManagers) {
+        this.appirioManagers = appirioManagers;
     }
 
     /**

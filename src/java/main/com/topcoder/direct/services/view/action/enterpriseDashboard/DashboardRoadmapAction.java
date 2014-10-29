@@ -12,6 +12,9 @@ import com.topcoder.direct.services.view.dto.dashboard.calendar.DashboardMilesto
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +64,12 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
      * @since 1.1
      */
     private static final List ALL_MILESTONE_STATUS = Arrays.asList(MilestoneStatus.values());
+
+    /**
+     * Logger for this class.
+     * @since 1.10.8
+     */
+    private static final Logger logger = Logger.getLogger(DashboardRoadmapAction.class);
 
     /**
      * Static constructor
@@ -245,6 +254,8 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
 
         // extra all the responsible person user id from the milestone
         for (Milestone m : milestones) {
+            m.setName(StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJson(m.getName())));
+            m.setDescription(StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJson(m.getDescription())));
             if (m.getOwners() != null && m.getOwners().size() > 0) {
                 getViewData().getResponsiblePersonIds().add(m.getOwners().get(0).getUserId());
             }
@@ -265,10 +276,10 @@ public class DashboardRoadmapAction extends BaseDirectStrutsAction implements Fo
      */
     private static Map<String, String> getMilestoneJsonData(Milestone m, Map<Long, String> projects) {
         Map<String, String> item = new HashMap<String, String>();
-        item.put("title", m.getName());
+        item.put("title", StringEscapeUtils.escapeHtml4(m.getName()));
         item.put("projectId", String.valueOf(m.getProjectId()));
-        item.put("projectName", projects.get(m.getProjectId()));
-        item.put("description", m.getDescription());
+        item.put("projectName", StringEscapeUtils.escapeHtml4(projects.get(m.getProjectId())));
+        item.put("description", StringEscapeUtils.escapeHtml4(m.getDescription()));
         item.put("date", MILESTONE_DATE_FORMAT.format(m.isCompleted() ? m.getCompletionDate() : m.getDueDate()));
 
         return item;

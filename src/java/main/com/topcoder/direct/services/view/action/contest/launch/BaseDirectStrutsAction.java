@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -9,6 +9,8 @@ import com.topcoder.direct.services.project.metadata.DirectProjectMetadataKeySer
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.milestone.MilestoneService;
 import com.topcoder.direct.services.project.milestone.ResponsiblePersonService;
+import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.services.AuthorizationService;
@@ -21,10 +23,6 @@ import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.user.UserService;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.ejb.user.UserPreferenceHome;
 import org.apache.log4j.Logger;
 
@@ -32,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -134,8 +133,16 @@ import java.util.List;
  *     </li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.9 (TopCoder Direct Performance Improvement - My Projects)
+ * <ul>
+ *     <li>Update {@link #getProjects()} to refactor get projects logic to DataProvider class</li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -434,28 +441,24 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
 			}
         });		*/
 
+        // long timeLog = System.currentTimeMillis();
+
         List<ProjectData> projects = new ArrayList<ProjectData>();
 
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        Request request = new Request();
-        String myProjectsHandle = "direct_my_projects_v2";
-        request.setContentHandle(myProjectsHandle);
-        request.setProperty("uid", String.valueOf(getCurrentUser().getUserId()));
-        request.setProperty("directProjectStatusId", "1");
+        Map<Long, String> projectsOfUser = DataProvider.getProjectsOfUser(getCurrentUser().getUserId(), 1);
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(myProjectsHandle);
-        final int recordNum = resultContainer.size();
-        for (int i = 0; i < recordNum; i++) {
-            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+        for (Map.Entry<Long, String> entry : projectsOfUser.entrySet()) {
             ProjectData project = new ProjectData();
-            project.setName(tcDirectProjectName);
-            project.setProjectId(tcDirectProjectId);
+            project.setName(entry.getValue());
+            project.setProjectId(entry.getKey());
             projects.add(project);
         }
 
         // sort the projects by project name ignore case
         Collections.sort(projects, new ProjectDataNameComparator());
+
+        // System.out.println("PERFORMANCE_LOG:" + DirectUtils.getTCSubjectFromSession().getUserId()
+        //        + " BaseDirectStrutsAction#getProjects took " + (System.currentTimeMillis() - timeLog) + " ms");
         
         return projects;
     }

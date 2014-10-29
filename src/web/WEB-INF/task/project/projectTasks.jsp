@@ -35,7 +35,7 @@
     <ui:projectPageType tab="tasks"/>
 
     <link rel="stylesheet" href="/css/direct/projectTasks.css" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript" src="/scripts/jsrender.min.js"></script>
     <script type="text/javascript" src="/scripts/projectTasks.js"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
@@ -446,7 +446,7 @@
             </div>
             <div class="col5 fLeft">
                 <select name="taskListId" id="quickAssignTask" class="fLeft">
-                    <option value="${defaultProjectTask.id}" selected="selected">${defaultProjectTask.name}</option>
+                    <option value="${defaultProjectTask.id}" selected="selected"><c:out value="${defaultProjectTask.name}" /></option>
                 </select>
             </div>
         </form>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
@@ -112,9 +112,16 @@ import javax.servlet.http.HttpServletRequest;
  *     <li>Refactor method convertMapKeyToString to DirectUtils as a common static utility method</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.4 (TopCoder Direct - Challenges Section Filters Panel)
+ * <ul>
+ *     <li>Updated {@link #getOptionsForClient()} to return all the projects of the user if the client id is 0</li>
+ * </ul>
+ * </p>
  * 
  * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, GreatKevin
- * @version 2.3
+ * @version 2.4
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -891,7 +898,22 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         Map<String, Object> result = new HashMap<String, Object>();
 
         result.put("billings", DirectUtils.convertMapKeyToString(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
-        result.put("projects", DirectUtils.convertMapKeyToString(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
+
+        Map<String, String> projectsData;
+
+        if (getFormData().getCustomerIds()[0] == 0) {
+            // get all projects
+            List<ProjectBriefDTO> userProjects = DataProvider.getUserProjects(currentUser.getUserId());
+            projectsData = new LinkedHashMap<String, String>();
+            for (ProjectBriefDTO p : userProjects) {
+                projectsData.put(String.valueOf(p.getId()), p.getName());
+            }
+        } else {
+            projectsData = DirectUtils.convertMapKeyToString(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
+        }
+
+        result.put("projects", projectsData);
+
         setResult(result);
 
         return SUCCESS;

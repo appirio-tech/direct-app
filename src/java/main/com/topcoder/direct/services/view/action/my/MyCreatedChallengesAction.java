@@ -27,8 +27,13 @@ import java.util.Map;
  * The action to handle the my created challenges request.
  * </p>
  *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Challenges Section Filters Panel)
+ * - Handle the filter panel parameters
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.0
+ * @version 1.1
  */
 public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
 
@@ -62,7 +67,9 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             return ANONYMOUS;
         }
 
-        // do nothing, forward to the jsp page directly
+        // populate filter data
+        this.setupFilterPanel();
+
         return SUCCESS;
     }
 
@@ -89,8 +96,7 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             Map<String, Object> result = new HashMap<String, Object>();
 
             Map<String, String> params = new HashMap<String, String>();
-            params.put("filter",
-                    "creator=" + getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId()));
+
             params.put("metadata", "true");
 
             String sortColumn = "id";
@@ -104,6 +110,17 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             }
 
             params.put("orderBy", sortColumn + sortOrder);
+
+            String filtersQuery = getFiltersQuery();
+
+            if (filtersQuery.trim().length() > 0) {
+                filtersQuery += ("&creator=" +
+                        getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId()));
+            } else {
+                filtersQuery = "creator=" + getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId());
+            }
+
+            params.put("filter", filtersQuery);
 
             JsonNode jsonNode = getJsonResultFromAPI(buildServiceEndPoint(params));
 

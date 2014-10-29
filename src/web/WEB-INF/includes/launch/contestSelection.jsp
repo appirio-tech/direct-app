@@ -117,7 +117,7 @@
               <select id="projects" name="tcProject">
                 <option value="-1">Please select an existing project</option>
                 <s:iterator value="projects" var="proj">
-                <option value='<s:property value="projectId" />'  <s:if test="%{#proj.projectId==#session.currentProject.id}">selected="selected"</s:if> ><s:property value="name" /></option>
+                <option value='<s:property value="projectId" />'  <s:if test="%{#proj.projectId==#session.currentProject.id}">selected="selected"</s:if> ><s:property escapeJavaScript="true" value="name" /></option>
                 </s:iterator>
               </select>
           </div>
@@ -147,7 +147,7 @@
               <select id="contestMilestone" name="contestMilestone">
                   <option value="0">Please select a milestone to associate</option>
                   <s:iterator value="currentProjectMilestones" var="milestone">
-                      <option value='<s:property value="id"/>'> <s:property value="name"/></option>
+                      <option value='<s:property value="id"/>'> <s:property escapeJavaScript="true" value="name"/></option>
                   </s:iterator>
               </select>
           </div>

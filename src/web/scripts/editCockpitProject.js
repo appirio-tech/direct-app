@@ -930,13 +930,32 @@ $(document).ready(function (e) {
             var operation = {};
             var modalName = p.parent().parent().find(".triggerManagerModal").attr('name');
             var keyId = 0;
+            var requestURL;
+
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
 
             if(modalName == 'clientManagersModal') {
                 keyId = 1;
+                requestURL = 'saveClientProjectManagers';
+                formData.clientManagers = operations;
+
             } else if (modalName == 'projectManagersModal') {
                 keyId = 2;
+                requestURL = 'saveTopCoderManagers';
+                formData.projectManagers = operations;
+
             } else if (modalName == 'accountManagersModal') {
                 keyId = 14;
+                requestURL = 'saveTopCoderAccountManagers';
+                formData.accountManagers = operations;
+
+
+            } else if (modalName == 'appirioManagersModal') {
+                keyId = 15;
+                requestURL = 'saveAppirioManagers';
+                formData.appirioManagers = operations;
+
             }
 
             operation.KeyId = keyId;
@@ -944,18 +963,9 @@ $(document).ready(function (e) {
             operation.operation = 'remove';
             operations.push(operation);
 
-            var formData = {};
-            formData.projectId = $("input[name='editProjectId']").val();
-            if (modalName == 'clientManagersModal') {
-                formData.clientManagers = operations;
-            } else if (modalName == 'projectManagersModal') {
-                formData.projectManagers = operations;
-            } else if (modalName == 'accountManagersModal') {
-                formData.accountManagers = operations;
+            if(!requestURL || keyId <= 0) {
+                return;
             }
-
-            var requestURL = (modalName == 'clientManagersModal' ? 'saveClientProjectManagers' :
-                (modalName == 'accountManagersModal' ? 'saveTopCoderAccountManagers' : 'saveTopCoderManagers'));
 
             modalPreloader();
 
@@ -980,6 +990,8 @@ $(document).ready(function (e) {
 
 
             p.remove();
+
+            checkAppirioManagerNumber();
             return false;
         });
 
@@ -1210,11 +1222,41 @@ $(document).ready(function (e) {
                     p[name] = true;
                 }
             });
+            checkAppirioManagerNumberInModal(modal);
         });
+
+        function checkAppirioManagerNumberInModal(modal) {
+            if(modal.attr('id') == 'appirioManagersModal') {
+                if(modal.find('.addUserForm .addUserRight ul li').length > 0) {
+                    modal.find('.addUserForm .addItem').css('visibility', 'hidden');
+                    modal.find('.addUserForm .removeItem').css('visibility', 'visible');
+                } else {
+                    modal.find('.addUserForm .addItem').css('visibility', 'visible');
+                    modal.find('.addUserForm .removeItem').css('visibility', 'hidden');
+                }
+            }
+
+        }
+
+        function checkAppirioManagerNumber() {
+            if($("div.appirioManagerList ul li.memberLink").length > 0) {
+                $("div.appirioManagerList .triggerManagerModal").addClass('hidden');
+            } else {
+                $("div.appirioManagerList .triggerManagerModal").removeClass('hidden');
+            }
+
+        }
 
         // add item
         $('.userManagementModal .addUserForm .addItem').live('click', function () {
             var modal = $(this).parents('.userManagementModal:first');
+
+            if(modal.find('.addUserForm .addUserLeft ul li.selected').length > 1
+                && modal.attr('id') == 'appirioManagersModal') {
+                showErrors("A project can only have 1 Appirio Project Manager");
+                return;
+            }
+
             modal.find('.addUserForm .addUserLeft ul li.selected').each(function () {
                 modal.find('.addUserForm .addUserRight ul').append('<li name="' + $(this).attr('name') + '">' + $(this).html() + '</li>');
                 $(this).remove();
@@ -1229,6 +1271,7 @@ $(document).ready(function (e) {
                 }
             });
             adjustLeftRightPanel(modal);
+            checkAppirioManagerNumberInModal(modal);
         });
 
         // remove item
@@ -1248,6 +1291,7 @@ $(document).ready(function (e) {
                 }
             });
             adjustLeftRightPanel(modal);
+            checkAppirioManagerNumberInModal(modal);
         });
 
 
@@ -1595,19 +1639,34 @@ $(document).ready(function (e) {
 
             if(modal.attr('id') == 'addUserModal') return;
 
-            var metadataKey;
+            var keyId;
             var modalName = modal.attr('id');
+            var requestURL;
+            var operations = [];
+            var formData = {projectId:$("input[name='editProjectId']").val()};
 
             if(modalName == 'clientManagersModal') {
-                metadataKey = 1;
-            } else if (modalName == 'projectManagersModal') {
-                metadataKey = 2;
-            } else if (modalName == 'accountManagersModal') {
-                metadataKey = 14;
-            }
+                keyId = 1;
+                requestURL = 'saveClientProjectManagers';
+                formData.clientManagers = operations;
 
-            var requestURL = (modalName == 'clientManagersModal' ? 'saveClientProjectManagers' :
-                (modalName == 'accountManagersModal' ? 'saveTopCoderAccountManagers' : 'saveTopCoderManagers'));
+            } else if (modalName == 'projectManagersModal') {
+                keyId = 2;
+                requestURL = 'saveTopCoderManagers';
+                formData.projectManagers = operations;
+
+            } else if (modalName == 'accountManagersModal') {
+                keyId = 14;
+                requestURL = 'saveTopCoderAccountManagers';
+                formData.accountManagers = operations;
+
+
+            } else if (modalName == 'appirioManagersModal') {
+                keyId = 15;
+                requestURL = 'saveAppirioManagers';
+                formData.appirioManagers = operations;
+
+            }
 
             modal.find(".addUserLeft ul").empty();
 
@@ -1631,13 +1690,10 @@ $(document).ready(function (e) {
                 }
             });
 
-
-            var operations = [];
-
             // process toRemove
             $.each(toRemove, function (key, value) {
                 var operation = {};
-                operation.keyId = metadataKey;
+                operation.keyId = keyId;
                 operation.id = value.id;
                 operation.operation = 'remove';
                 operations.push(operation);
@@ -1646,14 +1702,11 @@ $(document).ready(function (e) {
             // process toAdd
             $.each(toAdd, function (key, value) {
                 var operation = {};
-                operation.keyId = metadataKey;
+                operation.keyId = keyId;
                 operation.operation = 'add';
                 operation.value = key;
                 operations.push(operation);
             });
-
-
-            var formData = {projectId:$("input[name='editProjectId']").val()};
 
             modalAllClose();
 
@@ -1662,15 +1715,6 @@ $(document).ready(function (e) {
             }
 
             modalPreloader();
-
-            if (modalName == 'clientManagersModal') {
-                formData.clientManagers = operations;
-            } else if (modalName == 'projectManagersModal') {
-                formData.projectManagers = operations;
-            } else if (modalName == 'accountManagersModal') {
-                formData.accountManagers = operations;
-            }
-
 
             $.ajax({
                 type:'post',
@@ -1700,6 +1744,8 @@ $(document).ready(function (e) {
                                     }
                                 );
                             });
+
+                            checkAppirioManagerNumber();
                         },
                         function (errorMessage) {
                             modalAllClose();
@@ -1753,6 +1799,8 @@ $(document).ready(function (e) {
 
             }
             adjustLeftRightPanel(modal);
+
+            checkAppirioManagerNumberInModal(modal);
         });
 
         $(".userManagementModal .downloadProfile").click(function () {

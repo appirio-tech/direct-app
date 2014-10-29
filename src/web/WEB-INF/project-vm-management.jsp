@@ -195,23 +195,23 @@
                                 <tbody class="vm_instances_body">
                                 <c:forEach items="${vmInstances}" var="vmInstance">
                                     <tr>
-                                        <td>${vmInstance.instance.contestId}</td>
-                                        <td>${vmInstance.contestName}</td>
-                                        <td>${vmInstance.vmImageTcName}</td>
-                                        <td>${vmInstance.accountName}</td>
-                                        <td>${vmInstance.instance.svnBranch}</td>
-                                        <td>${vmInstance.instance.tcMemberHandle}</td>
-                                        <td>${vmInstance.managerHandle}</td>
-                                        <td>${vmInstance.instance.publicIP}</td>
+                                        <td><c:out value="${vmInstance.instance.contestId}" /></td>
+                                        <td><c:out value="${vmInstance.contestName}" /></td>
+                                        <td><c:out value="${vmInstance.vmImageTcName}" /></td>
+                                        <td><c:out value="${vmInstance.accountName}" /></td>
+                                        <td><c:out value="${vmInstance.instance.svnBranch}" /></td>
+                                        <td><c:out value="${vmInstance.instance.tcMemberHandle}" /></td>
+                                        <td><c:out value="${vmInstance.managerHandle}" /></td>
+                                        <td><c:out value="${vmInstance.instance.publicIP}" /></td>
                                         <td><fmt:formatDate value="${vmInstance.instance.creationTime}" pattern="MM/dd/yyyy HH:mm"/></td>
                                         <td>
                                             <c:forEach items="${vmUsages}" var="vmUsage">
                                                 <c:if test="${vmUsage.id == vmInstance.instance.usageId}">
-                                                    ${vmUsage.name}
+                                                    <c:out value="${vmUsage.name}" />
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td class="vm_instance_status">${vmInstance.status}</td>
+                                        <td class="vm_instance_status"><c:out value="${vmInstance.status}" /></td>
                                         <td class="vm_instance_action" align="center">
                                             <div class="actionDropDownList" style="position: relative;">
                                                 <a href="javascript:void(0)" class="actionLink">Action<span class="arrow"></span></a>

@@ -657,7 +657,7 @@ function updateProjectGeneralInfo(notSendToServer) {
         $(".projectBudget span").text("Not Indicated");
     }
             
-    $('#contestNameTextLabel').html(contestName);
+    $('#contestNameTextLabel').html(htmlEncode(contestName));
     $('#projectNameTextLabel').html('<a href="../projectOverview?formData.projectId=' + projectId + '">' + projectName + '</a>');
     $('#billingProjectNameTextLabel').html(accountName);
     $('#projects').val(projectId);

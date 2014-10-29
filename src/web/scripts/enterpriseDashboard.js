@@ -73,9 +73,9 @@ var shortNameMap = {
     "36" :  ["Reporting" , "Reporting"],
     "37" :  ["Marathon Match" , "Marathon Match"],
     "9" :  ["Bug Hunt" , "Bug Hunt"],
-	"38" :  ["First2Finish" , "First2Finish"],
-	"39" :  ["Code" , "Code"],
-	"40" : ["Design First2Finish", "Design First2Finish"]
+    "38" :  ["First2Finish" , "First2Finish"],
+    "39" :  ["Code" , "Code"],
+    "40" : ["Design First2Finish", "Design First2Finish"]
 };
 var volumeTableLoaded;
 var tableViewTable;
@@ -1809,12 +1809,12 @@ function renderOverviewProjects(resultJson) {
             strData += '<tr>';
             strData += '<td>';
             strData += '<div class="showTip">';
-            strData += '<a href="' + projectLink + '" class="projectName" target="_blank" title="' + resultJson[i].name + '">' + projectName + '</a>';
+            strData += '<a href="' + projectLink + '" class="projectName" target="_blank" title="' + htmlEncode(resultJson[i].name) + '">' + htmlEncode(projectName) + '</a>';
             strData += '</div>';
             strData += '</td>';
             strData += '<td class="alignCenter">';
             if (resultJson[i].milestoneName) {
-                strData += '<a href="' + milestoneLink + '" target="_blank" title="'  + resultJson[i].milestoneName + '">' + milestoneName + '</a>';
+                strData += '<a href="' + milestoneLink + '" target="_blank" title="'  + htmlEncode(resultJson[i].milestoneName) + '">' + htmlEncode(milestoneName) + '</a>';
             }
             strData += '</td></tr>';
         }
@@ -4615,8 +4615,8 @@ function loadRoadmapCalendar() {
                                     break;
                             }
 
-                            var name = $("<span class='milestoneName'></span>").addClass(milestoneNameClass).text(event.title);
-                            var project = $("<span></span>").text(event.projectName);
+                            var name = $("<span class='milestoneName'></span>").addClass(milestoneNameClass).text(htmlEncode(event.title));
+                            var project = $("<span></span>").text(htmlEncode(event.projectName));
 
                             inner.find(".fc-event-title").empty().append(name).append(project);
 
@@ -4627,15 +4627,15 @@ function loadRoadmapCalendar() {
                                 "class":"triangle"
                             }).appendTo(tcTip);
                             $("<h2/>", {
-                                "text":event.title,
+                                "text": htmlEncode(event.title),
                                 "class":"tipsTitle"
                             }).appendTo(tcTip);
                             $("<h2/>", {
-                                "text":event.projectName,
+                                "text": htmlEncode(event.projectName),
                                 "class":"tipsTitle"
                             }).appendTo(tcTip);
                             $("<p/>", {
-                                "text":event.description
+                                "text": htmlEncode(event.description)
                             }).appendTo(tcTip);
                             tcTip.appendTo(inner.parent());
 

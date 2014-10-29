@@ -92,7 +92,7 @@ $(document).ready(function(){
         $('div.fullSizePic').hide();
         $('div.full' + artifactNum).show();
         var filename=$('#artifact'+artifactNum).val();
-        $('div.title h1').html(filename);
+        $('div.title h1').text(filename);
         $('.lblID').html(artifactNum);
         if (artifactNum==submissionArtifactCount) {
             $('.nextLink').hide();    

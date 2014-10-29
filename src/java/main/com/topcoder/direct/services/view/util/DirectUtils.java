@@ -637,8 +637,17 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.5 (TopCoder Direct Performance Improvement - My Projects)
+ * <ul>
+ *     <li>Added {@link #getGlobalClientBillingProjectMappingsCache()}</li>
+ *     <li>Added {@link #getGlobalClientsCache()}</li>
+ *     <li>Added {@link #getGlobalProjectClientCache()} ()}</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.4.1
+ * @version 1.5
  */
 public final class DirectUtils {
 
@@ -1946,6 +1955,46 @@ public final class DirectUtils {
     private static Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
         return DataProvider.getDashboardClientBillingProjectMappingsV2(tcSubject);
     }
+
+    /**
+     * Gets the global client-billing-project mapping cache. If cache is not hit, fill the cache first.
+     *
+     * @return the global client-billing-project mapping cache.
+     * @throws Exception if any error.
+     * @since 1.5
+     */
+    private static Map<String, Object> getGlobalClientBillingProjectMappingsCache() throws Exception {
+        if (DirectUtils.getApplicationContext().get(
+                DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE) == null) {
+            DataProvider.fillGlobalClientBillingProjectCache();
+        }
+
+        return (Map<String, Object>) DirectUtils.getApplicationContext().get(
+                DirectUtils.PROJECT_BILLING_MAPPING_RESULT_CACHE);
+    }
+
+    /**
+     * Gets the global clients cache.
+     *
+     * @return the global clients cache.
+     * @throws Exception if any error.
+     * @since 1.5
+     */
+    public static Map<Long, String> getGlobalClientsCache() throws Exception {
+        return (Map<Long, String>) getGlobalClientBillingProjectMappingsCache().get("clients");
+    }
+
+    /**
+     * Gets the global project-clients cache
+     *
+     * @return the global project-clients cache
+     * @throws Exception if any error.
+     * @since 1.5
+     */
+    public static Map<Long, Long> getGlobalProjectClientCache() throws Exception {
+        return (Map<Long, Long>) getGlobalClientBillingProjectMappingsCache().get("project.client");
+    }
+
 
     /**
      * Gets the billing accounts of the given client.

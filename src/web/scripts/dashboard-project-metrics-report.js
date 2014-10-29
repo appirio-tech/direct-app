@@ -202,20 +202,20 @@ $(document).ready(function() {
 
                             $billing.html("");
                             $.each(billings, function(key, value) {
-                                $billing.append($('<option></option>').val(key).html(value));
+                                $billing.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $billing.append($('<option></option>').val(0).html("All Billing Accounts"));
+                            $billing.append($('<option></option>').val(0).text("All Billing Accounts"));
                             $billing.val(0);
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).html(value));
+                                $project.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.append($('<option></option>').val(0).text("All Projects"));
                             $project.val(0);
 
                             sortDropDown("#formData\\.projectId");
@@ -259,11 +259,11 @@ $(document).ready(function() {
 
                             $project.html("");
                             $.each(projects, function(key, value) {
-                                $project.append($('<option></option>').val(key).html(value));
+                                $project.append($('<option></option>').val(key).text(value));
                             });
 
                             // append the default "select all"
-                            $project.append($('<option></option>').val(0).html("All Projects"));
+                            $project.append($('<option></option>').val(0).text("All Projects"));
                             $project.val(0);
                             sortDropDown("#formData\\.projectId");
                         },

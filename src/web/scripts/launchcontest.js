@@ -697,7 +697,7 @@ function handleProjectDropDownChange() {
     $contestMilestones.append($('<option></option>').val(0).html("Please select a milestone to associate"));
 
     $.each(milestones, function(id, value) {
-        $contestMilestones.append($('<option></option>').val(value.id).html(value.name).attr('title', value.description));
+        $contestMilestones.append($('<option></option>').val(value.id).text(htmlEncode(value.name)).attr('title', htmlEncode(value.description)));
     });
 
     $('.milestoneSelect select').resetSS();

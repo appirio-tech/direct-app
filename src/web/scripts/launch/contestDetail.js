@@ -354,8 +354,8 @@ function populateTypeSection() {
 		$('#rReceiptTab').addClass("off");
 		$('#rReceiptTab').html("<a class=\"last\"><span class=\"left\"><span class=\"right\">Receipt</span></span></a>");
 	}
-	$('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
-	$('#rContestName').html(mainWidget.competition.contestData.name);
+	$('#rTypeIntroduction').html(htmlEncode(mainWidget.competition.contestData.shortSummary));
+	$('#rContestName').html(htmlEncode(mainWidget.competition.contestData.name));
 	
 	if(isBillingViewable()) {
 	   $('.billingdisplay').show(); 
@@ -373,7 +373,7 @@ function populateTypeSection() {
   $('#rAdminFee').html(mainWidget.competition.contestData.contestAdministrationFee.formatMoney(2));  	 
   
   	if (mainWidget.competition.contestData.tcDirectProjectName != null) {
-		$('#rProjectName').html(mainWidget.competition.contestData.tcDirectProjectName);
+		$('#rProjectName').html(htmlEncode(mainWidget.competition.contestData.tcDirectProjectName));
 	}
 }
 
@@ -845,7 +845,7 @@ function populateDocumentSection() {
 	var html = "";
 	var template = unescape($('#documentTemplate tbody').html());
 	$.each(documents, function(i,doc) {
-		 html += $.validator.format(template,(i+1),doc['fileName'],doc['description'],doc['documentId']);
+		 html += $.validator.format(template,(i+1),doc['fileName'],htmlEncode(doc['description']),doc['documentId']);
 	});
 	$('#documentTable').html(html);
 }

@@ -79,7 +79,7 @@
                                                 <c:forEach items="${groups}" var="group" varStatus="vs">
                                                 <div class="multiOptionRow">
                                                     <input type="checkbox" value="${group.id}" id="multiSelect01CheckBox${vs.count}" name="groups" autocomplete="off"/>
-                                                    <label for="multiSelect01CheckBox${vs.count}">${group.name}</label>
+                                                    <label for="multiSelect01CheckBox${vs.count}"><c:out value="${group.name}" /></label>
                                                 </div>
                                                 </c:forEach>
 											</div>

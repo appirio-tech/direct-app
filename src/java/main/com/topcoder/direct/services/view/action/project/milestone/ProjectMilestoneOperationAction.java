@@ -13,6 +13,8 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,9 +106,13 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
                 throw new IllegalArgumentException("You don't have permission to create milestone for the project");
             }
 
-            final long newMilestoneId = getMilestoneService().add(getFormData().getMilestone());
+            Milestone milestone = getFormData().getMilestone();
+            milestone.setName(StringEscapeUtils.escapeHtml4(milestone.getName()));
+            milestone.setDescription(StringEscapeUtils.escapeHtml4(milestone.getDescription()));
 
-            Milestone milestone = getMilestoneService().get(newMilestoneId);
+            final long newMilestoneId = getMilestoneService().add(milestone);
+
+            milestone = getMilestoneService().get(newMilestoneId);
 
             final Map result = milestone.getMapRepresentation();
 
@@ -253,10 +259,14 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
                 throw new IllegalArgumentException("You don't have permission to modify this milestone");
             }
 
-            getMilestoneService().update(getFormData().getMilestone());
+            Milestone m = getFormData().getMilestone();
+            m.setName(StringEscapeUtils.escapeHtml4(m.getName()));
+            m.setDescription(StringEscapeUtils.escapeHtml4(m.getDescription()));
+
+            getMilestoneService().update(m);
 
             ProjectMilestoneDTO milestoneDTO = new ProjectMilestoneDTO();
-            Milestone m = getMilestoneService().get(getFormData().getMilestone().getId());
+            m = getMilestoneService().get(getFormData().getMilestone().getId());
             milestoneDTO.setMilestone(m);
             milestoneDTO.setContests(
                     DataProvider.getMilestoneContestAssociations(getFormData().getMilestone().getProjectId(),
@@ -302,7 +312,13 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
                 throw new IllegalArgumentException("You don't have permission to create milestones for the project");
             }
 
-            getMilestoneService().add(getFormData().getMilestones());
+            List<Milestone> milestones = getFormData().getMilestones();
+
+            for (Milestone m : milestones) {
+                m.setName(StringEscapeUtils.escapeHtml4(m.getName()));
+                m.setDescription(StringEscapeUtils.escapeHtml4(m.getDescription()));
+            }
+            getMilestoneService().add(milestones);
 
             result.put("operation", "addAll");
 

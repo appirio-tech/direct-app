@@ -621,7 +621,7 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
         <tr class="contestAggregationReport ${rowStyle}">
-            <td>${item.groupName}</td>
+            <td><c:out value="${item.groupName}" /></td>
             <td>${item.totalRegistrants}</td>
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>

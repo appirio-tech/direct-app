@@ -38,7 +38,7 @@
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
-    <script type="text/javascript"  src="/scripts/jsrender-min.js"></script>
+    <script type="text/javascript"  src="/scripts/jsrender.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>
     <script id="contestPipelineDrillInTemplate" type="text/x-jsrender">

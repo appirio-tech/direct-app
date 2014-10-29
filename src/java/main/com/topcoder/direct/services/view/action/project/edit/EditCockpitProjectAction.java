@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.edit;
 
@@ -23,10 +23,8 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.BillingAccount;
-import com.topcoder.security.groups.model.Client;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
-import com.topcoder.security.groups.services.ClientService;
 import com.topcoder.security.groups.services.GroupService;
 import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.facade.contest.notification.ContestNotification;
@@ -107,8 +105,15 @@ import com.topcoder.service.project.ProjectType;
  * </ol>
  * </p>
  *
- * @version 2.5.1
- * @author GreatKevin, freegod, FireIce
+ * <p>
+ * Version 2.5.2 (TopCoder Direct - Add Appirio Manager)
+ * <ul>
+ *     <li>Updated {@link #setCommonProjectMetadata(java.util.List)} to handle metadata for Appirio Manager</li>
+ * </ul>
+ * </p>
+ *
+ * @version 2.5.2
+ * @author GreatKevin, freegod, FireIce, Veve
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -547,6 +552,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             } else if (keyId == 14L) {
                 // TopCoder account manager ids
                 getViewData().getTcAccountManagerIds().add(data);
+            } else if (keyId == 15L) {
+                // Appirio Manager
+                getViewData().getAppirioManagerIds().add(data);
             }
         }
     }
