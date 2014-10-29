@@ -543,45 +543,11 @@
     </target>
     
     <target name="update-single-revision-number-for-css" description="update revision number for each CSS file">
-        <pathconvert property="pathInPage" pathsep="/" dirsep="/">
-            <path location="${file}"/>
-            <map from="${basedir}/src/web" to="" />
-        </pathconvert>
-
-        <svnex>
-            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
-        </svnex>
-        
-        <basename property="filename" file="${pathInPage}" suffix=".css"/>
-
-        <replaceregexp byline="true">
-            <regexp pattern='([href|src])="(.*${filename})(\.svn\d+)?\.css(\?v=\d+)?"'/>
-            <substitution expression='\1="\2\.svn${svn.info.lastRev}\.css"'/>
-            <fileset dir="${build_distdir}/direct.war">
-                <include name="**/*.jsp"/>
-            </fileset>
-        </replaceregexp>
+        <update-single-revision-number file="${file}" type="css"/>
     </target>
     
     <target name="update-single-revision-number-for-js" description="update revision number for each javascript file">
-        <pathconvert property="pathInPage" pathsep="/" dirsep="/">
-            <path location="${file}"/>
-            <map from="${basedir}/src/web" to="" />
-        </pathconvert>
-
-        <svnex>
-            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
-        </svnex>
-        
-        <basename property="filename" file="${pathInPage}" suffix=".js"/>
-
-        <replaceregexp byline="true">
-            <regexp pattern='([href|src])="(.*${filename})(\.svn\d+)?\.js(\?v=\d+)?"'/>
-            <substitution expression='\1="\2\.svn${svn.info.lastRev}\.js"'/>
-            <fileset dir="${build_distdir}/direct.war">
-                <include name="**/*.jsp"/>
-            </fileset>
-        </replaceregexp>
+        <update-single-revision-number file="${file}" type="js"/>
     </target>
 
     <target name="update-revision-numbers" description="update revision number for static files">
