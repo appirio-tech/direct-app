@@ -11,6 +11,13 @@ Setup on VM:
 Setup on Local env - Refer to http://apps.topcoder.com/wiki/display/docs/TC+Direct+Setup+Guide
 * Instead of using SVN, you will use the codes from this git repo
 
+VM Info:
+* http://apps.topcoder.com/wiki/display/projects/Direct+VM
+* http://apps.topcoder.com/wiki/display/docs/VM+Image+2.5
+
+Build/Compile
+* run 'ant'
+
 Deploy:
 * simply run 'ant deploy' to build all the components and the direct and deploy the direct to jboss
 
