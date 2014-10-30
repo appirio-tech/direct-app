@@ -519,10 +519,23 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
                 return false;
             }
         }
+
         if (regPhase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()
             && (specReviewPhase == null || specReviewPhase.getPhaseStatus().getPhaseStatusId() == ProjectPhaseStatus.CLOSED.getPhaseStatusId())) {
             return false;
         }
+
+        boolean allPhasesClosed = true;
+
+        for (ProjectPhaseDTO phase : allPhases) {
+            if (phase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()) { 
+                allPhasesClosed = false;
+            }
+        }
+        if (allPhasesClosed) {
+            return false;
+        }
+        
         return true;
     }
 
