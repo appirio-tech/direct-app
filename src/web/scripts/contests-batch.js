@@ -41,12 +41,27 @@ var disableUnaccesssibleBilling = function() {
     });
 };
 
+var disableUnchangableChallengeTypes = function() {
+    $("#contestTable.editTable tbody tr").each(function(){
+        var typeId = $(this).find('select[name=contestType]').val();
+        if (typeId == 38 || typeId == 39) {
+            $(this).find('select[name=contestType]').attr('disabled', 'disabled');
+        } else {
+            // remove the first2finish and code, not allow others change to
+            $(this).find('select[name=contestType] option[value="38"]').remove();
+            $(this).find('select[name=contestType] option[value="39"]').remove();
+        }
+    });
+}
+
 $(document).ready(function () {
 
     loadBatchContestsBuffer();
 
     // hide the unaccessible billing account
     disableUnaccesssibleBilling();
+
+    disableUnchangableChallengeTypes();
 
     // disable auto complete
     $("#contestTable.editTable input").attr('autocomplete', 'off');
