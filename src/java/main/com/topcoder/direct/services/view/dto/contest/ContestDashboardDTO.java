@@ -519,21 +519,25 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
                 return false;
             }
         }
-
         if (regPhase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()
             && (specReviewPhase == null || specReviewPhase.getPhaseStatus().getPhaseStatusId() == ProjectPhaseStatus.CLOSED.getPhaseStatusId())) {
             return false;
         }
+        return true;
+    }
 
-        boolean allPhasesClosed = true;
+    /**
+     * Checks whether the contest is completed (all phases are closed).
+     * 
+     * @return true if the contest is completed, false otherwise.
+     */
+    public boolean isCompleted() {
+        
 
         for (ProjectPhaseDTO phase : allPhases) {
             if (phase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()) { 
-                allPhasesClosed = false;
+                return false;
             }
-        }
-        if (allPhasesClosed) {
-            return false;
         }
         
         return true;
