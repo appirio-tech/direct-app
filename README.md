@@ -7,6 +7,7 @@ Setup on VM:
 * Delete the whole directory /home/direct/direct
 * Git Clone the direct-app repo into folder /home/direct/direct.
 * Copy the back up *.properties files back to /home/direct/direct
+* Among the *.properties, update topcoder_global.properties, add line 'direct_service_libdir=${libdir}/tcs/ejb' after tcs_libdir property
 * Make sure JDK7 is used: run 'export JAVA_HOME=/opt/jdk1.7.0_17'
 
 Setup on Local env - Refer to http://apps.topcoder.com/wiki/display/docs/TC+Direct+Setup+Guide
