@@ -21,6 +21,8 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
+    <bean id="springApplicationContext" class="com.topcoder.service.util.SpringApplicationContext"/>
+
     <!-- Services -->
     <bean id="projectServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="remote/ProjectServiceFacadeBean"/>

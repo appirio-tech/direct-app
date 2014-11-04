@@ -1,20 +1,24 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.config.entities.ResultConfig;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
+import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.TopCoderDirectAction;
+import com.topcoder.direct.services.view.action.project.FullProject;
 import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * <p>An interceptor for requests to secured area. Verifies that current user is granted a permission to access the
@@ -48,8 +52,15 @@ import javax.servlet.http.HttpServletRequest;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.4 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Updated method {@link #intercept(com.opensymphony.xwork2.ActionInvocation)} to process @FullProject annotation</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class ProjectAccessInterceptor implements Interceptor {
 
@@ -112,32 +123,68 @@ public class ProjectAccessInterceptor implements Interceptor {
      * @throws Exception if an unexpected error occurs while running the interception chain.
      */
     public String intercept(ActionInvocation actionInvocation) throws Exception {
+
         HttpServletRequest request = DirectUtils.getServletRequest();
+
+        // TODO - need to check does all the actions in direct subclass to TopCoderDirectAction ??
         TopCoderDirectAction action = (TopCoderDirectAction) actionInvocation.getAction();
+
         FormAction formAction = (FormAction) action;
+
         Object formData = formAction.getFormData();
+
+        // To use project access interceptor, the action must has formData which extends ProjectIdForm
         ProjectIdForm projectIdForm = (ProjectIdForm) formData;
+
         long projectId = projectIdForm.getProjectId();
-        boolean readonly = true;
-        boolean granted;
+        boolean writePermissionRequired = false;
+        boolean fullPermissionRequired = false;
+        boolean granted = false;
+
         String method = actionInvocation.getProxy().getMethod();
+
+        Map<String, ResultConfig> results = actionInvocation.getProxy().getConfig().getResults();
+
         if (method != null && !method.equals("execute")) {
-            if (actionInvocation.getAction().getClass().getMethod(method).isAnnotationPresent(WriteProject.class)) {
-                readonly = false;
+            // check method name to execute (non 'execute' method)
+            if (actionInvocation.getAction().getClass().getMethod(method).isAnnotationPresent(FullProject.class)) {
+                fullPermissionRequired = true;
+            } else if (actionInvocation.getAction().getClass().getMethod(method).isAnnotationPresent(WriteProject.class)) {
+                writePermissionRequired = true;
             }
         } else {
-            if (actionInvocation.getAction().getClass().isAnnotationPresent(WriteProject.class)) {
-                readonly = false;
+            // check class level
+            if (actionInvocation.getAction().getClass().isAnnotationPresent(FullProject.class)) {
+                fullPermissionRequired = true;
+            } else if (actionInvocation.getAction().getClass().isAnnotationPresent(WriteProject.class)) {
+                writePermissionRequired = true;
             }
         }
-        if (!readonly) {
-            granted =  AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+
+        if (fullPermissionRequired) {
+            granted = AuthorizationProvider.isUserGrantedFullAccessToProject(DirectUtils.getTCSubjectFromSession(),
+                    projectId);
+        } else if (writePermissionRequired) {
+            granted = AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(),
+                    projectId);
         } else {
-            granted = AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+            granted = AuthorizationProvider.isUserGrantedAccessToProject(DirectUtils.getTCSubjectFromSession(),
+                    projectId);
         }
+
         if (!granted) {
-            request.setAttribute("errorPageMessage", "Sorry, you don't have permission to access this project.");
+
+            String permissionErrorMessage = String.format("Sorry, you don't have %spermission to access this project.",
+                    fullPermissionRequired ? "Full " : (writePermissionRequired ? "Write " : ""));
+
+            if (actionInvocation.getAction() instanceof AbstractAction) {
+                ((AbstractAction) actionInvocation.getAction()).setResult(
+                        new Exception(permissionErrorMessage));
+            }
+
+            request.setAttribute("errorPageMessage", permissionErrorMessage);
             return "permissionDenied";
+
         } else {
             // record access time and accessed project id for
             // current user (Release Assembly - TopCoder Cockpit Navigation Update)

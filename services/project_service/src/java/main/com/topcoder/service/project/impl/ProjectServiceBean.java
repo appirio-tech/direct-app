@@ -351,8 +351,15 @@ import com.topcoder.util.log.LogManager;
  * </ul>
  * </p>
  *
- * @author humblefool, FireIce, ThinMan, woodjhon, ernestobf, GreatKevin, leo_lol, Ghost_141, GreatKevin, TCSASSEMBLER
- * @version 2.6
+ * <p>
+ * Version 2.7 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Added method implementation {@link #getClientByProject(long)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author humblefool, FireIce, ThinMan, woodjhon, ernestobf, GreatKevin, leo_lol, Ghost_141, GreatKevin
+ * @version 2.7
  * @since 1.0
  */
 @Stateless
@@ -1651,6 +1658,35 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
             throw new PersistenceFault(ex.getMessage());
         } finally {
             logExit("getBillingAccountsByProject(long projectId)");
+        }
+    }
+
+    /**
+     * Gets the client instance by the given direct project id.
+     *
+     * @param projectId the id of the direct project
+     * @return the client this project belongs to, null if no client
+     * @throws PersistenceFault if a generic persistence error occurs.
+     * @since 1.2
+     */
+    public Client getClientByProject(long projectId) throws PersistenceFault {
+        logEnter("getClientByProject(long projectId)");
+        logParameters("project id: {0}", projectId);
+
+        try {
+            List<com.topcoder.clients.model.Project> billingAccountsByProject = getBillingAccountsByProject(projectId);
+
+            if (billingAccountsByProject == null || billingAccountsByProject.size() == 0) {
+                return null;
+            }
+
+            return billingAccountsByProject.get(0).getClient();
+
+        } catch (Exception ex) {
+            logException(ex);
+            throw new PersistenceFault(ex.getMessage());
+        } finally {
+            logExit("getClientByProject(long projectId)");
         }
     }
 
