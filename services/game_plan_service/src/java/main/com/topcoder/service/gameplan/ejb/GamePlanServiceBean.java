@@ -129,8 +129,15 @@ import java.util.Set;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Updated {@link #PERMISSION_CHECKING} to add customer admin logic</li>
+ * </ul>
+ * </p>
+ *
  * @author saarixx, FireIce, isv, lmmortal, GreatKevin, TCSASSEMBLER, freegod
- * @version 1.3
+ * @version 1.4
  */
 @Stateless
 public class GamePlanServiceBean implements GamePlanServiceLocal, GamePlanServiceRemote {
@@ -262,7 +269,35 @@ public class GamePlanServiceBean implements GamePlanServiceLocal, GamePlanServic
             "                        AND   sg.archived = 0\n" +
             "                        AND ttc.client_status_id = 1\n" +
             "                        AND tdp.project_id = p.tc_direct_project_id\n" +
-            "                        ))";
+            "                        )\n" +
+            "OR EXISTS (\n"+
+            "                        SELECT \n"+
+            "                        tdp.project_id as tc_direct_project_id\n"+
+            "                        FROM project_info pi\n"+
+            "                        INNER JOIN tc_direct_project tdp ON p.tc_direct_project_id = tdp.project_id\n"+
+            "                        INNER JOIN tt_client_project cp ON cp.project_id = pi.value\n"+
+            "                        INNER JOIN tt_client c ON c.client_id = cp.client_id\n"+
+            "                        INNER JOIN customer_administrator ca ON ca.client_id = c.client_id\n"+
+            "                        WHERE pi.project_info_type_id = 32\n"+
+            "                        AND   c.status = 1\n"+
+            "                        AND   c.is_deleted = 0\n"+
+            "                        AND   pi.project_id = p.project_id\n"+
+            "                        AND   tdp.project_id = p.tc_direct_project_id\n"+
+            "                        AND   ca.user_id = :userId \n"+
+            "               )\n" +
+            "OR EXISTS (\n" +
+            "                        SELECT tdp.project_id AS tc_direct_project_id\n" +
+            "                        FROM tc_direct_project tdp\n" +
+            "                        INNER JOIN direct_project_account dpa ON tdp.project_id = dpa.project_id\n" +
+            "                        INNER JOIN tt_project ttp ON dpa.billing_account_id = ttp.project_id\n" +
+            "                        INNER JOIN tt_client_project ttcp ON ttp.project_id = ttcp.project_id\n" +
+            "                        INNER JOIN tt_client ttc ON ttcp.client_id = ttc.client_id\n" +
+            "                        INNER JOIN customer_administrator ca ON ca.client_id = ttc.client_id\n" +
+            "                        WHERE ttc.status = 1\n" +
+            "                           AND   ttc.is_deleted = 0\n" +
+            "                           AND   tdp.project_id = p.tc_direct_project_id\n" +
+            "                           AND   ca.user_id = :userId \n" +
+            "               ))\n";
 
     /**
      * Represents the name for active status.

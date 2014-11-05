@@ -4,8 +4,6 @@
 package com.topcoder.direct.services.view.action.project.edit;
 
 
-import java.util.*;
-
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
@@ -25,6 +23,7 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.model.DirectProject;
 import com.topcoder.security.groups.model.Group;
+import com.topcoder.security.groups.model.GroupPermissionType;
 import com.topcoder.security.groups.services.GroupService;
 import com.topcoder.security.groups.services.dto.GroupSearchCriteria;
 import com.topcoder.service.facade.contest.notification.ContestNotification;
@@ -33,6 +32,18 @@ import com.topcoder.service.permission.Permission;
 import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -112,7 +123,14 @@ import com.topcoder.service.project.ProjectType;
  * </ul>
  * </p>
  *
- * @version 2.5.2
+ * <p>
+ * Version 2.5.3 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Add group permission checking when checking whether the current user has full permission</li>
+ * </ul>
+ * </p>
+ *
+ * @version 2.5.3
  * @author GreatKevin, freegod, FireIce, Veve
  */
 @WriteProject
@@ -394,9 +412,20 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         }
 
         // TC staff has full permission to manage cockpit project resources and notifications
-        if(DirectUtils.isTcStaff(currentUser)) {
-            this.viewData.setHasFullPermission(true);
+        if(this.viewData.getHasFullPermission() == false) {
+            // no full permission yet, check other role and group
+
+            if (DirectUtils.isTcStaff(currentUser)) {
+                this.viewData.setHasFullPermission(true);
+            } else {
+                boolean groupFull = DirectUtils.hasPermissionBySecurityGroups(currentUser, getFormData().getProjectId(),
+                        getAuthorizationService(), GroupPermissionType.FULL);
+                if (groupFull) {
+                    this.viewData.setHasFullPermission(true);
+                }
+            }
         }
+
 
         final List<Long> watchedUserIds = getProjectServiceFacade().getWatchedUserIdsForProjectForum(currentUser, users, getFormData().getProjectId());
 
@@ -729,5 +758,4 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
     public void setGroupService(GroupService groupService) {
         this.groupService = groupService;
     }
-
 }

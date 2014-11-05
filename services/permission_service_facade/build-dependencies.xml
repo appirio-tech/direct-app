@@ -117,6 +117,8 @@
 
     <property name="security.jar" value="${tcs_libdir}/security/1.0/security.jar"/>
 
+    <property name="topcoder_security_groups.jar" value="${tcs_libdir}/topcoder_security_groups/1.0.0/topcoder_security_groups.jar"/>
+
 
     <!-- Direct Dependencies -->
 
@@ -229,6 +231,7 @@
         <pathelement location="${auditor.jar}"/>
         <pathelement location="${search_builder.jar}"/>
         <pathelement location="${typesafe_enum.jar}"/>
+        <pathelement location="${topcoder_security_groups.jar}"/>
         <pathelement location="${project_service.jar}"/>
         <pathelement location="${jbossws-client.jar}"/>
         <pathelement location="${activation.jar}"/>

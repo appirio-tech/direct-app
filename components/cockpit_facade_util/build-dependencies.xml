@@ -76,6 +76,9 @@
 
     <property name="xercesImpl.jar" value="${jboss_home}/lib/endorsed/xercesImpl.jar" />
 
+    <property name="spring.jar" value="${ext_libdir}/spring/spring.jar"/>
+
+
     <path id="component.tcs-dependencies">
         <pathelement location="${base_exception.jar}" />
         <pathelement location="${logging_wrapper.jar}" />
@@ -98,6 +101,7 @@
         <pathelement location="${jbossall-client.jar}" />
         <pathelement location="${jboss-jaxws.jar}" />
         <pathelement location="${jaxb-api.jar}" />
+        <pathelement location="${spring.jar}" />
     </path>
 
     <path id="component.test.3rdParty-dependencies">

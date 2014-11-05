@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.permission.ejb;
 
@@ -7,17 +7,25 @@ import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.GroupPermissionType;
+import com.topcoder.security.groups.model.ResourceType;
+import com.topcoder.security.groups.services.AuthorizationService;
 import com.topcoder.service.contest.eligibility.ContestEligibility;
 import com.topcoder.service.contest.eligibility.dao.ContestEligibilityManager;
 import com.topcoder.service.contest.eligibility.dao.ContestEligibilityPersistenceException;
 import com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManager;
 import com.topcoder.service.contest.eligibilityvalidation.ContestEligibilityValidationManagerException;
 import com.topcoder.service.facade.permission.CommonProjectPermissionData;
-import com.topcoder.service.permission.*;
+import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.PermissionService;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.service.permission.PermissionType;
+import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectService;
 import com.topcoder.service.user.UserService;
 import com.topcoder.service.user.UserServiceException;
+import com.topcoder.service.util.SpringApplicationContext;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.util.config.ConfigManager;
 import com.topcoder.util.config.ConfigManagerException;
@@ -31,17 +39,34 @@ import com.topcoder.web.ejb.user.UserPreferenceHome;
 import com.topcoder.web.ejb.user.UserTermsOfUse;
 import com.topcoder.web.ejb.user.UserTermsOfUseHome;
 import org.jboss.logging.Logger;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.ejb.*;
+import javax.ejb.CreateException;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * <p>
@@ -57,10 +82,19 @@ import java.util.*;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.2 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Added {@link #groupAuthorizationService} to check group related permission</li>
+ *     <li>Added method {@link #hasFullProjectPermissionViaGroup(long, com.topcoder.security.TCSubject)}</li>
+ *     <li>Updated method {@link #updateProjectPermissions(com.topcoder.security.TCSubject, java.util.List, long)}</li>
+ * </ul>
+ * </p>
+ *
  *
  * 
- * @author TCSDEVELOPER
- * @version 1.1
+ * @author GreatKevin
+ * @version 1.2
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -230,6 +264,29 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
 
 
     /**
+     * The group authorization service.
+     *
+     * @since 1.2
+     */
+    private AuthorizationService groupAuthorizationService;
+
+
+    /**
+     * Gets the group authorization service. If the field is null, get
+     * the authorization service from shared spring application context.
+     *
+     * @return the group authorization service.
+     * @since 1.2
+     */
+    public AuthorizationService getGroupAuthorizationService() {
+        if (groupAuthorizationService == null) {
+            groupAuthorizationService = (AuthorizationService) SpringApplicationContext.getBean(
+                    "groupAuthorizationService");
+        }
+        return groupAuthorizationService;
+    }
+
+    /**
      * <p>
      * Gets the EJB bean provide URL and createForum flag from the configuration file.
      * </p>
@@ -387,7 +444,9 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
         logger.debug("updatePermissions");
 
         try {
-            if (!isRole(tcSubject, ADMIN_ROLE) && !isRole(tcSubject, LIQUID_ADMIN_ROLE) && !isRole(tcSubject, TC_STAFF_ROLE)) {
+
+            if (!isRole(tcSubject, ADMIN_ROLE) && !isRole(tcSubject, LIQUID_ADMIN_ROLE) &&
+                    !isRole(tcSubject, TC_STAFF_ROLE)) {
                 long userId = tcSubject.getUserId();
 
                 List<CommonProjectPermissionData> userPermissions =
@@ -397,14 +456,14 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                     boolean hasFullPermission = false;
 
                     for (CommonProjectPermissionData data : userPermissions) {
-
                         if (p.getResourceId().longValue() == data.getProjectId()) {
                             if (data.getPfull() > 0) {
                                 hasFullPermission = true;
                                 break;
                             }
                         } else {
-                            if (p.getResourceId().longValue() == data.getContestId() && (p.isStudio() == data.isStudio())) {
+                            if (p.getResourceId().longValue() == data.getContestId() &&
+                                    (p.isStudio() == data.isStudio())) {
                                 if (data.getPfull() > 0 || data.getCfull() > 0) {
                                     hasFullPermission = true;
                                     break;
@@ -430,7 +489,8 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
 
                     // if permission is project, get its OR projects
                     if (per.getPermissionType().getPermissionTypeId() >= PermissionType.PERMISSION_TYPE_PROJECT_READ
-                            && per.getPermissionType().getPermissionTypeId() <= PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
+                            && per.getPermissionType().getPermissionTypeId() <=
+                            PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
                         projectIds = projectServices.getProjectIdByTcDirectProject(per.getResourceId());
                     } else if (!per.isStudio()) {
                         projectIds.add(per.getResourceId());
@@ -440,7 +500,8 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                         // for each OR project, find all observers
                         for (Long pid : projectIds) {
                             // delegate to new method added in BUGR-3731
-                            this.assignRole(tcSubject, pid.longValue(), ResourceRole.RESOURCE_ROLE_OBSERVER_ID, per.getUserId().longValue());
+                            this.assignRole(tcSubject, pid.longValue(), ResourceRole.RESOURCE_ROLE_OBSERVER_ID,
+                                    per.getUserId().longValue());
 
                         }
 
@@ -463,8 +524,10 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                         boolean isTCProject = false;
 
                         // if permission is project, get its OR projects
-                        if (toDelete.getPermissionType().getPermissionTypeId() >= PermissionType.PERMISSION_TYPE_PROJECT_READ
-                                && toDelete.getPermissionType().getPermissionTypeId() <= PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
+                        if (toDelete.getPermissionType().getPermissionTypeId() >=
+                                PermissionType.PERMISSION_TYPE_PROJECT_READ
+                                && toDelete.getPermissionType().getPermissionTypeId() <=
+                                PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
                             projectIds = projectServices.getProjectIdByTcDirectProject(per.getResourceId());
                             isTCProject = true;
                         } else if (!toDelete.isStudio()) {
@@ -477,8 +540,11 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                                 // or if we are removing contest permission but user still has project permission
                                 // we will not remove observer
                                 if ((!projectServices.hasContestPermission(pid, toDelete.getUserId()) && isTCProject)
-                                        || (!projectServices.checkProjectPermission(projectServices.getTcDirectProject(pid), true, toDelete.getUserId()) && !isTCProject)) {
-                                    com.topcoder.management.resource.Resource[] resources = projectServices.searchResources(pid, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+                                        || (!projectServices.checkProjectPermission(
+                                        projectServices.getTcDirectProject(pid), true, toDelete.getUserId()) &&
+                                        !isTCProject)) {
+                                    com.topcoder.management.resource.Resource[] resources = projectServices.searchResources(
+                                            pid, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
 
                                     com.topcoder.management.resource.Resource delRes = null;
 
@@ -486,7 +552,8 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                                     if (resources != null && resources.length > 0) {
                                         for (com.topcoder.management.resource.Resource resource : resources) {
                                             if (resource.hasProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID)
-                                                    && resource.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(String.valueOf(toDelete.getUserId()))) {
+                                                    && resource.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID).equals(
+                                                    String.valueOf(toDelete.getUserId()))) {
                                                 delRes = resource;
                                                 break;
                                             }
@@ -495,7 +562,8 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
 
                                     if (delRes != null) {
                                         projectServices.removeResource(delRes, String.valueOf(tcSubject.getUserId()));
-                                        projectServices.removeNotifications(delRes.getId(), new long[]{pid.longValue()}, String.valueOf(delRes.getId()));
+                                        projectServices.removeNotifications(delRes.getId(), new long[]{pid.longValue()},
+                                                String.valueOf(delRes.getId()));
                                     }
 
                                     // delete forum watch
@@ -547,12 +615,27 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
         logger.debug("permission service facade bean #updateProjectPermissions("
                 + tcSubject + ", " + projectPermissions + ", " + role + ")");
 
+
+
+
         try {
             if (!isRole(tcSubject, ADMIN_ROLE)
                     && !isRole(tcSubject, LIQUID_ADMIN_ROLE) && !isRole(tcSubject, TC_STAFF_ROLE)) {
-                // retrieve full access project id set
+                // NOT the admin role, need to check if the specified operation user has full permission
+                // on these project ids
+                Set<Long> directProjectIDsSetNeedToCheck = new HashSet<Long>();
+
+                // check all the direct project ID in passed-in project permissions
+                for (ProjectPermission permission : projectPermissions) {
+                    directProjectIDsSetNeedToCheck.add(permission.getProjectId());
+                }
+
+                // 1) Check permissions in user_permission_grant
+                // retrieve direct project ID set what the operation user has FULL permission on
                 Set<Long> fullAccessProjectIds = new HashSet<Long>();
+
                 List<ProjectPermission> allPermissions = getProjectPermissions(tcSubject);
+
                 for (ProjectPermission permission : allPermissions) {
                     if (permission.getUserId() == tcSubject.getUserId()
                             && "full".equals(permission.getPermission())) {
@@ -560,16 +643,39 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
                     }
                 }
 
-                // check permissions
-                for (ProjectPermission permission : projectPermissions) {
-                    if (!fullAccessProjectIds.contains(permission
-                            .getProjectId())) {
-                        throw new PermissionServiceException("User "
-                                + tcSubject.getUserId()
-                                + " is not granted FULL permission for "
-                                + "project " + permission.getProjectId());
+                Iterator<Long> itr = directProjectIDsSetNeedToCheck.iterator();
+
+                while (itr.hasNext()) {
+                    if (fullAccessProjectIds.contains(itr.next())) {
+                        // if has full permission, remove from check list
+                        itr.remove();
                     }
                 }
+
+                // 2) check group permission if there are direct project IDs not pass the direct full permission check
+                if (directProjectIDsSetNeedToCheck.size() > 0) {
+                    // still has direct project id not pass check, check the rest via group permission checking
+
+                    Iterator<Long> itr2 = directProjectIDsSetNeedToCheck.iterator();
+
+                    while (itr2.hasNext()) {
+                        if (hasFullProjectPermissionViaGroup(itr2.next(), tcSubject)) {
+                            // if has full permission, remove from check list
+                            itr2.remove();
+                        }
+                    }
+
+                }
+
+                // 3) Check if there is still id not pass check
+                if (directProjectIDsSetNeedToCheck.size() > 0) {
+                    throw new PermissionServiceException("User "
+                            + tcSubject.getUserId()
+                            + " is not granted FULL permission for these "
+                            + "project(s) : " + StringUtils.collectionToCommaDelimitedString(directProjectIDsSetNeedToCheck));
+                }
+
+
             }
 
 			//for now we will always add as observer to OR contests, 
@@ -700,6 +806,52 @@ public class PermissionServiceFacadeBean implements PermissionServiceFacadeLocal
 
         logger.debug("Exit updateProjectPermissions");
     }
+
+
+    /**
+     * Check if the given user has full permission on the given project by checking the group permission.
+     *
+     * @param directProjectId the direct project id
+     * @param user the user
+     * @return true if has full permission, false otherwise
+     * @throws Exception if any error
+     * @since 1.2
+     */
+    private boolean hasFullProjectPermissionViaGroup(long directProjectId, TCSubject user) throws Exception {
+
+        if (this.getGroupAuthorizationService() == null) {
+            System.out.println("Authorization Service not injected");
+            throw new IllegalStateException(
+                    "Group Authorization Service is not injected for PermissionServiceFacadeBean");
+        }
+
+        // Check if user is administrator for client account
+        com.topcoder.clients.model.Client clientByProject = projectService.getClientByProject(
+                directProjectId);
+
+
+        long userId = user.getUserId();
+        boolean isCustomerAdministrator = false;
+        if (clientByProject != null) {
+            isCustomerAdministrator = getGroupAuthorizationService().isCustomerAdministrator(userId,
+                    clientByProject.getId());
+        }
+        if (isCustomerAdministrator) {
+            return true;
+        } else {
+            // If not then check if user is granted desired permission to access the project based on
+            // security groups which user is member of
+            GroupPermissionType groupPermissionType =
+                    getGroupAuthorizationService().checkAuthorization(userId, directProjectId, ResourceType.PROJECT);
+
+            if (groupPermissionType == null || groupPermissionType != GroupPermissionType.FULL) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
 
     /**
      * <p>
