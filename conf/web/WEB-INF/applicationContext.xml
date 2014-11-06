@@ -502,7 +502,7 @@
 
     <!-- we need this type to avoid to store session value  -->
     <bean id="getContestReceiptAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestReceiptAction"
-          parent="copilotContestDetailsAction" scope="prototype">
+          parent="contestDetailAction" scope="prototype">
     </bean>
 
     <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
