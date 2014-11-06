@@ -373,6 +373,12 @@ $(function() {
             copilotProjectOperations : getCopilotWidgetOperations()
         };
 
+        // if there is no change, show error message
+        if (request.copilotProjectOperations.length == 0) {
+            showErrors("Please add or remove copilot before you click SAVE");
+            return false;
+        }
+        
         modalAllClose();
         modalPreloader();
 
