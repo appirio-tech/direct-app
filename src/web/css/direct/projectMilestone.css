@@ -242,7 +242,7 @@ a.grayButton:active .text .plus{
 .milestoneManage .milestoneList dd .projectS {
     overflow: hidden;
     font-size:12px;
-    color:#666; 
+    color:#666;
 }
 .milestoneManage .milestoneList dd .projectS p{
     float:left;
@@ -254,12 +254,12 @@ a.grayButton:active .text .plus{
     background:#cc0000;
     width:108px;
     display:inline-block;
-    margin-right:8px; 
+    margin-right:8px;
 }
     .milestoneManage .milestoneList dd .projectS .bar i{
         display:block;
-        height:12px;    
-        background:#009900;  
+        height:12px;
+        background:#009900;
     }
 .milestoneManage .milestoneList dd .projectS a{
     float:left;
@@ -333,8 +333,8 @@ a.grayButton:active .text .plus{
 
 .milestoneManage .milestoneList dd .actions a.remove {
     background: url(/images/remove-milestone-icon.png) no-repeat 0 0;
-} 
-     
+}
+
 .milestoneManage .milestoneList dd table {
     width:100%;
     font-size:12px;
@@ -342,7 +342,7 @@ a.grayButton:active .text .plus{
     margin-top:10px;
 }
 .milestoneManage .milestoneList dd.expand table{
-    display:table; 
+    display:table;
 }
 .milestoneManage .milestoneList dd table td{
    padding:6px 0;
@@ -584,7 +584,7 @@ a.grayButton:active .text .plus{
     position: absolute;
     width: 304px;
     font-size: 11px;
-    color: #666; 
+    color: #666;
     display: none;
     z-index: 1000;
 }
@@ -596,14 +596,14 @@ a.grayButton:active .text .plus{
     padding: 15px;
     text-align:right;
 }
- 
+
 .moveMilestonePopup .popupMask p {
     padding-bottom:12px;
     text-align:left;
 }
 .moveMilestonePopup .popupMask select {
     width:272px;
-} 
+}
 .moveMilestonePopup .popupMask a.grayButton{
     margin-top:15px;
 }
@@ -622,7 +622,7 @@ a.grayButton:active .text .plus{
     top: -6px;
     right: 52px;
 }
- 
+
 
 /* modal */
 .newOutLay input.text {
@@ -976,5 +976,24 @@ a.grayButton:active .text .plus{
     text-decoration: none;
 }
 
+/* Styles for launch new challenge '*' mandatory fields */
+span.red {
+    color: #ff0000;
+}
+
+.addNewContest .row .intro2 {
+    width: auto;
+    float: right;
+    display: inline;
+    margin-right: 12px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666666;
+    line-height: 25px;
+}
+
+.addNewContest .row .intro2 .red {
+    color: #FF0000;
+}
 
 
