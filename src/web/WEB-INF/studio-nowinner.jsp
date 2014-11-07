@@ -4,7 +4,7 @@
   - Version 1.1 (TC Direct Replatforming Release 5) change notes: Change contestId parameter to projectId.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
-  - 
+  -
   - Version: 1.2
   - Since: Submission Viewer Release 4 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
@@ -93,9 +93,9 @@
                                                                  <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                                                  <s:param name="formData.roundType" value="formData.roundType"/>
                                                              </s:url>" class="button7 btnDoNotChooseAWinner">
-                                                        <span class="left"><span class="right">DO NOT CHOOSE A WINNER </span></span></a>
+                                                        <span class="left"><span class="right">DON'T CHOOSE A WINNER </span></span></a>
 
-                                                    <link:studioSubmissionsGrid contestId="${viewData.contestId}" 
+                                                    <link:studioSubmissionsGrid contestId="${viewData.contestId}"
                                                                                 checkpointRound="${formData.isCheckpointRound}"
                                                                                 styleClass="button6 btnSelectAWinner">
                                                         <span class="left"><span class="right">SELECT A WINNER</span></span>
