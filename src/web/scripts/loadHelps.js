@@ -38,10 +38,10 @@ var VIDEO = { links: [
             { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
             { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
-            { text: "Cockpit - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
-            { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
-            { text: "Cockpit: Setting Permissions", link: "httpss://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Direct - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Direct - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
+            { text: "Direct: Setting Permissions", link: "httpss://www.topcoder.com/help/?p=729"},
+            { text: "Direct - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "http://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18"
 };
@@ -51,10 +51,10 @@ var TUTORIAL = { links: [
             { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
             { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
-            { text: "Cockpit - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
-            { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
-            { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Direct - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Direct - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
+            { text: "Direct: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
+            { text: "Direct - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=86"
 };
@@ -64,10 +64,10 @@ var EXAMPLE = { links: [
             { text: "Sample Project", link: "https://www.topcoder.com/how-it-works/"},
             { text: "How to get a copilot", link: "https://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
             { text: "Launching a Conceptualization Challenge", link: "https://www.topcoder.com/help/?p=583"},
-            { text: "Cockpit - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
-            { text: "Cockpit - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
-            { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Cockpit - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
+            { text: "Direct - Login", link: "https://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Direct - Project Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
+            { text: "Direct: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
+            { text: "Direct - Challenge Dashboard 1", link: "https://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=95"
 };

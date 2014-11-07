@@ -339,8 +339,8 @@ $(document).ready(function() {
                             breakDownMap[result[i].id] = result[i];
                         }
                         var totalCompleted = 0;
-                        var totalCompletedCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        var totalCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        var totalCompletedCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        var totalCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
                         var reg1 = /[\$,]/g;
 
@@ -353,13 +353,13 @@ $(document).ready(function() {
 
 
                             if (!breakdown) {
-                                breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
+                                breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
                             } else {
                                 if (breakdown.fullfillment > 0) {
                                     fullfillment = 1;
                                 }
                                 breakdown = [breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
-                                    breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc];
+                                    breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc, breakdown.testing];
                             }
 
                             totalCompleted += fullfillment;
@@ -473,7 +473,7 @@ $(document).ready(function() {
                     	}
                     	cnt++;
                     });
-                    for (var i = 0; i < 9; i++) {
+                    for (var i = 0; i < 10; i++) {
                         tr.append("<td></td>");
                     }
                     tr.append("<td>" + $(this).children("td:last").addClass("lastCol"). text() + "</td>");
@@ -490,9 +490,9 @@ $(document).ready(function() {
 
             if (projectIds.length > 0) {
                 $("#breakdownBody table").append("<tfoot><tr class='reportAverage'>" + "<td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Average (only completed contests are counted)</td>" +
-                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr>" +
+                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr>" +
                     "<tr class='reportTotal'><td colspan='10' style='text-align:left;padding:5px;border-left:none;' class='alignLeft'>Total</td>" +
-                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr></tfoot>");
+                    "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class='lastCol'></td></tr></tfoot>");
                     loadBreakdownData(projectIds);
             }
         } else {

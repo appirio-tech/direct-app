@@ -1,11 +1,11 @@
 %if:PAID='NO'%
 
 <p>
-A message from TopCoder.
+A message from Topcoder.
 </p>
 
 <p>
-We have scheduled your competition.  The contest will now undergo a specification review before it launches, which will be performed by the TopCoder Community %COMPETITION_TYPE% review board.
+We have scheduled your competition.  The contest will now undergo a specification review before it launches, which will be performed by the Topcoder Community %COMPETITION_TYPE% review board.
 </p>
 
 <p>
@@ -20,10 +20,10 @@ You can track the status of all your competitions, by visiting <a href\="https\:
 There you can\:
 <br/>
 <ul>
-    <li>Engage the TopCoder Community in your projects</li>
+    <li>Engage the Topcoder Community in your projects</li>
     <li>Track the progress of your projects and competitions</li>
     <li>View metrics and performance statistics for your projects and competitions</li>
-    <li>Collaborate with your team members and the TopCoder Community</li>
+    <li>Collaborate with your team members and the Topcoder Community</li>
     <li>Modify competitions that have not launched</li>
     <li>Select winners (if necessary for this competition) and download the results of each competition</li>
     <li>And much more</li>
@@ -51,7 +51,7 @@ Competition Title\:  %COMPETITION_TITLE%<br/>
 Review Style\:  User Selection<br/>
 %endif%
 %if:CONTEST_INDICATOR='OBJECTIVE'%
-Review Style\:  TopCoder Community Review Board.<br/>
+Review Style\:  Topcoder Community Review Board.<br/>
 %endif%
 Project\:       %PROJECT_NAME%<br/>
 Scheduled Launch Time\:  %LAUNCH_TIME%<br/>
@@ -77,7 +77,7 @@ Updated Total Cost\:      $%TOTAL_COST%<br/>
 
 
 <p>
-# * The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Cockpit (http\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
+# * The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Direct (http\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
 #<br/>
 #You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.<br/>
 #<br/>
@@ -111,7 +111,7 @@ This competition was ordered by\:
 </p>
 
 <p>
-If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
+If you've explored the links in Topcoder Direct and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
 </p>
 
 <p>
@@ -123,7 +123,7 @@ Please note\: This e-mail was sent from a notification-only address that cannot 
 </p>
 
 <p>
-Thank you for working with TopCoder.
+Thank you for working with Topcoder.
 </p>
 
 <p>

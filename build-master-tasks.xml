@@ -156,4 +156,60 @@
       }
         ]]>
     </scriptdef>
+
+    <macrodef name="update-single-revision-number" description="Update revision number for a file.">
+        <attribute name="file" />
+        <attribute name="type" />
+
+        <sequential>
+            <taskdef name="groovy"
+              classname="org.codehaus.groovy.ant.Groovy"
+              classpathref="script.path"/>
+
+            <pathconvert property="pathInPage" pathsep="/" dirsep="/">
+                <path location="@{file}"/>
+                <map from="${basedir}/src/web" to="" />
+            </pathconvert>
+
+            <exec executable="git" outputproperty="git.log.lastMod">
+                <arg value="log"/>
+                <arg value="-1"/>
+                <arg value="--pretty=format:%ct"/>
+                <arg value="@{file}"/>
+            </exec>
+
+            <groovy>
+                <![CDATA[
+                import java.util.*
+
+                def calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                calendar.setTimeInMillis(Long.parseLong(properties["git.log.lastMod"]) * 1000)
+
+                properties["lastModYear"] = "" + calendar.get(Calendar.YEAR)
+                def month = calendar.get(Calendar.MONTH) + 1
+                if (month < 10) {
+                  properties["lastModMonth"] = "0" + month
+                } else {
+                  properties["lastModMonth"] = "" + month
+                }
+                def day = calendar.get(Calendar.DAY_OF_MONTH)
+                if (day < 10) {
+                  properties["lastModDate"] = "0" + day
+                } else {
+                  properties["lastModDate"] = "" + day
+                }
+                ]]>
+            </groovy>
+        
+            <basename property="filename" file="${pathInPage}" suffix=".@{type}"/>
+
+            <replaceregexp byline="true">
+                <regexp pattern='([href|src])="(.*${filename})(\.git\d+)?\.@{type}(\?v=\d+)?"'/>
+                <substitution expression='\1="\2\.git${lastModYear}${lastModMonth}${lastModDate}\.@{type}"'/>
+                <fileset dir="${build_distdir}/direct.war">
+                    <include name="**/*.jsp"/>
+                </fileset>
+            </replaceregexp>
+        </sequential>
+    </macrodef>
 </project>

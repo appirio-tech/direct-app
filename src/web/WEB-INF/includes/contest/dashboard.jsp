@@ -62,8 +62,11 @@
             <c:choose>
                 <c:when test="${projectStatus eq 'Active'}">
                     <c:choose>
-                        <c:when test="${viewData.dashboard.stalled}">
+                        <c:when test="${viewData.dashboard.stalled and not viewData.dashboard.completed}">
                             <div class="status stalled">Challenge Status: <span>Stalled</span></div>
+                        </c:when>
+                        <c:when test="${viewData.dashboard.completed}">
+                            <div class="status completed">Challenge Status: <span>Stalled</span></div>
                         </c:when>
                         <c:otherwise>
                             <div class="status active">Challenge Status: <span>Active</span></div>

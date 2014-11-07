@@ -46,7 +46,7 @@
     <script type="text/javascript" src="/scripts/modalWindows.js"></script>
 </head>
 
-<body id="page" onload="loadHomePageFeeds();">
+<body id="page">
 <div id="landingPage">
 
     <!-- The header of the landing page -->

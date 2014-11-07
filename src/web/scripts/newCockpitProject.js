@@ -1467,18 +1467,25 @@ $(document).ready(function() {
 
         var request = {"searchText":searchText};
 
+        // show loading
+        $('#addUserModal').find('.addUserLeft .addUserList').addClass('ajaxLoadingBackground');
+        $('#addUserModal .addUserForm .addUserLeft ul').empty();
+
         $.ajax({
             type: 'POST',
             url:  "getUser",
             data: request,
             cache: false,
             dataType: 'json',
-            async : false,
+            async : true,
             success: function (jsonResult) {
                 handleJsonResult2(jsonResult,
                     function(result) {
+
+                        // remove loading ajax
+                        $('#addUserModal').find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
+
                         // insert into the left list
-                        $('#addUserModal .addUserForm .addUserLeft ul').empty();
                         $.each(result, function() {
                             $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y', 'scroll');
                             $('#addUserModal .addUserForm .addUserLeft ul').append('<li id="' + this.userId + '">' + this.handle + '</li>');
@@ -1487,6 +1494,8 @@ $(document).ready(function() {
 
                     },
                     function(errorMessage) {
+                        // remove loading ajax
+                        $('#addUserModal').find('.addUserLeft .addUserList').removeClass('ajaxLoadingBackground');
                         showErrors(errorMessage);
                     })
             }

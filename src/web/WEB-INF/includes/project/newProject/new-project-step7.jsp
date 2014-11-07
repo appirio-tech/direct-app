@@ -78,7 +78,7 @@
 
                     <dl class="pptManagementMessage hide">
                         <dt></dt>
-                        <dd><p style="width: 100%;line-height: 20px;font-size: 14px;">Our management team is reviewing your full specifications in order to assign the most qualified copilot to your project. You can expect to hear from your new copilot within 48 hours.<br/>We have already set up your project in the Cockpit, where you will be able to follow our progress in building your presentation.</p></dd>
+                        <dd><p style="width: 100%;line-height: 20px;font-size: 14px;">Our management team is reviewing your full specifications in order to assign the most qualified copilot to your project. You can expect to hear from your new copilot within 48 hours.<br/>We have already set up your project in the Direct, where you will be able to follow our progress in building your presentation.</p></dd>
                         <dd style="text-align: center;"><p style="font-size: 14px;">Thank you for choosing TopCoder!</p></dd>
                     </dl>
 

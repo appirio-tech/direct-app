@@ -296,14 +296,14 @@ var instantSearchFeaturesList = {
         {
             "title":    "Enterprise Dashboard - Overview",
             "link":     "/direct/direct/enterpriseDashboard/overview",
-            "brief":    "Provides overview of your cockpit projects at enterprise level",
+            "brief":    "Provides overview of your direct projects at enterprise level",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
         {
             "title":    "Enterprise Dashboard - Financials",
             "link":     "/direct/enterpriseDashboard/financial",
-            "brief":    "Provides financial information like actual cost, budget usage, and projected cost of your cockpit projects.",
+            "brief":    "Provides financial information like actual cost, budget usage, and projected cost of your direct projects.",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
@@ -317,14 +317,14 @@ var instantSearchFeaturesList = {
         {
             "title":    "Enterprise Dashboard - Roadmap",
             "link":     "/direct/enterpriseDashboard/roadmap",
-            "brief":    "SearShows you the overdue, upcoming and completed milestones (roadmap) of your cockpit projects.ch",
+            "brief":    "SearShows you the overdue, upcoming and completed milestones (roadmap) of your direct projects.ch",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
         {
             "title":    "Enterprise Dashboard - Pipeline",
             "link":     "/direct/enterpriseDashboard/pipeline",
-            "brief":    "Shows the numbers and chart of the contests pipeline of your cockpit projects.",
+            "brief":    "Shows the numbers and chart of the contests pipeline of your direct projects.",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
@@ -338,7 +338,7 @@ var instantSearchFeaturesList = {
         {
             "title":    "Enterprise Dashboard - Analytics",
             "link":     "/direct/enterpriseDashboard/analysis",
-            "brief":    "Provides analysis of average challenge duration, average challenge cost, project fulfillment and challenge volume of your cockpit projects, the data are showing in line charts.",
+            "brief":    "Provides analysis of average challenge duration, average challenge cost, project fulfillment and challenge volume of your direct projects, the data are showing in line charts.",
             "group":    "Dashboard",
             "reqAdmin": "no"
         },
@@ -387,14 +387,14 @@ var instantSearchFeaturesList = {
         {
             "title":    "Pipeline Report",
             "link":     "/direct/dashboardReports.action",
-            "brief":    "Detailed report of the contests pipeline of your cockpit projects",
+            "brief":    "Detailed report of the contests pipeline of your direct projects",
             "group":    "Report",
             "reqAdmin": "no"
         },
         {
             "title":    "Cost Analysis Report",
             "link":     "/direct/dashboardCostReport",
-            "brief":    "Detailed report of the contests cost of your cockpit projects",
+            "brief":    "Detailed report of the contests cost of your direct projects",
             "group":    "Report",
             "reqAdmin": "no"
         },
@@ -408,42 +408,42 @@ var instantSearchFeaturesList = {
         {
             "title":    "Participation Metrics Report",
             "link":     "/direct/dashboardParticipationReport",
-            "brief":    "Report of number metrics on how many TopCoder members work on your cockpit projects as competitors and copilots. ",
+            "brief":    "Report of number metrics on how many TopCoder members work on your direct projects as competitors and copilots. ",
             "group":    "Report",
             "reqAdmin": "no"
         },
         {
             "title":    "Project Metrics Report",
             "link":     "/direct/dashboardGetProjectMetricsReport",
-            "brief":    "Detailed Report on different metrics of your cockpit projects - the numer of draft, scheduled, active and completed contests, cost data, fulfillment, project timeline and project status etc. ",
+            "brief":    "Detailed Report on different metrics of your direct projects - the numer of draft, scheduled, active and completed contests, cost data, fulfillment, project timeline and project status etc. ",
             "group":    "Report",
             "reqAdmin": "no"
         },
         {
             "title":    "Jira Issues Report",
             "link":     "/direct/dashboardGetJiraIssuesReport ",
-            "brief":    "Detailed Report on Jira Issues and Bug Races of your Cockpit Projects",
+            "brief":    "Detailed Report on Jira Issues and Bug Races of your Direct Projects",
             "group":    "Report",
             "reqAdmin": "no"
         },
         {
             "title":    "All Projects Management",
             "link":     "/direct/allProjects.action",
-            "brief":    "Allow you to manage all your cockpit pages in one page",
+            "brief":    "Allow you to manage all your direct pages in one page",
             "group":    "Project",
             "reqAdmin": "no"
         },
         {
             "title":    "Notification Settings",
             "link":     "/direct/settings/notifications",
-            "brief":    "Manage your forum / timeline notifications on your cockpit projects and contests",
+            "brief":    "Manage your forum / timeline notifications on your direct projects and contests",
             "group":    "Settings",
             "reqAdmin": "no"
         },
         {
             "title":    "Permission Settings",
             "link":     "/direct/settings/permissions",
-            "brief":    "Manage the permissions of your cockpit projects - you can assign permission to new users to your project or change / delete existing permissions",
+            "brief":    "Manage the permissions of your direct projects - you can assign permission to new users to your project or change / delete existing permissions",
             "group":    "Settings",
             "reqAdmin": "no"
         },
@@ -492,7 +492,7 @@ var instantSearchFeaturesList = {
         {
             "title":    "Launch Copilot Posting",
             "link":     "/direct/copilot/launchCopilotContest",
-            "brief":    "Launch a new copilot posting for your cockpit project to recruite a copilot",
+            "brief":    "Launch a new copilot posting for your direct project to recruite a copilot",
             "group":    "Copilot",
             "reqAdmin": "no"
         },

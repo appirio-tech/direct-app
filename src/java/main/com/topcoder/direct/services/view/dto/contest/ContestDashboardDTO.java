@@ -527,6 +527,23 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     }
 
     /**
+     * Checks whether the contest is completed (all phases are closed).
+     * 
+     * @return true if the contest is completed, false otherwise.
+     */
+    public boolean isCompleted() {
+        
+
+        for (ProjectPhaseDTO phase : allPhases) {
+            if (phase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()) { 
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    /**
      * Gets the copilot project types.
      *
      * @return the copilot project types.

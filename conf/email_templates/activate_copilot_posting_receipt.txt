@@ -22,10 +22,10 @@ You can track the status of all your competitions, by visiting <a href\="https\:
 There you can\: 
 <br/>
 <ul>
-    <li>Engage the TopCoder Community in your projects</li>
+    <li>Engage the Topcoder Community in your projects</li>
     <li>Track progress and manage your projects and competitions</li>
     <li>View metrics and performance statistics for your projects and competitions</li>
-    <li>Collaborate with your team members and the TopCoder Community</li>
+    <li>Collaborate with your team members and the Topcoder Community</li>
     <li>Manage competitions</li>
     <li>Select winners (if necessary for this competition) and download the results of each competition</li>
     <li>And much more</li>
@@ -62,7 +62,7 @@ Additional Cost\:      $%TOTAL_COST%<br/>
 %endif%
 
 <p>
-# * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Cockpit (https\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
+# * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Direct (https\://www.topcoder.com/direct) at the conclusion of the competition.<br/>
 #<br/>
 #You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.<br/>
 #<br/>
@@ -92,7 +92,7 @@ This competition was ordered by\:<br/>
 </p>
 
 <p>
-If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.<br/>
+If you've explored the links in Topcoder Direct and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.<br/>
 <br/>
 ---------------------------------------------------------------------<br/>
 </p>
@@ -102,7 +102,7 @@ Please note\: This e-mail was sent from a notification-only address that cannot 
 </p>
 
 <p>
-Thank you for working with TopCoder.<br/>
+Thank you for working with Topcoder.<br/>
 <br/>
 ---------------------------------------------------------------------<br/>
 </p>

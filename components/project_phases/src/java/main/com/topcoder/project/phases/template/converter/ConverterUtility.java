@@ -51,46 +51,6 @@ import com.topcoder.util.config.UnknownNamespaceException;
  * If the user passes "auto" as the command line argument, the utility automatically executes all generated
  * SQL queries.
  * </p>
- * <p>
- * Accepted command line arguments:
- * <ul>
- * <li>"-inamespace" flag followed by XmlPhaseTemplatePersistence configuration namespace. Only this argument
- * is required.</li>
- * <li>"-onamespace" flag followed by DBPhaseTemplatePersistence configuration namespace.</li>
- * <li>"-ifile" flag followed by name of additional config file for xml persistence namespace that the
- * ConfigManager to load.</li>
- * <li>"-oifile" flag followed by name of additional config file for db persistence namespace that the
- * ConfigManager to load.</li>
- * <li>"-auto" flag that indicates whether to executes the generated SQL queries automatically.</li>
- * </ul>
- * </p>
- * The method
- * utilizes Command Line Utility component to facilitate parameters parsing and handling.
- * <p>
- * <p>
- * Sample usage of this command line tools:<br/>
- * The following command line can be used to output SQL queries those are intended for fulfilling an empty
- * database:<br/>
- * java ConverterUtility.class –inamespace xml_phase_template_namespace<br/>
- * <br/>
- * The following command line can be used to output SQL queries those are intended for adding templates to
- * non-empty database:<br/>
- * java ConverterUtility.class –inamespace xml_phase_template_namespace –onamespace
- * db_phase_template_namespace <br/>
- * <br/>
- * The following command line can be used to fulfill a database (queries are executed automatically):<br/>
- * java ConverterUtility.class –inamespace xml_phase_template_namespace –onamespace
- * db_phase_template_namespace –auto <br/>
- * <br/>
- * If users want to specify the config files in the command line instead of ConfigManager.properties, they can
- * use the following command line(suppose the xml_phase_template_namespace is in file "xml_config.xml", and
- * db_phase_template_namespace is in "db_config.xml"):<br/>
- * java ConverterUtility.class –inamespace xml_phase_template_namespace –onamespace
- * db_phase_template_namespace –ifile xml_config.xml –ofile db_config.xml –auto
- * </p>
- * <strong>Thread-safety:</strong> This class is not thread safe. But it is not required, because
- * only one instance of it is used in converter application.
- * </p>
  *
  * @author saarixx, TCSDEVELOPER
  * @version 1.1
@@ -145,7 +105,7 @@ public class ConverterUtility {
      * </p>
      */
     private static final String HELP_MSG = "Sample usage: java jarname"
-        + " �Cinamespace Xml_Persistence_NamSpace �Conamespace DB_Persistence_Namespace -auto"
+        + " Cinamespace Xml_Persistence_NamSpace Conamespace DB_Persistence_Namespace -auto"
         + "(-onamespace and -auto is optional)";
 
     /**

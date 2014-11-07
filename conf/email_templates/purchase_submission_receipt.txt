@@ -14,10 +14,10 @@ You can track the status of this competition, and all your competitions, by visi
 There you can\:<br/>
 <br/>
 <ul>
-    <li>Engage the TopCoder Community in your projects</li>
+    <li>Engage the Topcoder Community in your projects</li>
     <li>Track the progress of your projects and competitions</li>
     <li>View metrics and performance statistics for your projects and competitions</li>
-    <li>Collaborate with your team members and the TopCoder Community</li>
+    <li>Collaborate with your team members and the Topcoder Community</li>
     <li>Modify competitions that have not launched</li>
     <li>Select winners (if necessary for this competition) and download the results of each competition</li>
     <li>And much more</li>
@@ -43,7 +43,7 @@ Total\:      $%TOTAL_COST%<br/>
 </p>
 
 <p>
-You will be invoiced for $%TOTAL_COST% in accordance with the agreement you have in place with TopCoder, Inc.
+You will be invoiced for $%TOTAL_COST% in accordance with the agreement you have in place with Topcoder, Inc.
 </p> 
 
 <p>
@@ -70,7 +70,7 @@ This purchase was made for\:<br/>
 </p>
 
 <p>
-If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
+If you've explored the links in Topcoder Direct and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
 </p>
 
 <p>
@@ -78,7 +78,7 @@ If you've explored the links in TopCoder Cockpit and the Help Center but still n
 <br/>
 Please note\: This e-mail was sent from a notification-only address that cannot accept incoming e-mail. Please do not reply to this message.<br/>
 <br/>
-Thank you for working with TopCoder.<br/>
+Thank you for working with Topcoder.<br/>
 <br/>
 ---------------------------------------------------------------------<br/>
 </p>

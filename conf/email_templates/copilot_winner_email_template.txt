@@ -1,5 +1,5 @@
 <p>
-A message from TopCoder.
+A message from Topcoder.
 </p>
 
 <p> 
@@ -12,13 +12,13 @@ Here is a summary of your next steps.  Please make sure you do step 1.  Steps 2 
 
 <p> 
 1.  Post a message to your customer in the <a href\='http\://apps.topcoder.com/forums/?module\=Category&amp;categoryID\=%CATEGORY_ID%'>Project Forum</a>.  This will let the customer know that you have been officially selected as the copilot and are ready to start.<br/>
-2.  Create the game plan in <a href\='https\://www.topcoder.com/direct/dashboardActive.action'>Cockpit</a> by adding all known and estimated contests you plan to run.<br/>
+2.  Create the game plan in <a href\='https\://www.topcoder.com/direct/dashboardActive.action'>Direct</a> by adding all known and estimated contests you plan to run.<br/>
 3.  If it is not already set, please set the budget and expected duration for the project by using the <a href\='https\://www.topcoder.com/direct/editProject?formData.projectId\=%PROJECT_ID%'>Edit Project</a> screen.  This is very important, and many customers will not proceed with the project until they are set. This will help set expectations for the project.<br/>
 4.  Communicate often and keep your game plans updated.  Your customer will appreciate it and be more likely to expand their relationship with you.
 </p>
 
 <p>  
-If you run into any issues or have a situation you need assistance with, please email support@topcoder.com and the TopCoder team will be there to help. You can also find assistance in our <a href\='http\://www.topcoder.com/help'>Help Center</a>.
+If you run into any issues or have a situation you need assistance with, please email support@topcoder.com and the Topcoder team will be there to help. You can also find assistance in our <a href\='http\://www.topcoder.com/help'>Help Center</a>.
 </p>
 
 <p>
@@ -30,5 +30,5 @@ Please note\: This e-mail was sent from a notification-only address that cannot 
 </p>
 
 <p>
-Thank you for working with TopCoder.
+Thank you for working with Topcoder.
 </p>
