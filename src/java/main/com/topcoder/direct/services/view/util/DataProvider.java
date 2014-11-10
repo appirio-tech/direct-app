@@ -5330,7 +5330,7 @@ public class DataProvider {
 
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
 
         String queryName;
