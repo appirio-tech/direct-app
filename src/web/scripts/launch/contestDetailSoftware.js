@@ -99,8 +99,12 @@
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 3.2
+ * Version 3.3 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+ * @author Veve @channegeId 30046969
+ * - Add the marathon round id project info save for marathon challenge
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
+ * @version 3.3
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1177,17 +1181,23 @@ function populateTypeSection() {
   	$('#billingAccountDivEdit').hide();
   }
 
-  if(isBillingViewable()) {
-     $('.billingdisplay').show();
-     $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-  } else {
-  	 $('.billingdisplay').hide();
-  }
+    if (isBillingViewable()) {
+        $('.billingdisplay').show();
+        $('#rBillingAccount').html((billingProjectId <= 0) ? "&nbsp;" : $("#billingProjects option[value=" + billingProjectId + "]").text());
+    } else {
+        $('.billingdisplay').hide();
+    }
 
-    if(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
+    if (mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
         $('#rCMCTaskID').text(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $('input[name=CMCTaskID]').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $(".cmcTask").show();
+    }
+
+    if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty('Marathon Match Id')) {
+        $('#rMatchRoundId').text(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
+        $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
+        $(".matchRoundId").show();
     }
 }
 
@@ -1271,6 +1281,12 @@ function validateFieldsTypeSection() {
 
     validateContestName(contestName, errors);
     validateTcProject(tcProjectId, errors);
+
+    if ($("input[name=MatchRoundID]").length > 0 && $.trim($("input[name=MatchRoundID]").val()).length > 0) {
+        if(!isPositiveIntegerInput($("input[name=MatchRoundID]").val())) {
+            errors.push("The Marathon Match Round ID should be positive integer");
+        }
+    }
 
 
     // do NOT need milestone for First2Finish and CODE contest

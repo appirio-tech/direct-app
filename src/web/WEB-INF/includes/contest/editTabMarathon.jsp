@@ -11,6 +11,10 @@
   - Version 1.3 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
   -
+  - Version 1.4 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+  - @author Veve @channegeId 30046969
+  - - Add the marathon round id project info save for marathon challenge
+  -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
 --%>
@@ -63,6 +67,11 @@
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr class="matchRoundId">
+                <td class="first_tab_type"><strong>Match Round ID</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rMatchRoundId"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
             <tr>
@@ -159,8 +168,13 @@
                     <span class="value">
                         <input type="text" class="bigin"  name="CMCTaskID" value=""/>
                     </span>
-
-                 </span>
+             </span><br />
+            <span class="matchRoundId"><br />
+                    <span class="name fixWidthName"><strong>Match Round ID</strong></span>
+                    <span class="value">
+                        <input type="text" class="smallin"  name="MatchRoundID" value=""/>
+                    </span>
+             </span><br />
             <div id="projectEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Project Name</strong></span>

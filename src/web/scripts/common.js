@@ -47,6 +47,9 @@
  *
  * Version 2.4 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
  * - Refactor jQuery.fn.outerHTML from projectMilestone.js to the common lib
+ *
+ * Version 2.5 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+ * - Add a helper method isPositiveIntegerInput to check is variable is positive integer.
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -158,6 +161,22 @@ function isIntegerInput(input) {
 
     var number = parseInt(input, 10);
     if(input == "" || number != input) {
+        return false;
+    }
+
+    return true;
+}
+
+function isPositiveIntegerInput(input) {
+    if(!input) return false;
+
+    var number = parseInt(input, 10);
+    if(input == "" || number != input) {
+        return false;
+    }
+
+    // check if positive
+    if(number <= 0) {
         return false;
     }
 
