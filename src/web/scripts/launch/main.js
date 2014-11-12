@@ -100,8 +100,12 @@
  * Version 3.6 (TopCoder Direct - Review Cost Calculation Quick Updates) @author GreatKevin @challenge 30044580
  * - Updated codes related to the review cost calculation ajax.
  *
+ * Version 3.7 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+ * @author Veve @channegeId 30046969
+ * - Add the marathon round id project info save for marathon challenge
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.6
+ * @version 3.7
  */
 
  /**
@@ -948,6 +952,14 @@ function saveAsDraftRequest() {
 
     if ($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
+    }
+
+    if ($("input[name=MatchRoundID]").length > 0) {
+        if($.trim($("input[name=MatchRoundID]").val()).length > 0) {
+            mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id'] = $("input[name=MatchRoundID]").val();
+        } else {
+            mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id'] = '';
+        }
     }
 
     if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
