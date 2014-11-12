@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.2
+  - Version: 1.4
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
@@ -10,6 +10,9 @@
   -
   - Version 1.3 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 1.4 (Topcoder Direct - add total cost and estimate note to Marathon Match challenge)
+  -- Add total cost with esitmation notes for marathon challenge
   -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
@@ -335,7 +338,18 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>
             </tr>
         </table>
+
+
+        <div class="totalCostContainer">
+            <strong>Estimated Challenge Total:</strong> $<span id="rswTotal"></span>
+            <p class="note">
+                Note: Challenge prizes, costs, and fees in this section are estimates. <br>
+                Actual costs are based on prizes paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+        </div>
+
+        <div class="clear"></div>
     </div><!-- End .detailsContent -->
+
 </div><!-- End .details -->
 <!-- End Prize Display -->
 

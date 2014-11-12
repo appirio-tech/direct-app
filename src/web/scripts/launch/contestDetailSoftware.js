@@ -99,8 +99,11 @@
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 3.2
+ * Versin 3.3 (Topcoder Direct - add total cost and estimate note to Marathon Match challenge)
+ * -  Add total cost for marathon match
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, Veve
+ * @version 3.3
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1216,46 +1219,49 @@ function updateMCEPlaceHolderCtl() {
 }
 
 function saveTypeSection() {
-   if(!validateFieldsTypeSection()) {
-       return;
-   }
-   if (mainWidget.competitionType != "SOFTWARE") {
-      if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
-        $("#viewableSubmFlag").attr("disabled","disabled");
-        $("#viewableSubmFlag").attr("checked","");
-        mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
-      } else {
-        $("#viewableSubmFlag").attr("disabled","");
-      }
-      populateSpecSection();
-   }
+    if (!validateFieldsTypeSection()) {
+        return;
+    }
+    if (mainWidget.competitionType != "SOFTWARE") {
+        if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+            $("#viewableSubmFlag").attr("disabled", "disabled");
+            $("#viewableSubmFlag").attr("checked", "");
+            mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
+        } else {
+            $("#viewableSubmFlag").attr("disabled", "");
+        }
+        populateSpecSection();
+    }
 
-   //construct request data
-   fixFileTypeIds();
-   var request = saveAsDraftRequest();
+    //construct request data
+    fixFileTypeIds();
+    var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-         populateTypeSection();
-	     populateRoundSection();
-         if (mainWidget.competitionType == "SOFTWARE") {
-            var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
-            if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
+    $.ajax({
+        type: 'POST',
+        url: ctx + "/launch/saveDraftContest",
+        data: request,
+        cache: false,
+        dataType: 'json',
+        success: function (jsonResult) {
+            handleSaveAsDraftContestResult(jsonResult);
+            populateTypeSection();
+            populateRoundSection();
+            if (mainWidget.competitionType == "SOFTWARE") {
+                var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+                if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != null) {
+                    populatePrizeSection();
+                }
+            }
+            if (mainWidget.competitionType == "ALGORITHM") {
                 populatePrizeSection();
             }
-         }
-         showTypeSectionDisplay();
-         updateMCEPlaceHolderCtl();
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+            showTypeSectionDisplay();
+            updateMCEPlaceHolderCtl();
+        },
+        beforeSend: beforeAjax,
+        complete: afterAjax
+    });
 }
 
 function validateFieldsTypeSection() {
@@ -1920,7 +1926,7 @@ function updateContestCostData() {
         // calculate the percentage fee
         var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotFee) * contestPercentage;
 
-        if(mainWidget.competitionType == 'STUDIO') {
+        if(mainWidget.competitionType == 'STUDIO' || mainWidget.competitionType == 'ALGORITHM') {
             actualFee = (firstPlacePrize + (secondPlacePrize || 0) + extraPrize + checkpointPrize + reviewCost + (reliability || 0) + specReview + (digitalRun || 0) + copilotFee) * contestPercentage;
         }
 
