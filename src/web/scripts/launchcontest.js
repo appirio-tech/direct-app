@@ -71,10 +71,10 @@ $(document).ready(function() {
 
     //truncate the project name
     $(".addNewContest .row .projectSelect select option").each(function(){
-    	if($(this).text().length>60){
-    		var txt=$(this).text().substr(0,60)+'...';
-    		$(this).text(txt);
-    	}
+        if($(this).text().length>60){
+            var txt=$(this).text().substr(0,60)+'...';
+            $(this).text(txt);
+        }
     });
 
     //truncate the billing account, copilot and round type
@@ -82,10 +82,10 @@ $(document).ready(function() {
         ".addNewContest .row .copilotSelect select option, .addNewContest .row .milestoneSelect select option," +
         ".schedule #roundTypeDiv .roundelect select option, " +
         "#overviewAlgorithmPage .problemDiv select option").each(function(){
-    	if($(this).text().length>60){
-    		var txt=$(this).text().substr(0,50)+'...';
-    		$(this).text(txt);
-    	}
+        if($(this).text().length>60){
+            var txt=$(this).text().substr(0,50)+'...';
+            $(this).text(txt);
+        }
     });
 
     $("#billingGroupCheckBox input[type=checkbox]").change(function () {
@@ -447,7 +447,7 @@ $(document).ready(function() {
             $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Development']");
         }
         if (projectCategory.typeId == 3) {
-        	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Design']");
+            $("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Design']");
         }
         if (projectCategory.id == ALGORITHM_CATEGORY_ID_MARATHON) {
             $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Data']");
@@ -636,12 +636,12 @@ function handleProjectDropDownChange() {
     $("#billingProjects").resetSS();
 
     $('#billingProjects').bind("change", function() {
-    	if ($(this).find(":selected").data("cca")){
-    		$("#lccCheckBox").attr('checked','true').attr('disabled','true');
-    		mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
-    	}else{
-    		$("#lccCheckBox").removeAttr('disabled');
-    	}
+        if ($(this).find(":selected").data("cca")){
+            $("#lccCheckBox").attr('checked','true').attr('disabled','true');
+            mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+        }else{
+            $("#lccCheckBox").removeAttr('disabled');
+        }
         updateContestFee();
         updateBillingGroups();
     });
@@ -743,18 +743,18 @@ function handleProblemsDropDownChange() {
 }
 
 function updateRoundDurationLabels() {
-	var contestType = getContestType(true)[0];
+    var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
 
     var roundType = $('#roundTypes').val();
     if(contestType == "SOFTWARE") {
-		$("#checkpointDiv label").html("Checkpoint Duration:");
-	} else {
-		if (roundType == "single") {
-			$("#endDiv label").html("Round 1 Duration:");
+        $("#checkpointDiv label").html("Checkpoint Duration:");
+    } else {
+        if (roundType == "single") {
+            $("#endDiv label").html("Round 1 Duration:");
             $("#endDiv").show();
-		} else {
-			$("#checkpointDiv label").html("Round 1 Duration:");
+        } else {
+            $("#checkpointDiv label").html("Round 1 Duration:");
             $("#checkpointDiv").show();
             $("#endDiv label").html("Round 2 Duration:");
             $("#endDiv").show();
@@ -765,7 +765,7 @@ function updateRoundDurationLabels() {
             $("#checkpointDiv").hide();
             $("#endDiv").hide();
         }
-	}
+    }
 }
 
 /**
@@ -812,6 +812,14 @@ function onContestTypeChange() {
             templates: getStudioTemplatesName(typeId),
             templates_files: StudioContestSpecTemplates
         });
+    }
+
+    if (typeId == SOFTWARE_CATEGORY_ID_F2F
+        || typeId == SOFTWARE_CATEGORY_ID_CODE) {
+
+    $("#milestoneManSymbol").hide();
+    } else {
+        $("#milestoneManSymbol").show();
     }
 
     if(isContestSaved() && typeId != currentTypeId) {
