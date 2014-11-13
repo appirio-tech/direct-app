@@ -1,6 +1,6 @@
 /**
  * The JS script is for Project Metrics report.
- * 
+ *
  * AUTHOR: TCSASSEMBER
  * VERSION: 1.0 (TC Cockpit Project Metrics Report  )
  */
@@ -36,7 +36,7 @@ $(document).ready(function() {
         // remove the original "select" element
         $(obj).remove();
 
-        // update the status of checkboxes when one of the checkbox is clicked 
+        // update the status of checkboxes when one of the checkbox is clicked
         function updateCheckboxs(checkbox, multiBox) {
             if (checkbox) {
                 var checked = checkbox.is(":checked");
@@ -46,7 +46,7 @@ $(document).ready(function() {
                     });
                 }
             }
-            
+
             var allchecked = true;
             $("input:not(:first)", multiBox).each(function() {
                 if (!$(this).is(":checked")) {
@@ -69,20 +69,6 @@ $(document).ready(function() {
         updateCheckboxs(null, box);
     });
 
-    $('.filterTitle .expanded').click(function(){
-        $(this).blur();
-        var filterTitle = $(this).closest('.filterTitle');
-        if(!$(this).hasClass('collapsed')){
-            filterTitle.addClass('filterTitleCollapsed');
-            $(this).addClass('collapsed');
-            $('.filterContainer').hide();
-        }else{
-            filterTitle.removeClass('filterTitleCollapsed');
-            $(this).removeClass('collapsed');
-            $('.filterContainer').show();
-        }
-    });
-
     //Multi Select Area width
     function multiSelectAreaSet(){
         var width = $(window).width();
@@ -95,7 +81,7 @@ $(document).ready(function() {
             $('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width());
         }
     }
-    
+
     //resize Multi Select Area width
     $(window).resize(function(){
         if($('.filterContainer').length>0){
