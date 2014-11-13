@@ -25,7 +25,7 @@
  * - Update the CSS styles to fix multiple issues.
  *
  * Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
- * - Update the CSS styles to fix a drop down issue. 
+ * - Update the CSS styles to fix a drop down issue.
  *
  * TC-Studio - Wireframe Viewer Modal Window Direct integration assembly v1.0
  * - Add CSS styles for Wireframe Viewer Modal Window.
@@ -1069,8 +1069,8 @@ A.button5:hover {
 }
 A.button5:active{
     border:1px solid #ff8b04;
-    color: #fffffe;   
-    background: #ff8b03 url(../../images/button4.png) 90% -25px no-repeat; 
+    color: #fffffe;
+    background: #ff8b03 url(../../images/button4.png) 90% -25px no-repeat;
 }
 
 A.button6,
@@ -1091,6 +1091,11 @@ A.buttonBlue {
     color: #ffffff;
 }
 
+/* Fixes issue 20 */
+A.button7 {
+    padding: 0 0px;
+}
+
 A.button6 SPAN,
 A.button7 SPAN,
 A.button8 SPAN,
@@ -1103,7 +1108,7 @@ A.buttonBlue SPAN {
 }
 
 A.button7 SPAN.right {
-    padding: 4px 27px 0 27px;
+    padding: 4px 7px 0 7px;
     height: 20px;
 }
 
@@ -2785,7 +2790,7 @@ A.buttonRed1:hover span {
 
 /*
  * IE6 Notification styles
- * 
+ *
  */
 #ie6-notification {
     width: auto;
@@ -3232,7 +3237,7 @@ ul.errorMessage {
 
 /*
  * topcoder-maintenance-notification styles
- * 
+ *
  */
 #topcoder-maintenance-notification {
     width: auto;
