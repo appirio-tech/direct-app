@@ -22,9 +22,9 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit Billing Account Project Association) change notes:
   -   Add link to add billing account to project
-  - 
+  -
   - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) change notes:
-  - Fixed a drop down layout issue for a lenghthy project name.  
+  - Fixed a drop down layout issue for a lenghthy project name.
   -
   - Version 1.6 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match) change notes:
   - Update to support launching mm contest.
@@ -46,7 +46,7 @@
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-<h2>Please Select your Challenge Type</h2>
+<h2>Please Select your Challenge Type<span class="red">*</span></h2>
 
 <div class="tabOut">
       <!-- tab contest -->
@@ -100,19 +100,20 @@
 
       <!-- Contest Name -->
       <div class="row">
-          <label>Challenge Name :</label>
+          <label>Challenge Name :<span class="red">*</span></label>
           <input id="contestName" name="contestName" type="text" class="text" maxlength="254"/>
-          <input id="contestNameFromDesign" name="contestNameFromDesign" type="text" class="text hide" maxlength="300" />          
+      <span class="intro2">All fields marked with <span class="red">*</span> are mandatory</span>
+          <input id="contestNameFromDesign" name="contestNameFromDesign" type="text" class="text hide" maxlength="300" />
           <input id="contestIdFromDesign" name="contestIdFromDesign" type="hidden" />
           <div id="devOnlyDiv" class="lcc_chk hide" style="float:none;">
             <input id="devOnlyCheckBox" type="checkbox" />
             <span class="lcc">Dev Only</span>
-          </div>          
+          </div>
       </div>
 
       <!-- Project Name -->
       <div class="row">
-          <label>Project Name :</label>
+          <label>Project Name :<span class="red">*</span></label>
           <div class="projectSelect">
               <select id="projects" name="tcProject">
                 <option value="-1">Please select an existing project</option>
@@ -142,7 +143,7 @@
       </div>
 
       <div class="row">
-          <label>Milestone :</label>
+          <label>Milestone :<span class="red">*</span></label>
           <div class="milestoneSelect">
               <select id="contestMilestone" name="contestMilestone">
                   <option value="0">Please select a milestone to associate</option>
@@ -226,7 +227,7 @@
           </div>
           <span>ET (UTC-05)</span>
       </div>
-      
+
       <div id="endDateDiv" class="row software">
         <label>Submission End:</label>
           <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
@@ -275,7 +276,7 @@
 
 <div id="activateContestConfirmation" title="Do you really want to activate the challenge?" style="display:none;">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-    This will create a new challenge for you and then activate the created challenge. 
-    Please confirm you want to create the challenge and activate it. 
+    This will create a new challenge for you and then activate the created challenge.
+    Please confirm you want to create the challenge and activate it.
     After activation, you will start the challenge specification review.</p>
 </div>
