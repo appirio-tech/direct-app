@@ -7602,3 +7602,7 @@ a#platformSpecialist {
 
 }
 
+/* Fix for bug #28 */
+.topMenu .flyout a span {
+    color: #fff !important;
+}
