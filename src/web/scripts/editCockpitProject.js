@@ -2196,11 +2196,17 @@ function formatNumber(number) {
                 left = (value - minValue) / distance * w;
                 $('.valueRule', wrapper).width(left);
                 var output = s.output;
+                var curVal = output.val();
                 if (output) {
                     if(!s.step){
                         output.val(formatNumber(parseInt(value, 10)));
                     }else{
-                        output.val(formatNumber(parseInt(parseInt(value, 10)/1000)*1000));
+                        //Fix bug https://github.com/cloudspokes/direct-app/issues/17
+                        if (curVal % s.step !== 0) {
+                            output.val(formatNumber(parseInt(curVal, 10)));
+                        } else {
+                            output.val(formatNumber(parseInt(parseInt(value, 10)/s.step)*s.step));
+                        }
                     }
                 }
                 return left;
