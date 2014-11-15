@@ -1,15 +1,7 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.edit;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
@@ -17,6 +9,7 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.project.FullProject;
 import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectNotificationSetting;
@@ -37,7 +30,14 @@ import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
-import com.topcoder.shared.security.AuthorizationException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -417,24 +417,6 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
         // check if any existing client managers does not have write permission set on project
         final List<Permission> allPermissionsOfProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
 
-        // check current user has full permission to proceed
-        boolean hasFullPermission = false;
-
-        if (DirectUtils.isTcStaff(currentUser)) {
-            hasFullPermission = true;
-        } else {
-            for (Permission p : allPermissionsOfProject) {
-                if (p.getUserId() == currentUser.getUserId() && p.getPermissionType().getPermissionTypeId() == PROJECT_FULL_PERMISSION_TYPE_ID) {
-                    hasFullPermission = true;
-                }
-            }
-        }
-
-        if (!hasFullPermission) {
-            // do not have permission
-            throw new AuthorizationException("You don't have FULL permission on this project to do this operation");
-        }
-
         List<ProjectPermission> permissionToUpdate = new ArrayList<ProjectPermission>();
 
         // find the permission need to update: client manager has permission but it's not full permission
@@ -466,7 +448,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      *
      * @return result code.
      */
-    @WriteProject
+    @FullProject
     public String saveClientProjectManagers() {
         try {
             setResult(saveProjectResources(getFormData().getClientManagers(), CLIENT_MANAGER_METADATA_KEY));
@@ -484,7 +466,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      *
      * @return result code.
      */
-    @WriteProject
+    @FullProject
     public String saveTopCoderManagers() {
         try {
             setResult(saveProjectResources(getFormData().getProjectManagers(), TOPCODER_MANAGER_METADATA_KEY));
@@ -503,7 +485,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @return result code.
      * @since 2.3
      */
-    @WriteProject
+    @FullProject
     public String saveTopCoderAccountManagers() {
         try {
             setResult(saveProjectResources(getFormData().getAccountManagers(), TOPCODER_ACCOUNT_MANAGER_METADATA_KEY));
@@ -523,7 +505,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @return result code.
      * @since 2.5
      */
-    @WriteProject
+    @FullProject
     public String saveAppirioManagers() {
         try {
             setResult(saveProjectResources(getFormData().getAppirioManagers(), APPIRIO_MANAGER_METADATA_KEY));
@@ -571,6 +553,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      *
      * @return result code.
      */
+    @WriteProject
     public String addNewCustomMetadataKey() {
         try {
             Map<String, String> result = new HashMap<String, String>();
@@ -599,6 +582,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @return result code
      * @since 2.1
      */
+    @WriteProject
     public String associateProjectBillingAccount() {
         try {
             // check permission
@@ -641,6 +625,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @return result code
      * @since 2.1
      */
+    @WriteProject
     public String removeProjectBillingAccount() {
         try {
             // check permission
@@ -724,7 +709,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
      * @return the struts2 result code.
      * @since 2.0
      */
-    @WriteProject
+    @FullProject
     public String saveProjectPermissionsAndNotifications() {
         try {
             Map<String, String> result = new HashMap<String, String>();

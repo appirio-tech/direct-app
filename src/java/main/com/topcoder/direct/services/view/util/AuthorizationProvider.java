@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -66,8 +66,15 @@ import javax.servlet.http.HttpServletRequest;
  * </ul>
  * </p>
  *
- * @author isv, GreatKevin, TCSASSEMBLER
- * @version 1.5
+ * <p>
+ * Version 1.6 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ * <ul>
+ *     <li>Added method {@link #isUserGrantedFullAccessToProject(com.topcoder.security.TCSubject, long)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.6
  */
 public class AuthorizationProvider {
 
@@ -149,6 +156,41 @@ public class AuthorizationProvider {
 
             return DirectUtils.hasPermissionBySecurityGroups(tcSubject, projectId, authorizationService, 
                                                              GroupPermissionType.WRITE, GroupPermissionType.FULL);
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * <p>Checks if specified user is granted full access permission to specified project.</p>
+     *
+     * @param tcSubject a <code>TCSubject</code> providing the user subject.
+     * @param projectId a <code>long</code> providing the project ID.
+     * @return <code>true</code> if user is granted access to project; <code>false</code> otherwise.
+     * @throws Exception if any error occurs
+     * @since 1.6
+     */
+    public static boolean isUserGrantedFullAccessToProject(TCSubject tcSubject, long projectId) throws Exception {
+        if (DirectUtils.isTcStaff(tcSubject) || DirectUtils.isRole(tcSubject, ADMIN_ROLE)) {
+            return true;
+        }
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("has_cockpit_project_permissions");
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        request.setProperty("permTypeIds", "3");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_project_permissions");
+        if (resultContainer.isEmpty()) {
+            HttpServletRequest servletRequest = DirectUtils.getServletRequest();
+            ServletContext ctx = servletRequest.getSession().getServletContext();
+            WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
+            AuthorizationService authorizationService
+                    = (AuthorizationService) applicationContext.getBean("groupAuthorizationService");
+
+            return DirectUtils.hasPermissionBySecurityGroups(tcSubject, projectId, authorizationService,
+                    GroupPermissionType.FULL);
         } else {
             return true;
         }
