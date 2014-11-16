@@ -869,6 +869,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="saveClientProjectManagers" class="saveCockpitProjectSettingAction"
@@ -876,6 +877,8 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
+
         </action>
 
         <action name="saveTopCoderAccountManagers" class="saveCockpitProjectSettingAction"
@@ -883,6 +886,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="saveTopCoderManagers" class="saveCockpitProjectSettingAction"
@@ -890,6 +894,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="saveAppirioManagers" class="saveCockpitProjectSettingAction"
@@ -897,6 +902,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="addNewCustomMetadataKey" class="saveCockpitProjectSettingAction"
@@ -904,6 +910,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="removeProjectBillingAccount" class="saveCockpitProjectSettingAction"
@@ -911,6 +918,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="associateProjectBillingAccount" class="saveCockpitProjectSettingAction"
@@ -925,6 +933,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="saveContestsNotificationsForUser" class="saveCockpitProjectSettingAction"
@@ -932,6 +941,7 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="permissionDenied" type="json"/>
         </action>
 
         <action name="calendar" class="com.topcoder.direct.services.view.action.dashboard.CalendarAction">

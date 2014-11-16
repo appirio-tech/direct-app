@@ -2812,7 +2812,7 @@ public final class DirectUtils {
         throws PermissionServiceException {
         try {
             // Check if user is administrator for client account
-            Long clientId = getClientIdForProject(tcSubject, tcDirectProjectId);
+            Long clientId = getGlobalProjectClientCache().get(tcDirectProjectId);
             long userId = tcSubject.getUserId();
             boolean isCustomerAdministrator = false;
             if (clientId != null) {

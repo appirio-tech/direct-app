@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.2
+  - Version: 1.5
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
@@ -10,6 +10,13 @@
   -
   - Version 1.3 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 1.4 (Topcoder Direct - add total cost and estimate note to Marathon Match challenge)
+  -- Add total cost with esitmation notes for marathon challenge
+  -
+  - Version 1.5 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+  - @author Veve @channegeId 30046969
+  - - Add the marathon round id project info save for marathon challenge
   -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
@@ -63,6 +70,11 @@
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr class="matchRoundId">
+                <td class="first_tab_type"><strong>Match Round ID</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rMatchRoundId"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
             <tr>
@@ -159,8 +171,13 @@
                     <span class="value">
                         <input type="text" class="bigin"  name="CMCTaskID" value=""/>
                     </span>
-
-                 </span>
+             </span><br />
+            <span class="matchRoundId"><br />
+                    <span class="name fixWidthName"><strong>Match Round ID</strong></span>
+                    <span class="value">
+                        <input type="text" class="smallin"  name="MatchRoundID" value=""/>
+                    </span>
+             </span><br />
             <div id="projectEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -335,7 +352,18 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>
             </tr>
         </table>
+
+
+        <div class="totalCostContainer">
+            <strong>Estimated Challenge Total:</strong> $<span id="rswTotal"></span>
+            <p class="note">
+                Note: Challenge prizes, costs, and fees in this section are estimates. <br>
+                Actual costs are based on prizes paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+        </div>
+
+        <div class="clear"></div>
     </div><!-- End .detailsContent -->
+
 </div><!-- End .details -->
 <!-- End Prize Display -->
 

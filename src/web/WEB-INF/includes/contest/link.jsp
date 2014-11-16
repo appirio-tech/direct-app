@@ -122,19 +122,6 @@
 		<li class="splitter"></li>
         <li><a href="${viewData.contestStats.svn}" target="_blank"  class="contestLinkIcon linkIconSVN">SVN</a></li>
         </c:if>
-
-        <s:if test="marathon">
-            <input id="mmProjectId" type="hidden" value="${viewData.contestStats.contest.id}"/>
-            <input id="mmRoundId" type="hidden" value="${viewData.roundId}"/>
-            <s:if test="hasRoundId">
-                <li class="splitter"></li>
-                <li><a href="javascript: roundIdModalLoad('update');">Update Round ID</a></li>
-            </s:if>
-            <s:else>
-                <li class="splitter"></li>
-                <li><a href="javascript: roundIdModalLoad('set');">Set Round ID</a> </li>
-            </s:else>
-        </s:if>
     </ul>
     <div class="clear"></div>
 </div>

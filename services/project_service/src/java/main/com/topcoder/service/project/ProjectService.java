@@ -1,10 +1,11 @@
 /*
- * Copyright (C) 2008-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2008 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.project;
 
 import java.util.List;
 
+import com.topcoder.clients.model.Client;
 import com.topcoder.service.project.entities.ProjectQuestion;
 import com.topcoder.security.TCSubject;
 
@@ -82,11 +83,18 @@ import com.topcoder.security.TCSubject;
  * </p>
  *
  * <p>
+ *     Version 2.2 (TopCoder Direct - Add Group Permission Logic and project full permission checking)
+ *     <ul>
+ *         <li>Added method {@link #getClientByProject(long)}</li>
+ *     </ul>
+ * </p>
+ *
+ * <p>
  * <b>Thread Safety</b>: Implementations must be thread safe.
  * </p>
  *
- * @author humblefool, FireIce, ThinMan, leo_lol, TCSDEVELOPER
- * @version 2.1
+ * @author humblefool, FireIce, ThinMan, leo_lol, GreatKevin
+ * @version 2.2
  * @since 1.0
  */
 public interface ProjectService {
@@ -346,6 +354,16 @@ public interface ProjectService {
      * @since 2.0
      */
     public List<com.topcoder.clients.model.Project> getBillingAccountsByProject(long projectId) throws PersistenceFault;
+
+    /**
+     * Gets the client instance by the given direct project id.
+     *
+     * @param projectId the id of the direct project
+     * @return the client this project belongs to, null if no client
+     * @throws PersistenceFault if a generic persistence error occurs.
+     * @since 1.2
+     */
+    public Client getClientByProject(long projectId) throws PersistenceFault;
 
     /**
      * Gets the projects by the billing account id.
