@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.cloudvm;
 
@@ -17,12 +17,12 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCSubject;
+import com.topcoder.shared.security.AuthorizationException;
+import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,8 +34,13 @@ import java.util.Set;
  * - added contestId so that the action can receive a pre-populated contestId
  * </p>
  *
- * @author Standlove, jiajizhou86
- * @version 1.1
+ * <p>
+ * Version 1.1.1 ([Bug Bounty] - TopCoder Direct Bug Fixes Round 1 #12) changes:
+ * - add some error handling
+ * </p>
+ *
+ * @author Standlove, jiajizhou86, deedee
+ * @version 1.1.1
  */
 public class DashboardVMAction extends AbstractAction {
 
@@ -86,47 +91,54 @@ public class DashboardVMAction extends AbstractAction {
      * @throws Exception if any error occurs
      */
     public String execute() throws Exception {
-        String messages = "";
-        
-        TCSubject user = AbstractVMAction.getUser();
-        AbstractVMAction.authorize(user);
-        vmImages = getCloudVMService().getVMImages(user);
-        vmContestTypes = getCloudVMService().getVMContestTypes(user);
-        vmUsages = getCloudVMService().getVMUsages(user);
-        
-        // try {
-            vmInstances = getCloudVMService().getVMInstances(user);
-        // } catch (Exception ex) { 
-        //     vmInstances = new ArrayList<VMInstanceData>(); // BUGR-3930
-        // }
-        admin = inRole(user, "Administrator");
+        try{
+            String messages = "";
 
-        HttpServletRequest request = DirectUtils.getServletRequest();
-        request.setAttribute("messages", messages);
-        HttpSession session = request.getSession(false);
+            TCSubject user = AbstractVMAction.getUser();
+            AbstractVMAction.authorize(user);
+            vmImages = getCloudVMService().getVMImages(user);
+            vmContestTypes = getCloudVMService().getVMContestTypes(user);
+            vmUsages = getCloudVMService().getVMUsages(user);
 
-        if (request.getParameterMap().containsKey("contestId")) {
-            try {
-                contestId = Long.valueOf(request.getParameter("contestId"));
-            } catch (Exception ex) {
-                // ignore such number conversion exception
+            // try {
+                vmInstances = getCloudVMService().getVMInstances(user);
+            // } catch (Exception ex) {
+            //     vmInstances = new ArrayList<VMInstanceData>(); // BUGR-3930
+            // }
+            admin = inRole(user, "Administrator");
+
+            HttpServletRequest request = DirectUtils.getServletRequest();
+            request.setAttribute("messages", messages);
+            HttpSession session = request.getSession(false);
+
+            if (request.getParameterMap().containsKey("contestId")) {
+                try {
+                    contestId = Long.valueOf(request.getParameter("contestId"));
+                } catch (Exception ex) {
+                    // ignore such number conversion exception
+                    contestId = 0;
+                }
+            } else {
                 contestId = 0;
             }
-        } else {
-            contestId = 0;
+
+            if (session != null) {
+                sessionData = new SessionData(session);
+            }
+
+            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
+
+            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+            userProjectsDTO.setProjects(projects);
+            viewData.setUserProjects(userProjectsDTO);
+
+            return SUCCESS;
+        } catch (AuthorizationException e) {
+            ServletActionContext.getRequest().setAttribute("errorPageMessage", e.getMessage());
+            return ERROR;
+        } catch (Exception e){
+            return ERROR;
         }
-
-        if (session != null) {
-            sessionData = new SessionData(session);
-        }
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
-
-        return SUCCESS;
     }
 
     /**
