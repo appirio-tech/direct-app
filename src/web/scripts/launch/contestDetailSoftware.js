@@ -99,8 +99,16 @@
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 3.2
+
+ * Versin 3.3 (Topcoder Direct - add total cost and estimate note to Marathon Match challenge)
+ * -  Add total cost for marathon match
+ *
+ * Version 3.4 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+ * @author Veve @channegeId 30046969
+ * - Add the marathon round id project info save for marathon challenge
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
+ * @version 3.4
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1177,17 +1185,23 @@ function populateTypeSection() {
   	$('#billingAccountDivEdit').hide();
   }
 
-  if(isBillingViewable()) {
-     $('.billingdisplay').show();
-     $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-  } else {
-  	 $('.billingdisplay').hide();
-  }
+    if (isBillingViewable()) {
+        $('.billingdisplay').show();
+        $('#rBillingAccount').html((billingProjectId <= 0) ? "&nbsp;" : $("#billingProjects option[value=" + billingProjectId + "]").text());
+    } else {
+        $('.billingdisplay').hide();
+    }
 
-    if(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
+    if (mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
         $('#rCMCTaskID').text(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $('input[name=CMCTaskID]').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $(".cmcTask").show();
+    }
+
+    if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty('Marathon Match Id')) {
+        $('#rMatchRoundId').text(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
+        $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
+        $(".matchRoundId").show();
     }
 }
 
@@ -1216,46 +1230,49 @@ function updateMCEPlaceHolderCtl() {
 }
 
 function saveTypeSection() {
-   if(!validateFieldsTypeSection()) {
-       return;
-   }
-   if (mainWidget.competitionType != "SOFTWARE") {
-      if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
-        $("#viewableSubmFlag").attr("disabled","disabled");
-        $("#viewableSubmFlag").attr("checked","");
-        mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
-      } else {
-        $("#viewableSubmFlag").attr("disabled","");
-      }
-      populateSpecSection();
-   }
+    if (!validateFieldsTypeSection()) {
+        return;
+    }
+    if (mainWidget.competitionType != "SOFTWARE") {
+        if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+            $("#viewableSubmFlag").attr("disabled", "disabled");
+            $("#viewableSubmFlag").attr("checked", "");
+            mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
+        } else {
+            $("#viewableSubmFlag").attr("disabled", "");
+        }
+        populateSpecSection();
+    }
 
-   //construct request data
-   fixFileTypeIds();
-   var request = saveAsDraftRequest();
+    //construct request data
+    fixFileTypeIds();
+    var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-         populateTypeSection();
-	     populateRoundSection();
-         if (mainWidget.competitionType == "SOFTWARE") {
-            var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
-            if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
+    $.ajax({
+        type: 'POST',
+        url: ctx + "/launch/saveDraftContest",
+        data: request,
+        cache: false,
+        dataType: 'json',
+        success: function (jsonResult) {
+            handleSaveAsDraftContestResult(jsonResult);
+            populateTypeSection();
+            populateRoundSection();
+            if (mainWidget.competitionType == "SOFTWARE") {
+                var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+                if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != null) {
+                    populatePrizeSection();
+                }
+            }
+            if (mainWidget.competitionType == "ALGORITHM") {
                 populatePrizeSection();
             }
-         }
-         showTypeSectionDisplay();
-         updateMCEPlaceHolderCtl();
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+            showTypeSectionDisplay();
+            updateMCEPlaceHolderCtl();
+        },
+        beforeSend: beforeAjax,
+        complete: afterAjax
+    });
 }
 
 function validateFieldsTypeSection() {
@@ -1271,6 +1288,12 @@ function validateFieldsTypeSection() {
 
     validateContestName(contestName, errors);
     validateTcProject(tcProjectId, errors);
+
+    if ($("input[name=MatchRoundID]").length > 0 && $.trim($("input[name=MatchRoundID]").val()).length > 0) {
+        if(!isPositiveIntegerInput($("input[name=MatchRoundID]").val())) {
+            errors.push("The Marathon Match Round ID should be positive integer");
+        }
+    }
 
 
     // do NOT need milestone for First2Finish and CODE contest
@@ -1920,7 +1943,7 @@ function updateContestCostData() {
         // calculate the percentage fee
         var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotFee) * contestPercentage;
 
-        if(mainWidget.competitionType == 'STUDIO') {
+        if(mainWidget.competitionType == 'STUDIO' || mainWidget.competitionType == 'ALGORITHM') {
             actualFee = (firstPlacePrize + (secondPlacePrize || 0) + extraPrize + checkpointPrize + reviewCost + (reliability || 0) + specReview + (digitalRun || 0) + copilotFee) * contestPercentage;
         }
 
