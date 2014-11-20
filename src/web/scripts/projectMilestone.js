@@ -102,6 +102,7 @@ var clearMilestoneModalInput = function (modalId) {
     modal.find("input[name='projectDuedate']").val('mm/dd/yyyy').addClass('tip').removeClass('invalid').parent().find(".errorMessage").text('');
     modal.find("input[name='emailNotify']").attr('checked', '');
     modal.find("input.text").dpClearSelected();
+    $('.errorIcon').remove();
 }
 
 var validateMilestoneModalInput = function (modalId) {
@@ -111,31 +112,44 @@ var validateMilestoneModalInput = function (modalId) {
     if ($.trim(modal.find("input[name='projectName']").val()) == '') {
         passValidation = false;
         modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot be empty');
+        modal.find("input[name='projectName']").closest('li').find('.errorIcon').remove();
+        modal.find("input[name='projectName']").after("<span class='errorIcon'></span>");
     }
     else if (containTags($.trim(modal.find("input[name='projectName']").val()))) {
         passValidation = false;
         modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot contain HTML tags');
+        modal.find("input[name='projectName']").closest('li').find('.errorIcon').remove();
+        modal.find("input[name='projectName']").after("<span class='errorIcon'></span>");
     }
     else {
         modal.find("input[name='projectName']").removeClass('invalid').parent().find(".errorMessage").text('');
+        modal.find("input[name='projectName']").closest('li').find('.errorIcon').remove();
     }
 
     if ($.trim(modal.find("textarea[name='projectDesc']").val()) == '') {
         passValidation = false;
         modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot be empty');
+        modal.find("textarea[name='projectDesc']").closest('li').find('.errorIcon').remove();
+        modal.find("textarea[name='projectDesc']").after("<span class='errorIcon'></span>");
     } else if (containTags($.trim(modal.find("textarea[name='projectDesc']").val()))) {
         passValidation = false;
         modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot contain HTML tags');
+        modal.find("textarea[name='projectDesc']").closest('li').find('.errorIcon').remove();
+        modal.find("textarea[name='projectDesc']").after("<span class='errorIcon'></span>");
     }
     else {
         modal.find("textarea[name='projectDesc']").removeClass('invalid').parent().find(".errorMessage").text('');
+        modal.find("textarea[name='projectDesc']").closest('li').find('.errorIcon').remove();
     }
 
     if ($.trim(modal.find("input[name='projectDuedate']").val()) == '' || modal.find("input[name='projectDuedate']").val() == 'mm/dd/yyyy') {
         passValidation = false;
         modal.find("input[name='projectDuedate']").addClass('invalid').parent().find(".errorMessage").text('Due Date should be set');
+        modal.find("input[name='projectDuedate']").closest('li').find('.errorIcon').remove();
+        modal.find("input[name='projectDuedate']").closest('div').find('a').after("<span class='errorIcon'></span>");
     } else {
         modal.find("input[name='projectDuedate']").removeClass('invalid').parent().find(".errorMessage").text('');
+        modal.find("input[name='projectDuedate']").closest('li').find('.errorIcon').remove();
     }
 
     return passValidation;
@@ -272,6 +286,7 @@ $(document).ready(function () {
             $(this).removeClass("tip");
             if ($(this).val() != '' && $(this).val() != 'mm/dd/yyyy') {
                 $(this).removeClass('invalid').parent().find(".errorMessage").text('');
+                $(this).closest('li').find('.errorIcon').remove();
             }
         });
 
@@ -1024,6 +1039,7 @@ $(document).ready(function () {
             if (val.length > 0) {
                 textarea.parent().find(".errorMessage").text('');
                 textarea.removeClass('invalid');
+                textarea.parent().find('.errorIcon').remove();
             }
         }
 
