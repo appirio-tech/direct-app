@@ -1389,6 +1389,12 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private Resource getAppirioManagerResource() throws Exception {
 
+        if (softwareCompetition == null || softwareCompetition.getProjectHeader() == null 
+            || softwareCompetition.getProjectHeader().getTcDirectProjectId() <=0 )
+        {
+            return null;
+        }
+
         // check if need to insert Appirio manager
         List<DirectProjectMetadata> appirioManagers = this.getMetadataService().getProjectMetadataByProjectAndKey(
                 softwareCompetition.getProjectHeader().getTcDirectProjectId(),

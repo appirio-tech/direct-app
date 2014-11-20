@@ -441,14 +441,24 @@ public class GetContestAction extends ContestAction {
             .isStudio(softwareCompetition));
 
         // set the common info for marathon match contest only.
-        if(DirectUtils.isMM(softwareCompetition)) {
+        if (DirectUtils.isMM(softwareCompetition)) {
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
 
-            if(roundId != null) {
+            if (roundId != null && roundId.trim().length() > 0) {
                 hasRoundId = true;
-                viewData.setRoundId(Long.valueOf(roundId));
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
-                        viewData);
+
+                try {
+                    viewData.setRoundId(Long.valueOf(roundId));
+                } catch (NumberFormatException nfe) {
+                    // ignore
+                    hasRoundId = false;
+                }
+
+                if(viewData.getRoundId() != null && viewData.getRoundId() > 0) {
+                    MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService,
+                            timelineInterval,
+                            viewData);
+                }
             } else {
                 hasRoundId = false;
             }

@@ -224,6 +224,11 @@ a:hover, a:active, a:focus, a:active {
     height: 25px;
 }
 
+.smallin {
+    width: 150px;
+    height: 25px;
+}
+
 .contest_type {
     margin-top: 10px;
 }

@@ -366,13 +366,21 @@ $(function() {
         return operations;
     }
     
+    $('#copilotManageModal .saveButton').unbind("click");
+    
  // save the project copilots information
-    $('#copilotManageModal .saveButton').live('click', function() {
+    $('#copilotManageModal .saveButton').click(function() {
 
         var request = {
             copilotProjectOperations : getCopilotWidgetOperations()
         };
 
+        // if there is no change, show error message
+        if (request.copilotProjectOperations.length == 0) {
+            showErrors("Please add or remove copilot before you click SAVE");
+            return false;
+        }
+        
         modalAllClose();
         modalPreloader();
 
