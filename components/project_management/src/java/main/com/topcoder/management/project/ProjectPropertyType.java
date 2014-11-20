@@ -39,8 +39,12 @@ import java.io.Serializable;
  *     - Add property {@link #FORUM_TYPE}
  * </p>
  *
- * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin
- * @version 1.2.5
+ * <p>
+ *     Version 1.2.6 ([Bug Bounty] - TopCoder Direct Bug Fixes Round 1 issus#62)
+ *     - Add property {@link #FORUM_TYPE}
+ * </p>
+ * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, deedee
+ * @version 1.2.6
  * @since 1.0
  */
 public class ProjectPropertyType implements Serializable {
@@ -354,7 +358,13 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String FORUM_TYPE = "Forum Type";
 
-   
+    /**
+     * Represents the "Review Type" project property key.
+     *
+     * @since 1.2.6
+     */
+    public static final String REVIEW_TYPE = "Review Type";
+
     /**
      * Represents the id of this instance. Only values greater than zero is
      * allowed. This variable is initialized in the constructor and can be
