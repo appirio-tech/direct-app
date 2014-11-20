@@ -534,7 +534,10 @@ public class GetContestAction extends ContestAction {
             billingAccountsForProject.add(billingAccount);
         }
 
-        viewData.setReviewType(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.REVIEW_TYPE).trim().toLowerCase());
+        String rType = softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.REVIEW_TYPE);
+        if (rType != null){
+            viewData.setReviewType(rType.trim().toLowerCase());
+        }
 
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
