@@ -688,13 +688,12 @@ a.grayButton:active .text .plus{
 /* #editMilestoneModal,#addMilestoneModal  */
 #editMilestoneModal,
 #addMilestoneModal {
-    width: 706px;
+    width: 606px;
 }
 
 #editMilestoneModal .modalBody ul,
 #addMilestoneModal .modalBody ul {
-    padding: 20px 20px 0 50px;
-    border-top: 1px solid #ccc;
+    padding: 0px 20px 0 50px;
 }
 
 #editMilestoneModal .modalBody li,
@@ -707,7 +706,7 @@ a.grayButton:active .text .plus{
 #editMilestoneModal .modalBody li label,
 #addMilestoneModal .modalBody li label {
     float: left;
-    width: 250px;
+    width: 150px;
     font-weight: bold;
     font-size: 14px;
 }
@@ -748,7 +747,7 @@ a.grayButton:active .text .plus{
 #addMilestoneModal .buttonArea .button6 {
     display: inline;
     float: left;
-    margin-left: 245px;
+    margin-left: 195px;
     margin-right: 30px;
     width: 90px;
 }
@@ -979,6 +978,7 @@ a.grayButton:active .text .plus{
 /* Styles for launch new challenge '*' mandatory fields */
 span.red {
     color: #ff0000;
+    font-weight: normal;
 }
 
 .addNewContest .row .intro2 {
@@ -996,4 +996,13 @@ span.red {
     color: #FF0000;
 }
 
-
+div.row.notes {
+    width: auto;
+    text-align: right;
+    margin-right: 12px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666666;
+    line-height: 25px;
+    padding-bottom: 20px;
+}

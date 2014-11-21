@@ -3027,8 +3027,8 @@ A.buttonRed1:hover span {
 
 }
 #addNewProjectModal .modalBody .noticeContent {
-    padding-top: 35px;
-    height: 184px;
+    padding-top: 5px;
+    height: 214px;
     width: auto;
     padding-left: 26px;
 }
@@ -3040,7 +3040,7 @@ A.buttonRed1:hover span {
 
 #addNewProjectModal .modalBody .noticeContent .modalRow label {
     float: left;
-    width: 80px;
+    width: 100px;
     line-height: 22px;
     font-weight: bold;
     display: inline;
