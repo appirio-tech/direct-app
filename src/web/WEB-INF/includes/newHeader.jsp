@@ -237,6 +237,10 @@
         <span class="h"><a href="javascript:;">Admin</a></span>
 
         <ul>
+            <%
+                pageContext.setAttribute("hasVMDashboardAccess", DashboardVMAction.isApplicable());
+            %>
+            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting() || hasVMDashboardAccess || tcdirect:isTCStaff() || tcdirect:isScorecardAdmin()}">
             <li class="trigger" id="adminGeneralMenu">
                 <a class="first" href="javascript:;">General <span class="arrow"></span></a>
 
@@ -247,15 +251,11 @@
                                 <a class="first" href="<s:url action="contestFee" namespace="/settings/admin"/>">Challenge Fee Management <span class="icon feeI"></span></a>
                             </li>
                         </c:if>
-                        <%
-                            if (DashboardVMAction.isApplicable()) {
-                        %>
+                        <c:if test="${hasVMDashboardAccess}">
                         <li>
                             <a href="<s:url action="dashboardVMAction" namespace="/"/>">VM Management <span class="icon vmI"></span></a>
                         </li>
-                        <%
-                            }
-                        %>
+                        </c:if>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <li>
                                 <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback <span class="icon feedbackI"></span></a>
@@ -278,6 +278,7 @@
                     </ul>
                 </div>
             </li>
+            </c:if>
 
             <li class="trigger">
                 <a class="last" href="javascript:;">Settings <span class="arrow"></span></a>
