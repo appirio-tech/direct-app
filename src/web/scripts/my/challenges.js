@@ -31,16 +31,16 @@ $(document).ready(function () {
 
 
     // destroy the existing ones
-    $(".challengesFilter .date-pick").datePicker().bind(
-        'dateSelected',
-        function (e, selectedDate, $td) {
-            var table = $.fn.dataTable.fnTables(true);
-
-            if (table.length > 0) {
-                $(table).dataTable().fnDraw();
-            }
-        }
-    );
+    //$(".challengesFilter .date-pick").datePicker().bind(
+    //    'dateSelected',
+    //    function (e, selectedDate, $td) {
+    //        var table = $.fn.dataTable.fnTables(true);
+    //
+    //        if (table.length > 0) {
+    //            $(table).dataTable().fnDraw();
+    //        }
+    //    }
+    //);
 
 
 
@@ -52,11 +52,11 @@ $(document).ready(function () {
             if (value == "#customerFilter") {
                 loadOptionsByClientId($(this).val() == 'All' ? 0 : $(this).val());
             } else {
-                var table = $.fn.dataTable.fnTables(true);
-
-                if (table.length > 0) {
-                    $(table).dataTable().fnDraw();
-                }
+                //var table = $.fn.dataTable.fnTables(true);
+                //
+                //if (table.length > 0) {
+                //    $(table).dataTable().fnDraw();
+                //}
             }
 
 
@@ -98,11 +98,11 @@ $(document).ready(function () {
 
                         hideIndicator($("#projectFilter"));
 
-                        var table = $.fn.dataTable.fnTables(true);
-
-                        if (table.length > 0) {
-                            $(table).dataTable().fnDraw();
-                        }
+                        //var table = $.fn.dataTable.fnTables(true);
+                        //
+                        //if (table.length > 0) {
+                        //    $(table).dataTable().fnDraw();
+                        //}
 
                     },
                     function (errorMessage) {
@@ -112,6 +112,14 @@ $(document).ready(function () {
             }
         });
     }
+
+    $("a.filterApplyButton").click(function() {
+        var table = $.fn.dataTable.fnTables(true);
+
+        if (table.length > 0) {
+            $(table).dataTable().fnDraw();
+        }
+    });
 
 
 });

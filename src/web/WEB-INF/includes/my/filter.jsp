@@ -93,6 +93,14 @@
                 </div>
             </div>
 
+            <div class="column applyButtonColumn">
+                <a class="newButtonGreen filterApplyButton" href="javascript:;">
+                    <span class="left">
+                        <span class="right">APPLY</span>
+                    </span>
+                </a>
+            </div>
+
         </div>
     </div>
 </div>

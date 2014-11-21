@@ -13954,7 +13954,7 @@ div.totalCostContainer {
 }
 
 .challengesFilter .filterContainer .firstColumn {
-    width: 40%;
+    width: 37%;
 }
 
 .challengesFilter .filterContainer .secondColumn {
@@ -13962,9 +13962,16 @@ div.totalCostContainer {
 }
 
 .challengesFilter .filterContainer .thirdColumn {
-    width: 40%;
-    float: left;
-    display: inline;
+    width: 33%;
+}
+
+.challengesFilter .filterContainer .applyButtonColumn {
+    width: 8%;
+}
+
+.challengesFilter .filterContainer .applyButtonColumn .filterApplyButton {
+    float: right;
+    margin-top: 38px;
 }
 
 .challengesFilter .filterContainer .button div {
