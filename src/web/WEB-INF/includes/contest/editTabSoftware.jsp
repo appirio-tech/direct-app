@@ -97,8 +97,15 @@
             </tr>
             <tr></tr>
             <tr>
+                <s:if test="%{viewData.reviewType=='internal'}">
+                    <c:set var="rType" value="TopCoder Internal Review Board" />
+                </s:if>
+                <s:else>
+                    <c:set var="rType" value="TopCoder Community Review Board" />
+                </s:else>
                 <td class="first_tab_type"><strong>Review Style</strong></td>
-                <td class="sec_tab_type"><strong>: TopCoder Community Review Board<span id="rReviewStyle"></span></strong></td>
+                <td class="sec_tab_type"><strong>: ${rType}
+                <span id="rReviewStyle"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -192,7 +199,7 @@
             
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
-              <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
+              <input type="text" class="bigin"  id="reviewStyle" value="${rType}" disabled="disabled"/>
           </span>
           <br /><br />
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
@@ -250,8 +257,8 @@
           <div id="reviewTypeEditDiv" class="editDropDown">
               <span class="name fixWidthName"><strong>Review Type</strong></span>
 
-              <input type="radio" name="reviewType" value="community" title="The Community applies the review position and do the review"/><span class="textValue">Community</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="radio" name="reviewType" value="internal" title="The project internal resource reviews the challenge, please choose reviewer below"/><span class="textValue">Internal</span>
+              <input type="radio" name="reviewType" value="community" title="The Community applies the review position and do the review" <c:if test="${viewData.reviewType == 'community'}">checked="checked"</c:if> /><span class="textValue">Community</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" name="reviewType" value="internal" title="The project internal resource reviews the challenge, please choose reviewer below" <c:if test="${viewData.reviewType == 'internal'}">checked="checked"</c:if> /><span class="textValue">Internal</span>
 
               <div class="clearFix"></div>
           </div>

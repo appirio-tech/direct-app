@@ -24,6 +24,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -235,8 +236,14 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin
- * @version 2.9
+ * Version 2.9.1 ([Bug Bounty] - TopCoder Direct Bug Fixes Round 1 issus#62)
+ * <ul>
+ *     <li>Change on {@link #executeAction()} to set review type</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, deedee
+ * @version 2.9.1
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -525,6 +532,11 @@ public class GetContestAction extends ContestAction {
             billingAccount.put("name", billingProjects.get(i).getName());
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
             billingAccountsForProject.add(billingAccount);
+        }
+
+        String rType = softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.REVIEW_TYPE);
+        if (rType != null){
+            viewData.setReviewType(rType.trim().toLowerCase());
         }
 
         // Set current project context based on selected contest

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -49,8 +49,15 @@ import java.util.List;
  * </ol>
  * </p>
  *
- * @author isv, TCSASSEMBLER, Ghost_141
- * @version 1.2
+ * <p>
+ * Version 1.2.1 ([Bug Bounty] - TopCoder Direct Bug Fixes Round 1 issus#62)
+ * <ul>
+ *     <li>Add {@link #reviewType} and its setter/getter</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER, Ghost_141, deedee
+ * @version 1.2.1
  */
 public class ContestDetailsDTO extends MarathonMatchCommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
                                                             ContestIdForm.Aware {
@@ -86,6 +93,13 @@ public class ContestDetailsDTO extends MarathonMatchCommonDTO implements Contest
      * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
      */
     private boolean showSpecReview;
+
+    /**
+     * Review Type value
+     *
+     * @since 1.2.1
+     */
+    private String reviewType;
 
     /**
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
@@ -185,5 +199,25 @@ public class ContestDetailsDTO extends MarathonMatchCommonDTO implements Contest
      */
     public void setShowSpecReview(boolean showSpecReview) {
         this.showSpecReview = showSpecReview;
+    }
+
+    /**
+     * Getter for #reviewType
+     *
+     * @return reviewType
+     * @since 1.2.1
+     */
+    public String getReviewType() {
+        return reviewType;
+    }
+
+    /**
+     * Setter for #reviewType
+     *
+     * @param reviewType
+     * @since 1.2.1
+     */
+    public void setReviewType(String reviewType) {
+        this.reviewType = reviewType;
     }
 }
