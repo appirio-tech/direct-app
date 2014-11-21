@@ -139,6 +139,7 @@ import com.topcoder.web.common.tag.HandleTag;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -1032,21 +1033,29 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.5 (TopCoder Direct Performance Improvement - Project Latest Activities)
+ * <ul>
+ *     <li>Added {@link #getUserHandlesByUserIds}</li>
+ *     <li>Updated {@link #getLatestActivitiesForProject(long, long)} to use the new improved queries</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, 
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin,
  * @author Ghost_141, GreatKevin, Veve, GreatKevin
- * @version 6.4
+ * @version 6.5
  * @since 1.0
  */
 public class DataProvider {
 
     /**
-     * The suffiex for 'monthly'
+     * The suffix for 'monthly'
      */
     private static final String MONTHLY_SUFFIX = "_monthly";
 
-    
+
     /**
      * The name of paypal method.
      */
@@ -1497,41 +1506,47 @@ public class DataProvider {
     private static ActivityDTO createLatestActivity(ResultSetContainer result, int resultIndex, Map<Long,
             ProjectBriefDTO> directProjectsMap, Map<Long, TypedContestBriefDTO> contestsMap) {
 
-            String activityTypeText = result.getStringItem(resultIndex, "activity_type");
-            long tcDirectProjectId = result.getLongItem(resultIndex, "tc_direct_project_id");
-            String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
-            long contestId = result.getLongItem(resultIndex, "contest_id");
-            String contestName = result.getStringItem(resultIndex, "contest_name");
-            long contestTypeId = result.getLongItem(resultIndex, "contest_type_id");
-            Boolean isStudio = result.getBooleanItem(resultIndex, "is_studio");
+        String activityTypeText = result.getStringItem(resultIndex, "activity_type");
+        long tcDirectProjectId = result.getLongItem(resultIndex, "tc_direct_project_id");
+        String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
+        long contestId = result.getLongItem(resultIndex, "contest_id");
+        String contestName = result.getStringItem(resultIndex, "contest_name");
+        long contestTypeId = result.getLongItem(resultIndex, "contest_type_id");
+        Boolean isStudio = result.getBooleanItem(resultIndex, "is_studio");
 
-            long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
-            String originatorHandle = result.getStringItem(resultIndex, "user");
-            Timestamp date = result.getTimestampItem(resultIndex, "activity_time");
+        long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
 
+        String originatorHandle = null;
 
-            // Sets up the direct project
-            final ProjectBriefDTO project;
+        if (result.get(resultIndex).isValidColumn("user") && result.getItem(resultIndex, "user").getResultData() != null) {
+            originatorHandle = result.getStringItem(resultIndex, "user");
+        }
 
-            if (!directProjectsMap.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
-                directProjectsMap.put(tcDirectProjectId, project);
-            } else {
-                project = directProjectsMap.get(tcDirectProjectId);
-            }
+        Timestamp date = result.getTimestampItem(resultIndex, "activity_time");
 
-            final TypedContestBriefDTO contest;
-            if (contestsMap.containsKey(contestId)) {
-                contest = contestsMap.get(contestId);
-            } else {
-                contest = createTypedContest(contestId, contestName, project, ContestType.forIdAndFlag(contestTypeId, isStudio), null, !isStudio);//here
-                contestsMap.put(contestId, contest);
-            }
+        // Sets up the direct project
+        final ProjectBriefDTO project;
 
-            ActivityType activityType = ActivityType.forName(activityTypeText);
-            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+        if (!directProjectsMap.containsKey(tcDirectProjectId)) {
+            project = createProject(tcDirectProjectId, tcDirectProjectName);
+            directProjectsMap.put(tcDirectProjectId, project);
+        } else {
+            project = directProjectsMap.get(tcDirectProjectId);
+        }
 
-            return activity;
+        final TypedContestBriefDTO contest;
+        if (contestsMap.containsKey(contestId)) {
+            contest = contestsMap.get(contestId);
+        } else {
+            contest = createTypedContest(contestId, contestName, project,
+                    ContestType.forIdAndFlag(contestTypeId, isStudio), null, !isStudio);//here
+            contestsMap.put(contestId, contest);
+        }
+
+        ActivityType activityType = ActivityType.forName(activityTypeText);
+        ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+
+        return activity;
     }
 
     /**
@@ -1714,9 +1729,9 @@ public class DataProvider {
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
             data.setHasWritePermission(resultContainer.getBooleanItem(i, "has_write_permission"));
-           
+
             if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
-                
+
                 data.setProjectCompletionDate(resultContainer.getTimestampItem(i, "completion_date"));
             }
             if (resultContainer.getItem(i, "project_forum_id").getResultData() != null) {
@@ -2586,7 +2601,7 @@ public class DataProvider {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_latest_activities_replatforming");
+        request.setContentHandle("direct_project_latest_activities");
 
         // set the value of direct project id
         request.setProperty("tcdirectid", String.valueOf(projectId));
@@ -2599,10 +2614,15 @@ public class DataProvider {
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities_replatforming");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_latest_activities");
         final int recordNum = resultContainer.size();
 
+        Map<Long, String> users = new HashMap<Long, String>();
+
         for (int i = 0; i < recordNum; i++) {
+
+            users.put(Long.parseLong(resultContainer.getStringItem(i, "user_id")), null);
+
             ActivityDTO activity = createLatestActivity(resultContainer, i, projects, contests);
 
             List<ActivityDTO> contestActivities;
@@ -2617,6 +2637,8 @@ public class DataProvider {
             contestActivities.add(activity);
         }
 
+        users = getUserHandlesByUserIds(users.keySet());
+
         // sort the activities via activity date
         for (List<ActivityDTO> la : activities.values()) {
             Collections.sort(la, new Comparator<ActivityDTO>() {
@@ -2624,6 +2646,11 @@ public class DataProvider {
                     return -e1.getDate().compareTo(e2.getDate());
                 }
             });
+
+            // populate user handle for each activity dto
+            for (ActivityDTO ac : la) {
+                ac.setOriginatorHandle(users.get(ac.getOriginatorId()));
+            }
         }
 
         // sort the map by contest's latest activity date
@@ -2655,6 +2682,40 @@ public class DataProvider {
         dto.setActivities(sortedActivities);
 
         return dto;
+    }
+
+
+    /**
+     * Gets the user id <--> user handle mapings from the given set of user ids.
+     *
+     * @param userIds the set of user ids
+     * @return the map of user id to user handle
+     * @throws Exception if any error.
+     * @since 6.5
+     */
+    public static Map<Long, String> getUserHandlesByUserIds(Set<Long> userIds) throws Exception {
+
+        Map<Long, String> users = new HashMap<Long, String>();
+
+        if (userIds == null || userIds.isEmpty()) {
+            return users;
+        }
+
+        // populate user handle
+        DataAccess dataAccessor = new DataAccess(DBMS.OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("get_user_handles_by_ids");
+
+        // set the value of direct project id
+        request.setProperty("uids", concatenate(ArrayUtils.toPrimitive(userIds.toArray(new Long[]{})), ", "));
+
+        final ResultSetContainer resultContainer2 = dataAccessor.getData(request).get("get_user_handles_by_ids");
+
+        for (int i = 0, len = resultContainer2.size(); i < len; i++) {
+            users.put(resultContainer2.getLongItem(i, "user_id"), resultContainer2.getStringItem(i, "handle"));
+        }
+
+        return users;
     }
 
 
