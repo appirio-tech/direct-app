@@ -3,7 +3,10 @@
  *
  * Version 1.0 (TopCoder Direct - Challenges Section Filters Panel)
  *
- * @author GreatKevin
+ * Version 1.1 (TopCoder Direct - Add date filters to Challenges section filter panel)
+ * - Add date filters
+ *
+ * @author GreatKevin, Veve
  */
 $(document).ready(function () {
 
@@ -25,6 +28,20 @@ $(document).ready(function () {
             $('.challengesFilter .filterContainer').hide();
         }
     });
+
+
+    // destroy the existing ones
+    $(".challengesFilter .date-pick").datePicker().bind(
+        'dateSelected',
+        function (e, selectedDate, $td) {
+            var table = $.fn.dataTable.fnTables(true);
+
+            if (table.length > 0) {
+                $(table).dataTable().fnDraw();
+            }
+        }
+    );
+
 
 
     $.each(filters, function (index, value) {

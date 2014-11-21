@@ -13954,15 +13954,15 @@ div.totalCostContainer {
 }
 
 .challengesFilter .filterContainer .firstColumn {
-    width: 50%;
+    width: 40%;
 }
 
 .challengesFilter .filterContainer .secondColumn {
-    width: 30%;
+    width: 20%;
 }
 
-.challengesFilter .filterContainer .thirdCokumn {
-    width: 10%;
+.challengesFilter .filterContainer .thirdColumn {
+    width: 40%;
     float: left;
     display: inline;
 }

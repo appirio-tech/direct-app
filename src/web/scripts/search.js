@@ -884,6 +884,20 @@ $(document).ready(function() {
 
     });
 
+    function getDatePickerDate(id) {
+        var date;
+        var value = $("#" + id).val();
+
+        if($.trim(value).length > 0) {
+            try {
+                date = $.datepicker.parseDate('mm/dd/yy', $("#" + id).val());
+            } catch(err) {
+
+            }
+        }
+        return date;
+    }
+
 
     $.myCreatedChallengesTable = $("#myCreatedChallengesTable").dataTable({
         "iDisplayLength": 10,
@@ -909,6 +923,22 @@ $(document).ready(function() {
             aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
             aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
             aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+            var startFrom = getDatePickerDate("startDateBegin");
+            if(startFrom) {
+                aoData.push({name: "startDateFrom", value: $("#startDateBegin").val()});
+            }
+            var startTo = getDatePickerDate("startDateEnd");
+            if(startTo) {
+                aoData.push({name: "startDateTo", value: $("#startDateEnd").val()});
+            }
+            var endFrom = getDatePickerDate("endDateBegin");
+            if(endFrom) {
+                aoData.push({name: "endDateFrom", value: $("#endDateBegin").val()});
+            }
+            var endTo = getDatePickerDate("endDateEnd");
+            if(endTo) {
+                aoData.push({name: "endDateTo", value: $("#endDateEnd").val()});
+            }
         },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
@@ -966,6 +996,22 @@ $(document).ready(function() {
             aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
             aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
             aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+            var startFrom = getDatePickerDate("startDateBegin");
+            if(startFrom) {
+                aoData.push({name: "startDateFrom", value: $("#startDateBegin").val()});
+            }
+            var startTo = getDatePickerDate("startDateEnd");
+            if(startTo) {
+                aoData.push({name: "startDateTo", value: $("#startDateEnd").val()});
+            }
+            var endFrom = getDatePickerDate("endDateBegin");
+            if(endFrom) {
+                aoData.push({name: "endDateFrom", value: $("#endDateBegin").val()});
+            }
+            var endTo = getDatePickerDate("endDateEnd");
+            if(endTo) {
+                aoData.push({name: "endDateTo", value: $("#endDateEnd").val()});
+            }
         },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
