@@ -14022,3 +14022,10 @@ div.totalCostContainer {
 .ajaxLoadingBackground {
     background: url("/images/dots-white.gif") no-repeat scroll center center;
 }
+
+/* Styles for launch new challenge '*' mandatory fields */
+span.red {
+    color: #ff0000;
+    font-weight: normal;
+    padding-left: 1px;
+}

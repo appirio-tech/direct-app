@@ -815,9 +815,9 @@ function onContestTypeChange() {
     }
 
     if (typeId == SOFTWARE_CATEGORY_ID_F2F
-        || typeId == SOFTWARE_CATEGORY_ID_CODE) {
-
-    $("#milestoneManSymbol").hide();
+        || typeId == SOFTWARE_CATEGORY_ID_CODE
+        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $("#milestoneManSymbol").hide();
     } else {
         $("#milestoneManSymbol").show();
     }

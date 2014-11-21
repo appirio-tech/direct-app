@@ -976,11 +976,6 @@ a.grayButton:active .text .plus{
     text-decoration: none;
 }
 
-/* Styles for launch new challenge '*' mandatory fields */
-span.red {
-    color: #ff0000;
-}
-
 .addNewContest .row .intro2 {
     width: auto;
     float: right;
