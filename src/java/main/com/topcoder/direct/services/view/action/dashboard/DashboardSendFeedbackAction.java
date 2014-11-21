@@ -31,29 +31,35 @@ public class DashboardSendFeedbackAction extends BaseDirectStrutsAction {
      *
      */
     private static final String FEEDBACK_SUBJECT_NAME = "cockpit feedback";
-    
+
     /**
      * Private constant specifying the target email address to send the feedback.
      *
      */
     private static final String FEEDBACK_TO_ADDRESS = "support@topcoder.com";
-    
+
+    /**
+     * Private constant specifying the 'from' email address to send the feedback.
+     *
+     */
+    private static final String FEEDBACK_FROM_ADDRESS = "support@topcoder.com";
+
     /**
      * <p>A <code>String</code> providing the feedback content.</p>
      */
     private String feedbackContent;
-    
+
     /**
      * <p>A <code>String</code> providing the URL where the feedback dialog at when user sends the support.</p>
      */
     private String feedbackURL;
-    
+
     /**
      * <p>Constructs new <code>DashboardSendFeedbackAction</code> instance. This implementation does nothing.</p>
      */
     public DashboardSendFeedbackAction() {
     }
-    
+
     /**
      * <p>Gets the feedback content.</p>
      *
@@ -62,7 +68,7 @@ public class DashboardSendFeedbackAction extends BaseDirectStrutsAction {
     public String getFeedbackContent() {
         return this.feedbackContent;
     }
-    
+
     /**
      * <p>Sets the feedback content.</p>
      *
@@ -80,7 +86,7 @@ public class DashboardSendFeedbackAction extends BaseDirectStrutsAction {
     public String getFeedbackURL() {
         return this.feedbackURL;
     }
-    
+
     /**
      * <p>Sets the feedback content.</p>
      *
@@ -89,7 +95,7 @@ public class DashboardSendFeedbackAction extends BaseDirectStrutsAction {
     public void setFeedbackURL(String feedbackURL) {
         this.feedbackURL = feedbackURL;
     }
-    
+
     /**
      * The main logic of the action.
      *
@@ -98,29 +104,30 @@ public class DashboardSendFeedbackAction extends BaseDirectStrutsAction {
     @Override
     protected void executeAction() throws Exception {
         long userId = getSessionData().getCurrentUser().getUserId();
-        String fromAddr = getUserService().getEmailAddress(userId);
-       
+        String reporterEmail = getUserService().getEmailAddress(userId);
+
         // Get current time.
         SimpleDateFormat dateFormat = new SimpleDateFormat("E, MMM d, yyyy hh:mm a", Locale.US);
         dateFormat.setTimeZone(TimeZone.getTimeZone("EST5EDT"));
         String timeLine = dateFormat.format(new Date()).toString() + " EDT\n";
-        
+
         // Get reporter information.
         String handle = getUserService().getUserHandle(userId);
-        String reporterLine = "Reporter: " + handle + "\n";
-        
+        String reporterLine = "Reporter Handle: " + handle + "\n";
+        reporterLine += "Reporter Email: " + reporterEmail + "\n";
+
         // Get feedback information.
         String urlLine = "Source URL: " + this.feedbackURL + "\n";
-    	String header = timeLine + reporterLine + urlLine;
-    	String splitLine = "------------------------------------------------------------------------------------------------------------------------\n\n";
-    	String content = this.feedbackContent;
-    	
+        String header = timeLine + reporterLine + urlLine;
+        String splitLine = "------------------------------------------------------------------------------------------------------------------------\n\n";
+        String content = this.feedbackContent;
+
         // Create a TCSEmailMessage to be sent
         TCSEmailMessage email = new TCSEmailMessage();
 
         // Set subject message body.
         email.setSubject(FEEDBACK_SUBJECT_NAME);
-        email.setFromAddress(fromAddr);
+        email.setFromAddress(FEEDBACK_FROM_ADDRESS);
         email.setBody(header + splitLine + content);
         email.addToAddress(FEEDBACK_TO_ADDRESS, TCSEmailMessage.TO);
 
