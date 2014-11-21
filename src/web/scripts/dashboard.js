@@ -29,10 +29,10 @@
  *  Version 1.8 - Release Assembly - TopCoder Cockpit Project Overview Update 1
  *  - Add javascript codes to adjust the the project copilot box when resizing browser
  *
- *  Version 1.9 - TC Cockpit Post a Copilot Assembly 
+ *  Version 1.9 - TC Cockpit Post a Copilot Assembly
  *  - Update the img src of pre loading modal.
  *
- *  Version 2.0 - TC Cockpit Participation Metrics Report Part One Assembly 1 
+ *  Version 2.0 - TC Cockpit Participation Metrics Report Part One Assembly 1
  *  - Add the click handler for the "Select Report Type" drop down.
  *
  *  Version 2.1 - Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
@@ -40,13 +40,13 @@
  *
  *  Version 2.2 - Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp
  *  - Add the js codes to handle multiple selection box.
- * 
+ *
  *  Version 2.3 - Release Assembly - TC Direct Cockpit Release Two
  *  - Add the js codes to handle not choose 2nd place copilot button.
- * 
+ *
  *  Version 2.4 - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement
  *  - Add the js codes to load group by by customer id and load group values by group by id via ajax
- *  
+ *
  *  Version 2.5 - TC Direct Issue Tracking Tab Update Assembly 1
  *  - Add the js codes to handle add/edit JIRA issue in contest issue tracking page.
  *
@@ -79,19 +79,19 @@
  *
  *  Version 2.5 - Release Assembly - TC Direct Issue Tracking Tab Update Assembly 3
  *  - Add support for create/update/display direct project bugs
- * 
+ *
  *  Version 2.6 - Module Assembly - TC Cockpit Operations Dashboard For PMs
  *  - Add support for operations dashboard.
- * 
+ *
  *  Version 2.7 - BUGR-7279
  *  - Fix button not work issue.
- * 
+ *
  *  Version 2.8 - Module Assembly - TC Cockpit Invoice History Page Update
  *  - Add support for invoice status filter.
  *
  *  Version 2.9 - Module Assembly - Cockpit Copilot Posting Skills Update and Submission Revamp
  *  - Comment out the old copilot pickup handler
- *  
+ *
  *  Version 3.0 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0
  *  - Update a method to fix a text inconsistency bug.
  *
@@ -140,7 +140,7 @@ var mouse_is_inside;
 var selectProjectRightSidebar;
 
 $(document).ready(function(){
-						   
+
 	var Sys = {};
 	var ua = navigator.userAgent.toLowerCase();
     var filterToSynchronized = ['customerId', 'billingAccountId', 'projectId', 'startDate', 'endDate', 'statusIds', 'projectCategoryIds'];
@@ -203,7 +203,7 @@ $(document).ready(function(){
         }
         return requestPart;
     }
-	
+
     $("#selectReport").change(function() {
         var reportType = $(this).val();
         if (reportType == 'COST') {
@@ -233,16 +233,16 @@ $(document).ready(function(){
             window.location.href = '/direct/settings/admin/syncUser';
         }
     });
-	
+
 	//------------------------------------------------- Contests List
-	
+
 	/* sort contests */
     if ($("#contestsTable").length > 0) {
         $("#contestsTable").tablesorter();
-        
+
         $("#rightTableHeader .statusTh").click().click();
     }
-    
+
     /* init date-pack */
     if($('.date-pick').length > 0){
         $(".date-pick").datePicker({startDate:'01/01/2001'});
@@ -256,7 +256,7 @@ $(document).ready(function(){
             $("#contestsTable tr:even").addClass("even");
         }
     }
-	
+
 	/* sort contest by title */
 	sortTitle = function(){
 		 var sorting = [[1,0]];
@@ -266,7 +266,7 @@ $(document).ready(function(){
 			$("#contestsTable tr:even").addClass("even");
 		});
 	}
-	
+
 	/* sort contest by status */
 	sortStatus = function(){
 		var sorting = [[0,1]];
@@ -281,7 +281,7 @@ $(document).ready(function(){
         sortStatus();
     }
 
-	
+
 	/* sort contest by type */
 	sortType = function(){
 		var sorting = [[2,0]];
@@ -291,21 +291,21 @@ $(document).ready(function(){
 			$("#contestsTable tr:even").addClass("even");
 		});
 	}
-	
+
 	/* get the selected index and sort the contests table */
 	sortTable = function(mySelect){
 		var selected = mySelect.options[mySelect.selectedIndex].value;
-		
+
 		if( selected == "title" )
 			sortTitle();
 		else if(selected == "status")
 			sortStatus();
-		else 
+		else
 			sortType();
 	}
-	
+
 	/*-Show the scrollbar when the number of contests is more than 10-*/
-	
+
 	adjustContestListHeight = function() {
         var rows_height = 0;
         var contests_nbre = 0;
@@ -356,7 +356,7 @@ $(document).ready(function(){
             showArrows: true
         });
     }
-	
+
 	/*-------------------------- Show/hide the dropdown list --*/
 
     var updateCustomerDropDown = function (dropDownWrapper, items, customerName) {
@@ -731,10 +731,10 @@ $(document).ready(function(){
         var input = $(".customerSelectMask .inputSelect>input")[0];
         input.originalValue = input.value;
     }
-	
+
 	/*TCCC-2398*/
 	/*-------------------------- filter the project --*/
-	
+
 	filterProject = function(){
 		if (!$("#dropDown1 .dropList").is(":visible")) {
 			showHideProjectList();
@@ -759,7 +759,7 @@ $(document).ready(function(){
             }
         });
 	}
-    
+
     selectProject = function(e) {
         if (!$("#dropDown1 .dropList").is(":visible")) {
 			showHideProjectList();
@@ -812,7 +812,7 @@ $(document).ready(function(){
             }
         }
     }
-    
+
 	filterCustomer = function(){
 		if (!$("#dropDown2 .dropList").is(":visible")) {
 			showHideCustomerList();
@@ -888,7 +888,7 @@ $(document).ready(function(){
             }
         }
     }
-    
+
     $(".customerSelectMask .inputSelect input").focus(function(){
         showHideCustomerList();
     });
@@ -899,12 +899,12 @@ $(document).ready(function(){
     $(".customerSelectMask UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
-        
+
         if (!mask.find(".contestsDropDown .dropList").is(":hidden")) {
             mask.find(".contestsDropDown .dropList").hide();
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
-        
+
         /*
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
             // call method defined by filter panel
@@ -918,9 +918,9 @@ $(document).ready(function(){
         */
         return false;
     })
-	
+
 	/*------------------------- hover state of the dropdown list  --*/
-	
+
 	$(".contestsDropDown UL LI").live("mouseover",function(){
 			$(this).addClass("hover");
 	});
@@ -928,68 +928,68 @@ $(document).ready(function(){
 	$(".contestsDropDown UL LI").live("mouseout",function(){
 			$(this).removeClass("hover");
 	});
-	
+
 	/*------------------------- hover state of the contests table --*/
 	$("table#contestsTable tr").mouseover(function(){
 		$(this).addClass("highlight");
 	});
-	
+
 	$("table#contestsTable tr").mouseout(function(){
 		$(this).removeClass("highlight");
 	});
-	
+
 	/*------------------------- show or hide rows functionality in dashboard.html --*/
-	// we will show just the first rows_nbre rows 
+	// we will show just the first rows_nbre rows
 	$("TABLE.rowsToHide").each(function(){
-		
+
 		var table_id = $(this).attr("id");
 		var hide_row = false;
-		
+
 		$("#"+table_id+" TBODY TR").each(function(){
-												  
+
 				if( this.className.search("hideStart") != -1 ){
 						hide_row = true;
 				}
-					
+
 				if( hide_row )
-						$(this).addClass("hide");								
+						$(this).addClass("hide");
 		})
 	});
-	
-	
+
+
 	showHideRows = function(myLink, tableId){
-		
+
 		if( $(myLink).html() == "View More" ){ //when the user click the view more link we will show the hidden rows
 			$("#"+tableId+" TBODY TR").each(function(){
 				$(this).removeClass("hide");
 			});
-			
+
 			 $(myLink).html("Hide Rows");
 			 $(myLink).addClass("less");
-			 
+
 		}else{ //when the user click the hide rows link we will hide some rows
 			var hide_row = false;
 			$("#"+tableId +" TBODY TR").each(function(){
-					
+
 					if( this.className.search("hideStart") != -1 ){
 						hide_row = true;
 					}
-					
+
 					if( hide_row )
 						$(this).addClass("hide");
 			});
-			
+
 			$(myLink).html("View More");
 			$(myLink).removeClass("less");
 		}
-		
+
 	}
-	
+
 	/*----------------- projects table hover --*/
 	$("table.project tbody TR").mouseover(function(){
 			$(this).addClass("hover");
 	});
-	
+
 	$("table.project tbody TR").mouseout(function(){
 			$(this).removeClass("hover");
 	});
@@ -1004,95 +1004,95 @@ $(document).ready(function(){
 //					curr++;
 //			});
 	}
-	
-	
+
+
 	/*-------------------------------------------------------------- Popup -----------------*/
-	
+
 	var prevPopup = null;
 	showPopup = function(myLink,myPopupId){
 		var myLinkLeft = myLinkTop  = 0;
-		
+
 		/* hide the previous popup */
 		if( prevPopup )
 			$(prevPopup).css("display","none");
-			
+
 		prevPopup = $('#'+myPopupId);
-		
+
 		/* get the position of the current link */
 		do{
 			myLinkLeft += myLink.offsetLeft;
 			myLinkTop += myLink.offsetTop;
 		}while( myLink = myLink.offsetParent );
-		
+
 		/* set the position of the popup */
 		var popUpHeight2 = $('#'+myPopupId).height()/2;
-		
+
 		myLinkTop -= popUpHeight2;
-	
+
 		$('#'+myPopupId).css("top",myLinkTop+'px');
 		$('#'+myPopupId).css("left",( myLinkLeft + 50 )+'px');
-		
+
 		/* set the positio of the arrow inside the popup */
 		$(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
-		
+
 		/* show the popup */
 		$('#'+myPopupId).css("display","block");
-		
+
 	}
-	
+
 	/* if the user click the next of prev link of the calendar we will hide the popups */
 	$(".fc-button-prev a").click(function(){
 		$(prevPopup).css('display','none');
 	});
-	
+
 	$(".fc-button-next a").click(function(){
 		$(prevPopup).css('display','none');
 	});
-	
+
 	/*------------------------------------------------------------------------------------------*/
-	
+
 	/*-----------------  tabs4 navigation   -*/
 	showHideTabs = function(myLink, myContainerId, myTabsIndex){
 		/* myLink: the clicked link
 		   myContainerID: the id of the tabs container
 		   myTabsIndex: the index num of the tab */
-		
+
 		// get the first "ul" parent
 		// the html structure is as fellow: <ul><li><a href=""></a></li></ul>
 		var ULparent = $(myLink).parents()[1];
 		var curr_link = 0;
-		
+
 		$($(ULparent).children()).each(function(){ //add the "on" class to the parent (li) of the clicked link
-				
+
 				if( myTabsIndex == curr_link ){
 					$(this).addClass("on");
 				}else{
 					$(this).removeClass("on");
 				}
-				
+
 				curr_link++;
-				   
+
 		});
-		   
+
 		var current_tab = 0;
 		$($("#"+myContainerId).children()).each(function(){ // show the tab with the index myTabsIndex and hide the others
-				
+
 				if( current_tab == myTabsIndex ){
 					$(this).css('display','block');
 				}else{
 					$(this).css('display','none');
 				}
-				
+
 				current_tab++;
-				
+
 		})
 	}
-	
+
 	/*--------------------------------------- Show/Hide group users (the table on the permissions tab ) --*/
 	showHideGroup = function(myLink, rowClass){
 		/*  myLink: the clicked link
 			rowClass: the class name of the group */
-		
+
 		/* change the link ico */
 		if( myLink.className.search("expand") != -1 ){
 			$(myLink).removeClass("expand");
@@ -1101,11 +1101,11 @@ $(document).ready(function(){
 			$(myLink).removeClass("collapse");
 			$(myLink).addClass("expand");
 		}
-		
-		
+
+
 		$("."+rowClass).toggle();
 	}
-	
+
 	/*-------------------------------------- Check/uncheck all checkboxes functionnality --*/
 	/* myCheckbox: the "select all" check box
 	   myContainerId: the id of the container of the checkboxes */
@@ -1123,52 +1123,52 @@ $(document).ready(function(){
 	/*------------------------------ w/search ---*/
 	var prev_result = null;
 	showResults = function(mySelect, containerId){
-	
+
 		$("#"+containerId).css('display','block');
-		
+
 		if( prev_result )
 			$(prev_result).css('display','none');
-		
+
 		var result_container_id =  mySelect[0].options[mySelect[0].selectedIndex].value;
 		$("#"+result_container_id).css('display','block');
-		
+
 		prev_result = $("#"+result_container_id);
-		
+
 	}
-	
+
 	/*-------------------------------------------------------------------------*/
 	/* add zebra stripping for projectStats tables */
 	/* Uncommented since zebra style is looking weird */
 	// $('table.contests tbody tr:odd').addClass('even');
-	
-	/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
+
+	/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/
 
 	fixTabs3Width = function(){
 
 		var myLastLIWidth = $("#tabs3 UL LI.lastItem").width();
 		var myFirstLIWidth = $("#tabs3 UL LI.firstItem").width();
-	
-		var addit_pixels = eval( myFirstLIWidth ) * 4 - eval( $("#tabs3 UL").width() ); 
-		
+
+		var addit_pixels = eval( myFirstLIWidth ) * 4 - eval( $("#tabs3 UL").width() );
+
 		if( $.browser.safari || ($.browser.msie && $.browser.version <= 7.0 ) )
 			$("#tabs3 UL LI.lastItem").css("width", (myLastLIWidth - addit_pixels)+"px");
 	}
-	
-	
+
+
 	//fixTabs3Width();
-	
+
 	//$("#tabs3").resize(function(){
-		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
+		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/
 	//	if( $.browser.msie || $.browser.safari )
 	//		document.location.reload();
 	//});
-	
+
 	$('#projectName').change(function() {
 		var projectName = jQuery.trim($("#projectName").val());
 		$("#projectName").val(projectName);
 		return true;
 	});
-	
+
     /* open link in new windows for .memberProfile and .copilotProfile */
     $(".memberProfile[rel='_blank']").attr("target","_blank");
     $(".copilotProfile[rel='_blank']").attr("target","_blank");
@@ -1376,7 +1376,7 @@ $(document).ready(function(){
             $(this).parent().find(".FileField").val($(this).val());
         });
     }
-    
+
 // when click "Add New" button in contest tracking page under Race tab
     $('#issue .btnAddNew, #bugRace .btnAddNew').click(function() {
         $("li.bugRaceTab a").click();
@@ -1423,7 +1423,7 @@ $(document).ready(function(){
         $("#existingAtt").show();
         $("#existingAtt .row").html(atts.length > 0 ? atts.join("<br/>") : "None");
     }
-    
+
 	// when click "Edit" button in contest tracking page under Race tab
     $('#bugRace .issueSelectionContent .button11').live("click", function() {
         if($(this).hasClass("contestEdit")){
@@ -1459,7 +1459,7 @@ $(document).ready(function(){
             return false;
         }
     });
-    
+
     // fill the row using the bug race data
     function fillBugRaceRow(row, bugRace) {
         row.find("input.contestName").val(bugRace.issueSummary);
@@ -1491,7 +1491,7 @@ $(document).ready(function(){
         row.find("div.longDetails dd.issueUpdateDate").html(bugRace.updateDateString);
         row.find("div.longDetails dd.issueDueDate").html(bugRace.dueDateString);
     }
-    
+
     // validate the Add Race form in contest issue tracking page
     function validateBugForm(obj) {
         var flag = 1;
@@ -1500,9 +1500,9 @@ $(document).ready(function(){
                 $(obj).parents('.inputContainer').find('.firstPayment').val($(obj).parents('.inputContainer').find('.firstPayment').val().replace(/^0*/,''));
             } else {
                 if ($(obj).parents('.inputContainer').find('.firstPayment').val()) {
-                    $(obj).parents('.inputContainer').find('.firstPayment').val('0');    
+                    $(obj).parents('.inputContainer').find('.firstPayment').val('0');
                 } else {
-                    $(obj).parents('.inputContainer').find('.firstPayment').val('');    
+                    $(obj).parents('.inputContainer').find('.firstPayment').val('');
                 }
             }
         }
@@ -1580,7 +1580,7 @@ $(document).ready(function(){
             }
         });
     }
-    
+
     // add a new JIRA issue (Race)
     $('#bugRace .btnCreate').click(function() {
         var bugRaceUrl = 'addBugRace';
@@ -1624,7 +1624,7 @@ $(document).ready(function(){
                             options[1].text="Ongoing Races(" + total2 + ")";
                             $("li.bugRaceTab a span").text("Race (" + total1 + ")");
                             bugSortFunction();
-                            
+
                             if ($("#bugRace .viewAll input").is(":checked")) {
                                 $('.hideDetails').show();
                                 $('.viewDetails').hide();
@@ -1633,7 +1633,7 @@ $(document).ready(function(){
                                 $('.checkbox').attr('checked', true);
                             }
                             $("#bugRace .viewAll").show();
-                            
+
                             if (result.attachmentError) {
                                 // error when add attachment
                             } else {
@@ -1653,7 +1653,7 @@ $(document).ready(function(){
         }
         return false;
     });
-    
+
     // update a JIRA issue (Race)
     $('#bugRace .btnUpdate').live('click', function() {
         if (validateBugForm(this)) {
@@ -1668,7 +1668,7 @@ $(document).ready(function(){
                     }
                 }
             }
-            
+
             $.ajax({
                 type: 'POST',
                 url:'updateBugRace',
@@ -1692,11 +1692,11 @@ $(document).ready(function(){
                             rowItem.find("dd.issuePrize").html("$" + parseFloat($("#firstPayment").val()).formatMoney(2));
                             rowItem.find(".issueCCA").val($("#cca").is(":checked") ? "true" : "false");
 							rowItem.find(".issueType").val($("#bugType").val());
-                            
+
                             $('.issueSelectionContent .content').show();
                             $('.issueSelectionContent .inputContainer').hide();
                             $("#bugRace .viewAll").show();
-                            
+
                             if (result.attachmentError) {
                                 // error when add attachment
                             } else {
@@ -1717,7 +1717,7 @@ $(document).ready(function(){
         }
         return false;
     });
-    
+
     $('#bugRace .firstPayment').keypress(function(event) {
         if (event.which != 8 && (event.which < 48 || event.which > 57)){
             return false;
@@ -1834,7 +1834,7 @@ $(document).ready(function(){
         });
         hideBugRacesEmptyContest();
         bugSortFunction();
-        
+
         var bugIdx = 0;
         if (isNumber(getUrlPara('bugIdx'))) {
             bugIdx = parseInt(getUrlPara('bugIdx'));
@@ -1844,18 +1844,18 @@ $(document).ready(function(){
 
 
 
-    
+
     if ($.browser.mozilla) {
         // firefox
         $("input.BrowserHidden").attr("size", "8");
     }
-    
+
     if($(".issueSelectionContent #rdoYes").attr('checked')) {
         $('.issueSelectionContent #divUpload').hide();
     } else {
         $('.issueSelectionContent #divUpload').show();
     }
-    
+
 	$('.issueSelectionContent #rdoYes').live('click',function(){
 	 	if($(this).attr('checked')) {
 			$('.issueSelectionContent #divUpload').hide();
@@ -1870,7 +1870,7 @@ $(document).ready(function(){
 			$('.issueSelectionContent #divUpload').hide();
 		}
 	});
-    
+
     // bug race attachment uploader
     var bugrCurrentAttachment = {};
     var bugrAttachments = [];
@@ -1900,7 +1900,7 @@ $(document).ready(function(){
 
                         currentUploadInput.hide();
                         currentUploadInput.parent().find(".FileField").unbind("click");
-                        
+
                         modalClose();
                     },
                     function(errorMessage) {
@@ -1919,12 +1919,12 @@ $(document).ready(function(){
                         modalClose();
                     });
             }
-        }, false); 
+        }, false);
 
     $(".issueSelectionContent .btnUpload").click(function() {
         bugrUploader.setInput($(this).parent().find("input[type=file]").get(0));
         bugrUploader.curRow = $(this).parent();
-        
+
         var fileName = bugrUploader._input.value;
 
         var errors = [];
@@ -1932,12 +1932,12 @@ $(document).ready(function(){
         if (!checkRequired($(this).parent().find("input.FileField").val()) || !checkRequired(fileName)) {
             errors.push('No file is selected.');
         }
-        
+
         var startIndex = (fileName.indexOf('\\') >= 0 ? fileName.lastIndexOf('\\') : fileName.lastIndexOf('/'));
         if (startIndex != -1) {
             fileName = fileName.substring(startIndex + 1);
         }
-        
+
         var ok = true;
         for (var i = 0; i < bugrAttachments.length; i++) {
             if (fileName.toLowerCase() == bugrAttachments[i]['fileName'].toLowerCase()) {
@@ -1958,15 +1958,15 @@ $(document).ready(function(){
             showErrors(errors);
             return false;
         }
-        
+
         currentUploadInput = $(this);
 
         bugrUploader.submit();
         return false;
     });
-    
+
     /* added js code */
-	
+
     /**
      * Auto truncate columns.
 
@@ -1979,7 +1979,7 @@ $(document).ready(function(){
         } else{
              $(".myCopilotsContestsList .truncateRegs, .myProjectContests .truncateRegs").text("Registrants");
              $(".myCopilotsContestsList .truncateSubs, .myProjectContests .truncateSubs").text("Submissions");
-        } 
+        }
     }
 
     function  truncateTableHeaderNames(){
@@ -2087,7 +2087,7 @@ $(document).ready(function(){
     });
 
     $(".selectProject option:even").css("background", "#f3f3f3");
-    
+
 
 	$(".statusP .helpBtn").hover(
 		function(){
@@ -2099,7 +2099,7 @@ $(document).ready(function(){
 			}
 			else{
 				$(this).parents(".dashboardModule").find(".tooltipContainer").removeClass("tooltipLessThanIdeal").removeClass("tooltipForum");
-				
+
 			}
 			$(this).parents(".dashboardModule").find(".tooltipContainer").css("display", "block");
 		}
@@ -2108,22 +2108,22 @@ $(document).ready(function(){
 			$(this).siblings(".tooltipContainer").hide();
 		}
 	);
-	
+
 	$(".appositeContainer .registrationModule .tooltipContainer .closeIco").click(function(){
 		$(this).parents(".tooltipContainer").css("display", "none");
 	});
-	
-	var Sys = {}; 
-	var ua = navigator.userAgent.toLowerCase(); 
+
+	var Sys = {};
+	var ua = navigator.userAgent.toLowerCase();
 	/*
-	if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){ 
+	if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
 		$(".appositeContainer .issueModule").css({"width":"17.2%"});
 		$(".appositeContainer.studio .issueModule").css("width","24.7%");
-	} 
-	if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+	}
+	if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){
 		$(".appositeContainer .issueModule").css("width","17.4%");
 		$(".appositeContainer.studio .issueModule").css("width","24.7%");
-	} 
+	}
 	*/
     var currentPhase = null;
 
@@ -2148,13 +2148,13 @@ $(document).ready(function(){
             $(".dashboardModule .content .timelineContainer.copilot").css("padding-bottom", "39px");
 			/*
 			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
-				$(".appositeContainer .issueModule").css({"width":"17.2%"}); 
-				$(".appositeContainer.studio .issueModule").css("width","24.5%"); 
-			} 
-			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+				$(".appositeContainer .issueModule").css({"width":"17.2%"});
+				$(".appositeContainer.studio .issueModule").css("width","24.5%");
+			}
+			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){
 				$(".appositeContainer .issueModule").css("width","17.3%");
 				$(".appositeContainer.studio .issueModule").css("width","24.5%");
-			} 
+			}
 			*/
 
 		}
@@ -2163,19 +2163,19 @@ $(document).ready(function(){
 			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "42px");
             $(".dashboardModule .content .timelineContainer.copilot").css("padding-bottom", "39px");
 			/*
-			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){  
+			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
 				$(".appositeContainer .issueModule").css("width","17.4%");
 				$(".appositeContainer.studio .issueModule").css("width","24.8%");
-			} 
-			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+			}
+			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){
 				$(".appositeContainer .issueModule").css("width","17.4%");
 				$(".appositeContainer.studio .issueModule").css("width","24.8%");
-			} 
+			}
 			// IE 7
-			if($.browser.msie && $.browser.version == 7.0){  
+			if($.browser.msie && $.browser.version == 7.0){
 				$(".appositeContainer .issueModule").css("width","17.1%");
 				$(".appositeContainer.studio .issueModule").css("width","24.3%");
-			} 
+			}
 			*/
 		}
 
@@ -2189,10 +2189,10 @@ $(document).ready(function(){
 	$(window).resize(function(){
           adjust();
     });
-	// IE 8 
-	if($.browser.msie && $.browser.version == 8.0){ 
+	// IE 8
+	if($.browser.msie && $.browser.version == 8.0){
 		$(".appositeContainer .registrationModule .statusP .helpBtn").css("top","0");
-	} 
+	}
 	/* end */
 
     if ($(".progressContainer").length > 0) {
@@ -2469,17 +2469,17 @@ $(document).ready(function(){
     $('#radioApproveReject').click(function (e) {
         $('.approvalRejectSection').show();
     });
-    
+
     $('#radioApproveApproved').click(function (e) {
         $('.approvalRejectSection').hide();
     });
-    
+
     $('textarea.hint').focus(function () {
         if ($(this).hasClass('hint')) {
             $(this).val('');
         }
     });
-    
+
     $('textarea.hint').blur(function (e) {
         if (!$(this).val()) {
             if (!$(this).hasClass('hint')) {
@@ -2494,8 +2494,8 @@ $(document).ready(function(){
 
     $('#submitApprovalButton').click(function() {
         var d = $(this).attr('rel').split('_');;
-        var projectId = parseInt(d[1]); 
-        var submissionId = parseInt(d[0]); 
+        var projectId = parseInt(d[1]);
+        var submissionId = parseInt(d[0]);
         var rejectionReason = $('.rejectTextarea').val();
         var approved = $('#radioApproveApproved:checked').length > 0;
         if (!approved && $.trim(rejectionReason) == '') {
@@ -2548,7 +2548,7 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
         $(".roadmapViewArea .loading").css("opacity", "0.6");
         $(".roadmapViewArea .loading").show();
     }
-    
+
     isEnterpriseCalendarShown = false;
 
 
@@ -2686,7 +2686,7 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                 // this will be replaced with the ajax call in Assembly
                                 if (!isEnterpriseCalendarShown) {
                                 	isEnterpriseCalendarShown = true;
-                                	
+
 	                                $.each(calendarData.events, function (index, item) {
 	                                    $('.milestoneCalView').fullCalendar("renderEvent", item, true);
 	                                })
@@ -2724,7 +2724,7 @@ function adjustReportFilterHeight() {
 	$('.filterContainer1400 .statusMultiSelect .multiSelectBox').css({'height':(height - 90) + 'px'});
     $('#pipelineReportsPage .multiSelectArea .multiSelectBox').css({'height':(height - 37) + 'px'});
     $('#pipelineReportsPage #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 93) + 'px'});
-	
+
 }
 
 
@@ -2808,7 +2808,7 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('.selectWinnerCopilot').data('place', 1);
         $("#removeProjectDialog .header .title").text("Choose Copilot Confirmation");
         $("#removeProjectDialog .body").html("Choose <strong id='firstPlaceCopilot'></strong> as copilot of project <strong id='projectNameLabel'></strong> ?");
-        
+
         $('#firstPlaceCopilot').html(handle);
         $('#projectNameLabel').text(projectName);
     } else if (place == 2) {
@@ -2825,7 +2825,7 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $("#removeProjectDialog .header .title").text("Do not select any copilot");
         $("#removeProjectDialog .body").html("Are you sure you don't want to any copilot?");
     }
-    
+
     // move click bind logic here
     // from BUGR-7279
     $('.selectRunnerUpCopilot').unbind('click').bind('click', function() {
@@ -2838,7 +2838,7 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         // $('#SelectCopilotForm').submit();
         return false;
     });
-        
+
     $('.selectWinnerCopilot').unbind('click').bind('click', function() {
         var data = $(this).data('rel');
         $('#scpPlacement').val('1');
@@ -3008,11 +3008,17 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		$('#new-modal .outLay').hide();
         //$('.outLay').hide();
     }
-    
+
     /**
      * Close the add new project modal window.
      */
     modalCloseAddNewProject = function() {
+        // Check if error modal is present. Fixes #29
+        if ($('#demoModal:visible').length == 1 ) {
+            return false;
+        }
+
+
         $('#modalBackground').hide();
 		$('#new-modal #addNewProjectModal').hide();
     }
@@ -3070,7 +3076,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		}
 
         modalLoad('#preloaderModal');
-        
+
         if(objPreloaderTimmer) clearTimeout(objPreloaderTimmer);
 	    objPreloaderTimmer = setTimeout(function(){
 			$('#new-modal #preloaderModal').hide();
@@ -3078,9 +3084,9 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 			if(strMarginTop) $('#new-modal').css({'margin-top':strMarginTop});
             if(callback){
               callback.call(this);
-            } 
+            }
         },intPreloaderTimmer);
-        
+
 	}
     modalPreloader = function(itemID,strMarginTop,callback) {
         //        if($.browser.msie) {
@@ -3115,6 +3121,13 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
     }
 
 	$('#new-modal .outLay .closeModal').live('click', function(){
+        // Close the add new project modal separately because it
+        // checks if error modal is present or not
+        if ($("#addNewProjectModal:visible").length == 1) {
+            modalCloseAddNewProject();
+            return false;
+        }
+
 		modalAllClose();
 		return false;
 	});
@@ -3123,7 +3136,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		modalCloseAddNewProject();
 		return false;
 	});
-	
+
 	//copilot Manage
 	$('.addMoreUserModal').live('click',function(){
 		modalPreloader2('#addMoreUsersModal');
@@ -3243,9 +3256,9 @@ $(document).ready(function(){
 
      var zIndex = 100;
      $(".newSidebar .dropdownWidget").each(function(){
-        $(this).css("z-index",zIndex--);    
+        $(this).css("z-index",zIndex--);
      });
-    
+
     /*
      $(".newSidebar .dropdownWidget a.arrow").click(function(){
         var widget = $(this).parents(".dropdownWidget");
@@ -3254,7 +3267,7 @@ $(document).ready(function(){
             $(".dropdownWidget .dropList").hide();
             list.show();
         }else{
-            list.hide();    
+            list.hide();
         }
         return false;
     })
@@ -3266,25 +3279,25 @@ $(document).ready(function(){
          return false;
      })
     */
-    
+
     $(".newSidebar .contestList .tableHeader span").click(function(){
         var header = $(this).parent();
         if($(this).hasClass("down")){
             $(this).removeClass("down").addClass("up");
         }else if($(this).hasClass("up")){
-            $(this).removeClass("up").addClass("down");    
+            $(this).removeClass("up").addClass("down");
         }else{
             header.find("span").removeClass("down").removeClass("up");
             $(this).addClass("down");
         }
-        
+
         var o = 0;
         if ($(this).hasClass("down")) {
             o = 1;
         }
-        
+
         var oo;
-        
+
         if ($(this).hasClass("statusTh")) {
             oo = 0;
         } else if ($(this).hasClass("titleTh")) {
@@ -3292,7 +3305,7 @@ $(document).ready(function(){
         } else {
             oo = 2;
         }
-        
+
 		var sorting = [[oo, o]];
         currentSorting = sorting;
         sortCurrentContestsTable();
@@ -3319,7 +3332,7 @@ $(document).ready(function(){
             $("li#contest div.dropDwnLst").hide();
         }
     });
-    
+
     /* Add js code for BUGR-6759 */
     var tip = "Well, I think you can ...";
     $(".fbMask a.fbBtn").click(function(){
@@ -3333,7 +3346,7 @@ $(document).ready(function(){
                 height:"40px"
             }, 500,function(){
                 $(".fbMask a.fbBtn").removeClass("expand");
-            }); 
+            });
         }
         return false;
     })
@@ -3342,7 +3355,7 @@ $(document).ready(function(){
             height:"40px"
         }, 500,function(){
             $(".fbMask a.fbBtn").removeClass("expand");
-            $(".fbMask .fbSubmit textarea").val(tip);   
+            $(".fbMask .fbSubmit textarea").val(tip);
         });
         return false;
     })
@@ -3370,7 +3383,7 @@ $(document).ready(function(){
                             $(".fbMask .fbMsg").fadeOut(200,function(){
                                 $('.fbMask .fbBox').animate({
                                     height:"40px"
-                                }, 500); 
+                                }, 500);
                             });
                         },3000)
                     },
