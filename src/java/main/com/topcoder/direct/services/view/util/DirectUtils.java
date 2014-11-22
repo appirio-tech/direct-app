@@ -41,6 +41,7 @@ import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
+import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyInterceptor;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.services.DirectProjectService;
@@ -646,8 +647,14 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.5
+ * Version 1.5.1 ([Bug Bounty] - TopCoder Direct Bug Fixes Round 1 #16)
+ * <ul>
+ *     <li>Change on {@link #isSecurityGroupsUIAvailable()} to check TC staff</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin, deedee
+ * @version 1.5.1
  */
 public final class DirectUtils {
 
@@ -2856,7 +2863,14 @@ public final class DirectUtils {
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
         SecurityGroupsAccessInterceptor securityGroupsAccessInterceptor
             = (SecurityGroupsAccessInterceptor) applicationContext.getBean("securityGroupsAccessInterceptor");
-        return securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable();
+        if (securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable()){
+            SecurityGroupsTcStaffOnlyInterceptor securityGroupsTcStaffOnlyInterceptor = (SecurityGroupsTcStaffOnlyInterceptor)
+                    applicationContext.getBean("securityGroupsTcStaffOnlyInterceptor");
+            if (securityGroupsTcStaffOnlyInterceptor.checkPermission()){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
