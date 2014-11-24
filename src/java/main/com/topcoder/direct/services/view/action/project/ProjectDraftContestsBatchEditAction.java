@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -12,8 +12,6 @@ import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
@@ -26,7 +24,6 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectCategory;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 
@@ -58,8 +55,14 @@ import java.util.Set;
  *   </ol>
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.1 (Module Assembly - TC Cockpit Project Contests Batch Edit)
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Veve
+ * @version 1.2
  */
 @WriteProject
 public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction
@@ -131,11 +134,6 @@ public class ProjectDraftContestsBatchEditAction extends BaseDirectStrutsAction
 
         // remove copilot posting
         viewData.getSoftwareContestTypes().remove(ProjectCategory.COPILOT_POSTING.getId());
-
-        // populate the data needed for the right sidebar
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
-        viewData.setUserProjects(userProjectsDTO);
 
         ProjectBriefDTO currentDirectProject;
 

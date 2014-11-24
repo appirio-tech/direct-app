@@ -1032,11 +1032,18 @@ import java.util.Set;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 6.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * <ul>
+ *     <li>Rename {@link #createProjectBriefDTO(long, String)} and make it public to reuse outside the class</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
  * @author GreatKevin, duxiaoyang, minhu,
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, 
- * @author Ghost_141, GreatKevin, Veve, GreatKevin
- * @version 6.4
+ * @author Ghost_141, GreatKevin, Veve, GreatKevin, Veve
+ * @version 6.5
  * @since 1.0
  */
 public class DataProvider {
@@ -1514,7 +1521,7 @@ public class DataProvider {
             final ProjectBriefDTO project;
 
             if (!directProjectsMap.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
                 directProjectsMap.put(tcDirectProjectId, project);
             } else {
                 project = directProjectsMap.get(tcDirectProjectId);
@@ -1650,7 +1657,7 @@ public class DataProvider {
         final ProjectBriefDTO project;
 
         if (!directProjectsMap.containsKey(tcDirectProjectId)) {
-            project = createProject(tcDirectProjectId, tcDirectProjectName);
+            project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
             directProjectsMap.put(tcDirectProjectId, project);
         } else {
             project = directProjectsMap.get(tcDirectProjectId);
@@ -2197,7 +2204,7 @@ public class DataProvider {
         Map<Long, String> projectsOfUser = getProjectsOfUser(userId, 1);
 
         for (Map.Entry<Long, String> entry : projectsOfUser.entrySet()) {
-            projects.add(createProject(entry.getKey(), entry.getValue()));
+            projects.add(createProjectBriefDTO(entry.getKey(), entry.getValue()));
         }
 
         // get current user in session
@@ -2239,7 +2246,7 @@ public class DataProvider {
         Map<Long, String> projectsOfUser = getProjectsOfUser(userId, 0);
 
         for (Map.Entry<Long, String> entry : projectsOfUser.entrySet()) {
-            projects.add(createProject(entry.getKey(), entry.getValue()));
+            projects.add(createProjectBriefDTO(entry.getKey(), entry.getValue()));
         }
 
         // System.out.println("PERFORMANCE_LOG:" + DirectUtils.getTCSubjectFromSession().getUserId()
@@ -2725,7 +2732,7 @@ public class DataProvider {
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
                 projects.put(tcDirectProjectId, project);
             } else {
                 project = projects.get(tcDirectProjectId);
@@ -2859,7 +2866,7 @@ public class DataProvider {
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
                 projects.put(tcDirectProjectId, project);
             } else {
                 project = projects.get(tcDirectProjectId);
@@ -2958,7 +2965,7 @@ public class DataProvider {
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
                 projects.put(tcDirectProjectId, project);
             } else {
                 project = projects.get(tcDirectProjectId);
@@ -4639,7 +4646,7 @@ public class DataProvider {
             if (directProjects.containsKey(directProjectId)) {
                 project = directProjects.get(directProjectId);
             } else {
-                project = createProject(directProjectId, directProjectName);
+                project = createProjectBriefDTO(directProjectId, directProjectName);
 
                 directProjects.put(directProjectId, project);
             }
@@ -5618,7 +5625,7 @@ public class DataProvider {
      * @param name a <code>String</code> providing the project name.
      * @return an <code>ProjectBriefDTO</code> providing the details for a single project.
      */
-    private static ProjectBriefDTO createProject(long id, String name) {
+    public static ProjectBriefDTO createProjectBriefDTO(long id, String name) {
         ProjectBriefDTO project = new ProjectBriefDTO();
         project.setId(id);
         project.setName(name);
@@ -6006,7 +6013,7 @@ public class DataProvider {
                 if (projects.containsKey(tcDirectProjectId)) {
                     project = projects.get(tcDirectProjectId);
                 } else {
-                    project = createProject(tcDirectProjectId, tcDirectProjectName);
+                    project = createProjectBriefDTO(tcDirectProjectId, tcDirectProjectName);
                     projects.put(tcDirectProjectId, project);
                 }
 

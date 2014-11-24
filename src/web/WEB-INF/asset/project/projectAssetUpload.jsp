@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
+  - Author: GreatKevin, Veve
   -
   - The jsp for the project asset upload and save.
   -
@@ -14,6 +14,9 @@
   -
   - Version 1.3 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Use new font "Source Sans Pro" for the page
+  -
+  - Version 1.4 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -106,6 +109,7 @@
     <script type="text/javascript" src="/scripts/ajaxupload2.js"></script>
 
     <script type="text/javascript" src="/scripts/assets.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 </head>
 
 <body id="page">

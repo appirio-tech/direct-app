@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
@@ -13,7 +13,6 @@ import com.topcoder.asset.entities.User;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.asset.AssetContainerType;
 import com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.asset.project.AssetFileTypes;
 import com.topcoder.direct.services.view.dto.asset.project.ProjectAssetsViewDTO;
 import com.topcoder.direct.services.view.dto.asset.project.SaveAssetDTO;
@@ -110,8 +109,14 @@ import java.util.UUID;
  * </ul>
  * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 1.4
+ * <p>
+ * Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.5
  */
 public class ProjectAssetManageAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm>, ValidationAware {
 
@@ -678,11 +683,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         // right sidebar data
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), getFormData().getProjectId());
 
-        // populate the data needed for the right sidebar
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
-        viewData.setUserProjects(userProjectsDTO);
-
         ProjectBriefDTO currentDirectProject;
 
         if (projectContests.getContests().size() > 0) {
@@ -783,12 +783,6 @@ public class ProjectAssetManageAction extends BaseAbstractAssetAction implements
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(),
                                                                                        getFormData().getProjectId());
-
-        // populate the data needed for the right sidebar
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
-        viewData.setUserProjects(userProjectsDTO);
-
         ProjectBriefDTO currentDirectProject;
 
         if (projectContests.getContests().size() > 0) {

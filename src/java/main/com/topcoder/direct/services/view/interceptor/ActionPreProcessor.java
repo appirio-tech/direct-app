@@ -1,30 +1,24 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.action.AbstractAction;
-import com.topcoder.direct.services.view.action.ForwardAction;
 import com.topcoder.direct.services.view.action.LandingPage;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.action.TopCoderDirectAction;
 import com.topcoder.direct.services.view.action.contest.ContestDetailsAction;
 import com.topcoder.direct.services.view.action.dashboard.CalendarAction;
 import com.topcoder.direct.services.view.action.dashboard.DashboardAction;
-import com.topcoder.direct.services.view.action.dashboard.DashboardMilestoneCalendarAction;
 import com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction;
 import com.topcoder.direct.services.view.action.project.CreateProjectAction;
 import com.topcoder.direct.services.view.action.project.ProjectContestsAction;
 import com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction;
 import com.topcoder.direct.services.view.action.project.ProjectGamePlanAction;
-import com.topcoder.direct.services.view.action.project.ProjectOverviewAction;
-import com.topcoder.direct.services.view.action.project.SetCurrentProjectAction;
-import com.topcoder.direct.services.view.action.stats.InternalStatsAction;
 import com.topcoder.direct.services.view.processor.ProcessorsGroup;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
-import com.topcoder.direct.services.view.processor.UserProjectsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestDetailsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestStatsProcessor;
 import com.topcoder.direct.services.view.processor.dashboard.DashboardSearchProcessor;
@@ -82,8 +76,16 @@ import com.topcoder.direct.services.view.processor.stats.CoPilotStatsProcessor;
  * - Remove the unneeded pre processors for the ProjectOverviewAction
  * </p>
  *
- * @author isv, Blues, GreatKevin
- * @version 1.6
+ * <p>
+ * Version 1.7 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes action processor <code>UserProjectsProcessor</code> and <code>CurrentProjectContestsProcessor</code>. The
+ * UserProjectsProcessor gets the direct projects of user for right sidebar, the CurrentProjectContestsProcessor gets
+ * the contests of current project to display at the right sidebar. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author isv, Blues, GreatKevin, Veve
+ * @version 1.7
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -179,46 +181,30 @@ public class ActionPreProcessor implements Interceptor {
                                                                getLoginProcessor()});
         } else if (action instanceof DashboardAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor(),
-                                                               new UserProjectsProcessor(),
                                                                new LatestActivitiesProcessor(),
                                                                new UpcomingActivitiesProcessor()});
         } else if (action instanceof CalendarAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor(),
-                                                               new UserProjectsProcessor()
+            return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor()
                                                               });
         } else if (action instanceof LandingPage) {
             return new ProcessorsGroup(new RequestProcessor[] {});
         } else if (action instanceof CreateProjectAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor(),
+            return new ProcessorsGroup(new RequestProcessor[] {
                                                                new CreateProjectProcessor()});
         } else if (action instanceof DashboardSearchAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new DashboardSearchProcessor(),
-                                                               new UserProjectsProcessor()});
-        } else if (action instanceof SetCurrentProjectAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
-        } else if (action instanceof ForwardAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
-        } else if (action instanceof ProjectOverviewAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
+            return new ProcessorsGroup(new RequestProcessor[] {new DashboardSearchProcessor()});
         } else if (action instanceof ProjectContestsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ProjectContestsListProcessor(),
-                                                               new ProjectStatsProcessor(),
-                                                               new UserProjectsProcessor()});
+                                                               new ProjectStatsProcessor()});
         } else if (action instanceof ProjectContestsCalendarViewAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new ProjectStatsProcessor(),
-                                                               new UserProjectsProcessor()});
+            return new ProcessorsGroup(new RequestProcessor[] {new ProjectStatsProcessor()});
         } else if (action instanceof ContestDetailsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ContestDetailsProcessor(),
-                                                               new ContestStatsProcessor(),
-                                                               new UserProjectsProcessor()});
+                                                               new ContestStatsProcessor()});
         } else if (action instanceof ProjectGamePlanAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ProjectStatsProcessor(),
                                                                });
-        } else if (action instanceof InternalStatsAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
-        } else if (action instanceof DashboardMilestoneCalendarAction) {
-                    return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
-        } else {
+        }  else {
             return null;
         }
     }
@@ -236,23 +222,7 @@ public class ActionPreProcessor implements Interceptor {
         // TODO : Implement this method : Map the action to request processor based on some configuration-based logic
         if (action instanceof LoginAction) {
             return null;
-        } else if (action instanceof DashboardAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof CalendarAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof CreateProjectAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof DashboardSearchAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof SetCurrentProjectAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof ForwardAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof ProjectOverviewAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
         } else if (action instanceof ProjectContestsAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof ContestDetailsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
         } else {
             return null;

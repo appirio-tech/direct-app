@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
+  - Author: GreatKevin, Veve
   -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload)
   -
@@ -8,6 +8,9 @@
   -
   - Version: 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Use new font "Source Sans Pro" for the page
+  -
+  - Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
@@ -83,6 +86,7 @@
     <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
     <script type="text/javascript" src="/scripts/assets.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
 </head>
 

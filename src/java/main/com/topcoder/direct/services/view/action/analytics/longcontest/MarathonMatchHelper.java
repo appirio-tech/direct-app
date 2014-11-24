@@ -5,14 +5,11 @@ package com.topcoder.direct.services.view.action.analytics.longcontest;
 
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsServiceException;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.MarathonMatchCommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
@@ -76,8 +73,14 @@ import java.util.TimeZone;
  *      </ul>
  * </p>
  *
- * @author Ghost_141
- * @version 1.3
+ * <p>
+ * Version 1.4 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Ghost_141, Veve
+ * @version 1.4
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - 
  *             Dashboard and Submissions Tab)
  */
@@ -367,22 +370,11 @@ public final class MarathonMatchHelper {
         // Get current session
         HttpServletRequest request = DirectUtils.getServletRequest();
         SessionData sessionData = new SessionData(request.getSession());
-        // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider
-                .getProjectTypedContests(currentUser.getUserId(),
-                        contestStats.getContest().getProject().getId());
-        sessionData.setCurrentProjectContests(contests);
 
         // Set current project context based on selected contest
         sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
         sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
         session = sessionData;
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
     }
 
     /**

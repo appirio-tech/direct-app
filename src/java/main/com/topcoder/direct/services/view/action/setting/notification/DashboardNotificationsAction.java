@@ -1,14 +1,11 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.setting.notification;
 
 import com.topcoder.direct.services.view.action.setting.DashboardSettingAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.notification.UserPreferenceDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
@@ -50,8 +47,14 @@ import java.util.List;
  * </ul>
  * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 1.3
+ * <p>
+ * Version 1.4 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.4
  */
 public class DashboardNotificationsAction extends DashboardSettingAction {
 
@@ -126,12 +129,6 @@ public class DashboardNotificationsAction extends DashboardSettingAction {
         request.setAttribute("currentUserHandle", sessionData.getCurrentUserHandle());
 
         notifications = getContestServiceFacade().getNotificationsForUser(user, user.getUserId());
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
 
         UserPreference userPreference = getUserPreferenceHome().create();
 

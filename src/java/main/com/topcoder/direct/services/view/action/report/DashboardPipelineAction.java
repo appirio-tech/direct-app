@@ -1,27 +1,21 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
-import com.topcoder.clients.model.Client;
-import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyIdValueFilter;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardPipelineReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineLaunchedContestsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineSummaryDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.DashboardPipelineReportForm;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
@@ -54,7 +48,7 @@ import java.util.TreeSet;
  *     <li>Updated {@link #executeAction()} not to include co-pilot stats into manager stats.</li>
  *   </ol>
  * </p>
-  *
+ *
  * <p>
  * Version 1.0.2 (Release Assembly - TC Direct UI Improvement Assembly 3) Change notes:
  *   <ol>
@@ -64,21 +58,27 @@ import java.util.TreeSet;
  * </p>
  *
  * <p>
-  * Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) Change notes:
-  *   <ol>
-  *     <li>Updated {@link #executeAction()} to add filter by group by and group values.</li>
-  *   </ol>
-  * </p>
-  * 
-  * <p>
-  * Version 1.2 (Release Assembly - TopCoder Security Groups Release 6 v1.0) change notes:
-  * <ol>
-  * 	<li>Updated {@link #executeAction()} method to support security groups.</li>
-  * </ol>
-  * </p>
+ * Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} to add filter by group by and group values.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.1
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Security Groups Release 6 v1.0) change notes:
+ * <ol>
+ * 	<li>Updated {@link #executeAction()} method to support security groups.</li>
+ * </ol>
+ * </p>
+ *
+ * <p>
+ * Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author isv, Veve
+ * @version 1.3
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -406,22 +406,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             getFormData().setEndDate(dateFormat.format(endDate));
         }
 
-        // For normal request flow prepare various data to be displayed to user
-        if (!getFormData().isExcel()) {
-            // Set projects data
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
-
-            // Set current project contests
-            ProjectBriefDTO currentProject = this.sessionData.getCurrentProjectContext();
-            if (currentProject != null) {
-                List<TypedContestBriefDTO> contests
-                    = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
-                this.sessionData.setCurrentProjectContests(contests);
-            }
-        }
     }
 
     /**

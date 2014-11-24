@@ -10,7 +10,6 @@ import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -235,8 +234,14 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin
- * @version 2.9
+ * <p>
+ * Version 3.0 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve
+ * @version 3.0
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -441,24 +446,14 @@ public class GetContestAction extends ContestAction {
             .isStudio(softwareCompetition));
 
         // set the common info for marathon match contest only.
-        if (DirectUtils.isMM(softwareCompetition)) {
+        if(DirectUtils.isMM(softwareCompetition)) {
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
 
-            if (roundId != null && roundId.trim().length() > 0) {
+            if(roundId != null) {
                 hasRoundId = true;
-
-                try {
-                    viewData.setRoundId(Long.valueOf(roundId));
-                } catch (NumberFormatException nfe) {
-                    // ignore
-                    hasRoundId = false;
-                }
-
-                if(viewData.getRoundId() != null && viewData.getRoundId() > 0) {
-                    MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService,
-                            timelineInterval,
-                            viewData);
-                }
+                viewData.setRoundId(Long.valueOf(roundId));
+                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
+                        viewData);
             } else {
                 hasRoundId = false;
             }
@@ -765,12 +760,6 @@ public class GetContestAction extends ContestAction {
 
         if (viewData == null) {
             viewData = new ContestDetailsDTO();
-
-            // right side
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            viewData.setUserProjects(userProjectsDTO);
         }
 
         return viewData;

@@ -12,12 +12,9 @@ import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.edit.EditCockpitProjectDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.BillingAccount;
@@ -130,8 +127,14 @@ import java.util.Set;
  * </ul>
  * </p>
  *
- * @version 2.5.3
- * @author GreatKevin, freegod, FireIce, Veve
+ * <p>
+ * Version 2.6 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @version 2.6
+ * @author GreatKevin, freegod, FireIce, Veve, Veve
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -373,12 +376,6 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         // set project billing accounts
         viewData.setBillingAccounts(getProjectServiceFacade().getBillingAccountsByProject(getFormData().getProjectId()));
 
-        List<ProjectBriefDTO> projects
-                = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
-
         ProjectBriefDTO currentProject = new ProjectBriefDTO();
         currentProject.setId(projectData.getProjectId());
         currentProject.setName(projectData.getName());
@@ -450,10 +447,6 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         setCommonProjectMetadata(allProjectMetadata);
 
         getSessionData().setCurrentProjectContext(currentProject);
-
-        List<TypedContestBriefDTO> contests
-                = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
-        getSessionData().setCurrentProjectContests(contests);
 
         getSessionData().setCurrentSelectDirectProjectID(currentProject.getId());
 

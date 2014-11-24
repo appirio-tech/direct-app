@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.task.project;
 
@@ -19,7 +19,6 @@ import com.topcoder.direct.services.project.task.model.UserDTO;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.task.BaseTaskAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -41,7 +40,19 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 
 /**
  * <p>
@@ -73,8 +84,14 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.2
+ * <p>
+ * Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.3
  */
 public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<ProjectIdForm> {
 
@@ -447,12 +464,6 @@ public class ProjectTaskViewAction extends BaseTaskAction implements FormAction<
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(),
                                                                                        getFormData().getProjectId());
-
-        // populate the data needed for the right sidebar
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
-        viewData.setUserProjects(userProjectsDTO);
-
         ProjectBriefDTO currentDirectProject;
 
         if (projectContests.getContests().size() > 0) {

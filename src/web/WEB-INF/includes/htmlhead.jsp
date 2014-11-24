@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin, TCSASSEMBLER
-  - Version: 1.4
+  - Author: Blues, GreatKevin, Veve
+  - Version: 1.5
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: HTML header file linking to the CSS and javascript files. It is included by all the other JSP pages.
@@ -22,6 +22,9 @@
   -
   - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Use new font "Source Sans Pro" for the page
+  -
+  - Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
 --%>
 <title>Topcoder Direct</title>
 
@@ -97,4 +100,5 @@
 <script type="text/javascript" src="/scripts/instantSearch.js"></script>
 <script type="text/javascript" src="/scripts/intro.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jqtransform.js" ></script>
+<script type="text/javascript" src="/scripts/rightSidebar.js" ></script>
 <link rel="stylesheet" href="/css/direct/jqtransform.css" media="all" type="text/css"/>

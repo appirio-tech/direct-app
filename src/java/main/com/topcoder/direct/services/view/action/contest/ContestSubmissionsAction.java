@@ -1,36 +1,16 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
-import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.StudioContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.SubmissionViewerType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.StudioContestSubmissionsForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -41,6 +21,21 @@ import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
@@ -114,10 +109,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     the final fixes from winner and set the list of final fixes for contest.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.8 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
- * @author isv, flexme, minhu, GreatKevin
+ * @author isv, flexme, minhu, GreatKevin, Veve
  * @since Submission Viewer Release 1 assembly
- * @version 1.7.2
+ * @version 1.8
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -383,17 +384,6 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             // set the number of prizes
             int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
-
-            // Set projects data
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
-
-            // Set current project contests
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                    currentUser.getUserId(), contestStats.getContest().getProject().getId());
-            getSessionData().setCurrentProjectContests(contests);
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
