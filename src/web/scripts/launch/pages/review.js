@@ -277,7 +277,7 @@ function saveAsDraftReview() {
    $.ajax({
       type: 'POST',
       url:  "saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: handleSaveAsDraftContestResult

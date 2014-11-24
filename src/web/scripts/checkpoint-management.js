@@ -266,9 +266,9 @@ $(document).ready(function() {
        $.ajax({
             type: 'POST',
             url:  ctx + "/contest/saveSoftwareCheckpointReviewAction",
-            data: {projectId:projectId,
+            data: setupTokenRequest({projectId:projectId,
                     placements:placements,feedbacks:feedbacks,submissionIds:submissionIds,
-                    committed:committed,generalFeedback:generalFeedback},
+                    committed:committed,generalFeedback:generalFeedback}, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             timeout: 30000,

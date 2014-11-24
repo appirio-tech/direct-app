@@ -30,8 +30,8 @@ function updateDirectProjectStatus(directProjectId, statusId) {
     $.ajax({
         type: 'POST',
         url:  "updateDirectProjectStatus",
-        data: {'directProjectId':directProjectId,
-            'directProjectStatusId':statusId},
+        data: setupTokenRequest({'directProjectId':directProjectId,
+            'directProjectStatusId':statusId}, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {

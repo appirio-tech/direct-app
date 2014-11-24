@@ -6,7 +6,7 @@ package com.topcoder.direct.services.view.action.task;
 import com.topcoder.direct.services.project.task.NotificationService;
 import com.topcoder.direct.services.project.task.TaskListService;
 import com.topcoder.direct.services.project.task.TaskService;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 /**
  * <p>

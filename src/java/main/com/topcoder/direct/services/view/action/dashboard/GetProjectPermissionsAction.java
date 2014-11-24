@@ -3,9 +3,8 @@
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.security.TCSubject;
 

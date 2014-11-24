@@ -3,19 +3,8 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.zip.*;
-import java.util.*;
-
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
-
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
@@ -25,6 +14,18 @@ import com.topcoder.search.builder.filter.Filter;
 import com.topcoder.service.user.UserService;
 import com.topcoder.util.objectfactory.ObjectFactory;
 import com.topcoder.util.objectfactory.impl.ConfigManagerSpecificationFactory;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 
 /**

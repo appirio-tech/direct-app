@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.dashboard;
 
 import com.topcoder.clients.model.AuditableEntity;
 import com.topcoder.clients.model.Project;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardAggregatedStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;

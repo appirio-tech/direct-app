@@ -6,7 +6,7 @@ package com.topcoder.direct.services.view.action.accounting;
 import com.topcoder.clients.dao.ClientInvoiceUploadDAO;
 import com.topcoder.clients.dao.ClientInvoiceUploadPersistenceException;
 import com.topcoder.clients.model.ClientInvoiceUpload;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.Client;

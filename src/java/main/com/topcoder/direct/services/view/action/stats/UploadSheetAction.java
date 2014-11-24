@@ -7,7 +7,7 @@ import java.io.*;
 
 import org.apache.commons.io.IOUtils;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 /**
  * <p>A <code>Struts</code> action to be used for upload the excel file.</p>

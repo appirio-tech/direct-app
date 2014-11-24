@@ -7,7 +7,7 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchCriteriaType;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchResultsDTO;

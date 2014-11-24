@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
@@ -11,15 +11,8 @@ import com.topcoder.management.resource.Resource;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
-import org.apache.commons.io.FilenameUtils;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 /**
  * <p>

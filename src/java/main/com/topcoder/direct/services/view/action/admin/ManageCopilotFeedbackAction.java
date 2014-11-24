@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.admin;
 
 import com.topcoder.direct.services.copilot.dao.CopilotProjectDAO;
 import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;

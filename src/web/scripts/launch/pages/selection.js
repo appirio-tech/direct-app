@@ -511,7 +511,7 @@ function saveAsDraftContestSelection() {
    $.ajax({
       type: 'POST',
       url:  ctx + "/launch/saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: handleSaveAsDraftContestResult,

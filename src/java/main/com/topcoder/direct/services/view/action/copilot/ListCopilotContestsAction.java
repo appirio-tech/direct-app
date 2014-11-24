@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.copilot;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.copilot.CopilotPostingContestsListDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.util.DataProvider;

@@ -8,7 +8,7 @@ import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.project.FullProject;
 import com.topcoder.direct.services.view.action.project.WriteProject;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;

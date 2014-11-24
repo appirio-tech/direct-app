@@ -118,6 +118,10 @@
                             <!-- End .areaHeader -->
 
                             <s:form action="saveContestFeesAction" method="post" validate="true">
+
+
+                                <hidden:token/>
+
                             <div class="container2" id="contestFeeEditDetail">
                                 <div>
                                 <br/>

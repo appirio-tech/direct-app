@@ -459,7 +459,7 @@ function sendChooseCopilotAjaxRequest() {
     $.ajax({
         type: 'POST',
         url:'selectCopilotAjax',
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         dataType: "json",
         cache:false,
         async:true,

@@ -68,10 +68,10 @@ function repostContest() {
    $.ajax({
       type: 'POST',
       url:  ctx+"/contest/repostContest",
-      data: {
+      data: setupTokenRequest({
         projectId: repostProjectId,
         tcProjectId: repostTcProjectId
-      },
+      }, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: handleRepostContestResult,
@@ -195,12 +195,12 @@ function newVersionContest() {
    $.ajax({
       type: 'POST',
       url:  ctx+"/contest/newVersion",
-      data: {
+      data: setupTokenRequest({
         projectId: newVersionProjectId,
         tcProjectId: newVersionTcProjectId,
         autoDevCreating: newVersionDevCreation,
         minorVersion: newVersionMinorVersion
-      },
+      }, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: handleNewVersionContestResult,
