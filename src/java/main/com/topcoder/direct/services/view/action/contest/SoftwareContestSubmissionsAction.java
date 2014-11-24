@@ -1,20 +1,10 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
@@ -22,11 +12,9 @@ import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotSkillDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotStatDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotSubmissionStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -41,6 +29,14 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
@@ -130,8 +126,14 @@ import org.apache.log4j.Logger;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.8
+ * <p>
+ * Version 1.9 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.9
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -553,17 +555,6 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         getViewData().getContestStats().getContest()
                 .setBillingAccountId(Long.parseLong(softwareCompetition.getProjectHeader().getProperty(
                         ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY)));
-
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
-        // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                currentUser.getUserId(), contestStats.getContest().getProject().getId());
-        getSessionData().setCurrentProjectContests(contests);
 
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());

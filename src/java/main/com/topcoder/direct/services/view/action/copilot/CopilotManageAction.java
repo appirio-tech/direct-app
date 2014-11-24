@@ -1,34 +1,37 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.copilot;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.copilot.dao.CopilotProfileDAO;
 import com.topcoder.direct.services.copilot.model.CopilotProfile;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotManageDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
  * A <code>Struts</code> action used for handling access copilot manage page
  * request.
  * </p>
+ *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.0
+ * @author Veve
+ * @version 1.1
  * @since TC Direct Manage Copilots Assembly
  */
 public class CopilotManageAction extends BaseDirectStrutsAction {
@@ -134,13 +137,6 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
 
         // populate copilot values
         viewData = new CopilotManageDTO();
-
-        // set user projects
-        List<ProjectBriefDTO> projects = DataProvider
-                .getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
 
         // set all copilots
         List<CopilotBriefDTO> copilots = new ArrayList<CopilotBriefDTO>();

@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
+  - Author: GreatKevin, Veve
   -
   - Version: 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
   -
@@ -9,6 +9,9 @@
   -
   - Version: 1.2 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Rebranding the project planner page
+  -
+  - Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
@@ -85,6 +88,7 @@
     <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
     <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
     <script type="text/javascript" src="/scripts/instantSearch.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
     <link rel="stylesheet" href="/css/direct/jsgantt.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jsganttPlanner.js"></script>

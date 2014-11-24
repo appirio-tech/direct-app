@@ -1,6 +1,6 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
-  - Version: 1.4
+  - Author: GreatKevin, Veve
+  - Version: 1.5
   - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: JSP page for the jsgantt project game plan
@@ -17,6 +17,9 @@
   -
   - Version 1.4 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Rebranding the jsgantt page
+  -
+  - Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -98,6 +101,7 @@ window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
     <script type="text/javascript" src="/scripts/jsgantt.js"></script>
     <script type="text/javascript" src="/scripts/directgantt.js"></script>
     <script type="text/javascript" src="/scripts/instantSearch.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
     <ui:projectPageType tab="gameplan"/>
 </head>

@@ -1,13 +1,10 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.copilot;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotPostingContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -15,7 +12,9 @@ import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for viewing the list of <code>Copilot Posting
@@ -28,8 +27,14 @@ import java.util.*;
  *     </ul>
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Veve
+ * @version 1.2
  */
 public class ListCopilotContestsAction extends BaseDirectStrutsAction {
 
@@ -107,19 +112,5 @@ public class ListCopilotContestsAction extends BaseDirectStrutsAction {
             c.getContest().setCustomerId(projectsCustomerIdsMap.get(projectId) == null ? -1 : projectsCustomerIdsMap.get(projectId));
         }
 
-        // For normal request flow prepare various data to be displayed to user
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
-        // Set current project context based on selected contest
-        ProjectBriefDTO currentProject = this.sessionData.getCurrentProjectContext();
-        if (currentProject != null) {
-            List<TypedContestBriefDTO> contests
-                = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
-            this.sessionData.setCurrentProjectContests(contests);
-        }
     }
 }

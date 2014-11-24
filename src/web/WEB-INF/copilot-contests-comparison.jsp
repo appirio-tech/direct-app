@@ -1,6 +1,6 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
+  - Author: GreatKevin, Veve
   - Version: 1.4
   - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
   -
@@ -15,6 +15,9 @@
   -
   - Version 1.4 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
   - - Rebranding the copilot and reporting related pages.
+  -
+  - Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Description: This page renders the copilot posting submissions comparison mode.
 --%>
@@ -101,6 +104,7 @@
     <script type="text/javascript" src="/scripts/jsganttPlanner.js"></script>
     <link rel="stylesheet" href="/css/direct/projectPlanner.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/projectPlanner.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
 </head>
 

@@ -148,6 +148,8 @@
  * - TopCoder Direct - Challenges Section Filters Panel
  * - Add CSS for the final panel in my created challenges / my challenges
  *
+ * - TopCoder Direct - Change Right Sidebar to pure Ajax
+ * - Add decoration hover styles for the contest link in the right sidebar
  */
 
 body{
@@ -11177,7 +11179,7 @@ a.downloadAllbtn:hover span {
     font-weight: bold;
     font-size: 11px;
     display: block;
-    padding: 12px 0 5px;
+    padding: 12px 2px 5px;
 }
 
 .newSidebar .contestList .filter .dropdownWidget {
@@ -14036,3 +14038,13 @@ span.red {
     font-weight: normal;
     padding-left: 1px;
 }
+
+#contestsTable a.contestLink {
+    text-decoration: none;
+}
+
+#contestsTable a.contestLink:hover {
+    text-decoration: none;
+    color:#ff8a00;
+}
+

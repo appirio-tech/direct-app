@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -8,15 +8,11 @@ import com.topcoder.direct.cloudvm.service.CloudVMServiceException;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
-import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
+import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
@@ -37,8 +33,14 @@ import java.util.List;
  * - added error message handling when there is error accessing VM services.
  * </p>
  *
- * @author gentva, jiajizhou86
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author gentva, jiajizhou86, Veve
+ * @version 1.2
  */
 public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
 
@@ -150,17 +152,6 @@ public class ContestVMInstancesAction extends StudioOrSoftwareContestAction {
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, competition);
         getViewData().setContestStats(contestStats);
-
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
-        // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                currentUser.getUserId(), contestStats.getContest().getProject().getId());
-        this.sessionData.setCurrentProjectContests(contests);
 
         // Set current project context based on selected contest
         this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());

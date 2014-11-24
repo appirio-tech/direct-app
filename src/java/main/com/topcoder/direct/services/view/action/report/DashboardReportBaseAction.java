@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
@@ -9,9 +9,6 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.ReportBaseDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.DashboardReportForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -47,8 +44,14 @@ import java.util.Set;
  *  </ol>
  * </p>
  *
- * @author TCSASSEMBLER, Ghost_141
- * @version 1.2
+ * <p>
+ * Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Ghost_141, Veve
+ * @version 1.3
  * @param <FORMT> a type of the form used by the report page. It must extends from <code>DashboardReportForm</code>.
  * @param <VIEWT> a type of the view used by the report page. It must extends from <code>ReportBaseDTO</code>.
  */
@@ -270,21 +273,6 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         if (projectId > 0) {
             // check projectId parameter
             checkParameters(projectId, "projectId", getViewData().getProjectsLookupMap());
-        }
-
-        // For normal request flow prepare various data to be displayed to user
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
-        // Set current project contests
-        ProjectBriefDTO currentProject = this.sessionData.getCurrentProjectContext();
-        if (currentProject != null) {
-            List<TypedContestBriefDTO> contests
-                    = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
-            this.sessionData.setCurrentProjectContests(contests);
         }
 
         // handle the group by and group values view data and form data

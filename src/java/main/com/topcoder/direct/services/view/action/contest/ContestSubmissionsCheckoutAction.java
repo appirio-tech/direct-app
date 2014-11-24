@@ -1,24 +1,16 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.StudioContestSubmissionsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.StudioContestSubmissionsForm;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.deliverable.Submission;
@@ -27,6 +19,9 @@ import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -56,9 +51,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author flexme, minhu, isv
+ * <p>
+ * Version 1.4 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author flexme, minhu, isv, Veve
  * @since Submission Viewer Release 3 assembly
- * @version 1.3
+ * @version 1.4
  */
 public class ContestSubmissionsCheckoutAction extends ContestAction {
     /**
@@ -269,17 +270,6 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             // set the number of prizes
             int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
-
-            // Set projects data
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
-
-            // Set current project contests
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUser.getUserId(),
-                    contestStats.getContest().getProject().getId());
-            getSessionData().setCurrentProjectContests(contests);
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());

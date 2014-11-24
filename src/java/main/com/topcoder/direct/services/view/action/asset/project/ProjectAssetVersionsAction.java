@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
@@ -7,7 +7,6 @@ import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.CategorySearchCriteria;
 import com.topcoder.direct.services.view.action.asset.AssetContainerType;
 import com.topcoder.direct.services.view.action.asset.BaseAbstractAssetAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.asset.project.ProjectAssetVersionsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
@@ -27,8 +26,14 @@ import com.topcoder.security.TCSubject;
  * </ul>
  * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve
+ * @version 1.2
  */
 public class ProjectAssetVersionsAction extends BaseAbstractAssetAction {
 
@@ -113,11 +118,6 @@ public class ProjectAssetVersionsAction extends BaseAbstractAssetAction {
 
         // prepare right sidebar data
         final ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), viewData.getAsset().getContainerId());
-
-        // populate the data needed for the right sidebar
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
-        viewData.setUserProjects(userProjectsDTO);
 
         ProjectBriefDTO currentDirectProject;
 

@@ -1,16 +1,7 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import com.topcoder.clients.dao.CustomerPlatformFeeConfigurationException;
 import com.topcoder.clients.dao.CustomerPlatformFeePersistenceException;
@@ -18,23 +9,29 @@ import com.topcoder.clients.dao.CustomerPlatformFeeService;
 import com.topcoder.clients.model.CustomerPlatformFee;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.util.log.Level;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 
+import javax.annotation.PostConstruct;
+import java.util.*;
+
 /**
  * <p>
  * The action class for customer platform fee management.
  * </p>
+ *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
  * <p>Thread safety: Not an issue for struts2 action class.</p>
  * 
- * @author minhu
- * @version 1.0 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
+ * @author minhu, Veve
+ * @version 1.1
  */
 public class CustomerPlatformFeeAction extends BaseDirectStrutsAction {
     /**
@@ -360,10 +357,6 @@ public class CustomerPlatformFeeAction extends BaseDirectStrutsAction {
      */
     private void retrieveViewData() throws Exception {
         viewData = new CommonDTO();
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getCurrentUser().getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
     }
     
     /**
