@@ -305,7 +305,7 @@
                         </div>
                         <!-- End .overpipelineSection -->
 
-                        <!-- Projects Health -->
+                        <!-- Projects Health --
                         <div class="sectionContainer overprojectsHealthSection">
                             <div class="sectionInner">
 
@@ -313,16 +313,16 @@
                                     <h3>Projects Health</h3>
                                     <a href="javascript:;" class="icon" rel="Showing the overall projects Health of all projects.">!</a>
                                 </div>
-                                <!-- title -->
+                                <!-- title -
 
-                                <!-- container -->
+                                <!-- container --
                                 <div class="containerSection">
                                     <div id="overviewProjectHealth">
-                                        <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
+                                       <! <!--%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
                                         <div class="ajaxTableLoader" >Coming Soon!</div>
                                     </div>
                                 </div>
-                                <!-- End .containerSection -->
+                                <!-- End .containerSection -
 
                             </div>
                         </div>
