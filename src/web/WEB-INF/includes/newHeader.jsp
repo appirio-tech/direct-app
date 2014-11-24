@@ -72,7 +72,7 @@
             </c:if>
             <c:if test="${tcdirect:isTCStaff() || tcdirect:isTCPlatformSpecialist()}">
                 <li>
-                    <a href="<s:url action="platformSpecialistsReport" namespace="/"/>">Platform Specialists</a>
+                    <a href="<s:url action="platformSpecialistsReport" namespace="/"/>">Expert Services</a>
                 </li>
             </c:if>
             <c:if test="${tcdirect:isTCAccounting() || tcdirect:isTCOperation()}">

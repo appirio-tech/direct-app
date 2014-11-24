@@ -434,14 +434,14 @@
                                             <!-- End .clientManagers -->
 
                                             <!-- TopCoder Project Managers -->
-                                            <div class="projectManagers platformManagers" data-intro="Platform Specialists are TopCoder resources that are assigned to your projects. Reach out to them if you're having issues or have questions." data-step="11" data-position="left">
-                                                <h3>TopCoder Platform Specialists :</h3>
+                                            <div class="projectManagers platformManagers" data-intro="Expert Services are TopCoder resources that are assigned to your projects. Reach out to them if you're having issues or have questions." data-step="11" data-position="left">
+                                                <h3>TopCoder Expert Services :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.topcoderManagers == null || viewData.projectGeneralInfo.topcoderManagers.size == 0">
                                                     <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Add
-                                                        TopCoder Platform Specialists</a>
+                                                        TopCoder Expert Services</a>
                                                     </c:if>
                                                 </s:if>
                                                 <s:else>

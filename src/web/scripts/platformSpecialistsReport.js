@@ -22,8 +22,8 @@ $(document).ready(function(){
         initFilterDate();
         if ($("a#platformSpecialist").length == 0) {
             $("#platformSpecialist").multiSelect({
-                selectAllText: "Select All Platform Specialists",
-                oneOrMoreSelected: "% platform specialists selected"
+                selectAllText: "Select All Expert Services",
+                oneOrMoreSelected: "% expert services selected"
             });
         }
         return false;
@@ -385,7 +385,7 @@ function renderPlatformSpecialistsReport() {
                             marginBottom: 25
                         },
                         title: {
-                            text: 'Platform Specialists Spend Per Month',
+                            text: 'Expert Services Spend Per Month',
                             x: -20 //center
                         },
                         xAxis: {

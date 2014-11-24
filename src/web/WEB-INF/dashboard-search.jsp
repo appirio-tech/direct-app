@@ -57,7 +57,7 @@
             $('.multiselect').multiSelect({
                 selectAllText: "All Managers",
                 noneSelected: "All Managers",
-                oneOrMoreSelected: "% specialists selected"
+                oneOrMoreSelected: "% experts selected"
             }, selectPlatformSpecsCallback);
             $('.selectAll').attr("checked", "checked").trigger('change');
         });        
@@ -162,7 +162,7 @@
                                                 </div>
                                                 <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
                                                     <div class='row'>
-                                                        <span class='title'>Platform Specialists</span>
+                                                        <span class='title'>Expert Services</span>
                                                         <select id='projectManagerFilter' class="multiselect">
                                                             <option value='' selected="selected">All Managers</option>
                                                             <c:forEach var="managerName" items="${projectManagers}">

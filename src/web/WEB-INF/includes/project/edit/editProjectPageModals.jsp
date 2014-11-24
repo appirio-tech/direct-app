@@ -103,7 +103,7 @@
         <div class="modalHeader">
             <div class="modalHeaderRight">
                 <div class="modalHeaderCenter">
-                    <span>Manage TopCoder Platform Specialists</span>
+                    <span>Manage TopCoder Expert Services</span>
                     <a href="javascript:;" class="closeModal" title="Close">Close</a>
                 </div>
             </div>
