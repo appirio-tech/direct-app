@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.search;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
 import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
 import com.topcoder.direct.services.view.util.DataProvider;

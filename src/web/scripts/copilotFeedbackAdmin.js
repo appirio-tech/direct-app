@@ -130,7 +130,7 @@ $(document).ready(function () {
             type : 'post',
             url : 'adminEditCopilotFeedback',
             cache : false,
-            data : request,
+            data : setupTokenRequest(request, getStruts2TokenName()),
             dataType : 'json',
             success : function(jsonResult) {
                 handleJsonResult(jsonResult,
@@ -179,7 +179,7 @@ function updateCopilotFeedbackStatus(tableRow, newStatus) {
         type:'post',
         url:'updateCopilotFeedbackStatus',
         cache:false,
-        data:request,
+        data:setupTokenRequest(request, getStruts2TokenName()),
         dataType:'json',
         success:function (jsonResult) {
             handleJsonResult(jsonResult,

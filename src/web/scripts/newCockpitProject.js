@@ -555,7 +555,7 @@ var createNewProject = function() {
     $.ajax({
         type: 'POST',
         url:  "createNewCockpitProjectAjax",
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         async : true,

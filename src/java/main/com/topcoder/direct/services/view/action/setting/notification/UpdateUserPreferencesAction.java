@@ -3,13 +3,13 @@
  */
 package com.topcoder.direct.services.view.action.setting.notification;
 
-import java.util.List;
-
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.notification.UserPreferenceDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.ejb.user.UserPreference;
+
+import java.util.List;
 
 /**
  * <p>

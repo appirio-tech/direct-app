@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.copilot;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 import java.util.HashMap;
 import java.util.Map;

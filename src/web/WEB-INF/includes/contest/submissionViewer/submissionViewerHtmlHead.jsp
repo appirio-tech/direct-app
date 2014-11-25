@@ -120,7 +120,6 @@
 <s:if test="formData.viewType.toString() == 'SINGLE'">
     <script type="text/javascript" src="/scripts/jquery-cycle.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery-easing.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <!--[if IE 6]>
     <script src="/scripts/DD_belatedPNG.js?v=185283" type="text/javascript"></script>
@@ -128,12 +127,10 @@
     <![endif]-->
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT'">
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/checkout.js?v=213622"></script>
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT_CONFIRM'">
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/confirmCheckout.js?v=206299"></script>
 </s:if>

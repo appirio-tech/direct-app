@@ -7,7 +7,7 @@ import com.topcoder.clients.dao.CustomerPlatformFeeConfigurationException;
 import com.topcoder.clients.dao.CustomerPlatformFeePersistenceException;
 import com.topcoder.clients.dao.CustomerPlatformFeeService;
 import com.topcoder.clients.model.CustomerPlatformFee;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.util.log.Level;

@@ -10,7 +10,7 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyNameValueFilter;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchResultsDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;

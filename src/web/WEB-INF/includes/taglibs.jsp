@@ -15,6 +15,7 @@
 <%@ taglib prefix="link" tagdir="/WEB-INF/tags/links" %>
 <%@ taglib prefix="if" tagdir="/WEB-INF/tags/conditions" %>
 <%@ taglib prefix="ui" tagdir="/WEB-INF/tags/ui" %>
+<%@ taglib prefix="hidden" tagdir="/WEB-INF/tags/hidden" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
 <%@ taglib prefix="tcdirect" uri="/tcdirect-functions" %>
 <%@ taglib prefix="tc-webtag" uri="/WEB-INF/tld/tc-webtags.tld" %>

@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.action.project.milestone;
 
 import com.topcoder.direct.services.project.milestone.model.Milestone;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestDTO;
 import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneDTO;
 import com.topcoder.direct.services.view.form.ProjectMilestoneOperationForm;

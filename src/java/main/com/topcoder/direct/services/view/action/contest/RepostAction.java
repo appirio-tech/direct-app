@@ -6,7 +6,7 @@ package com.topcoder.direct.services.view.action.contest;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.permission.PermissionServiceException;
 

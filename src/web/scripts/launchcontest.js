@@ -1100,8 +1100,8 @@ function addNewProject() {
     $.ajax({
         type: 'POST',
         url:  "createProject",
-        data: {'projectName':projectName,
-            'projectDescription':projectDescription},
+        data: setupTokenRequest({'projectName':projectName,
+            'projectDescription':projectDescription}, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {

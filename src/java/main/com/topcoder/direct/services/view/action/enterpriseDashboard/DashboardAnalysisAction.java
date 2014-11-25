@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardAnalysisDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.AnalysisFilterForm;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.AnalysisGroupType;

@@ -142,7 +142,7 @@ if (!window.projectVMService) var projectVMService = {
                 type: 'POST',
                 url: 'terminateVMInstance',
                 timeout:20000, // Timeout of 20 secs
-                data: {'instanceId' : instanceId},
+                data: setupTokenRequest({'instanceId' : instanceId}, getStruts2TokenName()),
                 dataType: "json",
                 cache: false,
                 success: function(r) {

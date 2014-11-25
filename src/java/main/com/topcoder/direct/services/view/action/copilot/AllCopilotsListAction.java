@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.copilot;
 
 import com.topcoder.direct.services.copilot.dao.CopilotProfileDAO;
 import com.topcoder.direct.services.copilot.model.CopilotProfile;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 
 import java.util.HashMap;

@@ -3,23 +3,22 @@
  */
 package com.topcoder.direct.services.view.ajax.serializers;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import net.sf.json.JSON;
-import net.sf.json.JSONException;
-import net.sf.json.JSONSerializer;
-import net.sf.json.JsonConfig;
-
 import com.topcoder.direct.services.view.ajax.AJAXDataSerializationException;
 import com.topcoder.direct.services.view.ajax.AJAXDataSerializer;
 import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
 import com.topcoder.direct.services.view.ajax.Helper;
 import com.topcoder.direct.services.view.ajax.SoftwareCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.project.SoftwareCompetition;
+import net.sf.json.JSON;
+import net.sf.json.JSONException;
+import net.sf.json.JSONSerializer;
+import net.sf.json.JsonConfig;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * <p>
@@ -71,6 +70,13 @@ public class JSONDataSerializer implements AJAXDataSerializer {
 
     /**
      * <p>
+     * Represent the string of ${token} token
+     * </p>
+     */
+    private static final String ACTION_TOKEN_TOKEN = "$[token]";
+
+    /**
+     * <p>
      * This some specific data that could be used to dynamically populate the two format templates (jsonResultTemplate
      * and/or jsonErrorTemplate).
      * </p>
@@ -88,7 +94,7 @@ public class JSONDataSerializer implements AJAXDataSerializer {
      * empty string.
      * </p>
      */
-    private String jsonResultTemplate = "{\"result\": {\"name\": \"$[action]\",\"return\": $[result]}}";
+    private String jsonResultTemplate = "{\"result\": {\"name\": \"$[action]\",\"return\": $[result]}, \"token\": \"$[token]\"}";
 
     /**
      * <p>
@@ -96,7 +102,7 @@ public class JSONDataSerializer implements AJAXDataSerializer {
      * empty string.
      * </p>
      */
-    private String jsonErrorTemplate = "{\"error\": {\"name\": \"$[action]\",\"errorMessage\": \"$[error]\"}}";
+    private String jsonErrorTemplate = "{\"error\": {\"name\": \"$[action]\",\"errorMessage\": \"$[error]\"}, \"token\": \"$[token]\"}";
 
     /**
      * <p>
@@ -154,6 +160,12 @@ public class JSONDataSerializer implements AJAXDataSerializer {
         }
         // if the actionName is null, empty string is used
         jsonReturnString = jsonReturnString.replace(ACTION_TOKEN_REG, actionName == null ? EMPTY_STRING : actionName);
+
+        // generate a new token and put into response if needed
+        String tokenName = DirectUtils.getTokenName();
+        jsonReturnString = jsonReturnString.replace(ACTION_TOKEN_TOKEN, tokenName == null ? EMPTY_STRING :
+                DirectUtils.setupNewTokenForAjax());
+
         return jsonReturnString;
     }
 

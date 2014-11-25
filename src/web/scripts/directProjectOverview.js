@@ -393,7 +393,7 @@ $(document).ready(function() {
                 type : 'post',
                 url : 'updateProjectForumWatchAJAX',
                 cache : false,
-                data : request,
+                data : setupTokenRequest(request, getStruts2TokenName()),
                 dataType : 'json',
                 success : function(result) {
                     if(!result.result) {
@@ -426,7 +426,7 @@ $(document).ready(function() {
                     type : 'post',
                     url : 'createProjectForum',
                     cache : false,
-                    data : request,
+                    data : setupTokenRequest(request, getStruts2TokenName()),
                     dataType : 'json',
                     success : function(result) {
                         modalAllClose();
@@ -563,7 +563,7 @@ $(document).ready(function() {
             type : 'post',
             url : 'copilot/processCopilotProjects',
             cache : false,
-            data : request,
+            data : setupTokenRequest(request, getStruts2TokenName()),
             dataType : 'json',
             success : function(result) {
                 modalAllClose();
@@ -573,6 +573,7 @@ $(document).ready(function() {
                     return;
                 }
 
+                // no need to refresh the token because the page will be refreshed
                 location.reload(true);
             },
             error: function(result) {
@@ -901,11 +902,11 @@ $(document).ready(function() {
             url: 'addProjectForumAJAX',
             type: 'POST',
             cache: false,
-            data: {
+            data: setupTokenRequest({
                 tcDirectProjectId: tcDirectProjectId,
                 forumName: forumName,
                 forumDescription: forumDesc
-            },
+            }, getStruts2TokenName()),
             dataType: 'json',
             async: false,
             success: function(result) {
@@ -979,10 +980,10 @@ $(document).ready(function() {
             url: 'deleteProjectForumsAJAX',
             type: 'POST',
             cache: false,
-            data: {
+            data: setupTokenRequest({
                 tcDirectProjectId: tcDirectProjectId,
                 forumIds: forumIds
-            },
+            }, getStruts2TokenName()),
             dataType: 'json',
             async: false,
             success: function(result) {
@@ -1101,7 +1102,7 @@ $(document).ready(function() {
             type : 'post',
             url : 'createCopilotProjectFeedback',
             cache : false,
-            data : {formData:formData},
+            data : setupTokenRequest({formData:formData}, getStruts2TokenName()),
             dataType : 'json',
             success : function(jsonResult) {
                 handleJsonResult(jsonResult,
@@ -1189,7 +1190,7 @@ $(document).ready(function() {
             type : 'post',
             url : 'updateCopilotProjectFeedback',
             cache : false,
-            data : {formData:formData},
+            data : setupTokenRequest({formData:formData}, getStruts2TokenName()),
             dataType : 'json',
             success : function(jsonResult) {
                 handleJsonResult(jsonResult,

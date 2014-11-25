@@ -1251,7 +1251,7 @@ function saveTypeSection() {
     $.ajax({
         type: 'POST',
         url: ctx + "/launch/saveDraftContest",
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function (jsonResult) {
@@ -1540,7 +1540,7 @@ function saveRoundSection() {
    $.ajax({
       type: 'POST',
       url: ctx + "/launch/saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: function(jsonResult) {
@@ -2040,7 +2040,7 @@ function savePrizeSection() {
    $.ajax({
       type: 'POST',
       url: ctx + "/launch/saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: function(jsonResult) {
@@ -2531,7 +2531,7 @@ function saveSpecSection() {
    $.ajax({
       type: 'POST',
       url: ctx + "/launch/saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: function(jsonResult) {
@@ -2758,7 +2758,7 @@ function saveDocumentSection() {
    $.ajax({
       type: 'POST',
       url: ctx + "/launch/saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: function(jsonResult) {
@@ -2862,7 +2862,7 @@ function activateAndStartSpecReview(mode) {
     $.ajax({
         type: 'POST',
         url:  ctx + "/launch/saveDraftContest",
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: handleActivationResultEdit,

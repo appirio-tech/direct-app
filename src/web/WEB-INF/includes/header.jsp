@@ -8,4 +8,5 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+<hidden:token/>
 <jsp:include page="newHeader.jsp"/>

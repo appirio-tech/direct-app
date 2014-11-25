@@ -726,7 +726,7 @@ $(document).ready(function(){
             $.ajax({
               type: 'POST',
               url:  ctx+"/group/createGroup",
-              data: {group: group, skipInvitationEmail: skipInvitationEmail},
+              data: setupTokenRequest({group: group, skipInvitationEmail: skipInvitationEmail}, getStruts2TokenName()),
               cache: false,
               dataType: 'json',
               //async : false,
@@ -799,7 +799,7 @@ $(document).ready(function(){
             $.ajax({
               type: 'POST',
               url:  ctx+"/group/updateGroup",
-              data: {group: group, groupId: parseInt($("#groupId").val()), skipInvitationEmail: skipInvitationEmail},
+              data: setupTokenRequest({group: group, groupId: parseInt($("#groupId").val()), skipInvitationEmail: skipInvitationEmail}, getStruts2TokenName()),
               cache: false,
               dataType: 'json',
               timeout:3600000,
@@ -1310,7 +1310,7 @@ $(document).ready(function(){
         $.ajax({
           type: 'POST',
           url:  ctx+ "/group/approveRejectPendingUserAction",
-          data: approveRejectData,
+          data: setupTokenRequest(approveRejectData, getStruts2TokenName()),
           cache: false,
           dataType: 'json',
           //async : false,
@@ -1395,7 +1395,7 @@ $(document).ready(function(){
             $.ajax({
               type: 'POST',
               url:  ctx+ "/group/checkUpdateRemovePermission",
-              data: {groupId:groupId},
+              data: setupTokenRequest({groupId:groupId}, getStruts2TokenName()),
               cache: false,
               dataType: 'json',
               beforeSend: modalPreloader,
@@ -1449,7 +1449,7 @@ $(document).ready(function(){
         $.ajax({
           type: 'POST',
           url:  ctx+ "/group/deleteGroupAction",
-          data: {groupId:groupId},
+          data: setupTokenRequest({groupId:groupId}, getStruts2TokenName()),
           cache: false,
           dataType: 'json',
           beforeSend: modalPreloader,
@@ -1553,7 +1553,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'POST',
                 url:  ctx+"/group/sendInvitationAction",
-                data: {groupIds:[groupIds[groupIdx]], handles:data.handles, userIds:userIds},
+                data: setupTokenRequest({groupIds:[groupIds[groupIdx]], handles:data.handles, userIds:userIds}, getStruts2TokenName()),
                 cache: false,
                 dataType: 'json',
                 beforeSend: modalSendInvitation,
@@ -1613,7 +1613,7 @@ $(document).ready(function(){
         $.ajax({
           type: 'POST',
           url:  ctx+ "/group/createCustomerAdminAction",
-          data: {handle:handle, clientId:clientId},
+          data: setupTokenRequest({handle:handle, clientId:clientId}, getStruts2TokenName()),
           cache: false,
           dataType: 'json',
           beforeSend: modalPreloader,

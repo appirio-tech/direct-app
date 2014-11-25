@@ -371,7 +371,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: ctx + "/contest/saveFinalFix",
-            data: request,
+            data: setupTokenRequest(request, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             async: false,
@@ -527,7 +527,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: ctx + "/contest/reviewFinalFix",
-            data: request,
+            data: setupTokenRequest(request, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             async: false,

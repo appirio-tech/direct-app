@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.action.contest;
 
 import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;

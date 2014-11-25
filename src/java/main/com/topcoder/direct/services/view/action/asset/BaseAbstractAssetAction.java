@@ -9,7 +9,7 @@ import com.topcoder.asset.services.AssetService;
 import com.topcoder.asset.services.AssetVersionService;
 import com.topcoder.asset.services.FileTypeIconService;
 import com.topcoder.asset.services.ManagerService;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;

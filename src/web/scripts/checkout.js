@@ -115,14 +115,23 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             url:  ctx + "/contest/updateSubmissionFeedback",
-            data: {projectId : contestId, submissionId : submissionId, feedbackText : feedback, roundType : roundType},
+            data: setupTokenRequest({projectId : contestId, submissionId : submissionId, feedbackText : feedback, roundType : roundType}, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             async : false,
             success: function (jsonResult) {
-                modalClose();
-                showSuccessfulMessage("Your feedback has been saved.");
-                $("#info" + submissionId).removeClass("errorinfo");
+
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        modalClose();
+                        showSuccessfulMessage("Your feedback has been saved.");
+                        $("#info" + submissionId).removeClass("errorinfo");
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
+
+
             },
             beforeSend: beforeAjax,
             complete: afterAjax
@@ -142,7 +151,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             url:  ctx + "/contest/updateGeneralSubmissionsFeedback",
-            data: {projectId : contestId, feedbackText : feedback},
+            data: setupTokenRequest({projectId : contestId, feedbackText : feedback}, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             async : false,
@@ -362,7 +371,9 @@ $(document).ready(function(){
                 showErrors("Prize slots must be filled before choosing extra purchases.");
                 return false;
             }
-            $("#additionalPurchases").val(additionalPurchases);
+            $("#additionalPurchases").val(additionalPurchases)
+            $('<input />').attr('type', 'hidden').attr('name', "struts.token.name").attr('value', getStruts2TokenName()).appendTo('#checkoutForm');
+            $('<input />').attr('type', 'hidden').attr('name', getStruts2TokenName()).attr('value', getStruts2Token()).appendTo('#checkoutForm');
             $("#checkoutForm").submit();
         }
         return false;

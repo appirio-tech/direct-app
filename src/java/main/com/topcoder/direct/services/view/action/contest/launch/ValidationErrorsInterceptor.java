@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 /**
  * <p>
@@ -54,7 +55,7 @@ public class ValidationErrorsInterceptor extends AbstractInterceptor {
      * @return the result of the action invocation
      * @throws IllegalArgumentException
      *             if the <code>actionInvocation</code> is <code>null</code>, if the action in the actionInvocation is
-     *             not an {@link BaseDirectStrutsAction}
+     *             not an {@link com.topcoder.direct.services.view.action.BaseDirectStrutsAction}
      * @throws Exception
      *             the exception thrown by the ActionInvocation.invoke() method
      */
