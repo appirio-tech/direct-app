@@ -232,7 +232,7 @@ $(document).ready(function () {
         $.ajax({
             type:'post',
             url:'updateDraftContests',
-            data:{formData:formData, contestsToUpdate:contestsToUpdate},
+            data:setupTokenRequest({formData:formData, contestsToUpdate:contestsToUpdate}, getStruts2TokenName()),
             cache:false,
             timeout:400000,
             dataType:'json',
@@ -335,7 +335,7 @@ function handleDraftContestsRemoval() {
         $.ajax({
             type:'post',
             url:'removeDraftContests',
-            data:{formData:formData, contestsToUpdate:contestsToDelete},
+            data:setupTokenRequest({formData:formData, contestsToUpdate:contestsToDelete}, getStruts2TokenName()),
             cache:false,
             timeout:40000,
             dataType:'json',

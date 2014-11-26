@@ -54,14 +54,18 @@ $(document).ready(function () {
             responseType: 'json',
             onSubmit: function (file, ext) {
 
+                var data = {
+                    clientId: $("#clientOption").val(),
+                        invoiceDate: $("#uploadDate").val(),
+                    description: $("textarea[name=uploadInvoiceDescription]").val(),
+                    fileName: file
+                };
+
+                data = setupTokenRequest(data, getStruts2TokenName());
+
                 // set the form data for ajax upload form
                 invoiceUploader.setData(
-                    {
-                        clientId: $("#clientOption").val(),
-                        invoiceDate: $("#uploadDate").val(),
-                        description: $("textarea[name=uploadInvoiceDescription]").val(),
-                        fileName: file
-                    }
+                    data
                 );
 
                 modalPreloader();
@@ -151,7 +155,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: ctx + "/filterClientInvoices",
-            data: formData,
+            data: setupTokenRequest(formData, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {
@@ -203,7 +207,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: ctx + "/deleteClientInvoice",
-            data: formData,
+            data: setupTokenRequest(formData, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             success: function (jsonResult) {

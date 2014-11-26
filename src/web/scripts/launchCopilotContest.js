@@ -486,8 +486,8 @@ function addNewProject() {
     $.ajax({
         type: 'POST',
         url:  "../launch/createProject",
-        data: {'projectName':projectName,
-            'projectDescription':projectDescription},
+        data: setupTokenRequest({'projectName':projectName,
+            'projectDescription':projectDescription}, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {
@@ -1003,7 +1003,7 @@ function saveAsDraft() {
     $.ajax({
         type: 'POST',
         url: '../launch/saveDraftContest',
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: handleCopilotContestSaveAsDraftResult,
@@ -1069,7 +1069,7 @@ function submitCompetition() {
     $.ajax({
         type: 'POST',
         url: '../launch/saveDraftContest',
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: handleCopilotContestActivateResult,

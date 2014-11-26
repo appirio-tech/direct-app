@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;

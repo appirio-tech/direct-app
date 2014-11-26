@@ -446,7 +446,7 @@ function activateContestSoftware(mode) {
     $.ajax({
         type:'POST',
         url:"saveDraftContest",
-        data:request,
+        data:setupTokenRequest(request, getStruts2TokenName()),
         cache:false,
         dataType:'json',
         success:handleActivationResult,
@@ -518,7 +518,7 @@ function saveAsDraftOrderReview() {
    $.ajax({
       type: 'POST',
       url:  "saveDraftContest",
-      data: request,
+      data: setupTokenRequest(request, getStruts2TokenName()),
       cache: false,
       dataType: 'json',
       success: handleSaveAsDraftContestResult,

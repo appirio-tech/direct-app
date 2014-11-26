@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.action.contest.launch;
 
 
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
+
 /**
  * <p>
  * This is a base class only to hold the project service facade shared among several actions.

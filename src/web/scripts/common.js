@@ -470,20 +470,26 @@ function sortSelectOptions(selectId) {
  * Common function to handle JSON result.
  */
 function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
-   modalClose(); // close the potentical preloading modal first
-   if(jsonResult.result) {
-       successCallBack(jsonResult.result['return']);
-   } else {
-       failureCallBack(jsonResult.error.errorMessage);
-   }
+    modalClose(); // close the potentical preloading modal first
+    if (jsonResult.result) {
+        successCallBack(jsonResult.result['return']);
+    } else {
+        failureCallBack(jsonResult.error.errorMessage);
+    }
+    if((typeof jsonResult.token !== 'undefined') && $.trim(jsonResult.token).length > 0) {
+        updateStruts2Token(jsonResult.token);
+    }
 }
 
 function handleJsonResult2(jsonResult, successCallBack, failureCallBack) {
-   if(jsonResult.result) {
-       successCallBack(jsonResult.result['return']);
-   } else {
-       failureCallBack(jsonResult.error.errorMessage);
-   }
+    if (jsonResult.result) {
+        successCallBack(jsonResult.result['return']);
+    } else {
+        failureCallBack(jsonResult.error.errorMessage);
+    }
+    if((typeof jsonResult.token !== 'undefined') && $.trim(jsonResult.token).length > 0) {
+        updateStruts2Token(jsonResult.token);
+    }
 }
 
 /**
@@ -865,4 +871,30 @@ function getObjectSize(object) {
         }
     }
     return count;
+}
+
+function updateStruts2Token(newToken) {
+    if (typeof struts2Token !== 'undefined') {
+        struts2Token = newToken;
+    }
+}
+
+function getStruts2Token() {
+    return struts2Token;
+}
+
+function getStruts2TokenName() {
+    return struts2TokenName;
+}
+
+function setupTokenRequest(request, tokenName) {
+    var tokenData = {};
+
+    request = typeof request !== 'undefined' ? request : {};
+    tokenName = typeof tokenName !== 'undefined' ? tokenName : 'token';
+
+    tokenData["struts.token.name"] = tokenName;
+    tokenData[tokenName] = getStruts2Token();
+    request = $.extend(request, tokenData);
+    return request;
 }

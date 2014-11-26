@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.action.enterpriseDashboard;
 
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.ContestPipelineDrillInDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthProjectPipelineDTO;

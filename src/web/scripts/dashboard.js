@@ -886,7 +886,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'POST',
                 url: bugRaceUrl,
-                data: $('#bugForm').serialize(),
+                data: setupTokenRequest($('#bugForm').serialize(), getStruts2TokenName()),
                 dataType: "json",
                 cache:false,
                 async:true,
@@ -967,7 +967,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'POST',
                 url:'updateBugRace',
-                data: $('#bugForm').serialize(),
+                data: setupTokenRequest($('#bugForm').serialize(), getStruts2TokenName()),
                 dataType: "json",
                 cache:false,
                 async:true,
@@ -1797,25 +1797,25 @@ $(document).ready(function(){
             showErrors('Reason for rejection is required');
         } else {
             $.ajax({
-                type:'POST',
-                url:ctx + "/contest/submitApproval",
-                data:{approved:approved, rejectionReason:rejectionReason, projectId:projectId, submissionId:submissionId},
-                cache:false,
-                dataType:'json',
-                beforeSend:modalPreloader,
-                complete:modalClose,
-                success:function (jsonResult) {
-                    handleJsonResult(jsonResult,
-                        function (result) {
-                            $('.ApprovalSection').html('<p>The submission has been ' +
-                            (approved ? 'approved' : 'rejected') +
-                            '.</p>');
-                        },
-                        function (errorMessage) {
-                            showErrors(errorMessage);
-                        });
-                }
-            });
+                       type:'POST',
+                       url:ctx + "/contest/submitApproval",
+                       data:setupTokenRequest({approved:approved, rejectionReason:rejectionReason, projectId:projectId, submissionId:submissionId}, getStruts2TokenName()),
+                       cache:false,
+                       dataType:'json',
+                       beforeSend:modalPreloader,
+                       complete:modalClose,
+                       success:function (jsonResult) {
+                           handleJsonResult(jsonResult,
+                                            function (result) {
+                                                $('.ApprovalSection').html('<p>The submission has been ' +
+                                                                           (approved ? 'approved' : 'rejected') +
+                                                                           '.</p>');
+                                            },
+                                            function (errorMessage) {
+                                                showErrors(errorMessage);
+                                            });
+                       }
+                   });
         }
     });
 });

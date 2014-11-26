@@ -409,7 +409,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:'saveProjectPermissionsAndNotifications',
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -449,7 +449,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:'saveProjectPermissionsAndNotifications',
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -507,7 +507,7 @@ $(document).ready(function (e) {
             $.ajax({
                        type:'post',
                        url:'group/saveProjectGroupPermissions',
-                       data: request,
+                       data: setupTokenRequest(request, getStruts2TokenName()),
                        cache:false,
                        dataType:'json',
                        success:function (jsonResult) {
@@ -623,7 +623,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:'saveContestsNotificationsForUser',
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -733,7 +733,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:'associateProjectBillingAccount',
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -761,7 +761,7 @@ $(document).ready(function (e) {
                                     $.ajax({
                                         type:'post',
                                         url:"saveProjectSettings",
-                                        data:request,
+                                        data:setupTokenRequest(request, getStruts2TokenName()),
                                         cache:false,
                                         dataType:'json',
                                         success:function (jsonResult) {
@@ -803,7 +803,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:'removeProjectBillingAccount',
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -972,7 +972,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:requestURL,
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -1612,7 +1612,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:"saveProjectSettings",
-                data:request,
+                data:setupTokenRequest(request, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -1719,7 +1719,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:requestURL,
-                data:{formData:formData},
+                data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {
@@ -1983,7 +1983,7 @@ $(document).ready(function (e) {
             $.ajax({
                 type:'post',
                 url:"addNewCustomMetadataKey",
-                data:formData,
+                data:setupTokenRequest(formData, getStruts2TokenName()),
                 cache:false,
                 dataType:'json',
                 success:function (jsonResult) {

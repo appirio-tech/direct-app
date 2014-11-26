@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.report;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.dashboard.specialistreport.PlatformSpecialistReportDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 

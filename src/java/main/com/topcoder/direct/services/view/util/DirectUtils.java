@@ -3,70 +3,19 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.channels.FileLock;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.topcoder.direct.cloudvm.service.CloudVMService;
-import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.clients.dao.ProjectContestFeePercentageService;
-import com.topcoder.clients.dao.ProjectContestFeeService;
-import com.topcoder.clients.model.ProjectContestFeePercentage;
-import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
-import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
-import com.topcoder.management.resource.ResourceRole;
-import com.topcoder.security.groups.model.BillingAccount;
-import com.topcoder.security.groups.services.DirectProjectService;
-import com.topcoder.security.groups.services.dto.ProjectDTO;
-import com.topcoder.servlet.request.UploadedFile;
-import eu.medsea.mimeutil.MimeType;
-import eu.medsea.mimeutil.MimeUtil;
-
-import com.topcoder.management.review.data.Comment;
-import com.topcoder.management.review.data.CommentType;
-import org.apache.axis.encoding.Base64;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.catalog.entity.CompUploadedFile;
+import com.topcoder.clients.dao.ProjectContestFeePercentageService;
+import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
+import com.topcoder.clients.model.ProjectContestFeePercentage;
+import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
@@ -88,6 +37,9 @@ import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectType;
 import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceRole;
+import com.topcoder.management.review.data.Comment;
+import com.topcoder.management.review.data.CommentType;
 import com.topcoder.management.review.data.Review;
 import com.topcoder.project.phases.Phase;
 import com.topcoder.project.phases.PhaseStatus;
@@ -98,9 +50,12 @@ import com.topcoder.search.builder.SearchBuilderException;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
+import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.model.GroupPermissionType;
 import com.topcoder.security.groups.model.ResourceType;
 import com.topcoder.security.groups.services.AuthorizationService;
+import com.topcoder.security.groups.services.DirectProjectService;
+import com.topcoder.security.groups.services.dto.ProjectDTO;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
@@ -109,6 +64,7 @@ import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.user.UserServiceException;
+import com.topcoder.servlet.request.UploadedFile;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -117,6 +73,61 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.dwload.CacheClearer;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
+import eu.medsea.mimeutil.MimeType;
+import eu.medsea.mimeutil.MimeUtil;
+import org.apache.axis.encoding.Base64;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.util.TokenHelper;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileLock;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
@@ -3381,5 +3392,45 @@ public final class DirectUtils {
         }
 
         return null;
+    }
+
+    /**
+     * Sets up a new token in the session with the specified token name if the existing one is already invalidated.
+     *
+     * @return the newly generated token or the existing valid token
+     */
+    public static String setupNewTokenForAjax() {
+
+        String tokenName = getTokenName();
+
+        String myToken = TokenHelper.setToken(tokenName);
+
+        ActionContext.getContext().getValueStack().getContext().put(tokenName, myToken);
+
+        return myToken.toString();
+    }
+
+
+    /**
+     * Gets the token name from the servlet request.
+     *
+     * @return the token name if found, null otherwise.
+     */
+    public static String getTokenName() {
+        HttpServletRequest httpServletRequest = ServletActionContext.getRequest();
+
+        if (httpServletRequest.getParameter("struts.token.name") == null) {
+
+            return null;
+        } else {
+            String tokenName = httpServletRequest.getParameter("struts.token.name");
+            if (tokenName != null && tokenName.trim().length() > 0) {
+
+                return tokenName;
+            } else {
+
+                return null;
+            }
+        }
     }
 }

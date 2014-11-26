@@ -6,7 +6,7 @@ package com.topcoder.direct.services.view.action.roadmap;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DataProvider;
 import viecili.jrss.generator.RSSFeedGenerator;
 import viecili.jrss.generator.RSSFeedGeneratorImpl;

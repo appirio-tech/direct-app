@@ -292,7 +292,7 @@ function updateWesternUnionBalanceAmount(balanceAmount, succCallback, errorCallb
     $.ajax({
         type: 'POST',
         url:'updateWesternUnionBalanceAmount',
-        data: data,
+        data: setupTokenRequest(data, getStruts2TokenName()),
         dataType: "json",
         cache: false,
         success: function(jsonResult) {

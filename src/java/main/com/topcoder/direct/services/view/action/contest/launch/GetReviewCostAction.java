@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ReviewType;
 import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 

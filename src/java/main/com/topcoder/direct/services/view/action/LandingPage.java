@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.action;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.HomePageDTO;
 
 /**

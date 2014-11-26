@@ -170,7 +170,7 @@ $(function() {
         $.ajax({
             type: 'post',
             url: '../ajax/saveSpecReviewComment.action',
-            data: request,
+            data: setupTokenRequest(request, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             success: function(jsonResult) {
@@ -315,10 +315,10 @@ $(function() {
         $.ajax({
             type: 'post',
             url: '../ajax/resubmitSpecReview.action',
-            data: {
+            data: setupTokenRequest({
                 "content": "content",
                 "projectId": contestId
-            },
+            }, getStruts2TokenName()),
             cache: false,
             dataType: 'json',
             success: function(jsonResult) {

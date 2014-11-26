@@ -3,15 +3,11 @@
  */
 package com.topcoder.direct.services.view.action.stats;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.apache.commons.io.IOUtils;
-
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 /**
  * <p>A <code>Struts</code> action to be used for download the excel file.</p>

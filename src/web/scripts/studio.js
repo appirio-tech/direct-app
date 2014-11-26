@@ -78,4 +78,11 @@ $(document).ready(function () {
         }
         return true;
     })
+
+    $("a.checkpointConfirmation, .winnersLockIn").one('click', function (e) {
+        var originHref = $(this).attr('href');
+        this.href = originHref + "&struts.token.name=" + getStruts2TokenName()
+        + "&" + getStruts2TokenName() + "=" + getStruts2Token();
+    });
+
 }); 

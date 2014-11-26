@@ -105,7 +105,7 @@ if (!window.contestVMService) var contestVMService = {
                 type: 'POST',
                 url: 'terminateVMInstance',
                 timeout:20000, // Timeout of 20 secs
-                data: {'instanceId' : instanceId, 'contestId' : contestId, 'studio': isStudio},
+                data: setupTokenRequest({'instanceId' : instanceId, 'contestId' : contestId, 'studio': isStudio}, getStruts2TokenName()),
                 dataType: "json",
                 cache: false,
                 success: function(r) {

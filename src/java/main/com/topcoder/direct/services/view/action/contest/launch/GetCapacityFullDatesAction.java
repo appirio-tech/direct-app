@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.PipelineServiceFacade;

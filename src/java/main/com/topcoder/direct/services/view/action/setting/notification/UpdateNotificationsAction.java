@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.setting.notification;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.notification.ContestNotification;

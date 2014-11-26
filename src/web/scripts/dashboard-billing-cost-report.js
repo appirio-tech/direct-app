@@ -700,7 +700,7 @@ function updateInvoiceRecords(contestIds, jiraIssueIds, paymentIds, referenceIds
     $.ajax({
         type: 'POST',
         url:'updateInvoiceRecords',
-        data: data,
+        data: setupTokenRequest(data, getStruts2TokenName()),
         dataType: "json",
         cache:false,
 		timeout:400000,
@@ -740,7 +740,7 @@ function updateInvoice(invoiceId, invoiceNumber, invoiceDate, updateSingle, invo
     $.ajax({
         type: 'POST',
         url:'updateInvoice',
-        data: data,
+        data: setupTokenRequest(data, getStruts2TokenName()),
         dataType: "json",
         cache: false,
         success: function(jsonResult) {

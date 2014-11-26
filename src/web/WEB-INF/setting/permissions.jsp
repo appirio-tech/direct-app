@@ -1,3 +1,4 @@
+<%@ taglib prefix="hidden" uri="/struts-tags" %>
 <%--
   - Author: TCSASSEMBLER
   -

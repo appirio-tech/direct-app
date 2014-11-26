@@ -5,7 +5,7 @@ package com.topcoder.direct.services.view.action.cloudvm;
 
 import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.view.action.contest.launch.AggregateDataModel;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;

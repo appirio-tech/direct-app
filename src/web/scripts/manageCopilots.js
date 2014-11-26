@@ -388,7 +388,7 @@ $(function() {
             type : 'post',
             url : 'processCopilotProjects',
             cache : false,
-            data : request,
+            data : setupTokenRequest(request, getStruts2TokenName()),
             dataType : 'json',
             success : function(result) {
                 modalAllClose();
@@ -397,6 +397,8 @@ $(function() {
                     showErrors(result.error.errorMessage);
                     return;
                 }
+
+                // no need to refresh the token because the page will be refreshed
                 location.reload(true);
                 hanldeCopilotProjectOperationsResult(result);
                 
@@ -543,7 +545,7 @@ function processCopilotProjectOperations(operations, isRemove) {
         type : 'post',
         url : 'processCopilotProjects',
         cache : false,
-        data : request,
+        data : setupTokenRequest(request, getStruts2TokenName()),
         dataType : 'json',
         success : function(result) {
             modalClose();
