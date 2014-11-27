@@ -1,10 +1,11 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 
 /**
  * <p>
@@ -50,8 +51,9 @@ public class GetContestReceiptAction extends GetContestAction {
      * @throws Exception if any other error occurs
      */
     protected void executeAction() throws Exception {
-        super.executeAction();        
-            contestReceipt = DataProvider.getContestReceipt(super.getProjectId(), !super.isSoftware());
+        super.executeAction();
+        contestReceipt = DataProvider.getContestReceipt(super.getProjectId(), !super.isSoftware());
+        contestReceipt.setEstimation(DirectUtils.getChallengeCostData(this.softwareCompetition));
     }
 
     /**

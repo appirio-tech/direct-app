@@ -41,6 +41,8 @@ import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
+import com.topcoder.direct.services.view.dto.contest.cost.CostDTO;
+import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.groups.model.BillingAccount;
 import com.topcoder.security.groups.services.DirectProjectService;
@@ -646,8 +648,15 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.6 (TopCoder Direct - Add Estimation Cost Details to Receipt page)
+ * <ul>
+ *     <li>Added {@link #getChallengeCostData(com.topcoder.service.project.SoftwareCompetition)}</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public final class DirectUtils {
 
@@ -3381,5 +3390,63 @@ public final class DirectUtils {
         }
 
         return null;
+    }
+
+    /**
+     * Builds the estimation cost dto from <code>SoftwareCompetition</code>
+     *
+     * @param challenge the SoftwareCompetition instance
+     * @return the cost dto.
+     * @since 1.6
+     */
+    public static CostDTO getChallengeCostData(SoftwareCompetition challenge) {
+        CostDTO cost = new CostDTO();
+
+        cost.setPrizes(challenge.getProjectHeader().getPrizes());
+        Map<String, String> allProperties = challenge.getProjectHeader().getAllProperties();
+
+        String reliability = allProperties.get(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY);
+        String dr = allProperties.get(ProjectPropertyType.DR_POINTS_PROJECT_PROPERTY_KEY);
+        String review = allProperties.get(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY);
+        String specReview = allProperties.get(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY);
+        String copilot = allProperties.get(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY);
+        String adminFee = allProperties.get(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY);
+
+
+        if("true".equalsIgnoreCase(allProperties.
+                get(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY))) {
+            cost.setReliabilityBonus(parseProjectInfoDoubleValue(reliability));
+        }
+
+        if("on".equalsIgnoreCase(allProperties.
+                get(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY))) {
+            cost.setDrPoints(parseProjectInfoDoubleValue(dr));
+        }
+
+        cost.setReviewCost(parseProjectInfoDoubleValue(review));
+        cost.setSpecReviewCost(parseProjectInfoDoubleValue(specReview));
+        cost.setCopilotCost(parseProjectInfoDoubleValue(copilot));
+        cost.setAdminFee(parseProjectInfoDoubleValue(adminFee));
+
+        return cost;
+    }
+
+    /**
+     * Parses the project info value which is supposed to of type double
+     *
+     * @param infoValue the value string
+     * @return the double value, or null if empty or not double value
+     * @since 1.6
+     */
+    private static Double parseProjectInfoDoubleValue(String infoValue) {
+        if (infoValue == null || infoValue.trim().length() == 0) {
+            return null;
+        }
+
+        try {
+            return Double.parseDouble(infoValue);
+        } catch (NumberFormatException ne) {
+            return null;
+        }
     }
 }

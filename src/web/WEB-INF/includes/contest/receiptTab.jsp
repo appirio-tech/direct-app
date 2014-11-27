@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
-  - Version 1.3
+  - Author: GreatKevin, Veve
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Version 1.4
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - - Add the checkpoint prize for software contest receipt if exists
@@ -11,6 +11,9 @@
   -
   - Version 1.3 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Show the receipt details in table
+  -
+  - Version 1.4 (TopCoder Direct - Add Estimation Cost Details to Receipt page )
+  - - Add estimated cost table
   -
   - Description: This page fragment renders receipt page content for software contest.
 --%>
@@ -73,7 +76,7 @@
                                             <!-- end .orderReview -->
                                                 <div class="contestDetails" id="participationMetricsReportsSection">
                                                 
-                                                    <h2 class="sectionHead">Challenge Details</h2>
+                                                    <h2 class="sectionHead">Actual Cost</h2>
 
                                                     <table class="pipelineStats">
                                                         <thead>
@@ -106,6 +109,129 @@
                                                             <td>
                                                                 <b>
                                                                         $${contestReceipt.totalCost}
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+
+                                                    <h2 class="sectionHead">Estimated Cost</h2>
+
+                                                    <table class="pipelineStats">
+                                                        <thead>
+                                                        <tr class="subTheadRow">
+                                                            <th class="tableColumn">
+                                                                Payment Type
+                                                            </th>
+                                                            <th class="tableColumn">
+                                                                Estimated Amount
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <s:if test="contestReceipt.estimation.prizes != null">
+                                                            <s:iterator value="contestReceipt.estimation.prizes">
+                                                                <s:if test="prizeType.id == 15L">
+                                                                    <tr>
+                                                                        <td>
+                                                                            Winner Prize #<s:property value="place"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            $<s:property value="prizeAmount"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </s:if>
+                                                            </s:iterator>
+                                                            <s:iterator value="contestReceipt.estimation.prizes">
+                                                                <s:if test="prizeType.id == 14L">
+                                                                    <tr>
+                                                                        <td>
+                                                                            Checkpoint prizes
+                                                                        </td>
+                                                                        <td>
+                                                                            $<s:property value="prizeAmount"/> * <s:property value="numberOfSubmissions"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </s:if>
+                                                            </s:iterator>
+                                                        </s:if>
+
+
+                                                        <s:if test="contestReceipt.estimation.drPoints != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Studio Cup Points
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.drPoints}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.reliabilityBonus != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Reliability Bonus
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.reliabilityBonus}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.specReviewCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Specification Review Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.specReviewCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.reviewCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Review Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.reviewCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.copilotCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Copilot Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.copilotCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.adminFee != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Challenge Admin Fee
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.adminFee}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <tr>
+                                                            <td>
+                                                                <b>Total</b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    $${contestReceipt.estimation.total}
                                                                 </b>
                                                             </td>
                                                         </tr>
@@ -166,7 +292,7 @@
                                                 <div class="contestDetails" id="participationMetricsReportsSection" cellspacing="0" cellpadding="0">
 
 
-                                                    <h2 class="sectionHead">Challenge Details</h2>
+                                                    <h2 class="sectionHead">Actual Cost</h2>
                                                     <table class="pipelineStats">
                                                         <thead>
                                                         <tr class="subTheadRow">
@@ -198,6 +324,128 @@
                                                             <td>
                                                                 <b>
                                                                         $${contestReceipt.totalCost}
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+
+                                                    <h2 class="sectionHead">Estimated Cost</h2>
+
+                                                    <table class="pipelineStats">
+                                                        <thead>
+                                                        <tr class="subTheadRow">
+                                                            <th class="tableColumn">
+                                                                Payment Type
+                                                            </th>
+                                                            <th class="tableColumn">
+                                                                Estimated Amount
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <s:if test="contestReceipt.estimation.prizes != null">
+                                                            <s:iterator value="contestReceipt.estimation.prizes">
+                                                                <s:if test="prizeType.id == 15L">
+                                                                    <tr>
+                                                                        <td>
+                                                                            Winner Prize #<s:property value="place"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            $<s:property value="prizeAmount"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </s:if>
+                                                            </s:iterator>
+                                                            <s:iterator value="contestReceipt.estimation.prizes">
+                                                                <s:if test="prizeType.id == 14L">
+                                                                    <tr>
+                                                                        <td>
+                                                                            Checkpoint prizes
+                                                                        </td>
+                                                                        <td>
+                                                                            $<s:property value="prizeAmount"/> * <s:property value="numberOfSubmissions"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </s:if>
+                                                            </s:iterator>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.drPoints != null">
+                                                            <tr>
+                                                                <td>
+                                                                    DR Points
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.drPoints}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.reliabilityBonus != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Reliability Bonus
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.reliabilityBonus}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.specReviewCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Specification Review Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.specReviewCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.reviewCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Review Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.reviewCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.copilotCost != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Copilot Cost
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.copilotCost}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <s:if test="contestReceipt.estimation.adminFee != null">
+                                                            <tr>
+                                                                <td>
+                                                                    Challenge Admin Fee
+                                                                </td>
+                                                                <td>
+                                                                    $${contestReceipt.estimation.adminFee}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+
+                                                        <tr>
+                                                            <td>
+                                                                <b>Total</b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    $${contestReceipt.estimation.total}
                                                                 </b>
                                                             </td>
                                                         </tr>

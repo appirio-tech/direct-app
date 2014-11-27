@@ -1,7 +1,9 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
+
+import com.topcoder.direct.services.view.dto.contest.cost.CostDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,8 +28,15 @@ import java.util.List;
  * </ul>
  * </p>
  *
- * @author flexme, GreatKevin
- * @version 1.3
+ * <p>
+ * Version 1.4 (TopCoder Direct - Add Estimation Cost Details to Receipt page)
+ * <ul>
+ *     <li>Added the property {@link #estimation} </li>
+ * </ul>
+ * </p>
+ *
+ * @author flexme, GreatKevin, Veve
+ * @version 1.4
  */
 public class ContestReceiptDTO implements Serializable {
     /**
@@ -136,6 +145,13 @@ public class ContestReceiptDTO implements Serializable {
      * @since BUGR-7169
      */
     private List<ContestReceiptEntry> entries;
+
+    /**
+     * The estimation cost in the receipt.
+     *
+     * @since 1.4
+     */
+    private CostDTO estimation;
 
     /**
      * <p>Constructs new <code>ContestReceiptDTO</code> instance. This implementation does nothing.</p>
@@ -482,5 +498,25 @@ public class ContestReceiptDTO implements Serializable {
      */
     public void setEntries(List<ContestReceiptEntry> entries) {
         this.entries = entries;
+    }
+
+    /**
+     * Gets the estimation cost.
+     *
+     * @return the estimation cost.
+     * @since 1.4
+     */
+    public CostDTO getEstimation() {
+        return estimation;
+    }
+
+    /**
+     * Sets the estimation cost.
+     *
+     * @param estimation the estimation cost.
+     * @since 1.4
+     */
+    public void setEstimation(CostDTO estimation) {
+        this.estimation = estimation;
     }
 }

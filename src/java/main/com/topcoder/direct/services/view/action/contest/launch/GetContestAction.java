@@ -290,7 +290,7 @@ public class GetContestAction extends ContestAction {
      * <code>softwareCompetition</code> to hold the software competition.
      * </p>
      */
-    private SoftwareCompetition softwareCompetition;
+    protected SoftwareCompetition softwareCompetition;
 
     /**
      * <p>
