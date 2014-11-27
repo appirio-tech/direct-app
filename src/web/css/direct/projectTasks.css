@@ -1281,10 +1281,7 @@
 #addProjectTaskSuccessModal .buttonArea .button6, #addProjectTaskListSuccessModal .buttonArea .button6, #editProjectTaskListSuccessModal .buttonArea .button6, #resolveTaskListSuccessModal .buttonArea .button6 {
 	width: 48px;
 }
-#addProjectTaskSuccessModal .buttonArea .button6 span.right, #addProjectTaskListSuccessModal .buttonArea .button6 span.right, #editProjectTaskListSuccessModal .buttonArea .button6 span.right, #resolveTaskListSuccessModal .buttonArea .button6 span.right {
-    padding: 0 10px;
-	text-align: center;
-}
+
 #addProjectTaskListModal, #editProjectTaskListModal{
 	width: 647px;
 }
