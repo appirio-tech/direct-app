@@ -21,7 +21,7 @@
     float: right;
     top: 40px;
     right: 0;
-    margin-right: 20px;
+    margin-right: 25px;
 }
 
 #area1 .buttonBar.bottom {
@@ -81,6 +81,7 @@
     font-size: 12px;
     height: 26px;
     line-height: 26px;
+    margin-left: 25px;
 }
 
 #area1 .buttonBar div.postpone input.days {
