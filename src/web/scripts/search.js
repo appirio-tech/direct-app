@@ -407,6 +407,26 @@ $(document).ready(function() {
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['rating-asc'] = function (a, b) {
+        a=a.replace(/\D/g,'');
+        b=b.replace(/\D/g,'');
+        if (a==""){var x=0}else
+            var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        if (b==""){var y=0}else
+            var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['rating-desc'] = function (a, b) {
+        a=a.replace(/\D/g,'');
+        b=b.replace(/\D/g,'');
+        if (a==""){var x=0}else
+            var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        if (b==""){var y=0}else
+            var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
     jQuery.fn.dataTableExt.oSort['submission-number-asc'] = function (a, b) {
         var ah = trim(a.replace(/(<([^>]+)>)/ig, ""));
         var ahs = ah.split(":");
@@ -1062,7 +1082,7 @@ $(document).ready(function() {
         ],
         "aoColumns": [
             { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "rating" },
             { "sType": "reliability" },
             { "sType": "date-direct" },
             { "sType": "date-direct" }
