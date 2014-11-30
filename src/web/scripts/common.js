@@ -593,8 +593,8 @@ function showConfirmation(title, message, yesText, yesHandler) {
  * @since 1.3
  */
 function clearAddNewProjectForm() {
-    $('#addNewProjectModal').find('input[name="newProjectName"]').val('');
-    $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val('');
+    $('#addNewProjectModal').find('input[name="newProjectName"]').val('').removeClass('invalid').parent().find('.errorMessage').text('');
+    $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val('').removeClass('invalid').parent().find('.errorMessage').text('');
 }
 
 /*BUGR-4512*/

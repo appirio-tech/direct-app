@@ -3026,15 +3026,23 @@ A.buttonRed1:hover span {
     border-bottom: 3px solid #ff8a00;
 
 }
+
+.modalBody div.notes {
+    text-align: right;
+    font-size: 11px;
+    padding-right: 30px;
+    padding-bottom: 8px;
+}
+
 #addNewProjectModal .modalBody .noticeContent {
-    padding-top: 35px;
-    height: 184px;
+    padding-top: 10px;
+    height: 230px;
     width: auto;
     padding-left: 26px;
 }
 
 #addNewProjectModal .modalBody .noticeContent .modalRow {
-    padding-bottom: 8px;
+    padding-bottom: 14px;
     min-height: 10px;
 }
 

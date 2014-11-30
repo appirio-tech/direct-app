@@ -427,16 +427,21 @@
 
             <div class="modalBody">
                 <div class="noticeContent">
-                    <div class="modalRow">
-                        <label>Name:</label>
-                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
-
-                        <div class="clearFix"></div>
+                    <div class="modalRow notes">All fields
+                        marked with <span class="red">*</span> are mandatory
                     </div>
                     <div class="modalRow">
-                        <label>Description:</label>
+                        <label>Name:<span class="red">*</span></label>
+                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
+                        <div class="clearFix"></div>
+                        <span class="errorMessage" style="float:right;padding-right:60px"></span>
+                    </div>
+                    <div class="modalRow">
+                        <label>Description:<span class="red">*</span></label>
                         <textarea id="newProjectDescription" name="newProjectDescription" class="textField" rows=""
                                   cols=""></textarea>
+                        <div class="clearFix"></div>
+                        <span class="errorMessage" style="float:right;padding-right:60px"></span>
                     </div>
                 </div>
 
@@ -1904,23 +1909,27 @@
 
                 <!-- content -->
                 <div class="modalBody">
+
                     <ul>
+                        <div class="modalRow notes">All fields
+                            marked with <span class="red">*</span> are mandatory
+                        </div>
                         <li>
-                            <label>Name :</label>
+                            <label>Name <span class="red">*</span>:</label>
                             <div class="right">
                                 <input type="text"  name="projectName" class="text limitText" />
                                 <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
                             </div>
                         </li>
                         <li>
-                            <label>Description :</label>
+                            <label>Description<span class="red">*</span> :</label>
                             <div class="right">
                                 <textarea cols="10" rows="5" name="projectDesc"></textarea>
                                 <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
                             </div>
                         </li>
                         <li class="dateLine">
-                            <label>Due Date :</label>
+                            <label>Due Date<span class="red">*</span> :</label>
                             <div class="right">
                                 <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
                                 <span class="errorMessage" style="float:none"></span>
