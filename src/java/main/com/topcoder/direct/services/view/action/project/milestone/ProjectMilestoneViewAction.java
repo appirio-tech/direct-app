@@ -122,13 +122,36 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
     protected void executeAction() throws Exception {
 
         // set responsible person data
-        final List<ResponsiblePerson> allResponsiblePeople = getMilestoneResponsiblePersonService().getAllResponsiblePeople(getFormData().getProjectId());
-        getViewData().setResponsiblePersons(allResponsiblePeople);
+        getViewData().setResponsiblePersons(getProjectResponsiblePerson(getFormData().getProjectId()));
 
         getSessionData().setCurrentSelectDirectProjectID(
                 getFormData().getProjectId());
         getSessionData().setCurrentProjectContext(DataProvider.createProjectBriefDTO(getFormData().getProjectId(),
                 getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId()).getName()));
+    }
+
+
+    /**
+     * Get project responsible person which is all the person with permission on the project
+     *
+     * @param directProjectId the direct project id.
+     * @return the list of responsible person.
+     * @throws Exception if any error.
+     */
+    private List<ResponsiblePerson> getProjectResponsiblePerson(long directProjectId) throws Exception {
+        List<ResponsiblePerson> result = new ArrayList<ResponsiblePerson>();
+
+        List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
+                DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+
+        for (Permission p : permissionsByProject) {
+            ResponsiblePerson rp = new ResponsiblePerson();
+            rp.setUserId(p.getUserId());
+            rp.setName(p.getUserHandle());
+            result.add(rp);
+        }
+
+        return result;
     }
 
     /**
@@ -143,14 +166,13 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
         try {
 
             if (getFormData().getProjectId() > 0) {
-                List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
-                        DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+                List<ResponsiblePerson> responsiblePersons = getProjectResponsiblePerson(getFormData().getProjectId());
 
 
-                for (Permission p : permissionsByProject) {
+                for (ResponsiblePerson p : responsiblePersons) {
                     Map<String, Object> data = new HashMap<String, Object>();
                     data.put("userId", p.getUserId());
-                    data.put("name", p.getUserHandle());
+                    data.put("name", p.getName());
                     result.add(data);
                 }
             }
