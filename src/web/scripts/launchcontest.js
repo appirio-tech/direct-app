@@ -518,6 +518,11 @@ $(document).ready(function() {
         $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
     });
 
+    $('#addNewProjectModal input, #addNewProjectModal textarea').focus(function () {
+        $(this).removeClass("invalid");
+        $(this).parent().find(".errorMessage").text('');
+    });
+
     // round types
     $('#roundTypes').bind("change", function () {
         var contestType = getContestType(true)[0];
@@ -1072,10 +1077,48 @@ function resetFileTypes(studioSubtypeId) {
     $('#deliverablesCheckboxs').html(html);
 }
 
+var validateNewProjectModalInput = function (modalId) {
+    var modal = $("#" + modalId);
+    var passValidation = true;
+
+    // name, description are required
+    if ($.trim(modal.find("input[name='newProjectName']").val()) == '') {
+        passValidation = false;
+        modal.find("input[name='newProjectName']").addClass('invalid').parent().find(".errorMessage").text('Project Name cannot be empty');
+    }
+    else if (containTags($.trim(modal.find("input[name='newProjectName']").val()))) {
+        passValidation = false;
+        modal.find("input[name='newProjectName']").addClass('invalid').parent().find(".errorMessage").text('Project Name cannot contain HTML tags');
+    }
+    else {
+        modal.find("input[name='newProjectName']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    if ($.trim(modal.find("textarea[name='newProjectDescription']").val()) == '') {
+        passValidation = false;
+        modal.find("textarea[name='newProjectDescription']").addClass('invalid').parent().find(".errorMessage").text('Project Description cannot be empty');
+    }
+    else if (containTags($.trim(modal.find("textarea[name='newProjectDescription']").val()))) {
+        passValidation = false;
+        modal.find("textarea[name='newProjectDescription']").addClass('invalid').parent().find(".errorMessage").text('Project Description cannot contain HTML tags');
+    }
+    else {
+        modal.find("textarea[name='newProjectDescription']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    return passValidation;
+}
+
+
 /**
  * Adds a new project.
  */
 function addNewProject() {
+
+    if(!validateNewProjectModalInput('addNewProjectModal')) {
+        return;
+    }
+
     var projectName = $('#addNewProjectModal').find('input[name="newProjectName"]').val();
     var projectDescription = $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val();
 

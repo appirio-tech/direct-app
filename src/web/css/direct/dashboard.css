@@ -14035,7 +14035,7 @@ div.totalCostContainer {
 /* Styles for launch new challenge '*' mandatory fields */
 span.red {
     color: #ff0000;
-    font-weight: normal;
+    font-weight: normal !important;
     padding-left: 1px;
 }
 
