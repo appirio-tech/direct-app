@@ -98,7 +98,7 @@
             <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Review Style</strong></td>
-                <td class="sec_tab_type"><strong>: TopCoder Community Review Board<span id="rReviewStyle"></span></strong></td>
+                <td class="sec_tab_type"><strong>:&nbsp;<span id="rReviewStyle"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
