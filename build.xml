@@ -577,10 +577,6 @@
                 <include name="jboss-cache/jboss-cache-jdk50.jar" />
                 <include name="jboss-cache/jgroups.jar" />
             </fileset>
-            <fileset dir="${tcs_libdir}">
-                <include name="shared.jar" />
-                <include name="tcwebcommon.jar" />
-            </fileset>
         </copy>
     </target>
 

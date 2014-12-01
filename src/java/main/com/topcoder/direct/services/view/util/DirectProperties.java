@@ -85,6 +85,14 @@ public final class DirectProperties {
      * @since 1.1
      */
     public static String CLIENT_ID_AUTH0;
+
+    /**
+     * <p>A <code>String</code> providing the client secret in auth0.com to enable login with 
+     * social accounts like Google, Facebook.</p>
+     *
+     * @since 1.1
+     */
+    public static String CLIENT_SECRET_AUTH0;
     
 
     /**

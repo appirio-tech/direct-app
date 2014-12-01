@@ -443,6 +443,8 @@
     <property name="dom4j-1.6.1.jar" value="${poi_libdir}/ooxml-lib/dom4j-1.6.1.jar"/>
     <property name="xmlbeans-2.3.0.jar" value="${poi_libdir}/ooxml-lib/xmlbeans-2.3.0.jar"/>
 
+    <property name="java-jwt-0.2.jar" value="${ext_libdir}/jwt/java-jwt-0.2.jar"/>
+
     <!-- Http Client libs -->
     <property name="httpclient_libdir" value="${ext_libdir}/httpclient"/>
 
@@ -642,6 +644,7 @@
         <pathelement location="${scribe.jar}"/>
         <pathelement location="${jsr311.jar}"/>
         <pathelement location="${cxf.jar}"/>
+        <pathelement location="${java-jwt-0.2.jar}"/>
     </path>
 
 </project>
