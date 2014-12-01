@@ -1203,6 +1203,23 @@ function populateTypeSection() {
         $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
         $(".matchRoundId").show();
     }
+
+    // populate review style
+    if (mainWidget.softwareCompetition.projectHeader.properties['Review Type'] && mainWidget.competitionType == "SOFTWARE") {
+        var reviewType = mainWidget.softwareCompetition.projectHeader.properties['Review Type'];
+        if(reviewType == 'INTERNAL') {
+            $("#rReviewStyle").text("Internal Review");
+            $('input[value="internal"]').attr('checked', 'checked');
+        } else if(reviewType == 'COMMUNITY') {
+            $("#rReviewStyle").text("TopCoder Community Review Board");
+            $('input[value="community"]').attr('checked', 'checked');
+        } else {
+            $("#rReviewStyle").text(reviewType);
+        }
+
+
+    }
+
 }
 
 /**
