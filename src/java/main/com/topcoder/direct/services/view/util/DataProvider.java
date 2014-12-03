@@ -2612,7 +2612,7 @@ public class DataProvider {
 
         // set the value of direct project id
         request.setProperty("tcdirectid", String.valueOf(projectId));
-        request.setProperty("uid", String.valueOf(userId));
+        //request.setProperty("uid", String.valueOf(userId));
 
         // get the activities of last 15 days
         request.setProperty("days", "15");
