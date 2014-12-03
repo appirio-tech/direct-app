@@ -135,6 +135,8 @@ public class ProjectContestsAction extends BaseDirectStrutsAction implements For
 
         if (!contests.isEmpty()) {
             getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
+        } else { 
+            return ;
         }
 
         // set the attribute of flag whether to show the contests download panel
