@@ -288,7 +288,7 @@ function renderPlatformSpecialistsReport() {
 
                     // build thead
                     var theadRow = thead.find("tr");
-                    theadRow.append($("<th></th>").text("Platform Specialist"));
+                    theadRow.append($("<th></th>").text("Expert Services"));
                     var categories = [];
                     var seriesData = [];
                     $("a.selectMonth").each(function(){
