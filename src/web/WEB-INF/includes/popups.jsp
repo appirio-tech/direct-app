@@ -428,15 +428,17 @@
             <div class="modalBody">
                 <div class="noticeContent">
                     <div class="modalRow">
-                        <label>Name:</label>
-                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
+                        <label>Name:</label>newProjectName
+                        <input type="text" class="text validateLength" id="newProjectName" name="newProjectName" maxlength="60" oninput="javascript: var x = document.getElementById('newProjectName');var y = document.getElementById('newProjectNameCharCountSpan'); y.value= x.value.length;"/>
+                        <span class="hintTxt"><span class="customKeyError" id="newProjectNameCharCountSpan"></span> characters remaining.</span>
 
                         <div class="clearFix"></div>
                     </div>
                     <div class="modalRow">
                         <label>Description:</label>
-                        <textarea id="newProjectDescription" name="newProjectDescription" class="textField" rows=""
-                                  cols=""></textarea>
+                        <textarea id="newProjectDescription" name="newProjectDescription" class="textField validateLength" rows=""
+                                  cols="" maxlength="2000" oninput="javascript: var x = document.getElementById('newProjectDescription');var y = document.getElementById('newProjectDescriptionCharCountSpan'); y.value= x.value.length;"></textarea>
+                        <span class="hintTxt"><span class="customKeyError" id="newProjectDescriptionCharCountSpan"></span> characters remaining.</span>
                     </div>
                 </div>
 
