@@ -382,7 +382,8 @@
                <div class="startEtSelect">
                	<select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                </div>
-               <span>EST (UTC-05)</span>
+               <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                     pattern="z" timeZone="${defaultTimeZone}"/></span>
              </div>
 
                 <div id="checkPointEndDateEditDiv" class="row">
@@ -391,7 +392,8 @@
                     <div class="endEtSelect">
                         <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                     </div>
-                    <span>ET (UTC-05)</span>
+                    <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
                 </div>
 
                 <div id="endDateEditDiv" class="row software">
@@ -400,7 +402,8 @@
                     <div class="endEtSelect">
                         <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                     </div>
-                    <span>ET (UTC-05)</span>
+                    <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
                 </div>
 
              </div><!-- end .schedule -->

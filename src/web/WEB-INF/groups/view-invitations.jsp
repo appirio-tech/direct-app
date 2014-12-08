@@ -172,13 +172,13 @@
 											<td><s:property value="groupMember.group.name"/></td>
 											<td><s:if test="not groupMember.useGroupDefault"><s:property value="groupMember.specificPermission"/></s:if>
 											    <s:else><s:property value="groupMember.group.defaultPermission"/></s:else></td>
-											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${sentOn}" />
+											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a z" value="${sentOn}" timeZone="${defaultTimeZone}"/>
 											    ${dt}</td>
 											<td><s:if test="status+''=='REJECTED'">Rejected</s:if><s:else>
-											        <s:if test="acceptedOrRejectedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${acceptedOrRejectedOn}" />${dt}</s:if>
+											        <s:if test="acceptedOrRejectedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a z" value="${acceptedOrRejectedOn}" timeZone="${defaultTimeZone}"/>${dt}</s:if>
 											        <s:else>N/A</s:else></s:else></td>
 											<td><s:if test="status+''=='APPROVAL_REJECTED'">Rejected</s:if><s:else>
-											        <s:if test="approvalProcessedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${approvalProcessedOn}" />${dt}</s:if>
+											        <s:if test="approvalProcessedOn!=null"><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a z" value="${approvalProcessedOn}" timeZone="${defaultTimeZone}"/>${dt}</s:if>
 											        <s:else>N/A</s:else></s:else></td>
 										</tr>
 										</s:iterator>

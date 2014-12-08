@@ -152,7 +152,7 @@
                                               <div class="formText">
                                                 <div class="left">Date Submitted:</div>
                                                 <div class="right"><fmt:formatDate value="${submission.creationTimestamp}"
-                                                                                        pattern="MMM dd, yyyy, hh:mm:ss aa"/></div>
+                                                                                        pattern="MMM dd, yyyy, hh:mm:ss aa z" timeZone="${defaultTimeZone}"/></div>
                                               </div>
                                               <!-- End form Text -->
                                               <!-- form Text -->

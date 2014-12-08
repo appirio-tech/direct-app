@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
     /**
      * The date format to format the date to display in challenge data.
      */
-    private DateFormat challengeDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm 'ET (GMT -400)'");
+    private DateFormat challengeDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm z");
 
     /**
      * The mapping between display column index and column name to sort.
@@ -136,6 +137,7 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
                 result.put("sEcho", getSEcho());
 
                 List<List<String>> challengesData = new ArrayList<List<String>>();
+                challengeDateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
 
                 for (Challenge c : restResult.getContent()) {
                     List<String> challengeData = new ArrayList<String>();

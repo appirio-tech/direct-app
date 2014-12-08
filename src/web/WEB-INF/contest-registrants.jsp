@@ -102,8 +102,7 @@
                                                                     <td>
                                                                         <c:choose>
                                                                             <c:when test="${registrationDate ne null}">
-                                                                                <fmt:formatDate value="${registrationDate}"
-                                                                                                pattern="MM/dd/yyyy HH:mm"/>
+                                                                                <s:date name="registrationDate" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                                                                             </c:when>
                                                                             <c:otherwise>&minus;</c:otherwise>
                                                                         </c:choose>
@@ -111,8 +110,7 @@
                                                                     <td class="last">
                                                                         <c:choose>
                                                                             <c:when test="${submissionDate ne null}">
-                                                                                <fmt:formatDate value="${submissionDate}"
-                                                                                                pattern="MM/dd/yyyy HH:mm"/>
+                                                                                <s:date name="submissionDate" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                                                                             </c:when>
                                                                             <c:otherwise>&minus;</c:otherwise>
                                                                         </c:choose>

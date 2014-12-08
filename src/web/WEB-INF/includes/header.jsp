@@ -10,3 +10,5 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <hidden:token/>
 <jsp:include page="newHeader.jsp"/>
+<s:set name="defaultTimeZone" value="defaultTimeZone"/>
+<s:set name="defaultDateTimeFormat" value="defaultDateTimeFormat"/>

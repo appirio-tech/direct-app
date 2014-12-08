@@ -85,6 +85,8 @@
     <script type="text/javascript" src="/scripts/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/assets.js"></script>
     <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
@@ -154,7 +156,7 @@
                 <p><c:out
                         value="${tcdirect:fileSizeDisplay(currentVersion.fileSizeBytes)}"/> Version <s:property value="currentVersion.version"/></p>
                 <p>Uploaded by: <link:user userId="${currentVersion.uploader.id}"/></p>
-                <p><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT</p>
+                <p><s:date name="currentVersion.uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/> </p>
             </div>
             <div class="selectCategory">
                 <label>Category :</label>

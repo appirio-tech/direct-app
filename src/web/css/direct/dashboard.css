@@ -8262,7 +8262,7 @@ table.resultTable td.last a img {
 }
 
 .dashboardModule .content .progressContainer li .phaseDate p {
-    width: 128px;
+    width: 140px;
     padding: 0;
 }
 
@@ -11557,7 +11557,7 @@ TABLE.softwareStatsApproval {
 }
 
 #timeLineTip.tooltipContainer {
-    width: 150px;
+    width: 162px;
 }
 
 #timeLineTip.tooltipContainer SPAN.arrow {

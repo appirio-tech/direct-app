@@ -13,6 +13,7 @@ import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
+import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
@@ -127,6 +128,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -1629,6 +1631,7 @@ public final class DirectUtils {
             return null;
         }
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        dateFormat.setTimeZone(TimeZone.getTimeZone(AbstractAction.TIMEZONE));
         return dateFormat.format(date);
     }
 

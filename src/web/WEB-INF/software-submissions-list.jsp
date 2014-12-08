@@ -170,7 +170,7 @@
                                                                   <s:property value="uploadId"/>
                                                                 </td>
                                                                <td>
-                                                                    <s:date name="finalFixDate" format="MM.dd.yyyy"/>
+                                                                    <s:date name="finalFixDate" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                                                                </td>
                                                                <td>
                                                                   <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>
@@ -372,7 +372,7 @@
                                                             </td>
                                                             <td>
                                                                 <fmt:formatDate value="${submission.submissionDate}"
-                                                                                pattern="MM.dd.yyyy HH:mm:ss"/>
+                                                                                pattern="MM.dd.yyyy HH:mm:ss a z" timeZone="${defaultTimeZone}"/>
                                                             </td>
                                                             <s:if test="viewData.contestStats.contest.typeId != 38">
                                                                 <td>
@@ -532,7 +532,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <fmt:formatDate value="${submission.submissionDate}"
-                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST
+                                                                                        pattern="MM/dd/yyyy HH:mm a z" timeZone="${defaultTimeZone}"/>
                                                                     </td>
                                                                 </tr>
                                                                 </c:forEach>
@@ -597,7 +597,7 @@
                                                                                 submissionId="${submission.submissionId}"
                                                                                 styleClass="submission">#${submission.submissionId}</link:onlineReviewDownloadSubmission> 
                                                                         <p class="time"><fmt:formatDate value="${submission.submissionDate}"
-                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST</p>
+                                                                                                        pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
                                                                     </td>
                                                                     <td class="fbTd">
                                                                         <div class="fbMask">
@@ -688,7 +688,7 @@
                                                                                 submissionId="${submission.submissionId}"
                                                                                 styleClass="submission">#${submission.submissionId}</link:onlineReviewDownloadSubmission> 
                                                                         <p class="time"><fmt:formatDate value="${submission.submissionDate}"
-                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST</p>
+                                                                                                        pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
                                                                     </td>
                                                                     <td>
                                                                         <span class="prizes">

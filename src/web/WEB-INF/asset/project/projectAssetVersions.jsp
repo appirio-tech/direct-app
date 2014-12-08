@@ -82,6 +82,8 @@
     <script type="text/javascript" src="/scripts/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/assets.js"></script>
     <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
@@ -176,7 +178,7 @@
                         <link:user userId="${uploader.id}"/>
                     </td>
                     <td class="timeCell">
-                        <div class="time"><s:date name="uploadTime" format="MM/dd/yyyy HH:mm"/> EDT</div>
+                        <div class="time"><s:date name="uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/></div>
                     </td>
                     <td class="managementCell">
                         <a class="action" href="javascript:;"><span class="ico">Action</span></a>

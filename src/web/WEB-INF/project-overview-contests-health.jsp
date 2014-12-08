@@ -44,7 +44,7 @@
         <td class="alignTop">
             <div class="unitContent dateNotice"><c:out value="${nextPhaseName}"/>&nbsp;</div>
             <div class="unitContent dateFullFormat">
-                <fmt:formatDate value="${pageScope.nextPhaseStartTime}" pattern="MM/dd/yyyy HH:mm"/>
+                <fmt:formatDate value="${pageScope.nextPhaseStartTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
             </div>
         </td>
         <%-- Timeline --%>
@@ -86,8 +86,8 @@
                         </c:choose>
                     </h3>
                     <s:if test="%{#attr['value'].dashboardData.nextPhase != null}">
-                        <p>Start Time: <fmt:formatDate value="${pageScope.currentPhaseStartTime}" pattern="MM/dd/yyyy HH:mm"/></p>
-                        <p>End Time: <fmt:formatDate value="${pageScope.currentPhaseEndTime}" pattern="MM/dd/yyyy HH:mm"/></p>
+                        <p>Start Time: <fmt:formatDate value="${pageScope.currentPhaseStartTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
+                        <p>End Time: <fmt:formatDate value="${pageScope.currentPhaseEndTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
                     </s:if>
                 </div><!-- End .tooltipContent -->
                 

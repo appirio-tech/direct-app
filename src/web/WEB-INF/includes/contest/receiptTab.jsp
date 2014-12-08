@@ -35,7 +35,7 @@
                                                         <tbody><tr>
                                                             <th>Date :</th>
                                                             <td><fmt:formatDate value="<%= new java.util.Date()%>"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/></td>
+                                                                                pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Competition Type :</th>
@@ -55,7 +55,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Launch Time :</th>
-                                                            <td><fmt:formatDate value="${viewData.contestStats.startTime}" pattern="MM/dd/yyyy HH:mm zzz-05"/></td>
+                                                            <td><fmt:formatDate value="${viewData.contestStats.startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Launch By :</th>
@@ -248,7 +248,7 @@
                                                         <tbody><tr>
                                                             <th>Date :</th>
                                                             <td><fmt:formatDate value="<%= new java.util.Date()%>"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/></td>
+                                                                                pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Competition Type :</th>
@@ -269,7 +269,7 @@
                                                         <tr>
                                                             <th>Launch Time :</th>
                                                             <td><fmt:formatDate value="${viewData.contestStats.startTime}"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/></td>
+                                                                                pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Launch By :</th>

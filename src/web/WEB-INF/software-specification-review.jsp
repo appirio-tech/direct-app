@@ -202,7 +202,7 @@
                                                                                             <p><span class="text_reviewer_handle">${commentBy}: </span>(
                                                                                             <c:choose>
                                                                                                 <c:when test="${commentDate ne null}">
-                                                                                                    <fmt:formatDate value="${commentDate}" pattern="MM/dd/yyyy HH:mm"/>
+                                                                                                    <fmt:formatDate value="${commentDate}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                                                                                                 </c:when>
                                                                                                 <c:otherwise>00/00/0000 00.00</c:otherwise>
                                                                                             </c:choose>
@@ -230,7 +230,7 @@
                                                                                                     </c:if>
                                                                                                     comment: 
                                                                                                 </span>
-                                                                                                <span class="date_field">(<fmt:formatDate value="${commentDate}" pattern="MM/dd/yyyy HH:mm"/>)</span>
+                                                                                                <span class="date_field">(<fmt:formatDate value="${commentDate}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>)</span>
                                                                                             </p>
                                                                                             <p class="comment_field">
                                                                                                 ${comment}

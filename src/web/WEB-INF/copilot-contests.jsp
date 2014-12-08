@@ -186,10 +186,11 @@
                                                         <a href="../projectOverview?formData.projectId=${contest.contest.project.id}"><c:out value="${contest.contest.project.name}" /></a>
                                                     </td>
                                                     <td>
-                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${contest.startTime}"/> ET (GMT-400)
+                                                        <fmt:formatDate value="${contest.startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                                                     </td>
                                                     <td>
-                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${contest.endTime}"/> ET (GMT-400)
+                                                        <fmt:formatDate value="${contest.endTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
+
                                                     </td>
                                                     <td>
                                                         <a href="<s:url namespace="/copilot" action="listCopilotContestRegistrants">

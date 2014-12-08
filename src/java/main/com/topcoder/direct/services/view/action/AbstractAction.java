@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
@@ -40,13 +40,40 @@ import javax.servlet.http.HttpSession;
  *  </li>
  * </p>
  *
+ * <p>
+ *  Version 1.3 (TopCoder Direct - Change Date Time suffix label)
+ *  <ul>
+ *      <li>Added {@link #TIMEZONE} and its getter</li>
+ *      <li>Added {@link #DEFAULT_DATE_TIME_FORMAT} and its getter</li>
+ *      <li>Added {@link #DEFAULT_DATE_FORMAT} and its getter</li>
+ *  </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public abstract class AbstractAction extends ActionSupport implements TopCoderDirectAction, Preparable {
 
+    /**
+     * The default time zone for the direct application.
+     *
+     * @since 1.3
+     */
+    public static String TIMEZONE = "America/New_York";
 
+    /**
+     * The default date time format.
+     *
+     * @since 1.3
+     */
+    public static String DEFAULT_DATE_TIME_FORMAT = "MM/dd/yyyy HH:mm z";
 
+    /**
+     * The default date format.
+     *
+     * @since 1.3
+     */
+    public static String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
     /**
      * <p>A <code>RequestData</code> providing the access to request mapped to this action.</p>
@@ -343,4 +370,36 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
         return ActionContext.getContext().getActionInvocation().getResult() instanceof CustomFormatAJAXResult;
     }
 
+    /**
+     * Gets the default time zone.
+     *
+     * @return the default time zone.
+     * @since 1.3
+     */
+    public String getDefaultTimeZone() {
+
+        return TIMEZONE;
+    }
+
+    /**
+     * Gets the default date time format.
+     *
+     * @return the default date time format.
+     * @since 1.3
+     */
+    public String getDefaultDateTimeFormat() {
+
+        return DEFAULT_DATE_TIME_FORMAT;
+    }
+
+    /**
+     * Gets the default date format.
+     *
+     * @return the default date format.
+     * @since 1.3
+     */
+    public String getDefaultDateFormat() {
+
+        return DEFAULT_DATE_FORMAT;
+    }
 }

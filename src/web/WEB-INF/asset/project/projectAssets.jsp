@@ -85,6 +85,8 @@
     <script type="text/javascript" src="/scripts/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/assets.js"></script>
     <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 
@@ -384,7 +386,7 @@ mind that some features are not implemented yet.  For a full description of what
                         </td>
                         <td class="categoryCell"><strong><s:property value="categories[0].name"/></strong></td>
                         <td class="uploaderCell"><link:user userId="${currentVersion.uploader.id}"/></td>
-                        <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT
+                        <td class="dateCell"><s:date name="currentVersion.uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                         </td>
                         <td class="managementCell">
                             <a class="action" href="javascript:;"><span class="ico">Action</span></a>
@@ -677,7 +679,7 @@ mind that some features are not implemented yet.  For a full description of what
                         </td>
                         <td class="categoryCell"><strong><s:property value="categories[0].name"/></strong></td>
                         <td class="uploaderCell"><link:user userId="${currentVersion.uploader.id}"/></td>
-                        <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT</td>
+                        <td class="dateCell"><s:date name="currentVersion.uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/></td>
                         <td class="managementCell">
                             <a class="action" href="javascript:;"><span class="ico">Action</span></a>
                             <div class="actionMenu hide">
@@ -940,7 +942,7 @@ mind that some features are not implemented yet.  For a full description of what
                 </div>
             </td>
             <td class="categoryCell"><strong><s:property value="categories[0].name"/></strong></td>
-            <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT
+            <td class="dateCell"><s:date name="currentVersion.uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
             </td>
             <td class="managementCell">
                 <a class="action" href="javascript:;"><span class="ico">Action</span></a>
@@ -1197,7 +1199,7 @@ mind that some features are not implemented yet.  For a full description of what
                 </div>
             </td>
             <td class="categoryCell"><strong><s:property value="categories[0].name"/></strong></td>
-            <td class="dateCell"><s:date name="currentVersion.uploadTime" format="MM/dd/yyyy HH:mm"/> EDT</td>
+            <td class="dateCell"><s:date name="currentVersion.uploadTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/></td>
             <td class="managementCell">
                 <a class="action" href="javascript:;"><span class="ico">Action</span></a>
                 <div class="actionMenu hide">

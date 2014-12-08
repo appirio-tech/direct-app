@@ -397,7 +397,7 @@
                                                                     <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
                                                                     <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
                                                                     <br>
-                                                                    <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
+                                                                    <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm a z" timezone="defaultTimeZone"/></span>
                                                                 </p>
 
                                                                 <s:if test="inReviewPhase">
@@ -609,7 +609,7 @@
                                                                         </link:onlineReviewDownloadSubmission>
                                                                         <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
                                                                         <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
-                                                                        <br> <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
+                                                                        <br> <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm a z" timezone="defaultTimeZone"/></span>
                                                                         <span class="tl corner"></span> <span class="tr corner"></span>
                                                                         <span class="bl corner"></span> <span class="br corner"></span>
                                                                     </div>

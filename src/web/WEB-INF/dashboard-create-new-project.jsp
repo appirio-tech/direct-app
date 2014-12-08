@@ -43,6 +43,8 @@
     <link rel="stylesheet" href="/css/direct/ganttchart.css?v=198728" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=210661"></script>
     <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=209663"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
 	<script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
 	<script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
     <script type="text/javascript">

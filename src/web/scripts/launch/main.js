@@ -1476,7 +1476,7 @@ function getDocumentIds(docs) {
  * @return Date object
  */
 function getDate(datePart, timePart) {
-   return Date.parse(datePart+' '+timePart,'MM/dd/yyyy HH:mm EST');
+    return Date.parse(datePart + ' ' + timePart, 'MM/dd/yyyy HH:mm EST');
 }
 
 function formatDateForRequest(d) {
@@ -1491,7 +1491,10 @@ function formatDateForReview(d) {
    if(d == null) {
       return null;
    }
-   return d.toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (UTC-05)');
+
+    var dateTime = moment.tz(d.toString("MM/dd/yyyy HH:mm"), "America/New_York");
+
+    return dateTime.format('MM/DD/YYYY [at] HH:mm z');
 }
 
 function getDatePart(d) {
@@ -1518,7 +1521,7 @@ function getRoundedTime(d) {
 function getServerTime() {
     var d = new Date();
     var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-    return new Date(utc -5 * 3600000); // TC time
+    return new Date(utc - 5 * 3600000); // TC time
 }
 
 /**

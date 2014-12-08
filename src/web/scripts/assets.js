@@ -1784,7 +1784,7 @@ $(document).ready(function(){
 
 
                         // set upload time
-                        $("#editFileDetails .fileDetails .date").text(result.uploadTime + " EDT");
+                        $("#editFileDetails .fileDetails .date").text(formatDateString(result.uploadTime, '|'));
 
 
 
@@ -2395,7 +2395,7 @@ function populateUploadItem(item, json) {
     item.find("p.fileName").text(handleLongFileName(json.fileName, 80));
     item.find("span.size").text(json.fileSizeDisplay);
     item.find("span.uploader").text(json.uploader);
-    item.find("p.uploadTime").text(json.uploadTime + ' EDT');
+    item.find("p.uploadTime").text(formatDateString(json.uploadTime, '|'));
     item.data("uploadSessionKey", json.uploadSessionKey);
     item.find(".icon-file img").attr('src', '/images/icon-' + json.uploadFileTypeIcon + '.png').attr('alt',
         json.uploadFileTypeIcon);
@@ -2415,10 +2415,24 @@ function populateUploadNewVersion(item, json) {
     item.find("a.fileName").text(handleLongFileName(json.fileName, 28)).attr('title', json.fileName);
     item.find(".versionSection ul span").text(json.fileSizeDisplay);
     item.find(".uploadBy a").text(json.uploader);
-    item.find("p.date").text(json.uploadTime + ' EDT');
+    item.find("p.date").text(formatDateString(json.uploadTime, '|'));
     item.find(".icon-file img").attr('src', '/images/icon-' + json.uploadFileTypeIcon + '.png').attr('alt',
         json.uploadFileTypeIcon);
     item.find(".version").text("Version " + $("#uploadFinish").data("newVersionNumber")).addClass("modifyVersion");
     item.data("uploadSessionKey", json.uploadSessionKey);
+}
+
+function formatDateString(ds, separator) {
+    if(ds == null) {
+        return "";
+    }
+
+    if(!separator) {
+        separator = 'at';
+    }
+
+    var dateTime = moment.tz(ds.replace('|', ''), "America/New_York");
+
+    return dateTime.format('MM/DD/YYYY [' + separator + '] HH:mm z');
 }
 

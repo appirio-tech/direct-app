@@ -35,6 +35,8 @@
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=215325"></script>
 
