@@ -32,6 +32,8 @@ import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import org.apache.struts2.ServletActionContext;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -449,7 +451,7 @@ public class GetContestAction extends ContestAction {
         if(DirectUtils.isMM(softwareCompetition)) {
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
 
-            if(roundId != null) {
+            if(roundId != null && !roundId.equals("") && NumberUtils.isNumber(roundId)) {
                 hasRoundId = true;
                 viewData.setRoundId(Long.valueOf(roundId));
                 MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
