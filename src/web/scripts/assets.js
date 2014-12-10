@@ -2431,7 +2431,7 @@ function formatDateString(ds, separator) {
         separator = 'at';
     }
 
-    var dateTime = moment.tz(ds.replace('|', ''), "America/New_York");
+    var dateTime = moment.tz(new Date(ds.replace('|', '')).toString("yyyy-MM-dd HH:mm"), "America/New_York");
 
     return dateTime.format('MM/DD/YYYY [' + separator + '] HH:mm z');
 }
