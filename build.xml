@@ -382,6 +382,7 @@
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/scorecard/**/*.*"/>
+                <include name="scripts/my/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
                 <include name="scripts/ckeditor/templates/**/*.*"/>
             </fileset>
