@@ -1,7 +1,7 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141, GreatKevin, TCSASSEMBLER
-  - Version: 2.5
+  - Author: GreatKevin, tangzx, GreatKevin, Blues, Ghost_141, GreatKevin, Veve
+  - Version: 2.6
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
@@ -33,6 +33,9 @@
   -
   - Version 2.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
   - - Rebranding the copilot and reporting related pages.
+  -
+  - Version 2.6 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -120,6 +123,8 @@
     <script type="text/javascript" src="/scripts/jsganttPlanner.js"></script>
     <link rel="stylesheet" href="/css/direct/projectPlanner.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/projectPlanner.js"></script>
+    <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
+
     <jsp:include page="includes/paginationSetup.jsp"/>
     <script type="text/javascript">
         $(document).ready(function(){

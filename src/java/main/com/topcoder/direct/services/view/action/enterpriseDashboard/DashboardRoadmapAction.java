@@ -7,7 +7,7 @@ import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.dashboard.calendar.DashboardMilestoneCalendarDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.DataProvider;

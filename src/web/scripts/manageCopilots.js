@@ -366,13 +366,21 @@ $(function() {
         return operations;
     }
     
+    $('#copilotManageModal .saveButton').unbind("click");
+    
  // save the project copilots information
-    $('#copilotManageModal .saveButton').live('click', function() {
+    $('#copilotManageModal .saveButton').click(function() {
 
         var request = {
             copilotProjectOperations : getCopilotWidgetOperations()
         };
 
+        // if there is no change, show error message
+        if (request.copilotProjectOperations.length == 0) {
+            showErrors("Please add or remove copilot before you click SAVE");
+            return false;
+        }
+        
         modalAllClose();
         modalPreloader();
 
@@ -380,7 +388,7 @@ $(function() {
             type : 'post',
             url : 'processCopilotProjects',
             cache : false,
-            data : request,
+            data : setupTokenRequest(request, getStruts2TokenName()),
             dataType : 'json',
             success : function(result) {
                 modalAllClose();
@@ -389,6 +397,8 @@ $(function() {
                     showErrors(result.error.errorMessage);
                     return;
                 }
+
+                // no need to refresh the token because the page will be refreshed
                 location.reload(true);
                 hanldeCopilotProjectOperationsResult(result);
                 
@@ -535,7 +545,7 @@ function processCopilotProjectOperations(operations, isRemove) {
         type : 'post',
         url : 'processCopilotProjects',
         cache : false,
-        data : request,
+        data : setupTokenRequest(request, getStruts2TokenName()),
         dataType : 'json',
         success : function(result) {
             modalClose();

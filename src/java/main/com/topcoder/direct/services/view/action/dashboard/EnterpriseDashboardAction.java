@@ -5,10 +5,15 @@ package com.topcoder.direct.services.view.action.dashboard;
 
 import com.topcoder.clients.model.AuditableEntity;
 import com.topcoder.clients.model.Project;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.dashboard.*;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardAggregatedStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatPeriodType;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardSummary;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.EnterpriseDashboardForm;
@@ -17,12 +22,22 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -119,9 +134,15 @@ import javax.servlet.http.HttpServletRequest;
  *     <li>Updated {@link #getOptionsForClient()} to return all the projects of the user if the client id is 0</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 2.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
- * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, GreatKevin
- * @version 2.4
+ * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, GreatKevin, Veve
+ * @version 2.5
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -728,26 +749,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             }
         }
 
-        // For normal request flow prepare various data to be displayed to user
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        Collections.sort(projects, new Comparator<ProjectBriefDTO>() {
-            public int compare(ProjectBriefDTO e1, ProjectBriefDTO e2) {
-                return e1.getName().compareTo(e2.getName());
-            }
-        });
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
-        // Set current project contests
-        ProjectBriefDTO currentProject = this.sessionData.getCurrentProjectContext();
-        if (currentProject != null) {
-            List<TypedContestBriefDTO> contests
-                = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
-            this.sessionData.setCurrentProjectContests(contests);
-        }
-        
         // Build the result for consumption by JSON serializer in case of AJAX calls
         if (isAJAXCall) {
      

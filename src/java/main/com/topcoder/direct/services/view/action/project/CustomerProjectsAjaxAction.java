@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -25,8 +25,14 @@ import java.util.Map;
  *     - Add the current project id, current project name and the contests of current project data in the return.
  * </p>
  *
- * @version 1.1
- * @author hohosky, TCSASSEMBLER
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @version 1.2
+ * @author hohosky, Veve
  */
 public class CustomerProjectsAjaxAction extends BaseDirectStrutsAction {
 
@@ -50,29 +56,31 @@ public class CustomerProjectsAjaxAction extends BaseDirectStrutsAction {
         if (currentProjectContext != null) {
             currentProjectId = currentProjectContext.getId();
             currentProjectName = currentProjectContext.getName();
+        } else if (session.getCurrentSelectDirectProjectID() != null && session.getCurrentSelectDirectProjectID() > 0) {
+            currentProjectId = session.getCurrentSelectDirectProjectID();
+            currentProjectName = this.getProjectServiceFacade().getProject(currentUser, currentProjectId).getName();
         }
-
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                currentUser.getUserId(), currentProjectId);
 
         Map<String, Object> result = new HashMap<String, Object>();
         Map<String, Object> contestsResult = new HashMap<String, Object>();
 
+        if(currentProjectId > 0) {
+            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
+                    currentUser.getUserId(), currentProjectId);
 
-        for(TypedContestBriefDTO contest : contests) {
-            Map<String, Object> cmap = new HashMap<String, Object>();
-            cmap.put("title", contest.getTitle());
-            cmap.put("id", contest.getId());
-            cmap.put("status", contest.getStatus().getShortName());
-            cmap.put("type", contest.getContestType().getLetter());
+            for(TypedContestBriefDTO contest : contests) {
+                Map<String, Object> contestDataMap = new HashMap<String, Object>();
+                contestDataMap.put("title", contest.getTitle());
+                contestDataMap.put("id", contest.getId());
+                contestDataMap.put("status", contest.getStatus().getShortName());
+                contestDataMap.put("type", contest.getContestType().getLetter());
 
-            contestsResult.put(String.valueOf(contest.getId()), cmap);
+                contestsResult.put(String.valueOf(contest.getId()), contestDataMap);
+            }
         }
 
-        List<ProjectBriefDTO> projects
-                = DataProvider.getUserProjects(currentUser.getUserId());
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
+        userProjectsDTO.setProjects(DataProvider.getUserProjects(currentUser.getUserId()));
 
         result.put("projects", userProjectsDTO.getJsonDataMap());
         result.put("contests", contestsResult);

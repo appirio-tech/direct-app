@@ -19,17 +19,23 @@ if (!window.notifications) var notifications = {
     /**
      * Performs ajax call to update notification settings in back-end.
      */
-    update: function() {
+    update: function () {
         modalPreloader();
         $.ajax({
             type: 'POST',
-            url:'updateNotifications',
-            data: $('#dashboard-notifications-form').serialize(),
+            url: 'updateNotifications',
+            data: setupTokenRequest($('#dashboard-notifications-form').serialize(), getStruts2TokenName()),
             dataType: "json",
-            cache:false,
-            success:function(r) {
+            cache: false,
+            success: function (jsonResult) {
                 modalClose();
-                showSuccessfulMessage("Your notification settings have been updated.");
+                handleJsonResult2(jsonResult,
+                    function(result) {
+                        showSuccessfulMessage("Your notification settings have been updated.");
+                    },
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    });
             }
         });
     },
@@ -128,17 +134,24 @@ function savePreference() {
     });
 
     modalPreloader();
-    
+
     $.ajax({
         type: 'POST',
         url: ctx + '/preference/updatePreferences',
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         dataType: "json",
-        cache:false,
-        success:function(r) {
+        cache: false,
+        success: function (jsonResult) {
             modalClose();
-            showSuccessfulMessage("Your notification preferences have been saved.");
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    showSuccessfulMessage("Your notification preferences have been saved.");
+                },
+                function (errorMessage) {
+                    showErrors(errorMessage);
+                });
         }
+
     });
     
 }
@@ -274,7 +287,7 @@ var saveProjectForumNotifications = function() {
     $.ajax({
         type: 'POST',
         url:'updateDirectProjectNotifications',
-        data: {directProjectNotifications:request},
+        data: setupTokenRequest({directProjectNotifications:request}, getStruts2TokenName()),
         dataType: "json",
         cache:false,
         success:function(jsonResult) {

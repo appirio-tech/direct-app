@@ -12,10 +12,58 @@
     <constant name="struts.i18n.encoding" value="utf-8"></constant>
     <constant name="struts.custom.i18n.resources" value="Messages"/>
     <constant name="struts.ui.theme" value="simple"/>
-    <constant name="struts.convention.exclude.parentClassLoader" value="true" />
-    <constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip" />
-    <constant name="struts.multipart.maxSize" value="20971520" />
+    <constant name="struts.convention.exclude.parentClassLoader" value="true"/>
+    <constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip"/>
+    <constant name="struts.multipart.maxSize" value="20971520"/>
 
+
+    <package name="base" namespace="/base" extends="default">
+        <interceptors>
+            <interceptor-stack name="defaultDirectStack">
+                <interceptor-ref name="exception">
+                    <param name="logEnabled">true</param>
+                    <param name="logLevel">ERROR</param>
+                </interceptor-ref>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="params">
+                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
+                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                </interceptor-ref>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
+                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+
+            <!-- base stack -->
+            <interceptor-stack name="baseStack">
+                <interceptor-ref name="defaultDirectStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="loggingInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="baseStack"/>
+    </package>
 
 
     <package name="default" extends="ssl-default" namespace="/">
@@ -25,6 +73,7 @@
             <result-type name="image" class="com.topcoder.direct.services.view.util.result.CustomImageBytesResult">
             </result-type>
         </result-types>
+
         <interceptors>
             <interceptor name="preProcessor" class="actionPreProcessor"/>
             <interceptor name="projectAccessGuard"
@@ -43,48 +92,58 @@
             <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
             <interceptor name="securityGroupsAccessInterceptor" class="securityGroupsAccessInterceptor"/>
             <interceptor name="securityGroupsTcStaffOnlyInterceptor" class="securityGroupsTcStaffOnlyInterceptor"/>
-            <interceptor name="memberPaymentAuthorizationInterceptor" class="com.topcoder.direct.services.view.interceptor.MemberPaymentAuthorizationInterceptor"/>
+            <interceptor name="memberPaymentAuthorizationInterceptor"
+                         class="com.topcoder.direct.services.view.interceptor.MemberPaymentAuthorizationInterceptor"/>
+
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedProjectPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedProjectStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="projectAccessGuard"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedContestPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedContestStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedTCStaffStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="tcStaffAccessGuard"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedInternalStatsStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="internalStatsGuard"/>
             </interceptor-stack>
+
             <interceptor-stack name="securedDefaultStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
@@ -104,14 +163,21 @@
                 <interceptor-ref name="securityGroupsAccessInterceptor"/>
                 <interceptor-ref name="securityGroupsTcStaffOnlyInterceptor"/>
             </interceptor-stack>
+
+            <interceptor-stack name="groupTokenStack">
+                <interceptor-ref name="token"/>
+                <interceptor-ref name="groupDefaultStack"/>
+            </interceptor-stack>
+
             <interceptor-stack name="groupPublicStack">
                 <interceptor-ref name="baseStack"/>
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="securityGroupsAccessInterceptor"/>
             </interceptor-stack>
-      <interceptor-stack name="projectFeeStack">
-        <interceptor-ref name="loggingInterceptor"/>
+
+            <interceptor-stack name="projectFeeStack">
+                <interceptor-ref name="loggingInterceptor"/>
                 <interceptor-ref name="exception">
                     <param name="logEnabled">true</param>
                     <param name="logLevel">ERROR</param>
@@ -121,7 +187,7 @@
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
@@ -134,23 +200,23 @@
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
-                  <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
+                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
-        <interceptor-ref name="authnInterceptor"/>
-        <interceptor-ref name="contestFeeAccessInterceptor"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="contestFeeAccessInterceptor"/>
             </interceptor-stack>
-            
+
             <interceptor-stack name="memberPaymentStack">
                 <interceptor-ref name="baseStack"/>
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="memberPaymentAuthorizationInterceptor"/>
-            </interceptor-stack>            
+            </interceptor-stack>
         </interceptors>
 
         <default-interceptor-ref name="baseStack"/>
@@ -159,6 +225,7 @@
         <global-results>
             <result name="error">/error.jsp</result>
             <result name="permissionDenied">/error.jsp</result>
+            <result name="invalid.token">/invalidToken.jsp</result>
             <result name="anonymous">/home-redirect.jsp</result>
         </global-results>
 
@@ -200,16 +267,16 @@
 
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
             <result name="success" type="redirect">/scorecard/logout</result>
-      <!-- type="redirectAction">
-                <param name="actionName">home</param>
-                <param name="namespace">/</param>
-            </result> -->
+            <!-- type="redirectAction">
+                      <param name="actionName">home</param>
+                      <param name="namespace">/</param>
+                  </result> -->
         </action>
 
         <action name="getTopCoderRoadMap" class="publicTopCoderRoadmap">
             <interceptor-ref name="preProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="TopCoderRoadmap">
@@ -258,54 +325,56 @@
         </action>
         <action name="dashboardEnterpriseZoom" class="zoomEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="dashboardEnterpriseAJAX" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="dashboardEnterpriseHealthAJAX" class="enterpriseDashboardHealthAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
-        <action name="dashboardGetOptionsForClientAJAX" method="getOptionsForClient" class="ajaxEnterpriseDashboardAction">
+        <action name="dashboardGetOptionsForClientAJAX" method="getOptionsForClient"
+                class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        <action name="dashboardGetOptionsForBillingAJAX" method="getOptionsForBilling" class="ajaxEnterpriseDashboardAction">
+        <action name="dashboardGetOptionsForBillingAJAX" method="getOptionsForBilling"
+                class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="dashboardGetCostBreakDownAJAX" method="getCostBreakDown" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="dashboardEnterpriseTableViewCall" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="dashboardEnterpriseDrillTableCall" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="dashboardEnterpriseVolumeView" class="dashboardEnterpriseVolumeView">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="zoomEnterpriseDashboardVolumeView" class="zoomEnterpriseDashboardVolumeView">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="dashboardMilestoneCalendar" class="dashboardMilestoneCalendar">
@@ -315,8 +384,8 @@
 
         <action name="dashboardSendFeedback" class="dashboardSendFeedback">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
@@ -324,7 +393,7 @@
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
 
-         <action name="createNewProject" class="viewCreateNewProjectAction">
+        <action name="createNewProject" class="viewCreateNewProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
         </action>
@@ -451,13 +520,17 @@
                 <param name="namespace">/</param>
             </result>
         </action>
+
         <action name="updateDirectProjectStatus" class="updateProjectStatusAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="createProjectAndContest" class="com.topcoder.direct.services.view.action.project.CreateProjectAndAddContestAction">
+        <action name="createProjectAndContest"
+                class="com.topcoder.direct.services.view.action.project.CreateProjectAndAddContestAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">
                 <param name="actionName">home</param>
@@ -499,62 +572,62 @@
 
         <action name="getTaskLists" method="getTaskLists" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="updateTaskList" method="updateTaskList" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="deleteTaskList" method="deleteTaskList" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="resolveTaskList" method="resolveTaskList" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="addTask" method="addNewTask" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getTask" method="getTask" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="updateTask" method="updateTask" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="toggleTask" method="toggleTask" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="removeTask" method="removeTask" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="addTaskList" method="addTaskList" class="projectTasksAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="batchDraftContestsEdit" class="batchDraftContestsEditAction">
@@ -563,23 +636,29 @@
         </action>
 
         <action name="removeDraftContests" method="removeDraftContests" class="batchDraftContestsEditAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="updateDraftContests" method="updateDraftContests" class="batchDraftContestsEditAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="projectContestsCalendar" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
+        <action name="projectContestsCalendar"
+                class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/contests-calendar-view.jsp</result>
         </action>
 
-        <action name="currentProjectDetails" class="com.topcoder.direct.services.view.action.project.CurrentProjectContestsAction">
+        <action name="currentProjectDetails"
+                class="com.topcoder.direct.services.view.action.project.CurrentProjectContestsAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/contest-view.jsp</result>
         </action>
@@ -592,28 +671,30 @@
             <result name="success">/WEB-INF/permissions.jsp</result>
         </action>
 
-        <action name="ProjectGamePlanView" class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
+        <action name="ProjectGamePlanView"
+                class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-gameplan.jsp</result>
         </action>
 
-        <action name="ProjectJsGanttGamePlanView" class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
+        <action name="ProjectJsGanttGamePlanView"
+                class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-jsgantt-gameplan.jsp</result>
         </action>
 
         <action name="projectGamePlan" class="projectGamePlanDataAction">
-          <interceptor-ref name="securedProjectPreProcessorStack"/>
-          <result type="stream">
-             <param name="contentType">text/html</param>
-             <param name="inputName">inputStream</param>
-           </result>
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">inputStream</param>
+            </result>
         </action>
 
         <action name="getDirectProjectContests" method="getDirectProjectContests" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="projectGamePlanExport" method="getGamePlanDataExcelExport" class="projectGamePlanDataAction">
@@ -633,7 +714,7 @@
                 <param name="inputName">inputStream</param>
             </result>
         </action>
-        
+
         <action name="exportResults" class="projectContestsResultsExportAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="stream">
@@ -644,7 +725,8 @@
             </result>
         </action>
 
-        <action name="contestRegistrants" class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction">
+        <action name="contestRegistrants"
+                class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-registrants.jsp</result>
             <result name="download" type="stream">
@@ -654,7 +736,8 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        <action name="contestIssuesTracking" class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
+        <action name="contestIssuesTracking"
+                class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
@@ -663,16 +746,25 @@
             <result name="success">/WEB-INF/contest-vm-instances.jsp</result>
         </action>
         <action name="updateBugRace" class="updateJIRAIssueAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="addBugRace" class="createJIRABugIssueAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="addProjectBugRace" class="createProjectJIRABugIssueAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="projectOverview" class="projectOverviewAction">
@@ -717,15 +809,18 @@
             </result>
         </action>
 
-         <action name="projectIssueTracking" class="com.topcoder.direct.services.view.action.project.ProjectIssuesTrackingAction">
+        <action name="projectIssueTracking"
+                class="com.topcoder.direct.services.view.action.project.ProjectIssuesTrackingAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-issues-tracking.jsp</result>
         </action>
+
         <action name="currentProjectOverview"
                 class="currentProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
+
         <action name="projectContestsHealthAJAX" class="projectContestsHealthAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/project-overview-contests-health.jsp</result>
@@ -753,65 +848,79 @@
         </action>
 
         <action name="getProjectResponsiblePerson" method="getProjectResponsiblePerson"
-                        class="projectMilestoneViewAction">
-                    <interceptor-ref name="securedProjectPreProcessorStack"/>
-                    <result name="success" type="json"/>
-                    <result name="error" type="json"/>
+                class="projectMilestoneViewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
-	<action name="getCurrentUserRecentProjects" method="getCurrentUserRecentProjects" class="commonAction">
+        <action name="getCurrentUserRecentProjects" method="getCurrentUserRecentProjects" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="addProjectMilestone" method="addProjectMilestone"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="changeMilestoneStatus" method="changeMilestoneStatus"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="removeMilestone" method="removeMilestone"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="deleteContestFromMilestone" method="deleteContestFromMilestone"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="moveContestToMilestone" method="moveContestToMilestone"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="updateMilestone" method="updateMilestone"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="addProjectMilestones" method="addProjectMilestones"
                 class="projectMilestoneOperationAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="projectPlanner" class="projectPlannerAction">
@@ -819,7 +928,8 @@
             <result name="success">/WEB-INF/projectPlanner.jsp</result>
         </action>
 
-        <action name="getProjectPlannerConfiguration" class="projectPlannerAction" method="getProjectPlannerConfiguration">
+        <action name="getProjectPlannerConfiguration" class="projectPlannerAction"
+                method="getProjectPlannerConfiguration">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -866,82 +976,93 @@
         </action>
 
         <action name="saveProjectSettings" class="saveCockpitProjectSettingAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-            <result name="permissionDenied" type="json"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveClientProjectManagers" class="saveCockpitProjectSettingAction"
                 method="saveClientProjectManagers">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
-
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveTopCoderAccountManagers" class="saveCockpitProjectSettingAction"
                 method="saveTopCoderAccountManagers">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveTopCoderManagers" class="saveCockpitProjectSettingAction"
                 method="saveTopCoderManagers">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveAppirioManagers" class="saveCockpitProjectSettingAction"
                 method="saveAppirioManagers">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="addNewCustomMetadataKey" class="saveCockpitProjectSettingAction"
                 method="addNewCustomMetadataKey">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="removeProjectBillingAccount" class="saveCockpitProjectSettingAction"
                 method="removeProjectBillingAccount">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="associateProjectBillingAccount" class="saveCockpitProjectSettingAction"
                 method="associateProjectBillingAccount">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveProjectPermissionsAndNotifications" class="saveCockpitProjectSettingAction"
                 method="saveProjectPermissionsAndNotifications">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveContestsNotificationsForUser" class="saveCockpitProjectSettingAction"
                 method="saveContestsNotificationsForUser">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-            <result name="permissionDenied" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="calendar" class="com.topcoder.direct.services.view.action.dashboard.CalendarAction">
@@ -967,24 +1088,26 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getUser" class="searchUserAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="updateProjectPermissions" class="updateProjectPermissionsAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="syncUser" class="syncUserAction">
@@ -994,8 +1117,9 @@
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
-        
-        <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
+
+        <action name="dashboardNotifications"
+                class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1004,18 +1128,24 @@
             <result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>
         </action>
 
-        <action name="updateNotifications" class="com.topcoder.direct.services.view.action.setting.notification.UpdateNotificationsAction">
+        <action name="updateNotifications"
+                class="com.topcoder.direct.services.view.action.setting.notification.UpdateNotificationsAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="updateDirectProjectNotifications" method="updateDirectProjectNotifications" class="updateNotificationsAction">
+        <action name="updateDirectProjectNotifications" method="updateDirectProjectNotifications"
+                class="updateNotificationsAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="billing" class="clientInvoiceManageAction">
@@ -1023,25 +1153,31 @@
             <result name="success">/WEB-INF/billing/client_invoice.jsp</result>
         </action>
         <action name="uploadClientInvoice" method="uploadClientInvoice" class="clientInvoiceManageAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="deleteClientInvoice" method="deleteClientInvoice" class="clientInvoiceManageAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="filterClientInvoices" method="filterClientInvoices" class="clientInvoiceManageAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="downloadInvoiceUpload" method="downloadInvoiceUpload" class="clientInvoiceManageAction">
             <interceptor-ref name="baseStack"/>
@@ -1054,25 +1190,29 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        
+
         <action name="dashboardVMAction" class="dashboardVMAction">
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/vmmanager/dashboard-vm-management.jsp</result>
         </action>
         <action name="launchVMInstance" class="launchVMInstanceAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="terminateVMInstance" class="terminateVMInstanceAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="showVMInstances" class="showVMInstancesAction">
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="dashboardReports" class="dashboardReportsAction">
@@ -1121,7 +1261,7 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        
+
         <action name="dashboardProjectMetricsReport" class="dashboardShowProjectMetricsReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1136,8 +1276,9 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
         </action>
-        
-        <action name="clientUserStatsReport" class="com.topcoder.direct.services.view.action.report.ClientUserStatsReportAction">
+
+        <action name="clientUserStatsReport"
+                class="com.topcoder.direct.services.view.action.report.ClientUserStatsReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -1146,7 +1287,7 @@
                 <param name="contentDisposition">attachment;filename=${excelFileName}</param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">inputStream</param>
-                <param name="bufferSize">1024</param>            
+                <param name="bufferSize">1024</param>
             </result>
         </action>
         <action name="platformSpecialistsReport" class="platformSpecialistsReportAction">
@@ -1154,12 +1295,13 @@
             <result name="success">/WEB-INF/report/platform-specialist-report.jsp</result>
         </action>
 
-        <action name="getPlatformSpecialistsReportData" method="getPlatformSpecialistsReportData" class="platformSpecialistsReportAction">
+        <action name="getPlatformSpecialistsReportData" method="getPlatformSpecialistsReportData"
+                class="platformSpecialistsReportAction">
             <interceptor-ref name="securedTCStaffStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
+
         <action name="dashboardGetJiraIssuesReport" class="dashboardJiraIssuesReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1215,7 +1357,8 @@
             <result name="error" type="json"/>
         </action>
 
-        <action name="getInvoiceNumbersForBillingAccount" method="getInvoiceNumbersForBillingAccount" class="reportCommonAction">
+        <action name="getInvoiceNumbersForBillingAccount" method="getInvoiceNumbersForBillingAccount"
+                class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -1223,7 +1366,8 @@
             <result name="error" type="json"/>
         </action>
 
-        <action name="getProjectsForInvoiceNumberAndBillingAccount" method="getProjectsForInvoiceNumberAndBillingAccount" class="reportCommonAction">
+        <action name="getProjectsForInvoiceNumberAndBillingAccount"
+                method="getProjectsForInvoiceNumberAndBillingAccount" class="reportCommonAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -1232,30 +1376,36 @@
         </action>
 
         <action name="updateInvoiceRecords" class="updateInvoiceRecordsAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="updateInvoice" class="updateInvoiceAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="updateWesternUnionBalanceAmount" class="updateWesternUnionBalanceAmountAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-         <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
+        <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -1279,95 +1429,114 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
-        <action name="getProjectCopilotsWidgetData" method="getProjectCopilotsWidgetData" class="com.topcoder.direct.services.view.action.project.ProjectCopilotsWidgetAction">
+        <action name="getProjectCopilotsWidgetData" method="getProjectCopilotsWidgetData"
+                class="com.topcoder.direct.services.view.action.project.ProjectCopilotsWidgetAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="createProjectForum" class="createProjectForumAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="projectContestsCalendarView" method="getContestsCalendar" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
+        <action name="projectContestsCalendarView" method="getContestsCalendar"
+                class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
+
         <action name="updateProjectForumWatchAJAX" class="updateProjectForumWatchAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="getProjectForumsStatusAJAX" class="getProjectForumsStatusAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="addProjectForumAJAX" class="addProjectForumAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="deleteProjectForumsAJAX" class="deleteProjectForumsAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="createCopilotProjectFeedback" method="createCopilotProjectFeedback" class="projectCopilotFeedbackAction">
+        <action name="createCopilotProjectFeedback" method="createCopilotProjectFeedback"
+                class="projectCopilotFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="updateCopilotProjectFeedback" method="updateCopilotProjectFeedback" class="projectCopilotFeedbackAction">
+        <action name="updateCopilotProjectFeedback" method="updateCopilotProjectFeedback"
+                class="projectCopilotFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="customerProjectsAjaxAction" class="com.topcoder.direct.services.view.action.project.CustomerProjectsAjaxAction">
+        <action name="customerProjectsAjaxAction"
+                class="com.topcoder.direct.services.view.action.project.CustomerProjectsAjaxAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="createNewCockpitProjectAjax" class="createNewProjectAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
-    <action name="listBillingAccountAction" class="contestFeesHomeAction">
+        <action name="listBillingAccountAction" class="contestFeesHomeAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/billing_account_list.jsp</result>
         </action>
@@ -1390,6 +1559,7 @@
         </action>
 
         <action name="saveContestFeesAction" class="saveContestFeesAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
                 <param name="actionName">contestFee</param>
@@ -1399,6 +1569,7 @@
         </action>
 
         <action name="createContestFeesAction" class="createContestFeesAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
                 <param name="actionName">contestFee</param>
@@ -1409,8 +1580,8 @@
 
         <action name="checkRecordExist" method="checkRecordExist" class="customerPlatformFeeAction">
             <interceptor-ref name="projectFeeStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="listCustomerPlatformFee" class="customerPlatformFeeAction">
@@ -1418,41 +1589,47 @@
             <result name="success">/WEB-INF/billing/customer_platform_fee_list.jsp</result>
         </action>
 
-        <action name="enterCreateCustomerPlatformFee" method="enterCreateCustomerPlatformFee" class="customerPlatformFeeAction">
+        <action name="enterCreateCustomerPlatformFee" method="enterCreateCustomerPlatformFee"
+                class="customerPlatformFeeAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/customer_platform_fee.jsp</result>
         </action>
 
-        <action name="enterUpdateCustomerPlatformFee" method="enterUpdateCustomerPlatformFee" class="customerPlatformFeeAction">
+        <action name="enterUpdateCustomerPlatformFee" method="enterUpdateCustomerPlatformFee"
+                class="customerPlatformFeeAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/customer_platform_fee.jsp</result>
         </action>
 
-        <action name="createUpdateCustomerPlatformFee" method="createUpdateCustomerPlatformFee" class="customerPlatformFeeAction">
+        <action name="createUpdateCustomerPlatformFee" method="createUpdateCustomerPlatformFee"
+                class="customerPlatformFeeAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
                 <param name="actionName">listCustomerPlatformFee</param>
             </result>
             <result name="error">/WEB-INF/billing/customer_platform_fee.jsp</result>
-        </action>        
-        
-        <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
-          <param name="excelFile">@excelFile@</param>
-          <interceptor-ref name="securedInternalStatsStack"/>
-          <result name="success">/WEB-INF/internal-stats.jsp</result>
         </action>
+
+        <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
+            <param name="excelFile">@excelFile@</param>
+            <interceptor-ref name="securedInternalStatsStack"/>
+            <result name="success">/WEB-INF/internal-stats.jsp</result>
+        </action>
+
         <action name="uploadSheet" class="com.topcoder.direct.services.view.action.stats.UploadSheetAction">
-          <param name="excelFile">@excelFile@</param>
-          <interceptor-ref name="securedInternalStatsStack"/>
-          <result name="error">/WEB-INF/internal-stats.jsp</result>
-          <result type="redirectAction" name="success">
+            <param name="excelFile">@excelFile@</param>
+            <interceptor-ref name="securedInternalStatsStack"/>
+            <result name="error">/WEB-INF/internal-stats.jsp</result>
+            <result type="redirectAction" name="success">
                 <param name="actionName">internalStats</param>
                 <param name="namespace">/</param>
             </result>
         </action>
+
         <action name="downloadSheet" class="com.topcoder.direct.services.view.action.stats.DownloadSheetAction">
-          <param name="excelFile">@excelFile@</param>
-          <interceptor-ref name="securedInternalStatsStack"/>
+            <param name="excelFile">@excelFile@</param>
+            <interceptor-ref name="securedInternalStatsStack"/>
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
                 <param name="contentType">application/octet-stream</param>
@@ -1467,71 +1644,27 @@
         </action>
 
         <action name="adminEditCopilotFeedback" method="updateFeedbackAdmin" class="manageCopilotFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="updateCopilotFeedbackStatus" method="changeFeedbackStatus" class="manageCopilotFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="viewWireframeSubmission" class="viewWireframeSubmissionAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
-    </package>
-
-    <package name="base" namespace="/base" extends="default">
-        <interceptors>
-            <interceptor-stack name="defaultDirectStack">
-                <interceptor-ref name="exception">
-                    <param name="logEnabled">true</param>
-                    <param name="logLevel">ERROR</param>
-                </interceptor-ref>
-                <interceptor-ref name="alias"/>
-                <interceptor-ref name="servletConfig"/>
-                <interceptor-ref name="i18n"/>
-                <interceptor-ref name="params">
-                    <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
-                </interceptor-ref>
-                <interceptor-ref name="prepare"/>
-                <interceptor-ref name="chain"/>
-                <interceptor-ref name="debugging"/>
-                <interceptor-ref name="scopedModelDriven"/>
-                <interceptor-ref name="modelDriven"/>
-                <interceptor-ref name="fileUpload"/>
-                <interceptor-ref name="checkbox"/>
-                <interceptor-ref name="multiselect"/>
-                <interceptor-ref name="staticParams"/>
-                <interceptor-ref name="actionMappingParams"/>
-                <interceptor-ref name="params">
-                  <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
-                </interceptor-ref>
-                <interceptor-ref name="conversionError"/>
-                <interceptor-ref name="validation">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>
-                <interceptor-ref name="workflow">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>
-            </interceptor-stack>
-
-            <!-- base stack -->
-            <interceptor-stack name="baseStack">
-                <interceptor-ref name="defaultDirectStack"/>
-                <interceptor-ref name="authnInterceptor"/>
-                <interceptor-ref name="loggingInterceptor"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <default-interceptor-ref name="baseStack"/>
     </package>
 
     <package name="my" namespace="/my" extends="base">
@@ -1539,15 +1672,15 @@
             <result>/WEB-INF/my/myCreatedChallenges.jsp</result>
         </action>
         <action name="getCreatedChallenges" method="getMyCreatedChallenges" class="myCreatedChallengesAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="challenges" class="myChallengesAction">
             <result>/WEB-INF/my/myChallenges.jsp</result>
         </action>
         <action name="getMyChallenges" method="getMyChallenges" class="myChallengesAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
     </package>
 
@@ -1557,37 +1690,43 @@
         </action>
 
         <action name="getReviewCostAjax" class="getReviewCostAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="createProject" class="createProjectAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="saveDraftContest" class="saveDraftContestAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="getContestConfigs" method="getContestConfigs" class="commonAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="documentUpload" class="documentUploadAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
+
         <action name="imageUpload" class="imageUploadAction">
             <result>/WEB-INF/image-upload.jsp</result>
         </action>
 
         <action name="removeDocument" class="removeDocumentAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="downloadDocument" class="downloadDocumentAction">
@@ -1601,47 +1740,47 @@
         </action>
 
         <action name="getCategories" method="getCategories" class="commonAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getCapacityFullDates" class="getCapacityFullDatesAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getBillingProjectContestFees" method="getBillingProjectContestFees" class="commonAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getBillingAccountsForProject" method="getBillingAccountsForProject" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getDirectProjectCopilots" method="getDirectProjectCopilots" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getDirectProjectMilestones" method="getDirectProjectMilestones" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getDesignComponents" method="getDesignComponents" class="commonAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
+
         <action name="getActiveProblemSet" method="getActiveProblemSet" class="commonAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
     </package>
 
@@ -1652,23 +1791,23 @@
         </action>
 
         <action name="specReviewScheduled" method="specReviewScheduled" class="contestDetailJSONAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getContestIssuesNumber" method="getContestIssuesNumber" class="contestDetailJSONAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="getContestVMNumber" method="getContestVMNumber" class="contestDetailJSONAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="detailJson" class="contestDetailJSONAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="receipt" class="getContestReceiptAction">
@@ -1677,13 +1816,19 @@
         </action>
 
         <action name="repostContest" class="repostAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="newVersion" class="newVersionAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="submissions" class="contestSubmissionsAction">
@@ -1705,21 +1850,27 @@
         </action>
 
         <action name="updateSubmissionFeedback" class="updateStudioSubmissionFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-      <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="hasSubmissionFeedback" class="hasStudioSubmissionFeedbackAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result type="json"/>
         </action>
 
         <action name="checkout" class="studioSubmissionCheckoutAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
             <result name="confirm">/WEB-INF/studio-final-checkout-confirmation.jsp</result>
             <result>/WEB-INF/studio-submissions-checkout.jsp</result>
         </action>
@@ -1729,6 +1880,10 @@
         </action>
 
         <action name="saveContestCheckpointSubmissionRank" class="saveContestSubmissionRankAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
             <result type="redirectAction">
                 <param name="actionName">submissions</param>
                 <param name="namespace">/contest</param>
@@ -1739,6 +1894,10 @@
         </action>
 
         <action name="saveContestSubmissionRank" class="saveContestSubmissionRankAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
             <result type="redirectAction">
                 <param name="actionName">checkoutConfirm</param>
                 <param name="namespace">/contest</param>
@@ -1752,9 +1911,9 @@
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/software-submissions-list.jsp</result>
             <result name="checkpoint" type="redirectAction">
-                            <param name="actionName">softwareSubmissions</param>
-                            <param name="projectId">${formData.projectId}</param>
-                            <param name="roundType">CHECKPOINT</param>
+                <param name="actionName">softwareSubmissions</param>
+                <param name="projectId">${formData.projectId}</param>
+                <param name="roundType">CHECKPOINT</param>
             </result>
         </action>
 
@@ -1779,17 +1938,21 @@
         </action>
 
         <action name="saveSoftwareCheckpointReviewAction" class="saveSoftwareCheckpointReviewAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="submitApproval" class="submitApprovalAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="studioNoWinner" class="studioNoWinnerAction">
             <result>/WEB-INF/studio-nowinner.jsp</result>
         </action>
@@ -1803,18 +1966,20 @@
         </action>
 
         <action name="updateGeneralSubmissionsFeedback" class="updateStudioGeneralFeedbackAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="hasGeneralSubmissionsFeedback" class="hasStudioGeneralFeedbackAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result type="json"/>
         </action>
 
         <action name="startSpecReview" class="startSpecificationReviewAction">
@@ -1876,21 +2041,25 @@
             <result name="error" type="json"/>
         </action>
 
-        
+
         <action name="needFinalFix" class="needFinalFixAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
         <action name="saveFinalFix" class="saveFinalFixAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="reviewFinalFix" class="reviewFinalFixAction">
+            <interceptor-ref name="token"/>
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
         <action name="viewFinalFix" class="viewFinalFixAction">
             <interceptor-ref name="securedContestStack"/>
@@ -1901,13 +2070,19 @@
 
     <package name="ajax" namespace="/ajax" extends="base">
         <action name="saveSpecReviewComment" class="saveSpecReviewCommentAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="resubmitSpecReview" class="resubmitSpecReviewAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
     </package>
 
@@ -1927,7 +2102,7 @@
             </result>
         </action>
 
-    <action name="postACopilot" class="launchContestAction">
+        <action name="postACopilot" class="launchContestAction">
             <result>/WEB-INF/post-a-copilot.jsp</result>
         </action>
 
@@ -1940,21 +2115,26 @@
         </action>
 
         <action name="processCopilotProjects" class="copilotProjectAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="copilotStatistics" class="getCopilotStatisticsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="listCopilotPostings" class="listCopilotContestsAction">
             <result>/WEB-INF/copilot-contests.jsp</result>
         </action>
+
         <action name="copilotContestDetails" class="copilotContestDetailsAction">
             <result>/WEB-INF/copilot-contests-details.jsp</result>
         </action>
+
         <action name="listCopilotContestRegistrants" class="copilotContestsRegistrantsAction">
             <result type="chain">
                 <param name="actionName">setCopilotContestRegistrantProfiles</param>
@@ -1963,7 +2143,7 @@
         </action>
 
         <action name="copilotPostingReceipt" class="getContestReceiptAction">
-                 <result>/WEB-INF/copilot-receipt.jsp</result>
+            <result>/WEB-INF/copilot-receipt.jsp</result>
         </action>
 
         <action name="listCopilotContestSubmissions" class="copilotPostingContestSubmissionsAction">
@@ -1980,9 +2160,11 @@
         <action name="setCopilotContestRegistrantProfiles" class="allCopilotsListAction">
             <result>/WEB-INF/copilot-contests-registrants.jsp</result>
         </action>
+
         <action name="setCopilotContestSubmissionProfiles" class="allCopilotsListAction">
             <result>/WEB-INF/copilot-contests-submissions.jsp</result>
         </action>
+
         <action name="selectCopilot" class="selectCopilotAction">
             <result name="success" type="redirectAction">
                 <param name="actionName">listCopilotContestSubmissions</param>
@@ -1992,38 +2174,53 @@
         </action>
 
         <action name="previewGamePlan" class="previewCopilotSubmissionAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="selectCopilotAjax" method="selectCopilotAjax" class="selectCopilotAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="documentUpload" class="documentUploadAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
+
         <action name="saveDraftContest" class="saveDraftContestAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
+
         <action name="createProject" class="createProjectAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
     </package>
 
     <package name="preference" namespace="/preference" extends="base">
         <action name="updatePreferences" class="updateUserPreferencesAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
     </package>
 
     <package name="settings" namespace="/settings" extends="base">
-        <action name="notifications" class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
+        <action name="notifications"
+                class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
             <param name="settingType">notifications</param>
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -2053,53 +2250,6 @@
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/setting/jiraSyncUser.jsp</result>
-        </action>
-    </package>
-
-
-    <package name="projectMetadata" namespace="/metadata" extends="base">
-
-        <action name="projectMetadata" class="projectMetadataAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result>/WEB-INF/metadata/project-metadata-demo.jsp</result>
-        </action>
-
-        <action name="addProjectMetaData" method="addProjectMetaData" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
-        <action name="getAllProjectMetadata" method="getAllProjectMetadata" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
-        <action name="deleteProjectMetadata" method="deleteProjectMetadata" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
-        <action name="updateProjectMetadata" method="updateProjectMetadata" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
-        <action name="searchProjectByMetadata" method="searchProjectByMetadata" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-
-        <action name="addProjectMetadataKey" method="addProjectMetadataKey" class="projectMetadataAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
         </action>
     </package>
 
@@ -2134,15 +2284,16 @@
         </action>
         <action name="getTotalSpend" method="getTotalSpend" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="getTotalSpendDrillIn" method="getTotalSpendDrillIn" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_export.xls</param>
+                <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_export.xls
+                </param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">financialDrillInStream</param>
                 <param name="bufferSize">1024</param>
@@ -2150,10 +2301,12 @@
         </action>
         <action name="getTotalSpendExport" method="getTotalSpendExportAll" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=total_spend_${formData.startMonth}_${formData.endMonth}_export.xls</param>
+                <param name="contentDisposition">
+                    attachment;filename=total_spend_${formData.startMonth}_${formData.endMonth}_export.xls
+                </param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">financialExportStream</param>
                 <param name="bufferSize">1024</param>
@@ -2161,8 +2314,8 @@
         </action>
         <action name="getHealthExport" method="getHealthExportAll" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
                 <param name="contentDisposition">attachment;filename=projects_health_export.xls</param>
                 <param name="contentType">application/vnd.ms-excel</param>
@@ -2170,22 +2323,26 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        <action name="getFinancialStatistics" method="getFinancialStatistics" class="enterpriseDashboardFinancialAction">
+        <action name="getFinancialStatistics" method="getFinancialStatistics"
+                class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="getContestsPipeline" method="getContestsPipeline" class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        <action name="getContestsPipelineDrillIn" method="getContestsPipelineDrillIn" class="enterpriseDashboardPipelineAction">
+        <action name="getContestsPipelineDrillIn" method="getContestsPipelineDrillIn"
+                class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=contests_pipeline_${formData.startMonth}_export.xls</param>
+                <param name="contentDisposition">
+                    attachment;filename=contests_pipeline_${formData.startMonth}_export.xls
+                </param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">contestPipelineDrillInStream</param>
                 <param name="bufferSize">1024</param>
@@ -2193,15 +2350,18 @@
         </action>
         <action name="getProjectsPipeline" method="getProjectsPipeline" class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        <action name="getProjectsPipelineDrillIn" method="getProjectsPipelineDrillIn" class="enterpriseDashboardPipelineAction">
+        <action name="getProjectsPipelineDrillIn" method="getProjectsPipelineDrillIn"
+                class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=projects_pipeline_${formData.startMonth}_export.xls</param>
+                <param name="contentDisposition">
+                    attachment;filename=projects_pipeline_${formData.startMonth}_export.xls
+                </param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">projectPipelineDrillInStream</param>
                 <param name="bufferSize">1024</param>
@@ -2209,10 +2369,12 @@
         </action>
         <action name="getPipelineExport" method="getPipelineExportAll" class="enterpriseDashboardPipelineAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=pipeline_${formData.startMonth}_${formData.endMonth}_export.xls</param>
+                <param name="contentDisposition">
+                    attachment;filename=pipeline_${formData.startMonth}_${formData.endMonth}_export.xls
+                </param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">pipelineExport</param>
                 <param name="bufferSize">1024</param>
@@ -2220,8 +2382,8 @@
         </action>
         <action name="getProjectsMilestones" method="getProjectsMilestones" class="enterpriseDashboardRoadmapAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="getRoadmapCalendar" method="getRoadmapCalendar" class="enterpriseDashboardRoadmapAction">
             <interceptor-ref name="securedPreProcessorStack"/>
@@ -2229,60 +2391,70 @@
         </action>
         <action name="getProjectsWidget" method="getProjectsWidget" class="enterpriseDashboardProjectsAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="getFilteredProjects" method="getFilteredProjects" class="enterpriseDashboardEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="getOptionsForClientAJAX" method="getOptionsForClient" class="enterpriseDashboardEntryAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-      </package>
+    </package>
+
+
     <package name="securityGroup" namespace="/group" extends="base">
+
         <default-interceptor-ref name="groupDefaultStack"/>
+
         <action name="viewGroupAction" class="viewGroupAction">
             <result name="success">/WEB-INF/groups/view-user-group-details.jsp</result>
         </action>
-        
+
         <action name="searchUser" class="groupSearchUserAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-        
-        <action name="getUsers" class="groupSearchUserAction" method="getUsersByHandles">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>
-        
-        <action name="saveProjectGroupPermissions" class="saveSecurityGroupPermissionsAction">
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
 
+        <action name="getUsers" class="groupSearchUserAction" method="getUsersByHandles">
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="saveProjectGroupPermissions" class="saveSecurityGroupPermissionsAction">
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
+
         <action name="createGroup" class="createGroupAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="updateGroup" class="updateGroupAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="getProjectsAndAccounts" class="createGroupAction" method="getProjectsAndAccounts">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
+
         <action name="enterCreateGroup" class="createGroupAction" method="enterGroupDetails">
             <result name="success">/WEB-INF/groups/create-group.jsp</result>
         </action>
-        
+
         <action name="enterUpdateGroup" class="updateGroupAction" method="enterGroupDetails">
             <result name="success">/WEB-INF/groups/create-group.jsp</result>
         </action>
@@ -2295,12 +2467,12 @@
         </action>
         <action name="searchReceivedInvitations" class="viewInvitationStatusAction">
             <interceptor-ref name="groupPublicStack"/>
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="searchPendingApproval" class="viewPendingApprovalUserAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
         <action name="acceptRejectGroupInvitationAction" class="acceptRejectGroupInvitationAction">
             <interceptor-ref name="groupPublicStack"/>
@@ -2310,138 +2482,136 @@
             </result>
         </action>
         <action name="approveRejectPendingUserAction" class="approveRejectPendingUserAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="deleteGroupAction" class="deleteGroupAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="viewUserGroupsAction" class="searchGroupAction">
             <result name="success">/WEB-INF/groups/view-user-groups.jsp</result>
         </action>
-        
+
         <action name="searchGroupAction" class="searchGroupAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
-        
-        <action name="checkUpdateRemovePermission" method ="checkUpdateRemovePermission" class="searchGroupAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+
+        <action name="checkUpdateRemovePermission" method="checkUpdateRemovePermission" class="searchGroupAction">
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
         </action>
-        
+
         <action name="viewAuditingInfoAction" class="accessAuditingInfoAction">
             <result name="success">/WEB-INF/groups/auditing-info.jsp</result>
-        </action>        
+        </action>
+
         <action name="searchAuditingInfoAction" class="accessAuditingInfoAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>        
-        <action name="enterCreateCustomerAdminAction" method="enterCreateCustomerAdmin" class="createCustomerAdminAction">
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="enterCreateCustomerAdminAction" method="enterCreateCustomerAdmin"
+                class="createCustomerAdminAction">
             <result name="success">/WEB-INF/groups/create-administrator.jsp</result>
-        </action>        
+        </action>
+
         <action name="createCustomerAdminAction" class="createCustomerAdminAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>      
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
+
         <action name="enterSendInvitationAction" method="enterSendInvitation" class="sendInvitationAction">
             <result name="success">/WEB-INF/groups/send-invitation.jsp</result>
-        </action>        
-        <action name="sendInvitationAction" class="sendInvitationAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
         </action>
+
+        <action name="sendInvitationAction" class="sendInvitationAction">
+            <interceptor-ref name="groupTokenStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
+
         <action name="validateUserHandle" method="validateUserHandle" class="sendInvitationAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
     </package>
-    
+
     <package name="payments" namespace="/payments" extends="base">
         <default-interceptor-ref name="memberPaymentStack"/>
         <action name="overview" class="paymentOverviewAction">
             <result name="success">/WEB-INF/payments/payment.jsp</result>
         </action>
-        
+
         <action name="overview-print" class="paymentOverviewAction">
             <result name="success">/WEB-INF/payments/payment-print.jsp</result>
-        </action>        
-        
-        <action name="pullablePayments" class="pullablePaymentsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
         </action>
-        
+
+        <action name="pullablePayments" class="pullablePaymentsAction">
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="paymentStatus" class="paymentStatusDetailsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>        
-        
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="potentialCashOutFlow" class="potentialCashOutFlowDetailsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>        
-        
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="paymentsHistory" class="paymentsHistoryAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>   
-        
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="topMemberPayments" class="topMemberPaymentsStatsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>           
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
 
         <action name="memberPaymentStats" class="memberPaymentStatsAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
-        </action>           
-        
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
     </package>
 
     <package name="marathonMatchPackage" namespace="/marathonmatch" extends="base">
-        <action name="submission" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchDownloadSubmissionAction">
-            <interceptor-ref name="securedDefaultStack" />
+        <action name="submission"
+                class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchDownloadSubmissionAction">
+            <interceptor-ref name="securedDefaultStack"/>
             <result name="download" type="stream">
                 <param name="contentDisposition">attachment;filename=${viewData.fileName}</param>
-                 <param name="contentType">application/txt</param>
-                 <param name="inputName">viewData.submission</param>
+                <param name="contentType">application/txt</param>
+                <param name="inputName">viewData.submission</param>
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        
+
         <action name="oAuth">
-            <interceptor-ref name="defaultStack" />
-            <interceptor-ref name="oAuthGrantAccessInterceptor" />
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="oAuthGrantAccessInterceptor"/>
             <result>/WEB-INF/oauth-result.jsp</result>
         </action>
-        
+
         <action name="callBack" class="com.topcoder.direct.services.view.action.analytics.common.OAuthCallBackAction">
             <result>/WEB-INF/oauth-callback.jsp</result>
         </action>
     </package>
 
-    <package name="test" namespace="/test" extends="base">
-        <action name="testWinners" class="testContestResultsExport2Action">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="stream">
-                <param name="contentDisposition">attachment;filename=project-contest-results.xls</param>
-                <param name="contentType">application/vnd.ms-excel</param>
-                <param name="inputName">winnerSheet</param>
-                <param name="bufferSize">1024</param>
-            </result>
-        </action>
-        <action name="testCompositeReview" class="testContestResultsExport2Action" method="testPDF">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="stream">
-                <param name="contentDisposition">attachment;filename=composite-review.pdf</param>
-                <param name="contentType">application/pdf</param>
-                <param name="inputName">compositeReview</param>
-                <param name="bufferSize">1024</param>
-            </result>
-        </action>
-    </package>
 </struts>

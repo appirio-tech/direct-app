@@ -113,6 +113,8 @@
 
                             <s:form method="post" action="createUpdateCustomerPlatformFee" namespace="/"
                                     id="savePlatformFeeForm">
+
+                                <hidden:token/>
                             <div class="container2 platformFeeContainer">
                               <div class="platformFeeColumns">
                                 <br/>                               

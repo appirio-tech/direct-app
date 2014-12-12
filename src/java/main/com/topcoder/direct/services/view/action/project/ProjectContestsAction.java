@@ -3,13 +3,14 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
-import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -55,7 +56,7 @@ import java.util.List;
  * @author isv, GreatKevin, xjtufreeman, Veve, -jacob-
  * @version 1.6
  */
-public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
+public class ProjectContestsAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<ProjectContestsDTO> {
 
     /**
@@ -125,42 +126,28 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
      * <p>Handles the incoming request. If action is executed successfully then changes the current project context to
      * project requested for this action.</p>
      *
-     * @return a <code>String</code> referencing the next view or action to route request to. This implementation
-     *         returns {@link #SUCCESS} always.
      * @throws Exception if an unexpected error occurs while processing the request.
-     * @since 1.0
+     * @since 1.6
      */
     @Override
-    public String execute() throws Exception {
-        try {
-            String result = super.execute();
+    protected void executeAction() throws Exception {
+        List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
 
-            if (SUCCESS.equals(result)) {
-                List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
-
-                if (!contests.isEmpty()) {
-                    getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
-                }
-
-                // set the current direct project id in session, the contest details codes incorrectly
-                // use setCurrentProjectContext to override the current chosen direct project with current
-                // chosen contest, for the safe, we put the direct project id into session separately again
-                getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext() != null 
-                             ? getSessionData().getCurrentProjectContext().getId() : 0);
-
-                // set the attribute of flag whether to show the contests download panel
-                if (getSessionData().getCurrentProjectContext() != null) {
-                    getSessionData().getSession().setAttribute(SHOW_CONTESTS_DOWNLOAD,
-                                                           DataProvider.showContestsDownload(getSessionData().getCurrentProjectContext().getId()));
-                }
-
-                return SUCCESS;
-            } else {
-                return result;
-            }
-        } catch (Exception e) {
-            logger.error("Error in ProjectContestsAction " + e, e);
-            throw e;
+        if (!contests.isEmpty()) {
+            getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
+        } else { 
+            return ;
         }
+
+        // set the attribute of flag whether to show the contests download panel
+        if (getSessionData().getCurrentProjectContext() != null) {
+            getSessionData().getSession().setAttribute(SHOW_CONTESTS_DOWNLOAD,
+                    DataProvider.showContestsDownload(getSessionData().getCurrentProjectContext().getId()));
+        } else {
+            getSessionData().setCurrentProjectContext(
+                    DirectUtils.getCurrentProjectBrief(this.getProjectServiceFacade(), getFormData().getProjectId()));
+        }
+
+        getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
     }
 }

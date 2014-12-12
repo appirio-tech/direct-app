@@ -427,16 +427,21 @@
 
             <div class="modalBody">
                 <div class="noticeContent">
-                    <div class="modalRow">
-                        <label>Name:</label>
-                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
-
-                        <div class="clearFix"></div>
+                    <div class="modalRow notes">All fields
+                        marked with <span class="red">*</span> are mandatory
                     </div>
                     <div class="modalRow">
-                        <label>Description:</label>
+                        <label>Name:<span class="red">*</span></label>
+                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
+                        <div class="clearFix"></div>
+                        <span class="errorMessage" style="float:right;padding-right:60px"></span>
+                    </div>
+                    <div class="modalRow">
+                        <label>Description:<span class="red">*</span></label>
                         <textarea id="newProjectDescription" name="newProjectDescription" class="textField" rows=""
                                   cols=""></textarea>
+                        <div class="clearFix"></div>
+                        <span class="errorMessage" style="float:right;padding-right:60px"></span>
                     </div>
                 </div>
 
@@ -973,85 +978,6 @@
 </div>
     <!-- end #lockinNoFeedbackModal -->
 
-        <!-- #setRoundIdModal -->
-        <div id="setRoundIdModal" class="outLay">
-            <div class="modalHeader">
-                <div class="modalHeaderRight">
-                    <div class="modalHeaderCenter">
-                        Set Round ID
-                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalRoundIdClose();">Close</a>
-                    </div>
-                </div>
-            </div>
-            <!-- end .modalHeader -->
-
-            <div class="modalBody">
-                <div class="noticeContent">
-                    <div class="modalRow">
-                        <label>Round ID:</label>
-                        <input type="text" class="text" id="newRoundId" name="newRoundId"/>
-
-                        <div class="clearFix"></div>
-                    </div>
-                </div>
-
-                <div class="modalCommandBox">
-                    <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC" onclick="setRoundId();">SET</span></span></a>
-                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
-                       onclick="modalRoundIdClose();"><span class="btnR"><span
-                            class="btnC">CANCEL</span></span></a>
-                </div>
-            </div>
-            <!-- end .modalBody -->
-
-            <div class="modalFooter">
-                <div class="modalFooterRight">
-                    <div class="modalFooterCenter"></div>
-                </div>
-            </div>
-            <!-- end .modalFooter -->
-        </div>
-        <!-- end #setRoundIdModal -->
-
-        <!-- #updateRoundIdModal -->
-        <div id="updateRoundIdModal" class="outLay">
-            <div class="modalHeader">
-                <div class="modalHeaderRight">
-                    <div class="modalHeaderCenter">
-                        Update Round ID
-                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalRoundIdClose();">Close</a>
-                    </div>
-                </div>
-            </div>
-            <!-- end .modalHeader -->
-
-            <div class="modalBody">
-                <div class="noticeContent">
-                    <div class="modalRow">
-                        <label>Round ID:</label>
-                        <input type="text" class="text" id="updatedRoundId" name="updatedRoundId"/>
-
-                        <div class="clearFix"></div>
-                    </div>
-                </div>
-
-                <div class="modalCommandBox">
-                    <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC" onclick="updateRoundId();">UPDATE</span></span></a>
-                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
-                       onclick="modalRoundIdClose();"><span class="btnR"><span
-                            class="btnC">CANCEL</span></span></a>
-                </div>
-            </div>
-            <!-- end .modalBody -->
-
-            <div class="modalFooter">
-                <div class="modalFooterRight">
-                    <div class="modalFooterCenter"></div>
-                </div>
-            </div>
-            <!-- end .modalFooter -->
-        </div>
-        <!-- end #updateRoundIdModal -->
 
         <s:if test='%{#request.CURRENT_TAB  == "tasks" && #request.PAGE_TYPE  == "project"}'>
             <jsp:include page="./modal/projectTaskModals.jsp"/>
@@ -1983,23 +1909,27 @@
 
                 <!-- content -->
                 <div class="modalBody">
+
                     <ul>
+                        <div class="modalRow notes">All fields
+                            marked with <span class="red">*</span> are mandatory
+                        </div>
                         <li>
-                            <label>Name :</label>
+                            <label>Name <span class="red">*</span>:</label>
                             <div class="right">
                                 <input type="text"  name="projectName" class="text limitText" />
                                 <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
                             </div>
                         </li>
                         <li>
-                            <label>Description :</label>
+                            <label>Description<span class="red">*</span> :</label>
                             <div class="right">
                                 <textarea cols="10" rows="5" name="projectDesc"></textarea>
                                 <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
                             </div>
                         </li>
                         <li class="dateLine">
-                            <label>Due Date :</label>
+                            <label>Due Date<span class="red">*</span> :</label>
                             <div class="right">
                                 <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
                                 <span class="errorMessage" style="float:none"></span>
@@ -2426,7 +2356,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            <span>Manage TopCoder Platform Specialists</span>
+                            <span>Manage TopCoder Expert Services</span>
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>

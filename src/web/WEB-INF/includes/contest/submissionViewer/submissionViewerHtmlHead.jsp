@@ -1,10 +1,13 @@
 <%--
-  - Author: isv, flexme, minhu, TCSASSEMBLER
+  - Author: isv, flexme, minhu, Veve
+  -
+  - Version 1.9 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Version 1.8 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Use new font "Source Sans Pro" for the page
   -
-  Version 1.7 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes:
+  - Version 1.7 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) change notes:
   -   Added reference to studioFinalFix.css
   - Version 1.6 (TC-Studio - Wireframe Viewer Modal Window Direct Updates assembly v1.0) change notes:
   -   Added wireframe-viewer.js if and only if the contest type is wireframe.
@@ -16,7 +19,7 @@
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.8
+  - Version: 1.9
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
@@ -117,7 +120,6 @@
 <s:if test="formData.viewType.toString() == 'SINGLE'">
     <script type="text/javascript" src="/scripts/jquery-cycle.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery-easing.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <!--[if IE 6]>
     <script src="/scripts/DD_belatedPNG.js?v=185283" type="text/javascript"></script>
@@ -125,12 +127,10 @@
     <![endif]-->
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT'">
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/checkout.js?v=213622"></script>
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT_CONFIRM'">
-    <script type="text/javascript" src="/scripts/common.js?v=214061"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/confirmCheckout.js?v=206299"></script>
 </s:if>
@@ -141,3 +141,5 @@
 <script type="text/javascript" src="/scripts/finalFixDecision.js"></script>
 
 <script type="text/javascript" src="/scripts/submission_viewer.js"></script>
+<script type="text/javascript" src="/scripts/rightSidebar.js"></script>
+

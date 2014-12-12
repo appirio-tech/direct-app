@@ -71,10 +71,10 @@ $(document).ready(function() {
 
     //truncate the project name
     $(".addNewContest .row .projectSelect select option").each(function(){
-    	if($(this).text().length>60){
-    		var txt=$(this).text().substr(0,60)+'...';
-    		$(this).text(txt);
-    	}
+        if($(this).text().length>60){
+            var txt=$(this).text().substr(0,60)+'...';
+            $(this).text(txt);
+        }
     });
 
     //truncate the billing account, copilot and round type
@@ -82,10 +82,10 @@ $(document).ready(function() {
         ".addNewContest .row .copilotSelect select option, .addNewContest .row .milestoneSelect select option," +
         ".schedule #roundTypeDiv .roundelect select option, " +
         "#overviewAlgorithmPage .problemDiv select option").each(function(){
-    	if($(this).text().length>60){
-    		var txt=$(this).text().substr(0,50)+'...';
-    		$(this).text(txt);
-    	}
+        if($(this).text().length>60){
+            var txt=$(this).text().substr(0,50)+'...';
+            $(this).text(txt);
+        }
     });
 
     $("#billingGroupCheckBox input[type=checkbox]").change(function () {
@@ -447,7 +447,7 @@ $(document).ready(function() {
             $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Development']");
         }
         if (projectCategory.typeId == 3) {
-        	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Design']");
+            $("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Design']");
         }
         if (projectCategory.id == ALGORITHM_CATEGORY_ID_MARATHON) {
             $("<option/>").val("ALGORITHM"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Data']");
@@ -516,6 +516,11 @@ $(document).ready(function() {
         clearAddNewProjectForm();
         modalLoad("#addNewProjectModal");
         $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
+    });
+
+    $('#addNewProjectModal input, #addNewProjectModal textarea').focus(function () {
+        $(this).removeClass("invalid");
+        $(this).parent().find(".errorMessage").text('');
     });
 
     // round types
@@ -636,12 +641,12 @@ function handleProjectDropDownChange() {
     $("#billingProjects").resetSS();
 
     $('#billingProjects').bind("change", function() {
-    	if ($(this).find(":selected").data("cca")){
-    		$("#lccCheckBox").attr('checked','true').attr('disabled','true');
-    		mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
-    	}else{
-    		$("#lccCheckBox").removeAttr('disabled');
-    	}
+        if ($(this).find(":selected").data("cca")){
+            $("#lccCheckBox").attr('checked','true').attr('disabled','true');
+            mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+        }else{
+            $("#lccCheckBox").removeAttr('disabled');
+        }
         updateContestFee();
         updateBillingGroups();
     });
@@ -743,18 +748,18 @@ function handleProblemsDropDownChange() {
 }
 
 function updateRoundDurationLabels() {
-	var contestType = getContestType(true)[0];
+    var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
 
     var roundType = $('#roundTypes').val();
     if(contestType == "SOFTWARE") {
-		$("#checkpointDiv label").html("Checkpoint Duration:");
-	} else {
-		if (roundType == "single") {
-			$("#endDiv label").html("Round 1 Duration:");
+        $("#checkpointDiv label").html("Checkpoint Duration:");
+    } else {
+        if (roundType == "single") {
+            $("#endDiv label").html("Round 1 Duration:");
             $("#endDiv").show();
-		} else {
-			$("#checkpointDiv label").html("Round 1 Duration:");
+        } else {
+            $("#checkpointDiv label").html("Round 1 Duration:");
             $("#checkpointDiv").show();
             $("#endDiv label").html("Round 2 Duration:");
             $("#endDiv").show();
@@ -765,7 +770,7 @@ function updateRoundDurationLabels() {
             $("#checkpointDiv").hide();
             $("#endDiv").hide();
         }
-	}
+    }
 }
 
 /**
@@ -812,6 +817,14 @@ function onContestTypeChange() {
             templates: getStudioTemplatesName(typeId),
             templates_files: StudioContestSpecTemplates
         });
+    }
+
+    if (typeId == SOFTWARE_CATEGORY_ID_F2F
+        || typeId == SOFTWARE_CATEGORY_ID_CODE
+        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $("#milestoneManSymbol").hide();
+    } else {
+        $("#milestoneManSymbol").show();
     }
 
     if(isContestSaved() && typeId != currentTypeId) {
@@ -1064,10 +1077,48 @@ function resetFileTypes(studioSubtypeId) {
     $('#deliverablesCheckboxs').html(html);
 }
 
+var validateNewProjectModalInput = function (modalId) {
+    var modal = $("#" + modalId);
+    var passValidation = true;
+
+    // name, description are required
+    if ($.trim(modal.find("input[name='newProjectName']").val()) == '') {
+        passValidation = false;
+        modal.find("input[name='newProjectName']").addClass('invalid').parent().find(".errorMessage").text('Project Name cannot be empty');
+    }
+    else if (containTags($.trim(modal.find("input[name='newProjectName']").val()))) {
+        passValidation = false;
+        modal.find("input[name='newProjectName']").addClass('invalid').parent().find(".errorMessage").text('Project Name cannot contain HTML tags');
+    }
+    else {
+        modal.find("input[name='newProjectName']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    if ($.trim(modal.find("textarea[name='newProjectDescription']").val()) == '') {
+        passValidation = false;
+        modal.find("textarea[name='newProjectDescription']").addClass('invalid').parent().find(".errorMessage").text('Project Description cannot be empty');
+    }
+    else if (containTags($.trim(modal.find("textarea[name='newProjectDescription']").val()))) {
+        passValidation = false;
+        modal.find("textarea[name='newProjectDescription']").addClass('invalid').parent().find(".errorMessage").text('Project Description cannot contain HTML tags');
+    }
+    else {
+        modal.find("textarea[name='newProjectDescription']").removeClass('invalid').parent().find(".errorMessage").text('');
+    }
+
+    return passValidation;
+}
+
+
 /**
  * Adds a new project.
  */
 function addNewProject() {
+
+    if(!validateNewProjectModalInput('addNewProjectModal')) {
+        return;
+    }
+
     var projectName = $('#addNewProjectModal').find('input[name="newProjectName"]').val();
     var projectDescription = $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val();
 
@@ -1092,8 +1143,8 @@ function addNewProject() {
     $.ajax({
         type: 'POST',
         url:  "createProject",
-        data: {'projectName':projectName,
-            'projectDescription':projectDescription},
+        data: setupTokenRequest({'projectName':projectName,
+            'projectDescription':projectDescription}, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {

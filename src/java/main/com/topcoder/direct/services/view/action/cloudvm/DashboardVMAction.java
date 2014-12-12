@@ -1,18 +1,15 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.cloudvm;
 
 import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.view.action.contest.launch.AbstractAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.cloudvm.VMContestType;
-import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMImage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.RolePrincipal;
@@ -20,9 +17,6 @@ import com.topcoder.security.TCSubject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,8 +28,14 @@ import java.util.Set;
  * - added contestId so that the action can receive a pre-populated contestId
  * </p>
  *
- * @author Standlove, jiajizhou86
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Standlove, jiajizhou86, Veve
+ * @version 1.2
  */
 public class DashboardVMAction extends AbstractAction {
 
@@ -119,12 +119,6 @@ public class DashboardVMAction extends AbstractAction {
         if (session != null) {
             sessionData = new SessionData(session);
         }
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
 
         return SUCCESS;
     }

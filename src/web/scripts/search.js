@@ -407,6 +407,26 @@ $(document).ready(function() {
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['rating-asc'] = function (a, b) {
+        a=a.replace(/\D/g,'');
+        b=b.replace(/\D/g,'');
+        if (a==""){var x=0}else
+            var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        if (b==""){var y=0}else
+            var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['rating-desc'] = function (a, b) {
+        a=a.replace(/\D/g,'');
+        b=b.replace(/\D/g,'');
+        if (a==""){var x=0}else
+            var x = parseFloat(trim(a.replace(/<.*?>/g, "").toLowerCase()));
+        if (b==""){var y=0}else
+            var y = parseFloat(trim(b.replace(/<.*?>/g, "").toLowerCase()));
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
     jQuery.fn.dataTableExt.oSort['submission-number-asc'] = function (a, b) {
         var ah = trim(a.replace(/(<([^>]+)>)/ig, ""));
         var ahs = ah.split(":");
@@ -884,6 +904,20 @@ $(document).ready(function() {
 
     });
 
+    function getDatePickerDate(id) {
+        var date;
+        var value = $("#" + id).val();
+
+        if($.trim(value).length > 0) {
+            try {
+                date = $.datepicker.parseDate('mm/dd/yy', $("#" + id).val());
+            } catch(err) {
+
+            }
+        }
+        return date;
+    }
+
 
     $.myCreatedChallengesTable = $("#myCreatedChallengesTable").dataTable({
         "iDisplayLength": 10,
@@ -909,6 +943,22 @@ $(document).ready(function() {
             aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
             aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
             aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+            var startFrom = getDatePickerDate("startDateBegin");
+            if(startFrom) {
+                aoData.push({name: "startDateFrom", value: $("#startDateBegin").val()});
+            }
+            var startTo = getDatePickerDate("startDateEnd");
+            if(startTo) {
+                aoData.push({name: "startDateTo", value: $("#startDateEnd").val()});
+            }
+            var endFrom = getDatePickerDate("endDateBegin");
+            if(endFrom) {
+                aoData.push({name: "endDateFrom", value: $("#endDateBegin").val()});
+            }
+            var endTo = getDatePickerDate("endDateEnd");
+            if(endTo) {
+                aoData.push({name: "endDateTo", value: $("#endDateEnd").val()});
+            }
         },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
@@ -966,6 +1016,22 @@ $(document).ready(function() {
             aoData.push({name: "projectFilter", value: $("#projectFilter").val()});
             aoData.push({name: "challengeStatusFilter", value: $("#challengeStatusFilter").val()});
             aoData.push({name: "challengeTypeFilter", value: $("#challengeTypeFilter").val()});
+            var startFrom = getDatePickerDate("startDateBegin");
+            if(startFrom) {
+                aoData.push({name: "startDateFrom", value: $("#startDateBegin").val()});
+            }
+            var startTo = getDatePickerDate("startDateEnd");
+            if(startTo) {
+                aoData.push({name: "startDateTo", value: $("#startDateEnd").val()});
+            }
+            var endFrom = getDatePickerDate("endDateBegin");
+            if(endFrom) {
+                aoData.push({name: "endDateFrom", value: $("#endDateBegin").val()});
+            }
+            var endTo = getDatePickerDate("endDateEnd");
+            if(endTo) {
+                aoData.push({name: "endDateTo", value: $("#endDateEnd").val()});
+            }
         },
         "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
             oSettings.jqXHR = $.ajax( {
@@ -1016,7 +1082,7 @@ $(document).ready(function() {
         ],
         "aoColumns": [
             { "sType": "html" },
-            { "sType": "html" },
+            { "sType": "rating" },
             { "sType": "reliability" },
             { "sType": "date-direct" },
             { "sType": "date-direct" }

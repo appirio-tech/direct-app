@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardStatusColor;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;

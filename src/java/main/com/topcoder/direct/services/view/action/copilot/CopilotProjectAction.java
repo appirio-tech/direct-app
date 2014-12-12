@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.topcoder.direct.services.copilot.model.CopilotProject;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectOperationDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectOperationType;

@@ -48,7 +48,7 @@
 
                             <!-- main section -->
                             <div id="mainSection" style="margin: 0px !important;">
-                                <h2>Platform Specialists Report</h2>
+                                <h2>Expert Services Report</h2>
 
                                 <!-- filter panel -->
                                 <div class="filterPanel">
@@ -60,7 +60,7 @@
                                     </div>
                                     <!-- header of filter panel -->
                                     <div class="filterPanelContainer">
-                                        <dl><dt>Platform Specialists:</dt><dd style="background-position:right 15px;" id="headerPlatformSpecialist"></dd>
+                                        <dl><dt>Expert Services:</dt><dd style="background-position:right 15px;" id="headerPlatformSpecialist"></dd>
                                             <dt>Date Range :</dt>
                                             <dd class="last" id="headerDate"></dd>
                                         </dl>
@@ -156,7 +156,7 @@
                     <div class="row">
                         <div class="column">
                             <div>
-                                <label>Select Platform Specialists</label>
+                                <label>Select Expert Services</label>
                                 <s:select list="platformSpecialists" multiple="true" cssClass="multiselect" name="platformSpecialist"
                                           id="platformSpecialist" size="5"/>
                             </div>

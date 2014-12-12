@@ -479,7 +479,7 @@ function addNewProject() {
     $.ajax({
         type: 'POST',
         url:  "createProject",
-        data: {'projectName' : projectName, 'projectDescription' : projectDescription},
+        data: setupTokenRequest({'projectName' : projectName, 'projectDescription' : projectDescription}, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {
@@ -766,7 +766,7 @@ function activateContest() {
     $.ajax({
         type: 'POST',
         url:  "saveDraftContest",
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         success: function(jsonResult) {
@@ -936,7 +936,7 @@ function sendSaveDraftRequestToServer() {
     $.ajax({
         type: 'POST',
         url:  "saveDraftContest",
-        data: request,
+        data: setupTokenRequest(request, getStruts2TokenName()),
         cache: false,
         dataType: 'json',
         timeout: 180000,

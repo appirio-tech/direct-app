@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.milestone;
 
@@ -8,11 +8,8 @@ import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.ResponsiblePerson;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.ProjectMilestoneViewDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestDTO;
 import com.topcoder.direct.services.view.dto.project.milestone.ProjectMilestoneDTO;
 import com.topcoder.direct.services.view.form.ProjectMilestoneViewForm;
@@ -23,7 +20,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -46,8 +48,14 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * @author GreatKevin, Veve
- * @version 1.2
+ * <p>
+ * Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author GreatKevin, Veve, Veve
+ * @version 1.3
  */
 public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implements FormAction<ProjectMilestoneViewForm> {
 
@@ -114,35 +122,36 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
     protected void executeAction() throws Exception {
 
         // set responsible person data
-        final List<ResponsiblePerson> allResponsiblePeople = getMilestoneResponsiblePersonService().getAllResponsiblePeople(getFormData().getProjectId());
-        getViewData().setResponsiblePersons(allResponsiblePeople);
+        getViewData().setResponsiblePersons(getProjectResponsiblePerson(getFormData().getProjectId()));
 
-        // right side bar data
-        List<ProjectBriefDTO> projects
-                = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-
-        viewData.setUserProjects(userProjectsDTO);
-
-        // put project into the session
-        if (contests.size() > 0) {
-            getSessionData().setCurrentProjectContext(contests.get(0).getProject());
-        } else {
-            for (ProjectBriefDTO p : projects) {
-                if (p.getId() == getFormData().getProjectId()) {
-                    getSessionData().setCurrentProjectContext(p);
-                    break;
-                }
-            }
-
-        }
         getSessionData().setCurrentSelectDirectProjectID(
                 getFormData().getProjectId());
+        getSessionData().setCurrentProjectContext(DataProvider.createProjectBriefDTO(getFormData().getProjectId(),
+                getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId()).getName()));
+    }
 
-        // set project contests
-        getSessionData().setCurrentProjectContests(contests);
+
+    /**
+     * Get project responsible person which is all the person with permission on the project
+     *
+     * @param directProjectId the direct project id.
+     * @return the list of responsible person.
+     * @throws Exception if any error.
+     */
+    private List<ResponsiblePerson> getProjectResponsiblePerson(long directProjectId) throws Exception {
+        List<ResponsiblePerson> result = new ArrayList<ResponsiblePerson>();
+
+        List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
+                DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+
+        for (Permission p : permissionsByProject) {
+            ResponsiblePerson rp = new ResponsiblePerson();
+            rp.setUserId(p.getUserId());
+            rp.setName(p.getUserHandle());
+            result.add(rp);
+        }
+
+        return result;
     }
 
     /**
@@ -157,14 +166,13 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
         try {
 
             if (getFormData().getProjectId() > 0) {
-                List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(
-                        DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+                List<ResponsiblePerson> responsiblePersons = getProjectResponsiblePerson(getFormData().getProjectId());
 
 
-                for (Permission p : permissionsByProject) {
+                for (ResponsiblePerson p : responsiblePersons) {
                     Map<String, Object> data = new HashMap<String, Object>();
                     data.put("userId", p.getUserId());
-                    data.put("name", p.getUserHandle());
+                    data.put("name", p.getName());
                     result.add(data);
                 }
             }

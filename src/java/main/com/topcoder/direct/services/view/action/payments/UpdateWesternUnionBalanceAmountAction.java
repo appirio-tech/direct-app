@@ -4,7 +4,7 @@
 package com.topcoder.direct.services.view.action.payments;
 
 import com.topcoder.direct.services.payments.WesternUnionService;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for updating the western union balance amount.</p>

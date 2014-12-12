@@ -1,31 +1,27 @@
 /*
- * Copyright (C) 2010  -2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Date;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
+import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
-import com.topcoder.direct.services.view.util.DirectUtils;
-import org.apache.struts2.ServletActionContext;
-
-import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
+import org.apache.struts2.ServletActionContext;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,8 +61,14 @@ import com.topcoder.security.TCSubject;
  * </ul>
  * </p>
  *
- * @author BeBetter, duxiaoyang, GreatKevin, Veve
- * @version 1.4
+ * <p>
+ * Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author BeBetter, duxiaoyang, GreatKevin, Veve, Veve
+ * @version 1.5
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -109,12 +111,6 @@ public class LaunchContestAction extends ContestAction {
             TCSubject user = sessionData.getCurrentUser();
             admin = DirectUtils.isRole(user, "Administrator");
         }
-
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
-
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        viewData.setUserProjects(userProjectsDTO);
 
         // get cmc billing account with cmc account id
         if(getCmcAccountId() != null && getCmcAccountId().trim().length() > 0) {

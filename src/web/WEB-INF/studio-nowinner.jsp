@@ -92,7 +92,7 @@
                                                     <a href="<s:url action="studioNoWinnerDecide" namespace="/contest">
                                                                  <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                                                  <s:param name="formData.roundType" value="formData.roundType"/>
-                                                             </s:url>" class="button7 btnDoNotChooseAWinner">
+                                                             </s:url>" class="button7 newButtonOrange btnDoNotChooseAWinner">
                                                         <span class="left"><span class="right">DO NOT CHOOSE A WINNER </span></span></a>
 
                                                     <link:studioSubmissionsGrid contestId="${viewData.contestId}" 

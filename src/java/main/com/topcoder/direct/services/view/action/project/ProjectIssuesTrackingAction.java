@@ -1,21 +1,20 @@
 /*
- * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
-import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectIssueTrackingDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 
 import java.util.List;
 import java.util.Map;
@@ -34,10 +33,16 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author xjtufreeman, TCSDEVELOPER
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author xjtufreeman, Veve
+ * @version 1.2
  */
-public class ProjectIssuesTrackingAction extends AbstractAction implements FormAction<ProjectIdForm>,
+public class ProjectIssuesTrackingAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<ProjectIssueTrackingDTO> {
 
     /**
@@ -76,63 +81,32 @@ public class ProjectIssuesTrackingAction extends AbstractAction implements FormA
     }
 
     /**
-     * <p>Handles the incoming request. If action is executed successfully then changes the current project context to
-     * project requested for this action.</p>
+     * Executes the action
      *
-     * @return a <code>String</code> referencing the next view or action to route request to. This implementation
-     *         returns {@link #SUCCESS} always.
-     * @throws Exception if an unexpected error occurs while processing the request.
+     * @throws Exception if any error occurs
      */
     @Override
-    public String execute() throws Exception {
-        String result = super.execute();
-        if (SUCCESS.equals(result)) {
+    protected void executeAction() throws Exception {
+        // Gets the contests of the cockpit project first
+        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
+        Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
 
-            try {
-                // Gets the contests of the cockpit project first
-                List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
-                Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
+        getViewData().setProjectIssues(issues);
 
-                getViewData().setProjectIssues(issues);
-
-                List<ProjectBriefDTO> projects
-                    = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
-
-                UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-                userProjectsDTO.setProjects(projects);
-
-                viewData.setUserProjects(userProjectsDTO);
-
-                // put project into the session
-                if (contests.size() > 0) {
-                    getSessionData().setCurrentProjectContext(contests.get(0).getProject());
-                } else {
-                    for (ProjectBriefDTO p : projects) {
-                        if (p.getId() == getFormData().getProjectId()) {
-                            getSessionData().setCurrentProjectContext(p);
-                            break;
-                        }
-                    }
-
-                }
-                // set project bugs
-                Long directProjectID = getSessionData().getCurrentProjectContext().getId();
-                List<TcJiraIssue> bugs = JiraRpcServiceWrapper.getIssuesForDirectProject(directProjectID);
-                getViewData().setProjectBugs(bugs);
-
-                getSessionData().setCurrentSelectDirectProjectID(
-                        getFormData().getProjectId());
-
-                // set project contests
-                getSessionData().setCurrentProjectContests(contests);
-
-            } catch (Exception e) {
-                return ERROR;
-            }
-
-            return SUCCESS;
+        // put project into the session
+        if (contests.size() > 0) {
+            getSessionData().setCurrentProjectContext(contests.get(0).getProject());
         } else {
-            return result;
+            getSessionData().setCurrentProjectContext(DataProvider.createProjectBriefDTO(formData.getProjectId(),
+                    getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(),
+                            formData.getProjectId()).getName()));
         }
+
+        // set project bugs
+        List<TcJiraIssue> bugs = JiraRpcServiceWrapper.getIssuesForDirectProject(getFormData().getProjectId());
+        getViewData().setProjectBugs(bugs);
+
+        getSessionData().setCurrentSelectDirectProjectID(
+                getFormData().getProjectId());
     }
 }

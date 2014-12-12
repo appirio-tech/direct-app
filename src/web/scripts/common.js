@@ -47,6 +47,9 @@
  *
  * Version 2.4 (Module Assembly - TC Cockpit Contest Milestone Association Milestone Page Update)
  * - Refactor jQuery.fn.outerHTML from projectMilestone.js to the common lib
+ *
+ * Version 2.5 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
+ * - Add a helper method isPositiveIntegerInput to check is variable is positive integer.
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -158,6 +161,22 @@ function isIntegerInput(input) {
 
     var number = parseInt(input, 10);
     if(input == "" || number != input) {
+        return false;
+    }
+
+    return true;
+}
+
+function isPositiveIntegerInput(input) {
+    if(!input) return false;
+
+    var number = parseInt(input, 10);
+    if(input == "" || number != input) {
+        return false;
+    }
+
+    // check if positive
+    if(number <= 0) {
         return false;
     }
 
@@ -451,20 +470,26 @@ function sortSelectOptions(selectId) {
  * Common function to handle JSON result.
  */
 function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
-   modalClose(); // close the potentical preloading modal first
-   if(jsonResult.result) {
-       successCallBack(jsonResult.result['return']);
-   } else {
-       failureCallBack(jsonResult.error.errorMessage);
-   }
+    modalClose(); // close the potentical preloading modal first
+    if (jsonResult.result) {
+        successCallBack(jsonResult.result['return']);
+    } else {
+        failureCallBack(jsonResult.error.errorMessage);
+    }
+    if((typeof jsonResult.token !== 'undefined') && $.trim(jsonResult.token).length > 0) {
+        updateStruts2Token(jsonResult.token);
+    }
 }
 
 function handleJsonResult2(jsonResult, successCallBack, failureCallBack) {
-   if(jsonResult.result) {
-       successCallBack(jsonResult.result['return']);
-   } else {
-       failureCallBack(jsonResult.error.errorMessage);
-   }
+    if (jsonResult.result) {
+        successCallBack(jsonResult.result['return']);
+    } else {
+        failureCallBack(jsonResult.error.errorMessage);
+    }
+    if((typeof jsonResult.token !== 'undefined') && $.trim(jsonResult.token).length > 0) {
+        updateStruts2Token(jsonResult.token);
+    }
 }
 
 /**
@@ -568,8 +593,8 @@ function showConfirmation(title, message, yesText, yesHandler) {
  * @since 1.3
  */
 function clearAddNewProjectForm() {
-    $('#addNewProjectModal').find('input[name="newProjectName"]').val('');
-    $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val('');
+    $('#addNewProjectModal').find('input[name="newProjectName"]').val('').removeClass('invalid').parent().find('.errorMessage').text('');
+    $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val('').removeClass('invalid').parent().find('.errorMessage').text('');
 }
 
 /*BUGR-4512*/
@@ -846,4 +871,30 @@ function getObjectSize(object) {
         }
     }
     return count;
+}
+
+function updateStruts2Token(newToken) {
+    if (typeof struts2Token !== 'undefined') {
+        struts2Token = newToken;
+    }
+}
+
+function getStruts2Token() {
+    return struts2Token;
+}
+
+function getStruts2TokenName() {
+    return struts2TokenName;
+}
+
+function setupTokenRequest(request, tokenName) {
+    var tokenData = {};
+
+    request = typeof request !== 'undefined' ? request : {};
+    tokenName = typeof tokenName !== 'undefined' ? tokenName : 'token';
+
+    tokenData["struts.token.name"] = tokenName;
+    tokenData[tokenName] = getStruts2Token();
+    request = $.extend(request, tokenData);
+    return request;
 }

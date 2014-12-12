@@ -51,8 +51,19 @@ import java.util.Map;
  *     <li>Added method {@link #getFiltersQuery()}</li>
  * </ul>
  * </p>
- * @author GreatKevin
- * @version 1.1
+ *
+ * <p>
+ * Version 1.2 (TopCoder Direct - Add date filters to Challenges section filter panel)
+ * <ul>
+ *     <li>Added {@link #startDateFrom} and its getter and setter</li>
+ *     <li>Added {@link #startDateTo} and its getter and setter</li>
+ *     <li>Added {@link #endDateFrom} and its getter and setter</li>
+ *     <li>Added {@link #endDateTo} and its getter and setter</li>
+ *     <li>Updated {@link #getFiltersQuery()} to include the date filters above</li>
+ * </ul>
+ * </p>
+ * @author GreatKevin, Veve
+ * @version 1.2
  */
 public abstract class ServiceBackendDataTablesAction extends AbstractAction {
 
@@ -141,6 +152,34 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      * @since 1.1
      */
     private String challengeTypeFilter;
+
+    /**
+     * The start date from filter.
+     *
+     * @since 1.2
+     */
+    private String startDateFrom;
+
+    /**
+     * The start date to filter.
+     *
+     * @since 1.2
+     */
+    private String startDateTo;
+
+    /**
+     * The end date from filter.
+     *
+     * @since 1.2
+     */
+    private String endDateFrom;
+
+    /**
+     * The end date to filter.
+     *
+     * @since 1.2
+     */
+    private String endDateTo;
 
     /**
      * The max pagination size.
@@ -550,6 +589,18 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
         if (getChallengeTypeFilter() != null && !getChallengeTypeFilter().equalsIgnoreCase("all")) {
             filters.add("challengeType=" + getChallengeTypeFilter());
         }
+        if (getStartDateFrom() != null && getStartDateFrom().trim().length() > 0) {
+            filters.add("startDateFrom=" + getStartDateFrom());
+        }
+        if (getStartDateTo() != null && getStartDateTo().trim().length() > 0) {
+            filters.add("startDateTo=" + getStartDateTo());
+        }
+        if (getEndDateFrom() != null && getEndDateFrom().trim().length() > 0) {
+            filters.add("endDateFrom=" + getEndDateFrom());
+        }
+        if (getEndDateTo() != null && getEndDateTo().trim().length() > 0) {
+            filters.add("endDateTo=" + getEndDateTo());
+        }
 
         for (int i = 0, len = filters.size(); i < len; ++i) {
             if (i > 0) {
@@ -559,5 +610,87 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
         }
 
         return str.toString();
+    }
+
+    /**
+     * Get the start date from.
+     *
+     * @return the start date from.
+     *
+     * @since 1.2
+     */
+    public String getStartDateFrom() {
+        return startDateFrom;
+    }
+
+    /**
+     * Sets the start date from.
+     *
+     * @param startDateFrom the start date from.
+     *
+     * @since 1.2
+     */
+    public void setStartDateFrom(String startDateFrom) {
+        this.startDateFrom = startDateFrom;
+    }
+
+    /**
+     * Gets the start date to.
+     *
+     * @return the start date to.
+     * @since 1.2
+     */
+    public String getStartDateTo() {
+        return startDateTo;
+    }
+
+    /**
+     * Sets the start date to.
+     *
+     * @param startDateTo the start date to.
+     * @since 1.2
+     */
+    public void setStartDateTo(String startDateTo) {
+        this.startDateTo = startDateTo;
+    }
+
+    /**
+     * Gets the end date from.
+     *
+     * @return the end date from.
+     * @since 1.2
+     */
+    public String getEndDateFrom() {
+        return endDateFrom;
+    }
+
+    /**
+     * Sets the end date from.
+     *
+     * @param endDateFrom the end date from.
+     * @since 1.2
+     */
+    public void setEndDateFrom(String endDateFrom) {
+        this.endDateFrom = endDateFrom;
+    }
+
+    /**
+     * Gets the end date to.
+     *
+     * @return the end date to.
+     * @since 1.2
+     */
+    public String getEndDateTo() {
+        return endDateTo;
+    }
+
+    /**
+     * Sets the end date to.
+     *
+     * @param endDateTo the end date to.
+     * @since 1.2
+     */
+    public void setEndDateTo(String endDateTo) {
+        this.endDateTo = endDateTo;
     }
 }

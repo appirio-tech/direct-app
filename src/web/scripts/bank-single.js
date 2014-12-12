@@ -332,13 +332,19 @@ $(document).ready(function() {
 		$.ajax({
 			type: 'POST',
 			url:  ctx + "/contest/updateSubmissionFeedback",
-			data: {projectId : contestId, submissionId : submissionId, feedbackText : feedback, roundType : roundType},
+			data: setupTokenRequest({projectId : contestId, submissionId : submissionId, feedbackText : feedback, roundType : roundType}, getStruts2TokenName()),
 			cache: false,
 			dataType: 'json',
 			async : false,
 			success: function (jsonResult) {
-                $("#alertModal3").find(".modalBodyBox").find("p").html(htmlEncode(feedback).replace(/[\n]/g,'<br />'));
-                modalLoad("#alertModal3");
+                handleJsonResult2(jsonResult,
+                    function (result) {
+                        $("#alertModal3").find(".modalBodyBox").find("p").html(htmlEncode(feedback).replace(/[\n]/g,'<br />'));
+                        modalLoad("#alertModal3");
+                    },
+                    function (errorMessage) {
+                        showServerError(errorMessage);
+                    });
 			},
 			beforeSend: beforeAjax,
 			complete: afterAjax

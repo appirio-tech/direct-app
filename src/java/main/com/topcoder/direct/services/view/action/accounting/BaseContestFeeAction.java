@@ -10,7 +10,7 @@ import com.topcoder.clients.model.BillingAccount;
 import com.topcoder.clients.model.ContestType;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.groups.services.DirectProjectService;
 import com.topcoder.util.log.Level;

@@ -156,7 +156,7 @@ function pbutton_submit() {
     $.ajax({
         type:'POST',
         url:"updateProjectPermissions",
-        data:request,
+        data:setupTokenRequest(request, getStruts2TokenName()),
         cache:false,
         dataType:'json',
         success:function (jsonResult) {

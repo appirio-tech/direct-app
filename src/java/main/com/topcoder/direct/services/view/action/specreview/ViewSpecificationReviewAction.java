@@ -1,36 +1,18 @@
 /*
- * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.management.deliverable.Submission;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.web.util.HtmlUtils;
-
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.review.data.Comment;
 import com.topcoder.management.review.data.Item;
 import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
-import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -42,6 +24,16 @@ import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.review.specification.SpecificationReviewStatus;
 import com.topcoder.service.user.UserService;
 import com.topcoder.util.errorhandling.ExceptionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.util.HtmlUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * <p>
@@ -96,9 +88,15 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.4 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
- * @author caru, morehappiness, GreatKevin, minhu
- * @version 1.3
+ * @author caru, morehappiness, GreatKevin, minhu, Veve
+ * @version 1.4
  * @since 1.0
  */
 public class ViewSpecificationReviewAction extends SpecificationReviewAction {
@@ -345,11 +343,6 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             sessionData = new SessionData(request.getSession());
-            // Set current project contests
-            List<TypedContestBriefDTO> contests = DataProvider
-                    .getProjectTypedContests(getTCSubject().getUserId(),
-                            contestStats.getContest().getProject().getId());
-            sessionData.setCurrentProjectContests(contests);
 
             // Set current project context based on selected contest
             this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
@@ -362,12 +355,6 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             DirectUtils.setDashboardData(getTCSubject(), getProjectId(), viewData,
                     contestServiceFacade, isSoftware());
 
-             // Set projects data
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getTCSubject().getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
-            
             return SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

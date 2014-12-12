@@ -1,9 +1,12 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.0
+  - Author: GreatKevin, Veve
+  - Version: 1.1
   - Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 TopCoder Direct - Challenges Section Filters Panel
+  -
+  - Version 1.1 (TopCoder Direct - Add date filters to Challenges section filter panel)
+  - - Add date filters
   -
   - Filter panel for my created / my challenges.
 --%>
@@ -42,6 +45,15 @@
                 </div>
             </div>
 
+            <div class="column thirdColumn">
+                <div>
+                    <label>Start Date:</label>
+                    <input id='startDateBegin' type='text' readonly="readonly" class="date-pick"/>
+                    <span class='title toLabel'>To</span>
+                    <input id='startDateEnd' type='text' readonly="readonly" class="date-pick"/>
+                </div>
+            </div>
+
         </div>
         <div class="row">
             <div class="column firstColumn">
@@ -70,6 +82,23 @@
                         </s:iterator>
                     </select>
                 </div>
+            </div>
+
+            <div class="column thirdColumn">
+                <div>
+                    <label>End Date:</label>
+                    <input id='endDateBegin' type='text' readonly="readonly" class="date-pick"/>
+                    <span class='title toLabel'>To</span>
+                    <input id='endDateEnd' type='text' readonly="readonly" class="date-pick"/>
+                </div>
+            </div>
+
+            <div class="column applyButtonColumn">
+                <a class="newButtonGreen filterApplyButton" href="javascript:;">
+                    <span class="left">
+                        <span class="right">APPLY</span>
+                    </span>
+                </a>
             </div>
 
         </div>

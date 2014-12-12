@@ -4,17 +4,25 @@
 
 package com.topcoder.direct.services.view.interceptors;
 
+
+import java.util.Set;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+import com.auth0.jwt.JWTVerifier;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.contest.launch.Helper;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
@@ -26,8 +34,6 @@ import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.BasicAuthentication;
 import com.topcoder.web.common.security.SessionPersistor;
-
-import java.util.Set;
 
 
 
@@ -275,6 +281,31 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             new SessionPersistor(request.getSession()), new SimpleRequest(request),
             new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
         User user = auth.getActiveUser();
+
+        boolean jwtValid = true;
+
+        Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                ServerConfiguration.JWT_COOOKIE_KEY);
+
+
+
+        if (jwtCookie == null) {
+            return loginPageName;
+        }
+
+        Map<String, Object> decodedPayload;
+
+        try {
+            decodedPayload = new JWTVerifier(DirectProperties.CLIENT_SECRET_AUTH0, DirectProperties.CLIENT_ID_AUTH0).verify(jwtCookie.getValue());
+        } catch (Exception e) {
+            return loginPageName;
+        }
+       
+        if (decodedPayload.get("sub") == null) {
+            return loginPageName;
+        }
+
+
         if (user != null  && !user.isAnonymous()) {
             // get user roles for the user id
             Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
@@ -319,11 +350,18 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             handle = sessionData.getCurrentUserHandle();
         }
 
+        //I-137967(https://appirio.my.salesforce.com/a3v50000000D2Lt)
+        //loginfo.append(request.getRemoteAddr());
+        String remoteAddr = request.getHeader("X-Forwarded-For");
+        if(remoteAddr == null || remoteAddr.trim().length()==0) {
+            remoteAddr = request.getRemoteAddr();
+        }
+
         StringBuffer loginfo = new StringBuffer(100);
         loginfo.append("[* ");
         loginfo.append(handle);
         loginfo.append(" * ");
-        loginfo.append(request.getRemoteAddr());
+        loginfo.append(remoteAddr);
         loginfo.append(" * ");
         loginfo.append(request.getMethod());
         loginfo.append(" ");

@@ -148,6 +148,8 @@
  * - TopCoder Direct - Challenges Section Filters Panel
  * - Add CSS for the final panel in my created challenges / my challenges
  *
+ * - TopCoder Direct - Change Right Sidebar to pure Ajax
+ * - Add decoration hover styles for the contest link in the right sidebar
  */
 
 body{
@@ -11177,7 +11179,7 @@ a.downloadAllbtn:hover span {
     font-weight: bold;
     font-size: 11px;
     display: block;
-    padding: 12px 0 5px;
+    padding: 12px 2px 5px;
 }
 
 .newSidebar .contestList .filter .dropdownWidget {
@@ -13954,17 +13956,24 @@ div.totalCostContainer {
 }
 
 .challengesFilter .filterContainer .firstColumn {
-    width: 50%;
+    width: 37%;
 }
 
 .challengesFilter .filterContainer .secondColumn {
-    width: 30%;
+    width: 20%;
 }
 
-.challengesFilter .filterContainer .thirdCokumn {
-    width: 10%;
-    float: left;
-    display: inline;
+.challengesFilter .filterContainer .thirdColumn {
+    width: 33%;
+}
+
+.challengesFilter .filterContainer .applyButtonColumn {
+    width: 8%;
+}
+
+.challengesFilter .filterContainer .applyButtonColumn .filterApplyButton {
+    float: right;
+    margin-top: 38px;
 }
 
 .challengesFilter .filterContainer .button div {
@@ -14022,3 +14031,20 @@ div.totalCostContainer {
 .ajaxLoadingBackground {
     background: url("/images/dots-white.gif") no-repeat scroll center center;
 }
+
+/* Styles for launch new challenge '*' mandatory fields */
+span.red {
+    color: #ff0000;
+    font-weight: normal !important;
+    padding-left: 1px;
+}
+
+#contestsTable a.contestLink {
+    text-decoration: none;
+}
+
+#contestsTable a.contestLink:hover {
+    text-decoration: none;
+    color:#ff8a00;
+}
+

@@ -1,17 +1,18 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
@@ -152,6 +153,10 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction im
     @Override
     protected void executeAction() throws Exception {
         SessionData sessionData = new SessionData(ServletActionContext.getRequest().getSession());
+
+        getSessionData().setCurrentProjectContext(
+                DirectUtils.getCurrentProjectBrief(this.getProjectServiceFacade(), getFormData().getProjectId()));
+
         sessionData.setCurrentSelectDirectProjectID(getFormData().getProjectId());
     }
 

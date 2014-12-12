@@ -185,7 +185,7 @@
         </div>
 
         <div class="projectMetaAreaField">
-            <h4 class="projectMetaLabel pmIcon">TopCoder Platform Specialists :</h4>
+            <h4 class="projectMetaLabel pmIcon">TopCoder Expert Services :</h4>
 
             <div class="memberList">
                 <ul>

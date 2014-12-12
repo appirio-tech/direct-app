@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;

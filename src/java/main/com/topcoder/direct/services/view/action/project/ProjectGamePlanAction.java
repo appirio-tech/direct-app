@@ -1,24 +1,28 @@
+/*
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.direct.services.view.action.project;
 
-import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
-import com.topcoder.direct.services.view.util.DataProvider;
-
-import java.util.List;
+import com.topcoder.direct.services.view.util.DirectUtils;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: Jul 27, 2010
- * Time: 11:38:20 PM
- * To change this template use File | Settings | File Templates.
+ * The project game plan action.
+ *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1
  */
-public class ProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm>, ViewAction<ProjectContestsDTO> {
+public class ProjectGamePlanAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>, ViewAction<ProjectContestsDTO> {
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
@@ -59,31 +63,13 @@ public class ProjectGamePlanAction extends AbstractAction implements FormAction<
      * <p>Handles the incoming request. If action is executed successfully then changes the current project context to
      * project requested for this action.</p>
      *
-     * @return a <code>String</code> referencing the next view or action to route request to. This implementation
-     *         returns {@link #SUCCESS} always.
      * @throws Exception if an unexpected error occurs while processing the request.
      */
     @Override
-    public String execute() throws Exception {
-        String result = super.execute();
-        if (SUCCESS.equals(result)) {
-            getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+    protected void executeAction() throws Exception {
+        getSessionData().setCurrentProjectContext(
+                DirectUtils.getCurrentProjectBrief(this.getProjectServiceFacade(), getFormData().getProjectId()));
 
-            // set the current direct project id in session, the contest details codes incorrectly
-            // use setCurrentProjectContext to override the current chosen direct project with current
-            // chosen contest, for the safe, we put the direct project id into session separately again
-            getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
-
-            // set user projects
-            List<ProjectBriefDTO> projects = DataProvider
-                    .getUserProjects(getSessionData().getCurrentUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            viewData.setUserProjects(userProjectsDTO);
-            
-            return SUCCESS;
-        } else {
-            return result;
-        }
+        getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
     }
 }

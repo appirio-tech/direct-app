@@ -49,7 +49,12 @@ public enum ActivityType {
     /**
      * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
      */
-    CONTEST_COMPLETED("Contest Completed", "contestLaunch", "Posted By"),
+    CONTEST_DRAFTED("Contest Drafted", "contestDraft", "Posted By"),
+
+    /**
+     * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
+     */
+    CONTEST_COMPLETED("Contest Completed", "contestCompleted", "Posted By"),
 
      /**
      * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
@@ -131,6 +136,7 @@ public enum ActivityType {
      * @return an <code>ActivityType</code> matching the specified name or <code>null</code> if there is none.  
      */
     public static ActivityType forName(String name) {
+
         String value = (name == null) ? "" : name.trim();
         ActivityType[] types = ActivityType.values();
         for (int i = 0; i < types.length; i++) {

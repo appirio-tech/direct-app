@@ -8,7 +8,7 @@ import com.topcoder.direct.cloudvm.service.CloudVMServiceException;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.cloudvm.*;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -17,7 +17,6 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.shared.security.AuthorizationException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

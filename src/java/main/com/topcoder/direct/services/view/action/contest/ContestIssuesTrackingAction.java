@@ -1,29 +1,21 @@
 /*
- * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.SessionFileStore;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>Action class which handles retrieving Jira issues and bug races for the contest</p>
@@ -51,8 +43,14 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author Veve, TCSASSEMBLER
- * @version 1.4
+ * <p>
+ * Version 1.5 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author Veve, Veve
+ * @version 1.5
  */
 public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
 
@@ -113,19 +111,8 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, competition);
         getViewData().setContestStats(contestStats);
 
-        // Set projects data
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        getViewData().setUserProjects(userProjectsDTO);
-
         getViewData().setLastClosedFinalFix(DirectUtils.getLastClosedFinalFixPhase(getProjectServices(), getProjectId()));
         
-        // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                currentUser.getUserId(), contestStats.getContest().getProject().getId());
-        this.sessionData.setCurrentProjectContests(contests);
-
         // Set current project context based on selected contest
         this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
         this.sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());

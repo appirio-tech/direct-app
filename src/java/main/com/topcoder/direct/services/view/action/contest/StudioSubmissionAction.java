@@ -1,25 +1,15 @@
 /*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.StudioContestSubmissionDTO;
-import com.topcoder.direct.services.view.dto.contest.SubmissionViewerType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.StudioContestSubmissionForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -32,6 +22,12 @@ import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a single submission for
@@ -105,9 +101,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author isv, flexme, minhu
+ * <p>
+ * Version 2.0 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
+ *
+ * @author isv, flexme, minhu, Veve
  * @since Submission Viewer Release 1 assembly
- * @version 1.9
+ * @version 2.0
  */
 public class StudioSubmissionAction extends ContestAction {
 
@@ -302,16 +304,11 @@ public class StudioSubmissionAction extends ContestAction {
             int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
             
-            // Set projects data
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
 
             // Set current project contests
             List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
                     currentUser.getUserId(), contestStats.getContest().getProject().getId());
-            getSessionData().setCurrentProjectContests(contests);
+
             for (TypedContestBriefDTO contest : contests) {
                 if (contest.getId() == projectId) {
                     getViewData().setCurrentContest(contest);

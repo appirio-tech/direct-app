@@ -1,11 +1,14 @@
 <%--
-  - Author: jiajizhou86, TCSASSEMBLER
+  - Author: jiajizhou86, Veve
   -
   - Version: 1.0 (Release Assembly - TopCoder Direct VM Instances Management)
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Rebranding the project VM management page.
+  -
+  - Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+  - Add the right sidebar script reference
   -
   - Description: This page renders the project vm management view.
 --%>
@@ -39,7 +42,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="newSidebarCollapse">
 
                     <jsp:include page="includes/right.jsp"/>
 

@@ -18,7 +18,7 @@ import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.Invoice;
 import com.topcoder.clients.invoices.model.InvoiceRecord;
 import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.util.DataProvider;

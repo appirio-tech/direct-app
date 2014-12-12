@@ -1,19 +1,16 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.studio;
 
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.studio.FinalFixStatus;
 import com.topcoder.direct.services.view.dto.contest.studio.StudioFinalFix;
 import com.topcoder.direct.services.view.dto.contest.studio.StudioFinalFixDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.resource.Resource;
@@ -37,9 +34,15 @@ import java.util.Map;
 /**
  * <p>A <code>Struts</code> action used for handling the requests for viewing the details on Final Fixes for a single
  * <code>Studio</code> contest.</p>
+ *
+ * <p>
+ * Version 1.1 (TopCoder Direct - Change Right Sidebar to pure Ajax)
+ * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
+ * load these data via ajax instead after the page finishes loading.
+ * </p>
  * 
- * @author isv
- * @version 1.0 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One)
+ * @author isv, Veve
+ * @version 1.1
  */
 public class ViewFinalFixAction extends StudioOrSoftwareContestAction {
 
@@ -88,10 +91,6 @@ public class ViewFinalFixAction extends StudioOrSoftwareContestAction {
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, getProjectId(), softwareCompetition);
         this.viewData.setContestStats(contestStats);
 
-        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getCurrentUser().getUserId());
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-        userProjectsDTO.setProjects(projects);
-        this.viewData.setUserProjects(userProjectsDTO);
         this.viewData.setContestId(getProjectId());
 
         // Prepare the data for final fixes

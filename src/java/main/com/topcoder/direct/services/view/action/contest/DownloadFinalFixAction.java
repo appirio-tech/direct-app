@@ -1,6 +1,6 @@
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
 

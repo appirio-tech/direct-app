@@ -369,7 +369,7 @@ $(document).ready(function () {
         $.ajax({
             type:"POST",
             url:"changeMilestoneStatus",
-            data:{formData:formData},
+            data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
             dataType:'json',
             async:true,
             success:function (jsonResult) {
@@ -425,7 +425,7 @@ $(document).ready(function () {
         $.ajax({
             type:"POST",
             url:"changeMilestoneStatus",
-            data:{formData:formData},
+            data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
             dataType:'json',
             async:true,
             success:function (jsonResult) {
@@ -519,7 +519,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"POST",
                 url:"updateMilestone",
-                data:request,
+                data:setupTokenRequest(request, getStruts2TokenName()),
                 dataType:'json',
                 async:true,
                 success:function (jsonResult) {
@@ -562,7 +562,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"POST",
                 url:"addProjectMilestone",
-                data:request,
+                data:setupTokenRequest(request, getStruts2TokenName()),
                 dataType:'json',
                 async:true,
                 success:function (jsonResult) {
@@ -629,7 +629,7 @@ $(document).ready(function () {
         $.ajax({
             type:"POST",
             url:"removeMilestone",
-            data:{formData:formData},
+            data:setupTokenRequest({formData:formData}, getStruts2TokenName()),
             dataType:'json',
             async:true,
             success:function (jsonResult) {
@@ -873,8 +873,8 @@ $(document).ready(function () {
         $.ajax({
             type:"POST",
             url:"deleteContestFromMilestone",
-            data:{formData:{contestId:contestRow.find("input[name=contestId]").val(),
-                milestoneId:milestoneItem.find("input[name=milestoneId]").val()}},
+            data:setupTokenRequest({formData:{contestId:contestRow.find("input[name=contestId]").val(),
+                milestoneId:milestoneItem.find("input[name=milestoneId]").val()}}, getStruts2TokenName()),
             dataType:'json',
             async:true,
             success:function (jsonResult) {
@@ -924,8 +924,8 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "moveContestToMilestone",
-            data: {formData: {contestId: contestId,
-                milestoneId: milestoneId}},
+            data: setupTokenRequest({formData: {contestId: contestId,
+                milestoneId: milestoneId}}, getStruts2TokenName()),
             dataType: 'json',
             async: true,
             success: function (jsonResult) {
@@ -983,7 +983,7 @@ $(document).ready(function () {
             $.ajax({
                 type:"POST",
                 url:"addProjectMilestones",
-                data:request,
+                data:setupTokenRequest(request, getStruts2TokenName()),
                 dataType:'json',
                 async:true,
                 success:function (jsonResult) {
