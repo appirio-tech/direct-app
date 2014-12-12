@@ -1491,9 +1491,7 @@ function formatDateForReview(d) {
    if(d == null) {
       return null;
    }
-
-    var dateTime = moment.tz(d.toString("MM/dd/yyyy HH:mm"), "America/New_York");
-
+    var dateTime = moment.tz(d.toString("yyyy-MM-dd HH:mm"), "America/New_York");
     return dateTime.format('MM/DD/YYYY [at] HH:mm z');
 }
 

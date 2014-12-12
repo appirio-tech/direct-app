@@ -67,15 +67,16 @@
                 <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="matchRoundId">
+                <td class="first_tab_type"><strong>Match Round ID</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rMatchRoundId"></span></strong></td>
+            </tr>
+            <tr></tr>
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr></tr>
-            <tr class="matchRoundId">
-                <td class="first_tab_type"><strong>Match Round ID</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rMatchRoundId"></span></strong></td>
-            </tr>
             <tr class="cmcTask"></tr>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
@@ -166,18 +167,19 @@
             <span id="billingGroupCheckBox"><br />
                              <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
             </span>
-             <span class="cmcTask"><br />
-                    <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
-                    <span class="value">
-                        <input type="text" class="bigin"  name="CMCTaskID" value=""/>
-                    </span>
-             </span><br />
             <span class="matchRoundId"><br />
                     <span class="name fixWidthName"><strong>Match Round ID</strong></span>
                     <span class="value">
                         <input type="text" class="smallin"  name="MatchRoundID" value=""/>
                     </span>
              </span><br />
+             <span class="cmcTask"><br />
+                    <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
+                    <span class="value">
+                        <input type="text" class="bigin"  name="CMCTaskID" value=""/>
+                    </span>
+             </span><br />
+            
             <div id="projectEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Project Name</strong></span>
