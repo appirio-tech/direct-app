@@ -11,6 +11,7 @@ import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.cloudvm.service.CloudVMService;
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
@@ -72,6 +73,7 @@ import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.ApplicationServer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.dwload.CacheClearer;
 import com.topcoder.web.common.CachedDataAccess;
@@ -668,8 +670,15 @@ import java.util.zip.ZipOutputStream;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (TopCoder Direct - JWT token generation)
+ * <ul>
+ *     <li>Added {@link #addDirectCookie(javax.servlet.http.HttpServletResponse, String, String, int)}</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 public final class DirectUtils {
 
@@ -3404,6 +3413,23 @@ public final class DirectUtils {
         }
 
         return null;
+    }
+
+    /**
+     * Add a cookie to servlet response for direct application.
+     *
+     * @param response the servlet response.
+     * @param name the cookie name.
+     * @param value the cookie value
+     * @param time the expiration time. 0 to delete cookie, negative for session cookie.
+     * @since 1.7
+     */
+    public static void addDirectCookie(HttpServletResponse response, String name, String value, int time) {
+        Cookie c = new Cookie(name, value);
+        c.setMaxAge(time);
+        c.setDomain(ServerConfiguration.SSO_DOMAIN);
+        c.setPath("/");
+        response.addCookie(c);
     }
 
     /**
