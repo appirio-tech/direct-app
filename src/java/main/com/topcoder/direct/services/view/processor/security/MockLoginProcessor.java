@@ -1,28 +1,30 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.processor.security;
 
+import com.auth0.jwt.Algorithm;
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.form.LoginForm;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
+import com.topcoder.direct.services.view.util.DirectProperties;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.jwt.DirectJWTSigner;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.security.SimpleUser;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.logging.Logger;
-
-import com.topcoder.shared.security.SimpleResource;
-import com.topcoder.shared.security.SimpleUser;
 import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.LightAuthentication;
 import com.topcoder.web.common.security.SessionPersistor;
 import org.apache.struts2.ServletActionContext;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -41,26 +43,33 @@ import java.util.Set;
 
 /**
  * <p>A mock processor to be used for handling requests for user authentication to application.</p>
- *
+ * <p/>
  * <p>This processor expects the actions of {@link com.topcoder.direct.services.view.action.LoginAction} type to be passed to it. It gets the submitted user
  * credentials from action's form and uses them to authenticate user using config file.</p>
- *
+ * <p/>
  * <p>
- * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes: 
- *    <ul>
- *       <li>Set cookie to be used by scorecard application.</li>
- *    </ul> 
+ * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes:
+ * <ul>
+ * <li>Set cookie to be used by scorecard application.</li>
+ * </ul>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.2 (BUG TCCC-5802) Change notes:
- *  <ul>
- *   <li>Remove direct_sso cookie and its related logic.</li>
- *  </ul>
+ * <ul>
+ * <li>Remove direct_sso cookie and its related logic.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Version 1.3 (TopCoder Direct - JWT token generation)
+ * <ul>
+ *     <li>Updated {@link #processRequest(com.topcoder.direct.services.view.action.LoginAction)} to
+ *     add JWT cookie</li>
+ * </ul>
  * </p>
  *
- * @author TCSASSEMBLER, pvmagacho, ecnu_haozi
- * @version 1.2
+ * @author pvmagacho, ecnu_haozi, Veve
+ * @version 1.3
  */
 public class MockLoginProcessor implements RequestProcessor<LoginAction> {
 
@@ -78,6 +87,20 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
      * <p>A <code>Logger</code> to be used for logging the events encountered while processing the requests.</p>
      */
     private static final Logger log = Logger.getLogger(MockLoginProcessor.class);
+
+    /**
+     * The Options for JWT generation.
+     *
+     * @since 1.3
+     */
+    private static final DirectJWTSigner.Options JWT_OPTIONS;
+
+    static {
+        JWT_OPTIONS = new DirectJWTSigner.Options();
+        JWT_OPTIONS.setAlgorithm(Algorithm.HS256);
+        JWT_OPTIONS.setExpirySeconds(DirectProperties.JWT_EXPIRATION_SECONDS);
+        JWT_OPTIONS.setIssuedAt(true);
+    }
 
     /**
      * <p>Constructs new <code>MockLoginProcessor</code> instance. This implementation does nothing.</p>
@@ -135,7 +158,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
         String username = form.getUsername();
         String password = form.getPassword();
 
-        if((username == null || (username != null && username.trim().length() == 0))
+        if ((username == null || (username != null && username.trim().length() == 0))
                 && (password == null || (password != null && password.trim().length() == 0))) {
             action.setResultCode(LoginAction.RC_EMPTY_CREDENTIALS);
             return;
@@ -147,7 +170,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
 
             try {
                 tcSubject = getTCSubject(userId);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 log.error("Fail to retrieve the TCSubject for the user with id - " + userId);
             }
         }
@@ -162,17 +185,31 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
             action.setResultCode(LoginAction.RC_SUCCESS);
             log.info("User " + username + "  has been authenticated successfully");
 
-	    try {
-		// added by System Assembly - Direct Topcoder Scorecard Tool Integration (TC SSO cookie)
-		LightAuthentication auth = new LightAuthentication(
-                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
-                    new SimpleRequest(ServletActionContext.getRequest()),
-                    new SimpleResponse(ServletActionContext.getResponse()));
-		auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
-	    } catch (Exception e) {
-		log.error("User " + username + " could not set cookie"); 
-		action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
-	    }
+            try {
+                // added by System Assembly - Direct Topcoder Scorecard Tool Integration (TC SSO cookie)
+                LightAuthentication auth = new LightAuthentication(
+                        new SessionPersistor(ServletActionContext.getRequest().getSession()),
+                        new SimpleRequest(ServletActionContext.getRequest()),
+                        new SimpleResponse(ServletActionContext.getResponse()));
+                auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
+
+                // generate the jwt cookie
+                DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.CLIENT_SECRET_AUTH0);
+
+                Map<String, Object> claims = new HashMap<String, Object>();
+                claims.put("iss", "https://" + DirectProperties.DOMAIN_AUTH0);
+                claims.put("sub", "ad|" + tcSubject.getUserId());
+                claims.put("aud", DirectProperties.CLIENT_ID_AUTH0);
+
+                String sign = jwtSigner.sign(claims, JWT_OPTIONS);
+
+                // add session cookie, use -1 for expiration time
+                DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
+                        ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
+            } catch (Exception e) {
+                log.error("User " + username + " could not set cookie");
+                action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
+            }
         }
     }
 
