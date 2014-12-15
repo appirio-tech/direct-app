@@ -189,6 +189,7 @@ var SOFTWARE_CATEGORY_ID_CODE = 39;
 var STUDIO_CATEGORY_ID_DESIGN_F2F = 40;
 var SOFTWARE_CATEGORY_ID_BUG_HUNT = 9;
 var ALGORITHM_CATEGORY_ID_MARATHON = 37;
+var STUDIO_IDEA_GENERATION = 22;
 
 var DRAFT_STATUS = "Draft";
  
@@ -416,6 +417,18 @@ com.topcoder.direct.Project = function() {
 	  this.getDRPoints = function() {
 	  	  return this.properties['DR points'];
 	  }
+
+      this.isDrOn = function() {
+          return this.properties['Digital Run Flag'] ? (this.properties['Digital Run Flag'].toUpperCase() == 'ON') : false;
+      }
+
+      this.turnDRFlagOn = function() {
+          this.properties['Digital Run Flag'] = "On";
+      }
+
+      this.turnDRFlagOff = function() {
+          this.properties['Digital Run Flag'] = "Off";
+      }
 
 	  this.setCheckpointBonusCost = function(checkpointBonusCost) {
 	  	  this.properties['Checkpoint Bonus Cost'] = checkpointBonusCost;

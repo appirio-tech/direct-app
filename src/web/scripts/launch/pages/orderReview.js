@@ -1,7 +1,6 @@
-/*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ *
  * Rerender the order review page.
  * Version 1.1 change notes:
  * Provide a confirmation dialog when activating the created contest.
@@ -43,10 +42,11 @@
  * Version 2.1 (Release Assembly - TC Direct Edit Challenge - prize section update v1.0)
  * - Bug fix in total cost formula.
  *
+ * Version 2.2 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+ * - Handle the studio cup points flag
  *
- *
- * @author pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 2.1
+ * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve
+ * @version 2.2
  */
 
 /**
@@ -321,16 +321,21 @@ function updateOrderReviewStudio() {
 
 /**
  * Calculate studio cup points.
- * 
- * @return points
  */
-function calculateStudioCupPoints() {
+function calculateStudioCupPoints(_prizes) {
 
-    if(isDesignF2F()) return 0; //no studio cup points for Design First2Finish
+    if(isDesignF2F() || isIdeaGeneration() ||
+        !$("#studioCupPointsCheckBox").is(":checked"))
+        return 0; //no studio cup points for Design First2Finish or DR flag is not ON
 
 
     var isMultiRound = mainWidget.softwareCompetition.multiRound;
     var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+
+    if(_prizes) {
+        prizes = _prizes;
+    }
+
     var checkpointAmount = prizes[prizes.length - 1].prizeAmount;
     var checkpointTotal = 0;
 
@@ -352,7 +357,6 @@ function calculateStudioCupPoints() {
     });
 
     return (checkpointTotal + contestPrizeTotal) * 0.25;
-
 }
 
 /**

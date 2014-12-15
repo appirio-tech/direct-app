@@ -1,7 +1,6 @@
-/*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
@@ -104,8 +103,11 @@
  * @author Veve @channegeId 30046969
  * - Add the marathon round id project info save for marathon challenge
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin
- * @version 3.7
+ * Version 3.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+ * - Add studio cup points checkbox.
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve
+ * @version 3.8
  */
 
  /**
@@ -1292,102 +1294,114 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
 
 
 function showPage(pageId) {
-   $('.launchpage').hide();
+    $('.launchpage').hide();
 
-   // remove the 'Maximum Submissions' property and Allow stock art property
-   if(pageId == "contestSelectionPage") {
+    // remove the 'Maximum Submissions' property and Allow stock art property
+    if (pageId == "contestSelectionPage") {
         delete mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'];
         delete mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'];
-   }
-   
-   if(pageId == "overviewSoftwarePage") {
-      if(isTechnologyContest()) {
-         $('#swTechnologyDiv').show();
-      } else {
-         $('#swTechnologyDiv').hide();
-      }
+    }
 
-       if(isPlatformContest()) {
-           $('#swPlatformDiv').show();
-       } else {
-           $('#swPlatformDiv').hide();
-       }
+    if (pageId == "overviewSoftwarePage") {
+        if (isTechnologyContest()) {
+            $('#swTechnologyDiv').show();
+        } else {
+            $('#swTechnologyDiv').hide();
+        }
 
-      
-      if(isDevOrDesign()) {         
-         $('#swCatalogDiv').show();
-      } else {
-         $('#swCatalogDiv').hide();
-      }
-   }
-
-   if(pageId == "reviewPage") {
-      updateReviewStudio();
-   }
-
-   if(pageId == "reviewSoftwarePage") {
-      updateReviewSoftware();
-   }
-   
-   if(pageId == "reviewAlgorithmPage") {
-      updateReviewAlgorithm();
-   }
-
-   if(pageId == "orderReviewPage") {
-      updateOrderReviewStudio();
-   }
-
-   if(pageId == "orderReviewSoftwarePage") {
-      updateOrderReviewSoftware();
-   }
-   
-   if(pageId == "orderReviewAlgorithmPage") {
-      updateOrderReviewAlgorithm();
-   }
-
-   $('#'+pageId).show();
-   
-   if (pageId == "overviewPage" && $("#checkpointPrizeDiv").is(":visible") && !$("#checkpointPrizeDiv .numSelect select").data('customized')) {
-       $("#checkpointPrizeDiv .numSelect select").data('customized',true);
-       $("#checkpointPrizeDiv .numSelect select").sSelect();
-       $('#checkpointPrizeDiv div div div div').html('5');
-       $('#checkpointSubmissionNumber').val('5');
-       $('#checkpointPrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
-       $('#checkpointPrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
-       $('#checkpointPrize').val('50');
-   }
-
-   if (pageId == "overviewPage" && mainWidget.softwareCompetition.projectHeader.projectCategory.id == STUDIO_CATEGORY_ID_DESIGN_F2F) {
-       // special handling for the "Design First2Finish" page
-       $("#overviewPage .prizesInner").children(":gt(2)").hide();
-       $("#overviewPage .prizesInner input:gt(0)").val('');
-       $("#overviewPage .maxSubmissions input").val('');
-       $("#overviewPage .maxSubmissions").hide();
-   } else {
-       $("#overviewPage .prizesInner").children().show();
-       $("#overviewPage .maxSubmissions").show();
-
-   }
+        if (isPlatformContest()) {
+            $('#swPlatformDiv').show();
+        } else {
+            $('#swPlatformDiv').hide();
+        }
 
 
-   if (pageId == "overviewSoftwarePage") {
+        if (isDevOrDesign()) {
+            $('#swCatalogDiv').show();
+        } else {
+            $('#swCatalogDiv').hide();
+        }
+    }
 
-       if (isDevOrDesign()) {
-           $('#catalogSelect').sSelect();
-       }
-   }
+    if (pageId == "reviewPage") {
+        updateReviewStudio();
+    }
 
-   if (pageId == "overviewSoftwarePage" && $("#swCheckpointPrizeDiv").is(":visible") && !$("#swCheckpointPrizeDiv .numSelect select").data('customized')){
-        $("#swCheckpointPrizeDiv .numSelect select").data('customized',true);
+    if (pageId == "reviewSoftwarePage") {
+        updateReviewSoftware();
+    }
+
+    if (pageId == "reviewAlgorithmPage") {
+        updateReviewAlgorithm();
+    }
+
+    if (pageId == "orderReviewPage") {
+        updateOrderReviewStudio();
+    }
+
+    if (pageId == "orderReviewSoftwarePage") {
+        updateOrderReviewSoftware();
+    }
+
+    if (pageId == "orderReviewAlgorithmPage") {
+        updateOrderReviewAlgorithm();
+    }
+
+    $('#' + pageId).show();
+
+
+    if(pageId == "overviewPage") {
+        // studio challenge overview page
+        if ($("#checkpointPrizeDiv").is(":visible") && !$("#checkpointPrizeDiv .numSelect select").data('customized')) {
+            // for multiple round studio, setup the checkpoint prize section.
+            $("#checkpointPrizeDiv .numSelect select").data('customized', true);
+            $("#checkpointPrizeDiv .numSelect select").sSelect();
+            $('#checkpointPrizeDiv div div div div').html('5');
+            $('#checkpointSubmissionNumber').val('5');
+            $('#checkpointPrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
+            $('#checkpointPrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
+            $('#checkpointPrize').val('50');
+        }
+
+        if(isDesignF2F()) {
+            // special handling for the "Design First2Finish" page
+            $("#overviewPage .prizesInner").children(":gt(2)").hide();
+            $("#overviewPage .prizesInner input:gt(0)").val('');
+            $("#overviewPage .maxSubmissions input").val('');
+            $("#overviewPage .maxSubmissions").hide();
+        } else {
+            $("#overviewPage .prizesInner").children().show();
+            $("#overviewPage .maxSubmissions").show();
+        }
+
+        if(isDesignF2F() || isIdeaGeneration()) {
+            $("#studioCupPointsDiv").hide().find("input[type=checkbox]").removeAttr('checked');
+        } else {
+            $("#studioCupPointsDiv").show().find("input[type=checkbox]").attr('checked', 'checked');
+        }
+
+        delay(studioPrizeChangeHandler(), 1000);
+    }
+
+
+    if (pageId == "overviewSoftwarePage") {
+
+        if (isDevOrDesign()) {
+            $('#catalogSelect').sSelect();
+        }
+    }
+
+    if (pageId == "overviewSoftwarePage" && $("#swCheckpointPrizeDiv").is(":visible") && !$("#swCheckpointPrizeDiv .numSelect select").data('customized')) {
+        $("#swCheckpointPrizeDiv .numSelect select").data('customized', true);
         $("#swCheckpointPrizeDiv .numSelect select").sSelect();
         $('#swCheckpointPrizeDiv div div div div').html('2');
         $('#swCheckpointSubmissionNumber').val('2');
         $('#swCheckpointPrizeDiv div div div ul li:eq(0) a').removeClass('hiLite');
         $('#swCheckpointPrizeDiv div div div ul li:eq(1) a').addClass('hiLite');
         $('#swCheckpointPrize').val('200');
-   }
-   
-   $('html, body').animate({scrollTop:0}, 'fast');
+    }
+
+    $('html, body').animate({scrollTop: 0}, 'fast');
 }
 
 
@@ -1699,6 +1713,12 @@ function fillStudioPrizes(billingProjectId) {
     var copilotCost = parseFloat(_PH.getCopilotCost());
     var screeningCost = parseFloat(_PH.getReviewCost());
     var studioCupPoints = parseFloat(_PH.getDRPoints());
+    if(_PH.isDrOn() == false) {
+        studioCupPoints = 0;
+        $("#studioCupPointsCheckBox").removeAttr('checked');
+    } else {
+        $("#studioCupPointsCheckBox").attr('checked', 'checked');
+    }
     var adminFee = parseFloat(_PH.getAdminFee());
 
     var prizes = _PH.prizes;
@@ -2191,7 +2211,7 @@ function updateStudioPrizes() {
 
     // do some special cases handling here
     // 1) if challenge is of type design first2finish, no DR points
-    if (isDesignF2F()) {
+    if (isDesignF2F() || isIdeaGeneration()) {
         projectHeader.setDRPoints(0);
     }
 
@@ -2378,6 +2398,16 @@ function onTheFlyCalculateStudioCosts() {
     }
 
     var studioCupPoints = (mainPrizesSum + checkpointPrizesSum) * 0.25;
+
+    if($("#studioCupPointsCheckBox").is(":checked") == false) {
+        studioCupPoints = 0;
+    }
+
+    if(isDesignF2F() || isIdeaGeneration()) {
+        studioCupPoints = 0;
+        $("#studioCupPointsCheckBox").removeAttr('checked').parent().hide();
+    }
+
     var specReviewCost = 0;
     var screeningCost = 0;
 
@@ -2962,16 +2992,16 @@ function validateCodePrizes(errors) {
 }
 
 function validatePrizes(errors) {
-   var prizeInputs = [];
-   var lastPrizeIndex = -1;
-   var errorsAdded = false;
-   var $prizeElements;
-   
-   if(mainWidget.isStudioContest()) {
-       $prizeElements = $('div.prizes .prizesInput');
-   } else {
-       $prizeElements = $('div.alPrizes .prizesInput');
-   }
+    var prizeInputs = [];
+    var lastPrizeIndex = -1;
+    var errorsAdded = false;
+    var $prizeElements;
+
+    if (mainWidget.isStudioContest()) {
+        $prizeElements = $('div.prizes .prizesInput');
+    } else {
+        $prizeElements = $('div.alPrizes .prizesInput');
+    }
 
     $.each($prizeElements, function (i, element) {
         var value = $.trim($(this).val());
@@ -2982,65 +3012,66 @@ function validatePrizes(errors) {
         }
     });
 
-   var requiredPrizeNumber = isDesignF2F() ? 1 : 2;
+    var requiredPrizeNumber = isDesignF2F() ? 1 : 2;
 
-   //validation
-   if(prizeInputs.length < requiredPrizeNumber) {
-       errors.push('At least ' + (requiredPrizeNumber >= 2 ? 'First & Second place prizes' : 'First place prize') + ' should be set');
-       errorsAdded = true;
-   }
+    //validation
+    if (prizeInputs.length < requiredPrizeNumber) {
+        errors.push('At least ' + (requiredPrizeNumber >= 2 ? 'First & Second place prizes' : 'First place prize') + ' should be set');
+        errorsAdded = true;
+    }
 
-   var prizes = [];
-   $.each(prizeInputs, function(i, value) {
-        if(!checkRequired(value) || !checkNumber(value)) {
-            errors.push('Prize '+ (i+1) + ' is invalid.');
+    var prizes = [];
+    $.each(prizeInputs, function (i, value) {
+        if (!checkRequired(value) || !checkNumber(value)) {
+            errors.push('Prize ' + (i + 1) + ' is invalid.');
             errorsAdded = true;
         } else {
-            prizes.push(new com.topcoder.direct.Prize((i+1),parseFloat(value), CONTEST_PRIZE_TYPE_ID, 1));
+            prizes.push(new com.topcoder.direct.Prize((i + 1), parseFloat(value), CONTEST_PRIZE_TYPE_ID, 1));
         }
     });
 
-   //check prize order
-   if(errors.length ==0 ) {
-      var prevPrize = -1;
-     $.each(prizes, function(i, value) {
-          if(i != 0 && value.prizeAmount > prevPrize) {
-              errors.push('Prize '+ (i+1) + ' is too large.');
-              errorsAdded = true;
-          }
-          if (value.prizeType.id == CONTEST_PRIZE_TYPE_ID) {
-              if (value.place == 1) {
-                  mainWidget.softwareCompetition.projectHeader.setFirstPlaceCost(value.prizeAmount);
-              } else if (value.place == 2) {
-                  mainWidget.softwareCompetition.projectHeader.setSecondPlaceCost(value.prizeAmount);
-              }
-          }
+    //check prize order
+    if (errors.length == 0) {
+        var prevPrize = -1;
+        $.each(prizes, function (i, value) {
+            if (i != 0 && value.prizeAmount > prevPrize) {
+                errors.push('Prize ' + (i + 1) + ' is too large.');
+                errorsAdded = true;
+            }
+            if (value.prizeType.id == CONTEST_PRIZE_TYPE_ID) {
+                if (value.place == 1) {
+                    mainWidget.softwareCompetition.projectHeader.setFirstPlaceCost(value.prizeAmount);
+                } else if (value.place == 2) {
+                    mainWidget.softwareCompetition.projectHeader.setSecondPlaceCost(value.prizeAmount);
+                }
+            }
 
-          prevPrize = value.prizeAmount;
-      });
+            prevPrize = value.prizeAmount;
+        });
 
-      if(!isDesignF2F() &&
+        if (!isDesignF2F() &&
             prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount) {
-          errors.push('Second place prize should at least be 20% of first place prize.');
-          errorsAdded = true;
-      }
-   }
+            errors.push('Second place prize should at least be 20% of first place prize.');
+            errorsAdded = true;
+        }
+    }
     if (!errorsAdded) {
         if (phaseOpen) {
             var newPrizes = [];
-            for (var i = 1; i <=5; i++) {
+            for (var i = 1; i <= 5; i++) {
                 var value = $('#prize' + i).val();
                 if ($.trim(value).length > 0) {
                     newPrizes.push(value);
                 }
-            };
-            
+            }
+            ;
+
             if (newPrizes.length < originalPrizes.length) {
                 errors.push('The prizes can not be deleted');
             } else {
                 var n = Math.min(newPrizes.length, originalPrizes.length);
                 for (var i = 0; i < n; i++) {
-                    if (parseFloat(newPrizes[i]) < parseFloat(originalPrizes[i])){
+                    if (parseFloat(newPrizes[i]) < parseFloat(originalPrizes[i])) {
                         errors.push('The prizes can not be decreased');
                         break;
                     }
@@ -3049,7 +3080,7 @@ function validatePrizes(errors) {
         }
     }
 
-   return prizes;
+    return prizes;
 }
 
 function validateFileTypes(errors) {
@@ -3175,6 +3206,15 @@ function isDesignF2F() {
     } else {
         var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
         return (categoryId == STUDIO_CATEGORY_ID_DESIGN_F2F);
+    }
+}
+
+function isIdeaGeneration() {
+    if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+        return false;
+    } else {
+        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+        return (categoryId == STUDIO_IDEA_GENERATION);
     }
 }
 
