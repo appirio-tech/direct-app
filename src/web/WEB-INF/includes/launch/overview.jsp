@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin
-  - Version: 1.7
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin, Veve
+  - Version: 1.8
+  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
   -
@@ -18,6 +18,9 @@
   -   Fix multiple bugs.
   - Version 1.7 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for studio contest prize add and remove
+  -
+  - Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+  - Add studio cup points checkbox and studio cup points display
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -78,7 +81,7 @@
  <!-- end #uploadSection -->
     
     <!-- prizes -->
-	<div class="prizes">
+	<div class="prizes studioPrizes">
     
         <h3>Challenge Prizes:</h3>
         
@@ -110,7 +113,7 @@
     <!-- end .prizes -->
     
     <!-- Checkpoint Prizes -->
-	<div class="mPrizes hide" id="checkpointPrizeDiv">
+	<div class="mPrizes studioPrizes studioCheckpointPrizes hide" id="checkpointPrizeDiv">
     
         <h3><span class="icon">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
@@ -132,6 +135,20 @@
         
     </div>
     <!-- end .mPrizes -->
+
+    <!-- Studio Cup Points -->
+    <div class="studioCupPoints" id="studioCupPointsDiv">
+
+        <h3><span class="icon">Studio Cup Points:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+
+        <div class="studioCupPointsInner">
+            <input type="checkbox" id="studioCupPointsCheckBox" checked="checked"/> <!-- checked by default -->
+            <strong>&nbsp;Studio Cup Points&nbsp;:&nbsp;&nbsp;<span id="rStudioCupPoints"></span></strong>
+        </div>
+
+    </div>
+    <!-- End Studio Cup Points -->
+
     
     <!-- Final Deliverables -->
     <div class="deliverables">

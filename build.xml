@@ -316,7 +316,7 @@
         <copy file="${jackson-databind-2.3.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
     	<copy file="${yuicompressor.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${java-jwt-0.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${java-jwt-1.0.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- EJB components -->
         <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}/ejb" overwrite="true"/>

@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.dto.contest;
 
-import com.topcoder.direct.services.view.dto.contest.cost.CostDTO;
+import com.topcoder.direct.services.view.dto.cost.CostDTO;
 
 import java.io.Serializable;
 import java.util.List;

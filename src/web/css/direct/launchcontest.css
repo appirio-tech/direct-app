@@ -1299,14 +1299,14 @@ IMG.new_cur {
 /** end .prizesInner **/
 
 /** mPrizesInner **/
-.mPrizesInner {
+.mPrizesInner, .studioCupPointsInner {
     height: 28px;
     padding: 5px 0;
     border: #e7e7e7 solid 1px;
 }
 
 /** label **/
-.mPrizesInner label {
+.mPrizesInner label, .studioCupPointsInner label {
     width: auto;
     float: left;
     display: inline;
@@ -1328,7 +1328,7 @@ IMG.new_cur {
     font-weight: normal;
 }
 
-.mPrizesInner label.first {
+.mPrizesInner label.first, .studioCupPointsInner label.first {
     margin-left: 22px;
 }
 
@@ -1361,7 +1361,7 @@ IMG.new_cur {
     border-radius: 4px;
 }
 
-.mPrizesInner strong {
+.mPrizesInner strong, .studioCupPointsInner strong {
     width: auto;
     float: left;
     display: inline;
@@ -1374,6 +1374,18 @@ IMG.new_cur {
 }
 
 /** end .mPrizesInner **/
+
+/** start studio cup points **/
+#rStudioCupPoints {
+    font-size: 14px;
+}
+
+#studioCupPointsCheckBox {
+    float: left;
+    margin-left: 22px;
+    position: relative;
+    top: 7px;
+}
 
 /** mPrizesInner **/
 .deliverablesInner {

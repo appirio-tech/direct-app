@@ -11,6 +11,7 @@ import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.cloudvm.service.CloudVMService;
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
@@ -26,9 +27,10 @@ import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.cost.CostDTO;
+import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
+import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyInterceptor;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
@@ -668,8 +670,15 @@ import java.util.zip.ZipOutputStream;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (TopCoder Direct - JWT token generation)
+ * <ul>
+ *     <li>Added {@link #addDirectCookie(javax.servlet.http.HttpServletResponse, String, String, int)}</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 public final class DirectUtils {
 
@@ -2879,7 +2888,14 @@ public final class DirectUtils {
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
         SecurityGroupsAccessInterceptor securityGroupsAccessInterceptor
             = (SecurityGroupsAccessInterceptor) applicationContext.getBean("securityGroupsAccessInterceptor");
-        return securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable();
+        if (securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable()){
+            SecurityGroupsTcStaffOnlyInterceptor securityGroupsTcStaffOnlyInterceptor = (SecurityGroupsTcStaffOnlyInterceptor)
+                    applicationContext.getBean("securityGroupsTcStaffOnlyInterceptor");
+            if (securityGroupsTcStaffOnlyInterceptor.checkPermission()){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -3404,6 +3420,23 @@ public final class DirectUtils {
         }
 
         return null;
+    }
+
+    /**
+     * Add a cookie to servlet response for direct application.
+     *
+     * @param response the servlet response.
+     * @param name the cookie name.
+     * @param value the cookie value
+     * @param time the expiration time. 0 to delete cookie, negative for session cookie.
+     * @since 1.7
+     */
+    public static void addDirectCookie(HttpServletResponse response, String name, String value, int time) {
+        Cookie c = new Cookie(name, value);
+        c.setMaxAge(time);
+        c.setDomain(ServerConfiguration.SSO_DOMAIN);
+        c.setPath("/");
+        response.addCookie(c);
     }
 
     /**

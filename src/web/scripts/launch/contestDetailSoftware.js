@@ -1,7 +1,6 @@
-/*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ *
  * Contest Detail Javascript
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
@@ -99,7 +98,6 @@
  * - Update prize section to support on the fly cost calculation for design challenge
  * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
  *
-
  * Versin 3.3 (Topcoder Direct - add total cost and estimate note to Marathon Match challenge)
  * -  Add total cost for marathon match
  *
@@ -107,8 +105,11 @@
  * @author Veve @channegeId 30046969
  * - Add the marathon round id project info save for marathon challenge
  *
+ * Version 3.5 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+ * - Add studio cup points checkbox
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.4
+ * @version 3.5
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -422,6 +423,10 @@ $(document).ready(function(){
 
     $("#checkpointSubmissionNumber").bind('change', function() {
         onStudioPrizeInputChange($('#checkpointPrize'), "Checkpoint prize", true);
+    })
+
+    $("#studioCupPointsCheckBox").change(function(){
+        onTheFlyCalculateStudioCosts();
     })
 
     $(".prizesInner_software input[type=text].prizesInput").bind('keyup', function(){
@@ -1918,10 +1923,12 @@ function updateContestCostData() {
     if(digitalRunFlag != 'On') {
         $('#swDigitalRun').attr('disabled', 'disabled');
         $('#DRCheckbox').removeAttr('checked');
+        $('#studioCupPointsCheckBox').removeAttr('checked');
 
     } else {
         $('#swDigitalRun').removeAttr('disabled');
         $('#DRCheckbox').attr('checked', 'checked');
+        $('#studioCupPointsCheckBox').attr('checked', 'checked');
     }
 
     originalPrizes = {};
@@ -2196,7 +2203,13 @@ function validateFieldsPrizeSection() {
         }
 
         //save the DR points
-        mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
+        if($("#studioCupPointsCheckBox").is(":checked")) {
+            mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
+            mainWidget.softwareCompetition.projectHeader.turnDRFlagOn();
+        } else {
+            mainWidget.softwareCompetition.projectHeader.properties['DR points'] = 0;
+            mainWidget.softwareCompetition.projectHeader.turnDRFlagOff();
+        }
     }
 
     if (isActiveContest) {

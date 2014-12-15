@@ -314,6 +314,22 @@
 
 @excelFile@=/Users/macbookpro/Downloads/Revenue_sample.xlsx
 
+@ApplicationServer.STUDIO_SERVICES_PROVIDER_URL@=jnp://localhost:1399
+@ApplicationServer.STUDIO_SERVICES_USERNAME@=user
+@ApplicationServer.STUDIO_SERVICES_PASSWORD@=password
+@ApplicationServer.STUDIO_SERVICES_PROTOCOL@=cockpitDomain
+@ApplicationServer.STUDIO_SERVICES_CONTEXT_FACTORY@=org.jboss.security.jndi.LoginInitialContextFactory
+@ApplicationServer.STUDIO_SERVICES_PKG_PREFIXES@=org.jboss.naming:org.jnp.interfaces
+@ApplicationServer.STUDIO_SERVICES_JNDI_NAME@=StudioServiceBean/remote
+
+@ApplicationServer.SSO_COOKIE_KEY@=tcsso
+@ApplicationServer.SSO_HASH_SECRET@=
+@ApplicationServer.SSO_DOMAIN@=topcoder.com
+
+@ApplicationServer.JWT_COOKIE_KEY@=tcjwt
+
+@ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
+
 
 #######################################
 # securityGroupApplicationContext.xml #
@@ -408,5 +424,7 @@
 
 @DOMAIN_AUTH0@=
 @CLIENT_ID_AUTH0@=
+@CLIENT_SECRET_AUTH0@=
+@JWT_EXPIRATION_SECONDS@=36000000
 @REG_SERVER_NAME@=tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection

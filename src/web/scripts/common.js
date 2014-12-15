@@ -183,6 +183,14 @@ function isPositiveIntegerInput(input) {
     return true;
 }
 
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
 /**
  * Modifies the jQuery param function so that it matches struts2 conversion.
  */
