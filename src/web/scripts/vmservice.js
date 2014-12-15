@@ -123,7 +123,8 @@ if (!window.vmService) var vmService = {
         $.ajax({
             type: 'POST',
             url:'launchVMInstance',
-            data: setupTokenRequest(data, getStruts2TokenName()),
+            //data: setupTokenRequest(data, getStruts2TokenName()),
+            data : data,
             timeout:20000, // Timeout of 20 secs
             dataType: "json",
             cache:false,
