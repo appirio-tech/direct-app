@@ -27,9 +27,10 @@ import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.cost.CostDTO;
+import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
+import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyInterceptor;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
@@ -73,7 +74,6 @@ import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.ApplicationServer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.dwload.CacheClearer;
 import com.topcoder.web.common.CachedDataAccess;
@@ -2888,7 +2888,14 @@ public final class DirectUtils {
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
         SecurityGroupsAccessInterceptor securityGroupsAccessInterceptor
             = (SecurityGroupsAccessInterceptor) applicationContext.getBean("securityGroupsAccessInterceptor");
-        return securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable();
+        if (securityGroupsAccessInterceptor.isSecurityGroupsUIAvailable()){
+            SecurityGroupsTcStaffOnlyInterceptor securityGroupsTcStaffOnlyInterceptor = (SecurityGroupsTcStaffOnlyInterceptor)
+                    applicationContext.getBean("securityGroupsTcStaffOnlyInterceptor");
+            if (securityGroupsTcStaffOnlyInterceptor.checkPermission()){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

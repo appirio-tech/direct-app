@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.dto.contest.cost;
+package com.topcoder.direct.services.view.dto.cost;
 
 import com.topcoder.management.project.Prize;
 
