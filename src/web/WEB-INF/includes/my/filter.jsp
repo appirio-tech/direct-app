@@ -47,7 +47,7 @@
 
             <div class="column thirdColumn">
                 <div>
-                    <label>Start Date:</label>
+                    <label>Start Date: <a class="clearDates" href="#">Clear</a></label>
                     <input id='startDateBegin' type='text' readonly="readonly" class="date-pick"/>
                     <span class='title toLabel'>To</span>
                     <input id='startDateEnd' type='text' readonly="readonly" class="date-pick"/>
@@ -86,7 +86,7 @@
 
             <div class="column thirdColumn">
                 <div>
-                    <label>End Date:</label>
+                    <label>End Date:<a class="clearDates" href="#">Clear</a></label>
                     <input id='endDateBegin' type='text' readonly="readonly" class="date-pick"/>
                     <span class='title toLabel'>To</span>
                     <input id='endDateEnd' type='text' readonly="readonly" class="date-pick"/>

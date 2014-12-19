@@ -29,6 +29,10 @@ $(document).ready(function () {
         }
     });
 
+    $("a.clearDates").click(function(){
+        $(this).parent().parent().find("input").val('');
+    })
+
 
     // destroy the existing ones
     //$(".challengesFilter .date-pick").datePicker().bind(
