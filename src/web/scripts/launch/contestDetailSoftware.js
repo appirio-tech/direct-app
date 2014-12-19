@@ -108,8 +108,11 @@
  * Version 3.5 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
  * - Add studio cup points checkbox
  *
+ * Version 3.6 (TopCoder Direct - EST/EDT switch in date picker)
+ * - Setup event handler for auto changing date time timezone
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.5
+ * @version 3.6
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -138,8 +141,11 @@ $(document).ready(function(){
 	  }
 
     /* init date-pack */
-    if($('.date-pick').length > 0){
-      $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
+    if ($('.date-pick').length > 0) {
+        $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
+        setupDateTimeSuffix("start");
+        setupDateTimeSuffix("end");
+        setupDateTimeSuffix("checkPointEnd");
     }
 
     $.each(billingAccounts, function(key, value) {

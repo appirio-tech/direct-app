@@ -2461,3 +2461,9 @@ a.nobutton:hover {
     color: #666666 !important;
 }
 
+#start2Timezone {
+    color: #6c6c6c !important;
+    font-size: 12px !important;
+    line-height: 22px !important;
+}
+

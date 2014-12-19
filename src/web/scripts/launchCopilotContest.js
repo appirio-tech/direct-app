@@ -31,9 +31,12 @@
  *
  * Version 1.6.3 (Release Assembly - TC Cockpit Private Challenge Update)
  * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+ *
+ * Version 1.6.4 (TopCoder Direct - EST/EDT switch in date picker)
+ * - Setup event handler for auto changing date time timezone
  * 
- * @author duxiaoyang, GreatKevin
- * @version 1.6.3
+ * @author duxiaoyang, GreatKevin, Veve
+ * @version 1.6.4
  */
 
 var roundMinutes = function(date) {
@@ -71,6 +74,7 @@ $(document).ready(function(){
         var hours = postTime.toString('HH');
         $("#startTime option:eq(" + parseInt(hours) + ")").attr('selected', 'selected');
         $(".startEtSelect .selectedTxt").text(hours + ":00");
+        setupDateTimeSuffix("start");
     }
 
     /**

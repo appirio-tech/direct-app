@@ -61,8 +61,11 @@
  * Version 2.6 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
  * - Add review type radios to choose 'community' or 'internal' review
  *
+ * Version 2.7 (TopCoder Direct - EST/EDT switch in date picker)
+ * - Setup event handler for auto changing date time timezone
+ *
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.6
+ * @version 2.7
  */
 $(document).ready(function() {
 
@@ -574,6 +577,9 @@ $(document).ready(function() {
         var date = $.datepicker.parseDate('mm/dd/yy', dt);
         date.setDate(date.getDate() + 1);
         $(".date-pick").datePicker().val($.datepicker.formatDate('mm/dd/yy', date)).trigger('change');
+        setupDateTimeSuffix("start");
+        setupDateTimeSuffix("end");
+        setupDateTimeSuffix("checkPointEnd");
     }
 
     if($("#startTime").length > 0) {
