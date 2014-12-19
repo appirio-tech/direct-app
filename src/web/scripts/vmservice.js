@@ -200,7 +200,7 @@ if (!window.vmService) var vmService = {
                 type: 'POST',
                 url: 'terminateVMInstance',
                 timeout:20000, // Timeout of 20 secs
-                data: data, //setupTokenRequest({'instanceId' : instanceId}, getStruts2TokenName()),
+                data: {'instanceId' : instanceId}, //setupTokenRequest({'instanceId' : instanceId}, getStruts2TokenName()),
                 dataType: "json",
                 cache: false,
                 success: function(r) {
