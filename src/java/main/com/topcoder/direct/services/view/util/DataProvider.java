@@ -5671,8 +5671,9 @@ public class DataProvider {
             }
 
             ContestReceiptEntry entry = new ContestReceiptEntry();
-            entry.setPaymentType(row.getStringItem("payment_type"));
+            entry.setPaymentType(row.getStringItem("payment_type").trim());
             entry.setPaymentAmount(row.getDoubleItem("payment_amount"));
+            entry.setPaymentTypeId(row.getLongItem("payment_type_id"));
 
             entries.add(entry);
         }

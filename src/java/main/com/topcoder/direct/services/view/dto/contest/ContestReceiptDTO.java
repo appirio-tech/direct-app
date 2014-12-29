@@ -4,9 +4,15 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 import com.topcoder.direct.services.view.dto.cost.CostDTO;
+import com.topcoder.management.project.Prize;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A DTO providing the complete details on a contest receipt.</p>
@@ -35,8 +41,17 @@ import java.util.List;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.5 ([Direct] - challenge receipt page update)
+ * <ul>
+ *     <li>Added {@link #getWinnerEntries()}</li>
+ *     <li>Added {@link #getCheckpointWinnerEntries()}</li>
+ *     <li>Added {@link #getNonWinnerEntries()}</li>
+ * </ul>
+ * </p>
+ *
  * @author flexme, GreatKevin, Veve
- * @version 1.4
+ * @version 1.5
  */
 public class ContestReceiptDTO implements Serializable {
     /**
@@ -499,6 +514,133 @@ public class ContestReceiptDTO implements Serializable {
     public void setEntries(List<ContestReceiptEntry> entries) {
         this.entries = entries;
     }
+
+    /**
+     * Gets the winner entries.
+     *
+     * @return the list of winner entries.
+     * @since 1.5
+     */
+    public List<ContestReceiptEntry> getWinnerEntries() {
+        List<ContestReceiptEntry> winnerEntries = new ArrayList<ContestReceiptEntry>();
+
+        for (ContestReceiptEntry e : this.getEntries()) {
+
+            if (e.getPaymentType().equalsIgnoreCase("winner")) {
+                winnerEntries.add(e);
+            }
+        }
+
+        Collections.sort(winnerEntries, new Comparator<ContestReceiptEntry>() {
+            public int compare(ContestReceiptEntry o1, ContestReceiptEntry o2) {
+                return Double.compare(o2.getPaymentAmount(), o1.getPaymentAmount());
+            }
+        });
+
+        // get the main winner prizes
+        List<Prize> prizes = getEstimation().getMainPrizes();
+
+        int prizeRank = 1;
+
+        int maxPrizePlace = -1;
+
+        for (ContestReceiptEntry e : winnerEntries) {
+            for (Prize p : prizes) {
+
+                if (p.getPlace() > maxPrizePlace) {
+                    maxPrizePlace = p.getPlace();
+                }
+
+                if (p.getPlace() == prizeRank ) {
+                    e.setEstimatedAmount(p.getPrizeAmount());
+                }
+            }
+            prizeRank++;
+        }
+
+        if (maxPrizePlace > winnerEntries.size()) {
+            for (int k = winnerEntries.size(); k < maxPrizePlace; ++k) {
+                ContestReceiptEntry extraEntry = new ContestReceiptEntry();
+                extraEntry.setPaymentType("Winner");
+                extraEntry.setEstimatedAmount(prizes.get(k).getPrizeAmount());
+                winnerEntries.add(extraEntry);
+            }
+        }
+
+        return winnerEntries;
+    }
+
+    /**
+     * Gets the checkpoint winner entries.
+     *
+     * @return the checkpoint winner entries.
+     * @since 1.5
+     */
+    public List<ContestReceiptEntry> getCheckpointWinnerEntries() {
+        List<ContestReceiptEntry> checkpointWinnerEntries = new ArrayList<ContestReceiptEntry>();
+
+        // get the checkpoint prize
+        Prize checkpointPrize = this.getEstimation().getCheckpointPrize();
+
+        if (checkpointPrize == null) {
+            return checkpointWinnerEntries;
+        }
+
+        for (ContestReceiptEntry e : this.getEntries()) {
+            if(e.getPaymentType().equalsIgnoreCase("checkpoint winner")) {
+                checkpointWinnerEntries.add(e);
+            }
+        }
+
+        Collections.sort(checkpointWinnerEntries, new Comparator<ContestReceiptEntry>() {
+            public int compare(ContestReceiptEntry o1, ContestReceiptEntry o2) {
+                return Double.compare(o2.getPaymentAmount(), o1.getPaymentAmount());
+            }
+        });
+
+        for (ContestReceiptEntry e : checkpointWinnerEntries) {
+            e.setEstimatedAmount(checkpointPrize.getPrizeAmount());
+        }
+
+        if (checkpointPrize.getNumberOfSubmissions() > checkpointWinnerEntries.size()) {
+            for (int k = checkpointWinnerEntries.size(); k < checkpointPrize.getNumberOfSubmissions(); ++k) {
+                ContestReceiptEntry extraEntry = new ContestReceiptEntry();
+                extraEntry.setPaymentType("Checkpoint Winner");
+                extraEntry.setEstimatedAmount(checkpointPrize.getPrizeAmount());
+                checkpointWinnerEntries.add(extraEntry);
+            }
+        }
+
+        return checkpointWinnerEntries;
+    }
+
+    /**
+     * Gets the nonWinner (checkpoint winner) entries.
+     *
+     * @return the list of nonWinner (checkpint winner) entries.
+     * @since 1.5
+     */
+    public Map<String, ContestReceiptEntry> getNonWinnerEntries() {
+        // map which is used to aggregate the payment amount of the same payment type
+        Map<String, ContestReceiptEntry> entriesMap = new HashMap<String, ContestReceiptEntry>();
+
+        for (ContestReceiptEntry e : this.getEntries()) {
+            if (!(e.getPaymentType().equalsIgnoreCase("winner")
+                    || e.getPaymentType().equalsIgnoreCase("checkpoint winner"))) {
+                if (entriesMap.containsKey(e.getPaymentType())) {
+                    // exists, sum up the payment amount
+                    ContestReceiptEntry existingEntry = entriesMap.get(e.getPaymentType());
+                    existingEntry.setPaymentAmount(existingEntry.getPaymentAmount() + e.getPaymentAmount());
+                } else {
+                    // no exist, put into map
+                    entriesMap.put(e.getPaymentType(), new ContestReceiptEntry(e));
+                }
+            }
+        }
+
+        return entriesMap;
+    }
+
 
     /**
      * Gets the estimation cost.

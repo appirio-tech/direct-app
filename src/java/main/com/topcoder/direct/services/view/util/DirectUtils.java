@@ -3527,13 +3527,13 @@ public final class DirectUtils {
      */
     private static Double parseProjectInfoDoubleValue(String infoValue) {
         if (infoValue == null || infoValue.trim().length() == 0) {
-            return null;
+            return 0d;
         }
 
         try {
             return Double.parseDouble(infoValue);
         } catch (NumberFormatException ne) {
-            return null;
+            return 0d;
         }
     }
 }
