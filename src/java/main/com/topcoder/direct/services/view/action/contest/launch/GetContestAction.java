@@ -10,6 +10,7 @@ import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
+import com.topcoder.direct.services.view.action.setting.ChallengeConfirmationPreferenceAction;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -30,6 +31,9 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.RowNotFoundException;
+import com.topcoder.web.ejb.user.UserPreference;
 import org.apache.struts2.ServletActionContext;
 
 import org.apache.commons.lang.math.NumberUtils;
@@ -242,8 +246,16 @@ import java.util.Map;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve
- * @version 3.0
+ * <p>
+ * Version 3.1 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * <ul>
+ *     <li>Adds the {@link #showSaveChallengeConfirmation} and its getter</li>
+ *     <li>Updates {@link #executeAction()} to populate the {@link #showSaveChallengeConfirmation}</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin
+ * @version 3.1
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -358,6 +370,13 @@ public class GetContestAction extends ContestAction {
      * @since 2.4
      */
     private int timelineInterval;
+
+    /**
+     * The preference value of whether to show the save challenge confirmation.
+     *
+     * @since 3.1
+     */
+    private boolean showSaveChallengeConfirmation;
 
     /**
      * <p>
@@ -522,6 +541,17 @@ public class GetContestAction extends ContestAction {
             billingAccount.put("name", billingProjects.get(i).getName());
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
             billingAccountsForProject.add(billingAccount);
+        }
+
+        UserPreference userPreference = this.getUserPreferenceHome().create();
+
+        try {
+            String value = userPreference.getValue(DirectUtils.getTCSubjectFromSession().getUserId(),
+                    ChallengeConfirmationPreferenceAction.CHALLENGE_CONFIRMATION_PREFERENCE_ID,
+                    DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            this.showSaveChallengeConfirmation = Boolean.valueOf(value);
+        } catch (RowNotFoundException rfe) {
+            this.showSaveChallengeConfirmation = true;
         }
 
         // Set current project context based on selected contest
@@ -966,6 +996,16 @@ public class GetContestAction extends ContestAction {
      */
     public static enum TYPE {
         COPILOT_CONTEST, CONTEST, CONTEST_JSON
+    }
+
+    /**
+     * Gets whether to show the save challenge confirmation.
+     *
+     * @return true if show, false otherwise.
+     * @since 3.1
+     */
+    public boolean isShowSaveChallengeConfirmation() {
+        return showSaveChallengeConfirmation;
     }
 
 }

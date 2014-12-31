@@ -21,8 +21,11 @@
  * Version 1.6 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
  * - Handles new Design First2Finish contest
  *
+ * Version 1.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
  * @author bugbuka, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 /**
  * Rerender the review page.
@@ -265,21 +268,32 @@ function continueReview() {
 
 
 function saveAsDraftReview() {
-   if(!validateFieldsReview()) {
-       return;
-   }
+    if (!validateFieldsReview()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        //construct request data
+        var request = saveAsDraftRequest();
 
-   modalPreloader();
+        modalPreloader();
 
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: handleSaveAsDraftContestResult
-   });
+        $.ajax({
+            type: 'POST',
+            url: "saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: handleSaveAsDraftContestResult
+        });
+    };
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }

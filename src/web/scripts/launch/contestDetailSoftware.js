@@ -111,8 +111,11 @@
  * Version 3.6 (TopCoder Direct - EST/EDT switch in date picker)
  * - Setup event handler for auto changing date time timezone
  *
+ * Version 3.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.6
+ * @version 3.7
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -132,6 +135,11 @@ function getContestPrize(prizesData, place) {
 }
 
 $(document).ready(function(){
+
+    if($("#timelineModule .heading .draft").length == 0) {
+        // no draft challenge
+        showSaveChallengeConfirmation = false;
+    }
 
 	  /* init select */
 	  if($('select').length > 0){
@@ -1261,46 +1269,59 @@ function saveTypeSection() {
     if (!validateFieldsTypeSection()) {
         return;
     }
-    if (mainWidget.competitionType != "SOFTWARE") {
-        if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
-            $("#viewableSubmFlag").attr("disabled", "disabled");
-            $("#viewableSubmFlag").attr("checked", "");
-            mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
-        } else {
-            $("#viewableSubmFlag").attr("disabled", "");
+
+    var saveDraftHandler = function() {
+        if (mainWidget.competitionType != "SOFTWARE") {
+            if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+                $("#viewableSubmFlag").attr("disabled", "disabled");
+                $("#viewableSubmFlag").attr("checked", "");
+                mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
+            } else {
+                $("#viewableSubmFlag").attr("disabled", "");
+            }
+            populateSpecSection();
         }
-        populateSpecSection();
-    }
 
-    //construct request data
-    fixFileTypeIds();
-    var request = saveAsDraftRequest();
+        //construct request data
+        fixFileTypeIds();
+        var request = saveAsDraftRequest();
 
-    $.ajax({
-        type: 'POST',
-        url: ctx + "/launch/saveDraftContest",
-        data: setupTokenRequest(request, getStruts2TokenName()),
-        cache: false,
-        dataType: 'json',
-        success: function (jsonResult) {
-            handleSaveAsDraftContestResult(jsonResult);
-            populateTypeSection();
-            populateRoundSection();
-            if (mainWidget.competitionType == "SOFTWARE") {
-                var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
-                if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != null) {
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                populateTypeSection();
+                populateRoundSection();
+                if (mainWidget.competitionType == "SOFTWARE") {
+                    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+                    if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != null) {
+                        populatePrizeSection();
+                    }
+                }
+                if (mainWidget.competitionType == "ALGORITHM") {
                     populatePrizeSection();
                 }
-            }
-            if (mainWidget.competitionType == "ALGORITHM") {
-                populatePrizeSection();
-            }
-            showTypeSectionDisplay();
-            updateMCEPlaceHolderCtl();
-        },
-        beforeSend: beforeAjax,
-        complete: afterAjax
-    });
+                showTypeSectionDisplay();
+                updateMCEPlaceHolderCtl();
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if(showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function(){
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }
 
 function validateFieldsTypeSection() {
@@ -1554,37 +1575,50 @@ function populateRoundSection() {
 }
 
 function saveRoundSection() {
-   var preStartDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
-   var preSubEndDate = mainWidget.softwareCompetition.subEndDate;
-   var preCheckpointDate = mainWidget.softwareCompetition.checkpointDate;
-   if(!validateFieldsRoundSection()) {
-       return;
-   }
+    if (!validateFieldsRoundSection()) {
+        return;
+    }
 
-   //construct request data
-   fixFileTypeIds();
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        var preStartDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
+        var preSubEndDate = mainWidget.softwareCompetition.subEndDate;
+        var preCheckpointDate = mainWidget.softwareCompetition.checkpointDate;
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-		 if (jsonResult.error) {
-			 mainWidget.softwareCompetition.assetDTO.directjsProductionDate = preStartDate;
-			 mainWidget.softwareCompetition.subEndDate = preSubEndDate;
-			 mainWidget.softwareCompetition.checkpointDate = preCheckpointDate;
-		 }
-         populateRoundSection();
-         populatePrizeSection();
-         showRoundSectionDisplay();
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+        //construct request data
+        fixFileTypeIds();
+        var request = saveAsDraftRequest();
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                if (jsonResult.error) {
+                    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = preStartDate;
+                    mainWidget.softwareCompetition.subEndDate = preSubEndDate;
+                    mainWidget.softwareCompetition.checkpointDate = preCheckpointDate;
+                }
+                populateRoundSection();
+                populatePrizeSection();
+                showRoundSectionDisplay();
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }
 
 /**
@@ -2049,45 +2083,56 @@ function isBillingEditable() {
 }
 
 function savePrizeSection() {
-   if(!validateFieldsPrizeSection()) {
-       return;
-   }
-
-   //construct request data
-   fixFileTypeIds();
-   var request = saveAsDraftRequest();
-
-    if (startedContest) {
-        var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
-
-        if(billingProjectId <= 0) {
-            showErrors("no billing project is selected.");
-            return;
-        }
-        request['activationFlag'] = true;
+    if (!validateFieldsPrizeSection()) {
+        return;
     }
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-         populatePrizeSection();
-         //populateTypeSection();
-         showPrizeSectionDisplay();
-         if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
+    var saveDraftHandler = function () {
+        //construct request data
+        fixFileTypeIds();
+        var request = saveAsDraftRequest();
+
+        if (startedContest) {
             var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
-            if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
-                populateTypeSection();
+
+            if (billingProjectId <= 0) {
+                showErrors("no billing project is selected.");
+                return;
             }
-         }
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+            request['activationFlag'] = true;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                populatePrizeSection();
+                //populateTypeSection();
+                showPrizeSectionDisplay();
+                if (mainWidget.competitionType == "STUDIO" || mainWidget.competitionType == "ALGORITHM") {
+                    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+                    if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != null) {
+                        populateTypeSection();
+                    }
+                }
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }
 
 function validateFieldsPrizeSection() {
@@ -2557,27 +2602,41 @@ function populateSpecSection(initFlag) {
 }
 
 function saveSpecSection() {
-   if(!validateFieldsSpecSection()) {
-       return;
-   }
+    if (!validateFieldsSpecSection()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-         populateSpecSection();
-         showSpecSectionDisplay();
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+        //construct request data
+        var request = saveAsDraftRequest();
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                populateSpecSection();
+                showSpecSectionDisplay();
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
+
 }
 
 function validateFieldsSpecSection() {
@@ -2787,48 +2846,61 @@ function showDocumentSectionEdit() {
 }
 
 function saveDocumentSection() {
-   //construct request data
-   fixFileTypeIds();
-   var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-		 // gets the documents details
-	   $.ajax({
-		  type: 'POST',
-		  url:  ctx+"/contest/detailJson",
-		  data: {"projectId":paramContestId},
-		  cache: false,
-		  dataType: 'json',
-		  async : false,
-		  success: function (jsonResult) {
-			  handleJsonResult(jsonResult,
-			  function(result) {
-				 //documentations, each doc has fields of documentId, fileName, description, documentTypId, url
-				 swDocuments = result.documentation;
-				 // mark them as documentation
-				 $.each(swDocuments, function(i, doc) {
-					  doc['comp'] = true;
-				 });
-				 setRollbackDocuments();
-				 populateDocumentSection();
-				 showDocumentSectionDisplay();
-			  },
-			  function(errorMessage) {
-				  showServerError(errorMessage);
-			  })
-		  }
-	   });
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax
-   });
+    var saveDraftHandler = function () {
+        //construct request data
+        fixFileTypeIds();
+        var request = saveAsDraftRequest();
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                // gets the documents details
+                $.ajax({
+                    type: 'POST',
+                    url: ctx + "/contest/detailJson",
+                    data: {"projectId": paramContestId},
+                    cache: false,
+                    dataType: 'json',
+                    async: false,
+                    success: function (jsonResult) {
+                        handleJsonResult(jsonResult,
+                            function (result) {
+                                //documentations, each doc has fields of documentId, fileName, description, documentTypId, url
+                                swDocuments = result.documentation;
+                                // mark them as documentation
+                                $.each(swDocuments, function (i, doc) {
+                                    doc['comp'] = true;
+                                });
+                                setRollbackDocuments();
+                                populateDocumentSection();
+                                showDocumentSectionDisplay();
+                            },
+                            function (errorMessage) {
+                                showServerError(errorMessage);
+                            })
+                    }
+                });
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }
 
 

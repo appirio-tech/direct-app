@@ -32,7 +32,7 @@
  *
  * Version 1.6 TC Cockpit Post a Copilot Assembly  change notes:
  * - Add more checks.
- * 
+ *
  * Version 1.7 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
  * - Fixed bug TCCC-3724. Updated logic for editing the contests.
  *
@@ -3313,6 +3313,35 @@ function getStudioTemplatesName(categoryId) {
     } else {
         return "default_studio_contest_spec_templates";
     }
+}
+
+function showChallengeSaveConfiguration(saveFunction) {
+    displayUserConfirmation("#saveChallengeConfirmation", "Save Challenge Confirmation",
+        "Draft challenges scheduled to start in the future are visible in the upcoming challenge section of topcoder.com." +
+        " Visible details include the challenge name, prizes, timeline, platform, and technologies. Change these details" +
+        " as needed before saving the challenge as a draft.", "Save As Draft", saveFunction
+        , "Cancel");
+
+    $("#saveChallengeConfirmation .checkbox input").unbind('change');
+    $("#saveChallengeConfirmation .checkbox input").bind('change', function() {
+        var flag = !$(this).is(":checked");
+
+        $.ajax({
+            type: 'POST',
+            url: "saveChallengeConfirmation",
+            data: {flag: flag},
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult2(jsonResult, function(result) {
+                    showSaveChallengeConfirmation = (result.value == "true");
+                }, function(errorMessage){
+                    showErrors(errorMessage);
+                })
+            }
+        });
+
+    });
 }
 
 

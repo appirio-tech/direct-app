@@ -583,6 +583,11 @@
         <property name="milestoneService" ref="milestoneService"/>
     </bean>
 
+    <bean id="saveChallengeConfirmation"
+          class="com.topcoder.direct.services.view.action.setting.ChallengeConfirmationPreferenceAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
     <bean id="contestSubmissionsAction"
           class="com.topcoder.direct.services.view.action.contest.ContestSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">

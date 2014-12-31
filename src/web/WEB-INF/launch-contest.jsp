@@ -34,6 +34,9 @@
     <script type="text/javascript" src="/scripts/launch/pages/overview.js?v=207440"></script>
     <script type="text/javascript" src="/scripts/launch/pages/review.js?v=210691"></script>
     <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=214861"></script>
+    <script type="text/javascript">
+        var showSaveChallengeConfirmation = <s:property value="showSaveChallengeConfirmation"/>;
+    </script>
 </head>
 
 <body id="page">

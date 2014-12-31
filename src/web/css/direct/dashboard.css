@@ -14058,3 +14058,13 @@ a.clearDates {
 a.clearDates:hover {
     text-decoration: none;
 }
+
+#saveChallengeConfirmation .checkbox {
+    float: left;
+    padding-left: 20px;
+    line-height: 30px
+}
+
+#saveChallengeConfirmation .checkbox input {
+    margin-right:3px;
+}

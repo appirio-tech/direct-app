@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
+import com.topcoder.direct.services.view.action.setting.ChallengeConfirmationPreferenceAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -13,6 +14,9 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.RowNotFoundException;
+import com.topcoder.web.ejb.user.UserPreference;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,8 +71,16 @@ import java.util.Map;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  *
- * @author BeBetter, duxiaoyang, GreatKevin, Veve, Veve
- * @version 1.5
+ * <p>
+ * Version 1.6 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * <ul>
+ *     <li>Adds the {@link #showSaveChallengeConfirmation} and its getter</li>
+ *     <li>Updates {@link #executeAction()} to populate the {@link #showSaveChallengeConfirmation}</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, duxiaoyang, GreatKevin, Veve, Veve, GreatKevin
+ * @version 1.6
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -95,6 +107,13 @@ public class LaunchContestAction extends ContestAction {
     private IdNamePair cmcBillingAccount;
 
     /**
+     * The preference value of whether to show the save challenge confirmation.
+     *
+     * @since 1.6
+     */
+    private boolean showSaveChallengeConfirmation;
+
+    /**
      * <p>
      * Executes the action. Does nothing for now.
      * </p>
@@ -116,6 +135,18 @@ public class LaunchContestAction extends ContestAction {
         if(getCmcAccountId() != null && getCmcAccountId().trim().length() > 0) {
             setCmcBillingAccount(DataProvider.getBillingAccountFromCMCAccountID(getCmcAccountId()));
         }
+
+        UserPreference userPreference = this.getUserPreferenceHome().create();
+
+        try {
+            String value = userPreference.getValue(DirectUtils.getTCSubjectFromSession().getUserId(),
+                    ChallengeConfirmationPreferenceAction.CHALLENGE_CONFIRMATION_PREFERENCE_ID,
+                    DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            this.showSaveChallengeConfirmation = Boolean.valueOf(value);
+        } catch (RowNotFoundException rfe) {
+            this.showSaveChallengeConfirmation = true;
+        }
+
     }
 
     public CommonDTO getViewData() {
@@ -252,5 +283,15 @@ public class LaunchContestAction extends ContestAction {
      */
     public void setCmcBillingAccount(IdNamePair cmcBillingAccount) {
         this.cmcBillingAccount = cmcBillingAccount;
+    }
+
+    /**
+     * Gets whether to show the save challenge confirmation.
+     *
+     * @return true if show, false otherwise.
+     * @since 1.6
+     */
+    public boolean isShowSaveChallengeConfirmation() {
+        return showSaveChallengeConfirmation;
     }
 }

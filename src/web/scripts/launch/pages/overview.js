@@ -37,8 +37,11 @@
  * - Add handler for prizes changes in studio contest to validate and auto calculate the studio cup points
  * - Add handler for studio cup points checkbox to turn studio cup ON/OFF
  *
- * @author bugbuka, GreatKevin, Veve
- * @version 1.8
+ * Version 1.9 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
+ * @author bugbuka, GreatKevin, Veve, GreatKevin
+ * @version 1.9
  */
 $(document).ready(function() {
 
@@ -453,21 +456,33 @@ function continueOverview() {
 }
 
 function saveAsDraftOverview() {
-   if(!validateFieldsOverview()) {
-       return;
-   }
+    if (!validateFieldsOverview()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        //construct request data
+        var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: handleSaveAsDraftContestResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax      
-   });
+        $.ajax({
+            type: 'POST',
+            url: "saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: handleSaveAsDraftContestResult,
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }

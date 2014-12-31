@@ -45,8 +45,11 @@
  * Version 2.2 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
  * - Handle the studio cup points flag
  *
- * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve
- * @version 2.2
+ * Version 2.3 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
+ * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve, GreatKevin
+ * @version 2.3
  */
 
 /**
@@ -512,23 +515,34 @@ function handleActivationResult(jsonResult) {
  * Save as draft order review.
  */
 function saveAsDraftOrderReview() {
-   if(!validateFieldsOrderReview()) {
-       return;
-   }
+    if (!validateFieldsOrderReview()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        //construct request data
+        var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: handleSaveAsDraftContestResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax      
-   });
+        $.ajax({
+            type: 'POST',
+            url: "saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: handleSaveAsDraftContestResult,
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    }
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }
 
 /**

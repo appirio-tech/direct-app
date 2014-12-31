@@ -71,6 +71,8 @@
         <c:if test="${hasRoundId}">
             var timeLineData = ${viewData.timeLineGraphData};
         </c:if>
+
+        var showSaveChallengeConfirmation = <s:property value="showSaveChallengeConfirmation"/>;
     </script>
 </head>
 
