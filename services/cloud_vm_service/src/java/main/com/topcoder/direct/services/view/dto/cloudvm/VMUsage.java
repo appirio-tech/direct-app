@@ -45,5 +45,26 @@ public class VMUsage extends AbstractIdEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+
+    public static String getName(long id) {
+        if (id == 1) {
+            return "VM for competitors";
+        }
+
+        if (id == 2) {
+            return "VM for reviewers";
+        }
+
+        if (id == 3) {
+            return "VM for manager/copilots";
+        }
+
+        if (id == 4) {
+            return "VM for Bug race";
+        }
+
+        return "VM for competitors";
+    }
 }
 

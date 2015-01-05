@@ -7,12 +7,16 @@ import com.topcoder.direct.cloudvm.service.CloudVMServiceException;
 import com.topcoder.direct.services.view.action.contest.launch.ValidationErrorRecord;
 import com.topcoder.direct.services.view.action.contest.launch.ValidationErrors;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstance;
+import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.user.UserService;
 import com.topcoder.service.user.UserServiceException;
 import com.topcoder.security.TCSubject;
 import com.topcoder.shared.security.AuthorizationException;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -105,6 +109,18 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
                 errors.put("contestId",
                     "No contest with such id. Contest type may be wrong or you may have no permission to access contest data.");
             }
+
+            String challengeName = "Bug Race";
+            if (instance.getContestTypeId() != bugRaceContestTypeId) {
+                challengeName = ((SoftwareCompetition) result).getProjectHeader().getProperty(
+                        ProjectPropertyType.PROJECT_NAME_PROJECT_PROPERTY_KEY);
+
+            }
+
+            instance.setContestName(challengeName);
+
+            instance.setUsageName(VMUsage.getName(instance.getUsageId()));
+
         }
 
         // check member handle

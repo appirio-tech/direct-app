@@ -117,6 +117,21 @@ public class CloudVMServiceBean implements CloudVMServiceRemote, CloudVMServiceL
 	private static final String EMAIL = "email";
 
 	/**
+	 *	Represents the UserData key for storing challenge id
+	 */
+	private static final String CHALLENGE_ID = "challenge_id";
+
+	/**
+	 *	Represents the UserData key for storing challenge id
+	 */
+	private static final String CHALLENGE_NAME = "challenge_name";
+
+	/**
+	 *	Represents the UserData key for storing challenge id
+	 */
+	private static final String ROLE = "role";
+
+	/**
 	 * Represents the String containing the End of Line
 	 */
 	private static final String EOL = "\n";
@@ -319,6 +334,10 @@ public class CloudVMServiceBean implements CloudVMServiceRemote, CloudVMServiceL
 				userData.append(populateUserData(BRANCH,vmInstance.getSvnBranch()));
 				userData.append(populateUserData(HANDLE,tcMemberHandle));
 				userData.append(populateUserData(USER_EMAIL,userService.getEmailAddress(tcMemberHandle)));
+				userData.append(populateUserData(CHALLENGE_ID,String.valueOf(vmInstanceMain.getContestId())));
+				userData.append(populateUserData(CHALLENGE_NAME, vmInstanceMain.getContestName()));
+				userData.append(populateUserData(ROLE, vmInstanceMain.getUsageName()));
+
 				if (vmInstanceMain.getUserData() != null ){
 					userData.append(vmInstanceMain.getUserData());
 				}

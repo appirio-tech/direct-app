@@ -67,6 +67,11 @@ public class VMInstance extends AbstractIdEntity {
      * Represents the usage id. It has getter & setter. It can be any value.
      */
     private long usageId;
+
+    /**
+     * Represents the usage id. It has getter & setter. It can be any value.
+     */
+    private String usageName;
     
     /**
      * Represents VM public IP address.
@@ -322,6 +327,27 @@ public class VMInstance extends AbstractIdEntity {
     public void setPublicIP(String publicIP) {
         this.publicIP = publicIP;
     }
+
+    /**
+     * Setter for the namesake instance variable. Simply set the value to the namesake instance variable.
+     *
+     * @param usageName
+     */
+    public void setUsageName(String usageName) {
+        this.usageName = usageName;
+    }
+
+    /**
+     * Getter for the namesake instance variable. Simply return the namesake instance variable.
+     *
+     * @return field value
+     * @since BUGR-3932
+     */
+    public String getUsageName() {
+        return usageName;
+    }
+
+    
 
     /**
      * Getter for the namesake instance variable. Simply return the namesake instance variable.
