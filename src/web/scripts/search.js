@@ -377,7 +377,6 @@ $(document).ready(function() {
     jQuery.fn.dataTableExt.oSort['html-trimmed-asc'] = function (a, b) {
         var x = trim(a.replace(/<[^>]+>/g, "").toLowerCase());
         var y = trim(b.replace(/<[^>]+>/g, "").toLowerCase());
-        console.log(x + '--->' + y);
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     };
 

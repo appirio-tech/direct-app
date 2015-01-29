@@ -51,6 +51,8 @@
     <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
 	<link rel="stylesheet" href="/css/direct/copilotDetails.css?v=209437" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/copilot/copilotPosting.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
     <script type="text/javascript" src="/scripts/copilots.js?v=213622"></script>
@@ -98,6 +100,7 @@
             budget = '${viewData.dashboard.budget}';
             $('#start2TimeInput').getSetSSValue(getTimePart('${assetDTO.productionDate}'));
             $("#start2DateInput").datePicker().val(getDatePart('${assetDTO.productionDate}')).trigger('change');
+            setupCopilotDateTimeSuffix("start2");
         });
     </script>
 </head>
@@ -537,7 +540,7 @@
                         <jsp:include page="/WEB-INF/includes/common/timeOptions.jsp"/>
                     </select>
                 </div>
-                <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                <span id="start2Timezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                       pattern="z" timeZone="${defaultTimeZone}"/></span>
             </div>
 

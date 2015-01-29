@@ -216,7 +216,7 @@
           <div class="startEtSelect">
             <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+          <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
@@ -226,7 +226,7 @@
           <div class="endEtSelect">
               <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+          <span id="checkPointEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
@@ -236,7 +236,7 @@
           <div class="endEtSelect">
             <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+          <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 

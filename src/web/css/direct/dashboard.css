@@ -14048,3 +14048,23 @@ span.red {
     color:#ff8a00;
 }
 
+a.clearDates {
+    font-size: 12px;
+    color: #ff8a00;
+    padding-left: 6px;
+    font-weight: normal;
+}
+
+a.clearDates:hover {
+    text-decoration: none;
+}
+
+#saveChallengeConfirmation .checkbox {
+    float: left;
+    padding-left: 20px;
+    line-height: 30px
+}
+
+#saveChallengeConfirmation .checkbox input {
+    margin-right:3px;
+}

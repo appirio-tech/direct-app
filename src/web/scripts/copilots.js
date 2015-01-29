@@ -34,8 +34,11 @@
  * Version 1.5.5 (Release Assembly - TC Cockpit Private Challenge Update)
  * - Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
  *
- *  @author GreatKevin, isv, GreatKevin
- * @version 1.5.5
+ * Version 1.6 (TopCoder Direct - EST/EDT switch in date picker)
+ * - Setup event handler for auto changing date time timezone
+ *
+ *  @author GreatKevin, isv, GreatKevin, Veve
+ * @version 1.6
  */
 
 var currentDocument = {};
@@ -73,6 +76,21 @@ var loadedBillingAccount = 0;
 function parseDate(d) {
     return Date.parse(d,'MM/dd/yyyy HH:mm').toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (UTC-05)');
 }
+
+
+function setupCopilotDateTimeSuffix(idPrefix) {
+    $('#' + idPrefix + 'DateInput, #' + idPrefix + 'TimeInput').bind('change', function () {
+        var value = $('#' + idPrefix + 'DateInput').val() + ' ' + $('#' + idPrefix + 'TimeInput').val();
+        $('#' + idPrefix + 'Timezone').text(
+            moment.tz(
+                value,
+                "MM/DD/YYYY HH:mm",
+                DEFAULT_TIMEZONE
+            ).format('z')
+        );
+    });
+}
+
     
 $(document).ready(function() {
 
@@ -91,7 +109,7 @@ $(document).ready(function() {
         yscroll: true
     };
 
-    $('#projects2, #billingProjects2').sSelect(SelectOptions);
+    $('#projects2, #billingProjects2, #start2TimeInput').sSelect(SelectOptions);
     
     CKEDITOR.replace( 'publicCopilotPostingDescription2' );
     CKEDITOR.replace( 'privateCopilotPostingDescription2' );

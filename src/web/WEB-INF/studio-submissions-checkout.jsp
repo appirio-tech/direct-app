@@ -1,14 +1,16 @@
 <%--
-  - Author: flexme, Ghost_141, TCSDEVELOPER
+  - Author: flexme, Ghost_141, deedee
   -
+  - Version 1.5 (TopCoder Direct - Error When Review Design Challenges) change notes:
+  -    - Add input contestDashboardContestId, used by some ajax request
   - Version 1.4 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes:
   - Version 1.3 (TC Direct Replatforming Release 5) change notes: The final round check out process is changed, the unused code were removed.
   - Version 1.2 (TC Direct Replatforming Release 3  ) change notes: Update studioCheckoutSubmissionItem tag to work with the new Submission type.
   - Version 1.1 (Direct Submission Viewer Release 4 ) change notes: Added logic for handling "Confirmed" submissions.
   - 
-  - Version: 1.4
+  - Version: 1.5
   - Since: Submission Viewer Release 3 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010-2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest for checking out.
 --%>
@@ -52,7 +54,7 @@
                             <!-- End .areaHeader -->
                             
                             <div class="container2 tabs3Container">
-
+                                <input type="hidden" name="contestDashboardContestId" value="${viewData.contestStats.contest.id}"/>
                                 <jsp:include page="includes/contest/tabs.jsp"/>
                                 
                                 <div class="container2Left">

@@ -50,6 +50,9 @@
  *
  * Version 2.5 (Topcoder Direct - Allow a user to link a marathon match round id to direct mm challenge)
  * - Add a helper method isPositiveIntegerInput to check is variable is positive integer.
+ *
+ * Version 2.6 (TopCoder Direct - EST/EDT switch in date picker)
+ * - Add method to setup event handler for auto changing date time timezone
  * 
  * @since Launch Contest Assembly - Studio
  */
@@ -113,6 +116,8 @@ $(document).ready(function() {
 });
 
 var invalidCharsRegExp = /[^a-zA-Z0-9\$!\(\)\[\]\'\"\-\.\,\/\+ ]+/mg;
+
+var DEFAULT_TIMEZONE = "America/New_York";
 
 /**
  * Limits the allowed chars to alphanumeric, $, and !
@@ -182,6 +187,14 @@ function isPositiveIntegerInput(input) {
 
     return true;
 }
+
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
 
 /**
  * Modifies the jQuery param function so that it matches struts2 conversion.
@@ -897,4 +910,17 @@ function setupTokenRequest(request, tokenName) {
     tokenData[tokenName] = getStruts2Token();
     request = $.extend(request, tokenData);
     return request;
+}
+
+function setupDateTimeSuffix(idPrefix) {
+    $('#' + idPrefix + 'Date, #' + idPrefix + 'Time').bind('change', function () {
+        var value = $('#' + idPrefix + 'Date').val() + ' ' + $('#' + idPrefix + 'Time').val();
+        $('#' + idPrefix + 'Timezone').text(
+            moment.tz(
+                value,
+                "MM/DD/YYYY HH:mm",
+                DEFAULT_TIMEZONE
+            ).format('z')
+        );
+    });
 }

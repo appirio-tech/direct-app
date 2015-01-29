@@ -1,8 +1,7 @@
-/*
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
- */
 /**
- * Overview Page.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ *
+ * Overview Page (the second page of the launch challenge flow)
  *
  * <p>
  * Version 1.0.1 (TC Direct Release Assembly 7) Change notes:
@@ -34,8 +33,15 @@
  * Version 1.7 (Module Assembly - TC Cockpit Launch F2F contest)
  * - Add support for "Choose Project Platforms" control
  *
- * @author bugbuka, GreatKevin
- * @version 1.7
+ * Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+ * - Add handler for prizes changes in studio contest to validate and auto calculate the studio cup points
+ * - Add handler for studio cup points checkbox to turn studio cup ON/OFF
+ *
+ * Version 1.9 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
+ * @author bugbuka, GreatKevin, Veve, GreatKevin
+ * @version 1.9
  */
 $(document).ready(function() {
 
@@ -87,7 +93,7 @@ $(document).ready(function() {
        sortCategorySelects();
    });
 
-   //prizes
+   // software prizes event handlers
    $('input[name="prizeRadio"]').click(function(){
        fillPrizes();
    });
@@ -115,9 +121,50 @@ $(document).ready(function() {
 
     $('#swCheckpointPrize').bind('keyup', onCheckpointPrizeChangeKeyUp);
     $('#swCheckpointSubmissionNumber').bind('change', onCheckpointPrizeChangeKeyUp);
+
+
+    // studio prizes event handles
+    $(".studioPrizes select").change(function () {
+        studioPrizeChangeHandler();
+    });
+
+    $(".studioPrizes input[type=text]").keyup(function() {
+        delay(studioPrizeChangeHandler, 500);
+    })
+
+    $("#studioCupPointsCheckBox").change(function(){
+        studioPrizeChangeHandler();
+    });
 }); // end of initiation
 
 
+var studioPrizeChangeHandler = function() {
+    var errors = [];
+
+    var prizes = validatePrizes(errors);
+
+    if (mainWidget.softwareCompetition.multiRound) {
+        var checkPointPrize = $('#checkpointPrize').val();
+        var checkpointPrizeNumber = parseFloat(checkPointPrize);
+        if (!checkRequired(checkPointPrize) || !checkNumber(checkPointPrize) || isNaN(checkpointPrizeNumber)) {
+            errors.push('Checkpoint prize is invalid.');
+        }
+
+        prizes.push(new com.topcoder.direct.Prize(1, checkpointPrizeNumber, CHECKPOINT_PRIZE_TYPE_ID, parseInt($('#checkpointSubmissionNumber').val())));
+    }
+
+    if(errors.length > 0) {
+        showErrors(errors);
+        $("#rStudioCupPoints").text('0');
+    } else {
+        var studioCupPoints = calculateStudioCupPoints(prizes);
+        $("#rStudioCupPoints").text(studioCupPoints);
+    }
+
+    if(!$("#studioCupPointsCheckBox").is(":checked")) {
+        $("#rStudioCupPoints").text('0');
+    }
+};
 
 function validateFieldsOverview() {
    if(mainWidget.isSoftwareContest()) {
@@ -336,7 +383,13 @@ function validateFieldsOverviewStudio() {
    }
 
    //save the DR points
-   mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
+    if($("#studioCupPointsCheckBox").is(":checked")) {
+        mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
+        mainWidget.softwareCompetition.projectHeader.properties['Digital Run Flag'] = 'On';
+    } else {
+        mainWidget.softwareCompetition.projectHeader.properties['DR points'] = 0;
+        mainWidget.softwareCompetition.projectHeader.properties['Digital Run Flag'] = 'Off';
+    }
 
    return true;
 }
@@ -403,21 +456,33 @@ function continueOverview() {
 }
 
 function saveAsDraftOverview() {
-   if(!validateFieldsOverview()) {
-       return;
-   }
+    if (!validateFieldsOverview()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        //construct request data
+        var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: handleSaveAsDraftContestResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax      
-   });
+        $.ajax({
+            type: 'POST',
+            url: "saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: handleSaveAsDraftContestResult,
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+
+    if (showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            saveDraftHandler();
+        });
+    }
 }

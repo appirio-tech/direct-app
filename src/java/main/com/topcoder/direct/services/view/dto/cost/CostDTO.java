@@ -1,16 +1,28 @@
 /*
  * Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.direct.services.view.dto.contest.cost;
+package com.topcoder.direct.services.view.dto.cost;
 
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.PrizeType;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * The Cost DTO which represents the cost information of a challenge.
  *
- * @version 1.0 (TopCoder Direct - Add Estimation Cost Details to Receipt page)
+ * <p>
+ * Version 1.1 ([Direct] - challenge receipt page update)
+ * <ul>
+ *     <li>Added {@link #getMainPrizes()} to filter out the main prizes</li>
+ *     <li>Added {@link #getCheckpointPrize()} ()} to filter out the checkpoint prizes</li>
+ * </ul>
+ * </p>
+ *
+ * @version 1.1
  * @author Veve
  */
 public class CostDTO {
@@ -23,32 +35,32 @@ public class CostDTO {
     /**
      * The dr points
      */
-    private Double drPoints;
+    private Double drPoints = 0d;
 
     /**
      * The reliability bonus.
      */
-    private Double reliabilityBonus;
+    private Double reliabilityBonus  = 0d;
 
     /**
      * The spec review cost.
      */
-    private Double specReviewCost;
+    private Double specReviewCost  = 0d;
 
     /**
      * The review cost.
      */
-    private Double reviewCost;
+    private Double reviewCost  = 0d;
 
     /**
      * The copilot cost.
      */
-    private Double copilotCost;
+    private Double copilotCost  = 0d;
 
     /**
      * The admin fee.
      */
-    private Double adminFee;
+    private Double adminFee  = 0d;
 
     /**
      * Gets the prizes
@@ -66,6 +78,58 @@ public class CostDTO {
      */
     public void setPrizes(List<Prize> prizes) {
         this.prizes = prizes;
+    }
+
+    /**
+     * Filter out the prizes of certain prize type
+     *
+     * @param prize the list of prize to filter
+     * @param prizeTypeId the prize type id
+     * @return the list of prizes filtered.
+     * @since 1.1
+     */
+    private List<Prize> filterAndSortPrizes(List<Prize> prize, long prizeTypeId) {
+        List<Prize> filteredPrizes = new ArrayList<Prize>();
+
+        for (Prize p : getPrizes()) {
+            if (p.getPrizeType().getId() == prizeTypeId) {
+                filteredPrizes.add(p);
+            }
+        }
+
+        Collections.sort(filteredPrizes, new Comparator<Prize>() {
+            public int compare(Prize o1, Prize o2) {
+                return o1.getPlace() - o2.getPlace();
+            }
+        });
+
+        return filteredPrizes;
+    }
+
+    /**
+     * Filters out the main prizes and return
+     *
+     * @return the list of main prizes.
+     * @since 1.1
+     */
+    public List<Prize> getMainPrizes() {
+        return filterAndSortPrizes(this.getPrizes(), PrizeType.CONTEST_PRIZE.getId());
+    }
+
+    /**
+     * Filter out the checkpoint prize and return. There should be only one checkpint prize.
+     *
+     * @return the filtered out checkpoint prize.
+     * @since 1.1
+     */
+    public Prize getCheckpointPrize() {
+        for (Prize p : getPrizes()) {
+            if (p.getPrizeType().getId() == PrizeType.CHECKPOINT_PRIZE.getId()) {
+                return p;
+            }
+        }
+
+        return null;
     }
 
     /**

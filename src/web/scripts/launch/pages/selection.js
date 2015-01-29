@@ -44,7 +44,10 @@
  * Version 2.1 (F2F - TC Cockpit Update Bug Hunt type)
  * - Only display 1st place cost for Bug hunt (like First2Finish), but display spec review cost for bug hunt.
  *
- * @version 2.1
+ * Version 2.2 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
+ * - Add the save challenge confirmation
+ *
+ * @version 2.2
  * @author bugbuka, Veve, GreatKevin
  */
 $(document).ready(function () {
@@ -501,23 +504,36 @@ function continueContestSelection() {
 }
 
 function saveAsDraftContestSelection() {
-   if(!validateFieldsContestSelection()) {
-       return;
-   }
+    if (!validateFieldsContestSelection()) {
+        return;
+    }
 
-   //construct request data
-   var request = saveAsDraftRequest();
+    var saveDraftHandler = function () {
+        //construct request data
+        var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url:  ctx + "/launch/saveDraftContest",
-      data: setupTokenRequest(request, getStruts2TokenName()),
-      cache: false,
-      dataType: 'json',
-      success: handleSaveAsDraftContestResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax 
-   });
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: handleSaveAsDraftContestResult,
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+    if(showSaveChallengeConfirmation == false) {
+        saveDraftHandler();
+    } else {
+        showChallengeSaveConfiguration(function(){
+            closeModal();
+            saveDraftHandler();
+        });
+    }
+
+
 }
 
 function initContestNamesFromDesign() {   

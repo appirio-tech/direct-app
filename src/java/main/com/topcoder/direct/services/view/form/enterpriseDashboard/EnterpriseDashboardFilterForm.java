@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form.enterpriseDashboard;
 
@@ -18,30 +18,38 @@ import java.io.Serializable;
  * </ol>
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - New User Issue with Enterprise Dashboard)
+ * <ul>
+ *     <li>Change the setter of clientId, directProjectId, projectStatusId and projectFilterId to use
+ *     string. Change the getter to parse the long ID from string, if invalid, use negative value</li>
+ * </ul>
+ * </p>
+ *
+ * @author Veve
+ * @version 1.2
  */
 public class EnterpriseDashboardFilterForm implements Serializable {
 
     /**
      * The client id.
      */
-    private long clientId;
+    private String clientId;
 
     /**
      * The direct project id.
      */
-    private long directProjectId;
+    private String directProjectId;
 
     /**
      * The project status id.
      */
-    private long projectStatusId;
+    private String projectStatusId;
 
     /**
      * The project filter id.
      */
-    private long projectFilterId;
+    private String projectFilterId;
 
     /**
      * The project filter value.
@@ -74,13 +82,33 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      */
     private String zoom;
 
+
+    /**
+     * Gets the long id from the string value. If string value is invalid, return -1 (negative value)
+     *
+     * @param str the str value to check
+     * @return the parsed long id.
+     * @since 1.2
+     */
+    private static long getIdFromString(String str) {
+        if(str == null || str.trim().length() == 0) {
+            return -1;
+        } else {
+            try {
+                return Long.parseLong(str);
+            } catch (NumberFormatException e) {
+                return -1;
+            }
+        }
+    }
+
     /**
      * Gets the id of the client.
      *
      * @return the id of the client.
      */
     public long getClientId() {
-        return clientId;
+        return getIdFromString(this.clientId);
     }
 
     /**
@@ -88,7 +116,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      *
      * @param clientId the id of the client.
      */
-    public void setClientId(long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
@@ -98,7 +126,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      * @return the direct project id.
      */
     public long getDirectProjectId() {
-        return directProjectId;
+        return getIdFromString(this.directProjectId);
     }
 
     /**
@@ -106,7 +134,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      *
      * @param directProjectId the direct project id.
      */
-    public void setDirectProjectId(long directProjectId) {
+    public void setDirectProjectId(String directProjectId) {
         this.directProjectId = directProjectId;
     }
 
@@ -116,7 +144,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      * @return the project status id.
      */
     public long getProjectStatusId() {
-        return projectStatusId;
+        return getIdFromString(this.projectStatusId);
     }
 
     /**
@@ -124,7 +152,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      *
      * @param projectStatusId the project status id.
      */
-    public void setProjectStatusId(long projectStatusId) {
+    public void setProjectStatusId(String projectStatusId) {
         this.projectStatusId = projectStatusId;
     }
 
@@ -134,7 +162,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      * @return the project filter metadata key id.
      */
     public long getProjectFilterId() {
-        return projectFilterId;
+        return getIdFromString(this.projectFilterId);
     }
 
     /**
@@ -142,7 +170,7 @@ public class EnterpriseDashboardFilterForm implements Serializable {
      *
      * @param projectFilterId the project filter metadata key id.
      */
-    public void setProjectFilterId(long projectFilterId) {
+    public void setProjectFilterId(String projectFilterId) {
         this.projectFilterId = projectFilterId;
     }
 

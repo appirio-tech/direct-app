@@ -44,6 +44,9 @@
   - Version 2.3 (Release Assembly - TC Direct Prize Section Update)
   - Update prize section to support on the fly cost calculation for design challenge
   - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
+  -
+  - Version 2.4 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
+  - Add studio cup points checkbox
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -389,7 +392,7 @@
                <div class="startEtSelect">
                 <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                </div>
-               <span><fmt:formatDate value="<%= new java.util.Date()%>"
+               <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
              </div>
              
@@ -596,6 +599,7 @@
                             <tr>
                                 <td>Spec Review Fee: $<span id="studioSpecReviewFee"></span></td>
                                 <td>Screening Cost: $<span id="studioScreeningCost"></span></td>
+                                <td><input type="checkbox" id="studioCupPointsCheckBox" style="top:0px;"/></td>
                                 <td>Studio Cup: $<span id="studioCupPoints"></span></td>
                                 <td>Copilot Fee: $<span id="studioCopilotFee"></span></td>
                                 <td>Challenge Fee: $<span id="studioAdminFee"></span></td>

@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
+
+import com.topcoder.shared.util.TCResourceBundle;
+import com.topcoder.shared.util.logging.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.MissingResourceException;
-
-import com.topcoder.shared.util.TCResourceBundle;
-import com.topcoder.shared.util.logging.Logger;
 
 /**
  * <p>
@@ -32,8 +32,15 @@ import com.topcoder.shared.util.logging.Logger;
  *       <li>Add {@link #LDAP_AUTH0_CONNECTION_NAME}</li>
  *   </ul>
  * </p>
- * @author BeBetter, ecnu_haozi
- * @version 1.2
+ *
+ * <p>
+ *   Version 1.3 (TopCoder Direct - JWT token generation)
+ *   <ul>
+ *       <li>Add {@link #JWT_EXPIRATION_SECONDS}</li>
+ *   </ul>
+ * </p>
+ * @author BeBetter, ecnu_haozi, Veve
+ * @version 1.3
  */
 public final class DirectProperties {
     /**
@@ -93,6 +100,15 @@ public final class DirectProperties {
      * @since 1.1
      */
     public static String CLIENT_SECRET_AUTH0;
+
+    /**
+     * <p>
+     * The expiration seconds of the JWT.
+     * </p>
+     *
+     * @since 1.3
+     */
+    public static int JWT_EXPIRATION_SECONDS;
     
 
     /**
