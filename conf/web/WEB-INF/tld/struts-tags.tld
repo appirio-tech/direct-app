@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
   <description><![CDATA["To make it easier to access dynamic data;
-                    the Apache Struts framework includes a library of custom tags.
-                    The tags interact with the framework's validation and internationalization features;
-                    to ensure that input is correct and output is localized.
-                    The Struts Tags can be used with JSP FreeMarker or Velocity."]]></description>
-  <display-name>"Struts Tags"</display-name>
-  <tlib-version>2.2.3</tlib-version>
+                        the Apache Struts framework includes a library of custom tags.
+                        The tags interact with the framework's validation and internationalization features;
+                        to ensure that input is correct and output is localized.
+                        The Struts Tags can be used with JSP FreeMarker or Velocity."]]></description>
+  <display-name>Struts Tags</display-name>
+  <tlib-version>2.3</tlib-version>
   <short-name>s</short-name>
   <uri>/struts-tags</uri>
   <tag>
@@ -47,6 +47,12 @@
     <attribute>
       <description><![CDATA[Namespace for action to call]]></description>
       <name>namespace</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether an exception should be rethrown, if the target action throws an exception]]></description>
+      <name>rethrowException</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -96,6 +102,18 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[ Whether to escape HTML]]></description>
+      <name>escape</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -227,13 +245,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -347,6 +365,18 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[ Whether to escape HTML]]></description>
+      <name>escape</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -474,13 +504,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -564,6 +594,18 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[The action to generate the URL for, if not using value]]></description>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The anchor for this URL]]></description>
+      <name>anchor</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The css class to use for element]]></description>
       <name>cssClass</name>
       <required>false</required>
@@ -594,6 +636,30 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Whether to encode parameters]]></description>
+      <name>encode</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Specifies whether to escape ampersand (&amp;) to (&amp;amp;) or not]]></description>
+      <name>escapeAmp</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Specifies whether to force the addition of scheme, host and port or not]]></description>
+      <name>forceAddSchemeHostAndPort</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The URL.]]></description>
       <name>href</name>
       <required>false</required>
@@ -602,6 +668,18 @@
     <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether actual context should be included in URL]]></description>
+      <name>includeContext</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The includeParams attribute may have the value 'none', 'get' or 'all']]></description>
+      <name>includeParams</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -636,8 +714,20 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[The method of action to use]]></description>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The name to set for element]]></description>
       <name>name</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The namespace to use]]></description>
+      <name>namespace</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -732,14 +822,32 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[The resulting portlet mode]]></description>
+      <name>portletMode</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Specifies if this should be a portlet render or action URL. Default is "render". To create an action URL, use "action".]]></description>
+      <name>portletUrlType</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Set scheme attribute]]></description>
+      <name>scheme</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -804,8 +912,14 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
-      <description><![CDATA[Preset the value of input element.]]></description>
+      <description><![CDATA[The target value to use, if not using action]]></description>
       <name>value</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The resulting portlet window state]]></description>
+      <name>windowState</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -893,6 +1007,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1030,13 +1150,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1150,6 +1270,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -1192,8 +1318,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1295,13 +1439,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1417,6 +1561,12 @@
     <attribute>
       <description><![CDATA[Decide if an empty option is to be inserted. Default false.]]></description>
       <name>emptyOption</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1596,13 +1746,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1673,6 +1823,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Specifies the html5 type element to display. e.g. text, email, url]]></description>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Preset the value of input element.]]></description>
       <name>value</name>
       <required>false</required>
@@ -1706,6 +1862,12 @@
     <attribute>
       <description><![CDATA[Whether to print out the date nicely]]></description>
       <name>nice</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The specific timezone in which to format the date]]></description>
+      <name>timezone</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1755,6 +1917,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -1886,13 +2054,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2002,6 +2170,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2139,13 +2313,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2313,8 +2487,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of second list objects to get css class from]]></description>
+      <name>doubleListCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of second list objects to get css style from]]></description>
+      <name>doubleListCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The key expression to use for second list]]></description>
       <name>doubleListKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of second list objects to get title from]]></description>
+      <name>doubleListTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2439,6 +2631,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The form name this component resides in and populates to]]></description>
       <name>formName</name>
       <required>false</required>
@@ -2499,8 +2697,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2608,13 +2824,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -2754,6 +2970,18 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[ Whether to escape HTML]]></description>
+      <name>escape</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Field name for single field attribute usage]]></description>
       <name>fieldName</name>
       <required>false</required>
@@ -2887,13 +3115,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3009,6 +3237,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3140,13 +3374,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3284,6 +3518,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Id of element that will receive the focus when page loads.]]></description>
       <name>focusElement</name>
       <required>false</required>
@@ -3292,6 +3532,12 @@
     <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether actual context should be included in URL]]></description>
+      <name>includeContext</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3453,13 +3699,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3591,6 +3837,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -3718,13 +3970,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -3838,6 +4090,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -3965,13 +4223,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4041,7 +4299,7 @@
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
-    <dynamic-attributes>false</dynamic-attributes>
+    <dynamic-attributes>true</dynamic-attributes>
   </tag>
   <tag>
     <description><![CDATA[Render a hidden input field]]></description>
@@ -4081,6 +4339,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4212,13 +4476,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4407,6 +4671,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[the header key of the select box]]></description>
       <name>headerKey</name>
       <required>false</required>
@@ -4467,8 +4737,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4588,13 +4876,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4690,6 +4978,18 @@
     <tag-class>org.apache.struts2.views.jsp.IteratorTag</tag-class>
     <body-content>JSP</body-content>
     <attribute>
+      <description><![CDATA[if specified the iteration will start on that index]]></description>
+      <name>begin</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[if specified the iteration will end on that index(inclusive)]]></description>
+      <name>end</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Deprecated. Use 'var' instead]]></description>
       <name>id</name>
       <required>false</required>
@@ -4698,6 +4998,12 @@
     <attribute>
       <description><![CDATA[If specified, an instanceof IteratorStatus will be pushed into stack upon each iteration]]></description>
       <name>status</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[if specified the iteration index will be increased by this value on each iteration. It can be a negative value, in which case 'begin' must be greater than 'end']]></description>
+      <name>step</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4753,6 +5059,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4890,13 +5202,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -4981,6 +5293,85 @@
     </attribute>
     <attribute>
       <description><![CDATA[The name where the resultant merged iterator will be stored in the stack's context]]></description>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <dynamic-attributes>false</dynamic-attributes>
+  </tag>
+  <tag>
+    <description><![CDATA[Render a formatted number.]]></description>
+    <name>number</name>
+    <tag-class>org.apache.struts2.views.jsp.NumberTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <description><![CDATA[The currency to use for a currency format]]></description>
+      <name>currency</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether grouping is used]]></description>
+      <name>groupingUsed</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Deprecated. Use 'var' instead]]></description>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Maximum fraction digits]]></description>
+      <name>maximumFractionDigits</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Maximum integer digits]]></description>
+      <name>maximumIntegerDigits</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Minimum fraction digits]]></description>
+      <name>minimumFractionDigits</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Maximum integer digits]]></description>
+      <name>minimumIntegerDigits</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The number value to format]]></description>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Parse integer only]]></description>
+      <name>parseIntegerOnly</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[The rounding mode to use - not implemented yet as this required Java 1.6]]></description>
+      <name>roundingMode</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Type of number formatter (currency, integer, number or percent, default is number)]]></description>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Name used to reference the value pushed into the Value Stack]]></description>
       <name>var</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
@@ -5222,8 +5613,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of second list objects to get css class from]]></description>
+      <name>doubleListCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of second list objects to get css style from]]></description>
+      <name>doubleListCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The key expression to use for second list]]></description>
       <name>doubleListKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of second list objects to get title from]]></description>
+      <name>doubleListTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -5348,6 +5757,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[The form name this component resides in and populates to]]></description>
       <name>formName</name>
       <required>false</required>
@@ -5426,8 +5841,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -5535,13 +5968,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -5722,6 +6155,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -5867,13 +6306,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -5950,6 +6389,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Specifies the html5 type element to display. e.g. text, email, url]]></description>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Preset the value of input element.]]></description>
       <name>value</name>
       <required>false</required>
@@ -5969,14 +6414,32 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
-      <description><![CDATA[ Whether to escape HTML]]></description>
+      <description><![CDATA[Deprecated. Use 'escapeHtml'. Whether to escape HTML]]></description>
       <name>escape</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether to escape CSV (useful to escape a value for a column)]]></description>
+      <name>escapeCsv</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether to escape HTML]]></description>
+      <name>escapeHtml</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Whether to escape Javascript]]></description>
       <name>escapeJavaScript</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Whether to escape XML]]></description>
+      <name>escapeXml</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6043,6 +6506,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -6085,8 +6554,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6188,13 +6675,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6264,7 +6751,7 @@
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
-    <dynamic-attributes>false</dynamic-attributes>
+    <dynamic-attributes>true</dynamic-attributes>
   </tag>
   <tag>
     <description><![CDATA[Render a reset button]]></description>
@@ -6316,6 +6803,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6459,13 +6952,19 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Supply an image src for <i>image</i> type reset button. Will have no effect for types <i>input</i> and <i>button</i>.]]></description>
+      <name>src</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6591,6 +7090,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Key for first item in list. Must not be empty! '-1' and '' is correct, '' is bad.]]></description>
       <name>headerKey</name>
       <required>false</required>
@@ -6645,8 +7150,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6754,13 +7277,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -6929,6 +7452,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -7068,13 +7597,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -7237,6 +7766,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[HTML id attribute]]></description>
       <name>id</name>
       <required>false</required>
@@ -7370,13 +7905,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -7498,6 +8033,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -7647,13 +8188,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -7724,6 +8265,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Specifies the html5 type element to display. e.g. text, email, url]]></description>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[Preset the value of input element.]]></description>
       <name>value</name>
       <required>false</required>
@@ -7769,6 +8316,12 @@
     <attribute>
       <description><![CDATA[Set the html disabled attribute on rendered html element]]></description>
       <name>disabled</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -7900,13 +8453,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -8147,6 +8700,12 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Define error position of form element (top|bottom)]]></description>
+      <name>errorPosition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Key for first item in list. Must not be empty! '-1' and '' is correct, '' is bad.]]></description>
       <name>headerKey</name>
       <required>false</required>
@@ -8201,8 +8760,26 @@
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
+      <description><![CDATA[Property of list objects to get css class from]]></description>
+      <name>listCssClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get css style from]]></description>
+      <name>listCssStyle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
       <description><![CDATA[ Property of list objects to get field value from]]></description>
       <name>listKey</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description><![CDATA[Property of list objects to get title from]]></description>
+      <name>listTitle</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -8322,13 +8899,13 @@
     </attribute>
     <attribute>
       <description><![CDATA[If set to true, the rendered element will indicate that input is required]]></description>
-      <name>required</name>
+      <name>requiredLabel</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
     <attribute>
       <description><![CDATA[Define required position of required form element (left|right)]]></description>
-      <name>requiredposition</name>
+      <name>requiredPosition</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>

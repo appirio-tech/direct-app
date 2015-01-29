@@ -307,7 +307,7 @@
                 <a title="Download Copilot Posting Submission" href="/direct/contest/downloadSoftwareSubmission?projectId=${projectId}&submissionId=${submissionId}" class="btnDownload"></a>
                 <s:if test="enableCopilotPostingSubmissionPreview"><a title="Preview Game Plan" href="javascript:;" class="btnPreview previewCopilotGamePlan"></a></s:if>
                 <br />
-                <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm"/>&nbsp;EST</span>
+                <span class="timeStamp"><s:date name="submitTime" format="MM/dd/yyyy | hh:mm a z" timezone="defaultTimeZone"/></span>
             </p>
         </div>
         <div class="colPickup pickupCell cell rPickUp <c:if test="${userId eq firstPlaceWinner.id}">cpPicked</c:if> <c:if test="${userId eq secondPlaceWinner.id}">rupPicked</c:if>">

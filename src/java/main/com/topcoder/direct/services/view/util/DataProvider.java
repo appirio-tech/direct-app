@@ -27,6 +27,7 @@ import com.topcoder.direct.services.payments.entities.PullablePayments;
 import com.topcoder.direct.services.payments.entities.TopMemberPayment;
 import com.topcoder.direct.services.payments.entities.TopMemberPaymentCriteria;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
+import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.dto.ActivityDTO;
 import com.topcoder.direct.services.view.dto.ActivityType;
 import com.topcoder.direct.services.view.dto.ClientBillingDirectProjectMappingDTO;
@@ -194,6 +195,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -8924,7 +8926,8 @@ public class DataProvider {
 
         final List<MilestoneContestDTO> result = new ArrayList<MilestoneContestDTO>();
 
-        DateFormat contestDateFormater = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat contestDateFormater = new SimpleDateFormat("MM/dd/yyyy HH:mm z");
+        contestDateFormater.setTimeZone(TimeZone.getTimeZone(AbstractAction.TIMEZONE));
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(
                 "direct_project_milestones_contests_associations");

@@ -3840,7 +3840,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         // create an array to store the resources, if copilot exists and copilot is not current user, we create
         // an array of length 3, otherwise of length 2
         com.topcoder.management.resource.Resource[] resources =
-                new com.topcoder.management.resource.Resource[(isCopilotCurrentUser || (copilot == null)) ? 2 : 3];
+                new com.topcoder.management.resource.Resource[2];
 
         resources[0] = new com.topcoder.management.resource.Resource();
         resources[0].setId(com.topcoder.management.resource.Resource.UNSET_ID);
@@ -3939,7 +3939,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             resources[1].setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
         }
 
-        if (copilot != null && !isCopilotCurrentUser) {
+        if (copilot != null && (!isCopilotCurrentUser || appirioManager != null)) {
+            com.topcoder.management.resource.Resource[] _resources = resources;
+            resources = new com.topcoder.management.resource.Resource[3];
+            resources[0] = _resources[0];
+            resources[1] = _resources[1];
             // when copilot exists and copilot is not current user, we store resource in another array element
             resources[2] = copilot;
 

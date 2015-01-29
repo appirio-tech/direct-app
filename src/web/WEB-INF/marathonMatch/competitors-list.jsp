@@ -40,7 +40,7 @@
             <td><tc-webtag:ratingColor rating="${rating}" darkBG="false">${rating}</tc-webtag:ratingColor></td>
             <td><c:if test="${rank eq null}">--</c:if> <c:if test="${rank ne null}">${rank}</c:if></td>
             <td><strong class="score">${provisionalScore}</strong></td>
-            <td><fmt:formatDate value="${lastSubmissionTime}" pattern="MM.dd.yyyy HH:mm:ss" timeZone="US/Eastern"/></td>
+            <td><fmt:formatDate value="${lastSubmissionTime}" pattern="MM.dd.yyyy HH:mm:ss z" timeZone="${defaultTimeZone}"/></td>
             <td>${language} </td>
             <td>
                 <a href="<s:url action="mmRegistrants" namespace="/contest">

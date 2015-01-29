@@ -29,7 +29,7 @@
         <tr>
             <td><strong><tc-webtag:handle coderId="${userId > 0 ? userId : 0}" handle="${handle}" context="marathon_match" darkBG="false"/></strong></td>
             <td><tc-webtag:ratingColor rating="${rating}" darkBG="false">${rating}</tc-webtag:ratingColor></td>
-            <td><fmt:formatDate value="${registrationTime}" pattern="MM.dd.yyyy HH:mm:ss" timeZone="US/Eastern"/></td>
+            <td><fmt:formatDate value="${registrationTime}" pattern="MM.dd.yyyy HH:mm:ss z" timeZone="${defaultTimeZone}"/></td>
         </tr>
     </s:iterator>
     </tbody>

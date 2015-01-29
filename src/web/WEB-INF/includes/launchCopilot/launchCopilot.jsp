@@ -113,7 +113,8 @@
                 <div class="startEtSelect">
                     <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                 </div>
-                <span>ET (UTC-05)</span>
+                <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
             </div>
             <p class="save hide">
                 <a class="cancel_text" href="javascript:;">cancel</a>

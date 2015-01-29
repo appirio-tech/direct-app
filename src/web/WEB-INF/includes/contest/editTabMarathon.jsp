@@ -290,7 +290,8 @@
                     <div class="startEtSelect">
                         <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                     </div>
-                    <span>EST (UTC-05)</span>
+                    <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
                 </div>
 
                 <div class="row">
@@ -299,7 +300,8 @@
                     <div class="startEtSelect">
                         <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                     </div>
-                    <span>EST (UTC-05)</span>
+                    <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
                 </div>
 
             </div> <!-- end .schedule -->

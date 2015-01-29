@@ -107,7 +107,8 @@
     <script type="text/javascript" src="/scripts/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="/scripts/jquery.fileupload.js"></script>
     <script type="text/javascript" src="/scripts/ajaxupload2.js"></script>
-
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/assets.js"></script>
     <script type="text/javascript" src="/scripts/rightSidebar.js"></script>
 </head>

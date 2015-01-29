@@ -137,7 +137,7 @@
                         <link:user userId="${feedback.authorId}"/>
                     </td>
                     <td>
-                        <s:date name="feedback.submitDate" format="yyyy-MM-dd" />
+                        <s:date name="feedback.submitDate" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone" />
                     </td>
                     <td class="feedbackStatus <s:if test="feedback.status == 'Rejected'">feedbackRejected</s:if>">
                         <s:property value="feedback.status.toUpperCase()"/>

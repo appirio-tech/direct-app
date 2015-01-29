@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * <p>
@@ -38,7 +39,7 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
     /**
      * The date format to format the date to display in challenge data.
      */
-    private DateFormat challengeDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    private DateFormat challengeDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm z");
 
     /**
      * The mapping between display column index and column name to sort.
@@ -112,6 +113,8 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
 
             RestResult<Challenge> restResult = objectMapper.readValue(jsonNode.get("result"),
                     objectMapper.getTypeFactory().constructParametricType(RestResult.class, Challenge.class));
+            challengeDateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
+
 
             if (restResult != null) {
                 result.put("iTotalRecords", restResult.getMetadata().getTotalCount());

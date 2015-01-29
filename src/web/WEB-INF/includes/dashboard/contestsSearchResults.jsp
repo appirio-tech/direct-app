@@ -58,12 +58,12 @@
                 <td><link:contestDetails contest="${contest}"/></td>
 
                 <td>
-                    <fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                    <fmt:formatDate value="${startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
 
                 </td>
 
                  <td>
-                    <fmt:formatDate value="${endTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                    <fmt:formatDate value="${endTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
 
                 </td>
                 <td>

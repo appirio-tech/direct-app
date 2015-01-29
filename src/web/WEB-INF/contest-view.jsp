@@ -227,10 +227,10 @@
                                                 </td>
                                                                                                                        
                                                 <td>
-                                                    <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${startTime}"/> ET (GMT-400)
+                                                    <s:date name="startTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                                                 </td>
                                                 <td>
-                                                    <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${endTime}"/> ET (GMT-400)
+                                                    <s:date name="endTime" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                                                 </td>
                                                     
                                                 <td>

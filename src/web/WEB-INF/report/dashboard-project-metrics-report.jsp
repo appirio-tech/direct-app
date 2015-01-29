@@ -245,12 +245,12 @@
             </td>
             <td>
                 <c:if test="${not (item.startDate eq null)}">
-                    <fmt:formatDate value="${item.startDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                    <fmt:formatDate value="${item.startDate}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                 </c:if>
             </td>
             <td>
                 <c:if test="${not (item.completionDate eq null)}">
-                    <fmt:formatDate value="${item.completionDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                    <fmt:formatDate value="${item.completionDate}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                 </c:if>     
             </td>
             <td>${item.totalContests}</td>

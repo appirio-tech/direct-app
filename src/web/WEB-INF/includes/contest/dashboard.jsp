@@ -124,14 +124,14 @@
                     <div class="projectDate startDate">
                         <span class="arrow"></span>
                         <label>Challenge Start :</label>
-                        <fmt:formatDate value="${viewData.dashboard.startTime}" pattern="MM/dd/yyyy HH:mm"/> 
+                        <fmt:formatDate value="${viewData.dashboard.startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                     </div>                                            
                 </c:if>
                 <c:if test="${viewData.dashboard.endTime != null}">
                     <div class="projectDate endDate">
                         <span class="arrow"></span>
                         <label>Challenge End :</label>
-                        <fmt:formatDate value="${viewData.dashboard.endTime}" pattern="MM/dd/yyyy HH:mm"/>
+                        <fmt:formatDate value="${viewData.dashboard.endTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                     </div>                                        
                 </c:if>
                 
@@ -171,15 +171,15 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                                <span class="tooltipStartTime hide"><fmt:formatDate value="${phase.startTime}" pattern="MM/dd/yyyy HH:mm"/></span>
-                                <span class="tooltipEndTime hide"><fmt:formatDate value="${phase.endTime}" pattern="MM/dd/yyyy HH:mm"/></span>
+                                <span class="tooltipStartTime hide"><fmt:formatDate value="${phase.startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></span>
+                                <span class="tooltipEndTime hide"><fmt:formatDate value="${phase.endTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></span>
                                 <c:if test="${phase.phaseStatus.phaseStatusId == 2 && !alreadyShowDate}">
                                     <c:set var="alreadyShowDate" value="true"/>
                                     <div class="phaseDate">
                                         <p class="start"><label>Start</label>: 
-                                        <fmt:formatDate value="${phase.startTime}" pattern="MM/dd/yyyy HH:mm"/></p>
+                                        <fmt:formatDate value="${phase.startTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
                                         <p><label>End</label>: 
-                                        <fmt:formatDate value="${phase.endTime}" pattern="MM/dd/yyyy HH:mm"/></p>
+                                        <fmt:formatDate value="${phase.endTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></p>
                                     </div>
                                 </c:if>
                             </li>                                                        
@@ -423,7 +423,7 @@
                             <link:user userId="${author.id}" handle="${author.handle}" />
                             <span class="date">
                             <!--04/13/2011 12:84-->
-                            <fmt:formatDate value="${latestForumPost.timestamp}" pattern="MM/dd/yyyy HH:mm"/>
+                            <fmt:formatDate value="${latestForumPost.timestamp}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/>
                             </span>
                         </p>
                     </c:if>

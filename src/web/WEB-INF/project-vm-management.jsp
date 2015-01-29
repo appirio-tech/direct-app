@@ -206,7 +206,7 @@
                                         <td><c:out value="${vmInstance.instance.tcMemberHandle}" /></td>
                                         <td><c:out value="${vmInstance.managerHandle}" /></td>
                                         <td><c:out value="${vmInstance.instance.publicIP}" /></td>
-                                        <td><fmt:formatDate value="${vmInstance.instance.creationTime}" pattern="MM/dd/yyyy HH:mm"/></td>
+                                        <td><fmt:formatDate value="${vmInstance.instance.creationTime}" pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></td>
                                         <td>
                                             <c:forEach items="${vmUsages}" var="vmUsage">
                                                 <c:if test="${vmUsage.id == vmInstance.instance.usageId}">

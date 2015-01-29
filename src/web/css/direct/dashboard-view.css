@@ -389,7 +389,7 @@ TABLE#projectActivities TR.hover{
 /* new tooltips */
 .tooltipBox{
 	position: absolute;
-	width: 182px;
+	width: 185px;
 	z-index: 999;
 	display: none;
 	color: #000;

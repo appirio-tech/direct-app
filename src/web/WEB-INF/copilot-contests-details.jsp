@@ -510,7 +510,7 @@
                 <li>
                     <label style="width:200px;">Start Date/Time:</label>
                     <span id="startDateLabel"><fmt:formatDate value="${tcdirect:toDate(assetDTO.productionDate)}"
-                                                              pattern="MM/dd/yyyy HH:mm"/></span>
+                                                              pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}"/></span>
                 </li>
                 <li>
                     <label style="width:200px;">Submission End Date/Time:</label> <span id="subEndDateLabel">${subEndDate}</span>
@@ -537,7 +537,8 @@
                         <jsp:include page="/WEB-INF/includes/common/timeOptions.jsp"/>
                     </select>
                 </div>
-                <span>ET (UTC-05)</span>
+                <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
             </div>
 
             <p class="save">

@@ -74,7 +74,7 @@
                             <s:property value="uploadId"/>
                         </td>
                         <td>
-                            <s:date name="finalFixDate" format="MM.dd.yyyy"/>
+                            <s:date name="finalFixDate" format="%{defaultDateTimeFormat}" timezone="defaultTimeZone"/>
                         </td>
                         <td>
                             <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>

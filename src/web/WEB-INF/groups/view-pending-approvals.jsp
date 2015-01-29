@@ -148,7 +148,7 @@
 											<td><input type="checkbox"/></td>
 											<td><s:property value="users[#st.index].handle"/></td>
 											<td><s:property value="users[#st.index].emailAddress"/></td>
-											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a" value="${sentOn}" />
+											<td><fmt:formatDate var="dt" pattern="MM-dd-yyyy hh:mm a z" value="${sentOn}" timeZone="${defaultTimeZone}"/>
 											    ${dt}</td>
 											<td><s:property value="groupMember.group.client.name"/></td>
 											<td class="hide"><s:property value="id"/></td>

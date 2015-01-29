@@ -28,7 +28,7 @@
             <dt>Rating:</dt>
             <dd><strong class="rating"><tc-webtag:ratingColor rating="${viewData.competitorInfoDTO.rating}" darkBG="false">${viewData.competitorInfoDTO.rating}</tc-webtag:ratingColor></strong></dd>
             <dt>Last Submission at:</dt>
-            <dd><fmt:formatDate value="${viewData.competitorInfoDTO.lastSubmissionTime}" pattern="MM/dd/yyyy HH:mm z" timeZone="US/Eastern"/></dd>
+            <dd><fmt:formatDate value="${viewData.competitorInfoDTO.lastSubmissionTime}" pattern="MM/dd/yyyy HH:mm z" timeZone="${defaultTimeZone}"/></dd>
             <dt>Number of Full Submissions:</dt>
             <dd>${viewData.competitorInfoDTO.noOfFullSubmissions}</dd>
         </dl>

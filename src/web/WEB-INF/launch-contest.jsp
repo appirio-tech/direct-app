@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="/css/direct/projectMilestone.css" media="all" type="text/css" />
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/projectMilestone.js"></script>
     <script type="text/javascript" src="/scripts/launchcontest.js?v=215290"></script>

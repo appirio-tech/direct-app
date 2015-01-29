@@ -19,6 +19,20 @@
     </context-param>
 
     <filter>
+        <filter-name>ClickjackFilter</filter-name>
+        <filter-class>com.topcoder.direct.filter.ClickjackFilter</filter-class>
+        <init-param>
+            <param-name>mode</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ClickjackFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>direct</filter-name>
         <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
     </filter>

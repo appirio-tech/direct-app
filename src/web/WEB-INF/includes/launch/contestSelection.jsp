@@ -38,7 +38,7 @@
   - Version 1.9 (TC Cockpit Software Challenge Checkpoint End Date and Final End Date)
   - - Add checkpoint end date / submission end date / time picker for software contest. Remove old duration picker.
   -
-  - Version 2.0 (First2Finish - TC Cockpit Auto Assign Reviewer Update）
+  - Version 2.0 (First2Finish - TC Cockpit Auto Assign Reviewer Update)
   - - Add Reviewer dropdown in launch new challenge step 1
   -
   - Version 2.1 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
@@ -216,7 +216,8 @@
           <div class="startEtSelect">
             <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (UTC-05)</span>
+          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
       <div id="checkPointEndDateDiv" class="row">
@@ -225,7 +226,8 @@
           <div class="endEtSelect">
               <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (UTC-05)</span>
+          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
       <div id="endDateDiv" class="row software">
@@ -234,7 +236,8 @@
           <div class="endEtSelect">
             <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (UTC-05)</span>
+          <span><fmt:formatDate value="<%= new java.util.Date()%>"
+                                pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
       <!-- Checkpoint -->

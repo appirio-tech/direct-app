@@ -77,12 +77,10 @@
                         <link:projectOverview project="${project}"/>
                     </td>
                     <td class="hide">
-                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${projectSummary.projectCreationDate}"/> ET
-                        (GMT-400)
+                        <fmt:formatDate pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}" value="${projectSummary.projectCreationDate}"/>
                     </td>
                     <td class="hide">
-                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${projectSummary.projectCompletionDate}"/> ET
-                        (GMT-400)
+                        <fmt:formatDate pattern="${defaultDateTimeFormat}" timeZone="${defaultTimeZone}" value="${projectSummary.projectCompletionDate}"/>
                     </td>
                     <td>${projectSummary.customerName}</td>
                     <td>
