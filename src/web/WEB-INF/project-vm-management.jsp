@@ -1,5 +1,5 @@
 <%--
-  - Author: jiajizhou86, Veve
+  - Author: jiajizhou86, Veve, Blues
   -
   - Version: 1.0 (Release Assembly - TopCoder Direct VM Instances Management)
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
@@ -9,6 +9,9 @@
   -
   - Version 1.2 (TopCoder Direct - Change Right Sidebar to pure Ajax)
   - Add the right sidebar script reference
+  -
+  - Version 1.3 (TopCoder Direct - Issues Fix Release Assembly 1)
+  - Hide the VM creation button if the user does not have authorization to create VM
   -
   - Description: This page renders the project vm management view.
 --%>
@@ -79,11 +82,13 @@
                                 <a id="refreshBtn" href="javascript:projectVMService.refresh(tcDirectProjectId);" class="grayButton">
                                     <span class="buttonMask"><span class="text">Refresh</span></span>
                                 </a>
-                                <a class="lanchVMInstanceBtn button6 newButtonGreen btnAddNew" href="<s:url action="dashboardVMAction" namespace="/"/>">
+                                <s:if test="allowVMCreation">
+                                    <a class="lanchVMInstanceBtn button6 newButtonGreen btnAddNew" href="<s:url action="dashboardVMAction" namespace="/"/>">
                                     <span class="left">
                                         <span class="right">LAUNCH VIRTUAL MACHINE</span>
                                     </span>
-                                </a>
+                                    </a>
+                                </s:if>
                             </div>
                             <!-- end summary -->
 

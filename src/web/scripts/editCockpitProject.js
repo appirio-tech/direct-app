@@ -39,8 +39,10 @@
  * Version 2.8 (Release Assembly - TC Cockpit Misc Bug Fixes)
  * - Fix the issue TCCC-5633 to prevent edit project page cover the game plan dropdown
  * by reducing the zindex of edit page
+ * - Fix "Entering Total Budget < $1000 for a Project shows up as $0 on overview tab"
+ *  (https://github.com/cloudspokes/direct-app/issues/17)
  *
- * @author GreatKevin, Ghost_141, GreatKevin, freegod, TCSASSEMBLER
+ * @author GreatKevin, Ghost_141, GreatKevin, freegod, Blues
  * @version 2.8
  */
 Date.format = 'mm/dd/yyyy';
@@ -1009,6 +1011,7 @@ $(document).ready(function (e) {
         $('#budgetSlider').slider({
             rule:['0K', '20K', '40K', '60K', '80K', '100K', '120K', '140K', '160K', '180K', '200K'],
             defaultValue:initialBudget,
+            minValue: 0,
             output:$('#budgetOutput'),
             convert:function (label) {
                 label = label.replace('K', '');
@@ -1026,7 +1029,7 @@ $(document).ready(function (e) {
                     $('#budgetOutput').trigger('change');
                 }
             },
-            step:1000, 
+            step: 1000,
             errorMessage:"Please input a positive integer for project budget."
         });
 
@@ -2197,7 +2200,7 @@ function formatNumber(number) {
                 $('.valueRule', wrapper).width(left);
                 var output = s.output;
                 if (output) {
-                    if(!s.step){
+                    if(!s.step || parseInt(value, 10) < 1000){
                         output.val(formatNumber(parseInt(value, 10)));
                     }else{
                         output.val(formatNumber(parseInt(parseInt(value, 10)/1000)*1000));

@@ -423,13 +423,18 @@ import java.util.*;
  * </p>
  *
  * <p>
+ * Version 2.3 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Fix "Editing Code Challenge changes reviewer number back to 2" (https://github.com/cloudspokes/direct-app/issues/96)
+ * </p>
+ *
+ * <p>
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
- * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin
- * @version 2.2
+ * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, Blues
+ * @version 2.3
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -2133,6 +2138,10 @@ public class ProjectServicesImpl implements ProjectServices {
                         registrationPhase.setLength(endDate.getTime() - fixedStart);
                     }
                 }
+
+                // check if the contest is internal review
+                boolean isInternalReview = "internal".equalsIgnoreCase(projectHeader.getProperty(ProjectPropertyType.REVIEW_TYPE));
+
     
                 for (Phase p : phases) {
                     p.setScheduledStartDate(p.calcStartDate());
@@ -2146,11 +2155,11 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                            projectHeader.getAutoAssignReviewerId() > 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                            isInternalReview && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                         // code with auto assigned review only requires one reviewer.
                         p.setAttribute("Reviewer Number", "1");
                     } else if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                            projectHeader.getAutoAssignReviewerId() == 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                            !isInternalReview && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                         // code with auto assigned review only requires one reviewer.
                         p.setAttribute("Reviewer Number", "2");
                     }

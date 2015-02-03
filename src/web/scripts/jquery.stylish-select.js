@@ -35,11 +35,14 @@ Dual licensed under the MIT and GPL licenses.
             }
         },
         //added by Justin Beasley
-        resetSS: function(){
+        resetSS: function(newOpts){
             var oldOpts = $(this).data('ssOpts');
             $this = $(this);
             $this.next().remove();
             //unbind all events and redraw
+            if(newOpts) {
+                oldOpts = newOpts;
+            }
             $this.unbind().sSelect(oldOpts);
         }
     });
@@ -52,7 +55,8 @@ Dual licensed under the MIT and GPL licenses.
                 defaultText: 'Please select',
                 animationSpeed: 0, //set speed of dropdown
                 ddMaxHeight: '', //set css max-height value of dropdown
-				yscroll: false
+				yscroll: false,
+                autoAdjust: true
             };
 
             //initial variables
@@ -69,7 +73,7 @@ Dual licensed under the MIT and GPL licenses.
             $newLi;
 
             //added by Justin Beasley
-            $(this).data('ssOpts',options);
+            $(this).data('ssOpts', options);
 			
             //build new list
             $containerDiv.insertAfter($input);
@@ -149,7 +153,7 @@ Dual licensed under the MIT and GPL licenses.
                 }
 
                 containerPosY = containerPosY-scrollTop;
-                if (containerPosY+newUlHeight >= docHeight){
+                if (containerPosY+newUlHeight >= docHeight && opts.autoAdjust){
                     $newUl.css({
                         top: '-'+newUlHeight+'px',
                         height: newUlHeight,

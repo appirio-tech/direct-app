@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, kanakarajank, Ghost_141, jiajizhou86, GreatKevin
-  - Version: 1.5
-  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, kanakarajank, Ghost_141, jiajizhou86, GreatKevin, Blues
+  - Version: 1.6
+  - Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of VM management in dashboard.
   -
@@ -14,6 +14,8 @@
                 Add pre-populated contest id.
   - Version 1.5 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to admin
+  - Version 1.6 (TopCoder Direct - Issues Fix Release Assembly 1)
+  - Fix VM management page - terminate button (https://github.com/cloudspokes/direct-app/issues/98)
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -253,7 +255,7 @@
                                                 <td class="vm_instance_status">${vmInstance.status}</td>
                                                 <td class="vm_instance_action" align="center"><c:if test="${vmInstance.status eq 'RUNNING'}">
 													<div class="term1"><div>
-													<a href="javascript:void(0)" onclick="javascript:vmService.terminate(${vmInstance.instance.id}, this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>&nbsp;
+													<a href="javascript:void(0)" onclick="javascript:vmService.terminate(${vmInstance.instance.id}, this);" class="newButtonOrange" style="margin:auto;">Terminate</a>&nbsp;
 													</div></div>
 													
 												</c:if></td>

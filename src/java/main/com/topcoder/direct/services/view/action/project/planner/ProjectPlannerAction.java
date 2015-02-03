@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2015 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.planner;
 
@@ -51,8 +51,18 @@ import java.util.TreeSet;
  * </ul>
  * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * <p>
+ * Version 1.2 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * <ul>
+ *     <li>
+ *         Fix "Win/Chrome-challenge details of "Copilot Posting" -after click submissions show server error"
+ *         (https://github.com/cloudspokes/direct-app/issues/18)
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, Blues
+ * @version 1.2
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner version 1.0)
  */
 public class ProjectPlannerAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm> {
@@ -338,7 +348,8 @@ public class ProjectPlannerAction extends BaseDirectStrutsAction implements Form
             // check the permission
             checkProjectPlannerPagePermission();
 
-            setResult(getProjectPlannerConfigurationByBillingId(getBillingAccountId()));
+            setResult(getBillingAccountId() > 0 ?
+                    getProjectPlannerConfigurationByBillingId(getBillingAccountId()) : new HashMap<String, String>());
         } catch (Throwable e) {
             if (getModel() != null) {
                 setResult(e);

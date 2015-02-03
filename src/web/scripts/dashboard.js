@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for dashboard.
  *
@@ -135,9 +135,12 @@
  * Version 3.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
  * - Refactor right sidebar scripts into the separate js file rightSidebar.js
  *
+ * Version 3.4 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Fix https://github.com/cloudspokes/direct-app/issues/101
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman,
- * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve
- * @version 3.3
+ * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve, Blues
+ * @version 3.4
  */
 
 var mouse_is_inside;
@@ -1304,8 +1307,8 @@ $(document).ready(function(){
         }
     }
 
-
     $(window).resize(function(){
+        adjustInstantSearch();
         truncateTH();
         truncateTableHeaderNames();
         alignProjectCopilots();
@@ -2533,8 +2536,21 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 
 })(jQuery);
 
+// Fix https://github.com/cloudspokes/direct-app/issues/101
+function adjustInstantSearch() {
+    var width = $(window).width();
+    if(width > 1200){
+        $(".topMenu .instantSearch").addClass("largeInstanceSearch");
+    } else{
+        $(".topMenu .instantSearch").removeClass("largeInstanceSearch");
+
+    }
+}
+
 /* Add js code for  https://apps.topcoder.com/bugs/browse/BUGR-6104 */
 $(document).ready(function(){
+
+    adjustInstantSearch();
 
     var zIndex = 100;
     $(".newSidebar .dropdownWidget").each(function(){

@@ -1,13 +1,16 @@
 <%--
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2013 - 2015 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Marathon Match Results page.
   -
   - Version 1.1 - Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2
   - - Update to inlcude resutls detail page.
   -
-  - Author: Ghost_141
-  - Version: 1.1
+  - Version 1.2 (TopCoder Direct - Issues Fix Release Assembly 1)
+  - - Update to display error message if there is error message.
+  -
+  - Author: Ghost_141, Blues
+  - Version: 1.2
   - Since: 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -77,12 +80,23 @@
 
                                 <div>
 
-                                    <c:if test="${type eq null}">
-                                        <jsp:include page="marathonMatch/results.jsp"/>
-                                    </c:if>
-                                    <c:if test="${type eq 'system'}">
-                                        <jsp:include page="marathonMatch/results-details.jsp"/>
-                                    </c:if>
+                                 <s:if test="errorMessage eq null">
+                                     <c:if test="${type eq null}">
+                                         <jsp:include page="marathonMatch/results.jsp"/>
+                                     </c:if>
+                                     <c:if test="${type eq 'system'}">
+                                         <jsp:include page="marathonMatch/results-details.jsp"/>
+                                     </c:if>
+                                 </s:if>
+                                 <s:else>
+                                     <div class="noReceipt">
+                                         <div>
+                                             <s:property value="errorMessage"/>
+                                         </div>
+                                     </div>
+                                 </s:else>
+
+
 
                                 </div>
                             </div>

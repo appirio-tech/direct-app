@@ -1,11 +1,14 @@
 <%--
-  - Author: Veve
-  - Version: 1.0
-  - Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Veve, Blues
+  - Version: 1.1
+  - Copyright (C) 2014 - 2015 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the admin login page for TC Direct application.
   -
   - Version 1.0 (TopCoder Direct - Update Login and add Admin Login)
+  -
+  - Version 1.1 (TopCoder Direct - Issues Fix Release Assembly 1)
+  - Fix AdminLogin redirect (https://github.com/cloudspokes/direct-app/issues/100)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -68,7 +71,7 @@
             <div class="loginBoxInner">
                 <h2>Admin Login</h2>
 
-                <s:form action="home" namespace="/" id="LoginForm" method="post" onsubmit="return submitLoginForm();">
+                <s:form action="adminLogin" namespace="/" id="LoginForm" method="post" onsubmit="return submitLoginForm();">
 
                     <p class="errorMessage">
                         <s:if test="hasActionErrors()">

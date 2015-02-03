@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -64,8 +64,17 @@
  * Version 2.7 (TopCoder Direct - EST/EDT switch in date picker)
  * - Setup event handler for auto changing date time timezone
  *
- * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.7
+ * Version 2.8 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Fix "Design F2F checkpoint prizes issue"
+ * (https://github.com/cloudspokes/direct-app/issues/102)
+ * - Fix "Marathon Match : Problem Statment dropdow values are being cut-off"
+ *   (https://github.com/cloudspokes/direct-app/issues/89)
+ * - Fix "characters remaining' count message is not displaying in Create New Project window"
+ *   (https://github.com/cloudspokes/direct-app/issues/20)
+ *
+ *
+ * @author GreatKevin, csy2012, bugbuka, GreatKevin, Blues
+ * @version 2.8
  */
 $(document).ready(function() {
 
@@ -519,11 +528,13 @@ $(document).ready(function() {
         clearAddNewProjectForm();
         modalLoad("#addNewProjectModal");
         $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
+        $("textarea[name='newProjectDescription'], input[name='newProjectName']").trigger('change');
     });
 
     $('#addNewProjectModal input, #addNewProjectModal textarea').focus(function () {
         $(this).removeClass("invalid");
         $(this).parent().find(".errorMessage").text('');
+        $(this).parent().find(".hintMessage").show();
     });
 
     // round types
@@ -585,6 +596,14 @@ $(document).ready(function() {
     if($("#startTime").length > 0) {
         $(".startEtSelect ul li:eq(9) a, #endDateDiv .endEtSelect ul li:eq(9) a, #checkPointEndDateDiv .endEtSelect ul li:eq(9) a").trigger('click');
     }
+
+
+    $("textarea[name='newProjectDescription'], input[name='newProjectName']").change(function () {
+        updateTextCount($(this));
+    }).trigger('change');
+    $("textarea[name='newProjectDescription'], input[name='newProjectName']").keyup(function () {
+        updateTextCount($(this));
+    });
 
 
     CKEDITOR.replace( 'contestIntroduction' );
@@ -749,7 +768,7 @@ function handleProblemsDropDownChange() {
         $("#problems").append($('<option></option>').val(key).html(value));
     });
     $("#problems").val(-1);
-    $("#problems").resetSS();
+    $("#problems").resetSS({autoAdjust: false});
     $("#problems").getSetSSValue(-1);
 }
 
@@ -831,6 +850,11 @@ function onContestTypeChange() {
         $("#milestoneManSymbol").hide();
     } else {
         $("#milestoneManSymbol").show();
+    }
+
+    if(typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $('#roundTypes').val('single');
+        $('#roundTypes').trigger("change");
     }
 
     if(isContestSaved() && typeId != currentTypeId) {
@@ -1083,10 +1107,24 @@ function resetFileTypes(studioSubtypeId) {
     $('#deliverablesCheckboxs').html(html);
 }
 
+function updateTextCount(_input) {
+    var limit = _input.attr('limit');
+    var remaining = limit - _input.val().length;
+
+    if(remaining < 0) {
+        remaining = 0;
+        var v = _input.val();
+        _input.val(v.substr(0, limit));
+    }
+
+    _input.parent().find(".hintMessage").text(remaining + " characters remaining")
+}
+
 var validateNewProjectModalInput = function (modalId) {
     var modal = $("#" + modalId);
     var passValidation = true;
-
+    modal.find("input[name='newProjectName']").addClass('invalid').parent().find(".hintMessage").hide();
+    modal.find("textarea[name='newProjectDescription']").addClass('invalid').parent().find(".hintMessage").hide();
     // name, description are required
     if ($.trim(modal.find("input[name='newProjectName']").val()) == '') {
         passValidation = false;
@@ -1098,6 +1136,7 @@ var validateNewProjectModalInput = function (modalId) {
     }
     else {
         modal.find("input[name='newProjectName']").removeClass('invalid').parent().find(".errorMessage").text('');
+        modal.find("input[name='newProjectName']").parent().find(".hintMessage").show();
     }
 
     if ($.trim(modal.find("textarea[name='newProjectDescription']").val()) == '') {
@@ -1110,6 +1149,7 @@ var validateNewProjectModalInput = function (modalId) {
     }
     else {
         modal.find("textarea[name='newProjectDescription']").removeClass('invalid').parent().find(".errorMessage").text('');
+        modal.find("textarea[name='newProjectDescription']").parent().find(".hintMessage").show();
     }
 
     return passValidation;

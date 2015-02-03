@@ -1,14 +1,15 @@
 <%--
-  - Author: isv, flexme, Ghost_141, TCSDEVELOPER
+  - Author: isv, flexme, Ghost_141, Blues
+  - Version 1.6 (TopCoder Direct - Issues Fix Release Assembly 1) Fix https://github.com/cloudspokes/direct-app/issues/11
   - Version 1.5 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) change notes: Fix multiple bugs.
   - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added "I can not choose a winner" button.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Add link for checkout button.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Create dynamic prize slots depends on the prize number.
   -
-  - Version: 1.5
+  - Version: 1.6
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders Bank Selection area to be displayed on Studio Submissions Grid, List and
   - Single views.
@@ -102,27 +103,31 @@
         <s:if test="!viewData.hasCheckout" >
             <s:if test="formData.roundType.toString() == 'CHECKPOINT'">
                 <s:if test="viewData.phaseOpen">
-                <link:studioCheckout contestId="${projectId}" checkpointRound="${true}" styleClass="buttonBankSelection checkpointConfirmation">
-                    <span class="left"><span class="right">CONFIRM CHECKPOINT</span></span>
-                </link:studioCheckout>
+                    <link:studioCheckout contestId="${projectId}" checkpointRound="${true}" styleClass="buttonBankSelection checkpointConfirmation">
+                        <span class="left"><span class="right">CONFIRM CHECKPOINT</span></span>
+                    </link:studioCheckout>
                 </s:if>
                 <s:else>
-                <a href="javascript:;" class="buttonBankSelection"><span class="left"><span
-                         class="right">CONFIRM CHECKPOINT</span></span></a>
+                    <a href="javascript:;" class="buttonBankSelection"><span class="left"><span
+                             class="right">CONFIRM CHECKPOINT</span></span></a>
                 </s:else>
             </s:if>
             <s:else>
-                <link:studioCheckout contestId="${projectId}" checkpointRound="${false}"
-                                     styleClass="buttonBankSelection winnersLockIn">
-                    <span class="left"><span class="right">Lock-in Winners</span></span>
-                </link:studioCheckout>
+                <s:if test="viewData.phaseOpen">
+                    <link:studioCheckout contestId="${projectId}" checkpointRound="${false}"
+                                         styleClass="buttonBankSelection winnersLockIn">
+                        <span class="left"><span class="right">Lock-in Winners</span></span>
+                    </link:studioCheckout>
+                </s:if>
             </s:else>
             <s:if test="formData.roundType.toString() == 'FINAL'">
-            <a href="<s:url action="studioNoWinner" namespace="/contest">
-                         <s:param name="projectId" value="viewData.contestStats.contest.id"/>
-                         <s:param name="formData.roundType" value="formData.roundType"/>
-                     </s:url>" class="buttonBankSelection">
-                <span class="left"><span class="right">I cannot choose a winner</span></span></a>
+                <s:if test="viewData.phaseOpen">
+                    <a href="<s:url action="studioNoWinner" namespace="/contest">
+                                 <s:param name="projectId" value="viewData.contestStats.contest.id"/>
+                                 <s:param name="formData.roundType" value="formData.roundType"/>
+                             </s:url>" class="buttonBankSelection">
+                        <span class="left"><span class="right">I cannot choose a winner</span></span></a>
+                </s:if>
             </s:if>
             <a href="javascript:;" id="clearSlots" class="buttonBankSelection"><span class="left"><span
                     class="right">CLEAR SLOTS</span></span></a>

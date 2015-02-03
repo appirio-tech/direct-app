@@ -639,25 +639,23 @@ public class GetContestAction extends ContestAction {
     public String getContestVMNumber() {
         try {
 
-            if (projectId <= 0) {
-                throw new DirectException("projectId less than 0 or not defined.");
-            }
-
             int activeVMs = 0;
 
-            try {
-                // Get active VM instance number
-                List<VMInstanceData> vmInstances = DirectUtils.getCloudVMService().getVMInstancesForContest(
-                        DirectUtils.getTCSubjectFromSession(),
-                        projectId);
+            if (projectId > 0) {
+                try {
+                    // Get active VM instance number
+                    List<VMInstanceData> vmInstances = DirectUtils.getCloudVMService().getVMInstancesForContest(
+                            DirectUtils.getTCSubjectFromSession(),
+                            projectId);
 
-                for (VMInstanceData instance : vmInstances) {
-                    if (instance.getStatus() == VMInstanceStatus.RUNNING) {
-                        activeVMs++;
+                    for (VMInstanceData instance : vmInstances) {
+                        if (instance.getStatus() == VMInstanceStatus.RUNNING) {
+                            activeVMs++;
+                        }
                     }
+                } catch (Exception ex) {
+                    activeVMs = 0;
                 }
-            } catch (Exception ex) {
-                activeVMs = 0;
             }
 
             Map<String, String> result = new HashMap<String, String>();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * Used for the new project creation process, included by the JSP file dashboard-create-new-project.jsp
  *
@@ -19,6 +19,10 @@
  *
  * @version 1.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
  *              Rebranding the copilot and reporting related pages.
+ *
+ * @version 1.6 TopCoder Direct - Issues Fix Release Assembly 1
+ * - Fix "Copyrights details and terms/privacy policy links on dashboard are showing different text color"
+ *   (https://github.com/cloudspokes/direct-app/issues/90)
  */
 
 /* CSS Document */
@@ -36,14 +40,6 @@
     display: block;
 }
 
-body#page {
-    margin: 0;
-    padding: 0 0 50px;
-    /* set default font details */
-    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
-    background-color: #f6f6f6;
-    color: #666666;
-}
 
 /*--------------
 	MISC
@@ -586,83 +582,6 @@ table {
 	FOOTER
 ------------------*/
 
-#footer {
-    padding: 20px 21px 17px 10px;
-    margin: 0 auto;
-    font-size: 11px;
-    color: #666666;
-    position: relative;
-    border-top: 1px solid #e7e7e7;
-}
-
-/*update footer*/
-#footer .socialNetwork {
-    float: right;
-    position: relative;
-    top: -2px;
-}
-
-.homeFooter .socialNetwork {
-    padding-right: 6px;
-}
-
-.dashboard .socialNetwork {
-    padding-right: 15px;
-}
-
-#footer .socialNetwork span {
-    position: relative;
-    top: -3px;
-}
-
-#footer .socialNetwork a,
-#footer .socialNetwork a:visited {
-    background-image: url(/images/followIcon.gif);
-    background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    overflow: hidden;
-    margin-left: 6px;
-}
-
-#footer .socialNetwork a.twitterIcon,
-#footer .socialNetwork a.twitterIcon:visited {
-    background-position: 0 0;
-}
-
-#footer .socialNetwork a.linkedInIcon,
-#footer .socialNetwork a.linkedInIcon:visited {
-    background-position: -16px 0;
-}
-
-#footer .socialNetwork a.facebookIcon,
-#footer .socialNetwork a.facebookIcon:visited {
-    background-position: -32px 0;
-}
-
-#footer .copyright {
-    font-size: 11px;
-    color: #666666;
-}
-
-#footer .copyright span {
-    display: inline-block;
-    padding-right: 0px;
-}
-
-#footer .copyright a,
-#footer .copyright a:visited {
-    background: url(/images/footerSeparator.gif) no-repeat left center;
-    color: #666666;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0 1px 0 4px;
-}
-
-#footer .copyright a:hover {
-    text-decoration: underline;
-}
 
 /*----------------
 	MAIN CONTENT

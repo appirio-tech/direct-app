@@ -354,6 +354,11 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String FORUM_TYPE = "Forum Type";
 
+    /**
+     * Represents the "Review Type" project property key
+     */
+    public static final String REVIEW_TYPE = "Review Type";
+
    
     /**
      * Represents the id of this instance. Only values greater than zero is

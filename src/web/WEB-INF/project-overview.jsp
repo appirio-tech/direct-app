@@ -1,6 +1,6 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin, TCSASSEMBLER
+  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang, GreatKevin, Blues
   -
   - Version: 2.1
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
@@ -45,6 +45,8 @@
   - - Rebranding the project overview page
   - Version 2.1 - (topcoder Direct - Add Project Billings to project overview) @author deedee @challenge 30045142 changes:
   - - Add billing accounts list
+  - Version 2.2 - (TopCoder Direct - Issues Fix Release Assembly 1)
+  - - Fix "Money symbol should be locale independent" (https://github.com/cloudspokes/direct-app/issues/41)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -254,7 +256,7 @@
                                                             <dt>Total Budget :</dt>
                                                             <dd><fmt:formatNumber
                                                                     value="${viewData.projectGeneralInfo.totalBudget}"
-                                                                    type="currency" maxFractionDigits="0"/></dd>
+                                                                    type="currency" maxFractionDigits="0" currencySymbol="$"/></dd>
                                                             <dt class="actual">Actual Cost :</dt>
                                                             <dd class="actualNum actualCostSlot"><span style="font-size:11px">Loading...</span></dd>
                                                             <dt class="projected">Projected Total :</dt>

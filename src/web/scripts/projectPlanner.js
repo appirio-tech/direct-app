@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * Javascript for for the project planner page.
  *
@@ -8,7 +8,10 @@
  * -version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
  * - Add preview and estimates calculation for the project planner and copilot submissions page
  *
- * @author GreatKevin
+ * Version 1.2 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Fix https://github.com/cloudspokes/direct-app/issues/18
+ *
+ * @author GreatKevin, Blues
  */
 $(function(){
 
@@ -1057,6 +1060,11 @@ $(function(){
                 success: function (jsonResult) {
                     handleJsonResult2(jsonResult,
                         function (result) {
+
+                            if(jQuery.isEmptyObject(result)) {
+                                return;
+                            }
+
                             contestDescription = result;
                             $(".previewCopilotGamePlan").trigger('click');
                             modalPreloader();

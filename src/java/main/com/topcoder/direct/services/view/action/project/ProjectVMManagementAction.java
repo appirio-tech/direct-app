@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2015 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -17,6 +17,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.shared.security.AuthorizationException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -25,8 +26,17 @@ import java.util.List;
 /**
  * Action supporting project level vm management page.
  *
- * @author jiajizhou86
- * @version 1.0
+ * <p>
+ * Version 1.1 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * <ul>
+ *     <li>
+ *         Fix "Launch Virtual Management throws exception" (https://github.com/cloudspokes/direct-app/issues/12)
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author jiajizhou86, Blues
+ * @version 1.1
  */
 public class ProjectVMManagementAction extends BaseDirectStrutsAction
         implements FormAction<ProjectIdForm> {
@@ -97,6 +107,13 @@ public class ProjectVMManagementAction extends BaseDirectStrutsAction
     private boolean allowVMTermination;
 
     /**
+     * Whether current user has permission to create VM.
+     *
+     * @since 1.1
+     */
+    private boolean allowVMCreation;
+
+    /**
      * Current login user info
      */
     private TCSubject user;
@@ -144,6 +161,13 @@ public class ProjectVMManagementAction extends BaseDirectStrutsAction
      */
     private void populateUserData() throws PermissionServiceException {
         user = AbstractVMAction.getUser();
+
+        try {
+            AbstractVMAction.authorize(user);
+            allowVMCreation = true;
+        } catch (AuthorizationException ae) {
+            allowVMTermination = false;
+        }
 
         allowVMTermination = DirectUtils.isCockpitAdmin(user)
                 || DirectUtils.isVMManager(user)
@@ -328,5 +352,15 @@ public class ProjectVMManagementAction extends BaseDirectStrutsAction
      */
     public void setVmErrorMessage(String vmErrorMessage) {
         this.vmErrorMessage = vmErrorMessage;
+    }
+
+    /**
+     * Gets whether the user can create VM.
+     *
+     * @return the true if yes, false otherwise.
+     * @since 1.1
+     */
+    public boolean isAllowVMCreation() {
+        return allowVMCreation;
     }
 }

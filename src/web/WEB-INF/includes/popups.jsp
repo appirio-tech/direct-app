@@ -1,8 +1,8 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, Veve
-  - Version: 3.5
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin, duxiaoyang, Ghost_141, GreatKevin, Veve, Blues
+  - Version: 3.6
+  - Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -86,6 +86,9 @@
   -
   - Version 3.5 (TopCoder Direct - Add Appirio Manager)
   - - Added the modal window for Add Appirio Manager in edit project page.
+  -
+  - Version 3.6 (TopCoder Direct - Issues Fix Release Assembly 1)
+  - - Add character counting for create new proejct modal window
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -432,15 +435,17 @@
                     </div>
                     <div class="modalRow">
                         <label>Name:<span class="red">*</span></label>
-                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
+                        <input type="text" class="text" id="newProjectName" name="newProjectName" limit="60"/>
                         <div class="clearFix"></div>
+                        <span class="hintMessage" style="float:right;padding-right:60px"></span>
                         <span class="errorMessage" style="float:right;padding-right:60px"></span>
                     </div>
                     <div class="modalRow">
                         <label>Description:<span class="red">*</span></label>
                         <textarea id="newProjectDescription" name="newProjectDescription" class="textField" rows=""
-                                  cols=""></textarea>
+                                  cols="" limit="2000"></textarea>
                         <div class="clearFix"></div>
+                        <span class="hintMessage" style="float:right;padding-right:60px"></span>
                         <span class="errorMessage" style="float:right;padding-right:60px"></span>
                     </div>
                 </div>

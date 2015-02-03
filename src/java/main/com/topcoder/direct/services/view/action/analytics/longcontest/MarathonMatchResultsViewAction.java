@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2015 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.analytics.longcontest;
 
@@ -63,9 +63,18 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
+ * <p>
+ *     Version 1.3 (TopCoder Direct - Issues Fix Release Assembly 1)
+ *     <ul>
+ *         <li>
+ *             Fix "challenge type of "Marathon Match" - after click on "results" tab show error page"
+ *             (https://github.com/cloudspokes/direct-app/issues/14)
+ *         </li>
+ *     </ul>
+ * </p>
  *
- * @author Ghost_141
- * @version 1.1
+ * @author Ghost_141, Blues
+ * @version 1.3
  * @since 1.0 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab)
  */
 public class MarathonMatchResultsViewAction extends AbstractAction
@@ -148,6 +157,13 @@ public class MarathonMatchResultsViewAction extends AbstractAction
     private boolean hasRoundId = false;
 
     /**
+     * The error message to display.
+     *
+     * @since 1.3
+     */
+    private String errorMessage;
+
+    /**
      * Create an instance of <code>MarathonMatchResultsViewAction</code>.
      */
     public MarathonMatchResultsViewAction() {
@@ -179,29 +195,30 @@ public class MarathonMatchResultsViewAction extends AbstractAction
 
             viewData = new MMResultsInfoDTO();
 
-            if(hasRoundId) {
+            if (hasRoundId) {
                 viewData.setRoundId(Long.valueOf(roundIdStr));
             }
-
-            // If the contest don't have the round id or the contest is a active contest then throw an exception.
-            if(!hasRoundId ||
-                    MarathonMatchHelper.isMarathonMatchActive(viewData.getRoundId(), marathonMatchAnalyticsService)) {
-                throw new Exception("The contest is either don't have round id or is an active contest");
-            }
-
-            MarathonMatchHelper.getMarathonMatchDetails(viewData.getRoundId().toString(), marathonMatchAnalyticsService,
-                    timelineInterval, viewData);
 
             // Get the common data for contest page.
             MarathonMatchHelper.getCommonData(projectId, currentUser, softwareCompetition, viewData,
                     contestServiceFacade, getSessionData());
 
-            if(type == null) {
-                // results page.
-                viewResults();
-            } else if(type.equals(RESULT_DETAIL)) {
-                // result detail page.
-                viewSystemTestResults();
+            // If the contest don't have the round id or the contest is a active contest then throw an exception.
+            if (!hasRoundId) {
+                errorMessage = "The Marathon Match does not have a round ID";
+            } else if (MarathonMatchHelper.isMarathonMatchActive(viewData.getRoundId(), marathonMatchAnalyticsService)) {
+                errorMessage = "The Marathon Match is still ongoing, results will be available when match finishes";
+            } else {
+                MarathonMatchHelper.getMarathonMatchDetails(viewData.getRoundId().toString(), marathonMatchAnalyticsService,
+                        timelineInterval, viewData);
+
+                if (type == null) {
+                    // results page.
+                    viewResults();
+                } else if (type.equals(RESULT_DETAIL)) {
+                    // result detail page.
+                    viewSystemTestResults();
+                }
             }
 
             return SUCCESS;
@@ -565,5 +582,16 @@ public class MarathonMatchResultsViewAction extends AbstractAction
      */
     public void setStc(Integer stc) {
         this.stc = stc;
+    }
+
+    /**
+     * Gets the error message.
+     *
+     * @return the error message.
+     * @since 1.3
+     */
+    @Override
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

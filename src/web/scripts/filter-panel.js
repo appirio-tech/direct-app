@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for data table filter panel.
  *
@@ -38,8 +38,12 @@
  * Version 2.1 (Release Assembly - TopCoder Direct VM Instances Management) changes:
  * - add filter handler for project vm management page.
  *
- * @author GreatKevin, tangzx, Fanazhe, gentva, jiajizhou86
- * @version 2.1
+ * Version 2.2 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Fix "Projects Selecting date intervals do not validate if start date is before end date"
+ *   (https://github.com/cloudspokes/direct-app/issues/26)
+ *
+ * @author GreatKevin, tangzx, Fanazhe, gentva, jiajizhou86, Blues
+ * @version 2.2
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -872,41 +876,73 @@ var setupFilterPanel = function () {
         });
     }
 
+    function validateFilterDates() {
+        var errors = [];
+
+        if($.trim($("#startDateBegin").val()).length > 0 && $.trim($("#startDateEnd").val()).length > 0) {
+            var start = parseDateValue($("#startDateBegin").val())
+            var end = parseDateValue($("#startDateEnd").val())
+            if(start > end) {
+                errors.push("Specified Date Range is invalid. End Date should be larger than Start Date");
+            }
+        }
+
+        if($.trim($("#endDateBegin").val()).length > 0 && $.trim($("#endDateEnd").val()).length > 0) {
+            var start = parseDateValue($("#endDateBegin").val())
+            var end = parseDateValue($("#endDateEnd").val())
+            if(start > end) {
+                errors.push("Specified Date Range is invalid. End Date should be larger than Start Date");
+            }
+        }
+
+        if(errors.length > 0) {
+            showErrors(errors);
+        }
+    }
+
 
     $("#startDateBegin").keyup(function () {
         tableHandle.fnDraw();
+        validateFilterDates();
     });
 
     $("#startDateBegin").change(function() {
         tableHandle.fnDraw();
-        tableHandle.fnFilter("")
+        tableHandle.fnFilter("");
+        validateFilterDates();
     });
 
     $("#startDateEnd").keyup(function() {
         tableHandle.fnDraw();
+        validateFilterDates();
     });
 
     $("#startDateEnd").change(function () {
         tableHandle.fnDraw();
-        tableHandle.fnFilter("")
+        tableHandle.fnFilter("");
+        validateFilterDates();
     });
 
     $("#endDateBegin").keyup(function () {
         tableHandle.fnDraw();
+        validateFilterDates();
     });
 
     $("#endDateBegin").change(function () {
         tableHandle.fnDraw();
-        tableHandle.fnFilter("")
+        tableHandle.fnFilter("");
+        validateFilterDates();
     });
 
     $("#endDateEnd").keyup(function () {
         tableHandle.fnDraw();
+        validateFilterDates();
     });
 
     $("#endDateEnd").change(function () {
         tableHandle.fnDraw();
-        tableHandle.fnFilter("")
+        tableHandle.fnFilter("");
+        validateFilterDates();
     });
 
     // pop data for project managers

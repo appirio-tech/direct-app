@@ -150,6 +150,9 @@
  *
  * - TopCoder Direct - Change Right Sidebar to pure Ajax
  * - Add decoration hover styles for the contest link in the right sidebar
+ *
+ * - TopCoder Direct - Issues Fix Release Assembly 1
+ * - Fix "Multiple level dropdown hard to select" https://github.com/cloudspokes/direct-app/issues/97
  */
 
 body{
@@ -11841,6 +11844,10 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText {
     padding-left: 10px;
 }
 
+#new-modal .hintMessage {
+    font-size: 11px;
+}
+
 #new-modal .warningMessage {
     color: #FF0000;
     font-size: 11px;
@@ -12724,12 +12731,12 @@ tr.reportAverage {
 
 #newHeader .topMenu .lv2,
 #newHeader .topMenu .lv3 {
-    left: 208px;
+    left: 205px;
     top: 0;
 }
 
 #newHeader .topMenu .lv3Wide {
-    left: 298px !important;
+    left: 295px !important;
 }
 
 #newHeader .topMenu .flyout .h {

@@ -38,6 +38,10 @@
  *
  * TC Direct Rebranding Assembly Dashboard and Admin related pages
  * - Rebranding the dashboard and admin realted pages
+ *
+ * TopCoder Direct - Issues Fix Release Assembly 1
+ * - Fix "Copyrights details and terms/privacy policy links on dashboard are showing different text color"
+ *   (https://github.com/cloudspokes/direct-app/issues/90)
  */
 html, body {
     width: 100%;
@@ -1661,18 +1665,19 @@ IMG {
 
 #footer .copyright {
     font-size: 12px;
-    color: #A1A1A1;
+    color: #A1A1A1 !important;
 }
 
-#footer .copyright span {
+#footer .copyright span, #footer .socialNetwork span {
     display: inline-block;
     padding-right: 0px;
+    color: #A1A1A1 !important;
 }
 
 #footer .copyright a,
 #footer .copyright a:visited {
     background: url(../../images/footerSeparator.gif) no-repeat left center;
-    color: #A1A1A1;
+    color: #A1A1A1 !important;
     text-decoration: none;
     display: inline-block;
     padding: 0 1px 0 4px;

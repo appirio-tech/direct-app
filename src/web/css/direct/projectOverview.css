@@ -1,10 +1,13 @@
 /*
- * Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * Used for the project overview pages.
  *
  * Version 1.0 (TC Direct Rebranding Assembly Project and Contest related pages)
  * - Rebranding the project overview page.
+ *
+  * Version 1.1 (TopCoder Direct - Issues Fix Release Assembly 1)
+ * - Add Proper Padding and align for Direct Project Activities （https://github.com/cloudspokes/direct-app/issues/106)
  */
 .projectInforDiv {
     overflow: hidden;
@@ -868,6 +871,21 @@ td.contestActivities .reviewComplete .leftLaunch p {
 }
 td.contestActivities .reviewComplete .rightLaunch p a {
     color: #DDCC00;
+}
+
+td.contestActivities .reviewComplete {
+    background: url("/images/completed.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+
+td.contestActivities .contestCompleted {
+    background: url("/images/completed.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+
+td.contestActivities .contestDraft {
+    background: url("/images/posted.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
 }
 
 td.contestActivities .leftLaunch {
