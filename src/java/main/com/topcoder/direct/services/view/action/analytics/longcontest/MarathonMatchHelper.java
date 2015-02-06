@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.analytics.longcontest;
 
+import com.topcoder.commons.utils.LoggingWrapperUtility;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsServiceException;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
@@ -24,6 +25,8 @@ import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.ProgressResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
+import com.topcoder.util.log.Log;
+import com.topcoder.util.log.LogManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -100,6 +103,11 @@ public final class MarathonMatchHelper {
      * Represent the day group type.
      */
     public static final String GROUP_TYPE_DAY = "day";
+
+    /**
+     * Log instance.
+     */
+    private static final Log logger = LogManager.getLog(MarathonMatchHelper.class.getName());
 
     /**
      * Get the marathon match details information of this marathon match contest.
@@ -211,9 +219,16 @@ public final class MarathonMatchHelper {
      */
     public static boolean isMarathonMatchActive(Long roundId,
             MarathonMatchAnalyticsService marathonMatchAnalyticsService) throws MarathonMatchAnalyticsServiceException {
-        SearchResult<MarathonMatchItemResource> activeContests =
+        SearchResult<MarathonMatchItemResource> activeContests = null; 
+
+        try {
+            activeContests =
                 marathonMatchAnalyticsService.getMarathonMatchListings("active", null, null, 50, 1, null, null,
                         MarathonMatchHelper.ACCESS_TOKEN);
+        } catch (Exception e) {
+            LoggingWrapperUtility.logException(logger, "isMarathonMatchActive", e);
+            return false;
+        }
         boolean active = false;
         for(MarathonMatchItemResource contestItem : activeContests.getItems()) {
             if(contestItem.getRoundId() == roundId) {
