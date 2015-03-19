@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for edit project page..
  *
@@ -40,8 +40,11 @@
  * - Fix the issue TCCC-5633 to prevent edit project page cover the game plan dropdown
  * by reducing the zindex of edit page
  *
+ * Version 2.9 (TC Direct - Update Edit Project Budget Controls)
+ * - Update the slider control to allow input box to input exact value
+ *
  * @author GreatKevin, Ghost_141, GreatKevin, freegod, TCSASSEMBLER
- * @version 2.8
+ * @version 2.9
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -1076,6 +1079,7 @@ $(document).ready(function (e) {
                 var t1 = d1.getTime();
                 var t2 = d2.getTime();
                 var duration = Math.floor((t2 - t1) / (3600 * 1000 * 24));
+
                 $('#durationOutput').val(duration);
                 if (duration > 400) {
                     $('.durationPanel .sliderView input.radio').attr('disabled', 'disabled');
@@ -1138,7 +1142,7 @@ $(document).ready(function (e) {
                     }
                     return;
                 }
-                var num = parseInt($(this).val(), 10);
+                var num = parseInt(v, 10);
                 if (num < 0 || isNaN(num)) {
                     num = 0;
                 }
@@ -2172,7 +2176,7 @@ function formatNumber(number) {
             if ($.browser.msie && ($.browser.msie.version == '7.0' || $.browser.version == '8.0')) {
                 handler.addClass('addMore');
             }
-            var onDrag = function (target, left) {
+            var onDrag = function (target, left, needsUpdateOutput) {
                 var container = target.parent();
                 var w = target.data('w');
                 var wrapper = container.parent();
@@ -2195,22 +2199,25 @@ function formatNumber(number) {
                 }
                 left = (value - minValue) / distance * w;
                 $('.valueRule', wrapper).width(left);
-                var output = s.output;
-                if (output) {
-                    if(!s.step){
-                        output.val(formatNumber(parseInt(value, 10)));
-                    }else{
-                        output.val(formatNumber(parseInt(parseInt(value, 10)/1000)*1000));
+
+                if(needsUpdateOutput) {
+                    var output = s.output;
+                    if (output) {
+                        if(!s.step){
+                            output.val(formatNumber(parseInt(value, 10)));
+                        }else{
+                            output.val(formatNumber(parseInt(parseInt(value, 10)/s.step)*s.step));
+                        }
                     }
+                    return left;
                 }
-                return left;
             };
             handler.draggable({
                 axis:'x',
                 containment:'parent',
                 drag:function (event, ui) {
                     var left = ui.position.left;
-                    onDrag($(this), left);
+                    onDrag($(this), left, 1);
                 }
             });
 
@@ -2224,7 +2231,7 @@ function formatNumber(number) {
                 var offset = $(this).offset();
                 var left = x - offset.left - h.width() / 2;
 
-                h.css('left', onDrag(h, left) + 'px');
+                h.css('left', onDrag(h, left, 1) + 'px');
 
             });
 
@@ -2310,9 +2317,13 @@ function formatNumber(number) {
 
                     if (value == 0) {
                         $(this).val('');
+                    } else {
+                        // update the input value, always use the input
+                        var actualInputValue = $(this).val().replace(/[,]/g, '').replace(/[ ]/g, '');
+                        $(this).val(formatNumber(parseInt(actualInputValue, 10)));
                     }
-                });
 
+                });
                 setValue(s, s.defaultValue);
 
             }
