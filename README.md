@@ -16,9 +16,10 @@ direct-app
 ## running locally
 1. Create a direct VM (this will be used for an informix database)
 2. Add this entry to your /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`
-3. `docker pull build.appirio.net:5050/docker-app-run`
-4. `docker run --name=direct-app -d -v /Users/james/dev/topcoder/direct-app/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
-5. 
+3. Download the direct runtime image: `docker pull build.appirio.net:5050/docker-app-run`
+4. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
+
+   This will start the app with an endpoint available on port 8080.
 ---
 ## **old** instructions
 Setup on VM:
