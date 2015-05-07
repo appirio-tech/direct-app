@@ -3,12 +3,13 @@ direct-app
 
 ## building
 To build, download the docker build container that has all of the build dependencies. You can then run the container to build your local source code.
+
 1. Clone the github source directory
 2. Rename `token.properties.docker` to `token.properties` in the source directory
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
 4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
-3. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
-4. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`. 
+5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
+6. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`. 
 
    For example, `docker run -v /Users/james/dev/direct-app:/data -t clean package-direct deploy-prod`
 
@@ -16,18 +17,22 @@ To build, download the docker build container that has all of the build dependen
 
 ## running locally
 In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll use a direct VM for those dependencies. The instructions below document the steps needed to run locally.
+
 1. Create a direct VM (this will be used for an informix database and some EJBs that direct depends on)
 2. SSH in to your VM and edit your /etc/hosts file to add an entry for vm.cloud.topcoder.com that maps to the ethernet ip address of the VM (should be a 10.x address). Your entry should look something like `10.238.212.241 vm.cloud.topcoder.com`
 3. Stop the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/kill.sh`
 4. Edit the start.sh file to add `-b vm.cloud.topcoder.com` to the run.sh command. I.e., it should look like `nohup ./run.sh -b vm.cloud.topcoder.com -c all -Djboss.partition.name=TCPartition > ./nohup.out 2>&1 &`
 5. Start the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/start.sh` as the tc user
-2. Add this entry to your local /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`. Your VM ip is the **external** ip address to your VM and not the 10.x address you entered above.
-3. Download the direct runtime docker image: `docker pull build.appirio.net:5050/docker-app-run`
-4. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
+6. Add this entry to your local /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`. Your VM ip is the **external** ip address to your VM and not the 10.x address you entered above.
+7. Download the direct runtime docker image: `docker pull build.appirio.net:5050/docker-app-run`
+8. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
 
    This will start the app with an endpoint available on port 8080.
+
 ---
+
 ## **old** instructions
+
 Setup on VM:
 * Once you get your VM, login into the VM with your private key and account 'direct'
 * Back up token.properties and topcoder_global.properties in /home/direct/direct somewhere
