@@ -2,6 +2,7 @@ direct-app
 ==========
 
 ## building
+To build, download the docker build container that has all of the build dependencies. You can then run the container to build your local source code.
 1. Clone the github source directory
 2. Rename `token.properties.docker` to `token.properties` in the source directory
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
@@ -14,9 +15,14 @@ direct-app
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 
 ## running locally
-1. Create a direct VM (this will be used for an informix database)
-2. Add this entry to your /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`
-3. Download the direct runtime image: `docker pull build.appirio.net:5050/docker-app-run`
+In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll use a direct VM for those dependencies. The instructions below document the steps needed to run locally.
+1. Create a direct VM (this will be used for an informix database and some EJBs that direct depends on)
+2. SSH in to your VM and edit your /etc/hosts file to add an entry for vm.cloud.topcoder.com that maps to the ethernet ip address of the VM (should be a 10.x address). Your entry should look something like `10.238.212.241 vm.cloud.topcoder.com`
+3. Stop the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/kill.sh`
+4. Edit the start.sh file to add `-b vm.cloud.topcoder.com` to the run.sh command. I.e., it should look like `nohup ./run.sh -b vm.cloud.topcoder.com -c all -Djboss.partition.name=TCPartition > ./nohup.out 2>&1 &`
+5. Start the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/start.sh` as the tc user
+2. Add this entry to your local /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`. Your VM ip is the **external** ip address to your VM and not the 10.x address you entered above.
+3. Download the direct runtime docker image: `docker pull build.appirio.net:5050/docker-app-run`
 4. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
 
    This will start the app with an endpoint available on port 8080.
