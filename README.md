@@ -11,7 +11,7 @@ To build, download the docker build container that has all of the build dependen
 5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
 6. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`. 
 
-   For example, `docker run -v /Users/james/dev/direct-app:/data -t clean package-direct deploy-prod`
+   For example, `docker run -v /Users/james/dev/topcoder/direct-app:/data -t direct-build clean package-direct deploy-prod`
 
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 
@@ -24,10 +24,12 @@ In this configuration, we'll run the direct app in a docker container locally bu
 4. Edit the start.sh file to add `-b vm.cloud.topcoder.com` to the run.sh command. I.e., it should look like `nohup ./run.sh -b vm.cloud.topcoder.com -c all -Djboss.partition.name=TCPartition > ./nohup.out 2>&1 &`
 5. Start the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/start.sh` as the tc user
 6. Add this entry to your local /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`. Your VM ip is the **external** ip address to your VM and not the 10.x address you entered above.
-7. Download the direct runtime docker image: `docker pull build.appirio.net:5050/docker-app-run`
-8. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app-run`
+7. Download the direct runtime docker image: `docker pull build.appirio.net:5050/direct-app`
+8. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app`
+9. Download the direct web app with the command `docker pull build.appirio.net:5050/direct-web`
+1. Run the direct web app with the command `docker run -p 8200:8080 --link direct-app:direct-app-jboss -t direct-web`
 
-   This will start the app with an endpoint available on port 8080.
+   This will start the app with an endpoint available on port 8200. If you have `dockerhost` set to your docker ip, you can now go to http://dockerhost:8200/direct/home.action
 
 ---
 
