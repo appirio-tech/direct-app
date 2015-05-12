@@ -9,29 +9,30 @@ To build, download the docker build container that has all of the build dependen
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
 4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
 5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
-6. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`. 
+6. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`.
 
    For example, `docker run -v /Users/james/dev/topcoder/direct-app:/data -t direct-build clean package-direct deploy-prod`
 
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 
 ## running locally
-In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll use a direct VM for those dependencies. The instructions below document the steps needed to run locally.
+In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll need to run several containers and connect to the dev database. To run, follow these steps.
 
-1. Create a direct VM (this will be used for an informix database and some EJBs that direct depends on)
-2. SSH in to your VM and edit your /etc/hosts file to add an entry for vm.cloud.topcoder.com that maps to the ethernet ip address of the VM (should be a 10.x address). Your entry should look something like `10.238.212.241 vm.cloud.topcoder.com`
-3. Stop the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/kill.sh`
-4. Edit the start.sh file to add `-b vm.cloud.topcoder.com` to the run.sh command. I.e., it should look like `nohup ./run.sh -b vm.cloud.topcoder.com -c all -Djboss.partition.name=TCPartition > ./nohup.out 2>&1 &`
-5. Start the tc jboss instance: `/home/tc/jboss-4.0.4.GA/bin/start.sh` as the tc user
-6. Add this entry to your local /etc/hosts file: `<vm ip> vm.cloud.topcoder.com`. Your VM ip is the **external** ip address to your VM and not the 10.x address you entered above.
-7. Download the direct runtime docker image: `docker pull build.appirio.net:5050/direct-app`
-8. Run the direct app with the command `docker run -p 8080:8080 --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct -t direct-app`
+1. Add your IP address to the direct-app-nat security group in the topcoder-dev AWS account.
+1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `boot2docker ip`
+2. Download the topcoder cache server image: `docker pull build.appirio.net:5050/tc-cache`
+2. Run `docker run -d --name tc-cache -t build.appirio.net:5050/tc-cache`
+2. Download the direct runtime docker image: `docker pull build.appirio.net:5050/direct-app`
+8. Run the direct app with the command `docker run --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct --link tc-cache:tc-cache -t build.appirio.net:5050/direct-app`. `<source dir>` = source directory described above. It should contain the jboss-4.2.3.GA directory you created before.
 9. Download the direct web app with the command `docker pull build.appirio.net:5050/direct-web`
-1. Run the direct web app with the command `docker run -p 8200:8080 --link direct-app:direct-app-jboss -t direct-web`
+1. Run the direct web app with the command `docker run -d --name=direct-web -v /Users/james/dev/topcoder/direct-app/src/web:/data -p 443:443 --link direct-app:direct-app-jboss -t build.appirio.net:5050/direct-web`
 
-   This will start the app with an endpoint available on port 8200. If you have `dockerhost` set to your docker ip, you can now go to http://dockerhost:8200/direct/home.action
+   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder-dev.com/direct/home.action
+
+> NOTE: the SSL certificate is self-signed as will generate a warning/error when you access the site for the first time. Just accept it and continue.
 
 ---
+
 
 ## **old** instructions
 
