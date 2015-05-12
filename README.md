@@ -18,7 +18,7 @@ To build, download the docker build container that has all of the build dependen
 ## running locally
 In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll need to run several containers and connect to the dev database. To run, follow these steps.
 
-1. Add your IP address to the direct-app-nat security group in the topcoder-dev AWS account.
+1. Add your IP address to the direct-app-nat security group in the topcoder-dev AWS account. Just add all TCP to your IP. This is a whitelist in order to not make the db publicly accessible. You can get your ip from http://checkip.amazonaws.com/
 1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `boot2docker ip`
 2. Download the topcoder cache server image: `docker pull build.appirio.net:5050/tc-cache`
 2. Run `docker run -d --name=tc-cache -t build.appirio.net:5050/tc-cache`
