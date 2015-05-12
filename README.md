@@ -9,9 +9,9 @@ To build, download the docker build container that has all of the build dependen
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
 4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
 5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
-6. Run the docker container to execute a build. The format of the command is `docker run -v <source dir>:/data -t direct-build <ant target(s)>`.
+6. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t build.appirio.net:5050/direct-build <ant target(s)>`.
 
-   For example, `docker run -v /Users/james/dev/topcoder/direct-app:/data -t direct-build clean package-direct deploy-prod`
+   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t direct-build clean package-direct deploy-prod`
 
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 
@@ -21,7 +21,7 @@ In this configuration, we'll run the direct app in a docker container locally bu
 1. Add your IP address to the direct-app-nat security group in the topcoder-dev AWS account.
 1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `boot2docker ip`
 2. Download the topcoder cache server image: `docker pull build.appirio.net:5050/tc-cache`
-2. Run `docker run -d --name tc-cache -t build.appirio.net:5050/tc-cache`
+2. Run `docker run -d --name=tc-cache -t build.appirio.net:5050/tc-cache`
 2. Download the direct runtime docker image: `docker pull build.appirio.net:5050/direct-app`
 8. Run the direct app with the command `docker run --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct --link tc-cache:tc-cache -t build.appirio.net:5050/direct-app`. `<source dir>` = source directory described above. It should contain the jboss-4.2.3.GA directory you created before.
 9. Download the direct web app with the command `docker pull build.appirio.net:5050/direct-web`
