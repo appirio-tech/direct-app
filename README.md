@@ -11,7 +11,7 @@ To build, download the docker build container that has all of the build dependen
 5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
 6. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t build.appirio.net:5050/direct-build <ant target(s)>`.
 
-   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t direct-build clean package-direct deploy-prod`
+   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t build.appirio.net:5050/direct-build clean package-direct deploy-prod`
 
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 
