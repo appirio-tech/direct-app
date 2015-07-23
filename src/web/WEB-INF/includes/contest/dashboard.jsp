@@ -374,15 +374,15 @@
                                 </s:else>
 
                             </p>
-                            <p>
-                                <label class="prediction">Prediction</label>:
-                                <s:if test="!viewData.contestStats.isStudio">
-                                    ${viewData.dashboard.predictedNumberOfSubmissions}
-                                </s:if>
-                                <s:else>
-                                    N/A
-                                </s:else>
-                            </p>
+<%--                        <p> --%>
+<%--                            <label class="prediction">Prediction</label>: --%>
+<%--                            <s:if test="!viewData.contestStats.isStudio"> --%>
+<%--                                ${viewData.dashboard.predictedNumberOfSubmissions} --%>
+<%--                            </s:if> --%>
+<%--                            <s:else> --%>
+<%--                                N/A --%>
+<%--                            </s:else> --%>
+<%--                        </p> --%>
                             <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->
