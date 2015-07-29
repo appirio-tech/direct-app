@@ -6,6 +6,8 @@
     <!-- Override these in ../topcoder_global.properties -->
     <property name="javadoc.locale" value="en_US"/>
     <property name="javac.encoding" value="UTF-8"/>
+    <property name="javac.source.ver" value="1.6"/>
+    <property name="javac.target.ver" value="1.6"/>
     <property name="debug" value="off"/>
     <property name="verbose" value="no"/>
     <available file="topcoder_global.properties" property="properties.exists"/>
@@ -119,7 +121,8 @@
     <target name="compile" description="compile the source code">
         <mkdir dir="${build_classdir}"/>
         <javac srcdir="${javamain}" destdir="${build_classdir}" includes="${packagedir}/**" debug="true"
-               verbose="${verbose}" includeAntRuntime="no" encoding="${javac.encoding}">
+               verbose="${verbose}" includeAntRuntime="no" encoding="${javac.encoding}"
+               source="${javac.source.ver}" target="${javac.target.ver}">
             <classpath refid="buildlibs"/>
         </javac>
     </target>
@@ -127,7 +130,8 @@
     <target name="marathonmatch_compile" description="compile the marathon match source code">
         <mkdir dir="${build_classdir}"/>
         <javac srcdir="${javamain}" destdir="${build_classdir}" includes="com/topcoder/marathonmatch/**" debug="true"
-            verbose="${verbose}" includeantruntime="no" encoding="${javac.encoding}">
+            verbose="${verbose}" includeantruntime="no" encoding="${javac.encoding}"
+            source="${javac.source.ver}" target="${javac.target.ver}">
             <classpath refid="buildlibs" />
         </javac>
     </target>
