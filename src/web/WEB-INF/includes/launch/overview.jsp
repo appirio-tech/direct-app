@@ -137,12 +137,12 @@
     <!-- end .mPrizes -->
 
     <!-- Studio Cup Points -->
-    <div class="studioCupPoints" id="studioCupPointsDiv">
+    <div class="studioCupPoints drHide" id="studioCupPointsDiv">
 
         <h3><span class="icon">Studio Cup Points:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
 
         <div class="studioCupPointsInner">
-            <input type="checkbox" id="studioCupPointsCheckBox" checked="checked"/> <!-- checked by default -->
+            <input type="checkbox" id="studioCupPointsCheckBox"/> <!-- checked by default -->
             <strong>&nbsp;Studio Cup Points&nbsp;:&nbsp;&nbsp;<span id="rStudioCupPoints"></span></strong>
         </div>
 
