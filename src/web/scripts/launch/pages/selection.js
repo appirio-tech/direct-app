@@ -500,7 +500,7 @@ function continueContestSelection() {
       showPage('overviewPage');
    }
 
-   
+    $(".drHide").hide();
 }
 
 function saveAsDraftContestSelection() {

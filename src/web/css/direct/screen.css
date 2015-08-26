@@ -1314,6 +1314,10 @@ IMG {
     display: none;
 }
 
+.drHide {
+    display: none;
+}
+
 .fLeft {
     float: left !important;
 }

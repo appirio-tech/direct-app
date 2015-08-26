@@ -289,6 +289,13 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Constant for draft project status.
+     * </p>
+     */
+    private static final ProjectStatus PROJECT_STATUS_DRAFT = new ProjectStatus(2, "DRAFT");
+
+    /**
+     * <p>
      * Constant for root catalog id property header.
      * </p>
      */
@@ -987,6 +994,15 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition.getProjectHeader().getProperties().remove(THURGOOD_LAUGUAGE_KEY);
             }
         }
+
+        // turn DR off if it's draft contest
+        if (softwareCompetition.getProjectHeader().getProjectStatus().getId() == PROJECT_STATUS_DRAFT.getId()) {
+            softwareCompetition.getProjectHeader().getProperties().put(
+                    ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY, "Off");
+            softwareCompetition.getProjectHeader().getProperties().put(
+                    ProjectPropertyType.DR_POINTS_PROJECT_PROPERTY_KEY, "0"
+            );
+        }
     }
 
     /**
@@ -1084,7 +1100,8 @@ public class SaveDraftContestAction extends ContestAction {
         if (projectHeaderTemp.getProjectCategory().getProjectType().getDescription() == null) {
             projectHeaderTemp.getProjectCategory().getProjectType().setDescription("");
         }
-        projectHeaderTemp.setProjectStatus(PROJECT_STATUS_ACTIVE);
+
+        projectHeaderTemp.setProjectStatus(PROJECT_STATUS_DRAFT);
 
         // process project resources
 
