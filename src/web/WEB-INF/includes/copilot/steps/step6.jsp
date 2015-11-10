@@ -205,7 +205,7 @@
                 <div class="totalCostContainer">
                 <p class="note">
                   Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
-                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentive paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                 </div>
             </div>
             <!--End .rowItem-->

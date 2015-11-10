@@ -328,7 +328,8 @@
                             <label>Registrants</label>: ${viewData.dashboard.numberOfRegistrants}
                         </p>
                         <div class="statusP ${regStatusColor}">
-                            <s:if test="viewData.contestStats.showHealth">
+                            <s:if test="false">
+                            <%-- <s:if test="viewData.contestStats.showHealth"> --%>
                             <span class="progressStatus">
                                 <span class="progress" style="width:${statusWidth}%"></span>
                                 <span class="cover"></span>
@@ -374,15 +375,15 @@
                                 </s:else>
 
                             </p>
-                            <p>
-                                <label class="prediction">Prediction</label>:
-                                <s:if test="!viewData.contestStats.isStudio">
-                                    ${viewData.dashboard.predictedNumberOfSubmissions}
-                                </s:if>
-                                <s:else>
-                                    N/A
-                                </s:else>
-                            </p>
+<%--                        <p> --%>
+<%--                            <label class="prediction">Prediction</label>: --%>
+<%--                            <s:if test="!viewData.contestStats.isStudio"> --%>
+<%--                                ${viewData.dashboard.predictedNumberOfSubmissions} --%>
+<%--                            </s:if> --%>
+<%--                            <s:else> --%>
+<%--                                N/A --%>
+<%--                            </s:else> --%>
+<%--                        </p> --%>
                             <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->

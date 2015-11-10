@@ -251,12 +251,12 @@
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
               <span class="">
                   <span class="mid_info topcoderPrize">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-                  <span class="mid_info topcoderPrize">&nbsp;Digital Run:&nbsp;</span>
-                  <input type="checkbox" id="DRCheckbox" checked="checked" autocomplete="off" class="topcoderPrize"/>
-                  <span class="mid_info topcoderPrize">
+                  <span class="mid_info topcoderPrize drHide">&nbsp;Digital Run:&nbsp;</span>
+                  <input type="checkbox" id="DRCheckbox" autocomplete="off" class="topcoderPrize drHide"/>
+                  <span class="mid_info topcoderPrize drHide">
                     Digital Points:&nbsp;&nbsp;$
                   </span>
-                  <input type="text" class="prizesInput topcoderPrize" value="" id="swDigitalRun" readonly="true" size="7" style="padding: 0 5px; font-size: 11px;"/>
+                  <input type="text" class="prizesInput topcoderPrize drHide" value="" id="swDigitalRun" readonly="true" size="7" style="padding: 0 5px; font-size: 11px;"/>
                   <br/>
               </span>
               <span class="first_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
@@ -265,7 +265,7 @@
 			  <div class="totalCostContainer"><strong>Estimated Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong>
               <p class="note">
                   Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
-                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
         </div>
 		  </span>
     </div>

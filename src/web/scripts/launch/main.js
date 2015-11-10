@@ -1374,11 +1374,9 @@ function showPage(pageId) {
             $("#overviewPage .maxSubmissions").show();
         }
 
-        if(isDesignF2F() || isIdeaGeneration()) {
-            $("#studioCupPointsDiv").hide().find("input[type=checkbox]").removeAttr('checked');
-        } else {
-            $("#studioCupPointsDiv").show().find("input[type=checkbox]").attr('checked', 'checked');
-        }
+
+        $("#studioCupPointsDiv").hide().find("input[type=checkbox]").removeAttr('checked');
+
 
         delay(studioPrizeChangeHandler(), 1000);
     }
