@@ -1176,7 +1176,10 @@ public final class DirectUtils {
 
         List<String> names = new ArrayList<String>();
         for (int i = 0; i < recordNum; i++) {
-            names.add(resultContainer.getStringItem(i, "file_name"));
+            long imageTypeId = resultContainer.getLongItem(i, "image_type_id");
+            if(imageTypeId == 30L) {
+                names.add(resultContainer.getStringItem(i, "file_name"));
+            }
         }
 
         return names;
