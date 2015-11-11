@@ -219,8 +219,9 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             ASPClient aspClient = ASPClientFactory.build(tcjwt);
 
             // get the worksteps via API
-            // this.workSteps = aspClient.retrieveWorkSteps(String.valueOf(getFormData().getProjectId()));
+            this.workSteps = aspClient.retrieveWorkSteps(String.valueOf(getFormData().getProjectId()));
 
+/*
             WorkStep step1 = new WorkStep();
             step1.setId("ws1");
             step1.setStatus("Active");
@@ -240,7 +241,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             this.workSteps.add(step1);
             this.workSteps.add(step2);
             this.workSteps.add(step3);
-
+*/
 
 
             // put work steps in session
@@ -265,7 +266,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
         } catch (Throwable e) {
 
-            e.printStackTrace();
+            logger.error("Unable to retrieve work steps", e);
 
             if (getModel() != null) {
                 setResult(e);
@@ -309,6 +310,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             setResult(result);
 
         } catch (Throwable e) {
+            logger.error("Unable to retrieve design contests", e);
             if (getModel() != null) {
                 setResult(e);
             }
@@ -386,6 +388,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             setResult(result);
 
         } catch (Throwable e) {
+            logger.error("get workstep phases error", e);
             if (getModel() != null) {
                 setResult(e);
             }
@@ -442,6 +445,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             setResult(result);
 
         } catch (Throwable e) {
+            logger.error("get submission data error", e);
             if (getModel() != null) {
                 setResult(e);
             }
@@ -585,14 +589,14 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                             "The specified challenge and phase do not have submissions to push");
                 }
 
-                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                String submissionsJson = ow.writeValueAsString(submissionsToPush);
-                String workStepJson = ow.writeValueAsString(workStep);
+                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                //String submissionsJson = ow.writeValueAsString(submissionsToPush);
+                //String workStepJson = ow.writeValueAsString(workStep);
 
-                // aspClient.publishSubmissionsToWorkStep(workStep, submissionsToPush);
+                aspClient.publishSubmissionsToWorkStep(workStep, submissionsToPush);
 
-                logger.info(submissionsJson);
-                logger.info(workStepJson);
+                //logger.info(submissionsJson);
+                //logger.info(workStepJson);
 
             } else {
                 throw new Exception("You don't have permission to push submissions for workstep in the project."
@@ -603,6 +607,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             setResult(result);
 
         } catch (Throwable e) {
+            logger.error("Unable to publish submissions", e);
             if (getModel() != null) {
                 setResult(e);
             }
