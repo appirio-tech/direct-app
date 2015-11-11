@@ -9,9 +9,9 @@ To build, download the docker build container that has all of the build dependen
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
 4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
 5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
-6. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t build.appirio.net:5050/direct-build <ant target(s)>`.
+6. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t appiriodevops/tc-direct-app-build <ant target(s)>`.
 
-   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t build.appirio.net:5050/direct-build clean package-direct deploy-prod`
+   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t appiriodevops/tc-direct-app-build clean package-direct deploy-prod`
 
 > NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
 

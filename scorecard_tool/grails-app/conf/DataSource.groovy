@@ -17,9 +17,9 @@ environments {
             // dbCreate = "create-drop"
 
             driverClassName = "com.informix.jdbc.IfxDriver"
-            url = "jdbc:informix-sqli://localhost:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8"
-            username = "informix"
-            password = "1nf0rm1x"
+            url = "jdbc:informix-sqli://informixdb:2020/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8"
+            username = "coder"
+            password = "Qn8TZxFFD77tzQwc"
         }
     }
     test {
@@ -33,9 +33,9 @@ environments {
     production {
         dataSource {
             driverClassName = "com.informix.jdbc.IfxDriver"
-            url = "jdbc:informix-sqli://localhost:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8"
-            username = "informix"
-            password = "1nf0rm1x"
+            url = "jdbc:informix-sqli://informixdb:2020/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8"
+            username = "coder"
+            password = "Qn8TZxFFD77tzQwc"
         }
     }
 }

@@ -20,11 +20,11 @@ ENV JBOSS_HOME /data/jboss-4.2.3.GA
 COPY start-jboss.sh /data/jboss-4.2.3.GA/bin/
 COPY TC.prod.ldap.keystore /data/jboss-4.2.3.GA/bin/
 
-VOLUME /data/jboss-4.2.3.GA/server/direct
+#VOLUME /data/jboss-4.2.3.GA/server/direct
 
 RUN mkdir /data/temp_files
 RUN rm /data/jboss-4.2.3.zip
 
 CMD ["/data/jboss-4.2.3.GA/bin/start-jboss.sh"]
 
-EXPOSE 8080 
+#EXPOSE 8080 

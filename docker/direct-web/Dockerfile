@@ -7,4 +7,4 @@ VOLUME /data
 
 #CMD ["/usr/sbin/nginx"]
 
-EXPOSE 8080
+#EXPOSE 8080
