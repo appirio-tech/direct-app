@@ -14,6 +14,9 @@
   - Version 1.3 (TopCoder Direct - My Created Challenges)
   - - Add "My" in top nav
   -
+  - Version 1.4 (TC Direct - ASP Integration Work Management)
+  - - Add "Work Manager" for project dashboard.
+  -
   - Description: The new cockpit header and navigation.
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
@@ -483,7 +486,10 @@
             <a class="tas" href="<s:url action="projectTasks" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Tasks</a>
         </li>
 	    <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="active"</c:if>>
-           <a class="vm"href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span  style="top:12px"  class="icon"></span>VM Management</a>
+           <a class="vm" href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span  style="top:12px"  class="icon"></span>VM Management</a>
+        </li>
+        <li <c:if test="${requestScope.CURRENT_TAB eq 'workManagement'}">class="active"</c:if>>
+            <a class="mil" href="<s:url action="projectWorkManager" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span>Work Manager</a>
         </li>
     </ul>
 </div><!-- End .mainMenu -->

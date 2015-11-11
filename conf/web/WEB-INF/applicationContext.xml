@@ -294,6 +294,12 @@
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
     </bean>
 
+    <bean id="projectWorkManagementAction"
+          class="com.topcoder.direct.services.view.action.project.ProjectWorkManagementAction" scope="prototype" parent="baseDirectStrutsAction">
+        <property name="studioSubmissionBase" value="@studio.submission.base@"/>
+        <property name="mimeTypeRetriever" ref="mimeTypeRetriever"/>
+    </bean>
+
     <bean id="getProjectVMInstancesAction"
           class="com.topcoder.direct.services.view.action.project.GetProjectVMInstancesAction" scope="prototype">
         <property name="cloudVMService" ref="cloudVMService"/>
