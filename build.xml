@@ -294,6 +294,9 @@
         <copy file="${jsr311.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${cxf.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${asp-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy todir="${ear_shared_libdir}" overwrite="true">
+            <fileset dir="${ext_libdir}/aspclient" includes="*.jar"/>
+        </copy>
         <copy file="${aopalliance-1.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${geronimo-jaxws_2.2_spec-1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${geronimo-annotation_1.0_spec-1.1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>

@@ -639,7 +639,6 @@
         <path refid="poi.libs"/>
         <path refid="httpclient.lib"/>
         <path refid="pdf.lib"/>
-        <path refid="aspclient.libs"/>
         <pathelement location="${jira-soapclient-all.jar}"/>
         <pathelement location="${servlet-api.jar}"/>
         <pathelement location="${jaxb.jar}"/>
@@ -658,6 +657,7 @@
         <pathelement location="${jsr311.jar}"/>
         <pathelement location="${cxf.jar}"/>
         <pathelement location="${java-jwt-1.0.0.jar}"/>
+        <pathelement location="${asp-client.jar}"/>
     </path>
 
 </project>
