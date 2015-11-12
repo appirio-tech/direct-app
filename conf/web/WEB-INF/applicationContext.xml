@@ -498,14 +498,18 @@
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST" />
           <property name="timelineInterval" value="1"/>
+<!--
           <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+-->
     </bean>
 
     <bean id="contestDetailJSONAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST_JSON" />
           <property name="timelineInterval" value="1"/>
+<!--
           <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+-->
     </bean>
 
     <!-- we need this type to avoid to store session value  -->
@@ -1534,7 +1538,9 @@
     <bean id="marathonMatchViewAction"
           class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchViewAction"
           scope="prototype">
+<!--
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+-->
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
         <property name="timelineInterval" value="1"/>
         <property name="submissionHistoryInterval" value="20"/>
@@ -1543,13 +1549,16 @@
     <bean id="marathonMatchResultsViewAction"
           class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchResultsViewAction"
           scope="prototype">
+<!--
         <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+-->
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
         <property name="timelineInterval" value="1"/>
     </bean>
 
     <bean id="marathonMatchRoundIdAction" class="com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchRoundIdAction" scope="prototype"/>
 
+    <!--
     <bean id="marathonMatchAnalyticsService"
           class="com.topcoder.direct.services.view.action.analytics.longcontest.services.impl.MarathonMatchAnalyticsServiceImpl"
           init-method="checkInit">
@@ -1565,6 +1574,7 @@
         <property name="clientSecret" value="@clientSecret@"/>
         <property name="apiKey" value="@apiKey@"/>
     </bean>
+    -->
 
     <bean id="needFinalFixAction"
           class="com.topcoder.direct.services.view.action.contest.studio.NeedFinalFixAction"
