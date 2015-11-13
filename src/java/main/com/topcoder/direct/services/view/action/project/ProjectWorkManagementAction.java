@@ -218,8 +218,12 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
             ASPClient aspClient = ASPClientFactory.build(tcjwt);
 
+            logger.info("Retrieving work steps...");
+
             // get the worksteps via API
             this.workSteps = aspClient.retrieveWorkSteps(String.valueOf(getFormData().getProjectId()));
+
+            logger.info("Found " + this.workSteps.size() + " steps");
 
 /*
             WorkStep step1 = new WorkStep();
@@ -287,6 +291,8 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             checkPermission();
 
             List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+            logger.info("Getting design challenges...");
 
             ProjectContestsListDTO projectContests = DataProvider.getProjectContests(
                     DirectUtils.getTCSubjectFromSession().getUserId(),
@@ -699,12 +705,14 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      * @return the base path of the submission.
      */
     private String createAbsoluteStudioSubmissionBasePath(Submission submission) {
-        StringBuffer buf = new StringBuffer(200);
+        StringBuilder buf = new StringBuilder(200);
         buf.append(getStudioSubmissionBase());
         buf.append(System.getProperty("file.separator"));
         buf.append(submission.getUpload().getProject());
         buf.append(System.getProperty("file.separator"));
-        buf.append(this.userHandlesMap.get(Long.parseLong(submission.getCreationUser())));
+        //buf.append(this.userHandlesMap.get(Long.parseLong(submission.getCreationUser())));
+        // files are stored on disk with lowercase handle
+        buf.append(this.userHandlesMap.get(Long.parseLong(submission.getCreationUser())).toLowerCase());
         buf.append("_");
         buf.append(submission.getCreationUser());
         buf.append(System.getProperty("file.separator"));
