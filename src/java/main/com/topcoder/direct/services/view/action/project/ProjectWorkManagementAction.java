@@ -634,7 +634,8 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
     private com.appirio.client.asp.api.Submission getSubmissionDataForAPI(Submission submission,
                                                                           boolean isOriginalSubmissionNeeded) throws Exception {
         com.appirio.client.asp.api.Submission s = new com.appirio.client.asp.api.Submission();
-        s.setSubmitterId(String.valueOf(submission.getUpload().getOwner()));
+        //s.setSubmitterId(String.valueOf(submission.getUpload().getOwner()));
+        s.setSubmitterId(submission.getCreationUser());
         s.setTopcoderSubmissionId(String.valueOf(submission.getId()));
 
         List<SubmissionFile> files = new ArrayList<SubmissionFile>();
