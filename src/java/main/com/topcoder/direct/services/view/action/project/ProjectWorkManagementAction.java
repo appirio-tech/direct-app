@@ -23,6 +23,7 @@ import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
+import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
@@ -164,28 +165,11 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
 
     private void checkPermission() throws Exception {
-        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-        // check if user is one of the following roles, if yes, pass the permission checking and return
-        if (DirectUtils.isTcStaff(currentUser) || DirectUtils.isTcOperations(currentUser) ||
-                DirectUtils.isTCPlatformSpecialist(currentUser)) {
-            // pass permission checking
-            return;
+        if (!AuthorizationProvider.isUserGrantedToAccessWorkManager(
+                DirectUtils.getTCSubjectFromSession(),
+                getFormData().getProjectId())) {
+            throw new Exception("You don't have permission to access");
         }
-
-        // check if user is one of the copilot of the project
-        // 1) get the copilots of the project
-        List<ContestCopilotDTO> copilots = DataProvider.getCopilotsForDirectProject(
-                getFormData().getProjectId());
-
-        for (ContestCopilotDTO copilot : copilots) {
-            if (copilot.getUserId() == currentUser.getUserId()) {
-                // pass permission checking
-                return;
-            }
-        }
-
-        // still not pass permission checking, throw exception
-        throw new Exception("You don't have permission to access");
     }
 
 
@@ -326,6 +310,22 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
     }
 
     /**
+     * Helper method to build the phase result for the ajax response.
+     *
+     * @param contestID the contest id
+     * @param phaseType the phase type
+     * @return the built map result.
+     */
+    private static Map<String, Object> buildPhaseResult(long contestID, ProjectPhaseType phaseType) {
+        Map<String, Object> resultItem = new HashMap<String, Object>();
+        resultItem.put("id", contestID + ":" + phaseType.toString());
+        resultItem.put("label", phaseType.toString());
+        resultItem.put("type", "phase");
+
+        return resultItem;
+    }
+
+    /**
      * Gets the phases that can be pushed for the passed in contest and work step type.
      *
      * @return the result code.
@@ -356,11 +356,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 // “checkpoint submission” and “checkpoint screening” phases, display the checkpoint submission phase.
                 if (closedPhases.containsKey(ProjectPhaseType.CHECKPOINT_SUBMISSION.toString())
                         && closedPhases.containsKey(ProjectPhaseType.CHECKPOINT_SCREENING.toString())) {
-                    Map<String, Object> resultItem = new HashMap<String, Object>();
-                    resultItem.put("id", getContestId() + ":" + ProjectPhaseType.CHECKPOINT_SUBMISSION.toString());
-                    resultItem.put("label", ProjectPhaseType.CHECKPOINT_SUBMISSION.toString());
-                    resultItem.put("type", "phase");
-                    result.add(resultItem);
+                    result.add(buildPhaseResult(getContestId(), ProjectPhaseType.CHECKPOINT_SUBMISSION));
                 }
 
             } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.completeDesigns.name())) {
@@ -370,11 +366,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 // display the submission phase.
                 if (closedPhases.containsKey(ProjectPhaseType.SUBMISSION.toString())
                         && closedPhases.containsKey(ProjectPhaseType.SCREENING.toString())) {
-                    Map<String, Object> resultItem = new HashMap<String, Object>();
-                    resultItem.put("id", getContestId() + ":" + ProjectPhaseType.SUBMISSION.toString());
-                    resultItem.put("label", ProjectPhaseType.SUBMISSION.toString());
-                    resultItem.put("type", "phase");
-                    result.add(resultItem);
+                    result.add(buildPhaseResult(getContestId(), ProjectPhaseType.SUBMISSION));
                 }
 
             } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.finalFixes.name())) {
@@ -383,11 +375,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 // a closed “submission” and “screening” phases,
                 // display the submission phase.
                 if (closedPhases.containsKey(ProjectPhaseType.SUBMISSION.toString())) {
-                    Map<String, Object> resultItem = new HashMap<String, Object>();
-                    resultItem.put("id", getContestId() + ":" + ProjectPhaseType.FINAL_FIX.toString());
-                    resultItem.put("label", ProjectPhaseType.FINAL_FIX.toString());
-                    resultItem.put("type", "phase");
-                    result.add(resultItem);
+                    result.add(buildPhaseResult(getContestId(), ProjectPhaseType.FINAL_FIX));
                 }
             }
 

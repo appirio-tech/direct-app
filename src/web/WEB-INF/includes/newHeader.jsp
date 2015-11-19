@@ -488,9 +488,15 @@
 	    <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="active"</c:if>>
            <a class="vm" href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span  style="top:12px"  class="icon"></span>VM Management</a>
         </li>
-        <li <c:if test="${requestScope.CURRENT_TAB eq 'workManagement'}">class="active"</c:if>>
-            <a class="mil" href="<s:url action="projectWorkManager" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span>Work Manager</a>
-        </li>
+
+        <c:set var="hasWorkManagerPermission" value="${tcdirect:hasPermissionToAccessWorkManager(session.currentSelectDirectProjectID)}" scope="request"/>
+
+        <c:if test="${hasWorkManagerPermission}">
+            <li <c:if test="${requestScope.CURRENT_TAB eq 'workManagement'}">class="active"</c:if>>
+                <a class="mil" href="<s:url action="projectWorkManager" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span>Work Manager</a>
+            </li>
+        </c:if>
+
     </ul>
 </div><!-- End .mainMenu -->
 </div>

@@ -1,8 +1,9 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.groups.model.GroupPermissionType;
@@ -16,6 +17,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>An utility class providing the methods for making authorization decisions.</p>
@@ -73,8 +75,15 @@ import javax.servlet.http.HttpServletRequest;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (TC Direct - ASP Integration Work Management)
+ * <ul>
+ *     <li>Added method {@link #isUserGrantedToAccessWorkManager(TCSubject, long)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 public class AuthorizationProvider {
 
@@ -253,5 +262,38 @@ public class AuthorizationProvider {
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_milestone_write_permission");
         return resultContainer.size() > 0;
+    }
+
+    /**
+     * <p>
+     * Checks if the specified user has permission to access work manager related.
+     * </p>
+     *
+     * @param tcSubject a <code>TCSubject</code> providing the user subject.
+     * @param directProjectId a <code>long</code> providing the direct project ID.
+     * @return true if has permission, false otherwise.
+     * @throws Exception if any error.
+     * @since 1.7
+     */
+    public static boolean isUserGrantedToAccessWorkManager(TCSubject tcSubject, long directProjectId) throws Exception {
+        // check if user is one of the following roles, if yes, pass the permission checking and return
+        if (DirectUtils.isTcStaff(tcSubject) || DirectUtils.isTcOperations(tcSubject) ||
+                DirectUtils.isTCPlatformSpecialist(tcSubject)) {
+            // pass permission checking
+            return true;
+        }
+
+        // check if user is one of the copilot of the project
+        // 1) get the copilots of the project
+        List<ContestCopilotDTO> copilots = DataProvider.getCopilotsForDirectProject(directProjectId);
+
+        for (ContestCopilotDTO copilot : copilots) {
+            if (copilot.getUserId() == tcSubject.getUserId()) {
+                // pass permission checking
+                return true;
+            }
+        }
+
+        return false;
     }
 }

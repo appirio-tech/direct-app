@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -15,10 +15,10 @@ import com.topcoder.security.groups.services.dto.ProjectDTO;
 import com.topcoder.security.groups.services.dto.UserDTO;
 import com.topcoder.service.pipeline.CommonPipelineData;
 import com.topcoder.service.user.UserServiceException;
+import com.topcoder.shared.util.ApplicationServer;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import com.topcoder.shared.util.ApplicationServer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +28,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -135,8 +135,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3.4 (TC Direct - ASP Integration Work Management)
+ * <ul>
+ *     <li>Added method {@link #hasPermissionToAccessWorkManager(long)}</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, pvmagacho, flexme, GreatKevin, FireIce, GreatKevin
- * @version 1.3.3
+ * @version 1.3.4
  */
 public class JSPHelper {
 
@@ -647,6 +654,18 @@ public class JSPHelper {
      */
     public static boolean hasWriteProjectPermission(long projectId) throws Exception {
         return AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
+    }
+
+    /**
+     * Checks whether current user has permission to access work manager.
+     *
+     * @param projectId the id of the given project.
+     * @return true if current user has write permission on the given project, false otherwise.
+     * @throws Exception if any error occurs.
+     * @since 1.3.4
+     */
+    public static boolean hasPermissionToAccessWorkManager(long projectId) throws Exception {
+        return AuthorizationProvider.isUserGrantedToAccessWorkManager(DirectUtils.getTCSubjectFromSession(), projectId);
     }
 
     /**

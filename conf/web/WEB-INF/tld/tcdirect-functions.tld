@@ -165,6 +165,12 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean hasWriteProjectPermission(long)</function-signature>
     </function>
+
+    <function>
+        <name>hasPermissionToAccessWorkManager</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean hasPermissionToAccessWorkManager(long)</function-signature>
+    </function>
     
     <function>
         <name>maxLong</name>

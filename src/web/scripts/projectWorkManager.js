@@ -6,12 +6,11 @@ $(document).ready(function() {
     var currentWorkStep;
     var currentChallenge;
     var currentPhase;
+    var currentPushStatus;
 
     $("#pushButtonDiv a").click(function() {
-        console.log("Start pushing....");
-        console.log(currentWorkStep);
-        console.log(currentChallenge);
-        console.log(currentPhase);
+
+		modalPreloader();
 
         $.ajax({
             type: 'POST',
@@ -23,7 +22,7 @@ $(document).ready(function() {
             success: function(jsonResult) {
                 handleJsonResult(jsonResult,
                     function(result) {
-                        console.log(result);
+                        showSuccessfulMessage("The " + currentPushStatus + " pushed to work manager");
                     },
                     function(errorMessage) {
                         showServerError(errorMessage);
@@ -38,15 +37,9 @@ $(document).ready(function() {
         customNodeTypeIndicator: {phase: "icon-phase"},
         customNodeTypeHandler: {
             phase: function (hColumn, node, data) {
-                console.log(hColumn);
-                console.log(node);
-                console.log(data);
-                console.log(currentWorkStep);
-                console.log(currentChallenge);
                 currentPhase = data;
 
-
-                console.log({contestId: currentChallenge.id, phaseName: currentPhase.label});
+                modalPreloader();
 
                 // get the submission count and status
                 $.ajax({
@@ -59,7 +52,7 @@ $(document).ready(function() {
                     success: function(jsonResult) {
                         handleJsonResult(jsonResult,
                             function(result) {
-                                console.log(result);
+                                currentPushStatus = result.pushStatus;
                                 $("#pushButtonDiv a").text("Push " + result.pushStatus).show();
                             },
                             function(errorMessage) {
@@ -78,6 +71,7 @@ $(document).ready(function() {
             // the first column of work steps when node_is is null
             // load the data via ajax for the first column
             if(node_id === null) {
+                modalPreloader();
                 $.ajax({
                     type: 'POST',
                     url:  ctx + "/getProjectWorkSteps",
@@ -107,6 +101,7 @@ $(document).ready(function() {
             for(var i = 0; i < workStepLength; i++) {
                 if(node_id == workStepResult[i].id) {
                     currentWorkStep = workStepResult[i];
+                    modalPreloader();
                     $.ajax({
                         type: 'POST',
                         url:  ctx + "/getWorkStepDesignChallenges",
@@ -135,6 +130,7 @@ $(document).ready(function() {
             for(var i = 0; i < challengeLength; i++) {
                 if(node_id == challengeResult[i].id) {
                     currentChallenge = challengeResult[i];
+                    modalPreloader();
                     $.ajax({
                         type: 'POST',
                         url:  ctx + "/getContestPhasesForWorkStep",
