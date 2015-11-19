@@ -587,7 +587,11 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 //String submissionsJson = ow.writeValueAsString(submissionsToPush);
                 //String workStepJson = ow.writeValueAsString(workStep);
 
+                logger.info("Starting submission publishing...");
+
                 aspClient.publishSubmissionsToWorkStep(workStep, submissionsToPush);
+
+                logger.info("Submissions published");
 
                 //logger.info(submissionsJson);
                 //logger.info(workStepJson);
@@ -621,6 +625,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      */
     private com.appirio.client.asp.api.Submission getSubmissionDataForAPI(Submission submission,
                                                                           boolean isOriginalSubmissionNeeded) throws Exception {
+        logger.info("Processing submission " + submission.getId() + " for user " + submission.getCreationUser());
         com.appirio.client.asp.api.Submission s = new com.appirio.client.asp.api.Submission();
         //s.setSubmitterId(String.valueOf(submission.getUpload().getOwner()));
         s.setSubmitterId(submission.getCreationUser());
@@ -725,8 +730,9 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         String[] fileNames = baseDir.list(new SubmissionPresentationFilter("preview", submission.getId()));
 
         if (fileNames == null || fileNames.length < 1) {
+            logger.error("Unable to find preview file " + baseDir.getAbsolutePath() + "/" + submission.getId() + "_preview.zip");
             throw new IllegalArgumentException(
-                    String.format("No preview zip file for contestID:%s, submissionID:%s",
+                    String.format("No preview zip file found for contest %s and submissionID %s. Please verify the submission was uploaded successfully.",
                             submission.getUpload().getProject(),
                             submission.getId()));
         }

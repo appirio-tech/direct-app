@@ -8,8 +8,7 @@ To build, download the docker build container that has all of the build dependen
 2. Rename `token.properties.docker` to `token.properties` in the source directory
 3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
 4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
-5. Download the docker build image: `docker pull build.appirio.net:5050/direct-build`
-6. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t appiriodevops/tc-direct-app-build <ant target(s)>`.
+5. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t appiriodevops/tc-direct-app-build <ant target(s)>`.
 
    For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t appiriodevops/tc-direct-app-build clean package-direct deploy-prod`
 
@@ -18,16 +17,17 @@ To build, download the docker build container that has all of the build dependen
 ## running locally
 In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll need to run several containers and connect to the dev database. To run, follow these steps.
 
-1. Add your IP address to the direct-app-nat security group in the topcoder-dev AWS account. Just add all TCP to your IP. This is a whitelist in order to not make the db publicly accessible. You can get your ip from http://checkip.amazonaws.com/
-1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `boot2docker ip`
-2. Download the topcoder cache server image: `docker pull build.appirio.net:5050/tc-cache`
-2. Run `docker run -d --name=tc-cache -t build.appirio.net:5050/tc-cache`
-2. Download the direct runtime docker image: `docker pull build.appirio.net:5050/direct-app`
-8. Run the direct app with the command `docker run --name=direct-app -d -v <source dir>/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct --link tc-cache:tc-cache -t build.appirio.net:5050/direct-app`. `<source dir>` = source directory described above. It should contain the jboss-4.2.3.GA directory you created before.
-9. Download the direct web app with the command `docker pull build.appirio.net:5050/direct-web`
-1. Run the direct web app with the command `docker run -d --name=direct-web -v /Users/james/dev/topcoder/direct-app/src/web:/data -p 443:443 --link direct-app:direct-app-jboss -t build.appirio.net:5050/direct-web`
+> NOTE: it is assumed you are running with the latest Docker toolbox and Docker compose (1.5+)
 
-   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder-dev.com/direct/home.action
+1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `docker-machine ip default`
+2. Set the following environment variables:
+* TC_DEV_NAT_DIR : Local directory containing the pem file for accessing the dev NAT instance (used to create a tunnel to the dev informix instances)
+* TC_DIRECT_SRC_HOME : Local directory for the root direct-app directory
+* ASP_API_URL : Base URL for the ASP API (e.g., https://api.topcoder-dev.com)
+3. Run `docker-compose up` from the `docker` subdirectory containing the `docker-compose.yml` file
+
+
+   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder.com/direct/enterpriseDashboard/activeContests.action
 
 > NOTE: the SSL certificate is self-signed as will generate a warning/error when you access the site for the first time. Just accept it and continue.
 
