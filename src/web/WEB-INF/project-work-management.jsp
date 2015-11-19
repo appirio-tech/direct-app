@@ -125,7 +125,7 @@
 
                             <div id="WorkManagerDiv"></div>
                             <div id="pushButtonDiv">
-                                <a class="newButtonGreen">Push 5 checkpoint submissions</a>
+                                <a class="newButtonGreen" style="cursor: default;">Push 5 checkpoint submissions</a>
                             </div>
 
                         </div>
