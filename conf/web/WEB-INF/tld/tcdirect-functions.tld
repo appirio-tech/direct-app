@@ -171,6 +171,12 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean hasPermissionToAccessWorkManager(long)</function-signature>
     </function>
+
+    <function>
+        <name>getDemandWorkId</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getDirectProjectDemandWorkId(long)</function-signature>
+    </function>
     
     <function>
         <name>maxLong</name>

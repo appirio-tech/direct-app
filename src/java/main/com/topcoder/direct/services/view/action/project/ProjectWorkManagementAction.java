@@ -12,7 +12,7 @@ import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.MimeTypeRetriever;
-import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
@@ -20,6 +20,7 @@ import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -27,16 +28,13 @@ import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
-import com.topcoder.security.TCSubject;
+import com.topcoder.management.deliverable.Upload;
+import com.topcoder.project.phases.Phase;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -82,6 +80,14 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      */
     private String studioSubmissionBase;
 
+
+    /**
+     * The base path of the software contest submissions. Injected via spring.
+     *
+     * @since 1.1
+     */
+    private String softwareSubmissionBase;
+
     /**
      * The contest id.
      */
@@ -102,7 +108,15 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      */
     private List<WorkStep> workSteps;
 
+    /**
+     * The cache maps user id to user handle.
+     */
     private Map<Long, String> userHandlesMap;
+
+    /**
+     * The demand work id of the direct project.
+     */
+    private String demandWorkId;
 
     /**
      * <p>
@@ -137,6 +151,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.designConcepts.name(), "Design Concepts");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.completeDesigns.name(), "Complete Designs");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.finalFixes.name(), "Final Fixes");
+        WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.code.name(), "Code");
     }
 
     /**
@@ -158,17 +173,26 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         if (tcjwt != null && tcjwt.trim().length() > 0) {
             return tcjwt;
         } else {
-            throw new Exception("You don't have permission to access this page."
-                    + " Please try login again.");
+            String errorMessage = "You don't have required jwt cookie to access the work manager page."
+                    + " Please try login again.";
+            DirectUtils.setErrorMessageInErrorPage(errorMessage);
+            throw new Exception(errorMessage);
         }
     }
 
 
+    /**
+     * Checks whether current user has permission to access the work manager.
+     *
+     * @throws Exception if any error.
+     */
     private void checkPermission() throws Exception {
         if (!AuthorizationProvider.isUserGrantedToAccessWorkManager(
                 DirectUtils.getTCSubjectFromSession(),
                 getFormData().getProjectId())) {
-            throw new Exception("You don't have permission to access");
+            String errorMessage = "You don't have permission to access the work manager page.";
+            DirectUtils.setErrorMessageInErrorPage(errorMessage);
+            throw new Exception(errorMessage);
         }
     }
 
@@ -186,6 +210,9 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
         // check user permission
         checkPermission();
+
+        // sets the demand work id.
+        this.setDemandWorkId(DataProvider.getDirectProjectDemandWorkId(this.getFormData().getProjectId()));
     }
 
     /**
@@ -265,11 +292,33 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
     }
 
     /**
+     * Checks whether the work step is in design (studio) or development.
+     *
+     * @param workStepName the type name of the work step.
+     * @return true if it's in design, false if it's in development
+     */
+    private boolean isWorkStepForStudio(String workStepName) {
+        if (getWorkStepName() == null || getWorkStepName().trim().length() == 0) {
+            throw new IllegalArgumentException("Workstep name should not be null for method isWorkStepForStudio");
+        }
+
+        if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.designConcepts.name())
+                || getWorkStepName().equalsIgnoreCase(WorkStep.StepType.completeDesigns.name())
+                || getWorkStepName().equalsIgnoreCase(WorkStep.StepType.finalFixes.name())) {
+            return true;
+        } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.code.name())) {
+            return false;
+        } else {
+            throw new IllegalArgumentException("Unknown workstep name:" + workStepName);
+        }
+    }
+
+    /**
      * The ajax action to get the active / completed design challenges for the selected work step.
      *
      * @return the result code.
      */
-    public String getDesignChallenges() {
+    public String getChallengesForWorkStepAndProject() {
         try {
 
             checkPermission();
@@ -287,7 +336,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 if (!contestDTO.getStatus().equals(ContestStatus.DRAFT)
                         && !contestDTO.getStatus().equals(ContestStatus.DELETED)
                         && !contestDTO.getStatus().getName().toLowerCase().contains("cancelled")
-                        && contestDTO.getIsStudio()) {
+                        && contestDTO.getIsStudio() == isWorkStepForStudio(getWorkStepName())) {
                     Map<String, Object> item = new HashMap<String, Object>();
                     item.put("id", contestDTO.getContest().getId());
                     item.put("label", contestDTO.getContest().getTitle());
@@ -300,7 +349,8 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             setResult(result);
 
         } catch (Throwable e) {
-            logger.error("Unable to retrieve design contests", e);
+            logger.error(String.format("Unable to retrieve challenges for project:%s, workstep:%s",
+                    getFormData().getProjectId(), getWorkStepName()), e);
             if (getModel() != null) {
                 setResult(e);
             }
@@ -342,40 +392,66 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                     false);
             List<ProjectPhaseDTO> allPhases = contestDashboardData.getAllPhases();
 
-            Map<String, ProjectPhaseDTO> closedPhases = new HashMap<String, ProjectPhaseDTO>();
+            Map<String, ProjectPhaseDTO> closedPhasesMap = new HashMap<String, ProjectPhaseDTO>();
+            Map<String, ProjectPhaseDTO> opennedPhasesMap = new HashMap<String, ProjectPhaseDTO>();
+            Map<String, ProjectPhaseDTO> allPhasesMap = new HashMap<String, ProjectPhaseDTO>();
 
             for (ProjectPhaseDTO phase : allPhases) {
                 if (phase.getPhaseStatus().equals(ProjectPhaseStatus.CLOSED)) {
-                    closedPhases.put(phase.getPhaseType().toString(), phase);
+                    closedPhasesMap.put(phase.getPhaseType().toString(), phase);
+                } else if (phase.getPhaseStatus().equals(ProjectPhaseStatus.OPEN)) {
+                    opennedPhasesMap.put(phase.getPhaseType().toString(), phase);
                 }
+
+                allPhasesMap.put(phase.getPhaseType().toString(), phase);
             }
 
             if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.designConcepts.name())) {
-                // check phases for designConcept workstep
-                // If the work step is designConcepts, and the chosen challenge has closed
+                // check phases for designConcept work step
+                // If the WorkStep is designConcepts, and the chosen challenge has closed
                 // “checkpoint submission” and “checkpoint screening” phases, display the checkpoint submission phase.
-                if (closedPhases.containsKey(ProjectPhaseType.CHECKPOINT_SUBMISSION.toString())
-                        && closedPhases.containsKey(ProjectPhaseType.CHECKPOINT_SCREENING.toString())) {
+                if (closedPhasesMap.containsKey(ProjectPhaseType.CHECKPOINT_SUBMISSION.toString())
+                        && closedPhasesMap.containsKey(ProjectPhaseType.CHECKPOINT_SCREENING.toString())) {
                     result.add(buildPhaseResult(getContestId(), ProjectPhaseType.CHECKPOINT_SUBMISSION));
                 }
 
             } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.completeDesigns.name())) {
-                // check phases for completeDesigns workstep
-                // If the workstep is completeDesigns, and the chosen challenge has
+                // check phases for completeDesigns work step
+                // If the WorkStep is completeDesigns, and the chosen challenge has
                 // a closed “submission” and “screening” phases,
                 // display the submission phase.
-                if (closedPhases.containsKey(ProjectPhaseType.SUBMISSION.toString())
-                        && closedPhases.containsKey(ProjectPhaseType.SCREENING.toString())) {
+                if (closedPhasesMap.containsKey(ProjectPhaseType.SUBMISSION.toString())
+                        && closedPhasesMap.containsKey(ProjectPhaseType.SCREENING.toString())) {
                     result.add(buildPhaseResult(getContestId(), ProjectPhaseType.SUBMISSION));
                 }
 
             } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.finalFixes.name())) {
-                // check phases for completeDesigns workstep
-                // If the workstep is completeDesigns, and the chosen challenge has
-                // a closed “submission” and “screening” phases,
-                // display the submission phase.
-                if (closedPhases.containsKey(ProjectPhaseType.SUBMISSION.toString())) {
+                // check phases for finalFixes work step
+                // If the WorkStep is finalFixes, and the chosen challenge has
+                // a closed “final fix” phases and no open final fix
+                // display the final fix phase.
+                if (closedPhasesMap.containsKey(ProjectPhaseType.FINAL_FIX.toString())
+                        && !opennedPhasesMap.containsKey(ProjectPhaseType.FINAL_FIX.toString())) {
                     result.add(buildPhaseResult(getContestId(), ProjectPhaseType.FINAL_FIX));
+                }
+            } else if (getWorkStepName().equalsIgnoreCase(WorkStep.StepType.code.name())) {
+                // check phases for code work step (dev challenges)
+                // if the chosen challenge has a closed final
+                if (allPhasesMap.containsKey(ProjectPhaseType.FINAL_FIX.toString())) {
+                    // the challenge has final fix, check if there is closed final fix/ final review and no open final fix
+                    if (closedPhasesMap.containsKey(ProjectPhaseType.FINAL_FIX.toString())
+                            && closedPhasesMap.containsKey(ProjectPhaseType.FINAL_REVIEW.toString())
+                            && !opennedPhasesMap.containsKey(ProjectPhaseType.FINAL_FIX.toString())) {
+                        result.add(buildPhaseResult(getContestId(), ProjectPhaseType.FINAL_FIX));
+                    }
+                } else {
+                    // the challenge does not have final fix, check if there is closed submission/review phase
+                    if (closedPhasesMap.containsKey(ProjectPhaseType.SUBMISSION.toString())
+                            && closedPhasesMap.containsKey(ProjectPhaseType.REVIEW.toString())
+                            && closedPhasesMap.containsKey(ProjectPhaseType.APPEALS.toString())
+                            && closedPhasesMap.containsKey(ProjectPhaseType.APPEALS_RESPONSE.toString())) {
+                        result.add(buildPhaseResult(getContestId(), ProjectPhaseType.SUBMISSION));
+                    }
                 }
             }
 
@@ -408,7 +484,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             String pushStatus = "No submissions to push";
 
             if (getPhaseName() != null) {
-                if (CHECKPOINT_SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName())) {
+                if (CHECKPOINT_SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName()) && isWorkStepForStudio(getWorkStepName())) {
                     List<Submission> checkpointSubmissions = DirectUtils.getStudioContestSubmissions(getContestId(),
                             ContestRoundType.CHECKPOINT,
                             DirectUtils.getTCSubjectFromSession(), getContestServiceFacade());
@@ -417,7 +493,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                         pushStatus = checkpointSubmissions.size() + " checkpoint submissions";
                     }
 
-                } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName())) {
+                } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName()) && isWorkStepForStudio(getWorkStepName())) {
                     List<Submission> submissions = DirectUtils.getStudioContestSubmissions(getContestId(),
                             ContestRoundType.FINAL,
                             DirectUtils.getTCSubjectFromSession(), getContestServiceFacade());
@@ -425,11 +501,27 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                     if (submissions != null) {
                         pushStatus = submissions.size() + " submissions";
                     }
-                } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName())) {
+                } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName()) && isWorkStepForStudio(getWorkStepName())) {
                     List<ContestFinalFixDTO> finalFixes = DataProvider.getContestFinalFixes(getContestId());
 
                     if (finalFixes != null && finalFixes.size() > 0) {
                         pushStatus = " final fix submissions";
+                    }
+                } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName()) && !isWorkStepForStudio(getWorkStepName())) {
+                    List<ContestFinalFixDTO> finalFixes = DataProvider.getContestFinalFixes(getContestId());
+
+                    if (finalFixes != null && finalFixes.size() > 0) {
+                        pushStatus = " final fixed submission";
+                    }
+                } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName()) && !isWorkStepForStudio(getWorkStepName())) {
+                    SoftwareContestSubmissionsDTO softwareSubmissionDTO = new SoftwareContestSubmissionsDTO();
+                    softwareSubmissionDTO.setProjectId(getContestId());
+                    DataProvider.setSoftwareSubmissionsData(softwareSubmissionDTO);
+
+                    List<SoftwareContestWinnerDTO> winners = softwareSubmissionDTO.getWinners();
+
+                    if (winners != null && winners.size() > 0) {
+                        pushStatus = " 1st place submission";
                     }
                 }
             }
@@ -507,13 +599,13 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                             Map<Integer, Submission> value = organizingMap.get(key);
                             List<com.appirio.client.asp.api.Submission> userSubmissionsToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
                             for (Map.Entry<Integer, Submission> entry : value.entrySet()) {
-                                userSubmissionsToPush.add(getSubmissionDataForAPI(entry.getValue(), false));
+                                userSubmissionsToPush.add(getStudioSubmissionDataForAPI(entry.getValue(), false));
                             }
                             submissionsToPush.add(userSubmissionsToPush);
                         }
 
 
-                    } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName())) {
+                    } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName()) && isWorkStepForStudio(getWorkStepName())) {
 
                         List<Submission> finalRoundSubmissions = DirectUtils.getStudioContestSubmissions(getContestId(),
                                 ContestRoundType.FINAL,
@@ -541,11 +633,11 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                             Map<Integer, Submission> value = organizingMap.get(key);
                             List<com.appirio.client.asp.api.Submission> userSubmissionsToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
                             for (Map.Entry<Integer, Submission> entry : value.entrySet()) {
-                                userSubmissionsToPush.add(getSubmissionDataForAPI(entry.getValue(), false));
+                                userSubmissionsToPush.add(getStudioSubmissionDataForAPI(entry.getValue(), false));
                             }
                             submissionsToPush.add(userSubmissionsToPush);
                         }
-                    } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName())) {
+                    } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName()) && isWorkStepForStudio(getWorkStepName())) {
                         List<Submission> finalFixesSubmissions = DirectUtils.getStudioContestSubmissions(getContestId(),
                                 ContestRoundType.STUDIO_FINAL_FIX_SUBMISSION,
                                 DirectUtils.getTCSubjectFromSession(), getContestServiceFacade());
@@ -562,15 +654,67 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                             }
 
                             userHandlesMap.put(Long.parseLong(latestSubmission.getCreationUser()),
-                                    this.getUserService().getUserHandle(Long.parseLong(latestSubmission.getCreationUser())));
+                                    this.getUserService().getUserHandle(
+                                            Long.parseLong(latestSubmission.getCreationUser())));
 
                             List<com.appirio.client.asp.api.Submission> finalFixSubmissionsToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
 
-                            finalFixSubmissionsToPush.add(getSubmissionDataForAPI(latestSubmission, true));
+                            finalFixSubmissionsToPush.add(getStudioSubmissionDataForAPI(latestSubmission, true));
 
                             submissionsToPush.add(finalFixSubmissionsToPush);
                         }
 
+                    } else if (SUBMISSION_PHASE.equalsIgnoreCase(getPhaseName()) && !isWorkStepForStudio(getWorkStepName())) {
+                        SoftwareContestSubmissionsDTO softwareSubmissionDTO = new SoftwareContestSubmissionsDTO();
+                        softwareSubmissionDTO.setProjectId(getContestId());
+                        DataProvider.setSoftwareSubmissionsData(softwareSubmissionDTO);
+
+                        SoftwareContestWinnerDTO firstPlaceWinner = softwareSubmissionDTO.getFirstPlaceWinner();
+
+                        Submission[] submissions = getContestServiceFacade().getSoftwareProjectSubmissions(
+                                getCurrentUser(), firstPlaceWinner.getProjectId());
+
+                        for (Submission sub : submissions) {
+                            if (sub.getId() == firstPlaceWinner.getSubmissionId()) {
+                                // find the winner
+                                List<com.appirio.client.asp.api.Submission> winnerSubmissionToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
+
+                                winnerSubmissionToPush.add(getSoftwareSubmissionDataForAPI(sub));
+
+                                submissionsToPush.add(winnerSubmissionToPush);
+                            }
+                        }
+
+                    } else if (FINAL_FIX_PHASE.equalsIgnoreCase(getPhaseName()) && !isWorkStepForStudio(getWorkStepName())) {
+                        Phase lastClosedFinalFixPhase = DirectUtils.getLastClosedFinalFixPhase(
+                                this.getProjectServices(), getContestId());
+                        List<ContestFinalFixDTO> finalFixes = DataProvider.getContestFinalFixes(
+                                getContestId());
+                        Upload[] uploads = this.getContestServiceFacade().getActiveUploads(getContestId(), DirectUtils.FINAL_FIX_UPLOAD_TYPE_ID);
+                        for (Upload upload : uploads) {
+                            if (upload.getProjectPhase() != null && upload.getProjectPhase().longValue() == lastClosedFinalFixPhase.getId()) {
+                                Submission finalFixSubmission = new Submission();
+                                long finalFixSubmissionId = 0;
+                                long submitterId = 0;
+                                for (ContestFinalFixDTO ff : finalFixes) {
+                                    if (ff.getUploadId() == upload.getId()) {
+                                        finalFixSubmissionId = upload.getId();
+                                        submitterId = ff.getFinalFixerUserId();
+                                        finalFixSubmission.setUpload(upload);
+                                    }
+                                }
+
+                                if (finalFixSubmissionId > 0 && submitterId > 0) {
+                                    finalFixSubmission.setId(finalFixSubmissionId);
+                                    finalFixSubmission.setCreationUser(String.valueOf(submitterId));
+                                    List<com.appirio.client.asp.api.Submission> finalFixSubmissionToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
+
+                                    finalFixSubmissionToPush.add(getSoftwareSubmissionDataForAPI(finalFixSubmission));
+
+                                    submissionsToPush.add(finalFixSubmissionToPush);
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -583,18 +727,18 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                             "The specified challenge and phase do not have submissions to push");
                 }
 
-                //ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                //String submissionsJson = ow.writeValueAsString(submissionsToPush);
-                //String workStepJson = ow.writeValueAsString(workStep);
+//                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//                String submissionsJson = ow.writeValueAsString(submissionsToPush);
+//                String workStepJson = ow.writeValueAsString(workStep);
 
                 logger.info("Starting submission publishing...");
 
                 aspClient.publishSubmissionsToWorkStep(workStep, submissionsToPush);
 
                 logger.info("Submissions published");
-
-                //logger.info(submissionsJson);
-                //logger.info(workStepJson);
+//
+//                logger.info(submissionsJson);
+//                logger.info(workStepJson);
 
             } else {
                 throw new Exception("You don't have permission to push submissions for workstep in the project."
@@ -614,6 +758,33 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         return SUCCESS;
     }
 
+    /**
+     * Builds the submission for the asp client to use.
+     *
+     * @param submission the submission object
+     * @return the built asp client submission DTO.
+     * @throws Exception if any error.
+     */
+    private com.appirio.client.asp.api.Submission getSoftwareSubmissionDataForAPI(Submission submission) throws Exception {
+        logger.info(
+                "Processing software submission " + submission.getId() + " for user " + submission.getCreationUser());
+        com.appirio.client.asp.api.Submission s = new com.appirio.client.asp.api.Submission();
+        s.setSubmitterId(submission.getCreationUser());
+        s.setTopcoderSubmissionId(String.valueOf(submission.getId()));
+        List<SubmissionFile> files = new ArrayList<SubmissionFile>();
+        s.setFiles(files);
+
+        System.out.println("software submission base:" + getSoftwareSubmissionBase());
+        System.out.println("submission upload:" + submission.getUpload());
+        System.out.println("submission upload parameter:" + submission.getUpload().getParameter());
+
+
+        files.add(createSubmissionFile(SubmissionFile.FileRole.DELIVERABLE,
+                getSoftwareSubmissionBase() + File.separator + submission.getUpload().getParameter()));
+
+        return s;
+    }
+
 
     /**
      * Builds the <code>com.appirio.client.asp.api.Submission</code> from the direct submission.
@@ -623,9 +794,9 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      * @return result code
      * @throws Exception if any error occus.
      */
-    private com.appirio.client.asp.api.Submission getSubmissionDataForAPI(Submission submission,
-                                                                          boolean isOriginalSubmissionNeeded) throws Exception {
-        logger.info("Processing submission " + submission.getId() + " for user " + submission.getCreationUser());
+    private com.appirio.client.asp.api.Submission getStudioSubmissionDataForAPI(Submission submission,
+                                                                                boolean isOriginalSubmissionNeeded) throws Exception {
+        logger.info("Processing studio submission " + submission.getId() + " for user " + submission.getCreationUser());
         com.appirio.client.asp.api.Submission s = new com.appirio.client.asp.api.Submission();
         //s.setSubmitterId(String.valueOf(submission.getUpload().getOwner()));
         s.setSubmitterId(submission.getCreationUser());
@@ -730,9 +901,11 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         String[] fileNames = baseDir.list(new SubmissionPresentationFilter("preview", submission.getId()));
 
         if (fileNames == null || fileNames.length < 1) {
-            logger.error("Unable to find preview file " + baseDir.getAbsolutePath() + "/" + submission.getId() + "_preview.zip");
+            logger.error("Unable to find preview file " + baseDir.getAbsolutePath() + "/" + submission.getId() +
+                    "_preview.zip");
             throw new IllegalArgumentException(
-                    String.format("No preview zip file found for contest %s and submissionID %s. Please verify the submission was uploaded successfully.",
+                    String.format(
+                            "No preview zip file found for contest %s and submissionID %s. Please verify the submission was uploaded successfully.",
                             submission.getUpload().getProject(),
                             submission.getId()));
         }
@@ -875,6 +1048,26 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
     }
 
     /**
+     * Gets the software submission base path.
+     *
+     * @return the software submission base path.
+     * @since 1.1
+     */
+    public String getSoftwareSubmissionBase() {
+        return softwareSubmissionBase;
+    }
+
+    /**
+     * Sets the software submission base path.
+     *
+     * @param softwareSubmissionBase the software submission base path.
+     * @since 1.1
+     */
+    public void setSoftwareSubmissionBase(String softwareSubmissionBase) {
+        this.softwareSubmissionBase = softwareSubmissionBase;
+    }
+
+    /**
      * Gets the work step id.
      *
      * @return the work step id.
@@ -890,6 +1083,24 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      */
     public void setWorkStepId(String workStepId) {
         this.workStepId = workStepId;
+    }
+
+    /**
+     * Gets the demand work id.
+     *
+     * @return the demand work id.
+     */
+    public String getDemandWorkId() {
+        return demandWorkId;
+    }
+
+    /**
+     * Sets the demand work id.
+     *
+     * @param demandWorkId the demand work id.
+     */
+    public void setDemandWorkId(String demandWorkId) {
+        this.demandWorkId = demandWorkId;
     }
 
     /**

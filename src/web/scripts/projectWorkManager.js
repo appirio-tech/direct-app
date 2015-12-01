@@ -15,7 +15,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url:  ctx + "/pushSubmissions",
-            data: {contestId: currentChallenge.id, phaseName: currentPhase.label, workStepId: currentWorkStep.id, formData: {projectId: tcDirectProjectId}},
+            data: {contestId: currentChallenge.id, phaseName: currentPhase.label, workStepId: currentWorkStep.id, workStepName: currentWorkStep.workStepType, formData: {projectId: tcDirectProjectId}},
             cache: false,
             async: false,
             dataType: 'json',
@@ -45,7 +45,7 @@ $(document).ready(function() {
                 $.ajax({
                     type: 'POST',
                     url:  ctx + "/getSubmissionDataForPhase",
-                    data: {contestId: currentChallenge.id, phaseName: currentPhase.label, formData: {projectId: tcDirectProjectId}},
+                    data: {contestId: currentChallenge.id, phaseName: currentPhase.label, workStepName: currentWorkStep.workStepType, formData: {projectId: tcDirectProjectId}},
                     cache: false,
                     async: false,
                     dataType: 'json',
@@ -104,8 +104,8 @@ $(document).ready(function() {
                     modalPreloader();
                     $.ajax({
                         type: 'POST',
-                        url:  ctx + "/getWorkStepDesignChallenges",
-                        data: {formData: {projectId: tcDirectProjectId}},
+                        url:  ctx + "/getWorkStepChallenges",
+                        data: {formData: {projectId: tcDirectProjectId}, workStepName: currentWorkStep.workStepType},
                         cache: false,
                         async: false,
                         dataType: 'json',

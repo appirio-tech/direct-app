@@ -789,7 +789,7 @@
             <result name="error" type="json"/>
         </action>
 
-        <action name="getWorkStepDesignChallenges" method="getDesignChallenges" class="projectWorkManagementAction">
+        <action name="getWorkStepChallenges" method="getChallengesForWorkStepAndProject" class="projectWorkManagementAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
