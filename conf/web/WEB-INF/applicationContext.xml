@@ -297,6 +297,7 @@
     <bean id="projectWorkManagementAction"
           class="com.topcoder.direct.services.view.action.project.ProjectWorkManagementAction" scope="prototype" parent="baseDirectStrutsAction">
         <property name="studioSubmissionBase" value="@studio.submission.base@"/>
+        <property name="softwareSubmissionBase" value="@file_storage_location@"/>
         <property name="mimeTypeRetriever" ref="mimeTypeRetriever"/>
     </bean>
 

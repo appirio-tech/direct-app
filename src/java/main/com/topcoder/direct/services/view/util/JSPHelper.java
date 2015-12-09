@@ -669,6 +669,17 @@ public class JSPHelper {
     }
 
     /**
+     * Gets the demand work id of the specified direct project.
+     *
+     * @param projectId the id of the direct project.
+     * @return the demand work id, null if no exist or no demand work id.
+     * @throws Exception if any error occurs.
+     */
+    public static String getDirectProjectDemandWorkId(long projectId) throws Exception {
+        return DataProvider.getDirectProjectDemandWorkId(projectId);
+    }
+
+    /**
      * Gets the current login user id.
      *
      * @return the current login user id.

@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.shared.util.ApplicationServer" %>
 <%--
   - Author: TCSASSEMBLER
   -
@@ -119,7 +120,16 @@
 
                             <!-- begin topLine -->
                             <div class="projectVMManagement">
-                                <h2>Work Management</h2>
+
+                                <%
+                                    String[] splits = ApplicationServer.SERVER_NAME.split(".");
+                                    String topServerName = "topcoder.com";
+                                    if (splits != null && splits.length >= 2) {
+                                        topServerName = splits[splits.length - 2] + "." + splits[splits.length - 1];
+                                    }
+                                %>
+
+                                <h2>Work Management</h2> <a href="https://work.<%=topServerName%>/customer/projects/${demandWorkId}/timeline" target="_blank">Work Manager Project</a>
                             </div>
                             <!-- end topLine -->
 

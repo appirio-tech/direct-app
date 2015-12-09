@@ -854,7 +854,7 @@ public final class DirectUtils {
      * 
      * @since 1.8.5
      */
-    private static final int FINAL_FIX_UPLOAD_TYPE_ID = 3;
+    public static final int FINAL_FIX_UPLOAD_TYPE_ID = 3;
 
     private static final String IS_CLIENT_USER_SQL = "SELECT client_id FROM client_user_xref cux, user_account ua, common_oltp:user u"
      + " WHERE cux.user_id = ua.user_account_id AND UPPER(ua.user_name) = UPPER(u.handle) AND u.user_id = ?";
