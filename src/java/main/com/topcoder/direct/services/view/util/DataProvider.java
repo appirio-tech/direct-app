@@ -7926,27 +7926,22 @@ public class DataProvider {
      * @throws Exception if any error
      */
     public static String getDirectProjectDemandWorkId(long tcDirectProjectId) throws Exception {
-System.err.println("getting demand work id for " + tcDirectProjectId);
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("project_name");
+        // this refers to a query tool command/query
+        request.setContentHandle("demand_work_id");
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
-        //ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("project_contest_results");
         ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("demand_work_id");
 
 
         if (resultSetContainer != null && resultSetContainer.size() > 0) {
-System.err.println("got result");
             ResultSetRow resultSetRow = resultSetContainer.get(0);
             if (resultSetRow.getItem("demand_work_id").getResultData() != null) {
-System.err.println("Found work id " +  resultSetRow.getStringItem("demand_work_id"));
                 return resultSetRow.getStringItem("demand_work_id");
             } else {
-System.err.println("No demand work id in result set");
                 return null;
             }
         }
-System.err.println("no demand work id");
 
         return null;
     }
