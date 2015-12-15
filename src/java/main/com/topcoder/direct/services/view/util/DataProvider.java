@@ -7930,7 +7930,8 @@ public class DataProvider {
         Request request = new Request();
         request.setContentHandle("project_name");
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
-        ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("project_contest_results");
+        //ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("project_contest_results");
+        ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("demand_work_id");
 
         if (resultSetContainer != null && resultSetContainer.size() > 0) {
             ResultSetRow resultSetRow = resultSetContainer.get(0);
