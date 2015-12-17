@@ -1,0 +1,128 @@
+/* column view container */
+.column-view-container {
+    width: 70%;
+    height: 400px;
+    padding: 0;
+    border: 1px solid #ccc;
+    background: #FFF;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    font-size: 13px;
+    float: left;
+}
+
+#pushButtonDiv {
+    float: left;
+    width: 25%;
+    height: 400px;
+}
+
+#pushButtonDiv a {
+    position: relative;
+    top: 50%;
+    left: 20%;
+    display: none;
+    padding: 3px 7px !important;
+}
+
+/* the composition div for colums */
+.column-view-composition {
+    display: table;
+    white-space: nowrap;
+}
+
+/**/
+.column {
+    display: table-cell;
+    border-right: 1px solid #999;
+}
+
+.column:last-child {
+    border-right: 0;
+}
+
+.column:only-child {
+    border-right: 1px solid #999;
+}
+
+/* for error messages */
+.column > p {
+    margin: 10px;
+    color: #666;
+}
+
+/* for column listing */
+.column ul {
+    margin: 0;
+    padding: 0;
+    height: 400px;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.column ul li {
+    position: relative;
+    margin: 0;
+    padding: 10px 20px 10px 10px;
+    overflow: hidden;
+    -o-text-overflow: ellipsis; /* pour Opera 9 */
+    text-overflow: ellipsis; /* pour le reste du monde */
+}
+
+.column ul li:hover {
+    cursor: pointer;
+}
+
+.column ul li i {
+    position: absolute;
+    top: 9px;
+    right: 5px;
+}
+
+.column ul li:hover, .column ul li.active {
+    background: #999999;
+    color: #FFFFFF;
+}
+
+.column ul li:hover a, .column ul li.active a {
+    color: #FFFFFF;
+}
+
+.column ul li.search {
+    margin: 0;
+    padding: 5px;
+}
+
+.column ul li.search input {
+    width: 100%;
+    margin: 0;
+}
+
+/* icon type, could be replace with FontAwesome */
+[class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../../images/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+}
+
+.icon-chevron-right {
+    background-position: -456px -72px;
+}
+
+.icon-globe {
+    background-position: -336px -144px;
+}
+
+.icon-file {
+    background-position: -23px -24px;
+}

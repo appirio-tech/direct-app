@@ -291,12 +291,20 @@
         <copy file="${log4j.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${slf4j.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${scribe.jar}" todir="${ear_shared_libdir}" overwrite="true" />
+<!--
         <copy file="${jsr311.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${cxf.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+-->
+        <copy file="${asp-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy todir="${ear_shared_libdir}" overwrite="true">
+            <fileset dir="${ext_libdir}/aspclient" includes="*.jar"/>
+        </copy>
+<!--
         <copy file="${aopalliance-1.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${geronimo-jaxws_2.2_spec-1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${geronimo-annotation_1.0_spec-1.1.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${neethi-3.0.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+-->
         <copy todir="${ear_shared_libdir}" overwrite="true">
             <fileset dir="${httpclient_libdir}">
                 <include name="commons-codec-1.6.jar"/>

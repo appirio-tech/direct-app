@@ -64,7 +64,12 @@
 
     <class name="CopilotProject" table="copilot_project">
         <id name="id" column="copilot_project_id" type="long">
+            <!-- use a sequence b/c rows are inserted by other processes too
             <generator class="increment"/>
+            -->
+            <generator class="sequence">
+                <param name="sequence">copilot_project_sequence</param>
+            </generator>
         </id>
         <property name="createDate" column="create_date" type="timestamp" update="false"/>
         <property name="createUser" column="create_user" type="string" update="false"/>

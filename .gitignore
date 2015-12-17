@@ -7,3 +7,6 @@ target/
 token.properties
 topcoder_global.properties
 stacktrace.log
+/bin/
+.DS_Store
+*/.DS_Store

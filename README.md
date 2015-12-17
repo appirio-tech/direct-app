@@ -1,6 +1,41 @@
 direct-app
 ==========
 
+## building
+To build, download the docker build container that has all of the build dependencies. You can then run the container to build your local source code.
+
+1. Clone the github source directory
+2. Rename `token.properties.docker` to `token.properties` in the source directory
+3. Rename `topcoder_global.properties.docker` to `topcoder_global.properties`
+4. Unzip [jboss-4.2.3.zip](http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fjboss%2Ffiles%2FJBoss%2FJBoss-4.2.3.GA%2F) in your root source directory. The build will place jboss deployment files here. It also needs some of its libraries for the build itself.
+5. Run the docker container to execute a build. The format of the command is `docker run --rm=true -v <source dir>:/data -t appiriodevops/tc-direct-app-build <ant target(s)>`.
+
+   For example, `docker run --rm=true -v /Users/james/dev/topcoder/direct-app:/data -t appiriodevops/tc-direct-app-build clean package-direct deploy-prod`
+
+> NOTE: the source directory should be writeable to Docker so use a directory under `/Users/<username>`
+
+## running locally
+In this configuration, we'll run the direct app in a docker container locally but it unfortunately requires many dependencies so we'll need to run several containers and connect to the dev database. To run, follow these steps.
+
+> NOTE: it is assumed you are running with the latest Docker toolbox and Docker compose (1.5+)
+
+1. Add this entry to your local /etc/hosts file: `<docker ip> docker.topcoder-dev.com`. This is needed for auth integration that requires the same top level domain. You can get the docker ip with the command `docker-machine ip default`
+2. Set the following environment variables:
+* TC_DEV_NAT_DIR : Local directory containing the pem file for accessing the dev NAT instance (used to create a tunnel to the dev informix instances)
+* TC_DIRECT_SRC_HOME : Local directory for the root direct-app directory
+* ASP_API_URL : Base URL for the ASP API (e.g., https://api.topcoder-dev.com)
+3. Run `docker-compose up` from the `docker` subdirectory containing the `docker-compose.yml` file
+
+
+   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder-dev.com/direct/enterpriseDashboard/activeContests.action
+
+> NOTE: the SSL certificate is self-signed as will generate a warning/error when you access the site for the first time. Just accept it and continue.
+
+---
+
+
+## **old** instructions
+
 Setup on VM:
 * Once you get your VM, login into the VM with your private key and account 'direct'
 * Back up token.properties and topcoder_global.properties in /home/direct/direct somewhere
@@ -8,7 +43,7 @@ Setup on VM:
 * Git Clone the direct-app repo into folder /home/direct/direct.
 * Copy the back up *.properties files back to /home/direct/direct
 * Among the *.properties, update topcoder_global.properties, add line 'direct_service_libdir=${libdir}/tcs/ejb' after tcs_libdir property
-* Make sure JDK7 is used: run 
+* Make sure JDK7 is used: run
 * + export JAVA_HOME=/opt/jdk1.7.0_17
 * + export PATH=/opt/jdk1.7.0_17/bin:$PATH
 

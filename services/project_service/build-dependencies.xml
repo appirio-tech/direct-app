@@ -71,7 +71,7 @@
         <pathelement location="${project_services.jar}" />
         <pathelement location="${security.jar}" />
         <pathelement location="${user_service.jar}" />
-
+		<pathelement location="${typesafe_enum.jar}" />
     </path>
 
     <path id="component.3rdParty-dependencies">
