@@ -129,7 +129,7 @@
                                     }
                                 %>
 
-                                <h2>Work Management</h2> <a href="https://work.<%=topServerName%>/customer/projects/${demandWorkId}/timeline" target="_blank">Work Manager Project</a>
+                                <h2>Work Management</h2> <a href="https://connect.<%=topServerName%>/customer/projects/${demandWorkId}/timeline" target="_blank">Work Manager Project</a>
                             </div>
                             <!-- end topLine -->
 
