@@ -501,7 +501,7 @@
                         <td class="first_tab"></td>
                         <td class="sec_tab_prize"><strong>5th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>                         
-                        <td class="third_tab_prize"><strong>Studio Cup:</strong> $<span id="rswDigitalRun"></span></td>
+                        <td class="third_tab_prize drHide"><strong>Studio Cup:</strong> $<span id="rswDigitalRun"></span></td>
                       </tr>                                                     
                       <tr>
                         <td class="first_tab"></td>
@@ -529,7 +529,7 @@
                       <span class="name" class="last_info"><strong>Estimated Challenge Total: </strong></span> $<span id="rswTotal"></span>
                       <p class="note">
                         Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
-                        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                   </p>
               </div>
              <div class="clear"></div>
@@ -599,8 +599,8 @@
                             <tr>
                                 <td>Spec Review Fee: $<span id="studioSpecReviewFee"></span></td>
                                 <td>Screening Cost: $<span id="studioScreeningCost"></span></td>
-                                <td><input type="checkbox" id="studioCupPointsCheckBox" style="top:0px;"/></td>
-                                <td>Studio Cup: $<span id="studioCupPoints"></span></td>
+                                <td class="drHide"><input type="checkbox" id="studioCupPointsCheckBox" style="top:0px;"/></td>
+                                <td class="drHide">Studio Cup: $<span id="studioCupPoints"></span></td>
                                 <td>Copilot Fee: $<span id="studioCopilotFee"></span></td>
                                 <td>Challenge Fee: $<span id="studioAdminFee"></span></td>
                             </tr>
@@ -611,7 +611,7 @@
                         <strong>Estimated Challenge Total:&nbsp;&nbsp;$  <span id="studioTotal"></span></strong>
                         <p class="note">
                         Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
-                        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                     </div>
 
                     <div class="clear"></div>

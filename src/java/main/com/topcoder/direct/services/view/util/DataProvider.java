@@ -1437,7 +1437,8 @@ public class DataProvider {
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();//here
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities_replatforming");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(
+                "direct_latest_activities_replatforming");
         final int recordNum = resultContainer.size();
 
         for (int i = 0; i < recordNum; i++) {
@@ -2043,7 +2044,7 @@ public class DataProvider {
     public static List<DashboardContestSearchResultDTO> searchUserContests(TCSubject tcSubject, String searchFor,
         final Date begin, final Date end) throws Exception {
         List<CommonProjectContestData> contests = DirectUtils.getContestServiceFacade().getCommonProjectContestData(
-            tcSubject);
+                tcSubject);
         List<CommonProjectContestData> filteredContests;
         if (StringUtils.isBlank(searchFor) && begin == null && end == null) {
             filteredContests = contests;
@@ -2416,7 +2417,7 @@ public class DataProvider {
                 stats.setTotalBudget(row.getStringItem("total_budget"));
                 stats.setActualCost(row.getDoubleItem("actual_cost"));
                 stats.setStartDate(getDate(row,"create_date"));
-                stats.setCompletionDate(getDate(row,"completion_date"));
+                stats.setCompletionDate(getDate(row, "completion_date"));
                 stats.setTotalContests(row.getIntItem("total_number"));
 
                 // draft
@@ -2440,8 +2441,8 @@ public class DataProvider {
                 stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
 
                 stats.setProjectedCost(row.getDoubleItem("cost_draft") + row.getDoubleItem("cost_scheduled") +
-                		row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
-                		row.getDoubleItem("cost_cancelled") + row.getDoubleItem("project_level_cost"));
+                        row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
+                        row.getDoubleItem("cost_cancelled") + row.getDoubleItem("project_level_cost"));
 
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
@@ -3006,7 +3007,8 @@ public class DataProvider {
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final List<TypedContestBriefDTO> contests = new ArrayList<TypedContestBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_typed_contests_replatforming");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(
+                "direct_my_typed_contests_replatforming");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -7282,7 +7284,7 @@ public class DataProvider {
             String phases = resultContainer.getStringItem(i, "phases");
 
             long monthCount = resultContainer.getLongItem(i, "monthcount");
-            EnterpriseDashboardMonthPipelineDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+            EnterpriseDashboardMonthPipelineDTO item = resultMap.get((monthCount / 100) * 12 + (monthCount % 100) - 1);
 
             if (currentPhase != null && ((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
                 // active
@@ -7499,7 +7501,7 @@ public class DataProvider {
             long monthCount = resultContainer.getLongItem(i, "monthcount");
 
             EnterpriseDashboardMonthProjectPipelineDTO item =
-                    resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+                    resultMap.get((monthCount / 100) * 12 + (monthCount % 100) - 1);
 
             if (projectStatusId == 4L) {
                 item.setTotalCompletedProjects(item.getTotalCompletedProjects() + 1);
@@ -7912,6 +7914,36 @@ public class DataProvider {
         ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
         wb.write(saveTo);
         return new ByteArrayInputStream(saveTo.toByteArray());
+    }
+
+    /**
+     * Gets the demand work id of the direct project, return null if the project does not exist or the direct project does not
+     * demand work id.
+     *
+     * @param tcDirectProjectId the id of the direct project
+     * @return the demand work id of the direct project or null the project does not exist or the direct project does not
+     * demand work id.
+     * @throws Exception if any error
+     */
+    public static String getDirectProjectDemandWorkId(long tcDirectProjectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        // this refers to a query tool command/query
+        request.setContentHandle("demand_work_id");
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
+        ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("demand_work_id");
+
+
+        if (resultSetContainer != null && resultSetContainer.size() > 0) {
+            ResultSetRow resultSetRow = resultSetContainer.get(0);
+            if (resultSetRow.getItem("demand_work_id").getResultData() != null) {
+                return resultSetRow.getStringItem("demand_work_id");
+            } else {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     /**

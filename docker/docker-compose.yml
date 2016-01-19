@@ -1,0 +1,24 @@
+tc-cache:
+  image: "tc-cache"
+informixdb:
+  image: "direct-informixdb"
+  volumes:
+   - "${TC_DEV_NAT_DIR}:/ssh"
+direct-app:
+  environment:
+   - ASP_API_URL=${ASP_API_URL}
+  image: "direct-app"
+  links:
+    - "informixdb"
+    - "tc-cache"
+  volumes:
+    - "${TC_DIRECT_SRC_HOME}/jboss-4.2.3.GA/server/default:/data/jboss-4.2.3.GA/server/direct"
+    - "${TC_DIRECT_SRC_HOME}/jboss-4.2.3.GA/server/default:/wtf"
+direct-web:
+  image: "direct-web"
+  links:
+    - "direct-app"
+  volumes:
+    - "${TC_DIRECT_SRC_HOME}/src/web:/data"
+  ports:
+    - "443:443"

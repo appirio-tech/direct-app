@@ -166,7 +166,6 @@ function updateOrderReviewSoftware() {
        $('#sworDRPoints').parents("td").show()
    }
     var contestPrizesPart = 0;
-
     if(isCode()) {
         var contestPrizesHTML = "";
         var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
@@ -233,6 +232,9 @@ function updateOrderReviewSoftware() {
         // show the prize settings for TopCoder contests
         $(".topcoderPrize").show();
     }
+
+    $(".drHide").hide();
+
 }
 
 /**
@@ -273,7 +275,7 @@ function updateOrderReviewStudio() {
        html +=
        '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    });
-   html +=   '<td>' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
+   html +=   '<td class="drHide">' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(2) +'</td>';
    $('#orPrizesTR').html(html);
    

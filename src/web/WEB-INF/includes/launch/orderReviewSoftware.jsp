@@ -68,7 +68,7 @@
   		<tbody><tr>
   			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+  			<td class="topcoderPrize drHide">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="last">$<span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
@@ -101,7 +101,7 @@
 		<tr>
         <p class="note">
         Note: Challenge prizes, costs, and fees in this section are estimates. <br>
-        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+        Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
         </tr>
     </table>    
   

@@ -1115,6 +1115,8 @@ function initContest(contestJson) {
     if (contestJson.projectStatus.name != "Draft") {
     	canEditMultiRound = false;
     }
+
+    $(".drHide").hide();
 }
 
 

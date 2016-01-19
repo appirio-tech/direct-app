@@ -778,6 +778,41 @@
             <result name="success">/WEB-INF/project-vm-management.jsp</result>
         </action>
 
+        <action name="projectWorkManager" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-work-management.jsp</result>
+        </action>
+
+        <action name="getProjectWorkSteps" method="getDirectProjectWorkSteps" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getWorkStepChallenges" method="getChallengesForWorkStepAndProject" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getContestPhasesForWorkStep" method="getContestPhasesForWorkStep" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getSubmissionDataForPhase" method="getSubmissionDataForPhase" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="pushSubmissions" method="pushSubmissions" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getProjectVMInstances" class="getProjectVMInstancesAction">
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json"/>

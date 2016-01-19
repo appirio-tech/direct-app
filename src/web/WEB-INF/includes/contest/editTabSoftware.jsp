@@ -450,7 +450,7 @@
                    </tr>
                    <tr class="rightbor">
                        <td class="first_tab topcoderPrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
-                       <td class="sec_tab_prize topcoderPrize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
+                       <td class="sec_tab_prize topcoderPrize drHide"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
                        
                    </tr>
@@ -474,7 +474,7 @@
              <strong>Estimated Challenge Total:</strong> $<span id="rswTotal"></span>
              <p class="note">
                   Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
-                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                  Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
          </div>
 
          <div class="clear"></div>
@@ -553,9 +553,9 @@
                              <span class="">
                                  <span class="mid_info topcoderPrize">Reliability Bonus:&nbsp;&nbsp;$ <span
                                          id="swReliabilityBonus"></span></span>
-                                 <span class="mid_info topcoderPrize">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" class="topcoderPrize"/>
-                                 <span class="mid_info topcoderPrize">Digital Points:&nbsp;&nbsp;$</span>
-                                 <input type="text" class="prizesInput topcoderPrize" value="" id="swDigitalRun" readonly="true" size="7"/>
+                                 <span class="mid_info topcoderPrize drHide">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" class="topcoderPrize drHide"/>
+                                 <span class="mid_info topcoderPrize drHide">Digital Points:&nbsp;&nbsp;$</span>
+                                 <input type="text" class="prizesInput topcoderPrize drHide" value="" id="swDigitalRun" readonly="true" size="7"/>
                              </span>
 
                          <br />
@@ -593,7 +593,7 @@
               <div class="totalCostContainer">
                   <strong>Estimated Challenge Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong>
                   <p class="note">
-                  Note: Challenge prizes, costs, and fees in this section are estimates.</n> Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses and digital run incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
+                  Note: Challenge prizes, costs, and fees in this section are estimates.</n> Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
               </div>
 
                     <div class="clear"></div>

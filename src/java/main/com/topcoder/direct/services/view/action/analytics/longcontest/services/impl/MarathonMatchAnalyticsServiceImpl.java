@@ -3,12 +3,8 @@
  */
 package com.topcoder.direct.services.view.action.analytics.longcontest.services.impl;
 
-import com.topcoder.commons.utils.LoggingWrapperUtility;
-import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsServiceException;
-import com.topcoder.util.log.Log;
-import com.topcoder.util.log.LogManager;
+import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.web.tc.rest.longcontest.resources.CompetitorResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchDetailsResource;
 import com.topcoder.web.tc.rest.longcontest.resources.MarathonMatchItemResource;
@@ -16,22 +12,6 @@ import com.topcoder.web.tc.rest.longcontest.resources.MatchResultResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SearchResult;
 import com.topcoder.web.tc.rest.longcontest.resources.SubmissionResource;
 import com.topcoder.web.tc.rest.longcontest.resources.SystemTestResourceWrapper;
-import org.apache.commons.io.IOUtils;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
-import org.apache.cxf.rs.security.oauth2.common.ClientAccessToken;
-import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The implementation of MarathonMatchAnalyticsService interface, it will used to call the remote rest service.
@@ -80,6 +60,7 @@ import java.util.Map;
  * @since 1.0 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress)
  * @version 1.3
  */
+@Deprecated
 public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalyticsService {
 
     /**
@@ -115,11 +96,6 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @since 1.1
      */
     private static final String HANDLE = "{handle}";
-
-    /**
-     * Log instance.
-     */
-    private Log logger = LogManager.getLog(CLASS_NAME);
 
     /**
      * Represent the base url of the remote rest service.
@@ -163,11 +139,6 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     private String getSystemTestsResultsEndPointUrl;
 
     /**
-     * The data format used to format date string from rest response.
-     */
-    private DateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy HH:mm z");
-
-    /**
      * Represent the client id.
      */
     private String clientId;
@@ -186,44 +157,6 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * Check the initialization of bean instance.
      */
     public void checkInit() {
-        final String signature = CLASS_NAME + "#checkInit()";
-        try {
-            getMMBasicInfoEndPointUrl = fixUrl("getMMBasicInfoEndPointUrl", getMMBasicInfoEndPointUrl);
-            getAllMMSubmissionsEndPointUrl = fixUrl("getAllMMSubmissionsEndPointUrl", getAllMMSubmissionsEndPointUrl);
-            getMMRegistrantsEndPointUrl = fixUrl("getMMRegistrantsEndPointUrl", getMMRegistrantsEndPointUrl);
-            getMatchResultsEndPointUrl = fixUrl("getMatchResultsEndPointUrl", getMatchResultsEndPointUrl);
-            getCompetitorDetailsEndPointUrl =
-                    fixUrl("getCompetitorDetailsEndPointUrl", getCompetitorDetailsEndPointUrl);
-            getSystemTestsResultsEndPointUrl =
-                    fixUrl("getSystemTestsResultsEndPointUrl", getSystemTestsResultsEndPointUrl);
-            remoteServiceBaseUrl = fixUrl("remoteServiceBaseUrl", remoteServiceBaseUrl);
-
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(clientId, "clientId", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(clientSecret,
-                    "clientSecret", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(apiKey, "apiKey", IllegalArgumentException.class);
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature, iae);
-        }
-    }
-
-    /**
-     * Check the url whether start with '/'. If it's not fix it.
-     * If the url is fine, just return them back.
-     *
-     * @param urlName the name of the url.
-     * @param value the url value.
-     * @return the fixed value.
-     */
-    private String fixUrl(String urlName, String value) {
-        if(value == null || value.trim().length() == 0) {
-            throw new IllegalArgumentException("The " + urlName + " should not be null nor empty");
-        }
-        value = value.trim();
-        if(!value.startsWith("/") && !value.startsWith("http")) {
-            value = "/" + value.trim();
-        }
-        return value;
     }
 
     /**
@@ -237,39 +170,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      */
     public MarathonMatchDetailsResource getMarathonMatchDetails(long roundId, String groupType, String accessToken)
             throws MarathonMatchAnalyticsServiceException{
-        final String signature = CLASS_NAME + "#getMarathonMatchDetails(roundId, groupType, accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature, new String[] {"roundId", "groupType", "accessToken"},
-                    new Object[] {roundId, groupType, accessToken});
-
-            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(groupType, "groupType", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getMMBasicInfoEndPointUrl,
-                    createParameterMap(new String[] {"groupType"}, new String[] {groupType}),
-                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
-                    accessToken);
-
-            ObjectMapper mapper = createObjectMapper();
-
-            MarathonMatchDetailsResource result =
-                    mapper.readValue(jsonResult.getBytes(), new TypeReference<MarathonMatchDetailsResource>() {});
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (MarathonMatchAnalyticsServiceException e) {
-            LoggingWrapperUtility.logException(logger, signature, e);
-            throw e;
-        } catch (IOException ioe) {
-            LoggingWrapperUtility.logException(logger, signature, ioe);
-            throw new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", ioe);
-        }
+       throw new MarathonMatchAnalyticsServiceException("not implemented");
     }
 
     /**
@@ -282,41 +183,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      */
     public SearchResult<CompetitorResource> getRegistrants(long roundId,
             String accessToken) throws MarathonMatchAnalyticsServiceException {
-        final String signature = CLASS_NAME
-                + "#getRegistrants(roundId, accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature,
-                    new String[] {"roundId", "accessToken"},
-                    new Object[] {roundId, accessToken});
-
-            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getMMRegistrantsEndPointUrl,
-                    createParameterMap(new String[] {"pageSize", "pageNumber", "sortingOrder", "sortingField"},
-                            new String[] {DEFAULT_PAGE_SIZE, DEFAULT_PAGE_NUMBER, DEFAULT_SORTING_ORDER, "rating"}),
-                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
-                    accessToken);
-
-            ObjectMapper mapper = createObjectMapper();
-
-            SearchResult<CompetitorResource> result =
-                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SearchResult<CompetitorResource>>() {});
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (MarathonMatchAnalyticsServiceException e) {
-            LoggingWrapperUtility.logException(logger, signature, e);
-            throw e;
-        } catch (IOException e) {
-            LoggingWrapperUtility.logException(logger, signature, e);
-            throw new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e);
-        }
+        throw new MarathonMatchAnalyticsServiceException("not implemented");
     }
 
     /**
@@ -337,42 +204,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     public SearchResult<SubmissionResource> getCompetitorSubmissionsHistory(long roundId, String handle, int pageSize,
             int pageNumber, String sortingOrder, String sortingField, String accessToken)
             throws MarathonMatchAnalyticsServiceException {
-        final String signature = CLASS_NAME +
-                "#getCompetitorSubmissionsHistory(long roundId, String handle, int pageSize, int pageNumber, " +
-                "String sortingOrder, String sortingField, String accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature,
-                    new String[] {"roundId", "handle", "pageSize", "pageNumber", "sortingOrder", "sortingField",
-                            "accessToken"},
-                    new Object[] {roundId, handle, pageSize, pageNumber, sortingOrder, sortingField, accessToken});
-            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(handle, "handle", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageSize, "pageSize", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageNumber, "pageNumber", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getAllMMSubmissionsEndPointUrl,
-                    createParameterMap(new String[] {"pageSize", "pageNumber", "sortingOrder", "sortingField"},
-                            new String[] {String.valueOf(pageSize), String.valueOf(pageNumber), sortingOrder,
-                                    sortingField}),
-                    createParameterMap(new String[] {ROUND_ID, HANDLE}, new String[] {String.valueOf(roundId), handle}),
-                    accessToken);
-
-            ObjectMapper mapper = createObjectMapper();
-
-            SearchResult<SubmissionResource> result =
-                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SearchResult<SubmissionResource>>() {});
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (IOException e) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
-        }
+       throw new MarathonMatchAnalyticsServiceException("not implemented"); 
     }
 
     /**
@@ -395,46 +227,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     public SearchResult<MarathonMatchItemResource> getMarathonMatchListings(String type, String date, String projectId,
             int pageSize, int pageNumber, String sortingOrder, String sortingField, String accessToken)
             throws MarathonMatchAnalyticsServiceException {
-        final String signature = CLASS_NAME + "#getMarathonMatchListings(type, date, project, pageSize, pageNumber, " +
-                "sortingOrder, sortingField, accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature,
-                    new String[]{"type", "date", "projectId", "pageSize", "pageNumber", "sortingOrder", "sortingField",
-                            "accessToken"},
-                    new Object[]{type, date, projectId, pageSize, pageNumber, sortingOrder, sortingField, accessToken});
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(type, "type", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageSize, "pageSize", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageNumber, "pageNumber", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getMarathonMatchListingsEndPointUrl,
-                    createParameterMap(new String[] {"type", "date", "project", "pageSize", "pageNumber",
-                            "sortingOrder", "sortingField"},
-                            new String[] {type, date, projectId, String.valueOf(pageSize), String.valueOf(pageNumber),
-                                    sortingOrder, sortingField}),
-                    createParameterMap(null, null),
-                    accessToken);
-            ObjectMapper mapper = createObjectMapper();
-
-            SearchResult<MarathonMatchItemResource> result =
-                    mapper.readValue(jsonResult.getBytes(),
-                            new TypeReference<SearchResult<MarathonMatchItemResource>>() {
-                            });
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (MarathonMatchAnalyticsServiceException e) {
-            LoggingWrapperUtility.logException(logger, signature, e);
-            throw e;
-        } catch (IOException e) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
-        }
+        throw new MarathonMatchAnalyticsServiceException("not implemented");
     }
 
     /**
@@ -454,43 +247,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     public SearchResult<MatchResultResource> getMatchResults(long roundId, int pageSize, int pageNumber,
             String sortingOrder, String sortingField, String accessToken)
             throws MarathonMatchAnalyticsServiceException {
-        final String signature = CLASS_NAME + "#getMatchResults(roundId, pageSize, pageNumber, sortingOrder, " +
-                "sortingField, accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature,
-                    new String[] {"roundId", "pageSize", "pageNumber", "sortingOrder", "sortingField", "accessToken"},
-                    new Object[] {roundId, pageSize, pageNumber, sortingOrder, sortingField, accessToken});
-            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageSize, "pageSize", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(pageNumber, "pageNumber", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getMatchResultsEndPointUrl,
-                    createParameterMap(new String[] {"pageSize", "pageNumber", "sortingOrder", "sortingField"},
-                            new String[] {String.valueOf(pageSize), String.valueOf(pageNumber), sortingOrder,
-                                    sortingField}),
-                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
-                    accessToken);
-
-            ObjectMapper mapper = createObjectMapper();
-
-            SearchResult<MatchResultResource> result =
-                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SearchResult<MatchResultResource>>() {});
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (MarathonMatchAnalyticsServiceException e) {
-            LoggingWrapperUtility.logException(logger, signature, e);
-            throw e;
-        } catch (IOException e) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
-        }
+        throw new MarathonMatchAnalyticsServiceException("not implemented");
     }
 
     /**
@@ -509,131 +266,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
     public SystemTestResourceWrapper getSystemTests(long roundId, Long coderId, int coderStartNumber,
             int testCaseStartNumber, String sortingField, String sortingOrder, String accessToken)
             throws MarathonMatchAnalyticsServiceException {
-        final String signature = CLASS_NAME + "#getSystemTests(long roundId, long coderId, int coderStartNumber, " +
-                "int testCaseStartNumber, String sortingOrder, String sortingField, String accessToken)";
-        try {
-            LoggingWrapperUtility.logEntrance(logger, signature,
-                    new String[] {"roundId", "coderId", "coderStartNumber", "testCaseStartNumber", "sortingOrder",
-                            "sortingField", "accessToken"},
-                    new Object[] {roundId, coderId, coderStartNumber, testCaseStartNumber, sortingOrder, sortingField,
-                            accessToken});
-            ValidationUtility.checkPositive(roundId, "roundId", IllegalArgumentException.class);
-            if(coderId != null) {
-                ValidationUtility.checkPositive(coderId, "coderId", IllegalArgumentException.class);
-            }
-            ValidationUtility.checkPositive(coderStartNumber, "coderStartNumber", IllegalArgumentException.class);
-            ValidationUtility.checkPositive(testCaseStartNumber, "testCaseStartNumber", IllegalArgumentException.class);
-            ValidationUtility.checkNotNullNorEmptyAfterTrimming(accessToken, "accessToken",
-                    IllegalArgumentException.class);
-
-            String jsonResult = callRestService(getSystemTestsResultsEndPointUrl,
-                    createParameterMap(new String[] {"coderId", "coderStartNumber", "testCaseStartNumber",
-                            "sortingOrder", "sortingField"},
-                            new String[] {coderId == null ? null : coderId.toString(), String.valueOf(coderStartNumber),
-                                    String.valueOf(testCaseStartNumber), sortingOrder, sortingField}),
-                    createParameterMap(new String[] {ROUND_ID}, new String[] {String.valueOf(roundId)}),
-                    accessToken);
-            ObjectMapper mapper = createObjectMapper();
-
-            SystemTestResourceWrapper result =
-                    mapper.readValue(jsonResult.getBytes(), new TypeReference<SystemTestResourceWrapper>() {});
-
-            LoggingWrapperUtility.logExit(logger, signature, new Object[] {result});
-
-            return result;
-        } catch (IllegalArgumentException iae) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("The parameter is invalid.", iae));
-        } catch (IOException e) {
-            throw LoggingWrapperUtility.logException(logger, signature,
-                    new MarathonMatchAnalyticsServiceException("Error occurred when process json string.", e));
-        }
-    }
-
-    /**
-     * Build a json node based on an existing response.
-     *
-     * @param url the url.
-     * @param queryParams the map of query parameters.
-     * @param pathParams the map of path parameters.
-     * @param accessToken the access token.
-     * @return the json node of the response.
-     * @throws IOException if any error occurs when reading data.
-     * @throws MarathonMatchAnalyticsServiceException if the rest call is failed.
-     */
-    private String callRestService(String url, Map<String, String> queryParams, Map<String, String> pathParams,
-            String accessToken) throws IOException, MarathonMatchAnalyticsServiceException {
-        WebClient client = getWebClient();
-
-        if(queryParams != null) {
-            for(String key : queryParams.keySet()) {
-                if(queryParams.get(key) != null) {
-                    client.query(key, queryParams.get(key));
-                }
-            }
-        }
-
-        // Set the api key for the rest call.
-        client.query("user_key", apiKey);
-
-        if(pathParams != null) {
-            for(String key : pathParams.keySet()) {
-                url = url.replace(key, pathParams.get(key));
-            }
-        }
-
-        OAuthClientUtils.Consumer consumer = new OAuthClientUtils.Consumer(clientId, clientSecret);
-        ClientAccessToken clientAccessToken = new ClientAccessToken(OAuthConstants.BEARER_TOKEN_TYPE, accessToken);
-        String authHeader = OAuthClientUtils.createAuthorizationHeader(consumer, clientAccessToken);
-        client.replaceHeader("Authorization", authHeader);
-
-        Response response = client.path(url).get();
-
-        if (response.getStatus() != 200) {
-            throw new MarathonMatchAnalyticsServiceException("The rest call is failed :" + response.getStatus());
-        } else {
-            return IOUtils.toString((InputStream) response.getEntity(), "UTF-8");
-        }
-    }
-
-    /**
-     * Create the map by given input keys and values.
-     *
-     * @param key the keys
-     * @param value the values.
-     * @return the map.
-     */
-    private Map<String, String> createParameterMap(String[] key, String[] value) {
-        // Create a null object.
-        if(key == null && value == null) {
-            return null;
-        }
-        Map<String, String> map = new HashMap<String, String>();
-        for(int i = 0; i < key.length; i++) {
-            map.put(key[i], value[i]);
-        }
-        return map;
-    }
-
-    /**
-     * Gets the <code>WebClient</code> instance to make call to remote service.
-     *
-     * @return the <code>WebClient</code> instance
-     */
-    private WebClient getWebClient() {
-        return WebClient.create(getRemoteServiceBaseUrl());
-    }
-
-    /**
-     * Create the object mapper.
-     *
-     * @return the object mapper instance.
-     */
-    private ObjectMapper createObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.setDateFormat(dateFormat);
-        return mapper;
+        throw new MarathonMatchAnalyticsServiceException("not implemented");
     }
 
     /**
@@ -642,7 +275,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the remote service base url
      */
     public String getRemoteServiceBaseUrl() {
-        return remoteServiceBaseUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -651,7 +284,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param remoteServiceBaseUrl the remote service base url
      */
     public void setRemoteServiceBaseUrl(String remoteServiceBaseUrl) {
-        this.remoteServiceBaseUrl = remoteServiceBaseUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -660,7 +293,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get mM basic info end point url
      */
     public String getGetMMBasicInfoEndPointUrl() {
-        return getMMBasicInfoEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -669,7 +302,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getMMBasicInfoEndPointUrl the get mM basic info end point url
      */
     public void setGetMMBasicInfoEndPointUrl(String getMMBasicInfoEndPointUrl) {
-        this.getMMBasicInfoEndPointUrl = getMMBasicInfoEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -678,7 +311,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get mM registrants end point url
      */
     public String getGetMMRegistrantsEndPointUrl() {
-        return getMMRegistrantsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -687,7 +320,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getMMRegistrantsEndPointUrl the get mM registrants end point url
      */
     public void setGetMMRegistrantsEndPointUrl(String getMMRegistrantsEndPointUrl) {
-        this.getMMRegistrantsEndPointUrl = getMMRegistrantsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -696,7 +329,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get all mM submissions end point url
      */
     public String getGetAllMMSubmissionsEndPointUrl() {
-        return getAllMMSubmissionsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -705,7 +338,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getAllMMSubmissionsEndPointUrl the get all mM submissions end point url
      */
     public void setGetAllMMSubmissionsEndPointUrl(String getAllMMSubmissionsEndPointUrl) {
-        this.getAllMMSubmissionsEndPointUrl = getAllMMSubmissionsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -714,7 +347,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get match results end point url
      */
     public String getGetMatchResultsEndPointUrl() {
-        return getMatchResultsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -723,7 +356,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getMatchResultsEndPointUrl the get match results end point url
      */
     public void setGetMatchResultsEndPointUrl(String getMatchResultsEndPointUrl) {
-        this.getMatchResultsEndPointUrl = getMatchResultsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -732,7 +365,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get competitor details end point url
      */
     public String getGetCompetitorDetailsEndPointUrl() {
-        return getCompetitorDetailsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -741,7 +374,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getCompetitorDetailsEndPointUrl the get competitor details end point url
      */
     public void setGetCompetitorDetailsEndPointUrl(String getCompetitorDetailsEndPointUrl) {
-        this.getCompetitorDetailsEndPointUrl = getCompetitorDetailsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -750,7 +383,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @return the get marathon match listings end point url
      */
     public String getGetMarathonMatchListingsEndPointUrl() {
-        return getMarathonMatchListingsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -759,7 +392,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param getMarathonMatchListingsEndPointUrl the get marathon match listings end point url
      */
     public void setGetMarathonMatchListingsEndPointUrl(String getMarathonMatchListingsEndPointUrl) {
-        this.getMarathonMatchListingsEndPointUrl = getMarathonMatchListingsEndPointUrl;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -768,7 +401,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param clientId the client id
      */
     public void setClientId(String clientId) {
-        this.clientId = clientId;
+        throw new IllegalStateException("not implemented");
     }
 
     /**
@@ -777,7 +410,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param clientSecret the client secret
      */
     public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+        
     }
 
     /**
@@ -786,7 +419,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @param apiKey the api key
      */
     public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+        
     }
 
     /**
@@ -796,7 +429,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @since 1.3
      */
     public String getGetSystemTestsResultsEndPointUrl() {
-        return getSystemTestsResultsEndPointUrl;
+        throw new IllegalStateException("not implemented");  
     }
 
     /**
@@ -806,7 +439,7 @@ public class MarathonMatchAnalyticsServiceImpl implements MarathonMatchAnalytics
      * @since 1.3
      */
     public void setGetSystemTestsResultsEndPointUrl(String getSystemTestsResultsEndPointUrl) {
-        this.getSystemTestsResultsEndPointUrl = getSystemTestsResultsEndPointUrl;
+      
     }
 }
 
