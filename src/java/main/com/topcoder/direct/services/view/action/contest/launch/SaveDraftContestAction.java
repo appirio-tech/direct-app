@@ -1003,6 +1003,31 @@ public class SaveDraftContestAction extends ContestAction {
                     ProjectPropertyType.DR_POINTS_PROJECT_PROPERTY_KEY, "0"
             );
         }
+
+        // guard check if the admin fee is set to a positive double value
+        if(softwareCompetition.getProjectHeader().getProperties().containsKey(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY)) {
+            String adminFeeStrValue = softwareCompetition.getProjectHeader().getProperties().get(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY);
+            if(adminFeeStrValue != null && adminFeeStrValue.trim().length() > 0) {
+                // try parsing the string value to double value
+                try {
+                    double adminFeeDoubleValue = Double.parseDouble(adminFeeStrValue);
+
+                    if (adminFeeDoubleValue < 0) {
+                        throw new IllegalArgumentException(
+                                String.format("The admin fee value [%s] should be positive", adminFeeDoubleValue));
+                    }
+
+                    if (Double.isNaN(adminFeeDoubleValue)) {
+                        throw new IllegalArgumentException(
+                                String.format("The admin fee value [%s] should not be NaN", adminFeeDoubleValue));
+                    }
+
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalArgumentException(
+                            String.format("The admin fee value [%s] is not a valid number", adminFeeStrValue));
+                }
+            }
+        }
     }
 
     /**
