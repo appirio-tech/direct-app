@@ -133,6 +133,12 @@ public final class DirectProperties {
     public static String LDAP_AUTH0_CONNECTION_NAME;
 
     /**
+     * Paramater whether we use loginProcessor or not
+     *
+     */
+    public static String USE_LOGIN_PROCESSOR;
+
+    /**
      * <p>
      * Initializes non-final static fields for this class with values for the same-named properties from the resource
      * bundle.
