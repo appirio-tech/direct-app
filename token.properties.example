@@ -202,6 +202,8 @@
 ##########################
 # typical windows configuration
 @loginProcessor@=com.topcoder.direct.services.view.processor.security.EJBLoginProcessor
+# set to 'true' if you want to use @loginProcessor@ as authentication system
+@useLoginProcessor@=false
 
 # typical VM configuration
 #@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor

@@ -23,6 +23,8 @@ import com.topcoder.shared.util.logging.Logger;
 import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.LightAuthentication;
+import com.topcoder.web.common.security.SSOCookieService;
+import com.topcoder.web.common.security.SSOCookieServiceImpl;
 import com.topcoder.web.common.security.SessionPersistor;
 import org.apache.struts2.ServletActionContext;
 import org.w3c.dom.Document;
@@ -192,6 +194,12 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
                         new SimpleRequest(ServletActionContext.getRequest()),
                         new SimpleResponse(ServletActionContext.getResponse()));
                 auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
+
+                //We need to set SSO cookie, BUT password in MockXmlAuthenticator.xml must be same with
+                //the one in database
+                SSOCookieService ssoCookieService = new SSOCookieServiceImpl();
+                ssoCookieService.setSSOCookie(ServletActionContext.getResponse(), tcSubject.getUserId(),
+                        action.getFormData().isRemember());
 
                 // generate the jwt cookie
                 DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.CLIENT_SECRET_AUTH0);
