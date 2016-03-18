@@ -497,6 +497,23 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
             // get and set dashboard stats
             setDashboardProjectStat();
+
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("draftContestsNumber", projectStats.getDraftContestsNumber());
+            result.put("pipelineContestsNumber", projectStats.getPipelineContestsNumber());
+            result.put("runningContestsNumber", projectStats.getRunningContestsNumber());
+            result.put("finishedContestsNumber", projectStats.getFinishedContestsNumber());
+            result.put("cancelledNumber", viewData.getDashboardProjectStat().getCancelledNumber());
+            result.put("completedNumber", viewData.getDashboardProjectStat().getCompletedNumber());
+            result.put("totalMemberCost", viewData.getDashboardProjectStat().getTotalMemberCost());
+            result.put("averageMemberCostPerContest", viewData.getDashboardProjectStat().getAverageMemberCostPerContest());
+            result.put("totalContestFee", viewData.getDashboardProjectStat().getTotalContestFee());
+            result.put("averageContestFeePerContest", viewData.getDashboardProjectStat().getAverageContestFeePerContest());
+            result.put("totalProjectCost", viewData.getDashboardProjectStat().getTotalProjectCost());
+            result.put("averageContestDuration", viewData.getDashboardProjectStat().getAverageContestDuration());
+            result.put("averageFulfillment", viewData.getDashboardProjectStat().getAverageFulfillment());
+
+            setResult(result);
         } catch (Throwable error) {
             if(getModel() != null) {
                 setResult(error);
@@ -674,7 +691,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
 
         getViewData().getProjectGeneralInfo().setActualCost(actualCost);
-        
+
         DataProvider.setProjectGeneralInfo(getViewData().getProjectGeneralInfo());
         // set project permission info
         setProjectPermissionInfo();
@@ -696,11 +713,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         final List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
 
         ProjectPermissionInfoDTO permissionInfo = new ProjectPermissionInfoDTO();
-		boolean hasFullPermission = false;
-	
+        boolean hasFullPermission = false;
+
         if (permissionsByProject != null) {
-            for(Permission p : permissionsByProject) { 
-	
+            for(Permission p : permissionsByProject) {
+
                 if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_REPORT) {
                     permissionInfo.setReportPermissionNumber(permissionInfo.getReportPermissionNumber() + 1);
                 } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_READ) {
@@ -709,10 +726,10 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                     permissionInfo.setWritePermissionNumber(permissionInfo.getWritePermissionNumber() + 1);
                 } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
                     permissionInfo.setFullPermissionNumber(permissionInfo.getFullPermissionNumber() + 1);
-					if (p.getUserId() == currentUser.getUserId())
-					{
-						hasFullPermission = true;
-					}
+                    if (p.getUserId() == currentUser.getUserId())
+                    {
+                        hasFullPermission = true;
+                    }
                 }
             }
         }

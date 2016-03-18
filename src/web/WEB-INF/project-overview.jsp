@@ -753,6 +753,7 @@
                                         <tr>
                                             <td><div class="ajaxTableLoader"><img src="/images/loadingAnimation.gif" alt="loading" /></div></td>
                                         </tr>
+                                        <%@include file="project-overview-project-stats.jsp"%>
                                     </tbody>
                                 </table>
                                <!-- End .projectsStats -->

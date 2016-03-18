@@ -710,15 +710,45 @@ $(document).ready(function() {
         return operations;
     }
 
+    function getDurationTextInDays(durationInHours) {
+        var durationInDays = durationInHours / 24;
+        var text = durationInDays.formatMoney(2);
+        if (Math.round(durationInDays) != 1) {
+            text += " days";
+        } else {
+            text += " day";
+        }
+
+        return text;
+    };
     $.ajax({
         type : 'POST',
         url : 'getProjectStatsAjax',
         cache : false,
         timeout:100*1000,
+        dataType:"json",
         data : {formData:{projectId:tcDirectProjectId}},
         success : function(result) {
-            $("#projectStatistics").find('.ajaxTableLoader').parents("tr").hide();
-            $("#projectStatistics tbody").append(result);
+            $("#projectStatistics tbody tr").toggleClass('hide');
+
+            var statsData = result.result.return;
+
+            $("#projectStatistics tbody td.draftContestsNumber").text(statsData.draftContestsNumber);
+            $("#projectStatistics tbody td.pipelineContestsNumber").text(statsData.pipelineContestsNumber);
+            $("#projectStatistics tbody td.runningContestsNumber").text(statsData.runningContestsNumber);
+           var allContestsNumber =(statsData.finishedContestsNumber +
+               statsData.cancelledNumber) + '(' +statsData.completedNumber + '/' +
+               (statsData.finishedContestsNumber-statsData.completedNumber) + '/' +
+               statsData.cancelledNumber + ')';
+            $("#projectStatistics tbody td.allContestsNumber").text(allContestsNumber);
+            $("#projectStatistics tbody td.totalMemberCost").text('$' + statsData.totalMemberCost.formatMoney(2));
+            $("#projectStatistics tbody td.averageMemberCostPerContest").text('$' + statsData.averageMemberCostPerContest.formatMoney(2));
+            $("#projectStatistics tbody td.totalContestFee").text('$' + statsData.totalContestFee.formatMoney(2));
+            $("#projectStatistics tbody td.averageContestFeePerContest").text('$' + statsData.averageContestFeePerContest.formatMoney(2));
+            $("#projectStatistics tbody td.totalProjectCost").text('$' + statsData.totalProjectCost.formatMoney(2));
+            $("#projectStatistics tbody td.averageContestDuration").text(getDurationTextInDays(statsData.averageContestDuration));
+            $("#projectStatistics tbody td.averageFulfillment").text('$' + statsData.averageFulfillment.formatMoney(2));
+
             var actualCostText = $.trim($("#totalProjectCostValue").text()).replace(/[,.$]/g,'');
             var actualCost = parseFloat(actualCostText);
             var projectedCost = actualCost + parseFloat($(".plannedCostValue").text());
