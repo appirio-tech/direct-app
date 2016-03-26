@@ -789,15 +789,67 @@ $(document).ready(function() {
         }
     });
 
+    var isSameDay = function(d1, d2) {
+        return (d1.getYear() == d2.getYear()) && (d1.getDayOfYear() == d2.getDayOfYear());
+    }
+    var getDateText = function(date, pattern) {
+        date = new Date(date.time);
+        var now = Date.today();
+
+        var yesterday = Date.today().add({ days: -1});
+
+        var tomorrow = Date.today().add({ days: 1});
+
+        if (isSameDay(now, date)) {
+            return "Today";
+        } else if (isSameDay(date, yesterday)) {
+            return "Yesterday";
+        } else if (isSameDay(date, tomorrow)) {
+            return "Tomorrow";
+        } else {
+            return date.toString(pattern);
+        }
+    }
     $.ajax({
         type : 'POST',
         url : 'getProjectActivitiesAjax',
         cache : false,
         timeout:100*1000,
+        dataType:"json",
         data : {formData:{projectId:tcDirectProjectId}},
         success : function(result) {
             $("#projectActivities").find('.ajaxTableLoader').parents("tr").hide();
-            $("#projectActivities tbody").append(result);
+            var activitiesById = result.result.return; // title -> activities
+            var activitiesHtml = '';
+            for(var id in activitiesById) {
+                var activities = activitiesById[id];
+                for(var i = 0; i < activities.length; i++) {
+                    var activity = activities[i];
+                    var title = activity.title;
+                        activitiesHtml +=
+                        '<tr class="contestLaunch">' +
+                        '<td class="contestActivities">' +
+                        '<div class="' + activity.typeShortName + '">' +
+                        '<div class="leftLaunch">' +
+                        '<h3>' + title + '</h3>' +
+                        '<p>' + activity.typeName + '</p>' +
+                        '<a href="/direct/contest/detail?projectId=' + activity.contestId + '">View</a>' +
+                        '</div>' +
+                        '<div class="rightLaunch"><p>' + activity.typeActionText + ' : <a class="coderTextBlack" ' +
+                        'href="' + activity.memberProfileUrlBase + '/tc?module=MemberProfile&cr=' + activity.originatorId + '">' + activity.originatorHandle + '</a></p>' +
+                        '<p clas="date">' + getDateText(activity.date, 'MM/dd/yyyy') + '</p>' +
+                        '</div>' +
+                        '<div class="clearFix"></div>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+                }
+            }
+            if(!activitiesHtml) {
+                activitiesHtml = '<tr><td style="text-align: center">No Recent Activities</td></tr>';
+            }
+
+            $("#projectActivities tbody").append(activitiesHtml);
         },
         error: function(result) {
             showErrors("Fail to load the project copilots data");

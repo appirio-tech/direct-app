@@ -10,6 +10,7 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.dto.ActivityDTO;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
@@ -234,6 +235,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      * The flag determines whether it's a call to export project general info.
      */
     private boolean export = false;
+
+    /**
+     * The member profile url base.
+     */
+    private String memberProfileUrlBase;
 
     /**
      * Gets the project service facade.
@@ -574,6 +580,28 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             LatestProjectActivitiesDTO latestActivities
                     = DataProvider.getLatestActivitiesForProject(DirectUtils.getTCSubjectFromSession().getUserId(), getFormData().getProjectId());
             viewData.setLatestProjectActivities(latestActivities);
+
+            Map<String, List<Map<String, Object>>> m = new HashMap<String, List<Map<String, Object>>>();
+            for(Map.Entry<ContestBriefDTO, List<ActivityDTO>>  entry: latestActivities.getActivities().entrySet()) {
+                List<Map<String, Object>> activities = new ArrayList<Map<String, Object>>();
+                for(ActivityDTO activityDTO : entry.getValue()) {
+                    Map<String, Object> activity = new HashMap<String, Object>();
+                    activity.put("title", entry.getKey().getTitle());
+                    activity.put("typeShortName", activityDTO.getType().getShortName());
+                    activity.put("typeName", activityDTO.getType().getName());
+                    activity.put("typeActionText", activityDTO.getType().getActionText());
+                    activity.put("contestId", activityDTO.getContest().getId());
+                    activity.put("originatorId", activityDTO.getOriginatorId());
+                    activity.put("originatorHandle", activityDTO.getOriginatorHandle());
+                    activity.put("date", activityDTO.getDate());
+                    activity.put("memberProfileUrlBase", getMemberProfileUrlBase());
+
+                    activities.add(activity);
+                }
+                m.put(Long.toString(entry.getKey().getId()), activities);
+            }
+
+            setResult(m);
         } catch (Throwable error) {
             if(getModel() != null) {
                 setResult(error);
@@ -773,5 +801,23 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * Gets the memberProfileUrlBase.
+     *
+     * @return the memberProfileUrlBase.
+     */
+    public String getMemberProfileUrlBase() {
+        return memberProfileUrlBase;
+    }
+
+    /**
+     * Sets the memberProfileUrlBase.
+     *
+     * @param memberProfileUrlBase the memberProfileUrlBase.
+     */
+    public void setMemberProfileUrlBase(String memberProfileUrlBase) {
+        this.memberProfileUrlBase = memberProfileUrlBase;
     }
 }

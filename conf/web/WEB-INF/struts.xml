@@ -833,7 +833,8 @@
 
         <action name="getProjectActivitiesAjax" method="getProjectActivitiesAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
-            <result name="success">/WEB-INF/project-overview-project-activities.jsp</result>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="projectInfoExport" class="projectExportAction">

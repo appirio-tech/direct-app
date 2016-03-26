@@ -286,6 +286,7 @@
         <property name="userService" ref="userService"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+        <property name="memberProfileUrlBase" value="@member.profile.url.base@"/>
     </bean>
 
     <bean id="projectVMManagementAction"
