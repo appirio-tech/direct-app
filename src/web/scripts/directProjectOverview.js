@@ -710,15 +710,45 @@ $(document).ready(function() {
         return operations;
     }
 
+    function getDurationTextInDays(durationInHours) {
+        var durationInDays = durationInHours / 24;
+        var text = durationInDays.formatMoney(2);
+        if (Math.round(durationInDays) != 1) {
+            text += " days";
+        } else {
+            text += " day";
+        }
+
+        return text;
+    };
     $.ajax({
         type : 'POST',
         url : 'getProjectStatsAjax',
         cache : false,
         timeout:100*1000,
+        dataType:"json",
         data : {formData:{projectId:tcDirectProjectId}},
         success : function(result) {
-            $("#projectStatistics").find('.ajaxTableLoader').parents("tr").hide();
-            $("#projectStatistics tbody").append(result);
+            $("#projectStatistics tbody tr").toggleClass('hide');
+
+            var statsData = result.result.return;
+
+            $("#projectStatistics tbody td.draftContestsNumber").text(statsData.draftContestsNumber);
+            $("#projectStatistics tbody td.pipelineContestsNumber").text(statsData.pipelineContestsNumber);
+            $("#projectStatistics tbody td.runningContestsNumber").text(statsData.runningContestsNumber);
+           var allContestsNumber =(statsData.finishedContestsNumber +
+               statsData.cancelledNumber) + '(' +statsData.completedNumber + '/' +
+               (statsData.finishedContestsNumber-statsData.completedNumber) + '/' +
+               statsData.cancelledNumber + ')';
+            $("#projectStatistics tbody td.allContestsNumber").text(allContestsNumber);
+            $("#projectStatistics tbody td.totalMemberCost").text('$' + statsData.totalMemberCost.formatMoney(2));
+            $("#projectStatistics tbody td.averageMemberCostPerContest").text('$' + statsData.averageMemberCostPerContest.formatMoney(2));
+            $("#projectStatistics tbody td.totalContestFee").text('$' + statsData.totalContestFee.formatMoney(2));
+            $("#projectStatistics tbody td.averageContestFeePerContest").text('$' + statsData.averageContestFeePerContest.formatMoney(2));
+            $("#projectStatistics tbody td.totalProjectCost").text('$' + statsData.totalProjectCost.formatMoney(2));
+            $("#projectStatistics tbody td.averageContestDuration").text(getDurationTextInDays(statsData.averageContestDuration));
+            $("#projectStatistics tbody td.averageFulfillment").text('$' + statsData.averageFulfillment.formatMoney(2));
+
             var actualCostText = $.trim($("#totalProjectCostValue").text()).replace(/[,.$]/g,'');
             var actualCost = parseFloat(actualCostText);
             var projectedCost = actualCost + parseFloat($(".plannedCostValue").text());
@@ -759,15 +789,67 @@ $(document).ready(function() {
         }
     });
 
+    var isSameDay = function(d1, d2) {
+        return (d1.getYear() == d2.getYear()) && (d1.getDayOfYear() == d2.getDayOfYear());
+    }
+    var getDateText = function(date, pattern) {
+        date = new Date(date.time);
+        var now = Date.today();
+
+        var yesterday = Date.today().add({ days: -1});
+
+        var tomorrow = Date.today().add({ days: 1});
+
+        if (isSameDay(now, date)) {
+            return "Today";
+        } else if (isSameDay(date, yesterday)) {
+            return "Yesterday";
+        } else if (isSameDay(date, tomorrow)) {
+            return "Tomorrow";
+        } else {
+            return date.toString(pattern);
+        }
+    }
     $.ajax({
         type : 'POST',
         url : 'getProjectActivitiesAjax',
         cache : false,
         timeout:100*1000,
+        dataType:"json",
         data : {formData:{projectId:tcDirectProjectId}},
         success : function(result) {
             $("#projectActivities").find('.ajaxTableLoader').parents("tr").hide();
-            $("#projectActivities tbody").append(result);
+            var activitiesById = result.result.return; // title -> activities
+            var activitiesHtml = '';
+            for(var id in activitiesById) {
+                var activities = activitiesById[id];
+                for(var i = 0; i < activities.length; i++) {
+                    var activity = activities[i];
+                    var title = activity.title;
+                        activitiesHtml +=
+                        '<tr class="contestLaunch">' +
+                        '<td class="contestActivities">' +
+                        '<div class="' + activity.typeShortName + '">' +
+                        '<div class="leftLaunch">' +
+                        '<h3>' + title + '</h3>' +
+                        '<p>' + activity.typeName + '</p>' +
+                        '<a href="/direct/contest/detail?projectId=' + activity.contestId + '">View</a>' +
+                        '</div>' +
+                        '<div class="rightLaunch"><p>' + activity.typeActionText + ' : <a class="coderTextBlack" ' +
+                        'href="' + activity.memberProfileUrlBase + '/tc?module=MemberProfile&cr=' + activity.originatorId + '">' + activity.originatorHandle + '</a></p>' +
+                        '<p clas="date">' + getDateText(activity.date, 'MM/dd/yyyy') + '</p>' +
+                        '</div>' +
+                        '<div class="clearFix"></div>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+                }
+            }
+            if(!activitiesHtml) {
+                activitiesHtml = '<tr><td style="text-align: center">No Recent Activities</td></tr>';
+            }
+
+            $("#projectActivities tbody").append(activitiesHtml);
         },
         error: function(result) {
             showErrors("Fail to load the project copilots data");
