@@ -861,7 +861,8 @@
 
         <action name="projectContestsHealthAJAX" class="projectContestsHealthAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success">/WEB-INF/project-overview-contests-health.jsp</result>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="projectMilestoneView" class="projectMilestoneViewAction">

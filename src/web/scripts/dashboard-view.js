@@ -154,6 +154,202 @@ $(document).ready(function(){
                });
     }
 
+    function formatEDTDate(time) {
+        //format date into string like "03/26/2016 09:00 EDT"
+        var result = "";
+        
+        result += (time.month < 9 ? "0" : "") + (time.month+1) + "/";
+        result += (time.date < 10 ? "0" : "") + time.date + "/";
+        result += (time.year + 1900) + " ";
+        result += (time.hours < 10 ? "0" : "") + time.hours + ":";
+        result += (time.minutes < 10 ? "0" : "") + time.minutes + " EDT";
+
+        return result;
+    }
+
+    function generateSectionHeader(contestData, healthData, type) {
+        var copilotContestDetailLink = "/direct/copilot/copilotContestDetails.action?projectId=" + contestData.id,
+            contestDetailLink = "/direct/contest/detail.action?projectId=" + contestData.id;
+
+        var row = "<td>";
+        if (contestData.contestTypeName === "Copilot Posting") {
+            row += "<a class='tooltopsBtn' href='" + copilotContestDetailLink + "'>";
+        } else {
+            row += "<a class='tooltopsBtn' href='" + contestDetailLink + "'>";
+        }
+        if (type === 'Timeline') {
+            row += '<span class="' + healthData.phaseStatusColor.toLowerCase() + '"></span></a>';
+        } else if (type === 'Registration') {
+            row += '<span class="' + healthData.regStatusColor.toLowerCase() + '"></span></a>';
+        } else if (type === 'Review') {
+            row += '<span class="' + healthData.reviewersSignupStatusColor.toLowerCase() + '"></span></a>';
+        } else if (type === 'Forum') {
+            row += '<span class="' + healthData.forumActivityStatusColor.toLowerCase() + '"></span></a>';
+        } else if (type === 'Dependencies') {
+            row += '<span class="' + healthData.dependenciesStatusColor.toLowerCase() + '"></span></a>';
+        } else if (type === 'Issue Tracking') {
+            row += '<span class="' + healthData.contestIssuesColor.toLowerCase() + '"></span></a>';
+        }
+        
+        row += '<div class="tooltipBox">' + 
+            '<span class="arrow"></span>' + 
+            '<div class="tooltipHeader">' + 
+                '<div class="tooltipHeaderRight">' + 
+                    '<div class="tooltipHeaderCenter">' + 
+                        '<h2>' + type + '</h2>' + 
+                    '</div>' + 
+                '</div>' + 
+            '</div>';
+
+        row += '<div class="tooltipContent">';
+        return row;
+    }
+
+    function generateSectionFooter() {
+        var row = "</div>";
+        row += '<div class="tooltipFooter">' + 
+                '<div class="tooltipFooterRight">' + 
+                    '<div class="tooltipFooterCenter"></div>' + 
+                '</div>' + 
+            '</div>' + 
+        '</div>';
+        row += "</td>";
+        return row;
+    }
+
+    function generateProjectHealthTable(allData) {
+        var result = JSON.parse(allData);
+        var data = result['result']['return'];
+
+        var renderedResult = "";
+        for (var i=0;i<data.length;i++) {
+            var contestData = data[i].contest,
+                healthData = data[i].healthData;
+
+            var currentPhaseStartTime = healthData.dashboardData.currentPhase.startTime,
+                currentPhaseEndTime = healthData.dashboardData.currentPhase.endTime,
+                currentPhaseName = healthData.dashboardData.currentPhase.phaseName,
+                nextPhaseName = healthData.dashboardData.nextPhase.phaseName,
+                nextPhaseStartTime = healthData.dashboardData.nextPhase.startTime,
+                nextPhaseEndTime = healthData.dashboardData.nextPhase.endTime,
+                numberOfRegistrants = healthData.dashboardData.numberOfRegistrants;
+
+            var copilotContestDetailLink = "/direct/copilot/copilotContestDetails.action?projectId=" + contestData.id,
+                contestDetailLink = "/direct/contest/detail.action?projectId=" + contestData.id;
+
+            var row = "<tr " + (i%2 === 0 ? "class='even'" : "") + ">";
+
+            //first td
+            row += "<td class='first'>";
+            if (contestData.contestTypeName === "Copilot Posting") {
+                row += "<a class='longWordsBreak " + healthData.contestStatusColor.toLowerCase() + "' href='" +
+                    copilotContestDetailLink + "'>";
+            } else {
+                row += "<a class='longWordsBreak " + healthData.contestStatusColor.toLowerCase() + "' href='" +
+                    contestDetailLink + "'>";
+            }
+            row += contestData.title;
+            row += "</a>";
+            row += "</td>";
+
+            //second td
+            row += "<td class='alignTop'>";
+            row += "<div class='unitContent'>" + contestData.contestTypeName + "</div>";
+            row += "</td>";
+
+            //third td
+            row += '<td class="alignTop">';
+            row += '<div class="unitContent">' + currentPhaseName + '&nbsp;</div>'
+            row += '</td>';
+
+            row += '<td class="alignTop">';
+            row += '<div class="unitContent dateNotice">' + nextPhaseName + '&nbsp;</div>'
+            row += '<div class="unitContent dateFullFormat">';
+            row += formatEDTDate(nextPhaseStartTime);
+            row += '</div>';
+            row += '</td>';
+
+            //Timeline
+            row += generateSectionHeader(contestData, healthData, "Timeline");
+
+            var currentPhaseStatus = healthData.currentPhaseStatus;
+            row += "<h3>";
+            if (currentPhaseStatus === "RUNNING") {
+                row += currentPhaseName + " is running."
+            } else if (currentPhaseStatus === "CLOSING") {
+                row += currentPhaseName + " is closing."
+            } else if (currentPhaseStatus === "LATE") {
+                row += currentPhaseName + " is late."
+            } else {
+                row += "There is no running phase.";
+            }
+            row += "</h3>";
+            if (healthData.dashboardData.nextPhase) {
+                row += "<p>Start Time:" + formatEDTDate(currentPhaseStartTime) + "</p>";
+                row += "<p>End Time:" + formatEDTDate(currentPhaseEndTime) + "</p>";
+            }
+            row += generateSectionFooter();
+            
+
+            //Registration
+            row += generateSectionHeader(contestData, healthData, "Registration");
+            var regStatus = healthData.registrationStatus;
+            if (regStatus === 'REGISTRATION_LESS_IDEAL_ACTIVE') {
+                row += '<h3>Registration is less than ideal.</h3>' + 
+                        '<p>Consider increasing prize money and double-check the clarity and scope of your challenge.</p>';
+            } else if (regStatus === 'REGISTRATION_LESS_IDEAL_CLOSED') {
+                row += '<h3>Registration is less than ideal.</h3>' + 
+                        '<p>Consider re-opening registration and increasing prize money.</p>';
+            } else if (regStatus === 'REGISTRATION_POOR') {
+                row += '<h3>Registration is poor.</h3>' + 
+                        '<p>It is unlikely you will receive good submissions. Consider reposting.</p>';
+            } else {
+                row += '<h3>Registration is healthy.</h3>';
+            }
+            row += "<p><strong># of registrants</strong> :" + numberOfRegistrants + "</p>";
+            row += generateSectionFooter();
+
+            //Review
+            row += generateSectionHeader(contestData, healthData, "Review");
+            row += '<p><strong>' + healthData.dashboardData.reviewers.length + '</strong> of '+
+                '<strong>' + healthData.dashboardData.requiredReviewersNumber + '</strong> reviewers are registered.</p>';
+            row += generateSectionFooter();
+
+            //Forum
+            row += generateSectionHeader(contestData, healthData, "Forum");
+            row += '<p><strong>' + healthData.unansweredForumPostsNumber + '</strong> unanswered threads.</p> ' +
+                    '<p><a href="' + healthData.dashboardData.forumURL + '">View Thread</a></p>';
+            row += generateSectionFooter();
+
+            //Dependencies
+            row += generateSectionHeader(contestData, healthData, "Dependencies");
+            var depStatus = healthData.dependenciesStatus;
+            if (depStatus === 'DEPENDENCIES_NON_SATISFIED') {
+                row += 'Some dependencies are not satisfied.';
+            } else if (depStatus === 'DEPENDENCIES_SATISFIED') {
+                row += 'All dependencies are satisfied.';
+            } else if (depStatus === 'NO_DEPENDENCIES') {
+                row += 'This challenge has no dependencies.';
+            }
+
+            row += generateSectionFooter();
+
+            //Issue Tracking
+            row += generateSectionHeader(contestData, healthData, "Issue Tracking");
+            row += '<a class="viewDetailsLink" href="' + 
+                '/direct/contestIssuesTracking.action?projectId=' + contestData.id + '&amp;subTab=issues">'
+            row += 'View Details</a>';
+            row += '<p>Open Issue : <strong>' + healthData.unresolvedIssuesNumber + '</strong></p>';
+            row += '<div class="clearFix"></div>';
+            row += generateSectionFooter();
+            row += "</tr>\n";
+
+            renderedResult += row;
+        }
+
+        return renderedResult
+    }
+
     if ($("#projectHealthTable").length != 0) {
         $('#loaderProjectHealthWrapper td').width($('.projectHealthHeader').width());
         
@@ -162,21 +358,20 @@ $(document).ready(function(){
         var request = {};
         request['projectId'] = tcDirectProjectId;
         $.ajax( {
-            type : 'POST',
-            url : 'projectContestsHealthAJAX',
+            type : 'GET',
+            url : 'projectContestsHealthAJAX' + '?projectId=' + tcDirectProjectId,
             cache : false,
-            data : request,
-            dataType : 'html',
             error : function(e) {
                 $('#loaderProjectHealth').remove();
                 $('#projectHealthTableBody').empty();
                 $('#projectHealthTableBody').html('<tr class="odd"><td valign="top" colspan="10">Failed to retrieve data</td></tr>');
             },
             success : function(result) {
+                var haha = generateProjectHealthTable(result);
                 $('#loaderProjectHealthWrapper').remove();
                 $('#loaderProjectHealth').remove();
                 $('#projectHealthTableBody').empty();
-                $('#projectHealthTableBody').append(result);
+                $('#projectHealthTableBody').append(generateProjectHealthTable(result));
                 c = result;
                 $("#projectHealthTable").dataTable({
                         "bAutoWidth": false,
@@ -200,9 +395,8 @@ $(document).ready(function(){
                         "sScrollY": "156px",
                         "oLanguage": {
                             "sEmptyTable": '<tr class="odd"><td valign="top" colspan="10" align="center" class="dataTables_empty">No data available in table</td></tr>'                               
-                         }
-               }
-        );
+                        }
+                    });
                 
                 adjustTables();
                 
