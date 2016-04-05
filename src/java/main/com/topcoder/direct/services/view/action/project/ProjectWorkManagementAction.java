@@ -152,6 +152,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.completeDesigns.name(), "Complete Designs");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.finalFixes.name(), "Final Fixes");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.code.name(), "Code");
+        WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.codeFinalFixes.name(), "Code Final Fixes");
     }
 
     /**
