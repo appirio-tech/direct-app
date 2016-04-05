@@ -49,6 +49,7 @@
 
 
     <script type="text/javascript">
+        var use_login_processor = <%=DirectProperties.USE_LOGIN_PROCESSOR%>;
 
         function isEnterKeyPressed(e) {
             if (window.event) return (window.event.keyCode == 13);
@@ -58,7 +59,7 @@
 
         function submitOnEnter(e) {
             if (!isEnterKeyPressed(e)) return true;
-            submitAuth0LoginForm();
+            doSubmitLoginForm();
             return false;
         }
 
@@ -144,6 +145,7 @@
             <!-- End .headerInner -->
         </div>
         <!-- End #header -->
+        <s:form action="home" namespace="/" id="LoginForm" method="post">
         <div class="loginBox">
             <div class="loginBoxInner">
                 <h2>Login to your account</h2>
@@ -156,7 +158,7 @@
 
                     <p class="password inputF"><input type="password" placeholder="Password" onkeypress="submitOnEnter(event);" id="LoginForm_formData_password" name="formData.password" maxlength="50"><span></span></p>
 
-                    <a class="login" href="javascript:;" onclick="submitAuth0LoginForm();">Login</a>
+                    <a class="login" href="javascript:;" onclick="doSubmitLoginForm();">Login</a>
 
                     <p class="additonalAction jqtransform">
                         <span class="signForget"><a href="http://<%=ServerConfiguration.NEW_SERVER_NAME%>/?action=callback" target="_blank">Sign Up</a> | <a href="http://www.topcoder.com/password-recovery/" target="_blank">Forgot Password
@@ -164,7 +166,8 @@
                         <input type="checkbox" name="formData.remember" id="remember_me"><label>Remember me</label>
                     </p>
 
-            </div>      
+            </div>
+            </s:form>
             <div class="socialNetwork">
                 <a href="javascript:;" class="salesforceIcon socialLogin" title="Login with Salesforce"></a>
                 <a href="javascript:;" class="githubIcon socialLogin" title="Login with GitHub"></a>

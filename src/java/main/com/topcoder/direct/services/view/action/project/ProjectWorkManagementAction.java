@@ -152,6 +152,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.completeDesigns.name(), "Complete Designs");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.finalFixes.name(), "Final Fixes");
         WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.code.name(), "Code");
+        WORK_STEP_DISPLAY_NAME.put(WorkStep.StepType.codeFinalFixes.name(), "Code Final Fixes");
     }
 
     /**
@@ -821,11 +822,15 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 long sortOrder = resultContainer.getIntItem(i, "sort_order");
                 long imageTypeId = resultContainer.getLongItem(i, "image_type_id");
                 String imageFileName = resultContainer.getStringItem(i, "file_name");
-                SubmissionFile.FileRole fileRole = SubmissionFile.FileRole.PREVIEW;
+                SubmissionFile.FileRole fileRole;
+
+                // 29 = small watermark, 31 = full watermark
 
                 if (imageTypeId == 29L || imageTypeId == 31L) {
                     if (sortOrder == 1) {
                         fileRole = SubmissionFile.FileRole.COVER;
+                    } else {
+                        fileRole = imageTypeId == 29L ? SubmissionFile.FileRole.PREVIEW_SMALL : SubmissionFile.FileRole.PREVIEW_FULL;
                     }
 
                     files.add(createSubmissionFile(fileRole, getImageFilePath(submission, imageFileName)));

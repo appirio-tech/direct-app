@@ -70,6 +70,14 @@ var submitLoginForm = function() {
     document.LoginForm.submit();
 }
 
+var doSubmitLoginForm = function() {
+    if (use_login_processor){
+        submitLoginForm();
+    }else{
+        submitAuth0LoginForm();
+    }
+
+}
 $(document).ready(function () {
 
     var wrapperH = $('#landingPage #wrapper').height() + 25;
