@@ -717,6 +717,9 @@ function initContest(contestJson) {
     //general initialization
     // populate the select option for software group
     $.each(projectCategoryArray, function (i, projectCategory) {
+        if (projectCategory.hideInDropdown) {
+            return;
+        }
         // not show copilot contest type
         if (isSoftware && projectCategory.id != 29 && projectCategory.id != 37 && projectCategory.typeId != 3) {
             if ($("optgroup[label='Software']").length > 0) {

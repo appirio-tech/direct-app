@@ -445,6 +445,9 @@ $(document).ready(function() {
     // initialize selects
     // populate the select option for software group
     $.each(projectCategoryArray, function(i, projectCategory) {
+        if (projectCategory.hideInDropdown) {
+            return;
+        }
         // not show copilot contest type
         if (projectCategory.id != 29 && projectCategory.id != ALGORITHM_CATEGORY_ID_MARATHON && projectCategory.typeId != 3) {
             $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Development']");
