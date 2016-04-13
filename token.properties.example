@@ -430,3 +430,4 @@
 @JWT_EXPIRATION_SECONDS@=36000000
 @REG_SERVER_NAME@=tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
+@member.profile.url.base@=http://tc.cloud.topcoder.com
