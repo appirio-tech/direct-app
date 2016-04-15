@@ -29,6 +29,9 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceManager;
+import com.topcoder.management.resource.persistence.ResourcePersistenceException;
 import com.topcoder.project.phases.Phase;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -50,8 +53,16 @@ import java.util.TreeMap;
 /**
  * Action supporting project work management page.
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ *
+ * <p>
+ * Version 1.1 Change notes:
+ *   <ol>
+ *     <li>Added {@link #resourceManager} property.</li>
+ *     <li>Added {@link #resolveSubmitter(Submission)} method.</li>
+ *   </ol>
+ * </p>
+ * @author isv, TCSASSEMBLER
+ * @version 1.1
  */
 public class ProjectWorkManagementAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm> {
 
@@ -128,6 +139,13 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      * </p>
      */
     private MimeTypeRetriever mimeTypeRetriever;
+
+    /**
+     * <p>A <code>ResourceManager</code> providing the value for resourceManager property.</p>
+     *
+     * @since 1.1
+     */
+    private ResourceManager resourceManager;
 
     /**
      * Logger for this class.
@@ -581,6 +599,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                         Map<Long, Map<Integer, Submission>> organizingMap = new HashMap<Long, Map<Integer, Submission>>();
 
                         for (Submission s : checkpointSubmissions) {
+                            resolveSubmitter(s);
 
                             Long submissionUserId = Long.parseLong(s.getCreationUser());
 
@@ -591,8 +610,6 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                                 Map<Integer, Submission> userSubmissionMap = new TreeMap<Integer, Submission>();
                                 userSubmissionMap.put(s.getUserRank(), s);
                                 organizingMap.put(submissionUserId, userSubmissionMap);
-                                userHandlesMap.put(submissionUserId,
-                                        this.getUserService().getUserHandle(submissionUserId));
                             }
                         }
 
@@ -615,6 +632,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                         Map<Long, Map<Integer, Submission>> organizingMap = new HashMap<Long, Map<Integer, Submission>>();
 
                         for (Submission s : finalRoundSubmissions) {
+                            resolveSubmitter(s);
 
                             Long submissionUserId = Long.parseLong(s.getCreationUser());
 
@@ -625,8 +643,6 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                                 Map<Integer, Submission> userSubmissionMap = new TreeMap<Integer, Submission>();
                                 userSubmissionMap.put(s.getUserRank(), s);
                                 organizingMap.put(submissionUserId, userSubmissionMap);
-                                userHandlesMap.put(submissionUserId,
-                                        this.getUserService().getUserHandle(submissionUserId));
                             }
                         }
 
@@ -647,16 +663,13 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
                             // find out the latest final fix submission
                             Submission latestSubmission = finalFixesSubmissions.get(0);
+                            resolveSubmitter(latestSubmission);
                             for (int i = 1, n = finalFixesSubmissions.size(); i < n; ++i) {
                                 if (latestSubmission.getModificationTimestamp().compareTo(
                                         finalFixesSubmissions.get(i).getModificationTimestamp()) < 0) {
                                     latestSubmission = finalFixesSubmissions.get(i);
                                 }
                             }
-
-                            userHandlesMap.put(Long.parseLong(latestSubmission.getCreationUser()),
-                                    this.getUserService().getUserHandle(
-                                            Long.parseLong(latestSubmission.getCreationUser())));
 
                             List<com.appirio.client.asp.api.Submission> finalFixSubmissionsToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
 
@@ -678,6 +691,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                         for (Submission sub : submissions) {
                             if (sub.getId() == firstPlaceWinner.getSubmissionId()) {
                                 // find the winner
+                                resolveSubmitter(sub);
                                 List<com.appirio.client.asp.api.Submission> winnerSubmissionToPush = new ArrayList<com.appirio.client.asp.api.Submission>();
 
                                 winnerSubmissionToPush.add(getSoftwareSubmissionDataForAPI(sub));
@@ -695,6 +709,7 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                         for (Upload upload : uploads) {
                             if (upload.getProjectPhase() != null && upload.getProjectPhase().longValue() == lastClosedFinalFixPhase.getId()) {
                                 Submission finalFixSubmission = new Submission();
+                                resolveSubmitter(finalFixSubmission);
                                 long finalFixSubmissionId = 0;
                                 long submitterId = 0;
                                 for (ContestFinalFixDTO ff : finalFixes) {
@@ -891,6 +906,25 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
                 submission.getId(), buf.toString()));
 
         return buf.toString();
+    }
+
+    /**
+     * <p>Gets the details for actual submitter based on the submitter resource associated with the specified submission
+     * and updates {@link Submission#getCreationUser()} accordingly.</p>
+     *
+     * @param submission a <code>Submission</code> providing submission details.
+     * @throws ResourcePersistenceException if an unexpected error occurs.
+     * @since 1.1
+     */
+    private void resolveSubmitter(Submission submission) throws ResourcePersistenceException {
+        long submitterResourceId = submission.getUpload().getOwner();
+        Resource submitterResource = getResourceManager().getResource(submitterResourceId);
+        long submitterUserId = Long.parseLong(submitterResource.getProperty("External Reference ID"));
+        String submitterHandle = submitterResource.getProperty("Handle");
+
+        this.userHandlesMap.put(submitterUserId, submitterHandle);
+
+        submission.setCreationUser(String.valueOf(submitterUserId));
     }
 
     /**
@@ -1124,6 +1158,26 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      */
     public void setMimeTypeRetriever(MimeTypeRetriever mimeTypeRetriever) {
         this.mimeTypeRetriever = mimeTypeRetriever;
+    }
+
+    /**
+     * <p>Gets the resourceManager property.</p>
+     *
+     * @return a <code>ResourceManager</code> providing the value for resourceManager property.
+     * @since 1.1
+     */
+    public ResourceManager getResourceManager() {
+        return this.resourceManager;
+    }
+
+    /**
+     * <p>Sets the resourceManager property.</p>
+     *
+     * @param resourceManager a <code>ResourceManager</code> providing the value for resourceManager property.
+     * @since 1.1
+     */
+    public void setResourceManager(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
     }
 
     public static class SubmissionPresentationFilter implements FilenameFilter {
