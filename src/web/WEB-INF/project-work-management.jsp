@@ -1,11 +1,13 @@
 <%@ page import="com.topcoder.shared.util.ApplicationServer" %>
 <%--
-  - Author: TCSASSEMBLER
+  - Author: isv
   -
-  - Version: 1.0 (TC Direct - ASP Integration Work Management)
-  - Copyright (C) 2015 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1 (TC Direct - ASP Integration Work Management)
+  - Copyright (C) 2015-2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project work step management view.
+  - Version 1.1 (TOPCODER DIRECT - ASP INTEGRATION WORK MANAGEMENT IMPROVEMENT) changes:
+  -  Added button for checking the submission's push status 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -135,8 +137,12 @@
 
                             <div id="WorkManagerDiv"></div>
                             <div id="pushButtonDiv">
-                                <a class="newButtonGreen" style="cursor: default;">Push 5 checkpoint submissions</a>
+                                <a class="newButtonGreen" style="cursor: default;" id="pushSubmissionsBtn">Push 5 checkpoint submissions</a>
+                                <br/>
+                                <br/>
+                                <a class="newButtonGreen pushStatus" style="cursor: default;" id="checkPushStatusBtn">Check push status</a>
                             </div>
+
 
                         </div>
                         <!-- end main area -->

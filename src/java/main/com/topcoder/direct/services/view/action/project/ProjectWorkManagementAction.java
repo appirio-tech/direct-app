@@ -53,7 +53,6 @@ import java.util.TreeMap;
 /**
  * Action supporting project work management page.
  *
- *
  * <p>
  * Version 1.1 Change notes:
  *   <ol>
@@ -61,8 +60,21 @@ import java.util.TreeMap;
  *     <li>Added {@link #resolveSubmitter(Submission)} method.</li>
  *   </ol>
  * </p>
- * @author isv, TCSASSEMBLER
- * @version 1.1
+ *
+ * <p>
+ * Version 1.2 (TOPCODER DIRECT - ASP INTEGRATION WORK MANAGEMENT IMPROVEMENT) Change notes:
+ *   <ol>
+ *     <li>Temporarily switched {@link ASPClient} into <code>demo</code> mode just for sake of testing/reviewing this
+ *     submission.</li>
+ *     <li>Added {@link SubmissionPusher} class.</li>
+ *     <li>Added {@link #pushId} property.</li>
+ *     <li>Added {@link #getSubmissionPushStatus()} method.</li>
+ *     <li>Moved the code pushing the submissions to separate thread.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv
+ * @version 1.2
  */
 public class ProjectWorkManagementAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm> {
 
@@ -128,6 +140,13 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
      * The demand work id of the direct project.
      */
     private String demandWorkId;
+
+    /**
+     * <p>A <code>long</code> providing the value for pushId property.</p>
+     *
+     * @since 1.2
+     */
+    private long pushId;
 
     /**
      * <p>
@@ -375,6 +394,32 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
             }
         }
 
+        return SUCCESS;
+    }
+
+    /**
+     * <p>Gets the current status for requested submission's push.</p>
+     * 
+     * @return {@link #SUCCESS} always.
+     * @since 1.2
+     */
+    public String getSubmissionPushStatus() {
+        try {
+            checkPermission();
+            
+            String submissionPushStatus = DirectUtils.getSubmissionPushStatus(getPushId());
+
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("pushStatus", submissionPushStatus);
+
+            setResult(result);
+        } catch (Throwable e) {
+            logger.error("Unable to get submission's push status", e);
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        
         return SUCCESS;
     }
 
@@ -749,7 +794,17 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
 
                 logger.info("Starting submission publishing...");
 
-                aspClient.publishSubmissionsToWorkStep(workStep, submissionsToPush);
+                // Start a separate thread for pushing the submissions
+                long userId = getCurrentUser().getUserId();
+                long pushId = DirectUtils.insertSubmissionPushStatus(getFormData().getProjectId(), userId);
+                if (pushId == 0) {
+                    throw new Exception("Could not create new record for submission's push status");
+                }
+                SubmissionPusher submissionPusher = new SubmissionPusher(aspClient, workStep, submissionsToPush, userId,
+                    pushId);
+                Thread submissionPusherThread = new Thread(submissionPusher);
+                submissionPusherThread.start();
+                result.put("pushId", String.valueOf(pushId));
 
                 logger.info("Submissions published");
 //
@@ -1180,6 +1235,27 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
         this.resourceManager = resourceManager;
     }
 
+
+    /**
+     * <p>Gets the pushId property.</p>
+     *
+     * @return a <code>long</code> providing the value for pushId property.
+     * @since 1.2
+     */
+    public long getPushId() {
+        return this.pushId;
+    }
+
+    /**
+     * <p>Sets the pushId property.</p>
+     *
+     * @param pushId a <code>long</code> providing the value for pushId property.
+     * @since 1.2
+     */
+    public void setPushId(long pushId) {
+        this.pushId = pushId;
+    }
+
     public static class SubmissionPresentationFilter implements FilenameFilter {
 
         /**
@@ -1219,6 +1295,91 @@ public class ProjectWorkManagementAction extends BaseDirectStrutsAction implemen
          */
         public boolean accept(File dir, String name) {
             return name.startsWith(this.filenamePrefix);
+        }
+    }
+
+    /**
+     * <p>A separate thread to be used for pushing the submissions to <code>TopCoder Connect</code> system.</p>
+     *
+     * @author TCSCODER
+     * @version 1.0
+     * @since 1.1 (TOPCODER DIRECT - ASP INTEGRATION WORK MANAGEMENT IMPROVEMENT)
+     */
+    private static class SubmissionPusher implements Runnable {
+
+        /**
+         * <p>Logger for this class.</p>
+         */
+        private static final Logger logger = Logger.getLogger(SubmissionPusher.class);
+
+        /**
+         * <p>An <code>ASPClient</code> providing interface to TopCoder Connect system.</p>
+         */
+        private ASPClient aspClient;
+
+        /**
+         * <p>A <code>WorkStep</code> specifying the work step the submissions correspond to.</p>
+         */
+        private WorkStep workStep;
+
+        /**
+         * <p>A <code>List</code> of submissions to push to TopCoder Connect.</p>
+         */
+        private List<List<com.appirio.client.asp.api.Submission>> submissionsToPush;
+
+        /**
+         * <p>A <code>Long</code> providing the ID for submission push status.</p>
+         */
+        private long pushId;
+
+        /**
+         * <p>A <code>Long</code> providing the ID for user pushing the submission.</p>
+         */
+        private long userId;
+        
+        /**
+         * <p>Constructs new <code>SubmissionPusher</code> instance with specified ASP client.</p>
+         *
+         * @param aspClient an <code>ASPClient</code> providing interface to TopCoder Connect system.
+         * @param workStep a <code>WorkStep</code> specifying the work step the submissions correspond to.
+         * @param submissionsToPush a <code>List</code> of submissions to push to TopCoder Connect.
+         * @param userId a <code>long</code> providing the ID for user pushing the submission.
+         * @param pushId a <code>long</code> providing the ID for submission push status.
+         */
+        private SubmissionPusher(ASPClient aspClient, WorkStep workStep,
+                                 List<List<com.appirio.client.asp.api.Submission>> submissionsToPush,
+                                 long userId, long pushId) {
+            this.aspClient = aspClient;
+            this.workStep = workStep;
+            this.submissionsToPush = submissionsToPush;
+            this.userId = userId;
+            this.pushId = pushId;
+        }
+
+        /**
+         * <p>Pushes intended submissions to <code>TopCoder Connect</code> system via <code>ASP Client</code>.</p>
+         */
+        public void run() {
+            logger.info("Starting to push the submissions to TopCoder Connect. Push ID: " + this.pushId);
+
+            boolean success = false;
+            try {
+                this.aspClient.publishSubmissionsToWorkStep(this.workStep, this.submissionsToPush);
+                success = true;
+                logger.info("Pushed submissions to TopCoder Connect. Push ID: " + this.pushId);
+            } catch (Exception e) {
+                logger.error("Failed to push submissions for push ID: " + this.pushId, e);
+            }
+
+            try {
+                if (success) {
+                    DirectUtils.updateSubmissionPushStatus(this.pushId, this.userId, "SUCCESS");
+                } else {
+                    DirectUtils.updateSubmissionPushStatus(this.pushId, this.userId, "FAIL");
+                }
+            } catch (Exception e) {
+                logger.error("Failed to update submission's push status for push ID: " + this.pushId, e);
+            }
         }
     }
 }
