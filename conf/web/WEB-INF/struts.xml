@@ -789,6 +789,12 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="getSubmissionPushStatus" method="getSubmissionPushStatus" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getWorkStepChallenges" method="getChallengesForWorkStepAndProject" class="projectWorkManagementAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
