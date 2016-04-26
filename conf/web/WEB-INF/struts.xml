@@ -789,6 +789,12 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="getSubmissionPushStatus" method="getSubmissionPushStatus" class="projectWorkManagementAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="getWorkStepChallenges" method="getChallengesForWorkStepAndProject" class="projectWorkManagementAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success" type="json"/>
@@ -821,7 +827,8 @@
 
         <action name="getProjectStatsAjax" method="getProjectStatsAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
-            <result name="success">/WEB-INF/project-overview-project-stats.jsp</result>
+            <result name="success" type="json" />
+            <result name="error" type="json"/>
         </action>
 
         <action name="getProjectIssuesStatsAjax" method="getProjectIssuesStatsAjax" class="projectOverviewAction">
@@ -832,7 +839,8 @@
 
         <action name="getProjectActivitiesAjax" method="getProjectActivitiesAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
-            <result name="success">/WEB-INF/project-overview-project-activities.jsp</result>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="projectInfoExport" class="projectExportAction">
@@ -859,7 +867,8 @@
 
         <action name="projectContestsHealthAJAX" class="projectContestsHealthAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result name="success">/WEB-INF/project-overview-contests-health.jsp</result>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
         </action>
 
         <action name="projectMilestoneView" class="projectMilestoneViewAction">

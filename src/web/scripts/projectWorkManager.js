@@ -1,3 +1,15 @@
+/*
+ * Copyright (C) 2015-2016 TopCoder Inc., All Rights Reserved.
+ *
+ * Javascript for the project work manager pages.
+ *
+ * Version 1.1 (TOPCODER DIRECT - ASP INTEGRATION WORK MANAGEMENT IMPROVEMENT) changes:
+ * - clicking "Push Submissions" button displays a confirmation dialog
+ * - added button for checking the submission's push status
+ *
+ * @version 1.1
+ * @author GreatKevin, isv
+ */
 $(document).ready(function() {
     // these global variables store the current state of the hColumns control
     var workStepResult = [];
@@ -7,29 +19,68 @@ $(document).ready(function() {
     var currentChallenge;
     var currentPhase;
     var currentPushStatus;
-
-    $("#pushButtonDiv a").click(function() {
-
-		modalPreloader();
-
+    var pushId = 0;
+    var pushStatusChecking = false; 
+    
+    function checkPushStatus() {
+        if (pushStatusChecking) {
+            return;
+        }
+        pushStatusChecking = true;
+        $('#checkPushStatusBtn').html("Checking push status... ");
         $.ajax({
-            type: 'POST',
-            url:  ctx + "/pushSubmissions",
-            data: {contestId: currentChallenge.id, phaseName: currentPhase.label, workStepId: currentWorkStep.id, workStepName: currentWorkStep.workStepType, formData: {projectId: tcDirectProjectId}},
+            type: 'GET',
+            url: ctx + "/getSubmissionPushStatus",
+            data: {pushId: pushId},
             cache: false,
-            async: false,
+            async: true,
             dataType: 'json',
-            success: function(jsonResult) {
+            success: function (jsonResult) {
+                pushStatusChecking = false;
                 handleJsonResult(jsonResult,
-                    function(result) {
-                        showSuccessfulMessage("The " + currentPushStatus + " pushed to work manager");
+                    function (result) {
+                        $('#checkPushStatusBtn').html("Check push status: " + result["pushStatus"]);
                     },
-                    function(errorMessage) {
+                    function (errorMessage) {
                         showServerError(errorMessage);
                     });
             }
         });
-    })
+    }
+    
+    $("#pushButtonDiv a#checkPushStatusBtn").click(function() {
+        checkPushStatus();
+    });
+
+    $("#pushButtonDiv a#pushSubmissionsBtn").click(function() {
+        $('.pushStatus').hide();
+        displayUserConfirmation("#pushSubmissionsConfirmation", "Push Submissions",
+            "Do you want to push " + currentPushStatus + " to TopCoder Connect?", "Push", function() {
+                closeModal();
+                modalPreloader();
+                $.ajax({
+                    type: 'POST',
+                    url: ctx + "/pushSubmissions",
+                    data: {contestId: currentChallenge.id, phaseName: currentPhase.label, workStepId: currentWorkStep.id, workStepName: currentWorkStep.workStepType, formData: {projectId: tcDirectProjectId}},
+                    cache: false,
+                    async: true,
+                    dataType: 'json',
+                    success: function (jsonResult) {
+                        closeModal();
+                        handleJsonResult(jsonResult,
+                            function (result) {
+                                pushId = result["pushId"];
+                                showSuccessfulMessage("The " + currentPushStatus + " pushed to work manager");
+                                $('.pushStatus').show();
+                                checkPushStatus();
+                            },
+                            function (errorMessage) {
+                                showServerError(errorMessage);
+                            });
+                    }
+                });
+            }, "Cancel");
+    });
 
     $("#WorkManagerDiv").hColumns({
         noContentString: "No matchable result",
@@ -53,7 +104,7 @@ $(document).ready(function() {
                         handleJsonResult(jsonResult,
                             function(result) {
                                 currentPushStatus = result.pushStatus;
-                                $("#pushButtonDiv a").text("Push " + result.pushStatus).show();
+                                $("#pushButtonDiv a#pushSubmissionsBtn").text("Push " + result.pushStatus).show();
                             },
                             function(errorMessage) {
                                 showServerError(errorMessage);

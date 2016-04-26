@@ -383,3 +383,4 @@
 @REG_SERVER_NAME@= www.topcoder-dev.com
 @LDAP_AUTH0_CONNECTION_NAME@=LDAP
 @JWT_EXPIRATION_SECONDS@ = 3600000
+@member.profile.url.base@=http://tc.cloud.topcoder.com

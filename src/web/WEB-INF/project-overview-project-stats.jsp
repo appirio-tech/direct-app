@@ -1,74 +1,62 @@
-<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-<s:push value="viewData.projectStats">
-    <tr>
+    <tr class="hide">
         <td class="statusName"># of Drafts</td>
-        <td><s:property value="draftContestsNumber"/></td>
+        <td class="draftContestsNumber"></td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName"># Scheduled</td>
-        <td><s:property value="pipelineContestsNumber"/></td>
+        <td class="pipelineContestsNumber"></td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName"># Active</td>
-        <td><s:property value="runningContestsNumber"/></td>
+        <td class="runningContestsNumber"></td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Finished(Completed/Failed/Cancelled)</td>
-        <td>${viewData.projectStats.finishedContestsNumber + viewData.dashboardProjectStat.cancelledNumber}(${viewData.dashboardProjectStat.completedNumber}/
-                ${viewData.projectStats.finishedContestsNumber-viewData.dashboardProjectStat.completedNumber}/
-                ${viewData.dashboardProjectStat.cancelledNumber})
+        <td class="allContestsNumber">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Total Member Cost</td>
-        <td>
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.totalMemberCost}" pattern="$#,##0.00"/>
+        <td class="totalMemberCost">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Average Member Cost</td>
-        <td>
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.averageMemberCostPerContest}" pattern="$#,##0.00"/>
+        <td class="averageMemberCostPerContest">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Total Challenge Fee</td>
-        <td>
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.totalContestFee}" pattern="$#,##0.00"/>
+        <td class="totalContestFee">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Average Challenge Fee</td>
-        <td>
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.averageContestFeePerContest}" pattern="$#,##0.00"/>
+        <td class="averageContestFeePerContest">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Total Project Cost</td>
-        <td id="totalProjectCostValue">
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.totalProjectCost}" pattern="$#,##0"/>
+        <td id="totalProjectCostValue" class="totalProjectCost">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Average Challenge Duration</td>
-        <td>
-            <c:out value="${tcdirect:getDurationTextInDays(viewData.dashboardProjectStat.averageContestDuration)}"/>
+        <td class="averageContestDuration">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Average Fulfillment</td>
-        <td>
-            <fmt:formatNumber value="${viewData.dashboardProjectStat.averageFulfillment}" pattern="##0.##"/>%
+        <td class="averageFulfillment">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Unresolved Issues</td>
         <td id="unresolvedIssuesTD">
         </td>
     </tr>
-    <tr>
+    <tr class="hide">
         <td class="statusName">Ongoing Races</td>
         <td id="ongoingRacesTD">
         </td>
     </tr>
-</s:push>

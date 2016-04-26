@@ -249,6 +249,24 @@
 
     <bean id="mimeTypeRetriever" class="com.topcoder.direct.services.view.action.contest.launch.MimeTypeRetriever"/>
 
+    <bean id="dbConnectionFactory" class="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+        <constructor-arg index="0" value="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl"/>
+    </bean>
+
+    <bean id="resourcePersistence" class="com.topcoder.management.resource.persistence.sql.SqlResourcePersistence">
+        <constructor-arg index="0" ref="dbConnectionFactory"/>
+    </bean>
+
+    <bean id="searchBundleManager" class="com.topcoder.search.builder.SearchBundleManager">
+        <constructor-arg index="0" value="com.topcoder.searchbuilder.common"/>
+    </bean>
+
+    <bean id="persistenceResourceManager"
+          class="com.topcoder.management.resource.persistence.PersistenceResourceManager">
+        <constructor-arg index="0" ref="resourcePersistence"/>
+        <constructor-arg index="1" ref="searchBundleManager"/>
+    </bean>
+
     <!-- Actions -->
     <bean id="baseDirectStrutsAction"
           class="com.topcoder.direct.services.view.action.BaseDirectStrutsAction"
@@ -286,6 +304,7 @@
         <property name="userService" ref="userService"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+        <property name="memberProfileUrlBase" value="@member.profile.url.base@"/>
     </bean>
 
     <bean id="projectVMManagementAction"
@@ -299,6 +318,7 @@
         <property name="studioSubmissionBase" value="@studio.submission.base@"/>
         <property name="softwareSubmissionBase" value="@file_storage_location@"/>
         <property name="mimeTypeRetriever" ref="mimeTypeRetriever"/>
+        <property name="resourceManager" ref="persistenceResourceManager"/>
     </bean>
 
     <bean id="getProjectVMInstancesAction"

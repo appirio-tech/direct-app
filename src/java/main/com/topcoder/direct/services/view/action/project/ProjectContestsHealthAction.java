@@ -13,6 +13,9 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.shared.util.logging.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -92,15 +95,20 @@ public class ProjectContestsHealthAction extends BaseDirectStrutsAction {
             log.info("Retrieved contests health data for project " + getProjectId() 
                       + ", contests count = " + contests.size());
 
+            List<Map<String, Object> > results = new ArrayList<Map<String, Object> >();
             // Get dashboard data for each contest
             for (ContestBriefDTO contest : contests.keySet()) {
                 ContestDashboardDTO contestDashboardData =
                     DataProvider.getContestDashboardData(contest.getId(), !contest.isSoftware(), false);
                 contests.get(contest).setDashboardData(contestDashboardData);
+
+                Map<String, Object> contestResult = new HashMap<String, Object>();
+                contestResult.put("contest", contest);
+                contestResult.put("healthData", contests.get(contest));
+                results.add(contestResult);
             }
 
-
-            setResult(contests);
+            setResult(results);
         } catch (Exception e) {
             DirectUtils.getServletResponse().setStatus(500);
             log.error("Got an error", e);
