@@ -14,6 +14,7 @@ CKEDITOR.editorConfig = function (config) {
        { name: 'document', items : ['Source','-','Templates','-', 'SpellChecker' ] }, 
        { name: 'clipboard', items : [ 'Cut','Copy','Paste','-','Undo','Redo' ] }, 
        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] }, 
+       { name: 'max', items : [ 'Maximize' ] }, 
        '/', 
        { name: 'styles', items : [ 'Format','Font','FontSize', '-', 'TextColor','BGColor'] }, 
        { name: 'paragraph', items : [ 'Outdent','Indent','-','Blockquote', 
