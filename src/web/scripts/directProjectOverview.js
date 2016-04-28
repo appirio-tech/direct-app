@@ -749,7 +749,7 @@ $(document).ready(function() {
             $("#projectStatistics tbody td.averageContestDuration").text(getDurationTextInDays(statsData.averageContestDuration));
             $("#projectStatistics tbody td.averageFulfillment").text('$' + statsData.averageFulfillment.formatMoney(2));
 
-            var actualCostText = $.trim($("#totalProjectCostValue").text()).replace(/[,.$]/g,'');
+            var actualCostText = $.trim($("#totalProjectCostValue").text()).replace(/[,$]/g,'');
             var actualCost = parseFloat(actualCostText);
             var projectedCost = actualCost + parseFloat($(".plannedCostValue").text());
             $(".actualCostSlot").html('$' + actualCost.formatMoney(0));
