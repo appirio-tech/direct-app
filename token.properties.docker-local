@@ -75,8 +75,8 @@ j#######################################################
 ####################
 # cache.properties #
 ####################
-@host_url@=localhost:2199
-@cache.primary@=localhost:8501
+@host_url@=tc-cache:2199
+@cache.primary@=tc-cache:8501
 
 
 ###########################
@@ -355,4 +355,5 @@ j#######################################################
 #####################################
 @ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
 @ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
+
 
