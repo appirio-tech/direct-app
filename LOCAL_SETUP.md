@@ -3,7 +3,7 @@
 ## Deployment
 
 ```sh
-git clone https://github.com/skyhit/direct-app.git
+git clone https://github.com/direct-app/direct-app.git
 cd direct-app
 git checkout base_docker_image_for_direct_app_local_setup
 cp token.properties.docker-local token.properties
