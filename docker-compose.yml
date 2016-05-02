@@ -6,8 +6,9 @@ services:
   tc-informix:
     image: "appiriodevops/informix:1.1"
   tc-direct:
-    build: ./docker/local-setup/direct-app-base
-    image: "tc-direct"
+    #build: ./docker/local-setup/direct-app-base
+    #image: "tc-direct"
+    image: "appiriodevops/direct-app-base:latest"
     links:
       - "tc-informix"
       - "tc-cache"
