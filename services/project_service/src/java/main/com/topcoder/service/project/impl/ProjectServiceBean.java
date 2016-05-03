@@ -8,8 +8,10 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -30,9 +32,12 @@ import javax.persistence.Query;
 import com.topcoder.clients.dao.ClientDAO;
 import com.topcoder.clients.dao.ProjectDAO;
 import com.topcoder.clients.model.Client;
+import com.topcoder.service.project.entities.DirectProjectType;
 import com.topcoder.service.project.entities.ProjectAnswer;
+import com.topcoder.service.project.entities.ProjectAnswerOption;
 import com.topcoder.service.project.entities.ProjectAudit;
 import com.topcoder.service.project.entities.ProjectQuestion;
+import com.topcoder.service.project.entities.ProjectQuestionOption;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.auth.module.UserProfilePrincipal;
@@ -2112,7 +2117,7 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
      *
      * @since 1.1
      */
-    private ProjectData copyProjectData(ProjectData project) {
+    private static ProjectData copyProjectData(ProjectData project) {
         ProjectData projectData = new ProjectData();
 
         projectData.setName(project.getName());
@@ -2126,14 +2131,135 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
         projectData.setCompletionDate(project.getCompletionDate());
         projectData.setProjectType(project.getProjectType());
         projectData.setProjectCategory(project.getProjectCategory());
-        projectData.setProjectAnswers(project.getProjectAnswers());
+        
+        if (project.getProjectAnswers() != null & !project.getProjectAnswers().isEmpty()) {
+            List<ProjectAnswer> answers = new ArrayList<ProjectAnswer>();
+            for (ProjectAnswer answer : project.getProjectAnswers()) {
+                answers.add(copyProjectAnswer(answer));
+            }
+            projectData.setProjectAnswers(answers);
+        }
 
         projectData.setFixedBugContestFee(project.getFixedBugContestFee());
         projectData.setPercentageBugContestFee(project.getPercentageBugContestFee());
 
         return projectData;
     }
+    
+    /**
+     * Copy the project answer
+     * 
+     * @param answer the project answer to copy
+     * @return the copied project answer
+     */
+    private static ProjectAnswer copyProjectAnswer(ProjectAnswer answer) {
+        ProjectAnswer copy = new ProjectAnswer();
+        copy.setId(answer.getId());
+        
+        if (answer.getMultipleAnswers() != null && !answer.getMultipleAnswers().isEmpty()) {
+            copy.setMultipleAnswers(new ArrayList<String>(answer.getMultipleAnswers()));
+        }
+        
+        Map<Long, ProjectQuestionOption> questionOptionMap = new HashMap<Long, ProjectQuestionOption>();
+        
+        if (answer.getProjectQuestion() != null) {
+            copy.setProjectQuestion(copyProjectQuestion(answer.getProjectQuestion()));
+            
+            List<ProjectQuestionOption> questionOptions = copy.getProjectQuestion().getQuestionOptions();
+            if (questionOptions != null) {
+                for (ProjectQuestionOption option : questionOptions) {
+                    questionOptionMap.put(option.getId(), option);
+                }
+            }
+        }
+        
+        if (answer.getOptionAnswers() != null && !answer.getOptionAnswers().isEmpty()) {
+            List<ProjectAnswerOption> options = new ArrayList<ProjectAnswerOption>();
+            for (ProjectAnswerOption option : answer.getOptionAnswers()) {
+                options.add(copyProjectAnswerOption(option, questionOptionMap));
+            }
+            copy.setOptionAnswers(options);
+        }
+        
+        copy.setTextualAnswer(answer.getTextualAnswer());
+        
+        return copy;
+    }
+    
+    /**
+     * Copy the project question
+     * 
+     * @param question the project question to copy
+     * @return the copied project question
+     */
+    private static ProjectQuestion copyProjectQuestion(ProjectQuestion question) {
+        ProjectQuestion copy = new ProjectQuestion();
+        copy.setAnswerHtmlId(question.getAnswerHtmlId());
+        copy.setId(question.getId());
+        copy.setMultipleAnswersHtmlXpath(question.getMultipleAnswersHtmlXpath());
+        
+        if (question.getQuestionOptions() != null && !question.getQuestionOptions().isEmpty()) {
+            List<ProjectQuestionOption> options = new ArrayList<ProjectQuestionOption>();
+            for (ProjectQuestionOption option : question.getQuestionOptions()) {
+                options.add(copyProjectQuestionOption(option));
+            }
+            copy.setQuestionOptions(options);
+        }
+        if (question.getDirectProjectType() != null) {
+            DirectProjectType projectType = new DirectProjectType();
+            projectType.setId(question.getDirectProjectType().getId());
+            projectType.setName(question.getDirectProjectType().getName());
+            copy.setDirectProjectType(projectType);
+        }
 
+        copy.setQuestionText(question.getQuestionText());
+        
+        return copy;
+    }
+    
+    /**
+     * Copy the project question option.
+     * 
+     * @param option the project question option
+     * @return the copied the project question option
+     */
+    private static ProjectQuestionOption copyProjectQuestionOption(ProjectQuestionOption option) {
+        ProjectQuestionOption copy = new ProjectQuestionOption();
+        
+        copy.setAnswerHtmlId(option.getAnswerHtmlId());
+        copy.setAssociatedTextboxHtmlId(option.getAssociatedTextboxHtmlId());
+        copy.setHasAssociatedTextbox(option.isHasAssociatedTextbox());
+        copy.setId(option.getId());
+        copy.setQuestionOptionText(option.getQuestionOptionText());
+        
+        return copy;
+    }
+    
+    /**
+     * Copy the project answer option.
+     * 
+     * @param option the project answer option
+     * @param questionOptions the question options
+     * @return the copied project answer option
+     */
+    private static ProjectAnswerOption copyProjectAnswerOption(ProjectAnswerOption option, 
+            Map<Long, ProjectQuestionOption> questionOptions) {
+        ProjectAnswerOption copy = new ProjectAnswerOption();
+        
+        copy.setAnswerHtmlValue(option.getAnswerHtmlValue());
+        copy.setId(option.getId());
+        
+        if (option.getProjectQuestionOption() != null) {
+            ProjectQuestionOption questionOption = questionOptions.get(option.getProjectQuestionOption().getId());
+            if (questionOption == null) {
+                questionOption = copyProjectQuestionOption(option.getProjectQuestionOption());
+            }
+            copy.setProjectQuestionOption(questionOption);
+        }
+        
+        return copy;
+    }
+    
     /**
      * <p>
      * Logs the entrance of a method.
