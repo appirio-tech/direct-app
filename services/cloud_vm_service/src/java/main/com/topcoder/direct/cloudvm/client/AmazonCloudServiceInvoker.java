@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.cloudvm.client;
 
@@ -11,6 +11,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.AvailabilityZone;
+import com.amazonaws.services.ec2.model.CreateTagsRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Instance;
@@ -19,6 +20,7 @@ import com.amazonaws.services.ec2.model.Placement;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
+import com.amazonaws.services.ec2.model.Tag;
 import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.ec2.model.TerminateInstancesResult;
 import com.topcoder.direct.cloudvm.service.CloudVMServiceException;
@@ -50,9 +52,16 @@ import com.topcoder.util.log.LogManager;
  * </ul>
  * </p>
  *
- * @author kanakarajank, jiajizhou86
- * 
- * @version 1.1
+ * <p>
+ * Changes in version 1.2 (Topcoder Direct - VM Management Improvement - Create Tag for EC2 Instance):
+ * <ul>
+ * <li>When the EC2 instance is created, tag it with AMI name and challenge id.</li>
+ * </ul>
+ * </p>
+ *
+ * @author kanakarajank, jiajizhou86, TCSCODER
+ * @version 1.2
+ * @since 1.0
  */
 public class AmazonCloudServiceInvoker {
 
@@ -124,6 +133,12 @@ public class AmazonCloudServiceInvoker {
 		// send request
 		RunInstancesResult result = client.runInstances(request);
 		Instance instance = result.getReservation().getInstances().get(0);
+
+        // create tag
+        CreateTagsRequest createTagsRequest = new CreateTagsRequest();
+        createTagsRequest.withResources(instance.getInstanceId()).withTags(new Tag("Name", vmImage.getTcName() + " - "
+            + vmInstance.getContestId()));
+        client.createTags(createTagsRequest);
 
 		vmInstance.setAwsInstanceId(instance.getInstanceId());
 		logger.log(Level.DEBUG,

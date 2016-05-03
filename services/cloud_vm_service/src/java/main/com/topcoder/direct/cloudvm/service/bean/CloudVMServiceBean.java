@@ -1,6 +1,6 @@
 /*
 
- * Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.cloudvm.service.bean;
 
@@ -81,9 +81,17 @@ import com.topcoder.util.log.LogManager;
  *     </li>
  * </ul>
  * </p>
- * 
- * @author Standlove, kanakarajank, hohosky, gentva, jiajizhou86
- * @version 1.4
+ *
+ * <p>
+ * Changes in version 1.5 (Topcoder Direct - VM Management Improvement - Create Tag for EC2 Instance):
+ * <ul>
+ * <li>Add challenge id ane challenge name into user data.</li>
+ * </ul>
+ * </p>
+ *
+ * @author Standlove, kanakarajank, hohosky, gentva, jiajizhou86, TCSCODER
+ * @version 1.5
+ * @since 1.0
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -115,6 +123,16 @@ public class CloudVMServiceBean implements CloudVMServiceRemote, CloudVMServiceL
 	 *  Represents the UserData key for storing Email
 	 */
 	private static final String EMAIL = "email";
+
+    /**
+     * Represents the UserData key for challenge id.
+     */
+    private static final String CHALLENGE_ID = "challenge_id";
+
+    /**
+     * Represents the UserData key for challenge name.
+     */
+    private static final String CHALLENGE_NAME = "challenge_name";
 
 	/**
 	 * Represents the String containing the End of Line
@@ -319,6 +337,8 @@ public class CloudVMServiceBean implements CloudVMServiceRemote, CloudVMServiceL
 				userData.append(populateUserData(BRANCH,vmInstance.getSvnBranch()));
 				userData.append(populateUserData(HANDLE,tcMemberHandle));
 				userData.append(populateUserData(USER_EMAIL,userService.getEmailAddress(tcMemberHandle)));
+				userData.append(populateUserData(CHALLENGE_ID, "" + vmInstance.getContestId()));
+				userData.append(populateUserData(CHALLENGE_NAME, vmInstance.getContestName()));
 				if (vmInstanceMain.getUserData() != null ){
 					userData.append(vmInstanceMain.getUserData());
 				}
