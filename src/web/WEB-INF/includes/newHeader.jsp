@@ -334,7 +334,7 @@
         </li>
 
         <li class="helloUserLink">
-            <a href="https://www.topcoder.com/university/help-center" target="_blank">Help</a>
+            <a href="https://help.topcoder.com" target="_blank">Help</a>
         </li>
     </ul>
 </div><!-- End .helloUSer -->
