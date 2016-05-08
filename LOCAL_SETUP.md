@@ -3,9 +3,8 @@
 ## Deployment
 
 ```sh
-git clone https://github.com/direct-app/direct-app.git
+git clone https://github.com/appirio-tech/direct-app.git
 cd direct-app
-git checkout base_docker_image_for_direct_app_local_setup
 cp token.properties.docker-local token.properties
 cp topcoder_global.properties.docker-local topcoder_global.properties
 docker-compose up
