@@ -166,7 +166,8 @@
 
     <property name="xerces.jar" value="${ext_libdir}/xerces/2.6.2/xerces.jar"/>
     <property name="commons-discovery.jar" value="${ext_libdir}/commons-discovery/0.2/commons-discovery.jar"/>
-    <property name="aws-java" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
+    <property name="aws-java-sdk-core" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-core-1.10.72.jar"/>
+    <property name="aws-java-sdk-ec2" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-ec2-1.10.72.jar"/>
     <property name="jackson-core" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
     <property name="jackson-mapper" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
 
@@ -226,7 +227,8 @@
 
         <pathelement location="${jaxb-api.jar}"/>
         <pathelement location="${jaxb-impl.jar}"/>
-        <pathelement location="${aws-java}"/>
+        <pathelement location="${aws-java-sdk-core}"/>
+        <pathelement location="${aws-java-sdk-ec2}"/>
         <pathelement location="${jboss_home}/lib/commons-codec.jar"/>
         <pathelement location="${jboss_home}/lib/commons-httpclient.jar"/>
         <pathelement location="${jackson-core}"/>
