@@ -1,8 +1,5 @@
 version: '2'
 services:
-  tc-cache:
-    build: ./docker/tc-cache
-    image: "tc-cache"
   tc-informix:
     image: "appiriodevops/informix:1.1"
   tc-direct:
@@ -11,7 +8,6 @@ services:
     image: "appiriodevops/direct-app-base:latest"
     links:
       - "tc-informix"
-      - "tc-cache"
     volumes:
       - ".:/root/direct"
     command: sh -c "cd /root/direct && ant first_deploy && /root/jboss-4.2.3.GA/bin/run.sh -b 0.0.0.0"
