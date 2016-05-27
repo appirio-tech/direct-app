@@ -240,6 +240,7 @@
         <copy file="${httpProxyPackage.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbcx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbc.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${redshift.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jira-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jira-soapclient-all.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${mysql-connector-java-5.1.6-bin.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -592,6 +593,7 @@
                 <include name="aws-java-sdk/aws-java-sdk-1.0.004.jar" />
                 <include name="informix/ifxjdbc.jar" />
                 <include name="informix/ifxjdbcx.jar" />
+                <include name="redshift/RedshiftJDBC41-1.1.10.1010.jar" />
                 <include name="jboss-cache/jboss-cache-jdk50.jar" />
                 <include name="jboss-cache/jgroups.jar" />
             </fileset>

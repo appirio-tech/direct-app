@@ -303,7 +303,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         // If necessary get and process report data
         if (!getViewData().isShowJustForm()) {
 
-            Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
+            Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReportFromRedshift
                     (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
                             paymentTypeIds,
                             customerId, billingAccountId, contestId, invoiceNumber, startDate, endDate,

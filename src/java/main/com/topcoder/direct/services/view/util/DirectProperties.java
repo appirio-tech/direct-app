@@ -39,8 +39,16 @@ import java.util.MissingResourceException;
  *       <li>Add {@link #JWT_EXPIRATION_SECONDS}</li>
  *   </ul>
  * </p>
- * @author BeBetter, ecnu_haozi, Veve
- * @version 1.3
+ *<p>
+ *   Version 1.4 (TopCoder Direct - Update competition costs report to use Redshift)
+ *   <ul>
+ *       <li>Add {@link #REDSHIFT_JDBC_URL}</li>
+ *       <li>Add {@link #REDSHIFT_JDBC_USERNAME}</li>
+ *       <li>Add {@link #REDSHIFT_JDBC_PASSWORD}</li>
+ *   </ul>
+ * </p>
+ * @author BeBetter, ecnu_haozi, Veve, kalc
+ * @version 1.4
  */
 public final class DirectProperties {
     /**
@@ -137,6 +145,24 @@ public final class DirectProperties {
      *
      */
     public static String USE_LOGIN_PROCESSOR;
+
+    /**
+     * URL for Redshift database
+     *
+     */
+    public static String REDSHIFT_JDBC_URL;
+
+    /**
+     * username for Redshift database
+     *
+     */
+    public static String REDSHIFT_JDBC_USERNAME;
+
+    /**
+     * Password for Redshift database
+     *
+     */
+    public static String REDSHIFT_JDBC_PASSWORD;
 
     /**
      * <p>
