@@ -5635,7 +5635,7 @@ public class DataProvider {
 
         boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
 
-		String query = "select * from competition_costs where contest_id=DECODE(?, 0, contest_id, ?) " +
+		String query = "select * from cost_transaction where contest_id=DECODE(?, 0, contest_id, ?) " +
                		"AND direct_project_id=DECODE(?, 0, direct_project_id, ?) AND " +
                		"billing_project_id=DECODE(?, 0, billing_project_id, ?) AND " +
                		"client_id=DECODE(?, 0, client_id, ?) AND " +

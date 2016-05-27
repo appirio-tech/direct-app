@@ -303,11 +303,20 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         // If necessary get and process report data
         if (!getViewData().isShowJustForm()) {
 
-            Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReportFromRedshift
-                    (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
-                            paymentTypeIds,
-                            customerId, billingAccountId, contestId, invoiceNumber, startDate, endDate,
-                            BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
+            Map<Long, List<BillingCostReportEntryDTO>> billingCosts = new HashMap<Long, List<BillingCostReportEntryDTO>>();
+            if(form.getUseRedshift() != null && form.getUseRedshift()) {
+                billingCosts = DataProvider.getDashboardBillingCostReportFromRedshift
+                        (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
+                                paymentTypeIds,
+                                customerId, billingAccountId, contestId, invoiceNumber, startDate, endDate,
+                                BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
+            } else {
+                billingCosts = DataProvider.getDashboardBillingCostReport
+                        (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
+                                paymentTypeIds,
+                                customerId, billingAccountId, contestId, invoiceNumber, startDate, endDate,
+                                BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
+            }
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();
 
