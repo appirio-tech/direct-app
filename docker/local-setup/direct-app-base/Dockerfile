@@ -57,5 +57,5 @@ RUN mkdir /root/temp_files
 RUN mkdir -p /root/studiofiles/submissions
 
 # expose jboss ports
-EXPOSE 8180 443
+EXPOSE 8180 443 1199 1198 3973
 
