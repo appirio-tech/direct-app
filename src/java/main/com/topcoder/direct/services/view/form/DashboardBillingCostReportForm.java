@@ -52,6 +52,13 @@ public class DashboardBillingCostReportForm extends DashboardCostReportForm {
      * Represents the invoice number submitted by billing cost report form.
      */
     private String invoiceNumber;
+
+    /**
+     * <p>Represents to use redshift instead of informix.</p>
+     * 
+     * @since 1.2
+     */
+    private Boolean useRedshift;
     
     /**
      * Gets the payment type ids used for filtering billing cost report.
@@ -89,6 +96,26 @@ public class DashboardBillingCostReportForm extends DashboardCostReportForm {
      */
     public void setSelectInvoiced(Boolean selectInvoiced) {
         this.selectInvoiced = selectInvoiced;
+    }
+
+    /**
+     * Gets whether to use redshift or not.
+     *
+     * @return whether to use redshift.
+     * @since 1.2
+     */
+    public Boolean getUseRedshift() {
+        return useRedshift;
+    }
+    
+    /**
+     * Sets whether to use redshift or not.
+     *
+     * @param useRedshift whether to use redshift or not
+     * @since 1.2
+     */
+    public void setUseRedshift(Boolean useRedshift) {
+        this.useRedshift = useRedshift;
     }
     
     /**

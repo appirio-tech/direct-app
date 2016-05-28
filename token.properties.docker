@@ -384,3 +384,11 @@
 @LDAP_AUTH0_CONNECTION_NAME@=LDAP
 @JWT_EXPIRATION_SECONDS@ = 3600000
 @member.profile.url.base@=http://tc.cloud.topcoder.com
+
+#####################################
+# Redshift Connection parameters    #
+#####################################
+@REDSHIFT_JDBC_URL@=jdbc:redshift://topcoder.caezoofcs94i.us-west-2.redshift.amazonaws.com:5439/billing
+@REDSHIFT_JDBC_USERNAME@=topcoder
+@REDSHIFT_JDBC_PASSWORD@=T0pcod3r
+

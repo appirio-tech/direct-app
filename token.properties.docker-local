@@ -356,4 +356,12 @@ j#######################################################
 @ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
 @ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
 
+#####################################
+# Redshift Connection parameters    #
+#####################################
+@REDSHIFT_JDBC_URL@=jdbc:redshift://topcoder.caezoofcs94i.us-west-2.redshift.amazonaws.com:5439/billing
+@REDSHIFT_JDBC_USERNAME@=topcoder
+@REDSHIFT_JDBC_PASSWORD@=T0pcod3r
+
+
 
