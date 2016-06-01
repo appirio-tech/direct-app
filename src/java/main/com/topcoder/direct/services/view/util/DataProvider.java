@@ -5640,7 +5640,9 @@ public class DataProvider {
                		"billing_project_id=DECODE(?, 0, billing_project_id, ?) AND " +
                		"client_id=DECODE(?, 0, client_id, ?) AND " +
                		"invoice_id=DECODE(?, 0, invoice_id, ?) AND " + 
-               		"payment_date between ? AND ? ORDER BY payment_date DESC";
+               		"payment_date between ? AND ?";
+
+        String sqlOrder = "ORDER BY payment_date DESC";
 
 		Request request = new Request();
 
@@ -5680,7 +5682,7 @@ public class DataProvider {
             paymentTypeFilter.add(paymentTypeId);
         }
 
-		data = getDataFromRedshift(query, request, paymentTypeFilter, paymentTypesMapping);
+		data = getDataFromRedshift(query, sqlOrder, request, paymentTypeFilter, paymentTypesMapping, currentUser.getUserId());
 
 		return data;
     }
@@ -5696,7 +5698,7 @@ public class DataProvider {
      * @return the generated cost report.
      * @since 2.5.0
      */
-     private static Map<Long, List<BillingCostReportEntryDTO>> getDataFromRedshift(String sql, Request request, Set<Long> paymentTypeFilter, Map<String, Long> paymentTypesMapping) {
+     private static Map<Long, List<BillingCostReportEntryDTO>> getDataFromRedshift(String sql, String sqlOrder, Request request, Set<Long> paymentTypeFilter, Map<String, Long> paymentTypesMapping,long userId) {
 	 	Connection conn = null;
         PreparedStatement stmt = null;
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
@@ -5709,6 +5711,51 @@ public class DataProvider {
            props.setProperty("user", DirectProperties.REDSHIFT_JDBC_USERNAME);
            props.setProperty("password", DirectProperties.REDSHIFT_JDBC_PASSWORD);
            conn = DriverManager.getConnection(DirectProperties.REDSHIFT_JDBC_URL, props);
+
+           long pid = Long.parseLong(request.getProperty("pj"));
+           long cid = Long.parseLong(request.getProperty("clientid"));
+           List<String> pids = new ArrayList<String>();
+           List<String> cids = new ArrayList<String>();
+           if (pid==0){
+
+				final String queryName = "get_user_projects";
+				DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+				Request req = new Request();
+				req.setContentHandle(queryName);
+				req.setProperty("uid", String.valueOf(userId));
+
+				final ResultSetContainer resultSetContainer = dataAccessor.getData(req).get(queryName);
+				for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+					pids.add(row.getStringItem("project_id"));
+				}
+               String pstr="";
+               for (int i=0;i<pids.size();i++){
+                   if (i>0) pstr+=",";
+                   pstr+=pids.get(i);
+               }
+               sql+=" AND direct_project_id IN ("+pstr+")";
+           }
+           if (cid==0){
+				final String queryName = "get_user_clients";
+				DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+				Request req = new Request();
+				req.setContentHandle(queryName);
+				req.setProperty("uid", String.valueOf(userId));
+
+				final ResultSetContainer resultSetContainer = dataAccessor.getData(req).get(queryName);
+				for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+					cids.add(row.getStringItem("client_id"));
+				}
+               String cstr="";
+               for (int i=0;i<cids.size();i++){
+                   if (i>0) cstr+=",";
+                   cstr+=cids.get(i);
+               }
+               sql+=" AND client_id IN ("+cstr+")";
+           }
+
+           sql+=" "+sqlOrder;
+
 
 		   //Try a simple query.
            stmt = conn.prepareStatement(sql);
@@ -5725,24 +5772,24 @@ public class DataProvider {
            stmt.setLong(5, Long.parseLong(request.getProperty("billingaccountid")));
            stmt.setLong(6, Long.parseLong(request.getProperty("billingaccountid")));
 
-			// set client_id
-			stmt.setLong(7, Long.parseLong(request.getProperty("clientid")));
-			stmt.setLong(8, Long.parseLong(request.getProperty("clientid")));
+	   // set client_id
+           stmt.setLong(7, Long.parseLong(request.getProperty("clientid")));
+           stmt.setLong(8, Long.parseLong(request.getProperty("clientid")));
 
-			// set invoice_id
-			stmt.setLong(9, Long.parseLong(request.getProperty("invoicenumber")));
-			stmt.setLong(10, Long.parseLong(request.getProperty("invoicenumber")));
+	   // set invoice_id
+	   stmt.setLong(9, Long.parseLong(request.getProperty("invoicenumber")));
+	   stmt.setLong(10, Long.parseLong(request.getProperty("invoicenumber")));
 
-			// set payment_date_start
-			stmt.setString(11, request.getProperty("sdt"));
+	   // set payment_date_start
+	   stmt.setString(11, request.getProperty("sdt"));
 
-			// set payment_date_end
-			stmt.setString(12, request.getProperty("edt"));
+           // set payment_date_end
+	   stmt.setString(12, request.getProperty("edt"));
 
            ResultSet allResults = stmt.executeQuery();
 
-		   while(allResults != null && allResults.next()) {
-			BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
+           while(allResults != null && allResults.next()) {
+	    BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
 
 			// set status first
             String status = allResults.getString("contest_status");
