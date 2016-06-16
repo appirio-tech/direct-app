@@ -330,7 +330,7 @@
         </li>
 
         <li class="helloUserLink">
-            <a href="<s:url action="logout" namespace="/"/>">Logout</a>
+            <a href="https://<%=ServerConfiguration.SERVER_NAME%>/logout">Logout</a>
         </li>
 
         <li class="helloUserLink">
