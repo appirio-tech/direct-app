@@ -5365,7 +5365,7 @@ public class ProjectServicesImpl implements ProjectServices {
                         || projectHeader.getProjectCategory().getId() == ProjectCategory.ASSEMBLY.getId()) {
                     p.setAttribute("Reviewer Number", "2");
                 } else {
-                    p.setAttribute("Reviewer Number", "3");
+                    p.setAttribute("Reviewer Number", "2");
                 }
             }
 			else if (p.getPhaseType().getName().equals("Secondary Reviewer Review"))
