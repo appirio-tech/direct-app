@@ -229,9 +229,8 @@ $(document).ready(function(){
             var currentPhaseStartTime = healthData.dashboardData.currentPhase.startTime,
                 currentPhaseEndTime = healthData.dashboardData.currentPhase.endTime,
                 currentPhaseName = healthData.dashboardData.currentPhase.phaseName,
-                nextPhaseName = healthData.dashboardData.nextPhase.phaseName,
-                nextPhaseStartTime = healthData.dashboardData.nextPhase.startTime,
-                nextPhaseEndTime = healthData.dashboardData.nextPhase.endTime,
+                nextPhaseName = healthData.dashboardData.nextPhase ? healthData.dashboardData.nextPhase.phaseName : "",
+                nextPhaseStartTime = healthData.dashboardData.nextPhase ? healthData.dashboardData.nextPhase.startTime : null,
                 numberOfRegistrants = healthData.dashboardData.numberOfRegistrants;
 
             var copilotContestDetailLink = "/direct/copilot/copilotContestDetails.action?projectId=" + contestData.id,
@@ -265,7 +264,9 @@ $(document).ready(function(){
             row += '<td class="alignTop">';
             row += '<div class="unitContent dateNotice">' + nextPhaseName + '&nbsp;</div>'
             row += '<div class="unitContent dateFullFormat">';
-            row += formatEDTDate(nextPhaseStartTime);
+            if (nextPhaseStartTime != null) {
+                row += formatEDTDate(nextPhaseStartTime);
+            }
             row += '</div>';
             row += '</td>';
 

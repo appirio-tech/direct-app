@@ -1,0 +1,359 @@
+j#######################################################
+# TopCoder Software Component Development Environment #
+#######################################################
+
+#############################
+## Home directory for Jboss #
+#############################
+@JBOSS_HOME@=/root/jboss-4.2.3.GA
+
+####################################
+## Informix database configuration #
+####################################
+@database.server@=tc-informix
+@database.port@=2021
+@database.username@=informix
+@database.password@=1nf0rm1x
+@database.INFORMIXSERVER@=informixoltp_tcp
+
+###############################
+# bugs database configuration #
+###############################
+@bugs.connection.string@=jdbc:informix-sqli://tc-informix:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp;
+@bugs.database.username@=informix
+@bugs.database.password@=1nf0rm1x
+@bugs.database.driver@=com.informix.jdbc.IfxDriver
+@bugs.type.mapping@=InformixDB
+
+##############################
+# dw database configuration  #
+##############################
+@dw.database.server@=tc-informix
+@dw.database.INFORMIXSERVER@=informixoltp_tcp
+
+#######################################
+## Parameters used by EmailEngine.xml #
+#######################################
+@emailengine_smtp_host@=localhost
+@emailengine_smtp_port@=25
+@emailengine_smtp_user@=
+@emailengine_smtp_password@=
+
+########################################################
+# URL for JNDI lookup used in following files          #
+#  tc_login_bean.properties                            #
+#  ApplicationServer.properties                        #
+########################################################
+@context.security.url@=jnp://localhost:1199
+
+########################################################
+# URL for JNDI lookup used in following files          #
+#  app.properties                                      #
+#  auto_piolot.xml                                     #
+#  Direct.properties                                   #
+########################################################
+@service.provider.url@=localhost:1199
+@studio.submission.base@=/root/studiofiles/submissions
+
+#############
+# LDAP host #
+#############
+@ldap_host@=NOT_USED
+@bind_password@=NOT_USED
+
+############################################################################################
+# file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
+############################################################################################
+@file_storage_location@=/root/temp_files
+
+##############
+# struts.xml #
+##############
+@uploadedFilesRootDir@=/root/temp_files
+@excelFile@=/root/jboss-4.2.3.GA/server/default/conf/rev_sample.xlsx
+
+####################
+# cache.properties #
+####################
+@host_url@=tc-cache:2199
+@cache.primary@=tc-cache:8501
+
+
+###########################
+# Forum bean provider url #
+###########################
+@forumBeanProviderUrl@=jnp://localhost:1199
+@studioForumBeanProviderUrl@=jnp://63.118.154.182:1099
+
+########################################################################
+# ContestServiceFacade.xml for contest service facade component        #
+########################################################################
+#ContestEligibilityMapping
+@ContestEligibilityMapping.name@=1
+@ContestEligibilityMapping.EligibilityName@=TextName1
+@ContestEligibilityMapping.EligibilityGroupId@=1
+@ContestEligibilityMapping.EligibilityAdminRole@=LCSUPPORT
+
+#payflow
+@payFlowHostAddress@=pilot-payflowpro.paypal.com
+@payFlowUser@=tcTestAccount2
+@payFlowPartner@=PayPal
+@payFlowVendor@=tcTestAccount2
+@payFlowPassword@=password123
+@createForum@=false
+
+@userBeanProviderUrl@=jnp://localhost:1199
+@projectBeanProviderUrl@=jnp://localhost:1199
+@mockSubmissionFilePath@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/
+@studioForumRootCategoryId@=23250
+
+###################################################
+# ejb-jar.xml for studio service component        #
+###################################################
+@documentBasePath@=/nfs_shares/studiofiles/documents/
+@pactsServiceLocation@=63.118.154.181:1099
+@autoPaymentsEnabled@=false
+@submissionSiteBaseUrl@=http://174.129.126.198/studio/submissions
+@submissionSiteFilePath@=/nfs_shares/studiofiles/documents/
+
+#################################################################################
+# SpecReviewCommentService.xml for spec review comment service component        #
+#################################################################################
+@createComment@=false
+
+#################################################################################
+# SpecReviewService.xml for spec review service component                       #
+#################################################################################
+@defaultSpecReviewerContestType1@=99
+@defaultSpecReviewerUserId1@=99
+
+
+##########################
+# applicationContext.xml #
+##########################
+#@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor
+@loginProcessor@=com.topcoder.direct.services.view.processor.security.MockLoginProcessor
+@useLoginProcessor@=true
+@JWT_EXPIRATION_SECONDS@=36000000 
+@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
+@pptJIRAProject@=TCFAQ
+@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
+@analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
+@randomStringImageConfigFile@=/root/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/RandomStringImage.xml
+@randomStringImageColorsFile@=/root/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/Colors.xml
+@randomStringImageDictFile@=/root/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/movie-characters
+@invoiceUploadRootPath@=C:/jboss-4.2.3.GA/tmp/invoices
+@paypal.baseUrl@=https://api-3t.sandbox.paypal.com/nvp
+@paypal.username@=platfo_1255077030_biz_api1.gmail.com
+@paypal.password@=1255077037
+@paypal.signature@=Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf
+@payoneer.baseApiUrl@=api.payoneer.com
+@payoneer.username@username
+@payoneer.password@password
+@payoneer.partnerId@partnerId
+@paymemtStatsService.resultLimit@=10
+@paymentsService.paymentMethodID@=2
+@payoneerService@=com.topcoder.direct.services.payments.impl.MockPayoneerServiceImpl
+
+
+@paymentsByStatusByDays@=30,60,120
+@paypalPaymentMethodId@=2
+@payoneerPaymentMethodId@=5
+@westernPaymentMethodId@=6
+
+@taskEmailSender@=support@topcoder.com
+@taskCreationEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; has been created.
+@taskCreationEmailBodyTemplatePath@=email_templates/create_task_email_template.txt
+@taskStatusChangeEmailSubjectTemplateText@=Task &quot;%TASK_NAME%&quot; status has been changed.
+@taskStatusChangeEmailBodyTemplatePath@=email_templates/update_task_status_email_template.txt
+
+
+#####################################
+# applicationContext.xml direct.war #
+#####################################
+@onlinereview.login.url@=http://tcs.cloud.topcoder.com/review/actions/Login.do
+@onlinereview.login.username@=heffan
+@onlinereview.login.password@=password
+@onlinereview.compsitereview.url.prefix@=http://tcs.cloud.topcoder.com/review/actions/ViewCompositeScorecard.do?method=viewCompositeScorecard&amp;pdf=true&amp;sid=
+@onlinereview.url.base@=http://tcs.cloud.topcoder.com
+
+
+###########################
+# liquidPortalService.xml #
+###########################
+@notusObserverTermsId@=20794
+@notusSubmitterTermsId@=20623
+@jiraEmailAddress@=sma@topcoder.com
+@liquidStudioContestsEmailFrom@=sma@topcoder.com
+@liquidStudioContestsEmailTo@=sma@topcoder.com
+@liquidStudioContestsEmailCC@=sma@topcoder.com
+@liquidStudioContestsEmailBilling@=1
+@liquidCcnEmailFrom@=sma@topcoder.com
+@liquidCcnEmailTo@=sma@topcoder.com
+
+#####################
+# Direct.properties #
+#####################
+@CONTEST_SERVICE_PROVIDER_URL@=localhost:1199
+
+############################
+# objectFactory_config.xml #
+############################
+@jiraServiceEndPoint@=http://bad/bugs/rpc/soap/jirasoapservice-v2
+@jiraServiceAdminUserName@=jadmin
+@jiraServiceAdminUserPassword@=admin123
+@confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
+@confluenceServiceAdminUserName@=scamp
+@confluenceServiceAdminUserPassword@=password
+
+############################
+# IssueTrackingConfig.xml  #
+############################
+@jiraIssueURLPrefix@=http://tc.cloud.topcoder.com/bugs/browse/
+@jiraProfilePrefix@=http://tc.cloud.topcoder.com/bugs/secure/ViewProfile.jspa?name=
+@jiraBugRaceProject@=TEST
+
+################################
+# ApplicationServer.properties #
+################################
+## MEMBER_DEV
+@ApplicationServer.ENVIRONMENT@=3
+@ApplicationServer.SERVER_NAME@=tc.cloud.topcoder.com
+@ApplicationServer.STUDIO_SERVER_NAME@=studio.cloud.topcoder.com
+@ApplicationServer.OPENAIM_SERVER_NAME@=www.dev.topcoder.com/openaim
+@ApplicationServer.TRUVEO_SERVER_NAME@=www.dev.topcoder.com/truveo
+@ApplicationServer.WINFORMULA_SERVER_NAME@=www.dev.topcoder.com/winformula
+@ApplicationServer.CSF_SERVER_NAME@=csf.dev.topcoder.com
+@ApplicationServer.CORP_SERVER_NAME@=www.dev.topcoder.com/corp
+@ApplicationServer.SOFTWARE_SERVER_NAME@=tcs.cloud.topcoder.com
+@ApplicationServer.FORUMS_SERVER_NAME@=tc.cloud.topcoder.com/forums
+@ApplicationServer.HOST_URL@=localhost:1199
+@ApplicationServer.FORUMS_HOST_URL@=localhost:1199
+@ApplicationServer.CONTEST_HOST_URL@=63.118.154.180:10099
+@ApplicationServer.BASE_DIR@=/export/home/web/web/
+@ApplicationServer.XSL_CACHING@=false
+@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1199
+@ApplicationServer.TCS_APP_SERVER_URL@=localhost:11199
+@ApplicationServer.SESSION_ID_LENGTH@=0
+@ApplicationServer.FILE_CONVERSION_PROVIDER_URL@=172.16.210.53:1099
+@ApplicationServer.WEB_SERVER_ID@=1
+@ApplicationServer.JMS_HOST_URL@=jnp://localhost:1699
+@ApplicationServer.DISTRIBUTED_UI_SERVER_NAME@ = localhost:8080
+@ApplicationServer.OR_WEBSERVICES_SERVER_NAME@ = 63.118.154.186:8080
+@ApplicationServer.WIKI_SERVER_NAME@ = www.dev.topcoder.com/wiki
+@ApplicationServer.USER_SERVICES_HOST_URL@=jnp://localhost:1199
+@ApplicationServer.JNDI_FACTORY@=org.jnp.interfaces.NamingContextFactory
+@ApplicationServer.JMS_FACTORY@=java:/ConnectionFactory
+@ApplicationServer.JMS_BKP_FACTORY@=jms.connection.jmsFactory_BKP
+@ApplicationServer.TRANS_FACTORY@=javax.transaction.UserTransaction
+@ApplicationServer.TRANS_MANAGER@=java:/TransactionManager
+@ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
+
+@ApplicationServer.NEW_SERVER_NAME@=newtc.cloud.topcoder.com
+@ApplicationServer.JIRA_SERVER_NAME@=https://apps.topcoder.com/test
+@ApplicationServer.STUDIO_FORUMS_SERVER_NAME@=studio.cloud.topcoder.com/forums
+
+@ApplicationServer.STUDIO_SERVICES_PROVIDER_URL@=jnp://localhost:1399
+@ApplicationServer.STUDIO_SERVICES_USERNAME@=user
+@ApplicationServer.STUDIO_SERVICES_PASSWORD@=password
+@ApplicationServer.STUDIO_SERVICES_PROTOCOL@=cockpitDomain
+@ApplicationServer.STUDIO_SERVICES_CONTEXT_FACTORY@=org.jboss.security.jndi.LoginInitialContextFactory
+@ApplicationServer.STUDIO_SERVICES_PKG_PREFIXES@=org.jboss.naming:org.jnp.interfaces
+@ApplicationServer.STUDIO_SERVICES_JNDI_NAME@=StudioServiceBean/remote
+
+@ApplicationServer.SSO_COOKIE_KEY@=tcsso
+@ApplicationServer.SSO_HASH_SECRET@=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
+@ApplicationServer.SSO_DOMAIN@=topcoder.com
+
+
+###########################
+# Scorecard Configuration #
+###########################
+@scorecardUrl@=jdbc:informix-sqli://tc-informix:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
+
+################################
+# ppt and analytics activation #
+################################
+@ppt_activation_email_body_template_file@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/ppt.war/WEB-INF/classes/email_template/register_activation.txt
+@mobile_activation_email_body_template_file@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/mobile.war/WEB-INF/classes/email_template/register_activation.txt
+@analytics_activation_email_body_template_file@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/analytics.war/WEB-INF/classes/email_template/register_activation.txt
+@activation_email_from_address@=service@topcoder.com
+@activation_email_subject@=TopCoder Activation
+
+#######################################
+# securityGroupApplicationContext.xml #
+#######################################
+@emailTemplateFileDir@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/email_templates
+@SecurityGroup.InvitationEmailSender@=support@topcoder.com
+@SecurityGroup.AcceptRejectUrlBase@=http://cockpit.cloud.topcoder.com/direct/group/acceptRejectGroupInvitationAction.action
+@SecurityGroup.RegistrationUrl@=http://cockpit.cloud.topcoder.com/direct/group/acceptRejectGroupInvitationAction.action
+@SecurityGroup.EditNotificationUrl@=http://tc.cloud.topcoder.com/tc?module=EditNotifications
+@securityGroupsManagers@=
+@securityGroupsManagersOnly@=true
+
+#######################################
+# CloudVMService.xml                  #
+#######################################
+@notusBaseUrl@=https://www-180.ibm.com/cloud/innovation/api/rest/20090403
+
+############################
+# ProjectServiceFacade.xml #
+############################
+@projectCreationEmailToAddresses@=testuser1@topcoder.com;testuser2@topcoder.com
+@projectCreationEmailCCAddresses@=testuser3@topcoder.com;testuser4@topcoder.com
+
+#######################################
+# Wireframe Submissions Configuration #
+#######################################
+@wireframeDirectory@=/root/wireframeDirectory
+@wireframeIndexPage@=submission/index.html
+@trustedIPs@=192.168.150.250;202.120.2.101
+@watermarkImageMapping@=/viewWireframePage/;/css/direct/WatermarkTcRepeat.css
+
+#########################
+# Assets configuration #
+#########################
+@assetUploadBasePath@=/tmp/assetupload
+@assetUploadTempFileRoot@=/tmp/assetuploadtemp
+
+##################################################
+# REST API                                       #
+##################################################
+@api_server_domain@=api.topcoder.com
+@apiKey@=a47d06ceff527eddd5c9b51623a0eaad
+@clientId@=test
+@clientSecret@=test
+
+
+#######################################
+# Contest Creation SNS Configuration #
+#######################################
+@amazonSNSAccessKey@=AKIAIGN4KRVNTBGLQDJA
+@amazonSNSSecretKey@=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
+@contestCreationArn@=arn:aws:sns:us-west-2:170569073448:tc-test
+@contestCreationSubject@=cmc challenge contest creation
+@contestCreationMessageTemplatePath@=contest_creation_sns_message.txt
+@contestUpdateSubject@=cmc challenge contest update
+@contestUpdateMessageTemplatePath@=contest_update_sns_message.txt
+
+#####################################
+# Auth0                             #
+#####################################
+@DOMAIN_AUTH0@ = sma.auth0.com
+@CLIENT_ID_AUTH0@ = CMaBuwSnY0Vu68PLrWatvvu3iIiGPh7t
+@CLIENT_SECRET_AUTH0@ = ZEEIRf_aLhvbYymAMTFefoEJ_8y7ELrUaboMTmE5fQoJXEo7sxxyg8IW6gtbyKuT
+@REG_SERVER_NAME@= tc.cloud.topcoder.com
+@LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
+
+
+@ApplicationServer.SSO_COOKIE_KEY@=tcsso_vm
+@ApplicationServer.SSO_HASH_SECRET@=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
+@ApplicationServer.SSO_DOMAIN@=topcoder.com
+
+#####################################
+# Direct API                        #
+#####################################
+@ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
+@ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
+
+

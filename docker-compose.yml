@@ -1,0 +1,23 @@
+version: '2'
+services:
+  tc-informix:
+    image: "appiriodevops/informix:1.2"
+    ports:
+      - "2021:2021"
+  tc-direct:
+    build: ./docker/local-setup/direct-app-base
+    #image: "tc-direct"
+    #image: "appiriodevops/direct-app-base:latest"
+    links:
+      - "tc-informix"
+    volumes:
+      - ".:/root/direct"
+    hostname: cockpit.cloud.topcoder.com
+    command: sh -c "cd /root/direct && ant first_deploy && /root/jboss-4.2.3.GA/bin/run.sh -b 0.0.0.0 -Djboss.remoting.version=1"
+    ports:
+      - "443:443"
+      - "8180:8180"
+      - "1199:1199"
+      - "1198:1198"
+      - "3973:3973"
+

@@ -5361,15 +5361,12 @@ public class ProjectServicesImpl implements ProjectServices {
                         ) {
                     // 1) copilot posting 2) studio 3) bug hunt 4) code with auto assigned review only requires one reviewer.
                     p.setAttribute("Reviewer Number", "1");
-                } else if(projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                                projectHeader.getAutoAssignReviewerId() == 0) {
+                } else if((projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() && projectHeader.getAutoAssignReviewerId() == 0)
+                        || projectHeader.getProjectCategory().getId() == ProjectCategory.ASSEMBLY.getId()) {
                     p.setAttribute("Reviewer Number", "2");
                 } else {
-                    p.setAttribute("Reviewer Number", "3");
+                    p.setAttribute("Reviewer Number", "2");
                 }
-
-
-                
             }
 			else if (p.getPhaseType().getName().equals("Secondary Reviewer Review"))
             {

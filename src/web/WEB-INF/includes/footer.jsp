@@ -38,36 +38,6 @@
         <a href="http://www.topcoder.com/community/how-it-works/privacy-policy/" target="_blank" title="Privacy">Privacy</a>
     </div>
     <!--End copyright-->
-    <!--Add Feedback Dialog-->
-    <c:if test="${requestScope.CURRENT_TAB ne 'enterprise'}">
-        <div class="fbMask">
-            <div class="fbBox">
-                <a class="fbBtn" href="javascript:;">
-                    <span class="r">
-                        <span class="m">
-                            <i></i>
-                            Feedback
-                        </span>
-                    </span>
-                </a>
-                <div class="fbSubmit">
-                    <div class="boxTop"></div>
-                    <div class="boxContent">
-                        <p>Have some feedback?  Encountered an issue?  Please share with us.</p>
-                        <textarea cols="6" rows="10"></textarea>
-                        <div class="action">
-                            <a href="javascript:;" class="button6 cancel"><span class="left"><span class="right">Cancel</span></span></a>
-                            <a href="javascript:;" class="button6 submit"><span class="left"><span class="right">Submit</span></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fbMsg">
-                <span class="right"><span class="text">Your feedback has been submitted. Thank you.</span></span>
-            </div>
-        </div>
-    </c:if>
-    <!--End .fbMask--> 
 </div>
 
 <% 
@@ -102,7 +72,12 @@
   })();
 
 </script>
-<script src="https://www.surveymonkey.com/jsPop.aspx?sm=9TuySvkc_2bkBu8a5NO08XyQ_3d_3d"> </script>
+
+<!-- Start of topcoder Zendesk Widget script -->
+<script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","topcoder.zendesk.com");
+/*]]>*/</script>
+<!-- End of topcoder Zendesk Widget script -->
+
 
 <!-- End #footer -->
 

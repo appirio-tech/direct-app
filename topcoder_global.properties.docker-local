@@ -1,0 +1,20 @@
+base=/root/direct
+libdir=${base}/lib
+tcs_libdir=${libdir}/tcs
+direct_service_libdir=${libdir}/tcs/ejb
+jar_tcs_libdir=${libdir}/tcs
+cronos_libdir=${libdir}/tcs
+ext_libdir=${libdir}/third_party
+jar_ext_libdir==${libdir}/third_party 
+jboss.home=/root/jboss-4.2.3.GA
+jboss_home=${jboss.home}
+server.name=default
+jboss.config.name=${server.name}
+jboss_config_name=${server.name}
+jboss_lib=${jboss.home}/server/${server.name}/lib
+apache_tcdocs=/mnt/apache/tcdocs
+
+# The svn user, it is optional, then the cached username/password will be used.
+# Uncomment and configure these settings if you want to use predefined svn credentials.
+#svn.username=xxx
+#svn.password=xxx
