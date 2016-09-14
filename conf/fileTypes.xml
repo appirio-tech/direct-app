@@ -25,6 +25,10 @@
       <value>38</value>
       <description>ICO files</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="20">
     <fileFormat>
@@ -35,6 +39,10 @@
       <value>37</value>
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="21">
     <fileFormat>
@@ -69,6 +77,10 @@
       <value>46</value>
       <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="18">
 	<fileFormat>
@@ -79,6 +91,10 @@
       <value>45</value>
       <description>RP file created with Axure</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="34">
     <fileFormat>
@@ -113,6 +129,10 @@
       <value>40</value>
       <description>PDF file</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="22">
 	<fileFormat>
@@ -147,6 +167,10 @@
       <value>46</value>
       <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="30">
 	<fileFormat>
@@ -169,6 +193,10 @@
       <value>37</value>
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="31">
 	<fileFormat>
@@ -191,6 +219,10 @@
       <value>37</value>
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="17">
     <fileFormat>
@@ -213,6 +245,10 @@
       <value>37</value>
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
   <contestType id="32">
     <fileFormat>
@@ -235,55 +271,63 @@
       <value>37</value>
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
+	<fileFormat>
+	  <value>47</value>
+	  <description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
   </contestType>
-    <contestType id="40">
-        <fileFormat>
-            <value>33</value>
-            <description>Layered PSD files created in Adobe Photoshop or similar</description>
-        </fileFormat>
-        <fileFormat>
-            <value>34</value>
-            <description>AI files created in Adobe Illustrator or similar</description>
-        </fileFormat>
-        <fileFormat>
-            <value>35</value>
-            <description>EPS files created in Adobe Illustrator or similar</description>
-        </fileFormat>
-        <fileFormat>
-            <value>36</value>
-            <description>Vector AI files created in Adobe Illustrator or similar</description>
-        </fileFormat>
-        <fileFormat>
-            <value>37</value>
-            <description>Vector EPS files created in Adobe Illustrator or similar</description>
-        </fileFormat>
-        <fileFormat>
-            <value>39</value>
-            <description>INDD created with InDesign</description>
-        </fileFormat>
-        <fileFormat>
-            <value>40</value>
-            <description>PDF file</description>
-        </fileFormat>
-        <fileFormat>
-            <value>42</value>
-            <description>WORD document</description>
-        </fileFormat>
-        <fileFormat>
-            <value>43</value>
-            <description>Text file saved as TXT</description>
-        </fileFormat>
-        <fileFormat>
-            <value>44</value>
-            <description>HTML</description>
-        </fileFormat>
-        <fileFormat>
-            <value>45</value>
-            <description>RP file created with Axure</description>
-        </fileFormat>
-        <fileFormat>
-            <value>46</value>
-            <description>PPT (for presentations) created with PowerPoint or similar</description>
-        </fileFormat>
-    </contestType>
+  <contestType id="40">
+	<fileFormat>
+		<value>33</value>
+		<description>Layered PSD files created in Adobe Photoshop or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>34</value>
+		<description>AI files created in Adobe Illustrator or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>35</value>
+		<description>EPS files created in Adobe Illustrator or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>36</value>
+		<description>Vector AI files created in Adobe Illustrator or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>37</value>
+		<description>Vector EPS files created in Adobe Illustrator or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>39</value>
+		<description>INDD created with InDesign</description>
+	</fileFormat>
+	<fileFormat>
+		<value>40</value>
+		<description>PDF file</description>
+	</fileFormat>
+	<fileFormat>
+		<value>42</value>
+		<description>WORD document</description>
+	</fileFormat>
+	<fileFormat>
+		<value>43</value>
+		<description>Text file saved as TXT</description>
+	</fileFormat>
+	<fileFormat>
+		<value>44</value>
+		<description>HTML</description>
+	</fileFormat>
+	<fileFormat>
+		<value>45</value>
+		<description>RP file created with Axure</description>
+	</fileFormat>
+	<fileFormat>
+		<value>46</value>
+		<description>PPT (for presentations) created with PowerPoint or similar</description>
+	</fileFormat>
+	<fileFormat>
+		<value>47</value>
+		<description>Mac OS X Sketch vector graphics</description>
+	</fileFormat>
+  </contestType>
 </contestTypes>
