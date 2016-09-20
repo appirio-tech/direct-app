@@ -26,8 +26,8 @@
       <description>ICO files</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="20">
@@ -40,8 +40,8 @@
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="21">
@@ -78,8 +78,8 @@
       <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="18">
@@ -92,8 +92,8 @@
       <description>RP file created with Axure</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="34">
@@ -130,8 +130,8 @@
       <description>PDF file</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="22">
@@ -168,8 +168,8 @@
       <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="30">
@@ -194,8 +194,8 @@
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="31">
@@ -220,8 +220,8 @@
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="17">
@@ -246,8 +246,8 @@
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="32">
@@ -272,8 +272,8 @@
       <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
 	<fileFormat>
-	  <value>6300</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <value>50</value>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="40">
@@ -326,8 +326,8 @@
 		<description>PPT (for presentations) created with PowerPoint or similar</description>
 	</fileFormat>
 	<fileFormat>
-		<value>6300</value>
-		<description>Mac OS X Sketch vector graphics</description>
+		<value>50</value>
+		<description>Sketch</description>
 	</fileFormat>
   </contestType>
 </contestTypes>
