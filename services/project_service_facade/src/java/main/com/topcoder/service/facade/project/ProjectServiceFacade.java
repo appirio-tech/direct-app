@@ -124,8 +124,14 @@ import com.topcoder.service.project.UserNotFoundFault;
  *         <li>Added {@link #deleteTopCoderDirectProjectForum(long, long)} to delete direct project forums.</li>
  *     </ul>
  * </p>
- * @author isv, GreatKevin, TCSDEVELOPER, duxiaoyang
- * @version 2.5
+ * <p>
+ *     Version 2.6 (TOPCODER DIRECT - MAKE FORUM CREATION OPTIONAL) changes:
+ *     <ul>
+ *         <li>Added {@link #createProject(TCSubject, ProjectData, boolean)} to enable or disable forum creation</li>
+ *     </ul>
+ * </p>
+ * @author isv, GreatKevin, TCSDEVELOPER, duxiaoyang, TCSCODER
+ * @version 2.6
  */
 public interface ProjectServiceFacade {
 
@@ -148,6 +154,25 @@ public interface ProjectServiceFacade {
      * @see ProjectService#createProject(ProjectData)
      */
     ProjectData createProject(TCSubject tcSubject, ProjectData projectData) throws PersistenceFault, IllegalArgumentFault;
+
+
+    /**
+     * <p>Creates a project with the given project data.</p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param projectData
+     *            The project data to be created. Must not be null.
+     *            The <code>ProjectData.name</code> must not be null/empty.
+     *            The <code>ProjectData.projectId</code>, if any, is ignored.
+     * @param withForum indicates the forum should be created or not
+     * @return The project as it was created, with the <code>ProjectData.projectId</code> and <code>ProjectData.userId
+     *         </code> set. Will never be null.
+     * @throws IllegalArgumentFault if the given <code>ProjectData</code> is illegal.
+     * @throws PersistenceFault if a generic persistence error occurs.
+     * @see ProjectService#createProject(ProjectData)
+     * @since 2.6
+     */
+    ProjectData createProject(TCSubject tcSubject, ProjectData projectData, boolean withForum) throws PersistenceFault, IllegalArgumentFault;
 	
 	/**
      * <p>Creates a project with the given project data and forum templates.</p>
