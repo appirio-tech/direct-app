@@ -43,7 +43,7 @@
 	
 
     <!-- Import the dependencies of this build file -->
-    <import file="${base}/build-dependencies.xml"/>
+    <import file="${basedir}/build-dependencies.xml"/>
 
     <!-- COMPONENT PARAMETERS -->
     <property name="component" value="${component.name}"/>

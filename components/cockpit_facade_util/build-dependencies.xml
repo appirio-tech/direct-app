@@ -96,6 +96,7 @@
     </path>
 
     <path id="component.3rdParty-dependencies">
+	<path refid="ejb.libs"/>
         <pathelement location="${jboss-ejb3x.jar}" />
         <pathelement location="${ejb3-persistence.jar}" />
         <pathelement location="${jbossall-client.jar}" />
