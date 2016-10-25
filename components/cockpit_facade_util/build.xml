@@ -126,7 +126,9 @@
 
     <target name="compile">
         <mkdir dir="${build_classdir}"/>
+<echo message="*** debug *** ${ejb-api.jar}"/>
 <echo message="*** debug *** ${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
+
         <javac srcdir="${javamain}" destdir="${build_classdir}" includes="${packagedir}/**" debug="true"
                verbose="${verbose}" includeAntRuntime="no" encoding="${javac.encoding}">
             <classpath refid="buildlibs"/>
