@@ -126,6 +126,8 @@
 
     <target name="compile">
         <mkdir dir="${build_classdir}"/>
+
+<echo message="*** debug *** ${basedir}/build-dependencies.xml"/>
 <echo message="*** debug *** ${ejb-api.jar}"/>
 <echo message="*** debug *** ${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
 
