@@ -27,7 +27,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="20">
@@ -41,7 +41,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="21">
@@ -79,7 +79,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="18">
@@ -93,7 +93,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="34">
@@ -131,7 +131,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="22">
@@ -169,7 +169,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="30">
@@ -195,7 +195,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="31">
@@ -221,7 +221,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="17">
@@ -247,7 +247,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="32">
@@ -273,7 +273,7 @@
     </fileFormat>
 	<fileFormat>
 	  <value>50</value>
-	  <description>Mac OS X Sketch vector graphics</description>
+	  <description>Sketch</description>
 	</fileFormat>
   </contestType>
   <contestType id="40">
@@ -327,7 +327,7 @@
 	</fileFormat>
 	<fileFormat>
 		<value>50</value>
-		<description>Mac OS X Sketch vector graphics</description>
+		<description>Sketch</description>
 	</fileFormat>
   </contestType>
 </contestTypes>

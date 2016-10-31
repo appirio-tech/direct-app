@@ -207,9 +207,17 @@ import org.jboss.logging.Logger;
  * Version 2.8 (Release Assembly - TC Cockpit Start Project Flow Billing Account Integration)
  * - Set project billing account when creating new project is the billing account is set.
  * </p>
+ * <p> 
+ * Version 2.9 (TOPCODER DIRECT - MAKE FORUM CREATION OPTIONAL) changes:
+ *     <ul>
+ *         <li>Added {@link #createProject(TCSubject, ProjectData, boolean)}  to enable or disable forum creation.</li>
+ *         <li>Refactored the other createProject to use a common createProjectInternal method.</li>
+ *         <li>Updated createTopCoderDirectProjectForum method to log the method entry at INFO level</li>
+ *     </ul>
+ * </p>
  *
- * @author isv, waits, GreatKevin, duxiaoyang, GreatKevin
- * @version 2.8
+ * @author isv, waits, GreatKevin, duxiaoyang, GreatKevin, TCSCODER
+ * @version 2.9
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -500,8 +508,31 @@ public class ProjectServiceFacadeBean implements ProjectServiceFacadeLocal, Proj
     public ProjectData createProject(TCSubject tcSubject, ProjectData projectData)
         throws PersistenceFault, IllegalArgumentFault
     {
-        return createProject(tcSubject, projectData, null);
+        return createProjectInternal(tcSubject, projectData, true, null);
     }
+
+    /**
+     * <p>Creates a project with the given project data.</p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param projectData
+     *            The project data to be created. Must not be null.
+     *            The <code>ProjectData.name</code> must not be null/empty.
+     *            The <code>ProjectData.projectId</code>, if any, is ignored.
+     * @param withForum indicates the forum should be created or not
+     * @return The project as it was created, with the <code>ProjectData.projectId</code> and <code>ProjectData.userId
+     *         </code> set. Will never be null.
+     * @throws IllegalArgumentFault if the given <code>ProjectData</code> is illegal.
+     * @throws PersistenceFault if a generic persistence error occurs.
+     * @see ProjectService#createProject(ProjectData)
+     * @since 2.9
+     */
+    public ProjectData createProject(TCSubject tcSubject, ProjectData projectData, boolean withForum) 
+        throws PersistenceFault, IllegalArgumentFault {
+
+        return createProjectInternal(tcSubject, projectData, withForum, null);
+    }
+
 
     /**
      * <p>Creates a project with the given project data and forum templates.</p>
@@ -526,7 +557,30 @@ public class ProjectServiceFacadeBean implements ProjectServiceFacadeLocal, Proj
     public ProjectData createProject(TCSubject tcSubject, ProjectData projectData, Map<String, String> forums)
         throws PersistenceFault, IllegalArgumentFault
     {
-		if (forums != null) {
+		return createProjectInternal(tcSubject, projectData, true, forums);
+    }
+
+
+    /**
+     * <p>Creates a project with the given project data and forum templates.</p>
+     *
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param projectData The project data to be created. Must not be null. The <code>ProjectData.name</code> must not be
+     * null/empty. The <code>ProjectData.projectId</code>, if any, is ignored.
+     * @param withForum indicates the forum should be created or not
+     * @param forums a list of project forum templates configuration.
+     * @return The project as it was created, with the <code>ProjectData.projectId</code> and <code>ProjectData.userId
+     *         </code> set. Will never be null.
+     * @throws IllegalArgumentFault if the given <code>ProjectData</code> is illegal, or <code>forums</code> list
+     *         contains <code>null</code> key/value.
+     * @throws PersistenceFault if a generic persistence error occurs.
+     * @see ProjectService#createProject(TCSubject, ProjectData)
+     */
+    private ProjectData createProjectInternal(TCSubject tcSubject, ProjectData projectData, boolean withForum, Map<String, String> forums)
+        throws PersistenceFault, IllegalArgumentFault
+    {
+        if (forums != null) {
             for (String key : forums.keySet()) {
                 if (key == null || forums.get(key) == null) {
                     throw new IllegalArgumentFault("Forums map contains NULL key/value");
@@ -552,10 +606,12 @@ public class ProjectServiceFacadeBean implements ProjectServiceFacadeLocal, Proj
             permissions[0] = perm;
             permissionService.updatePermissions(tcSubject, permissions);
 
-            long forumID = createTopCoderDirectProjectForum(tcSubject, result.getProjectId(), null, forums);
+            if (withForum) {
+                long forumID = createTopCoderDirectProjectForum(tcSubject, result.getProjectId(), null, forums);
 
-			projectData.setForumCategoryId(String.valueOf(forumID));
-			result.setForumCategoryId(String.valueOf(forumID));
+                projectData.setForumCategoryId(String.valueOf(forumID));
+                result.setForumCategoryId(String.valueOf(forumID));
+            }
 
             // send project creation notification email
             com.topcoder.project.phases.Phase phase = new com.topcoder.project.phases.Phase();
@@ -574,10 +630,6 @@ public class ProjectServiceFacadeBean implements ProjectServiceFacadeLocal, Proj
 
             final String[] toAddrs = projectCreationEmailToAddressesConfig.split(";");
             final String[] ccAddrs = projectCreationEmailCCAddressesConfig.split(";");
-
-//            sendEmail(EMAIL_FILE_TEMPLATE_SOURCE_KEY, file,
-//                      projectCreationEmailSubject.replace("%PROJECT_NAME%", result.getName()), toAddrs, ccAddrs, null,
-//                      projectCreationEmailFromAddress, phase, "Cockpit Project Creation");
 
             return result;
         } catch (PermissionServiceException e) {
@@ -969,7 +1021,7 @@ public class ProjectServiceFacadeBean implements ProjectServiceFacadeLocal, Proj
     public long createTopCoderDirectProjectForum(TCSubject currentUser, long projectId, Long tcDirectProjectTypeId,
             Map<String, String> forumConfig) throws ProjectServiceFault {
         long userId = currentUser.getUserId();
-        logger.debug("createTopCoderDirectProjectForum (projectId = " + projectId + ", userId = " + userId
+        logger.info("createTopCoderDirectProjectForum (projectId = " + projectId + ", userId = " + userId
                      + ", createProjectForum = )" + createForum);
 
         if (!createForum) {
