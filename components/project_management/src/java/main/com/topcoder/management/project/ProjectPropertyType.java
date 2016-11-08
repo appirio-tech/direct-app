@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -39,8 +39,14 @@ import java.io.Serializable;
  *     - Add property {@link #FORUM_TYPE}
  * </p>
  *
- * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin
- * @version 1.2.5
+ * <p>
+ *     Version 1.2.6 (Provide Way To Pre_register members When Launching Challenge)
+ *     - Add property {@link #PRIVATE_PROJECT}
+ *     - Add property {@link #PRE_REGISTER_USERS}
+ * </p>
+ *
+ * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
+ * @version 1.2.6
  * @since 1.0
  */
 public class ProjectPropertyType implements Serializable {
@@ -353,6 +359,20 @@ public class ProjectPropertyType implements Serializable {
      * @since 1.2.5
      */
     public static final String FORUM_TYPE = "Forum Type";
+
+    /**
+     *  Represent "Private Project Status" project property type
+     *
+     *  @since 1.2.6
+     */
+    public static final String PRIVATE_PROJECT = "Private Project Status";
+
+    /**
+     * Represent "Pre-Register Users" project property type
+     *
+     * @since 1.2.6
+     */
+    public static final String PRE_REGISTER_USERS = "PreRegister Users";
 
    
     /**

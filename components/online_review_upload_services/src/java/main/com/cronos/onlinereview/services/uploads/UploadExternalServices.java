@@ -8,6 +8,7 @@ import com.topcoder.management.resource.Resource;
 
 import javax.activation.DataHandler;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 /**
  * <p>
@@ -204,4 +205,18 @@ public interface UploadExternalServices {
      * @since 1.1.1
      */
     Resource addPrimaryScreener(long projectId, long userId) throws UploadServicesException, PhaseManagementException;
+
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator  user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    Set<Long> removeAllSubmitters(long projectId, String operator) throws UploadServicesException;
 }

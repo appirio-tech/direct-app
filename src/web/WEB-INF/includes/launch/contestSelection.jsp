@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 2.1
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, bugbuka, GreatKevin, TCSCODER
+  - Version: 2.2
+  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
 
@@ -43,6 +43,8 @@
   -
   - Version 2.1 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
   - - Add review type radios to choose 'community' or 'internal' review
+  - Version 2.2 (Provide Way To Pre_register members When Launching Challenge)
+  - - Add support pre-register member
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -183,6 +185,16 @@
               <select id="reviewer" name="reviewer">
               </select>
           </div>
+      </div>
+
+      <div class="row privateProjectRow">
+          <label>Private Challenge</label>
+          <input type="checkbox" name="privateProject" title="Is this challenge private?">
+      </div>
+
+      <div class="row preRegisterUsersRow hide">
+          <label>Pre-Register Members</label>
+          <input name="preRegisterUsers" type="text" class="text"/>
       </div>
 
   </div>

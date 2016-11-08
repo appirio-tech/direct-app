@@ -37,7 +37,7 @@ package com.topcoder.management.resource;
  *     <li>Added {@link #RESOURCE_ROLE_ITERATIVE_REVIEWER_ID}</li>
  * </ul>
  * </p>
- * 
+ *
  * @author aubergineanode, kinfkong, isv, GreatKevin
  * @version 1.3
  */
@@ -185,6 +185,12 @@ public class ResourceRole extends AuditableResourceStructure {
      */
     public static final String RESOURCE_ROLE_FINAL_REVIEWER_NAME = "Final Reviewer";
 
+
+    /**
+     * <code>resource role id</code> for submitter
+     * @since 1.4
+     */
+    public static final long RESOURCE_ROLE_SUBMITTER = 1L;
 
     /**
      * <p>
