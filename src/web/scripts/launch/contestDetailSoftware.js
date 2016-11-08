@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -114,8 +114,11 @@
  * Version 3.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.7
+ * Version 3.8 (Provide Way To Pre_register members When Launching Challenge)
+ * - Add pre-register member
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
+ * @version 3.8
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1161,6 +1164,23 @@ function populateTypeSection() {
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
+
+    var privatProject = p["Private Project Status"];
+    var preReg = p["PreRegister Users"] ? p["PreRegister Users"] : "";
+
+    if (privatProject === "1"){
+        $("#rPrivateProject").text("Yes");
+        $("#privateProject").attr("checked", "checked");
+        $(".preRegisterUsersDiv").show();
+        $("#preRegisterUsersEditDiv").show();
+        $("#rPreRegisterUsers").text(preReg);
+        $("#preRegisterUsers").val(preReg);
+    }else{
+        $("#rPrivateProject").text("No");
+        $("#privateProject").attr("checked", false);
+        $(".preRegisterUsersDiv").hide()
+        $("#preRegisterUsersEditDiv").hide();
+    }
 
     if (mainWidget.softwareCompetition.projectMilestoneId > 0) {
         $('#rProjectMilestone').text(mainWidget.softwareCompetition.projectMilestoneName);

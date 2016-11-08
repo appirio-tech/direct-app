@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.text.MessageFormat;
+import java.util.Set;
 
 /**
  * <p>
@@ -572,6 +573,27 @@ public class DefaultUploadExternalServices implements UploadExternalServices {
             }
         } catch (IOException e) {
             // ignores exception
+        }
+    }
+
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator  user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    public Set<Long> removeAllSubmitters(long projectId, String operator) throws UploadServicesException{
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadExternalServices#removeAllSubmitters(long, string)");
+        try {
+            return uploadServices.removeAllSubmitters(projectId, operator);
+        } finally {
+            Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadExternalServices#removeAllSubmitters(long, string)");
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -106,8 +106,11 @@
  * Version 3.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
  * - Add studio cup points checkbox.
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, Veve
- * @version 3.8
+ * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
+ * - Add support for pre-register member
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
+ * @version 3.9
  */
 
  /**
@@ -523,6 +526,17 @@ $(document).ready(function() {
     }
     swUploader.submit();
   });
+
+    $("input[name=privateProject]").click(function(){
+        if ($(this).attr("checked") === true) {
+            $(".preRegisterUsersRow").show();
+            $("#preRegisterUsersEditDiv").show();
+        }else{
+            $(".preRegisterUsersRow").hide();
+            $("#preRegisterUsersEditDiv").hide();
+        }
+    })
+
 }); // end of initiation
 
 
@@ -962,6 +976,13 @@ function saveAsDraftRequest() {
         } else {
             mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id'] = '';
         }
+    }
+
+    if ($("input[name=privateProject]:checked").length > 0){
+        mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
+        mainWidget.softwareCompetition.projectHeader.properties["PreRegister Users"] = $("input[name=preRegisterUsers]").val().trim();
+    }else{
+        mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
     }
 
     if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {

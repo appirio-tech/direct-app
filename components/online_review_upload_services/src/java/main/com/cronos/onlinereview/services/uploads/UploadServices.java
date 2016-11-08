@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2007-2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007-2016 TopCoder Inc., All Rights Reserved.
  */
 package com.cronos.onlinereview.services.uploads;
 
 import com.topcoder.management.phase.PhaseManagementException;
 import com.topcoder.management.resource.Resource;
+
+import java.util.Set;
 
 
 /**
@@ -27,8 +29,14 @@ import com.topcoder.management.resource.Resource;
  * Thread safety: the implementations must be thread safe.
  * </p>
  *
+ * <p>
+ *     Vesion 1.1.2 (Provide Way To Pre_register members When Launching Challenge)
+ *     <ol>
+ *         <li>Added {@link #removeAllSubmitters(long, String)} method</li>
+ *     </ol>
+ * </p>
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1.1
+ * @version 1.1.2
  * @since 1.0
  */
 public interface UploadServices {
@@ -37,7 +45,7 @@ public interface UploadServices {
      * <p>
      * Adds a new submission for an user in a particular project.
      * </p>
-     *
+     * <p/>
      * <p>
      * If the project allows multiple submissions for users, it will add the new submission and return. If multiple
      * submission are not allowed for the project firstly, it will add the new submission, secondly mark previous
@@ -47,9 +55,7 @@ public interface UploadServices {
      * @param projectId the project's id
      * @param userId    the user's id
      * @param filename  the file name to use
-     *
      * @return the id of the new submission
-     *
      * @throws InvalidProjectException      if the project does not exist
      * @throws InvalidProjectPhaseException if neither Submission or Screening phase are opened
      * @throws InvalidUserException         if the user does not exist or has not the submitter role
@@ -69,9 +75,7 @@ public interface UploadServices {
      * @param projectId the project's id
      * @param userId    the user's id
      * @param filename  the file name to use
-     *
      * @return the id of the created final fix submission.
-     *
      * @throws InvalidProjectException      if the project does not exist
      * @throws InvalidProjectPhaseException if Final Fix phase is not opened
      * @throws InvalidUserException         if the user does not exist or she/he is not winner submitter
@@ -91,9 +95,7 @@ public interface UploadServices {
      * @param projectId the project's id
      * @param userId    the user's id
      * @param filename  the file name to use
-     *
      * @return the id of the created test cases submission
-     *
      * @throws InvalidProjectException      if the project does not exist
      * @throws InvalidProjectPhaseException if Review phase is not opened
      * @throws InvalidUserException         if the user does not exist or has not the reviewer role
@@ -110,9 +112,7 @@ public interface UploadServices {
      * @param projectId the project's id
      * @param userId    the user's id.
      * @param filename  the file name to use.
-     *
      * @return the id of the new submission.
-     *
      * @throws InvalidProjectException      if the project doesn't exist.
      * @throws InvalidProjectPhaseException if Specification Submission phase is not opened.
      * @throws InvalidUserException         if the user doesn't exist or hasn't the Specification Submitter role.
@@ -131,16 +131,14 @@ public interface UploadServices {
      * @param submissionId       the submission's id
      * @param submissionStatusId the submission status id
      * @param operator           the operator which execute the operation
-     *
-     * @throws InvalidSubmissionException if the submission does not exist
-     * @throws InvalidSubmissionStatusException
-     *                                    if the submission status does not exist
-     * @throws PersistenceException       if some error occurs in persistence layer
-     * @throws IllegalArgumentException   if any id is &lt; 0 or if operator is null or trim to empty
+     * @throws InvalidSubmissionException       if the submission does not exist
+     * @throws InvalidSubmissionStatusException if the submission status does not exist
+     * @throws PersistenceException             if some error occurs in persistence layer
+     * @throws IllegalArgumentException         if any id is &lt; 0 or if operator is null or trim to empty
      * @since 1.0
      */
     void setSubmissionStatus(long submissionId, long submissionStatusId, String operator)
-         throws InvalidSubmissionException, InvalidSubmissionStatusException, PersistenceException;
+            throws InvalidSubmissionException, InvalidSubmissionStatusException, PersistenceException;
 
 
     /**
@@ -148,9 +146,7 @@ public interface UploadServices {
      *
      * @param projectId the project to which the user needs to be added
      * @param userId    the user to be added
-     *
      * @return the added resource id
-     *
      * @throws InvalidProjectException      if the project id is unknown
      * @throws InvalidUserException         if the user id is unknown
      * @throws InvalidProjectPhaseException if the phase of the project is not Registration.
@@ -171,7 +167,7 @@ public interface UploadServices {
      * @throws InvalidUserException         if the user id is unknown
      * @throws InvalidProjectPhaseException if the phase of the project is not Registration.
      * @throws UploadServicesException      if any error occurs from UploadServices
-     * @throws PhaseManagementException if an unexpected error occurs.
+     * @throws PhaseManagementException     if an unexpected error occurs.
      * @throws IllegalArgumentException     if any id is &lt; 0
      * @since 1.1.1
      */
@@ -187,9 +183,23 @@ public interface UploadServices {
      * @throws InvalidUserException         if the user id is unknown
      * @throws InvalidProjectPhaseException if the phase of the project is not Registration.
      * @throws UploadServicesException      if any error occurs from UploadServices
-     * @throws PhaseManagementException if an unexpected error occurs.
+     * @throws PhaseManagementException     if an unexpected error occurs.
      * @throws IllegalArgumentException     if any id is &lt; 0
      * @since 1.1.1
      */
     Resource addPrimaryScreener(long projectId, long userId) throws UploadServicesException, PhaseManagementException;
+
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator  user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    Set<Long> removeAllSubmitters(long projectId, String operator) throws UploadServicesException;
 }
