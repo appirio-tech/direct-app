@@ -5,8 +5,6 @@ informixdb:
   volumes:
    - "${TC_DEV_NAT_DIR}:/ssh"
 direct-app:
-  environment:
-   - ASP_API_URL=${ASP_API_URL}
   image: "direct-app"
   links:
     - "informixdb"

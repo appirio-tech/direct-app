@@ -23,7 +23,6 @@ In this configuration, we'll run the direct app in a docker container locally bu
 2. Set the following environment variables:
 * TC_DEV_NAT_DIR : Local directory containing the pem file for accessing the dev NAT instance (used to create a tunnel to the dev informix instances)
 * TC_DIRECT_SRC_HOME : Local directory for the root direct-app directory
-* ASP_API_URL : Base URL for the ASP API (e.g., https://api.topcoder-dev.com)
 3. Run `docker-compose up` from the `docker` subdirectory containing the `docker-compose.yml` file
 
 
