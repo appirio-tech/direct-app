@@ -52,6 +52,11 @@
     padding-top: 5px;
 }
 
+#launchContestOut .markdown_mode {
+    float: left;
+    padding-left: 24px;
+}
+
 #launchContestOut .bug_hunt {
     font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -1579,6 +1584,7 @@ a.draft:hover span.right, a.preview:hover span.right {
 /** Contest Detail **/
 #launchContestOut .contestDetail h3 {
     margin-top: 18px;
+    margin-bottom: 18px;
 }
 
 /** help icon **/

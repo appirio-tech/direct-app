@@ -177,8 +177,23 @@ function validateFieldsOverview() {
 }
 
 function validateFieldsOverviewSoftware() {
-   var detailedRequirements = CKEDITOR.instances.swDetailedRequirements.getData();
-   var softwareGuidelines = CKEDITOR.instances.swGuidelines.getData();
+   var detailedRequirementsCM = $("#swDetailedRequirements").data('swDetailedRequirements-cm');
+   var markDownUsedForDetailedRequirements = $("#swDetailMarkdownStyle").is(":checked");
+   var detailedRequirements;
+   if (markDownUsedForDetailedRequirements) {
+       detailedRequirements = detailedRequirementsCM.getValue();
+   } else {
+       detailedRequirements = CKEDITOR.instances.swDetailedRequirements.getData();
+   }
+
+   var softwareGuidelinesCM = $("#swGuidelines").data('swGuidelines-cm');
+   var softwareGuidelines;
+   var markdownUsedForGuidelines = $("#swGuidelinesMarkdownStyle").is(":checked");
+   if (markdownUsedForGuidelines) {
+       softwareGuidelines = softwareGuidelinesCM.getValue();
+   } else {
+       softwareGuidelines =  CKEDITOR.instances.swGuidelines.getData();
+   }
 
    var rootCategoryId = $('#catalogSelect').val();
    //checkpoint prize and submission numbers
@@ -250,7 +265,12 @@ function validateFieldsOverviewSoftware() {
    }
 
    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
+
+   mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForDetailedRequirements = markDownUsedForDetailedRequirements;
+
    mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
+
+   mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForSubmissionGuidelines = markdownUsedForGuidelines;
 
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;

@@ -516,12 +516,16 @@ com.topcoder.direct.ProjectSpec = function() {
       this.projectSpecId = 0;
       
       this.detailedRequirements = "";
+
+	  this.markdownUsedForDetailedRequirements = false;
       
       this.submissionDeliverables = "";
       
       this.environmentSetupInstructions = "";
       
       this.finalSubmissionGuidelines = "";
+
+	  this.markdownUsedForSubmissionGuidelines = false;
       
       /**
        * Represents private description field.

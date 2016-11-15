@@ -1769,7 +1769,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * 
      * @since Cockpit Launch Contest - Update for Spec Creation v1.0
      */
-    private static final String QUERY_PROJECT_SPEC_SQL = "SELECT " 
+    private static final String QUERY_PROJECT_SPEC_SQL = "SELECT "
         + " ps1.project_spec_id, " 
         + " ps1.version, "
         + " ps1.detailed_requirements, "
@@ -1783,7 +1783,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
         + " ps1.private_description, "
         + " ps1.detailed_requirements_text, "
         + " ps1.final_submission_guidelines_text, "
-        + " ps1.private_description_text "
+        + " ps1.private_description_text, "
+        + " ps1.detailed_requirements_markdown_used, "
+        + " ps1.final_submission_guidelines_markdown_used "
         + " FROM project_spec as ps1 "
         + " WHERE ps1.project_id = ? "
         + " AND ps1.version = (SELECT max(ps2.version) FROM project_spec as ps2 WHERE ps2.project_id = ?)";
@@ -1810,7 +1812,8 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
         Helper.STRING_TYPE, Helper.STRING_TYPE,
         Helper.STRING_TYPE, Helper.DATE_TYPE,
         Helper.STRING_TYPE, Helper.DATE_TYPE, Helper.STRING_TYPE,
-        Helper.STRING_TYPE, Helper.STRING_TYPE, Helper.STRING_TYPE};
+        Helper.STRING_TYPE, Helper.STRING_TYPE,
+        Helper.STRING_TYPE, Helper.BOOLEAN_TYPE, Helper.BOOLEAN_TYPE};
     
     /**
      * Represents the column types for the result set which is returned by
@@ -1833,10 +1836,12 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      */
     private static final String CREATE_PROJECT_SPEC_SQL = "INSERT INTO project_spec "
             + "(project_spec_id, project_id, version, " 
-            + "detailed_requirements_text, submission_deliverables, environment_setup_instruction, final_submission_guidelines_text, "
+            + "detailed_requirements_text, detailed_requirements_markdown_used, "
+            + "submission_deliverables, environment_setup_instruction, "
+            + "final_submission_guidelines_text, final_submission_guidelines_markdown_used, "
             + "create_user, create_date, modify_user, modify_date, private_description_text) "
             + "VALUES (?, ?, 1, " 
-            + "?, ?, ?, ?, "
+            + "?, ?, ?, ?, ?, ?, "
             + "?, CURRENT, ?, CURRENT, ?)";
     
     /**
@@ -1852,10 +1857,12 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      */
     private static final String UPDATE_PROJECT_SPEC_SQL = "INSERT INTO project_spec "
             + "(project_spec_id, project_id, version, " 
-            + "detailed_requirements_text, submission_deliverables, environment_setup_instruction, final_submission_guidelines_text, "
+            + "detailed_requirements_text, detailed_requirements_markdown_used, "
+            + "submission_deliverables, environment_setup_instruction, "
+            + "final_submission_guidelines_text, final_submission_guidelines_markdown_used, "
             + "create_user, create_date, modify_user, modify_date, private_description_text) "
             + "VALUES (?, ?, (select NVL(max(ps.version), 0)  + 1 from project_spec as ps where ps.project_id = ?), " 
-            + "?, ?, ?, ?, "
+            + "?, ?, ?, ?, ?, ?, "
             + "?, CURRENT, ?, CURRENT, ?)";
     
     /**
@@ -5398,9 +5405,11 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
         Object[] queryArgs = new Object[] {newId,
             projectId,
             projectSpec.getDetailedRequirements() != null ? projectSpec.getDetailedRequirements() : "",
+            projectSpec.isMarkdownUsedForDetailedRequirements(),
             projectSpec.getSubmissionDeliverables() != null ? projectSpec.getSubmissionDeliverables() : "",
             projectSpec.getEnvironmentSetupInstructions() != null ? projectSpec.getEnvironmentSetupInstructions() : "",
             projectSpec.getFinalSubmissionGuidelines() != null ? projectSpec.getFinalSubmissionGuidelines() : "",
+            projectSpec.isMarkdownUsedForSubmissionGuidelines(),
             operator,
             operator,
             projectSpec.getPrivateDescription() != null ? projectSpec.getPrivateDescription() : ""};
@@ -5547,9 +5556,11 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             projectId, 
             projectId,
             projectSpec.getDetailedRequirements() != null ? projectSpec.getDetailedRequirements() : "",
+            projectSpec.isMarkdownUsedForDetailedRequirements(),
             projectSpec.getSubmissionDeliverables() != null ? projectSpec.getSubmissionDeliverables() : "",
             projectSpec.getEnvironmentSetupInstructions() != null ? projectSpec.getEnvironmentSetupInstructions() : "",
             projectSpec.getFinalSubmissionGuidelines() != null ? projectSpec.getFinalSubmissionGuidelines() : "",
+            projectSpec.isMarkdownUsedForSubmissionGuidelines(),
             operator,
             operator,
             projectSpec.getPrivateDescription() != null ? projectSpec.getPrivateDescription() : ""};
@@ -7157,6 +7168,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             if(rows[i][13] != null && ((String) rows[i][13]).trim().length() > 0) {
                 spec.setPrivateDescription((String) rows[i][13]);
             }
+
+            spec.setMarkdownUsedForDetailedRequirements((Boolean) rows[i][14]);
+            spec.setMarkdownUsedForSubmissionGuidelines((Boolean) rows[i][15]);
 
             specs[i] = spec;
         }

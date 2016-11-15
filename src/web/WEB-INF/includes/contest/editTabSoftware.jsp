@@ -793,7 +793,13 @@
             <div class="contestDetail">        		
                 <!-- Detailed Requirements -->
             	<div class="description">                
-                      <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+                      <h3><span class="icon">Detailed Requirements</span>
+                          <span class="markdown_mode">
+                              <input type="checkbox" id="swDetailMarkdownStyle">
+                              <span class="lcc"><label for="swDetailMarkdownStyle">Markdown Style</label>
+                              </span>
+                          </span>
+                          <a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                       <div class="textarea1">
                           <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
                           <p class="mceFooterNote">
@@ -825,7 +831,12 @@
                 
                 <!-- Contest Description -->
                 <div class="guidelines <s:if test='result.projectHeader.projectCategory.id == 29'>hide</s:if>">                  
-                      <h3><span class="icon">Submission Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
+                      <h3><span class="icon">Submission Guidelines</span>
+                          <span class="markdown_mode">
+                              <input type="checkbox" id="swGuidelinesMarkdownStyle">
+                              <span class="lcc"><label for="swGuidelinesMarkdownStyle">Markdown Style</label></span>
+                          </span>
+                          <a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                       
                       <div class="textarea1">
                           <textarea id="swGuidelines" rows="" cols=""></textarea>

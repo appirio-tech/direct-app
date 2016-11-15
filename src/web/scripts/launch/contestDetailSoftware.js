@@ -286,6 +286,8 @@ $(document).ready(function(){
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
+            //initialize codemirrors from the populated specs
+            initCodeMirrorEditors(['swDetailedRequirements', 'swGuidelines'], ['swDetailMarkdownStyle', 'swGuidelinesMarkdownStyle'], [mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements, mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines]);
 
             loadingChallengeDetails = false;
 
@@ -614,11 +616,23 @@ function onContestTypeChange() {
         if (swDetailedRequirements) {
             swDetailedRequirements.destroy(true);
         }
+        //on callback needed so that editor is toggled only after template is loaded and
+        //CKEditor is ready
         CKEDITOR.replace('swGuidelines', {
+            on : {
+                instanceReady: function(evt) {
+                    toggleEditorMode('swGuidelines', 'swGuidelinesMarkdownStyle');
+                }
+            },
             templates: getSGTemplatesName(typeId),
             templates_files: SGTemplatesList
         });
         CKEDITOR.replace('swDetailedRequirements', {
+            on : {
+                instanceReady: function(evt) {
+                    toggleEditorMode('swDetailedRequirements', 'swDetailMarkdownStyle');
+                }
+            },
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList
         });
@@ -856,7 +870,9 @@ function initContest(contestJson) {
 
    projectHeader.reviewScorecardId = contestJson.reviewScorecardId;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
+   projectHeader.projectSpec.markdownUsedForDetailedRequirements = contestJson.markdownUsedForDetailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
+   projectHeader.projectSpec.markdownUsedForSubmissionGuidelines = contestJson.markdownUsedForSubmissionGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
    projectHeader.prizes = contestJson.prizes;
    if (projectHeader.prizes) {
@@ -2508,14 +2524,20 @@ function getSplitFileTypes(allFileTypes) {
  * first time initialized. It could be ignored if it is not first time initialized.
  */
 function populateSpecSection(initFlag) {
+   var markdownUsedForDetailedRequirements = mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForDetailedRequirements;
    var detailedRequirements = mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements;
    var guidelines = mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines;
+   var markdownUsedForGuidelines = mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForSubmissionGuidelines;
    var privateDescription = mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription;
 
 	//edit
-	$('#swDetailedRequirements').val(detailedRequirements);
+    $('#swDetailedRequirements').val(detailedRequirements);
 	$('#swGuidelines').val(guidelines);
     $('#swPrivateDescription').val(privateDescription);
+
+    //setting markdown checkbox values
+    $('#swDetailMarkdownStyle').attr('checked', markdownUsedForDetailedRequirements);
+    $('#swGuidelinesMarkdownStyle').attr('checked', markdownUsedForGuidelines);
 
     if(isDevOrDesign()) {
        if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag){
@@ -2583,8 +2605,19 @@ function populateSpecSection(initFlag) {
   }
 
   //display
-  $('#rswDetailedRequirements').html(detailedRequirements);
-  $('#rswGuidelines').html(guidelines);
+  var previewPlaceholderIds = ['rswDetailedRequirements', 'rswGuidelines'];
+  var origContent = [detailedRequirements, guidelines];
+  var markdownFlags = [markdownUsedForDetailedRequirements, markdownUsedForGuidelines];
+
+  //converting to html depending on the mode specified
+  $.each(previewPlaceholderIds, function(i, val) {
+    if (markdownFlags[i]) {
+        $('#'+val).html(markdown.toHTML(origContent[i]));
+    } else {
+        $('#'+val).html(origContent[i]);
+    }
+  });
+
   $('#rswPrivateDescription').html(privateDescription);
 
   if(isDevOrDesign()) {
@@ -2730,8 +2763,24 @@ function saveSpecSection() {
 
 function validateFieldsSpecSection() {
     // for software contest
-    var detailedRequirements = getCKEditorContent('swDetailedRequirements');
-    var softwareGuidelines = getCKEditorContent('swGuidelines');
+    var detailedRequirementsCM = $("#swDetailedRequirements").data('swDetailedRequirements-cm');
+    var markDownUsedForDetailedRequirements = $("#swDetailMarkdownStyle").is(":checked");
+    var detailedRequirements;
+    if (markDownUsedForDetailedRequirements) {
+        detailedRequirements = detailedRequirementsCM.getValue();
+    } else {
+        detailedRequirements = CKEDITOR.instances.swDetailedRequirements.getData();
+    }
+
+    var softwareGuidelinesCM = $("#swGuidelines").data('swGuidelines-cm');
+    var softwareGuidelines;
+    var markdownUsedForGuidelines = $("#swGuidelinesMarkdownStyle").is(":checked");
+    if (markdownUsedForGuidelines) {
+        softwareGuidelines = softwareGuidelinesCM.getValue();
+    } else {
+        softwareGuidelines =  CKEDITOR.instances.swGuidelines.getData();
+    }
+
     var privateDescription = getCKEditorContent('swPrivateDescription');
 
     // for studio contest
@@ -2828,7 +2877,9 @@ function validateFieldsSpecSection() {
         mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
     } else if (mainWidget.isSoftwareContest()) {
         mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
+        mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForDetailedRequirements = markDownUsedForDetailedRequirements;
         mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
+        mainWidget.softwareCompetition.projectHeader.projectSpec.markdownUsedForSubmissionGuidelines = markdownUsedForGuidelines;
         mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
     } else if (mainWidget.isAlgorithmContest()) {
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
