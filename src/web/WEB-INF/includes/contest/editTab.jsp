@@ -70,6 +70,11 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Review Scorecard</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rReviewScorecard"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
@@ -229,6 +234,22 @@
                     </div>
                 </div>
                 <br /> <br />
+                 <!-- Review Scorecard -->
+                 <div id="reviewScorecardDivEdit">
+                 <br />
+                     <span class="name fixWidthName"><strong>Review Scorecard </strong></span>
+                     <div class="reviewScorecardSelect" style="float:left">
+                         <select id="reviewScorecardSelects" name="reviewScorecardSelects" class="bigin">
+                             <option value="0">Please select a review scorecard to associate</option>
+                             <s:iterator value="reviewScorecards" var="reviewScorecard">
+                                 <option value='<s:property value="id"/>'>
+                                     <s:property value="name"/>
+                                 </option>
+                             </s:iterator>
+                         </select>
+                     </div>
+                 </div>
+                 <br /> <br />
                  <div id="copilotEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Copilot</strong></span>

@@ -92,7 +92,7 @@
 			position:absolute;
 			width: 105px;
 			height: 68px;
-			
+
 		}*/
 
 /** tab list **/
@@ -273,7 +273,7 @@
 
 /** add new **/
 #launchContestOut .addNewContest {
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     margin-top: 34px;
     border: #e7e7e7 solid 1px;
 }
@@ -346,7 +346,7 @@
     border: 1px solid #a8abad;
 }
 
-#launchContestOut .addNewContest .projectSelect, #launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect, .milestoneSelect, .reviewerSelect {
+#launchContestOut .addNewContest .projectSelect, #launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect, .reviewScorecardSelect, .milestoneSelect, .reviewerSelect {
     width: auto;
     float: left;
     display: inline;
@@ -1946,7 +1946,7 @@ a.draft:hover span.right, a.preview:hover span.right {
 }
 
 /** billing  and round select **/
-.billingSelect .newListSelected, .prizeBillingSelect .newListSelected, .roundelect .newListSelected, .copilotSelect .newListSelected, .milestoneSelect .newListSelected, .projectsSelect .newListSelected, .copilotsSelect .newListSelected, .problemSelect .newListSelected, .reviewerSelect .newListSelected {
+.reviewScorecardSelect .newListSelected, .billingSelect .newListSelected, .prizeBillingSelect .newListSelected, .roundelect .newListSelected, .copilotSelect .newListSelected, .milestoneSelect .newListSelected, .projectsSelect .newListSelected, .copilotsSelect .newListSelected, .problemSelect .newListSelected, .reviewerSelect .newListSelected {
     width: 283px;
     height: 28px;
     padding: 0 5px;
@@ -1963,11 +1963,11 @@ a.draft:hover span.right, a.preview:hover span.right {
     color: #6c6c6c;
 }
 
-.billingSelect .selectedTxt, .prizeBillingSelect .selectedTxt, .roundelect .selectedTxt, .copilotSelect .selectedTxt, .milestoneSelect .selectedTxt, .copilotsSelect .selectedTxt, .projectsSelect .selectedTxt, .problemSelect .selectedTxt, .reviewerSelect .selectedTxt {
+.reviewScorecardSelect .selectedTxt, .billingSelect .selectedTxt, .prizeBillingSelect .selectedTxt, .roundelect .selectedTxt, .copilotSelect .selectedTxt, .milestoneSelect .selectedTxt, .copilotsSelect .selectedTxt, .projectsSelect .selectedTxt, .problemSelect .selectedTxt, .reviewerSelect .selectedTxt {
     width: 281px;
 }
 
-.billingSelect .newList, .prizeBillingSelect .newList, .roundelect .newList, .copilotSelect .newList, .milestoneSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList, .reviewerSelect .newList {
+.reviewScorecardSelect .newList, .billingSelect .newList, .prizeBillingSelect .newList, .roundelect .newList, .copilotSelect .newList, .milestoneSelect .newList, .copilotsSelect .newList, .projectsSelect .newList, .problemSelect .newList, .reviewerSelect .newList {
     width: 290px;
     border: #ccc solid 1px;
     background: #fff;

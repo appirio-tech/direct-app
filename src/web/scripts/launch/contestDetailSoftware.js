@@ -544,6 +544,30 @@ var ACTIVE_PROJECT_STATUS = 1;
 var isActiveContest = false;
 var startedContest = true;
 var preCost = 0;
+var reviewScorecards;
+
+function loadReviewScorecardList(typeId){
+    if(reviewScorecards === null || reviewScorecards === undefined){
+      reviewScorecards = getReviewScorecards();
+    }
+
+    if(typeId !== null){
+      var $contestReviewScorecard = $("#reviewScorecardSelects");
+
+      $contestReviewScorecard.html("");
+
+      $contestReviewScorecard.append($('<option></option>').val(0).html("Please select a review scorecard to associate"));
+
+      $.each(reviewScorecards, function(id, value) {
+          if(value.projectCategory == 6 || value.projectCategory == typeId){
+            $contestReviewScorecard.append($('<option></option>').val(value.id).text(htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)).attr('title', htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)));
+          }
+      });
+    }
+
+    $("#reviewScorecardSelects").resetSS();
+    $('#reviewScorecardSelects').getSetSSValue(mainWidget.softwareCompetition.projectHeader.reviewScorecardId);
+}
 
 /**
  * event handler function when contest type is changed.
@@ -552,6 +576,9 @@ function onContestTypeChange() {
     var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
+
+    loadReviewScorecardList(typeId);
+
 
     if(isContestSaved()) {
         currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
@@ -811,6 +838,7 @@ function initContest(contestJson) {
    projectHeader.properties = contestJson.properties;
    projectHeader.challengeCreator = contestJson.challengeCreator;
 
+   projectHeader.reviewScorecardId = contestJson.reviewScorecardId;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
@@ -1153,11 +1181,23 @@ function populateTypeSection() {
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#contestNameText').text(mainWidget.softwareCompetition.assetDTO.name);
         $('#challegneCreatorLabel').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
-  
+
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//display
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
+
+  $('#rReviewScorecard').text(mainWidget.softwareCompetition.projectHeader.reviewScorecardId);
+
+  $.each(reviewScorecards,function(){
+   if(this.id === mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
+     $('#rReviewScorecard').text(this.scorecardName + " " + this.scorecardVersion);
+   }
+  });
+
+  loadReviewScorecardList(null);
+
+
 	$('#rContestName').text(mainWidget.softwareCompetition.assetDTO.name);
         $('#rChallengeCreator').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
 	$('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
@@ -1357,6 +1397,8 @@ function validateFieldsTypeSection() {
     var copilotName = $('select#copilots option:selected').text();
     var milestoneId = parseInt($('select#milestones').val());
 
+    var reviewScorecardId = parseInt($('select#scorecardSelects').val());
+
     //validation
     var errors = [];
 
@@ -1417,6 +1459,9 @@ function validateFieldsTypeSection() {
         var billingProjectId = $('select#billingProjects').val();
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
     }
+
+    // set scoreboard.
+    mainWidget.softwareCompetition.projectHeader.setReviewScorecardId(reviewScorecardId);
 
     return true;
 }
@@ -3126,6 +3171,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
 
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
+
     var value = $('#projects').getSetSSValue();
 
     var result = getCopilotsByDirectProjectId(value);
@@ -3150,7 +3196,9 @@ function handleProjectDropDownChange() {
     $('#copilots').getSetSSValue(selected);
 
 
+
     var milestones = getMilestonesByDirectProjectId(value);
+
     var $contestMilestones = $("#milestones");
 
     $contestMilestones.html("");
@@ -3162,7 +3210,6 @@ function handleProjectDropDownChange() {
     });
 
     $("#milestones").resetSS();
-
 
     billingAccounts = getBillingAccountsByDirectProjectId(value);
     $("#billingProjects").empty();
@@ -3183,6 +3230,7 @@ function handleProjectDropDownChange() {
 		$("#billingProjects").data('customized',true);
         $('#billingProjects').sSelect({ddMaxHeight: '220',yscroll: true});
     }
+
 	$('#billingProjects').resetSS();
 	$('#billingProjects').bind("change", function() {
         if ($(this).find(":selected").data("cca")){
@@ -3230,4 +3278,3 @@ function setupReviewerDropdown(challengeTypeId, directProjectId) {
         }
     }
 }
-
