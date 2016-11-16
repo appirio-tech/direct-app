@@ -690,8 +690,20 @@ import java.util.zip.ZipOutputStream;
  *   </ol>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86
- * @version 1.8
+ * <p>
+ * Changes in version 1.9 (TopCoder Direct - Remove ASP Integration Related Logic):
+ * <ul>
+ * <li>Remove {@link #insertSubmissionPushStatus(long, long)} method.</li>
+ * <li>Remove {@link #updateSubmissionPushStatus(long, long, String)} method.</li>
+ * <li>Remove {@link #getSubmissionPushStatus(long)} method.</li>
+ * <li>Remove {@link #INSERT_PUSH_STATUS_SQL} constant.</li>
+ * <li>Remove {@link #UPDATE_PUSH_STATUS_SQL} constant.</li>
+ * <li>Remove {@link #SELECT_PUSH_STATUS_SQL} constant.</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
+ * @version 1.9
  */
 public final class DirectUtils {
 
@@ -894,33 +906,6 @@ public final class DirectUtils {
     private static final String UPDATE_ROUND_ID_SQL =
             "UPDATE project_info SET value = ?, modify_user = ?, modify_date = CURRENT WHERE project_id = ? AND " +
                     "project_info_type_id = 56";
-
-    /**
-     * <p>A <code>String</code> providing an SQL statement for inserting new record for submission push into database.
-     * </p>
-     *
-     * @since 1.8
-     */
-    private static final String INSERT_PUSH_STATUS_SQL =
-        "INSERT INTO submission_push_status (tc_direct_project_id, user_id, value, create_user, create_date, " +
-            "modify_user, modify_date) VALUES(?, ?, 'RUNNING', ?, CURRENT, ?, CURRENT)";
-
-    /**
-     * <p>A <code>String</code> providing an SQL statement for updating existing record for submission push in database.
-     * </p>
-     *
-     * @since 1.8
-     */
-    private static final String UPDATE_PUSH_STATUS_SQL =
-        "UPDATE submission_push_status SET value = ?, modify_user = ?, modify_date = CURRENT WHERE push_id = ?";
-
-    /**
-     * <p>A <code>String</code> providing an SQL statement for getting the current status for submission push in
-     * database.</p>
-     *
-     * @since 1.8
-     */
-    private static final String SELECT_PUSH_STATUS_SQL = "SELECT value FROM submission_push_status WHERE push_id = ?";
 
     /**
      * <p>
@@ -3577,105 +3562,6 @@ public final class DirectUtils {
             return Double.parseDouble(infoValue);
         } catch (NumberFormatException ne) {
             return 0d;
-        }
-    }
-
-    /**
-     * <p>Gets the current status for specified submission's push from database.</p>
-     *
-     * @param pushId a <code>long</code> providing the ID of a submission's push to get status for.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
-     */
-    public static String getSubmissionPushStatus(long pushId) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-            statement = connection.prepareStatement(SELECT_PUSH_STATUS_SQL);
-
-            statement.setLong(1, pushId);
-
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            } else {
-                return "";
-            }
-        } finally {
-            DatabaseUtils.close(resultSet);
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
-        }
-    }
-
-    /**
-     * <p>Inserts a new record for submission push status into database.</p>
-     *
-     * @param tcDirectProjectId a <code>Long</code> providing the ID of a TC Direct project.
-     * @param userId a <code>long</code> providing the ID of a user.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
-     */
-    public static long insertSubmissionPushStatus(long tcDirectProjectId, long userId) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-            statement = connection.prepareStatement(INSERT_PUSH_STATUS_SQL, Statement.RETURN_GENERATED_KEYS);
-
-            statement.setLong(1, tcDirectProjectId);
-            statement.setLong(2, userId);
-            statement.setLong(3, userId);
-            statement.setLong(4, userId);
-
-            statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            } else {
-                return 0; 
-            }
-        } finally {
-            DatabaseUtils.close(resultSet);
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
-        }
-    }
-
-    /**
-     * <p>Updates a record for submission push status in database.</p>
-     *
-     * @param pushId a <code>Long</code> providing the ID of a submission push.
-     * @param userId a <code>Long</code> providing the ID of a user.
-     * @param newStatus a <code>String</code> providing new push status.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
-     */
-    public static void updateSubmissionPushStatus(long pushId, long userId, String newStatus) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-            statement = connection.prepareStatement(UPDATE_PUSH_STATUS_SQL);
-
-            statement.setString(1, newStatus);
-            statement.setLong(2, userId);
-            statement.setLong(3, pushId);
-
-            statement.executeUpdate();
-
-        } finally {
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
         }
     }
 }

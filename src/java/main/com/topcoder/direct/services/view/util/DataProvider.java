@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -1051,11 +1051,15 @@ import java.util.TimeZone;
  * </ul>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
- * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin,
- * @author Ghost_141, GreatKevin, Veve, GreatKevin, Veve
- * @version 6.5
+ * <p>Changes in version 6.6 ():
+ * <ul>
+ * <li>Remove {@link #getDirectProjectDemandWorkId(long)} method.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, duxiaoyang, minhu,
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, Ghost_141,
+ * @version 6.6
  * @since 1.0
  */
 public class DataProvider {
@@ -7946,36 +7950,6 @@ public class DataProvider {
         ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
         wb.write(saveTo);
         return new ByteArrayInputStream(saveTo.toByteArray());
-    }
-
-    /**
-     * Gets the demand work id of the direct project, return null if the project does not exist or the direct project does not
-     * demand work id.
-     *
-     * @param tcDirectProjectId the id of the direct project
-     * @return the demand work id of the direct project or null the project does not exist or the direct project does not
-     * demand work id.
-     * @throws Exception if any error
-     */
-    public static String getDirectProjectDemandWorkId(long tcDirectProjectId) throws Exception {
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        Request request = new Request();
-        // this refers to a query tool command/query
-        request.setContentHandle("demand_work_id");
-        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
-        ResultSetContainer resultSetContainer = dataAccessor.getData(request).get("demand_work_id");
-
-
-        if (resultSetContainer != null && resultSetContainer.size() > 0) {
-            ResultSetRow resultSetRow = resultSetContainer.get(0);
-            if (resultSetRow.getItem("demand_work_id").getResultData() != null) {
-                return resultSetRow.getStringItem("demand_work_id");
-            } else {
-                return null;
-            }
-        }
-
-        return null;
     }
 
     /**
