@@ -5336,6 +5336,9 @@ public class ProjectServicesImpl implements ProjectServices {
             }
         }
 
+        if(projectHeader.getReviewScorecardId() != 0){
+          reviewTemplateId = projectHeader.getReviewScorecardId();
+        }
         for (Phase p : projectPhases.getAllPhases()) {
             p.setPhaseStatus(PhaseStatus.SCHEDULED);
             p.setScheduledStartDate(p.calcStartDate());

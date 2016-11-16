@@ -566,7 +566,22 @@ function loadReviewScorecardList(typeId){
     }
 
     $("#reviewScorecardSelects").resetSS();
-    $('#reviewScorecardSelects').getSetSSValue(mainWidget.softwareCompetition.projectHeader.reviewScorecardId);
+    // Select default review scorecard.
+    $.each(reviewScorecards, function(id, value) {
+        if(value.projectCategory == 6){
+          $('#reviewScorecardSelects').getSetSSValue(value.id);
+          return false;
+        }
+    });
+    // Override default review scorecard. Select reviewScorecardId for this challenge if it is listed.
+    $.each(reviewScorecards, function(id, value) {
+        if(value.projectCategory == 6 || value.projectCategory == typeId){
+          if(value.id == mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
+            $('#reviewScorecardSelects').getSetSSValue(value.id);
+            return false;
+          }
+        }
+    });
 }
 
 /**
@@ -1186,16 +1201,14 @@ function populateTypeSection() {
 
 	//display
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
-
-  $('#rReviewScorecard').text(mainWidget.softwareCompetition.projectHeader.reviewScorecardId);
+  
+  loadReviewScorecardList(null);
 
   $.each(reviewScorecards,function(){
    if(this.id === mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
      $('#rReviewScorecard').text(this.scorecardName + " " + this.scorecardVersion);
    }
   });
-
-  loadReviewScorecardList(null);
 
 
 	$('#rContestName').text(mainWidget.softwareCompetition.assetDTO.name);
@@ -1397,7 +1410,7 @@ function validateFieldsTypeSection() {
     var copilotName = $('select#copilots option:selected').text();
     var milestoneId = parseInt($('select#milestones').val());
 
-    var reviewScorecardId = parseInt($('select#scorecardSelects').val());
+    var reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
 
     //validation
     var errors = [];
