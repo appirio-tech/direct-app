@@ -101,6 +101,11 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Review Scorecard</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rReviewScorecard"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Review Style</strong></td>
                 <td class="sec_tab_type"><strong>:&nbsp;<span id="rReviewStyle"></span></strong></td>
             </tr>
@@ -235,6 +240,21 @@
                   <select id="milestones" name="milestones" class="bigin">
                       <option value="0">Please select a milestone to associate</option>
                       <s:iterator value="milestones" var="milestone">
+                          <option value='<s:property value="id"/>'>
+                              <s:property value="name"/>
+                          </option>
+                      </s:iterator>
+                  </select>
+              </div>
+              <div class="clearFix"></div>
+          </div>
+          <!-- Review Scorecard -->
+          <div id="reviewScorecardDivEdit" class="editDropDown">
+             <span class="name fixWidthName"><strong>Review Scorecard</strong></span>
+             <div class="reviewScorecardSelect" style="float:left">
+                 <select id="reviewScorecardSelects" name="reviewScorecardSelects" class="bigin">
+                     <option value="0">Please select a review scorecard to associate</option>
+                     <s:iterator value="reviewScorecards" var="reviewScorecard">
                           <option value='<s:property value="id"/>'>
                               <s:property value="name"/>
                           </option>

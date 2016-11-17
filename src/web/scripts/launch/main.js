@@ -182,7 +182,7 @@ var swCurrentDocument = {};
 var swDocuments = [];
 
 // represents project id of reporting contest type. 
-var REPORTING_ID = "36"
+var REPORTING_ID = "36";
 /**
  * Configuration/General Set up
  */
@@ -879,6 +879,26 @@ function getBillingAccountsByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
+function getReviewScorecards() {
+    var returnValue = {};
+    $.ajax({
+        type: 'POST',
+        url: ctx + '/launch/getReviewScorecards',
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    returnValue = result;
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+    return returnValue;
+}
 function getMilestonesByDirectProjectId(directProjectId) {
     var returnValue = {};
     var request = {directProjectId:directProjectId};

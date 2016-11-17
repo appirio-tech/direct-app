@@ -69,6 +69,7 @@ import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsD
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ReviewScorecardDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
@@ -957,7 +958,7 @@ import java.util.TimeZone;
  * <p>
  * Version 6.20 (Release Assembly - TopCoder Cockpit Operations Dashboard Improvements 4 Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Updated {@link #getPMProjectData(TCSubject)} method to retrieve the list of copilots for the TC Direct 
+ *     <li>Updated {@link #getPMProjectData(TCSubject)} method to retrieve the list of copilots for the TC Direct
  *     projects, maximum delay for the project's contests launching and late phases.</li>
  *   </ol>
  * </p>
@@ -975,7 +976,7 @@ import java.util.TimeZone;
  *     <li>Added method {@link #getMilestoneContestAssociations(long, long, long)}</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 6.23 (BUGR - 9794) Change notes:
  * <ol>
@@ -1056,10 +1057,8 @@ import java.util.TimeZone;
  * </ul>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve,
- * @author GreatKevin, duxiaoyang, minhu,
- * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, GreatKevin, 
- * @author Ghost_141, GreatKevin, Veve, GreatKevin, Veve, TCSCODER
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, duxiaoyang, minhu,
+ * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, Ghost_141,
  * @version 6.6
  * @since 1.0
  */
@@ -1070,7 +1069,7 @@ public class DataProvider {
      */
     private static final String MONTHLY_SUFFIX = "_monthly";
 
-    
+
     /**
      * The name of paypal method.
      */
@@ -1132,6 +1131,37 @@ public class DataProvider {
         Request countReq = new Request();
         countReq.setContentHandle("member_count");
         return countDai.getData(countReq).get("member_count").getIntItem(0, "member_count");
+    }
+
+    public static List<ReviewScorecardDTO> getReviewScorecardDTO() throws Exception {
+       DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+       Request request = new Request();
+       request.setContentHandle("get_review_scorecard");
+
+       final ResultSetContainer resultContainer = dataAccessor.getData(request).get("get_review_scorecard");
+       List<ReviewScorecardDTO> result = new ArrayList<ReviewScorecardDTO>();
+
+       final int recordNum = resultContainer.size();
+
+       for (int i = 0; i < recordNum; i++) {
+           long scorecardId = resultContainer.getLongItem(i, "scorecard_id");
+           long scorecardTypeId = resultContainer.getLongItem(i, "scorecard_type_id");
+           long projectCategoryId = resultContainer.getLongItem(i, "project_category_id");
+           String scorecardName = resultContainer.getStringItem(i, "name");
+           String scorecardVersion = resultContainer.getStringItem(i, "version");
+
+           ReviewScorecardDTO reviewScorecard = new ReviewScorecardDTO();
+           reviewScorecard.setScorecardTypeId(scorecardTypeId);
+           reviewScorecard.setProjectCategoryId(projectCategoryId);
+           reviewScorecard.setScorecardId(scorecardId);
+           reviewScorecard.setScorecardName(scorecardName);
+           reviewScorecard.setScorecardVersion(scorecardVersion);
+
+           // add to result
+           result.add(reviewScorecard);
+       }
+
+       return result;
     }
 
      /**
@@ -1745,9 +1775,9 @@ public class DataProvider {
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
             data.setHasWritePermission(resultContainer.getBooleanItem(i, "has_write_permission"));
-           
+
             if (resultContainer.getItem(i, "completion_date").getResultData() != null) {
-                
+
                 data.setProjectCompletionDate(resultContainer.getTimestampItem(i, "completion_date"));
             }
             if (resultContainer.getItem(i, "project_forum_id").getResultData() != null) {
@@ -1884,7 +1914,7 @@ public class DataProvider {
         Map<String, ResultSetContainer> result = dataAccessor.getData(request);
         ResultSetContainer resultContainer = result.get("direct_my_pm_projects_contests_v3");
         Map<Long, ProjectSummaryData> projectDataLookup = new HashMap<Long, ProjectSummaryData>();
-        
+
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
             ProjectSummaryData data = new ProjectSummaryData();
             if (row.getItem("tc_direct_project_id").getResultData() != null) {
@@ -1978,7 +2008,7 @@ public class DataProvider {
                     data.setLaunchLateDelay(hoursDelayed); // There is at least 1 hour of delay
                 } else if (diff % 3600 > 0) {
                     data.setLaunchLateDelay(0L);           // There is less than 1 hour of delay so 0 indicates that
-                                                           // and null (set by default) will indicate that there is 
+                                                           // and null (set by default) will indicate that there is
                                                            // no delay
                 }
             }
@@ -1992,7 +2022,7 @@ public class DataProvider {
 
             projectData.add(data);
         }
-        
+
         // Collect the data for the active contests
         resultContainer = result.get("direct_project_active_contest_stats");
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
@@ -2168,7 +2198,7 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
 
 
-        
+
         Request request = new Request();
         request.setContentHandle("is_customer_admin");
         request.setProperty("uid", String.valueOf(userId));
@@ -2208,7 +2238,7 @@ public class DataProvider {
         }
 
 
-     
+
 
         return result;
     }
@@ -4286,7 +4316,7 @@ public class DataProvider {
                     && !row.getStringItem("forum_type").equals("")) {
                 isNewForum = true;
             }
-	
+
 			dto.setShowRegHealth(true);
 
 			// if reliability is not eligiable, alwasy sets to healthys
@@ -5321,7 +5351,7 @@ public class DataProvider {
             if (row.getItem("completion_date").getResultData() != null) {
                 costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
             }
-			
+
 			long actualActive = 0;
 			if (row.getItem("actual_active").getResultData() != null) {
                 actualActive = row.getLongItem("actual_active");
@@ -5336,16 +5366,16 @@ public class DataProvider {
             costDTO.setContestType(contestCategory);
 
             if (costDTO.getStatus() != null) {
-                if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled")) 
+                if(costDTO.getStatus().equals("Completed") || costDTO.getStatus().equals("Failed") || costDTO.getStatus().equals("Cancelled"))
 				{
                     // for finished contest, total cost = actual cost + contest fee
                     costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
-                } 
-				else if (actualActive == 1 && costDTO.getStatus().equals("Active")) 
+                }
+				else if (actualActive == 1 && costDTO.getStatus().equals("Active"))
 				{
 					costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
 				}
-				 else 
+				 else
 				 {
                     // for unfinished contest, total cost = estimated cost + contest fee
                     costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
@@ -6161,7 +6191,7 @@ public class DataProvider {
     private static void setRegistrationPhaseStatus(ContestHealthDTO dto, double reliabilityTotal,
                                                    long registrationPhaseStatus, String reliabilityEligible) {
         dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
-		
+
 		if ("false".equals(reliabilityEligible)) {
 			return;
 		}
@@ -6425,13 +6455,13 @@ public class DataProvider {
      */
     private static boolean setReportQueryParameters(Request request, TCSubject currentUser, long clientId, long billingAccountId, long projectId) {
         setUserPermissionQueryParameter(request, currentUser);
-    
+
     request.setProperty("tcdirectid", "0");
         request.setProperty("billingaccountid", "0");
         request.setProperty("clientid", "0");
-    
+
     boolean anySet = false;
-      
+
         if (projectId > 0) {
             request.setProperty("tcdirectid", String.valueOf(projectId));
       anySet = true;
@@ -8429,7 +8459,7 @@ public class DataProvider {
 
     /**
      * get active problems
-     * 
+     *
      * @return the active problems
      * @throws Exception if there is any error.
      * @since 6.6
@@ -8450,7 +8480,7 @@ public class DataProvider {
         }
 
         return problems;
-        
+
     }
 
     /**
@@ -8537,7 +8567,7 @@ public class DataProvider {
 
     /**
      * Get member pullable payments.
-     * 
+     *
      * @return
      *      an instance of {@link PullablePayments}.
      * @throws Exception
@@ -8548,7 +8578,7 @@ public class DataProvider {
       DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
       Request request = new Request();
       request.setContentHandle(queryName);
-      
+
       final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
 
       PullablePayments payments = new PullablePayments();
@@ -8570,10 +8600,10 @@ public class DataProvider {
       }
       return payments;
     }
-    
+
     /**
      * Get member payments by status for given days.
-     * 
+     *
      * @param startDate
      *      start date
      * @param endDate
@@ -8587,7 +8617,7 @@ public class DataProvider {
         if (startDate == null || endDate == null) {
             throw new IllegalArgumentException("Specified dates should not be null");
         }
-        
+
       final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
       final String queryName = "get_payments_by_status";
       DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
@@ -8596,7 +8626,7 @@ public class DataProvider {
       request.setProperty("sda", dateFormatter.format(startDate));
       request.setProperty("ed", dateFormatter.format(endDate));
 
-      List<PaymentsByStatus> payments = new ArrayList<PaymentsByStatus>(); 
+      List<PaymentsByStatus> payments = new ArrayList<PaymentsByStatus>();
       final ResultSetContainer resultSet = dataAccess.getData(request).get(queryName);
       for(int i=0;i<resultSet.size();i++) {
         double amount = resultSet.getDoubleItem(i, "net_amount");
@@ -8690,7 +8720,7 @@ public class DataProvider {
 
     /**
      * Get member payment history with given criteria.
-     * 
+     *
      * @param criteria
      *      search criteria
      * @return
@@ -8700,11 +8730,11 @@ public class DataProvider {
     public static List<PaymentHistoryResult> getPaymentHistory(PaymentHistoryCriteria criteria) throws Exception {
         Date startDate = criteria.getStartDate();
         Date endDate = criteria.getEndDate();
-        
+
         if (startDate == null || endDate == null) {
             throw new IllegalArgumentException("Specified dates should not be null");
         }
-        
+
         final DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
       final String queryName = "get_payment_history";
       DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
@@ -8767,7 +8797,7 @@ public class DataProvider {
 
     /**
      * Get member payment trend by given criteria.
-     * 
+     *
      * @param criteria
      *      search criteria
      * @return
@@ -8778,7 +8808,7 @@ public class DataProvider {
     public static List<PaymentTrend> getPaymentsTrends(PaymentTrendSearchCriteria criteria) throws Exception {
         Date startDate = criteria.getStartDate();
         Date endDate = criteria.getEndDate();
-        
+
         if (startDate == null || endDate == null) {
             throw new IllegalArgumentException("Specified dates should not be null");
         }
@@ -8792,8 +8822,8 @@ public class DataProvider {
       } else if(criteria.getPaymentStatusId() == PaymentStatus.OWED.getPaymentStatusId()) {
         queryName = "get_created_payments_trends";
       }
-      
-        request.setProperty("sda", dateFormatter.format(startDate));      
+
+        request.setProperty("sda", dateFormatter.format(startDate));
         request.setProperty("ed", dateFormatter.format(endDate));
       if(null != criteria.getSortingColumn()) {
         request.setProperty("sc", criteria.getSortingColumn());
@@ -8825,7 +8855,7 @@ public class DataProvider {
 
     /**
      * Get top member payments via criteria.
-     * 
+     *
      * @param criteria
      *      search criteria
      * @return
@@ -8875,13 +8905,13 @@ public class DataProvider {
           payment.setPaymentMethod(WESTERN_UNION_METHOD_NAME);
         }  else if(paymentMethodId == PaymentMethod.NOT_SET.getPaymentMethodId()) {
           payment.setPaymentMethod(NOT_SET_METHOD_NAME);
-        }   
+        }
 
         topMemberPayments.add(payment);
       }
       return topMemberPayments;
     }
-    
+
     /**
      * This method queries Marathon Match download submission.
      *
@@ -9079,4 +9109,3 @@ public class DataProvider {
     }
 
 }
-
