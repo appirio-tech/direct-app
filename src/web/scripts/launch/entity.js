@@ -3,13 +3,13 @@
  */
 /**
  * This javascript file defines classes to store informations about contest.
- * 
+ *
  * <p>
  * Changes in v1.0.1 (TC Direct - Launch Copilot Selection Contest assembly): add private description field in project class,
  * and copilot selection contest in project category array.
  * </p>
  * <p>
- * Changes in v1.0.2 (TC Direct - Software Creation Update assembly): 
+ * Changes in v1.0.2 (TC Direct - Software Creation Update assembly):
  *  - Add copilotUserId and copilotUserName to SoftwareCompetition
  * </p>
  * <p>
@@ -330,6 +330,7 @@ com.topcoder.direct.Project = function() {
 	  
 	  this.tcDirectProjectId = -1;	
 	  
+	  this.reviewScorecardId = 0;
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
 	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
@@ -344,6 +345,12 @@ com.topcoder.direct.Project = function() {
 
 	  this.properties = {};
 	  
+	  this.setReviewScorecardId = function(reviewScorecardId) {
+	  	  this.reviewScorecardId = reviewScorecardId;
+	  }
+	  this.getReviewScorecardId = function() {
+	  	  return this.reviewScorecardId;
+	  }
 	  this.setBillingProject = function(billingProjectId) {
 	  	  this.properties['Billing Project'] = billingProjectId;
 	  }

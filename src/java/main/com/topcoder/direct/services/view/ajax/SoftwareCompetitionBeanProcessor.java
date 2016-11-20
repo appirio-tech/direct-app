@@ -58,7 +58,7 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <li>Add document url to the response.</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 1.5 - Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
  * <ul>
@@ -187,6 +187,13 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("securityGroupId", project.getSecurityGroupId());
         result.put("challengeCreator", project.getCreator());
 
+        // retrieve review scorecard id.
+        for(com.topcoder.project.phases.Phase phase : bean.getProjectPhases().getAllPhases()){
+            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.REVIEW_PHASE.getName())){
+            	result.put("reviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
+            }
+        }
+
         // get resources of project
         Resource[] resources = bean.getResources();
 
@@ -247,7 +254,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
             result.put("privateDescription", project.getProjectSpec().getPrivateDescription());
         }
-        
+
         // technologies/categories for development/design
         if (isDevOrDesign(bean)) {
             result.put("rootCategoryId", assetDTO.getRootCategory().getId());
@@ -307,7 +314,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         if (hasMulti) {
             result.put("multiRoundEndDate", DirectUtils.getDateString(DirectUtils.getMultiRoundEndDate(bean)));
         }
-        
+
         if(DirectUtils.isMM(bean)){
             result.put("projectMMSpecification", bean.getProjectHeader().getProjectMMSpecification());
         } else if (DirectUtils.isStudio(bean)) {

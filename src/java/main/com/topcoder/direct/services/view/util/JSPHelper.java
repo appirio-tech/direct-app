@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2015 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -142,8 +142,16 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author isv, pvmagacho, flexme, GreatKevin, FireIce, GreatKevin
- * @version 1.3.4
+ * <p>
+ * Changes in version 1.3.5 (TopCoder Direct - Remove ASP Integration Related Logic):
+ * <ul>
+ * <li>Remove {@link #hasPermissionToAccessWorkManager(long)} method.</li>
+ * <li>Remove {@link #getDirectProjectDemandWorkId(long)} method.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, pvmagacho, flexme, GreatKevin, FireIce, GreatKevin, TCSCODER
+ * @version 1.3.5
  */
 public class JSPHelper {
 
@@ -654,29 +662,6 @@ public class JSPHelper {
      */
     public static boolean hasWriteProjectPermission(long projectId) throws Exception {
         return AuthorizationProvider.isUserGrantedWriteAccessToProject(DirectUtils.getTCSubjectFromSession(), projectId);
-    }
-
-    /**
-     * Checks whether current user has permission to access work manager.
-     *
-     * @param projectId the id of the given project.
-     * @return true if current user has write permission on the given project, false otherwise.
-     * @throws Exception if any error occurs.
-     * @since 1.3.4
-     */
-    public static boolean hasPermissionToAccessWorkManager(long projectId) throws Exception {
-        return AuthorizationProvider.isUserGrantedToAccessWorkManager(DirectUtils.getTCSubjectFromSession(), projectId);
-    }
-
-    /**
-     * Gets the demand work id of the specified direct project.
-     *
-     * @param projectId the id of the direct project.
-     * @return the demand work id, null if no exist or no demand work id.
-     * @throws Exception if any error occurs.
-     */
-    public static String getDirectProjectDemandWorkId(long projectId) throws Exception {
-        return DataProvider.getDirectProjectDemandWorkId(projectId);
     }
 
     /**

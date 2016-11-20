@@ -2084,6 +2084,7 @@ public class ProjectServicesImpl implements ProjectServices {
             }
 
             checkPrivateProjectPhase(projectHeader, projectPhases);
+
             // call phaseManager.updatePhases(projectPhases,operator)
             Util.log(logger, Level.DEBUG, "Starts calling PhaseManager#updatePhases method.");
             phaseManager.updatePhases(projectPhases, operator);
@@ -5100,6 +5101,9 @@ public class ProjectServicesImpl implements ProjectServices {
             }
         }
 
+        if(projectHeader.getReviewScorecardId() != 0){
+          reviewTemplateId = projectHeader.getReviewScorecardId();
+        }
         for (Phase p : projectPhases.getAllPhases()) {
             p.setPhaseStatus(PhaseStatus.SCHEDULED);
             p.setScheduledStartDate(p.calcStartDate());
