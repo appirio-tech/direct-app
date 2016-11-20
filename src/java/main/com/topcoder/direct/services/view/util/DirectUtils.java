@@ -16,6 +16,7 @@ import com.topcoder.direct.services.project.metadata.DirectProjectMetadataServic
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
@@ -690,8 +691,15 @@ import java.util.zip.ZipOutputStream;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.8.1 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *  <ol>
+ *      <li>Added {@link #getUsersFromHandle(String[])} method</li>
+ *      <li>Added {@link #getUnAgreedProjectTermByUser(long, long, Long[])} methos</li>
+ *  </ol>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86
- * @version 1.8
+ * @version 1.8.1
  */
 public final class DirectUtils {
 
@@ -921,6 +929,30 @@ public final class DirectUtils {
      * @since 1.8
      */
     private static final String SELECT_PUSH_STATUS_SQL = "SELECT value FROM submission_push_status WHERE push_id = ?";
+
+    /**
+     * Query for getting project term
+     * @since 1.8.1
+     */
+    private static final String QUERY_PROJECT_TERMS = "SELECT tou.terms_of_use_id, sort_order, tou.terms_of_use_type_id, " +
+            "tou.title, tou.url, tou.terms_of_use_agreeability_type_id " +
+            "FROM project_role_terms_of_use_xref INNER JOIN terms_of_use tou ON " +
+            "project_role_terms_of_use_xref.terms_of_use_id = tou.terms_of_use_id WHERE project_id = ? " +
+            "AND resource_role_id = ? AND " +
+            "tou.terms_of_use_agreeability_type_id <> 1 order by sort_order";
+
+    /**
+     * Query for getting users term
+     * @since 1.8.1
+     */
+    private static String QUERY_USER_TERMS = "SELECT  user_id, terms_of_use_id FROM user_terms_of_use_xref " +
+            "WHERE user_id in (";
+
+    /**
+     * Query for getting users by list of handle
+     * @since 1.8.1
+     */
+    private static String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
 
     /**
      * <p>
@@ -3676,6 +3708,120 @@ public final class DirectUtils {
         } finally {
             DatabaseUtils.close(statement);
             DatabaseUtils.close(connection);
+        }
+    }
+
+    /**
+     * Get user ids from given handle
+     *
+     * @param handles list of handle
+     * @return map of user id and handle
+     * @throws Exception
+     * @since 1.8.1
+     */
+    public static  Map<Long, String> getUsersFromHandle(String[] handles) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (handles == null || handles.length == 0){
+            return null;
+        }
+
+        try{
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            StringBuilder sbQueryUsers = new StringBuilder(QUERY_GET_USERS_FROM_HANDLE);
+            for (int i = 0; i < handles.length; i++){
+                sbQueryUsers.append(" ?,");
+            }
+            sbQueryUsers.setCharAt(sbQueryUsers.length() - 1, ')');
+
+            ps = con.prepareStatement(sbQueryUsers.toString());
+
+            for (int i = 0; i < handles.length; i++){
+                ps.setString(i + 1, handles[i]);
+            }
+            rs = ps.executeQuery();
+            Map<Long, String> result = new HashMap<Long, String>();
+            while (rs.next()){
+                result.put(rs.getLong("user_id"), rs.getString("handle"));
+            }
+            return result;
+        }finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
+        }
+    }
+
+    /**
+     * Get terms of user is not agree yet from given project
+     *
+     * @param projectId project id
+     * @param roleId role id
+     * @param users list of users id
+     * @return map user and list of pending terms
+     * @throws Exception
+     * @since 1.8.1
+     */
+    public static Map<Long, List<TermOfUse>> getUnAgreedProjectTermByUser(long projectId, long roleId, Long[] users) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Map<Long, List<TermOfUse>> failedTermCheck = new HashMap<Long, List<TermOfUse>>();
+        Map<Long, List<Long>> userTerms = new HashMap<Long, List<Long>>();
+
+        try{
+            StringBuilder sbQueryUserTerms = new StringBuilder(QUERY_USER_TERMS);
+            for (Long user : users){
+                sbQueryUserTerms.append(" ?,");
+                userTerms.put(user, new ArrayList<Long>());
+            }
+
+            sbQueryUserTerms.setCharAt(sbQueryUserTerms.length() - 1, ')');
+
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            ps = con.prepareStatement(sbQueryUserTerms.toString());
+            for (int i = 0; i < users.length; i++){
+                ps.setLong(i + 1, users[i]);
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                List<Long> userTerm = userTerms.get(rs.getLong("user_id"));
+                userTerm.add(rs.getLong("terms_of_use_id"));
+            }
+
+            ps = con.prepareStatement(QUERY_PROJECT_TERMS);
+            ps.setLong(1, projectId);
+            ps.setLong(2, roleId);
+            rs = ps.executeQuery();
+
+            while (rs.next()){
+                for (Map.Entry<Long, List<Long>> entry : userTerms.entrySet()) {
+                    Long user = entry.getKey();
+                    List<Long> agreedTerms = entry.getValue();
+                    if (!agreedTerms.contains(rs.getLong(1))){
+                        List<TermOfUse> terms = failedTermCheck.get(user);
+                        if (terms == null) {
+                            terms = new ArrayList<TermOfUse>();
+                            failedTermCheck.put(user, terms);
+                        }
+                        TermOfUse term = new TermOfUse();
+                        term.setId(rs.getLong(1));
+                        term.setTitle(rs.getString(4));
+                        term.setUrl(rs.getString(5));
+                        terms.add(term);
+
+                    }
+                }
+
+            }
+            return failedTermCheck;
+        }finally{
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
         }
     }
 }

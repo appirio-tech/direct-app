@@ -155,6 +155,7 @@ import com.topcoder.util.log.LogManager;
 import com.topcoder.util.objectfactory.ObjectFactory;
 import com.topcoder.util.objectfactory.impl.ConfigManagerSpecificationFactory;
 import com.topcoder.web.common.RowNotFoundException;
+import com.topcoder.web.common.model.TermsOfUse;
 import com.topcoder.web.ejb.forums.Forums;
 import com.topcoder.web.ejb.forums.ForumsHome;
 import com.topcoder.web.ejb.project.ProjectRoleTermsOfUse;
@@ -847,9 +848,15 @@ import java.util.Set;
  *     </li>
  *     <li> Added {@link #updatePreRegister(TCSubject, SoftwareCompetition, Set)} method</li>
  * </ul>
+ *
+ * Version 3.4 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
+ * <ul>
+ *     <li> Updated {@link #updatePreRegister(TCSubject, SoftwareCompetition, Set)}</li>
+ *     <li> Add helper {@link #isPrivate(TCSubject, long, boolean)}</li>
+ * </ul>
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, TCSCODER
- * @version 3.3
+ * @version 3.4
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -1256,7 +1263,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     @Resource(name = "uploadManagerOFKey")
     private String uploadManagerOFKey;
 
-   /**
+    /**
      * Object Factory key for the project manager.
      *
      * @since 1.9.2
@@ -2239,24 +2246,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             if (tobeUpdatedCompetition == null) {
                 tobeUpdatedCompetition =
                     createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), multiRoundEndDate, endDate);
-
-                Set<String> currentPreRegisterUsers = new HashSet<String>();
-
-                boolean currentPrivateProject = competition.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") ?
-                        true : false;
-
-                if (currentPrivateProject) {
-                    String preRegisterMember = competition.getProjectHeader().getProperty(ProjectPropertyType.PRE_REGISTER_USERS) == null ?
-                            "" : competition.getProjectHeader().getProperty(ProjectPropertyType.PRE_REGISTER_USERS);
-
-                    for (String member : preRegisterMember.split(",")){
-                        currentPreRegisterUsers.add(member.trim());
-                    }
-
-                    Set<String> newRegitersUsers = this.updatePreRegister(tcSubject, competition, currentPreRegisterUsers);
-                    competition.getProjectHeader().setProperty(ProjectPropertyType.PRE_REGISTER_USERS,
-                            StringUtils.join(newRegitersUsers, ","));
-                }
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
             } else {
                 competition.setProjectHeaderReason("User Update");
@@ -3641,6 +3630,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
             }
 
+            if (isPrivateProject(contest)){
+                // not rate for private
+                contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
+            }
+
 //			if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.CONTENT_CREATION.getId())
 //            {
 //                contest.getProjectHeader().setProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY, "Off");
@@ -4309,9 +4303,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             Date oldStartDate = null;
             Date oldCheckpointEndDate = null;
             Date oldEndDate = null;
-            boolean removedUser = false;
-            Set<String> currentPreRegisterUsers = new HashSet<String>();
-            boolean currentPrivateProject = false;
 
             if (contest.getProjectHeader() != null) {
 
@@ -4322,37 +4313,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                                 contest.getProjectHeader().getId());
 
                 Project oldProject = oldProjectData.getProjectHeader();
-
-                //pre-register member
-                if (contest.getProjectHeader().getProjectStatus().getId() == ProjectStatus.ACTIVE.getId()) {
-                    currentPrivateProject = contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") ?
-                            true : false;
-                    boolean oldPrivateProject = oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") ?
-                            true : false;
-                    Set<String> oldPreRegisterUsers = new HashSet<String>();
-
-                    if (!currentPrivateProject && oldPrivateProject) {
-                        currentPrivateProject = true;
-                    }else if(currentPrivateProject) {
-                        String preRegister = contest.getProjectHeader().getProperty(ProjectPropertyType.PRE_REGISTER_USERS) == null ?
-                                "" : contest.getProjectHeader().getProperty(ProjectPropertyType.PRE_REGISTER_USERS);
-                        for (String member : preRegister.split(",")) {
-                            currentPreRegisterUsers.add(member.trim());
-                        }
-                        if (oldProject.getProjectStatus().getId() == ProjectStatus.ACTIVE.getId()) {
-                            preRegister = oldProject.getProperty(ProjectPropertyType.PRE_REGISTER_USERS) == null ?
-                                    "" : oldProject.getProperty(ProjectPropertyType.PRE_REGISTER_USERS);
-                            for (String member : preRegister.split(",")) {
-                                oldPreRegisterUsers.add(member.trim());
-                            }
-                            if (currentPreRegisterUsers.equals(oldPreRegisterUsers)) {
-                                //member is not change. skiip it
-                                currentPrivateProject = false;
-                            }
-                        }
-                    }
-                }
-
 
                 if(StringUtils.isNotEmpty(cmcTaskId)) {
 
@@ -4475,6 +4435,14 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
 				}
 
+                if (isPrivateProject(contest)){
+                    contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
+                }else if (oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")){
+                    //remove current registrant
+                    Set<Long> preUsers = updatePreRegister(tcSubject, contest, new HashSet<Long>());
+                }
+
+
 //				if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.CONTENT_CREATION.getId())
 //				{
 //					contest.getProjectHeader().setProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY, "Off");
@@ -4528,11 +4496,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                             continue;
                         }
                     }
-                    if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER){
-                        continue;
-                    }
-
-                    if (!currentPrivateProject) {
+                    if (r.getResourceRole().getId() != ResourceRole.RESOURCE_ROLE_SUBMITTER) {
                         updatedResources.add(r);
                     }
                 }
@@ -4588,21 +4552,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         }
                     }
                 }
-
-                String newPreRegisterUsers = "";
-                if (currentPrivateProject) {
-                    Set<String> updateUsers = updatePreRegister(tcSubject, contest, currentPreRegisterUsers);
-                    newPreRegisterUsers = StringUtils.join(updateUsers, ",");
-
-                    contest.getProjectHeader().setProperty(ProjectPropertyType.PRE_REGISTER_USERS, newPreRegisterUsers);
-                    if (currentPrivateProject) {
-                        com.topcoder.management.resource.Resource[] regs = this.projectServices.searchResources(contest.getId(), 1);
-
-                        updatedResources.addAll(Arrays.asList(regs));
-
-                    }
-                }
-
 
                 FullProjectData projectData = projectServices.updateProject(contest.getProjectHeader(),
                         contest.getProjectHeaderReason(),
@@ -4854,12 +4803,12 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param tcSubject
      * @param contest
      * @param preRegisterMembers
-     * @return
-     * @throws ContestServiceException\
+     * @return successfully added user
+     * @throws ContestServiceException
      * @since 3.3
      */
-    private Set<String> updatePreRegister(TCSubject tcSubject, SoftwareCompetition contest,
-                                          Set<String> preRegisterMembers) throws ContestServiceException
+    public Set<Long> updatePreRegister(TCSubject tcSubject, SoftwareCompetition contest,
+                                          Set<Long> preRegisterMembers) throws ContestServiceException
     {
 
         long forumId;
@@ -4867,9 +4816,21 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         String moderatorRoleId = "";
         Forums forum = null;
         try {
-            Set<Long> removedUsers = uploadExternalServices.removeAllSubmitters(contest.getId(),
-                    String.valueOf(tcSubject.getUserId()));
+            com.topcoder.management.resource.Resource[] regs = this.projectServices.searchResources(contest.getId(),
+                    ResourceRole.RESOURCE_ROLE_SUBMITTER);
 
+            Set<Long> removedUsers = new HashSet<Long>();
+            for (com.topcoder.management.resource.Resource r : regs){
+                if (!preRegisterMembers.contains(r.getUserId())){
+                    removedUsers.add(r.getUserId());
+                }else{
+                    preRegisterMembers.remove(r.getUserId());
+                }
+            }
+
+            removedUsers = uploadExternalServices.removeSubmitters(contest.getId(), removedUsers,
+                               String.valueOf(tcSubject.getUserId()));
+            //remove forum
             if (createForum) {
                 try {
                     forumId = contest.getAssetDTO().getForum().getJiveCategoryId();
@@ -4886,18 +4847,14 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 }
             }
 
-
-            Set<String> addedUsers = new HashSet<String>();
-            for (String member : preRegisterMembers) {
+            Set<Long> addedUsers = new HashSet<Long>();
+            for (Long member : preRegisterMembers) {
                 try {
-                    Long user = userService.getUserId(member.trim());
-                    this.addSubmitter(tcSubject, contest.getId(), user);
+                    this.addSubmitter(tcSubject, contest.getId(), member);
                     if (createForum) {
-                        forum.assignRole(user, userRoleId);
+                        forum.assignRole(member, userRoleId);
                     }
                     addedUsers.add(member);
-                } catch (UserServiceException e) {
-                    logger.error("Failed to add pre-register member: " + member, e);
                 } catch (EJBException e) {
                     logger.error("Failed to assign forum role for user: " + member, e);
                 } catch (Exception e) {
@@ -4906,9 +4863,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
             return addedUsers;
         }catch (Exception e){
-            throw new ContestServiceException("Failed to pre-register user");
+            throw new ContestServiceException("Failed to pre-register user", e);
         }
     }
+
 
     /**
      * Checks whether the contest has project info FORUM TYPE
@@ -6877,6 +6835,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             return false;
         }
     }
+
     /**
      * The next day for production-date.
      * @return new date
@@ -9007,5 +8966,16 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public boolean[] requireBillingProjectsCCA(long[] billingProjectIds) throws PersistenceException {
         return projectManager.requireBillingProjectsCCA(billingProjectIds);
+    }
+
+    /**
+     * Check whether the project is private
+     *
+     * @param contest
+     * @return True if project if private
+     * @since 3.4
+     */
+    private boolean isPrivateProject(SoftwareCompetition contest){
+        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") ? true :false;
     }
 }

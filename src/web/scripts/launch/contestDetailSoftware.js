@@ -762,6 +762,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.endDate = parseDate(contestJson.endDate);
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
    mainWidget.softwareCompetition.adminFee = contestJson.adminFee;
+    mainWidget.softwareCompetition.registrants = contestJson.registrant;
 
    var startDate =  parseDate(contestJson.startDate);
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
@@ -1095,6 +1096,11 @@ function initContest(contestJson) {
         if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
             $(".edit_prize").parent().show();
+            if (contestJson.properties["Private Project Status"] == "1"){
+                $(".edit_round").show();
+                $('#roundEdit').show();
+                $(".edit_prize").show();
+            }
         } else {
             $(".edit_prize").show();
             $(".edit_round").show();
@@ -1166,15 +1172,15 @@ function populateTypeSection() {
 	}
 
     var privatProject = p["Private Project Status"];
-    var preReg = p["PreRegister Users"] ? p["PreRegister Users"] : "";
+    var preRegisterUsers = mainWidget.softwareCompetition.registrants.join(",");
 
     if (privatProject === "1"){
         $("#rPrivateProject").text("Yes");
         $("#privateProject").attr("checked", "checked");
         $(".preRegisterUsersDiv").show();
         $("#preRegisterUsersEditDiv").show();
-        $("#rPreRegisterUsers").text(preReg);
-        $("#preRegisterUsers").val(preReg);
+        $("#rPreRegisterUsers").text(preRegisterUsers);
+        $("#preRegisterUsers").val(preRegisterUsers);
     }else{
         $("#rPrivateProject").text("No");
         $("#privateProject").attr("checked", false);
