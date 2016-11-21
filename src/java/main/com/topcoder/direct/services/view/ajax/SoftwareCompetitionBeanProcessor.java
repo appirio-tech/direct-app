@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import com.topcoder.clients.model.ContestType;
 import com.topcoder.management.project.ProjectPlatform;
@@ -100,8 +102,14 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.1 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
+ * <ul>
+ *     <li> Add list of registrant in map result</li>
+ * </ul>
+ * </p>
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 2.0
+ * @version 2.1
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -197,6 +205,8 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
         double totalCopilots = 0;
 
+        List<String> registrant = new ArrayList<String>();
+
         // Gets copilots and reviewers from the resources of the contest
         for (Resource r : resources) {
             // get copilots
@@ -215,6 +225,10 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
                 totalCopilots += copilotFee;
             }
+
+            if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
+                registrant.add(r.getProperty("Handle"));
+            }
             // get reviewers
             if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID ||
                     r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_REVIEWER_ID) {
@@ -222,6 +236,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }
         }
 
+        result.put("registrant", registrant);
         // put the copilots into the result
         result.put("copilots", copilots);
 

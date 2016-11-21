@@ -21,11 +21,17 @@ import java.util.Set;
  * </p>
  *
  * <p>
+ *     Version 1.1.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *     <ol>
+ *         <li>Added {@link #removeSubmitters(long, Set, String)} method</li>
+ *     </ol>
+ * </p>
+ * <p>
  * Thread safety: the implementations must be thread safe.
  * </p>
  *
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1
+ * @version 1.1.3
  * @since 1.0
  */
 public interface UploadExternalServices {
@@ -219,4 +225,16 @@ public interface UploadExternalServices {
      * @since 1.1.2
      */
     Set<Long> removeAllSubmitters(long projectId, String operator) throws UploadServicesException;
+
+    /**
+     * Remove submitters from given project
+     *
+     * @param projectId the project id
+     * @param users set of user id
+     * @param operator user who is added it
+     * @return
+     * @throws UploadServicesException
+     * @since 1.1.3
+     */
+    Set<Long> removeSubmitters(long projectId, Set<Long> users, String operator)throws UploadServicesException;
 }

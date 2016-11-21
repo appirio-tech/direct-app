@@ -42,7 +42,6 @@ import java.io.Serializable;
  * <p>
  *     Version 1.2.6 (Provide Way To Pre_register members When Launching Challenge)
  *     - Add property {@link #PRIVATE_PROJECT}
- *     - Add property {@link #PRE_REGISTER_USERS}
  * </p>
  *
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
@@ -367,14 +366,6 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String PRIVATE_PROJECT = "Private Project Status";
 
-    /**
-     * Represent "Pre-Register Users" project property type
-     *
-     * @since 1.2.6
-     */
-    public static final String PRE_REGISTER_USERS = "PreRegister Users";
-
-   
     /**
      * Represents the id of this instance. Only values greater than zero is
      * allowed. This variable is initialized in the constructor and can be

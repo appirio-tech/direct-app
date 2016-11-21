@@ -300,6 +300,10 @@ com.topcoder.direct.SoftwareCompetition = function() {
 
     // hold the project milestone name  the contest associates with
     this.projectMilestoneName = 0;
+
+	this.registrants = null;
+
+	this.isPrivateProject = function(){return this.projectHeader.properties["Private Project Status"] == "1" ? true : false;}
 } 
 
 /**

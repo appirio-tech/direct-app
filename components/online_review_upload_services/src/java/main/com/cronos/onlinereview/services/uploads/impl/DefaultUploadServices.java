@@ -101,13 +101,20 @@ import java.text.SimpleDateFormat;
  *     <li>Added {@link #removeUsersProjectResult(Project, Collection)} method</li>
  *     <li>Updated {@link #addSubmitter(long, long)} fixing dateformat</li>
  * </ul>
+ *
+ * <p>
+ * Version 1.1.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *     <ol>
+ *         <li>Added {@link #removeSubmitters(long, Set, String)} method</li>
+ *     </ol>
+ * </p>
  * <p>
  * Thread safety: the thread safety is completely relied to the managers implementations because it's impossible to
  * change the other variables.
  * </p>
  *
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1.2
+ * @version 1.1.3
  */
 public class DefaultUploadServices implements UploadServices {
 
@@ -1229,19 +1236,17 @@ public class DefaultUploadServices implements UploadServices {
     }
 
     /**
-     * Remove all submitters for a given project
+     * Remove submitters from given project
      *
      * @param projectId the project id
-     * @param operator user whos added
-     * @return
-     * @throws InvalidProjectException
+     * @param users set of user id
+     * @param operator user who is added it
+     * @return set removedUsers
      * @throws UploadServicesException
-     * @throws InvalidUserException
-     * @throws InvalidProjectPhaseException
-     * @since 1.1.2
+     * @since 1.1.3
      */
-    public Set<Long> removeAllSubmitters(long projectId, String operator)throws UploadServicesException {
-        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeSubmitter(long, String)");
+    public Set<Long> removeSubmitters(long projectId, Set<Long> users, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeSubmitters(long, Set, String)");
 
         try {
             Project project = managersProvider.getProjectManager().getProject(projectId);
@@ -1249,17 +1254,19 @@ public class DefaultUploadServices implements UploadServices {
 
             Filter filter = ResourceFilterBuilder.createProjectIdFilter(project.getId());
             Resource[] resources = resourceManager.searchResources(filter);
-            Set<Long> users = new HashSet<Long>();
+            Set<Long> removedUsers = new HashSet<Long>();
             for (Resource resource : resources) {
-                if (resource.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
-                    users.add(resource.getUserId());
-                    resourceManager.removeResource(resource, operator);
+                if (resource.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER){
+                    if (users == null || users.contains(resource.getUserId())){
+                        removedUsers.add(resource.getUserId());
+                        resourceManager.removeResource(resource, operator);
+                    }
                 }
             }
-            if (!users.isEmpty()) {
-                removeUsersProjectResult(project, users);
+            if (!removedUsers.isEmpty()) {
+                removeUsersProjectResult(project, removedUsers);
             }
-            return users;
+            return removedUsers;
 
         }catch (SearchBuilderException e){
             Helper.logFormat(LOG, Level.ERROR, e, "Failed to get the project resources for the projectId {0}",
@@ -1277,6 +1284,22 @@ public class DefaultUploadServices implements UploadServices {
         } finally {
             Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadServices#removeSubmitter(long, String)");
         }
+    }
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    public Set<Long> removeAllSubmitters(long projectId, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeAllSubmitters(long, String)");
+            return removeSubmitters(projectId, null, operator);
     }
 
     /**
