@@ -209,6 +209,8 @@
         <copy file="${spell_check.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+		<copy file="${tccache.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+
     	<copy file="${topcoder_security_groups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${review_application_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${project_payment_calculator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -236,6 +238,8 @@
         <copy file="${commons-dbcp.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-discovery.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-pool.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+		<copy file="${commons-pool2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+		<copy file="${jedis.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${confluence-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${httpProxyPackage.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbcx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
