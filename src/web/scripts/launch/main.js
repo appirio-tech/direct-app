@@ -879,10 +879,11 @@ function getBillingAccountsByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
-function getReviewScorecards() {
+function getReviewScorecards(typeId) {
     var returnValue = {};
     $.ajax({
         type: 'POST',
+        data: {categoryId: typeId},
         url: ctx + '/launch/getReviewScorecards',
         cache: false,
         async: false,
