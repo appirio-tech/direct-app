@@ -547,23 +547,21 @@ var preCost = 0;
 var reviewScorecards;
 
 function loadReviewScorecardList(typeId){
-    if(reviewScorecards === null || reviewScorecards === undefined){
-      reviewScorecards = getReviewScorecards();
+    var $contestReviewScorecard = $("#reviewScorecardSelects");
+
+    $contestReviewScorecard.html("");
+
+    $contestReviewScorecard.append($('<option></option>').val(0).html("Please select a review scorecard to associate"));
+
+    if(typeId === null){
+        return;
     }
+    reviewScorecards = getReviewScorecards(typeId);
 
-    if(typeId !== null){
-      var $contestReviewScorecard = $("#reviewScorecardSelects");
+    $.each(reviewScorecards, function(id, value) {
+        $contestReviewScorecard.append($('<option></option>').val(value.id).text(htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)).attr('title', htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)));
+    });
 
-      $contestReviewScorecard.html("");
-
-      $contestReviewScorecard.append($('<option></option>').val(0).html("Please select a review scorecard to associate"));
-
-      $.each(reviewScorecards, function(id, value) {
-          if(value.projectCategory == 6 || value.projectCategory == typeId){
-            $contestReviewScorecard.append($('<option></option>').val(value.id).text(htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)).attr('title', htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)));
-          }
-      });
-    }
 
     $("#reviewScorecardSelects").resetSS();
     // Select default review scorecard.
@@ -591,9 +589,7 @@ function onContestTypeChange() {
     var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
-
     loadReviewScorecardList(typeId);
-
 
     if(isContestSaved()) {
         currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;

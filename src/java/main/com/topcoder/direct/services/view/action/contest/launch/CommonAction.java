@@ -127,6 +127,8 @@ public class CommonAction extends BaseContestFeeAction {
 
     private CostCalculationService costCalculationService;
 
+    private long categoryId;
+
     /**
      * <p>
      * Executes the action.
@@ -205,7 +207,7 @@ public class CommonAction extends BaseContestFeeAction {
 
     public String getReviewScorecards() {
        try {
-           List<ReviewScorecardDTO> reviewScorecards = DataProvider.getReviewScorecardDTO();
+           List<ReviewScorecardDTO> reviewScorecards = DataProvider.getReviewScorecardDTO(this.categoryId);
            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
            for (ReviewScorecardDTO c : reviewScorecards) {
                Map<String, String> reviewScorecard = new HashMap<String, String>();
@@ -525,5 +527,13 @@ public class CommonAction extends BaseContestFeeAction {
 
     public void setCostCalculationService(CostCalculationService costCalculationService) {
         this.costCalculationService = costCalculationService;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
     }
 }
