@@ -1291,12 +1291,13 @@ function populateTypeSection() {
         $('.billingdisplay').hide();
     }
 
+/*
     if (mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
         $('#rCMCTaskID').text(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $('input[name=CMCTaskID]').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $(".cmcTask").show();
     }
-
+*/
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty('Marathon Match Id')) {
         $('#rMatchRoundId').text(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
         $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
