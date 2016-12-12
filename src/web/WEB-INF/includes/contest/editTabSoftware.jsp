@@ -212,8 +212,24 @@
           <span class="value">
               <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
           </span>
-          <br /><br />
-				 <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
+          <!-- Review Scorecard -->
+          <div id="reviewScorecardDivEdit" class="editDropDown">
+             <span class="name fixWidthName"><strong>Review Scorecard</strong></span>
+             <div class="reviewScorecardSelect" style="float:left">
+                 <select id="reviewScorecardSelects" name="reviewScorecardSelects" class="bigin">
+                     <option value="0">Please select a review scorecard to associate</option>
+                     <s:iterator value="reviewScorecards" var="reviewScorecard">
+                          <option value='<s:property value="id"/>'>
+                              <s:property value="name"/>
+                          </option>
+                      </s:iterator>
+                  </select>
+              </div>
+              <div class="clearFix"></div>
+          </div>
+	      
+	  <br /><br />
+	  <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
 
           <div id="projectEditDiv" class="editDropDown">
               <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -248,21 +264,7 @@
               </div>
               <div class="clearFix"></div>
           </div>
-          <!-- Review Scorecard -->
-          <div id="reviewScorecardDivEdit" class="editDropDown">
-             <span class="name fixWidthName"><strong>Review Scorecard</strong></span>
-             <div class="reviewScorecardSelect" style="float:left">
-                 <select id="reviewScorecardSelects" name="reviewScorecardSelects" class="bigin">
-                     <option value="0">Please select a review scorecard to associate</option>
-                     <s:iterator value="reviewScorecards" var="reviewScorecard">
-                          <option value='<s:property value="id"/>'>
-                              <s:property value="name"/>
-                          </option>
-                      </s:iterator>
-                  </select>
-              </div>
-              <div class="clearFix"></div>
-          </div>
+
 
           <div id="copilotEditDiv" class="editDropDown">
               <span class="name fixWidthName"><strong>Copilot</strong></span>
