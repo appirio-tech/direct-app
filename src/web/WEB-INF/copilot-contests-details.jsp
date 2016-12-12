@@ -229,8 +229,7 @@
 
                     </strong>
                 </li>
-<!--
-		<c:if test='${projectHeader.properties["CloudSpokes CMC Task"] != null}'>
+                <c:if test='${projectHeader.properties["CloudSpokes CMC Task"] != null}'>
                     <li>
                         <label>CMC Task ID :</label>
                         <strong id="rCMCTaskID">
@@ -238,7 +237,6 @@
                         </strong>
                     </li>
                 </c:if>
--->
                 <li>
                     <label>Experience :</label>
                     
@@ -312,12 +310,11 @@
             </div>
 
             <!-- CMC Task ID -->
-<!--
-	   <div class="row">
+            <div class="row">
                 <label for="contestNameInput2">CMC Task ID</label>
                 <input type="text" class="text" value="${projectHeader.properties["CloudSpokes CMC Task"]}" name="CMCTaskID"/>
             </div>
--->
+
             <!-- Billing Account -->
             <div class="row <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label for="billingProjects2">Select Your Billing Account :</label>

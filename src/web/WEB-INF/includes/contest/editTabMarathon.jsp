@@ -76,15 +76,12 @@
                 <td class="sec_tab_type"><strong>: <span id="rMatchRoundId"></span></strong></td>
             </tr>
             <tr></tr>
-<!--
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr></tr>
             <tr class="cmcTask"></tr>
--->
-
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
@@ -188,14 +185,13 @@
                         <input type="text" class="smallin"  name="MatchRoundID" value=""/>
                     </span>
              </span><br />
-<!-- 
              <span class="cmcTask"><br />
                     <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">
                         <input type="text" class="bigin"  name="CMCTaskID" value=""/>
                     </span>
              </span><br />
--->            
+            
             <div id="projectEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Project Name</strong></span>

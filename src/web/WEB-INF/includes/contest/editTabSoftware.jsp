@@ -125,8 +125,7 @@
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
             </tr>
             <tr></tr>
-<!--
-	    <tr class="cmcTask">
+            <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
@@ -135,7 +134,6 @@
                 <td class="first_tab_type"><strong>Milestone</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
             </tr>
--->
             <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Copilot</strong></td>
@@ -202,15 +200,14 @@
               <input type="text" class="bigin"  id="contestName" />
               <span id="contestNameText"></span>
           </span>
-<!--
-	  <br /><br  class="cmcTask" /><p class="cmcTask">
+          <br /><br  class="cmcTask" /><p class="cmcTask">
           <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">
                         <input type="text" value="" name="CMCTaskID" class="bigin">
                     </span>
 
           </p><br/>
--->            
+            
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
               <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
