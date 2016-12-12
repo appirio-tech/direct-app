@@ -126,7 +126,7 @@
 
                                 <!-- step first -->
                                 <div class="stepFirst stepContainer">
-                                    <!--<input type="hidden" name="CMCTaskID" value='<s:property value="%{#parameters.cmcTaskId}" />'/>-->
+                                    <input type="hidden" name="CMCTaskID" value='<s:property value="%{#parameters.cmcTaskId}" />'/>
                                     <input type="hidden" name="CMCBillingID" value='<s:property value="cmcBillingAccount.id" />'/>
                                     <input type="hidden" name="CMCBillingName" value='<s:property value="cmcBillingAccount.name" />'/>
                                   <div class="geryContent">

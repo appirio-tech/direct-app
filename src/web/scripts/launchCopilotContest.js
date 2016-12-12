@@ -993,11 +993,10 @@ function saveAsDraft() {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
 
-/*	
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
-*/
+
 
     if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
         mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
@@ -1059,11 +1058,11 @@ function submitCompetition() {
     if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
-/*
+
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
-*/
+
 
     if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
         mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
