@@ -982,7 +982,7 @@ function cancelContest() {
 }
 
 function saveAsDraftRequest() {
-
+/*
     if ($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
@@ -990,7 +990,7 @@ function saveAsDraftRequest() {
     if ($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task'] = $("input[name=CMCTaskID]").val();
     }
-
+*/
     if ($("input[name=MatchRoundID]").length > 0) {
         if($.trim($("input[name=MatchRoundID]").val()).length > 0) {
             mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id'] = $("input[name=MatchRoundID]").val();

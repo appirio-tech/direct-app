@@ -684,11 +684,11 @@ function updateProjectGeneralInfo(notSendToServer) {
     
     $('#copilotTypesTextLabel').html(exp);
     $('#budgetTextLabel').html(bud);
-
+/*
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         $("#rCMCTaskID").html($("input[name=CMCTaskID]").val());
     }
-    
+*/    
     if (typeof notSendToServer == "undefined" || !notSendToServer) {
         sendSaveDraftRequestToServer();
     }
@@ -853,11 +853,11 @@ function saveAsDraftRequest() {
 
     var contestFee = parseFloat($("#swContestFee").text()).toFixed(1);
     request["projectHeader.properties['Admin Fee']"] = contestFee;
-
+/*
     if($("input[name=CMCTaskID]").length > 0 && $.trim($("input[name=CMCTaskID]").val()).length > 0) {
         request["projectHeader.properties['CloudSpokes CMC Task']"] = $("input[name=CMCTaskID]").val();
     }
-
+*/
     if($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
         request['projectHeader.securityGroupId'] = $("#billingGroupCheckBox select").val();
     } else {
