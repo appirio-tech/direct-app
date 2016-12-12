@@ -193,7 +193,7 @@
       </div>
 
       <div class="row preRegisterUsersRow hide">
-          <label>Pre-Register Members</label>
+          <label>Assign Member(s)</label>
           <input name="preRegisterUsers" type="text" class="text"/>
       </div>
 
