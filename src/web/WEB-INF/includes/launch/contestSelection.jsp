@@ -79,8 +79,6 @@
                       <span class="bug_hunt">Create Bug Hunt Challenge</span>
                       <a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a>
                   </div>
-
-                  <div class="help"><span class="new_style">Challenge Type Information</span></div>
               </div>
           </div>
           <!-- end .selectDesing -->
