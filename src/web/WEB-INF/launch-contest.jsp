@@ -138,10 +138,6 @@
                     </div></div>
                 </div><!-- End .tooltipCaption -->
 
-                <div class="tooltipContent" id="contestDescriptionTooltip">
-                    <p>Challenge Description</p>
-                </div><!-- End .tooltipContent -->
-
             </div></div>
         </div></div></div>
     </div>
@@ -312,7 +308,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>In some cases, when clients would like to hold a "private" competition that has confidentiality terms in addition to the usual click-through terms, the competition will require a Competition Confidentiality Agreement or "CCA" document to be completed prior to participation in the competition. http://apps.topcoder.com/wiki<br/>/display/tc/Competition+<br/>Confidentiality+Agreement+<br/>%28CCA%29</p>
+                    <p>In some cases, when clients would like to hold a "private" competition that has confidentiality terms in addition to the usual click-through terms, the competition will require a Competition Confidentiality Agreement or "CCA" document to be completed prior to participation in the competition. https://www.topcoder.com/<br/>challenge-details/terms/<br/>detail/21153/</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
