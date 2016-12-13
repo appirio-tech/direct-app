@@ -4437,9 +4437,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
                 if (isPrivateProject(contest)){
                     contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
-                }else if (oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")){
-                    //remove current registrant
-                    Set<Long> preUsers = updatePreRegister(tcSubject, contest, new HashSet<Long>());
+                }else {
+                    if (oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")){
+                        //remove current registrant
+                        Set<Long> preUsers = updatePreRegister(tcSubject, contest, new HashSet<Long>());
+                    }
                 }
 
 
@@ -8976,6 +8978,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 3.4
      */
     private boolean isPrivateProject(SoftwareCompetition contest){
-        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") ? true :false;
+        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1");
     }
 }
