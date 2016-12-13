@@ -97,7 +97,7 @@
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
             <tr class="preRegisterUsersDiv hide">
-                <td class="first_tab_type"><strong>Pre-Register Members</strong></td>
+                <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
             </tr>
             <tr>
@@ -229,7 +229,7 @@
             </div>
             <br />
             <div id="preRegisterUsersEditDiv">
-                <span class="name fixWidthName"><strong>Pre-Register Members</strong></span>
+                <span class="name fixWidthName"><strong>Assign Member(s):</strong></span>
                 <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
             </div>
             <br /><br />
