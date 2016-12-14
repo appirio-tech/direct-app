@@ -51,6 +51,11 @@ public class ProjectSpec extends AuditableObject implements Serializable {
     private String detailedRequirements;
 
     /**
+     * Represents whether markdown was used to create the detailedRequirements
+     */
+    private boolean markdownUsedForDetailedRequirements = false;
+
+    /**
      * Represents the submission deliverables for the project.
      */
     private String submissionDeliverables;
@@ -64,7 +69,13 @@ public class ProjectSpec extends AuditableObject implements Serializable {
      * Represents the final submission guidelines.
      */
     private String finalSubmissionGuidelines;
-    
+
+    /**
+     * Represents whether markdown was used to create the
+     * final submission guidelines
+     */
+    private boolean markdownUsedForSubmissionGuidelines = false;
+
     /**
      * Represents the private description.
      * 
@@ -165,6 +176,22 @@ public class ProjectSpec extends AuditableObject implements Serializable {
     }
 
     /**
+     * Gets whether markdown was used for specifying detailed requirements
+     * @return boolean - flag whether markdown was used
+     */
+    public boolean isMarkdownUsedForDetailedRequirements() {
+        return markdownUsedForDetailedRequirements;
+    }
+
+    /**
+     * Sets flag to indicate that markdown was used to specify detailed requirements
+     * @param markdownUsedForDetailedRequirements
+     */
+    public void setMarkdownUsedForDetailedRequirements(boolean markdownUsedForDetailedRequirements) {
+        this.markdownUsedForDetailedRequirements = markdownUsedForDetailedRequirements;
+    }
+
+    /**
      * <p>
      * Gets the submission deliverables of this instance parent Project
      * </p>
@@ -231,6 +258,22 @@ public class ProjectSpec extends AuditableObject implements Serializable {
      */
     public void setFinalSubmissionGuidelines(String finalSubmissionGuidelines) {
         this.finalSubmissionGuidelines = finalSubmissionGuidelines;
+    }
+
+    /**
+     * Gets whether markdown was used for specifying submission guidelines
+     * @return boolean - flag whether markdown was used
+     */
+    public boolean isMarkdownUsedForSubmissionGuidelines() {
+        return markdownUsedForSubmissionGuidelines;
+    }
+
+    /**
+     * Sets flag to indicate that markdown was used to specify submission guidelines
+     * @param markdownUsedForDetailedRequirements
+     */
+    public void setMarkdownUsedForSubmissionGuidelines(boolean markdownUsedForSubmissionGuidelines) {
+        this.markdownUsedForSubmissionGuidelines = markdownUsedForSubmissionGuidelines;
     }
 
     /**
