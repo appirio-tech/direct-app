@@ -1234,7 +1234,7 @@ function populateTypeSection() {
         var preRegisterUsers = mainWidget.softwareCompetition.registrants.join(",");
 
         $(".privateProjectRow").show();
-
+        $("#privateProjectEditDiv").show();
         if (privateProject === "1"){
             $("#rPrivateProject").text("Yes");
             $("#privateProject").attr("checked", "checked");
