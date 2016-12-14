@@ -999,17 +999,19 @@ function saveAsDraftRequest() {
         }
     }
 
-    if ($("input[name=privateProject]:checked").length > 0){
-        mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
-        if (mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] ==
-            $("input[name=preRegisterUsers]").val().trim()){
-            mainWidget.softwareCompetition.preRegisterUsers = "";
+    if (isF2F() || isDesignF2F()) {
+        if ($("input[name=privateProject]:checked").length > 0){
+            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
+            if (mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] ==
+                $("input[name=preRegisterUsers]").val().trim()){
+                mainWidget.softwareCompetition.preRegisterUsers = "";
+            }else{
+                mainWidget.softwareCompetition.preRegisterUsers = $("input[name=preRegisterUsers]").val();
+            }
         }else{
-            mainWidget.softwareCompetition.preRegisterUsers = $("input[name=preRegisterUsers]").val();
+            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
+            mainWidget.softwareCompetition.preRegisterUsers = "";
         }
-    }else{
-        mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
-        mainWidget.softwareCompetition.preRegisterUsers = "";
     }
 
     if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {

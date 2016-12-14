@@ -2084,7 +2084,7 @@ public class ProjectServicesImpl implements ProjectServices {
             }
 
             checkPrivateProjectPhase(projectHeader, projectPhases);
-
+            setScorecards(projectHeader, projectPhases);
             // call phaseManager.updatePhases(projectPhases,operator)
             Util.log(logger, Level.DEBUG, "Starts calling PhaseManager#updatePhases method.");
             phaseManager.updatePhases(projectPhases, operator);
@@ -5101,9 +5101,6 @@ public class ProjectServicesImpl implements ProjectServices {
             }
         }
 
-        if(projectHeader.getReviewScorecardId() != 0){
-          reviewTemplateId = projectHeader.getReviewScorecardId();
-        }
         for (Phase p : projectPhases.getAllPhases()) {
             p.setPhaseStatus(PhaseStatus.SCHEDULED);
             p.setScheduledStartDate(p.calcStartDate());
@@ -5112,7 +5109,6 @@ public class ProjectServicesImpl implements ProjectServices {
                     || p.getPhaseType().getId() == PhaseType.SPECIFICATION_SUBMISSION_PHASE.getId()) {
                 p.setFixedStartDate(p.calcStartDate());
             }
-
 
             if (p.getPhaseType().getName().equals(PhaseType.REGISTRATION_PHASE.getName())) {
                 p.setAttribute("Registration Number", "0");
@@ -5168,12 +5164,30 @@ public class ProjectServicesImpl implements ProjectServices {
     private void checkPrivateProjectPhase(Project projectHeader, com.topcoder.project.phases.Project projectPhases) {
         for (Phase p : projectPhases.getAllPhases()) {
             if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
-                if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
+                if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
                     p.setPhaseStatus(PhaseStatus.CLOSED);
                 }else{
                     p.setPhaseStatus(PhaseStatus.SCHEDULED);
                 }
                 break;
+            }
+        }
+    }
+
+    /**
+     * Helper to check project phase status. It must set to CLOSED for private project
+     *
+     * @param projectHeader Project
+     * @param projectPhases Project phases
+     * @since 2.3
+     */
+    private void setScorecards(Project projectHeader, com.topcoder.project.phases.Project projectPhases) {
+        for (Phase p : projectPhases.getAllPhases()) {
+            if(projectHeader.getReviewScorecardId() != 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()){
+                p.setAttribute(SCORECARD_ID_PHASE_ATTRIBUTE_KEY, String.valueOf(projectHeader.getReviewScorecardId()));
+            }
+            if (projectHeader.getIterativeReviewScorecardId() != 0 && p.getPhaseType().getId() == PhaseType.ITERATIVE_REVIEW_PHASE.getId()) {
+                p.setAttribute(SCORECARD_ID_PHASE_ATTRIBUTE_KEY, String.valueOf(projectHeader.getIterativeReviewScorecardId()));
             }
         }
     }

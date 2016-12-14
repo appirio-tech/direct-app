@@ -566,18 +566,26 @@ function loadReviewScorecardList(typeId){
     $("#reviewScorecardSelects").resetSS();
     // Select default review scorecard.
     $.each(reviewScorecards, function(id, value) {
-        if(value.projectCategory == 6){
+        if(value.projectCategory == 6 || value.projectCategory == 28){
           $('#reviewScorecardSelects').getSetSSValue(value.id);
           return false;
         }
     });
     // Override default review scorecard. Select reviewScorecardId for this challenge if it is listed.
     $.each(reviewScorecards, function(id, value) {
-        if(value.projectCategory == 6 || value.projectCategory == typeId){
-          if(value.id == mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
-            $('#reviewScorecardSelects').getSetSSValue(value.id);
-            return false;
-          }
+        if(value.projectCategory == typeId){
+            if (value.projectCategory != SOFTWARE_CATEGORY_ID_F2F) {
+                if(value.id == mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
+                    $('#reviewScorecardSelects').getSetSSValue(value.id);
+                    return false;
+                }
+            } else {
+                if(value.id == mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId){
+                    $('#reviewScorecardSelects').getSetSSValue(value.id);
+                    return false;
+                }
+            }
+
         }
     });
 }
@@ -851,6 +859,7 @@ function initContest(contestJson) {
    projectHeader.challengeCreator = contestJson.challengeCreator;
 
    projectHeader.reviewScorecardId = contestJson.reviewScorecardId;
+   projectHeader.iterativeReviewScorecardId = contestJson.iterativeReviewScorecardId;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
@@ -1207,7 +1216,7 @@ function populateTypeSection() {
   loadReviewScorecardList(null);
 
   $.each(reviewScorecards,function(){
-   if(this.id === mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
+   if(this.id === mainWidget.softwareCompetition.projectHeader.reviewScorecardId || this.id === mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId){
      $('#rReviewScorecard').text(this.scorecardName + " " + this.scorecardVersion);
    }
   });
@@ -1220,20 +1229,28 @@ function populateTypeSection() {
 		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
 
-    var privatProject = p["Private Project Status"];
-    var preRegisterUsers = mainWidget.softwareCompetition.registrants.join(",");
+    if (isF2F() || isDesignF2F()) {
+        var privateProject = p["Private Project Status"];
+        var preRegisterUsers = mainWidget.softwareCompetition.registrants.join(",");
 
-    if (privatProject === "1"){
-        $("#rPrivateProject").text("Yes");
-        $("#privateProject").attr("checked", "checked");
-        $(".preRegisterUsersDiv").show();
-        $("#preRegisterUsersEditDiv").show();
-        $("#rPreRegisterUsers").text(preRegisterUsers);
-        $("#preRegisterUsers").val(preRegisterUsers);
-    }else{
-        $("#rPrivateProject").text("No");
-        $("#privateProject").attr("checked", false);
-        $(".preRegisterUsersDiv").hide()
+        $(".privateProjectRow").show();
+
+        if (privateProject === "1"){
+            $("#rPrivateProject").text("Yes");
+            $("#privateProject").attr("checked", "checked");
+            $(".preRegisterUsersDiv").show();
+            $("#preRegisterUsersEditDiv").show();
+            $("#rPreRegisterUsers").text(preRegisterUsers);
+            $("#preRegisterUsers").val(preRegisterUsers);
+        }else{
+            $("#rPrivateProject").text("No");
+            $("#privateProject").attr("checked", false);
+            $(".preRegisterUsersDiv").hide();
+            $("#preRegisterUsersEditDiv").hide();
+        }
+    } else {
+        $(".privateProjectRow").hide();
+        $("#privateProjectEditDiv").hide();
         $("#preRegisterUsersEditDiv").hide();
     }
 
@@ -1412,8 +1429,13 @@ function validateFieldsTypeSection() {
     var copilotUserId = parseInt($('select#copilots').val());
     var copilotName = $('select#copilots option:selected').text();
     var milestoneId = parseInt($('select#milestones').val());
-
-    var reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    var reviewScorecardId = 0;
+    var iterativeReviewScorecardId = 0;
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F) {
+        iterativeReviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    } else {
+        reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    }
 
     //validation
     var errors = [];
@@ -1476,8 +1498,12 @@ function validateFieldsTypeSection() {
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
     }
 
-    // set scoreboard.
-    mainWidget.softwareCompetition.projectHeader.setReviewScorecardId(reviewScorecardId);
+    // set review scorecard.
+    mainWidget.softwareCompetition.projectHeader.reviewScorecardId = reviewScorecardId;
+
+    // set iterative review scorecard
+    mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = iterativeReviewScorecardId;
+
 
     return true;
 }

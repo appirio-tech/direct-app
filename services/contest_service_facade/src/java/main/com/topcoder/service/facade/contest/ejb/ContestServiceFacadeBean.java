@@ -8933,9 +8933,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         String projectCCA = contest.getProjectHeader().getProperty(ProjectPropertyType.CONFIDENTIALITY_TYPE_PROJECT_PROPERTY_KEY);
 
         Map<String, String> allProperties = contest.getProjectHeader().getAllProperties();
-        for (Map.Entry<String, String> e : allProperties.entrySet()) {
-            System.out.println("@@@@@@@@ " + e.getKey() + "->" + e.getValue());
-        }
 
         if (projectCCA.toLowerCase().equals(CONFIDENTIALITY_PUBLIC)){
             String billingProject = contest.getProjectHeader().getProperty(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY);

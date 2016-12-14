@@ -104,10 +104,6 @@
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
-            <tr>
-                <td class="first_tab_type"><strong>Created By</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
-            </tr>
             <tr></tr>
         </table>
     </div><!-- End .detailsContent -->
@@ -222,16 +218,6 @@
                 </div>
             </div>
 
-             <br /><br />
-            <div id="privateProjectEditDiv">
-                <span class="name fixWidthName"><strong>Private Challenge</strong></span>
-                <input type="checkbox"  name="privateProject" id="privateProject"/>
-            </div>
-            <br />
-            <div id="preRegisterUsersEditDiv">
-                <span class="name fixWidthName"><strong>Pre-Register Members</strong></span>
-                <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
-            </div>
             <br /><br />
 
                 <span class="name fixWidthName"><strong>Created By</strong></span>

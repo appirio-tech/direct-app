@@ -6516,7 +6516,7 @@ public class DataProvider {
         contestIdsSet.add(0L);
         // get unique JIRA issue IDs
         Set<String> jiraIssueIdsSet = new HashSet<String>();
-        jiraIssueIdsSet.add("0"); System.out.println("---------------jiraIssueIds---------------------"+jiraIssueIds);
+        jiraIssueIdsSet.add("0");
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {

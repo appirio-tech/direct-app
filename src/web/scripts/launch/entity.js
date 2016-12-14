@@ -331,6 +331,7 @@ com.topcoder.direct.Project = function() {
 	  this.tcDirectProjectId = -1;	
 	  
 	  this.reviewScorecardId = 0;
+	  this.iterativeReviewScorecardId = 0;
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
 	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
@@ -344,13 +345,7 @@ com.topcoder.direct.Project = function() {
 	  this.copilotContestExtraInfos = [];
 
 	  this.properties = {};
-	  
-	  this.setReviewScorecardId = function(reviewScorecardId) {
-	  	  this.reviewScorecardId = reviewScorecardId;
-	  }
-	  this.getReviewScorecardId = function() {
-	  	  return this.reviewScorecardId;
-	  }
+
 	  this.setBillingProject = function(billingProjectId) {
 	  	  this.properties['Billing Project'] = billingProjectId;
 	  }

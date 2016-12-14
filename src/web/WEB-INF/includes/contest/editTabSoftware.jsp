@@ -140,7 +140,7 @@
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
 
-            <tr>
+            <tr class="privateProjectRow hide">
                 <td class="first_tab_type"><strong>Private Challenge</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
             </tr>
@@ -302,12 +302,12 @@
               <div class="clearFix"></div>
           </div>
             <br />
-          <div id="privateProjectEditDiv">
+          <div id="privateProjectEditDiv" class="hide">
               <span class="name fixWidthName"><strong>Private Challenge</strong></span>
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
           </div>
           <br />
-          <div id="preRegisterUsersEditDiv">
+          <div id="preRegisterUsersEditDiv" class="hide">
               <span class="name fixWidthName"><strong>Pre-Register Members</strong></span>
               <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
           </div>
