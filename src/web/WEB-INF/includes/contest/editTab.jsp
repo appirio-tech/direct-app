@@ -124,7 +124,7 @@
             </tr>
             <tr></tr>
             <tr class="privateProjectRow hide">
-                <td class="first_tab_type"><strong>Private Challenge</strong></td>
+                <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
             </tr>
             <tr></tr>
