@@ -72,11 +72,13 @@
                 <td class="sec_tab_type"><strong>: <span id="rContestTypeName"></span></strong></td>
             </tr>
             <tr></tr>
+<%--
             <tr>
                 <td class="first_tab_type"><strong>Review Scorecard</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rReviewScorecard"></span></strong></td>
             </tr>
             <tr></tr>
+--%>
             <tr>
                 <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
@@ -253,6 +255,7 @@
                 </div>
                 <br /> <br />
                  <!-- Review Scorecard -->
+<%--
                  <div id="reviewScorecardDivEdit">
                  <br />
                      <span class="name fixWidthName"><strong>Review Scorecard </strong></span>
@@ -268,6 +271,7 @@
                      </div>
                  </div>
                  <br /> <br />
+--%>                 
                  <div id="copilotEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Copilot</strong></span>
