@@ -16,6 +16,7 @@ import com.topcoder.direct.services.project.metadata.DirectProjectMetadataServic
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
@@ -690,8 +691,27 @@ import java.util.zip.ZipOutputStream;
  *   </ol>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86
- * @version 1.8
+ * <p>
+ * Version 1.8.1 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *  <ol>
+ *      <li>Added {@link #getUsersFromHandle(String[])} method</li>
+ *      <li>Added {@link #getUnAgreedProjectTermByUser(long, long, Long[])} methos</li>
+ *  </ol>
+ * </p>
+ * <p>
+ * Changes in version 1.9 (TopCoder Direct - Remove ASP Integration Related Logic):
+ * <ul>
+ * <li>Remove {@link #insertSubmissionPushStatus(long, long)} method.</li>
+ * <li>Remove {@link #updateSubmissionPushStatus(long, long, String)} method.</li>
+ * <li>Remove {@link #getSubmissionPushStatus(long)} method.</li>
+ * <li>Remove {@link #INSERT_PUSH_STATUS_SQL} constant.</li>
+ * <li>Remove {@link #UPDATE_PUSH_STATUS_SQL} constant.</li>
+ * <li>Remove {@link #SELECT_PUSH_STATUS_SQL} constant.</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
+ * @version 1.9
  */
 public final class DirectUtils {
 
@@ -896,31 +916,28 @@ public final class DirectUtils {
                     "project_info_type_id = 56";
 
     /**
-     * <p>A <code>String</code> providing an SQL statement for inserting new record for submission push into database.
-     * </p>
-     *
-     * @since 1.8
+     * Query for getting project term
+     * @since 1.8.1
      */
-    private static final String INSERT_PUSH_STATUS_SQL =
-        "INSERT INTO submission_push_status (tc_direct_project_id, user_id, value, create_user, create_date, " +
-            "modify_user, modify_date) VALUES(?, ?, 'RUNNING', ?, CURRENT, ?, CURRENT)";
+    private static final String QUERY_PROJECT_TERMS = "SELECT tou.terms_of_use_id, sort_order, tou.terms_of_use_type_id, " +
+            "tou.title, tou.url, tou.terms_of_use_agreeability_type_id " +
+            "FROM project_role_terms_of_use_xref INNER JOIN terms_of_use tou ON " +
+            "project_role_terms_of_use_xref.terms_of_use_id = tou.terms_of_use_id WHERE project_id = ? " +
+            "AND resource_role_id = ? AND " +
+            "tou.terms_of_use_agreeability_type_id <> 1 order by sort_order";
 
     /**
-     * <p>A <code>String</code> providing an SQL statement for updating existing record for submission push in database.
-     * </p>
-     *
-     * @since 1.8
+     * Query for getting users term
+     * @since 1.8.1
      */
-    private static final String UPDATE_PUSH_STATUS_SQL =
-        "UPDATE submission_push_status SET value = ?, modify_user = ?, modify_date = CURRENT WHERE push_id = ?";
+    private static String QUERY_USER_TERMS = "SELECT  user_id, terms_of_use_id FROM user_terms_of_use_xref " +
+            "WHERE user_id in (";
 
     /**
-     * <p>A <code>String</code> providing an SQL statement for getting the current status for submission push in
-     * database.</p>
-     *
-     * @since 1.8
+     * Query for getting users by list of handle
+     * @since 1.8.1
      */
-    private static final String SELECT_PUSH_STATUS_SQL = "SELECT value FROM submission_push_status WHERE push_id = ?";
+    private static String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
 
     /**
      * <p>
@@ -3581,101 +3598,116 @@ public final class DirectUtils {
     }
 
     /**
-     * <p>Gets the current status for specified submission's push from database.</p>
+     * Get user ids from given handle
      *
-     * @param pushId a <code>long</code> providing the ID of a submission's push to get status for.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
+     * @param handles list of handle
+     * @return map of user id and handle
+     * @throws Exception
+     * @since 1.8.1
      */
-    public static String getSubmissionPushStatus(long pushId) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+    public static  Map<Long, String> getUsersFromHandle(String[] handles) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (handles == null || handles.length == 0){
+            return null;
+        }
 
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-            statement = connection.prepareStatement(SELECT_PUSH_STATUS_SQL);
-
-            statement.setLong(1, pushId);
-
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            } else {
-                return "";
+        try{
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            StringBuilder sbQueryUsers = new StringBuilder(QUERY_GET_USERS_FROM_HANDLE);
+            for (int i = 0; i < handles.length; i++){
+                sbQueryUsers.append(" ?,");
             }
-        } finally {
-            DatabaseUtils.close(resultSet);
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
+            sbQueryUsers.setCharAt(sbQueryUsers.length() - 1, ')');
+
+            ps = con.prepareStatement(sbQueryUsers.toString());
+
+            for (int i = 0; i < handles.length; i++){
+                ps.setString(i + 1, handles[i]);
+            }
+            rs = ps.executeQuery();
+            Map<Long, String> result = new HashMap<Long, String>();
+            while (rs.next()){
+                result.put(rs.getLong("user_id"), rs.getString("handle"));
+            }
+            return result;
+        }finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
         }
     }
 
     /**
-     * <p>Inserts a new record for submission push status into database.</p>
+     * Get terms of user is not agree yet from given project
      *
-     * @param tcDirectProjectId a <code>Long</code> providing the ID of a TC Direct project.
-     * @param userId a <code>long</code> providing the ID of a user.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
+     * @param projectId project id
+     * @param roleId role id
+     * @param users list of users id
+     * @return map user and list of pending terms
+     * @throws Exception
+     * @since 1.8.1
      */
-    public static long insertSubmissionPushStatus(long tcDirectProjectId, long userId) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+    public static Map<Long, List<TermOfUse>> getUnAgreedProjectTermByUser(long projectId, long roleId, Long[] users) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Map<Long, List<TermOfUse>> failedTermCheck = new HashMap<Long, List<TermOfUse>>();
+        Map<Long, List<Long>> userTerms = new HashMap<Long, List<Long>>();
 
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
-
-            statement = connection.prepareStatement(INSERT_PUSH_STATUS_SQL, Statement.RETURN_GENERATED_KEYS);
-
-            statement.setLong(1, tcDirectProjectId);
-            statement.setLong(2, userId);
-            statement.setLong(3, userId);
-            statement.setLong(4, userId);
-
-            statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            } else {
-                return 0; 
+        try{
+            StringBuilder sbQueryUserTerms = new StringBuilder(QUERY_USER_TERMS);
+            for (Long user : users){
+                sbQueryUserTerms.append(" ?,");
+                userTerms.put(user, new ArrayList<Long>());
             }
-        } finally {
-            DatabaseUtils.close(resultSet);
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
-        }
-    }
 
-    /**
-     * <p>Updates a record for submission push status in database.</p>
-     *
-     * @param pushId a <code>Long</code> providing the ID of a submission push.
-     * @param userId a <code>Long</code> providing the ID of a user.
-     * @param newStatus a <code>String</code> providing new push status.
-     * @throws Exception if an unexpected error occurs.
-     * @since 1.8
-     */
-    public static void updateSubmissionPushStatus(long pushId, long userId, String newStatus) throws Exception {
-        Connection connection = null;
-        PreparedStatement statement = null;
+            sbQueryUserTerms.setCharAt(sbQueryUserTerms.length() - 1, ')');
 
-        try {
-            connection = DatabaseUtils.getDatabaseConnection(DBMS.TCS_OLTP_DATASOURCE_NAME);
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            ps = con.prepareStatement(sbQueryUserTerms.toString());
+            for (int i = 0; i < users.length; i++){
+                ps.setLong(i + 1, users[i]);
+            }
 
-            statement = connection.prepareStatement(UPDATE_PUSH_STATUS_SQL);
+            rs = ps.executeQuery();
 
-            statement.setString(1, newStatus);
-            statement.setLong(2, userId);
-            statement.setLong(3, pushId);
+            while (rs.next()){
+                List<Long> userTerm = userTerms.get(rs.getLong("user_id"));
+                userTerm.add(rs.getLong("terms_of_use_id"));
+            }
 
-            statement.executeUpdate();
+            ps = con.prepareStatement(QUERY_PROJECT_TERMS);
+            ps.setLong(1, projectId);
+            ps.setLong(2, roleId);
+            rs = ps.executeQuery();
 
-        } finally {
-            DatabaseUtils.close(statement);
-            DatabaseUtils.close(connection);
+            while (rs.next()){
+                for (Map.Entry<Long, List<Long>> entry : userTerms.entrySet()) {
+                    Long user = entry.getKey();
+                    List<Long> agreedTerms = entry.getValue();
+                    if (!agreedTerms.contains(rs.getLong(1))){
+                        List<TermOfUse> terms = failedTermCheck.get(user);
+                        if (terms == null) {
+                            terms = new ArrayList<TermOfUse>();
+                            failedTermCheck.put(user, terms);
+                        }
+                        TermOfUse term = new TermOfUse();
+                        term.setId(rs.getLong(1));
+                        term.setTitle(rs.getString(4));
+                        term.setUrl(rs.getString(5));
+                        terms.add(term);
+
+                    }
+                }
+
+            }
+            return failedTermCheck;
+        }finally{
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
         }
     }
 }

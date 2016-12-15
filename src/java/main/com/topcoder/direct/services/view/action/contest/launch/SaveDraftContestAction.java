@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -14,6 +14,8 @@ import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
+import com.topcoder.direct.services.view.dto.contest.FailedRegisterUser;
+import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -43,12 +45,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -260,8 +257,16 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #doPreRegisterUsers(TCSubject, SoftwareCompetition, String)} method</li>
+ *     <li>Updated {@link #getSoftwareResult(SoftwareCompetition, Set)}</li>
+ *     <li>Updated {@link #executeAction()}</li>
+ * </ul>
+ * </p>
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
- * @version 2.2
+ * @version 2.3
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -671,6 +676,8 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private long cmcBillingId;
 
+    private String preRegisterUsers;
+
     /**
      * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
@@ -771,7 +778,8 @@ public class SaveDraftContestAction extends ContestAction {
                                                                                  tcDirectProjectId, checkpointDate,
                                                                                  endDate == null ? null : endDate.toGregorianCalendar().getTime());
             }
-            setResult(getSoftwareResult(softwareCompetition));
+            Set<FailedRegisterUser> failedRegisterUsers = doPreRegisterUsers(tcSubject, softwareCompetition, preRegisterUsers);
+            setResult(getSoftwareResult(softwareCompetition, failedRegisterUsers));
         } else {
             // *** creation of the software competition ***
             softwareCompetition = new SoftwareCompetition();
@@ -790,8 +798,9 @@ public class SaveDraftContestAction extends ContestAction {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
                             tcDirectProjectId, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
                 }
-                
-                setResult(getSoftwareResult(softwareCompetition));
+
+                Set<FailedRegisterUser> failedRegisterUsers = doPreRegisterUsers(tcSubject, softwareCompetition, preRegisterUsers);
+                setResult(getSoftwareResult(softwareCompetition, failedRegisterUsers));
             } else {
                 // the competition type is unknown, add error field instead of exception
                 // to make the action robust.
@@ -1665,12 +1674,26 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Creates a result map so it could be serialized by JSON serializer.
      * </p>
-     * 
+     *
      * @param softwareCompetition
      *            Software competition object
      * @return the result map
      */
     private Map<String, Object> getSoftwareResult(SoftwareCompetition softwareCompetition) throws Exception {
+        return getSoftwareResult(softwareCompetition, null);
+    }
+
+    /**
+     * <p>
+     * Creates a result map so it could be serialized by JSON serializer.
+     * </p>
+     * 
+     * @param softwareCompetition
+     *            Software competition object
+     * @param failedRegisterUsers
+     * @return the result map
+     */
+    private Map<String, Object> getSoftwareResult(SoftwareCompetition softwareCompetition, Set<FailedRegisterUser> failedRegisterUsers) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("projectId", softwareCompetition.getProjectHeader().getId());
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition)));
@@ -1693,6 +1716,7 @@ public class SaveDraftContestAction extends ContestAction {
 
         List<CompDocumentation> documentation = softwareCompetition.getAssetDTO().getDocumentation();
         result.put("documents", documentation);
+        result.put("failedRegisterUser", failedRegisterUsers);
 
         return result;
     }
@@ -2354,4 +2378,74 @@ public class SaveDraftContestAction extends ContestAction {
         this.cmcBillingId = cmcBillingId;
     }
 
+    public String getPreRegisterUsers() {
+        return preRegisterUsers;
+    }
+
+    public void setPreRegisterUsers(String preRegisterUsers) {
+        this.preRegisterUsers = preRegisterUsers;
+    }
+
+    /**
+     * Pre-Register users to a given project
+     *
+     * @param tcSubject TCSubject
+     * @param contest
+     * @param users comma separate of users
+     * @return
+     * @throws Exception
+     * @since 2.3
+     */
+    private Set<FailedRegisterUser> doPreRegisterUsers(TCSubject tcSubject, SoftwareCompetition contest, String users) throws Exception {
+        if (users == null || users.equals("")){
+            return null;
+        }
+        Set<FailedRegisterUser> res = new HashSet<FailedRegisterUser>();
+        String[] handles = users.split(",");
+        for (int i = 0; i < handles.length; i++) {
+            handles[i] = handles[i].trim();
+        }
+
+        //user not found
+        Map<Long, String> preRegisterUsers = DirectUtils.getUsersFromHandle(handles);
+        for (String handle : handles) {
+            if (!preRegisterUsers.containsValue(handle)) {
+                FailedRegisterUser failedRegisterUser = new FailedRegisterUser();
+                failedRegisterUser.setHandle(handle);
+                failedRegisterUser.setReason("user is not found");
+                res.add(failedRegisterUser);
+            }
+        }
+
+        //validate term
+        Long[] userIds = new Long[preRegisterUsers.keySet().size()];
+        userIds = preRegisterUsers.keySet().toArray(userIds);
+        Map<Long, List<TermOfUse>> failedTermUsers = DirectUtils.getUnAgreedProjectTermByUser(contest.getId(),
+                ResourceRole.RESOURCE_ROLE_SUBMITTER, userIds);
+        if (failedTermUsers.size() > 0) {
+            for (Map.Entry<Long, List<TermOfUse>> entry : failedTermUsers.entrySet()) {
+                Long user = entry.getKey();
+                List<TermOfUse> unAgreedTerms = entry.getValue();
+                FailedRegisterUser<TermOfUse> failedRegisterUser = new FailedRegisterUser<TermOfUse>();
+                failedRegisterUser.setHandle(preRegisterUsers.get(user));
+                failedRegisterUser.setReason("not approved terms:");
+                failedRegisterUser.setProperties(unAgreedTerms);
+                res.add(failedRegisterUser);
+                preRegisterUsers.remove(user);
+            }
+        }
+
+        //other failed register
+        Set<Long> preRegisterUsersSet = new HashSet<Long>(preRegisterUsers.keySet());
+        Set<Long> registeredUsers = getContestServiceFacade().updatePreRegister(tcSubject, contest, preRegisterUsersSet);
+        for (Long user : preRegisterUsersSet) {
+            if (!registeredUsers.contains(user)) {
+                FailedRegisterUser failedRegisterUser = new FailedRegisterUser();
+                failedRegisterUser.setHandle(preRegisterUsers.get(user));
+                failedRegisterUser.setReason("Can't register this user");
+                res.add(failedRegisterUser);
+            }
+        }
+        return res;
+    }
 }

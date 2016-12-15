@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -106,8 +106,11 @@
  * Version 3.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
  * - Add studio cup points checkbox.
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, Veve
- * @version 3.8
+ * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
+ * - Add support for pre-register member
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
+ * @version 3.9
  */
 
  /**
@@ -179,7 +182,7 @@ var swCurrentDocument = {};
 var swDocuments = [];
 
 // represents project id of reporting contest type. 
-var REPORTING_ID = "36"
+var REPORTING_ID = "36";
 /**
  * Configuration/General Set up
  */
@@ -523,6 +526,17 @@ $(document).ready(function() {
     }
     swUploader.submit();
   });
+
+    $("input[name=privateProject]").click(function(){
+        if ($(this).attr("checked") === true) {
+            $(".preRegisterUsersRow").show();
+            $("#preRegisterUsersEditDiv").show();
+        }else{
+            $(".preRegisterUsersRow").hide();
+            $("#preRegisterUsersEditDiv").hide();
+        }
+    })
+
 }); // end of initiation
 
 
@@ -865,6 +879,27 @@ function getBillingAccountsByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
+function getReviewScorecards(typeId) {
+    var returnValue = {};
+    $.ajax({
+        type: 'POST',
+        data: {categoryId: typeId},
+        url: ctx + '/launch/getReviewScorecards',
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    returnValue = result;
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+    return returnValue;
+}
 function getMilestonesByDirectProjectId(directProjectId) {
     var returnValue = {};
     var request = {directProjectId:directProjectId};
@@ -964,6 +999,21 @@ function saveAsDraftRequest() {
         }
     }
 
+    if (isF2F() || isDesignF2F()) {
+        if ($("input[name=privateProject]:checked").length > 0){
+            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
+            if (mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] ==
+                $("input[name=preRegisterUsers]").val().trim()){
+                mainWidget.softwareCompetition.preRegisterUsers = "";
+            }else{
+                mainWidget.softwareCompetition.preRegisterUsers = $("input[name=preRegisterUsers]").val();
+            }
+        }else{
+            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
+            mainWidget.softwareCompetition.preRegisterUsers = "";
+        }
+    }
+
     if ($("#billingGroupCheckBox input[type=checkbox]").is(":checked") && $("#billingGroupCheckBox select").val() > 0) {
         mainWidget.softwareCompetition.projectHeader.securityGroupId = $("#billingGroupCheckBox select").val();
     } else {
@@ -1046,6 +1096,7 @@ function saveAsDraftRequestSoftware() {
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
+    request['preRegisterUsers'] = mainWidget.softwareCompetition.preRegisterUsers;
 
    if(mainWidget.softwareCompetition.subEndDate && formatDateForRequest(mainWidget.softwareCompetition.subEndDate)) {
        request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
@@ -1139,6 +1190,7 @@ function saveAsDraftRequestStudio() {
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
+    request['preRegisterUsers'] = mainWidget.softwareCompetition.preRegisterUsers;
 
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
@@ -1179,7 +1231,8 @@ function saveAsDraftRequestAlgorithm() {
    request['competitionType'] = 'ALGORITHM';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
-    
+    request['preRegisterUsers'] = mainWidget.softwareCompetition.preRegisterUsers;
+
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
         request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
@@ -1211,6 +1264,22 @@ function handleSaveAsDraftContestResult(jsonResult) {
    }
 }
 
+function handleFailedRegsiterUsers(failedUsers, projectId){
+    messages = "These members fail to register:<br><br>";
+    for (var i = 0;i < failedUsers.length; i++){
+        var additionMsg = " "
+        if (failedUsers[i].properties != null && failedUsers[i].properties.length > 0){
+            for (var j = 0; j < failedUsers[i].properties.length; j++) {
+                additionMsg += "<a href='" + failedUsers[i].properties[j].url + "'>[" + failedUsers[i].properties[j].title + "]</a>";
+                console.log(additionMsg);
+            }
+        }
+        messages += "<li><strong>" + failedUsers[i].handle + "</strong> - " + failedUsers[i].reason + additionMsg + "</li>";
+        console.log(messages);
+    }
+    showWarningMessage(messages, "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + projectId,'_self',false);} )
+}
+
 function handleSaveAsDraftContestResultSoftware(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
@@ -1218,10 +1287,34 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
           modalClose();
-          showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else {
+                    showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                        window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                    });
+                }
+            }else {
+                showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                    window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                });
+            }
         } else {
           modalClose();
-          showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else {
+                    showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName + "</span> has been updated successfully.", "VIEW CHALLENGE", function () {
+                        window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                    });
+                }
+            }else {
+                showSuccessfulMessageWithOperation("Software Challenge <span class='messageContestName'>" + contestName + "</span> has been updated successfully.", "VIEW CHALLENGE", function () {
+                    window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                });
+            }
         }
 
         // update contest title display
@@ -1245,13 +1338,31 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if (mainWidget.softwareCompetition.projectHeader.id < 0) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else {
+                    showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                        window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                    });
+                }
+            }else {
             showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
                 window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
             });
+            }
         } else {
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else{
+                    showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been updated successfully.", "VIEW CHALLENGE", function () {
+                        window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                    });}
+            }else{
             showSuccessfulMessageWithOperation("Studio Challenge <span class='messageContestName'>" + contestName + "</span> has been updated successfully.", "VIEW CHALLENGE", function () {
                 window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
-            });
+            });}
         }
 
         // update contest title display
@@ -1276,9 +1387,29 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been saved successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else{
+                    showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                        window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                    });
+                }
+            }else {
+                showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName + "</span> has been saved successfully.", "VIEW CHALLENGE", function () {
+                    window.open('/direct/contest/detail?projectId=' + result.projectId, '_self', false);
+                });
+            }
         } else {
-            showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            if (mainWidget.softwareCompetition.isPrivateProject()){
+                if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
+                    handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
+                }else{
+                    showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+                }
+            }else{
+                showSuccessfulMessageWithOperation("Algorithm Challenge <span class='messageContestName'>" + contestName +"</span> has been updated successfully.", "VIEW CHALLENGE", function(){window.open ('/direct/contest/detail?projectId=' + result.projectId,'_self',false);});
+            }
         }
 
         // update contest title display

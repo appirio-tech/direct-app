@@ -195,6 +195,56 @@ public class Project extends AuditableObject implements Serializable {
     private String tcDirectProjectName;
 
     /**
+     * The review scorecard id.
+     *
+     * @since 2016.11.11
+     */
+    private long reviewScorecardId = 0;
+
+    /**
+     * The iterative review scorecard id.
+     */
+    private long iterativeReviewScorecardId = 0;
+
+    /**
+     * Sets the id of review scorecard.
+     *
+     * @param id
+     *            The id of review scorecard id.
+     */
+    public void setReviewScorecardId(long reviewScorecardId) {
+        this.reviewScorecardId = reviewScorecardId;
+    }
+
+    /**
+     * Gets the id of review scorecard.
+     *
+     * @return the id of review scorecard id.
+     */
+    public long getReviewScorecardId() {
+        return reviewScorecardId;
+    }
+
+    /**
+     * Sets the id of iterative review scorecard.
+     *
+     * @param id
+     *            The id of iterative review scorecard id.
+     */
+    public void setIterativeReviewScorecardId(long iterativeReviewScorecardId) {
+        this.iterativeReviewScorecardId = iterativeReviewScorecardId;
+    }
+
+    /**
+     * Gets the id of iterative review scorecard.
+     *
+     * @return the id of iterative review scorecard id.
+     */
+    public long getIterativeReviewScorecardId() {
+        return iterativeReviewScorecardId;
+    }
+
+    /**
      * The creator
      * 
      * @since 

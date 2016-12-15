@@ -1,10 +1,11 @@
 /*
- * Copyright (C) 2009 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.contest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 
@@ -247,8 +248,15 @@ import com.topcoder.service.user.Registrant;
  * </ul>
  * </p>
  *
+ * * <p>
+ * Version 1.8.4 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #updatePreRegister(TCSubject, SoftwareCompetition, Set)} method</li>
+ * </ul>
+ * </p>
+ *
  * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin
- * @version 1.8.3
+ * @version 1.8.4
  */
 public interface ContestServiceFacade {
 
@@ -1489,4 +1497,18 @@ public interface ContestServiceFacade {
      * @since 1.8.1
      */
     public boolean[] requireBillingProjectsCCA(long[] billingProjectIds) throws PersistenceException;
+
+    /**
+     * Update pre-register users
+     *
+     *
+     * @param tcSubject
+     * @param contest
+     * @param preRegisterMembers
+     * @return
+     * @throws ContestServiceException\
+     * @since 1.8.4
+     */
+    Set<Long> updatePreRegister(TCSubject tcSubject, SoftwareCompetition contest,
+                                        Set<Long> preRegisterMembers) throws ContestServiceException;
 }

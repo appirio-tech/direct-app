@@ -1017,6 +1017,20 @@ function onContestTypeChange() {
             }).trigger('change');
           }
         }
+
+        if(typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+            $(".privateProjectRow").show();
+            if ($("input[name=privateProject]").attr("checked") === true) {
+                $(".preRegisterUsersRow").show();
+                $("#preRegisterUsersEditDiv").show();
+            }else{
+                $(".preRegisterUsersRow").hide();
+                $("#preRegisterUsersEditDiv").hide();
+            }
+        } else {
+            $(".privateProjectRow").hide();
+            $(".preRegisterUsersRow").hide();
+        }
     }
 
     /// Studio Contest

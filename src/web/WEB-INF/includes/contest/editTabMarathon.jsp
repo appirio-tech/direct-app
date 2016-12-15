@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.5
-  - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+  - Version: 1.6
+  - Copyright (C) 2013 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - change on #billingProjects, will load by jquery
@@ -20,6 +20,10 @@
   -
   - Description: Edit Tab for algorithm - marathon contest detail page
   - Since: Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page
+  -
+  - Version 1.6 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
+  - Add Pre-Register user for private challenge
+  -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -91,6 +95,14 @@
             <tr>
                 <td class="first_tab_type"><strong>Challenge Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
+            </tr>
+            <tr class="preRegisterUsersDiv hide">
+                <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
+            </tr>
+            <tr>
+                <td class="first_tab_type"><strong>Created By</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
@@ -211,7 +223,17 @@
             </div>
 
              <br /><br />
-               
+            <div id="privateProjectEditDiv">
+                <span class="name fixWidthName"><strong>Private Challenge</strong></span>
+                <input type="checkbox"  name="privateProject" id="privateProject"/>
+            </div>
+            <br />
+            <div id="preRegisterUsersEditDiv">
+                <span class="name fixWidthName"><strong>Assign Member(s):</strong></span>
+                <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
+            </div>
+            <br /><br />
+
                 <span class="name fixWidthName"><strong>Created By</strong></span>
                 <span class ='small_info_spec' id="challegneCreatorLabel"></span>
      

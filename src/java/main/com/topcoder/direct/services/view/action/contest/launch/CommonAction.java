@@ -25,6 +25,7 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ReviewScorecardDTO;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -126,6 +127,8 @@ public class CommonAction extends BaseContestFeeAction {
 
     private CostCalculationService costCalculationService;
 
+    private long categoryId;
+
     /**
      * <p>
      * Executes the action.
@@ -202,6 +205,26 @@ public class CommonAction extends BaseContestFeeAction {
         return SUCCESS;
     }
 
+    public String getReviewScorecards() {
+       try {
+           List<ReviewScorecardDTO> reviewScorecards = DataProvider.getReviewScorecardDTO(this.categoryId);
+           List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+           for (ReviewScorecardDTO c : reviewScorecards) {
+               Map<String, String> reviewScorecard = new HashMap<String, String>();
+               reviewScorecard.put("id", String.valueOf(c.getScorecardId()));
+               reviewScorecard.put("projectCategory", String.valueOf(c.getProjectCategoryId()));
+               reviewScorecard.put("scorecardName", c.getScorecardName());
+               reviewScorecard.put("scorecardVersion", c.getScorecardVersion());
+               result.add(reviewScorecard);
+           }
+           setResult(result);
+       } catch (Throwable e) {
+           if (getModel() != null) {
+               setResult(e);
+           }
+       }
+       return SUCCESS;
+    }
 
     /**
      * Handles the ajax request to get all the contests of the direct project specified by the form input
@@ -504,5 +527,13 @@ public class CommonAction extends BaseContestFeeAction {
 
     public void setCostCalculationService(CostCalculationService costCalculationService) {
         this.costCalculationService = costCalculationService;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
     }
 }

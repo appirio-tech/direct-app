@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.3
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Version: 2.5
+  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -47,6 +47,9 @@
   -
   - Version 2.4 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
   - Add studio cup points checkbox
+  -
+  - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
+  - Add Pre-Register user for private challenge
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -70,6 +73,11 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Review Scorecard</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rReviewScorecard"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Challenge Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rContestName"></span></strong></td>
             </tr>
@@ -88,6 +96,7 @@
                 <td class="first_tab_type"><strong>Billing Account</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
             </tr>
+<%--
             <tr>
                 <td class="first_tab_type"><strong>Private Group</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
@@ -98,6 +107,7 @@
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
+--%>            
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
@@ -112,6 +122,17 @@
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
+            <tr></tr>
+            <tr class="privateProjectRow hide">
+                <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr class="preRegisterUsersDiv hide">
+                <td class="first_tab_type" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
+            </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -189,7 +210,8 @@
                  </div>
                  
                  <br /><br />
-                <span id="billingGroupCheckBox"><br />
+<%--
+                 <span id="billingGroupCheckBox"><br />
                              <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
                  </span>
                 <span class="cmcTask"><br />
@@ -199,6 +221,7 @@
                     </span>
 
                  </span>
+--%>                 
                  <div id="projectEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -229,6 +252,22 @@
                     </div>
                 </div>
                 <br /> <br />
+                 <!-- Review Scorecard -->
+                 <div id="reviewScorecardDivEdit">
+                 <br />
+                     <span class="name fixWidthName"><strong>Review Scorecard </strong></span>
+                     <div class="reviewScorecardSelect" style="float:left">
+                         <select id="reviewScorecardSelects" name="reviewScorecardSelects" class="bigin">
+                             <option value="0">Please select a review scorecard to associate</option>
+                             <s:iterator value="reviewScorecards" var="reviewScorecard">
+                                 <option value='<s:property value="id"/>'>
+                                     <s:property value="name"/>
+                                 </option>
+                             </s:iterator>
+                         </select>
+                     </div>
+                 </div>
+                 <br /> <br />
                  <div id="copilotEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Copilot</strong></span>
@@ -244,7 +283,16 @@
                       <div class="clearFix"></div>
                  </div>
                  <br /><br />
-               
+                     <div id="privateProjectEditDiv" class="hide">
+                         <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></span>
+                         <input type="checkbox"  name="privateProject" id="privateProject"/>
+                     </div>
+                     <br />
+                     <div id="preRegisterUsersEditDiv" class="hide">
+                         <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
+                         <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
+                     </div>
+                     <br /><br />
                     <span class="name fixWidthName"><strong>Created By</strong></span>
                  <span class ='small_info_spec' id="challegneCreatorLabel"></span>
                  </div>

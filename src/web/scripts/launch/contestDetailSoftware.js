@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -114,8 +114,11 @@
  * Version 3.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin
- * @version 3.7
+ * Version 3.8 (Provide Way To Pre_register members When Launching Challenge)
+ * - Add pre-register member
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
+ * @version 3.8
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -541,6 +544,51 @@ var ACTIVE_PROJECT_STATUS = 1;
 var isActiveContest = false;
 var startedContest = true;
 var preCost = 0;
+var reviewScorecards;
+
+function loadReviewScorecardList(typeId){
+    var $contestReviewScorecard = $("#reviewScorecardSelects");
+
+    $contestReviewScorecard.html("");
+
+    $contestReviewScorecard.append($('<option></option>').val(0).html("Please select a review scorecard to associate"));
+
+    if(typeId === null){
+        return;
+    }
+    reviewScorecards = getReviewScorecards(typeId);
+
+    $.each(reviewScorecards, function(id, value) {
+        $contestReviewScorecard.append($('<option></option>').val(value.id).text(htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)).attr('title', htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)));
+    });
+
+
+    $("#reviewScorecardSelects").resetSS();
+    // Select default review scorecard.
+    $.each(reviewScorecards, function(id, value) {
+        if(value.projectCategory == 6 || value.projectCategory == 28){
+          $('#reviewScorecardSelects').getSetSSValue(value.id);
+          return false;
+        }
+    });
+    // Override default review scorecard. Select reviewScorecardId for this challenge if it is listed.
+    $.each(reviewScorecards, function(id, value) {
+        if(value.projectCategory == typeId){
+            if (value.projectCategory != SOFTWARE_CATEGORY_ID_F2F) {
+                if(value.id == mainWidget.softwareCompetition.projectHeader.reviewScorecardId){
+                    $('#reviewScorecardSelects').getSetSSValue(value.id);
+                    return false;
+                }
+            } else {
+                if(value.id == mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId){
+                    $('#reviewScorecardSelects').getSetSSValue(value.id);
+                    return false;
+                }
+            }
+
+        }
+    });
+}
 
 /**
  * event handler function when contest type is changed.
@@ -549,6 +597,7 @@ function onContestTypeChange() {
     var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
+    loadReviewScorecardList(typeId);
 
     if(isContestSaved()) {
         currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
@@ -759,6 +808,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.endDate = parseDate(contestJson.endDate);
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
    mainWidget.softwareCompetition.adminFee = contestJson.adminFee;
+    mainWidget.softwareCompetition.registrants = contestJson.registrant;
 
    var startDate =  parseDate(contestJson.startDate);
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
@@ -808,6 +858,8 @@ function initContest(contestJson) {
    projectHeader.properties = contestJson.properties;
    projectHeader.challengeCreator = contestJson.challengeCreator;
 
+   projectHeader.reviewScorecardId = contestJson.reviewScorecardId ? contestJson.reviewScorecardId: 0;
+   projectHeader.iterativeReviewScorecardId = contestJson.iterativeReviewScorecardId ? contestJson.iterativeReviewScorecardId : 0;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
@@ -1092,6 +1144,11 @@ function initContest(contestJson) {
         if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
             $(".edit_prize").parent().show();
+            if (contestJson.properties["Private Project Status"] == "1"){
+                $(".edit_round").show();
+                $('#roundEdit').show();
+                $(".edit_prize").show();
+            }
         } else {
             $(".edit_prize").show();
             $(".edit_round").show();
@@ -1150,17 +1207,52 @@ function populateTypeSection() {
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#contestNameText').text(mainWidget.softwareCompetition.assetDTO.name);
         $('#challegneCreatorLabel').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
-  
+
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//display
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
+  
+  loadReviewScorecardList(null);
+
+  $.each(reviewScorecards,function(){
+   if(this.id === mainWidget.softwareCompetition.projectHeader.reviewScorecardId || this.id === mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId){
+     $('#rReviewScorecard').text(this.scorecardName + " " + this.scorecardVersion);
+   }
+  });
+
+
 	$('#rContestName').text(mainWidget.softwareCompetition.assetDTO.name);
         $('#rChallengeCreator').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
 	$('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
+
+    if (isF2F() || isDesignF2F()) {
+        var privateProject = p["Private Project Status"];
+        var preRegisterUsers = mainWidget.softwareCompetition.registrants.join(",");
+
+        $(".privateProjectRow").show();
+        $("#privateProjectEditDiv").show();
+        if (privateProject === "1"){
+            $("#rPrivateProject").text("Yes");
+            $("#privateProject").attr("checked", "checked");
+            $(".preRegisterUsersDiv").show();
+            $("#preRegisterUsersEditDiv").show();
+            $("#rPreRegisterUsers").text(preRegisterUsers);
+            $("#preRegisterUsers").val(preRegisterUsers);
+        }else{
+            $("#rPrivateProject").text("No");
+            $("#privateProject").attr("checked", false);
+            $(".preRegisterUsersDiv").hide();
+            $("#preRegisterUsersEditDiv").hide();
+        }
+    } else {
+        $(".privateProjectRow").hide();
+        $("#privateProjectEditDiv").hide();
+        $("#preRegisterUsersEditDiv").hide();
+    }
 
     if (mainWidget.softwareCompetition.projectMilestoneId > 0) {
         $('#rProjectMilestone').text(mainWidget.softwareCompetition.projectMilestoneName);
@@ -1216,12 +1308,13 @@ function populateTypeSection() {
         $('.billingdisplay').hide();
     }
 
+/*
     if (mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']) {
         $('#rCMCTaskID').text(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $('input[name=CMCTaskID]').val(mainWidget.softwareCompetition.projectHeader.properties['CloudSpokes CMC Task']);
         $(".cmcTask").show();
     }
-
+*/
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty('Marathon Match Id')) {
         $('#rMatchRoundId').text(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
         $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
@@ -1396,6 +1489,14 @@ function validateFieldsTypeSection() {
     if (isBillingEditable()) {
         var billingProjectId = $('select#billingProjects').val();
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
+    }
+
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F) {
+        // set review scorecard.
+        mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    } else {
+        // set iterative review scorecard
+        mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
     }
 
     return true;
@@ -3106,6 +3207,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
 
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
+
     var value = $('#projects').getSetSSValue();
 
     var result = getCopilotsByDirectProjectId(value);
@@ -3130,7 +3232,9 @@ function handleProjectDropDownChange() {
     $('#copilots').getSetSSValue(selected);
 
 
+
     var milestones = getMilestonesByDirectProjectId(value);
+
     var $contestMilestones = $("#milestones");
 
     $contestMilestones.html("");
@@ -3142,7 +3246,6 @@ function handleProjectDropDownChange() {
     });
 
     $("#milestones").resetSS();
-
 
     billingAccounts = getBillingAccountsByDirectProjectId(value);
     $("#billingProjects").empty();
@@ -3163,6 +3266,7 @@ function handleProjectDropDownChange() {
 		$("#billingProjects").data('customized',true);
         $('#billingProjects').sSelect({ddMaxHeight: '220',yscroll: true});
     }
+
 	$('#billingProjects').resetSS();
 	$('#billingProjects').bind("change", function() {
         if ($(this).find(":selected").data("cca")){
@@ -3210,4 +3314,3 @@ function setupReviewerDropdown(challengeTypeId, directProjectId) {
         }
     }
 }
-

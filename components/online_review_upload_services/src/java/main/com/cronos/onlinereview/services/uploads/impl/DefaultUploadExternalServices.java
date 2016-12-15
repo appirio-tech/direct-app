@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007-2016 TopCoder Inc., All Rights Reserved.
  */
 package com.cronos.onlinereview.services.uploads.impl;
 
@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.text.MessageFormat;
+import java.util.Set;
 
 /**
  * <p>
@@ -68,12 +69,19 @@ import java.text.MessageFormat;
  *   </ol>
  * </p>
  * <p>
+ *
+ * <p>
+ * Version 1.1.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #removeSubmitters(long, Set, String)} method</li>
+ * </ul>
+ * </p>
  * Thread safe: The thread safety is completely relied to the uploadServices implementation because it's impossible
  * to change the other variables
  * </p>
  *
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1.1
+ * @version 1.1.3
  * @since 1.0
  */
 public class DefaultUploadExternalServices implements UploadExternalServices {
@@ -572,6 +580,46 @@ public class DefaultUploadExternalServices implements UploadExternalServices {
             }
         } catch (IOException e) {
             // ignores exception
+        }
+    }
+
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator  user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    public Set<Long> removeAllSubmitters(long projectId, String operator) throws UploadServicesException{
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadExternalServices#removeAllSubmitters(long, string)");
+        try {
+            return uploadServices.removeAllSubmitters(projectId, operator);
+        } finally {
+            Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadExternalServices#removeAllSubmitters(long, string)");
+        }
+    }
+
+    /**
+     * Remove submitters from given project
+     *
+     * @param projectId the project id
+     * @param users set of user id
+     * @param operator user who is added it
+     * @return
+     * @throws UploadServicesException
+     * @since 1.1.3
+     */
+    public Set<Long> removeSubmitters(long projectId, Set<Long> users, String operator) throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadExternalServices#removeSubmitters(long, Set, string)");
+        try{
+            return uploadServices.removeSubmitters(projectId, users, operator);
+        }finally {
+            Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadExternalServices#removeSubmitters(long, Set, string)");
         }
     }
 }

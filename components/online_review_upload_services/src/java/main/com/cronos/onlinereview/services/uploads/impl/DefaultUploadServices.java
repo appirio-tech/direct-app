@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007-2016 TopCoder Inc., All Rights Reserved.
  */
 package com.cronos.onlinereview.services.uploads.impl;
 
@@ -50,24 +50,16 @@ import com.topcoder.search.builder.filter.OrFilter;
 import com.topcoder.util.config.ConfigManager;
 import com.topcoder.util.config.UnknownNamespaceException;
 import com.topcoder.util.log.Level;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 /**
  * <p>
@@ -102,14 +94,27 @@ import java.util.Locale;
  *     <li>Added {@link #addReviewer(long, long)} method.</li>
  *   </ol>
  * </p>
- * 
+ *
+ * Version 1.1.2 (Provide Way To Pre_register members When Launching Challenge)
+ * <ul>
+ *     <li>Added {@link #removeAllSubmitters(long, String)} method</li>
+ *     <li>Added {@link #removeUsersProjectResult(Project, Collection)} method</li>
+ *     <li>Updated {@link #addSubmitter(long, long)} fixing dateformat</li>
+ * </ul>
+ *
+ * <p>
+ * Version 1.1.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *     <ol>
+ *         <li>Added {@link #removeSubmitters(long, Set, String)} method</li>
+ *     </ol>
+ * </p>
  * <p>
  * Thread safety: the thread safety is completely relied to the managers implementations because it's impossible to
  * change the other variables.
  * </p>
  *
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1.1
+ * @version 1.1.3
  */
 public class DefaultUploadServices implements UploadServices {
 
@@ -1186,8 +1191,7 @@ public class DefaultUploadServices implements UploadServices {
             resource.setProperty("Payment Status", "No");
             // Set resource properties copied from external user
             resource.setProperty("External Reference ID", Long.toString(userId));
-
-            resource.setProperty("Registration Date", new Date().toString());
+            resource.setProperty("Registration Date", DATE_FORMAT.format(new Date()));
 
             resource.setUserId(userId);
 
@@ -1230,6 +1234,143 @@ public class DefaultUploadServices implements UploadServices {
             Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadServices#addSubmitter(long, long)");
         }
     }
+
+    /**
+     * Remove submitters from given project
+     *
+     * @param projectId the project id
+     * @param users set of user id
+     * @param operator user who is added it
+     * @return set removedUsers
+     * @throws UploadServicesException
+     * @since 1.1.3
+     */
+    public Set<Long> removeSubmitters(long projectId, Set<Long> users, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeSubmitters(long, Set, String)");
+
+        try {
+            Project project = managersProvider.getProjectManager().getProject(projectId);
+            ResourceManager resourceManager = managersProvider.getResourceManager();
+
+            Filter filter = ResourceFilterBuilder.createProjectIdFilter(project.getId());
+            Resource[] resources = resourceManager.searchResources(filter);
+            Set<Long> removedUsers = new HashSet<Long>();
+            for (Resource resource : resources) {
+                if (resource.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER){
+                    if (users == null || users.contains(resource.getUserId())){
+                        removedUsers.add(resource.getUserId());
+                        resourceManager.removeResource(resource, operator);
+                    }
+                }
+            }
+            if (!removedUsers.isEmpty()) {
+                removeUsersProjectResult(project, removedUsers);
+            }
+            return removedUsers;
+
+        }catch (SearchBuilderException e){
+            Helper.logFormat(LOG, Level.ERROR, e, "Failed to get the project resources for the projectId {0}",
+                    new Object[]{projectId});
+            throw new UploadServicesException("Exception occurred while getting the project resource", e);
+        }catch (com.topcoder.management.project.PersistenceException e) {
+            Helper.logFormat(LOG, Level.ERROR, e, "Failed to get the project for the projectId {0}",
+                    new Object[]{projectId});
+            throw new UploadServicesException("Exception occurred while getting the project.", e);
+        } catch (ResourcePersistenceException e) {
+            Helper.logFormat(LOG, Level.ERROR, e, "ResourcePersistenceException occurred while "
+                    + "removing the resource projectId : {0}.", new Object[]{projectId});
+            throw new UploadServicesException(
+                    "ResourcePersistenceException occurred while removing the resource.", e);
+        } finally {
+            Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadServices#removeSubmitter(long, String)");
+        }
+    }
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    public Set<Long> removeAllSubmitters(long projectId, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeAllSubmitters(long, String)");
+            return removeSubmitters(projectId, null, operator);
+    }
+
+    /**
+     * Remove users from project_result and component_inquiry
+     *
+     * @param project project id
+     * @param users collection of users
+     * @throws UploadServicesException
+     * @since 1.1.2
+     */
+    private void removeUsersProjectResult(Project project, Collection users) throws UploadServicesException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        LOG.log(Level.INFO, "removing entry project result table.");
+        try {
+            DBConnectionFactory dbconn;
+            dbconn = new DBConnectionFactoryImpl(DB_CONNECTION_NAMESPACE);
+            conn = dbconn.createConnection();
+
+            if (users.isEmpty()){
+                return;
+            }
+            StringBuilder query = new StringBuilder("delete from project_result where project_id = ? and user_id in (");
+            int i;
+            for (i = 0; i < users.size(); i++){
+                query.append(" ? ,");
+            }
+            query.setCharAt(query.length() - 1, ')');
+
+            ps = conn.prepareStatement(query.toString());
+            ps.setLong(1, project.getId());
+            i = 2;
+            for (Long user : (Set<Long>) users){
+                ps.setLong(i, user);
+                i++;
+            }
+
+            ps.executeUpdate();
+            close(ps);
+
+            // delete from component_inquiry
+            query = new StringBuilder("delete from component_inquiry where project_id = ? and user_id in (");
+            for (i = 0; i < users.size(); i++){
+                query.append(" ? ,");
+            }
+            query.setCharAt(query.length() - 1, ')');
+
+            ps = conn.prepareStatement(query.toString());
+            ps.setLong(1, project.getId());
+            i = 2;
+            for (Long user : (Set<Long>) users){
+                ps.setLong(i, user);
+                i++;
+            }
+            ps.executeUpdate();
+        } catch (UnknownConnectionException e) {
+            throw new UploadServicesException("Failed to create connection", e);
+        } catch (SQLException e) {
+            throw new UploadServicesException("Failed to executing project_result", e);
+        } catch (DBConnectionException e) {
+            throw new UploadServicesException("Failed to return DBConnection", e);
+        } catch (com.topcoder.db.connectionfactory.ConfigurationException e) {
+            throw new UploadServicesException("Failed to return DBConnection", e);
+        } finally {
+            close(ps);
+            close(conn);
+        }
+    }
+
+
 
     /**
      * Adds the given user as a new reviewer to the given project id.

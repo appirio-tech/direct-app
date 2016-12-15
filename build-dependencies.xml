@@ -474,8 +474,6 @@
     <!-- slf4j -->
     <property name="slf4j.jar" value="${ext_libdir}/mime-util/slf4j-api-1.5.11.jar"/>
 
-    <property name="asp-client.jar" value="${ext_libdir}/aspclient/asp-client.jar"/>
-
 
     <!-- EJB/Persistence libraries -->
     <path id="ejb.libs">
@@ -626,10 +624,6 @@
         <pathelement location="${scorecard_management.jar}"/>
     </path>
 
-    <path id="aspclient.libs">
-        <fileset dir="${ext_libdir}/aspclient" includes="*.jar"/>
-    </path>
-
     <path id="component.3rdParty-dependencies">
         <path refid="struts.libs"/>
         <path refid="spring.libs"/>
@@ -661,7 +655,6 @@
         <pathelement location="${cxf.jar}"/>
 -->
         <pathelement location="${java-jwt-1.0.0.jar}"/>
-        <pathelement location="${asp-client.jar}"/>
     </path>
 
 </project>

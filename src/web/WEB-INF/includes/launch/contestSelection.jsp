@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, bugbuka, GreatKevin
-  - Version: 2.1
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, bugbuka, GreatKevin, TCSCODER
+  - Version: 2.2
+  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
 
@@ -43,6 +43,8 @@
   -
   - Version 2.1 (F2F - TC Cockpit Update Auto Assign Reviewer Flow)
   - - Add review type radios to choose 'community' or 'internal' review
+  - Version 2.2 (Provide Way To Pre_register members When Launching Challenge)
+  - - Add support pre-register member
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -77,8 +79,6 @@
                       <span class="bug_hunt">Create Bug Hunt Challenge</span>
                       <a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a>
                   </div>
-
-                  <div class="help"><span class="new_style">Challenge Type Information</span></div>
               </div>
           </div>
           <!-- end .selectDesing -->
@@ -183,6 +183,16 @@
               <select id="reviewer" name="reviewer">
               </select>
           </div>
+      </div>
+
+      <div class="row privateProjectRow hide">
+          <label>Private Challenge</label>
+          <input type="checkbox" name="privateProject" title="Is this challenge private?">
+      </div>
+
+      <div class="row preRegisterUsersRow hide">
+          <label>Assign Member(s):</label>
+          <input name="preRegisterUsers" type="text" class="text"/>
       </div>
 
   </div>
