@@ -120,14 +120,17 @@
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr class="privateProjectRow hide">
                 <td class="first_tab_type"><strong>Private Challenge</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr class="preRegisterUsersDiv hide">
                 <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -205,7 +208,8 @@
                  </div>
                  
                  <br /><br />
-                <span id="billingGroupCheckBox"><br />
+<%--
+                 <span id="billingGroupCheckBox"><br />
                              <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
                  </span>
                 <span class="cmcTask"><br />
@@ -215,6 +219,7 @@
                     </span>
 
                  </span>
+--%>                 
                  <div id="projectEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Project Name</strong></span>
