@@ -858,8 +858,8 @@ function initContest(contestJson) {
    projectHeader.properties = contestJson.properties;
    projectHeader.challengeCreator = contestJson.challengeCreator;
 
-   projectHeader.reviewScorecardId = contestJson.reviewScorecardId;
-   projectHeader.iterativeReviewScorecardId = contestJson.iterativeReviewScorecardId;
+   projectHeader.reviewScorecardId = contestJson.reviewScorecardId ? contestJson.reviewScorecardId: 0;
+   projectHeader.iterativeReviewScorecardId = contestJson.iterativeReviewScorecardId ? contestJson.iterativeReviewScorecardId : 0;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
@@ -1429,13 +1429,6 @@ function validateFieldsTypeSection() {
     var copilotUserId = parseInt($('select#copilots').val());
     var copilotName = $('select#copilots option:selected').text();
     var milestoneId = parseInt($('select#milestones').val());
-    var reviewScorecardId = 0;
-    var iterativeReviewScorecardId = 0;
-    if (categoryId == SOFTWARE_CATEGORY_ID_F2F) {
-        iterativeReviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
-    } else {
-        reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
-    }
 
     //validation
     var errors = [];
@@ -1498,12 +1491,13 @@ function validateFieldsTypeSection() {
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
     }
 
-    // set review scorecard.
-    mainWidget.softwareCompetition.projectHeader.reviewScorecardId = reviewScorecardId;
-
-    // set iterative review scorecard
-    mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = iterativeReviewScorecardId;
-
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F) {
+        // set review scorecard.
+        mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    } else {
+        // set iterative review scorecard
+        mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
+    }
 
     return true;
 }
