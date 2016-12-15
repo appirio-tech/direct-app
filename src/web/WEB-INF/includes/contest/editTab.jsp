@@ -284,7 +284,7 @@
                  </div>
                  <br /><br />
                      <div id="privateProjectEditDiv" class="hide">
-                         <span class="name fixWidthName"><strong>Private Challenge</strong></span>
+                         <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></span>
                          <input type="checkbox"  name="privateProject" id="privateProject"/>
                      </div>
                      <br />
