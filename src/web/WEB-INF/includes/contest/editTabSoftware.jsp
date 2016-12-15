@@ -115,21 +115,25 @@
                 <td class="sec_tab_type"><strong>: <span id="rCCA"></span></strong></td>
             </tr>
             <tr></tr>
-            <tr>
+<%--
+	    <tr>
                 <td class="first_tab_type"><strong>Private Group</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
+--%>	    
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
             </tr>
             <tr></tr>
+<%--		
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
+--%>	    
             <tr>
                 <td class="first_tab_type"><strong>Milestone</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
@@ -139,15 +143,18 @@
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
+            <tr></tr>
 
             <tr class="privateProjectRow hide">
                 <td class="first_tab_type"><strong>Private Challenge</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr class="preRegisterUsersDiv hide">
                 <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -200,13 +207,16 @@
               <input type="text" class="bigin"  id="contestName" />
               <span id="contestNameText"></span>
           </span>
-          <br /><br  class="cmcTask" /><p class="cmcTask">
+<%--
+	  <br /><br  class="cmcTask" /><p class="cmcTask">
           <span class="name fixWidthName"><strong>CMC Task ID</strong></span>
                     <span class="value">
                         <input type="text" value="" name="CMCTaskID" class="bigin">
                     </span>
 
-          </p><br/>
+          </p>
+--%>	  
+	  <br/>
             
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
