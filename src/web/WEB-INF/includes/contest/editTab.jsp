@@ -96,6 +96,7 @@
                 <td class="first_tab_type"><strong>Billing Account</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
             </tr>
+<%--
             <tr>
                 <td class="first_tab_type"><strong>Private Group</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
@@ -106,6 +107,7 @@
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
+--%>            
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
