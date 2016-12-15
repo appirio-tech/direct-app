@@ -151,7 +151,7 @@
             </tr>
             <tr></tr>
             <tr class="preRegisterUsersDiv hide">
-                <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
+                <td class="first_tab_type" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
             </tr>
             <tr></tr>
@@ -318,7 +318,7 @@
           </div>
           <br />
           <div id="preRegisterUsersEditDiv" class="hide">
-              <span class="name fixWidthName"><strong>Assign Member(s):</strong></span>
+              <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
               <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
           </div>
           <br/><br />
