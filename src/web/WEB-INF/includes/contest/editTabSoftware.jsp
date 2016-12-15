@@ -216,7 +216,7 @@
 
           </p>
 --%>	  
-	  <br/>
+      	  <br/><br/>
             
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
@@ -238,7 +238,7 @@
               <div class="clearFix"></div>
           </div>
 	      
-	  <br /><br />
+	  <br />
 	  <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
 
           <div id="projectEditDiv" class="editDropDown">
