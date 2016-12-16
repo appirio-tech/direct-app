@@ -4437,11 +4437,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
                 if (isPrivateProject(contest)){
                     contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
-                }else {
-                    if (oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")){
-                        //remove current registrant
-                        Set<Long> preUsers = updatePreRegister(tcSubject, contest, new HashSet<Long>());
-                    }
                 }
 
 
@@ -4498,9 +4493,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                             continue;
                         }
                     }
-                    if (r.getResourceRole().getId() != ResourceRole.RESOURCE_ROLE_SUBMITTER) {
+//                    if (r.getResourceRole().getId() != ResourceRole.RESOURCE_ROLE_SUBMITTER) {
                         updatedResources.add(r);
-                    }
+//                    }
                 }
 
                 if(isF2FContest(contest)) {

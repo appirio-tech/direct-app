@@ -44,6 +44,11 @@ package com.topcoder.management.resource;
 public class ResourceRole extends AuditableResourceStructure {
 
     /**
+     * Default serial version id.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * <p>
      * The value that the id field will have (and that the getId
      * method will return) when the id field has not been set in the constructor

@@ -25,6 +25,11 @@ package com.topcoder.management.resource;
 public class Notification extends AuditableResourceStructure {
 
     /**
+     * Default serial version id.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * <p>
      * The identifier of the project that the notification applies to.
      * </p>
