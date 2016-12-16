@@ -4498,9 +4498,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                             continue;
                         }
                     }
-                    if (r.getResourceRole().getId() != ResourceRole.RESOURCE_ROLE_SUBMITTER) {
+//                    if (r.getResourceRole().getId() != ResourceRole.RESOURCE_ROLE_SUBMITTER) {
                         updatedResources.add(r);
-                    }
+//                    }
                 }
 
                 if(isF2FContest(contest)) {
