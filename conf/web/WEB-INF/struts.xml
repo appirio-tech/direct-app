@@ -30,7 +30,7 @@
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>                
+                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>             
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
