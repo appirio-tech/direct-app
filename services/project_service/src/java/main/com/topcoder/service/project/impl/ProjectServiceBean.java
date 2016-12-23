@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -371,6 +372,13 @@ import com.topcoder.util.log.LogManager;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRemote {
+    /**
+     * Represents the pattern for project name
+     *
+     * @since 2.4
+     */
+    private static final String NAME_PATTERN = "[a-zA-Z0-9\\$\\!\\(\\)\\[\\]'\\\"\\-\\.\\,\\/\\+ ]+";
+
     /**
      * Represents the field names to be audit.
      * 
@@ -1988,6 +1996,17 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
             throw logException(new IllegalArgumentFault("The name attribute of the project data can not be null."));
         } else if (name.trim().length() == 0) {
             throw logException(new IllegalArgumentFault("The name attribute of the project data can not be empty."));
+        } else if (!Pattern.matches(NAME_PATTERN, name)) {
+            throw logException(new IllegalArgumentFault("The name attribute of the project data is not following pattern as - " + NAME_PATTERN));
+        }
+
+        String description = projectData.getDescription();
+        if (null == description) {
+            throw logException(new IllegalArgumentFault("The description attribute of the project data can not be null."));
+        } else if (description.trim().length() == 0) {
+            throw logException(new IllegalArgumentFault("The description attribute of the project data can not be empty."));
+        } else if (!Pattern.matches(NAME_PATTERN, description)) {
+            throw logException(new IllegalArgumentFault("The description attribute of the project data is not following pattern as - " + NAME_PATTERN));
         }
         
         //added in version 2.2
