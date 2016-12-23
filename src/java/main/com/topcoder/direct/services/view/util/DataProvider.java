@@ -120,6 +120,7 @@ import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
 import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.project.ProjectStatus;
@@ -177,6 +178,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.DriverManager;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -197,6 +200,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Properties;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -5617,6 +5621,298 @@ public class DataProvider {
         }
 
         return data;
+    }
+
+    /**
+     * Gets the billing cost report entries with the given parameters from Redshift. The method returns a map,
+     * the key is the contest id, the value is a list of billing cost entries.
+     *
+     * @param invoiceTypes a <code>List</code> providing all the invoice types.
+     * @param currentUser the current user.
+     * @param projectId the direct project id.
+     * @param projectCategoryIds the software project category ides.
+     * @param studioProjectCategoryIds the studio project category ids.
+     * @param paymentTypeIds the payment type ids.
+     * @param clientId the client id.
+     * @param billingAccountId the billing accounts id.
+     * @param projectStatusIds the project status ids.
+     * @param contestId the contest id
+     * @param invoiceNumber the invoice number
+     * @param startDate the start date.
+     * @param endDate the end date.
+     * @param statusMapping the mapping of all the contest status.
+     * @param paymentTypesMapping the mapping of all the payment types.
+     * @return the generated cost report.
+     * @throws Exception if any error occurs.
+     * @since 2.5.0
+     */
+    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReportFromRedshift(List<InvoiceType> invoiceTypes,
+                                                                                           TCSubject currentUser, long projectId,
+                                                                                           long[] paymentTypeIds,
+                                                                                           long clientId, long billingAccountId,
+                                                                                           long contestId, String invoiceNumber, Date startDate, Date endDate,
+                                                                                           Map<String, Long> paymentTypesMapping) throws Exception {
+        // create an empty map first to store the result data
+        Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
+        if (contestId <= 0) {
+            if (paymentTypeIds == null || paymentTypeIds.length == 0) {
+                return data;
+            }
+        }
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(endDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        endDate = calendar.getTime();
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
+
+		String query = "select * from cost_transaction where contest_id=DECODE(?, 0, contest_id, ?) " +
+               		"AND direct_project_id=DECODE(?, 0, direct_project_id, ?) AND " +
+               		"billing_project_id=DECODE(?, 0, billing_project_id, ?) AND " +
+               		"client_id=DECODE(?, 0, client_id, ?) AND " +
+               		"invoice_id=DECODE(?, 0, invoice_id, ?) AND " + 
+               		"payment_date between ? AND ? ORDER BY payment_date DESC";
+
+		Request request = new Request();
+
+		if(contestId > 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+            request.setProperty("pj", String.valueOf(contestId));
+            setUserPermissionQueryParameter(request, currentUser);
+        } else {
+            request.setProperty("pj", "0");
+            if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+                return data;
+            }
+        }
+
+        if (hasInvoice) {
+            request.setProperty("invoicenumber", invoiceNumber);
+			request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+            request.setProperty("pj", "0");
+        } else {
+			request.setProperty("invoicenumber", "0");
+        }
+
+        if (contestId > 0 || hasInvoice) {
+            request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
+            request.setProperty("edt", dateFormatter.format(new GregorianCalendar(9999, 1, 1).getTime()));
+        } else {
+            request.setProperty("sdt", dateFormatter.format(startDate));
+            request.setProperty("edt", dateFormatter.format(endDate));
+        }
+
+		Set<Long> paymentTypeFilter = new HashSet<Long>();
+        for (long paymentTypeId : paymentTypeIds) {
+            paymentTypeFilter.add(paymentTypeId);
+        }
+
+		data = getDataFromRedshift(query, request, paymentTypeFilter, paymentTypesMapping);
+
+		return data;
+    }
+
+    /**
+     * Gets the billing cost report entries with the given parameters from Redshift. The method returns a map,
+     * the key is the contest id, the value is a list of billing cost entries.
+     *
+     * @param sql the sql query to be executed.
+     * @param request contains parameters for sql query.
+     * @param paymentTypeFilter list of payment type to be included.
+     * @param paymentTypesMapping the mapping of all the payment types.
+     * @return the generated cost report.
+     * @since 2.5.0
+     */
+     private static Map<Long, List<BillingCostReportEntryDTO>> getDataFromRedshift(String sql, Request request, Set<Long> paymentTypeFilter, Map<String, Long> paymentTypesMapping) {
+	 	Connection conn = null;
+        PreparedStatement stmt = null;
+        Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
+	 	try {
+			Class.forName("com.amazon.redshift.jdbc41.Driver");
+
+			//Open a connection and define properties.
+           Properties props = new Properties();
+
+           props.setProperty("user", DirectProperties.REDSHIFT_JDBC_USERNAME);
+           props.setProperty("password", DirectProperties.REDSHIFT_JDBC_PASSWORD);
+           conn = DriverManager.getConnection(DirectProperties.REDSHIFT_JDBC_URL, props);
+
+		   //Try a simple query.
+           stmt = conn.prepareStatement(sql);
+
+           // set contest_id
+           stmt.setLong(1, Long.parseLong(request.getProperty("pj")));
+           stmt.setLong(2, Long.parseLong(request.getProperty("pj")));
+
+           // set direct_project_id
+           stmt.setLong(3, Long.parseLong(request.getProperty("tcdirectid")));
+           stmt.setLong(4, Long.parseLong(request.getProperty("tcdirectid")));
+
+           // set billing_project_id
+           stmt.setLong(5, Long.parseLong(request.getProperty("billingaccountid")));
+           stmt.setLong(6, Long.parseLong(request.getProperty("billingaccountid")));
+
+			// set client_id
+			stmt.setLong(7, Long.parseLong(request.getProperty("clientid")));
+			stmt.setLong(8, Long.parseLong(request.getProperty("clientid")));
+
+			// set invoice_id
+			stmt.setLong(9, Long.parseLong(request.getProperty("invoicenumber")));
+			stmt.setLong(10, Long.parseLong(request.getProperty("invoicenumber")));
+
+			// set payment_date_start
+			stmt.setString(11, request.getProperty("sdt"));
+
+			// set payment_date_end
+			stmt.setString(12, request.getProperty("edt"));
+
+           ResultSet allResults = stmt.executeQuery();
+
+		   while(allResults != null && allResults.next()) {
+			BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
+
+			// set status first
+            String status = allResults.getString("contest_status");
+            costDTO.setStatus(status == null ? null : status.trim());
+
+			// get payment type
+            String paymentType = allResults.getString("line_item_category");
+
+            IdNamePair client = new IdNamePair();
+            IdNamePair billing = new IdNamePair();
+            IdNamePair directProject = new IdNamePair();
+            IdNamePair contest = new IdNamePair();
+            IdNamePair contestCategory = new IdNamePair();
+
+            if (allResults.getLong("contest_id") != 0) {
+                contest.setId(allResults.getLong("contest_id"));
+            }
+            if (allResults.getString("contest_name") != null) {
+                contest.setName(allResults.getString("contest_name"));
+            }
+            if (allResults.getLong("payment_id") != 0) {
+                costDTO.setPaymentId(allResults.getLong("payment_id"));
+            }
+
+            if (allResults.getLong("client_id") != 0) {
+                client.setId(allResults.getLong("client_id"));
+            }
+            if (allResults.getString("client") != null) {
+                client.setName(allResults.getString("client"));
+            }
+            if (allResults.getLong("billing_project_id") != 0) {
+                billing.setId(allResults.getLong("billing_project_id"));
+            }
+            if (allResults.getString("billing_project_name") != null) {
+                billing.setName(allResults.getString("billing_project_name"));
+            }
+            if (allResults.getLong("direct_project_id") != 0) {
+                directProject.setId(allResults.getLong("direct_project_id"));
+            }
+            if (allResults.getString("direct_project_name") != null) {
+                directProject.setName(allResults.getString("direct_project_name"));
+            }
+
+            if (allResults.getLong("project_category_id") != 0) {
+                contestCategory.setId(allResults.getLong("project_category_id"));
+            }
+            if (allResults.getString("category") != null) {
+                contestCategory.setName(allResults.getString("category"));
+            }
+            if (allResults.getDouble("actual_total_member_costs") != 0) {
+                costDTO.setActualTotalMemberCost(allResults.getDouble("actual_total_member_costs"));
+            }
+            if (allResults.getDate("completion_date") != null) {
+                costDTO.setCompletionDate(allResults.getDate("completion_date"));
+            }
+            if (allResults.getDate("launch_date") != null) {
+                costDTO.setLaunchDate(allResults.getDate("launch_date"));
+            }
+            if (allResults.getDate("payment_date") != null) {
+                costDTO.setPaymentDate(allResults.getDate("payment_date"));
+            }
+            if (allResults.getDouble("line_item_amount") != 0) {
+                costDTO.setPaymentAmount(allResults.getDouble("line_item_amount"));
+            }
+            if (allResults.getString("reference_id") != null) {
+                costDTO.setReferenceId(allResults.getString("reference_id"));
+            }
+
+            if (allResults.getDouble("invoice_amount") != 0) {
+                costDTO.setInvoiceAmount(allResults.getDouble("invoice_amount"));
+            }
+
+            if (allResults.getDate("process_date") != null) {
+                costDTO.setInvoiceDate(allResults.getDate("process_date"));
+            }
+
+            if (allResults.getString("invoice_number") != null) {
+                costDTO.setInvoiceNumber(allResults.getString("invoice_number"));
+            }
+
+            if (allResults.getLong("invoice_id") != 0) {
+                costDTO.setInvoiceId(allResults.getLong("invoice_id"));
+            }
+
+            if (allResults.getLong("invoice_record_id") != 0) {
+                costDTO.setInvoiceRecordId(allResults.getLong("invoice_record_id"));
+            }
+
+            costDTO.setProcessed(allResults.getBoolean("processed"));
+            
+            if (allResults.getString("payment_desc") != null) {
+                costDTO.setPaymentDesc(allResults.getString("payment_desc"));
+            }
+
+            costDTO.setClient(client);
+            costDTO.setBilling(billing);
+            costDTO.setProject(directProject);
+            costDTO.setContest(contest);
+            costDTO.setContestType(contestCategory);
+            costDTO.setPaymentType(paymentType);
+
+            List<BillingCostReportEntryDTO> entries;
+
+            if (!data.containsKey(costDTO.getContest().getId())) {
+                entries = new ArrayList<BillingCostReportEntryDTO>();
+                data.put(costDTO.getContest().getId(), entries);
+            } else {
+                entries = data.get(costDTO.getContest().getId());
+            }
+
+			// add the entry if payment type filter allows
+            if (paymentTypeFilter.contains(paymentTypesMapping.get(paymentType.trim().toLowerCase()))) {
+                entries.add(costDTO);
+            }
+          }
+
+	 	} catch(Exception ex) {
+			ex.printStackTrace();
+	 	} finally{
+           //Finally block to close resources.
+           try{
+              if(stmt!=null)
+                 stmt.close();
+           }catch(Exception ex){
+           }// nothing we can do
+           try{
+              if(conn!=null)
+                 conn.close();
+           }catch(Exception ex){
+              ex.printStackTrace();
+           }
+        }
+	 	return data;
     }
 
     /**
