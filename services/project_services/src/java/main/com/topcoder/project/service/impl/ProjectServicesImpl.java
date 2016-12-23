@@ -2080,9 +2080,15 @@ public class ProjectServicesImpl implements ProjectServices {
                         p.setAttribute("Reviewer Number", "2");
                     }
 
-                    if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
-                        if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
-                            p.setPhaseStatus(PhaseStatus.CLOSED);
+                    if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId() && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
+                        if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
+                            if (p.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
+                                p.setPhaseStatus(PhaseStatus.CLOSED);
+                            }
+                        } else {
+                            if (p.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId()) {
+                                p.setPhaseStatus(PhaseStatus.SCHEDULED);
+                            }
                         }
                     }
                 }
