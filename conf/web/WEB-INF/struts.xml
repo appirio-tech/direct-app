@@ -7,7 +7,7 @@
         This is a configuration file for Struts2 context to be used by TC Direct application.
     -->
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
     <constant name="struts.locale" value="en_US"/>
     <constant name="struts.i18n.encoding" value="utf-8"></constant>
     <constant name="struts.custom.i18n.resources" value="Messages"/>
