@@ -7,7 +7,7 @@
         This is a configuration file for Struts2 context to be used by TC Direct application.
     -->
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
     <constant name="struts.locale" value="en_US"/>
     <constant name="struts.i18n.encoding" value="utf-8"></constant>
     <constant name="struts.custom.i18n.resources" value="Messages"/>
@@ -30,7 +30,7 @@
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>             
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
@@ -44,7 +44,7 @@
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
@@ -188,7 +188,7 @@
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
@@ -202,7 +202,7 @@
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
                     <param name="acceptParamNames">\w+((\.\w+)|(\[\d+\])|(\['(\w|\s)+'\]))*</param>
-                    <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                    <param name="excludeParams">(.*\.|^|.*|\[('|"))(c|C)lass(\.|('|")]|\[).*,^dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,^parameters\..*,^action:.*,^method:.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
