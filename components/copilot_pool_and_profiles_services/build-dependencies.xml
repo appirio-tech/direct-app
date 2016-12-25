@@ -26,10 +26,6 @@
   <property name="jaxb-api.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
   <property name="javaee.jar" value="${ext_libdir}/j2ee/1.5/javaee.jar"/>
   
-   <!-- Struts jars -->
-   <property name="struts_dir" value="${ext_libdir}/struts/2.0.14/lib" />
-   <property name="commons-logging.jar" value="${struts_dir}/commons-logging-1.0.4.jar"/>
-  
   <!-- Spring jars -->
 
 

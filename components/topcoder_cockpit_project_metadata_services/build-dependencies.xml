@@ -21,7 +21,7 @@
     <property name="ifxjdbc.jar" value="${ext_libdir}/informix/ifxjdbc.jar"/>
     
     <property name="commons-dbcp.jar" value="${ext_libdir}/commons-dbcp/commons-dbcp.jar"/>
-    <property name="commons-logging.jar" value="${ext_libdir}/struts/commons-logging-1.1.1.jar"/>
+    <property name="commons-logging.jar" value="${ext_libdir}/struts/2.3.31/commons-logging-1.1.3.jar"/>
     <property name="commons-pool.jar" value="${ext_libdir}/commons-pool/commons-pool.jar"/>
     <property name="log4j.jar" value="${ext_libdir}/jboss/log4j.jar"/>
     <property name="hibernate3.jar" value="${ext_libdir}/hibernate/hibernate3.jar"/>
