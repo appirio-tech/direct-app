@@ -17,7 +17,6 @@ import org.apache.struts2.util.StrutsTypeConverter;
 import com.opensymphony.xwork2.XWorkException;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 import com.opensymphony.xwork2.conversion.impl.XWorkBasicConverter;
-import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ContainerProvider;
 import com.opensymphony.xwork2.config.impl.DefaultConfiguration;
@@ -141,10 +140,8 @@ public class XMLGregorianCalendarTypeConverter extends StrutsTypeConverter {
             List<ContainerProvider> providers = new ArrayList<ContainerProvider>();
             providers.add(new XWorkConfigurationProvider());
             config.reloadContainer(providers);
-            ObjectFactory objectFactory = new ObjectFactory();
-            objectFactory.setContainer(config.getContainer());
             basicConverter = new XWorkBasicConverter();
-            basicConverter.setObjectFactory(objectFactory);
+            basicConverter.setContainer(config.getContainer());
         }
         return basicConverter;
     }
