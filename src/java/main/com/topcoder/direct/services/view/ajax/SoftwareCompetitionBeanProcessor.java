@@ -108,8 +108,14 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li> Add list of registrant in map result</li>
  * </ul>
  * </p>
+ *
+ * Version 2.2 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * <ul>
+ *     <li>Update {@link #getMapResult(SoftwareCompetition)} include registrant id</li>
+ * </ul>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 2.1
+ * @version 2.2
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -209,7 +215,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
         double totalCopilots = 0;
 
-        List<String> registrant = new ArrayList<String>();
+        List<Map> registrant = new ArrayList<Map>();
 
         // Gets copilots and reviewers from the resources of the contest
         for (Resource r : resources) {
@@ -231,7 +237,10 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }
 
             if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
-                registrant.add(r.getProperty("Handle"));
+                Map<String, String> user = new HashMap<String, String>();
+                user.put("id", String.valueOf(r.getUserId()));
+                user.put("handle", r.getProperty("Handle"));
+                registrant.add(user);
             }
             // get reviewers
             if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID ||

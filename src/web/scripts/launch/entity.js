@@ -192,6 +192,7 @@ var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 var STUDIO_IDEA_GENERATION = 22;
 
 var DRAFT_STATUS = "Draft";
+var ACTIVE_STATUS = "Active";
 
 var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},

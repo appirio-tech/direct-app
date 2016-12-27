@@ -2080,7 +2080,20 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/studio-final-fixes.jsp</result>
         </action>
-
+        <action name="close" class="com.topcoder.direct.services.view.action.contest.CloseContestAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
+        <action name="cancel" class="com.topcoder.direct.services.view.action.contest.CancelContestAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
     </package>
 
     <package name="ajax" namespace="/ajax" extends="base">

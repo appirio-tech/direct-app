@@ -155,7 +155,6 @@ import com.topcoder.util.log.LogManager;
 import com.topcoder.util.objectfactory.ObjectFactory;
 import com.topcoder.util.objectfactory.impl.ConfigManagerSpecificationFactory;
 import com.topcoder.web.common.RowNotFoundException;
-import com.topcoder.web.common.model.TermsOfUse;
 import com.topcoder.web.ejb.forums.Forums;
 import com.topcoder.web.ejb.forums.ForumsHome;
 import com.topcoder.web.ejb.project.ProjectRoleTermsOfUse;
@@ -183,6 +182,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
@@ -854,9 +855,16 @@ import java.util.Set;
  *     <li> Updated {@link #updatePreRegister(TCSubject, SoftwareCompetition, Set)}</li>
  *     <li> Add helper {@link #isPrivate(TCSubject, long, boolean)}</li>
  * </ul>
+ *
+ * Version 3.5 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * <ul>
+ *     <li>Add {@link #closeSoftwareContest(TCSubject, long, long)}</li>
+ *     <li>Add {@link #cancelSoftwareContestByUser(TCSubject, long)}</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
- * @author isv, GreatKevin, Veve, TCSCODER
- * @version 3.4
+ * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
+ * @version 3.5
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -1009,6 +1017,20 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.4
      */
     private static final String PROJECT_SUBMISSION_PHASE_NAME = "Submission";
+
+    /**
+     * Private constant specifying project review phase name.
+     *
+     * @since 3.5
+     */
+    private static final String PROJECT_REVIEW_PHASE_NAME = "Review";
+
+    /**
+     * Private constant specifying project iterative review phase name.
+     *
+     * @since 3.5
+     */
+    private static final String PROJECT_ITERATIVE_REVIEW_PHASE_NAME = "Iterative Review";
 
     /**
      * Private constant specifying project final fix phase name.
@@ -1678,6 +1700,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 3.3
      */
     private static final String SOFTWARE_MODERATOR_FORUM_ROLE_PREFIX = "Software_Moderators_";
+
+    /**
+     * One minute in millisecond
+     */
+    private static final long MINUTE_IN_MILIS = 60000;
 
     /**
      * The init of static fields.
@@ -3630,7 +3657,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
             }
 
-            if (isPrivateProject(contest)){
+            if (isPrivateProject(contest)) {
                 // not rate for private
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
             }
@@ -4435,7 +4462,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
 				}
 
-                if (isPrivateProject(contest)){
+                if (isPrivateProject(contest)) {
                     contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
                 }
 
@@ -4563,7 +4590,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 if(isTcDirectProjectChanged) {
                    updateContestObserversFromDirectProject(tcSubject, contest);
                 }
-
 
                 // TCCC-1438 - it's better to refetch from backend.
                 projectData.setContestSales(projectServices.getContestSales(projectData.getProjectHeader().getId()));
@@ -4817,11 +4843,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     ResourceRole.RESOURCE_ROLE_SUBMITTER);
 
             Set<Long> removedUsers = new HashSet<Long>();
+            Set<Long> addedUsers = new HashSet<Long>();
             for (com.topcoder.management.resource.Resource r : regs){
                 if (!preRegisterMembers.contains(r.getUserId())){
                     removedUsers.add(r.getUserId());
-                }else{
+                } else{
                     preRegisterMembers.remove(r.getUserId());
+                    addedUsers.add(r.getUserId());
                 }
             }
 
@@ -4844,7 +4872,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 }
             }
 
-            Set<Long> addedUsers = new HashSet<Long>();
             for (Long member : preRegisterMembers) {
                 try {
                     this.addSubmitter(tcSubject, contest.getId(), member);
@@ -4859,7 +4886,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 }
             }
             return addedUsers;
-        }catch (Exception e){
+        } catch (Exception e){
             throw new ContestServiceException("Failed to pre-register user", e);
         }
     }
@@ -5008,7 +5035,30 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @throws ContestServiceException if an error occurs when interacting with the service layer.
      * @since TopCoder Service Layer Integration 3 Assembly
      */
-    public long uploadSubmission(TCSubject tcSubject, long projectId, String filename, DataHandler submission)
+    public long uploadSubmission(TCSubject tcSubject,long projectId, String filename,
+                                 DataHandler submission) throws ContestServiceException{
+        return uploadSubmission(tcSubject.getUserId(), projectId, filename, submission);
+    }
+
+    /**
+     * <p>
+     * Adds a new submission for an user in a particular project.
+     * </p>
+     * <p>
+     * If the project allows multiple submissions for users, it will add the new submission and return. If multiple
+     * submission are not allowed for the project, firstly it will add the new submission, secondly mark previous
+     * submissions as deleted and then return.
+     * </p>
+     *
+     * @param userId user Id
+     * @param projectId project Id
+     * @param filename filename
+     * @param submission submission data
+     * @return
+     * @throws ContestServiceException
+     * @since 3.5
+     */
+    public long uploadSubmission(long userId, long projectId, String filename, DataHandler submission)
             throws ContestServiceException {
         logger.debug("uploadSubmission");
 
@@ -5016,7 +5066,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             logger.debug("Exit updateSoftwareContest");
 
             return uploadExternalServices.uploadSubmission(projectId,
-                    tcSubject.getUserId(), filename, submission);
+                    userId, filename, submission);
         } catch (UploadServicesException e) {
             logger.error("Operation failed in the uploadExternalServices.", e);
             throw new ContestServiceException("Operation failed in the uploadExternalServices.",
@@ -8970,6 +9020,135 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 3.4
      */
     private boolean isPrivateProject(SoftwareCompetition contest){
-        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1");
+        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && "1".equals(contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT));
+    }
+
+    /**
+     * Close project immediately and pick winner
+     *
+     * @param tcSubject TCSubject
+     * @param projectId project id
+     * @param winnerId user id of choosen winner
+     * @throws ContestServiceException
+     * @since 3.5
+     */
+    public void closeSoftwareContest(TCSubject tcSubject, long projectId, long winnerId) throws ContestServiceException {
+        logger.debug("Entering #closeSoftwareContest");
+
+        try {
+            Project contest = projectServices.getProject(projectId);
+
+            if (contest.getProjectStatus().getId() != ProjectStatus.ACTIVE.getId()) {
+                logger.error("Closing challenge only applicable against ACTIVE challenge");
+                throw new ContestServiceException("Close challenge only applicable against ACTIVE challenge");
+            }
+
+            com.topcoder.management.resource.Resource[] regs = this.projectServices.searchResources(contest.getId(),
+                    ResourceRole.RESOURCE_ROLE_SUBMITTER);
+            boolean notRegistrant = true;
+            for (com.topcoder.management.resource.Resource r : regs) {
+                if (r.getUserId() == winnerId) {
+                    notRegistrant = false;
+                    break;
+                }
+            }
+            if (notRegistrant) {
+                logger.error("userId " + String.valueOf(winnerId) + " is not registered to this challenge");
+                throw new ContestServiceException("This user is not registered to this challenge");
+            }
+
+            com.topcoder.project.phases.Project projectPhases = projectServices.getPhases(contest.getId());
+            com.topcoder.project.phases.Phase[] phases = projectPhases.getAllPhases();
+            boolean needToUpdate = false;
+            //make sure we have submission phase is opened if not update it
+            for (com.topcoder.project.phases.Phase phase : phases) {
+                if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                    if (phase.getPhaseStatus().getId() != PhaseStatus.OPEN.getId()) {
+                        needToUpdate = true;
+                        phase.setPhaseStatus(PhaseStatus.OPEN);
+                        break;
+                    }
+                }
+            }
+            if (needToUpdate) {
+                projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
+                projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
+            }
+
+            //upload dummy submission for winner
+            new FileOutputStream(mockSubmissionFilePath + mockSubmissionFileName, false).close();
+            DataHandler dataHandler = new DataHandler(new FileDataSource(mockSubmissionFilePath +
+                    mockSubmissionFileName));
+            long submissionId = uploadSubmission(winnerId, contest.getId(), mockSubmissionFileName, dataHandler);
+
+            //close submission and review phase
+            com.topcoder.project.phases.Phase submissionPhase = null;
+            for (com.topcoder.project.phases.Phase phase : phases) {
+                if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                    Date scheduleStartDate = phase.getScheduledStartDate();
+                    Date currentDate = new Date();
+                    Date actualStartDate = null;
+                    long length = 0L;
+                    if (currentDate.before(scheduleStartDate)){
+                        //set length to 5 minutes
+                        length = 5 * MINUTE_IN_MILIS;
+                        actualStartDate = new Date(currentDate.getTime() - length);
+                    } else{
+                        actualStartDate = scheduleStartDate;
+                        length = currentDate.getTime() - scheduleStartDate.getTime();
+                    }
+                    phase.setActualStartDate(actualStartDate);
+                    phase.setActualEndDate(currentDate);
+                    phase.setLength(length);
+                    phase.setPhaseStatus(PhaseStatus.CLOSED);
+                    if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                        submissionPhase = phase;
+                    }
+                }
+            }
+            projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
+            projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
+
+            //set submission score and upload phase
+            Submission submission = uploadManager.getSubmission(submissionId);
+            submission.setInitialScore(100.0);
+            submission.setFinalScore(100.0);
+            uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
+
+            Upload upload = submission.getUpload();
+            upload.setProjectPhase(submissionPhase.getId());
+            uploadManager.updateUpload(upload, String.valueOf(tcSubject.getUserId()));
+        } catch (IOException e) {
+            logger.error("Failed to create submission file");
+            throw new ContestServiceException("Failed to create submission file", e);
+        } catch (ProjectServicesException e) {
+            logger.error("Failed to update phase");
+            throw new ContestServiceException("Failed to update phase", e);
+        } catch (UploadPersistenceException e) {
+            logger.error("Failed to get/update submission");
+            throw new ContestServiceException("Failed to get/update submission", e);
+        }
+    }
+
+    /**
+     * Cancel project
+     *
+     * @param tcSubject TCSubject
+     * @param projectId project id
+     * @throws ContestServiceException
+     * @since 3.5
+     */
+    public void cancelSoftwareContestByUser(TCSubject tcSubject, long projectId) throws ContestServiceException{
+        logger.debug("Entering #cancelSoftwareContestByUser");
+        try {
+            Project contest = projectServices.getProject(projectId);
+            contest.setProjectStatus(ProjectStatus.CANCELLED_CLIENT_REQUEST);
+            projectManager.updateProject(contest, "cancel-client request", String.valueOf(tcSubject.getUserId()));
+        } catch (Exception e) {
+            logger.error("Failed to update challenge");
+            throw new ContestServiceException("Failed to update challenge", e);
+        }
     }
 }
