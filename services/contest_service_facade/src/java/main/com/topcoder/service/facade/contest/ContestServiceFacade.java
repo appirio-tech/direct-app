@@ -255,8 +255,13 @@ import com.topcoder.service.user.Registrant;
  * </ul>
  * </p>
  *
- * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin
- * @version 1.8.4
+ * Version 1.8.5 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * <ul>
+ *     <li>Add {@link #closeSoftwareContest(TCSubject, long, long)}</li>
+ *     <li>Add {@link #cancelSoftwareContestByUser(TCSubject, long)}</li>
+ * </ul>
+ * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin, deedee, TCSASSEMBLER
+ * @version 1.8.5
  */
 public interface ContestServiceFacade {
 
@@ -748,7 +753,28 @@ public interface ContestServiceFacade {
      * @since TopCoder Service Layer Integration 3 Assembly
      */
     public long uploadSubmission(TCSubject tcSubject,long projectId, String filename,
-        DataHandler submission) throws ContestServiceException;
+                                DataHandler submission) throws ContestServiceException;
+
+    /**
+     * <p>
+     * Adds a new submission for an user in a particular project.
+     * </p>
+     * <p>
+     * If the project allows multiple submissions for users, it will add the new submission and return. If multiple
+     * submission are not allowed for the project, firstly it will add the new submission, secondly mark previous
+     * submissions as deleted and then return.
+     * </p>
+     *
+     * @param userId user Id
+     * @param projectId project Id
+     * @param filename filename
+     * @param submission submission data
+     * @return
+     * @throws ContestServiceException
+     * @since 3.5
+     */
+    public long uploadSubmission(long userId, long projectId, String filename,
+                                 DataHandler submission) throws ContestServiceException;
 
     /**
      * <p>
@@ -1511,4 +1537,25 @@ public interface ContestServiceFacade {
      */
     Set<Long> updatePreRegister(TCSubject tcSubject, SoftwareCompetition contest,
                                         Set<Long> preRegisterMembers) throws ContestServiceException;
+
+    /**
+     * Close project immediately and pick winner
+     *
+     * @param tcSubject TCSubject
+     * @param projectId project id
+     * @param winnerId user id of choosen winner
+     * @throws ContestServiceException
+     * @since 1.8.5
+     */
+    void closeSoftwareContest(TCSubject tcSubject, long projectId, long winnerId) throws ContestServiceException;
+
+    /**
+     * Cancel project
+     *
+     * @param tcSubject TCSubject
+     * @param projectId project id
+     * @throws ContestServiceException
+     * @since 1.8.5
+     */
+    void cancelSoftwareContestByUser(TCSubject tcSubject, long projectId) throws ContestServiceException;
 }
