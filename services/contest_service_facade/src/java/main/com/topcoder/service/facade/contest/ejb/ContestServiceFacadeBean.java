@@ -4600,12 +4600,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.setProjectData(projectData);
                 contest.setId(projectData.getProjectHeader().getId());
 
-
-                if (!isPrivateProject(contest) && ("1".equals(oldProject.getProperty(ProjectPropertyType.PRIVATE_PROJECT)))) {
-                    //if switch from private, remove current registrant
-                    Set<Long> preUsers = updatePreRegister(tcSubject, contest, new HashSet<Long>());
-                }
-
                 // update contest forum
 		        long forumId = projectServices.getForumId(projectData.getProjectHeader().getId());
                 boolean forumTypeExists = oldProjectData.getProjectHeader().getAllProperties().containsKey(
