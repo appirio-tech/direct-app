@@ -2081,12 +2081,16 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId() && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
-                        if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
+                        if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && "1".equals(projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT))) {
                             if (p.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
+                                p.setActualStartDate(p.getScheduledStartDate());
+                                p.setActualEndDate(p.getScheduledEndDate());
                                 p.setPhaseStatus(PhaseStatus.CLOSED);
                             }
                         } else {
                             if (p.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId()) {
+                                p.setActualStartDate(null);
+                                p.setActualEndDate(null);
                                 p.setPhaseStatus(PhaseStatus.SCHEDULED);
                             }
                         }
