@@ -108,6 +108,7 @@
             </tr>
             <tr class="cmcTask"></tr>
 --%>            
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
@@ -124,7 +125,7 @@
             </tr>
             <tr></tr>
             <tr class="privateProjectRow hide">
-                <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></td>
+                <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
             </tr>
             <tr></tr>
@@ -284,7 +285,7 @@
                  </div>
                  <br /><br />
                      <div id="privateProjectEditDiv" class="hide">
-                         <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Private Challenge</strong></span>
+                         <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></span>
                          <input type="checkbox"  name="privateProject" id="privateProject"/>
                      </div>
                      <br />
