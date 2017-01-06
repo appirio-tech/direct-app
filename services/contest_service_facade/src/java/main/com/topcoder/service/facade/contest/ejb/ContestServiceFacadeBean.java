@@ -9075,19 +9075,14 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
             }
 
-            //upload dummy subssion for winner
+            //upload dummy submission for winner
             new FileOutputStream(mockSubmissionFilePath + mockSubmissionFileName, false).close();
             DataHandler dataHandler = new DataHandler(new FileDataSource(mockSubmissionFilePath +
                     mockSubmissionFileName));
             long submissionId = uploadSubmission(winnerId, contest.getId(), mockSubmissionFileName, dataHandler);
 
-            Submission submission = uploadManager.getSubmission(submissionId);
-            submission.setInitialScore(100.0);
-            submission.setFinalScore(100.0);
-
-            uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
-
             //close submission and review phase
+            com.topcoder.project.phases.Phase submissionPhase = null;
             for (com.topcoder.project.phases.Phase phase : phases) {
                 if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
                         PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
@@ -9108,11 +9103,23 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     phase.setActualEndDate(currentDate);
                     phase.setLength(length);
                     phase.setPhaseStatus(PhaseStatus.CLOSED);
+                    if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                        submissionPhase = phase;
+                    }
                 }
             }
             projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
             projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
 
+            //set submission score and upload phase
+            Submission submission = uploadManager.getSubmission(submissionId);
+            submission.setInitialScore(100.0);
+            submission.setFinalScore(100.0);
+            uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
+
+            Upload upload = submission.getUpload();
+            upload.setProjectPhase(submissionPhase.getId());
+            uploadManager.updateUpload(upload, String.valueOf(tcSubject.getUserId()));
         } catch (IOException e) {
             logger.error("Failed to create submission file");
             throw new ContestServiceException("Failed to create submission file", e);
