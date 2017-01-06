@@ -108,7 +108,6 @@
             </tr>
             <tr class="cmcTask"></tr>
 --%>            
-            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
