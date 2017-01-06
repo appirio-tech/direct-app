@@ -224,7 +224,7 @@
 
              <br /><br />
             <div id="privateProjectEditDiv">
-                <span class="name fixWidthName"><strong>Private Challenge</strong></span>
+                <span class="name fixWidthName"><strong>Task</strong></span>
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
             </div>
             <br />

@@ -186,7 +186,7 @@
       </div>
 
       <div class="row privateProjectRow hide">
-          <label>Private Challenge</label>
+          <label>Task</label>
           <input type="checkbox" name="privateProject" title="Is this challenge private?">
       </div>
 
