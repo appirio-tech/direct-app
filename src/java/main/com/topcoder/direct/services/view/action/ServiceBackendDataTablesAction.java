@@ -16,6 +16,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -66,6 +67,10 @@ import java.util.Map;
  * @version 1.2
  */
 public abstract class ServiceBackendDataTablesAction extends AbstractAction {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(ServiceBackendDataTablesAction.class);
 
     /**
      * The display start in the request.
@@ -262,12 +267,12 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      */
     protected URI buildServiceEndPoint(Map<String, String> parameters) throws URISyntaxException {
 
-        int pageSize = getIDisplayLength() == -1 ? MAX_PAGINATION_SIZE : getIDisplayLength();
+        int pageSize = getiDisplayLength() == -1 ? MAX_PAGINATION_SIZE : getiDisplayLength();
 
 
         URIBuilder builder = new URIBuilder();
         builder.setScheme("http").setHost(ServerConfiguration.DIRECT_API_SERVICE_ENDPOINT).setPath(getServiceURL())
-                .setParameter("offset", String.valueOf(getIDisplayStart()))
+                .setParameter("offset", String.valueOf(getiDisplayStart()))
                 .setParameter("limit", String.valueOf(pageSize));
 
         if (parameters != null) {
@@ -300,7 +305,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     }
 
     protected JsonNode getJsonResultFromAPI(URI apiEndPoint) throws Exception {
-
+        logger.debug("Get JSON result from API: " + apiEndPoint);
         DefaultHttpClient httpClient = new DefaultHttpClient();
         JsonNode jsonNode = null;
 
@@ -345,7 +350,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @return the displayStart.
      */
-    public int getIDisplayStart() {
+    public int getiDisplayStart() {
         return iDisplayStart;
     }
 
@@ -354,7 +359,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @param iDisplayStart the display start.
      */
-    public void setIDisplayStart(int iDisplayStart) {
+    public void setiDisplayStart(int iDisplayStart) {
         this.iDisplayStart = iDisplayStart;
     }
 
@@ -363,7 +368,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @return the displayLength.
      */
-    public int getIDisplayLength() {
+    public int getiDisplayLength() {
         return iDisplayLength;
     }
 
@@ -372,7 +377,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @param iDisplayLength the displayLength.
      */
-    public void setIDisplayLength(int iDisplayLength) {
+    public void setiDisplayLength(int iDisplayLength) {
         this.iDisplayLength = iDisplayLength;
     }
 
@@ -381,7 +386,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @return the sEcho.
      */
-    public String getSEcho() {
+    public String getsEcho() {
         return sEcho;
     }
 
@@ -390,7 +395,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @param sEcho the sEcho.
      */
-    public void setSEcho(String sEcho) {
+    public void setsEcho(String sEcho) {
         this.sEcho = sEcho;
     }
 
@@ -417,7 +422,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @return the sort column index.
      */
-    public int getISortCol_0() {
+    public int getiSortCol_0() {
         return iSortCol_0;
     }
 
@@ -426,7 +431,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @param iSortCol_0 the sort column index.
      */
-    public void setISortCol_0(int iSortCol_0) {
+    public void setiSortCol_0(int iSortCol_0) {
         this.iSortCol_0 = iSortCol_0;
     }
 
@@ -435,7 +440,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @return the sort order.
      */
-    public String getSSortDir_0() {
+    public String getsSortDir_0() {
         return sSortDir_0;
     }
 
@@ -444,7 +449,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      *
      * @param sSortDir_0 the sort order.
      */
-    public void setSSortDir_0(String sSortDir_0) {
+    public void setsSortDir_0(String sSortDir_0) {
         this.sSortDir_0 = sSortDir_0;
     }
 

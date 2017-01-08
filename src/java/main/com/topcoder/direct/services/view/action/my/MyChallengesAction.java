@@ -93,10 +93,10 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
 
             String sortColumn = "id";
             String sortOrder = " desc null last";
-            if (getISortCol_0() >= 0 && getSSortDir_0() != null && getSSortDir_0().trim().length() > 0) {
+            if (getiSortCol_0() >= 0 && getsSortDir_0() != null && getsSortDir_0().trim().length() > 0) {
                 // there is sorting parameters
-                sortColumn = SORTING_MAP.containsKey(getISortCol_0()) ? SORTING_MAP.get(getISortCol_0()) : "id";
-                if (getSSortDir_0().trim().equalsIgnoreCase("asc")) {
+                sortColumn = SORTING_MAP.containsKey(getiSortCol_0()) ? SORTING_MAP.get(getiSortCol_0()) : "id";
+                if (getsSortDir_0().trim().equalsIgnoreCase("asc")) {
                     sortOrder = " asc null first";
                 }
             }
@@ -122,7 +122,7 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
                 // no filtering - It should be the same as iTotalRecords
                 result.put("iTotalDisplayRecords", restResult.getMetadata().getTotalCount());
 
-                result.put("sEcho", getSEcho());
+                result.put("sEcho", getsEcho());
 
                 List<List<String>> challengesData = new ArrayList<List<String>>();
 
