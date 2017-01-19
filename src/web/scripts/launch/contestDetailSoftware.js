@@ -2389,7 +2389,7 @@ function validateFieldsPrizeSection() {
         }
     }
 
-    if (isActiveContest && !mainWidget.isPrivateProject()) {
+    if (isActiveContest && !mainWidget.softwareCompetition.isPrivateProject()) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
             errors.push('The cost of active challenge should not be decreased.');

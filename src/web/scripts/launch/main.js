@@ -972,7 +972,7 @@ function isContestSaved() {
 }
 
 function disablePrizeAdjustment() {
-    return (phaseOpen && !mainWidget.isPrivateProject())
+    return (phaseOpen && !mainWidget..softwareCompetition.isPrivateProject())
 }
 
 /**
