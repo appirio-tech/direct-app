@@ -5168,6 +5168,10 @@ public class ProjectServicesImpl implements ProjectServices {
             if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
                 if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
                     p.setPhaseStatus(PhaseStatus.CLOSED);
+                    Date now = new Date();
+                    p.setFixedStartDate(now);
+                    p.setActualStartDate(now);
+                    p.setActualEndDate(new Date(System.currentTimeMillis()+5*60*1000));
                 }
             }
         }
