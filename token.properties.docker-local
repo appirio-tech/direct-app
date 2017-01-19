@@ -265,12 +265,6 @@ j#######################################################
 @ApplicationServer.SSO_HASH_SECRET@=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
 @ApplicationServer.SSO_DOMAIN@=topcoder.com
 
-
-###########################
-# Scorecard Configuration #
-###########################
-@scorecardUrl@=jdbc:informix-sqli://tc-informix:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
-
 ################################
 # ppt and analytics activation #
 ################################
