@@ -862,9 +862,14 @@ import java.util.Set;
  *     <li>Add {@link #cancelSoftwareContestByUser(TCSubject, long)}</li>
  * </ul>
  *
+ * Version 3.6 (TOPCODER DIRECT - FIXES FOR CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * <ul>
+ *     <li>Refactor {@link #createReviewerResource(long, long, long, boolean, boolean)}</li>
+ *     <li>Fix {@link #closeSoftwareContest(TCSubject, long, long)} to work with auto pilot</li>
+ * </ul>
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.5
+ * @version 3.6
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -964,6 +969,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private static final String RESOURCE_INFO_PAYMENT_NA = "N/A";
 
     /**
+     * Resource info attribute for Manual payment
+     * @since 3.6
+     */
+    private static final String RESOURCE_INFO_MANUAL_PAYMENT = "Manual Payments";
+
+    /**
+     * Scorecard ID attibute
+     * @since 3.6
+     */
+    private static final String SCORECARD_ID_ATTRIBUTE = "Scorecard ID";
+
+    /**
      * Email file template source key that is used by email generator.
      */
     private static final String EMAIL_FILE_TEMPLATE_SOURCE_KEY = "fileTemplateSource";
@@ -1010,6 +1027,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * Private constant specifying administrator role.
      */
     private static final String ADMIN_ROLE = "Cockpit Administrator";
+
+    /**
+     * Private constant specifying project registration phase name.
+     *
+     * @since 3.6
+     */
+    private static final String PROJECT_REGISTRATION_PHASE_NAME = "Registration";
 
     /**
      * Private constant specifying project submission phase name.
@@ -4098,13 +4122,35 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @throws UserServiceException if error when getting resource handle.
      * @since 2.5
      */
-    private com.topcoder.management.resource.Resource createReviewerResource(long userId, long contestId, long phaseId, boolean hasPayment) throws UserServiceException {
+    private com.topcoder.management.resource.Resource createReviewerResource(long userId, long contestId, long phaseId,
+                                                                            boolean hasPayment) throws UserServiceException {
+        return createReviewerResource(userId, contestId, phaseId, hasPayment, false);
+    }
+
+    /**
+     * Creates a Reviewer Resource to add to the contest
+     *
+     * @param userId the user id
+     * @param contestId the contest id.
+     * @param phaseId the phase the resource adds to, 0 for not add
+     * @param hasPayment whether this resource should be paid.
+     * @param iterativeReviewer whether this iterative review
+     * @return the created Reviewer resource to add.
+     * @throws UserServiceException if error when getting resource handle.
+     * @since 3.6
+     */
+    private com.topcoder.management.resource.Resource createReviewerResource(long userId, long contestId, long phaseId,
+                                                                             boolean hasPayment, boolean iterativeReviewer) throws UserServiceException {
         com.topcoder.management.resource.Resource resource = new com.topcoder.management.resource.Resource();
         // unset id
         resource.setId(-1);
 
         // set resource to reviewer
-        resource.setResourceRole(new ResourceRole(ResourceRole.RESOURCE_ROLE_REVIEWER_ID));
+        if (iterativeReviewer){
+            resource.setResourceRole(new ResourceRole(ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID));
+        }else {
+            resource.setResourceRole(new ResourceRole(ResourceRole.RESOURCE_ROLE_REVIEWER_ID));
+        }
 
         resource.setProperty(RESOURCE_INFO_HANDLE, userService.getUserHandle(userId));
         resource.setProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID, String.valueOf(userId));
@@ -4121,6 +4167,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         if(!hasPayment) {
             resource.setProperty(RESOURCE_INFO_PAYMENT_STATUS, RESOURCE_INFO_PAYMENT_STATUS_NA);
             resource.setProperty(RESOURCE_INFO_PAYMENT, RESOURCE_INFO_PAYMENT_NA);
+            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, "true");
         }
 
         // set registration date to now
@@ -9083,28 +9130,45 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             //close submission and review phase
             com.topcoder.project.phases.Phase submissionPhase = null;
+            com.topcoder.project.phases.Phase reviewPhase = null;
             for (com.topcoder.project.phases.Phase phase : phases) {
-                if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
-                        PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
-                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())) {
-                    Date scheduleStartDate = phase.getScheduledStartDate();
+                if (PROJECT_REGISTRATION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())) {
                     Date currentDate = new Date();
-                    Date actualStartDate = null;
-                    long length = 0L;
-                    if (currentDate.before(scheduleStartDate)){
-                        //set length to 5 minutes
-                        length = 5 * MINUTE_IN_MILIS;
-                        actualStartDate = new Date(currentDate.getTime() - length);
-                    } else{
-                        actualStartDate = scheduleStartDate;
-                        length = currentDate.getTime() - scheduleStartDate.getTime();
-                    }
-                    phase.setActualStartDate(actualStartDate);
-                    phase.setActualEndDate(currentDate);
-                    phase.setLength(length);
-                    phase.setPhaseStatus(PhaseStatus.CLOSED);
+                    //length 1 hour
+                    long length = 60 * MINUTE_IN_MILIS;
+                    //submision start 3h before
+                    Date regStartDate = new Date(currentDate.getTime() - 180 * MINUTE_IN_MILIS);
+                    //submision start 2h before
+                    Date submissionStartDate = new Date(currentDate.getTime() - 120 * MINUTE_IN_MILIS);
+                    //submission end / review start 1h before
+                    Date submissionEndDate = new Date(currentDate.getTime() - 60 * MINUTE_IN_MILIS);
+
                     if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                        phase.setScheduledStartDate(submissionStartDate);
+                        phase.setActualStartDate(submissionStartDate);
+                        phase.setScheduledEndDate(submissionEndDate);
+                        phase.setActualEndDate(submissionEndDate);
+                        phase.setLength(length);
+                        phase.setPhaseStatus(PhaseStatus.CLOSED);
                         submissionPhase = phase;
+                    } else if (PROJECT_REGISTRATION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                        phase.setScheduledStartDate(regStartDate);
+                        phase.setFixedStartDate(regStartDate);
+                        phase.setActualStartDate(regStartDate);
+                        phase.setScheduledEndDate(submissionEndDate);
+                        phase.setActualEndDate(submissionEndDate);
+                        phase.setLength(2 * length);
+                        phase.setPhaseStatus(PhaseStatus.CLOSED);
+                    } else {
+                        phase.setScheduledStartDate(submissionEndDate);
+                        phase.setActualStartDate(submissionEndDate);
+                        phase.setScheduledEndDate(currentDate);
+                        phase.setLength(length);
+                        phase.setPhaseStatus(PhaseStatus.OPEN);
+                        reviewPhase = phase;
                     }
                 }
             }
@@ -9115,7 +9179,24 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             Submission submission = uploadManager.getSubmission(submissionId);
             submission.setInitialScore(100.0);
             submission.setFinalScore(100.0);
+            submission.setPlacement(1L);
+            submission.setPrize(contest.getPrizes().get(0));
             uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
+
+            //create reviewer, remove if there is
+            com.topcoder.management.resource.Resource[] reviewers = this.projectServices.searchResources(contest.getId(),
+                    ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID);
+            for (com.topcoder.management.resource.Resource r : reviewers) {
+                this.projectServices.removeResource(r, String.valueOf(tcSubject.getUserId()));
+            }
+            com.topcoder.management.resource.Resource reviewer = createReviewerResource(winnerId, contest.getId(),
+                    reviewPhase.getId(), false, ProjectCategory.FIRST2FINISH.getName().equals(contest.getProjectCategory().getName()));
+
+            reviewer = projectServices.updateResource(reviewer, String.valueOf(tcSubject.getUserId()));
+
+            //create review
+            Scorecard scorecard = projectServices.getScorecard(Long.parseLong((String) reviewPhase.getAttribute(SCORECARD_ID_ATTRIBUTE)));
+            createReview(reviewer, submissionId, 1, scorecard, reviewPhase.getId());
 
             Upload upload = submission.getUpload();
             upload.setProjectPhase(submissionPhase.getId());
@@ -9123,6 +9204,12 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         } catch (IOException e) {
             logger.error("Failed to create submission file");
             throw new ContestServiceException("Failed to create submission file", e);
+        } catch (UserServiceException e) {
+            logger.error("User not found: " + String.valueOf(winnerId));
+            throw new ContestServiceException("User not found: " + String.valueOf(winnerId), e);
+        } catch (ReviewManagementException e) {
+            logger.error("Failed to create review");
+            throw new ContestServiceException("Failed to create review", e);
         } catch (ProjectServicesException e) {
             logger.error("Failed to update phase");
             throw new ContestServiceException("Failed to update phase", e);
