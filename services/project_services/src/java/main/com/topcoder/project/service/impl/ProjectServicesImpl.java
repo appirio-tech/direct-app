@@ -2083,14 +2083,17 @@ public class ProjectServicesImpl implements ProjectServices {
                     if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId() && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
                         if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && "1".equals(projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT))) {
                             if (p.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
-                                p.setActualStartDate(p.getScheduledStartDate());
-                                p.setActualEndDate(p.getScheduledEndDate());
+                                Date now = new Date();
+                                p.setFixedStartDate(now);
+                                p.setActualStartDate(now);
+                                p.setActualEndDate(new Date(System.currentTimeMillis()+5*60*1000));
                                 p.setPhaseStatus(PhaseStatus.CLOSED);
                             }
                         } else {
                             if (p.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId()) {
                                 p.setActualStartDate(null);
                                 p.setActualEndDate(null);
+                                p.setFixedStartDate(null);
                                 p.setPhaseStatus(PhaseStatus.SCHEDULED);
                             }
                         }
@@ -5168,6 +5171,10 @@ public class ProjectServicesImpl implements ProjectServices {
             if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
                 if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
                     p.setPhaseStatus(PhaseStatus.CLOSED);
+                    Date now = new Date();
+                    p.setFixedStartDate(now);
+                    p.setActualStartDate(now);
+                    p.setActualEndDate(new Date(System.currentTimeMillis()+5*60*1000));
                 }
             }
         }

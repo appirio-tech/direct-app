@@ -2336,7 +2336,7 @@ function validateFieldsPrizeSection() {
             validateCodePrizes(errors);
         }
 
-        if (phaseOpen) {
+        if (disablePrizeAdjustment()) {
             var newFirstPlacePrize = $('#swFirstPlace').val();
             var newDigitalRun = $('#swDigitalRun').val();
             if (checkNumber(newFirstPlacePrize)) {
@@ -2389,7 +2389,7 @@ function validateFieldsPrizeSection() {
         }
     }
 
-    if (isActiveContest) {
+    if (isActiveContest && !mainWidget.softwareCompetition.isPrivateProject()) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
             errors.push('The cost of active challenge should not be decreased.');
