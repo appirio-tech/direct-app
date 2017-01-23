@@ -354,7 +354,7 @@
     <property name="tcwebcommon.jar.name" value="tcwebcommon.jar"/>
     <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}"/>
 
-
+    <property name="tccache.jar" value="${tcs_libdir}/tc_cache/1.0.0/tc_cache.jar"/>
     <!-- 3rd party dependencies -->
     <property name="asm-3.3.jar" value="${ext_libdir}/asm/asm-3.3.jar"/>
     <property name="asm-commons-3.3.jar" value="${ext_libdir}/asm/asm-commons-3.3.jar"/>
@@ -369,6 +369,9 @@
     <property name="commons-dbcp.jar" value="${ext_libdir}/commons-dbcp/commons-dbcp.jar"/>
     <property name="commons-discovery.jar" value="${ext_libdir}/commons-discovery/0.2/commons-discovery.jar"/>
     <property name="commons-pool.jar" value="${ext_libdir}/commons-pool/commons-pool.jar"/>
+    <property name="commons-pool2.jar" value="${ext_libdir}/commons-pool/commons-pool2-2.4.2.jar"/>
+    <property name="jedis.jar" value="${ext_libdir}/jedis/jedis-2.8.1.jar"/>
+
     <property name="confluence-service-axis-client.jar" value="${ext_libdir}/confluence/2.7.3/confluence-service-axis-client.jar"/>
     <property name="httpProxyPackage.jar" value="${ext_libdir}/httpProxyPackage/httpProxyPackage.jar"/>
     <property name="ifxjdbcx.jar" value="${ext_libdir}/informix/ifxjdbcx.jar"/>
@@ -537,6 +540,7 @@
     <path id="commons.libs">
         <pathelement location="${ext_libdir}/commons-dbcp/commons-dbcp.jar"/>
         <pathelement location="${ext_libdir}/commons-pool/commons-pool.jar"/>
+        <pathelement location="${ext_libdir}/commons-pool/commons-pool2-2.4.2.jar"/>
     </path>
 
     <!-- Asm libraries -->
@@ -584,6 +588,7 @@
         <pathelement location="${user.jar}"/>
         <pathelement location="${shared.jar}"/>
         <pathelement location="${tcwebcommon.jar}"/>
+        <pathelement location="${tccache.jar}"/>
         <pathelement location="${online_review_upload_services.jar}"/>
         <pathelement location="${catalog_services.jar}"/>
         <pathelement location="${admin_service_facade.jar}"/>
@@ -650,6 +655,7 @@
         <pathelement location="${jackson-core-2.3.2.jar}"/>
         <pathelement location="${jackson-databind-2.3.2.jar}"/>
         <pathelement location="${scribe.jar}"/>
+        <pathelement location="${jedis.jar}"/>
 <!--
         <pathelement location="${jsr311.jar}"/>
         <pathelement location="${cxf.jar}"/>
