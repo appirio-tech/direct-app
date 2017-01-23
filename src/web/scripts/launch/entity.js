@@ -192,6 +192,7 @@ var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 var STUDIO_IDEA_GENERATION = 22;
 
 var DRAFT_STATUS = "Draft";
+var ACTIVE_STATUS = "Active";
 
 var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
@@ -300,6 +301,10 @@ com.topcoder.direct.SoftwareCompetition = function() {
 
     // hold the project milestone name  the contest associates with
     this.projectMilestoneName = 0;
+
+	this.registrants = null;
+
+	this.isPrivateProject = function(){return this.projectHeader.properties["Private Project Status"] == "1" ? true : false;}
 } 
 
 /**
@@ -327,6 +332,7 @@ com.topcoder.direct.Project = function() {
 	  this.tcDirectProjectId = -1;	
 	  
 	  this.reviewScorecardId = 0;
+	  this.iterativeReviewScorecardId = 0;
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
 	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
@@ -340,13 +346,7 @@ com.topcoder.direct.Project = function() {
 	  this.copilotContestExtraInfos = [];
 
 	  this.properties = {};
-	  
-	  this.setReviewScorecardId = function(reviewScorecardId) {
-	  	  this.reviewScorecardId = reviewScorecardId;
-	  }
-	  this.getReviewScorecardId = function() {
-	  	  return this.reviewScorecardId;
-	  }
+
 	  this.setBillingProject = function(billingProjectId) {
 	  	  this.properties['Billing Project'] = billingProjectId;
 	  }

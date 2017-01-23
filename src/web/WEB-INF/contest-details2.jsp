@@ -1,7 +1,7 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
-  - Version: 1.10
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Version: 1.11
+  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -28,6 +28,8 @@
   - - Add support for marathon match contest.
   - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab) change notes:
   - - Update dashboard part to show the real time line graph.
+  - Version 1.11 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY):
+  - - Add CANCEL and CLOSE button on active private challenge
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -101,6 +103,8 @@
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:if test="marathon">icon-marathon</s:if><s:else><s:property value="viewData.contest.contestType.letter"/></s:else>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>  <img id="contestLoading" style="display:none" src="/images/dots-white.gif"/>
+                            <a href="javascript:forceCancelContest();" class="button6 preview privateCmd hide"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <a href="javascript:closeContest();" class="button6 preview privateCmd hide"><span class="left"><span class="right">CLOSE</span></span></a>
                             <a href="javascript:activateContestEdit();" class="activateButton" style="float:right;display: none"></a>
                         </h2>
 

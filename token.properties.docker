@@ -36,10 +36,6 @@
 @dw.database.server@=direct-dev.topcoder.com
 @dw.database.INFORMIXSERVER@=datawarehouse_tcp
 
-###########################
-# Scorecard Configuration #
-###########################
-@scorecardUrl@=jdbc:informix-sqli://direct-dev.topcoder.com:2020/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
 
 #######################################
 ## Parameters used by EmailEngine.xml #

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -64,8 +64,11 @@
  * Version 2.7 (TopCoder Direct - EST/EDT switch in date picker)
  * - Setup event handler for auto changing date time timezone
  *
+ * Version 2.8 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * - Fix the showing control for private challenges(F2F and Design F2F)
+ *
  * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.7
+ * @version 2.8
  */
 $(document).ready(function() {
 
@@ -1047,6 +1050,20 @@ function onContestTypeChange() {
         $(".schedule").css("margin-bottom", "0px");
 
         getCapacityDatesForStudioSubType(getContestType(true)[1]);
+    }
+
+    if(typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $(".privateProjectRow").show();
+        if ($("input[name=privateProject]").attr("checked") === true) {
+            $(".preRegisterUsersRow").show();
+            $("#preRegisterUsersEditDiv").show();
+        }else{
+            $(".preRegisterUsersRow").hide();
+            $("#preRegisterUsersEditDiv").hide();
+        }
+    } else {
+        $(".privateProjectRow").hide();
+        $(".preRegisterUsersRow").hide();
     }
 
     if (mainWidget.isAlgorithmContest()) {

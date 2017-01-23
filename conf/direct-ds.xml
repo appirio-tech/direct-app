@@ -21,7 +21,7 @@
     <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
 	<xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
 	<xa-datasource-property name="DatabaseName">tcs_catalog</xa-datasource-property>
-	<xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property> 
+	<xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
 
     <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
     <!-- sql to call when connection is created -->
@@ -45,7 +45,7 @@
 
     <no-tx-datasource>
        <jndi-name>OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -79,7 +79,7 @@
 
     <no-tx-datasource>
         <jndi-name>TCS_CATALOG</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
          <driver-class>com.informix.jdbc.IfxDriver</driver-class>
@@ -107,7 +107,7 @@
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">informixoltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
 
 		<new-connection-sql>set lock mode to wait 5</new-connection-sql>
         <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
@@ -167,7 +167,7 @@
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">corporate_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
         
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -196,7 +196,7 @@
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">corporate_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
         
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -226,7 +226,7 @@
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">common_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
 
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -258,7 +258,7 @@
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">time_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
 
 		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
 		<!-- sql to call when connection is created -->

@@ -1133,35 +1133,36 @@ public class DataProvider {
         return countDai.getData(countReq).get("member_count").getIntItem(0, "member_count");
     }
 
-    public static List<ReviewScorecardDTO> getReviewScorecardDTO() throws Exception {
-       DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-       Request request = new Request();
-       request.setContentHandle("get_review_scorecard");
+    public static List<ReviewScorecardDTO> getReviewScorecardDTO(long categoryId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("get_review_scorecard");
+        request.setProperty("cid", String.valueOf(categoryId));
 
-       final ResultSetContainer resultContainer = dataAccessor.getData(request).get("get_review_scorecard");
-       List<ReviewScorecardDTO> result = new ArrayList<ReviewScorecardDTO>();
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("get_review_scorecard");
+        List<ReviewScorecardDTO> result = new ArrayList<ReviewScorecardDTO>();
 
-       final int recordNum = resultContainer.size();
+        final int recordNum = resultContainer.size();
 
-       for (int i = 0; i < recordNum; i++) {
-           long scorecardId = resultContainer.getLongItem(i, "scorecard_id");
-           long scorecardTypeId = resultContainer.getLongItem(i, "scorecard_type_id");
-           long projectCategoryId = resultContainer.getLongItem(i, "project_category_id");
-           String scorecardName = resultContainer.getStringItem(i, "name");
-           String scorecardVersion = resultContainer.getStringItem(i, "version");
+        for (int i = 0; i < recordNum; i++) {
+            long scorecardId = resultContainer.getLongItem(i, "scorecard_id");
+            long scorecardTypeId = resultContainer.getLongItem(i, "scorecard_type_id");
+            long projectCategoryId = resultContainer.getLongItem(i, "project_category_id");
+            String scorecardName = resultContainer.getStringItem(i, "name");
+            String scorecardVersion = resultContainer.getStringItem(i, "version");
 
-           ReviewScorecardDTO reviewScorecard = new ReviewScorecardDTO();
-           reviewScorecard.setScorecardTypeId(scorecardTypeId);
-           reviewScorecard.setProjectCategoryId(projectCategoryId);
-           reviewScorecard.setScorecardId(scorecardId);
-           reviewScorecard.setScorecardName(scorecardName);
-           reviewScorecard.setScorecardVersion(scorecardVersion);
+            ReviewScorecardDTO reviewScorecard = new ReviewScorecardDTO();
+            reviewScorecard.setScorecardTypeId(scorecardTypeId);
+            reviewScorecard.setProjectCategoryId(projectCategoryId);
+            reviewScorecard.setScorecardId(scorecardId);
+            reviewScorecard.setScorecardName(scorecardName);
+            reviewScorecard.setScorecardVersion(scorecardVersion);
 
-           // add to result
-           result.add(reviewScorecard);
-       }
+            // add to result
+            result.add(reviewScorecard);
+        }
 
-       return result;
+        return result;
     }
 
      /**
@@ -6515,7 +6516,7 @@ public class DataProvider {
         contestIdsSet.add(0L);
         // get unique JIRA issue IDs
         Set<String> jiraIssueIdsSet = new HashSet<String>();
-        jiraIssueIdsSet.add("0"); System.out.println("---------------jiraIssueIds---------------------"+jiraIssueIds);
+        jiraIssueIdsSet.add("0");
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {

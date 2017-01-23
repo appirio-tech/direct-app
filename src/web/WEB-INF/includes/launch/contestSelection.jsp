@@ -79,8 +79,6 @@
                       <span class="bug_hunt">Create Bug Hunt Challenge</span>
                       <a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a>
                   </div>
-
-                  <div class="help"><span class="new_style">Challenge Type Information</span></div>
               </div>
           </div>
           <!-- end .selectDesing -->
@@ -187,13 +185,13 @@
           </div>
       </div>
 
-      <div class="row privateProjectRow">
-          <label>Private Challenge</label>
+      <div class="row privateProjectRow hide">
+          <label>Task</label>
           <input type="checkbox" name="privateProject" title="Is this challenge private?">
       </div>
 
       <div class="row preRegisterUsersRow hide">
-          <label>Pre-Register Members</label>
+          <label>Assign Member(s):</label>
           <input name="preRegisterUsers" type="text" class="text"/>
       </div>
 

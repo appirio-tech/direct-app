@@ -56,14 +56,6 @@
 #@dw.database.server@=env.topcoder.com
 #@dw.database.INFORMIXSERVER@=informixoltp_tcp
 
-###########################
-# Scorecard Configuration #
-###########################
-# typical windows configuration
-@scorecardUrl@=jdbc:informix-sqli://localhost:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
-
-# typical VM configuration
-#@scorecardUrl@=jdbc:informix-sqli://env.topcoder.com:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
 
 #######################################
 ## Parameters used by EmailEngine.xml #

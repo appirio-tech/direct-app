@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import com.topcoder.clients.model.ContestType;
 import com.topcoder.management.project.ProjectPlatform;
@@ -100,8 +102,20 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.1 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
+ * <ul>
+ *     <li> Add list of registrant in map result</li>
+ * </ul>
+ * </p>
+ *
+ * Version 2.2 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
+ * <ul>
+ *     <li>Update {@link #getMapResult(SoftwareCompetition)} include registrant id</li>
+ * </ul>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 2.0
+ * @version 2.2
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -182,7 +196,11 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // retrieve review scorecard id.
         for(com.topcoder.project.phases.Phase phase : bean.getProjectPhases().getAllPhases()){
             if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.REVIEW_PHASE.getName())){
-            	result.put("reviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
+                result.put("reviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
+            }
+
+            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.ITERATIVE_REVIEW_PHASE.getName())){
+                result.put("iterativeReviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
             }
         }
 
@@ -196,6 +214,8 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         Map<String, String> reviewers = new HashMap<String, String>();
 
         double totalCopilots = 0;
+
+        List<Map> registrant = new ArrayList<Map>();
 
         // Gets copilots and reviewers from the resources of the contest
         for (Resource r : resources) {
@@ -215,6 +235,13 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
                 totalCopilots += copilotFee;
             }
+
+            if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
+                Map<String, String> user = new HashMap<String, String>();
+                user.put("id", String.valueOf(r.getUserId()));
+                user.put("handle", r.getProperty("Handle"));
+                registrant.add(user);
+            }
             // get reviewers
             if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID ||
                     r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_REVIEWER_ID) {
@@ -222,6 +249,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }
         }
 
+        result.put("registrant", registrant);
         // put the copilots into the result
         result.put("copilots", copilots);
 

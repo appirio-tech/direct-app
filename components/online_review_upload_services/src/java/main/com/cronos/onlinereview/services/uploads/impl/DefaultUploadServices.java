@@ -101,13 +101,29 @@ import java.text.SimpleDateFormat;
  *     <li>Added {@link #removeUsersProjectResult(Project, Collection)} method</li>
  *     <li>Updated {@link #addSubmitter(long, long)} fixing dateformat</li>
  * </ul>
+ *
+ * <p>
+ * Version 1.1.3 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES):
+ *     <ol>
+ *         <li>Added {@link #removeSubmitters(long, Set, String)} method</li>
+ *     </ol>
+ * </p>
  * <p>
  * Thread safety: the thread safety is completely relied to the managers implementations because it's impossible to
  * change the other variables.
  * </p>
  *
+ * Version 1.1.4 (TOPCODER DIRECT - FIXES FOR CLOSE PRIVATE CHALLENGE IMMEDIATELY):
+ *     <ol>
+ *         <li>Added {@link #isProjectResultCategory(long)} method</li>
+ *     </ol>
+ * </p>
+ * <p>
+ * Thread safety: the thread safety is completely relied to the managers implementations because it's impossible to
+ * change the other variables.
+ * </p>
  * @author fabrizyo, saarixx, cyberjag, TCSDEVELOPER
- * @version 1.1.2
+ * @version 1.1.4
  */
 public class DefaultUploadServices implements UploadServices {
 
@@ -1229,19 +1245,17 @@ public class DefaultUploadServices implements UploadServices {
     }
 
     /**
-     * Remove all submitters for a given project
+     * Remove submitters from given project
      *
      * @param projectId the project id
-     * @param operator user whos added
-     * @return
-     * @throws InvalidProjectException
+     * @param users set of user id
+     * @param operator user who is added it
+     * @return set removedUsers
      * @throws UploadServicesException
-     * @throws InvalidUserException
-     * @throws InvalidProjectPhaseException
-     * @since 1.1.2
+     * @since 1.1.3
      */
-    public Set<Long> removeAllSubmitters(long projectId, String operator)throws UploadServicesException {
-        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeSubmitter(long, String)");
+    public Set<Long> removeSubmitters(long projectId, Set<Long> users, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeSubmitters(long, Set, String)");
 
         try {
             Project project = managersProvider.getProjectManager().getProject(projectId);
@@ -1249,17 +1263,19 @@ public class DefaultUploadServices implements UploadServices {
 
             Filter filter = ResourceFilterBuilder.createProjectIdFilter(project.getId());
             Resource[] resources = resourceManager.searchResources(filter);
-            Set<Long> users = new HashSet<Long>();
+            Set<Long> removedUsers = new HashSet<Long>();
             for (Resource resource : resources) {
-                if (resource.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
-                    users.add(resource.getUserId());
-                    resourceManager.removeResource(resource, operator);
+                if (resource.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER){
+                    if (users == null || users.contains(resource.getUserId())){
+                        removedUsers.add(resource.getUserId());
+                        resourceManager.removeResource(resource, operator);
+                    }
                 }
             }
-            if (!users.isEmpty()) {
-                removeUsersProjectResult(project, users);
+            if (!removedUsers.isEmpty()) {
+                removeUsersProjectResult(project, removedUsers);
             }
-            return users;
+            return removedUsers;
 
         }catch (SearchBuilderException e){
             Helper.logFormat(LOG, Level.ERROR, e, "Failed to get the project resources for the projectId {0}",
@@ -1277,6 +1293,22 @@ public class DefaultUploadServices implements UploadServices {
         } finally {
             Helper.logFormat(LOG, Level.DEBUG, "Exited DefaultUploadServices#removeSubmitter(long, String)");
         }
+    }
+    /**
+     * Remove all submitters for a given project
+     *
+     * @param projectId the project id
+     * @param operator user whos added
+     * @return
+     * @throws InvalidProjectException
+     * @throws UploadServicesException
+     * @throws InvalidUserException
+     * @throws InvalidProjectPhaseException
+     * @since 1.1.2
+     */
+    public Set<Long> removeAllSubmitters(long projectId, String operator)throws UploadServicesException {
+        Helper.logFormat(LOG, Level.DEBUG, "Entered DefaultUploadServices#removeAllSubmitters(long, String)");
+            return removeSubmitters(projectId, null, operator);
     }
 
     /**
@@ -1605,6 +1637,39 @@ public class DefaultUploadServices implements UploadServices {
     }
 
     /**
+     * Lookup function for project categories that should have a project_result row.  These rows are used
+     * for ratings, reliability, and the Digital Run.
+     *
+     * Copied from online_review: com/cronos/onlinereview/util/ActionsHelper.java#L205
+     *
+     * @param categoryId the category id to look up.
+     * @return whether the provided category id should have a project_result row.
+     * @since 1.1.4
+     */
+    private static boolean isProjectResultCategory(long categoryId) {
+        return (categoryId == 1       // Component Design
+                || categoryId == 2    // Component Development
+                || categoryId == 5    // Component Testing
+                || categoryId == 6    // Application Specification
+                || categoryId == 7    // Application Architecture
+                || categoryId == 9    // Bug Hunt
+                || categoryId == 13   // Test Scenarios
+                || categoryId == 26   // Test Suites
+                || categoryId == 14   // Application Assembly
+                || categoryId == 23   // Application Conceptualization
+                || categoryId == 19   // UI Prototype
+                || categoryId == 24   // RIA Build
+                || categoryId == 25   // RIA Component
+                || categoryId == 29   // Copilot Posting
+                || categoryId == 35   // Content Creation
+                || categoryId == 36   // Reporting
+                || categoryId == 38   // First2Finish
+                || categoryId == 39   // Code
+                || categoryId == 40   // Design F2F (NEW)
+        );
+    }
+
+    /**
      * Populate project_result and component_inquiry for new submitters.
      *
      * @param project       the project
@@ -1621,9 +1686,8 @@ public class DefaultUploadServices implements UploadServices {
         PreparedStatement ratingStmt = null;
         PreparedStatement componentInquiryStmt = null;
         long categoryId = project.getProjectCategory().getId();
-        // Only design/development/assembly will modify the project result table.
-        if (categoryId != 1 && categoryId != 2 && categoryId != 14) {
-            // design/development/assembly project need project_result
+
+        if (!isProjectResultCategory(categoryId)) {
             return;
         }
         LOG.log(Level.INFO, "Populating the project result table.");
