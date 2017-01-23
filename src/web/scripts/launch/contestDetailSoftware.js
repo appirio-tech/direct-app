@@ -3353,7 +3353,7 @@ function doCloseContest(winnerId) {
         success: function (jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
-                    showConfirmation("Success", "Challenge has been closed", "OK", function () {
+                    showConfirmation("Success", "The system will close the challenge shortly.", "OK", function () {
                         location.reload();
                     });
                 },

@@ -9189,7 +9189,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             for (com.topcoder.management.resource.Resource r : reviewers) {
                 this.projectServices.removeResource(r, String.valueOf(tcSubject.getUserId()));
             }
-            com.topcoder.management.resource.Resource reviewer = createReviewerResource(winnerId, contest.getId(),
+            com.topcoder.management.resource.Resource reviewer = createReviewerResource(tcSubject.getUserId(), contest.getId(),
                     reviewPhase.getId(), false, ProjectCategory.FIRST2FINISH.getName().equals(contest.getProjectCategory().getName()));
 
             reviewer = projectServices.updateResource(reviewer, String.valueOf(tcSubject.getUserId()));
