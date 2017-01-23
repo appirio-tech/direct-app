@@ -2336,7 +2336,7 @@ function validateFieldsPrizeSection() {
             validateCodePrizes(errors);
         }
 
-        if (phaseOpen) {
+        if (disablePrizeAdjustment()) {
             var newFirstPlacePrize = $('#swFirstPlace').val();
             var newDigitalRun = $('#swDigitalRun').val();
             if (checkNumber(newFirstPlacePrize)) {
@@ -2389,7 +2389,7 @@ function validateFieldsPrizeSection() {
         }
     }
 
-    if (isActiveContest) {
+    if (isActiveContest && !mainWidget.softwareCompetition.isPrivateProject()) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
             errors.push('The cost of active challenge should not be decreased.');
@@ -3353,7 +3353,7 @@ function doCloseContest(winnerId) {
         success: function (jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
-                    showConfirmation("Success", "Challenge has been closed", "OK", function () {
+                    showConfirmation("Success", "The system will close the challenge shortly.", "OK", function () {
                         location.reload();
                     });
                 },

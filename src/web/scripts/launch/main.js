@@ -971,6 +971,9 @@ function isContestSaved() {
    return (mainWidget.softwareCompetition.projectHeader.id > 0);
 }
 
+function disablePrizeAdjustment() {
+    return (phaseOpen && !mainWidget.softwareCompetition.isPrivateProject())
+}
 
 /**
  * Handles cancel contest.
@@ -3101,7 +3104,6 @@ function validateCodePrizes(errors) {
                     newPrizes.push(value);
                 }
             }
-            ;
 
             if (newPrizes.length < originalPrizes.prizes.length) {
                 errors.push('The prizes can not be deleted');
