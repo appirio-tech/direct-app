@@ -9113,7 +9113,20 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     if (phase.getPhaseStatus().getId() != PhaseStatus.OPEN.getId()) {
                         needToUpdate = true;
                         phase.setPhaseStatus(PhaseStatus.OPEN);
-                        break;
+                    }
+                } else if (PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())){
+                    //check whether iterative/review open and winner has been choosen
+                    //which mean challenge has been close
+                    if (phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId()) {
+                        Submission[] submissions = uploadManager.getProjectSubmissions(contest.getId());
+                        for (Submission submission : submissions){
+                            if(submission.getPlacement() != null && submission.getPlacement() == 1L){
+                                logger.error("Challenge has been closed");
+                                throw new ContestServiceException("Winner for this challenge has been selected or " +
+                                "challenge has been closed before");
+                            }
+                        }
                     }
                 }
             }
@@ -9139,7 +9152,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     Date currentDate = new Date();
                     //length 1 hour
                     long length = 60 * MINUTE_IN_MILIS;
-                    //submision start 3h before
+                    //reg start 3h before
                     Date regStartDate = new Date(currentDate.getTime() - 180 * MINUTE_IN_MILIS);
                     //submision start 2h before
                     Date submissionStartDate = new Date(currentDate.getTime() - 120 * MINUTE_IN_MILIS);
@@ -9231,8 +9244,33 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         logger.debug("Entering #cancelSoftwareContestByUser");
         try {
             Project contest = projectServices.getProject(projectId);
+            com.topcoder.project.phases.Project projectPhases = projectServices.getPhases(contest.getId());
+            com.topcoder.project.phases.Phase[] phases = projectPhases.getAllPhases();
+
+            //check whether iterative/review open and winner has been choosen
+            //which mean challenge has been close before
+            for (com.topcoder.project.phases.Phase phase : phases) {
+                if (PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())){
+                    //check whether iterative/review open and winner has been choosen
+                    //which mean challenge has been close
+                    if (phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId()) {
+                        Submission[] submissions = uploadManager.getProjectSubmissions(contest.getId());
+                        for (Submission submission : submissions){
+                            if(submission.getPlacement() != null && submission.getPlacement() == 1L){
+                                logger.error("Challenge has been closed");
+                                throw new ContestServiceException("Can't  cancel this challenge because winner " +
+                                            "for this challenge has been selected or challenge has been closed before");
+                            }
+                        }
+                    }
+                }
+            }
+
             contest.setProjectStatus(ProjectStatus.CANCELLED_CLIENT_REQUEST);
             projectManager.updateProject(contest, "cancel-client request", String.valueOf(tcSubject.getUserId()));
+        } catch (ContestServiceException e) {
+            throw  e;
         } catch (Exception e) {
             logger.error("Failed to update challenge");
             throw new ContestServiceException("Failed to update challenge", e);
