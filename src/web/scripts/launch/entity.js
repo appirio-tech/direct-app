@@ -193,6 +193,7 @@ var STUDIO_IDEA_GENERATION = 22;
 
 var DRAFT_STATUS = "Draft";
 var ACTIVE_STATUS = "Active";
+var TASK_FLAG = "Task Flag";
 
 var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
@@ -304,7 +305,7 @@ com.topcoder.direct.SoftwareCompetition = function() {
 
 	this.registrants = null;
 
-	this.isPrivateProject = function(){return this.projectHeader.properties["Private Project Status"] == "1" ? true : false;}
+	this.isTask = function(){return this.projectHeader.properties[TASK_FLAG] == "1" ? true : false;}
 } 
 
 /**

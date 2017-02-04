@@ -185,9 +185,9 @@
           </div>
       </div>
 
-      <div class="row privateProjectRow hide">
+      <div class="row taskFlagRow hide">
           <label>Task</label>
-          <input type="checkbox" name="privateProject" title="Is this challenge private?">
+          <input type="checkbox" name="taskFlag" title="Is this challenge private?">
       </div>
 
       <div class="row preRegisterUsersRow hide">

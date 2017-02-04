@@ -31,8 +31,8 @@ public class CancelContestAction extends ContestAction {
         if (!AuthorizationProvider.isUserGrantedWriteAccessToProject(currentUser, contest.getTcDirectProjectId())) {
             throw new Exception("You don't have access to this resource");
         }
-        if (contest.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null &&
-                contest.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
+        if (contest.getProperty(ProjectPropertyType.TASK_FLAG) != null &&
+                "1".equals(contest.getProperty(ProjectPropertyType.TASK_FLAG))) {
             contestServiceFacade.cancelSoftwareContestByUser(currentUser, getProjectId());
         } else {
             throw new Exception("Only for private challenge");

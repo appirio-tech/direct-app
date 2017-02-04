@@ -1152,7 +1152,7 @@ function initContest(contestJson) {
         if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
             $(".edit_prize").parent().show();
-            if (contestJson.properties["Private Project Status"] == "1"){
+            if (contestJson.properties[TASK_FLAG] == "1"){
                 $(".edit_round").show();
                 $('#roundEdit').show();
                 $(".edit_prize").show();
@@ -1174,10 +1174,10 @@ function initContest(contestJson) {
     if(contestJson.isReviewPhaseClosed) {
         $(".edit_prize").hide();
         $(".edit_round").hide();
-        $(".privateCmd").hide();
+        $(".taskCmd").hide();
     }else if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS &&
-    contestJson.properties["Private Project Status"] == "1"){
-        $(".privateCmd").show();
+    contestJson.properties[TASK_FLAG] == "1"){
+        $(".taskCmd").show();
     }
 
 
@@ -1242,34 +1242,34 @@ function populateTypeSection() {
 	}
 
     if (isF2F() || isDesignF2F()) {
-        var privateProject = p["Private Project Status"];
+        var taskFlag = p[TASK_FLAG];
         var registrants = [];
         for (var i=0; i < mainWidget.softwareCompetition.registrants.length; i++) {
             registrants.push(mainWidget.softwareCompetition.registrants[i]["handle"]);
         }
         var preRegisterUsers = registrants.join(",");
 
-        $(".privateProjectRow").show();
-        $("#privateProjectEditDiv").show();
-        if (privateProject === "1") {
-            $("#rPrivateProject").text("Yes");
-            $("#privateProject").attr("checked", "checked");
+        $(".taskFlagRow").show();
+        $("#taskFlagEditDiv").show();
+        if (taskFlag === "1") {
+            $("#rTaskFlag").text("Yes");
+            $("#taskFlag").attr("checked", "checked");
             $(".preRegisterUsersDiv").show();
             $("#preRegisterUsersEditDiv").show();
             $("#rPreRegisterUsers").text(preRegisterUsers);
             $("#preRegisterUsers").val(preRegisterUsers);
         }else{
-            $("#rPrivateProject").text("No");
-            $("#privateProject").attr("checked", false);
+            $("#rTaskFlag").text("No");
+            $("#taskFlag").attr("checked", false);
             $(".preRegisterUsersDiv").hide();
             $("#preRegisterUsersEditDiv").hide();
         }
         if (mainWidget.softwareCompetition.projectHeader.projectStatus.name == ACTIVE_STATUS) {
-            $("#privateProject").attr("disabled", "true");
+            $("#taskFlag").attr("disabled", "true");
         }
     } else {
-        $(".privateProjectRow").hide();
-        $("#privateProjectEditDiv").hide();
+        $(".taskFlagRow").hide();
+        $("#taskFlagEditDiv").hide();
         $("#preRegisterUsersEditDiv").hide();
     }
 
@@ -2388,7 +2388,7 @@ function validateFieldsPrizeSection() {
         }
     }
 
-    if (isActiveContest && !mainWidget.softwareCompetition.isPrivateProject()) {
+    if (isActiveContest && !mainWidget.softwareCompetition.isTask()) {
         var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
         if (totalCostWithoutAdminFee < preCost) {
             errors.push('The cost of active challenge should not be decreased.');
@@ -3117,8 +3117,8 @@ function handleActivationResultEdit(jsonResult) {
             canEditMultiRound = false;
             $('#resubmit').hide();
             $(".activateButton").hide();
-            if (mainWidget.softwareCompetition.isPrivateProject()) {
-                $(".privateCmd").show();
+            if (mainWidget.softwareCompetition.isTask()) {
+                $(".taskCmd").show();
             }
             $("#timelineModule .heading .status").removeClass('draft');
             $("#timelineModule .heading .status").addClass(result.projectStatus.name.toLowerCase());
@@ -3341,7 +3341,7 @@ function setupReviewerDropdown(challengeTypeId, directProjectId) {
 }
 
 function doCloseContest(winnerId) {
-    var request = {"projectId": mainWidget.softwareCompetition.projectHeader.id , "winner": parseInt(winnerId)};
+    var request = {"projectId": mainWidget.softwareCompetition.projectHeader.id , "winnerId": parseInt(winnerId)};
     $.ajax({
         type: 'POST',
         url:  ctx+"/contest/close",
@@ -3353,7 +3353,7 @@ function doCloseContest(winnerId) {
             handleJsonResult(jsonResult,
                 function(result) {
                     showConfirmation("Success", "The system will close the challenge shortly.", "OK", function () {
-                        $(".privateCmd").hide();
+                        $(".taskCmd").hide();
                         closeModal();
                     });
                 },

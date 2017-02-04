@@ -41,7 +41,7 @@ import java.io.Serializable;
  *
  * <p>
  *     Version 1.2.6 (Provide Way To Pre_register members When Launching Challenge)
- *     - Add property {@link #PRIVATE_PROJECT}
+ *     - Add property {@link #TASK_FLAG}
  * </p>
  *
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
@@ -360,11 +360,11 @@ public class ProjectPropertyType implements Serializable {
     public static final String FORUM_TYPE = "Forum Type";
 
     /**
-     *  Represent "Private Project Status" project property type
+     *  Represent "Task Flag" project property type
      *
      *  @since 1.2.6
      */
-    public static final String PRIVATE_PROJECT = "Private Project Status";
+    public static final String TASK_FLAG = "Task Flag";
 
     /**
      * Represents the id of this instance. Only values greater than zero is

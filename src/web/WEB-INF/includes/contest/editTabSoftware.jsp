@@ -145,9 +145,9 @@
             </tr>
             <tr></tr>
 
-            <tr class="privateProjectRow hide">
+            <tr class="taskFlagRow hide">
                 <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rTaskFlag"></span></strong></td>
             </tr>
             <tr></tr>
             <tr class="preRegisterUsersDiv hide">
@@ -312,9 +312,9 @@
               <div class="clearFix"></div>
           </div>
             <br />
-          <div id="privateProjectEditDiv" class="hide">
+          <div id="taskFlagEditDiv" class="hide">
               <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></span>
-                <input type="checkbox"  name="privateProject" id="privateProject"/>
+                <input type="checkbox"  name="taskFlag" id="taskFlag"/>
           </div>
           <br />
           <div id="preRegisterUsersEditDiv" class="hide">

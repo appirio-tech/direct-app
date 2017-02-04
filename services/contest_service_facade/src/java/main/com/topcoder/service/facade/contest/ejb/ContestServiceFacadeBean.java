@@ -3681,7 +3681,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
             }
 
-            if (isPrivateProject(contest)) {
+            if (isTask(contest)) {
                 // not rate for private
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
             }
@@ -4509,7 +4509,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
 				}
 
-                if (isPrivateProject(contest)) {
+                if (isTask(contest)) {
                     contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
                 }
 
@@ -9066,8 +9066,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @return True if project if private
      * @since 3.4
      */
-    private boolean isPrivateProject(SoftwareCompetition contest){
-        return contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && "1".equals(contest.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT));
+    private boolean isTask(SoftwareCompetition contest){
+        return contest.getProjectHeader().getProperty(ProjectPropertyType.TASK_FLAG) != null && "1".equals(contest.getProjectHeader().getProperty(ProjectPropertyType.TASK_FLAG));
     }
 
     /**

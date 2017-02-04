@@ -527,7 +527,7 @@ $(document).ready(function() {
     swUploader.submit();
   });
 
-    $("input[name=privateProject]").click(function(){
+    $("input[name=taskFlag]").click(function(){
         if ($(this).attr("checked") === true) {
             $(".preRegisterUsersRow").show();
             $("#preRegisterUsersEditDiv").show();
@@ -972,7 +972,7 @@ function isContestSaved() {
 }
 
 function disablePrizeAdjustment() {
-    return (phaseOpen && !mainWidget.softwareCompetition.isPrivateProject())
+    return (phaseOpen && !mainWidget.softwareCompetition.isTask())
 }
 
 /**
@@ -1003,16 +1003,16 @@ function saveAsDraftRequest() {
     }
 
     if (isF2F() || isDesignF2F()) {
-        if ($("input[name=privateProject]:checked").length > 0){
-            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
-            if (mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] ==
+        if ($("input[name=taskFlag]:checked").length > 0){
+            mainWidget.softwareCompetition.projectHeader.properties[TASK_FLAG] = "1";
+            if (mainWidget.softwareCompetition.projectHeader.properties[TASK_FLAG] ==
                 $("input[name=preRegisterUsers]").val().trim()){
                 mainWidget.softwareCompetition.preRegisterUsers = "";
             }else{
                 mainWidget.softwareCompetition.preRegisterUsers = $("input[name=preRegisterUsers]").val();
             }
         }else{
-            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
+            mainWidget.softwareCompetition.projectHeader.properties[TASK_FLAG] = "0";
             mainWidget.softwareCompetition.preRegisterUsers = "";
         }
     }
@@ -1290,7 +1290,7 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
           modalClose();
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.isTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else {
@@ -1305,7 +1305,7 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
             }
         } else {
           modalClose();
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.isTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else {
@@ -1341,7 +1341,7 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if (mainWidget.softwareCompetition.projectHeader.id < 0) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.isTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else {
@@ -1355,7 +1355,7 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
             });
             }
         } else {
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.isTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else{
@@ -1390,7 +1390,7 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.iaTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else{
@@ -1404,7 +1404,7 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
                 });
             }
         } else {
-            if (mainWidget.softwareCompetition.isPrivateProject()){
+            if (mainWidget.softwareCompetition.isTask()){
                 if (result.failedRegisterUser != null && result.failedRegisterUser.length > 0) {
                     handleFailedRegsiterUsers(result.failedRegisterUser, result.projectId);
                 }else{

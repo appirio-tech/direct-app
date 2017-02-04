@@ -22,7 +22,7 @@ public class CloseContestAction extends ContestAction {
     /**
      * User id of registrant that is been choose as thw winner
      */
-    private long winner;
+    private long winnerId;
 
     /**
      * <p>Execute the action</p>
@@ -39,30 +39,30 @@ public class CloseContestAction extends ContestAction {
             throw new Exception("You don't have access to this resource");
         }
 
-        if (contest.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null &&
-                contest.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1")) {
-            contestServiceFacade.closeSoftwareContest(currentUser, getProjectId(), winner);
+        if (contest.getProperty(ProjectPropertyType.TASK_FLAG) != null &&
+                "1".equals(contest.getProperty(ProjectPropertyType.TASK_FLAG))) {
+            contestServiceFacade.closeSoftwareContest(currentUser, getProjectId(), winnerId);
         } else {
             throw new Exception("Only for private challenge");
         }
     }
 
     /**
-     * Getter for {@link #winner}
+     * Getter for {@link #winnerId}
      *
-     * @return winner
+     * @return winnerId
      */
-    public long getWinner() {
-        return winner;
+    public long getWinnerId() {
+        return winnerId;
     }
 
     /**
-     * Setter for {@link #winner}
+     * Setter for {@link #winnerId}
      *
-     * @param winner
+     * @param winnerId
      */
-    public void setWinner(long winner) {
-        this.winner = winner;
+    public void setWinnerId(long winnerId) {
+        this.winnerId = winnerId;
     }
 
 

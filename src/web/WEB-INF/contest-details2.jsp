@@ -103,8 +103,8 @@
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:if test="marathon">icon-marathon</s:if><s:else><s:property value="viewData.contest.contestType.letter"/></s:else>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>  <img id="contestLoading" style="display:none" src="/images/dots-white.gif"/>
-                            <a href="javascript:forceCancelContest();" class="button6 preview privateCmd hide"><span class="left"><span class="right">CANCEL</span></span></a>
-                            <a href="javascript:closeContest();" class="button6 preview privateCmd hide"><span class="left"><span class="right">CLOSE</span></span></a>
+                            <a href="javascript:forceCancelContest();" class="button6 preview taskCmd hide"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <a href="javascript:closeContest();" class="button6 preview taskCmd hide"><span class="left"><span class="right">CLOSE</span></span></a>
                             <a href="javascript:activateContestEdit();" class="activateButton" style="float:right;display: none"></a>
                         </h2>
 

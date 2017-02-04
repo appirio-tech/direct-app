@@ -1053,8 +1053,8 @@ function onContestTypeChange() {
     }
 
     if(typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
-        $(".privateProjectRow").show();
-        if ($("input[name=privateProject]").attr("checked") === true) {
+        $(".taskFlagRow").show();
+        if ($("input[name=taskFlag]").attr("checked") === true) {
             $(".preRegisterUsersRow").show();
             $("#preRegisterUsersEditDiv").show();
         }else{
@@ -1062,7 +1062,7 @@ function onContestTypeChange() {
             $("#preRegisterUsersEditDiv").hide();
         }
     } else {
-        $(".privateProjectRow").hide();
+        $(".taskFlagRow").hide();
         $(".preRegisterUsersRow").hide();
     }
 

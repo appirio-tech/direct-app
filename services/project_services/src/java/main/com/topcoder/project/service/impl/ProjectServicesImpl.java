@@ -2081,7 +2081,7 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId() && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
-                        if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && "1".equals(projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT))) {
+                        if (projectHeader.getProperty(ProjectPropertyType.TASK_FLAG) != null && "1".equals(projectHeader.getProperty(ProjectPropertyType.TASK_FLAG))) {
                             if (p.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
                                 Date now = new Date();
                                 p.setFixedStartDate(now);
@@ -5169,7 +5169,7 @@ public class ProjectServicesImpl implements ProjectServices {
             }
 
             if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
-                if (projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT) != null && projectHeader.getProperty(ProjectPropertyType.PRIVATE_PROJECT).equals("1") && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
+                if (projectHeader.getProperty(ProjectPropertyType.TASK_FLAG) != null && projectHeader.getProperty(ProjectPropertyType.TASK_FLAG).equals("1") && projectHeader.getProjectStatus().getId() == ProjectStatus.DRAFT.getId()) {
                     p.setPhaseStatus(PhaseStatus.CLOSED);
                     Date now = new Date();
                     p.setFixedStartDate(now);

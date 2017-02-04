@@ -221,17 +221,6 @@
                     </select>
                 </div>
             </div>
-
-             <br /><br />
-            <div id="privateProjectEditDiv">
-                <span class="name fixWidthName"><strong>Task</strong></span>
-                <input type="checkbox"  name="privateProject" id="privateProject"/>
-            </div>
-            <br />
-            <div id="preRegisterUsersEditDiv">
-                <span class="name fixWidthName"><strong>Assign Member(s):</strong></span>
-                <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
-            </div>
             <br /><br />
 
                 <span class="name fixWidthName"><strong>Created By</strong></span>
