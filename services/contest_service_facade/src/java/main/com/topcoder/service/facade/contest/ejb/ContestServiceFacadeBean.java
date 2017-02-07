@@ -9106,12 +9106,16 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             com.topcoder.project.phases.Project projectPhases = projectServices.getPhases(contest.getId());
             com.topcoder.project.phases.Phase[] phases = projectPhases.getAllPhases();
-            boolean needToUpdate = false;
+            boolean phaseNeedToUpdate = false;
+            boolean phaseHasClosed = false;
             //make sure we have submission phase is opened if not update it
             for (com.topcoder.project.phases.Phase phase : phases) {
                 if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
                     if (phase.getPhaseStatus().getId() != PhaseStatus.OPEN.getId()) {
-                        needToUpdate = true;
+                        phaseNeedToUpdate = true;
+                        if (phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId()){
+                            phaseHasClosed = true;
+                        }
                         phase.setPhaseStatus(PhaseStatus.OPEN);
                     }
                 } else if (PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
@@ -9130,7 +9134,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     }
                 }
             }
-            if (needToUpdate) {
+            if (phaseNeedToUpdate) {
                 projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
                 projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
             }
@@ -9145,42 +9149,28 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             com.topcoder.project.phases.Phase submissionPhase = null;
             com.topcoder.project.phases.Phase reviewPhase = null;
             for (com.topcoder.project.phases.Phase phase : phases) {
-                if (PROJECT_REGISTRATION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
-                        PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
-                        PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
+                if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+                    if (phaseNeedToUpdate && !phaseHasClosed) {
+                        //submission is scheduled
+                        phase.setActualStartDate(new Date());
+                        phase.setActualEndDate(new Date());
+                    } else if (!phaseNeedToUpdate){
+                        //phase already open
+                        phase.setActualEndDate(new Date());
+                    }
+                    phase.setPhaseStatus(PhaseStatus.CLOSED);
+                    submissionPhase = phase;
+                } else if (PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName()) ||
                         PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())) {
-                    Date currentDate = new Date();
-                    //length 1 hour
-                    long length = 60 * MINUTE_IN_MILIS;
-                    //reg start 3h before
-                    Date regStartDate = new Date(currentDate.getTime() - 180 * MINUTE_IN_MILIS);
-                    //submision start 2h before
-                    Date submissionStartDate = new Date(currentDate.getTime() - 120 * MINUTE_IN_MILIS);
-                    //submission end / review start 1h before
-                    Date submissionEndDate = new Date(currentDate.getTime() - 60 * MINUTE_IN_MILIS);
-
-                    if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
-                        phase.setScheduledStartDate(submissionStartDate);
-                        phase.setActualStartDate(submissionStartDate);
-                        phase.setScheduledEndDate(submissionEndDate);
-                        phase.setActualEndDate(submissionEndDate);
-                        phase.setLength(length);
-                        phase.setPhaseStatus(PhaseStatus.CLOSED);
-                        submissionPhase = phase;
-                    } else if (PROJECT_REGISTRATION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
-                        phase.setScheduledStartDate(regStartDate);
-                        phase.setFixedStartDate(regStartDate);
-                        phase.setActualStartDate(regStartDate);
-                        phase.setScheduledEndDate(submissionEndDate);
-                        phase.setActualEndDate(submissionEndDate);
-                        phase.setLength(2 * length);
-                        phase.setPhaseStatus(PhaseStatus.CLOSED);
-                    } else {
-                        phase.setScheduledStartDate(submissionEndDate);
-                        phase.setActualStartDate(submissionEndDate);
-                        phase.setScheduledEndDate(currentDate);
-                        phase.setLength(length);
+                    if (phase.getPhaseStatus().getId() == PhaseStatus.SCHEDULED.getId()) {
+                        phase.setActualStartDate(new Date());
+                        phase.setScheduledEndDate(null);
+                        phase.setScheduledStartDate(phase.calcStartDate());
+                        phase.setScheduledEndDate(phase.calcEndDate());
                         phase.setPhaseStatus(PhaseStatus.OPEN);
+                    }
+                    if (phase.getPhaseStatus().getId() != PhaseStatus.CLOSED.getId()) {
+                        //skiping closed iterative review
                         reviewPhase = phase;
                     }
                 }
