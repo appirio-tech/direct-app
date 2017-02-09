@@ -9187,8 +9187,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
 
             //create reviewer, remove if there is
+            long roleId = contest.getProjectCategory().getId() == ProjectCategory.FIRST2FINISH.getId() ?
+                    ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID : ResourceRole.RESOURCE_ROLE_REVIEWER_ID;
+
             com.topcoder.management.resource.Resource[] reviewers = this.projectServices.searchResources(contest.getId(),
-                    ResourceRole.RESOURCE_ROLE_ITERATIVE_REVIEWER_ID);
+                    roleId);
             for (com.topcoder.management.resource.Resource r : reviewers) {
                 this.projectServices.removeResource(r, String.valueOf(tcSubject.getUserId()));
             }
