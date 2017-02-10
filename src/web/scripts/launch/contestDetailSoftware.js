@@ -1266,7 +1266,6 @@ function populateTypeSection() {
         }
         if (mainWidget.softwareCompetition.projectHeader.projectStatus.name == ACTIVE_STATUS) {
             $("#privateProject").attr("disabled", "true");
-            $("#preRegisterUsers").attr("disabled", "true");
         }
     } else {
         $(".privateProjectRow").hide();
@@ -3354,7 +3353,8 @@ function doCloseContest(winnerId) {
             handleJsonResult(jsonResult,
                 function(result) {
                     showConfirmation("Success", "The system will close the challenge shortly.", "OK", function () {
-                        location.reload();
+                        $(".privateCmd").hide();
+                        closeModal();
                     });
                 },
                 function(errorMessage) {
