@@ -82,9 +82,20 @@ function updateReviewSoftware() {
    $('#rswBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
    
    $('#rswStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
-   
-   $('#rswDetailedRequirements').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
-   $('#rswSoftwareGuidelines').html(mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines);
+
+   //Setting preview fields data based on the markdown flag
+   var projSpec = mainWidget.softwareCompetition.projectHeader.projectSpec;
+   var previewPlaceholderIds = ['rswDetailedRequirements', 'rswSoftwareGuidelines'];
+   var origContent = [projSpec.detailedRequirements, projSpec.finalSubmissionGuidelines];
+   var markdownFlags = [projSpec.markdownUsedForDetailedRequirements, projSpec.markdownUsedForSubmissionGuidelines];
+
+   $.each(previewPlaceholderIds, function(i, val) {
+       if (markdownFlags[i]) {
+           $('#'+val).html(markdown.toHTML(origContent[i]));
+       } else {
+            $('#'+val).html(origContent[i]);
+       }
+   });
    
    $('#rswFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));
    $('#rswSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));

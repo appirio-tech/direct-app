@@ -39,7 +39,12 @@
 
   <!-- Contest Description -->
 	<div class="description">    
-        <h3><span class="icon">Detailed Requirements</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
+        <h3><span class="icon">Detailed Requirements</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>-->
+            <span class="markdown_mode">
+                <input type="checkbox" id="swDetailMarkdownStyle">
+                <span class="lcc"><label for="swDetailMarkdownStyle">Markdown Style</label></span>
+            </span>
+        </h3>
         
         <div class="textarea">
             <textarea id="swDetailedRequirements" rows="15" cols="80"></textarea>
@@ -50,7 +55,12 @@
     
   <!-- guidelines -->
 	<div class="guidelines">    
-        <h3><span class="icon">Submission Guidelines</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>--></h3>
+        <h3><span class="icon">Submission Guidelines</span><!--<a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a>-->
+            <span class="markdown_mode">
+                <input type="checkbox" id="swGuidelinesMarkdownStyle">
+                <span class="lcc"><label for="swGuidelinesMarkdownStyle">Markdown Style</label></span>
+            </span>
+        </h3>
         
         <div class="textarea">
             <textarea id="swGuidelines" rows="15" cols="80"></textarea>

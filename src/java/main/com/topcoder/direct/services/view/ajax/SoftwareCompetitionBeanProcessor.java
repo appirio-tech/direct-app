@@ -264,7 +264,11 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // spec
         if (!DirectUtils.isStudio(bean)) {
         	result.put("detailedRequirements", project.getProjectSpec().getDetailedRequirements());
+            //whether markdown used to specify detailed requirements
+            result.put("markdownUsedForDetailedRequirements", project.getProjectSpec().isMarkdownUsedForDetailedRequirements());
             result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
+            //whether markdown used to specify submission guidelines
+            result.put("markdownUsedForSubmissionGuidelines", project.getProjectSpec().isMarkdownUsedForSubmissionGuidelines());
             result.put("privateDescription", project.getProjectSpec().getPrivateDescription());
         }
 

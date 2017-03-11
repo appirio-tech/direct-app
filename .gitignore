@@ -50,4 +50,5 @@ stacktrace.log
 *.rej
 *.diff
 .idea
-
+*/.idea
+.idea

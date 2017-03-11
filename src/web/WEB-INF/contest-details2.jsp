@@ -62,6 +62,7 @@
     <script type="text/javascript" src="/scripts/moment.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+    <script type="text/javascript" src="/scripts/launch/editorUtil.js"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>

@@ -508,6 +508,11 @@ $(document).ready(function() {
     CKEDITOR.loadTemplates(DRTemplatesList);
     CKEDITOR.loadTemplates(StudioContestSpecTemplates);
 
+    //initialize blank CM editors
+    var toggleableEditorIds = ['swDetailedRequirements', 'swGuidelines'];
+    var checkboxIds = ['swDetailMarkdownStyle', 'swGuidelinesMarkdownStyle'];
+    initBlankCodeMirrorEditors(toggleableEditorIds, checkboxIds);
+
     // choose contest type
     $('#contestTypes').bind("change", function() {
         onContestTypeChange();
@@ -812,11 +817,23 @@ function onContestTypeChange() {
         if (swDetailedRequirements) {
             swDetailedRequirements.destroy(true);
         }
+        //on callback needed so that editor is toggled only after template is loaded and
+        //CKEditor is ready
         CKEDITOR.replace('swGuidelines', {
+            on : {
+                instanceReady: function(evt) {
+                    toggleEditorMode('swGuidelines', 'swGuidelinesMarkdownStyle');
+                }
+            },
             templates: getSGTemplatesName(typeId),
             templates_files: SGTemplatesList
         });
         CKEDITOR.replace('swDetailedRequirements', {
+            on : {
+                instanceReady: function(evt) {
+                    toggleEditorMode('swDetailedRequirements', 'swDetailMarkdownStyle');
+                }
+            },
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList
         });
