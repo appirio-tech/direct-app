@@ -158,6 +158,12 @@
           <a href="javascript:;" target="_blank" class="addMilestone hide">Manage Project Milestones</a>
       </div>
 
+      <!-- product -->
+      <div class="row">
+          <label>Product :</label>
+          <input id="productName" name="productName" type="text" class="text"/>
+      </div>
+
       <!-- Copilot for Software Contest -->
       <div class="row">
           <label>Copilot :</label>

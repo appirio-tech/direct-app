@@ -1045,6 +1045,11 @@ public class SaveDraftContestAction extends ContestAction {
                 }
             }
         }
+        if ((softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_TYPE) == null ||
+                "".equals(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_TYPE))) &&
+                softwareCompetition.getProjectHeader().getProperties().containsKey(ProjectPropertyType.PRODUCT_TYPE)){
+            softwareCompetition.getProjectHeader().getProperties().remove(ProjectPropertyType.PRODUCT_TYPE);
+        }
     }
 
     /**

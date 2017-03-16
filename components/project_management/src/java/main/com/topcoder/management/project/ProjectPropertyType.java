@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -44,8 +44,13 @@ import java.io.Serializable;
  *     - Add property {@link #PRIVATE_PROJECT}
  * </p>
  *
+ * <p>
+ *     Version 1.2.7 (TOPCODER DIRECT - ADD OPTIONAL CHALLENGE PROPERTY - PRODUCT)
+ *     - Add property {@link #PRODUCT_TYPE}
+ * </p>
+ *
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
- * @version 1.2.6
+ * @version 1.2.7
  * @since 1.0
  */
 public class ProjectPropertyType implements Serializable {
@@ -365,6 +370,13 @@ public class ProjectPropertyType implements Serializable {
      *  @since 1.2.6
      */
     public static final String PRIVATE_PROJECT = "Private Project Status";
+
+    /**
+     *  Represent "Product Type" project property type
+     *
+     *  @since 1.2.7
+     */
+    public static final String PRODUCT_TYPE = "Product Type";
 
     /**
      * Represents the id of this instance. Only values greater than zero is
