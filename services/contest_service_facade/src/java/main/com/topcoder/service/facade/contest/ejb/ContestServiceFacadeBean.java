@@ -9093,8 +9093,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             com.topcoder.management.resource.Resource[] regs = this.projectServices.searchResources(contest.getId(),
                     ResourceRole.RESOURCE_ROLE_SUBMITTER);
             boolean notRegistrant = true;
+            com.topcoder.management.resource.Resource winnerResource = null;
             for (com.topcoder.management.resource.Resource r : regs) {
                 if (r.getUserId() == winnerId) {
+                    winnerResource = r;
                     notRegistrant = false;
                     break;
                 }
@@ -9139,11 +9141,21 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
             }
 
-            //upload dummy submission for winner
-            new FileOutputStream(mockSubmissionFilePath + mockSubmissionFileName, false).close();
-            DataHandler dataHandler = new DataHandler(new FileDataSource(mockSubmissionFilePath +
-                    mockSubmissionFileName));
-            long submissionId = uploadSubmission(winnerId, contest.getId(), mockSubmissionFileName, dataHandler);
+            //set winning submission
+            Submission winningSubmission = null;
+            Submission[] submissions = uploadManager.getUserSubmissionsForProject(contest.getId(), winnerResource.getId());
+
+            if (submissions.length > 0){
+                //set first submission as winning
+                winningSubmission = submissions[0];
+            } else {
+                //upload dummy submission if winner doesn't upload submission yet
+                new FileOutputStream(mockSubmissionFilePath + mockSubmissionFileName, false).close();
+                DataHandler dataHandler = new DataHandler(new FileDataSource(mockSubmissionFilePath +
+                        mockSubmissionFileName));
+                long submissionId = uploadSubmission(winnerId, contest.getId(), mockSubmissionFileName, dataHandler);
+                winningSubmission = uploadManager.getSubmission(submissionId);
+            }
 
             //close submission and review phase
             com.topcoder.project.phases.Phase submissionPhase = null;
@@ -9178,13 +9190,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
             projectServices.updatePhases(projectPhases, String.valueOf(tcSubject.getUserId()));
 
+
             //set submission score and upload phase
-            Submission submission = uploadManager.getSubmission(submissionId);
-            submission.setInitialScore(100.0);
-            submission.setFinalScore(100.0);
-            submission.setPlacement(1L);
-            submission.setPrize(contest.getPrizes().get(0));
-            uploadManager.updateSubmission(submission, String.valueOf(tcSubject.getUserId()));
+            winningSubmission.setInitialScore(100.0);
+            winningSubmission.setFinalScore(100.0);
+            winningSubmission.setPlacement(1L);
+            winningSubmission.setPrize(contest.getPrizes().get(0));
+            uploadManager.updateSubmission(winningSubmission, String.valueOf(tcSubject.getUserId()));
 
             //create reviewer, remove if there is
             long roleId = contest.getProjectCategory().getId() == ProjectCategory.FIRST2FINISH.getId() ?
@@ -9195,16 +9207,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             for (com.topcoder.management.resource.Resource r : reviewers) {
                 this.projectServices.removeResource(r, String.valueOf(tcSubject.getUserId()));
             }
-            com.topcoder.management.resource.Resource reviewer = createReviewerResource(tcSubject.getUserId(), contest.getId(),
-                    reviewPhase.getId(), false, ProjectCategory.FIRST2FINISH.getName().equals(contest.getProjectCategory().getName()));
+            com.topcoder.management.resource.Resource reviewer = createReviewerResource(tcSubject.getUserId(),
+                    contest.getId(), reviewPhase.getId(), false,
+                    ProjectCategory.FIRST2FINISH.getName().equals(contest.getProjectCategory().getName()));
 
             reviewer = projectServices.updateResource(reviewer, String.valueOf(tcSubject.getUserId()));
 
             //create review
-            Scorecard scorecard = projectServices.getScorecard(Long.parseLong((String) reviewPhase.getAttribute(SCORECARD_ID_ATTRIBUTE)));
-            createReview(reviewer, submissionId, 1, scorecard, reviewPhase.getId());
+            Scorecard scorecard = projectServices.getScorecard(Long.parseLong(
+                    (String) reviewPhase.getAttribute(SCORECARD_ID_ATTRIBUTE)));
+            createReview(reviewer, winningSubmission.getId(), 1, scorecard, reviewPhase.getId());
 
-            Upload upload = submission.getUpload();
+            Upload upload = winningSubmission.getUpload();
             upload.setProjectPhase(submissionPhase.getId());
             uploadManager.updateUpload(upload, String.valueOf(tcSubject.getUserId()));
         } catch (IOException e) {
