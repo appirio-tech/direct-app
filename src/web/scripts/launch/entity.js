@@ -194,6 +194,8 @@ var STUDIO_IDEA_GENERATION = 22;
 var DRAFT_STATUS = "Draft";
 var ACTIVE_STATUS = "Active";
 
+var PRODUCT_TYPE ="Product Type"	;
+
 var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
 	{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',                    label:'Software Specification',             typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},

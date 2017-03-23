@@ -1040,6 +1040,12 @@ function saveAsDraftRequest() {
         mainWidget.softwareCompetition.projectHeader.properties['Review Type'] = reviewType;
     }
 
+    if ($("#productName").val().trim().length > 0) {
+        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_TYPE] = $("#productName").val().trim();
+    }else{
+        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_TYPE] = "";
+    }
+
 
     var request;
 

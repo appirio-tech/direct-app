@@ -88,6 +88,11 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Product</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rProduct"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
@@ -206,7 +211,13 @@
                     </select>
                 </div>
             </div>
-            <br /><br />
+            <br /><br /><br />
+            <span class="name fixWidthName"><strong>Product</strong></span>
+                  <span class="value">
+                      <input type="text" class="bigin"  id="productName" />
+                      <span id="productNameText"></span>
+                  </span>
+            <br/><br/>
             <div id="copilotEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Copilot</strong></span>

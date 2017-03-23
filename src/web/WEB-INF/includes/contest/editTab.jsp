@@ -96,6 +96,7 @@
                 <td class="first_tab_type"><strong>Billing Account</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rBillingAccount"></span></strong></td>
             </tr>
+            <tr></tr>
 <%--
             <tr>
                 <td class="first_tab_type"><strong>Private Group</strong></td>
@@ -116,6 +117,11 @@
             <tr>
                 <td class="first_tab_type"><strong>Milestone</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Product</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rProduct"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -251,7 +257,13 @@
                         </select>
                     </div>
                 </div>
-                <br /> <br />
+                <br /> <br /><br />
+                <span class="name fixWidthName"><strong>Product</strong></span>
+                  <span class="value">
+                      <input type="text" class="bigin"  id="productName" />
+                      <span id="productNameText"></span>
+                  </span>
+                <br/><br/>
                  <!-- Review Scorecard -->
                  <div id="reviewScorecardDivEdit">
                  <br />
