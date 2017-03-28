@@ -1041,9 +1041,9 @@ function saveAsDraftRequest() {
     }
 
     if ($("#productName").val().trim().length > 0) {
-        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_TYPE] = $("#productName").val().trim();
+        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] = $("#productName").val().trim();
     }else{
-        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_TYPE] = "";
+        mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] = "";
     }
 
 
