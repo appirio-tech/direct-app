@@ -112,10 +112,8 @@ $(document).ready(function() {
 	  
 	  $("#swFileDescription, #fileDescription, #fileDescription2").bind('keydown keyup paste', limitFileDescriptionChars(200));
 
-      $("#newProjectDescription").bind('keydown keyup paste', limitFileDescriptionChars(2000));
+      $("#newProjectDescription").bind('keydown keyup paste', limitFileDescriptionChars(10000));
 });
-
-var invalidCharsRegExp = /[^a-zA-Z0-9\$!\(\)\[\]\'\"\-\.\,\/\+ ]+/mg;
 
 var DEFAULT_TIMEZONE = "America/New_York";
 
