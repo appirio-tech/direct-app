@@ -1045,10 +1045,10 @@ public class SaveDraftContestAction extends ContestAction {
                 }
             }
         }
-        if ((softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_TYPE) == null ||
-                "".equals(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_TYPE))) &&
-                softwareCompetition.getProjectHeader().getProperties().containsKey(ProjectPropertyType.PRODUCT_TYPE)){
-            softwareCompetition.getProjectHeader().getProperties().remove(ProjectPropertyType.PRODUCT_TYPE);
+        if ((softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_SKU) == null ||
+                "".equals(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_SKU))) &&
+                softwareCompetition.getProjectHeader().getProperties().containsKey(ProjectPropertyType.PRODUCT_SKU)){
+            softwareCompetition.getProjectHeader().getProperties().remove(ProjectPropertyType.PRODUCT_SKU);
         }
     }
 

@@ -46,7 +46,7 @@ import java.io.Serializable;
  *
  * <p>
  *     Version 1.2.7 (TOPCODER DIRECT - ADD OPTIONAL CHALLENGE PROPERTY - PRODUCT)
- *     - Add property {@link #PRODUCT_TYPE}
+ *     - Add property {@link #PRODUCT_SKU}
  * </p>
  *
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
@@ -372,11 +372,11 @@ public class ProjectPropertyType implements Serializable {
     public static final String PRIVATE_PROJECT = "Private Project Status";
 
     /**
-     *  Represent "Product Type" project property type
+     *  Represent "Product SKU" project property type
      *
      *  @since 1.2.7
      */
-    public static final String PRODUCT_TYPE = "Product Type";
+    public static final String PRODUCT_SKU = "Product SKU";
 
     /**
      * Represents the id of this instance. Only values greater than zero is
