@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -265,8 +265,16 @@ import java.util.*;
  *     <li>Updated {@link #executeAction()}</li>
  * </ul>
  * </p>
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, GreatKevin, Veve
- * @version 2.3
+ * 
+ * <p>
+ * Version 2.4 (TOPCODER DIRECT - SUPPORT CHALLENGES WITH ZERO PRIZE):
+ * <ul>
+ *     <li>Updated {@link #populateCompetition(SoftwareCompetition)} method to accept zero prize</li>
+ * </ul>
+ * </p>
+ * 
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER
+ * @version 2.4
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -964,7 +972,7 @@ public class SaveDraftContestAction extends ContestAction {
         List<Prize> newPrizes = new ArrayList<Prize>();
         if (prizes != null) {
             for (Prize prize : prizes) {
-                if (prize.getPrizeAmount() > 0) {
+                if (prize.getPrizeAmount() >= 0) {
                 	if (projectId > 0) {
                 		prize.setProjectId(projectId);
                 	} else {
@@ -1036,6 +1044,11 @@ public class SaveDraftContestAction extends ContestAction {
                             String.format("The admin fee value [%s] is not a valid number", adminFeeStrValue));
                 }
             }
+        }
+        if ((softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_SKU) == null ||
+                "".equals(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRODUCT_SKU))) &&
+                softwareCompetition.getProjectHeader().getProperties().containsKey(ProjectPropertyType.PRODUCT_SKU)){
+            softwareCompetition.getProjectHeader().getProperties().remove(ProjectPropertyType.PRODUCT_SKU);
         }
     }
 
