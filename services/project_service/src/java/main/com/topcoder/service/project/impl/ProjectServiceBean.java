@@ -2001,9 +2001,7 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
         }
 
         String description = projectData.getDescription();
-        if (null == description) {
-            throw logException(new IllegalArgumentFault("The description attribute of the project data can not be null."));
-        } else if (description.trim().length() > 10000) {
+        if (null != description && description.trim().length() > 10000) {
             throw logException(new IllegalArgumentFault("The description attribute of the project data cann't be more than 10000 characters."));
         }
         
