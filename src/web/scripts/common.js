@@ -130,9 +130,6 @@ function limitContestProjectNameChars(maxChars) {
         var textArea = $(this);
         var content = textArea.val();
         var invalid = false;
-        if (content.search(invalidCharsRegExp, '') > -1) {
-            invalid = true;
-        }
         if (content.length <= maxChars && !invalid) {
             ori = content;
         }
