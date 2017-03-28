@@ -1223,10 +1223,12 @@ function populateTypeSection() {
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//product
+    /*
     if (mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] != null){
         $("#rProduct").text(mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU]);
         $("#productName").val(mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU]);
     }
+    */
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
   
   loadReviewScorecardList(null);

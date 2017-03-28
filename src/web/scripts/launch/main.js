@@ -1039,13 +1039,13 @@ function saveAsDraftRequest() {
 
         mainWidget.softwareCompetition.projectHeader.properties['Review Type'] = reviewType;
     }
-
+/*
     if ($("#productName").val().trim().length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] = $("#productName").val().trim();
     }else{
         mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] = "";
     }
-
+*/
 
     var request;
 
