@@ -124,11 +124,13 @@
                 <td class="sec_tab_type"><strong>: <span id="rProduct"></span></strong></td>
             </tr>
             <tr></tr>
+<%--
             <tr>
                 <td class="first_tab_type"><strong>Copilot</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCopilots"></span></strong></td>
             </tr>
             <tr></tr>
+--%>
             <tr class="privateProjectRow hide">
                 <td class="first_tab_type" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPrivateProject"></span></strong></td>
@@ -258,12 +260,14 @@
                     </div>
                 </div>
                 <br /> <br /><br />
+ <%--
                 <span class="name fixWidthName"><strong>Product</strong></span>
                   <span class="value">
                       <input type="text" class="bigin"  id="productName" />
                       <span id="productNameText"></span>
                   </span>
                 <br/><br/>
+ --%>
                  <!-- Review Scorecard -->
                  <div id="reviewScorecardDivEdit">
                  <br />
