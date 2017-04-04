@@ -1222,7 +1222,13 @@ function populateTypeSection() {
 
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
-	//display
+	//product
+    /*
+    if (mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] != null){
+        $("#rProduct").text(mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU]);
+        $("#productName").val(mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU]);
+    }
+    */
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
   
   loadReviewScorecardList(null);
@@ -1513,7 +1519,7 @@ function validateFieldsTypeSection() {
     if (categoryId == SOFTWARE_CATEGORY_ID_F2F) {
         // set review scorecard.
         mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
-    } else {
+    } else if (categoryId != ALGORITHM_CATEGORY_ID_MARATHON){
         // set iterative review scorecard
         mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
     }

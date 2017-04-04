@@ -1996,17 +1996,13 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
             throw logException(new IllegalArgumentFault("The name attribute of the project data can not be null."));
         } else if (name.trim().length() == 0) {
             throw logException(new IllegalArgumentFault("The name attribute of the project data can not be empty."));
-        } else if (!Pattern.matches(NAME_PATTERN, name)) {
-            throw logException(new IllegalArgumentFault("The name attribute of the project data is not following pattern as - " + NAME_PATTERN));
+        } else if (name.trim().length() > 200) {
+            throw logException(new IllegalArgumentFault("The name attribute of the project data cannot be more than 200 characters."));
         }
 
         String description = projectData.getDescription();
-        if (null == description) {
-            throw logException(new IllegalArgumentFault("The description attribute of the project data can not be null."));
-        } else if (description.trim().length() == 0) {
-            throw logException(new IllegalArgumentFault("The description attribute of the project data can not be empty."));
-        } else if (!Pattern.matches(NAME_PATTERN, description)) {
-            throw logException(new IllegalArgumentFault("The description attribute of the project data is not following pattern as - " + NAME_PATTERN));
+        if (null != description && description.trim().length() > 10000) {
+            throw logException(new IllegalArgumentFault("The description attribute of the project data cann't be more than 10000 characters."));
         }
         
         //added in version 2.2
