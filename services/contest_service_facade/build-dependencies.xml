@@ -230,8 +230,8 @@
     <property name="tcwebcommon.jar" value="${tcs_libdir}/${tcwebcommon.jar.name}"/>
 
     <property name="aws-java.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
-    <property name="commons-io-2.2.jar" value="${ext_libdir}/struts/2.3.31/commons-io-2.2.jar"/>
-    <property name="commons-lang-2.4.jar" value="${ext_libdir}/struts/2.3.31/commons-lang-2.4.jar"/>
+    <property name="commons-io-2.2.jar" value="${ext_libdir}/struts/2.3.32/commons-io-2.2.jar"/>
+    <property name="commons-lang-2.4.jar" value="${ext_libdir}/struts/2.3.32/commons-lang-2.4.jar"/>
 
     <path id="component.tcs-dependencies">
         <pathelement location="${jboss_login_module.jar}"/>
