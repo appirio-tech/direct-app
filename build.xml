@@ -268,13 +268,13 @@
         <copy file="${freemarker-2.3.22.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${json-lib-2.3-jdk15.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ognl-3.0.19.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-convention-plugin-2.3.31.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-core-2.3.31.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-spring-plugin-2.3.31.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-json-plugin-2.3.31.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-convention-plugin-2.3.32.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-core-2.3.32.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-spring-plugin-2.3.32.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-json-plugin-2.3.32.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 		<copy file="${struts2-ssl-plugin-1.2.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-1.2.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${xwork-core-2.3.31.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${xwork-core-2.3.32.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss-cache-jdk50.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jgroups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ehcache.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
