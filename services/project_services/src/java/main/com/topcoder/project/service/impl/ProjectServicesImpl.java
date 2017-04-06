@@ -1940,9 +1940,15 @@ public class ProjectServicesImpl implements ProjectServices {
                         PhaseType.REGISTRATION_PHASE.getId(), PhaseType.REGISTRATION_PHASE.getId(), projectPhases.getStartDate(), projectPhases.getStartDate());
                 if (multiRoundEndDate != null) {
                     adjustPhaseForEndDate(PhaseType.CHECKPOINT_SUBMISSION_PHASE, newProjectPhases, multiRoundEndDate);
+                    if (isStudio) {
+                        adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, multiRoundEndDate);
+                    }
                 }
                 if (endDate != null) {
-                    adjustPhaseForEndDate(PhaseType.SUBMISSION_PHASE, newProjectPhases, endDate);
+                    long submissionDuration = adjustPhaseForEndDate(PhaseType.SUBMISSION_PHASE, newProjectPhases, endDate);
+                    if ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000)) {
+                        adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, endDate);
+                    }
                 }
                 setNewPhasesProperties(projectHeader, newProjectPhases, (multiRoundEndDate != null), isStudio);
 
@@ -2015,7 +2021,7 @@ public class ProjectServicesImpl implements ProjectServices {
                 }
                 phaseManager.fillDependencies(phasesMap, new long[]{projectPhases.getId()});
 
-                subRegDiff = isStudio ? 0 : -subRegDiff;
+                //subRegDiff = isStudio ? 0 : -subRegDiff;
 
                 if (multiRoundEndDate != null) {
                     // multiround phase duration
@@ -2027,8 +2033,11 @@ public class ProjectServicesImpl implements ProjectServices {
                             break;
                         }
                     }
+                    if (isStudio){
+                        adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, projectPhases, multiRoundEndDate);
+                    }
                     if (multiRoundPhase != null) {
-                        multiRoundPhase.setLength(multiRoundEndDate.getTime() - fixedStart + subRegDiff);
+                        multiRoundPhase.setLength(multiRoundEndDate.getTime() - fixedStart - subRegDiff);
                     }
                 }
                 if (endDate != null) {
@@ -2051,10 +2060,10 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (submissionPhase != null) {
-                        submissionPhase.setLength(endDate.getTime() - fixedStart + subRegDiff);
+                        submissionPhase.setLength(endDate.getTime() - fixedStart - subRegDiff);
                     }
 
-                    if (registrationPhase != null && (isStudio || isAlgorithm || isFirst2Finish || isCode || submissionPhase.getLength() <= (48 * 60 * 60 * 1000))) {
+                    if (registrationPhase != null && ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionPhase.getLength() <= (48 * 60 * 60 * 1000))) {
                         registrationPhase.setLength(endDate.getTime() - fixedStart);
                     }
                 }
@@ -2739,12 +2748,15 @@ public class ProjectServicesImpl implements ProjectServices {
             if (multiRoundEndDate != null) {
                 // multiround phase duration
                 adjustPhaseForEndDate(PhaseType.CHECKPOINT_SUBMISSION_PHASE, newProjectPhases, multiRoundEndDate);
+                if (isStudio) {
+                    adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, multiRoundEndDate);
+                }
             }
             if (endDate != null) {
                 // submission phase duration
                 long submissionDuration = adjustPhaseForEndDate(PhaseType.SUBMISSION_PHASE, newProjectPhases, endDate);
 
-                if (isStudio || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000)) {
+                if ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000)) {
                     adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, endDate);
                 }
             }
