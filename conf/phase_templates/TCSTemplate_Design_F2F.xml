@@ -9,14 +9,14 @@
     </PhaseTypes>
     <!--     A set of project phases defined in this template. -->
     <Phases>
-        <Phase id="registrationPhase" length="2592000000" type="registration" phaseId="1">
+        <Phase id="registrationPhase" length="864000000" type="registration" phaseId="1">
         </Phase>
 
-        <Phase id="submissionPhase" length="2592000000" type="submission"  phaseId="2">
+        <Phase id="submissionPhase" length="864000000" type="submission"  phaseId="2">
             <Dependency id="registrationPhase" isDependencyStart="true" isDependentStart="true" lagTime="300000"/>
         </Phase>
 
-        <Phase id="reviewPhase" length="2592000000" type="review"  phaseId="4">
+        <Phase id="reviewPhase" length="864000000" type="review"  phaseId="4">
             <Dependency id="submissionPhase" isDependencyStart="true" isDependentStart="true" lagTime="0"/>
         </Phase>
     </Phases>
