@@ -413,23 +413,23 @@
 -->
 
     <!-- Struts 2 libs -->
-    <property name="struts2_libdir" value="${ext_libdir}/struts/2.3.31"/>
+    <property name="struts2_libdir" value="${ext_libdir}/struts/2.3.32"/>
     <property name="commons-beanutils-1.8.0.jar" value="${struts2_libdir}/commons-beanutils-1.8.0.jar"/>
     <property name="commons-collections-3.2.2.jar" value="${struts2_libdir}/commons-collections-3.2.2.jar"/>
     <property name="commons-fileupload-1.3.2.jar" value="${struts2_libdir}/commons-fileupload-1.3.2.jar"/>
     <property name="commons-io-2.2.jar" value="${struts2_libdir}/commons-io-2.2.jar"/>
     <property name="commons-lang-2.4.jar" value="${struts2_libdir}/commons-lang-2.4.jar"/>
-    <property name="commons-lang3-3.3.2.jar" value="${struts2_libdir}/commons-lang3-3.3.2.jar"/>
+    <property name="commons-lang3-3.2.jar" value="${struts2_libdir}/commons-lang3-3.2.jar"/>
     <property name="commons-logging-1.1.3.jar" value="${struts2_libdir}/commons-logging-1.1.3.jar"/>
     <property name="ezmorph-1.0.6.jar" value="${struts2_libdir}/ezmorph-1.0.6.jar"/>
     <property name="freemarker-2.3.22.jar" value="${struts2_libdir}/freemarker-2.3.22.jar"/>
     <property name="json-lib-2.3-jdk15.jar" value="${struts2_libdir}/json-lib-2.3-jdk15.jar"/>
     <property name="ognl-3.0.19.jar" value="${struts2_libdir}/ognl-3.0.19.jar"/>
-    <property name="struts2-convention-plugin-2.3.31.jar" value="${struts2_libdir}/struts2-convention-plugin-2.3.31.jar"/>
-    <property name="struts2-core-2.3.31.jar" value="${struts2_libdir}/struts2-core-2.3.31.jar"/>
-    <property name="struts2-spring-plugin-2.3.31.jar" value="${struts2_libdir}/struts2-spring-plugin-2.3.31.jar"/>
-    <property name="struts2-json-plugin-2.3.31.jar" value="${struts2_libdir}/struts2-json-plugin-2.3.31.jar"/>
-    <property name="xwork-core-2.3.31.jar" value="${struts2_libdir}/xwork-core-2.3.31.jar"/>
+    <property name="struts2-convention-plugin-2.3.32.jar" value="${struts2_libdir}/struts2-convention-plugin-2.3.32.jar"/>
+    <property name="struts2-core-2.3.32.jar" value="${struts2_libdir}/struts2-core-2.3.32.jar"/>
+    <property name="struts2-spring-plugin-2.3.32.jar" value="${struts2_libdir}/struts2-spring-plugin-2.3.32.jar"/>
+    <property name="struts2-json-plugin-2.3.32.jar" value="${struts2_libdir}/struts2-json-plugin-2.3.32.jar"/>
+    <property name="xwork-core-2.3.32.jar" value="${struts2_libdir}/xwork-core-2.3.32.jar"/>
     <property name="struts2-ssl-plugin-1.2.1.jar" value="${ext_libdir}/struts/struts2-ssl-plugin-1.2.1.jar"/>
     <property name="xwork-1.2.3.jar" value="${ext_libdir}/struts/xwork-1.2.3.jar"/>
 
@@ -491,19 +491,19 @@
         <pathelement location="${commons-fileupload-1.3.2.jar}"/>
         <pathelement location="${commons-io-2.2.jar}"/>
         <pathelement location="${commons-lang-2.4.jar}"/>
-        <pathelement location="${commons-lang3-3.3.2.jar}"/>
+        <pathelement location="${commons-lang3-3.2.jar}"/>
         <pathelement location="${commons-logging-1.1.3.jar}"/>
         <pathelement location="${ezmorph-1.0.6.jar}"/>
         <pathelement location="${freemarker-2.3.22.jar}"/>
         <pathelement location="${json-lib-2.3-jdk15.jar}"/>
         <pathelement location="${ognl-3.0.19.jar}"/>
-        <pathelement location="${struts2-convention-plugin-2.3.31.jar}"/>
-        <pathelement location="${struts2-core-2.3.31.jar}"/>
-        <pathelement location="${struts2-spring-plugin-2.3.31.jar}"/>
-        <pathelement location="${struts2-json-plugin-2.3.31.jar}"/>
+        <pathelement location="${struts2-convention-plugin-2.3.32.jar}"/>
+        <pathelement location="${struts2-core-2.3.32.jar}"/>
+        <pathelement location="${struts2-spring-plugin-2.3.32.jar}"/>
+        <pathelement location="${struts2-json-plugin-2.3.32.jar}"/>
         <pathelement location="${struts2-ssl-plugin-1.2.1.jar}"/>
         <pathelement location="${xwork-1.2.3.jar}"/>
-        <pathelement location="${xwork-core-2.3.31.jar}"/>
+        <pathelement location="${xwork-core-2.3.32.jar}"/>
     </path>
 
     <!-- Spring libraries -->
