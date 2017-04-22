@@ -1,9 +1,9 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: xjtufreeman, Ghost_141, TCSASSEMBLER
-  - Version 1.3
+  - Author: xjtufreeman, Ghost_141, duxiaoyang
+  - Version 1.4
   -
-  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
 
   - Version: 1.1 (TC Direct Issue Tracking Tab Update Assembly 3 v1.0) change notes:
   - Added logic to display the project bugs.
@@ -13,7 +13,10 @@
   -
   - Version 1.3 (TC Direct Rebranding Assembly Project and Contest related pages)
   - Update the icons of project issues tracking page
-  - 
+  -
+  - Version 1.4 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace id attribute for s:iterator with var attribute
+  -
   - Description: This page renders the project issue tracking view.
   -
 --%>
@@ -117,7 +120,7 @@
                                                         </colgroup>
 
 
-                                                        <s:iterator value="viewData.projectIssues" id="id" status="contestStatus">
+                                                        <s:iterator value="viewData.projectIssues" var="id" status="contestStatus">
 
                                                         <s:if test="value.issues.size > 0">
 
@@ -472,7 +475,7 @@
                                                         </tr>
 
 
-                                                         <s:iterator value="viewData.projectIssues" id="id" status="contestStatus">
+                                                         <s:iterator value="viewData.projectIssues" var="id" status="contestStatus">
 
                                                           <s:if test="value.bugRaces.size > 0">
 

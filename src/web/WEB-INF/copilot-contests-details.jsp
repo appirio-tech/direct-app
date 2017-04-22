@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, GreatKevin, Ghost_141
-  - Version: 1.8
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: isv, GreatKevin, Ghost_141, duxiaoyang
+  - Version: 1.9
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
   - - Change time zone from GMT-04 to UTC-05.
@@ -21,12 +21,15 @@
   -
   - Version 1.6 (Cockpit Customer Copilot Posting Process Revamp Copilot Posting Dashboard)
   - - Added copilot posting dashboard
-  - 
+  -
   - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix text inconsistency bug.
   -
   - Version 1.8 (Release Assembly - TC Cockpit Private Challenge Update)
   -- Add support for choosing security group for contest eligibility. Security groups are retrieved by billing account.
+  -
+  - Version 1.9 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -92,7 +95,7 @@
             ${doc.uploadedFileName}
             ${doc.uploadedFileDesc} -->
             </c:forEach>
-            
+
             <c:forEach items="${viewData.dashboard.copilotProjectTypes}" var="type" varStatus="loop" >
                 experiences.push('${type}');
             </c:forEach>
@@ -181,7 +184,7 @@
 
 <div id="launchContestOut" class="launchCopilotContest">
 
-<s:set name="contestStatus" value="viewData.contestStats.contest.status.name"/>
+<s:set var="contestStatus" value="viewData.contestStats.contest.status.name"/>
 
 <!-- add new contest -->
 <div class="editMask">
@@ -239,14 +242,14 @@
                 </c:if>
                 <li>
                     <label>Experience :</label>
-                    
+
                     <strong id="copilotTypesTextLabel">
                         <c:forEach var="copilotType" items="${allProjectCopilotTypes}" >
                             <c:if test="${fn:contains(viewData.dashboard.copilotProjectTypes, copilotType.key)}">
                                 ${copilotType.value}&nbsp;
-                            </c:if>                               
+                            </c:if>
                         </c:forEach>
-                        
+
                         <c:if test="${not empty viewData.dashboard.otherManagingExperienceString}">
                             <c:out value="${viewData.dashboard.otherManagingExperienceString}" />
                         </c:if>
@@ -254,7 +257,7 @@
                 </li>
                 <li>
                     <label>Budget :</label>
-                    
+
                     <strong id="budgetTextLabel">
                         <c:if test="${not empty viewData.dashboard.budget}">
                             $ ${viewData.dashboard.budget}
@@ -267,7 +270,7 @@
 
                 <li>
                     <label>Created By :</label>
-                    
+
                     <strong id="challengeCreatorLabel">
                             ${projectHeader.creator}
                     </strong>
@@ -336,7 +339,7 @@
                 <input type="checkbox" style=""><span>Run this copilot posting in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
                 <input type="hidden" id="securityGroupId" value="${projectHeader.securityGroupId}" />
             </div>
-            
+
             <!-- Experience -->
             <div class="row experienceRow <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label>Select Copilot Experience :</label>
@@ -347,7 +350,7 @@
                             <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(viewData.dashboard.copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
                             <label for="${copilotType.value}">${copilotType.value}</label>
                         </li>
-                        </c:forEach>      
+                        </c:forEach>
                     </ul>
                     <ul class="type3">
                         <c:forEach var="copilotType" items="${allProjectCopilotTypes}" begin="${fn:length(allProjectCopilotTypes) / 2 + 0.5}">
@@ -356,19 +359,19 @@
                             <label for="${copilotType.value}">${copilotType.value}</label>
                         </li>
                         </c:forEach>
-                    </ul>  
-                    
+                    </ul>
+
                     <div class="clear"></div>
-                    
+
                     <label class="otherExperience">Other:</label>
                     <input type="text" class="text" id="otherExperience" value='${viewData.dashboard.otherManagingExperienceString}'/>
                 </div>
-            </div>            
-            
+            </div>
+
             <!-- Budget -->
             <div class="row budgetRow experienceRow <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label for="projectBudgetInput">Set Budget :</label>
-                
+
                 <ul>
                     <li>
                         <input type="radio" class="radio" name="budget" id="haveBudget" <c:if test="${not empty viewData.dashboard.budget}">checked='checked'</c:if> />
@@ -377,9 +380,9 @@
                     </li>
                     <li>
                         <input type="radio" class="radio" name="budget" id="notHaveBudget" <c:if test="${empty viewData.dashboard.budget}">checked='checked'</c:if>/>
-                        <label for="notHaveBudget">b. I don't have a budget yet.</label> 
+                        <label for="notHaveBudget">b. I don't have a budget yet.</label>
                     </li>
-                </ul>                
+                </ul>
             </div>
             <div></div>
             <br/>
@@ -389,7 +392,7 @@
             </div>
 
 
-            
+
             <p class="save">
                 <a class="cancel_text" href="javascript:" id="cancelContestInfo">cancel</a>
                 <a href="javascript:" id="saveContestInfo">
@@ -434,7 +437,7 @@
         </table>
         <div class="totalCostContainer">
                  <p style="padding-left:10px" class="note">
-                  Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                  Note: Challenge prizes, costs, and fees in this section are estimates. <br>
                   Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                 </div>
     </div>
@@ -476,7 +479,7 @@
                 <div class="totalCostContainer"><strong>Estimated Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong>
                 <br>
                 <p class="note">
-                  Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                  Note: Challenge prizes, costs, and fees in this section are estimates. <br>
                   Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                 </div>
             </div>

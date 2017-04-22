@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Blues, Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 1.8
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Blues, Ghost_141, csy2012, duxiaoyang
+  - Version: 1.9
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
   -
@@ -20,15 +20,18 @@
   -
   - Version 1.5 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
   - - Added Group by and group values into the filter panel.
-  - 
+  -
   - Version 1.6 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
-  - 
+  -
   - Version 1.7 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 2.0) changes:
   - - Changed the font to bold for "FROM" and "TO".
   -
   - Version 1.8 (Release Assembly - TopCoder Cockpit Navigation Update)
   - - Update the page type to report
+  -
+  - Version 1.9 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -196,9 +199,9 @@
                                                         All</label>
                                                 </div>
                                                 <s:iterator value='viewData.groupValues' status='c' var="groupValue">
-                                                    <s:set name='needCheck' value='false'/>
+                                                    <s:set var='needCheck' value='false'/>
                                                     <s:iterator value='formData.groupValues' var="group">
-                                                        <s:if test="#group == #groupValue"><s:set name='needCheck'
+                                                        <s:if test="#group == #groupValue"><s:set var='needCheck'
                                                                                                   value='true'/></s:if>
                                                     </s:iterator>
                                                     <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
@@ -226,9 +229,9 @@
                                             </div>
 
                                             <s:iterator value='viewData.contestTypeOptions' status='c'>
-                                                <s:set name='needCheck' value='false'/>
+                                                <s:set var='needCheck' value='false'/>
                                                 <s:iterator value='formData.contestTypes' var="contestType">
-                                                    <s:if test="#contestType == key"><s:set name='needCheck' value='true'/></s:if>
+                                                    <s:if test="#contestType == key"><s:set var='needCheck' value='true'/></s:if>
                                                 </s:iterator>
                                                 <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
                                                     <input type="checkbox"
@@ -257,9 +260,9 @@
                                             </div>
 
                                             <s:iterator value='viewData.contestStatusOptions' status='c'>
-                                                <s:set name='needCheck' value='false'/>
+                                                <s:set var='needCheck' value='false'/>
                                                 <s:iterator value='formData.contestStatuses' var="contestStatus">
-                                                    <s:if test="#contestStatus == key"><s:set name='needCheck' value='true'/></s:if>
+                                                    <s:if test="#contestStatus == key"><s:set var='needCheck' value='true'/></s:if>
                                                 </s:iterator>
                                                 <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
                                                     <input type="checkbox"
@@ -287,9 +290,9 @@
                                             </div>
 
                                             <s:iterator value='viewData.clients' status='c' var="clientValue">
-                                                <s:set name='needCheck' value='false'/>
+                                                <s:set var='needCheck' value='false'/>
                                                 <s:iterator value='formData.clients' var="client">
-                                                    <s:if test="#client == value"><s:set name='needCheck' value='true'/></s:if>
+                                                    <s:if test="#client == value"><s:set var='needCheck' value='true'/></s:if>
                                                 </s:iterator>
                                                 <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
                                                     <input type="checkbox"

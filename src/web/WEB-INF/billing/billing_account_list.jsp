@@ -1,19 +1,22 @@
 <%--
-  - Author: Ghost_141, TCSASSEMBLER
-  - Version: 1.3
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, duxiaoyang
+  - Version: 1.4
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
   - Initialized the page functions.
-  - 
+  -
   - Version 1.1 (Release Assembly - Project Contest Fee Management) changes:
   - Added a new clientName column to the billing account table.
-  - 
+  -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - Remove the container2BottomLeft and container2BottomRight class in pagination part.
   -
   - Version 1.3 (TC Direct Rebranding Assembly Dashboard and Admin related pages)
   - - Update the header for rebranding
+  -
+  - Version 1.4 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace id attribute for s:url with var attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,7 +43,7 @@
     <div class="content">
         <div class="alert">
             <span class="title">You&acute;re using Internet Explorer 6 or Lower. </span>
-            <span class="desc">For the full features supported and best experience we strongly recommend upgrading to 
+            <span class="desc">For the full features supported and best experience we strongly recommend upgrading to
                 <strong class="ie8"><a href="javascript:;">Internet Explorer 8</a>
                     <span class="tip">
                         <span class="tipTop"></span>
@@ -50,7 +53,7 @@
                         </span>
                         <span class="tipBottom"></span>
                     </span>
-                </strong>, 
+                </strong>,
                 <strong class="ff"><a href="javascript:;">Firefox 5.0</a>
                     <span class="tip">
                         <span class="tipTop"></span>
@@ -60,7 +63,7 @@
                         </span>
                         <span class="tipBottom"></span>
                     </span>
-                </strong>, 
+                </strong>,
                 <strong class="safari"><a href="javascript:;">Safari 5</a>
                         <span class="tip">
                             <span class="tipTop"></span>
@@ -70,7 +73,7 @@
                             </span>
                             <span class="tipBottom"></span>
                         </span>
-                    </strong> or 
+                    </strong> or
                     <strong class="chrome"><a href="javascript:;">Google Chrome</a>
                         <span class="tip">
                             <span class="tipTop"></span>
@@ -109,7 +112,7 @@
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
 
-                                <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
+                                <s:url action="contestFee" namespace="/settings/admin" var="feeMainPage">
                                 </s:url>
                                 <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
@@ -123,13 +126,13 @@
                                         <table id="billingAccounts" class="projectStats contests paginatedDataTable resultTable"
                                            cellpadding="0"
                                            cellspacing="0">
-                                           
+
                                         <colgroup>
                                             <col width="30%" />
 											<col width="30%" />
                                             <col width="40%" />
-                                        </colgroup>  
-                                        
+                                        </colgroup>
+
                                         <thead>
                                             <tr>
                                                 <th>Billing Account Id</th>
@@ -137,7 +140,7 @@
                                                 <th>Billing Account</th>
                                             </tr>
                                         </thead>
-                                        
+
                                         <tbody>
 
                                             <s:iterator value="result.items" status="status">
@@ -151,18 +154,18 @@
                                                     <td class="first">
                                                         <a href="listContestFeesAction.action?projectId=${projectId}"><s:property value="name"/></a>
                                                     </td>
-                                                    
+
                                                 </tr>
                                             </s:iterator>
-                                        
+
                                         </tbody>
                                     </table>
-                    
-                   
-                    
-                    
-                                </div>                          
-                            
+
+
+
+
+                                </div>
+
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">

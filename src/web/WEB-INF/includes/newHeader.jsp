@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER, TCSCODER
+  - Author: GreatKevin, TCSASSEMBLER, TCSCODER, duxiaoyang
   -
-  - Copyright (C) 2013 - 2016 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version: 1.0 (Release Assembly - TopCoder Cockpit Navigation Update)
   -
@@ -19,6 +19,9 @@
   -
   - Version 1.5 (TopCoder Direct - Remove ASP Integration Related Logic)
   - - Remove "Work Manager" for project dashboard.
+  -
+  - Version 1.6 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
   -
   - Description: The new cockpit header and navigation.
 --%>
@@ -399,7 +402,7 @@
             <a href="javascript:;" class="logo"><span>
                 <c:choose>
                     <c:when test="${requestScope.CURRENT_TAB eq 'myCreatedChallenges'}">
-                       Challenges I Created 
+                       Challenges I Created
                     </c:when>
                     <c:when test="${requestScope.CURRENT_TAB eq 'myChallenges'}">
                        All Challenges
@@ -498,10 +501,10 @@
 </ui:isProjectPage>
 
 <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
-    <s:set name="projId" value="viewData.projectStats.project.id"/>
+    <s:set var="projId" value="viewData.projectStats.project.id"/>
 </c:if>
 <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">
-    <s:set name="projId" value="viewData.contestStats.contest.project.id"/>
+    <s:set var="projId" value="viewData.contestStats.contest.project.id"/>
 </c:if>
 
 <ui:isCopilotPage>
