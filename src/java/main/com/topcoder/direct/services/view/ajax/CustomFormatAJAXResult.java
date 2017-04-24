@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
@@ -15,7 +15,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.opensymphony.xwork2.ValidationAware;
+import com.opensymphony.xwork2.interceptor.ValidationAware;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -74,14 +74,21 @@ import com.topcoder.direct.services.view.ajax.serializers.JSONDataSerializer;
  * </p>
  *
  * <p>
+ * Version 1.1 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+ * <ul>
+ * <li>Changed the package for ValidationAware.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
  * Thread safety: Technically this class is NOT thread safe since it has mutable states, but the intended
  * usage of the mutators is for IoC injection and thus we expect for these values not to be changed after
  * initialization. Thus this class can be considered as thread-safe conditional in an IoC injection usage of
  * the mutators.
  * </p>
  *
- * @author AleaActaEst, TCSDEVELOPER
- * @version 1.0
+ * @author AleaActaEst, TCSDEVELOPER, duxiaoyang
+ * @version 1.1
  */
 @SuppressWarnings("serial")
 public class CustomFormatAJAXResult implements Result {

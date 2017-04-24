@@ -1,8 +1,8 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: Blues, GreatKevin, notpad, Ghost_141, TCSASSEMBLER
-  - Version: 2.5
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin, notpad, Ghost_141, duxiaoyang
+  - Version: 2.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
@@ -32,13 +32,13 @@
   - Version 1.9 (Release Assembly - TC Direct Cockpit Release Six)
   - - Add aggregation stats table to show total contests number, total bug races number and total amount.
   - - Add invoice number dropdown
-  - 
+  -
   - Version 2.0 (Module Assembly - TC Cockpit Invoice History Page Update) changes:
   - - Add invoice status filter.
-  - 
+  -
   - Version 2.1 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0) changes:
   - - Update layout to fix a layout issue.
-  - 
+  -
   - Version 2.2 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0) changes:
   - - Update layout to fix a layout issue.
   -
@@ -50,6 +50,9 @@
   -
   - Version 2.5 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
   - - Rebranding the copilot and reporting related pages.
+  -
+  - Version 2.6 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -222,14 +225,14 @@
                                     <label for="invoiceStatusSelectAll" title="Select All">Select All</label>
                                 </div>
                                 <div class="multiOptionRow <s:if test="formData.selectInvoiced == true">multiOptionRowChecked</s:if>">
-                                    <input type="checkbox" 
+                                    <input type="checkbox"
                                         <s:property value="formData.selectInvoiced"/>
-                                        <s:if test="formData.selectInvoiced == true">checked="checked"</s:if> 
+                                        <s:if test="formData.selectInvoiced == true">checked="checked"</s:if>
                                         id="invoiceStatusInvoiced" name="formData.selectInvoiced" value="true" class="optionItem"/>
                                     <label for="invoiceStatusInvoiced" title="Invoiced">Invoiced</label>
                                 </div>
                                 <div class="multiOptionRow <s:if test="formData.selectNotInvoiced == true">multiOptionRowChecked</s:if>">
-                                    <input type="checkbox" 
+                                    <input type="checkbox"
                                         <s:if test="formData.selectNotInvoiced == true">checked="checked"</s:if>
                                         id="invoiceStatusNotInvoiced" name="formData.selectNotInvoiced" value="true" class="optionItem"/>
                                     <label for="invoiceStatusNotInvoiced" title="Not Invoiced">Not Invoiced</label>
@@ -237,8 +240,8 @@
                             </div>
                         </div>
                     </div>
-                </div>            
-                <!-- end InvoiceStatusFilter -->                
+                </div>
+                <!-- end InvoiceStatusFilter -->
 
                   <div id="groupFilter" data-intro="If these look familiar, then you know they are based on your project meta data. To learn more about this, visit TopCoder University." data-step="5" data-position="left">
                       <div class="filterRow firstFilterRow">
@@ -264,9 +267,9 @@
                                           All</label>
                                   </div>
                                   <s:iterator value='viewData.groupValues' status='c' var="groupValue">
-                                      <s:set name='needCheck' value='false'/>
+                                      <s:set var='needCheck' value='false'/>
                                       <s:iterator value='formData.groupValues' var="group">
-                                          <s:if test="#group == #groupValue"><s:set name='needCheck'
+                                          <s:if test="#group == #groupValue"><s:set var='needCheck'
                                                                                     value='true'/></s:if>
                                       </s:iterator>
                                       <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
@@ -296,9 +299,9 @@
                         </div>
 
                         <s:iterator value='viewData.projectCategories' status='c'>
-                            <s:set name='needCheck' value='false'/>
+                            <s:set var='needCheck' value='false'/>
                             <s:iterator value='formData.projectCategoryIds' var="cateogryId">
-                                <s:if test="#cateogryId == key.longValue()"><s:set name='needCheck'
+                                <s:if test="#cateogryId == key.longValue()"><s:set var='needCheck'
                                                                                    value='true'/></s:if>
                             </s:iterator>
                             <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
@@ -325,9 +328,9 @@
                         </div>
 
                         <s:iterator value='viewData.paymentTypes' status='p'>
-                            <s:set name='needCheck' value='false'/>
+                            <s:set var='needCheck' value='false'/>
                             <s:iterator value='formData.paymentTypeIds' var="paymentTypeId">
-                                <s:if test="#paymentTypeId == key.longValue()"><s:set name='needCheck'
+                                <s:if test="#paymentTypeId == key.longValue()"><s:set var='needCheck'
                                                                                    value='true'/></s:if>
                             </s:iterator>
                             <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
@@ -434,7 +437,7 @@
         <th class="tableTitle" colspan="
         <c:if test="${viewData.canProcessInvoices}">21</c:if>
         <c:if test="${!viewData.canProcessInvoices}">17</c:if>
-        
+
         ">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Invoice History Details</span>
@@ -457,18 +460,18 @@
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
         <th class="tableColumn">&nbsp;Launch Date&nbsp;</th>
         <th class="tableColumn">&nbsp;Completion Date&nbsp;</th>
-        
+
         <c:if test="${viewData.canProcessInvoices}">
         <th class="tableColumn">&nbsp;Actual Total Member Cost&nbsp;</th>
         </c:if>
-        
+
         <th class="tableColumn">&nbsp;Payment Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Amount&nbsp;</th>
-        
+
         <th class="tableColumn">&nbsp;Invoice Number&nbsp;</th>
         <th class="tableColumn">&nbsp;Invoice Date&nbsp;</th>
 		<th class="tableColumn">&nbsp;Invoice Amount&nbsp;</th>
-        
+
         <c:if test="${viewData.canProcessInvoices}">
         <th class="tableColumn">&nbsp;Payment ID&nbsp;</th>
         <th class="tableColumn" style="width:100px">
@@ -533,13 +536,13 @@
             <td>
                  <s:date name="completionDate" format="yyyy-MM-dd" />
             </td>
-            
+
             <c:if test="${viewData.canProcessInvoices}">
                 <s:if test="paymentType!='Platform Fee'">
-                   <td>${actualTotalMemberCost}</td>  
+                   <td>${actualTotalMemberCost}</td>
                 </s:if><s:else><td/></s:else>
             </c:if>
-            
+
             <td>
                  <s:property value="paymentType"/>
             </td>
@@ -547,7 +550,7 @@
                 <s:set var="paymentA" value="paymentAmount" scope="page"/>
                 <fmt:formatNumber value="${paymentA}" pattern="$###,##0.00"/>
             </td>
-            
+
             <td class="invoiceNumber">
                 <c:if test="${viewData.canProcessInvoices and not empty invoiceNumber}">
                     <a href="#" class="updInvoiceDate">${invoiceNumber}</a>
@@ -564,8 +567,8 @@
                     <s:date name="invoiceDate" format="yyyy-MM-dd" />
                 </c:if>
             </td>
-            
-            
+
+
             <td class="invoiceAmount">
                 <s:set var="invoiceA" value="invoiceAmount" scope="page"/>
                 <c:if test="${viewData.canProcessInvoices and not empty invoiceDate}">
@@ -575,12 +578,12 @@
 					<fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/>
                 </c:if>
             </td>
-			
+
 			<c:if test="${viewData.canProcessInvoices}">
             <td>
                 <s:if test="paymentId!=0 && paymentType=='Contest Fee'">for <s:property value="paymentId"/></s:if>
                 <s:else><s:property value="paymentId"/></s:else>
-            </td>            
+            </td>
             <td>
                 <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" jiraissueid="<s:if test="paymentId==0 && paymentType=='Contest Fee' && referenceId != null && referenceId != ''"><s:property value="referenceId"/></s:if><s:else></s:else>" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
             </td>
@@ -588,7 +591,7 @@
                 <c:if test="${not empty invoiceNumber}">
                     <a href="#" class="addCredit">Credit</a>
                 </c:if>
-            </td>            
+            </td>
             </c:if>
 
         </tr>

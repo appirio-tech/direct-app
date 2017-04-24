@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru, TCSASSEMBLER
-  - Version: 3.3
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, bugbuka, leo_lol, xjtufreeman, GreatKevin, caru, duxiaoyang
+  - Version: 3.4
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
   - It renders the common page headers.
@@ -52,6 +52,8 @@
   - Version 3.1 (Module Assembly TC - Cockpit Tasks Management Services Setup and Quick Add Task) change notes: add project Tasks tab
   - Version 3.2 (Release Assembly - TopCoder Cockpit Asset View And Basic Upload version 1.0) changes notes: rename "Assets"->"Files"
   - Version 3.3 (Release Assembly - TC Cockpit Misc Bug Fixes) change notes: Make Game Plan tab clickable and link to game plan page
+  - Version 3.4 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
@@ -580,10 +582,10 @@
 
 
 <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
-    <s:set name="projId" value="viewData.projectStats.project.id"/>
+    <s:set var="projId" value="viewData.projectStats.project.id"/>
 </c:if>
 <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">
-    <s:set name="projId" value="viewData.contestStats.contest.project.id"/>
+    <s:set var="projId" value="viewData.contestStats.contest.project.id"/>
 </c:if>
 
 <ui:isProjectPage>

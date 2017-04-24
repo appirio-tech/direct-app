@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.asset.project;
 
-import com.opensymphony.xwork2.ValidationAware;
+import com.opensymphony.xwork2.interceptor.ValidationAware;
 import com.topcoder.asset.entities.Asset;
 import com.topcoder.asset.entities.AssetVersion;
 import com.topcoder.asset.entities.Category;
@@ -115,8 +115,15 @@ import java.util.UUID;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  *
- * @author GreatKevin, Veve
- * @version 1.5
+ * <p>
+ * Version 1.6 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+ * <ul>
+ * <li>Changed the package for ValidationAware.</li>
+ * </ul>
+ * </p>
+ *
+ * @author GreatKevin, Veve, duxiaoyang
+ * @version 1.6
  */
 public class ProjectAssetManageAction extends BaseAbstractAssetAction implements FormAction<ProjectIdForm>, ValidationAware {
 

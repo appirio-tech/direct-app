@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -18,6 +18,7 @@ import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.util.errorhandling.ExceptionUtils;
+import org.apache.struts2.dispatcher.LocalizedMessage;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 
 import javax.servlet.ServletInputStream;
@@ -64,13 +65,20 @@ import javax.servlet.http.HttpServletRequest;
  * </p>
  *
  * <p>
+ * Version 1.2 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #checkRequestError()} to use LocalizedMessage instead of String.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> The class is not thread safe because it's mutable by the setters and the values of this class
  * will change based on the request parameters. It's not required to be thread safe because in Struts 2 the actions
  * (different from Struts 1) are created for every request.
  * </p>
  *
- * @author fabrizyo, isv
- * @version 1.1
+ * @author fabrizyo, isv, duxiaoyang
+ * @version 1.2
  */
 public class DocumentUploadAction extends ContestAction {
     /**
@@ -163,7 +171,7 @@ public class DocumentUploadAction extends ContestAction {
     /**
      * <p>A <code>String</code> providing the text of error message to be displayed to user in case uploaded file
      * exceeds the pre-defined limit.</p>
-     * 
+     *
      * @since 1.1
      */
     private String fileSizeLimitExceededMessage;
@@ -176,7 +184,7 @@ public class DocumentUploadAction extends ContestAction {
 
     /**
      * <p>Handles the incoming request.</p>
-     * 
+     *
      * @return a <code>String</code> referencing the next view to be displayed to user.
      * @throws Exception if an unexpected error occurs.
      * @since 1.1
@@ -201,23 +209,21 @@ public class DocumentUploadAction extends ContestAction {
     /**
      * <p>Handles the case when the request for uploading the document has failed, most likely due to uploaded file to
      * exceed the maximum file size limit.</p>
-     * 
-     * @return a <code>String</code> referencing the next view.  
+     *
+     * @return a <code>String</code> referencing the next view.
      * @since 1.1
      */
     public String checkRequestError() {
         StringBuilder b = new StringBuilder();
         MultiPartRequestWrapper servletRequest = (MultiPartRequestWrapper) DirectUtils.getServletRequest();
         if (servletRequest.hasErrors()) {
-            Collection<String> errors = servletRequest.getErrors();
-            for (String error : errors) {
-                error = error.toLowerCase();
-                if (error.startsWith("the request was rejected because its size") 
-                    && error.contains("exceeds the configured maximum")) {
-                        setResult(new RuntimeException(getFileSizeLimitExceededMessage()));
-                        return ERROR;
+            Collection<LocalizedMessage> errors = servletRequest.getErrors();
+            for (LocalizedMessage error : errors) {
+                if (error.getTextKey().equals("struts.messages.upload.error.SizeLimitExceededException")) {
+                    setResult(new RuntimeException(getFileSizeLimitExceededMessage()));
+                    return ERROR;
                 } else {
-                    b.append("\n").append(error);
+                    b.append("\n").append(error.getDefaultMessage());
                 }
             }
         }

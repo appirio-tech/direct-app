@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: TCSASSEMBLER, duxiaoyang
   - Version: 1.2
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
@@ -7,12 +7,12 @@
   - Since: TC Direct Manage Copilots Assembly
   -
   - Version 1.1 - Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0
-  - - Fixed upper case issue for SAVE and CANCEL buttons in Copilot Management popup, and scroll issue in IE for copilot removal.  
+  - - Fixed upper case issue for SAVE and CANCEL buttons in Copilot Management popup, and scroll issue in IE for copilot removal.
   - -  Re-use same modal windows for manage copilot screen.
   -
   - Version 1.2 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
   - - Rebranding the copilot and reporting related pages.
-  -    
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -47,26 +47,26 @@
                                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
                                     <strong>Manage Copilots</strong>
                                 </div> <!-- End .currentPage -->
-                                
+
                                 <div id="copilotsIntroduction">
                                     <div class="orderReview">
-                                
+
                                         <div class="myCopilotsContests">
                                             <span class="introductionHeadIcon"><img src="/images/copilot_contests_icon.png" alt="copilot contests" /></span>
                                             <h2 class="sectionHead">Manage Copilots</h2>
                                         </div>
                                         <!-- end .getCopilots -->
-                                        
+
                                         <div class="myCopilotsContestsList">
                                             <div class="container2 tabs3Container tabs4Special">
-                                                
+
                                                 <div id="tabs3">
                                                     <ul>
                                                         <li class="firstItem on"><a href="javascript:;" id="projectViewLink" class="first"><span class="left"><span class="right">Project View</span></span></a></li>
                                                         <li class="lastItem"><a href="javascript:;" id="contestViewLink" class="last"><span class="left"><span class="right">Challenge View</span></span></a></li>
                                                     </ul>
                                                 </div><!-- End #tabs3 -->
-                                            
+
                                                 <div class="container2Left"><div class="container2Right">
                                                     <div class="tableContainer">
                                                         <table id="copilotProjectTable" class="projectStats newManageStatus" cellpadding="0" cellspacing="0" style="border: none">
@@ -90,7 +90,7 @@
                                                                         <td></td>
                                                                         <td><a href="javascript:;" class="downloadProfile triggerModal newButtonGreen copilotManage" name="copilotManage"> <span class="profileLeft">Add Copilot</span></a></td>
                                                                     </tr>
-                                                                    
+
                                                                     <s:iterator value="copilots" status="stat">
                                                                         <tr class="trChild hide <c:if test='${stat.last}'>lastTr</c:if>">
                                                                             <td class="photo"><i class="icon-user"></i>
@@ -102,12 +102,12 @@
                                                                             <td class="copilotType">${copilotType}</td>
                                                                             <td><a href="javascript:removeCopilotProject(${project.id}, ${copilotProfileId}, ${copilotProjectId});" class="closeProjectCopilot">close</a></td>
                                                                         </tr>
-                                                                    </s:iterator>                                                                
-                                                                </s:iterator>                                                                
-                                                                
+                                                                    </s:iterator>
+                                                                </s:iterator>
+
                                                             </tbody>
                                                         </table><!-- End .projectsStats -->
-                                                        
+
                                                         <table id="copilotContestTable" class="projectStats newManageStatus newManageContestsStatus hide" cellpadding="0" cellspacing="0">
                                                             <thead>
                                                                 <tr>
@@ -141,11 +141,11 @@
 																						${contest.title}
 																					</c:otherwise>
 																				</c:choose>
-																				
+
 																			</td>
                                                                             <td></td>
                                                                             <td class="photo">
-                                                                                <s:iterator value="copilots" id="handle">
+                                                                                <s:iterator value="copilots" var="handle">
                                                                                     <div>
                                                                                         <img src="/images/photo_people_small.png" alt="photo" />
                                                                                         <span>${handle}</span>
@@ -156,7 +156,7 @@
                                                                     </s:iterator>
                                                                 </s:iterator>
                                                             </tbody>
-                                                        </table><!-- End .projectsStats -->                                                        
+                                                        </table><!-- End .projectsStats -->
                                                     </div>
 
                                                 </div></div>
@@ -166,7 +166,7 @@
                                     </div>
                                     <!-- end .orderReview -->
                                 </div>
-                                <!-- end #copilotsIntroduction -->                                
+                                <!-- end #copilotsIntroduction -->
                             </div> <!-- End.area1Content -->
                         </div> <!-- End #area1 -->
 
@@ -182,15 +182,15 @@
         </div>
     </div>
     <!-- End #wrapper -->
-    
+
     <!-- dialog -->
     <div class="dialogContent" style="display: none;">
-        <div id="manageUserDialog"> 
+        <div id="manageUserDialog">
             <div class="header">
                     <div class="title">Copilot Management</div>
                     <a class="dialogClose closeDialog" href="javascript:void(0);"></a>
-            </div> 
-            
+            </div>
+
             <div class="body">
                 <div class="left">
                     <div class="subtitle">
@@ -217,62 +217,62 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="foot">
                 <div class="separator"></div>
                 <div class="buttons">
                     <a class="button6 saveDialogButton makeSureButton" href="javascript:void(0)"><span class="left"><span class="right">SAVE</span></span></a>
                     <a class="button6 closeDialog" href="javascript:void(0)"><span class="left"><span class="right">CANCEL</span></span></a>
                 </div>
-            </div>    
-        </div>  
+            </div>
+        </div>
 
-        <div id="makeSureDialog"> 
+        <div id="makeSureDialog">
             <div class="header">
                     <div class="title">Confirmation</div>
                     <a class="dialogClose closeDialog" href="javascript:void(0);"></a>
-            </div> 
-            
+            </div>
+
             <div class="body">
                 Copilots of project <span class="b projectName"></span> have been saved
             </div>
-            
+
             <div class="foot">
                 <div class="separator"></div>
                 <div class="buttons">
                     <a class="button6 okey2Button" href="javascript:void(0)"><span class="left"><span class="right">OK</span></span></a>
                 </div>
-            </div>    
-        </div>  
+            </div>
+        </div>
 
-        <div id="removeProjectDialog"> 
+        <div id="removeProjectDialog">
             <div class="header">
                     <div class="title">Remove Copilot</div>
                     <a class="dialogClose closeDialog" href="javascript:void(0);"></a>
-            </div> 
-            
+            </div>
+
             <div class="body">
                 The Copilot <span class="b handle addSpace"> </span> has been removed from Project <span class="b projectName"></span>
             </div>
-            
+
             <div class="foot">
                 <div class="separator"></div>
                 <div class="buttons">
                     <a class="button6 removeProjectMakeSureButton okey2Button" href="javascript:void(0)"><span class="left"><span class="right">OK</span></span></a>
                 </div>
-            </div>    
-        </div>      
+            </div>
+        </div>
     </div>
     <!-- End dialog -->
-    
+
     <!-- Copilots information -->
     <div id="copilotsList" class="hide">
         <s:iterator value="viewData.copilots">
             <input type="hidden" name="copilot_${copilotProfileId}" value="${handle}"></input>
-        </s:iterator>        
+        </s:iterator>
     </div>
     <!-- End Copilots information -->
-    
+
     <!-- tr template -->
     <table class="hide">
         <tbody id="trTemplate">
