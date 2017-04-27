@@ -122,7 +122,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
               + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name "
               + " from project as p left join client_project as cp on p.project_id = cp.project_id left join client c "
               + "            on c.client_id = cp.client_id and (c.is_deleted = 0 or c.is_deleted is null) "
-              + " where p.start_date <= current and current <= p.end_date ";
+              + " where p.active = 1 and p.p.start_date <= current and current <= p.end_date ";
 
     /**
      * The query string used to select projects.
