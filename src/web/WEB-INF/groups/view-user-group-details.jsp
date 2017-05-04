@@ -1,7 +1,7 @@
 <%--
-  - Author: backstreetlili, freegod, GreatKevin
-  - Version: 1.6
-  - Copyright (C) 2012 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: backstreetlili, freegod, GreatKevin, duxiaoyang
+  - Version: 1.7
+  - Copyright (C) 2012 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Release Assembly - TopCoder Security Groups Frontend - View Group Details) changes:
   - Initialized the page functions.
@@ -21,6 +21,9 @@
   -
   - Version 1.6 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
   - - Reskin the group pages
+  -
+  - Version 1.7 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace id attribute for s:iterator with var attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -32,9 +35,9 @@
 <head>
     <c:set var="PAGE_TYPE" value="group" scope="request"/>
     <c:set var="CURRENT_TAB" value="detail" scope="request"/>
-    
+
     <jsp:include page="../includes/htmlhead.jsp"/>
-    
+
     <!-- External CSS -->
     <link rel="stylesheet" href="/css/direct/layout.css?v=212459" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/direct/layout-groups.css?v=210792" media="all" type="text/css" />
@@ -48,13 +51,13 @@
 	<div id="wrapperInner">
 		<div id="container">
 			<div id="content">
-			
+
 				<jsp:include page="../includes/header.jsp"/>
 				<input type="hidden" id="groupDetailsPage" value="true"/>
 				<!-- End #header -->
 				<div id="wholeContent">
 					<div id="wholeArea">
-					
+
 						<div id="wholeAreaHeader">
 							<h2 class="groupDetailsTitle">View Group - <c:out value="${group.name}" /></h2>
                             <s:url var="viewUserGroupsUrl" action="viewUserGroupsAction" namespace="/group">
@@ -63,7 +66,7 @@
 							<a class="button7 newButtonBlue" href="${viewUserGroupsUrl}"><span class="left">BACK TO GROUPS</span></a>
 						</div>
 						<!-- End #wholeAreaHeader -->
-						
+
 						<div class="groupDetailsTable">
 							<!-- .filterTitle -->
 							<div class="filterTitle">
@@ -74,7 +77,7 @@
 								</div><!-- End .filterTitleRight -->
 							</div>
 							<!-- End .filterTitle -->
-							
+
 							<div class="groupDetailsTableContainer">
 								<table cellpadding="0" cellspacing="0">
 									<colgroup>
@@ -100,7 +103,7 @@
 											<td><c:out value="${group.client.name}" /></td>
 											<td class="firstColumn">Billing Accounts:</td>
 											<td>
-											    <s:iterator value="group.billingAccounts" id="billingAccount" status="status">
+											    <s:iterator value="group.billingAccounts" var="billingAccount" status="status">
 											    <s:if test="#status.First">
                                                     <s:property value="name"/>
                                                 </s:if>
@@ -113,7 +116,7 @@
 										<tr>
 											<td class="firstColumn">Projects:</td>
 											<td>
-											    <s:iterator value="group.directProjects" id="directProject" status="status">
+											    <s:iterator value="group.directProjects" var="directProject" status="status">
                                                 <s:if test="#status.First">
                                                     <s:property value="name"/>
                                                 </s:if>
@@ -131,9 +134,9 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 						</div>
-						
+
 						<div class="groupMembersTable">
 							<!-- .filterTitle -->
 							<div class="filterTitle">
@@ -144,7 +147,7 @@
 								</div><!-- End .filterTitleRight -->
 							</div>
 							<!-- End .filterTitle -->
-							
+
 							<div class="groupMembersTableContainer">
 								<table cellpadding="0" cellspacing="0" class="normalTableList detailsGroupTable">
 									<colgroup>
@@ -160,7 +163,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									    <s:iterator value="group.groupMembers" id="groupMember" status="status">
+									    <s:iterator value="group.groupMembers" var="groupMember" status="status">
                                         <s:if test="#groupMember.getUnassignedOn() == null">
 										<tr>
 											<td><s:property value="handle"/></td>
@@ -187,22 +190,22 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div class="groupDetailsButton">
                                 <c:if test="${not groupFullPermission}">
 								<a class="newButton1 newButtonGreen newButtonGray triggerModal deleteGroupButton" href="javascript:;"><span class="btnR"><span class="btnC">DELETE GROUP</span></span></a>
 								<a class="newButton1 newButtonGreen updateGroupButton" href="<s:url action="enterUpdateGroup" namespace="/group"><s:param name="groupId">${group.id}</s:param></s:url>"><span class="btnR"><span class="btnC">EDIT GROUP</span></span></a>
                                 </c:if>
 							</div>
-							
+
 						</div>
-						
+
 					</div>
 				</div>
 
 				<!-- End #mainContent -->
 				<jsp:include page="../includes/footer.jsp"/>
-			
+
 			</div>
 			<!-- End #content -->
 		</div>

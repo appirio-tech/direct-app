@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -22,6 +22,7 @@ import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.util.errorhandling.ExceptionUtils;
+import org.apache.struts2.dispatcher.LocalizedMessage;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 
 import javax.servlet.ServletInputStream;
@@ -30,13 +31,20 @@ import org.apache.struts2.ServletActionContext;
 
 /**
  * <p>
+ * Version 1.2 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #checkRequestError()} to use LocalizedMessage instead of String.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> The class is not thread safe because it's mutable by the setters and the values of this class
  * will change based on the request parameters. It's not required to be thread safe because in Struts 2 the actions
  * (different from Struts 1) are created for every request.
  * </p>
  *
- * @author TCASSEMBLER
- * @version 1.1
+ * @author TCASSEMBLER, duxiaoyang
+ * @version 1.2
  */
 public class ImageUploadAction extends ContestAction {
     /**
@@ -77,7 +85,7 @@ public class ImageUploadAction extends ContestAction {
     /**
      * <p>A <code>String</code> providing the text of error message to be displayed to user in case uploaded file
      * exceeds the pre-defined limit.</p>
-     * 
+     *
      * @since 1.1
      */
     private String fileSizeLimitExceededMessage;
@@ -90,7 +98,7 @@ public class ImageUploadAction extends ContestAction {
 
     /**
      * <p>Handles the incoming request.</p>
-     * 
+     *
      * @return a <code>String</code> referencing the next view to be displayed to user.
      * @throws Exception if an unexpected error occurs.
      * @since 1.1
@@ -115,23 +123,21 @@ public class ImageUploadAction extends ContestAction {
     /**
      * <p>Handles the case when the request for uploading the document has failed, most likely due to uploaded file to
      * exceed the maximum file size limit.</p>
-     * 
-     * @return a <code>String</code> referencing the next view.  
+     *
+     * @return a <code>String</code> referencing the next view.
      * @since 1.1
      */
     public String checkRequestError() {
         StringBuilder b = new StringBuilder();
         MultiPartRequestWrapper servletRequest = (MultiPartRequestWrapper) DirectUtils.getServletRequest();
         if (servletRequest.hasErrors()) {
-            Collection<String> errors = servletRequest.getErrors();
-            for (String error : errors) {
-                error = error.toLowerCase();
-                if (error.startsWith("the request was rejected because its size") 
-                    && error.contains("exceeds the configured maximum")) {
-                        setResult(new RuntimeException(getFileSizeLimitExceededMessage()));
-                        return ERROR;
+            Collection<LocalizedMessage> errors = servletRequest.getErrors();
+            for (LocalizedMessage error : errors) {
+                if (error.getTextKey().equals("struts.messages.upload.error.SizeLimitExceededException")) {
+                    setResult(new RuntimeException(getFileSizeLimitExceededMessage()));
+                    return ERROR;
                 } else {
-                    b.append("\n").append(error);
+                    b.append("\n").append(error.getDefaultMessage());
                 }
             }
         }
@@ -150,10 +156,10 @@ public class ImageUploadAction extends ContestAction {
      */
     private void executeActionSoftware() throws Exception {
     	HttpServletRequest request = ServletActionContext.getRequest();
-    	String CKEditorFuncNum = request.getParameter("CKEditorFuncNum"); 
-    	
-    	String webRoot = request.getSession().getServletContext().getRealPath(""); 
-    	
+    	String CKEditorFuncNum = request.getParameter("CKEditorFuncNum");
+
+    	String webRoot = request.getSession().getServletContext().getRealPath("");
+
     	String exception = "";
 
     	try {
@@ -174,14 +180,14 @@ public class ImageUploadAction extends ContestAction {
         } catch (Exception e) {
         	exception = e.toString();
         }
-    	
+
     	PrintWriter printWriter = new PrintWriter(new FileWriter(webRoot + "/WEB-INF/image-upload.jsp"));
-    	printWriter.write("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("  
-                + CKEditorFuncNum  
-                + ", '"  
-                + "/direct/upload/" + uploadFileName  
-                + "' , '"  
-                + ""  
+    	printWriter.write("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+                + CKEditorFuncNum
+                + ", '"
+                + "/direct/upload/" + uploadFileName
+                + "' , '"
+                + ""
                 + "');</script>");
     	printWriter.flush();
     }
@@ -261,4 +267,3 @@ public class ImageUploadAction extends ContestAction {
         this.fileSizeLimitExceededMessage = fileSizeLimitExceededMessage;
     }
 }
-

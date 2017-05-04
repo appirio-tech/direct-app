@@ -1,7 +1,7 @@
 <%--
-  - Author: Ghost_141, TCSASSEMBLER
-  - Version: 1.4
-  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, TCSASSEMBLER, duxiaoyang
+  - Version: 1.6
+  - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Release Assembly - Project Contest Fee Management Update 1) changes:
   - Initialized the page functions. This page renders the form for creating contest fees for billing accounts.
@@ -15,6 +15,9 @@
   - - Update the page type to admin
   - Version 1.5 (BUGR-10395 Cockpit Fixed Contest Fee Not Saved)
   - - Update the contest fee to populate the contestTypeId
+  - Version 1.6 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace id attribute for s:iterator with var attribute
+  - - Replace id attribute for s:url with var attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,7 +43,7 @@
     <div class="content">
         <div class="alert">
             <span class="title">You&acute;re using Internet Explorer 6 or Lower. </span>
-            <span class="desc">For the full features supported and best experience we strongly recommend upgrading to 
+            <span class="desc">For the full features supported and best experience we strongly recommend upgrading to
                 <strong class="ie8"><a href="javascript:;">Internet Explorer 8</a>
                     <span class="tip">
                         <span class="tipTop"></span>
@@ -51,7 +54,7 @@
                         </span>
                         <span class="tipBottom"></span>
                     </span>
-                </strong>, 
+                </strong>,
                 <strong class="ff"><a href="javascript:;">Firefox 5.0</a>
                     <span class="tip">
                         <span class="tipTop"></span>
@@ -62,7 +65,7 @@
                         </span>
                         <span class="tipBottom"></span>
                     </span>
-                </strong>, 
+                </strong>,
                 <strong class="safari"><a href="javascript:;">Safari 5</a>
                         <span class="tip">
                             <span class="tipTop"></span>
@@ -72,7 +75,7 @@
                             </span>
                             <span class="tipBottom"></span>
                         </span>
-                </strong> or 
+                </strong> or
                     <strong class="chrome"><a href="javascript:;">Google Chrome</a>
                         <span class="tip">
                             <span class="tipTop"></span>
@@ -112,7 +115,7 @@
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a>
                                 &gt;
-                                <s:url action="contestFee" namespace="/settings/admin" id="feeMainPage">
+                                <s:url action="contestFee" namespace="/settings/admin" var="feeMainPage">
                                 </s:url>
                                 <strong><a href="<s:property value="#feeMainPage"/>">Challenge Fee Management</a></strong>
                             </div>
@@ -136,7 +139,7 @@
                                     <div style="color:red">
                                         <s:fielderror/>
                                     </div>
- 
+
                                     <div id="contest_fee_type">
                                         <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Challenge Fee', 'false':'Member Cost Percentage Based Challenge Fee'}"/>
                                         <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20" cssClass="contestFeePercentage"/>
@@ -160,7 +163,7 @@
                                             <td colspan="2"><strong>Studio</strong></td>
                                         </tr>
 
-                                        <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                        <s:iterator value="formData.contestFees" var="formData.contestFees"
                                                     status="status">
                                             <s:if test="studio && contestTypeId < 900000">
                                                 <tr>
@@ -179,7 +182,7 @@
                                             <td colspan="2"><strong>Software</strong></td>
                                         </tr>
 
-                                        <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                        <s:iterator value="formData.contestFees" var="formData.contestFees"
                                                     status="status">
                                             <s:if test="!studio && contestTypeId < 900000">
                                                 <tr>
@@ -199,7 +202,7 @@
                                             <td colspan="2"><strong>Others</strong></td>
                                         </tr>
 
-                                        <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                        <s:iterator value="formData.contestFees" var="formData.contestFees"
                                                     status="status">
                                             <s:if test="contestTypeId >= 900000">
                                                 <tr>
@@ -250,6 +253,3 @@
 <!-- End #page -->
 
 </html>
-
-                    
-                    

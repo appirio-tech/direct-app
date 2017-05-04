@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012, TCSASSEMBLER
-  - Version: 2.3
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, flexme, GreatKevin, Ghost_141, csy2012, duxiaoyang
+  - Version: 2.4
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
   - - Add a popup window to support the cost breakdown data.
@@ -26,12 +26,12 @@
   -
   - Version 1.7 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
   - - Added new column launch date in the cost analysis report
-  - 
+  -
   - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Remove the container2BottomLeft and container2BottomRight class in pagination part.
-  - 
+  -
   - Version 1.9 (Release Assembly - TopCoder Cockpit Direct UI Layout Bugs Termination 2.0)
-  - - Fixed the date, title layout issue for 'cost breakdown view' result table.   
+  - - Fixed the date, title layout issue for 'cost breakdown view' result table.
   -
   - Version 2.0 (Release Assembly - TC Cockpit Project Total Cost Fixes)
   - - Handles the display of project level cost data
@@ -44,6 +44,9 @@
   -
   - Version 2.3 (TC Direct Rebranding Assembly Copilot and Reporting related pages)
   - - Rebranding the copilot and reporting related pages.
+  -
+  - Version 2.4 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -203,9 +206,9 @@
                                             All</label>
                                     </div>
                                     <s:iterator value='viewData.groupValues' status='c' var="groupValue">
-                                        <s:set name='needCheck' value='false'/>
+                                        <s:set var='needCheck' value='false'/>
                                         <s:iterator value='formData.groupValues' var="group">
-                                            <s:if test="#group == #groupValue"><s:set name='needCheck'
+                                            <s:if test="#group == #groupValue"><s:set var='needCheck'
                                                                                       value='true'/></s:if>
                                         </s:iterator>
                                         <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
@@ -233,9 +236,9 @@
                                 </div>
 
                                 <s:iterator value='viewData.contestStatus' status='s'>
-                                    <s:set name='needCheck' value='false'/>
+                                    <s:set var='needCheck' value='false'/>
                                     <s:iterator value='formData.statusIds' var="statusId">
-                                        <s:if test="#statusId == key.longValue()"><s:set name='needCheck' value='true'/></s:if>
+                                        <s:if test="#statusId == key.longValue()"><s:set var='needCheck' value='true'/></s:if>
                                     </s:iterator>
                                     <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
                                         <input type="checkbox"
@@ -260,9 +263,9 @@
                                 </div>
 
                                 <s:iterator value='viewData.projectCategories' status='c'>
-                                    <s:set name='needCheck' value='false'/>
+                                    <s:set var='needCheck' value='false'/>
                                     <s:iterator value='formData.projectCategoryIds' var="cateogryId">
-                                        <s:if test="#cateogryId == key.longValue()"><s:set name='needCheck'
+                                        <s:if test="#cateogryId == key.longValue()"><s:set var='needCheck'
                                                                                            value='true'/></s:if>
                                     </s:iterator>
                                     <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">

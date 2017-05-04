@@ -1,13 +1,13 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%--
-  - Author: Ghost_141, GreatKevin
-  - Version: 1.4
-  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin, duxiaoyang
+  - Version: 1.5
+  - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest links area for Contest Details page
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
-  - 1. Change the  style for the links. 
+  - 1. Change the  style for the links.
   - 2. Add the 'View Contest', 'Repost Contest', 'New Version' links.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Results Tab 2) changes:
@@ -16,8 +16,11 @@
   - Version 1.3 (BUGR - 9796) changes:
   - 1. Add link for update/set round id.
   -
-   - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
+  - Version 1.4 (Release Assembly - Port Design Challenge Forum to use Dev Forum)
   - - Update forum link for studio contest
+  -
+  - Version 1.5 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
@@ -36,21 +39,21 @@
             <li class="splitter" id="newVersionButtonSplitter"></li>
         </s:if>
 
-        
+
 
         <s:if test="viewData.contestStats.isStudio">
-            <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
+            <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
         </s:if>
         <s:elseif test="marathon">
             <s:if test="viewData.active">
-                <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
+                <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:if>
             <s:else>
-                <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
+                <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
             </s:else>
         </s:elseif>
         <s:else>
-           <s:set name="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
+           <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
         </s:else>
 
         <s:if test="marathon">

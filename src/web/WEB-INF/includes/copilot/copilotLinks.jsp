@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER, duxiaoyang
+  - Version 1.1
+  - Copyright (C) - 2017 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace name attribute for s:set with var attribute
+--%>
+
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
@@ -5,7 +14,7 @@
     <ul class="links">
 
 
-        <s:set name="contestLink"
+        <s:set var="contestLink"
                value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
 
         <s:if test="viewData.contestStats.draft">

@@ -1,11 +1,14 @@
 <%--
-  - Author: Veve
-  - Version: 1.0
-  - Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
+  - Author: Veve, duxiaoyang
+  - Version: 1.1
+  - Copyright (C) 2014 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the admin login page for TC Direct application.
   -
   - Version 1.0 (TopCoder Direct - Update Login and add Admin Login)
+  -
+  - Version 1.1 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
+  - - Replace escape attribute for s:property with escapeHtml attribute
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -73,7 +76,7 @@
                     <p class="errorMessage">
                         <s:if test="hasActionErrors()">
                             <s:iterator value="actionErrors">
-                                <s:property escape="false"/>
+                                <s:property escapeHtml="false"/>
                             </s:iterator>
                         </s:if>
                     </p>
