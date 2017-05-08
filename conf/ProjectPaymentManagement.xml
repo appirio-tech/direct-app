@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.management.payment.impl.ProjectPaymentManagerImpl">
+        <Property name="loggerName">
+            <Value>com.topcoder.management.payment.impl.ProjectPaymentManagerImpl</Value>
+        </Property>
+        <Property name="objectFactoryConfig">
+            <Property name="DatabaseProjectPaymentPersistence">
+                <Property name="type">
+                    <Value>com.topcoder.management.payment.impl.persistence.DatabaseProjectPaymentPersistence</Value>
+                </Property>
+            </Property>
+        </Property>
+        <Property name="searchBundleManagerNamespace">
+            <Value>com.topcoder.search.builder</Value>
+        </Property>
+        <Property name="projectPaymentSearchBundleName">
+            <Value>ProjectPaymentSearchBundle</Value>
+        </Property>
+        <Property name="projectPaymentPersistenceKey">
+            <Value>DatabaseProjectPaymentPersistence</Value>
+        </Property>
+        <Property name="projectPaymentPersistenceConfig">
+            <Property name="loggerName">
+                <Value>com.topcoder.management.payment.impl.persistence.DatabaseProjectPaymentPersistence</Value>
+            </Property>
+            <Property name="dbConnectionFactoryConfig">
+                <Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+                    <Property name="connections">
+                        <Property name="default">
+                            <Value>tcs</Value>
+                        </Property>
+                        <Property name="tcs">
+                            <Property name="producer">
+                                <Value>com.topcoder.db.connectionfactory.producers.JNDIConnectionProducer</Value>
+                            </Property>
+                            <Property name="parameters">
+                                <Property name="jndi_name">
+                                    <Value>java:/InformixDS</Value>
+                                </Property>
+                            </Property>
+                        </Property>
+                    </Property>
+                </Property>
+            </Property>
+            <Property name="connectionName">
+                <Value>tcs</Value>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

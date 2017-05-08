@@ -735,6 +735,129 @@
 					</Property>
 				</Property>
 			</Property>
+			<Property name="ProjectPaymentSearchBundle">
+				<Property name="type">
+					<Value>Database</Value>
+				</Property>
+				<Property name="name">
+					<Value>ProjectPaymentSearchBundle</Value>
+				</Property>
+
+				<Property name="searchStrategy">
+					<Property name="class">
+						<Value>dbStrategy</Value>
+					</Property>
+				</Property>
+
+				<Property name="searchableFields">
+					<Property name="projectPaymentId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="resourceId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="submissionId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="projectId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="pactsPaymentId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+					<Property name="projectPaymentTypeId">
+						<Property name="validator">
+							<Property name="class">
+								<Value>validator</Value>
+							</Property>
+							<Property name="identifier">
+								<Value>default</Value>
+							</Property>
+						</Property>
+					</Property>
+				</Property>
+
+				<Property name="context">
+					<Value>
+						SELECT project_payment.project_payment_id,
+						project_payment.resource_id,
+						project_payment.submission_id,
+						project_payment.amount,
+						project_payment.pacts_payment_id,
+						project_payment.create_user,
+						project_payment.create_date,
+						project_payment.modify_user,
+						project_payment.modify_date,
+						project_payment_type_lu.project_payment_type_id,
+						project_payment_type_lu.name,
+						project_payment_type_lu.mergeable,
+						project_payment_type_lu.pacts_payment_type_id,
+						resource.project_id
+						FROM project_payment
+						INNER JOIN project_payment_type_lu
+						ON project_payment.project_payment_type_id = project_payment_type_lu.project_payment_type_id
+						INNER JOIN resource
+						ON project_payment.resource_id = resource.resource_id
+						WHERE
+					</Value>
+				</Property>
+
+				<Property name="alias">
+					<Property name="projectPaymentId">
+						<Value>project_payment.project_payment_id</Value>
+					</Property>
+					<Property name="resourceId">
+						<Value>project_payment.resource_id</Value>
+					</Property>
+					<Property name="projectId">
+						<Value>resource.project_id</Value>
+					</Property>
+					<Property name="projectPaymentTypeId">
+						<Value>project_payment.project_payment_type_id</Value>
+					</Property>
+					<Property name="submissionId">
+						<Value>project_payment.submission_id</Value>
+					</Property>
+					<Property name="pactsPaymentId">
+						<Value>project_payment.pacts_payment_id</Value>
+					</Property>
+				</Property>
+			</Property>
 		</Property>
 	</Config>
 

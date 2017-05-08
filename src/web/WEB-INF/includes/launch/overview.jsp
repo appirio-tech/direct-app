@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin, Veve
-  - Version: 1.8
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin, Veve, TCSASSEMBER
+  - Version: 1.9
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
   -
@@ -21,6 +21,9 @@
   -
   - Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
   - Add studio cup points checkbox and studio cup points display
+  -
+  - Version 1.9 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -135,6 +138,9 @@
         
     </div>
     <!-- end .mPrizes -->
+    <div class="copilotFeeDiv">
+        <label>Copilot Fee:</label> <span class="dw">$</span> <input type="text" class="copilotFee studio" value="0" disabled="true"/>
+    </div>
 
     <!-- Studio Cup Points -->
     <div class="studioCupPoints drHide" id="studioCupPointsDiv">

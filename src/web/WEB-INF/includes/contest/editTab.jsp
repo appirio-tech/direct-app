@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.5
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -50,6 +50,9 @@
   -
   - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
+  -
+  - Version 2.6 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -665,7 +668,7 @@
                                 <td>Screening Cost: $<span id="studioScreeningCost"></span></td>
                                 <td class="drHide"><input type="checkbox" id="studioCupPointsCheckBox" style="top:0px;"/></td>
                                 <td class="drHide">Studio Cup: $<span id="studioCupPoints"></span></td>
-                                <td>Copilot Fee: $<span id="studioCopilotFee"></span></td>
+                                <td>Copilot Fee: $<input type="text" name="copilotFee" class="copilotFee" /></td>
                                 <td>Challenge Fee: $<span id="studioAdminFee"></span></td>
                             </tr>
                         </table>

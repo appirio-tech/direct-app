@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin
-  - Version: 1.9
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin, ASASSEMBLER
+  - Version: 1.10
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -32,6 +32,9 @@
   -
   - Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
   - - Make the spec review alone, so it can be displayed for bug hunt challenge
+  -
+  - Version 1.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -   Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -261,7 +264,9 @@
               </span>
               <span class="first_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
-              <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
+              <div class="copilotFeeDiv">
+                  <label>Copilot Fee:</label> <span class="dw">$</span> <input type="text" class="copilotFee software" value="0" disabled="true"/>
+              </div>
 			  <div class="totalCostContainer"><strong>Estimated Challenge Total:&nbsp;&nbsp;$ <span id="swTotal"></span></strong>
               <p class="note">
                   Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
@@ -270,9 +275,7 @@
 		  </span>
     </div>
 </div>
-
-
-  <!-- end .prizes -->
+    <!-- end .prizes -->
   <div class="clear"></div>
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
