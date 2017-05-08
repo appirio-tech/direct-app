@@ -18,7 +18,7 @@ CKEDITOR.editorConfig = function (config) {
        { name: 'max', items : [ 'Maximize' ] }, 
        '/', 
        { name: 'styles', items : [ 'Format','Font','FontSize', '-', 'TextColor','BGColor'] }, 
-       { name: 'paragraph', items : [ 'Outdent','Indent','-','Blockquote', 
+       { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote', 
        '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] }, 
        { name: 'links', items : [ 'Link','Unlink' ] } 
     ]; 
