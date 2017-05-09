@@ -276,7 +276,7 @@
                         </c:if>
                         <c:if test="${tcdirect:isScorecardAdmin()}">
                             <li>
-                                <a class="last" href="/direct/scorecard/">Scorecard Management <span class="icon scorecardI"></span></a>
+                                <a class="last" href="/scorecard/">Scorecard Management <span class="icon scorecardI"></span></a>
                             </li>
                         </c:if>
                         <c:if test="${tcdirect:isSuperAdmin()}">

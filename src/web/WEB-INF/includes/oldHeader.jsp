@@ -192,7 +192,7 @@
         </if:isSecurityGroupsUIAccessible>
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
@@ -266,7 +266,7 @@
 
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
@@ -338,7 +338,7 @@
         </if:isSecurityGroupsUIAccessible>
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
@@ -404,7 +404,7 @@
         </if:isSecurityGroupsUIAccessible>
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
@@ -467,7 +467,7 @@
         </if:isSecurityGroupsUIAccessible>
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
@@ -526,7 +526,7 @@
 
         <c:if test="${tcdirect:isScorecardAdmin()}">
             <li>
-                <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                <a href="/scorecard/"><span>Scorecards</span></a>
             </li>
         </c:if>
         <c:if test="${tcdirect:canViewInternalStats()}">
