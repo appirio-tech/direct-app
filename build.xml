@@ -381,7 +381,7 @@
 				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/my/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
-                <include name="scripts/ckeditor/templates/**/*.*"/>
+                <include name="scripts/ckeditor/**/*.*"/>
             </fileset>
         </zip>
     </target>
@@ -393,9 +393,9 @@
 	                <exclude name="scripts/tiny_mce/**/*.*"/>
 	                <include name="scripts/*.*"/>
 	                <include name="scripts/launch/**/*.*"/>
-					<include name="scripts/copilot/**/*.*"/>
+			<include name="scripts/copilot/**/*.*"/>
 	                <include name="scripts/tinyMCE/templates/*.html"/>
-	                <include name="scripts/ckeditor/templates/**/*.*"/>
+	                <include name="scripts/ckeditor/**/*.*"/>
 	            	<include name="images/*.*"/>
 	            	<include name="images/copilotPosting/*.*"/>
 	            	<include name="images/edit/*.*"/>
