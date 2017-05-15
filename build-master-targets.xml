@@ -567,7 +567,6 @@
             <path>
                 <fileset dir="${webdir}">
                     <include name="**/*.css"/>
-					<exclude name="**/scorecard/"/>
                 </fileset>
             </path>
         </foreach>

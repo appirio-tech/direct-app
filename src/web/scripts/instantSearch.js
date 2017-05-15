@@ -484,7 +484,7 @@ var instantSearchFeaturesList = {
         },
         {
             "title":    "Scorecard Management",
-            "link":     "/direct/scorecard/",
+            "link":     "/scorecard/",
             "brief":    "Manage the challenge scorecard - your can create new scorecard templates here",
             "group":    "Admin",
             "reqAdmin": "yes"

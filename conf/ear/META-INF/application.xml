@@ -95,13 +95,6 @@
     <module>
         <java>conf</java>
     </module>
-
-     <module>
-         <web>
-            <web-uri>scorecard.war</web-uri>		
-            <context-root>/direct/scorecard</context-root>		
-        </web>		
-    </module>
     <module>
         <web>
             <web-uri>direct.war</web-uri>
