@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin
-  - Version: 1.9
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin, TCSCODER
+  - Version: 1.10
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -32,6 +32,9 @@
   -
   - Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
   - - Make the spec review alone, so it can be displayed for bug hunt challenge
+  -
+  - Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for adding challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -106,6 +109,9 @@
         </select>   
       </div>
    </div>
+    <div class="prizes group" id="groupSoftwareDiv">
+        <jsp:include page="group.jsp"/>
+    </div>
 
   <div id="swThurgoodDiv" style="display: none">
       <h3>Use Thurgood to check challenge submissions?</h3><br/>

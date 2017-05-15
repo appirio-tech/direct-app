@@ -1,9 +1,12 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.0
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Author: bugbuka, TCSCCODER
+  - Version: 1.1
+  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for algorithm contest.
+  -
+  - Version 1.1 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for displaying challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -40,6 +43,10 @@
             <th>End :</th>
             <td><span id="ralEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
+		<tr class="rGroups">
+			<th>Challenge Groups :</th>
+			<td><a href="javascript:backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+		</tr>
 	</table>
 </div>
 <!-- End .overviewBox -->

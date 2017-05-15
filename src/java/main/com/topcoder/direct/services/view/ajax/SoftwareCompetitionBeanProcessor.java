@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-import com.topcoder.clients.model.ContestType;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
@@ -114,8 +114,13 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Update {@link #getMapResult(SoftwareCompetition)} include registrant id</li>
  * </ul>
  *
- * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin
- * @version 2.2
+ * Version 2.3 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Updated {@link #getMapResult(SoftwareCompetition)}include project groups of challenge</li>
+ * </ul>
+ *
+ * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin, TCSCODER
+ * @version 2.3
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -293,6 +298,12 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
                 }
             }));
         }
+
+        result.put("groupIds", CollectionUtils.collect(bean.getProjectHeader().getGroups(), new Transformer() {
+            public Object transform(Object object) {
+                return ((ProjectGroup) object).getId() + "";
+            }
+        }));
 
         // documentation
         result.put("documentation", CollectionUtils.collect(assetDTO.getDocumentation(), new Transformer() {

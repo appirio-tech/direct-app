@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.5
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSCODER
+  - Version: 1.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for software contest.
   -
@@ -18,6 +18,9 @@
   -
   - Version 1.5 (Module Assembly - TC Cockpit Launch F2F contest)
   - - Hide the uneeded prize for F2F contest
+  -
+  - Version 1.6 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for display and edit challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -57,6 +60,10 @@
 		<tr id="rswCheckpointTR">
             <th>Checkpoint End :</th>
             <td><span id="rswCheckpointDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+        </tr>
+        <tr class="rGroups">
+            <th>Challenge Groups :</th>
+            <td><a href="javascript:backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
 	</table>
 </div>

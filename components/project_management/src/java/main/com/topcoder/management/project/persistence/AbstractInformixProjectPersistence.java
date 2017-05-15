@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project.persistence;
 
@@ -43,6 +43,7 @@ import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectMMSpecification;
 import com.topcoder.management.project.ProjectPersistence;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectSpec;
 import com.topcoder.management.project.ProjectStatus;
@@ -381,9 +382,28 @@ import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
  * Thread Safety: This class is thread safe because it is immutable.
  * </p>
  *
+ * <p>
+ * Version 1.8.2 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #CREATE_PROJECT_GROUP_SQL}</li>
+ *     <li>Added {@link #DELETE_PROJECT_GROUP_SQL}</li>
+ *     <li>Added {@link #QUERY_ALL_PROJECT_GROUP_SQL}</li>
+ *     <li>Added {@link #QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES}</li>
+ *     <li>Added {@link #QUERY_PROJECT_GROUP_SQL}</li>
+ *     <li>Added {@link #QUERY_PROJECT_GROUP_COLUMN_TYPES}</li>
+ *     <li>Added {@link #QUERY_PROJECT_GROUP_IDS_SQL}</li>
+ *     <li>Updated {@link #createProject(Long, Project, String, Connection)}</li>
+ *     <li>Updated {@link #getProjects(long[], Connection)} add groups</li>
+ *     <li>Updated {@link #updateProject(Project, String, String, Connection)}</li>
+ *     <li>Added {@link #updateProjectGroups(Long, List<ProjectGroup>, String, Connection)} to update challenge groups</li>
+ *     <li>Added {@link #getAllProjectGroups()} get all groups</li>
+ *     <li>Added {@link #createProjectGroup(Long, List, String, Connection)}to add groups of challenge</li>
+ *     <li>Added {@link #getProjectGroupIdsForProject(Long, Connection)} get groupg ids of challenge</li>
+ *     <li>Added {@link #deleteProjectGroup(Long, List, Connection)} to delete groups</li>
+ * </ul>
  *
- * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin
- * @version 1.8.1
+ * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin, TCSCODER
+ * @version 1.8.2
  * @since 1.0
  */
 public abstract class AbstractInformixProjectPersistence implements ProjectPersistence {
@@ -2442,7 +2462,61 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * @since 1.5.4
      */
     private static final String UPDATE_CHECKPOINT_FEEDBACK_SQL = "UPDATE comp_milestone_feedback "
-            + "SET feedback = ? WHERE project_id = ";    
+            + "SET feedback = ? WHERE project_id = ";
+
+    /**
+     * Sql statement for adding challenge group
+     * @since 1.8.2
+     */
+    private static final String CREATE_PROJECT_GROUP_SQL = "INSERT INTO project_group_xref "
+            + "(project_id, project_group_id,"
+            + "create_user, create_date, modify_user, modify_date) "
+            + "VALUES (?, ?, ?, CURRENT, ?, CURRENT)";
+
+    /**
+     * Sql statement for deleting challenge group
+     * @since 1.8.2
+     */
+    private static final String DELETE_PROJECT_GROUP_SQL = "DELETE FROM project_group_xref "
+            + "WHERE project_id = ? AND project_group_id IN ";
+
+    /**
+     * Sql statement for fetching all of challenge groups
+     * @since 1.8.2
+     */
+    private static final String QUERY_ALL_PROJECT_GROUP_SQL = "SELECT project_group_id, name " +
+            " FROM project_group_lu";
+
+    /**
+     * Return type of {@link #QUERY_ALL_PROJECT_GROUP_SQL}
+     * @since 1.8.2
+     */
+    private static final DataType[] QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES = new DataType[] {
+            Helper.LONG_TYPE, Helper.STRING_TYPE };
+
+    /**
+     * Sql statement for fetching challenge groups of a challenge
+     * @since 1.8.2
+     */
+    private static final String QUERY_PROJECT_GROUP_SQL =
+            "SELECT pg.project_id, pg.project_group_id, plu.name \n" +
+                    "FROM project_group_xref pg \n" +
+                    "INNER JOIN project_group_lu plu \n" +
+                    "ON pg.project_group_id = plu.project_group_id WHERE pg.project_id IN";
+
+    /**
+     * Return type of {@link #QUERY_PROJECT_GROUP_SQL}
+     * @since 1.8.2
+     */
+    private static final DataType[] QUERY_PROJECT_GROUP_COLUMN_TYPES = new DataType[] {
+            Helper.LONG_TYPE, Helper.LONG_TYPE, Helper.STRING_TYPE};
+
+    /**
+     * Sql statement for fetching group id of challenge group
+     * @since 1.8.2
+     */
+    private static final String QUERY_PROJECT_GROUP_IDS_SQL = "SELECT "
+            + "project_group_id FROM project_group_xref WHERE project_id = ?";
 
     /**
      * <p>
@@ -5351,6 +5425,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
         // create the project platforms
         createProjectPlatforms(projectId, project.getPlatforms(), operator, conn);
+
+        //create challenge group
+        createProjectGroup(projectId, project.getGroups(), operator, conn);
     }
 
     /**
@@ -5509,6 +5586,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
         // update the project platforms
         updateProjectPlatforms(projectId, project.getPlatforms(), operator, conn);
+
+        //update group
+        updateProjectGroups(projectId, project.getGroups(), operator, conn);
     }
 
     /**
@@ -5857,7 +5937,14 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
             project.getPlatforms().add(new ProjectPlatform((Long) row[1], (String) row[2]));
         }
-
+        //get challenge group
+        rows = Helper.doQuery(conn, QUERY_PROJECT_GROUP_SQL + idList, new Object[]{},
+                QUERY_PROJECT_GROUP_COLUMN_TYPES);
+        for(int i = 0; i < rows.length; ++i) {
+            Object[] row = rows[i];
+            Project project = (Project) projectMap.get(row[0]);
+            project.getGroups().add(new ProjectGroup((Long) row[1], (String) row[2]));
+        }
         return projects;
     }
     /**
@@ -9990,6 +10077,211 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 closeConnectionOnError(conn);
             }
             throw e;
+        }
+    }
+
+    /**
+     * <p>
+     * Update groups of the challenge
+     * </p>
+     *
+     * @param projectId project Id
+     * @param groups list of challenge groups
+     * @param operator user id who execute this
+     * @param conn connection
+     * @throws PersistenceException if database related exception occur
+     * @since 1.8.2
+     */
+    private void updateProjectGroups(Long projectId, List<ProjectGroup> groups, String operator, Connection conn)
+            throws PersistenceException {
+
+        if(groups == null) {
+            groups = new ArrayList<ProjectGroup>();
+        }
+
+        // get old platform ids from database
+        Set<Long> oldGroupIds = getProjectGroupIdsForProject(projectId, conn);
+
+        // create a list to contain the platforms to insert
+        List<ProjectGroup> groupsToAdd = new ArrayList<ProjectGroup>();
+
+        // create a list to contain the platforms to remove
+        List<Long> groupsToDelete = new ArrayList<Long>();
+
+        Set<Long> newGroupIds = new HashSet<Long>();
+
+        for(ProjectGroup p : groups) {
+            if(!oldGroupIds.contains(p.getId())) {
+                // the existing does not contain, to add
+                groupsToAdd.add(p);
+            }
+            newGroupIds.add(p.getId());
+        }
+
+        for(Long oldGId : oldGroupIds) {
+            if(!newGroupIds.contains(oldGId)) {
+                // the old platform is not in the new platform, to remove
+                groupsToDelete.add(oldGId);
+            }
+        }
+
+        // create the new platforms
+        createProjectGroup(projectId, groupsToAdd, operator, conn);
+
+        // delete the old platforms
+        deleteProjectGroup(projectId, groupsToDelete, conn);
+    }
+
+    /**
+     * <p>
+     * Get all groups
+     * </p>
+     * @return Array of all ProjectGroup
+     * @throws PersistenceException if any database related exception occur
+     * @since 1.8.2
+     */
+    public ProjectGroup[] getAllProjectGroups() throws PersistenceException {
+        Connection conn = null;
+        getLogger().log(Level.INFO, new LogMessage(null, null, "Enter getAllProjectGroup method."));
+        try {
+            // create the connection
+            conn = openConnection();
+
+            Object[][] rows = Helper.doQuery(conn,
+                    QUERY_ALL_PROJECT_GROUP_SQL, new Object[] {},
+                    QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES);
+
+            // create the ProjectPlatform array.
+            ProjectGroup[] projectGroups = new ProjectGroup[rows.length];
+
+            for (int i = 0; i < rows.length; ++i) {
+                Object[] row = rows[i];
+
+                // create the ProjectPlatform object
+                projectGroups[i] = new ProjectGroup(((Long) row[0]).longValue(),
+                        (String) row[1]);
+            }
+
+            closeConnection(conn);
+            return projectGroups;
+        } catch (PersistenceException e) {
+            getLogger().log(Level.ERROR, new LogMessage(null, null, "Fail to getAllProjectGroups.", e));
+            if (conn != null) {
+                closeConnectionOnError(conn);
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * <p>
+     * Add groups to a challenge
+     * </p>
+     *
+     * @param projectId project Id
+     * @param groups list of ProjectGroup of the challenge
+     * @param operator user whos execute this
+     * @param conn connection
+     * @throws PersistenceException if any database exception occur
+     * @since 1.8.2
+     */
+    private void createProjectGroup(Long projectId, List<ProjectGroup> groups, String operator, Connection conn)
+            throws PersistenceException {
+
+        getLogger().log(Level.INFO, new LogMessage(projectId, operator,
+                "insert record into project_group_xref with project id" + projectId));
+
+        if (groups == null || groups.size() == 0) {
+            return;
+        }
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // prepare the statement.
+            preparedStatement = conn
+                    .prepareStatement(CREATE_PROJECT_GROUP_SQL);
+
+            // enumerator each project platform
+            for (ProjectGroup group : groups) {
+                System.out.println("DDD create: " + group.getId());
+                Object[] queryArgs = new Object[]{projectId, group.getId(),
+                        operator, operator};
+                Helper.doDMLQuery(preparedStatement, queryArgs);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenceException(
+                    "Unable to create prepared statement ["
+                            + CREATE_PROJECT_GROUP_SQL + "].", e);
+        } finally {
+            Helper.closeStatement(preparedStatement);
+        }
+    }
+
+    /**
+     * <p>
+     * Get ids of groups of the challenge
+     * </p>
+     *
+     * @param projectId project ID
+     * @param conn connection
+     * @return list of ids of groups
+     * @throws PersistenceException if any database related exception occur
+     * @sincec 1.8.2
+     */
+    private Set<Long> getProjectGroupIdsForProject(Long projectId, Connection conn) throws PersistenceException {
+        Set<Long> groupIds = new HashSet<Long>();
+
+        // find projects in the table.
+        Object[][] rows = Helper.doQuery(conn, QUERY_PROJECT_GROUP_IDS_SQL,
+                new Object[]{projectId}, new DataType[] {Helper.LONG_TYPE});
+
+        // enumerator each row
+        for (int i = 0; i < rows.length; ++i) {
+            Object[] row = rows[i];
+
+            // add the id to the map
+            groupIds.add((Long) row[0]);
+        }
+
+        return groupIds;
+    }
+
+    /**
+     * <p>
+     * Delete groups from challenge
+     * </p>
+     *
+     * @param projectId project Id
+     * @param groupIds list ids of groups to delete
+     * @param conn connection
+     * @throws PersistenceException if any database related exception occur
+     * @since 1.8.2
+     */
+    private void deleteProjectGroup(Long projectId, List<Long> groupIds, Connection conn)
+            throws PersistenceException {
+
+        if (groupIds!= null && !groupIds.isEmpty()) {
+
+            // build the id list string
+            StringBuffer idListBuffer = new StringBuffer();
+            idListBuffer.append('(');
+            int idx = 0;
+            for (Long pid : groupIds) {
+                if (idx++ != 0) {
+                    idListBuffer.append(',');
+                }
+                idListBuffer.append(pid);
+            }
+            idListBuffer.append(')');
+
+            getLogger().log(Level.INFO, new LogMessage(projectId, null,
+                    "delete records from project_group_xref with projectId:" + projectId));
+
+            // delete the project platforms whose id is in the set
+            Helper.doDMLQuery(conn, DELETE_PROJECT_GROUP_SQL
+                    + idListBuffer.toString(), new Object[] {projectId});
         }
     }
 }

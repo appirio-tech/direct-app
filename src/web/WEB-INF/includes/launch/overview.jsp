@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin, Veve
-  - Version: 1.8
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Ghost_141, GreatKevin, Veve, TCSCODER
+  - Version: 1.9
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
   -
@@ -21,6 +21,9 @@
   -
   - Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
   - Add studio cup points checkbox and studio cup points display
+  -
+  - Version 1.9 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for adding challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -62,6 +65,10 @@
         </div>
   </div>
   <!-- end round 2 information -->
+
+    <div class="prizes group" id="groupStudioDiv">
+        <jsp:include page="group.jsp"/>
+    </div>
 
   <!-- upload -->
 	<div id="uploadSection">

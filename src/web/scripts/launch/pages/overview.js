@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Overview Page (the second page of the launch challenge flow)
  *
@@ -40,8 +40,11 @@
  * Version 1.9 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
- * @author bugbuka, GreatKevin, Veve, GreatKevin
- * @version 1.9
+ * Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Update review page for groups selected section
+ *
+ * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSCODER
+ * @version 1.10
  */
 $(document).ready(function() {
 
@@ -441,6 +444,14 @@ function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
+    //add challenge group to review page
+    var gid="#" + $(".group:visible").attr("id");
+    var groupsSpan="";
+    $(gid+" .masterGroupsChoosenSelect option").each(function(k,v){
+        groupsSpan+='<span>'+$(v).text()+'</span>';
+    });
+    $(".overviewData .rGroups td span").remove();
+    $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
    if(mainWidget.isSoftwareContest()) {
        if(!hasRequirementDocument()) {
