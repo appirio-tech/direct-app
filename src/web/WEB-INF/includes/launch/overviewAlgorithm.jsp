@@ -1,10 +1,13 @@
 <%--
-  - Author: bugbuka, GreatKevin
-  - Version: 1.1
+  - Author: bugbuka, GreatKevin, TCCODER
+  - Version: 1.3
   - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.2 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for algorithm contest prize add and remove
+  -
+  - Version 1.3 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for algorithm contest
   -
   - Description: This page fragment renders edit algorithm contest page.
 --%>
@@ -41,6 +44,30 @@
         </div>        
     </div>
     <!-- end Match Rules -->
+
+    <div class="prizes" id="algoGroupDiv">    
+        <h3>Choose Your Group:</h3>
+        
+        <div class="prizesInner_tech">
+        <span class="head_font">Master Groups</span>
+        <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+        <br />  
+        <select multiple id="masterAlgoGroupsSelect">  
+            <s:iterator value="referenceDataBean.groups">
+               <option value='<s:property value="id" />'><s:property value="name" /></option>
+            </s:iterator>                   
+        </select>  
+        
+        <div id="button_algo_group">
+          <img src="/images/add_tech.png" alt="add" id="addAlgoGroups" />
+            <br /><br />
+          <img src="/images/remove_tech.png" alt="remove" id="removeAlgoGroups" />
+        </div>    
+        
+        <select multiple id="masterAlgoGroupsChoosenSelect">
+        </select>   
+      </div>
+   </div>
     
     <!-- upload -->
     <div id="alUploadSection">

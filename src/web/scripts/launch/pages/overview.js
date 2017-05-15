@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Overview Page (the second page of the launch challenge flow)
  *
@@ -39,9 +39,12 @@
  *
  * Version 1.9 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
+ * 
+ * Version 1.10 (Topcoder - Support Groups Concept For Challenges)
+ * - Added support for project group management
  *
- * @author bugbuka, GreatKevin, Veve, GreatKevin
- * @version 1.9
+ * @author bugbuka, GreatKevin, Veve, GreatKevin, TCCODER
+ * @version 1.10
  */
 $(document).ready(function() {
 
@@ -50,6 +53,9 @@ $(document).ready(function() {
 
    // platforms
    sortPlatformSelects();
+
+   // groups
+   sortGroupSelects();
 
    // categories
    sortCategorySelects();
@@ -64,6 +70,36 @@ $(document).ready(function() {
         $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
         sortPlatformSelects();
         technologyAndPlatformSelectsChanged();
+    });
+
+    $('#addGroups').click(function(){
+        $('#masterGroupsSelect option:selected').appendTo('#masterGroupsChoosenSelect');
+        sortGroupSelects();
+    });
+
+    $('#removeGroups').click(function(){
+        $('#masterGroupsChoosenSelect option:selected').appendTo('#masterGroupsSelect');
+        sortGroupSelects();
+    });
+
+    $('#addStudioGroups').click(function(){
+        $('#masterStudioGroupsSelect option:selected').appendTo('#masterStudioGroupsChoosenSelect');
+        sortStudioGroupSelects();
+    });
+
+    $('#removeStudioGroups').click(function(){
+        $('#masterStudioGroupsChoosenSelect option:selected').appendTo('#masterStudioGroupsSelect');
+        sortStudioGroupSelects();
+    });
+
+    $('#addAlgoGroups').click(function(){
+        $('#masterAlgoGroupsSelect option:selected').appendTo('#masterAlgoGroupsChoosenSelect');
+        sortAlgoGroupSelects();
+    });
+
+    $('#removeAlgoGroups').click(function(){
+        $('#masterAlgoGroupsChoosenSelect option:selected').appendTo('#masterAlgoGroupsSelect');
+        sortAlgoGroupSelects();
     });
 
    $('#addTechnologies').click(function(){

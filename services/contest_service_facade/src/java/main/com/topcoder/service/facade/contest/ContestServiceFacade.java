@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.contest;
 
@@ -21,6 +21,7 @@ import com.topcoder.management.project.DesignComponents;
 import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.PersistenceException;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.review.ReviewManagementException;
 import com.topcoder.management.review.data.Comment;
@@ -255,13 +256,23 @@ import com.topcoder.service.user.Registrant;
  * </ul>
  * </p>
  *
+ * <p>
  * Version 1.8.5 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * <ul>
  *     <li>Add {@link #closeSoftwareContest(TCSubject, long, long)}</li>
  *     <li>Add {@link #cancelSoftwareContestByUser(TCSubject, long)}</li>
  * </ul>
- * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin, deedee, TCSASSEMBLER
- * @version 1.8.5
+ * </p>
+ * 
+ * <p>
+ *  Version 1.8.6 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *  </ul>
+ * </p>
+ *
+ * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin, deedee, TCSASSEMBLER, TCCODER
+ * @version 1.8.6
  */
 public interface ContestServiceFacade {
 
@@ -1371,6 +1382,14 @@ public interface ContestServiceFacade {
      * @since 1.8.3
      */
     public ProjectPlatform[] getAllProjectPlatforms() throws ContestServiceException;
+
+    /**
+     * Gets all project groups.
+     *
+     * @return all the project groups available, return empty if cannot find any.
+     * @throws ContestServiceException if there are any exceptions.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ContestServiceException;
     
     /**
      * <p>Selects copilot for specified TC Direct project.</p>

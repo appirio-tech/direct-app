@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service.impl;
 
@@ -429,13 +429,20 @@ import java.util.*;
  * </ul>
  * <p>
  *
+ * <p>
+ *  Version 2.4 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *  </ul>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
- * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCSCODER
- * @version 2.3
+ * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCCODER
+ * @version 2.4
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -4898,6 +4905,26 @@ public class ProjectServicesImpl implements ProjectServices {
                     "PersistenceException occurred in ProjectServicesImpl#getAllProjectPlatforms method." + ex);
             throw new ProjectServicesException(
                     "PersistenceException occurred when getAllProjectPlatforms",
+                    ex);
+        }
+    }
+
+    /**
+     * Gets all project groups.
+     *
+     * @return all the project groups.
+     * @throws ProjectServicesException if any error.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ProjectServicesException {
+        log(Level.INFO, "Enters ProjectServicesImpl#getAllProjectGroups method.");
+
+        try {
+            return projectManager.getAllProjectGroups();
+        } catch (PersistenceException ex) {
+            log(Level.ERROR,
+                    "PersistenceException occurred in ProjectServicesImpl#getAllProjectGroups method." + ex);
+            throw new ProjectServicesException(
+                    "PersistenceException occurred when getAllProjectGroups",
                     ex);
         }
     }

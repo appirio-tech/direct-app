@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -88,14 +88,21 @@ import java.util.List;
  *     <li>Added method {@link #getAllProjectPlatforms()}</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ *  Version 1.6 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *  </ul>
+ * </p>
  * 
  * <p>
  * Thread safety: The implementations of this interface do not have to be thread
  * safe.
  * </p>
  *
- * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin
- * @version 1.5
+ * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin, TCCODER
+ * @version 1.6
  */
 public interface ProjectPersistence {
     /**
@@ -235,6 +242,14 @@ public interface ProjectPersistence {
      * @since 1.5
      */
     public ProjectPlatform[] getAllProjectPlatforms() throws PersistenceException;
+
+    /**
+     * Gets all project groups.
+     *
+     * @return all the project groups.
+     * @throws PersistenceException if there is any error.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws PersistenceException;
 
     /**
      * Build {@link Project} directly from the {@link CustomResultSet}

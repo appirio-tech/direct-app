@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -108,9 +108,12 @@
  *
  * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
  * - Add support for pre-register member
+ * 
+ * Version 3.10 (Topcoder - Support Groups Concept For Challenges)
+ * - Added support for project group management
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
- * @version 3.9
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCCODER
+ * @version 3.10
  */
 
  /**
@@ -1165,6 +1168,11 @@ function saveAsDraftRequestSoftware() {
             });
     }
 
+    request['groups'] =
+      $.map($('#masterGroupsChoosenSelect option'), function (option, i) {
+          return option.value;
+      });
+
    // if dev is derived from selected design
    if(mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded) {
       request['selectedDesignId'] = mainWidget.softwareCompetition.assetDTO.directjsDesignId;
@@ -1225,6 +1233,11 @@ function saveAsDraftRequestStudio() {
 
    request['hasMulti'] = mainWidget.softwareCompetition.multiRound;
 
+   request['groups'] =
+      $.map($('#masterStudioGroupsChoosenSelect option'), function (option, i) {
+          return option.value;
+      });
+
    //document uploads
    request['docUploadIds'] = getStudioDocumentIds();
    request['docCompIds'] = getCompDocumentIds();
@@ -1250,6 +1263,11 @@ function saveAsDraftRequestAlgorithm() {
    updateAlgorithmPrizes();
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
+
+   request['groups'] =
+      $.map($('#masterAlgoGroupsChoosenSelect option'), function (option, i) {
+          return option.value;
+      });
 
    // end date
    request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
@@ -1516,7 +1534,6 @@ function showPage(pageId) {
 
 
         $("#studioCupPointsDiv").hide().find("input[type=checkbox]").removeAttr('checked');
-
 
         delay(studioPrizeChangeHandler(), 1000);
     }
@@ -2905,7 +2922,6 @@ function getAlgorithmContestCost(projectCategoryId) {
     }
 }
 
-
 /**
  * Software Technology/Category functions
  */
@@ -2940,13 +2956,25 @@ function technologyAndPlatformSelectsChanged() {
     return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
 }
 
-
-
 function sortPlatformSelects() {
     sortSelectOptions('masterPlatformsSelect');
     sortSelectOptions('masterPlatformsChoosenSelect');
 }
 
+function sortGroupSelects() {
+   sortSelectOptions('masterGroupsSelect');
+   sortSelectOptions('masterGroupsChoosenSelect');
+}
+
+function sortStudioGroupSelects() {
+   sortSelectOptions('masterStudioGroupsSelect');
+   sortSelectOptions('masterStudioGroupsChoosenSelect');
+}
+
+function sortAlgoGroupSelects() {
+   sortSelectOptions('masterAlgoGroupsSelect');
+   sortSelectOptions('masterAlgoGroupsChoosenSelect');
+}
 
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');

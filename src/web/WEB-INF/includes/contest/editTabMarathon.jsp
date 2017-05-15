@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.6
-  - Copyright (C) 2013 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - change on #billingProjects, will load by jquery
@@ -24,6 +24,8 @@
   - Version 1.6 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
   -
+  - Version 1.7 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for marathon contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -506,6 +508,24 @@
                    </span>
         </div>
         </p>
+
+        <div class="bottom_spec">
+        </div>
+
+        <div class="group">                         
+           <p class="det_font">
+           <span class="name"><strong>Current Project Groups</strong></span>
+           
+           <br /><br />
+           <span class="small_info_spec" id="ralGroups">
+           </span>
+           </p>
+           
+            <div class="bottom_spec">
+           </div>
+        </div> <!-- End of .group -->
+
+
     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -553,6 +573,30 @@
 
                 </div>
                 <!-- end .guidelines -->
+
+                <div class="prizes group" id="algoGroupDiv">    
+                    <h3>Choose Your Group:</h3>
+                      
+                    <div class="prizesInner_tech">
+                        <span class="head_font">Master Groups</span>
+                        <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+                        <br />  
+                        <select multiple id="masterAlgoGroupsSelect">  
+                            <s:iterator value="referenceDataBean.groups">
+                                <option value='<s:property value="id" />'><s:property value="name" /></option>
+                            </s:iterator>                   
+                        </select>  
+                            
+                        <div id="button_studio_group">
+                            <img src="/images/add_tech.png" alt="add" id="addAlgoGroups" />
+                            <br /><br />
+                            <img src="/images/remove_tech.png" alt="remove" id="removeAlgoGroups" />
+                        </div>    
+                          
+                        <select multiple id="masterAlgoGroupsChoosenSelect">
+                        </select>   
+                    </div>
+                </div>
             </div> <!-- end .contestDetail -->
 
         </div> <!-- End .launchContestOut -->

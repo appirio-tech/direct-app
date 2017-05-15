@@ -1,9 +1,12 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.0
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Author: bugbuka, TCCODER
+  - Version: 1.1
+  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for algorithm contest.
+  -
+  - Version 1.1 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group review for algorithm contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -55,6 +58,9 @@
 
 		<dt>Match Rules :</dt>
 		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Current Groups :</dt>
+        <dd><span id="ralGroups"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->

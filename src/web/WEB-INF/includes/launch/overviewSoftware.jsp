@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin
-  - Version: 1.9
+  - Author: isv, Ghost_141, GreatKevin, TCCODER
+  - Version: 1.10
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -32,6 +32,9 @@
   -
   - Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
   - - Make the spec review alone, so it can be displayed for bug hunt challenge
+  -
+  - Version 1.10 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for software contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -103,6 +106,30 @@
         </div>    
         
         <select multiple id="masterTechnologiesChoosenSelect">
+        </select>   
+      </div>
+   </div>
+
+   <div class="prizes" id="swGroupDiv">    
+        <h3>Choose Your Group:</h3>
+        
+        <div class="prizesInner_tech">
+        <span class="head_font">Master Groups</span>
+        <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+        <br />  
+        <select multiple id="masterGroupsSelect">  
+            <s:iterator value="referenceDataBean.groups">
+               <option value='<s:property value="id" />'><s:property value="name" /></option>
+            </s:iterator>                   
+        </select>  
+        
+        <div id="button_group">
+          <img src="/images/add_tech.png" alt="add" id="addGroups" />
+            <br /><br />
+          <img src="/images/remove_tech.png" alt="remove" id="removeGroups" />
+        </div>    
+        
+        <select multiple id="masterGroupsChoosenSelect">
         </select>   
       </div>
    </div>

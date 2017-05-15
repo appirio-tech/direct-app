@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.contest.ejb;
 
@@ -56,6 +56,7 @@ import com.topcoder.management.project.Project;
 import com.topcoder.management.project.ProjectCategory;
 import com.topcoder.management.project.ProjectManager;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectType;
@@ -867,9 +868,17 @@ import java.util.Set;
  *     <li>Refactor {@link #createReviewerResource(long, long, long, boolean, boolean)}</li>
  *     <li>Fix {@link #closeSoftwareContest(TCSubject, long, long)} to work with auto pilot</li>
  * </ul>
+ *
+ * <p>
+ *  Version 3.7 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *  </ul>
+ * </p> 
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
- * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.6
+ * @author isv, GreatKevin, Veve, deedee, TCSASSEMBLER, TCCODER
+ * @version 3.7
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -8402,6 +8411,23 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         } catch (ProjectServicesException e) {
             logger.error("Operation failed in the getAllProjectPlatforms.", e);
             throw new ContestServiceException("Operation failed in the getAllProjectPlatforms.", e);
+        }
+    }
+
+    /**
+     * Gets all the project groups.
+     *
+     * @return all the project groups avaiable.
+     * @throws ContestServiceException if there is any error.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ContestServiceException {
+        logger.debug("getAllProjectGroups");
+
+        try {
+            return projectServices.getAllProjectGroups();
+        } catch (ProjectServicesException e) {
+            logger.error("Operation failed in the getAllProjectGroups.", e);
+            throw new ContestServiceException("Operation failed in the getAllProjectGroups.", e);
         }
     }
 

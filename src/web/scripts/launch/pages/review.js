@@ -23,9 +23,12 @@
  *
  * Version 1.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
+ * 
+ * Version 1.8 (Topcoder - Support Groups Concept For Challenges)
+ * - Added support for project group management
  *
- * @author bugbuka, GreatKevin
- * @version 1.7
+ * @author bugbuka, GreatKevin, TCCODER
+ * @version 1.8
  */
 /**
  * Rerender the review page.
@@ -46,6 +49,12 @@ function updateReviewAlgorithm() {
    $('#ralProblemStatement').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName);
    $('#ralMatchDetails').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails);
    $('#ralMatchRules').html(mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules);
+
+   var groupsHtml = "";
+   $.each($('#masterAlgoGroupsChoosenSelect option'),function(i,option) {
+      groupsHtml += option.text +"<br/>";
+   });
+   $('#ralGroups').html(groupsHtml);
    
    //prizes
    var html = "";
@@ -88,6 +97,12 @@ function updateReviewSoftware() {
    
    $('#rswFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));
    $('#rswSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));
+
+    var groupsHtml = "";
+    $.each($('#masterGroupsChoosenSelect option'),function(i,option) {
+        groupsHtml += option.text +"<br/>";
+    });
+    $('#rswGroups').html(groupsHtml);
 
     // prize for Code contest type
     var prizeHTML = "";
@@ -167,6 +182,12 @@ function updateReviewStudio() {
 
    $('#rContestIntroduction').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
    $('#rContestDescription').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription);
+
+   var groupsHtml = "";
+   $.each($('#masterStudioGroupsChoosenSelect option'),function(i,option) {
+      groupsHtml += option.text +"<br/>";
+   });
+   $('#rsGroups').html(groupsHtml);
    
    //prizes
    var html = "";

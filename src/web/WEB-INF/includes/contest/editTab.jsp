@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.5
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -50,6 +50,9 @@
   -
   - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
+  -
+  - Version 2.6 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for studio contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -736,6 +739,19 @@
                
                 <div class="bottom_spec">
                </div>
+
+               <div class="group">                         
+                   <p class="det_font">
+                   <span class="name"><strong>Current Project Groups</strong></span>
+                   
+                   <br /><br />
+                   <span class="small_info_spec" id="rsGroups">
+                   </span>
+                   </p>
+                   
+                    <div class="bottom_spec">
+                   </div>
+               </div> <!-- End of .group -->
                
                <p class="det_font">
                <span class="name"><strong>Final Deliverables</strong></span>
@@ -803,6 +819,30 @@
 
                 </div>
                 <!-- end .guidelines -->
+
+                <div class="prizes group" id="studioGroupDiv">    
+                    <h3>Choose Your Group:</h3>
+                      
+                    <div class="prizesInner_tech">
+                        <span class="head_font">Master Groups</span>
+                        <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+                        <br />  
+                        <select multiple id="masterStudioGroupsSelect">  
+                            <s:iterator value="referenceDataBean.groups">
+                                <option value='<s:property value="id" />'><s:property value="name" /></option>
+                            </s:iterator>                   
+                        </select>  
+                            
+                        <div id="button_studio_group">
+                            <img src="/images/add_tech.png" alt="add" id="addStudioGroups" />
+                            <br /><br />
+                            <img src="/images/remove_tech.png" alt="remove" id="removeStudioGroups" />
+                        </div>    
+                          
+                        <select multiple id="masterStudioGroupsChoosenSelect">
+                        </select>   
+                    </div>
+                </div>
             </div> <!-- end .contestDetail -->
            <div class="deliverables">  
                <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        

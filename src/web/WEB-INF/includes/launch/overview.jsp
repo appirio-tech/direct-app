@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin, Veve
-  - Version: 1.8
+  - Author: isv, Ghost_141, GreatKevin, Veve, TCCODER
+  - Version: 1.9
   - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
@@ -21,6 +21,9 @@
   -
   - Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
   - Add studio cup points checkbox and studio cup points display
+  -
+  - Version 1.9 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for studio contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -44,7 +47,31 @@
         </div>        
   </div>
   <!-- end contest introduction -->
+
+  <div class="prizes" id="studioGroupDiv">    
+        <h3>Choose Your Group:</h3>
         
+        <div class="prizesInner_tech">
+        <span class="head_font">Master Groups</span>
+        <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+        <br />  
+        <select multiple id="masterStudioGroupsSelect">  
+            <s:iterator value="referenceDataBean.groups">
+               <option value='<s:property value="id" />'><s:property value="name" /></option>
+            </s:iterator>                   
+        </select>  
+        
+        <div id="button_studio_group">
+          <img src="/images/add_tech.png" alt="add" id="addStudioGroups" />
+            <br /><br />
+          <img src="/images/remove_tech.png" alt="remove" id="removeStudioGroups" />
+        </div>    
+        
+        <select multiple id="masterStudioGroupsChoosenSelect">
+        </select>   
+      </div>
+   </div>
+
   <!-- Round 1 information -->
 	<div class="target hide" id="round1InfoDiv" >    
         <h3><span class="icon">Round 1 Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
