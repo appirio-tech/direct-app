@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -27,8 +28,15 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  *  </ul>
  * </p>
  *
- * @version 1.1
- * @author GreatKevin
+ * <p>
+ *  Version 1.2 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added project groups data</li>
+ *  </ul>
+ * </p>
+ * 
+ * @version 1.2
+ * @author GreatKevin, TCCODER
  */
 public class ReferenceDataBean implements InitializingBean {
     /**
@@ -65,6 +73,16 @@ public class ReferenceDataBean implements InitializingBean {
      * @since 1.1
      */
     private Map<Long, ProjectPlatform> platformMap;
+
+    /**
+     * The groups.
+     */
+    private List<ProjectGroup> groups;
+
+    /**
+     * The groups map.
+     */
+    private Map<Long, ProjectGroup> groupMap;
 
     /**
      * <p>
@@ -203,6 +221,24 @@ public class ReferenceDataBean implements InitializingBean {
     }
 
     /**
+     * Gets the groups map.
+     *
+     * @return the groups map.
+     */
+    public List<ProjectGroup> getGroups() {
+        return groups;
+    }
+
+    /**
+     * Sets the groups map.
+     *
+     * @return the groups map.
+     */
+    public Map<Long, ProjectGroup> getGroupMap() {
+        return groupMap;
+    }
+
+    /**
      * <p>
      * Gets the categories.
      * </p>
@@ -338,6 +374,13 @@ public class ReferenceDataBean implements InitializingBean {
         platformMap = new HashMap<Long, ProjectPlatform>();
         for(ProjectPlatform platform : platforms) {
             platformMap.put(platform.getId(), platform);
+        }
+
+        // groups
+        groups = Arrays.asList(getContestServiceFacade().getAllProjectGroups());
+        groupMap = new HashMap<Long, ProjectGroup>();
+        for(ProjectGroup group : groups) {
+            groupMap.put(group.getId(), group);
         }
 
         // categories

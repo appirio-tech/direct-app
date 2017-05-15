@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.9
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.10
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -73,6 +73,8 @@
   - Version 2.9 (Provide Way To Pre_register members When Launching Challenge)
   - - pre-register member support
   -
+  - Version 2.10 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group to spec section for software contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -777,6 +779,21 @@
                         <div class="bottom_spec">
                        </div>
                     </div> <!-- End of .technology -->
+
+                    <div class="group">                         
+                       <p class="det_font">
+                       <span class="name"><strong>Current Project Groups</strong></span>
+                       
+                       <br /><br />
+                       <span class="small_info_spec" id="rswGroups">
+                       </span>
+                       </p>
+                       
+                        <div class="bottom_spec">
+                       </div>
+                    </div> <!-- End of .group -->
+
+
                </s:if>
                
                <div class="component">    
@@ -908,6 +925,30 @@
                             </div>    
                               
                             <select multiple id="masterTechnologiesChoosenSelect">
+                            </select>   
+                        </div>
+                    </div>
+
+                    <div class="prizes group" id="swGroupDiv">    
+                        <h3>Choose Your Group:</h3>
+                          
+                        <div class="prizesInner_tech">
+                            <span class="head_font">Master Groups</span>
+                            <span class="head_font_space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Project Groups</span>
+                            <br />  
+                            <select multiple id="masterGroupsSelect">  
+                                <s:iterator value="referenceDataBean.groups">
+                                    <option value='<s:property value="id" />'><s:property value="name" /></option>
+                                </s:iterator>                   
+                            </select>  
+                                
+                            <div id="button_group">
+                                <img src="/images/add_tech.png" alt="add" id="addGroups" />
+                                <br /><br />
+                                <img src="/images/remove_tech.png" alt="remove" id="removeGroups" />
+                            </div>    
+                              
+                            <select multiple id="masterGroupsChoosenSelect">
                             </select>   
                         </div>
                     </div>

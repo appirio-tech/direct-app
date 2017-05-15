@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.5
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCCODER
+  - Version: 1.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for software contest.
   -
@@ -18,6 +18,9 @@
   -
   - Version 1.5 (Module Assembly - TC Cockpit Launch F2F contest)
   - - Hide the uneeded prize for F2F contest
+  -
+  - Version 1.6 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group review for software contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -70,6 +73,9 @@
 
 		<dt>Submission Guidelines :</dt>
 		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+    <dt>Current Groups :</dt>
+    <dd><span id="rswGroups"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->

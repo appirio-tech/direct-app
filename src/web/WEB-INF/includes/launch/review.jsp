@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.2
+  - Author: TCSASSEMBER, TCCODER
+  - Version: 1.3
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for studio contest.
@@ -10,6 +10,9 @@
   - - Remove End Date for project.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
+  -
+  - Version 1.3 (Topcoder - Support Groups Concept For Challenges)
+  - Added project group review for studio contest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -66,6 +69,9 @@
 
         <dt>Challenge Description :</dt>
         <dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Current Groups :</dt>
+        <dd><span id="rsGroups"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
         <dt class="rMultiInfo">Round One Information :</dt>
         <dd class="rMultiInfo"><span id="rRound1Info"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>

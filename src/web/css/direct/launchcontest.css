@@ -968,7 +968,7 @@ table.total td.toRight {
 /** prizesInner **/
 /** prizesInner **/
 
-#button_tech, #button_platform {
+#button_tech, #button_platform, #button_group, #button_studio_group, #button_algo_group {
     height: 90px;
     padding-top: 40px;
     padding-bottom: 20px;
@@ -1003,14 +1003,14 @@ table.total td.toRight {
     padding-left: 260px;
 }
 
-#masterTechnologiesSelect, #masterPlatformsSelect {
+#masterTechnologiesSelect, #masterPlatformsSelect, #masterGroupsSelect, #masterStudioGroupsSelect, #masterAlgoGroupsSelect {
     overflow: scroll;
     height: 150px;
     width: 285px;
     float: left;
 }
 
-#masterTechnologiesChoosenSelect, #masterPlatformsChoosenSelect {
+#masterTechnologiesChoosenSelect, #masterPlatformsChoosenSelect, #masterGroupsChoosenSelect, #masterStudioGroupsChoosenSelect, #masterAlgoGroupsChoosenSelect {
     overflow: scroll;
     height: 150px;
     width: 285px;

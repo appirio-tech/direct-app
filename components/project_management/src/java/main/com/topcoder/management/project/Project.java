@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -74,6 +74,13 @@ import javax.xml.bind.annotation.XmlType;
  *      <li>Added property {@link #autoAssignReviewerId}</li>
  *  </ul>
  * </p>
+ *
+ * <p>
+ *  Version 1.10 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added property {@link #groups}</li>
+ *  </ul>
+ * </p>
  * 
  * <p>
  * This class implements Serializable interface to support serialization.
@@ -82,8 +89,8 @@ import javax.xml.bind.annotation.XmlType;
  * Thread safety: This class is not thread safe.
  * </p>
  *
- * @author tuenm, iamajia, duxiaoyang, bugbuka, GreatKevin
- * @version 1.9
+ * @author tuenm, iamajia, duxiaoyang, bugbuka, GreatKevin, TCCODER
+ * @version 1.10
  * @since 1.0
  */
 @XmlType(name = "project", namespace = "com.topcoder.management.project")
@@ -142,6 +149,12 @@ public class Project extends AuditableObject implements Serializable {
      * @since 1.6
      */
     private List<ProjectPlatform> platforms;
+
+    /**
+     * Represents the groups of Project. The default value is null. It's changeable. It could not contain null.
+     * It's accessed in getter and setter.
+     */
+    private List<ProjectGroup> groups;
 	
     /**
      *  it will be not zero if this project is associated with direct project     
@@ -541,6 +554,33 @@ public class Project extends AuditableObject implements Serializable {
             }
         }
         this.platforms = platforms;
+    }
+
+    /**
+     * Gets the groups of the project.
+     *
+     * @return the list of project groups.
+     */
+    public List<ProjectGroup> getGroups() {
+        if (groups == null) {
+            groups = new ArrayList<ProjectGroup>();
+        }
+
+        return groups;
+    }
+
+    /**
+     * Sets the groups of the project.
+     *
+     * @param groups the list of project groups.
+     */
+    public void setGroups(List<ProjectGroup> groups) {
+        if (null != groups) {
+            if (groups.contains(null)) {
+                throw new IllegalArgumentException("The project groups can not contain null.");
+            }
+        }
+        this.groups = groups;
     }
 
     /**

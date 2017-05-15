@@ -24,6 +24,7 @@ import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectMMSpecification;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectStudioSpecification;
@@ -272,9 +273,16 @@ import java.util.*;
  *     <li>Updated {@link #populateCompetition(SoftwareCompetition)} method to accept zero prize</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ *  Version 2.5 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Updated {@link #populateCompetition(SoftwareCompetition)} method to save project groups</li>
+ *  </ul>
+ * </p>
  * 
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER
- * @version 2.4
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCCODER
+ * @version 2.5
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -614,6 +622,11 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.8
      */
     private List<String> platforms;
+
+    /**
+     * Id list for groups.
+     */
+    private List<String> groups;
 
     /**
      * <p>
@@ -989,6 +1002,15 @@ public class SaveDraftContestAction extends ContestAction {
             softwareCompetition.setDirectProjectMilestoneId(getDirectProjectMilestoneId());
         } else {
             softwareCompetition.setDirectProjectMilestoneId(0);
+        }
+
+        // set groups
+        if (groups != null && groups.size() > 0) {
+            List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
+            for (String groupId : groups) {
+                groupsList.add(getReferenceDataBean().getGroupMap().get(Long.parseLong(groupId)));
+            }
+            softwareCompetition.getProjectHeader().setGroups(groupsList);
         }
         
         if (DirectUtils.isStudio(softwareCompetition)) {
@@ -2146,6 +2168,24 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setPlatforms(List<String> platforms) {
         this.platforms = platforms;
+    }
+
+    /**
+     * Gets the groups.
+     *
+     * @return the groups.
+     */
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    /**
+     * Sets the groups.
+     *
+     * @param groups the groups.
+     */
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 
     /**

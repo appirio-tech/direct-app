@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -124,13 +124,20 @@ import java.util.Map;
  * </p>
  * 
  * <p>
+ *  Version 1.6 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *  </ul>
+ * </p>
+ * 
+ * <p>
  * Thread Safety: The implementation is not thread safe in that two threads
  * running the same method will use the same statement and could overwrite each
  * other's work.
  * </p>
  *
- * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin
- * @version 1.5
+ * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin, TCCODER
+ * @version 1.6
  */
 public class ProjectManagerImpl implements ProjectManager {
     /**
@@ -546,6 +553,16 @@ public class ProjectManagerImpl implements ProjectManager {
      */
     public ProjectPlatform[] getAllProjectPlatforms() throws PersistenceException {
         return persistence.getAllProjectPlatforms();
+    }
+
+    /**
+     * Gets all project groups.
+     *
+     * @return all the project groups.
+     * @throws PersistenceException if there is any error.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws PersistenceException {
+        return persistence.getAllProjectGroups();
     }
 
     /**

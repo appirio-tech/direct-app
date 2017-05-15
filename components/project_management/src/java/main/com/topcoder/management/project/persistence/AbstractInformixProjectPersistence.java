@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project.persistence;
 
@@ -43,6 +43,7 @@ import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectMMSpecification;
 import com.topcoder.management.project.ProjectPersistence;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectSpec;
 import com.topcoder.management.project.ProjectStatus;
@@ -381,9 +382,17 @@ import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
  * Thread Safety: This class is thread safe because it is immutable.
  * </p>
  *
+ * <p>
+ *  Version 1.8.2 (Topcoder - Support Groups Concept For Challenges)
+ *  <ul>
+ *      <li>Added method {@link #getAllProjectGroups()}</li>
+ *      <li>Updated various method to retrieve, create, update and delete groups related to project</li>
+ *  </ul>
+ * </p>
  *
- * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin
- * @version 1.8.1
+ *
+ * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin, TCCODER
+ * @version 1.8.2
  * @since 1.0
  */
 public abstract class AbstractInformixProjectPersistence implements ProjectPersistence {
@@ -1032,6 +1041,15 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     private static final String QUERY_ALL_PROJECT_PLATFORMS_SQL = "SELECT project_platform_id, name " +
             " FROM project_platform_lu";
 
+
+    /**
+     * The SQL to get all the project groups from project_group_lu table.
+     */
+    private static final String QUERY_ALL_PROJECT_GROUPS_SQL = "SELECT project_group_id, name " +
+            " FROM project_group_lu";
+
+
+
     /**
      * Represents the sql statement to query all project contest data.
      * 
@@ -1359,6 +1377,13 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     private static final DataType[] QUERY_ALL_PROJECT_PLATFORMS_COLUMN_TYPES = new DataType[] {
             Helper.LONG_TYPE, Helper.STRING_TYPE };
 
+
+    /**
+     * Represents the column types for the result which gets all the project groups.
+     */
+    private static final DataType[] QUERY_ALL_PROJECT_GROUPS_COLUMN_TYPES = new DataType[] {
+            Helper.LONG_TYPE, Helper.STRING_TYPE };
+
     /**
      * Represents the column types for the result set which is returned by executing the sql statement to query all
      * project categories.
@@ -1565,6 +1590,15 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                     "ON pp.project_platform_id = pl.project_platform_id WHERE pp.project_id IN";
 
     /**
+     * Represents the sql statement to query project groups for a set of project ids.
+     */
+    private static final String QUERY_PROJECT_GROUPS_SQL =
+            "SELECT pg.project_id, pg.project_group_id, pl.name \n" +
+                    "FROM project_group_xref pg \n" +
+                    "INNER JOIN project_group_lu pl \n" +
+                    "ON pg.project_group_id = pl.project_group_id WHERE pg.project_id IN";
+
+    /**
      * Represents the sql statement to query project properties.
      */
     private static final String QUERY_ONE_PROJECT_PROPERTIES_SQL = "SELECT "
@@ -1591,6 +1625,13 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             Helper.LONG_TYPE, Helper.LONG_TYPE, Helper.STRING_TYPE};
 
     /**
+     * Represents the column types for the result set which query project groups of a set
+     * of project ids.
+     */
+    private static final DataType[] QUERY_PROJECT_GROUPS_COLUMN_TYPES = new DataType[] {
+            Helper.LONG_TYPE, Helper.LONG_TYPE, Helper.STRING_TYPE};
+
+    /**
      * Represents the sql statement to query project property ids.
      */
     private static final String QUERY_PROJECT_PROPERTY_IDS_SQL = "SELECT "
@@ -1611,11 +1652,22 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             + "project_platform_id FROM project_platform WHERE project_id = ?";
 
     /**
+     * Represents the sql statement to query the group ids of a given project id.
+     */
+    private static final String QUERY_PROJECT_GROUP_IDS_SQL = "SELECT "
+            + "project_group_id FROM project_group_xref WHERE project_id = ?";
+
+    /**
      * Represents the column types for the result set returne from getting platform ids of a project id.
      *
      * @since 1.8
      */
     private static final DataType[] QUERY_PROJECT_PLATFORM_IDS_COLUMN_TYPES = new DataType[] {Helper.LONG_TYPE};
+
+    /**
+     * Represents the column types for the result set returne from getting group ids of a project id.
+     */
+    private static final DataType[] QUERY_PROJECT_GROUP_IDS_COLUMN_TYPES = new DataType[] {Helper.LONG_TYPE};
 
     /**
      * Represents the column types for the result set which is returned by
@@ -1716,6 +1768,14 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             + "VALUES (?, ?, ?, CURRENT, ?, CURRENT)";
 
     /**
+     * Represents the SQL statement to insert a new project group in to table project_group_xref
+     */
+    private static final String CREATE_PROJECT_GROUP_SQL = "INSERT INTO project_group_xref "
+            + "(project_id, project_group_id,"
+            + "create_user, create_date, modify_user, modify_date) "
+            + "VALUES (?, ?, ?, CURRENT, ?, CURRENT)";
+
+    /**
      * Represents the sql statement to create project audit.
      */
     private static final String CREATE_PROJECT_AUDIT_SQL = "INSERT INTO project_audit "
@@ -1759,6 +1819,12 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      */
     private static final String DELETE_PROJECT_PLATFORMS_SQL = "DELETE FROM project_platform "
             + "WHERE project_id = ? AND project_platform_id IN ";
+
+    /**
+     * Represents the sql statement to delete the given groups of a given project.
+     */
+    private static final String DELETE_PROJECT_GROUPS_SQL = "DELETE FROM project_group_xref "
+            + "WHERE project_id = ? AND project_group_id IN ";
 
     /**
      * Represents the sql statement to query project_spec for specified project_id.
@@ -3331,6 +3397,34 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             return projectPlatforms;
         } catch (PersistenceException e) {
             getLogger().log(Level.ERROR, new LogMessage(null, null, "Fail to getAllProjectPlatforms.", e));
+            if (conn != null) {
+                closeConnectionOnError(conn);
+            }
+            throw e;
+        }
+    }
+
+
+    /**
+     * Gets all project groups.
+     *
+     * @return all the project groups.
+     * @throws PersistenceException if there is any error.
+     */
+    public ProjectGroup[] getAllProjectGroups() throws PersistenceException {
+        Connection conn = null;
+        getLogger().log(Level.INFO, new LogMessage(null, null, "Enter getAllProjectGroups method."));
+        try {
+            // create the connection
+            conn = openConnection();
+
+            // get all groups
+            ProjectGroup[] projectGroups = getAllProjectGroups(conn);
+
+            closeConnection(conn);
+            return projectGroups;
+        } catch (PersistenceException e) {
+            getLogger().log(Level.ERROR, new LogMessage(null, null, "Fail to getAllProjectGroups.", e));
             if (conn != null) {
                 closeConnectionOnError(conn);
             }
@@ -5351,6 +5445,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
         // create the project platforms
         createProjectPlatforms(projectId, project.getPlatforms(), operator, conn);
+
+        // create the project groups
+        createProjectGroups(projectId, project.getGroups(), operator, conn);
     }
 
     /**
@@ -5509,6 +5606,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
         // update the project platforms
         updateProjectPlatforms(projectId, project.getPlatforms(), operator, conn);
+
+        // update the project groups
+        updateProjectGroups(projectId, project.getGroups(), operator, conn);
     }
 
     /**
@@ -5858,6 +5958,24 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             project.getPlatforms().add(new ProjectPlatform((Long) row[1], (String) row[2]));
         }
 
+        // find the project groups in the database
+        rows = Helper.doQuery(conn, QUERY_PROJECT_GROUPS_SQL + idList, new Object[]{},
+                QUERY_PROJECT_GROUPS_COLUMN_TYPES);
+
+        for(int i = 0; i < rows.length; ++i) {
+            Object[] row = rows[i];
+
+            // get the corresponding Project object
+            Project project = (Project) projectMap.get(row[0]);
+
+            if(project.getGroups() == null) {
+                List<ProjectGroup> groups = new ArrayList<ProjectGroup>();
+                project.setGroups(groups);
+            }
+
+            project.getGroups().add(new ProjectGroup((Long) row[1], (String) row[2]));
+        }
+
         return projects;
     }
     /**
@@ -6026,6 +6144,49 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     }
 
     /**
+     * Creates the project groups into the project.
+     *
+     * @param projectId the id of the project
+     * @param groups the list of ProjectGroup to create
+     * @param operator the operator
+     * @param conn the database connection
+     * @throws PersistenceException if there is any error.
+     */
+    private void createProjectGroups(Long projectId, List<ProjectGroup> groups, String operator, Connection conn)
+            throws PersistenceException {
+
+        getLogger().log(Level.INFO, new LogMessage(projectId, operator,
+                "insert record into project_group_xref with project id" + projectId));
+
+        if (groups == null || groups.size() == 0) {
+            return;
+        }
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // prepare the statement.
+            preparedStatement = conn
+                    .prepareStatement(CREATE_PROJECT_GROUP_SQL);
+
+            // enumerator each project group
+            for (ProjectGroup group : groups) {
+                // insert the project group into database
+                Object[] queryArgs = new Object[]{projectId, group.getId(),
+                        operator, operator};
+                Helper.doDMLQuery(preparedStatement, queryArgs);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenceException(
+                    "Unable to create prepared statement ["
+                            + CREATE_PROJECT_GROUP_SQL + "].", e);
+        } finally {
+            Helper.closeStatement(preparedStatement);
+        }
+    }
+
+    /**
      * Make an Id-Project map from Project[].
      * @param projects the Id-Project array
      * @return an Id-Project map
@@ -6159,6 +6320,55 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     }
 
     /**
+     * Updates the project groups.
+     *
+     * @param projectId the id of the project
+     * @param groups the list of ProjectGroup to create
+     * @param operator the operator
+     * @param conn the database connection
+     * @throws PersistenceException if any error
+     */
+    private void updateProjectGroups(Long projectId, List<ProjectGroup> groups, String operator, Connection conn)
+            throws PersistenceException {
+
+        if(groups == null) {
+            groups = new ArrayList<ProjectGroup>();
+        }
+
+        // get old group ids from database
+        Set<Long> oldGroupIds = getProjectGroupsForProject(projectId, conn);
+
+        // create a list to contain the groups to insert
+        List<ProjectGroup> groupsToAdd = new ArrayList<ProjectGroup>();
+
+        // create a list to contain the groups to remove
+        List<Long> groupsToDelete = new ArrayList<Long>();
+
+        Set<Long> newGroupIds = new HashSet<Long>();
+
+        for(ProjectGroup p : groups) {
+            if(!oldGroupIds.contains(p.getId())) {
+                // the existing does not contain, to add
+                groupsToAdd.add(p);
+            }
+            newGroupIds.add(p.getId());
+        }
+
+        for(Long oldPID : oldGroupIds) {
+            if(!newGroupIds.contains(oldPID)) {
+                // the old group is not in the new group, to remove
+                groupsToDelete.add(oldPID);
+            }
+        }
+
+        // create the new groups
+        createProjectGroups(projectId, groupsToAdd, operator, conn);
+
+        // delete the old groups
+        deleteProjectGroups(projectId, groupsToDelete, conn);
+    }
+
+    /**
      * Gets all the property ids associated to this project.
      * @param projectId The id of this project
      * @param conn The database connection
@@ -6245,6 +6455,33 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
     }
 
     /**
+     * Gets the project group ids for the given project.
+     *
+     * @param projectId the id of the project
+     * @param conn the database connection
+     * @return a set of project group ids.
+     * @throws PersistenceException if any error
+     */
+    private Set<Long> getProjectGroupsForProject(Long projectId, Connection conn) throws PersistenceException {
+        Set<Long> groupIds = new HashSet<Long>();
+
+        // find projects in the table.
+        Object[][] rows = Helper.doQuery(conn, QUERY_PROJECT_GROUP_IDS_SQL,
+                new Object[]{projectId},
+                QUERY_PROJECT_GROUP_IDS_COLUMN_TYPES);
+
+        // enumerator each row
+        for (int i = 0; i < rows.length; ++i) {
+            Object[] row = rows[i];
+
+            // add the id to the map
+            groupIds.add((Long) row[0]);
+        }
+
+        return groupIds;
+    }
+
+    /**
      * Delete the project properties from the database.
      * @param project the project object
      * @param propertyIdSet the Set that contains the property ids to delete
@@ -6319,6 +6556,41 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
             // delete the project platforms whose id is in the set
             Helper.doDMLQuery(conn, DELETE_PROJECT_PLATFORMS_SQL
+                    + idListBuffer.toString(), new Object[] {projectId});
+        }
+    }
+
+    /**
+     * Deletes the project groups.
+     *
+     * @param projectId the id of the project
+     * @param groupIds the group ids to delete.
+     * @param conn the database connection
+     * @throws PersistenceException if any error.
+     */
+    private void deleteProjectGroups(Long projectId, List<Long> groupIds, Connection conn)
+        throws PersistenceException {
+
+        // check if the group set to delete is empty
+        if (groupIds != null && !groupIds.isEmpty()) {
+
+            // build the id list string
+            StringBuffer idListBuffer = new StringBuffer();
+            idListBuffer.append('(');
+            int idx = 0;
+            for (Long pid : groupIds) {
+                if (idx++ != 0) {
+                    idListBuffer.append(',');
+                }
+                idListBuffer.append(pid);
+            }
+            idListBuffer.append(')');
+
+            getLogger().log(Level.INFO, new LogMessage(projectId, null,
+                    "delete records from project_group with projectId:" + projectId));
+
+            // delete the project groups whose id is in the set
+            Helper.doDMLQuery(conn, DELETE_PROJECT_GROUPS_SQL
                     + idListBuffer.toString(), new Object[] {projectId});
         }
     }
@@ -6440,6 +6712,34 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
         }
 
         return projectPlatforms;
+    }
+
+    /**
+     * Gets all project groups.
+     *
+     * @param conn the database connection
+     * @return the array of all project groups.
+     * @throws PersistenceException if any error.
+     */
+    private ProjectGroup[] getAllProjectGroups(Connection conn)
+            throws PersistenceException {
+        // find all project groups in the table.
+        Object[][] rows = Helper.doQuery(conn,
+                QUERY_ALL_PROJECT_GROUPS_SQL, new Object[] {},
+                QUERY_ALL_PROJECT_GROUPS_COLUMN_TYPES);
+
+        // create the ProjectGroup array.
+        ProjectGroup[] projectGroups = new ProjectGroup[rows.length];
+
+        for (int i = 0; i < rows.length; ++i) {
+            Object[] row = rows[i];
+
+            // create the ProjectGroup object
+            projectGroups[i] = new ProjectGroup(((Long) row[0]).longValue(),
+                    (String) row[1]);
+        }
+
+        return projectGroups;
     }
 
     /**

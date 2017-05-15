@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -119,9 +119,12 @@
  *
  * Version 3.9 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * - Add support for closing and canceling private challenge
+ * 
+ * Version 3.10 (Topcoder - Support Groups Concept For Challenges)
+ * - Added support for project group management
  *
- * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.9
+ * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCCODER
+ * @version 3.10
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -388,6 +391,36 @@ $(document).ready(function(){
         $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
         sortPlatformSelects();
         technologyAndPlatformSelectsChanged();
+    });
+
+    $('#addGroups').click(function(){
+        $('#masterGroupsSelect option:selected').appendTo('#masterGroupsChoosenSelect');
+        sortGroupSelects();
+    });
+
+    $('#removeGroups').click(function(){
+        $('#masterGroupsChoosenSelect option:selected').appendTo('#masterGroupsSelect');
+        sortGroupSelects();
+    });
+
+    $('#addStudioGroups').click(function(){
+        $('#masterStudioGroupsSelect option:selected').appendTo('#masterStudioGroupsChoosenSelect');
+        sortStudioGroupSelects();
+    });
+
+    $('#removeStudioGroups').click(function(){
+        $('#masterStudioGroupsChoosenSelect option:selected').appendTo('#masterStudioGroupsSelect');
+        sortStudioGroupSelects();
+    });
+
+    $('#addAlgoGroups').click(function(){
+        $('#masterAlgoGroupsSelect option:selected').appendTo('#masterAlgoGroupsChoosenSelect');
+        sortAlgoGroupSelects();
+    });
+
+    $('#removeAlgoGroups').click(function(){
+        $('#masterAlgoGroupsChoosenSelect option:selected').appendTo('#masterAlgoGroupsSelect');
+        sortAlgoGroupSelects();
     });
 
 
@@ -837,7 +870,7 @@ function initContest(contestJson) {
     });
 
     mainWidget.softwareCompetition.copilotCost = parseFloat(contestJson.copilotsFee);
-
+    mainWidget.softwareCompetition.groups = contestJson.groupIds;
 
     // milestone
     if(mainWidget.competitionType != 'ALGORITHM') {
@@ -2591,15 +2624,30 @@ function populateSpecSection(initFlag) {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
 
+    // groups
+    if (mainWidget.competitionType == 'SOFTWARE') {
+      $('#masterGroupsSelect').val(mainWidget.softwareCompetition.groups);
+      $('#masterGroupsSelect option:selected').appendTo('#masterGroupsChoosenSelect');
+      sortGroupSelects();
+
+      var groupsHtml = "";
+      $.each($('#masterGroupsChoosenSelect option'),function(i,option) {
+          groupsHtml += option.text +"<br/>";
+      });
+      $('#rswGroups').html(groupsHtml);
+    }
+
 
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
 	  $('#contestIntroduction').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
 	  $('#contestDescription').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription);
 	  $('#deliverablesCheckboxs').html('');
+
+
 	  var types = getSplitFileTypes(mainWidget.softwareCompetition.fileTypes);
 	  // default types
-      var predefinedFileTypes = types[2];
+    var predefinedFileTypes = types[2];
 	  var html = "";
 
       $.each(predefinedFileTypes, function(i, type) {
@@ -2659,6 +2707,17 @@ function populateSpecSection(initFlag) {
   if (mainWidget.competitionType == "STUDIO") {
 	  $('#rContestIntroduction').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
 	  $('#rContestDescription').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription);
+
+    $('#masterStudioGroupsSelect').val(mainWidget.softwareCompetition.groups);
+    $('#masterStudioGroupsSelect option:selected').appendTo('#masterStudioGroupsChoosenSelect');
+    sortStudioGroupSelects();
+
+    var groupsHtml = "";
+    $.each($('#masterStudioGroupsChoosenSelect option'),function(i,option) {
+        groupsHtml += option.text +"<br/>";
+    });
+    $('#rsGroups').html(groupsHtml);
+
 	  html = "";
       var studioSubtypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
       var types = getStudioFileTypes(studioSubtypeId);
@@ -2720,6 +2779,16 @@ function populateSpecSection(initFlag) {
         $("#marathonMatchDetails").val(marathonSpec.matchDetails);
         $("#marathonMatchRules").val(marathonSpec.matchRules);
         var problems = getActiveProblemSet();
+
+        $('#masterAlgoGroupsSelect').val(mainWidget.softwareCompetition.groups);
+        $('#masterAlgoGroupsSelect option:selected').appendTo('#masterAlgoGroupsChoosenSelect');
+        sortAlgoGroupSelects();
+
+        var groupsHtml = "";
+        $.each($('#masterAlgoGroupsChoosenSelect option'),function(i,option) {
+            groupsHtml += option.text +"<br/>";
+        });
+        $('#ralGroups').html(groupsHtml);
 
         $("#problems").empty();
         $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
@@ -2868,15 +2937,30 @@ function validateFieldsSpecSection() {
         mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription = contestDescription;
         mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction = contestIntroduction;
         mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
+
+        mainWidget.softwareCompetition.groups =
+          $.map($('#masterStudioGroupsChoosenSelect option'), function (option, i) {
+              return option.value;
+          });
     } else if (mainWidget.isSoftwareContest()) {
         mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
         mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
         mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
+
+        mainWidget.softwareCompetition.groups =
+          $.map($('#masterGroupsChoosenSelect option'), function (option, i) {
+              return option.value;
+          });
     } else if (mainWidget.isAlgorithmContest()) {
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules = matchRules;
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemId = matchProblemId;
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName = matchProblemName;
+
+        mainWidget.softwareCompetition.groups =
+          $.map($('#masterAlgoChoosenSelect option'), function (option, i) {
+              return option.value;
+          });
     }
 
     if (isDevOrDesign()) {
