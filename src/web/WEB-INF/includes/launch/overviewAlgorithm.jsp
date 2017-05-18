@@ -44,8 +44,9 @@
         </div>        
     </div>
     <!-- end Match Rules -->
-    <div class="prizes group" id="groupAlgorithmDiv">
-        <jsp:include page="group.jsp"/>
+    <h3>Challenge Group</h3>
+    <div class="prizes group algorithm" id="groupAlgorithmDiv">
+        <div id="group_algorithm"></div>
     </div>
     <!-- upload -->
     <div id="alUploadSection">

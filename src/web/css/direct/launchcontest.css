@@ -3189,3 +3189,8 @@ div#winnerDiv {
     padding: 2px 5px 2px 5px;
     margin-right: 5px;
 }
+div.group{
+    width: 675px;
+    border: 1px solid #CCC;
+    margin-top: 20px;
+}

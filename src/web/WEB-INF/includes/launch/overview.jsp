@@ -65,9 +65,9 @@
         </div>
   </div>
   <!-- end round 2 information -->
-
-    <div class="prizes group" id="groupStudioDiv">
-        <jsp:include page="group.jsp"/>
+    <h3>Challenge Group</h3>
+    <div class="prizes group studio" id="groupStudioDiv">
+        <div id="group_studio"></div>
     </div>
 
   <!-- upload -->

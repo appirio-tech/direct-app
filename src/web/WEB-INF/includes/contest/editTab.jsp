@@ -817,8 +817,9 @@
 
                 </div>
                 <!-- end .guidelines -->
-                <div class="prizes group" id="groupSoftwareDiv">
-                    <jsp:include page="../launch/group.jsp"/>
+                <h3>Challenge Group</h3>
+                <div class="prizes group studio" id="groupStudioDiv">
+                    <div id="group_studio"></div>
                 </div>
             </div> <!-- end .contestDetail -->
            <div class="deliverables">  

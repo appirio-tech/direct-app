@@ -2596,8 +2596,16 @@ function populateSpecSection(initFlag) {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
 
-    $(".group .masterGroupsSelect").val(mainWidget.softwareCompetition.groups);
-    $(".group .masterGroupsSelect option:selected").appendTo(".group .masterGroupsChoosenSelect");
+    var gid = "#group_" + getContestType()[0].toLowerCase();
+    var groupMap = {};
+    $.each(securityGroups, function(i, val){
+        groupMap[''+val.id]=val;
+    });
+    var selectedGroup = []
+    $.each(mainWidget.softwareCompetition.groups, function(i, val){
+        selectedGroup.push(groupMap[val]);
+    });
+    jQuery_1_11_1(gid).magicSuggest().setSelection(selectedGroup);
 
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
@@ -2654,8 +2662,8 @@ function populateSpecSection(initFlag) {
      $('#rswTechnologies').html(html);
   }
     var sGroup="";
-    $.each($('.group .masterGroupsChoosenSelect option'),function(i,option) {
-        sGroup += option.text +"<br/>";
+    $.each(selectedGroup,function(i,group) {
+        sGroup += group.name +"<br/>";
     });
     $('#rswGroups').html(sGroup);
 

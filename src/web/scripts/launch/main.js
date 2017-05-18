@@ -186,6 +186,8 @@ var swDocuments = [];
 
 // represents project id of reporting contest type. 
 var REPORTING_ID = "36";
+
+var securityGroups = [];
 /**
  * Configuration/General Set up
  */
@@ -210,6 +212,28 @@ $(document).ready(function() {
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
             copilotFees = result.copilotFees;
+              securityGroups = result.groups;
+
+              securityGroups.sort(function(A, B){
+                  var a = A.name.toLowerCase();
+                  var b = B.name.toLowerCase();
+                  return a < b ? -1 : ((a > b) ? 1 : 0);
+              });
+              jQuery_1_11_1("#group_software").magicSuggest({
+                  placeholder: 'Type group name here',
+                  allowFreeEntries: false,
+                  data: securityGroups
+              });
+              jQuery_1_11_1("#group_studio").magicSuggest({
+                  placeholder: 'Type group name here',
+                  allowFreeEntries: false,
+                  data: securityGroups
+              });
+              jQuery_1_11_1("#group_algorithm").magicSuggest({
+                  placeholder: 'Type group name here',
+                  allowFreeEntries: false,
+                  data: securityGroups
+              });
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -540,24 +564,24 @@ $(document).ready(function() {
         }
     })
 
-    sortGroupSelects();
-    $(".addGroups").click(function(){
-        $(".group:visible .masterGroupsSelect option:selected").appendTo(".group:visible .masterGroupsChoosenSelect");
-        sortGroupSelects();
-        mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
-            function (option, i) {
-                return option.value;
-            });
-    });
-
-    $(".removeGroups").click(function(){
-        $(".group:visible .masterGroupsChoosenSelect option:selected").appendTo(".group:visible .masterGroupsSelect");
-        sortGroupSelects();
-        mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
-            function (option, i) {
-                return option.value;
-            });
-    });
+    //sortGroupSelects();
+    //$(".addGroups").click(function(){
+    //    $(".group:visible .masterGroupsSelect option:selected").appendTo(".group:visible .masterGroupsChoosenSelect");
+    //    sortGroupSelects();
+    //    mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
+    //        function (option, i) {
+    //            return option.value;
+    //        });
+    //});
+    //
+    //$(".removeGroups").click(function(){
+    //    $(".group:visible .masterGroupsChoosenSelect option:selected").appendTo(".group:visible .masterGroupsSelect");
+    //    sortGroupSelects();
+    //    mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
+    //        function (option, i) {
+    //            return option.value;
+    //        });
+    //});
 
 }); // end of initiation
 
@@ -1083,8 +1107,11 @@ function saveAsDraftRequest() {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
 
-    request['groups'] = mainWidget.softwareCompetition.groups;
-
+    var gid = "#group_" + getContestType()[0].toLowerCase();
+    var selectedGroups = jQuery_1_11_1(gid).magicSuggest().getSelection();
+    request['groups'] = $.map(selectedGroups, function (val, i) {
+                                    return val.id.toString();
+                        });
     return request;
 }
 

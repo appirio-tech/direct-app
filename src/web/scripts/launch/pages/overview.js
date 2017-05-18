@@ -445,10 +445,11 @@ function continueOverview() {
        return;
    }
     //add challenge group to review page
-    var gid="#" + $(".group:visible").attr("id");
+    var gid = "#group_" + getContestType()[0].toLowerCase();
     var groupsSpan="";
-    $(gid+" .masterGroupsChoosenSelect option").each(function(k,v){
-        groupsSpan+='<span>'+$(v).text()+'</span>';
+    var groupSelected = jQuery_1_11_1(gid).magicSuggest().getSelection();
+    $.each(groupSelected, function(i, g){
+        groupsSpan+='<span>'+ g.name+'</span>';
     });
     $(".overviewData .rGroups td span").remove();
     $(groupsSpan).insertBefore(".overviewData .rGroups td a");

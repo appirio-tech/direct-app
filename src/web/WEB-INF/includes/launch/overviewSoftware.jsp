@@ -109,8 +109,9 @@
         </select>   
       </div>
    </div>
-    <div class="prizes group" id="groupSoftwareDiv">
-        <jsp:include page="group.jsp"/>
+    <h3>Challenge Group</h3>
+    <div class="prizes group software" id="groupSoftwareDiv">
+        <div id="group_software"></div>
     </div>
 
   <div id="swThurgoodDiv" style="display: none">

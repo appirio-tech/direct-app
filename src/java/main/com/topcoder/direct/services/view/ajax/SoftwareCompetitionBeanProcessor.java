@@ -301,7 +301,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
         result.put("groupIds", CollectionUtils.collect(bean.getProjectHeader().getGroups(), new Transformer() {
             public Object transform(Object object) {
-                return ((ProjectGroup) object).getId() + "";
+                return ((ProjectGroup) object).getId();
             }
         }));
 
