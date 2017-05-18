@@ -444,15 +444,6 @@ function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
-    //add challenge group to review page
-    var gid = "#group_" + getContestType()[0].toLowerCase();
-    var groupsSpan="";
-    var groupSelected = jQuery_1_11_1(gid).magicSuggest().getSelection();
-    $.each(groupSelected, function(i, g){
-        groupsSpan+='<span>'+ g.name+'</span>';
-    });
-    $(".overviewData .rGroups td span").remove();
-    $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
    if(mainWidget.isSoftwareContest()) {
        if(!hasRequirementDocument()) {

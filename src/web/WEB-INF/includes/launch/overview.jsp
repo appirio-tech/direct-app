@@ -65,11 +65,6 @@
         </div>
   </div>
   <!-- end round 2 information -->
-    <h3>Challenge Group</h3>
-    <div class="prizes group studio" id="groupStudioDiv">
-        <div id="group_studio"></div>
-    </div>
-
   <!-- upload -->
 	<div id="uploadSection">
     

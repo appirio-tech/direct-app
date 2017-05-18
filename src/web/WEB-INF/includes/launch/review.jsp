@@ -58,7 +58,7 @@
             <td><span id="rEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
         <tr class="rGroups">
-            <th>Challenge Groups :</th>
+            <th>Group(s) :</th>
             <td><a href="javascript:backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
     </table>

@@ -105,14 +105,17 @@
                 <td class="first_tab_type"><strong>Challenge Fee</strong></td>
                 <td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr class="preRegisterUsersDiv hide">
                 <td class="first_tab_type"><strong>Assign Member(s):</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rPreRegisterUsers"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Created By</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
+                <td class="first_tab_type"><strong>Group(s):</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
             </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -244,23 +247,27 @@
                 <span class="name fixWidthName"><strong>Task</strong></span>
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
             </div>
-            <br />
             <div id="preRegisterUsersEditDiv">
+                <br />
                 <span class="name fixWidthName"><strong>Assign Member(s):</strong></span>
                 <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
             </div>
-            <br /><br />
-
+            <br />
+            <div id="groupDisplay">
+                <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
+                <div id="groupDiv"><div id="groups"></div></div>
+            </div>
+            <br/><br/>
                 <span class="name fixWidthName"><strong>Created By</strong></span>
                 <span class ='small_info_spec' id="challegneCreatorLabel"></span>
-     
-
+            <br/>
+            <p class="save">
+                <a href="javascript:;" class="cancel_text">cancel</a>
+                <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
+            </p>
+            <div class="clear"></div>
         </div>
-        <p class="save">
-            <a href="javascript:;" class="cancel_text">cancel</a>
-            <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
-        </p>
-        <div class="clear"></div>             
+        <div class="clear"></div>
     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Contest Type Edit -->
@@ -508,18 +515,6 @@
                    </span>
         </div>
         </p>
-        <div class="groupDisplay">
-            <p class="det_font">
-                <span class="name"><strong>Challenge Groups</strong></span>
-
-                <br />
-                       <span class="small_info_spec" id="rswGroups">
-                       </span>
-            </p>
-
-            <div class="bottom_spec">
-            </div>
-        </div>
     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -567,10 +562,6 @@
 
                 </div>
                 <!-- end .guidelines -->
-                <h3>Challenge Group</h3>
-                <div class="prizes group algorithm" id="groupAlgorithmDiv">
-                    <div id="group_algorithm"></div>
-                </div>
             </div> <!-- end .contestDetail -->
 
         </div> <!-- End .launchContestOut -->

@@ -3189,8 +3189,20 @@ div#winnerDiv {
     padding: 2px 5px 2px 5px;
     margin-right: 5px;
 }
-div.group{
-    width: 675px;
+#groupDiv{
     border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-left: 132px;
+    width: auto;
+    margin-right: 50px;
+}
+.ms-ctn-focus{
+    background-color: #ffffff;
+}
+#groupDisplay #groupDiv{
+    margin-left: 150px;
+}
+div#groupDisplay {
     margin-top: 20px;
 }
+

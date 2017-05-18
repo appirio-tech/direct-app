@@ -165,6 +165,11 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Group(s):</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
@@ -327,17 +332,19 @@
               </div>
               <div class="clearFix"></div>
           </div>
-            <br />
           <div id="privateProjectEditDiv" class="hide">
               <span class="name fixWidthName" title="Run this as an assigned task. Registration will not be open to anyone else, but it will still be publically listed."><strong>Task</strong></span>
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
           </div>
-          <br />
           <div id="preRegisterUsersEditDiv" class="hide">
               <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
               <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
           </div>
-          <br/><br />
+          <div id="groupDisplay">
+              <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
+              <div id="groupDiv"><div id="groups"></div></div>
+          </div>
+          <br/><br/>
           <div>
 
             <span class="name fixWidthName"><strong>Created By</strong></span>
@@ -345,8 +352,6 @@
             <span class ='small_info_spec' id="challegneCreatorLabel"></span>
                   
           </div>
-
-
 
                  </p>
                  <p class="save">                 	
@@ -781,19 +786,6 @@
                     </div> <!-- End of .technology -->
                </s:if>
 
-                <div class="groupDisplay">
-                    <p class="det_font">
-                        <span class="name"><strong>Challenge Groups</strong></span>
-
-                        <br />
-                       <span class="small_info_spec" id="rswGroups">
-                       </span>
-                    </p>
-
-                    <div class="bottom_spec">
-                    </div>
-                </div>
-               
                <div class="component">    
                    <p class="det_font">
                    <span class="name"><strong>Catalog Name</strong></span>
@@ -958,11 +950,6 @@
 	              		</div> <!-- end of prizesInner_tech -->
 	              	</div>
                 </s:if>
-                <h3>Challenge Group</h3>
-                <div class="prizes group software" id="groupSoftwareDiv">
-                    <div id="group_software"></div>
-                </div>
-                
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
 		    		

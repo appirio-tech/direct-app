@@ -44,10 +44,6 @@
         </div>        
     </div>
     <!-- end Match Rules -->
-    <h3>Challenge Group</h3>
-    <div class="prizes group algorithm" id="groupAlgorithmDiv">
-        <div id="group_algorithm"></div>
-    </div>
     <!-- upload -->
     <div id="alUploadSection">
         <h3>File Upload (20MB maximum):</h3>       

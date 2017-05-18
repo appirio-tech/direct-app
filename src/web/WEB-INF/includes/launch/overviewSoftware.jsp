@@ -109,10 +109,6 @@
         </select>   
       </div>
    </div>
-    <h3>Challenge Group</h3>
-    <div class="prizes group software" id="groupSoftwareDiv">
-        <div id="group_software"></div>
-    </div>
 
   <div id="swThurgoodDiv" style="display: none">
       <h3>Use Thurgood to check challenge submissions?</h3><br/>

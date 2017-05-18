@@ -219,17 +219,7 @@ $(document).ready(function() {
                   var b = B.name.toLowerCase();
                   return a < b ? -1 : ((a > b) ? 1 : 0);
               });
-              jQuery_1_11_1("#group_software").magicSuggest({
-                  placeholder: 'Type group name here',
-                  allowFreeEntries: false,
-                  data: securityGroups
-              });
-              jQuery_1_11_1("#group_studio").magicSuggest({
-                  placeholder: 'Type group name here',
-                  allowFreeEntries: false,
-                  data: securityGroups
-              });
-              jQuery_1_11_1("#group_algorithm").magicSuggest({
+              jQuery_1_11_1("#groups").magicSuggest({
                   placeholder: 'Type group name here',
                   allowFreeEntries: false,
                   data: securityGroups
@@ -562,27 +552,7 @@ $(document).ready(function() {
             $(".preRegisterUsersRow").hide();
             $("#preRegisterUsersEditDiv").hide();
         }
-    })
-
-    //sortGroupSelects();
-    //$(".addGroups").click(function(){
-    //    $(".group:visible .masterGroupsSelect option:selected").appendTo(".group:visible .masterGroupsChoosenSelect");
-    //    sortGroupSelects();
-    //    mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
-    //        function (option, i) {
-    //            return option.value;
-    //        });
-    //});
-    //
-    //$(".removeGroups").click(function(){
-    //    $(".group:visible .masterGroupsChoosenSelect option:selected").appendTo(".group:visible .masterGroupsSelect");
-    //    sortGroupSelects();
-    //    mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
-    //        function (option, i) {
-    //            return option.value;
-    //        });
-    //});
-
+    });
 }); // end of initiation
 
 
@@ -1107,8 +1077,7 @@ function saveAsDraftRequest() {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
 
-    var gid = "#group_" + getContestType()[0].toLowerCase();
-    var selectedGroups = jQuery_1_11_1(gid).magicSuggest().getSelection();
+    var selectedGroups = jQuery_1_11_1("#groups").magicSuggest().getSelection();
     request['groups'] = $.map(selectedGroups, function (val, i) {
                                     return val.id.toString();
                         });
@@ -2996,12 +2965,6 @@ function technologyAndPlatformSelectsChanged() {
 function sortPlatformSelects() {
     sortSelectOptions('masterPlatformsSelect');
     sortSelectOptions('masterPlatformsChoosenSelect');
-}
-
-function sortGroupSelects(){
-    var id=$(".group:visible").attr("id");
-    sortSelectOptions(id+" .masterGroupsSelect");
-    sortSelectOptions(id+" .masterGroupsChoosenSelect");
 }
 
 function sortCategorySelects() {
