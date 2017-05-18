@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service;
 
@@ -8,6 +8,7 @@ import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.PersistenceException;
 import com.topcoder.management.project.Project;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.SimplePipelineData;
 import com.topcoder.management.project.SimpleProjectContestData;
 import com.topcoder.management.project.SimpleProjectPermissionData;
@@ -211,7 +212,14 @@ import java.util.Set;
  *     <li>Added method {@link #getPhases(long)}</li>
  * </ul>
  * </p>
- * 
+ *
+ * <p>
+ * Version 1.9 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #getAllProjectGroups()}</li>
+ * </ul>
+ * </p>
+ *
  * <p>
  * <strong>Thread Safety:</strong> Implementations must be thread-safe from the point of view of
  * their use. Implementations can assume that passed objects will be operated on by just one thread.
@@ -219,8 +227,8 @@ import java.util.Set;
  *
  *
  * @author argolite, moonli, pulky
- * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, GreatKevin
- * @version 1.8
+ * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, GreatKevin, TCSCODER
+ * @version 1.9
  */
 public interface ProjectServices {
     /**
@@ -1602,4 +1610,13 @@ public interface ProjectServices {
      * @since 1.8
      */
     public com.topcoder.project.phases.Project getPhases(long projectId) throws ProjectServicesException;
+
+    /**
+     * Get all project groups
+     *
+     * @return array of all project group
+     * @throws ProjectServicesException if any database related exception occur
+     * @since 1.9
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ProjectServicesException;
 }

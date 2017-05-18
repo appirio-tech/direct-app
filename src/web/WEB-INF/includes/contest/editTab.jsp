@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.5
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.6
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -50,6 +50,9 @@
   -
   - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
+  -
+  - Version 2.6 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for display and edit challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -736,7 +739,18 @@
                
                 <div class="bottom_spec">
                </div>
-               
+                <div class="groupDisplay">
+                    <p class="det_font">
+                        <span class="name"><strong>Challenge Groups</strong></span>
+
+                        <br />
+                       <span class="small_info_spec" id="rswGroups">
+                       </span>
+                    </p>
+
+                    <div class="bottom_spec">
+                    </div>
+                </div>
                <p class="det_font">
                <span class="name"><strong>Final Deliverables</strong></span>
                <br />
@@ -803,6 +817,9 @@
 
                 </div>
                 <!-- end .guidelines -->
+                <div class="prizes group" id="groupSoftwareDiv">
+                    <jsp:include page="../launch/group.jsp"/>
+                </div>
             </div> <!-- end .contestDetail -->
            <div class="deliverables">  
                <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service.ejb;
 
@@ -18,6 +18,7 @@ import javax.ejb.TransactionAttributeType;
 import com.topcoder.management.project.FileType;
 import com.topcoder.management.project.Project;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.SimplePipelineData;
 import com.topcoder.management.project.SimpleProjectContestData;
 import com.topcoder.management.project.SimpleProjectPermissionData;
@@ -247,8 +248,14 @@ import com.topcoder.util.log.LogManager;
  * </ul>
  * </p>
  *
- * @author fabrizyo, znyyddf, pulky, murphydog, waits, hohosky, isv, GreatKevin
- * @version 1.8
+ * Version 1.9 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #getAllProjectGroups()}</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, znyyddf, pulky, murphydog, waits, hohosky, isv, GreatKevin, TCSCODER
+ * @version 1.9
  * @since 1.0
  */
 @Stateless
@@ -2745,6 +2752,26 @@ public class ProjectServicesBean implements ProjectServicesLocal, ProjectService
         } catch (IllegalArgumentException e) {
             Util.log(logger, Level.ERROR, "IllegalArgumentException occurred in " + method);
             throw e;
+        } catch (ProjectServicesException e) {
+            Util.log(logger, Level.ERROR, "ProjectServicesException occurred in " + method);
+            throw e;
+        } finally {
+            Util.log(logger, Level.INFO, "Exits " + method);
+        }
+    }
+
+    /**
+     * Get all project groups
+     *
+     * @return array of all project group
+     * @throws ProjectServicesException if any database related exception occur
+     * @since 1.9
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ProjectServicesException {
+        String method = "ProjectServicesBean#getAllProjectGroups method.";
+        Util.log(logger, Level.INFO, "Enters" + method);
+        try {
+            return getProjectServices().getAllProjectGroups();
         } catch (ProjectServicesException e) {
             Util.log(logger, Level.ERROR, "ProjectServicesException occurred in " + method);
             throw e;
