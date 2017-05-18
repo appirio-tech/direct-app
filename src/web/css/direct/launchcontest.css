@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+* Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
 *
 * This css used to render the launch new contest flow.
 *
@@ -22,8 +22,11 @@
 * - Update prize section to support on the fly cost calculation for design challenge
 * - Add checkpoint prize for dev challenge prize section and update on the fly cost calculation
 *
-* Author: GreatKevin, TCSASSEMBLER
-* Version 1.6
+* Version 1.7 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+* - Add section for project group
+
+* Author: GreatKevin, TCSASSEMBLER, TCSCODER
+* Version 1.7
 */
 @charset "utf-8";
 
@@ -968,7 +971,7 @@ table.total td.toRight {
 /** prizesInner **/
 /** prizesInner **/
 
-#button_tech, #button_platform {
+#button_tech, #button_platform, .button_tech {
     height: 90px;
     padding-top: 40px;
     padding-bottom: 20px;
@@ -1003,14 +1006,14 @@ table.total td.toRight {
     padding-left: 260px;
 }
 
-#masterTechnologiesSelect, #masterPlatformsSelect {
+#masterTechnologiesSelect, #masterPlatformsSelect, .masterGroupsSelect {
     overflow: scroll;
     height: 150px;
     width: 285px;
     float: left;
 }
 
-#masterTechnologiesChoosenSelect, #masterPlatformsChoosenSelect {
+#masterTechnologiesChoosenSelect, #masterPlatformsChoosenSelect, .masterGroupsChoosenSelect {
     overflow: scroll;
     height: 150px;
     width: 285px;
@@ -3178,4 +3181,11 @@ div#selectWinnerConfirmation.outLay {
 div#winnerDiv {
     margin-top: -30px;
     padding: 10px;
+}
+
+.rGroups td span {
+    border: #e7e7e7 solid 1px;
+    border-radius: 5px;
+    padding: 2px 5px 2px 5px;
+    margin-right: 5px;
 }

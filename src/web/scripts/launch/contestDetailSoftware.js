@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -120,8 +120,11 @@
  * Version 3.9 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * - Add support for closing and canceling private challenge
  *
+ * Version 3.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Add support for challenge group(view and editing)
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.9
+ * @version 3.10
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -857,6 +860,8 @@ function initContest(contestJson) {
    if(isPlatformContest()) {
        mainWidget.softwareCompetition.platforms = contestJson.platformIds;
    }
+
+    mainWidget.softwareCompetition.groups = contestJson.groupIds;
 
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    projectHeader.tcDirectProjectId = contestJson.tcDirectProjectId;
@@ -2591,6 +2596,8 @@ function populateSpecSection(initFlag) {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
 
+    $(".group .masterGroupsSelect").val(mainWidget.softwareCompetition.groups);
+    $(".group .masterGroupsSelect option:selected").appendTo(".group .masterGroupsChoosenSelect");
 
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
@@ -2646,6 +2653,11 @@ function populateSpecSection(initFlag) {
      });
      $('#rswTechnologies').html(html);
   }
+    var sGroup="";
+    $.each($('.group .masterGroupsChoosenSelect option'),function(i,option) {
+        sGroup += option.text +"<br/>";
+    });
+    $('#rswGroups').html(sGroup);
 
   if(isPlatformContest()) {
       var html = "";

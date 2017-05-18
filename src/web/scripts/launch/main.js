@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -109,8 +109,11 @@
  * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
  * - Add support for pre-register member
  *
+ * Version 3.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Add support for pick up challenge group.
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
- * @version 3.9
+ * @version 3.10
  */
 
  /**
@@ -536,6 +539,25 @@ $(document).ready(function() {
             $("#preRegisterUsersEditDiv").hide();
         }
     })
+
+    sortGroupSelects();
+    $(".addGroups").click(function(){
+        $(".group:visible .masterGroupsSelect option:selected").appendTo(".group:visible .masterGroupsChoosenSelect");
+        sortGroupSelects();
+        mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
+            function (option, i) {
+                return option.value;
+            });
+    });
+
+    $(".removeGroups").click(function(){
+        $(".group:visible .masterGroupsChoosenSelect option:selected").appendTo(".group:visible .masterGroupsSelect");
+        sortGroupSelects();
+        mainWidget.softwareCompetition.groups = $.map($('.group:visible .masterGroupsChoosenSelect option'),
+            function (option, i) {
+                return option.value;
+            });
+    });
 
 }); // end of initiation
 
@@ -1060,6 +1082,8 @@ function saveAsDraftRequest() {
     if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
+
+    request['groups'] = mainWidget.softwareCompetition.groups;
 
     return request;
 }
@@ -2947,6 +2971,11 @@ function sortPlatformSelects() {
     sortSelectOptions('masterPlatformsChoosenSelect');
 }
 
+function sortGroupSelects(){
+    var id=$(".group:visible").attr("id");
+    sortSelectOptions(id+" .masterGroupsSelect");
+    sortSelectOptions(id+" .masterGroupsChoosenSelect");
+}
 
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');

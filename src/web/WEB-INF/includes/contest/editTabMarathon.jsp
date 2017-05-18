@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.6
-  - Copyright (C) 2013 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - change on #billingProjects, will load by jquery
@@ -24,6 +24,8 @@
   - Version 1.6 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
   -
+  - Version 1.7 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for display and edit challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -506,6 +508,18 @@
                    </span>
         </div>
         </p>
+        <div class="groupDisplay">
+            <p class="det_font">
+                <span class="name"><strong>Challenge Groups</strong></span>
+
+                <br />
+                       <span class="small_info_spec" id="rswGroups">
+                       </span>
+            </p>
+
+            <div class="bottom_spec">
+            </div>
+        </div>
     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -553,6 +567,9 @@
 
                 </div>
                 <!-- end .guidelines -->
+                <div class="prizes group" id="groupSoftwareDiv">
+                    <jsp:include page="../launch/group.jsp"/>
+                </div>
             </div> <!-- end .contestDetail -->
 
         </div> <!-- End .launchContestOut -->

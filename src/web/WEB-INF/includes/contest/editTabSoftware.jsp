@@ -1,6 +1,6 @@
 <%--
-  - Version: 2.9
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.10
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -73,6 +73,8 @@
   - Version 2.9 (Provide Way To Pre_register members When Launching Challenge)
   - - pre-register member support
   -
+  - Version 2.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for display and edit challenge group
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -778,6 +780,19 @@
                        </div>
                     </div> <!-- End of .technology -->
                </s:if>
+
+                <div class="groupDisplay">
+                    <p class="det_font">
+                        <span class="name"><strong>Challenge Groups</strong></span>
+
+                        <br />
+                       <span class="small_info_spec" id="rswGroups">
+                       </span>
+                    </p>
+
+                    <div class="bottom_spec">
+                    </div>
+                </div>
                
                <div class="component">    
                    <p class="det_font">
@@ -943,6 +958,9 @@
 	              		</div> <!-- end of prizesInner_tech -->
 	              	</div>
                 </s:if>
+                <div class="prizes group" id="groupSoftwareDiv">
+                    <jsp:include page="../launch/group.jsp"/>
+                </div>
                 
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->

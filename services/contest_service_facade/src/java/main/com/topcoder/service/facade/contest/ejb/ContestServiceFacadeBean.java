@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.contest.ejb;
 
@@ -59,6 +59,7 @@ import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectType;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.management.review.ReviewManagementException;
 import com.topcoder.management.review.application.ReviewAuction;
@@ -867,9 +868,15 @@ import java.util.Set;
  *     <li>Refactor {@link #createReviewerResource(long, long, long, boolean, boolean)}</li>
  *     <li>Fix {@link #closeSoftwareContest(TCSubject, long, long)} to work with auto pilot</li>
  * </ul>
+ *
+ * Version 3.7 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Add {@link #getAllProjectGroups()}to get all project groups</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.6
+ * @version 3.7
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -9267,6 +9274,24 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         } catch (Exception e) {
             logger.error("Failed to update challenge");
             throw new ContestServiceException("Failed to update challenge", e);
+        }
+    }
+
+    /**
+     * Get all project groups
+     *
+     * @return array of all project groups
+     * @throws ContestServiceException if any database related exception occur
+     * @since 3.7
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ContestServiceException {
+        logger.debug("getAllProjectGroups");
+
+        try {
+            return projectServices.getAllProjectGroups();
+        } catch (ProjectServicesException e) {
+            logger.error("Operation failed in the getAllProjectGroups.", e);
+            throw new ContestServiceException("Operation failed in the getAllProjectGroups.", e);
         }
     }
 }
