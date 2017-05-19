@@ -3204,9 +3204,15 @@ div#winnerDiv {
 div#groupDisplay {
     margin-top: 20px;
 }
-
 div#groupDisplay #groupDiv{
     margin-top: 20px;
     width: 293px;
 }
-
+#groupDiv .ms-res-ctn .ms-res-item{
+    font-size: 12px;
+    text-decoration: underline;
+    line-height: 20px;
+}
+#groupDiv .ms-res-ctn .ms-res-item-active {
+    background-color: #CCC;
+}
