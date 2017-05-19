@@ -79,12 +79,6 @@
     <property name="design_dist.jar" value="${distfilename}_${component_version}_design_dist.jar"/>
     <property name="jboss_deploy_dir" value="${jboss.home}/server/${server.name}/deploy" />
 
-    <!-- SCORECARD WAR -->
-    <property name="scorecard_dir" value="${basedir}/scorecard_tool"/>
-    <property name="scorecard_conf" value="${scorecard_dir}/grails-app/conf"/>
-    <property name="scorecardtargetdir" value="${basedir}/target"/>
-    <property name="scorecard.war" value="${build_distdir}/scorecard.war" />
-    
     <!-- DOCUMENT PACKAGE -->
     <property name="dist_docpackage" value="${builddir}/doc_package"/>
     <property name="docpackage.jar" value="${distfilename}_docs.jar"/>
@@ -111,11 +105,6 @@
             </fileset>
         </copy>
         <replace replacefilterfile="token.properties" dir="${tokenized_conf}"/>
-    </target>
-
-    <target name="init-scorecard" description="update the configurations with tokens for scorecard" >
-    <copy file="${scorecard_dir}/DataSource.groovy.properties" tofile="${scorecard_conf}/DataSource.groovy" overwrite="true"/>
-    <replace replacefilterfile="token.properties" dir="${scorecard_dir}/grails-app/conf"/>
     </target>
     
     <target name="compile" description="compile the source code">
@@ -148,7 +137,7 @@
     <property name="temp_dist_ear" value="${build_distdir}/temp_dist_ear"/>
     <property name="ear_shared_libdir" value="${build_distdir}/lib"/>
 
-    <target name="ear" depends="war, scorecard_war" description="create the ear tarball for direct application">
+    <target name="ear" depends="war" description="create the ear tarball for direct application">
         <!-- Copy the libraries -->
         <mkdir dir="${build_distdir}"/>
         <mkdir dir="${build_distdir}/lib"/>
@@ -387,15 +376,13 @@
         <zip destfile="direct-static.jar">
             <fileset dir="${srcdir}/web">
                 <include name="css/direct/**/*.css"/>
-                <include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/copilot/**/*.*"/>
                 <include name="scripts/my/**/*.*"/>
-                <include name="scripts/scorecard/**/*.*"/>
                 <include name="scripts/tinyMCE/templates/*.html"/>
-                <include name="scripts/ckeditor/templates/**/*.*"/>
+                <include name="scripts/ckeditor/**/*.*"/>
             </fileset>
         </zip>
     </target>
@@ -404,14 +391,12 @@
 	        <zip destfile="direct-static-all.jar">
 	            <fileset dir="${srcdir}/web">
 	                <include name="css/direct/**/*.css"/>
-	                <include name="css/scorecard/**/*.css"/>
 	                <exclude name="scripts/tiny_mce/**/*.*"/>
 	                <include name="scripts/*.*"/>
 	                <include name="scripts/launch/**/*.*"/>
-					<include name="scripts/copilot/**/*.*"/>
-	                <include name="scripts/scorecard/**/*.*"/>
+			<include name="scripts/copilot/**/*.*"/>
 	                <include name="scripts/tinyMCE/templates/*.html"/>
-	                <include name="scripts/ckeditor/templates/**/*.*"/>
+	                <include name="scripts/ckeditor/**/*.*"/>
 	            	<include name="images/*.*"/>
 	            	<include name="images/copilotPosting/*.*"/>
 	            	<include name="images/edit/*.*"/>
@@ -686,28 +671,6 @@
                 <antcall target="version-deploy-jsp"/>
             </then>
         </if>
-    </target>
-
-    <!-- =================================
-          target: scorecard
-         ================================= -->
-    <target name="scorecard_war" depends="init-scorecard" description="--> Creates a WAR of a Grails application">
-       <ant antfile="build.xml" target="war" dir="${scorecard_dir}" inheritall="false">
-        <propertyset>
-            <propertyref builtin="commandline"/>
-        </propertyset>
-       </ant>
-       <unzip src="${scorecard_dir}/scorecard.war" dest="${scorecard.war}"/>
-       <delete file="${scorecard_dir}/scorecard.war"/>
-    </target>
-
-    <target name="scorecard_clean" description="--> Clean all files of a Grails application">
-       <ant antfile="build.xml" target="clean" dir="${scorecard_dir}" inheritall="false">
-        <propertyset>
-            <propertyref builtin="commandline"/>
-        </propertyset>
-       </ant>
-       <delete dir="${scorecardtargetdir}"/>
     </target>
     
     <!-- ************************************************************************** -->

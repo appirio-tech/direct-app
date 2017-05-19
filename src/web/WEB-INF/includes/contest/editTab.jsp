@@ -51,7 +51,9 @@
   - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
   -
-  - Version 2.6 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  - Version 2.6 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for display and edit challenge group
+  - Version 2.7 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -145,10 +147,15 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Group(s):</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
-            <tr></tr>            
+            <tr></tr>
             <%--<tr>--%>
                 <%--<td class="first_tab_type"><strong>Challenge Fee</strong></td>--%>
                 <%--<td class="sec_tab_type"><strong>: $<span id="rAdminFee"></span></strong></td>--%>
@@ -311,16 +318,20 @@
                          <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
                          <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
                      </div>
-                     <br /><br />
+                     <div id="groupDisplay">
+                         <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
+                         <div id="groupDiv"><div id="groups"></div></div>
+                     </div>
+                     <br/><br/>
                     <span class="name fixWidthName"><strong>Created By</strong></span>
                  <span class ='small_info_spec' id="challegneCreatorLabel"></span>
                  </div>
                  </div>
-                 <p class="save">                   
+                 <p class="save">
                      <a href="javascript:;" class="cancel_text">cancel</a>
                      <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
-                 </p>                         
-                 <div class="clear"></div>                              
+                 </p>
+                 <div class="clear"></div>
                 </div><!-- End .detailsContent -->                                                              
 </div><!-- End .details -->
 <!-- End Contest Type Edit --> 
@@ -739,7 +750,6 @@
                
                 <div class="bottom_spec">
                </div>
-               
                <p class="det_font">
                <span class="name"><strong>Final Deliverables</strong></span>
                <br />

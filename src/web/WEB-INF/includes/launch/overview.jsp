@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin, Veve, TCSASSEMBER
+  - Author: isv, Ghost_141, GreatKevin, Veve, TCSCODER
   - Version: 1.9
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
@@ -22,7 +22,10 @@
   - Version 1.8 (TopCoder Direct - Design Challenge Track Studio Cup Point Flag)
   - Add studio cup points checkbox and studio cup points display
   -
-  - Version 1.9 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  - Version 1.9 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for adding challenge group
+  -
+  - Version 1.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -65,7 +68,6 @@
         </div>
   </div>
   <!-- end round 2 information -->
-
   <!-- upload -->
 	<div id="uploadSection">
     

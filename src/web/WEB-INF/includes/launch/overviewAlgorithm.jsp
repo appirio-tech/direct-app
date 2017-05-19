@@ -1,12 +1,15 @@
 <%--
-  - Author: bugbuka, GreatKevin, TCSASSEMBLER
+  - Author: bugbuka, GreatKevin, TCSCODER
   - Version: 1.3
   - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.2 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for algorithm contest prize add and remove
   -
-  - Version 1.9 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  - Version 1.3 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for adding challenge group
+  -
+  - Version 1.4 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -   Add support for custom copilot fee
   - Description: This page fragment renders edit algorithm contest page.
 --%>
@@ -43,7 +46,6 @@
         </div>        
     </div>
     <!-- end Match Rules -->
-    
     <!-- upload -->
     <div id="alUploadSection">
         <h3>File Upload (20MB maximum):</h3>       

@@ -109,10 +109,13 @@
  * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
  * - Add support for pre-register member
  *
- * Version 3.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * Version 3.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Add support for pick up challenge group.
+ *
+ * Version 3.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
  * @version 3.10
  */
 
@@ -186,6 +189,8 @@ var swDocuments = [];
 
 // represents project id of reporting contest type. 
 var REPORTING_ID = "36";
+
+var securityGroups = [];
 /**
  * Configuration/General Set up
  */
@@ -210,6 +215,18 @@ $(document).ready(function() {
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
             copilotFees = result.copilotFees;
+              securityGroups = result.groups;
+
+              securityGroups.sort(function(A, B){
+                  var a = A.name.toLowerCase();
+                  var b = B.name.toLowerCase();
+                  return a < b ? -1 : ((a > b) ? 1 : 0);
+              });
+              jQuery_1_11_1("#groups").magicSuggest({
+                  placeholder: 'Type group name here',
+                  allowFreeEntries: false,
+                  data: securityGroups
+              });
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -538,8 +555,7 @@ $(document).ready(function() {
             $(".preRegisterUsersRow").hide();
             $("#preRegisterUsersEditDiv").hide();
         }
-    })
-
+    });
 }); // end of initiation
 
 
@@ -1063,10 +1079,16 @@ function saveAsDraftRequest() {
     if($("input[name=CMCBillingID]").length > 0 && $.trim($("input[name=CMCBillingID]").val()).length > 0) {
         request['cmcBillingId'] = $("input[name=CMCBillingID]").val();
     }
+
     var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
     if(copilotCost > 0 && (copilotCost != parseFloat(copilotFees[getContestType(true)[1]]["copilotFee"]))){
         request["customCopilotFee"] = mainWidget.softwareCompetition.copilotCost;
     }
+
+    var selectedGroups = jQuery_1_11_1("#groups").magicSuggest().getSelection();
+    request['groups'] = $.map(selectedGroups, function (val, i) {
+                                    return val.id.toString();
+                        });
     return request;
 }
 
@@ -2942,7 +2964,6 @@ function sortPlatformSelects() {
     sortSelectOptions('masterPlatformsSelect');
     sortSelectOptions('masterPlatformsChoosenSelect');
 }
-
 
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');

@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, Ghost_141, GreatKevin, ASASSEMBLER
+  - Author: isv, Ghost_141, GreatKevin, TCSCODER
   - Version: 1.10
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
@@ -33,7 +33,10 @@
   - Version 1.9 (F2F - TC Cockpit Update Bug Hunt type)
   - - Make the spec review alone, so it can be displayed for bug hunt challenge
   -
-  - Version 1.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  - Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+  - - Add section for adding challenge group
+  -
+  - Version 1.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -   Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>

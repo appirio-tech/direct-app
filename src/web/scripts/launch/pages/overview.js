@@ -40,11 +40,14 @@
  * Version 1.9 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
- * Version 1.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Update review page for groups selected section
+ *
+ * Version 1.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
- * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 1.10
+ * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSCODER
+ * @version 1.11
  */
 $(document).ready(function() {
 

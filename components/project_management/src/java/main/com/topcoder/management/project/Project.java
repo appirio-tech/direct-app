@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -74,7 +74,13 @@ import javax.xml.bind.annotation.XmlType;
  *      <li>Added property {@link #autoAssignReviewerId}</li>
  *  </ul>
  * </p>
- * 
+ *
+ * <p>
+ * Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #groups}</li>
+ * </ul>
+ * </p>
  * <p>
  * This class implements Serializable interface to support serialization.
  * </p>
@@ -82,8 +88,8 @@ import javax.xml.bind.annotation.XmlType;
  * Thread safety: This class is not thread safe.
  * </p>
  *
- * @author tuenm, iamajia, duxiaoyang, bugbuka, GreatKevin
- * @version 1.9
+ * @author tuenm, iamajia, duxiaoyang, bugbuka, GreatKevin, TCSCODER
+ * @version 1.10
  * @since 1.0
  */
 @XmlType(name = "project", namespace = "com.topcoder.management.project")
@@ -279,6 +285,13 @@ public class Project extends AuditableObject implements Serializable {
      * @since 1.3
      */
     private List<CopilotContestExtraInfo> copilotContestExtraInfos;
+
+    /**
+     * Represents list of groups of the challenge
+     *
+     * @since 1.10
+     */
+    private List<ProjectGroup> groups;
 
      /**
      * <p>
@@ -842,5 +855,34 @@ public class Project extends AuditableObject implements Serializable {
      */
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    /**
+     * Getter for {@link #groups}
+     *
+     * @return groups
+     * @since 1.10
+     */
+    public List<ProjectGroup> getGroups() {
+        if (groups == null) {
+            groups = new ArrayList<ProjectGroup>();
+        }
+        return groups;
+    }
+
+    /**
+     * Setter for {@link #groups}
+     *
+     * @param groups list of ProjectGroup
+     * @since 1.10
+     */
+    public void setGroups(List<ProjectGroup> groups) {
+        if (groups != null) {
+            if (groups.contains(null)) {
+                throw new IllegalArgumentException("The project groups can not contain null.");
+            }
+        }
+
+        this.groups = groups;
     }
 }

@@ -27,6 +27,7 @@ import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectStudioSpecification;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -273,7 +274,14 @@ import java.util.*;
  * </ul>
  * </p>
  *
- * Version 2.5 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * <p>
+ * Version 2.5 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #groups}lint of project group if from request</li>
+ *     <li>Updated {@link #populateCompetition(SoftwareCompetition)}to process groups</li>
+ * </ul>
+ * </p>
+ * Version 2.6 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * <ul>
  *     <li>Add {@link #customCopilotFee}</li>
  *     <li>Update {@link #getCopilotResource()} to support custom fee</li>
@@ -623,6 +631,12 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.8
      */
     private List<String> platforms;
+
+    /**
+     * Id list for challenge group
+     * @since 2.5
+     */
+    private List<String> groups;
 
     /**
      * <p>
@@ -1023,6 +1037,17 @@ public class SaveDraftContestAction extends ContestAction {
             populateStudioCompetition(softwareCompetition);
         } else {
             populateSoftwareCompetition(softwareCompetition);
+        }
+
+        //set group
+        if (groups != null && groups.size() > 0) {
+            List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
+            for (String groupId : groups) {
+                groupsList.add(getReferenceDataBean().getGroupMap().get(Long.valueOf(groupId)));
+            }
+            softwareCompetition.getProjectHeader().setGroups(groupsList);
+        } else {
+            softwareCompetition.getProjectHeader().setGroups(new ArrayList<ProjectGroup>());
         }
 
         // remove the thurgood information if needed
@@ -2442,6 +2467,26 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setCustomCopilotFee(Double customCopilotFee) {
         this.customCopilotFee = customCopilotFee;
+    }
+  
+    /*
+     * Getter for {@link #groups}
+     *
+     * @return groups
+     * @sicne 2.5
+     */
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    /**
+     * Setter for {@link #groups}
+     *
+     * @param groups Ids of groups
+     * @since 2.5
+     */
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 
     public long getCmcBillingId() {
