@@ -3371,9 +3371,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.getAssetDTO().setProductionDate(getXMLGregorianCalendar(startDate));
             }
 
-            if (billingProjectId > 0) {
-                persistContestEligility(contest.getProjectHeader(), null, false);
-            }
+            //if (billingProjectId > 0) {
+            persistContestEligility(contest.getProjectHeader(), null, false);
+            //}
 
             if (creatingDevContest) {
                 autoCreateDevContest(tcSubject, contest, tcDirectProjectId, devContest);
@@ -3840,29 +3840,43 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param isStudio true for studio
      * @throws ContestEligibilityPersistenceException if any error occurs
      */
-    private void persistContestEligility(Project projectHeader, ContestEligibility eligiblity, boolean isStudio)
+    private void persistContestEligility(Project projectHeader, List<ContestEligibility> eligibilities, boolean isStudio)
         throws ContestEligibilityPersistenceException {
 
-        Long eligibilityGroupId = null;
-        if (eligiblity == null)
-        {
+        List<Long> groupsIds = new ArrayList<Long>();
+        List<Long> eligiblityGroupIds = new ArrayList<Long>();
 
-            eligibilityGroupId = projectHeader.getSecurityGroupId();
-        }
-        else
-        {
-            eligibilityGroupId = ((GroupContestEligibility)eligiblity).getGroupId();
+        if (eligibilities == null) {
+            //eligibilityGroupId = projectHeader.getSecurityGroupId();
+            for (ProjectGroup group : projectHeader.getGroups()){
+                groupsIds.add(group.getId());
+            }
+            eligibilities = contestEligibilityManager.getContestEligibility(projectHeader.getId(), isStudio);
+            for (ContestEligibility ce : eligibilities) {
+                Long eligibilityGroupId = ((GroupContestEligibility) ce).getGroupId();
+                if (!groupsIds.contains(eligibilityGroupId)){
+                    ce.setDeleted(true);
+                    continue;
+                }
+                eligiblityGroupIds.add(eligibilityGroupId);
+            }
+            for (Long group : groupsIds) {
+                if (!eligiblityGroupIds.contains(group)) {
+                    GroupContestEligibility contestEligibility = new GroupContestEligibility();
+                    contestEligibility.setContestId(projectHeader.getId());
+                    contestEligibility.setStudio(isStudio);
+                    contestEligibility.setDeleted(false);
+                    contestEligibility.setGroupId(group);
+                    eligibilities.add(contestEligibility);
+                }
+            }
+        } else {
+            for (ContestEligibility ce : eligibilities) {
+               ce.setContestId(projectHeader.getId());
+            }
         }
 
-
-        if (eligibilityGroupId != null && eligibilityGroupId > 0) {
-            GroupContestEligibility contestEligibility = new GroupContestEligibility();
-            contestEligibility.setContestId(projectHeader.getId());
-            contestEligibility.setStudio(isStudio);
-            contestEligibility.setDeleted(eligiblity == null ? false : eligiblity.isDeleted());
-            contestEligibility.setGroupId(eligibilityGroupId);
-            contestEligibilityManager.create(contestEligibility);
-        }
+        contestEligibilityManager.save(eligibilities);
     }
 
     /**
@@ -4720,17 +4734,21 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     allPhases[i].clearDependencies();
                 }
 
-                // billing projct can change, set or unset
-                // so for now easy way is removing current, and add if any
-                List<ContestEligibility> contestEligibilities =
-                 contestEligibilityManager.getContestEligibility(contest.getProjectHeader().getId(), false);
-                for (ContestEligibility ce:contestEligibilities){
-                    contestEligibilityManager.remove(ce);
-                }
-
-                if (billingProjectId > 0) {
-                    persistContestEligility(contest.getProjectHeader(), null, false);
-                }
+                //NOTE. comment out because now all challenges can set its groups, regards of its billing id status
+                //keep as reference
+                //
+//                // billing projct can change, set or unset
+//                // so for now easy way is removing current, and add if any
+//                List<ContestEligibility> contestEligibilities =
+//                 contestEligibilityManager.getContestEligibility(contest.getProjectHeader().getId(), false);
+//                for (ContestEligibility ce:contestEligibilities){
+//                    contestEligibilityManager.remove(ce);
+//                }
+//
+//                if (billingProjectId > 0) {
+//                    persistContestEligility(contest.getProjectHeader(), null, false);
+//                }
+                persistContestEligility(contest.getProjectHeader(), null, false);
             }
 
              Date startDate = contest.getProjectPhases().getStartDate();
@@ -5733,10 +5751,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             List<ContestEligibility> contestEligibilities =
                     contestEligibilityManager.getContestEligibility(contest.getProjectHeader().getId(), false);
 
+            //this can be removed
             if (contestEligibilities != null && contestEligibilities.size() > 0 && contestEligibilities.get(0) != null
                     && contestEligibilities.get(0) instanceof GroupContestEligibility) {
                 contest.getProjectHeader().setSecurityGroupId(((GroupContestEligibility) contestEligibilities.get(0)).getGroupId());
             }
+            //end remove
+            List<ProjectGroup> groups = new ArrayList<ProjectGroup>();
+            for (ContestEligibility ce : contestEligibilities) {
+                groups.add(new ProjectGroup(((GroupContestEligibility) ce).getGroupId(), ""));
+            }
+
+            contest.getProjectHeader().setGroups(groups);
 
             logger.debug("Exit getSoftwareContestByProjectId (" + projectId +
                 ")");
@@ -7088,9 +7114,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             List<ContestEligibility> contestEligibilities =
                  contestEligibilityManager.getContestEligibility(contest.getProjectHeader().getId(), false);
-            for (ContestEligibility ce:contestEligibilities){
-                persistContestEligility(newVersionORProject.getProjectHeader(), ce, false);
-            }
+//            for (ContestEligibility ce:contestEligibilities){
+//                persistContestEligility(newVersionORProject.getProjectHeader(), ce, false);
+//            }
+            persistContestEligility(newVersionORProject.getProjectHeader(), contestEligibilities, false);
 
             //4.if also auto-dev-creating for design, create it
             if (autoDevCreating && !isDevContest) {
@@ -7205,9 +7232,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             //3. keep terms and eligibility
             List<ContestEligibility> contestEligibilities =
                  contestEligibilityManager.getContestEligibility(contest.getProjectHeader().getId(), false);
-            for (ContestEligibility ce:contestEligibilities){
-                persistContestEligility(reOpendedProject.getProjectHeader(), ce, false);
-            }
+//            for (ContestEligibility ce:contestEligibilities){
+//                persistContestEligility(reOpendedProject.getProjectHeader(), ce, false);
+//            }
+            persistContestEligility(reOpendedProject.getProjectHeader(), contestEligibilities, false);
 			
 		
             reOpenContestId = reOpendedProject.getProjectHeader().getId();

@@ -201,7 +201,12 @@
           <label>Assign Member(s):</label>
           <input name="preRegisterUsers" type="text" class="text"/>
       </div>
-
+      <div class="row">
+          <label>Group(s):</label>
+          <div id="groupDiv">
+            <div id="groups"></div>
+          </div>
+      </div>
   </div>
   <!-- end .addNewContest -->
  </form>

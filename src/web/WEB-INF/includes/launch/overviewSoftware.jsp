@@ -109,9 +109,6 @@
         </select>   
       </div>
    </div>
-    <div class="prizes group" id="groupSoftwareDiv">
-        <jsp:include page="group.jsp"/>
-    </div>
 
   <div id="swThurgoodDiv" style="display: none">
       <h3>Use Thurgood to check challenge submissions?</h3><br/>

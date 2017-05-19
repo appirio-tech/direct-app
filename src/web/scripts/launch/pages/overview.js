@@ -444,14 +444,6 @@ function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
-    //add challenge group to review page
-    var gid="#" + $(".group:visible").attr("id");
-    var groupsSpan="";
-    $(gid+" .masterGroupsChoosenSelect option").each(function(k,v){
-        groupsSpan+='<span>'+$(v).text()+'</span>';
-    });
-    $(".overviewData .rGroups td span").remove();
-    $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
    if(mainWidget.isSoftwareContest()) {
        if(!hasRequirementDocument()) {

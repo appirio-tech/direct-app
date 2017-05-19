@@ -44,9 +44,6 @@
         </div>        
     </div>
     <!-- end Match Rules -->
-    <div class="prizes group" id="groupAlgorithmDiv">
-        <jsp:include page="group.jsp"/>
-    </div>
     <!-- upload -->
     <div id="alUploadSection">
         <h3>File Upload (20MB maximum):</h3>       

@@ -1366,7 +1366,17 @@ function populateTypeSection() {
 
 
     }
+    jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+    var groupMap = {};
+    $.each(securityGroups, function(i, val){
+        groupMap[''+val.id]=val.name;
+    });
+    var selectedGroupName = [];
+    $.each(mainWidget.softwareCompetition.groups, function(i, val){
+        selectedGroupName.push(groupMap[val]);
+    });
 
+    $('#rswGroups').html(selectedGroupName.join(", "));
 }
 
 /**
@@ -1422,6 +1432,7 @@ function saveTypeSection() {
             dataType: 'json',
             success: function (jsonResult) {
                 handleSaveAsDraftContestResult(jsonResult);
+                mainWidget.softwareCompetition.groups = jQuery_1_11_1("#groups").magicSuggest().getValue();
                 populateTypeSection();
                 populateRoundSection();
                 if (mainWidget.competitionType == "SOFTWARE") {
@@ -2596,9 +2607,6 @@ function populateSpecSection(initFlag) {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
 
-    $(".group .masterGroupsSelect").val(mainWidget.softwareCompetition.groups);
-    $(".group .masterGroupsSelect option:selected").appendTo(".group .masterGroupsChoosenSelect");
-
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
 	  $('#contestIntroduction').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
@@ -2653,11 +2661,6 @@ function populateSpecSection(initFlag) {
      });
      $('#rswTechnologies').html(html);
   }
-    var sGroup="";
-    $.each($('.group .masterGroupsChoosenSelect option'),function(i,option) {
-        sGroup += option.text +"<br/>";
-    });
-    $('#rswGroups').html(sGroup);
 
   if(isPlatformContest()) {
       var html = "";
