@@ -3194,7 +3194,7 @@ div#winnerDiv {
     border-radius: 5px;
     margin-left: 132px;
     width: auto;
-    margin-right: 50px;
+    margin-right: 372px;
 }
 .ms-ctn-focus{
     background-color: #ffffff;
@@ -3204,5 +3204,10 @@ div#winnerDiv {
 }
 div#groupDisplay {
     margin-top: 20px;
+}
+
+div#groupDisplay #groupDiv{
+    margin-top: 20px;
+    width: 293px;
 }
 
