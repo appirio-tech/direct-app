@@ -85,6 +85,8 @@
 
     <property name="topcoder_cockpit_project_milestone_services.jar" value="${tcs_libdir}/topcoder_cockpit_project_milestone_services.jar"/>
 
+    <property name="project_payment_management.jar" value="${tcs_libdir}/project_payment_management.jar"/>
+
     <property name="auditor.version" value="2.0.1"/>
     <property name="auditor.jar.name" value="auditor.jar"/>
     <property name="auditor.path" value="auditor/${auditor.version}"/>
@@ -627,6 +629,7 @@
         <pathelement location="${project_payment_calculator.jar}"/>
         <pathelement location="${marathon_match_resources.jar}"/>
         <pathelement location="${scorecard_management.jar}"/>
+        <pathelement location="${project_payment_management.jar}"/>
     </path>
 
     <path id="component.3rdParty-dependencies">

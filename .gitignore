@@ -36,6 +36,7 @@ lib/tcs/topcoder_cockpit_project_metadata_services.jar
 lib/tcs/topcoder_cockpit_project_milestone_services.jar
 lib/tcs/topcoder_cockpit_task_management_services.jar
 lib/tcs/workdays.jar
+lib/tcs/project_payment_management.jar
 build/
 direct.ear
 direct.jar
