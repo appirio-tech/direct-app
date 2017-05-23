@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.5
+  - Version: 2.6
   - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -50,6 +50,10 @@
   -
   - Version 2.5 (TOPCODER DIRECT - IMPROVEMENT FOR PRE-REGISTER MEMBERS WHEN LAUNCHING CHALLENGES)
   - Add Pre-Register user for private challenge
+  -
+  - Version 2.6 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+  - Added registration and submission end date/time for design F2F
+  - Added registration length for studio contests (excluding design F2F)
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -342,6 +346,11 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rStartDate"></span></td>
              </tr>
+             <tr>
+                <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rRegEndDate"></span></td>
+             </tr>
              <tr id="rCheckpointTR">
                 <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
@@ -419,6 +428,11 @@
                         <td class="sec_tab">&nbsp;</td>
                         <td><span id="rStartDateRO"></span></td>
                     </tr>
+                    <tr>
+                      <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                      <td class="sec_tab">&nbsp;</td>
+                      <td><span id="rRegEndDateRO"></span></td>
+                   </tr>
                     <tr id="rCheckpointTR">
                         <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                         <td class="sec_tab">&nbsp;</td>
@@ -458,6 +472,39 @@
                </div>
                <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
+             </div>
+
+             <div id="regEndDateEditDiv" class="row designF2F">
+                  <span class="name_label"><strong>Registration End:</strong></span>
+                  <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="regEndTime" name="regEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="regEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
+
+              <div id="endDateEditDiv" class="row designF2F">
+                  <span class="name_label"><strong>Submission End:</strong></span>
+                  <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
+
+             <div class="row" id="regEndEditDiv">
+                <span class="name_label"><strong>Registration Length:</strong></span>
+                <div class="endEtSelect">
+                  <select id="regEndDateDay" name="regEndDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+                </div>
+                <div class="selectSpan"><span>days</span></div>
+                <div class="endEtSelect">
+                  <select id="regEndDateHour" name="regEndDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+                </div>
+                <div class="selectSpan"><span>hours</span></div>
+                <div class="clear"></div>
              </div>
              
              <!-- Checkpoint -->

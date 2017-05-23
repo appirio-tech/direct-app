@@ -272,9 +272,18 @@ import java.util.*;
  *     <li>Updated {@link #populateCompetition(SoftwareCompetition)} method to accept zero prize</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 2.5 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added regEndDate property</li>
+ *     <li>Updated to call ContestServiceFacade's createSoftwareContest and updateSoftwareContest with the regEndDate argument</li>
+ *     <li>Added regEndDate in response</li>
+ * </ul>
+ * </p>
  * 
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER
- * @version 2.4
+ * @version 2.5
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -491,6 +500,11 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private Date checkpointDate = new Date();
+
+    /**
+     * The registration end date
+     */
+    private Date regEndDate = new Date();
 
     /**
      * <p>
@@ -783,7 +797,7 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition = activateSoftwareCompetition(softwareCompetition);
             } else {
                 softwareCompetition = contestServiceFacade.updateSoftwareContest(tcSubject, softwareCompetition,
-                                                                                 tcDirectProjectId, checkpointDate,
+                                                                                 tcDirectProjectId, regEndDate, checkpointDate,
                                                                                  endDate == null ? null : endDate.toGregorianCalendar().getTime());
             }
             Set<FailedRegisterUser> failedRegisterUsers = doPreRegisterUsers(tcSubject, softwareCompetition, preRegisterUsers);
@@ -804,7 +818,7 @@ public class SaveDraftContestAction extends ContestAction {
                     softwareCompetition = activateSoftwareCompetition(softwareCompetition);
                 } else {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
-                            tcDirectProjectId, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                            tcDirectProjectId, regEndDate, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
                 }
 
                 Set<FailedRegisterUser> failedRegisterUsers = doPreRegisterUsers(tcSubject, softwareCompetition, preRegisterUsers);
@@ -1710,6 +1724,7 @@ public class SaveDraftContestAction extends ContestAction {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("projectId", softwareCompetition.getProjectHeader().getId());
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition)));
+        result.put("regEndDate", DirectUtils.getDateString(DirectUtils.getRegistrationEndDate(softwareCompetition)));
         result.put("subEndDate", DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition)));
         result.put("paidFee", DirectUtils.getPaidFee(softwareCompetition));
         result.put("projectStatus", softwareCompetition.getProjectHeader().getProjectStatus());
@@ -1793,6 +1808,29 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setCheckpointDate(Date checkpointDate) {
         this.checkpointDate = checkpointDate;
+    }
+
+    /**
+     * <p>
+     * Gets registration end date
+     * </p>
+     * 
+     * @return the registration end date
+     */
+    public Date getRegEndDate() {
+        return regEndDate;
+    }
+
+    /**
+     * <p>
+     * Sets registration end date
+     * </p>
+     * 
+     * @param regEndDate
+     *            registration end date
+     */
+    public void setRegEndDate(Date regEndDate) {
+        this.regEndDate = regEndDate;
     }
 
     /**

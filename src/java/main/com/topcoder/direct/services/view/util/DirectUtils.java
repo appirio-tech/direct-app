@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -710,8 +710,15 @@ import java.util.zip.ZipOutputStream;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added getRegistrationEndDate method</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 1.9
+ * @version 2.0
  */
 public final class DirectUtils {
 
@@ -1366,6 +1373,26 @@ public final class DirectUtils {
             if (phase.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
                 return phase.getActualStartDate() != null ? phase.getActualStartDate() :
                     phase.getScheduledStartDate();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <p>Gets the registration phase end date for a contest.
+     *
+     * @param softwareCompetition the contest
+     * @return the registration phase end date
+     */
+    public static Date getRegistrationEndDate(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return null;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() :
+                    phase.getScheduledEndDate();
             }
         }
         return null;
