@@ -1011,11 +1011,18 @@ public class SaveDraftContestAction extends ContestAction {
             populateSoftwareCompetition(softwareCompetition);
         }
 
-        //set group
+        //set groups
         if (groups != null && groups.size() > 0) {
             List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
+            // get the TCSubject from session
+            ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
             for (String groupId : groups) {
-                groupsList.add(getReferenceDataBean().getGroupMap().get(Long.valueOf(groupId)));
+                for (ProjectGroup projectGroup : allProjectGroups) {
+                    if (Long.valueOf(projectGroup.getId()).equals(groupId)) {
+                        groupsList.add(projectGroup);
+                    }
+                }
+
             }
             softwareCompetition.getProjectHeader().setGroups(groupsList);
         } else {

@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPlatform;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,15 +27,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  *  </ul>
  * </p>
  *
- * <p>
- *  Version 1.2 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES) :
- *  <ul>
- *      <li>Added {@link #groups}list of all project_group_lu</li>
- *      <li>Added {@link #groupMap}map project_group_id to its object</li>
- *      <li>Updated {@link #afterPropertiesSet()} to set groups and groupMap</li>
- *  </ul>
- * </p>
- * @version 1.2
+ * @version 1.1
  * @author GreatKevin, TCSCODER
  */
 public class ReferenceDataBean implements InitializingBean {
@@ -144,20 +135,6 @@ public class ReferenceDataBean implements InitializingBean {
      * </p>
      */
     private Map<Long, List<Category>> catalogToCategoriesMap;
-
-    /**
-     * Challenge groups
-     *
-     * @since 1.2
-     */
-    private List<ProjectGroup> groups;
-
-    /**
-     * Map of challenge group if to its object
-     *
-     * @since 1.2
-     */
-    private Map<Long, ProjectGroup> groupMap;
 
     /**
      * <p>
@@ -336,36 +313,6 @@ public class ReferenceDataBean implements InitializingBean {
     }
 
     /**
-     * Getter for {@link #groups}
-     *
-     * @return groups
-     * @since 1.2
-     */
-    public List<ProjectGroup> getGroups() {
-        return groups;
-    }
-
-    /**
-     * Setter for {@link #groups}
-     *
-     * @param groups list of ProjectGroup
-     * @since 1.2
-     */
-    public void setGroups(List<ProjectGroup> groups) {
-        this.groups = groups;
-    }
-
-    /**
-     * Getter for {@link #groupMap}
-     *
-     * @return groupMap
-     * @since 1.2
-     */
-    public Map<Long, ProjectGroup> getGroupMap() {
-        return groupMap;
-    }
-
-    /**
      * <p>
      * Initialization function. It will be called by Spring context.
      * </p>
@@ -391,12 +338,6 @@ public class ReferenceDataBean implements InitializingBean {
         platformMap = new HashMap<Long, ProjectPlatform>();
         for(ProjectPlatform platform : platforms) {
             platformMap.put(platform.getId(), platform);
-        }
-
-        groups = Arrays.asList(getContestServiceFacade().getAllProjectGroups());
-        groupMap = new HashMap<Long, ProjectGroup>();
-        for (ProjectGroup group : groups) {
-            groupMap.put(group.getId(), group);
         }
 
         // categories
