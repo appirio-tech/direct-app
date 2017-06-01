@@ -453,9 +453,9 @@ public class CommonAction extends BaseContestFeeAction {
      * </p>
      *
      * @return the billing project information. each project is represented in a map object.
-     * @throws DAOFault if a DAO error occurs
+     * @throws ContestServiceException if contest service exception occurs
      */
-    private List<ProjectGroup> getAllProjectGroups() throws DAOFault {
+    private List<ProjectGroup> getAllProjectGroups() throws ContestServiceException {
         return Arrays.asList(getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession()));
     }
 
