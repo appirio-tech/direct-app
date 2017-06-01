@@ -35,6 +35,7 @@ import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+import com.topcoder.management.project.ProjectGroup;
 
 /**
  * <p>
@@ -324,7 +325,7 @@ public class CommonAction extends BaseContestFeeAction {
 
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
         configs.put("billingInfos", getBillingProjectInfos());
-        configs.put("groups", getReferenceDataBean().getGroups());
+        configs.put("groups", getAllProjectGroups());
         setResult(configs);
         return SUCCESS;
     }
@@ -444,6 +445,18 @@ public class CommonAction extends BaseContestFeeAction {
         }
 
         return billings;
+    }
+
+    /**
+     * <p>
+     * Gets all project groups
+     * </p>
+     *
+     * @return the billing project information. each project is represented in a map object.
+     * @throws ContestServiceException if contest service exception occurs
+     */
+    private List<ProjectGroup> getAllProjectGroups() throws ContestServiceException {
+        return Arrays.asList(getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession()));
     }
 
 

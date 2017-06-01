@@ -9312,8 +9312,12 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @throws ContestServiceException if any database related exception occur
      * @since 3.7
      */
-    public ProjectGroup[] getAllProjectGroups() throws ContestServiceException {
+    public ProjectGroup[] getAllProjectGroups(TCSubject tcSubject) throws ContestServiceException {
         logger.debug("getAllProjectGroups");
+
+        if (!isRole(tcSubject, ADMIN_ROLE) && !isRole(tcSubject, TC_STAFF_ROLE)) {
+            return new ProjectGroup[0];
+        }
 
         try {
             return projectServices.getAllProjectGroups();
