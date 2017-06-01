@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPlatform;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -336,36 +335,6 @@ public class ReferenceDataBean implements InitializingBean {
     }
 
     /**
-     * Getter for {@link #groups}
-     *
-     * @return groups
-     * @since 1.2
-     */
-    public List<ProjectGroup> getGroups() {
-        return groups;
-    }
-
-    /**
-     * Setter for {@link #groups}
-     *
-     * @param groups list of ProjectGroup
-     * @since 1.2
-     */
-    public void setGroups(List<ProjectGroup> groups) {
-        this.groups = groups;
-    }
-
-    /**
-     * Getter for {@link #groupMap}
-     *
-     * @return groupMap
-     * @since 1.2
-     */
-    public Map<Long, ProjectGroup> getGroupMap() {
-        return groupMap;
-    }
-
-    /**
      * <p>
      * Initialization function. It will be called by Spring context.
      * </p>
@@ -391,12 +360,6 @@ public class ReferenceDataBean implements InitializingBean {
         platformMap = new HashMap<Long, ProjectPlatform>();
         for(ProjectPlatform platform : platforms) {
             platformMap.put(platform.getId(), platform);
-        }
-
-        groups = Arrays.asList(getContestServiceFacade().getAllProjectGroups());
-        groupMap = new HashMap<Long, ProjectGroup>();
-        for (ProjectGroup group : groups) {
-            groupMap.put(group.getId(), group);
         }
 
         // categories

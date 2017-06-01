@@ -1572,5 +1572,5 @@ public interface ContestServiceFacade {
      * @throws ContestServiceException if any database related exception occur
      * @since 1.8.6
      */
-    public ProjectGroup[] getAllProjectGroups() throws ContestServiceException;
+    public ProjectGroup[] getAllProjectGroups(TCSubject tcSubject) throws ContestServiceException;
 }
