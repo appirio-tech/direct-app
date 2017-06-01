@@ -27,15 +27,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  *  </ul>
  * </p>
  *
- * <p>
- *  Version 1.2 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES) :
- *  <ul>
- *      <li>Added {@link #groups}list of all project_group_lu</li>
- *      <li>Added {@link #groupMap}map project_group_id to its object</li>
- *      <li>Updated {@link #afterPropertiesSet()} to set groups and groupMap</li>
- *  </ul>
- * </p>
- * @version 1.2
+ * @version 1.1
  * @author GreatKevin, TCSCODER
  */
 public class ReferenceDataBean implements InitializingBean {
@@ -143,20 +135,6 @@ public class ReferenceDataBean implements InitializingBean {
      * </p>
      */
     private Map<Long, List<Category>> catalogToCategoriesMap;
-
-    /**
-     * Challenge groups
-     *
-     * @since 1.2
-     */
-    private List<ProjectGroup> groups;
-
-    /**
-     * Map of challenge group if to its object
-     *
-     * @since 1.2
-     */
-    private Map<Long, ProjectGroup> groupMap;
 
     /**
      * <p>
