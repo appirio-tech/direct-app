@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -120,8 +120,11 @@
  * Version 3.9 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * - Add support for closing and canceling private challenge
  *
+ * Version 3.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * - Add support for challenge group(view and editing)
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.9
+ * @version 3.10
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -858,6 +861,8 @@ function initContest(contestJson) {
        mainWidget.softwareCompetition.platforms = contestJson.platformIds;
    }
 
+    mainWidget.softwareCompetition.groups = contestJson.groupIds;
+
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    projectHeader.tcDirectProjectId = contestJson.tcDirectProjectId;
    projectHeader.tcDirectProjectName = contestJson.tcDirectProjectName;
@@ -1361,7 +1366,17 @@ function populateTypeSection() {
 
 
     }
+    jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+    var groupMap = {};
+    $.each(securityGroups, function(i, val){
+        groupMap[''+val.id]=val.name;
+    });
+    var selectedGroupName = [];
+    $.each(mainWidget.softwareCompetition.groups, function(i, val){
+        selectedGroupName.push(groupMap[val]);
+    });
 
+    $('#rswGroups').html(selectedGroupName.join(", "));
 }
 
 /**
@@ -1417,6 +1432,7 @@ function saveTypeSection() {
             dataType: 'json',
             success: function (jsonResult) {
                 handleSaveAsDraftContestResult(jsonResult);
+                mainWidget.softwareCompetition.groups = jQuery_1_11_1("#groups").magicSuggest().getValue();
                 populateTypeSection();
                 populateRoundSection();
                 if (mainWidget.competitionType == "SOFTWARE") {
@@ -2590,7 +2606,6 @@ function populateSpecSection(initFlag) {
     } else {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
-
 
   // for studio
   if (mainWidget.competitionType == "STUDIO") {

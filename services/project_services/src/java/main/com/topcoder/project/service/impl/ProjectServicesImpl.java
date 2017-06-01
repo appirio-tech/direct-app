@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service.impl;
 
@@ -429,13 +429,19 @@ import java.util.*;
  * </ul>
  * <p>
  *
+ * Version 2.4 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #getAllProjectGroups()}</li>
+ * </ul>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
  * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCSCODER
- * @version 2.3
+ * @version 2.4
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -5196,6 +5202,28 @@ public class ProjectServicesImpl implements ProjectServices {
             if (projectHeader.getIterativeReviewScorecardId() != 0 && p.getPhaseType().getId() == PhaseType.ITERATIVE_REVIEW_PHASE.getId()) {
                 p.setAttribute(SCORECARD_ID_PHASE_ATTRIBUTE_KEY, String.valueOf(projectHeader.getIterativeReviewScorecardId()));
             }
+        }
+    }
+
+    /**
+     * Get all project groups
+     *
+     * @return array of all project group
+     * @throws ProjectServicesException if any database related exception occur
+     * @since 2.4
+     */
+    public ProjectGroup[] getAllProjectGroups() throws ProjectServicesException {
+        log(Level.INFO, "Enters ProjectServicesImpl#getAllProjectGroups method.");
+
+
+        try {
+            return projectManager.getAllProjectGroups();
+        } catch (PersistenceException ex) {
+            log(Level.ERROR,
+                    "PersistenceException occurred in ProjectServicesImpl#getAllProjectGroups method." + ex);
+            throw new ProjectServicesException(
+                    "PersistenceException occurred when getAllProjectGroups",
+                    ex);
         }
     }
 }
