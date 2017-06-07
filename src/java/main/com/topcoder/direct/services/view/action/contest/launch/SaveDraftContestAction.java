@@ -1018,7 +1018,7 @@ public class SaveDraftContestAction extends ContestAction {
             ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
             for (String groupId : groups) {
                 for (ProjectGroup projectGroup : allProjectGroups) {
-                    if (Long.valueOf(projectGroup.getId()).equals(groupId)) {
+                    if (Long.valueOf(groupId).equals(projectGroup.getId())) {
                         groupsList.add(projectGroup);
                     }
                 }
