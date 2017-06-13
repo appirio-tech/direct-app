@@ -43,8 +43,11 @@
  * Version 1.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
  * - Update review page for groups selected section
  *
+ * Version 1.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * - Add support for custom copilot fee
+ *
  * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 1.10
+ * @version 1.11
  */
 $(document).ready(function() {
 
@@ -137,6 +140,21 @@ $(document).ready(function() {
 
     $("#studioCupPointsCheckBox").change(function(){
         studioPrizeChangeHandler();
+    });
+
+    $(".copilotFee").focusout(function(){
+        var error = validateCopilotFee($(this).val(), true);
+        if(error){
+            //revert the value
+            $(this).val(mainWidget.softwareCompetition.copilotCost);
+        }
+    });
+    $(".copilotFee").keyup(function(){
+        if(checkNumber($(this).val()) && !isNaN(parseFloat($(this).val()))){
+            if($(this).hasClass("software")){
+                fillPrizes();
+            }
+        }//if not valid error messege show on focusout or save
     });
 }); // end of initiation
 
@@ -246,6 +264,10 @@ function validateFieldsOverviewSoftware() {
          errors.push('Checkpoint prize is invalid.');
       }      
    }
+   var error = validateCopilotFee($("input.copilotFee:not([disabled])").val(), false);
+   if(error) {
+      errors.push(error);
+   }
    
    if(errors.length > 0) {
        showErrors(errors);
@@ -254,7 +276,6 @@ function validateFieldsOverviewSoftware() {
 
    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
    mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
-
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories =
@@ -281,7 +302,7 @@ function validateFieldsOverviewSoftware() {
 
     // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
-   
+
    return true;
 }
 
@@ -336,7 +357,10 @@ function validateFieldsOverviewStudio() {
       mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
       mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
    }
-
+   var error = validateCopilotFee($("input.copilotFee:not([disabled])").val(), false);
+   if(error) {
+      errors.push(error);
+   }
    if ($('#maxSubmissions').length) {
        var maxSubmissions = $('#maxSubmissions').val();
 
@@ -413,7 +437,10 @@ function validateFieldsOverviewAlgorithm() {
    }
 
    var prizes = validatePrizes(errors);
-
+   var error = validateCopilotFee($("input.copilotFee:not([disabled])").val(), false);
+   if(error) {
+      errors.push(error);
+   }
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -430,21 +457,25 @@ function validateFieldsOverviewAlgorithm() {
    
    
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
-   
+
    // mainWidget.softwareCompetition.projectHeader.prizes = prizes;
 
    return true;
 }
 
 function backOverview() {
-   showPage('contestSelectionPage');
+    if(validateCopilotFee($("input.copilotFee:not([disabled])").val(), false)){
+        //revert
+        $(".copilotFee").val(mainWidget.softwareCompetition.copilotCost);
+        return;
+    }
+    showPage('contestSelectionPage');
 }
 
 function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
-
    if(mainWidget.isSoftwareContest()) {
        if(!hasRequirementDocument()) {
           showWarningMessage("Requirements Specification Document was not attached, continue?", "YES", function(){showPage('reviewSoftwarePage');closeModal();});

@@ -9,6 +9,8 @@
   - Version 1.3 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for adding challenge group
   -
+  - Version 1.4 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -   Add support for custom copilot fee
   - Description: This page fragment renders edit algorithm contest page.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -91,6 +93,9 @@
         </div>        
     </div>
     <!-- end .prizes -->
+    <div class="copilotFeeDiv">
+        <label>Copilot Fee:</label> <span class="dw">$</span> <input type="text" class="copilotFee algorithm" value="0" disabled="true"/>
+    </div>
 
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>

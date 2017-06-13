@@ -75,6 +75,9 @@
   -
   - Version 2.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for display and edit challenge group
+  -
+  - Version 2.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -638,7 +641,7 @@
                          <br />
                          <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span><span id="swContestFeePercentage"></span></span>
                          <span class="mid_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
-                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
+                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <input type="text"  name="copilotFee" class="copilotFee"/></span>
                          <br />
                          <span class="last_info"></span>
                          </span>                                                                
