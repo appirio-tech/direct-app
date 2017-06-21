@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -28,7 +28,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  * </p>
  *
  * @version 1.1
- * @author GreatKevin
+ * @author GreatKevin, TCSCODER
  */
 public class ReferenceDataBean implements InitializingBean {
     /**

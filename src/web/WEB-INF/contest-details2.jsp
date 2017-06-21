@@ -38,6 +38,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_11_1 = $.noConflict(true);
+    </script>
     <jsp:include page="includes/htmlhead.jsp"/>
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css" />
@@ -47,6 +53,7 @@
 
     <!-- New Style For Marathon Matches -->
     <link rel="stylesheet" href="/css/direct/marathonMatches.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
     
     <ui:projectPageType tab="gameplan"/>
     <ui:contestPageType tab="details"/>

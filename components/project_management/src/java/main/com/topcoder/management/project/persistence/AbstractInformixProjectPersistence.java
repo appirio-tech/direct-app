@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project.persistence;
 
@@ -43,6 +43,7 @@ import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.management.project.ProjectMMSpecification;
 import com.topcoder.management.project.ProjectPersistence;
 import com.topcoder.management.project.ProjectPlatform;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectSpec;
 import com.topcoder.management.project.ProjectStatus;
@@ -381,9 +382,16 @@ import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
  * Thread Safety: This class is thread safe because it is immutable.
  * </p>
  *
+ * <p>
+ * Version 1.8.2 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #QUERY_ALL_PROJECT_GROUP_SQL}</li>
+ *     <li>Added {@link #QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES}</li>
+ *     <li>Added {@link #getAllProjectGroups()} get all groups</li>
+ * </ul>
  *
- * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin
- * @version 1.8.1
+ * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin, TCSCODER
+ * @version 1.8.2
  * @since 1.0
  */
 public abstract class AbstractInformixProjectPersistence implements ProjectPersistence {
@@ -2442,7 +2450,21 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * @since 1.5.4
      */
     private static final String UPDATE_CHECKPOINT_FEEDBACK_SQL = "UPDATE comp_milestone_feedback "
-            + "SET feedback = ? WHERE project_id = ";    
+            + "SET feedback = ? WHERE project_id = ";
+
+    /**
+     * Sql statement for fetching all of challenge groups
+     * @since 1.8.2
+     */
+    private static final String QUERY_ALL_PROJECT_GROUP_SQL = "SELECT group_id, description " +
+            " FROM security_groups where challenge_group_ind=1";
+
+    /**
+     * Return type of {@link #QUERY_ALL_PROJECT_GROUP_SQL}
+     * @since 1.8.2
+     */
+    private static final DataType[] QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES = new DataType[] {
+            Helper.LONG_TYPE, Helper.STRING_TYPE };
 
     /**
      * <p>
@@ -9986,6 +10008,47 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                     Level.ERROR,
                     new LogMessage(null, null, "Fails to retrieving copilot contest extra infos with project id: "
                             + projectId, e));
+            if (conn != null) {
+                closeConnectionOnError(conn);
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * <p>
+     * Get all groups
+     * </p>
+     * @return Array of all ProjectGroup
+     * @throws PersistenceException if any database related exception occur
+     * @since 1.8.2
+     */
+    public ProjectGroup[] getAllProjectGroups() throws PersistenceException {
+        Connection conn = null;
+        getLogger().log(Level.INFO, new LogMessage(null, null, "Enter getAllProjectGroup method."));
+        try {
+            // create the connection
+            conn = openConnection();
+
+            Object[][] rows = Helper.doQuery(conn,
+                    QUERY_ALL_PROJECT_GROUP_SQL, new Object[] {},
+                    QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES);
+
+            // create the ProjectPlatform array.
+            ProjectGroup[] projectGroups = new ProjectGroup[rows.length];
+
+            for (int i = 0; i < rows.length; ++i) {
+                Object[] row = rows[i];
+
+                // create the ProjectPlatform object
+                projectGroups[i] = new ProjectGroup(((Long) row[0]).longValue(),
+                        (String) row[1]);
+            }
+
+            closeConnection(conn);
+            return projectGroups;
+        } catch (PersistenceException e) {
+            getLogger().log(Level.ERROR, new LogMessage(null, null, "Fail to getAllProjectGroups.", e));
             if (conn != null) {
                 closeConnectionOnError(conn);
             }

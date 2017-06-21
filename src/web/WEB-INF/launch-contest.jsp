@@ -21,8 +21,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_11_1 = $.noConflict(true);
+    </script>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/projectMilestone.css" media="all" type="text/css" />
+
+    <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
     <script type="text/javascript" src="/scripts/moment.min.js"></script>

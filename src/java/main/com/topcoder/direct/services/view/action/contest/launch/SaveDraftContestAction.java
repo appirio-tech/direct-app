@@ -27,6 +27,7 @@ import com.topcoder.management.project.ProjectPlatform;
 import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.management.project.ProjectStudioSpecification;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -272,9 +273,16 @@ import java.util.*;
  *     <li>Updated {@link #populateCompetition(SoftwareCompetition)} method to accept zero prize</li>
  * </ul>
  * </p>
- * 
+ *
+ * <p>
+ * Version 2.5 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
+ * <ul>
+ *     <li>Added {@link #groups}lint of project group if from request</li>
+ *     <li>Updated {@link #populateCompetition(SoftwareCompetition)}to process groups</li>
+ * </ul>
+ * </p>
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER
- * @version 2.4
+ * @version 2.5
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -614,6 +622,12 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.8
      */
     private List<String> platforms;
+
+    /**
+     * Id list for challenge group
+     * @since 2.5
+     */
+    private List<String> groups;
 
     /**
      * <p>
@@ -995,6 +1009,24 @@ public class SaveDraftContestAction extends ContestAction {
             populateStudioCompetition(softwareCompetition);
         } else {
             populateSoftwareCompetition(softwareCompetition);
+        }
+
+        //set groups
+        if (groups != null && groups.size() > 0) {
+            List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
+            // get the TCSubject from session
+            ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
+            for (String groupId : groups) {
+                for (ProjectGroup projectGroup : allProjectGroups) {
+                    if (Long.valueOf(groupId).equals(projectGroup.getId())) {
+                        groupsList.add(projectGroup);
+                    }
+                }
+
+            }
+            softwareCompetition.getProjectHeader().setGroups(groupsList);
+        } else {
+            softwareCompetition.getProjectHeader().setGroups(new ArrayList<ProjectGroup>());
         }
 
         // remove the thurgood information if needed
@@ -2381,6 +2413,26 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setDirectProjectMilestoneId(long directProjectMilestoneId) {
         this.directProjectMilestoneId = directProjectMilestoneId;
+    }
+
+    /**
+     * Getter for {@link #groups}
+     *
+     * @return groups
+     * @sicne 2.5
+     */
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    /**
+     * Setter for {@link #groups}
+     *
+     * @param groups Ids of groups
+     * @since 2.5
+     */
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 
     public long getCmcBillingId() {
