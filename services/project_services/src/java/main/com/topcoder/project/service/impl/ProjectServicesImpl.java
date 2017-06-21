@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service.impl;
 
@@ -429,13 +429,20 @@ import java.util.*;
  * </ul>
  * <p>
  *
+ * <p>
+ * Version 2.4 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Updated createProjectWithTemplate and updateProject methods to take an extra regEndDate argument</li>
+ * </ul>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
  * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCSCODER
- * @version 2.3
+ * @version 2.4
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -1755,7 +1762,7 @@ public class ProjectServicesImpl implements ProjectServices {
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
                                          com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date multiRoundEndDate, String operator) {
-        return updateProject(projectHeader, projectHeaderReason, projectPhases, projectResources, multiRoundEndDate, null, operator);
+        return updateProject(projectHeader, projectHeaderReason, projectPhases, projectResources, null, multiRoundEndDate, null, operator);
     }
 
     /**
@@ -1791,6 +1798,7 @@ public class ProjectServicesImpl implements ProjectServices {
      * @param projectPhases       the project's phases
      * @param projectResources    the project's resources, can be null or empty, can't contain null values. Null is
      *                            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate   the end date for the multiround phase. No multiround if it's null.
      * @param endDate             the end date for submission phase.
      * @param operator            the operator used to audit the operation, can be null but not empty
@@ -1814,7 +1822,8 @@ public class ProjectServicesImpl implements ProjectServices {
      * @since 1.4.7
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
-                                         com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) {
+                                         com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, 
+                                         Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) {
         Util.log(logger, Level.INFO, "Enters ProjectServicesImpl#updateProject method.");
 
         // check projectHeader
@@ -1938,15 +1947,20 @@ public class ProjectServicesImpl implements ProjectServices {
                 }
                 com.topcoder.project.phases.Project newProjectPhases = template.applyTemplate(templateName, leftOutPhaseIds,
                         PhaseType.REGISTRATION_PHASE.getId(), PhaseType.REGISTRATION_PHASE.getId(), projectPhases.getStartDate(), projectPhases.getStartDate());
+
+                if (regEndDate != null) {
+                    adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, regEndDate);
+                }
+
                 if (multiRoundEndDate != null) {
                     adjustPhaseForEndDate(PhaseType.CHECKPOINT_SUBMISSION_PHASE, newProjectPhases, multiRoundEndDate);
-                    if (isStudio) {
+                    if (isStudio && regEndDate == null) {
                         adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, multiRoundEndDate);
                     }
                 }
                 if (endDate != null) {
                     long submissionDuration = adjustPhaseForEndDate(PhaseType.SUBMISSION_PHASE, newProjectPhases, endDate);
-                    if ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000)) {
+                    if (regEndDate == null && ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000))) {
                         adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, endDate);
                     }
                 }
@@ -2022,6 +2036,9 @@ public class ProjectServicesImpl implements ProjectServices {
                 phaseManager.fillDependencies(phasesMap, new long[]{projectPhases.getId()});
 
                 //subRegDiff = isStudio ? 0 : -subRegDiff;
+                if (regEndDate != null) {
+                    adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, projectPhases, regEndDate);
+                }
 
                 if (multiRoundEndDate != null) {
                     // multiround phase duration
@@ -2033,7 +2050,7 @@ public class ProjectServicesImpl implements ProjectServices {
                             break;
                         }
                     }
-                    if (isStudio){
+                    if (isStudio && regEndDate == null) {
                         adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, projectPhases, multiRoundEndDate);
                     }
                     if (multiRoundPhase != null) {
@@ -2063,7 +2080,7 @@ public class ProjectServicesImpl implements ProjectServices {
                         submissionPhase.setLength(endDate.getTime() - fixedStart - subRegDiff);
                     }
 
-                    if (registrationPhase != null && ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionPhase.getLength() <= (48 * 60 * 60 * 1000))) {
+                    if (regEndDate == null && (registrationPhase != null && ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionPhase.getLength() <= (48 * 60 * 60 * 1000)))) {
                         registrationPhase.setLength(endDate.getTime() - fixedStart);
                     }
                 }
@@ -2599,7 +2616,7 @@ public class ProjectServicesImpl implements ProjectServices {
      */
     public FullProjectData createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project projectPhases,
                                                      Resource[] projectResources, Date multiRoundEndDate, String operator) {
-        return createProjectWithTemplate(projectHeader, projectPhases, projectResources, multiRoundEndDate, null, operator);
+        return createProjectWithTemplate(projectHeader, projectPhases, projectResources, null, multiRoundEndDate, null, operator);
     }
 
     /**
@@ -2633,6 +2650,7 @@ public class ProjectServicesImpl implements ProjectServices {
      * @param projectPhases     the project's phases
      * @param projectResources  the project's resources, can be null or empty, can't contain null values. Null is
      *                          treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate           the end date for submission phase.
      * @param operator          the operator used to audit the operation, can be null but not empty
@@ -2651,7 +2669,7 @@ public class ProjectServicesImpl implements ProjectServices {
      * @since 1.4.7
      */
     public FullProjectData createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project projectPhases,
-                                                     Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) {
+                                                     Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) {
         Util.log(logger, Level.INFO, "Enters ProjectServicesImpl#createProjectWithTemplate method.");
 
         ExceptionUtils.checkNull(projectHeader, null, null, "The parameter[projectHeader] should not be null.");
@@ -2745,10 +2763,14 @@ public class ProjectServicesImpl implements ProjectServices {
             com.topcoder.project.phases.Project newProjectPhases = template
                     .applyTemplate(templateName, leftOutPhaseIds, PhaseType.REGISTRATION_PHASE.getId(), PhaseType.REGISTRATION_PHASE.getId(), projectPhases.getStartDate(), projectPhases.getStartDate());
 
+            if (regEndDate != null) {
+                adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, regEndDate);
+            }
+            
             if (multiRoundEndDate != null) {
                 // multiround phase duration
                 adjustPhaseForEndDate(PhaseType.CHECKPOINT_SUBMISSION_PHASE, newProjectPhases, multiRoundEndDate);
-                if (isStudio) {
+                if (isStudio && regEndDate == null) {
                     adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, multiRoundEndDate);
                 }
             }
@@ -2756,7 +2778,7 @@ public class ProjectServicesImpl implements ProjectServices {
                 // submission phase duration
                 long submissionDuration = adjustPhaseForEndDate(PhaseType.SUBMISSION_PHASE, newProjectPhases, endDate);
 
-                if ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000)) {
+                if (regEndDate == null && ((isStudio && multiRoundEndDate == null) || isAlgorithm || isFirst2Finish || isCode || submissionDuration <= (48 * 60 * 60 * 1000))) {
                     adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, endDate);
                 }
             }

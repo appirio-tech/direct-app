@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2007 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.project.service;
 
@@ -211,6 +211,13 @@ import java.util.Set;
  *     <li>Added method {@link #getPhases(long)}</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.9 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Updated createProjectWithTemplate and updateProject methods to take an extra regEndDate argument</li>
+ * </ul>
+ * </p>
  * 
  * <p>
  * <strong>Thread Safety:</strong> Implementations must be thread-safe from the point of view of
@@ -219,8 +226,8 @@ import java.util.Set;
  *
  *
  * @author argolite, moonli, pulky
- * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, GreatKevin
- * @version 1.8
+ * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, GreatKevin, TCSCODER
+ * @version 1.9
  */
 public interface ProjectServices {
     /**
@@ -549,6 +556,7 @@ public interface ProjectServices {
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -576,7 +584,7 @@ public interface ProjectServices {
      * @since 1.4.5
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
-            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator);
+            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator);
     
     /**
      * <p>
@@ -723,6 +731,7 @@ public interface ProjectServices {
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -744,7 +753,7 @@ public interface ProjectServices {
      * @since 1.4.4
      */
     public FullProjectData createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project projectPhases,
-            Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator);
+            Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator);
     
     /**
      * <p>

@@ -109,8 +109,11 @@
  * Version 3.9 (Provide Way To Pre_register members When Launching Challenge)
  * - Add support for pre-register member
  *
+ * Version 4.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * - Updated saveAsDraftRequest to support regEndDate
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
- * @version 3.9
+ * @version 4.0
  */
 
  /**
@@ -1111,10 +1114,9 @@ function saveAsDraftRequestSoftware() {
        request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
    }
 
-    if(isF2F()) {
-        // remove end date for First2Finish, let the phase templates decide the end date
-        delete request['endDate'];
-    }
+   if(mainWidget.softwareCompetition.regEndDate && formatDateForRequest(mainWidget.softwareCompetition.regEndDate)) {
+       request['regEndDate'] = formatDateForRequest(mainWidget.softwareCompetition.regEndDate);
+   }
 
     //checkpoint
     if(mainWidget.softwareCompetition.multiRound) {
@@ -1215,12 +1217,8 @@ function saveAsDraftRequestStudio() {
       request['checkpointDate'] = formatDateForRequest(mainWidget.softwareCompetition.checkpointDate);
    }
    // end date
+   request['regEndDate'] = formatDateForRequest(mainWidget.softwareCompetition.regEndDate);
    request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
-
-   if(isDesignF2F()) {
-       // remove end date for Design First2Finish, let the phase templates decide the end date
-       delete request['endDate'];
-   }
 
 
    request['hasMulti'] = mainWidget.softwareCompetition.multiRound;

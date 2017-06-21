@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.9
+  - Version: 3.0
   - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -73,6 +73,8 @@
   - Version 2.9 (Provide Way To Pre_register members When Launching Challenge)
   - - pre-register member support
   -
+  - Version 3.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+  - All software contests support modification of registration and submission end date/time
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -375,6 +377,11 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rStartDate"></span></td>
              </tr>
+             <tr>
+                <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rRegEndDate"></span></td>
+             </tr>
              <tr id="rCheckpointTR">
                 <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
@@ -416,6 +423,11 @@
                         <td class="sec_tab">&nbsp;</td>
                         <td><span id="rStartDateRO"></span></td>
                     </tr>
+                    <tr>
+                      <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                      <td class="sec_tab">&nbsp;</td>
+                      <td><span id="rRegEndDateRO"></span></td>
+                    </tr>
                     <tr id="rCheckpointTR">
                         <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                         <td class="sec_tab">&nbsp;</td>
@@ -455,26 +467,35 @@
                <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
              </div>
+              <div id="regEndDateEditDiv" class="row software">
+                  <span class="name_label"><strong>Registration End:</strong></span>
+                  <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="regEndTime" name="regEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="regEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
-                <div id="checkPointEndDateEditDiv" class="row">
-                    <span class="name_label"><strong>Checkpoint End:</strong></span>
-                    <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
-                    <div class="endEtSelect">
-                        <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
-                    </div>
-                    <span id="checkPointEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
-                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
-                </div>
+              <div id="checkPointEndDateEditDiv" class="row">
+                  <span class="name_label"><strong>Checkpoint End:</strong></span>
+                  <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="checkPointEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
-                <div id="endDateEditDiv" class="row software">
-                    <span class="name_label"><strong>Submission End:</strong></span>
-                    <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
-                    <div class="endEtSelect">
-                        <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
-                    </div>
-                    <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
-                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
-                </div>
+              <div id="endDateEditDiv" class="row software">
+                  <span class="name_label"><strong>Submission End:</strong></span>
+                  <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
              </div><!-- end .schedule -->
              
