@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -254,8 +254,15 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin
- * @version 3.1
+ * <p>
+ * Version 3.2 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added regEndDate property</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin, TCSCODER
+ * @version 3.2
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -333,6 +340,11 @@ public class GetContestAction extends ContestAction {
      * </p>
      */
     private boolean admin;
+
+    /**
+     * The registration end date.
+     */
+    private String regEndDate;
 
     /**
      * The submission end date.
@@ -441,6 +453,7 @@ public class GetContestAction extends ContestAction {
             softwareCompetition.setType(CompetionType.STUDIO);
         }
         setResult(softwareCompetition);
+        regEndDate = DirectUtils.getDateString(DirectUtils.getRegistrationEndDate(softwareCompetition));
         subEndDate = DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition));
         contestEndDate = DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition));
 
@@ -940,6 +953,13 @@ public class GetContestAction extends ContestAction {
      */
     public void setType(TYPE type) {
         this.type = type;
+    }
+
+     /**
+     * Gets the registration end date.
+     */
+    public String getRegEndDate() {
+        return regEndDate;
     }
 
     /**
