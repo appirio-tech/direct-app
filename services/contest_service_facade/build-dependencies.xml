@@ -159,6 +159,8 @@
     <property name="team_management.jar" value="${tcs_libdir}/team_management.jar"/>
 
     <property name="review_application_management.jar" value="${tcs_libdir}/review_application_management.jar"/>
+    
+    <property name="project_payment_management.jar" value="${tcs_libdir}/project_payment_management.jar"/>
 
 
     <!-- Direct Services -->
@@ -296,6 +298,7 @@
 
         <pathelement location="${review_application_management.jar}"/>
         <pathelement location="${scorecard_management.jar}"/>
+        <pathelement location="${project_payment_management.jar}"/>
     </path>
 
     <path id="component.3rdParty-dependencies">

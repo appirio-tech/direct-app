@@ -1,5 +1,5 @@
 <%--
-  - Version: 3.0
+  - Version: 3.1
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -78,6 +78,9 @@
   -
   - Version 3.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
   - All software contests support modification of registration and submission end date/time
+  -
+  - Version 3.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -660,7 +663,7 @@
                          <br />
                          <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span><span id="swContestFeePercentage"></span></span>
                          <span class="mid_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
-                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
+                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <input type="text"  name="copilotFee" class="copilotFee"/></span>
                          <br />
                          <span class="last_info"></span>
                          </span>                                                                

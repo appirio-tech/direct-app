@@ -164,6 +164,13 @@ import com.topcoder.web.ejb.user.UserPreference;
 import com.topcoder.web.ejb.user.UserPreferenceHome;
 import com.topcoder.web.ejb.user.UserTermsOfUse;
 import com.topcoder.web.ejb.user.UserTermsOfUseHome;
+import com.topcoder.management.payment.ProjectPaymentManager;
+import com.topcoder.management.payment.ProjectPayment;
+import com.topcoder.management.payment.ProjectPaymentType;
+import com.topcoder.management.payment.ProjectPaymentManagementException;
+import com.topcoder.management.payment.impl.ProjectPaymentManagerImpl;
+import com.topcoder.management.payment.search.ProjectPaymentFilterBuilder;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -185,6 +192,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
@@ -880,9 +888,20 @@ import java.util.Set;
  *     <li>Updated the other methods to call the two methods above</li>
  * </ul>
  *
+ * Version 3.9(TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * <ul>
+ *     <li>Updated {@link #updateSoftwareContest(TCSubject, SoftwareCompetition, long, Date, Date)}</li>
+ *     <li>Updated {@link #createSoftwareContest(TCSubject, SoftwareCompetition, long, Date, Date)}</li>
+ *     <li>Added {@link #addManualCopilotPayment(com.topcoder.management.resource.Resource, TCSubject)}</li>
+ *     <li>Added {@link #removeManualCopilotPaymentByResourceId(long, long)}</li>
+ *     <li>Added {@link #projectPaymentManager}</li>
+ *     <li>Added {@link #COPILOT_PAYMENT_TYPE}</li>
+ *     <li>Added {@link #projectPaymentConfigFile}</li>
+ *     <li>Added {@link #MANUAL_PAYMENT}</li>
+ * </ul>
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.8
+ * @version 3.9
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -1744,6 +1763,35 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private static final long MINUTE_IN_MILIS = 60000;
 
     /**
+     * The Project Payment Manager
+     *
+     * @since 3.9
+     */
+    private ProjectPaymentManager projectPaymentManager;
+
+    /**
+     * Copilot Payment Type on project_payment_type_lu table
+     *
+     * @since 3.9
+     */
+    private static final Long COPILOT_PAYMENT_TYPE = 4L;
+
+    /**
+     * Path to Config Manager resource file
+     *
+     * @since 3.9
+     */
+    @Resource(name = "projectPaymentConfigFile")
+    private String projectPaymentConfigFile;
+
+    /**
+     * Manual payment flag
+     *
+     * @since 3.9
+     */
+    private static final String MANUAL_PAYMENT = "true";
+
+    /**
      * The init of static fields.
      */
     static {
@@ -1983,6 +2031,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
         } catch (Exception e) {
             throw new IllegalStateException("Failed to initialize AmazonSNS.", e);
+        }
+
+        try{
+            projectPaymentManager = new ProjectPaymentManagerImpl(projectPaymentConfigFile,
+                    ProjectPaymentManagerImpl.DEFAULT_CONFIG_NAMESPACE);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to initialize ProjectPaymentManager", e);
         }
     }
 
@@ -3352,6 +3407,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 }
             }
 
+            //process manual copilot payment
+            for (com.topcoder.management.resource.Resource r : projectData.getResources()) {
+                if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID &&
+                        MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))) {
+                    addManualCopilotPayment(r, tcSubject);
+                }
+            }
 
             // set timeline notification
             projectServices.addNotifications(tcSubject.getUserId(), new long[]{projectData.getProjectHeader().getId()}, String.valueOf(tcSubject.getUserId()));
@@ -4215,7 +4277,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         if(!hasPayment) {
             resource.setProperty(RESOURCE_INFO_PAYMENT_STATUS, RESOURCE_INFO_PAYMENT_STATUS_NA);
             resource.setProperty(RESOURCE_INFO_PAYMENT, RESOURCE_INFO_PAYMENT_NA);
-            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, "true");
+            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, MANUAL_PAYMENT);
         }
 
         // set registration date to now
@@ -4492,10 +4554,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 // check the permissions
                 checkSoftwareContestPermission(tcSubject, contest.getProjectHeader().getId(), false);
                 //checkBillingProjectPermission(tcSubject, contest);
-                
+
                 //check billing cca
                 checkBillingProjectCCA(contest);
-                
+
                 Set<com.topcoder.project.phases.Phase> phaseset = contest.getProjectPhases().getPhases();
                 com.topcoder.project.phases.Phase[] phases =  phaseset.toArray(new com.topcoder.project.phases.Phase[phaseset.size()]);
 
@@ -4558,7 +4620,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
 					contest.getProjectHeader().setProperty(ProjectPropertyType.TRACK_LATE_DELIVERABLES_PROJECT_PROPERTY_KEY, "false");
 				}
-				
+
 				if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.BUG_HUNT.getId())
 				{
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
@@ -4600,10 +4662,28 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 List<com.topcoder.management.resource.Resource> updatedResources = new ArrayList<com.topcoder.management.resource.Resource>();
                 Set<String> updatedCopilots = new HashSet<String>();
 
-                for(com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
-                    if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
-                        updatedCopilots.add(r.getProperties().get(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
+                List<Long> oldCopilotManualPayments = new ArrayList<Long>();
+                for (com.topcoder.management.resource.Resource r : oldCopilots) {
+                    if (MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))){
+                        oldCopilotManualPayments.add(r.getId());
                     }
+                }
+                boolean needManualPayment = false;
+                for (com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
+                    if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                        updatedCopilots.add(r.getProperties().get(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
+                        if (MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))){
+                            if (oldCopilotManualPayments.contains(r.getId())){
+                                oldCopilotManualPayments.remove(r.getId());
+                            }
+                            needManualPayment = true;
+                        }
+                    }
+                }
+
+                //we need to do remove task before projectServices delete the resources
+                for (Long r : oldCopilotManualPayments){
+                    removeManualCopilotPaymentByResourceId(contest.getId(), r);
                 }
 
                 for(com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
@@ -4702,6 +4782,12 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         endDate,
                         String.valueOf(tcSubject.getUserId()));
 
+                //process manual copilot payment
+                //after copilote resource persisted
+                if (needManualPayment) {
+                    processManualCopilotPayment(projectData.getResources(), contest.getId(), tcSubject);
+                }
+
                 //update project observer resources if tcDirectProject has been changed
                 if(isTcDirectProjectChanged) {
                    updateContestObserversFromDirectProject(tcSubject, contest);
@@ -4721,7 +4807,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 boolean forumTypeExists = oldProjectData.getProjectHeader().getAllProperties().containsKey(
                         ProjectPropertyType.FORUM_TYPE);
 
-                
+
                 if (forumId > 0 && createForum && !isStudio(contest))
                 {
                     updateForumName(forumId, contest.getAssetDTO().getName());
@@ -9373,5 +9459,79 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             logger.error("Operation failed in the getAllProjectGroups.", e);
             throw new ContestServiceException("Operation failed in the getAllProjectGroups.", e);
         }
+    }
+
+    /**
+     * Process Manual payment for copilot
+     *
+     * @param resources Resouces
+     * @param projectId Project Id
+     * @param tcSubject TCSubject
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private void processManualCopilotPayment(com.topcoder.management.resource.Resource[] resources, long projectId, TCSubject tcSubject)
+            throws ProjectPaymentManagementException {
+        Filter filterProjectId = ProjectPaymentFilterBuilder.createProjectIdFilter(projectId);
+        Filter filterCopilotPayment = ProjectPaymentFilterBuilder.createProjectPaymentTypeIdFilter(COPILOT_PAYMENT_TYPE);
+        Filter andFilter = new AndFilter(filterProjectId, filterCopilotPayment);
+        List<ProjectPayment> copilotPayments = projectPaymentManager.search(andFilter);
+        for (com.topcoder.management.resource.Resource r : resources) {
+            if ((r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) &&
+                    MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))) {
+                boolean found = false;
+                for (ProjectPayment p : copilotPayments) {
+                    if (p.getResourceId() == r.getId()) {
+                        if (p.getAmount() != BigDecimal.valueOf(Double.valueOf(r.getProperty(RESOURCE_INFO_PAYMENT)))){
+                            p.setAmount(BigDecimal.valueOf(Double.valueOf(r.getProperty(RESOURCE_INFO_PAYMENT))));
+                            projectPaymentManager.update(p, String.valueOf(tcSubject.getUserId()));
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    addManualCopilotPayment(r, tcSubject);
+            }
+        }
+    }
+
+    /**
+     * Remove Mmanual payment by reosurce Id
+     *
+     * @param projectId the project Id
+     * @param resourceId the resource Id
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private void removeManualCopilotPaymentByResourceId(long projectId, long resourceId)
+            throws ProjectPaymentManagementException {
+        Filter filterProjectId = ProjectPaymentFilterBuilder.createProjectIdFilter(projectId);
+        Filter filterCopilotPayment = ProjectPaymentFilterBuilder.createResourceIdFilter(resourceId);
+        Filter andFilter = new AndFilter(filterProjectId, filterCopilotPayment);
+        List<ProjectPayment> copilotPayments = projectPaymentManager.search(andFilter);
+        for (ProjectPayment p : copilotPayments){
+            projectPaymentManager.delete(p.getProjectPaymentId());
+        }
+    }
+
+    /**
+     * Add Manual Payment
+     *
+     * @param copilotResource the resource of copilot
+     * @param tcSubject TCSubject
+     * @return ProjectPayment that successfully added
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private ProjectPayment addManualCopilotPayment(com.topcoder.management.resource.Resource copilotResource,
+                                                   TCSubject tcSubject) throws ProjectPaymentManagementException {
+        ProjectPaymentType copilotPaymentType = new ProjectPaymentType();
+        copilotPaymentType.setProjectPaymentTypeId(COPILOT_PAYMENT_TYPE);
+        ProjectPayment newPayment = new ProjectPayment();
+        newPayment.setProjectPaymentType(copilotPaymentType);
+        newPayment.setAmount(BigDecimal.valueOf(Double.valueOf(copilotResource.getProperty(RESOURCE_INFO_PAYMENT))));
+        newPayment.setResourceId(copilotResource.getId());
+        return projectPaymentManager.create(newPayment, String.valueOf(tcSubject.getUserId()));
     }
 }

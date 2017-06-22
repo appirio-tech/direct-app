@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -72,8 +72,11 @@
  * - Added registration length for studio contests (excluding design F2F)
  * - All software contests support modification of registration and submission end date/time
  *
+ * Version 2.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * - Add support for custom copilot fee
+ *
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
- * @version 2.9
+ * @version 2.10
  */
 $(document).ready(function() {
 
@@ -952,7 +955,6 @@ function onContestTypeChange() {
         $('.milestoneSelect select').resetSS();
     }
 
-
     if (mainWidget.isSoftwareContest()) {
         //Software Contest
         $('.software').show();
@@ -1261,6 +1263,14 @@ function closeTBBox() {
  * @since 2.4
  */
 function copilotDropDownChange() {
-    // place holder
+    if ($("#contestCopilot").val() == "0"){
+        $(".copilotFee").val(0);
+        $(".copilotFee").attr("disabled", true);
+        mainWidget.softwareCompetition.copilotCost = 0;
+    }else{
+        mainWidget.softwareCompetition.copilotCost = copilotFees[getContestType(true)[1]]["copilotFee"];
+        $(".copilotFee").attr("disabled", true);
+        $(".copilotFee").val(mainWidget.softwareCompetition.copilotCost);
+        $(".copilotFee." + getContestType(true)[0].toLowerCase()).attr("disabled", false);
+    }
 }
-

@@ -25,6 +25,7 @@
     <project name="contest_eligibility_validation" buildType="services"/>
     <project name="pipeline_service" buildType="services"/>
     <project name="pipeline_service_facade" buildType="services"/>
+    <project name="project_payment_management"/>
     <project name="admin_service_facade" buildType="services"/>
     <project name="game_plan_service" buildType="services"/>
     <project name="user_service_facade" buildType="services" tokenize="true"/>
@@ -38,5 +39,4 @@
     <project name="topcoder_cockpit_task_management_services"/>
     <project name="topcoder_cockpit_asset_services"/>
     <project name="topcoder_cockpit_project_milestone_services"/>
-
 </projects>

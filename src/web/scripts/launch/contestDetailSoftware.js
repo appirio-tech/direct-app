@@ -128,8 +128,11 @@
  * - Added registration length for studio contests (excluding design F2F)
  * - All software contests support modification of registration and submission end date/time
  *
+ * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * - Add support for custom copilot fee
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.0
+ * @version 4.1
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -551,6 +554,33 @@ $(document).ready(function(){
     });
 
     $('#registrants').sSelect({ddMaxHeight: '220',yscroll: true});
+    $("#copilots").change(function(){
+        if ($(this).val() == 0){
+            $(".copilotFee").val(0);
+            $(".copilotFee").attr("disabled", true);
+            mainWidget.softwareCompetition.copilotCost = 0;
+        }else{
+            mainWidget.softwareCompetition.copilotCost = copilotFees[getContestType(true)[1]]["copilotFee"];
+            $(".copilotFee").attr("disabled", false);
+            $(".copilotFee").val(mainWidget.softwareCompetition.copilotCost);
+        }
+    });
+    $(".copilotFee").focusout(function(){
+        var error = validateCopilotFee($(this).val(), true);
+        if(error){
+            //revert the value
+            $(this).val(mainWidget.softwareCompetition.copilotCost);
+        }
+    });
+    $(".copilotFee").keyup(function(){
+        if(checkNumber($(this).val()) && !isNaN(parseFloat($(this).val()))){
+            if(mainWidget.isStudioContest()){
+                fillStudioPrizes();
+            }else {
+                fillPrizes();
+            }
+        }
+    });
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
@@ -2138,7 +2168,7 @@ function updateContestCostData() {
     var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
 
     // update to use contest data
-    copilotFee = parseFloat(p['Copilot Cost']);
+    //copilotFee = parseFloat(p['Copilot Cost']);
 
     var isMultipleRound = mainWidget.softwareCompetition.multiRound;
     // no prize data filled into mainWidget.softwareCompetition
@@ -2228,7 +2258,13 @@ function updateContestCostData() {
     }
 
     // (7) set the copilot cost
-    $('#swCopilotFee,#rswCopilotFee').html(copilotFee.formatMoney(2));
+    $('#rswCopilotFee').html(copilotFee);
+    $('.copilotFee').val(copilotFee);
+    if($("#copilots").val()>0){
+        $(".copilotFee").attr("disabled", false);
+    }else{
+        $(".copilotFee").attr("disabled", true);
+    }
 
     // (8) set the spec review cost
     $('#swSpecCost,#rswSpecCost').html(specReview.formatMoney(2));
@@ -2470,6 +2506,10 @@ function validateFieldsPrizeSection() {
             errors.push('The cost of active challenge should not be decreased.');
         }
     }
+    var error = validateCopilotFee($(".copilotFee").val());
+    if (error){
+        errors.push(error);
+    }
 
     if (errors.length > 0) {
         showErrors(errors);
@@ -2481,14 +2521,8 @@ function validateFieldsPrizeSection() {
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
     }
 
-    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
-
-    if (!copilotCost) {
-        copilotCost = mainWidget.softwareCompetition.copilotCost;
-    }
-
     // add copilot cost into project header
-    mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
+    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
 
     if (mainWidget.competitionType == "SOFTWARE") {
         updateSoftwarePrizes();
@@ -2572,8 +2606,6 @@ function showPrizeSectionEdit() {
         onTheFlyCalculateStudioCosts();
     }
     fillPrizes();
-
-
 }
 
 /**
