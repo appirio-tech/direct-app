@@ -291,8 +291,16 @@ import java.util.*;
  * </ul>
  * </p>
  * 
- * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER
- * @version 2.6
+ * Version 2.7 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * <ul>
+ *     <li>Add {@link #customCopilotFee}</li>
+ *     <li>Update {@link #getCopilotResource()} to support custom fee</li>
+ *     <li>Update {@link #updateSoftwareCompetitionCopilotResource()} to support copilot custom fee</li>
+ *     <li>Update {@link #initializeCompetition()} to support copilot custom fee</li>
+ * </ul>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin, flexme, frozenfx, bugbuka, TCSCODER, TCSASSEMBLER
+ * @version 2.7
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -397,6 +405,8 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.4
      */
     private static final String RESOURCE_INFO_REGISTRATION_DATE = "Registration Date";
+
+    private static final String RESOURCE_INFO_MANUAL_PAYMENT = "Manual Payments";
 
     /**
      * <p>
@@ -716,6 +726,12 @@ public class SaveDraftContestAction extends ContestAction {
     private String preRegisterUsers;
 
     /**
+     * Custom copilot fee
+     * @since 2.7
+     */
+    private Double customCopilotFee;
+
+    /**
      * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
@@ -909,7 +925,6 @@ public class SaveDraftContestAction extends ContestAction {
             currentCopilot.setProject(projectId);
             currentCopilotId = currentCopilot.getProperty(RESOURCE_INFO_USER_ID);
         }
-
         Map<String, Resource> oldCopilots = new HashMap<String, Resource>();
         List<Resource> updatedResources = new ArrayList<Resource>();
 
@@ -923,21 +938,27 @@ public class SaveDraftContestAction extends ContestAction {
             }
         }
 
+        // update copilot cost data  from config or use custom
+        Double copilotFee;
+        if (currentCopilot != null && "true".equals(currentCopilot.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))) {
+            copilotFee = customCopilotFee;
+        } else if (contestCopilotId > 0){
+            copilotFee = getCopilotFeeFromConfig(challengeCategoryId);
+        } else {
+            copilotFee = 0.0;
+        }
         if (!oldCopilots.containsKey(currentCopilotId)) {
             // C1 - C2, C1 - U, U - C1 && U - U
             // copilot to update is not one of the old copilots
             if (currentCopilot != null) {
                 // C1 - C2, U - C1
                 updatedResources.add(currentCopilot);
-
-                // update copilot cost data  from config
                 softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
-                        String.valueOf(getCopilotFeeFromConfig(challengeCategoryId)));
+                        String.valueOf(copilotFee));
             } else {
                // C1 - U, U - U
                 softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, "0");
             }
-
             softwareCompetition.setProjectResources(updatedResources.toArray(new Resource[updatedResources.size()]));
         } else {
             // copilot to update is one of the old copilots, update payment because the payment info could be changed
@@ -946,14 +967,22 @@ public class SaveDraftContestAction extends ContestAction {
             // r.setProperty(RESOURCE_INFO_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_PAYMENT));
 
             // c1 - c1, use the old value, do not overide it
+            Resource r = oldCopilots.get(currentCopilotId);
+            if (r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT) != currentCopilot.getProperty(RESOURCE_INFO_MANUAL_PAYMENT) ||
+                    r.getProperty(RESOURCE_INFO_PAYMENT) != currentCopilot.getProperty(RESOURCE_INFO_PAYMENT)){
+                r.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_MANUAL_PAYMENT));
+                r.setProperty(RESOURCE_INFO_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_PAYMENT));
+                updatedResources.add(r);
+                softwareCompetition.setProjectResources(updatedResources.toArray(new Resource[updatedResources.size()]));
+            }
+
             if (oldProjectHeader != null) {
-
-                String v = oldProjectHeader.getProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY);
-
-                if (v == null) {
-                    v = "0";
-                }
-                softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, v);
+//                String v = oldProjectHeader.getProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY);
+//                if (v == null) {
+//                    v = "0";
+//                }
+                softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
+                        String.valueOf(copilotFee));
             }
         }
     }
@@ -1205,12 +1234,17 @@ public class SaveDraftContestAction extends ContestAction {
         List<Resource> resources = new ArrayList<Resource>();
 
         resources.add(getUserResource());
-
         if (getContestCopilotId() > 0 && getContestCopilotName() != null &&
                 getContestCopilotName().trim().length() != 0) {
             resources.add(getCopilotResource());
-            softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
-                    String.valueOf(getCopilotFeeFromConfig(challengeCategoryId)));
+            Double copilotFee;
+            if (customCopilotFee != null && customCopilotFee >0) {
+                copilotFee = customCopilotFee;
+            } else {
+                copilotFee = getCopilotFeeFromConfig(challengeCategoryId);
+            }
+        softwareCompetition.getProjectHeader().setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
+                String.valueOf(copilotFee));
         } else {
             softwareCompetition.getProjectHeader().setProperty(
                     ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, "0");
@@ -1575,14 +1609,22 @@ public class SaveDraftContestAction extends ContestAction {
         resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), getContestCopilotName());
         resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(getContestCopilotId()));
 
-        resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT),
-                String.valueOf(getCopilotFeeFromConfig(getProjectHeader().getProjectCategory().getId())));
         // set payment status to "not paid"
         resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
         // set registration date to now
         resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
 
         resource.setUserId(getContestCopilotId());
+        if (customCopilotFee != null && customCopilotFee > 0 &&
+                customCopilotFee != getCopilotFeeFromConfig(softwareCompetition.getProjectHeader().getProjectCategory().getId())){
+            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, "true");
+            resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT),
+                    String.valueOf(customCopilotFee));
+        } else {
+            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, "false");
+            resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT),
+                    String.valueOf(getCopilotFeeFromConfig(getProjectHeader().getProjectCategory().getId())));
+        }
 
         return resource;
     }
@@ -2472,6 +2514,26 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setGroups(List<String> groups) {
         this.groups = groups;
+    }
+    
+    /**
+     * Getter for {@link #customCopilotFee}
+     *
+     * @return customCopilotFee
+     * @since 2.7
+     */
+    public Double getCustomCopilotFee() {
+        return customCopilotFee;
+    }
+
+    /**
+     * Setter for {@link #customCopilotFee}
+     *
+     * @param customCopilotFee
+     * @since 2.7
+     */
+    public void setCustomCopilotFee(Double customCopilotFee) {
+        this.customCopilotFee = customCopilotFee;
     }
 
     public long getCmcBillingId() {

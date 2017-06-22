@@ -61,7 +61,7 @@
 	<table class="prizesTable">
 		<tr>
 			<td class="first">Challenge Fee : <span id="alorAdminFee1"></span></td>
-			<td class="middleRight">Copilot Fee : <span id="alorCopilotFee"></span></td>
+			<td class="middleRight">Copilot Fee : $<span id="alorCopilotFee"></span></td>
 			<td class="last"><span id="alorAdminFee2"></span></td>
 		</tr>
 	</table>

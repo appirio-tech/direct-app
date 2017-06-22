@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.7
+  - Version: 1.8
   - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
@@ -26,6 +26,9 @@
   -
   - Version 1.7 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for display and edit challenge group
+  -
+  - Version 1.8 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -401,6 +404,12 @@
                 <td class="sec_tab"><strong>5th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
                     &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>
             </tr>
+            <tr>
+                <td class="first_tab"><strong>Copilot Fee
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
+                </strong><span id="rswCopilotFee"></span></td>
+                <td class="sec_tab"></td>
+            </tr>
         </table>
 
 
@@ -450,6 +459,11 @@
                 <label class="third">&nbsp;</label>
                 <span class="dw">&nbsp;</span>
                 <a href="javascript:;" class="removeButton alRemove"><span class="hide">REMOVE</span></a>
+            </div>
+            <div class="copilotFeeDiv">
+                <label class="first">Copilot Fee:</label>
+                <span class="dw">$</span>
+                <input type="text" class="copilotFee" value="" />
             </div>
         </div> <!-- End .prizes -->
 
