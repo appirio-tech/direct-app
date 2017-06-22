@@ -81,9 +81,9 @@
 	<table class="prizesTable">
 		<tr>
 			<td>Challenge Fee : <span id="orAdminFee1"></span></td>
-			<td>Specification Review : <span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-            <td>Screening : <span id="orReviewPayment"></span> </td>
-			<td>Copilot Fee : <span id="orCopilotFee"></span></td>
+			<td>Specification Review : $<span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+            <td>Screening : $<span id="orReviewPayment"></span> </td>
+			<td>Copilot Fee : $<span id="orCopilotFee"></span></td>
 			<td class="last"><span id="orAdminFee2"></span></td>
 		</tr>
 	</table>
